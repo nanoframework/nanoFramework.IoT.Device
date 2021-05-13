@@ -1,4 +1,9 @@
-﻿namespace System.Buffers.Binary
+﻿//
+// Copyright (c) .NET Foundation and Contributors
+// See LICENSE file in the project root for full license information.
+//
+
+namespace System.Buffers.Binary
 {
     /// <summary>
     /// Reads bytes as primitives with specific endianness.
@@ -10,11 +15,12 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static short ReadInt16BigEndian(SpanByte source)
         {
             if (source.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.Int16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (short)(source[0] << 8 | source[1]);
@@ -25,11 +31,12 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static short ReadInt16LittleEndian(SpanByte source)
         {
             if (source.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.Int16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (short)(source[1] << 8 | source[0]);
@@ -40,11 +47,12 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static int ReadInt32BigEndian(SpanByte source)
         {
             if (source.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.Int32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (int)(source[0] << 24 | source[1] << 16 | source[2] << 8 | source[3]);
@@ -55,30 +63,15 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static int ReadInt32LittleEndian(SpanByte source)
         {
             if (source.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.Int32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (int)(source[3] << 24 | source[2] << 16 | source[1] << 8 | source[0]);
-        }
-
-        /// <summary>
-        /// Reads an System.Int64 from the beginning of a read-only span of bytes, as big endian.
-        /// </summary>
-        /// <param name="source">The read-only span to read.</param>
-        /// <returns>The big endian value.</returns>
-        public static long ReadInt64BigEndian(SpanByte source)
-        {
-            if (source.Length < 8)
-            {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.Int64.");
-            }
-
-            return ((long)source[7] << 56 | (long)source[6] << 48 | (long)source[5] << 40 | (long)source[4] << 32 |
-                (long)source[3] << 24 | (long)source[2] << 16 | (long)source[1] << 8 | (long)source[0]);
         }
 
         /// <summary>
@@ -86,11 +79,12 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
-        public static long ReadInt64LittleEndian(SpanByte source)
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
+        public static long ReadInt64BigEndian(SpanByte source)
         {
             if (source.Length < 8)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.Int64.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return ((long)source[0] << 56 | (long)source[1] << 48 | (long)source[2] << 40 | (long)source[3] << 32 |
@@ -98,15 +92,33 @@
         }
 
         /// <summary>
+        /// Reads an System.Int64 from the beginning of a read-only span of bytes, as big endian.
+        /// </summary>
+        /// <param name="source">The read-only span to read.</param>
+        /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
+        public static long ReadInt64LittleEndian(SpanByte source)
+        {
+            if (source.Length < 8)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return ((long)source[7] << 56 | (long)source[6] << 48 | (long)source[5] << 40 | (long)source[4] << 32 |
+                (long)source[3] << 24 | (long)source[2] << 16 | (long)source[1] << 8 | (long)source[0]);
+        }
+
+        /// <summary>
         /// Reads a System.UInt16 from the beginning of a read-only span of bytes, as big  endian.
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static ushort ReadUInt16BigEndian(SpanByte source)
         {
             if (source.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.UInt16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (ushort)(source[0] << 8 | source[1]);
@@ -117,11 +129,12 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static ushort ReadUInt16LittleEndian(SpanByte source)
         {
             if (source.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.UInt16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (ushort)(source[1] << 8 | source[0]);
@@ -132,11 +145,12 @@
         /// </summary>
         /// <param name="source">The read-only span to read.</param>
         /// <returns> The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static uint ReadUInt32BigEndian(SpanByte source)
         {
             if (source.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.UInt32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (uint)(source[0] << 24 | source[1] << 16 | source[2] << 8 | source[3]);
@@ -147,11 +161,12 @@
         /// </summary>
         /// <param name="source">The read-only span of bytes to read.</param>
         /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static uint ReadUInt32LittleEndian(SpanByte source)
         {
             if (source.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.UInt32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return (uint)(source[3] << 24 | source[2] << 16 | source[1] << 8 | source[0]);
@@ -162,27 +177,12 @@
         /// </summary>
         /// <param name="source">The read-only span of bytes to read.</param>
         /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
         public static ulong ReadUInt64BigEndian(SpanByte source)
         {
             if (source.Length < 8)
             {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.UInt64.");
-            }
-
-            return ((ulong)source[7] << 56 | (ulong)source[6] << 48 | (ulong)source[5] << 40 | (ulong)source[4] << 32 |
-                (ulong)source[3] << 24 | (ulong)source[2] << 16 | (ulong)source[1] << 8 | (ulong)source[0]);
-        }
-
-        /// <summary>
-        /// Reads a System.UInt64 from the beginning of a read-only span of bytes, as little endian.
-        /// </summary>
-        /// <param name="source">The read-only span of bytes to read.</param>
-        /// <returns>The little endian value.</returns>
-        public static ulong ReadUInt64LittleEndian(SpanByte source)
-        {
-            if (source.Length < 8)
-            {
-                throw new ArgumentOutOfRangeException($"source is too small to contain an System.UInt64.");
+                throw new ArgumentOutOfRangeException();
             }
 
             return ((ulong)source[0] << 56 | (ulong)source[1] << 48 | (ulong)source[2] << 40 | (ulong)source[3] << 32 |
@@ -190,15 +190,33 @@
         }
 
         /// <summary>
+        /// Reads a System.UInt64 from the beginning of a read-only span of bytes, as little endian.
+        /// </summary>
+        /// <param name="source">The read-only span of bytes to read.</param>
+        /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
+        public static ulong ReadUInt64LittleEndian(SpanByte source)
+        {
+            if (source.Length < 8)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return ((ulong)source[7] << 56 | (ulong)source[6] << 48 | (ulong)source[5] << 40 | (ulong)source[4] << 32 |
+                (ulong)source[3] << 24 | (ulong)source[2] << 16 | (ulong)source[1] << 8 | (ulong)source[0]);
+        }
+
+        /// <summary>
         /// Writes an System.Int16 into a span of bytes, as big endian.
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static void WriteInt16BigEndian(SpanByte destination, short value)
         {
             if (destination.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[0] = (byte)(value >> 8);
@@ -210,11 +228,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static void WriteInt16LittleEndian(SpanByte destination, short value)
         {
             if (destination.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[1] = (byte)(value >> 8);
@@ -226,11 +245,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static void WriteInt32BigEndian(SpanByte destination, int value)
         {
             if (destination.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[0] = (byte)(value >> 24);
@@ -244,11 +264,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static void WriteInt32LittleEndian(SpanByte destination, int value)
         {
             if (destination.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[3] = (byte)(value >> 24);
@@ -262,11 +283,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
         public static void WriteInt64BigEndian(SpanByte destination, long value)
         {
             if (destination.Length < 8)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int64.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[0] = (byte)(value >> 56);
@@ -284,11 +306,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
         public static void WriteInt64LittleEndian(SpanByte destination, long value)
         {
             if (destination.Length < 8)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int64.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[7] = (byte)(value >> 56);
@@ -306,11 +329,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static void WriteUInt16BigEndian(SpanByte destination, ushort value)
         {
             if (destination.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[0] = (byte)(value >> 8);
@@ -322,11 +346,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int16.</exception>
         public static void WriteUInt16LittleEndian(SpanByte destination, ushort value)
         {
             if (destination.Length < 2)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int16.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[1] = (byte)(value >> 8);
@@ -338,11 +363,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static void WriteUInt32BigEndian(SpanByte destination, uint value)
         {
             if (destination.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[0] = (byte)(value >> 24);
@@ -356,11 +382,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int32.</exception>
         public static void WriteUInt32LittleEndian(SpanByte destination, uint value)
         {
             if (destination.Length < 4)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int32.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[3] = (byte)(value >> 24);
@@ -374,11 +401,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
         public static void WriteUInt64BigEndian(SpanByte destination, ulong value)
         {
             if (destination.Length < 8)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int64.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[0] = (byte)(value >> 56);
@@ -396,11 +424,12 @@
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain an System.Int64.</exception>
         public static void WriteUInt64LittleEndian(SpanByte destination, ulong value)
         {
             if (destination.Length < 8)
             {
-                throw new ArgumentOutOfRangeException($"destination is too small to contain an System.Int64.");
+                throw new ArgumentOutOfRangeException();
             }
 
             destination[7] = (byte)(value >> 56);
