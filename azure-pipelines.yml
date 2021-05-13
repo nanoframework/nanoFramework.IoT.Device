@@ -1,0 +1,161 @@
+trigger:
+  branches:
+    include: [main, develop, "release-*" ]
+  paths:
+    exclude: ["*.md", .gitignore]
+  tags:
+    include: ["v*"]
+
+# PR always trigger build
+
+# add nf-tools repo to resources (for Azure Pipelines templates)
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: nanoframework/nf-tools
+      endpoint: nanoframework
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  nugetPackageName: 'nanoFramework.IoT.Device'
+  repoName: 'nanoFramework.IoT.Device'
+
+steps:
+
+# step from template @ nf-tools repo
+# build steps only
+- template: azure-pipelines-templates/class-lib-build-only.yml@templates  
+  parameters:
+    sonarCloudProject: 'nanoframework_nanoFramework.IoT.Device'
+
+# package steps
+- template: azure-pipelines-templates/class-lib-package.yml@templates  
+  parameters:
+    nugetPackageName: 'nanoFramework.IoT.Device'
+
+# IMPORTANT:
+# - Create as many entries like this as needed for the nugets
+# - The tasks NuGetCommand needs to be cloned and adjusted as well
+# - The tasks GithubRelease needs to be cloned and adjusted as well
+- template: azure-pipelines-templates/class-lib-package.yml@templates  
+  parameters:
+    nugetPackageName: 'nanoFramework.IoT.Device.Client'
+
+- template: azure-pipelines-templates/class-lib-package.yml@templates  
+  parameters:
+    nugetPackageName: 'nanoFramework.IoT.Device.Server'
+
+- template: azure-pipelines-templates/class-lib-publish.yml@templates  
+
+# need to push remaining packages to NuGet individually because the template above can only push one package (happens on tag builds for any branch)
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: 
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).nupkg
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).snupkg
+    publishFeedCredentials: 'AzureArtifacts-$(System.TeamProject)'
+    includeSymbols: true
+  condition: and( succeeded(), ne( variables['StartReleaseCandidate'], true ) )
+  continueOnError: true
+  displayName: Push "Client" variant NuGet package to Azure Artifacts
+
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: 
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).nupkg
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).snupkg
+    publishFeedCredentials: 'AzureArtifacts-$(System.TeamProject)'
+    includeSymbols: true
+  condition: and( succeeded(), ne( variables['StartReleaseCandidate'], true ) )
+  continueOnError: true
+  displayName: Push "Server" variant NuGet package to Azure Artifacts
+
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: 
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).nupkg
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).snupkg
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+    includeSymbols: true
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne( variables['StartReleaseCandidate'], true ) )
+  continueOnError: true
+  displayName: Push "Client" variant NuGet package to NuGet
+
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: 
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).nupkg
+      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).snupkg
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+    includeSymbols: true
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne( variables['StartReleaseCandidate'], true ) )
+  continueOnError: true
+  displayName: Push "Server" variant NuGet package to NuGet
+
+# create or update GitHub release
+- task: GithubRelease@1
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ), ne( variables['StartReleaseCandidate'], true ) )
+  displayName: Create/Update GitHub PREVIEW release
+  inputs:
+    gitHubConnection: 'github.com_nano-$(System.TeamProject)'
+    tagSource: userSpecifiedTag
+    tag: v$(MY_NUGET_VERSION)
+    title: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
+    releaseNotesSource: inline
+    releaseNotesInline: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><br><h4>Install from NuGet</h4><br>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).<br>:package: [.NET (client API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Client/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)<br>:package: [.NET (server API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Server/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)'
+    assets: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
+    assetUploadMode: replace
+    isPreRelease: true
+    addChangeLog: false
+
+# create or update GitHub release ON tags from release or main branches
+- task: GithubRelease@1
+  condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), not(contains(variables['Build.SourceBranch'], 'preview') ), ne( variables['StartReleaseCandidate'], true ) )
+  displayName: Create/Update GitHub stable release
+  inputs:
+    gitHubConnection: 'github.com_nano-$(System.TeamProject)'
+    tagSource: userSpecifiedTag
+    tag: v$(MY_NUGET_VERSION)
+    title: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
+    releaseNotesSource: inline
+    releaseNotesInline: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><br><h4>Install from NuGet</h4><br>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).<br>:package: [.NET (client API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Client/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)<br>:package: [.NET (server API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Server/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)'
+    assets: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
+    assetUploadMode: replace
+    isPreRelease: false
+    addChangeLog: false
+
+# update dependents
+- task: UpdatenFDependencies@1
+  displayName: Update dependent class libs
+  condition: or( and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), eq(variables['StartReleaseCandidate'], 'false') ), and( succeeded(), contains(variables['getCommitMessage.COMMIT_MESSAGE'], '***UPDATE_DEPENDENTS***'), eq(variables['StartReleaseCandidate'], 'false') ), eq(variables['UPDATE_DEPENDENTS'], 'true') )
+  inputs:
+    gitHubToken: $(GitHubToken)
+    repositoriesToUpdate: |
+      nanoFramework.WebServer
+
+# step from template @ nf-tools repo
+# report error
+- template: azure-pipelines-templates/discord-webhook-task.yml@templates  
+  parameters:
+    status: 'failure'
+    webhookUrl: '$(DiscordWebhook)'
+    message: ''
