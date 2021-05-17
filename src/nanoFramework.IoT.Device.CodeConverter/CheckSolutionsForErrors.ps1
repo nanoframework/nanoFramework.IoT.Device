@@ -20,7 +20,7 @@ foreach ($sln in $files) {
         for ($j=1; $j -lt $errors.length; $j++){
             try {
                 #write-host $"error=$($errors[$j])"
-                $matches = (select-string "([^[]*).*generated_output.?\\([^\\[]*)" -InputObject $errors[$j]).Matches
+                $matches = (select-string "([^[]*).*devices_generated.?\\([^\\[]*)" -InputObject $errors[$j]).Matches
                 $results.Add(@{ Error = $matches.groups[1].value; Project = $matches.groups[2].value })
             } catch {
                 write-host "error caught!!!!!" #+ $error
