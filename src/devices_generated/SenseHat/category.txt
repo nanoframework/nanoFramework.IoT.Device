@@ -1,0 +1,10 @@
+thermometer
+barometer
+hygrometer
+imu
+magnetometer
+gyroscope
+accelerometer
+joystick
+display
+multi
