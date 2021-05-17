@@ -77,6 +77,24 @@ namespace nanoFramework.IoT.Device.CodeConverter
                                 NewProjectReferenceString = @"<Reference Include=""packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll""></Reference>",
                                 PackageConfigReferenceString = @"<package id=""UnitsNet.nanoFramework.Temperature"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
                             },
+                            new NugetPackages {
+                                Namespace="ElectricPotential",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll""></Reference>",
+                                PackageConfigReferenceString = @"<package id=""UnitsNet.nanoFramework.ElectricPotential"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Pressure",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll""></Reference>",
+                                PackageConfigReferenceString = @"<package id=""UnitsNet.nanoFramework.Pressure"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Length",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll""></Reference>",
+                                PackageConfigReferenceString = @"<package id=""UnitsNet.nanoFramework.Length"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                            },
 
                         };
 

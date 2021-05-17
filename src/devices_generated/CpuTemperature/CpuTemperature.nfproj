@@ -22,6 +22,7 @@
     <Reference Include="packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll"></Reference>
     <Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
 <Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
+<Reference Include="packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll"></Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -23,6 +23,7 @@
     <Reference Include="packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll"></Reference > 
 <Reference Include="packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll"></Reference>
 <Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
+<Reference Include="packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll"></Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

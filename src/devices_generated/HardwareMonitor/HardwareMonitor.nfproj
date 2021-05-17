@@ -21,6 +21,7 @@
   <ItemGroup>
     <Reference Include="packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll"></Reference>
     <Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
+<Reference Include="packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll"></Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

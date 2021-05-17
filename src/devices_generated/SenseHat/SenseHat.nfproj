@@ -25,6 +25,8 @@
 <Reference Include="packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll"></Reference>
 <Reference Include="packages\UnitsNet.nanoFramework.RelativeHumidity.4.91.0\lib\UnitsNet.RelativeHumidity.dll"></Reference>
 <Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
+<Reference Include="packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll"></Reference>
+<Reference Include="packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll"></Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
