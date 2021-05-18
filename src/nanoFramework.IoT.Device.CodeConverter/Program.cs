@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,29 +11,27 @@ namespace nanoFramework.IoT.Device.CodeConverter
     {
         static void Main(string[] args)
         {
-            var sourceDirectory = @"D:\Temp\src\devices";
-            var filePathFilters = new[] { @"\src\devices\" };
-            var targetProjectTemplateName = "BindingTemplateProject";
-            var targetUnitTestProjectTemplateName = "UnitTestTemplateProject";
-            var outputDirectoryPath = @"..\..\..\..\devices_generated";
+            // Initialize configuration.
+            // Set in appsettings.json or appsettings.Development.json.
+            var configuration = InitOptions<ConverterConfiguration>();
 
-            var outputDirectoryInfo = new DirectoryInfo(outputDirectoryPath);
+            var outputDirectoryInfo = new DirectoryInfo(configuration.OutputDirectoryPath);
             if (outputDirectoryInfo.Exists)
             {
                 outputDirectoryInfo.Delete(true);
             }
 
-            var targetProjectTemplateDirectory = Directory.GetDirectories("../../../", targetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetProjectTemplateDirectory = Directory.GetDirectories("../../../", configuration.TargetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
                 .FirstOrDefault();
             Console.WriteLine($"targetProjectTemplateDirectory={targetProjectTemplateDirectory}");
 
-            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("/", targetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("/", configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
                 .FirstOrDefault();
 
-            var sourceProjectFiles = Directory.GetFiles(sourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
-                .Where(x => filePathFilters.Any(d => x.Contains(d)))
+            var sourceProjectFiles = Directory.GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
+                .Where(x => configuration.FilePathFilters.Any(d => x.Contains(d)))
                 .Select(x => new FileInfo(x));
 
             foreach (var sourceProjectFile in sourceProjectFiles)
@@ -42,7 +41,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
-                var targetDirectory = $"{outputDirectoryPath}\\{projectName}";
+                var targetDirectory = $"{configuration.OutputDirectoryPath}\\{projectName}";
                 DirectoryInfo targetDirectoryInfo;
 
                 if (isUnitTestProject)
@@ -201,6 +200,32 @@ EndProject";
             Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
         }
+
+        private static T InitOptions<T>()
+            where T : new()
+        {
+            var config = InitConfig();
+            return config.Get<T>();
+        }
+
+        private static IConfigurationRoot InitConfig()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile($"appsettings.json", false, false)
+                .AddJsonFile($"appsettings.Development.json", true, false)
+                .AddEnvironmentVariables();
+
+            return builder.Build();
+        }
+    }
+
+    public class ConverterConfiguration
+    {
+        public string SourceDirectory { get; set; }
+        public string FilePathFilters { get; set; }
+        public string TargetProjectTemplateName { get; set; }
+        public string OutputDirectoryPath { get; set; }
+        public string TargetUnitTestProjectTemplateName { get; set; }
     }
 
     public class NugetPackages
@@ -301,5 +326,6 @@ EndProject";
 
             return checkIfFound;
         }
+
     }
 }

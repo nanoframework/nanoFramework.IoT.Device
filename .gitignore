@@ -255,3 +255,6 @@ paket-files/
 
 #SoundCloud
 *.sonarqube/
+
+#Development App Settings
+appsettings.Development.json
