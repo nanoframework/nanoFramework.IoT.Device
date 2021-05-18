@@ -10,7 +10,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
     {
         static void Main(string[] args)
         {
-            var sourceDirectory = @"D:\Source\Github\dotnet\iot\src\devices";
+            var sourceDirectory = @"E:\Github\dotnet-iot\src\devices";
             var filePathFilters = new[] { "\\src\\devices\\" };
             var targetProjectTemplateName = "BindingTemplateProject";
             var outputDirectoryPath = "..\\..\\..\\..\\devices_generated";
@@ -97,6 +97,20 @@ namespace nanoFramework.IoT.Device.CodeConverter
                                 PackageConfigReferenceString = @"<package id=""UnitsNet.nanoFramework.Length"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
                             },
 
+                            // Unit Tests
+                            new NugetPackages {
+                                Namespace="Xunit",
+                                OldProjectReferenceString= @"<PackageReference Include=""xunit"" Version=""2.4.0"" />",
+                                NewProjectReferenceString = @"<Reference Include=""packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe""></Reference>",
+                                PackageConfigReferenceString = @"<package id=""nanoFramework.TestFramework"" version=""1.0.114"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Xunit.Abstractions",
+                                OldProjectReferenceString= @"<PackageReference Include=""xunit"" Version=""2.4.0"" />",
+                                NewProjectReferenceString = @"<Reference Include=""packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe""></Reference>",
+                                PackageConfigReferenceString = @"<package id=""nanoFramework.TestFramework"" version=""1.0.114"" targetFramework=""netnanoframework10"" />"
+                            },
+
                         };
 
                 var searches = nfNugetPackages.ToDictionary(x => x.Namespace, x => false);
@@ -113,6 +127,10 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // PROJECT FILE
                 // Search for project references in old project file
                 var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
+
+                // check if this a Unit Test project
+                var isUnitTestProject = oldProjectFile.DirectoryName.EndsWith(".Tests");
+
                 var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
                 var oldProjectReferences = nfNugetPackages.Where(x => oldProjectFileContents.Contains(x.Namespace)).Select(x => x.Namespace).ToArray();
                 var oldFileReferences = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
