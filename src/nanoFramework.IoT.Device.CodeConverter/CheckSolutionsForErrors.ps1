@@ -41,6 +41,9 @@ write-host $failures
 write-host ""
 write-host $"ERRORS:"
 $results | Group-object {$_.Error } -noelement | sort-object Count -Descending | format-table -autosize
+write-host ""
+write-host $"PROJECTS:"
+$results | Group-object {$_.Project } -noelement | sort-object Count -Descending | format-table -autosize
 #write-host $groupedResults
 #$results[0]
 
