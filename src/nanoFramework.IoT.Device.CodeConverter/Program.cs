@@ -224,8 +224,8 @@ EndProject";
         public string SourceDirectory { get; set; }
         public string FilePathFilters { get; set; }
         public string TargetProjectTemplateName { get; set; }
-        public string OutputDirectoryPath { get; set; }
         public string TargetUnitTestProjectTemplateName { get; set; }
+        public string OutputDirectoryPath { get; set; }
     }
 
     public class NugetPackages
