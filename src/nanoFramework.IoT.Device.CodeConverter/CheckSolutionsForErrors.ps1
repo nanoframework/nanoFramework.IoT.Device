@@ -1,4 +1,4 @@
-$path = "D:\Temp\src\devices_generated"
+$path = "..\devices_generated"
 
 $files = Get-ChildItem -Path $path -Recurse -Include *.sln 
 

@@ -11,9 +11,9 @@ namespace nanoFramework.IoT.Device.CodeConverter
         static void Main(string[] args)
         {
             var sourceDirectory = @"D:\Temp\src\devices";
-            var filePathFilters = new[] { "\\src\\devices\\" };
+            var filePathFilters = new[] { @"\src\devices\" };
             var targetProjectTemplateName = "BindingTemplateProject";
-            var outputDirectoryPath = @"D:\Temp\src\devices_generated";
+            var outputDirectoryPath = @"..\..\..\..\devices_generated";
 
             var outputDirectoryInfo = new DirectoryInfo(outputDirectoryPath);
             if (outputDirectoryInfo.Exists)
