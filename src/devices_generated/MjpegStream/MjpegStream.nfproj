@@ -15,12 +15,12 @@
     <RootNamespace>MjpegStream</RootNamespace>
     <AssemblyName>MjpegStream</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll"></Reference>
-    <!-- INSERT NEW REFERENCES HERE -->
+    <Reference Include="packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll"></Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

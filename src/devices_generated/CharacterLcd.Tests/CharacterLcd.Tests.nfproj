@@ -15,7 +15,7 @@
     <RootNamespace>CharacterLcd.Tests</RootNamespace>
     <AssemblyName>CharacterLcd.Tests</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>

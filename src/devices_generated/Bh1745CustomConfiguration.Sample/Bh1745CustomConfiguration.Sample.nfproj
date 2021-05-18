@@ -15,7 +15,7 @@
     <RootNamespace>Bh1745CustomConfiguration.Sample</RootNamespace>
     <AssemblyName>Bh1745CustomConfiguration.Sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>

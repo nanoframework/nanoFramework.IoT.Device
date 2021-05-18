@@ -15,7 +15,7 @@
     <RootNamespace>Seesaw.Sample.Capabilities</RootNamespace>
     <AssemblyName>Seesaw.Sample.Capabilities</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
