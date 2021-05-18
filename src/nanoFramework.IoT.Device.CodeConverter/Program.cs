@@ -13,7 +13,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             var sourceDirectory = @"D:\Temp\src\devices";
             var filePathFilters = new[] { "\\src\\devices\\" };
             var targetProjectTemplateName = "BindingTemplateProject";
-            var outputDirectoryPath = "..\\..\\..\\..\\devices_generated";
+            var outputDirectoryPath = @"D:\Temp\src\devices_generated";
 
             var outputDirectoryInfo = new DirectoryInfo(outputDirectoryPath);
             if (outputDirectoryInfo.Exists)
@@ -119,18 +119,18 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         };
 
                 var searches = nfNugetPackages.ToDictionary(x => x.Namespace, x => false);
-                var packagesFromCode = new Dictionary<string, bool>();
 
                 foreach (var file in targetDirectoryInfo.GetFiles("*.cs",new EnumerationOptions { RecurseSubdirectories = true }))
                 {
-                    searches = file.EditFile(new Dictionary<string, string>
+                    searches = file.EditFile(
+                        new Dictionary<string, string>
                         {
                             { "stackalloc", "new" },
                             { "Span<byte>", "SpanByte" },
                             { ".AsSpan(start, length)", string.Empty },
-                        }, searches);
-
-                    packagesFromCode = file.FindCodeMatch(nfNugetPackages);
+                        }, 
+                        nfNugetPackages, 
+                        searches);
                 }
 
                 // PROJECT FILE
@@ -166,7 +166,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 }
 
                 newProjectReferences.AddRange(nfNugetPackages
-                        .Where(x => searches.Any(s => s.Value && s.Key == x.Namespace) || packagesFromCode.Any(p => p.Value && p.Key == x.Namespace))
+                        .Where(x => searches.Any(s => s.Value && s.Key == x.Namespace))
                         .Select(x => x.NewProjectReferenceString));
 
                 if (newProjectReferences.Any())
@@ -189,9 +189,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         // references from the old project file
                         oldProjectReferences.Any(p => p == x.Namespace) ||
                         // references in c# files
-                        searches.Any(s => s.Value && s.Key == x.Namespace) ||
-                        // used in code
-                        packagesFromCode.Any(p => p.Value && p.Key == x.Namespace))
+                        searches.Any(s => s.Value && s.Key == x.Namespace))
                     .Select(x => x.PackageConfigReferenceString);
 
                 if (packageReferences.Any())
@@ -236,6 +234,7 @@ EndProject";
 
             }
 
+            Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
         }
 
@@ -282,7 +281,11 @@ EndProject";
 
     public static class FileInfoExtensions
     {
-        public static Dictionary<string, bool> EditFile(this FileInfo sourceFile, Dictionary<string, string> replacements, Dictionary<string, bool> checkIfFound = null)
+        public static Dictionary<string, bool> EditFile(
+            this FileInfo sourceFile, 
+            Dictionary<string, string> replacements, 
+            NugetPackages[] nugetPackages = null,
+            Dictionary<string, bool> checkIfFound = null)
         {
             var replacedKeys = new List<string>();
             if (sourceFile.Exists)
@@ -309,7 +312,18 @@ EndProject";
                             {
                                 if (line.Contains(check.Key))
                                 {
-                                    checkIfFound[check.Key] = line.Contains(check.Key);
+                                    checkIfFound[check.Key] = true;
+                                }
+                            }
+                        }
+
+                        if (nugetPackages != null && nugetPackages.Length > 0)
+                        {
+                            foreach (var nugetPackage in nugetPackages)
+                            {
+                                if (nugetPackage.CodeMatchString != null && line.Contains(nugetPackage.CodeMatchString))
+                                {
+                                    checkIfFound[nugetPackage.Namespace] = true;
                                 }
                             }
                         }
@@ -323,40 +337,6 @@ EndProject";
             }
 
             return checkIfFound;
-        }
-
-        public static Dictionary<string, bool> FindCodeMatch(this FileInfo sourceFile, NugetPackages[] nugetPackages)
-        {
-            var codeMatches = new Dictionary<string, bool>();
-
-            if (sourceFile.Exists)
-            {
-                var tempFilename = $"{sourceFile.FullName}.edited";
-                using (var input = sourceFile.OpenText())
-                using (var output = new StreamWriter(tempFilename))
-                {
-                    string line;
-                    while (null != (line = input.ReadLine()))
-                    {
-                        if (nugetPackages != null && nugetPackages.Length > 0)
-                        {
-                            foreach (var nugetPackage in nugetPackages)
-                            {
-                                if (nugetPackage.CodeMatchString != null && line.Contains(nugetPackage.CodeMatchString))
-                                {
-                                    codeMatches[nugetPackage.Namespace] = true;
-                                }
-                            }
-                        }
-                        output.WriteLine(line);
-                    }
-                }
-
-                sourceFile.Delete();
-                new FileInfo(tempFilename).MoveTo(sourceFile.FullName);
-            }
-
-            return codeMatches;
         }
     }
 }
