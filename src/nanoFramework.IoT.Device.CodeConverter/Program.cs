@@ -73,100 +73,133 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 }
 
                 // PROJECT FILE
-                // Search for project references in old project file
-                var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
+                string[] oldProjectReferences;
+                string projectGuid;
+                CreateProjectFile(isUnitTestProject, projectName, targetDirectoryInfo, nfNugetPackages, searches, out oldProjectReferences, out projectGuid);
 
-                string unitTestProjectReference = string.Empty;
-                var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
-                var oldProjectReferences = nfNugetPackages.Where(x => oldProjectFileContents.Contains(x.Namespace)).Select(x => x.Namespace).ToArray();
-                var oldFileReferences = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
-                oldProjectFile.Delete();
+                // PACKAGES
+                CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
 
-                // Rename template project file
-                var targetProjectFile = targetDirectoryInfo.GetFiles("*.nfproj").First();
+                // SOLUTION File
+                CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
 
-                var projectReplacements = new Dictionary<string, string>();
+            }
+
+            Console.WriteLine("Completed. Press any key to exit.");
+            Console.ReadLine();
+        }
+
+        private static void CreateProjectFile(
+            bool isUnitTestProject, 
+            string projectName, 
+            DirectoryInfo targetDirectoryInfo, 
+            NugetPackages[] nfNugetPackages, 
+            Dictionary<string, bool> searches, 
+            out string[] oldProjectReferences, 
+            out string projectGuid)
+        {
+            // Search for project references in old project file
+            var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
+
+            string unitTestProjectReference = string.Empty;
+            var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
+            oldProjectReferences = nfNugetPackages.Where(x => oldProjectFileContents.Contains(x.Namespace)).Select(x => x.Namespace).ToArray();
+            var oldFileReferences = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
+            oldProjectFile.Delete();
+
+            // Rename template project file
+            var targetProjectFile = targetDirectoryInfo.GetFiles("*.nfproj").First();
+
+            var projectReplacements = new Dictionary<string, string>();
+
+            if (isUnitTestProject)
+            {
+                // Unit Test project
+                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName));
+
+                // Update project name 
+                projectReplacements.Add("UnitTestTemplateProject", projectName);
+
+                // build proper project reference
+                projectReplacements.Add(
+                    "<!-- INSERT PROJECT UNDER TEST REFERENCE HERE -->",
+                    $@"<ProjectReference Include=""..\{projectName.Replace(".Tests", "")}\{projectName.Replace(".Tests", "")}.nfproj"" />");
+            }
+            else
+            {
+                // Regular code project
+                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
+
+                // Update project name 
+                projectReplacements.Add("BindingTemplateProject", projectName);
+            }
+
+            // new GUID for project
+            projectGuid = Guid.NewGuid().ToString("B").ToUpper();
+            projectReplacements.Add("<!-- NEW PROJECT GUID -->", projectGuid);
+
+            // Update project references
+            var newProjectReferences = new List<string>();
+            if (oldProjectReferences.Any())
+            {
+                newProjectReferences.AddRange(oldProjectReferences.Select(x => nfNugetPackages.FirstOrDefault(r => r.Namespace == x).NewProjectReferenceString));
+            }
+
+            newProjectReferences.AddRange(nfNugetPackages
+                    .Where(x => searches.Any(s => s.Value && s.Key == x.Namespace))
+                    .Select(x => x.NewProjectReferenceString));
+
+            if (newProjectReferences.Any())
+            {
+                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed}\n{add}");
 
                 if (isUnitTestProject)
                 {
-                    // Unit Test project
-                    targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName));
-
-                    // Update project name 
-                    projectReplacements.Add("UnitTestTemplateProject", projectName);
-
-                    // build proper project reference
-                    projectReplacements.Add(
-                        "<!-- INSERT PROJECT UNDER TEST REFERENCE HERE -->",
-                        $@"<ProjectReference Include=""..\{projectName.Replace(".Tests", "")}\{projectName.Replace(".Tests", "")}.nfproj"" />");
-                }
-                else
-                {
-                    // Regular code project
-                    targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
-
-                    // Update project name 
-                    projectReplacements.Add("BindingTemplateProject", projectName);
+                    // add the reference to the project being tested
+                    newProjectReferencesString += unitTestProjectReference;
                 }
 
-                // new GUID for project
-                var projectGuid = Guid.NewGuid().ToString("B").ToUpper();
+                projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
+            }
+            if (oldFileReferences.Any())
+            {
+                var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n{add}");
+                projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
+            }
+            targetProjectFile.EditFile(projectReplacements);
+        }
 
-                projectReplacements.Add("<!-- NEW PROJECT GUID -->", projectGuid);
+        private static void CreatePackagesConfig(
+            DirectoryInfo targetDirectoryInfo, 
+            NugetPackages[] nfNugetPackages, 
+            Dictionary<string, bool> searches, 
+            string[] oldProjectReferences)
+        {
+            // Add nanoFramework nuget packages based on project references and references in the code
+            var packagesFile = targetDirectoryInfo.GetFiles("packages.config").First();
+            var packageReferences = nfNugetPackages
+                .Where(x =>
+                    // references from the old project file
+                    oldProjectReferences.Any(p => p == x.Namespace) ||
+                    // references in c# files
+                    searches.Any(s => s.Value && s.Key == x.Namespace))
+                .Distinct()
+                .Select(x => x.PackageConfigReferenceString);
 
-                // Update project references
-                var newProjectReferences = new List<string>();
-                if (oldProjectReferences.Any())
-                {
-                    newProjectReferences.AddRange(oldProjectReferences.Select(x => nfNugetPackages.FirstOrDefault(r => r.Namespace == x).NewProjectReferenceString));
-                }
-
-                newProjectReferences.AddRange(nfNugetPackages
-                        .Where(x => searches.Any(s => s.Value && s.Key == x.Namespace))
-                        .Select(x => x.NewProjectReferenceString));
-
-                if (newProjectReferences.Any())
-                {
-                    var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed}\n{add}");
-
-                    if (isUnitTestProject)
-                    {
-                        // add the reference to the project being tested
-                        newProjectReferencesString += unitTestProjectReference;
-                    }
-
-                    projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
-                }
-                if (oldFileReferences.Any())
-                {
-                    var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n{add}");
-                    projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
-                }
-                targetProjectFile.EditFile(projectReplacements);
-
-                // PACKAGES
-                // Add nanoFramework nuget packages based on project references and references in the code
-                var packagesFile = targetDirectoryInfo.GetFiles("packages.config").First();
-                var packageReferences = nfNugetPackages
-                    .Where(x =>
-                        // references from the old project file
-                        oldProjectReferences.Any(p => p == x.Namespace) ||
-                        // references in c# files
-                        searches.Any(s => s.Value && s.Key == x.Namespace))
-                    .Distinct()
-                    .Select(x => x.PackageConfigReferenceString);
-
-                if (packageReferences.Any())
-                {
-                    var packageReferencesString = packageReferences.Distinct()
-                        .Aggregate((seed, add) => $"{seed}\n{add}");
-                    packagesFile.EditFile(new Dictionary<string, string>
+            if (packageReferences.Any())
+            {
+                var packageReferencesString = packageReferences.Distinct()
+                    .Aggregate((seed, add) => $"{seed}\n{add}");
+                packagesFile.EditFile(new Dictionary<string, string>
                         {
                             { "<!-- INSERT NEW PACKAGES HERE -->", packageReferencesString },
                         });
-                }
+            }
+        }
 
-                var solutionFileTemplate = @"
+        private static void CreateSolutionFile(string projectName, DirectoryInfo targetDirectoryInfo, string projectGuid)
+        {
+            var solutionFileTemplate = @"
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
@@ -181,24 +214,19 @@ Global
 		[[ INSERT BUILD CONFIGURATIONS HERE ]]
 	EndGlobalSection
 EndGlobal";
-                var solutionProjectTemplate = $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT"", ""nanoFrameworkIoT.nfproj"", ""{projectGuid}""
+            var solutionProjectTemplate = $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT"", ""nanoFrameworkIoT.nfproj"", ""{projectGuid}""
 EndProject";
-                var solutionBuildConfigTemplate = $@"{projectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+            var solutionBuildConfigTemplate = $@"{projectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{projectGuid}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{projectGuid}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{projectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{projectGuid}.Release|Any CPU.Build.0 = Release|Any CPU
 		{projectGuid}.Release|Any CPU.Deploy.0 = Release|Any CPU";
 
-                var solutionProject = solutionProjectTemplate.Replace("nanoFrameworkIoT", projectName);
-                var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
-                solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
-                File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
-
-            }
-
-            Console.WriteLine("Completed. Press any key to exit.");
-            Console.ReadLine();
+            var solutionProject = solutionProjectTemplate.Replace("nanoFrameworkIoT", projectName);
+            var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
+            solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
+            File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
         }
 
         private static T InitOptions<T>()
