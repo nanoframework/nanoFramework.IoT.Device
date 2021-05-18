@@ -126,6 +126,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 var projectReplacements = new Dictionary<string, string> {
                     {"BindingTemplateProject", projectName }
                 };
+
+                // new GUID for project
+                var projectGuid = Guid.NewGuid().ToString("B").ToUpper();
+
+                projectReplacements.Add("<!-- NEW PROJECT GUID -->", projectGuid);
+
                 var newProjectReferences = new List<string>();
                 if (oldProjectReferences.Any())
                 {
@@ -181,20 +187,19 @@ Global
 		[[ INSERT BUILD CONFIGURATIONS HERE ]]
 	EndGlobalSection
 EndGlobal";
-                var solutionProjectTemplate = @"Project(""{11A8DD76-328B-46DF-9F39-F559912D0360}"") = ""nanoFrameworkIoT"", ""nanoFrameworkIoT.nfproj"", ""{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}""
+                var solutionProjectTemplate = $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT"", ""nanoFrameworkIoT.nfproj"", ""{projectGuid}""
 EndProject";
-                var solutionBuildConfigTemplate = @"{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29BACBB9-C5B6-4BEF-AEEF-9AFE39B678D9}.Release|Any CPU.Deploy.0 = Release|Any CPU";
+                var solutionBuildConfigTemplate = $@"{projectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{projectGuid}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{projectGuid}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{projectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{projectGuid}.Release|Any CPU.Build.0 = Release|Any CPU
+		{projectGuid}.Release|Any CPU.Deploy.0 = Release|Any CPU";
 
                 var solutionProject = solutionProjectTemplate.Replace("nanoFrameworkIoT", projectName);
                 var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
                 solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
                 File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
-
 
             }
 
