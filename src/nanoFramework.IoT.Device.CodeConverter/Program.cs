@@ -99,7 +99,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         };
 
                 var searches = nfNugetPackages.ToDictionary(x => x.Namespace, x => false);
-                foreach (var file in targetDirectoryInfo.GetFiles("*.cs"))
+                foreach (var file in targetDirectoryInfo.GetFiles("*.cs",new EnumerationOptions { RecurseSubdirectories = true }))
                 {
                     searches = file.EditFile(new Dictionary<string, string>
                         {
@@ -208,9 +208,22 @@ EndProject";
             if (sourceDirectory.Exists)
             {
                 var targetDirectory = Directory.CreateDirectory(targetPath);
-                foreach (var file in sourceDirectory.GetFiles().Where(f => filePathFilters == null || filePathFilters.Any(filter => f.FullName.Contains(filter)) == false))
+                foreach (var file in sourceDirectory.GetFiles("*", new EnumerationOptions { RecurseSubdirectories = true }).Where(f => filePathFilters == null || filePathFilters.Any(filter => f.FullName.Contains(filter)) == false))
                 {
-                    file.CopyTo($"{targetDirectory.FullName}\\{file.Name}");
+                    var path = file.FullName.Replace(sourceDirectory.FullName, string.Empty).Replace(file.Name, string.Empty).Trim('\\');
+                    if (string.IsNullOrEmpty(path) == false)
+                    {
+                        if (new[] { "bin", "obj" }.Contains(path) || file.Directory.GetFiles("*.csproj").Any())
+                        {
+                            continue;
+                        }
+                        path += "\\";
+                    }
+                    if (Directory.Exists($"{targetDirectory.FullName}\\{path}") == false)
+                    {
+                        targetDirectory.CreateSubdirectory(path);
+                    }
+                    file.CopyTo($"{targetDirectory.FullName}\\{path}{file.Name}");
                 }
                 return targetDirectory;
             }
