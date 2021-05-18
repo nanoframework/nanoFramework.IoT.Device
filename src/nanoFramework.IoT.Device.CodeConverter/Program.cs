@@ -26,7 +26,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 .FirstOrDefault();
             Console.WriteLine($"targetProjectTemplateDirectory={targetProjectTemplateDirectory}");
 
-            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("/", configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("../../../", configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
                 .FirstOrDefault();
 
