@@ -13,6 +13,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             var sourceDirectory = @"D:\Temp\src\devices";
             var filePathFilters = new[] { @"\src\devices\" };
             var targetProjectTemplateName = "BindingTemplateProject";
+            var targetUnitTestProjectTemplateName = "UnitTestTemplateProject";
             var outputDirectoryPath = @"..\..\..\..\devices_generated";
 
             var outputDirectoryInfo = new DirectoryInfo(outputDirectoryPath);
@@ -26,15 +27,33 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 .FirstOrDefault();
             Console.WriteLine($"targetProjectTemplateDirectory={targetProjectTemplateDirectory}");
 
+            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("/", targetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+                .Select(x => new DirectoryInfo(x))
+                .FirstOrDefault();
+
             var sourceProjectFiles = Directory.GetFiles(sourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
                 .Where(x => filePathFilters.Any(d => x.Contains(d)))
                 .Select(x => new FileInfo(x));
+
             foreach (var sourceProjectFile in sourceProjectFiles)
             {
+                // check if this a Unit Test project
+                var isUnitTestProject = sourceProjectFile.DirectoryName.EndsWith("tests");
+
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
                 var targetDirectory = $"{outputDirectoryPath}\\{projectName}";
-                var targetDirectoryInfo = targetProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
+                DirectoryInfo targetDirectoryInfo;
+
+                if (isUnitTestProject)
+                {
+                    targetDirectoryInfo = targetUnitTestProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
+                }
+                else
+                {
+                    targetDirectoryInfo = targetProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
+                }
+
                 sourceProjectFile.Directory.CopyDirectory(targetDirectory);
 
                 NugetPackages[] nfNugetPackages = NfNugetPackages.GetnfNugetPackages();
@@ -58,9 +77,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // Search for project references in old project file
                 var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
 
-                // check if this a Unit Test project
-                var isUnitTestProject = oldProjectFile.DirectoryName.EndsWith(".Tests");
-
+                string unitTestProjectReference = string.Empty;
                 var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
                 var oldProjectReferences = nfNugetPackages.Where(x => oldProjectFileContents.Contains(x.Namespace)).Select(x => x.Namespace).ToArray();
                 var oldFileReferences = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
@@ -68,18 +85,37 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 // Rename template project file
                 var targetProjectFile = targetDirectoryInfo.GetFiles("*.nfproj").First();
-                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
 
-                // Update project name and references in new project file
-                var projectReplacements = new Dictionary<string, string> {
-                    {"BindingTemplateProject", projectName }
-                };
+                var projectReplacements = new Dictionary<string, string>();
+
+                if (isUnitTestProject)
+                {
+                    // Unit Test project
+                    targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName));
+
+                    // Update project name 
+                    projectReplacements.Add("UnitTestTemplateProject", projectName);
+
+                    // build proper project reference
+                    projectReplacements.Add(
+                        "<!-- INSERT PROJECT UNDER TEST REFERENCE HERE -->",
+                        $@"<ProjectReference Include=""..\{projectName.Replace(".Tests", "")}\{projectName.Replace(".Tests", "")}.nfproj"" />");
+                }
+                else
+                {
+                    // Regular code project
+                    targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
+
+                    // Update project name 
+                    projectReplacements.Add("BindingTemplateProject", projectName);
+                }
 
                 // new GUID for project
                 var projectGuid = Guid.NewGuid().ToString("B").ToUpper();
 
                 projectReplacements.Add("<!-- NEW PROJECT GUID -->", projectGuid);
 
+                // Update project references
                 var newProjectReferences = new List<string>();
                 if (oldProjectReferences.Any())
                 {
@@ -92,7 +128,14 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 if (newProjectReferences.Any())
                 {
-                    var newProjectReferencesString = newProjectReferences.Aggregate((seed, add) => $"{seed}\n{add}");
+                    var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed}\n{add}");
+
+                    if (isUnitTestProject)
+                    {
+                        // add the reference to the project being tested
+                        newProjectReferencesString += unitTestProjectReference;
+                    }
+
                     projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
                 }
                 if (oldFileReferences.Any())
@@ -111,11 +154,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         oldProjectReferences.Any(p => p == x.Namespace) ||
                         // references in c# files
                         searches.Any(s => s.Value && s.Key == x.Namespace))
+                    .Distinct()
                     .Select(x => x.PackageConfigReferenceString);
 
                 if (packageReferences.Any())
                 {
-                    var packageReferencesString = packageReferences
+                    var packageReferencesString = packageReferences.Distinct()
                         .Aggregate((seed, add) => $"{seed}\n{add}");
                     packagesFile.EditFile(new Dictionary<string, string>
                         {
@@ -157,8 +201,6 @@ EndProject";
             Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
         }
-
-
     }
 
     public class NugetPackages
