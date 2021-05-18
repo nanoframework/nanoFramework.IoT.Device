@@ -1,6 +1,6 @@
+$path = "..\devices_generated"
 
-
-$files = Get-ChildItem -Recurse -Include *.sln 
+$files = Get-ChildItem -Path $path -Recurse -Include *.sln 
 
 $results = [System.Collections.ArrayList]::new()
 $success = [System.Collections.ArrayList]::new()

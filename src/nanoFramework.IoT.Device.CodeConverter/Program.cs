@@ -10,7 +10,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
     {
         static void Main(string[] args)
         {
-            var sourceDirectory = @"E:\Github\dotnet-iot\src\devices";
+            var sourceDirectory = @"D:\Temp\src\devices";
             var filePathFilters = new[] { "\\src\\devices\\" };
             var targetProjectTemplateName = "BindingTemplateProject";
             var outputDirectoryPath = "..\\..\\..\\..\\devices_generated";
@@ -21,7 +21,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 outputDirectoryInfo.Delete(true);
             }
 
-            var targetProjectTemplateDirectory = Directory.GetDirectories("/", targetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetProjectTemplateDirectory = Directory.GetDirectories("../../../", targetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
                 .FirstOrDefault();
             Console.WriteLine($"targetProjectTemplateDirectory={targetProjectTemplateDirectory}");
@@ -64,8 +64,6 @@ namespace nanoFramework.IoT.Device.CodeConverter
                                 NewProjectReferenceString = @"<Reference Include=""packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll""></Reference>",
                                 PackageConfigReferenceString = @"<package id=""nanoFramework.System.Device.I2c"" version=""1.0.1-preview.31"" targetFramework=""netnanoframework10"" />"
                             },
-
-
                             new NugetPackages {
                                 Namespace="RelativeHumidity",
                                 OldProjectReferenceString= @"--NA--",
@@ -96,6 +94,13 @@ namespace nanoFramework.IoT.Device.CodeConverter
                                 NewProjectReferenceString = @"<Reference Include=""packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll""></Reference>",
                                 PackageConfigReferenceString = @"<package id=""UnitsNet.nanoFramework.Length"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
                             },
+                            new NugetPackages {
+                                Namespace="System.Math",
+                                CodeMatchString="Math.",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""System.Math, Version=1.4.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731""></Reference>",
+                                PackageConfigReferenceString = @"<package id=""nanoFramework.System.Math"" version=""1.4.0-preview.1"" targetFramework=""netnanoframework10"" />"
+                            },
 
                             // Unit Tests
                             new NugetPackages {
@@ -114,6 +119,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         };
 
                 var searches = nfNugetPackages.ToDictionary(x => x.Namespace, x => false);
+                var packagesFromCode = new Dictionary<string, bool>();
+
                 foreach (var file in targetDirectoryInfo.GetFiles("*.cs",new EnumerationOptions { RecurseSubdirectories = true }))
                 {
                     searches = file.EditFile(new Dictionary<string, string>
@@ -122,6 +129,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
                             { "Span<byte>", "SpanByte" },
                             { ".AsSpan(start, length)", string.Empty },
                         }, searches);
+
+                    packagesFromCode = file.FindCodeMatch(nfNugetPackages);
                 }
 
                 // PROJECT FILE
@@ -156,7 +165,10 @@ namespace nanoFramework.IoT.Device.CodeConverter
                     newProjectReferences.AddRange(oldProjectReferences.Select(x => nfNugetPackages.FirstOrDefault(r => r.Namespace == x).NewProjectReferenceString));
                 }
 
-                newProjectReferences.AddRange(nfNugetPackages.Where(x => searches.Any(s => s.Value && s.Key == x.Namespace)).Select(x => x.NewProjectReferenceString));
+                newProjectReferences.AddRange(nfNugetPackages
+                        .Where(x => searches.Any(s => s.Value && s.Key == x.Namespace) || packagesFromCode.Any(p => p.Value && p.Key == x.Namespace))
+                        .Select(x => x.NewProjectReferenceString));
+
                 if (newProjectReferences.Any())
                 {
                     var newProjectReferencesString = newProjectReferences.Aggregate((seed, add) => $"{seed}\n{add}");
@@ -177,8 +189,11 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         // references from the old project file
                         oldProjectReferences.Any(p => p == x.Namespace) ||
                         // references in c# files
-                        searches.Any(s => s.Value && s.Key == x.Namespace))
+                        searches.Any(s => s.Value && s.Key == x.Namespace) ||
+                        // used in code
+                        packagesFromCode.Any(p => p.Value && p.Key == x.Namespace))
                     .Select(x => x.PackageConfigReferenceString);
+
                 if (packageReferences.Any())
                 {
                     var packageReferencesString = packageReferences
@@ -225,13 +240,16 @@ EndProject";
         }
 
     }
+
     public class NugetPackages
     {
         public string OldProjectReferenceString { get; set; }
+        public string CodeMatchString { get; set; }
         public string NewProjectReferenceString { get; set; }
         public string PackageConfigReferenceString { get; set; }
         public string Namespace { get; internal set; }
     }
+
     public static class DirectoryInfoExtensions
     {
         public static DirectoryInfo CopyDirectory(this DirectoryInfo sourceDirectory, string targetPath, string[] filePathFilters = null)
@@ -261,6 +279,7 @@ EndProject";
             return null;
         }
     }
+
     public static class FileInfoExtensions
     {
         public static Dictionary<string, bool> EditFile(this FileInfo sourceFile, Dictionary<string, string> replacements, Dictionary<string, bool> checkIfFound = null)
@@ -294,6 +313,7 @@ EndProject";
                                 }
                             }
                         }
+
                         output.WriteLine(line);
                     }
                 }
@@ -301,8 +321,42 @@ EndProject";
                 sourceFile.Delete();
                 new FileInfo(tempFilename).MoveTo(sourceFile.FullName);
             }
-            return checkIfFound;
 
+            return checkIfFound;
+        }
+
+        public static Dictionary<string, bool> FindCodeMatch(this FileInfo sourceFile, NugetPackages[] nugetPackages)
+        {
+            var codeMatches = new Dictionary<string, bool>();
+
+            if (sourceFile.Exists)
+            {
+                var tempFilename = $"{sourceFile.FullName}.edited";
+                using (var input = sourceFile.OpenText())
+                using (var output = new StreamWriter(tempFilename))
+                {
+                    string line;
+                    while (null != (line = input.ReadLine()))
+                    {
+                        if (nugetPackages != null && nugetPackages.Length > 0)
+                        {
+                            foreach (var nugetPackage in nugetPackages)
+                            {
+                                if (nugetPackage.CodeMatchString != null && line.Contains(nugetPackage.CodeMatchString))
+                                {
+                                    codeMatches[nugetPackage.Namespace] = true;
+                                }
+                            }
+                        }
+                        output.WriteLine(line);
+                    }
+                }
+
+                sourceFile.Delete();
+                new FileInfo(tempFilename).MoveTo(sourceFile.FullName);
+            }
+
+            return codeMatches;
         }
     }
 }
