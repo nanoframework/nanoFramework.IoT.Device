@@ -25,7 +25,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Devices\Tea5767\FrequencyRange.cs" />
+<Compile Include="Devices\Tea5767\SearchDirection.cs" />
+<Compile Include="Devices\Tea5767\Tea5767.cs" />
+<Compile Include="RadioReceiverBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

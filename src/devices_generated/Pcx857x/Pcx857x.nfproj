@@ -27,7 +27,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="..\Common\System\Device\Gpio\PinVector32.cs" Link="PinVector32.cs" />
+<Compile Include="..\Common\System\Device\Gpio\PinVector64.cs" Link="PinVector64.cs" />
+<Compile Include="Pca8574.cs" />
+<Compile Include="Pca8575.cs" />
+<Compile Include="Pcf8574.cs" />
+<Compile Include="Pcf8575.cs" />
+<Compile Include="Pcx8574.cs" />
+<Compile Include="Pcx8575.cs" />
+<Compile Include="Pcx857x.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

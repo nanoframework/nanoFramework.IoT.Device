@@ -26,7 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="*.cs" />
+<Compile Include="..\Common\System\Device\DelayHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

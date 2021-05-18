@@ -29,7 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="*.cs" />
+<Compile Include="RfConfiguration\*.cs" />
+<Compile Include="ListPassive\*.cs" />
+<Compile Include="AsTarget\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

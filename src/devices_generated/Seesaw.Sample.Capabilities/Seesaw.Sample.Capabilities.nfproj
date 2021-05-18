@@ -27,7 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Seesaw.Sample.BlinkingLights.cs" />
+<Compile Include="../../../../samples/led-more-blinking-lights/TimeEnvelope.cs" />
+<Compile Include="Volume.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

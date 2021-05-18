@@ -99,7 +99,7 @@ namespace Iot.Device.Ssd13xx
                 _genericBuffer = newBuffer;
             }
 
-            return _genericBuffer.AsSpan(start, length);
+            return _genericBuffer;
         }
     }
 }

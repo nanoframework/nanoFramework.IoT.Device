@@ -27,7 +27,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Mbi5027.cs" />
+<Compile Include="Mbi5027PinMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

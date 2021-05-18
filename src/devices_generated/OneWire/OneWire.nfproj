@@ -26,7 +26,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="*.cs" />
+<Compile Include="FamilyBindings\OneWireThermometerDevice.cs" />
+<Compile Include="FamilyBindings\OneWireThermometerDevice.Linux.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

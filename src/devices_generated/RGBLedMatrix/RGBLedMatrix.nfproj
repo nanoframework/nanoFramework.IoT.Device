@@ -26,7 +26,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Gpio.cs" />
+<Compile Include="PinMapping.cs" />
+<Compile Include="RgbLedMatrix.cs" />
+<Compile Include="../Common/Iot/Device/Graphics/BdfFont.cs" />
+<Compile Include="../Interop/Unix/ThreadHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

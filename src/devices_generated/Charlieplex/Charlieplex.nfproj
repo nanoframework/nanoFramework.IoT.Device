@@ -26,7 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="CharlieplexSegment.cs" />
+<Compile Include="CharlieplexSegmentNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

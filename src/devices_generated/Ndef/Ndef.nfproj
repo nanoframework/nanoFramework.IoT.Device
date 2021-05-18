@@ -24,7 +24,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="*.cs" />
+<Compile Include="Record\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

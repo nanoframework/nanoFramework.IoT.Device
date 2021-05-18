@@ -25,7 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Uln2003.cs" />
+<Compile Include="StepperMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

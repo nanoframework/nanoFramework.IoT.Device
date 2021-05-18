@@ -26,7 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Mlx90614.cs" />
+<Compile Include="Register.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

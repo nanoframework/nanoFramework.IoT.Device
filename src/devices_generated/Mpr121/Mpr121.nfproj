@@ -26,7 +26,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Channels.cs" />
+<Compile Include="ChannelStatusesChangedEventArgs.cs" />
+<Compile Include="Mpr121.cs" />
+<Compile Include="Mpr121Configuration.cs" />
+<Compile Include="Registers.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

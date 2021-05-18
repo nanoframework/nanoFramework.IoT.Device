@@ -26,7 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Register.cs" />
+<Compile Include="Ags01db.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

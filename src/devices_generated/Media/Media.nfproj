@@ -25,7 +25,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="../Interop/**/*.cs" />
+<Compile Include="VideoDevice/*.cs" />
+<Compile Include="VideoDevice/Devices/*.cs" />
+<Compile Include="SoundDevice/*.cs" />
+<Compile Include="SoundDevice/Devices/*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

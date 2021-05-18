@@ -26,7 +26,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <None Include="README.md" />
+<Compile Include="BrickPi3.cs" />
+<Compile Include="Models\*.cs" />
+<Compile Include="Extensions\*.cs" />
+<Compile Include="Movement\*.cs" />
+<Compile Include="Sensors\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

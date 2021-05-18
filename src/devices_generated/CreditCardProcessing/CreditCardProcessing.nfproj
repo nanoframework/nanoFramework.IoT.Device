@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="..\..\Common\Iot\Device\Common\NumberHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

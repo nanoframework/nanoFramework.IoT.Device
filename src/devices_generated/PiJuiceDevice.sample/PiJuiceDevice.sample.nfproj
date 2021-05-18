@@ -26,7 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="PiJuiceDevice.sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

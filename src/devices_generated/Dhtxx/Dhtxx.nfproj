@@ -28,7 +28,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="CommunicationProtocol.cs" />
+<Compile Include="Devices\Dht10.cs" />
+<Compile Include="Devices\Dht11.cs" />
+<Compile Include="Devices\Dht12.cs" />
+<Compile Include="Devices\Dht21.cs" />
+<Compile Include="Devices\Dht22.cs" />
+<Compile Include="DhtBase.cs" />
+<Compile Include="..\Common\System\Device\DelayHelper.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

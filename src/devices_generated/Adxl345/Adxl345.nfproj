@@ -25,7 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="GravityRange.cs" />
+<Compile Include="Register.cs" />
+<Compile Include="Adxl345.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

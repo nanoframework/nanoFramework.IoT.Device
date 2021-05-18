@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace nanoFramework.IoT.Device.CodeConverter
 {
@@ -105,6 +106,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         {
                             { "stackalloc", "new" },
                             { "Span<byte>", "SpanByte" },
+                            { ".AsSpan(start, length)", string.Empty },
                         }, searches);
                 }
 
@@ -113,6 +115,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
                 var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
                 var oldProjectReferences = nfNugetPackages.Where(x => oldProjectFileContents.Contains(x.Namespace)).Select(x => x.Namespace).ToArray();
+                var oldFileReferences = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
                 oldProjectFile.Delete();
 
                 // Rename template project file
@@ -134,6 +137,11 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 {
                     var newProjectReferencesString = newProjectReferences.Aggregate((seed, add) => $"{seed}\n{add}");
                     projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
+                }
+                if (oldFileReferences.Any())
+                {
+                    var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n{add}");
+                    projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
                 }
                 targetProjectFile.EditFile(projectReplacements);
 

@@ -25,7 +25,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="IntegrationTime.cs" />
+<Compile Include="Max44009.cs" />
+<Compile Include="Register.cs" />
+<Compile Include="WorkingMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

@@ -27,7 +27,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="InstructionFormat.cs" />
+<Compile Include="Mcp25xxx.cs" />
+<Compile Include="Mcp2515.cs" />
+<Compile Include="Mcp25625.cs" />
+<Compile Include="ReadStatusResponse.cs" />
+<Compile Include="RxBufferAddressPointer.cs" />
+<Compile Include="RxStatusResponse.cs" />
+<Compile Include="TxBufferAddressPointer.cs" />
+<Compile Include="Register\**\*.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

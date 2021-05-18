@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="BoardLed.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

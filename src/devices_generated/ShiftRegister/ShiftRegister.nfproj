@@ -27,7 +27,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="ShiftRegister.cs" />
+<Compile Include="ShiftRegisterPinMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

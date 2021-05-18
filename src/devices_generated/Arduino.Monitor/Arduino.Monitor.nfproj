@@ -31,7 +31,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="CharacterDisplay.cs" />
+<Compile Include="Arduino.Monitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

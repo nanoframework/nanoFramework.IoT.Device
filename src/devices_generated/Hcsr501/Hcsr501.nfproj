@@ -25,7 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Hcsr501.cs" />
+<Compile Include="Hcsr501ValueChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

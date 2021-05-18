@@ -25,7 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="LiquidLevelSwitch.sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

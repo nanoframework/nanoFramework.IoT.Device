@@ -26,7 +26,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Commands\*.cs" />
+<Compile Include="Commands\Ssd1327Commands\*.cs" />
+<Compile Include="Commands\Ssd1306Commands\*.cs" />
+<Compile Include="*.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

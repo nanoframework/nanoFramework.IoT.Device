@@ -29,7 +29,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Bme280.cs" />
+<Compile Include="Bme680.cs" />
+<Compile Include="Bme680HeaterProfile.cs" />
+<Compile Include="Bme680HeaterProfileConfig.cs" />
+<Compile Include="Bme680Mask.cs" />
+<Compile Include="Bmp280.cs" />
+<Compile Include="Bmx280Base.cs" />
+<Compile Include="Bmxx80Base.cs" />
+<Compile Include="CalibrationData\Bme680CalibrationData.cs" />
+<Compile Include="CalibrationData\Bme280CalibrationData.cs" />
+<Compile Include="CalibrationData\Bmp280CalibrationData.cs" />
+<Compile Include="CalibrationData\Bmxx80CalibrationData.cs" />
+<Compile Include="DeviceStatus.cs" />
+<Compile Include="FilteringMode\Bme680FilteringMode.cs" />
+<Compile Include="FilteringMode\Bmx280FilteringMode.cs" />
+<Compile Include="PowerMode\Bme680PowerMode.cs" />
+<Compile Include="PowerMode\Bmx280PowerMode.cs" />
+<Compile Include="ReadResult\Bme280ReadResult.cs" />
+<Compile Include="ReadResult\Bme680ReadResult.cs" />
+<Compile Include="ReadResult\Bmp280ReadResult.cs" />
+<Compile Include="Register\Bme680Register.cs" />
+<Compile Include="Register\Bmx280Register.cs" />
+<Compile Include="Register\Bmxx80Register.cs" />
+<Compile Include="Register\Bme280Register.cs" />
+<Compile Include="Sampling.cs" />
+<Compile Include="StandbyTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

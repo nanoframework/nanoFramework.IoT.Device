@@ -27,7 +27,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="I2cAddress.cs" />
+<Compile Include="Resolution.cs" />
+<Compile Include="Register.cs" />
+<Compile Include="Sht3x.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

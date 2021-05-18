@@ -27,7 +27,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Command.cs" />
+<Compile Include="DataRate.cs" />
+<Compile Include="DataReceivedEventArgs.cs" />
+<Compile Include="Nrf24l01.cs" />
+<Compile Include="Nrf24l01Pipe.cs" />
+<Compile Include="OutputPower.cs" />
+<Compile Include="PowerMode.cs" />
+<Compile Include="Register.cs" />
+<Compile Include="WorkingMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

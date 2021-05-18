@@ -28,7 +28,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Bmp180.cs" />
+<Compile Include="CalibrationData.cs" />
+<Compile Include="Register.cs" />
+<Compile Include="Sampling.cs" />
+<None Include="README.md"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

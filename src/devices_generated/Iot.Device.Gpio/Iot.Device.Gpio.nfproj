@@ -25,7 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="../Interop/Unix/Interop.Libraries.cs" />
+<Compile Include="../Interop/Unix/Libc/Interop.libc.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

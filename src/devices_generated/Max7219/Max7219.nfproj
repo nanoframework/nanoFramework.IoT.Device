@@ -26,7 +26,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="Max7219.cs" />
+<Compile Include="MatrixGraphics.cs" />
+<Compile Include="IFont.cs" />
+<None Include="README.md" />
+<Compile Include="Register.cs" />
+<Compile Include="RotationType.cs" />
+<Compile Include="Fonts.cs" />
+<Compile Include="FixedSizeFont.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

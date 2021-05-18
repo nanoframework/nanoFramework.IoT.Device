@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="../../Interop/Unix/ThreadHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

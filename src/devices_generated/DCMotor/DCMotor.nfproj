@@ -25,7 +25,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    
+	  <Compile Include="DCMotor.cs" />
+<Compile Include="DCMotor3Pin.cs" />
+<Compile Include="DCMotor2PinNoEnable.cs" />
+<Compile Include="DCMotor2PinWithBiDirectionalPin.cs" />
+<None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />
