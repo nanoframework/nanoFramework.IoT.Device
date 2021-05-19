@@ -67,6 +67,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         {
                             { "stackalloc", "new" },
                             { "Span<byte>", "SpanByte" },
+                            { "ReadOnlySpan<byte>", "SpanByte" },
                             { ".AsSpan(start, length)", string.Empty },
                         },
                         nfNugetPackages,
@@ -121,6 +122,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
             oldProjectReferences = nfNugetPackages.Where(x => oldProjectFileContents.Contains(x.Namespace)).Select(x => x.Namespace).ToArray();
             var oldFileReferences = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
+            var packagesPath = Regex.Matches(oldProjectFileContents, "<*(?:Compile|None) Include*=[^>]*/>", RegexOptions.IgnoreCase);
             oldProjectFile.Delete();
 
             // Rename template project file
