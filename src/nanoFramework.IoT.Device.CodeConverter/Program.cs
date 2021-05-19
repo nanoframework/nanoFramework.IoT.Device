@@ -169,7 +169,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             if (newProjectReferences.Any())
             {
-                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed}\n{add}");
+                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed.Replace("$LF$", "\n")}\n    {add.Replace("$LF$", "\n")}");
 
                 if (isUnitTestProject)
                 {
@@ -181,7 +181,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             }
             if (oldFileReferences.Any())
             {
-                var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n{add}");
+                var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n    {add}");
                 projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
             }
             targetProjectFile.EditFile(projectReplacements);
