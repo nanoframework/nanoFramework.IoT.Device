@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Dhtxx", "Dhtxx.nfproj", "{581E6493-7362-4A43-ACD2-6734F090F2B5}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Stopwatch", "..\Stopwatch\Stopwatch.nfproj", "{3F73CE11-8D42-4A43-87AC-48CBEB06105A}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Stopwatch", "..\..\Stopwatch\Stopwatch.nfproj", "{3F73CE11-8D42-4A43-87AC-48CBEB06105A}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Device.Model", "..\System.Device.Model\System.Device.Model.nfproj", "{80465FD2-98E8-4A76-8993-98491F3CB503}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "BinaryPrimitives", "..\BinaryPrimitives\BinaryPrimitives.nfproj", "{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Device.Model", "..\..\System.Device.Model\System.Device.Model.nfproj", "{80465FD2-98E8-4A76-8993-98491F3CB503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,12 +33,6 @@ Global
 		{80465FD2-98E8-4A76-8993-98491F3CB503}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80465FD2-98E8-4A76-8993-98491F3CB503}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80465FD2-98E8-4A76-8993-98491F3CB503}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
