@@ -175,6 +175,9 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 {
                     // add the reference to the project being tested
                     newProjectReferencesString += unitTestProjectReference;
+
+                    // packages path are one level up, need to adjust
+                    newProjectReferencesString = newProjectReferencesString.Replace("packages\\", "..\\packages\\");
                 }
 
                 projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
