@@ -27,9 +27,18 @@
     <RunSettingsFilePath>$(MSBuildProjectDirectory)\nano.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll"></Reference>
-    <Reference Include="packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.TestFramework.dll"></Reference>
-    <Reference Include="packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe"></Reference>
+    <Reference Include="mscorlib">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.TestFramework">
+      <HintPath>packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.TestFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.UnitTestLauncher">
+      <HintPath>packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <Private>True</Private>
+    </Reference>
     <!-- INSERT NEW REFERENCES HERE -->
   </ItemGroup>
   <ItemGroup>
