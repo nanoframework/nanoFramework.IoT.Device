@@ -33,7 +33,7 @@ The pixel array can be read out at any time and speed. However, the sensor updat
 
 The sensor has an integrated thermistor which can be readout to get the chip temperature.
 
-**Note:** The chip temperature does *not* equal to the environmental temeperature.
+**Note:** The chip temperature does *not* equal to the environmental temperature.
 
 The current image can be read from the sensor into the binding by:
 ```
@@ -42,12 +42,14 @@ public void ReadImage()
 
 The temperature of a pixel specified by its coordinates can be read using an indexer:
 ```
-public Temperature this[int x, int y]
+public Temperature this[Point pt]
 ```
+
+Point is a simple X and Y coordinate class.
 
 The whole temperature image can be read as a two-dimensional array:
 ```
-public Temperature[,] TemperatureImage
+public Temperature[][] TemperatureImage
 ```
 
 The raw reading (12-bit two's complement format) of a pixel specified by its number can be read using an indexer:
@@ -104,7 +106,7 @@ public void ClearAllFlags()
 *Note*: resetting the interrupt flag is only required if you want to clear flags while the readings are still within the hysteresis span (but already within the lower-upper range). This method does not clear the interrupt flags of the individual pixels.
 See interrupts section for further details on interrupt behavior.
 
-*Note*: the thermistor overflow flag is only menthioned in early versions of the reference specification.
+*Note*: the thermistor overflow flag is only mentioned in early versions of the reference specification.
 It is not clear whether this is a specification error or a change in a newer revision of the sensor.
 
 ### Frame Rate
