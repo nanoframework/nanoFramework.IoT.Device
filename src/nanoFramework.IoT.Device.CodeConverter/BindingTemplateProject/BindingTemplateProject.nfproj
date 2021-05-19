@@ -19,12 +19,15 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll"></Reference>
+    <Reference Include="mscorlib">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <!-- INSERT NEW REFERENCES HERE -->
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-	  <!-- INSERT FILE REFERENCES HERE -->
+    <!-- INSERT FILE REFERENCES HERE -->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

@@ -207,22 +207,22 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 [[ INSERT PROJECTS HERE ]]
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		[[ INSERT BUILD CONFIGURATIONS HERE ]]
-	EndGlobalSection
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        [[ INSERT BUILD CONFIGURATIONS HERE ]]
+    EndGlobalSection
 EndGlobal";
             var solutionProjectTemplate = $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT"", ""nanoFrameworkIoT.nfproj"", ""{projectGuid}""
 EndProject";
             var solutionBuildConfigTemplate = $@"{projectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{projectGuid}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{projectGuid}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{projectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{projectGuid}.Release|Any CPU.Build.0 = Release|Any CPU
-		{projectGuid}.Release|Any CPU.Deploy.0 = Release|Any CPU";
+        {projectGuid}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {projectGuid}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {projectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {projectGuid}.Release|Any CPU.Build.0 = Release|Any CPU
+        {projectGuid}.Release|Any CPU.Deploy.0 = Release|Any CPU";
 
             var solutionProject = solutionProjectTemplate.Replace("nanoFrameworkIoT", projectName);
             var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
@@ -344,6 +344,9 @@ EndProject";
                                 }
                             }
                         }
+
+                        // Make sure all line endings are CRLF.
+                        line = line.Replace("\n", "\r\n");
 
                         output.WriteLine(line);
                     }
