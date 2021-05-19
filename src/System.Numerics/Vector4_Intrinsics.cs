@@ -33,7 +33,6 @@ namespace System.Numerics
         /// Constructs a vector whose elements are all the single specified value.
         /// </summary>
         /// <param name="value">The element to fill the vector with.</param>
-        
         public Vector4(Single value)
             : this(value, value, value, value)
         {
@@ -45,7 +44,6 @@ namespace System.Numerics
         /// <param name="x">X component.</param>
         /// <param name="y">Y component.</param>
         /// <param name="z">Z component.</param>
-        
         public Vector4(Single x, Single y, Single z, Single w)
         {
             W = w;
@@ -99,8 +97,6 @@ namespace System.Numerics
         /// <exception cref="RankException">If array is multidimensional.</exception>
         /// <exception cref="ArgumentOutOfRangeException">If index is greater than end of the array or index is less than zero.</exception>
         /// <exception cref="ArgumentException">If number of elements in source vector is greater than those available in destination array.</exception>
-        
-        
         public void CopyTo(Single[] array, int index)
         {
             if (array == null)
@@ -127,7 +123,6 @@ namespace System.Numerics
         /// </summary>
         /// <param name="other">The Vector4 to compare this instance to.</param>
         /// <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
-        
         public bool Equals(Vector4 other)
         {
             return this.X == other.X
@@ -144,8 +139,6 @@ namespace System.Numerics
         /// <param name="vector1">The first vector.</param>
         /// <param name="vector2">The second vector.</param>
         /// <returns>The dot product.</returns>
-        
-        
         public static float Dot(Vector4 vector1, Vector4 vector2)
         {
             return vector1.X * vector2.X +
@@ -160,8 +153,6 @@ namespace System.Numerics
         /// <param name="value1">The first source vector.</param>
         /// <param name="value2">The second source vector.</param>
         /// <returns>The minimized vector.</returns>
-        
-        
         public static Vector4 Min(Vector4 value1, Vector4 value2)
         {
             return new Vector4(
@@ -177,8 +168,6 @@ namespace System.Numerics
         /// <param name="value1">The first source vector.</param>
         /// <param name="value2">The second source vector.</param>
         /// <returns>The maximized vector.</returns>
-        
-        
         public static Vector4 Max(Vector4 value1, Vector4 value2)
         {
             return new Vector4(
@@ -193,8 +182,6 @@ namespace System.Numerics
         /// </summary>
         /// <param name="value">The source vector.</param>
         /// <returns>The absolute value vector.</returns>
-        
-        
         public static Vector4 Abs(Vector4 value)
         {
             return new Vector4(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z), Math.Abs(value.W));
@@ -205,8 +192,6 @@ namespace System.Numerics
         /// </summary>
         /// <param name="value">The source vector.</param>
         /// <returns>The square root vector.</returns>
-        
-        
         public static Vector4 SquareRoot(Vector4 value)
         {
             return new Vector4((Single)Math.Sqrt(value.X), (Single)Math.Sqrt(value.Y), (Single)Math.Sqrt(value.Z), (Single)Math.Sqrt(value.W));
@@ -220,8 +205,6 @@ namespace System.Numerics
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
         /// <returns>The summed vector.</returns>
-        
-        
         public static Vector4 operator +(Vector4 left, Vector4 right)
         {
             return new Vector4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
@@ -233,8 +216,6 @@ namespace System.Numerics
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
         /// <returns>The difference vector.</returns>
-        
-        
         public static Vector4 operator -(Vector4 left, Vector4 right)
         {
             return new Vector4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
@@ -246,8 +227,6 @@ namespace System.Numerics
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
         /// <returns>The product vector.</returns>
-        
-        
         public static Vector4 operator *(Vector4 left, Vector4 right)
         {
             return new Vector4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
@@ -259,8 +238,6 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="right">The scalar value.</param>
         /// <returns>The scaled vector.</returns>
-        
-        
         public static Vector4 operator *(Vector4 left, Single right)
         {
             return left * new Vector4(right);
@@ -272,8 +249,6 @@ namespace System.Numerics
         /// <param name="left">The scalar value.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The scaled vector.</returns>
-        
-        
         public static Vector4 operator *(Single left, Vector4 right)
         {
             return new Vector4(left) * right;
@@ -285,8 +260,6 @@ namespace System.Numerics
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
         /// <returns>The vector resulting from the division.</returns>
-        
-        
         public static Vector4 operator /(Vector4 left, Vector4 right)
         {
             return new Vector4(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.W / right.W);
@@ -298,8 +271,6 @@ namespace System.Numerics
         /// <param name="value1">The source vector.</param>
         /// <param name="value2">The scalar value.</param>
         /// <returns>The result of the division.</returns>
-        
-        
         public static Vector4 operator /(Vector4 value1, float value2)
         {
             float invDiv = 1.0f / value2;
@@ -316,7 +287,6 @@ namespace System.Numerics
         /// </summary>
         /// <param name="value">The source vector.</param>
         /// <returns>The negated vector.</returns>
-        
         public static Vector4 operator -(Vector4 value)
         {
             return Zero - value;
@@ -328,8 +298,6 @@ namespace System.Numerics
         /// <param name="left">The first vector to compare.</param>
         /// <param name="right">The second vector to compare.</param>
         /// <returns>True if the vectors are equal; False otherwise.</returns>
-        
-        
         public static bool operator ==(Vector4 left, Vector4 right)
         {
             return left.Equals(right);
@@ -341,7 +309,6 @@ namespace System.Numerics
         /// <param name="left">The first vector to compare.</param>
         /// <param name="right">The second vector to compare.</param>
         /// <returns>True if the vectors are not equal; False if they are equal.</returns>
-        
         public static bool operator !=(Vector4 left, Vector4 right)
         {
             return !(left == right);

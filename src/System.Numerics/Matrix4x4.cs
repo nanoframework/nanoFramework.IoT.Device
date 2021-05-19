@@ -1472,7 +1472,6 @@ namespace System.Numerics
             public Vector3 Row2;
         };
 
-        [System.Security.SecuritySafeCritical]
         struct VectorBasis
         {
             public unsafe Vector3* Element0;
@@ -1489,7 +1488,6 @@ namespace System.Numerics
         /// <param name="rotation">The rotation component of the transformation matrix.</param>
         /// <param name="translation">The translation component of the transformation matrix</param>
         /// <returns>True if the source matrix was successfully decomposed; False otherwise.</returns>
-        [System.Security.SecuritySafeCritical]
         public static bool Decompose(Matrix4x4 matrix, out Vector3 scale, out Quaternion rotation, out Vector3 translation)
         {
             bool result = true;
@@ -2188,13 +2186,11 @@ namespace System.Numerics
         /// <returns>The string representation.</returns>
         public override string ToString()
         {
-            CultureInfo ci = CultureInfo.CurrentCulture;
-
-            return String.Format(ci, "{{ {{M11:{0} M12:{1} M13:{2} M14:{3}}} {{M21:{4} M22:{5} M23:{6} M24:{7}}} {{M31:{8} M32:{9} M33:{10} M34:{11}}} {{M41:{12} M42:{13} M43:{14} M44:{15}}} }}",
-                                 M11.ToString(ci), M12.ToString(ci), M13.ToString(ci), M14.ToString(ci),
-                                 M21.ToString(ci), M22.ToString(ci), M23.ToString(ci), M24.ToString(ci),
-                                 M31.ToString(ci), M32.ToString(ci), M33.ToString(ci), M34.ToString(ci),
-                                 M41.ToString(ci), M42.ToString(ci), M43.ToString(ci), M44.ToString(ci));
+            return String.Format("{{ {{M11:{0} M12:{1} M13:{2} M14:{3}}} {{M21:{4} M22:{5} M23:{6} M24:{7}}} {{M31:{8} M32:{9} M33:{10} M34:{11}}} {{M41:{12} M42:{13} M43:{14} M44:{15}}} }}",
+                                 M11.ToString(), M12.ToString(), M13.ToString(), M14.ToString(),
+                                 M21.ToString(), M22.ToString(), M23.ToString(), M24.ToString(),
+                                 M31.ToString(), M32.ToString(), M33.ToString(), M34.ToString(),
+                                 M41.ToString(), M42.ToString(), M43.ToString(), M44.ToString());
         }
 
         /// <summary>
