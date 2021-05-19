@@ -16,8 +16,7 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the [[Assembly]] assembly for .NET nanoFramework C# projects.
-This package requires a target with [[Assembly]] v$nativeVersion$ (checksum $checksum$).</description>
+    <description>This package includes the .NET IoT Core binding [[Assembly]] for .NET nanoFramework C# projects.</description>
     <summary>[[Assembly]] assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf [[Assembly]]</tags>
     <dependencies>
