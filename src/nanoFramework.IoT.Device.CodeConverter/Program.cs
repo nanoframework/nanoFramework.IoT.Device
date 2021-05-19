@@ -84,23 +84,26 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // SOLUTION File
                 CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
 
-
-                var targetNuspecFile = targetDirectoryInfo.GetFiles("template.nuspec").FirstOrDefault();
-                if (targetNuspecFile != null)
-                {
-                    targetNuspecFile.EditFile(new Dictionary<string, string>
-                    {
-                        { "[[Assembly]]", $"Iot.Device.{projectName}" },
-                        { "[[ProjectName]]", projectName },
-                    });
-                    targetNuspecFile.MoveTo($"{targetDirectory}\\{projectName}.nuspec", true);
-                }
+                CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
             }
 
             Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
         }
 
+        private static void CreateNuspecFile(DirectoryInfo targetDirectoryInfo, string projectName, string targetDirectory) {
+
+            var targetNuspecFile = targetDirectoryInfo.GetFiles("template.nuspec").FirstOrDefault();
+            if (targetNuspecFile != null)
+            {
+                targetNuspecFile.EditFile(new Dictionary<string, string>
+                    {
+                        { "[[Assembly]]", $"Iot.Device.{projectName}" },
+                        { "[[ProjectName]]", projectName },
+                    });
+                targetNuspecFile.MoveTo($"{targetDirectory}\\{projectName}.nuspec", true);
+            }
+        }
         private static void CreateProjectFile(
             bool isUnitTestProject,
             string projectName,
