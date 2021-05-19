@@ -71,6 +71,7 @@
                                 PackageConfigReferenceString = @"<package id=""nanoFramework.System.Math"" version=""1.4.0-preview.1"" targetFramework=""netnanoframework10"" />"
                             },
 
+                            /*
                             // Unit Tests
                             new NugetPackages {
                                 Namespace="Xunit",
@@ -84,6 +85,7 @@
                                 NewProjectReferenceString = @"<Reference Include=""nanoFramework.UnitTestLauncher""><HintPath>packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe</HintPath><Private>True</Private></Reference>",
                                 PackageConfigReferenceString = @"<package id=""nanoFramework.TestFramework"" version=""1.0.114"" targetFramework=""netnanoframework10"" />"
                             },
+                            */
 
                         };
             return nfNugetPackages;
