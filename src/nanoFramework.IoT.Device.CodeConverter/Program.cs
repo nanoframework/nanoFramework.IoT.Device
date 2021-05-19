@@ -277,7 +277,7 @@ EndProject";
                     var path = file.FullName.Replace(sourceDirectory.FullName, string.Empty).Replace(file.Name, string.Empty).Trim('\\');
                     if (string.IsNullOrEmpty(path) == false)
                     {
-                        if (new[] { "bin", "obj" }.Contains(path) || file.Directory.GetFiles("*.csproj").Any())
+                        if (new[] { "bin", "obj" }.Any(toIgnore => path.StartsWith(toIgnore)) || file.Directory.GetFiles("*.csproj").Any())
                         {
                             continue;
                         }
