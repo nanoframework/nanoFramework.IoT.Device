@@ -41,7 +41,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
-                var targetDirectory = $"{configuration.OutputDirectoryPath}\\{projectName}";
+                var projectPath = sourceProjectFile.Directory.FullName.Replace(configuration.SourceDirectory, string.Empty);
+                var targetDirectory = $"{configuration.OutputDirectoryPath}\\{projectPath}";
                 DirectoryInfo targetDirectoryInfo;
 
                 if (isUnitTestProject)
@@ -287,7 +288,7 @@ EndProject";
                     {
                         targetDirectory.CreateSubdirectory(path);
                     }
-                    file.CopyTo($"{targetDirectory.FullName}\\{path}{file.Name}");
+                    file.CopyTo($"{targetDirectory.FullName}\\{path}{file.Name}", true);
                 }
                 return targetDirectory;
             }
