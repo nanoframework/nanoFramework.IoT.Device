@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{B0F0EB4F-D168-4C16-B2B4-E11AD06FD008}</ProjectGuid>
+    <ProjectGuid>{B482AC40-1E21-4CBE-B54F-5EF6956BA3AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Mlx90614.Sample</RootNamespace>
-    <AssemblyName>Mlx90614.Sample</AssemblyName>
+    <RootNamespace>Iot.Device.Mlx90614.Sample</RootNamespace>
+    <AssemblyName>Iot.Device.Mlx90614.Sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,9 +23,18 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Gpio"><HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath><Private>True</Private></Reference> 
-<Reference Include="System.Device.I2c"><HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.Temperature"><HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
+    </Reference> 
+    <Reference Include="System.Device.I2c">
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

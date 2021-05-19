@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{512B4017-E6EA-4DBD-AAE0-9F21E83F0A58}</ProjectGuid>
+    <ProjectGuid>{498A2FF3-82E7-4034-86CC-EFEF41BA5DA7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>CpuTemperature</RootNamespace>
-    <AssemblyName>CpuTemperature</AssemblyName>
+    <RootNamespace>Iot.Device.CpuTemperature</RootNamespace>
+    <AssemblyName>Iot.Device.CpuTemperature</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,13 +23,19 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature"><HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.Length"><HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Length">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="CpuTemperature.cs" />
-<None Include="README.md" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

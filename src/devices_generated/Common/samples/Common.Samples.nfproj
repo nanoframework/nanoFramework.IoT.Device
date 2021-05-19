@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{5088394B-E097-46E2-A05D-FE432F1E9C83}</ProjectGuid>
+    <ProjectGuid>{FCF4EE89-1843-424E-A465-048213CC67BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Common.Samples</RootNamespace>
-    <AssemblyName>Common.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.Common.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.Common.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>

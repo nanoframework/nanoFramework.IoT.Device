@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{7735F35C-471F-4537-BD12-C2B55F39A168}</ProjectGuid>
+    <ProjectGuid>{FEA06CA3-45DD-4CD9-9CF8-0EC1A6E6CCCE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Media</RootNamespace>
-    <AssemblyName>Media</AssemblyName>
+    <RootNamespace>Iot.Device.Media</RootNamespace>
+    <AssemblyName>Iot.Device.Media</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,16 +23,22 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature"><HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.Length"><HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Length">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="../Interop/**/*.cs" />
-<Compile Include="VideoDevice/*.cs" />
-<Compile Include="VideoDevice/Devices/*.cs" />
-<Compile Include="SoundDevice/*.cs" />
-<Compile Include="SoundDevice/Devices/*.cs" />
+    <Compile Include="VideoDevice/*.cs" />
+    <Compile Include="VideoDevice/Devices/*.cs" />
+    <Compile Include="SoundDevice/*.cs" />
+    <Compile Include="SoundDevice/Devices/*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

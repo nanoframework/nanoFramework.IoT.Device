@@ -1,15 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "CardRfid.csproj", "{2B97523A-956B-4C88-8931-28C1AF88012C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "CardRfid.nfproj", "{2B97523A-956B-4C88-8931-28C1AF88012C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCardProcessing", "CreditCard\CreditCardProcessing.csproj", "{A9AC5868-77E7-4742-AF7E-E140F2CFF79B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCardProcessing", "CreditCard\CreditCardProcessing.nfproj", "{A9AC5868-77E7-4742-AF7E-E140F2CFF79B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "Mifare\Mifare.csproj", "{81A964D2-BA4B-4769-A630-084D8C4BEBDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "Mifare\Mifare.nfproj", "{81A964D2-BA4B-4769-A630-084D8C4BEBDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonHelpers", "..\Common\CommonHelpers.csproj", "{03F9B2A3-4B73-4D39-872B-BB0D81F3593E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonHelpers", "..\Common\CommonHelpers.nfproj", "{03F9B2A3-4B73-4D39-872B-BB0D81F3593E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

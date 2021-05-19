@@ -1,17 +1,17 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A15AFC2C-C6D8-496A-B275-DBE044FEA83F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "tests\Common.Tests.csproj", "{BF1A594E-CEE3-4629-9F95-56D40F7F00E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "tests\Common.Tests.nfproj", "{BF1A594E-CEE3-4629-9F95-56D40F7F00E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonHelpers", "CommonHelpers.csproj", "{1B521F66-CECB-4FA6-9FC4-FA70F24F8C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonHelpers", "CommonHelpers.nfproj", "{1B521F66-CECB-4FA6-9FC4-FA70F24F8C60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{CAED1B3A-81A5-419E-86D9-96F8D9EB2F29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Samples", "samples\Common.Samples.csproj", "{57DBD884-125C-4F60-852C-98086C15A43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Samples", "samples\Common.Samples.nfproj", "{57DBD884-125C-4F60-852C-98086C15A43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

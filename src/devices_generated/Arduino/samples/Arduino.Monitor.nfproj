@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{888ED07B-EFC0-411B-A4C7-C0676CCDB87F}</ProjectGuid>
+    <ProjectGuid>{0AB7F526-732E-4F8C-B4A1-030FCE8B30D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Arduino.Monitor</RootNamespace>
-    <AssemblyName>Arduino.Monitor</AssemblyName>
+    <RootNamespace>Iot.Device.Arduino.Monitor</RootNamespace>
+    <AssemblyName>Iot.Device.Arduino.Monitor</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,18 +23,39 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Gpio"><HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath><Private>True</Private></Reference> 
-<Reference Include="System.Device.Spi"><HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath><Private>True</Private></Reference> 
-<Reference Include="System.Device.I2c"><HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.Temperature"><HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.ElectricPotential"><HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.Pressure"><HintPath>packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.Length"><HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
+    </Reference> 
+    <Reference Include="System.Device.Spi">
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath>
+      <Private>True</Private>
+    </Reference> 
+    <Reference Include="System.Device.I2c">
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.ElectricPotential">
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Pressure">
+      <HintPath>packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Length">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="CharacterDisplay.cs" />
-<Compile Include="Arduino.Monitor.cs" />
+    <Compile Include="Arduino.Monitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

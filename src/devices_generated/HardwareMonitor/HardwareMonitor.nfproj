@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{7ABBBDC1-E3B8-4195-BDD6-A7A5FEB7A44E}</ProjectGuid>
+    <ProjectGuid>{FBE05614-DFE2-4EF0-A872-4F0A5B392281}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>HardwareMonitor</RootNamespace>
-    <AssemblyName>HardwareMonitor</AssemblyName>
+    <RootNamespace>Iot.Device.HardwareMonitor</RootNamespace>
+    <AssemblyName>Iot.Device.HardwareMonitor</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,14 +23,20 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature"><HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath><Private>True</Private></Reference>
-<Reference Include="UnitsNet.ElectricPotential"><HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.ElectricPotential">
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="OpenHardwareMonitor.cs" />
-<Compile Include="SensorType.cs" />
-<None Include="README.md" />
+    <Compile Include="SensorType.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

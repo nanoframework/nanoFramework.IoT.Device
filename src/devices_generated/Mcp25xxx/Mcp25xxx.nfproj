@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{899C2F4C-C1B4-4446-AA34-7FE04B78F4AB}</ProjectGuid>
+    <ProjectGuid>{2CC6B5FC-5A2D-4B69-9D34-B0FD8335A115}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Mcp25xxx</RootNamespace>
-    <AssemblyName>Mcp25xxx</AssemblyName>
+    <RootNamespace>Iot.Device.Mcp25xxx</RootNamespace>
+    <AssemblyName>Iot.Device.Mcp25xxx</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,22 +23,31 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Gpio"><HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath><Private>True</Private></Reference> 
-<Reference Include="System.Device.Spi"><HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath><Private>True</Private></Reference> 
-<Reference Include="UnitsNet.Length"><HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
+    </Reference> 
+    <Reference Include="System.Device.Spi">
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath>
+      <Private>True</Private>
+    </Reference> 
+    <Reference Include="UnitsNet.Length">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="InstructionFormat.cs" />
-<Compile Include="Mcp25xxx.cs" />
-<Compile Include="Mcp2515.cs" />
-<Compile Include="Mcp25625.cs" />
-<Compile Include="ReadStatusResponse.cs" />
-<Compile Include="RxBufferAddressPointer.cs" />
-<Compile Include="RxStatusResponse.cs" />
-<Compile Include="TxBufferAddressPointer.cs" />
-<Compile Include="Register\**\*.cs" />
-<None Include="README.md" />
+    <Compile Include="Mcp25xxx.cs" />
+    <Compile Include="Mcp2515.cs" />
+    <Compile Include="Mcp25625.cs" />
+    <Compile Include="ReadStatusResponse.cs" />
+    <Compile Include="RxBufferAddressPointer.cs" />
+    <Compile Include="RxStatusResponse.cs" />
+    <Compile Include="TxBufferAddressPointer.cs" />
+    <Compile Include="Register\**\*.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

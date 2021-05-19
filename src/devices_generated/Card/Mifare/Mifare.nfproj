@@ -8,12 +8,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{2EEBA76D-F617-40FE-BECF-5644B7919E43}</ProjectGuid>
+    <ProjectGuid>{90203615-CFD6-495F-A039-769A0EC8CC1D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Mifare</RootNamespace>
-    <AssemblyName>Mifare</AssemblyName>
+    <RootNamespace>Iot.Device.Mifare</RootNamespace>
+    <AssemblyName>Iot.Device.Mifare</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -23,7 +23,7 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length"><HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath><Private>True</Private></Reference>
+    <Reference Include="UnitsNet.Length">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
