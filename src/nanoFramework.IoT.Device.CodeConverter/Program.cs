@@ -84,6 +84,17 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // SOLUTION File
                 CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
 
+
+                var targetNuspecFile = targetDirectoryInfo.GetFiles("template.nuspec").FirstOrDefault();
+                if (targetNuspecFile != null)
+                {
+                    targetNuspecFile.EditFile(new Dictionary<string, string>
+                    {
+                        { "[[Assembly]]", $"Iot.Device.{projectName}" },
+                        { "[[ProjectName]]", projectName },
+                    });
+                    targetNuspecFile.MoveTo($"{targetDirectory}\\{projectName}.nuspec", true);
+                }
             }
 
             Console.WriteLine("Completed. Press any key to exit.");
@@ -91,12 +102,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
         }
 
         private static void CreateProjectFile(
-            bool isUnitTestProject, 
-            string projectName, 
-            DirectoryInfo targetDirectoryInfo, 
-            NugetPackages[] nfNugetPackages, 
-            Dictionary<string, bool> searches, 
-            out string[] oldProjectReferences, 
+            bool isUnitTestProject,
+            string projectName,
+            DirectoryInfo targetDirectoryInfo,
+            NugetPackages[] nfNugetPackages,
+            Dictionary<string, bool> searches,
+            out string[] oldProjectReferences,
             out string projectGuid)
         {
             // Search for project references in old project file
@@ -171,9 +182,9 @@ namespace nanoFramework.IoT.Device.CodeConverter
         }
 
         private static void CreatePackagesConfig(
-            DirectoryInfo targetDirectoryInfo, 
-            NugetPackages[] nfNugetPackages, 
-            Dictionary<string, bool> searches, 
+            DirectoryInfo targetDirectoryInfo,
+            NugetPackages[] nfNugetPackages,
+            Dictionary<string, bool> searches,
             string[] oldProjectReferences)
         {
             // Add nanoFramework nuget packages based on project references and references in the code
@@ -299,8 +310,8 @@ EndProject";
     public static class FileInfoExtensions
     {
         public static Dictionary<string, bool> EditFile(
-            this FileInfo sourceFile, 
-            Dictionary<string, string> replacements, 
+            this FileInfo sourceFile,
+            Dictionary<string, string> replacements,
             NugetPackages[] nugetPackages = null,
             Dictionary<string, bool> checkIfFound = null)
         {

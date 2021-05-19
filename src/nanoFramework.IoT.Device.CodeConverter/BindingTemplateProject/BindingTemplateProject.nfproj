@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>BindingTemplateProject</RootNamespace>
-    <AssemblyName>BindingTemplateProject</AssemblyName>
+    <RootNamespace>Iot.Device.BindingTemplateProject</RootNamespace>
+    <AssemblyName>Iot.Device.BindingTemplateProject</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
