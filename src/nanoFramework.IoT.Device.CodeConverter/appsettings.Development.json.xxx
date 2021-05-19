@@ -1,0 +1,7 @@
+{
+  "SourceDirectory": "D:\\Temp\\src\\devices",
+  "FilePathFilters": "src\\devices\\",
+  "TargetProjectTemplateName": "BindingTemplateProject",
+  "TargetUnitTestProjectTemplateName": "UnitTestTemplateProject",
+  "OutputDirectoryPath": "D:\\Temp\\src\\devices_generated_2"
+}

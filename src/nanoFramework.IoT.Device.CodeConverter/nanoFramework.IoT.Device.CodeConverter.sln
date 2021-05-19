@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nanoFramework.IoT.Device.CodeConverter", "nanoFramework.IoT.Device.CodeConverter.csproj", "{45778122-1AA6-493C-BBF8-9C2D202CF692}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45778122-1AA6-493C-BBF8-9C2D202CF692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45778122-1AA6-493C-BBF8-9C2D202CF692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45778122-1AA6-493C-BBF8-9C2D202CF692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45778122-1AA6-493C-BBF8-9C2D202CF692}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {200ADBEE-D022-4312-9D0B-43F8C987E86C}
+	EndGlobalSection
+EndGlobal
