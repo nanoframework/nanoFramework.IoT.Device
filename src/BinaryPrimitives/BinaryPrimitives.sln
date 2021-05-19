@@ -5,9 +5,12 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "BinaryPrimitivesUnitTests", "..\..\tests\BinaryPrimitivesUnitTests\BinaryPrimitivesUnitTests.nfproj", "{B195FAF3-7089-4061-9D2C-D8C1C131B8D0}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "BinaryPrimitives", "BinaryPrimitives.nfproj", "{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "BinaryPrimitives.shproj", "{E86896A2-B40C-4C03-B0E3-979DAF764CD6}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\BinaryPrimitives\BinaryPrimitives.projitems*{e86896a2-b40c-4c03-b0e3-979daf764cd6}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -19,12 +22,6 @@ Global
 		{B195FAF3-7089-4061-9D2C-D8C1C131B8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B195FAF3-7089-4061-9D2C-D8C1C131B8D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B195FAF3-7089-4061-9D2C-D8C1C131B8D0}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E247F900-24CB-47BB-BAE1-2EA78FBCE83D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
