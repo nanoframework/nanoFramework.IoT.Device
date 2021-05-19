@@ -82,7 +82,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
 
                 // SOLUTION File
-                CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
+                //CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
+                UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
 
                 CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
             }
@@ -242,6 +243,18 @@ EndProject";
             var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
             solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
             File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
+        }
+        private static void UpdateSolutionFile(string projectName, DirectoryInfo targetDirectoryInfo, string projectGuid)
+        {
+            var solutionFiles = targetDirectoryInfo.GetFiles("*.sln");
+            foreach(var solutionFile in solutionFiles)
+            {
+                solutionFile.EditFile(new Dictionary<string, string>
+                {
+                    {"csproj", "nfproj" }
+                });
+            }
+            
         }
 
         private static T InitOptions<T>()
