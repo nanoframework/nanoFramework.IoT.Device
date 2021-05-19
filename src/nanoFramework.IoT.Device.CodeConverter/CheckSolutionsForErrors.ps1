@@ -1,6 +1,9 @@
-$path = "..\devices_generated"
 
-$files = Get-ChildItem -Path $path -Recurse -Include *.sln 
+$files = Get-ChildItem -Recurse -Include *.sln
+
+if ((Get-Location).Path.endswith("CodeConverter") ){
+    $files = Get-ChildItem -Recurse -Path "..\devices_generated" -Include *.sln 
+}
 
 $results = [System.Collections.ArrayList]::new()
 $success = [System.Collections.ArrayList]::new()
