@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>cbc0e748-43ca-4f73-980d-3720e38ca677</ProjectGuid>
+    <ProjectGuid>{512B4017-E6EA-4DBD-AAE0-9F21E83F0A58}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -19,14 +19,16 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll"></Reference>
-    <Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
-<Reference Include="packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll"></Reference>
-<Reference Include="packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll"></Reference>
+    <Reference Include="mscorlib">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Temperature"><HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath><Private>True</Private></Reference>
+<Reference Include="UnitsNet.Length"><HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath><Private>True</Private></Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-	  <Compile Include="CpuTemperature.cs" />
+    <Compile Include="CpuTemperature.cs" />
 <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

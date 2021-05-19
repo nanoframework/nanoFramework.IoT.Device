@@ -1,0 +1,21 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ccs811.Sample", "Ccs811.Sample.nfproj", "{DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+        {DDD5D23B-93C5-46B2-B233-B602CF0B2D2E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+    EndGlobalSection
+EndGlobal
