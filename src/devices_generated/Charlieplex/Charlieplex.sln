@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{971CF810-C79D-49D5-B406-E6E793ACA411}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Samples", "samples\Charlieplex.Samples.nfproj", "{27B5BEE2-CB10-49DE-B4E2-E7D83B04B838}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Samples", "samples\Charlieplex.Samples.nfproj", "{A168DAB5-4F65-408A-87B6-BB2713F96C37}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\Charlieplex.Tests.nfproj", "{BA4EF1AD-D31E-4E5C-BA60-78A287D1CED3}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\Charlieplex.Tests.nfproj", "{74116BFA-FB32-46E6-923D-F110135387A5}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}.Release|Any CPU.Build.0 = Release|Any CPU
-        {ADC296CA-76F4-4A45-A53E-E2A15B3F2FE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {971CF810-C79D-49D5-B406-E6E793ACA411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {971CF810-C79D-49D5-B406-E6E793ACA411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {971CF810-C79D-49D5-B406-E6E793ACA411}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {971CF810-C79D-49D5-B406-E6E793ACA411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {971CF810-C79D-49D5-B406-E6E793ACA411}.Release|Any CPU.Build.0 = Release|Any CPU
+        {971CF810-C79D-49D5-B406-E6E793ACA411}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

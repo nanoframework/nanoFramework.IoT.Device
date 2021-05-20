@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{55F31CF9-C709-4BB3-920C-92CEF909259B}</ProjectGuid>
+    <ProjectGuid>{F76CF4EE-2EC0-4024-B204-0F329A12F801}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference> 
     <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.0-preview.33\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">

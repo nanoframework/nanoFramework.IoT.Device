@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mifare", "Mifare.nfproj", "{B38EF33A-A065-430F-9F10-E8E1EEF213CE}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mifare", "Mifare.nfproj", "{7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -14,11 +14,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {B38EF33A-A065-430F-9F10-E8E1EEF213CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {B38EF33A-A065-430F-9F10-E8E1EEF213CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {B38EF33A-A065-430F-9F10-E8E1EEF213CE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {B38EF33A-A065-430F-9F10-E8E1EEF213CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {B38EF33A-A065-430F-9F10-E8E1EEF213CE}.Release|Any CPU.Build.0 = Release|Any CPU
-        {B38EF33A-A065-430F-9F10-E8E1EEF213CE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}.Release|Any CPU.Build.0 = Release|Any CPU
+        {7468139C-6E7D-4A6A-9BC2-E3DB1D47EC07}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

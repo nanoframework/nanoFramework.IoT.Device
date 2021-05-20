@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter", "RadioTransmitter.nfproj", "{18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter", "RadioTransmitter.nfproj", "{AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter.Samples", "samples\RadioTransmitter.Samples.nfproj", "{76030DE5-00EC-478C-B2BA-7AC9ACB086BA}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter.Samples", "samples\RadioTransmitter.Samples.nfproj", "{0EE0A51E-FF1F-4E44-BFF9-D922B7B12B3D}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}.Release|Any CPU.Build.0 = Release|Any CPU
-        {18FD16D0-9B03-4EF6-A827-5BFB432AEA2C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}.Release|Any CPU.Build.0 = Release|Any CPU
+        {AB3C3BA1-0346-4D0F-A3CD-A309504DB95E}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

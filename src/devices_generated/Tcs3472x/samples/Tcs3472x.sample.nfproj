@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{B1C50479-4B74-475A-8B9F-6DA4EB0BE7FA}</ProjectGuid>
+    <ProjectGuid>{EC3F9D1D-2461-4D99-B18D-908F3DB54611}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference> 
     <Reference Include="System.Device.I2c">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.0-preview.33\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

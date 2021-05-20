@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor", "ServoMotor.nfproj", "{7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor", "ServoMotor.nfproj", "{FB7895B5-4BE0-4404-8606-728E33C2ABD4}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Samples", "samples\ServoMotor.Samples.nfproj", "{E89C79D5-06BC-4783-8399-6205E19B8F84}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Samples", "samples\ServoMotor.Samples.nfproj", "{B7560998-6FAB-4437-8F3A-DD007DB4C9DB}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Tests", "tests\ServoMotor.Tests.nfproj", "{E27E7077-7D52-4F52-8FD3-915E9421C9E4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Tests", "tests\ServoMotor.Tests.nfproj", "{D99DFF24-2634-47E8-89F2-AAF00D6FC44C}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}.Release|Any CPU.Build.0 = Release|Any CPU
-        {7AFBF785-E4E3-4C9D-89D6-F70BE29BC1A9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Release|Any CPU.Build.0 = Release|Any CPU
+        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{E467B739-9BBE-4395-B477-DD02806A3840}</ProjectGuid>
+    <ProjectGuid>{8711E141-5692-44AF-AB5E-300D797051B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference> 
     <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.0-preview.33\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature">

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CreditCardProcessing", "CreditCardProcessing.nfproj", "{23269B5D-75D7-47A7-A6FC-A1E94BEC0212}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CreditCardProcessing", "CreditCardProcessing.nfproj", "{96C87039-3520-4A21-B189-E51193D5CA07}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -14,11 +14,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {23269B5D-75D7-47A7-A6FC-A1E94BEC0212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {23269B5D-75D7-47A7-A6FC-A1E94BEC0212}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {23269B5D-75D7-47A7-A6FC-A1E94BEC0212}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {23269B5D-75D7-47A7-A6FC-A1E94BEC0212}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {23269B5D-75D7-47A7-A6FC-A1E94BEC0212}.Release|Any CPU.Build.0 = Release|Any CPU
-        {23269B5D-75D7-47A7-A6FC-A1E94BEC0212}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {96C87039-3520-4A21-B189-E51193D5CA07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {96C87039-3520-4A21-B189-E51193D5CA07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {96C87039-3520-4A21-B189-E51193D5CA07}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {96C87039-3520-4A21-B189-E51193D5CA07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {96C87039-3520-4A21-B189-E51193D5CA07}.Release|Any CPU.Build.0 = Release|Any CPU
+        {96C87039-3520-4A21-B189-E51193D5CA07}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
