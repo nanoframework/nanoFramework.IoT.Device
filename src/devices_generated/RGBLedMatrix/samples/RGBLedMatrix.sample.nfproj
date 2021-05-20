@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{90C9B3A7-899B-4DFE-89C2-B3B91E54C996}</ProjectGuid>
-    <OutputType>Executable</OutputType>
+    <ProjectGuid>{90186A45-3600-4B89-96B5-EE951F924E75}</ProjectGuid>
+    <OutputType>Ex</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.RGBLedMatrix.sample</RootNamespace>
@@ -21,7 +21,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length">
@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>..\packages\nanoFramework.System.Math.1.4.0-preview.1\lib\System.Math.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Math.1.0.0-preview.5\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -51,8 +51,8 @@ void Receiver_ReceivedData(object sender, DataReceivedEventArgs e)
         Console.Write($"{item} ");
     }
 
-    Console.WriteLine();
+    Debug.WriteLine();
 
-    Console.WriteLine($"Message: {res}");
-    Console.WriteLine();
+    Debug.WriteLine($"Message: {res}");
+    Debug.WriteLine();
 }

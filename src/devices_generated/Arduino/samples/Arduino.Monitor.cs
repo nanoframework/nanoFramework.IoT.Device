@@ -40,26 +40,26 @@ namespace Arduino.Samples
 
             using (var port = new SerialPort(portName, 115200))
             {
-                Console.WriteLine($"Connecting to Arduino on {portName}");
+                Debug.WriteLine($"Connecting to Arduino on {portName}");
                 try
                 {
                     port.Open();
                 }
                 catch (UnauthorizedAccessException x)
                 {
-                    Console.WriteLine($"Could not open COM port: {x.Message} Possible reason: Arduino IDE connected or serial console open");
+                    Debug.WriteLine($"Could not open COM port: {x.Message} Possible reason: Arduino IDE connected or serial console open");
                     return;
                 }
 
                 ArduinoBoard board = new ArduinoBoard(port.BaseStream);
                 try
                 {
-                    Console.WriteLine($"Firmware version: {board.FirmwareVersion}, Builder: {board.FirmwareName}");
+                    Debug.WriteLine($"Firmware version: {board.FirmwareVersion}, Builder: {board.FirmwareName}");
                     DisplayModes(board);
                 }
                 catch (TimeoutException x)
                 {
-                    Console.WriteLine($"No answer from board: {x.Message} ");
+                    Debug.WriteLine($"No answer from board: {x.Message} ");
                 }
                 finally
                 {
@@ -71,10 +71,10 @@ namespace Arduino.Samples
 
         private static void BoardOnLogMessages(string message, Exception? exception)
         {
-            Console.WriteLine("Log message: " + message);
+            Debug.WriteLine("Log message: " + message);
             if (exception != null)
             {
-                Console.WriteLine(exception);
+                Debug.WriteLine(exception);
             }
         }
 
@@ -88,9 +88,9 @@ namespace Arduino.Samples
             gpioController.OpenPin(Gpio2);
             gpioController.SetPinMode(Gpio2, PinMode.Input);
             CharacterDisplay disp = new CharacterDisplay(board);
-            Console.WriteLine("Display output test");
-            Console.WriteLine("The button on GPIO 2 changes modes");
-            Console.WriteLine("Press x to exit");
+            Debug.WriteLine("Display output test");
+            Debug.WriteLine("The button on GPIO 2 changes modes");
+            Debug.WriteLine("Press x to exit");
             disp.Output.ScrollUpDelay = TimeSpan.FromMilliseconds(500);
             AutoResetEvent buttonClicked = new AutoResetEvent(false);
 
@@ -118,7 +118,7 @@ namespace Arduino.Samples
             catch (IOException)
             {
                 bmp = null;
-                Console.WriteLine("BMP280 not available");
+                Debug.WriteLine("BMP280 not available");
             }
 
             OpenHardwareMonitor hardwareMonitor = new OpenHardwareMonitor();

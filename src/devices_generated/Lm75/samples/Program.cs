@@ -13,8 +13,8 @@ using Lm75 sensor = new(device);
 while (true)
 {
     // read temperature
-    Console.WriteLine($"Temperature: {sensor.Temperature.DegreesCelsius} ℃");
-    Console.WriteLine();
+    Debug.WriteLine($"Temperature: {sensor.Temperature.DegreesCelsius} ℃");
+    Debug.WriteLine();
 
     Thread.Sleep(1000);
 }

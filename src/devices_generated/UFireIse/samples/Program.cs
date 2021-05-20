@@ -12,10 +12,10 @@ PrintHelp();
 
 I2cConnectionSettings settings = new(BusId, UFireIse.I2cAddress);
 using I2cDevice device = I2cDevice.Create(settings);
-Console.WriteLine(
+Debug.WriteLine(
         $"UFire_ISE is ready on I2C bus {device.ConnectionSettings.BusId} with address {device.ConnectionSettings.DeviceAddress}");
 
-Console.WriteLine();
+Debug.WriteLine();
 
 while (true)
 {
@@ -41,17 +41,17 @@ while (true)
 
 void PrintHelp()
 {
-    Console.WriteLine("Command:");
-    Console.WriteLine("    B           Basic");
-    Console.WriteLine("    O           Read Orp (Oxidation-reduction potential) value");
-    Console.WriteLine("    P           Read pH (Power of Hydrogen) value");
-    Console.WriteLine();
+    Debug.WriteLine("Command:");
+    Debug.WriteLine("    B           Basic");
+    Debug.WriteLine("    O           Read Orp (Oxidation-reduction potential) value");
+    Debug.WriteLine("    P           Read pH (Power of Hydrogen) value");
+    Debug.WriteLine();
 }
 
 void Basic(I2cDevice device)
 {
     using UFireIse uFireIse = new UFireIse(device);
-    Console.WriteLine("mV:" + uFireIse.ReadElectricPotential().Millivolts);
+    Debug.WriteLine("mV:" + uFireIse.ReadElectricPotential().Millivolts);
 }
 
 void Orp(I2cDevice device)
@@ -59,25 +59,25 @@ void Orp(I2cDevice device)
     using UFireOrp uFireOrp = new(device);
     if (uFireOrp.TryMeasureOxidationReductionPotential(out ElectricPotential orp))
     {
-        Console.WriteLine("Eh:" + orp.Millivolts);
+        Debug.WriteLine("Eh:" + orp.Millivolts);
     }
     else
     {
-        Console.WriteLine("Not possible to measure pH");
+        Debug.WriteLine("Not possible to measure pH");
     }
 }
 
 void Ph(I2cDevice device)
 {
     using UFirePh uFire_pH = new UFirePh(device);
-    Console.WriteLine("mV:" + uFire_pH.ReadElectricPotential().Millivolts);
+    Debug.WriteLine("mV:" + uFire_pH.ReadElectricPotential().Millivolts);
 
     if (uFire_pH.TryMeasurepH(out float pH))
     {
-        Console.WriteLine("pH:" + pH);
+        Debug.WriteLine("pH:" + pH);
     }
     else
     {
-        Console.WriteLine("Not possible to measure pH");
+        Debug.WriteLine("Not possible to measure pH");
     }
 }

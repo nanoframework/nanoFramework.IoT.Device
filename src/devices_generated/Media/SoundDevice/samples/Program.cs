@@ -10,8 +10,8 @@ using SoundDevice device = SoundDevice.Create(settings);
 
 string path = Directory.GetCurrentDirectory();
 
-Console.WriteLine("Recording...");
+Debug.WriteLine("Recording...");
 device.Record(10, $"{path}/record.wav");
 
-Console.WriteLine("Playing...");
+Debug.WriteLine("Playing...");
 device.Play($"{path}/record.wav");

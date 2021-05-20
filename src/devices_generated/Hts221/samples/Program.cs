@@ -17,12 +17,12 @@ while (true)
     var tempValue = th.Temperature;
     var humValue = th.Humidity;
 
-    Console.WriteLine($"Temperature: {tempValue.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Relative humidity: {humValue:0.#}%");
+    Debug.WriteLine($"Temperature: {tempValue.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Relative humidity: {humValue:0.#}%");
 
     // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-    Console.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
     Thread.Sleep(1000);
 }
 

@@ -13,38 +13,38 @@ using Iot.Device.Bmxx80;
 using Iot.Device.Bmxx80.PowerMode;
 using UnitsNet;
 
-Console.WriteLine("Hello I2C, SPI and GPIO FTFI! FT4222");
-Console.WriteLine("Select the test you want to run:");
-Console.WriteLine(" 1 Run I2C tests with a BNO055");
-Console.WriteLine(" 2 Run SPI tests with a simple HC595 with led blinking on all ports");
-Console.WriteLine(" 3 Run GPIO tests with a simple led blinking on GPIO2 port and reading the port");
-Console.WriteLine(" 4 Run callback test event on GPIO2 on Failing and Rising");
+Debug.WriteLine("Hello I2C, SPI and GPIO FTFI! FT4222");
+Debug.WriteLine("Select the test you want to run:");
+Debug.WriteLine(" 1 Run I2C tests with a BNO055");
+Debug.WriteLine(" 2 Run SPI tests with a simple HC595 with led blinking on all ports");
+Debug.WriteLine(" 3 Run GPIO tests with a simple led blinking on GPIO2 port and reading the port");
+Debug.WriteLine(" 4 Run callback test event on GPIO2 on Failing and Rising");
 var key = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 
 List<FtDevice> devices = FtCommon.GetDevices();
-Console.WriteLine($"{devices.Count} FT4222 elements found");
+Debug.WriteLine($"{devices.Count} FT4222 elements found");
 foreach (FtDevice device in devices)
 {
-    Console.WriteLine($"Description: {device.Description}");
-    Console.WriteLine($"Flags: {device.Flags}");
-    Console.WriteLine($"Id: {device.Id}");
-    Console.WriteLine($"Location Id: {device.LocId}");
-    Console.WriteLine($"Serial Number: {device.SerialNumber}");
-    Console.WriteLine($"Device type: {device.Type}");
+    Debug.WriteLine($"Description: {device.Description}");
+    Debug.WriteLine($"Flags: {device.Flags}");
+    Debug.WriteLine($"Id: {device.Id}");
+    Debug.WriteLine($"Location Id: {device.LocId}");
+    Debug.WriteLine($"Serial Number: {device.SerialNumber}");
+    Debug.WriteLine($"Device type: {device.Type}");
 }
 
 if (devices.Count == 0)
 {
-    Console.WriteLine("No devices connected to run tests.");
+    Debug.WriteLine("No devices connected to run tests.");
     return;
 }
 
 FtDevice firstDevice = devices[0];
 
 var (chip, dll) = FtCommon.GetVersions();
-Console.WriteLine($"Chip version: {chip}");
-Console.WriteLine($"Dll version: {dll}");
+Debug.WriteLine($"Chip version: {chip}");
+Debug.WriteLine($"Dll version: {dll}");
 
 if (key.KeyChar == '1')
 {
@@ -73,13 +73,13 @@ void TestI2c(FtDevice device)
     using Bme280 bme280 = new(ftI2c.CreateDevice(Bme280.DefaultI2cAddress));
     bme280.SetPowerMode(Bmx280PowerMode.Normal);
 
-    Console.WriteLine($"Id: {bno055.Info.ChipId}, AccId: {bno055.Info.AcceleratorId}, GyroId: {bno055.Info.GyroscopeId}, MagId: {bno055.Info.MagnetometerId}");
-    Console.WriteLine($"Firmware version: {bno055.Info.FirmwareVersion}, Bootloader: {bno055.Info.BootloaderVersion}");
-    Console.WriteLine($"Temperature source: {bno055.TemperatureSource}, Operation mode: {bno055.OperationMode}, Units: {bno055.Units}");
+    Debug.WriteLine($"Id: {bno055.Info.ChipId}, AccId: {bno055.Info.AcceleratorId}, GyroId: {bno055.Info.GyroscopeId}, MagId: {bno055.Info.MagnetometerId}");
+    Debug.WriteLine($"Firmware version: {bno055.Info.FirmwareVersion}, Bootloader: {bno055.Info.BootloaderVersion}");
+    Debug.WriteLine($"Temperature source: {bno055.TemperatureSource}, Operation mode: {bno055.OperationMode}, Units: {bno055.Units}");
 
     if (bme280.TryReadTemperature(out Temperature temperature))
     {
-        Console.WriteLine($"Temperature: {temperature}");
+        Debug.WriteLine($"Temperature: {temperature}");
     }
 }
 
@@ -105,7 +105,7 @@ void TestGpio()
     gpioController.OpenPin(Gpio2);
     gpioController.SetPinMode(Gpio2, PinMode.Output);
 
-    Console.WriteLine("Blinking GPIO2");
+    Debug.WriteLine("Blinking GPIO2");
     while (!Console.KeyAvailable)
     {
         gpioController.Write(Gpio2, PinValue.High);
@@ -115,7 +115,7 @@ void TestGpio()
     }
 
     Console.ReadKey();
-    Console.WriteLine("Reading GPIO2 state");
+    Debug.WriteLine("Reading GPIO2 state");
     gpioController.SetPinMode(Gpio2, PinMode.Input);
     while (!Console.KeyAvailable)
     {
@@ -134,11 +134,11 @@ void TestEvents()
     gpioController.OpenPin(Gpio2);
     gpioController.SetPinMode(Gpio2, PinMode.Input);
 
-    Console.WriteLine("Setting up events on GPIO2 for rising and failing");
+    Debug.WriteLine("Setting up events on GPIO2 for rising and failing");
 
     gpioController.RegisterCallbackForPinValueChangedEvent(Gpio2, PinEventTypes.Falling | PinEventTypes.Rising, MyCallbackFailing);
 
-    Console.WriteLine("Event setup, press a key to remove the failing event");
+    Debug.WriteLine("Event setup, press a key to remove the failing event");
     while (!Console.KeyAvailable)
     {
         WaitForEventResult res = gpioController.WaitForEvent(Gpio2, PinEventTypes.Falling, new TimeSpan(0, 0, 0, 0, 50));
@@ -158,7 +158,7 @@ void TestEvents()
     gpioController.UnregisterCallbackForPinValueChangedEvent(Gpio2, MyCallbackFailing);
     gpioController.RegisterCallbackForPinValueChangedEvent(Gpio2, PinEventTypes.Rising, MyCallback);
 
-    Console.WriteLine("Event removed, press a key to remove all events and quit");
+    Debug.WriteLine("Event removed, press a key to remove all events and quit");
     while (!Console.KeyAvailable)
     {
         WaitForEventResult res = gpioController.WaitForEvent(Gpio2, PinEventTypes.Rising, new TimeSpan(0, 0, 0, 0, 50));
@@ -172,7 +172,7 @@ void TestEvents()
 }
 
 void MyCallback(object sender, PinValueChangedEventArgs pinValueChangedEventArgs) =>
-    Console.WriteLine($"Event on GPIO {pinValueChangedEventArgs.PinNumber}, event type: {pinValueChangedEventArgs.ChangeType}");
+    Debug.WriteLine($"Event on GPIO {pinValueChangedEventArgs.PinNumber}, event type: {pinValueChangedEventArgs.ChangeType}");
 
 void MyCallbackFailing(object sender, PinValueChangedEventArgs pinValueChangedEventArgs) =>
-    Console.WriteLine($"Event on GPIO {pinValueChangedEventArgs.PinNumber}, event type: {pinValueChangedEventArgs.ChangeType}");
+    Debug.WriteLine($"Event on GPIO {pinValueChangedEventArgs.PinNumber}, event type: {pinValueChangedEventArgs.ChangeType}");

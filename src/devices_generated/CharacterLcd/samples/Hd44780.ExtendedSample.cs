@@ -22,9 +22,9 @@ namespace Iot.Device.CharacterLcd.Samples
 
         public static void Test(Hd44780 lcd)
         {
-            Console.WriteLine("Starting...");
+            Debug.WriteLine("Starting...");
             lcd.Clear();
-            Console.WriteLine("Initialized");
+            Debug.WriteLine("Initialized");
             Console.ReadLine();
             TestPrompt("SetCursor", lcd, SetCursorTest);
             TestPrompt("Underline", lcd, l => l.UnderlineCursorVisible = true);
@@ -59,7 +59,7 @@ namespace Iot.Device.CharacterLcd.Samples
             TestPrompt("Time", lcd, TestClock);
             lcd.DisplayOn = false;
             lcd.BacklightOn = false;
-            Console.WriteLine("Done...");
+            Debug.WriteLine("Done...");
         }
 
         private static void CharacterSet(Hd44780 lcd)
@@ -184,14 +184,14 @@ namespace Iot.Device.CharacterLcd.Samples
             stopwatch.Stop();
             string result = $"Elapsed ms: {stopwatch.ElapsedMilliseconds}";
             lcd.Write(result);
-            Console.WriteLine(result);
+            Debug.WriteLine(result);
         }
 
         private static void SetBacklightColorTest(Hd44780 lcd)
         {
             if (lcd is not LcdRgb colorLcd)
             {
-                Console.WriteLine("Color backlight not supported");
+                Debug.WriteLine("Color backlight not supported");
                 return;
             }
 

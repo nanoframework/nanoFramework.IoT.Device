@@ -17,16 +17,16 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using Iot.Device.CharacterLcd;
 
-Console.WriteLine("Hello PCD8544, screen of Nokia 5110!");
-Console.WriteLine("Please select the platform you want to use:");
-Console.WriteLine("  1. Native device like a Raspberry Pi");
-Console.WriteLine("  2. FT4222");
+Debug.WriteLine("Hello PCD8544, screen of Nokia 5110!");
+Debug.WriteLine("Please select the platform you want to use:");
+Debug.WriteLine("  1. Native device like a Raspberry Pi");
+Debug.WriteLine("  2. FT4222");
 var platformChoice = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 
 if (platformChoice is not object or { KeyChar: not ('1' or '2') })
 {
-    Console.WriteLine("You have to choose a valid platform");
+    Debug.WriteLine("You have to choose a valid platform");
     return;
 }
 
@@ -34,7 +34,7 @@ SpiConnectionSettings spiConnection = new(0, 1) { ClockFrequency = 5_000_000, Mo
 Pcd8544 lcd;
 
 int pwmPin = -1;
-Console.WriteLine("Which pin/channel do you want to use for PWM? (use negative number for none)");
+Debug.WriteLine("Which pin/channel do you want to use for PWM? (use negative number for none)");
 var pinChoice = Console.ReadLine();
 try
 {
@@ -42,11 +42,11 @@ try
 }
 catch
 {
-    Console.WriteLine("Can't convert the pin number, will assume you don't want to use PWM.");
+    Debug.WriteLine("Can't convert the pin number, will assume you don't want to use PWM.");
 }
 
 int resetPin = -1;
-Console.WriteLine("Which pin do you want to use for Reset? (use negative number for none)");
+Debug.WriteLine("Which pin do you want to use for Reset? (use negative number for none)");
 pinChoice = Console.ReadLine();
 try
 {
@@ -54,11 +54,11 @@ try
 }
 catch
 {
-    Console.WriteLine("Can't convert the pin number, will assume you don't want to use Reset.");
+    Debug.WriteLine("Can't convert the pin number, will assume you don't want to use Reset.");
 }
 
 int dataCommandPin = -1;
-Console.WriteLine("Which pin do you want to use for Data Command?");
+Debug.WriteLine("Which pin do you want to use for Data Command?");
 pinChoice = Console.ReadLine();
 try
 {
@@ -70,7 +70,7 @@ catch
 
 if (dataCommandPin < 0)
 {
-    Console.WriteLine("Can't continue as Data Command pin has to be valid.");
+    Debug.WriteLine("Can't continue as Data Command pin has to be valid.");
     return;
 }
 
@@ -91,24 +91,24 @@ else
 
 if (lcd is not object)
 {
-    Console.WriteLine("Something went wrong, can't initialize PCD8544");
+    Debug.WriteLine("Something went wrong, can't initialize PCD8544");
     return;
 }
 
 lcd.Enabled = true;
-Console.WriteLine("Choose the demonstration you want to see:");
-Console.WriteLine("  1. All");
-Console.WriteLine("  2. Brightness, Contrast, Temperature, Bias");
-Console.WriteLine("  3. Display text, change cursor position");
-Console.WriteLine("  4. Display images, resize images");
-Console.WriteLine("  5. Display lines, points, rectangles");
-Console.WriteLine("  6. Use the LcdConsole and display texts");
+Debug.WriteLine("Choose the demonstration you want to see:");
+Debug.WriteLine("  1. All");
+Debug.WriteLine("  2. Brightness, Contrast, Temperature, Bias");
+Debug.WriteLine("  3. Display text, change cursor position");
+Debug.WriteLine("  4. Display images, resize images");
+Debug.WriteLine("  5. Display lines, points, rectangles");
+Debug.WriteLine("  6. Use the LcdConsole and display texts");
 var demoChoice = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 
 if (demoChoice is not object or { KeyChar: < '1' or > '6' })
 {
-    Console.WriteLine("You have to choose a demonstration");
+    Debug.WriteLine("You have to choose a demonstration");
     return;
 }
 
@@ -140,7 +140,7 @@ switch (demoChoice.KeyChar)
 
 void BrightnessContrastTemperatureBias()
 {
-    Console.WriteLine("Adjusting brightness from 0 to 1.0");
+    Debug.WriteLine("Adjusting brightness from 0 to 1.0");
     for (int i = 0; i < 10; i++)
     {
         lcd.SetCursorPosition(0, 0);
@@ -151,10 +151,10 @@ void BrightnessContrastTemperatureBias()
     }
 
     lcd.Clear();
-    Console.WriteLine("Reseting brightness to 0.2 (20%)");
+    Debug.WriteLine("Reseting brightness to 0.2 (20%)");
     lcd.BacklightBrightness = 0.2f;
 
-    Console.WriteLine("Adjusting contrast from 0 to 127");
+    Debug.WriteLine("Adjusting contrast from 0 to 127");
     for (byte i = 0; i < 128; i++)
     {
         lcd.SetCursorPosition(0, 0);
@@ -164,11 +164,11 @@ void BrightnessContrastTemperatureBias()
         Thread.Sleep(100);
     }
 
-    Console.WriteLine("Reseting contrast to recommended value 40");
+    Debug.WriteLine("Reseting contrast to recommended value 40");
     lcd.Contrast = 40;
     lcd.Clear();
 
-    Console.WriteLine("Testing the 4 different temperature modes");
+    Debug.WriteLine("Testing the 4 different temperature modes");
     lcd.WriteLine("Test temp 0");
     lcd.Temperature = Iot.Device.Display.Pcd8544Enums.ScreenTemperature.Coefficient0;
     Thread.Sleep(1500);
@@ -184,7 +184,7 @@ void BrightnessContrastTemperatureBias()
     lcd.Temperature = Iot.Device.Display.Pcd8544Enums.ScreenTemperature.Coefficient0;
     lcd.Clear();
 
-    Console.WriteLine("Adjusting bias from 0 to 6");
+    Debug.WriteLine("Adjusting bias from 0 to 6");
     // Adjusting the bias
     for (byte i = 0; i < 7; i++)
     {
@@ -197,13 +197,13 @@ void BrightnessContrastTemperatureBias()
         lcd.Clear();
     }
 
-    Console.WriteLine("Reseting bias to recommended value 4");
+    Debug.WriteLine("Reseting bias to recommended value 4");
     lcd.Bias = 4;
 }
 
 void DisplayTextChangePositionBlink()
 {
-    Console.WriteLine("Display is on and will switch on and off");
+    Debug.WriteLine("Display is on and will switch on and off");
     lcd.Write("Display is on and will switch on and off");
     for (int i = 0; i < 5; i++)
     {
@@ -214,7 +214,7 @@ void DisplayTextChangePositionBlink()
     lcd.Enabled = true;
     lcd.Clear();
 
-    Console.WriteLine("Displaying multi line with WriteLine");
+    Debug.WriteLine("Displaying multi line with WriteLine");
     lcd.SetCursorPosition(0, 0);
     lcd.Write("First line");
     lcd.SetCursorPosition(0, 1);
@@ -229,7 +229,7 @@ void DisplayTextChangePositionBlink()
     lcd.Write("last line");
     Thread.Sleep(1500);
 
-    Console.WriteLine("Inverting the color screen");
+    Debug.WriteLine("Inverting the color screen");
     // this will blink the screen
     for (int i = 0; i < 6; i++)
     {
@@ -237,7 +237,7 @@ void DisplayTextChangePositionBlink()
         Thread.Sleep(1000);
     }
 
-    Console.WriteLine("Activating the cursor, writting numbers in a raw");
+    Debug.WriteLine("Activating the cursor, writting numbers in a raw");
     lcd.Clear();
     lcd.SetCursorPosition(0, 0);
     lcd.UnderlineCursorVisible = true;
@@ -248,7 +248,7 @@ void DisplayTextChangePositionBlink()
     }
 
     lcd.Clear();
-    Console.WriteLine("Testing backspace to remove character");
+    Debug.WriteLine("Testing backspace to remove character");
     lcd.Write("Basckspace");
     for (int i = 0; i < 5; i++)
     {
@@ -256,7 +256,7 @@ void DisplayTextChangePositionBlink()
         lcd.Write("\b");
     }
 
-    Console.WriteLine("Displaying more text and moving the cursor around");
+    Debug.WriteLine("Displaying more text and moving the cursor around");
     lcd.Clear();
     lcd.Write("More text");
     Thread.Sleep(1500);
@@ -268,7 +268,7 @@ void DisplayTextChangePositionBlink()
     Thread.Sleep(1500);
     lcd.UnderlineCursorVisible = false;
 
-    Console.WriteLine("This will display a line of random bits");
+    Debug.WriteLine("This will display a line of random bits");
     lcd.Clear();
     lcd.WriteLine("This will display a line of random characters");
     Thread.Sleep(1500);
@@ -288,7 +288,7 @@ void DisplayTextChangePositionBlink()
 
 void DisplayingBitmap()
 {
-    Console.WriteLine("Displaying bitmap, text, resizing them");
+    Debug.WriteLine("Displaying bitmap, text, resizing them");
     using Image<Rgba32> bitmapMe = (Image<Rgba32>)Image.Load(Path.Combine("me.bmp"));
     var bitmap1 = BitmapToByteArray(bitmapMe);
     using Image<Rgba32> bitmapNokia = (Image<Rgba32>)Image.Load(Path.Combine("nokia_bw.bmp"));
@@ -341,7 +341,7 @@ void DisplayingBitmap()
 
 void DisplayLinesPointsRectabngles()
 {
-    Console.WriteLine("Drawing point, line and rectangles");
+    Debug.WriteLine("Drawing point, line and rectangles");
     lcd.DrawPoint(5, 5, true);
     lcd.DrawLine(0, 0, 15, 35, true);
     lcd.DrawRectangle(10, 30, 10, 20, true, true);
@@ -350,19 +350,19 @@ void DisplayLinesPointsRectabngles()
     lcd.Draw();
     Thread.Sleep(2000);
     lcd.Clear();
-    Console.WriteLine("Drawing 4 points at the 4 edges");
+    Debug.WriteLine("Drawing 4 points at the 4 edges");
     lcd.DrawPoint(0, 0, true);
     lcd.DrawPoint(Pcd8544.PixelScreenSize.Width - 1, 0, true);
     lcd.DrawPoint(Pcd8544.PixelScreenSize.Width - 1, Pcd8544.PixelScreenSize.Height - 1, true);
     lcd.DrawPoint(0, Pcd8544.PixelScreenSize.Height - 1, true);
     lcd.Draw();
     Thread.Sleep(2000);
-    Console.WriteLine("Drawing a rectangle at 2 pixels from the edge");
+    Debug.WriteLine("Drawing a rectangle at 2 pixels from the edge");
     lcd.DrawRectangle(2, 2, Pcd8544.PixelScreenSize.Width - 4, Pcd8544.PixelScreenSize.Height - 4, true, false);
     lcd.Draw();
     Thread.Sleep(2000);
     lcd.Clear();
-    Console.WriteLine("Drawing 2 diagonal lines");
+    Debug.WriteLine("Drawing 2 diagonal lines");
     lcd.DrawLine(0, 0, Pcd8544.PixelScreenSize.Width - 1, Pcd8544.PixelScreenSize.Height - 1, true);
     lcd.DrawLine(0, Pcd8544.PixelScreenSize.Height - 1, Pcd8544.PixelScreenSize.Width - 1, 0, true);
     lcd.Draw();
@@ -373,13 +373,13 @@ void LcdConsole()
 {
     LcdConsole console = new LcdConsole(lcd, string.Empty, false);
     console.LineFeedMode = LineWrapMode.Truncate;
-    Console.WriteLine("Nowrap test:");
+    Debug.WriteLine("Nowrap test:");
     console.Write("This is a long text that should not wrap and just extend beyond the display");
     console.WriteLine("This has CRLF\r\nin it and should \r\n wrap.");
     console.Write("This goes to the last line of the display");
     console.WriteLine("This isn't printed, because it's off the screen");
     Thread.Sleep(1500);
-    Console.WriteLine("Autoscroll test:");
+    Debug.WriteLine("Autoscroll test:");
     console.LineFeedMode = LineWrapMode.Wrap;
     console.WriteLine();
     console.WriteLine("Now the display should move up.");
@@ -399,14 +399,14 @@ void LcdConsole()
     }
 
     Thread.Sleep(1500);
-    Console.WriteLine("Intelligent wrapping test");
+    Debug.WriteLine("Intelligent wrapping test");
     console.LineFeedMode = LineWrapMode.WordWrap;
     console.WriteLine("Now intelligent wrapping should wrap this long sentence at word borders and ommit spaces at the start of lines.");
-    Console.WriteLine("Not wrappable test");
+    Debug.WriteLine("Not wrappable test");
     Thread.Sleep(1500);
     console.WriteLine("NowThisIsOneSentenceInOneWordThatCannotBeWrappedButStillAppearAllOverUpToTheEnd");
     Thread.Sleep(1500);
-    Console.WriteLine("Individual line test");
+    Debug.WriteLine("Individual line test");
     console.Clear();
     console.LineFeedMode = LineWrapMode.Truncate;
     console.ReplaceLine(0, "This is all garbage that will be replaced");
@@ -456,7 +456,7 @@ void LcdConsole()
     console.Dispose();
 }
 
-Console.WriteLine("Thank you for your attention!");
+Debug.WriteLine("Thank you for your attention!");
 lcd.WriteLine("Thank you for your attention!");
 Thread.Sleep(2000);
 lcd.Dispose();

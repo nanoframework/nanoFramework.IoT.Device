@@ -13,27 +13,27 @@ using Iot.Device.Rfid;
 
 MfRc522? mfrc522 = null;
 
-Console.WriteLine("Hello MFRC522!");
-Console.WriteLine("Do you want to use the MFRC522 on a device like a Raspberry Pi or through a FT4222?");
-Console.WriteLine("  1. Raspberry Pi or equivalent");
-Console.WriteLine("  2. FT4222");
+Debug.WriteLine("Hello MFRC522!");
+Debug.WriteLine("Do you want to use the MFRC522 on a device like a Raspberry Pi or through a FT4222?");
+Debug.WriteLine("  1. Raspberry Pi or equivalent");
+Debug.WriteLine("  2. FT4222");
 var hardchoice = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 if (hardchoice.KeyChar is not ('1' or '2'))
 {
-    Console.WriteLine("You have to choose option 1 or 2.");
+    Debug.WriteLine("You have to choose option 1 or 2.");
     return;
 }
 
-Console.WriteLine("How do you want to connect MFRC5222?");
-Console.WriteLine("  1. SPI");
-Console.WriteLine("  2. I2C");
-Console.WriteLine("  3. UART (Serial Port)");
+Debug.WriteLine("How do you want to connect MFRC5222?");
+Debug.WriteLine("  1. SPI");
+Debug.WriteLine("  2. I2C");
+Debug.WriteLine("  3. UART (Serial Port)");
 var connectionChoice = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 if (connectionChoice.KeyChar is not ('1' or '2' or '3'))
 {
-    Console.WriteLine("You have to choose option 1, 2 or 3.");
+    Debug.WriteLine("You have to choose option 1, 2 or 3.");
     return;
 }
 
@@ -53,7 +53,7 @@ switch (connectionChoice.KeyChar)
         mfrc522 = new(spi, 2, gpioController, false);
         break;
     case '2':
-        Console.WriteLine("Enter the I2C address in decimal so 16 for 0x10");
+        Debug.WriteLine("Enter the I2C address in decimal so 16 for 0x10");
         var i2cAddChoice = Console.ReadLine();
         try
         {
@@ -63,17 +63,17 @@ switch (connectionChoice.KeyChar)
         }
         catch (Exception)
         {
-            Console.WriteLine("Invalid I2C address entered");
+            Debug.WriteLine("Invalid I2C address entered");
             return;
         }
 
         break;
     case '3':
-        Console.WriteLine("Please enter your serial port like COM4 for Windows or /dev/ttyS0 for Linux");
+        Debug.WriteLine("Please enter your serial port like COM4 for Windows or /dev/ttyS0 for Linux");
         var serialNameChoice = Console.ReadLine();
         if (serialNameChoice is not object or { Length: 0 })
         {
-            Console.WriteLine("Serial port needs to be a valid one");
+            Debug.WriteLine("Serial port needs to be a valid one");
             return;
         }
 
@@ -83,12 +83,12 @@ switch (connectionChoice.KeyChar)
 
 if (mfrc522 is not object)
 {
-    Console.WriteLine("Something went wrong");
+    Debug.WriteLine("Something went wrong");
     return;
 }
 
-Console.WriteLine($"Version: {mfrc522.Version}, version should be 1 or 2. Some clones may appear with version 0");
-Console.WriteLine("Place your Mifare card on the reader, the default B key to 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF will be used to read the card");
+Debug.WriteLine($"Version: {mfrc522.Version}, version should be 1 or 2. Some clones may appear with version 0");
+Debug.WriteLine("Place your Mifare card on the reader, the default B key to 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF will be used to read the card");
 
 bool res;
 Data106kbpsTypeA card;
@@ -99,7 +99,7 @@ do
 }
 while (!res);
 
-Console.WriteLine();
+Debug.WriteLine();
 
 var mifare = new MifareCard(mfrc522, 0);
 mifare.SerialNumber = card.NfcId;
@@ -137,7 +137,7 @@ for (byte block = 0; block < 64; block++)
                 if (ret < 0)
                 {
                     mifare.ReselectCard();
-                    Console.WriteLine($"Error reading bloc: {block}");
+                    Debug.WriteLine($"Error reading bloc: {block}");
                 }
             }
         }
@@ -152,13 +152,13 @@ for (byte block = 0; block < 64; block++)
         {
             if (mifare.Data is object)
             {
-                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
+                Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
             }
         }
         else
         {
             mifare.ReselectCard();
-            Console.WriteLine($"Error reading bloc: {block}");
+            Debug.WriteLine($"Error reading bloc: {block}");
         }
 
         if (block % 4 == 3)
@@ -169,20 +169,20 @@ for (byte block = 0; block < 64; block++)
                 for (byte j = 3; j > 0; j--)
                 {
                     var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
-                    Console.WriteLine($"Bloc: {block - j}, Access: {access}");
+                    Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
                 }
 
                 var sector = mifare.SectorTailerAccess(block, mifare.Data);
-                Console.WriteLine($"Bloc: {block}, Access: {sector}");
+                Debug.WriteLine($"Bloc: {block}, Access: {sector}");
             }
             else
             {
-                Console.WriteLine("Can't check any sector bloc");
+                Debug.WriteLine("Can't check any sector bloc");
             }
         }
     }
     else
     {
-        Console.WriteLine($"Authentication error");
+        Debug.WriteLine($"Authentication error");
     }
 }

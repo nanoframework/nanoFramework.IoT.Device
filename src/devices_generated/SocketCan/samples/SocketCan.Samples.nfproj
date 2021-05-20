@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{DC945667-08C9-4FE2-8312-9332AAAD3E4C}</ProjectGuid>
-    <OutputType>Executable</OutputType>
+    <ProjectGuid>{471978C5-4AEB-43DA-B138-81A5A5D52E3A}</ProjectGuid>
+    <OutputType>Ex</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.SocketCan.Samples</RootNamespace>
@@ -21,7 +21,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length">$LF$      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>

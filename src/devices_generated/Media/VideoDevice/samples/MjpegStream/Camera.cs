@@ -109,7 +109,7 @@ namespace CameraIoT
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{ex}");
+                    Debug.WriteLine($"{ex}");
                     Thread.Sleep(1000);
                 }
             }

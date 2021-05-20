@@ -19,7 +19,7 @@ using Max31865 sensor = new(device, PlatinumResistanceThermometerType.Pt1000, Re
 
 while (true)
 {
-    Console.WriteLine($"Temperature: {sensor.Temperature.DegreesCelsius} ℃");
+    Debug.WriteLine($"Temperature: {sensor.Temperature.DegreesCelsius} ℃");
 
     // wait for 2000ms
     Thread.Sleep(2000);

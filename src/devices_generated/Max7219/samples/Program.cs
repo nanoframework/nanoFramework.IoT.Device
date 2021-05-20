@@ -13,7 +13,7 @@ if (args is { Length: > 0 })
     message = string.Join(" ", args);
 }
 
-Console.WriteLine(message);
+Debug.WriteLine(message);
 
 SpiConnectionSettings connectionSettings = new(0, 0)
 {
@@ -26,7 +26,7 @@ using Max7219 devices = new(spi, cascadedDevices: 4);
 devices.Init();
 
 // reinitialize the devices
-Console.WriteLine("Init");
+Debug.WriteLine("Init");
 devices.Init();
 
 // write a smiley to devices buffer
@@ -53,7 +53,7 @@ for (var i = 0; i < devices.CascadedDevices; i++)
 // flush the smiley to the devices using a different rotation each iteration.
 foreach (RotationType rotation in Enum.GetValues(typeof(RotationType)))
 {
-    Console.WriteLine($"Send Smiley using rotation {devices.Rotation}.");
+    Debug.WriteLine($"Send Smiley using rotation {devices.Rotation}.");
     devices.Rotation = rotation;
     devices.Flush();
     Thread.Sleep(1000);

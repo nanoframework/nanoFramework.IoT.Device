@@ -10,7 +10,7 @@ using Iot.Device.Mcp23xxx;
 
 int s_deviceAddress = 0x20;
 
-Console.WriteLine("Hello Mcp23xxx!");
+Debug.WriteLine("Hello Mcp23xxx!");
 
 using Mcp23xxx mcp23xxx = GetMcp23xxxDevice(Mcp23xxxDevice.Mcp23017);
 using GpioController controllerUsingMcp = new(PinNumberingScheme.Logical, mcp23xxx);
@@ -52,7 +52,7 @@ SpiDevice NewSpi() => SpiDevice.Create(new(0, 0)
 
 void ReadSwitchesWriteLeds(Mcp23x1x mcp23x1x)
 {
-    Console.WriteLine("Read Switches & Write LEDs");
+    Debug.WriteLine("Read Switches & Write LEDs");
 
     // Input direction for switches.
     mcp23x1x.WriteByte(Register.IODIR, 0b1111_1111, Port.PortA);
@@ -65,7 +65,7 @@ void ReadSwitchesWriteLeds(Mcp23x1x mcp23x1x)
         byte data = mcp23x1x.ReadByte(Register.GPIO, Port.PortA);
         // Write data to LEDs.
         mcp23x1x.WriteByte(Register.GPIO, data, Port.PortB);
-        Console.WriteLine(data);
+        Debug.WriteLine(data);
         Thread.Sleep(500);
     }
 }
@@ -73,72 +73,72 @@ void ReadSwitchesWriteLeds(Mcp23x1x mcp23x1x)
 void WriteByte(Mcp23x1x mcp23x1x)
 {
     // This assumes the device is in default Sequential Operation mode.
-    Console.WriteLine("Write Individual Byte");
+    Debug.WriteLine("Write Individual Byte");
 
     Register register = Register.IODIR;
 
     void IndividualRead(Mcp23xxx mcp, Register registerToRead)
     {
         byte dataRead = mcp23x1x.ReadByte(registerToRead, Port.PortB);
-        Console.WriteLine($"\tIODIRB: 0x{dataRead:X2}");
+        Debug.WriteLine($"\tIODIRB: 0x{dataRead:X2}");
     }
 
-    Console.WriteLine("Before Write");
+    Debug.WriteLine("Before Write");
     IndividualRead(mcp23x1x, register);
 
     mcp23x1x.WriteByte(register, 0x12, Port.PortB);
 
-    Console.WriteLine("After Write");
+    Debug.WriteLine("After Write");
     IndividualRead(mcp23x1x, register);
 
     mcp23x1x.WriteByte(register, 0xFF, Port.PortB);
 
-    Console.WriteLine("After Writing Again");
+    Debug.WriteLine("After Writing Again");
     IndividualRead(mcp23x1x, register);
 }
 
 void WriteUshort(Mcp23x1x mcp23x1x)
 {
     // This assumes the device is in default Sequential Operation mode.
-    Console.WriteLine("Write Sequential Bytes");
+    Debug.WriteLine("Write Sequential Bytes");
 
     void SequentialRead(Mcp23x1x mcp)
     {
         ushort dataRead = mcp.ReadUInt16(Register.IODIR);
-        Console.WriteLine($"\tIODIRA: 0x{(byte)dataRead:X2}");
-        Console.WriteLine($"\tIODIRB: 0x{(byte)dataRead >> 8:X2}");
+        Debug.WriteLine($"\tIODIRA: 0x{(byte)dataRead:X2}");
+        Debug.WriteLine($"\tIODIRB: 0x{(byte)dataRead >> 8:X2}");
     }
 
-    Console.WriteLine("Before Write");
+    Debug.WriteLine("Before Write");
     SequentialRead(mcp23x1x);
 
     mcp23x1x.WriteUInt16(Register.IODIR, 0x3412);
 
-    Console.WriteLine("After Write");
+    Debug.WriteLine("After Write");
     SequentialRead(mcp23x1x);
 
     mcp23x1x.WriteUInt16(Register.IODIR, 0xFFFF);
 
-    Console.WriteLine("After Writing Again");
+    Debug.WriteLine("After Writing Again");
     SequentialRead(mcp23x1x);
 }
 
 // This is now Read(pinNumber)
 void ReadBits(GpioController controller)
 {
-    Console.WriteLine("Read Bits");
+    Debug.WriteLine("Read Bits");
 
     for (int bitNumber = 0; bitNumber < 8; bitNumber++)
     {
         PinValue bit = controller.Read(bitNumber);
-        Console.WriteLine($"{bitNumber}: {bit}");
+        Debug.WriteLine($"{bitNumber}: {bit}");
     }
 }
 
 // This is now Write(pinNumber)
 void WriteBits(Mcp23x1x mcp23x1x, GpioController controller)
 {
-    Console.WriteLine("Write Bits");
+    Debug.WriteLine("Write Bits");
 
     // Make port output and set all pins.
     // (SetPinMode will also set the direction for each GPIO pin)
@@ -148,10 +148,10 @@ void WriteBits(Mcp23x1x mcp23x1x, GpioController controller)
     for (int bitNumber = 9; bitNumber < 16; bitNumber++)
     {
         controller.Write(bitNumber, PinValue.Low);
-        Console.WriteLine($"Bit {bitNumber} low");
+        Debug.WriteLine($"Bit {bitNumber} low");
         Thread.Sleep(500);
         controller.Write(bitNumber, PinValue.High);
-        Console.WriteLine($"Bit {bitNumber} high");
+        Debug.WriteLine($"Bit {bitNumber} high");
         Thread.Sleep(500);
     }
 }

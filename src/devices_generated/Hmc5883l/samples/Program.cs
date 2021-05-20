@@ -12,7 +12,7 @@ using Hmc5883l sensor = new(device);
 while (true)
 {
     // read heading
-    Console.WriteLine($"Heading: {sensor.Heading.ToString("0.00")} °");
+    Debug.WriteLine($"Heading: {sensor.Heading.ToString("0.00")} °");
 
     var status = sensor.DeviceStatus;
     Console.Write("Statuses: ");
@@ -24,8 +24,8 @@ while (true)
         }
     }
 
-    Console.WriteLine();
-    Console.WriteLine();
+    Debug.WriteLine();
+    Debug.WriteLine();
 
     // wait for a second
     Thread.Sleep(1000);

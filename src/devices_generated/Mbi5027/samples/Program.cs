@@ -15,8 +15,8 @@ Console.CancelKeyPress += (s, e) =>
     cancellationSource.Cancel();
 };
 
-Console.WriteLine($"Driver for {nameof(Mbi5027)}");
-Console.WriteLine($"Register bit length: {sr.BitLength}");
+Debug.WriteLine($"Driver for {nameof(Mbi5027)}");
+Debug.WriteLine($"Register bit length: {sr.BitLength}");
 
 CheckCircuit(sr);
 BinaryCounter(sr, cancellationSource);
@@ -26,7 +26,7 @@ sr.ShiftClear();
 void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
 {
     int endValue = 65_536;
-    Console.WriteLine($"Write 0 through {endValue}");
+    Debug.WriteLine($"Write 0 through {endValue}");
     int delay = 20;
 
     for (int i = 0; i < endValue; i++)
@@ -50,14 +50,14 @@ void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
 
 void CheckCircuit(Mbi5027 sr)
 {
-    Console.WriteLine("Checking circuit");
+    Debug.WriteLine("Checking circuit");
     sr.EnableDetectionMode();
 
     int index = sr.BitLength - 1;
 
     foreach (var value in sr.ReadOutputErrorStatus())
     {
-        Console.WriteLine($"Bit {index--}: {value}");
+        Debug.WriteLine($"Bit {index--}: {value}");
     }
 
     sr.EnableNormalMode();

@@ -16,6 +16,6 @@ I2cDevice i2cDevice = I2cDevice.Create(i2cSettings);
 Aht20 sensor = new Aht20(i2cDevice);
 while (true)
 {
-    Console.WriteLine($"{DateTime.Now.ToLongTimeString()}: {sensor.GetTemperature().DegreesCelsius:F1}°C, {sensor.GetHumidity().Percent:F0}%");
+    Debug.WriteLine($"{DateTime.Now.ToLongTimeString()}: {sensor.GetTemperature().DegreesCelsius:F1}°C, {sensor.GetHumidity().Percent:F0}%");
     Thread.Sleep(1000);
 }

@@ -21,12 +21,12 @@ Dictionary<string, Action> samples = new()
 
 if (args.Length == 0 || !samples.ContainsKey(args[0]))
 {
-    Console.WriteLine("Usage: SocketCan.Sample <sample-name>");
-    Console.WriteLine("Available samples:");
+    Debug.WriteLine("Usage: SocketCan.Sample <sample-name>");
+    Debug.WriteLine("Available samples:");
 
     foreach (var kv in samples)
     {
-        Console.WriteLine($"- {kv.Key}");
+        Debug.WriteLine($"- {kv.Key}");
     }
 
     return;
@@ -36,7 +36,7 @@ samples[args[0]]();
 
 void SendExample()
 {
-    Console.WriteLine($"Sending to id = 0x{id.Value:X2}");
+    Debug.WriteLine($"Sending to id = 0x{id.Value:X2}");
 
     using CanRaw can = new CanRaw();
     byte[][] buffers = new byte[][]
@@ -59,7 +59,7 @@ void SendExample()
         {
             can.WriteFrame(buffer, id);
             string dataAsHex = string.Join(string.Empty, buffer.Select((x) => x.ToString("X2")));
-            Console.WriteLine($"Sending: {dataAsHex}");
+            Debug.WriteLine($"Sending: {dataAsHex}");
             Thread.Sleep(1000);
         }
     }
@@ -67,7 +67,7 @@ void SendExample()
 
 void ReceiveAllExample()
 {
-    Console.WriteLine("Listening for any id");
+    Debug.WriteLine("Listening for any id");
 
     using CanRaw can = new();
     byte[] buffer = new byte[8];
@@ -79,22 +79,22 @@ void ReceiveAllExample()
             SpanByte data = new SpanByte(buffer, 0, frameLength);
             string type = id.ExtendedFrameFormat ? "EFF" : "SFF";
             string dataAsHex = string.Join(string.Empty, data.ToArray().Select((x) => x.ToString("X2")));
-            Console.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
+            Debug.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
         }
         else
         {
-            Console.WriteLine($"Invalid frame received!");
+            Debug.WriteLine($"Invalid frame received!");
             SpanByte data = new SpanByte(buffer, 0, frameLength);
             string type = id.ExtendedFrameFormat ? "EFF" : "SFF";
             string dataAsHex = string.Join(string.Empty, data.ToArray().Select((x) => x.ToString("X2")));
-            Console.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
+            Debug.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
         }
     }
 }
 
 void ReceiveOnAddressExample()
 {
-    Console.WriteLine($"Listening for id = 0x{id.Value:X2}");
+    Debug.WriteLine($"Listening for id = 0x{id.Value:X2}");
 
     using CanRaw can = new();
     byte[] buffer = new byte[8];
@@ -107,11 +107,11 @@ void ReceiveOnAddressExample()
             SpanByte data = new SpanByte(buffer, 0, frameLength);
             string type = id.ExtendedFrameFormat ? "EFF" : "SFF";
             string dataAsHex = string.Join(string.Empty, data.ToArray().Select((x) => x.ToString("X2")));
-            Console.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
+            Debug.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
         }
         else
         {
-            Console.WriteLine($"Invalid frame received!");
+            Debug.WriteLine($"Invalid frame received!");
         }
     }
 }

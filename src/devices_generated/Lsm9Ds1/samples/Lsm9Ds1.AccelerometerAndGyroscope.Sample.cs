@@ -16,8 +16,8 @@ namespace Iot.Device.Lsm9Ds1.Samples
             using Lsm9Ds1AccelerometerAndGyroscope ag = new(CreateI2cDevice());
             while (true)
             {
-                Console.WriteLine($"Acceleration={ag.Acceleration}");
-                Console.WriteLine($"AngularRate={ag.AngularRate}");
+                Debug.WriteLine($"Acceleration={ag.Acceleration}");
+                Debug.WriteLine($"AngularRate={ag.AngularRate}");
                 Thread.Sleep(100);
             }
         }

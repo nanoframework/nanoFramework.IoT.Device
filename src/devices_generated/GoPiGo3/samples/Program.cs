@@ -31,21 +31,21 @@ namespace GoPiGo3.Samples
         /// <param name="args">Unused</param>
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello GoPiGo3!");
-            Console.WriteLine("Choose a test by entering the number and press enter:");
-            Console.WriteLine("  1. Basic GoPiGo3 info and embedded led test");
-            Console.WriteLine("  2. Control left motor from motor right position");
-            Console.WriteLine("  3. Read encoder of right motor");
-            Console.WriteLine("  4. Test both servo motors");
-            Console.WriteLine("  5. Test Ultrasonic sensor on Grove1");
-            Console.WriteLine("  6. Test buzzer on Grove1");
-            Console.WriteLine("  7. Change buzzer tone on Grove1 with a potentiometer on Grove2");
-            Console.WriteLine("  8. Test sound sensor on Grove1");
-            Console.WriteLine("  9. Test a relay on Grove1");
-            Console.WriteLine(" 10. Test a button on Grove1");
-            Console.WriteLine(" 11. Control a led light on Grove2 from a light sensor on Grove1");
-            Console.WriteLine(" 12. Test MotorLeft speed based on encoder");
-            Console.WriteLine(" 13. Test driving the vehicle");
+            Debug.WriteLine("Hello GoPiGo3!");
+            Debug.WriteLine("Choose a test by entering the number and press enter:");
+            Debug.WriteLine("  1. Basic GoPiGo3 info and embedded led test");
+            Debug.WriteLine("  2. Control left motor from motor right position");
+            Debug.WriteLine("  3. Read encoder of right motor");
+            Debug.WriteLine("  4. Test both servo motors");
+            Debug.WriteLine("  5. Test Ultrasonic sensor on Grove1");
+            Debug.WriteLine("  6. Test buzzer on Grove1");
+            Debug.WriteLine("  7. Change buzzer tone on Grove1 with a potentiometer on Grove2");
+            Debug.WriteLine("  8. Test sound sensor on Grove1");
+            Debug.WriteLine("  9. Test a relay on Grove1");
+            Debug.WriteLine(" 10. Test a button on Grove1");
+            Debug.WriteLine(" 11. Control a led light on Grove2 from a light sensor on Grove1");
+            Debug.WriteLine(" 12. Test MotorLeft speed based on encoder");
+            Debug.WriteLine(" 13. Test driving the vehicle");
             var readCar = Console.ReadLine();
             switch (readCar)
             {
@@ -95,7 +95,7 @@ namespace GoPiGo3.Samples
 
         private static void TestServo()
         {
-            Console.WriteLine("Move both servo from position 800 µs to 1600µs. Press enter to stop the test.");
+            Debug.WriteLine("Move both servo from position 800 µs to 1600µs. Press enter to stop the test.");
             while (!Console.KeyAvailable)
             {
                 _goPiGo3.SetServo(ServoPort.Servo1, 800);
@@ -109,12 +109,12 @@ namespace GoPiGo3.Samples
         private static void TestGoPiGoDetails()
         {
             var goPiGoInfo = _goPiGo3.GoPiGo3Info;
-            Console.WriteLine($"Manufacturer: {goPiGoInfo?.Manufacturer}");
-            Console.WriteLine($"Board: {goPiGoInfo?.Board}");
-            Console.WriteLine($"Hardware version: {goPiGoInfo?.HardwareVersion}");
-            Console.WriteLine($"Id: {goPiGoInfo?.Id}");
+            Debug.WriteLine($"Manufacturer: {goPiGoInfo?.Manufacturer}");
+            Debug.WriteLine($"Board: {goPiGoInfo?.Board}");
+            Debug.WriteLine($"Hardware version: {goPiGoInfo?.HardwareVersion}");
+            Debug.WriteLine($"Id: {goPiGoInfo?.Id}");
             // Eyes led
-            Console.WriteLine("Testing Led, changing colors for the leds on both eyes");
+            Debug.WriteLine("Testing Led, changing colors for the leds on both eyes");
             for (int red = 0; red < 255; red += 10)
             {
                 for (int green = 0; green < 255; green += 10)
@@ -127,19 +127,19 @@ namespace GoPiGo3.Samples
             }
 
             // Led wifi
-            Console.WriteLine("Changing wifi led to red");
+            Debug.WriteLine("Changing wifi led to red");
             _goPiGo3.SetLed((byte)GoPiGo3Led.LedWifi, Color.Red);
             Thread.Sleep(2000);
-            Console.WriteLine("Changing wifi led to blue");
+            Debug.WriteLine("Changing wifi led to blue");
             _goPiGo3.SetLed((byte)GoPiGo3Led.LedWifi, Color.Green);
             Thread.Sleep(2000);
-            Console.WriteLine("Changing wifi led to green");
+            Debug.WriteLine("Changing wifi led to green");
             _goPiGo3.SetLed((byte)GoPiGo3Led.LedWifi, Color.Blue);
             Thread.Sleep(2000);
             // Get the voltage details
             var voltage = _goPiGo3.GoPiGoVoltage;
-            Console.WriteLine($"5V: {voltage.Voltage5V}");
-            Console.WriteLine($"Battery voltage: {voltage.VoltageBattery}");
+            Debug.WriteLine($"5V: {voltage.Voltage5V}");
+            Debug.WriteLine($"Battery voltage: {voltage.VoltageBattery}");
             _goPiGo3.SetLed((byte)GoPiGo3Led.LedEyeLeft + (byte)GoPiGo3Led.LedEyeRight + (byte)GoPiGo3Led.LedWifi, Color.Black);
         }
 
@@ -153,7 +153,7 @@ namespace GoPiGo3.Samples
             _goPiGo3.SetMotorPower(MotorPort.MotorRight, (byte)MotorSpeed.Float);
             // set some limits
             _goPiGo3.SetMotorLimits(MotorPort.MotorLeft, 50, 200);
-            Console.WriteLine("Read Motor Left and Right positions. Press enter stop the test.");
+            Debug.WriteLine("Read Motor Left and Right positions. Press enter stop the test.");
             AddLines();
             // run until we press enter
             while (!Console.KeyAvailable)
@@ -161,7 +161,7 @@ namespace GoPiGo3.Samples
                 var target = _goPiGo3.GetMotorEncoder(MotorPort.MotorRight);
                 _goPiGo3.SetMotorPosition(MotorPort.MotorLeft, target);
                 var status = _goPiGo3.GetMotorStatus(MotorPort.MotorLeft);
-                Console.WriteLine($"MotorLeft Target DPS: {target} Speed: {status.Speed} DPS: {status.Dps} Encoder: {status.Encoder} Flags: {status.Flags}");
+                Debug.WriteLine($"MotorLeft Target DPS: {target} Speed: {status.Speed} DPS: {status.Dps} Encoder: {status.Encoder} Flags: {status.Flags}");
                 status = _goPiGo3.GetMotorStatus(MotorPort.MotorRight);
                 Console.Write($"MotorRight Target DPS: {target} Speed: {status.Speed} DPS: {status.Dps} Encoder: {status.Encoder} Flags: {status.Flags}");
                 Thread.Sleep(20);
@@ -181,15 +181,15 @@ namespace GoPiGo3.Samples
 
         private static void AddLines()
         {
-            Console.WriteLine();
-            Console.WriteLine();
+            Debug.WriteLine();
+            Debug.WriteLine();
             Console.CursorTop -= 2;
         }
 
         private static void TestMotorEncoder()
         {
             // Reset first the position
-            Console.WriteLine("Read encoder of Motor Right. Reset position to 0 to start. Press enter stop the test.");
+            Debug.WriteLine("Read encoder of Motor Right. Reset position to 0 to start. Press enter stop the test.");
             _goPiGo3.OffsetMotorEncoder(MotorPort.MotorRight, _goPiGo3.GetMotorEncoder(MotorPort.MotorRight));
             while (!Console.KeyAvailable)
             {

@@ -13,7 +13,7 @@ using (var llv3 = new LidarLiteV3(CreateI2cDevice()))
     for (int i = 0; i < 10; i++)
     {
         Length currentDistance = llv3.MeasureDistance();
-        Console.WriteLine($"Current Distance: {currentDistance.Centimeters} cm");
+        Debug.WriteLine($"Current Distance: {currentDistance.Centimeters} cm");
         Thread.Sleep(1000);
     }
 }

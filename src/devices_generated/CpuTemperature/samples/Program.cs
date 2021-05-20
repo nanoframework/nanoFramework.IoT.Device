@@ -6,7 +6,7 @@ using System.Threading;
 using Iot.Device.CpuTemperature;
 
 CpuTemperature cpuTemperature = new CpuTemperature();
-Console.WriteLine("Press any key to quit");
+Debug.WriteLine("Press any key to quit");
 
 while (!Console.KeyAvailable)
 {
@@ -17,17 +17,17 @@ while (!Console.KeyAvailable)
         {
             if (!double.IsNaN(entry.Temperature.DegreesCelsius))
             {
-                Console.WriteLine($"Temperature from {entry.Sensor.ToString()}: {entry.Temperature.DegreesCelsius} °C");
+                Debug.WriteLine($"Temperature from {entry.Sensor.ToString()}: {entry.Temperature.DegreesCelsius} °C");
             }
             else
             {
-                Console.WriteLine("Unable to read Temperature.");
+                Debug.WriteLine("Unable to read Temperature.");
             }
         }
     }
     else
     {
-        Console.WriteLine($"CPU temperature is not available");
+        Debug.WriteLine($"CPU temperature is not available");
     }
 
     Thread.Sleep(1000);

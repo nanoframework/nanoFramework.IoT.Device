@@ -19,8 +19,8 @@ using Max31856 sensor = new(device, ThermocoupleType.K);
 while (true)
 {
     Temperature tempThermocouple = sensor.GetTemperature();
-    Console.WriteLine($"Temperature Thermocouple: {tempThermocouple.DegreesFahrenheit} F");
+    Debug.WriteLine($"Temperature Thermocouple: {tempThermocouple.DegreesFahrenheit} F");
     Temperature tempColdJunction = sensor.GetColdJunctionTemperature();
-    Console.WriteLine($"Temperature Cold Junction: {tempColdJunction.DegreesFahrenheit} F");
+    Debug.WriteLine($"Temperature Cold Junction: {tempColdJunction.DegreesFahrenheit} F");
     Thread.Sleep(2000);
 }

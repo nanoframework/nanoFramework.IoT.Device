@@ -6,18 +6,18 @@ using System.Threading;
 using Iot.Device.Hcsr04;
 using UnitsNet;
 
-Console.WriteLine("Hello Hcsr04 Sample!");
+Debug.WriteLine("Hello Hcsr04 Sample!");
 
 using Hcsr04 sonar = new(4, 17);
 while (true)
 {
     if (sonar.TryGetDistance(out Length distance))
     {
-        Console.WriteLine($"Distance: {distance.Centimeters} cm");
+        Debug.WriteLine($"Distance: {distance.Centimeters} cm");
     }
     else
     {
-        Console.WriteLine("Error reading sensor");
+        Debug.WriteLine("Error reading sensor");
     }
 
     Thread.Sleep(1000);

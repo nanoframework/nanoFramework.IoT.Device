@@ -13,14 +13,14 @@ using UnitsNet;
 
 var settings = new I2cConnectionSettings(2, StUsb4500.DefaultI2cAddress);
 var stUsb = new StUsb4500(I2cDevice.Create(settings));
-Console.WriteLine($"{nameof(stUsb.DeviceId)}: 0x{stUsb.DeviceId:x}");
+Debug.WriteLine($"{nameof(stUsb.DeviceId)}: 0x{stUsb.DeviceId:x}");
 UsbCCableConnection connection = stUsb.CableConnection;
-Console.WriteLine($"{nameof(stUsb.CableConnection)}: {connection}{Environment.NewLine}");
+Debug.WriteLine($"{nameof(stUsb.CableConnection)}: {connection}{Environment.NewLine}");
 
 PrintLocalPdo();
 
 PrintNvmData();
-Console.WriteLine("Update NVM? (y/N)");
+Debug.WriteLine("Update NVM? (y/N)");
 if (Console.ReadLine()?.ToLowerInvariant() == "y")
 {
     UpdateNvmData();
@@ -34,7 +34,7 @@ if (connection == UsbCCableConnection.Disconnected)
 PrintRdo();
 PrintSourcePdo(); // ATTENTION: This triggers a new USB PD contract negotiation and can cause a short power-disruption.
 
-Console.WriteLine("Update local PDOs? (y/N)");
+Debug.WriteLine("Update local PDOs? (y/N)");
 if (Console.ReadLine()?.ToLowerInvariant() != "y")
 {
     return;
@@ -47,26 +47,26 @@ PrintRdo();
 
 void PrintLocalPdo()
 {
-    Console.WriteLine("Local sink PDOs:");
+    Debug.WriteLine("Local sink PDOs:");
     PowerDeliveryObject[] sinkPdos = stUsb.SinkPowerDeliveryObjects;
     for (int i = 0; i < sinkPdos.Length; i++)
     {
         PowerDeliveryObject pdo = sinkPdos[i];
-        Console.WriteLine($"PDO #{i + 1}: {pdo}");
+        Debug.WriteLine($"PDO #{i + 1}: {pdo}");
     }
 
-    Console.WriteLine();
+    Debug.WriteLine();
 }
 
 void PrintNvmData()
 {
-    Console.WriteLine("NVM data:");
+    Debug.WriteLine("NVM data:");
     byte[] nvmData = stUsb.NvmData;
-    Console.WriteLine($"0x00: 0x{nvmData[0]:X2} 0x{nvmData[1]:X2} 0x{nvmData[2]:X2} 0x{nvmData[3]:X2} 0x{nvmData[4]:X2} 0x{nvmData[5]:X2} 0x{nvmData[6]:X2} 0x{nvmData[7]:X2}");
-    Console.WriteLine($"0x08: 0x{nvmData[8]:X2} 0x{nvmData[9]:X2} 0x{nvmData[10]:X2} 0x{nvmData[11]:X2} 0x{nvmData[12]:X2} 0x{nvmData[13]:X2} 0x{nvmData[14]:X2} 0x{nvmData[15]:X2}");
-    Console.WriteLine($"0x16: 0x{nvmData[16]:X2} 0x{nvmData[17]:X2} 0x{nvmData[18]:X2} 0x{nvmData[19]:X2} 0x{nvmData[20]:X2} 0x{nvmData[21]:X2} 0x{nvmData[22]:X2} 0x{nvmData[23]:X2}");
-    Console.WriteLine($"0x24: 0x{nvmData[24]:X2} 0x{nvmData[25]:X2} 0x{nvmData[26]:X2} 0x{nvmData[27]:X2} 0x{nvmData[28]:X2} 0x{nvmData[29]:X2} 0x{nvmData[30]:X2} 0x{nvmData[31]:X2}");
-    Console.WriteLine($"0x32: 0x{nvmData[32]:X2} 0x{nvmData[33]:X2} 0x{nvmData[34]:X2} 0x{nvmData[35]:X2} 0x{nvmData[36]:X2} 0x{nvmData[37]:X2} 0x{nvmData[38]:X2} 0x{nvmData[39]:X2}{Environment.NewLine}");
+    Debug.WriteLine($"0x00: 0x{nvmData[0]:X2} 0x{nvmData[1]:X2} 0x{nvmData[2]:X2} 0x{nvmData[3]:X2} 0x{nvmData[4]:X2} 0x{nvmData[5]:X2} 0x{nvmData[6]:X2} 0x{nvmData[7]:X2}");
+    Debug.WriteLine($"0x08: 0x{nvmData[8]:X2} 0x{nvmData[9]:X2} 0x{nvmData[10]:X2} 0x{nvmData[11]:X2} 0x{nvmData[12]:X2} 0x{nvmData[13]:X2} 0x{nvmData[14]:X2} 0x{nvmData[15]:X2}");
+    Debug.WriteLine($"0x16: 0x{nvmData[16]:X2} 0x{nvmData[17]:X2} 0x{nvmData[18]:X2} 0x{nvmData[19]:X2} 0x{nvmData[20]:X2} 0x{nvmData[21]:X2} 0x{nvmData[22]:X2} 0x{nvmData[23]:X2}");
+    Debug.WriteLine($"0x24: 0x{nvmData[24]:X2} 0x{nvmData[25]:X2} 0x{nvmData[26]:X2} 0x{nvmData[27]:X2} 0x{nvmData[28]:X2} 0x{nvmData[29]:X2} 0x{nvmData[30]:X2} 0x{nvmData[31]:X2}");
+    Debug.WriteLine($"0x32: 0x{nvmData[32]:X2} 0x{nvmData[33]:X2} 0x{nvmData[34]:X2} 0x{nvmData[35]:X2} 0x{nvmData[36]:X2} 0x{nvmData[37]:X2} 0x{nvmData[38]:X2} 0x{nvmData[39]:X2}{Environment.NewLine}");
 }
 
 void UpdateNvmData()
@@ -86,38 +86,38 @@ void UpdateNvmData()
 void PrintSourcePdo()
 {
     Power maxPower = Power.Zero;
-    Console.WriteLine("Source PDOs:");
+    Debug.WriteLine("Source PDOs:");
     PowerDeliveryObject[] sourcePdos = stUsb.SourcePowerDeliveryObjects;
     for (int i = 0; i < sourcePdos.Length; i++)
     {
         PowerDeliveryObject pdo = sourcePdos[i];
-        Console.WriteLine($"PDO #{i + 1}: {pdo}");
+        Debug.WriteLine($"PDO #{i + 1}: {pdo}");
         if (pdo.Power > maxPower)
         {
             maxPower = pdo.Power;
         }
     }
 
-    Console.WriteLine($"P(max) = {maxPower:0.##}{Environment.NewLine}");
+    Debug.WriteLine($"P(max) = {maxPower:0.##}{Environment.NewLine}");
 }
 
 void PrintRdo()
 {
-    Console.WriteLine("RDO (negotiated power):");
+    Debug.WriteLine("RDO (negotiated power):");
     RequestDataObject rdo = stUsb.RequestDataObject;
-    Console.WriteLine($"Requested position: PDO #{rdo.ObjectPosition}");
-    Console.WriteLine($"Operating current: {rdo.OperatingCurrent:0.##}");
-    Console.WriteLine($"Max. current: {rdo.MaximalCurrent:0.##}");
-    Console.WriteLine($"USB communications capable: {rdo.UsbCommunicationsCapable}");
-    Console.WriteLine($"Capability mismatch: {rdo.CapabilityMismatch}");
+    Debug.WriteLine($"Requested position: PDO #{rdo.ObjectPosition}");
+    Debug.WriteLine($"Operating current: {rdo.OperatingCurrent:0.##}");
+    Debug.WriteLine($"Max. current: {rdo.MaximalCurrent:0.##}");
+    Debug.WriteLine($"USB communications capable: {rdo.UsbCommunicationsCapable}");
+    Debug.WriteLine($"Capability mismatch: {rdo.CapabilityMismatch}");
     ElectricPotentialDc voltage = stUsb.RequestedVoltage;
-    Console.WriteLine($"Requested voltage: {voltage:0.##}");
-    Console.WriteLine($"Available Power: {Power.FromWatts(voltage.VoltsDc * rdo.MaximalCurrent.Amperes):0.##}{Environment.NewLine}");
+    Debug.WriteLine($"Requested voltage: {voltage:0.##}");
+    Debug.WriteLine($"Available Power: {Power.FromWatts(voltage.VoltsDc * rdo.MaximalCurrent.Amperes):0.##}{Environment.NewLine}");
 }
 
 void UpdateLocalPdo()
 {
-    Console.WriteLine($"Update Local sink PDOs...{Environment.NewLine}");
+    Debug.WriteLine($"Update Local sink PDOs...{Environment.NewLine}");
     PowerDeliveryObject[] sinkPdos = stUsb.SinkPowerDeliveryObjects;
     if (sinkPdos.Length > 1 && sinkPdos[1] is FixedSupplyObject fixedSupplyObject1)
     {

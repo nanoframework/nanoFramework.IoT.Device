@@ -18,10 +18,10 @@ while (true)
     // read data
     Vector3 data = sensor.Acceleration;
 
-    Console.WriteLine($"X: {data.X.ToString("0.00")} g");
-    Console.WriteLine($"Y: {data.Y.ToString("0.00")} g");
-    Console.WriteLine($"Z: {data.Z.ToString("0.00")} g");
-    Console.WriteLine();
+    Debug.WriteLine($"X: {data.X.ToString("0.00")} g");
+    Debug.WriteLine($"Y: {data.Y.ToString("0.00")} g");
+    Debug.WriteLine($"Z: {data.Z.ToString("0.00")} g");
+    Debug.WriteLine();
 
     // wait for 500ms
     Thread.Sleep(500);

@@ -33,8 +33,8 @@ namespace Arduino.Samples
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: Arduino.sample <PortName>");
-                Console.WriteLine("i.e.: Arduino.sample COM4");
+                Debug.WriteLine("Usage: Arduino.sample <PortName>");
+                Debug.WriteLine("i.e.: Arduino.sample COM4");
                 return;
             }
 
@@ -50,14 +50,14 @@ namespace Arduino.Samples
 
             using (var port = new SerialPort(portName, 115200))
             {
-                Console.WriteLine($"Connecting to Arduino on {portName}");
+                Debug.WriteLine($"Connecting to Arduino on {portName}");
                 try
                 {
                     port.Open();
                 }
                 catch (UnauthorizedAccessException x)
                 {
-                    Console.WriteLine($"Could not open COM port: {x.Message} Possible reason: Arduino IDE connected or serial console open");
+                    Debug.WriteLine($"Could not open COM port: {x.Message} Possible reason: Arduino IDE connected or serial console open");
                     return;
                 }
 
@@ -65,14 +65,14 @@ namespace Arduino.Samples
                 try
                 {
                     // This implicitly connects
-                    Console.WriteLine($"Connecting... Firmware version: {board.FirmwareVersion}, Builder: {board.FirmwareName}");
+                    Debug.WriteLine($"Connecting... Firmware version: {board.FirmwareVersion}, Builder: {board.FirmwareName}");
                     while (Menu(board))
                     {
                     }
                 }
                 catch (TimeoutException x)
                 {
-                    Console.WriteLine($"No answer from board: {x.Message} ");
+                    Debug.WriteLine($"No answer from board: {x.Message} ");
                 }
                 finally
                 {
@@ -84,31 +84,31 @@ namespace Arduino.Samples
 
         private static void BoardOnLogMessages(string message, Exception? exception)
         {
-            Console.WriteLine("Log message: " + message);
+            Debug.WriteLine("Log message: " + message);
             if (exception != null)
             {
-                Console.WriteLine(exception);
+                Debug.WriteLine(exception);
             }
         }
 
         private static bool Menu(ArduinoBoard board)
         {
-            Console.WriteLine("Hello I2C and GPIO on Arduino!");
-            Console.WriteLine("Select the test you want to run:");
-            Console.WriteLine(" 1 Run I2C tests with a BMP280");
-            Console.WriteLine(" 2 Run GPIO tests with a simple led blinking on GPIO6 port");
-            Console.WriteLine(" 3 Run polling button test on GPIO2");
-            Console.WriteLine(" 4 Run event wait test event on GPIO2 on Falling and Rising");
-            Console.WriteLine(" 5 Run callback event test on GPIO2");
-            Console.WriteLine(" 6 Run PWM test with a LED dimming on GPIO6 port");
-            Console.WriteLine(" 7 Blink the LED according to the input on A1");
-            Console.WriteLine(" 8 Read analog channel as fast as possible");
-            Console.WriteLine(" 9 Run SPI tests with an MCP3008 (experimental)");
-            Console.WriteLine(" 0 Detect all devices on the I2C bus");
-            Console.WriteLine(" H Read DHT11 Humidity sensor on GPIO 3 (experimental)");
-            Console.WriteLine(" X Exit");
+            Debug.WriteLine("Hello I2C and GPIO on Arduino!");
+            Debug.WriteLine("Select the test you want to run:");
+            Debug.WriteLine(" 1 Run I2C tests with a BMP280");
+            Debug.WriteLine(" 2 Run GPIO tests with a simple led blinking on GPIO6 port");
+            Debug.WriteLine(" 3 Run polling button test on GPIO2");
+            Debug.WriteLine(" 4 Run event wait test event on GPIO2 on Falling and Rising");
+            Debug.WriteLine(" 5 Run callback event test on GPIO2");
+            Debug.WriteLine(" 6 Run PWM test with a LED dimming on GPIO6 port");
+            Debug.WriteLine(" 7 Blink the LED according to the input on A1");
+            Debug.WriteLine(" 8 Read analog channel as fast as possible");
+            Debug.WriteLine(" 9 Run SPI tests with an MCP3008 (experimental)");
+            Debug.WriteLine(" 0 Detect all devices on the I2C bus");
+            Debug.WriteLine(" H Read DHT11 Humidity sensor on GPIO 3 (experimental)");
+            Debug.WriteLine(" X Exit");
             var key = Console.ReadKey();
-            Console.WriteLine();
+            Debug.WriteLine();
 
             switch (key.KeyChar)
             {
@@ -159,7 +159,7 @@ namespace Arduino.Samples
             int pin = 6;
             using (var pwm = board.CreatePwmChannel(0, pin, 100, 0))
             {
-                Console.WriteLine("Now dimming LED. Press any key to exit");
+                Debug.WriteLine("Now dimming LED. Press any key to exit");
                 while (!Console.KeyAvailable)
                 {
                     pwm.Start();
@@ -194,7 +194,7 @@ namespace Arduino.Samples
             var bmp = new Bmp280(device);
             bmp.StandbyTime = StandbyTime.Ms250;
             bmp.SetPowerMode(Bmx280PowerMode.Normal);
-            Console.WriteLine("Device open");
+            Debug.WriteLine("Device open");
             while (!Console.KeyAvailable)
             {
                 bmp.TryReadTemperature(out var temperature);
@@ -206,7 +206,7 @@ namespace Arduino.Samples
             bmp.Dispose();
             device.Dispose();
             Console.ReadKey();
-            Console.WriteLine();
+            Debug.WriteLine();
         }
 
         private static void ScanDeviceAddressesOnI2cBus(ArduinoBoard board)
@@ -249,7 +249,7 @@ namespace Arduino.Samples
                 stringBuilder.Append(Environment.NewLine);
             }
 
-            Console.WriteLine(stringBuilder.ToString());
+            Debug.WriteLine(stringBuilder.ToString());
         }
 
         public static void TestGpio(ArduinoBoard board)
@@ -262,7 +262,7 @@ namespace Arduino.Samples
             gpioController.OpenPin(gpio);
             gpioController.SetPinMode(gpio, PinMode.Output);
 
-            Console.WriteLine("Blinking GPIO6");
+            Debug.WriteLine("Blinking GPIO6");
             while (!Console.KeyAvailable)
             {
                 gpioController.Write(gpio, PinValue.High);
@@ -287,7 +287,7 @@ namespace Arduino.Samples
             gpioController.OpenPin(gpio);
             gpioController.SetPinMode(gpio, PinMode.Output);
 
-            Console.WriteLine("Blinking GPIO6, based on analog input.");
+            Debug.WriteLine("Blinking GPIO6, based on analog input.");
             while (!Console.KeyAvailable)
             {
                 ElectricPotential voltage = pin.ReadVoltage();
@@ -316,11 +316,11 @@ namespace Arduino.Samples
             {
                 if (args.PinNumber == analogPin)
                 {
-                    Console.WriteLine($"New voltage: {args.Value}.");
+                    Debug.WriteLine($"New voltage: {args.Value}.");
                 }
             };
 
-            Console.WriteLine("Waiting for changes on the analog input");
+            Debug.WriteLine("Waiting for changes on the analog input");
             while (!Console.KeyAvailable)
             {
                 // Nothing to do
@@ -362,7 +362,7 @@ namespace Arduino.Samples
                 throw new InvalidOperationException("Couldn't set pin mode");
             }
 
-            Console.WriteLine("Polling input pin 2");
+            Debug.WriteLine("Polling input pin 2");
             var lastState = gpioController.Read(gpio);
             while (!Console.KeyAvailable)
             {
@@ -371,11 +371,11 @@ namespace Arduino.Samples
                 {
                     if (newState == PinValue.High)
                     {
-                        Console.WriteLine("Button pressed");
+                        Debug.WriteLine("Button pressed");
                     }
                     else
                     {
-                        Console.WriteLine("Button released");
+                        Debug.WriteLine("Button released");
                     }
                 }
 
@@ -396,18 +396,18 @@ namespace Arduino.Samples
             gpioController.OpenPin(Gpio2);
             gpioController.SetPinMode(Gpio2, PinMode.Input);
 
-            Console.WriteLine("Waiting for both falling and rising events");
+            Debug.WriteLine("Waiting for both falling and rising events");
             while (!Console.KeyAvailable)
             {
                 var res = gpioController.WaitForEvent(Gpio2, PinEventTypes.Falling | PinEventTypes.Rising, new TimeSpan(0, 0, 0, 0, 50));
                 if ((!res.TimedOut) && (res.EventTypes != PinEventTypes.None))
                 {
-                    Console.WriteLine($"Event on GPIO {Gpio2}, event type: {res.EventTypes}");
+                    Debug.WriteLine($"Event on GPIO {Gpio2}, event type: {res.EventTypes}");
                 }
             }
 
             Console.ReadKey();
-            Console.WriteLine("Waiting for only rising events");
+            Debug.WriteLine("Waiting for only rising events");
             while (!Console.KeyAvailable)
             {
                 var res = gpioController.WaitForEvent(Gpio2, PinEventTypes.Rising, new TimeSpan(0, 0, 0, 0, 50));
@@ -429,10 +429,10 @@ namespace Arduino.Samples
             gpioController.OpenPin(Gpio2);
             gpioController.SetPinMode(Gpio2, PinMode.Input);
 
-            Console.WriteLine("Setting up events on GPIO2 for rising and falling");
+            Debug.WriteLine("Setting up events on GPIO2 for rising and falling");
 
             gpioController.RegisterCallbackForPinValueChangedEvent(Gpio2, PinEventTypes.Falling | PinEventTypes.Rising, MyCallback);
-            Console.WriteLine("Event setup, press a key to remove the falling event");
+            Debug.WriteLine("Event setup, press a key to remove the falling event");
             while (!Console.KeyAvailable)
             {
                 // Nothing to do
@@ -442,7 +442,7 @@ namespace Arduino.Samples
             Console.ReadKey();
             gpioController.UnregisterCallbackForPinValueChangedEvent(Gpio2, MyCallback);
             gpioController.RegisterCallbackForPinValueChangedEvent(Gpio2, PinEventTypes.Rising, MyCallback);
-            Console.WriteLine("Now only waiting for rising events, press a key to remove all events and quit");
+            Debug.WriteLine("Now only waiting for rising events, press a key to remove all events and quit");
             while (!Console.KeyAvailable)
             {
                 // Nothing to do
@@ -456,7 +456,7 @@ namespace Arduino.Samples
 
         private static void MyCallback(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
-            Console.WriteLine($"Event on GPIO {pinValueChangedEventArgs.PinNumber}, event type: {pinValueChangedEventArgs.ChangeType}");
+            Debug.WriteLine($"Event on GPIO {pinValueChangedEventArgs.PinNumber}, event type: {pinValueChangedEventArgs.ChangeType}");
         }
 
         public static void TestSpi(ArduinoBoard board)
@@ -466,17 +466,17 @@ namespace Arduino.Samples
             using (var spi = board.CreateSpiDevice(settings))
             using (Mcp3008 mcp = new Mcp3008(spi))
             {
-                Console.WriteLine("SPI Device open");
+                Debug.WriteLine("SPI Device open");
                 while (!Console.KeyAvailable)
                 {
                     double vdd = mcp.Read(5);
                     double vss = mcp.Read(6);
                     double middle = mcp.Read(7);
-                    Console.WriteLine($"Raw values: VSS {vss} VDD {vdd} Average {middle}");
+                    Debug.WriteLine($"Raw values: VSS {vss} VDD {vdd} Average {middle}");
                     vdd = vssValue * vdd / 1024;
                     vss = vssValue * vss / 1024;
                     middle = vssValue * middle / 1024;
-                    Console.WriteLine($"Converted values: VSS {vss:F2}V, VDD {vdd:F2}V, Average {middle:F2}V");
+                    Debug.WriteLine($"Converted values: VSS {vss:F2}V, VDD {vdd:F2}V, Average {middle:F2}V");
                     Thread.Sleep(200);
                 }
             }
@@ -486,17 +486,17 @@ namespace Arduino.Samples
 
         public static void TestDht(ArduinoBoard board)
         {
-            Console.WriteLine("Reading DHT11. Any key to quit.");
+            Debug.WriteLine("Reading DHT11. Any key to quit.");
 
             while (!Console.KeyAvailable)
             {
                 if (board.TryReadDht(3, 11, out var temperature, out var humidity))
                 {
-                    Console.WriteLine($"Temperature: {temperature}, Humidity {humidity}");
+                    Debug.WriteLine($"Temperature: {temperature}, Humidity {humidity}");
                 }
                 else
                 {
-                    Console.WriteLine("Unable to read DHT11");
+                    Debug.WriteLine("Unable to read DHT11");
                 }
 
                 Thread.Sleep(2500);

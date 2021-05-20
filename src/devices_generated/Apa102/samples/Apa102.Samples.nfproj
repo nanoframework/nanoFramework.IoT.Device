@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{BCBDAA2A-E4F3-45FC-AB0D-34E287058144}</ProjectGuid>
-    <OutputType>Executable</OutputType>
+    <ProjectGuid>{40256ABB-294A-46A5-8E71-8805BD4EF677}</ProjectGuid>
+    <OutputType>Ex</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Apa102.Samples</RootNamespace>
@@ -21,11 +21,11 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Spi">
-      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.38\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference> 
     <Reference Include="UnitsNet.Length">

@@ -45,13 +45,13 @@ while (true)
     try
     {
         VolumeConcentration reading = sensor.GetCo2Reading();
-        Console.WriteLine($"{reading.PartsPerMillion:F0} ppm");
+        Debug.WriteLine($"{reading.PartsPerMillion:F0} ppm");
     }
     catch (IOException e)
     {
-        Console.WriteLine("Concentration couldn't be read");
-        Console.WriteLine(e.Message);
-        Console.WriteLine(e.InnerException?.Message);
+        Debug.WriteLine("Concentration couldn't be read");
+        Debug.WriteLine(e.Message);
+        Debug.WriteLine(e.InnerException?.Message);
     }
 
     Thread.Sleep(1000);

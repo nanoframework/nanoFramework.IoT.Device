@@ -21,7 +21,7 @@ namespace Iot.Device.CharacterLcd.Samples
 
         public static void SampleEntryPoint()
         {
-            Console.WriteLine("Starting...");
+            Debug.WriteLine("Starting...");
             // for PCF8574T i2c addresses can be between 0x27 and 0x20 depending on bridged solder jumpers
             // for PCF8574AT i2c addresses can be between 0x3f and 0x38 depending on bridged solder jumpers
             var i2cDevice = I2cDevice.Create(new I2cConnectionSettings(busId: 1, deviceAddress: 0x27));
@@ -30,7 +30,7 @@ namespace Iot.Device.CharacterLcd.Samples
 
             using (lcd)
             {
-                Console.WriteLine("Initialized");
+                Debug.WriteLine("Initialized");
                 Console.ReadLine();
 
                 TestPrompt("SetCursor", lcd, SetCursorTest);
@@ -87,7 +87,7 @@ namespace Iot.Device.CharacterLcd.Samples
                 {
                     lcd.DisplayOn = false;
                     lcd.BacklightOn = false;
-                    Console.WriteLine("Done...");
+                    Debug.WriteLine("Done...");
                 }
             }
         }
@@ -202,7 +202,7 @@ namespace Iot.Device.CharacterLcd.Samples
             stopwatch.Stop();
             string result = $"Elapsed ms: {stopwatch.ElapsedMilliseconds}";
             lcd.Write(result);
-            Console.WriteLine(result);
+            Debug.WriteLine(result);
         }
 
         private static void SetBacklightColorTest(LcdRgb lcd)

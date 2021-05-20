@@ -9,7 +9,7 @@ const int PinkPin = 17;
 const int YellowPin = 27;
 const int OrangePin = 22;
 
-Console.WriteLine($"Let's go!");
+Debug.WriteLine($"Let's go!");
 using Uln2003 motor = new Uln2003(BluePin, PinkPin, YellowPin, OrangePin);
 Console.CancelKeyPress += (object? sender, ConsoleCancelEventArgs eventArgs) =>
 {

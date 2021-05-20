@@ -10,7 +10,7 @@ using Iot.Device.Bmxx80.PowerMode;
 using Iot.Device.Common;
 using UnitsNet;
 
-Console.WriteLine("Hello Bme280!");
+Debug.WriteLine("Hello Bme280!");
 
 // bus id on the raspberry pi 3
 const int busId = 1;
@@ -37,16 +37,16 @@ while (true)
     // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
     bme80.TryReadAltitude(defaultSeaLevelPressure, out var altValue);
 
-    Console.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
-    Console.WriteLine($"Altitude: {altValue.Meters:0.##}m");
-    Console.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
+    Debug.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
+    Debug.WriteLine($"Altitude: {altValue.Meters:0.##}m");
+    Debug.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
 
     // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
     if (readResult.Temperature.HasValue && readResult.Humidity.HasValue)
     {
-        Console.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
-        Console.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+        Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+        Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
     }
 
     Thread.Sleep(1000);
@@ -64,16 +64,16 @@ while (true)
     // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
     bme80.TryReadAltitude(defaultSeaLevelPressure, out altValue);
 
-    Console.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
-    Console.WriteLine($"Altitude: {altValue.Meters:0.##}m");
-    Console.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
+    Debug.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
+    Debug.WriteLine($"Altitude: {altValue.Meters:0.##}m");
+    Debug.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
 
     // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
     if (readResult.Temperature.HasValue && readResult.Humidity.HasValue)
     {
-        Console.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
-        Console.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+        Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+        Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
     }
 
     Thread.Sleep(5000);

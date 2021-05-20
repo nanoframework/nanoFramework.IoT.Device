@@ -18,8 +18,8 @@ namespace Iot.Device.Lsm9Ds1.Samples
         {
             using (Lsm9Ds1Magnetometer m = new(CreateI2cDevice()))
             {
-                Console.WriteLine("Calibrating...");
-                Console.WriteLine("Move the sensor around Z for the next 20 seconds, try covering every angle");
+                Debug.WriteLine("Calibrating...");
+                Debug.WriteLine("Move the sensor around Z for the next 20 seconds, try covering every angle");
 
                 TimeSpan timeout = TimeSpan.FromMilliseconds(20000);
                 Stopwatch sw = Stopwatch.StartNew();
@@ -33,7 +33,7 @@ namespace Iot.Device.Lsm9Ds1.Samples
                     Thread.Sleep(50);
                 }
 
-                Console.WriteLine("Stop moving for some time...");
+                Debug.WriteLine("Stop moving for some time...");
                 Thread.Sleep(3000);
 
                 const int intervals = 32;
@@ -54,7 +54,7 @@ namespace Iot.Device.Lsm9Ds1.Samples
                     if (n % 10 == 0)
                     {
                         Console.Clear();
-                        Console.WriteLine("Now move the sensor around again but slower...");
+                        Debug.WriteLine("Now move the sensor around again but slower...");
 
                         for (int i = 0; i < intervals; i++)
                         {
@@ -72,7 +72,7 @@ namespace Iot.Device.Lsm9Ds1.Samples
                                 }
                             }
 
-                            Console.WriteLine();
+                            Debug.WriteLine();
                         }
                     }
 

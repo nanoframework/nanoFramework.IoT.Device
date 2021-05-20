@@ -14,7 +14,7 @@ Console.Clear();
 Console.CursorVisible = false;
 
 PrintChannelsTable();
-Console.WriteLine("Press Enter to exit.");
+Debug.WriteLine("Press Enter to exit.");
 
 // Subscribe to channel statuses updates.
 mpr121.ChannelStatusesChanged += (object? sender, ChannelStatusesChangedEventArgs e) =>
@@ -33,11 +33,11 @@ Console.CursorVisible = true;
 
 void PrintChannelsTable()
 {
-    Console.WriteLine("-----------------");
+    Debug.WriteLine("-----------------");
 
     foreach (var channel in Enum.GetValues(typeof(Channels)))
     {
-        Console.WriteLine("| " + Enum.GetName(typeof(Channels), channel) + " |   |");
-        Console.WriteLine("-----------------");
+        Debug.WriteLine("| " + Enum.GetName(typeof(Channels), channel) + " |   |");
+        Debug.WriteLine("-----------------");
     }
 }

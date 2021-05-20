@@ -38,7 +38,7 @@ internal class Volume
         }
 
         _lastValue = value;
-        Console.WriteLine($"Volume: {value}");
+        Debug.WriteLine($"Volume: {value}");
 
         var tenth = value / 10;
 

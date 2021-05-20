@@ -13,7 +13,7 @@ if (args.Any(_ => _ == "temp"))
     // Quick and simple way to find a thermometer and print the temperature
     foreach (var dev in OneWireThermometerDevice.EnumerateDevices())
     {
-        Console.WriteLine($"Temperature reported by '{dev.DeviceId}': " +
+        Debug.WriteLine($"Temperature reported by '{dev.DeviceId}': " +
                             (await dev.ReadTemperatureAsync()).DegreesCelsius.ToString("F2") + "\u00B0C");
     }
 }
@@ -23,16 +23,16 @@ else
     foreach (string busId in OneWireBus.EnumerateBusIds())
     {
         OneWireBus bus = new(busId);
-        Console.WriteLine($"Found bus '{bus.BusId}', scanning for devices ...");
+        Debug.WriteLine($"Found bus '{bus.BusId}', scanning for devices ...");
         await bus.ScanForDeviceChangesAsync();
         foreach (string devId in bus.EnumerateDeviceIds())
         {
             OneWireDevice dev = new(busId, devId);
-            Console.WriteLine($"Found family '{dev.Family}' device '{dev.DeviceId}' on '{bus.BusId}'");
+            Debug.WriteLine($"Found family '{dev.Family}' device '{dev.DeviceId}' on '{bus.BusId}'");
             if (OneWireThermometerDevice.IsCompatible(busId, devId))
             {
                 OneWireThermometerDevice devTemp = new(busId, devId);
-                Console.WriteLine("Temperature reported by device: " +
+                Debug.WriteLine("Temperature reported by device: " +
                                     (await devTemp.ReadTemperatureAsync()).DegreesCelsius.ToString("F2") +
                                     "\u00B0C");
             }

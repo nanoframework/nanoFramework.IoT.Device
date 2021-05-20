@@ -14,8 +14,8 @@ using Max44009 sensor = new(device, IntegrationTime.Time100);
 while (true)
 {
     // read illuminance
-    Console.WriteLine($"Illuminance: {sensor.Illuminance}Lux");
-    Console.WriteLine();
+    Debug.WriteLine($"Illuminance: {sensor.Illuminance}Lux");
+    Debug.WriteLine();
 
     Thread.Sleep(1000);
 }

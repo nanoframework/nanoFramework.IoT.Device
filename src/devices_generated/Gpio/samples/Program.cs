@@ -16,15 +16,15 @@ namespace Sunxi.Gpio.Samples
             int debounceDelay = 50000;
             int pin = 7;
 
-            Console.WriteLine($"Let's blink an on-board LED!");
+            Debug.WriteLine($"Let's blink an on-board LED!");
 
             using GpioController controller = new GpioController(PinNumberingScheme.Board, new OrangePiZeroDriver());
             using BoardLed led = new BoardLed("orangepi:red:status");
 
             controller.OpenPin(pin, PinMode.InputPullUp);
             led.Trigger = "none";
-            Console.WriteLine($"GPIO pin enabled for use: {pin}.");
-            Console.WriteLine("Press any key to exit.");
+            Debug.WriteLine($"GPIO pin enabled for use: {pin}.");
+            Debug.WriteLine("Press any key to exit.");
 
             while (!Console.KeyAvailable)
             {

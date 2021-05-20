@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{381F0217-5C69-4569-BD88-A8F28FFB592D}</ProjectGuid>
+    <ProjectGuid>{A61330A9-B09B-49F9-92BE-52AE05F770A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -21,19 +21,19 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Gpio">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference> 
     <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.0-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.1\lib\System.Math.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Math.1.0.0-preview.5\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

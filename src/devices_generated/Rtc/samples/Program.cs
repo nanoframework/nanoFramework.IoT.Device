@@ -17,9 +17,9 @@ while (true)
     // read time
     DateTime dt = rtc.DateTime;
 
-    Console.WriteLine($"Time: {dt.ToString("yyyy/MM/dd HH:mm:ss")}");
-    Console.WriteLine($"Temperature: {rtc.Temperature.DegreesCelsius} ℃");
-    Console.WriteLine();
+    Debug.WriteLine($"Time: {dt.ToString("yyyy/MM/dd HH:mm:ss")}");
+    Debug.WriteLine($"Temperature: {rtc.Temperature.DegreesCelsius} ℃");
+    Debug.WriteLine();
 
     // wait for a second
     Thread.Sleep(1000);

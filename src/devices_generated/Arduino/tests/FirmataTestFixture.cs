@@ -45,7 +45,7 @@ namespace Arduino.Tests
             }
             catch (SocketException)
             {
-                Console.WriteLine("Unable to connect to simulator, trying hardware...");
+                Debug.WriteLine("Unable to connect to simulator, trying hardware...");
             }
 
             if (!ArduinoBoard.TryFindBoard(SerialPort.GetPortNames(), new List<int>() { 115200 }, out var board))

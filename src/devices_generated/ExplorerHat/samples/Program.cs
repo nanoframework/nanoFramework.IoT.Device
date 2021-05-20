@@ -54,7 +54,7 @@ int i = 0;
 foreach (var led in hat.Lights)
 {
     i++;
-    Console.WriteLine($"Led #{i} is {(led.IsOn ? "ON" : "OFF")}");
+    Debug.WriteLine($"Led #{i} is {(led.IsOn ? "ON" : "OFF")}");
 }
 
 // Motors

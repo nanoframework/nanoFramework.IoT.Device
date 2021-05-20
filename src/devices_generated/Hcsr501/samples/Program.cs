@@ -20,13 +20,13 @@ while (true)
     {
         // turn the led on when the sensor detected infrared heat
         ledController.Write(LedPin, PinValue.High);
-        Console.WriteLine("Detected! Turn the LED on.");
+        Debug.WriteLine("Detected! Turn the LED on.");
     }
     else
     {
         // turn the led off when the sensor undetected infrared heat
         ledController.Write(LedPin, PinValue.Low);
-        Console.WriteLine("Undetected! Turn the LED off.");
+        Debug.WriteLine("Undetected! Turn the LED off.");
     }
 
     Thread.Sleep(1000);

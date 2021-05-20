@@ -25,13 +25,13 @@ namespace Iot.Device.CharacterLcd.Samples
         {
             LcdConsole console = new LcdConsole(lcd, "A00", false);
             console.LineFeedMode = LineWrapMode.Truncate;
-            Console.WriteLine("Nowrap test:");
+            Debug.WriteLine("Nowrap test:");
             console.Write("This is a long text that should not wrap and just extend beyond the display");
             console.WriteLine("This has CRLF\r\nin it and should \r\n wrap.");
             console.Write("This goes to the last line of the display");
             console.WriteLine("This isn't printed, because it's off the screen");
             Console.ReadLine();
-            Console.WriteLine("Autoscroll test:");
+            Debug.WriteLine("Autoscroll test:");
             console.LineFeedMode = LineWrapMode.Wrap;
             console.WriteLine();
             console.WriteLine("Now the display should move up.");
@@ -51,14 +51,14 @@ namespace Iot.Device.CharacterLcd.Samples
             }
 
             Console.ReadLine();
-            Console.WriteLine("Intelligent wrapping test");
+            Debug.WriteLine("Intelligent wrapping test");
             console.LineFeedMode = LineWrapMode.WordWrap;
             console.WriteLine("Now intelligent wrapping should wrap this long sentence at word borders and ommit spaces at the start of lines.");
-            Console.WriteLine("Not wrappable test");
+            Debug.WriteLine("Not wrappable test");
             Console.ReadLine();
             console.WriteLine("NowThisIsOneSentenceInOneWordThatCannotBeWrapped");
             Console.ReadLine();
-            Console.WriteLine("Individual line test");
+            Debug.WriteLine("Individual line test");
             console.Clear();
             console.LineFeedMode = LineWrapMode.Truncate;
             console.ReplaceLine(0, "This is all garbage that will be replaced");
@@ -105,7 +105,7 @@ namespace Iot.Device.CharacterLcd.Samples
 
             alertTask?.Wait();
             Console.ReadKey();
-            Console.WriteLine("Culture Info Test");
+            Debug.WriteLine("Culture Info Test");
             LcdCharacterEncoding encoding = LcdConsole.CreateEncoding(CultureInfo.CreateSpecificCulture("de-CH"), "A00", '?', 8);
             console.LoadEncoding(encoding);
             console.Clear();
@@ -147,7 +147,7 @@ namespace Iot.Device.CharacterLcd.Samples
                 "også i Sydslesvig (i Flensborg ca. 20 %) samt PÅ FÆRØER OG GRØNLAND.");
 
             Console.ReadLine();
-            Console.WriteLine("Japanese test");
+            Debug.WriteLine("Japanese test");
             encoding = LcdConsole.CreateEncoding(CultureInfo.CreateSpecificCulture("ja-ja"), "A00", '?', 8);
             console.LoadEncoding(encoding);
             console.WriteLine("What about some japanese?");

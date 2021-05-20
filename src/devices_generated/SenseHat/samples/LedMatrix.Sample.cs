@@ -55,7 +55,7 @@ namespace Iot.Device.SenseHat.Samples
                 frames++;
                 if (frames % 200 == 0 && time > 1.0)
                 {
-                    Console.WriteLine($"Average FPS: {frames / time}");
+                    Debug.WriteLine($"Average FPS: {frames / time}");
                 }
 
                 Thread.Sleep(30);
