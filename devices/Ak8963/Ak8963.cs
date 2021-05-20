@@ -144,12 +144,12 @@ namespace Iot.Device.Magnetometer
                 try
                 {
                     var bias = ReadMagnetometerWithoutCorrection(true, TimeSpan.FromMilliseconds(12));
-                    minbias.X = Math.Min(bias.X, minbias.X);
-                    minbias.Y = Math.Min(bias.Y, minbias.Y);
-                    minbias.Z = Math.Min(bias.Z, minbias.Z);
-                    maxbias.X = Math.Max(bias.X, maxbias.X);
-                    maxbias.Y = Math.Max(bias.Y, maxbias.Y);
-                    maxbias.Z = Math.Max(bias.Z, maxbias.Z);
+                    minbias.X = (float)Math.Min(bias.X, minbias.X);
+                    minbias.Y = (float)Math.Min(bias.Y, minbias.Y);
+                    minbias.Z = (float)Math.Min(bias.Z, minbias.Z);
+                    maxbias.X = (float)Math.Max(bias.X, maxbias.X);
+                    maxbias.Y = (float)Math.Max(bias.Y, maxbias.Y);
+                    maxbias.Z = (float)Math.Max(bias.Z, maxbias.Z);
                     // 10 ms = 100Hz, so waiting to make sure we have new data
                     Thread.Sleep(10);
                 }
@@ -200,18 +200,36 @@ namespace Iot.Device.Magnetometer
         ///    +Z   +Y
         /// </remarks>
         /// <param name="waitForData">true to wait for new data</param>
+        /// <returns>The data from the magnetometer</returns>
+        public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData = true) => ReadMagnetometerWithoutCorrection(waitForData, DefaultTimeout);
+
+        /// <summary>
+        /// Read the magnetometer without Bias correction and can wait for new data to be present
+        /// </summary>
+        /// <remarks>
+        /// Vector axes are the following:
+        ///         +X
+        ///  \  |  /
+        ///   \ | /
+        ///    \|/
+        ///    /|\
+        ///   / | \
+        ///  /  |  \
+        ///    +Z   +Y
+        /// </remarks>
+        /// <param name="waitForData">true to wait for new data</param>
         /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
-        public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData = true, TimeSpan? timeout = null)
+        public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
             SpanByte rawData = new byte[6];
             // Wait for a data to be present
             if (waitForData)
             {
-                DateTime dt = DateTime.Now.Add(timeout ?? DefaultTimeout);
+                DateTime dt = DateTime.UtcNow.Add(timeout);
                 while (!HasDataToRead)
                 {
-                    if (DateTime.Now > dt)
+                    if (DateTime.UtcNow > dt)
                     {
                         throw new TimeoutException($"{nameof(ReadMagnetometer)} timeout reading value");
                     }
@@ -265,7 +283,26 @@ namespace Iot.Device.Magnetometer
         /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
         [Telemetry("Magnetometer")]
-        public Vector3 ReadMagnetometer(bool waitForData = true, TimeSpan? timeout = null)
+        public Vector3 ReadMagnetometer(bool waitForData = true) => ReadMagnetometer(waitForData, DefaultTimeout);
+
+        /// <summary>
+        /// Read the magnetometer with bias correction and can wait for new data to be present
+        /// </summary>
+        /// <remarks>
+        /// Vector axes are the following:
+        ///         +X
+        ///  \  |  /
+        ///   \ | /
+        ///    \|/
+        ///    /|\
+        ///   / | \
+        ///  /  |  \
+        ///    +Z   +Y
+        /// </remarks>
+        /// <param name="waitForData">true to wait for new data</param>
+        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
+        /// <returns>The data from the magnetometer</returns>
+        public Vector3 ReadMagnetometer(bool waitForData, TimeSpan timeout)
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
             magn *= MagnetometerAdjustment;

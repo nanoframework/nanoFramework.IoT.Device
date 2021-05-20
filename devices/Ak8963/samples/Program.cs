@@ -3,7 +3,7 @@
 
 using System;
 using System.Device.I2c;
-using System.IO;
+using System.Diagnostics;
 using System.Threading;
 using System.Numerics;
 using Iot.Device.Magnetometer;
@@ -18,10 +18,9 @@ Debug.WriteLine($"Mag X = {mag.X}");
 Debug.WriteLine($"Mag Y = {mag.Y}");
 Debug.WriteLine($"Mag Z = {mag.Z}");
 Debug.WriteLine("Press a key to continue");
-Console.ReadKey();
-Console.Clear();
+Thread.Sleep(1000);
 
-while (!Console.KeyAvailable)
+while (true)
 {
     Vector3 magne = ak8963.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
     Debug.WriteLine($"Mag X = {magne.X,15}");
@@ -29,5 +28,3 @@ while (!Console.KeyAvailable)
     Debug.WriteLine($"Mag Z = {magne.Z,15}");
     Thread.Sleep(200);
 }
-
-Console.ReadKey();
