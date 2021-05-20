@@ -190,6 +190,8 @@ namespace System.Numerics
             var valueW = Convert.ToDouble(value.W.ToString());
 
             return new Vector4((float)Math.Abs(valueX), (float)Math.Abs(valueY), (float)Math.Abs(valueZ), (float)Math.Abs(valueW));
+
+            return new Vector4(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z), Math.Abs(value.W));
         }
 
         /// <summary>

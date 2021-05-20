@@ -155,6 +155,8 @@ namespace System.Numerics
             var valueZ = Convert.ToDouble(value.Z.ToString());
 
             return new Vector3((float)Math.Abs(valueX), (float)Math.Abs(valueY), (float)Math.Abs(valueZ));
+
+            return new Vector3(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z));
         }
 
         /// <summary>

@@ -145,6 +145,8 @@ namespace System.Numerics
             var valueY = Convert.ToDouble(value.Y.ToString());
 
             return new Vector2((float)Math.Abs(valueX), (float)Math.Abs(valueY));
+
+            return new Vector2(Math.Abs(value.X), Math.Abs(value.Y));
         }
 
         /// <summary>
