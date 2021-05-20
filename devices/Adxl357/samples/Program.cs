@@ -6,6 +6,7 @@ using System.Device.I2c;
 using System.Numerics;
 using System.Threading;
 using Iot.Device.Adxl357;
+using System.Diagnostics;
 
 I2cConnectionSettings i2CConnectionSettings = new I2cConnectionSettings(1, Adxl357.DefaultI2CAddress);
 I2cDevice device = I2cDevice.Create(i2CConnectionSettings);
@@ -21,7 +22,7 @@ while (true)
     Debug.WriteLine($"X: {data.X.ToString("0.00")} g");
     Debug.WriteLine($"Y: {data.Y.ToString("0.00")} g");
     Debug.WriteLine($"Z: {data.Z.ToString("0.00")} g");
-    Debug.WriteLine();
+    Debug.WriteLine("");
 
     // wait for 500ms
     Thread.Sleep(500);
