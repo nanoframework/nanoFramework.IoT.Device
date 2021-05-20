@@ -141,7 +141,10 @@ namespace System.Numerics
         
         public static Vector2 Abs(Vector2 value)
         {
-            return new Vector2(Math.Abs(value.X), Math.Abs(value.Y));
+            var valueX = Convert.ToDouble(value.X.ToString());
+            var valueY = Convert.ToDouble(value.Y.ToString());
+
+            return new Vector2((float)Math.Abs(valueX), (float)Math.Abs(valueY));
         }
 
         /// <summary>

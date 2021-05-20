@@ -150,7 +150,11 @@ namespace System.Numerics
         /// <returns>The absolute value vector.</returns>
         public static Vector3 Abs(Vector3 value)
         {
-            return new Vector3(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z));
+            var valueX = Convert.ToDouble(value.X.ToString());
+            var valueY = Convert.ToDouble(value.Y.ToString());
+            var valueZ = Convert.ToDouble(value.Z.ToString());
+
+            return new Vector3((float)Math.Abs(valueX), (float)Math.Abs(valueY), (float)Math.Abs(valueZ));
         }
 
         /// <summary>

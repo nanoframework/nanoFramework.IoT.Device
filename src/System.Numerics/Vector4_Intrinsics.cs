@@ -184,7 +184,12 @@ namespace System.Numerics
         /// <returns>The absolute value vector.</returns>
         public static Vector4 Abs(Vector4 value)
         {
-            return new Vector4(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z), Math.Abs(value.W));
+            var valueX = Convert.ToDouble(value.X.ToString());
+            var valueY = Convert.ToDouble(value.Y.ToString());
+            var valueZ = Convert.ToDouble(value.Z.ToString());
+            var valueW = Convert.ToDouble(value.W.ToString());
+
+            return new Vector4((float)Math.Abs(valueX), (float)Math.Abs(valueY), (float)Math.Abs(valueZ), (float)Math.Abs(valueW));
         }
 
         /// <summary>
