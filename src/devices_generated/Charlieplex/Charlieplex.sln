@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{971CF810-C79D-49D5-B406-E6E793ACA411}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{4820AE3D-5ED1-444E-947F-DE682E500A25}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Samples", "samples\Charlieplex.Samples.nfproj", "{A168DAB5-4F65-408A-87B6-BB2713F96C37}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Samples", "samples\Charlieplex.Samples.nfproj", "{48490B09-232D-4054-869F-BEE0087C35C0}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\Charlieplex.Tests.nfproj", "{74116BFA-FB32-46E6-923D-F110135387A5}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\Charlieplex.Tests.nfproj", "{9FB0ED47-E515-4C82-A767-6EC50EE117CD}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {971CF810-C79D-49D5-B406-E6E793ACA411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {971CF810-C79D-49D5-B406-E6E793ACA411}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {971CF810-C79D-49D5-B406-E6E793ACA411}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {971CF810-C79D-49D5-B406-E6E793ACA411}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {971CF810-C79D-49D5-B406-E6E793ACA411}.Release|Any CPU.Build.0 = Release|Any CPU
-        {971CF810-C79D-49D5-B406-E6E793ACA411}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {4820AE3D-5ED1-444E-947F-DE682E500A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {4820AE3D-5ED1-444E-947F-DE682E500A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {4820AE3D-5ED1-444E-947F-DE682E500A25}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {4820AE3D-5ED1-444E-947F-DE682E500A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {4820AE3D-5ED1-444E-947F-DE682E500A25}.Release|Any CPU.Build.0 = Release|Any CPU
+        {4820AE3D-5ED1-444E-947F-DE682E500A25}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
