@@ -47,3 +47,8 @@ The project conversion, transformation os `Span<byte>` to `SpanByte` and other a
 
 - Issue: There is no generic (yet) and no Queue in nanoFramework. Most of the time, the usage of those elements are simple.
 - Resolution: Replace the Queue by a `ArrayList` and use `Add` and `Remove` with a cast to read the data.
+
+## Console
+
+- Issue: `Console` is not available in .NET nanoFramework. It does only appear on the sample side.
+- Resolution: can be replaced by `Debug`. And the `Console.Read` and other elements like this from the samples can be replaced by hard coded data or constants. 
