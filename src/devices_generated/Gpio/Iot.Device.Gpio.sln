@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{B7E1DA28-C513-41CE-8003-4BC442BB12DF}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{4076339A-AE00-4E59-B8C2-C2CFAA43C241}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio.Samples", "samples\\Iot.Device.Gpio.Samples.nfproj", "{7BA1353B-B020-4BC0-AC55-4E7F196B8E62}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio.Samples", "samples\\Iot.Device.Gpio.Samples.nfproj", "{EF46DF6E-F834-4B4D-B716-435631C1B2E9}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {B7E1DA28-C513-41CE-8003-4BC442BB12DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {B7E1DA28-C513-41CE-8003-4BC442BB12DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {B7E1DA28-C513-41CE-8003-4BC442BB12DF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {B7E1DA28-C513-41CE-8003-4BC442BB12DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {B7E1DA28-C513-41CE-8003-4BC442BB12DF}.Release|Any CPU.Build.0 = Release|Any CPU
-        {B7E1DA28-C513-41CE-8003-4BC442BB12DF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {4076339A-AE00-4E59-B8C2-C2CFAA43C241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {4076339A-AE00-4E59-B8C2-C2CFAA43C241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {4076339A-AE00-4E59-B8C2-C2CFAA43C241}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {4076339A-AE00-4E59-B8C2-C2CFAA43C241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {4076339A-AE00-4E59-B8C2-C2CFAA43C241}.Release|Any CPU.Build.0 = Release|Any CPU
+        {4076339A-AE00-4E59-B8C2-C2CFAA43C241}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

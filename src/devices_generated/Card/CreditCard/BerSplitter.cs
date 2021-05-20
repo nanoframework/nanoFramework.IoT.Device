@@ -21,7 +21,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// Constructor taking a BER encoded array
         /// </summary>
         /// <param name="toSplit">The byte array to be decoded</param>
-        public BerSplitter(ReadOnlySpanByte toSplit)
+        public BerSplitter(SpanByte toSplit)
         {
             Tags = new List<Tag>();
             int index = 0;
@@ -52,7 +52,7 @@ namespace Iot.Device.Card.CreditCardProcessing
             }
         }
 
-        private (uint TagNumber, byte NumberElements) DecodeTag(ReadOnlySpanByte toSplit)
+        private (uint TagNumber, byte NumberElements) DecodeTag(SpanByte toSplit)
         {
             uint tagValue = toSplit[0];
             byte index = 1;
@@ -70,7 +70,7 @@ namespace Iot.Device.Card.CreditCardProcessing
             return (tagValue, index);
         }
 
-        private (int Size, byte NumBytes) DecodeSize(ReadOnlySpanByte toSplit)
+        private (int Size, byte NumBytes) DecodeSize(SpanByte toSplit)
         {
             // Case infinite
             if (toSplit[0] == 0b1000_0000)

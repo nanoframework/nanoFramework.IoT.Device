@@ -107,6 +107,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
                             { "DateTime.Now", "DateTime.UtcNow" },
                             { ".AsSpan(start, length)", string.Empty },
                             { "Console.WriteLine(", "Debug.WriteLine(" },
+                            { "using System.Diagnostics.CodeAnalysis;", "" },
+                            { "\\[MemberNotNull.*\\]", "" },
                         },
                         nfNugetPackages,
                         searches);
@@ -533,6 +535,18 @@ EndProject";
                                 line = line.Replace(replacement.Key, replacement.Value);
                                 replacedKeys.Add(replacement.Key);
                             }
+                            try
+                            {
+                                if (replacement.Key.Contains(".*"))
+                                {
+                                    var regexMatch = Regex.Match(line, replacement.Key).Value;
+                                    if (string.IsNullOrEmpty(regexMatch) == false)
+                                    {
+                                        line = line.Replace(regexMatch, replacement.Value);
+                                    }
+                                }
+                            }
+                            catch (RegexParseException) { }
                         }
 
                         if (checkIfFound != null)

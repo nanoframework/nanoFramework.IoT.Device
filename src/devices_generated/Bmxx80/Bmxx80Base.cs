@@ -5,7 +5,7 @@ using System;
 using System.Buffers.Binary;
 using System.Device.I2c;
 using System.IO;
-using System.Diagnostics.CodeAnalysis;
+
 using Iot.Device.Bmxx80.CalibrationData;
 using Iot.Device.Bmxx80.Register;
 using UnitsNet;
@@ -305,7 +305,7 @@ namespace Iot.Device.Bmxx80
         }
 
 #if !NETCOREAPP2_1
-        [MemberNotNull(nameof(_calibrationData))]
+        
 #endif
         private void ReadCalibrationData()
         {

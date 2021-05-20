@@ -117,7 +117,7 @@ namespace Iot.Device.PiJuiceDevice
         /// </summary>
         /// <param name="command">The PiJuice command</param>
         /// <param name="data">The data to write</param>
-        internal void WriteCommand(PiJuiceCommand command, ReadOnlySpanByte data)
+        internal void WriteCommand(PiJuiceCommand command, SpanByte data)
         {
             byte tries = 0;
             SpanByte buffer = new byte[data.Length + 2];
@@ -157,7 +157,7 @@ namespace Iot.Device.PiJuiceDevice
         /// <param name="command">The PiJuice command</param>
         /// <param name="data">The data to write</param>
         /// <param name="delay">The delay before reading the data</param>
-        internal void WriteCommandVerify(PiJuiceCommand command, ReadOnlySpanByte data, int delay = 0)
+        internal void WriteCommandVerify(PiJuiceCommand command, SpanByte data, int delay = 0)
         {
             WriteCommand(command, data);
 
@@ -237,7 +237,7 @@ namespace Iot.Device.PiJuiceDevice
         /// <param name="data">The data.</param>
         /// <param name="checkLastByte">Whether the last byte in the data is included in the checksum</param>
         /// <returns>Checksum</returns>
-        private byte GetCheckSum(ReadOnlySpanByte data, bool checkLastByte = false)
+        private byte GetCheckSum(SpanByte data, bool checkLastByte = false)
         {
             byte fcs = 0xff;
 

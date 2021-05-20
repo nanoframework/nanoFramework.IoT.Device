@@ -3,7 +3,7 @@
 
 using System;
 using System.Reflection;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Iot.Device.Media
 {

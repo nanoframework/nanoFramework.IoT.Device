@@ -89,12 +89,12 @@ namespace Iot.Device.Arduino
             _board.Firmata.WriteReadI2cData(ConnectionSettings.DeviceAddress, bytes, null);
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             _board.Firmata.WriteReadI2cData(ConnectionSettings.DeviceAddress, buffer, null);
         }
 
-        public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
         {
             _board.Firmata.WriteReadI2cData(ConnectionSettings.DeviceAddress, writeBuffer, readBuffer);
         }

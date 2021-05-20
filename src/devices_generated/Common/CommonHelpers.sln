@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CommonHelpers", "CommonHelpers.nfproj", "{9EE31969-0588-49FC-A054-EE812F676B3B}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CommonHelpers", "CommonHelpers.nfproj", "{683F6C38-3FC7-432D-90E0-60F28F435FA3}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -14,11 +14,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {9EE31969-0588-49FC-A054-EE812F676B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {9EE31969-0588-49FC-A054-EE812F676B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {9EE31969-0588-49FC-A054-EE812F676B3B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {9EE31969-0588-49FC-A054-EE812F676B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {9EE31969-0588-49FC-A054-EE812F676B3B}.Release|Any CPU.Build.0 = Release|Any CPU
-        {9EE31969-0588-49FC-A054-EE812F676B3B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {683F6C38-3FC7-432D-90E0-60F28F435FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {683F6C38-3FC7-432D-90E0-60F28F435FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {683F6C38-3FC7-432D-90E0-60F28F435FA3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {683F6C38-3FC7-432D-90E0-60F28F435FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {683F6C38-3FC7-432D-90E0-60F28F435FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+        {683F6C38-3FC7-432D-90E0-60F28F435FA3}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

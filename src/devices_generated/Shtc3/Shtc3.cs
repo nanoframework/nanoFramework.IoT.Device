@@ -89,7 +89,7 @@ namespace Iot.Device.Shtc3
         /// <param name="data">Raw Data</param>
         /// <param name="crc8">Raw CRC8</param>
         /// <returns>Checksum is true or false</returns>
-        private static bool CheckCrc8(ReadOnlySpanByte data, byte crc8)
+        private static bool CheckCrc8(SpanByte data, byte crc8)
         {
             // Details in the Datasheet table 16 P9
             byte crc = CRC_INIT;

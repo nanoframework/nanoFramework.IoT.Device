@@ -12,7 +12,7 @@ using System.Device.I2c;
 using System.Device.Pwm;
 using System.Device.Spi;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+
 using System.IO;
 using System.IO.Ports;
 using System.Threading;

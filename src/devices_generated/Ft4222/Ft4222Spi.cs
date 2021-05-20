@@ -143,7 +143,7 @@ namespace Iot.Device.Ft4222
         }
 
         /// <inheritdoc/>
-        public override void TransferFullDuplex(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void TransferFullDuplex(SpanByte writeBuffer, SpanByte readBuffer)
         {
             ushort readBytes;
             var ftStatus = FtFunction.FT4222_SPIMaster_SingleReadWrite(_ftHandle,
@@ -156,7 +156,7 @@ namespace Iot.Device.Ft4222
         }
 
         /// <inheritdoc/>
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             ushort bytesWritten;
             var ftStatus = FtFunction.FT4222_SPIMaster_SingleWrite(_ftHandle, in MemoryMarshal.GetReference(buffer),

@@ -34,7 +34,7 @@ namespace Iot.Device.SocketCan
         /// <param name="data">Data to write (at most 8 bytes)</param>
         /// <param name="id">Recipient identifier</param>
         /// <remarks><paramref name="id"/> can be ignored by recipient - anyone connected to the bus can read or write any frames</remarks>
-        public void WriteFrame(ReadOnlySpanByte data, CanId id)
+        public void WriteFrame(SpanByte data, CanId id)
         {
             if (!id.IsValid)
             {
@@ -58,7 +58,7 @@ namespace Iot.Device.SocketCan
             }
 
             ReadOnlySpan<CanFrame> frameSpan = MemoryMarshal.CreateReadOnlySpan(ref frame, 1);
-            ReadOnlySpanByte buff = MemoryMarshal.AsBytes(frameSpan);
+            SpanByte buff = MemoryMarshal.AsBytes(frameSpan);
             Interop.Write(_handle, buff);
         }
 

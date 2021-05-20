@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{B180AAF8-7CFA-4633-A548-6847F8B52A47}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{68285933-ECB4-4198-B8A2-E5C26805D17D}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{B103FFB9-22BA-4382-878A-B15704D9F754}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{C865B31E-2DA4-4386-A054-FB9D51000F91}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{FC6450B4-4CC8-4946-A2E8-E88FC2CC78EC}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -18,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}.Release|Any CPU.Build.0 = Release|Any CPU
-        {BC8F8CE7-54F3-4AB3-AF6F-9DE01202E580}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {B180AAF8-7CFA-4633-A548-6847F8B52A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {B180AAF8-7CFA-4633-A548-6847F8B52A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {B180AAF8-7CFA-4633-A548-6847F8B52A47}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {B180AAF8-7CFA-4633-A548-6847F8B52A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {B180AAF8-7CFA-4633-A548-6847F8B52A47}.Release|Any CPU.Build.0 = Release|Any CPU
+        {B180AAF8-7CFA-4633-A548-6847F8B52A47}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

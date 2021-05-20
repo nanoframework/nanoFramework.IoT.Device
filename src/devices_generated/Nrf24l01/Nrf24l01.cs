@@ -5,7 +5,7 @@ using System;
 using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Iot.Device.Nrf24l01
 {
@@ -261,7 +261,7 @@ namespace Iot.Device.Nrf24l01
         /// Initialize
         /// </summary>
 #if !NETCOREAPP2_1
-        [MemberNotNull(nameof(_gpio))]
+        
 #endif
         private void Initialize(PinNumberingScheme pinNumberingScheme, OutputPower outputPower, DataRate dataRate, byte channel, GpioController? gpioController)
         {
@@ -293,7 +293,7 @@ namespace Iot.Device.Nrf24l01
         /// Initialize nRF24L01 Pipe
         /// </summary>
 #if !NETCOREAPP2_1
-        [MemberNotNull(nameof(Pipe0), nameof(Pipe0), nameof(Pipe1), nameof(Pipe2), nameof(Pipe3), nameof(Pipe4), nameof(Pipe5))]
+        
 #endif
         private void InitializePipe()
         {
@@ -682,7 +682,7 @@ namespace Iot.Device.Nrf24l01
         /// </summary>
         /// <param name="pipe">Pipe, form 0 to 5</param>
         /// <param name="address">Address, if (pipe > 1) then (address.Length = 1), else if (pipe = 1 || pipe = 0) then (address.Length ≤ 5)</param>
-        internal void SetRxAddress(byte pipe, ReadOnlySpanByte address)
+        internal void SetRxAddress(byte pipe, SpanByte address)
         {
             // Details in the Datasheet P55
             if (pipe > 5 || pipe < 0)
@@ -742,7 +742,7 @@ namespace Iot.Device.Nrf24l01
         /// Set nRF24L01 Send Address
         /// </summary>
         /// <param name="address">Address, address.Length = 5</param>
-        internal void SetTxAddress(ReadOnlySpanByte address)
+        internal void SetTxAddress(SpanByte address)
         {
             // Details in the Datasheet P56
             if (address.Length > 5 || address.Length < 1)
@@ -801,7 +801,7 @@ namespace Iot.Device.Nrf24l01
         #endregion
 
         #region sensor operation
-        internal void Write(ReadOnlySpanByte writeData)
+        internal void Write(SpanByte writeData)
         {
             SpanByte readBuf = new byte[writeData.Length];
 
@@ -820,7 +820,7 @@ namespace Iot.Device.Nrf24l01
             _sensor.TransferFullDuplex(writeBuf, readBuf);
         }
 
-        internal void Write(Command command, Register register, ReadOnlySpanByte writeData)
+        internal void Write(Command command, Register register, SpanByte writeData)
         {
             SpanByte writeBuf = new byte[1 + writeData.Length];
             SpanByte readBuf = new byte[1 + writeData.Length];
@@ -843,7 +843,7 @@ namespace Iot.Device.Nrf24l01
             return readBuf.Slice(1).ToArray();
         }
 
-        internal byte[] WriteRead(Command command, Register register, ReadOnlySpanByte writeData)
+        internal byte[] WriteRead(Command command, Register register, SpanByte writeData)
         {
             SpanByte writeBuf = new byte[1 + writeData.Length];
             SpanByte readBuf = new byte[1 + writeData.Length];

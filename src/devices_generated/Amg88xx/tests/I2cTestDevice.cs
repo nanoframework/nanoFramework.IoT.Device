@@ -37,7 +37,7 @@ namespace Iot.Device.Amg88xx.Tests
             DataWritten.Enqueue(value);
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -45,7 +45,7 @@ namespace Iot.Device.Amg88xx.Tests
             }
         }
 
-        public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
         {
             Write(writeBuffer);
             Read(readBuffer);

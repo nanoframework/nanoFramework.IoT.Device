@@ -81,7 +81,7 @@ namespace Iot.Device.Lsm9Ds1
             return new Vector3(x, y, z);
         }
 
-        private void Write(RegisterM register, ReadOnlySpanByte data)
+        private void Write(RegisterM register, SpanByte data)
         {
             SpanByte buff = new byte[data.Length + 1];
             buff[0] = (byte)register;

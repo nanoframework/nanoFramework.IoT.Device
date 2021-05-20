@@ -120,7 +120,7 @@ namespace Iot.Device.Ags01db
         /// <param name="length">Data Length</param>
         /// <param name="crc8">Raw CRC8</param>
         /// <returns>Checksum is true or false</returns>
-        private bool CheckCrc8(ReadOnlySpanByte data, int length, byte crc8)
+        private bool CheckCrc8(SpanByte data, int length, byte crc8)
         {
             // Details in the Datasheet P6
             byte crc = CRC_INIT;

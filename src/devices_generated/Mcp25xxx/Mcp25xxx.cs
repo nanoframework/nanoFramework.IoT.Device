@@ -249,7 +249,7 @@ namespace Iot.Device.Mcp25xxx
         public byte Read(Address address)
         {
             const byte dontCare = 0x00;
-            ReadOnlySpanByte writeBuffer = new byte[]
+            SpanByte writeBuffer = new byte[]
             {
                 (byte)InstructionFormat.Read,
                 (byte)address,
@@ -296,7 +296,7 @@ namespace Iot.Device.Mcp25xxx
         /// <param name="value">The value to be written.</param>
         public void WriteByte(Address address, byte value)
         {
-            ReadOnlySpanByte buffer = new byte[1]
+            SpanByte buffer = new byte[1]
             {
                 value
             };
@@ -320,7 +320,7 @@ namespace Iot.Device.Mcp25xxx
         /// </summary>
         /// <param name="address">The starting address to write data.</param>
         /// <param name="buffer">The buffer that contains the data to be written.</param>
-        public void Write(Address address, ReadOnlySpanByte buffer)
+        public void Write(Address address, SpanByte buffer)
         {
             SpanByte writeBuffer = new byte[buffer.Length + 2];
             writeBuffer[0] = (byte)InstructionFormat.Write;
@@ -335,7 +335,7 @@ namespace Iot.Device.Mcp25xxx
         /// </summary>
         /// <param name="addressPointer">The Address Pointer to one of six locations for the transmit buffer.</param>
         /// <param name="buffer">The data to load in transmit buffer.</param>
-        public void LoadTxBuffer(TxBufferAddressPointer addressPointer, ReadOnlySpanByte buffer)
+        public void LoadTxBuffer(TxBufferAddressPointer addressPointer, SpanByte buffer)
         {
             SpanByte writeBuffer = new byte[buffer.Length + 1];
 
@@ -389,7 +389,7 @@ namespace Iot.Device.Mcp25xxx
         public ReadStatusResponse ReadStatus()
         {
             const byte dontCare = 0x00;
-            ReadOnlySpanByte writeBuffer = new byte[]
+            SpanByte writeBuffer = new byte[]
             {
                 (byte)InstructionFormat.ReadStatus,
                 dontCare
@@ -408,7 +408,7 @@ namespace Iot.Device.Mcp25xxx
         public RxStatusResponse RxStatus()
         {
             const byte dontCare = 0x00;
-            ReadOnlySpanByte writeBuffer = new byte[]
+            SpanByte writeBuffer = new byte[]
             {
                 (byte)InstructionFormat.RxStatus,
                 dontCare

@@ -511,7 +511,7 @@ namespace Iot.Device.Pn532
         /// <param name="initiatorData">Specific initialization data</param>
         /// <returns>A raw byte array with the data of the targets if any has been identified</returns>
         public byte[]? ListPassiveTarget(MaxTarget maxTarget, TargetBaudRate targetBaudRate,
-            ReadOnlySpanByte initiatorData)
+            SpanByte initiatorData)
         {
             SpanByte toSend = new byte[2 + initiatorData.Length];
             toSend[0] = (byte)maxTarget;
@@ -760,7 +760,7 @@ namespace Iot.Device.Pn532
         /// <param name="dataToSend">The data to write to the card</param>
         /// <param name="dataFromCard">The potential data to receive</param>
         /// <returns>The number of bytes read</returns>
-        public override int Transceive(byte targetNumber, ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
         {
             SpanByte toSend = new byte[1 + dataToSend.Length];
             toSend[0] = targetNumber;
@@ -921,7 +921,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="dataToSend">The data to send</param>
         /// <returns>True if success</returns>
-        public bool WriteDataAsTarget(ReadOnlySpanByte dataToSend)
+        public bool WriteDataAsTarget(SpanByte dataToSend)
         {
             var ret = WriteCommand(CommandSet.TgSetData, dataToSend);
             if (ret < 0)
@@ -1460,7 +1460,7 @@ namespace Iot.Device.Pn532
             return WriteCommand(commandSet, SpanByte.Empty);
         }
 
-        private int WriteCommand(CommandSet commandSet, ReadOnlySpanByte writeData)
+        private int WriteCommand(CommandSet commandSet, SpanByte writeData)
         {
             _logger.LogDebug($"{nameof(WriteCommand)}: {nameof(CommandSet)} {commandSet} Bytes to send: {BitConverter.ToString(writeData.ToArray())}");
             if (_spiDevice is object)
@@ -1515,7 +1515,7 @@ namespace Iot.Device.Pn532
         /// <param name="commandSet">The command to use</param>
         /// <param name="writeData">The additional data to send</param>
         /// <returns></returns>
-        private byte[] CreateWriteMessage(CommandSet commandSet, ReadOnlySpanByte writeData)
+        private byte[] CreateWriteMessage(CommandSet commandSet, SpanByte writeData)
         {
             // 7 bytes + writeData length + 2 bytes if preamble
             int correctionPreamble = 2;
@@ -1579,7 +1579,7 @@ namespace Iot.Device.Pn532
             return buff.ToArray();
         }
 
-        private int WriteCommandSerial(CommandSet commandSet, ReadOnlySpanByte writeData)
+        private int WriteCommandSerial(CommandSet commandSet, SpanByte writeData)
         {
             if (_serialPort is null)
             {
@@ -1610,7 +1610,7 @@ namespace Iot.Device.Pn532
             return -1;
         }
 
-        private int WriteCommandI2C(CommandSet commandSet, ReadOnlySpanByte writeData)
+        private int WriteCommandI2C(CommandSet commandSet, SpanByte writeData)
         {
             if (_i2cDevice is null)
             {
@@ -1648,7 +1648,7 @@ namespace Iot.Device.Pn532
             return -1;
         }
 
-        private int WriteCommandSPI(CommandSet commandSet, ReadOnlySpanByte writeData)
+        private int WriteCommandSPI(CommandSet commandSet, SpanByte writeData)
         {
             if (_spiDevice is null)
             {

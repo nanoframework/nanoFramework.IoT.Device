@@ -209,7 +209,7 @@ namespace Iot.Device.Tm1637
         /// </remarks>
         /// </summary>
         /// <param name="rawData">The raw data array to display, size of the array has to be 6 maximum</param>
-        private void Display(ReadOnlySpanByte rawData)
+        private void Display(SpanByte rawData)
         {
             if (rawData.Length > MaxCharacters)
             {

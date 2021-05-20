@@ -9,7 +9,7 @@ using System;
 using System.Buffers.Binary;
 using System.Device.I2c;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+
 using System.IO;
 using System.Threading;
 
@@ -652,7 +652,7 @@ namespace Iot.Device.Vl53L0X
         /// are coming form the official API
         /// </summary>
 #if !NETCOREAPP2_1
-        [MemberNotNull(nameof(Information))]
+        
 #endif
         private void GetInfo()
         {

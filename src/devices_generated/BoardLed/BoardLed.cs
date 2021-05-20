@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Iot.Device.BoardLed
 {
@@ -146,7 +146,7 @@ namespace Iot.Device.BoardLed
         }
 
 #if !NETCOREAPP2_1
-        [MemberNotNull(nameof(_brightnessReader), nameof(_brightnessWriter), nameof(_triggerReader), nameof(_triggerWriter), nameof(_maxBrightnessReader))]
+        
 #endif
         private void Initialize()
         {

@@ -523,7 +523,7 @@ namespace Iot.Device.Ccs811
             SleepDownDevice();
         }
 
-        private void WriteRegister(Register register, ReadOnlySpanByte data)
+        private void WriteRegister(Register register, SpanByte data)
         {
             SpanByte toSend = new byte[data.Length + 1];
             toSend[0] = (byte)register;

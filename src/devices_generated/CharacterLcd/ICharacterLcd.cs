@@ -88,7 +88,7 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         /// <param name="location">Should be between 0 and <see cref="NumberOfCustomCharactersSupported"/>.</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
-        void CreateCustomCharacter(int location, ReadOnlySpanByte characterMap);
+        void CreateCustomCharacter(int location, SpanByte characterMap);
 
         /// <summary>
         /// Moves the cursor to an explicit column and row position.

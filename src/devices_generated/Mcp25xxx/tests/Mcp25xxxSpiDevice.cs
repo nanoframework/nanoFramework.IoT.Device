@@ -24,13 +24,13 @@ namespace Iot.Device.Mcp25xxx.Tests
 
         public override byte ReadByte() => LastReadByte;
 
-        public override void TransferFullDuplex(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void TransferFullDuplex(SpanByte writeBuffer, SpanByte readBuffer)
         {
             LastWriteBuffer = writeBuffer.ToArray();
             LastReadBuffer = readBuffer.ToArray();
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             LastWriteBuffer = buffer.ToArray();
         }

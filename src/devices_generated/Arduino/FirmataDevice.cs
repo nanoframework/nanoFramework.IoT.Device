@@ -875,7 +875,7 @@ namespace Iot.Device.Arduino
             SendCommand(i2cConfigCommand);
         }
 
-        public void WriteReadI2cData(int slaveAddress,  ReadOnlySpanByte writeData, SpanByte replyData)
+        public void WriteReadI2cData(int slaveAddress,  SpanByte writeData, SpanByte replyData)
         {
             // See documentation at https://github.com/firmata/protocol/blob/master/i2c.md
             FirmataCommandSequence i2cSequence = new FirmataCommandSequence();
@@ -1008,14 +1008,14 @@ namespace Iot.Device.Arduino
             SendCommand(disableSpi);
         }
 
-        public void SpiWrite(int csPin, ReadOnlySpanByte writeBytes)
+        public void SpiWrite(int csPin, SpanByte writeBytes)
         {
             // When the command is SPI_WRITE, the device answer is already discarded in the firmware.
             var command = SpiWrite(csPin, FirmataSpiCommand.SPI_WRITE, writeBytes, out _);
             SendCommand(command);
         }
 
-        public void SpiTransfer(int csPin, ReadOnlySpanByte writeBytes, SpanByte readBytes)
+        public void SpiTransfer(int csPin, SpanByte writeBytes, SpanByte readBytes)
         {
             var command = SpiWrite(csPin, FirmataSpiCommand.SPI_TRANSFER, writeBytes, out byte requestId);
             var response = SendCommandAndWait(command);
@@ -1033,7 +1033,7 @@ namespace Iot.Device.Arduino
             ReassembleByteString(response, 5, response[4] * 2, readBytes);
         }
 
-        private FirmataCommandSequence SpiWrite(int csPin, FirmataSpiCommand command, ReadOnlySpanByte writeBytes, out byte requestId)
+        private FirmataCommandSequence SpiWrite(int csPin, FirmataSpiCommand command, SpanByte writeBytes, out byte requestId)
         {
             requestId = (byte)(_lastRequestId++ & 0x7F);
 

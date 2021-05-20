@@ -25,7 +25,7 @@ namespace Iot.Device.CharacterLcd
         public static void CreateCustomCharacter(this ICharacterLcd self, byte location, byte b0, byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7)
         {
             byte[] array = { b0, b1, b2, b3, b4, b5, b6, b7 };
-            ReadOnlySpanByte bytes = new ReadOnlySpanByte(array);
+            SpanByte bytes = new SpanByte(array);
             self.CreateCustomCharacter(location, bytes);
         }
     }

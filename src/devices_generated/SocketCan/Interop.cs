@@ -51,7 +51,7 @@ namespace Iot.Device.SocketCan
         [DllImport("libc", EntryPoint = "setsockopt", CallingConvention = CallingConvention.Cdecl)]
         private static unsafe extern int SetSocketOpt(int fd, int level, int optName, byte* optVal, int optlen);
 
-        public static unsafe void Write(SafeHandle handle, ReadOnlySpanByte buffer)
+        public static unsafe void Write(SafeHandle handle, SpanByte buffer)
         {
             fixed (byte* b = buffer)
             {
@@ -109,7 +109,7 @@ namespace Iot.Device.SocketCan
             where T : struct
         {
             int fd = (int)handle.DangerousGetHandle();
-            ReadOnlySpanByte buf = MemoryMarshal.AsBytes(data);
+            SpanByte buf = MemoryMarshal.AsBytes(data);
             fixed (byte* pinned = buf)
             {
                 return SetSocketOpt(fd, level, (int)optName, pinned, buf.Length) == 0;

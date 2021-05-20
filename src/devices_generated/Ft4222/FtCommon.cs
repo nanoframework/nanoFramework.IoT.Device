@@ -63,7 +63,7 @@ namespace Iot.Device.Ft4222
             return devInfos;
         }
 
-        private static int FindFirstZero(ReadOnlySpanByte span)
+        private static int FindFirstZero(SpanByte span)
         {
             for (int i = 0; i < span.Length; i++)
             {

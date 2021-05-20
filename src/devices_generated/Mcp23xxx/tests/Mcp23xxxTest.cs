@@ -67,9 +67,9 @@ namespace Iot.Device.Mcp23xxx.Tests
 
             public override void Read(SpanByte buffer) => DeviceMock.Read(buffer);
 
-            public override void Write(ReadOnlySpanByte data) => DeviceMock.Write(data);
+            public override void Write(SpanByte data) => DeviceMock.Write(data);
 
-            public override void TransferFullDuplex(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+            public override void TransferFullDuplex(SpanByte writeBuffer, SpanByte readBuffer)
             {
                 Write(writeBuffer);
                 Read(readBuffer);
@@ -96,14 +96,14 @@ namespace Iot.Device.Mcp23xxx.Tests
 
             public override void Read(SpanByte buffer) => DeviceMock.Read(buffer);
 
-            public override void Write(ReadOnlySpanByte data) => DeviceMock.Write(data);
+            public override void Write(SpanByte data) => DeviceMock.Write(data);
 
             // Don't need these.
             public override void WriteByte(byte data) => throw new NotImplementedException();
 
             public override byte ReadByte() => throw new NotImplementedException();
 
-            public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer) => throw new NotImplementedException();
+            public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer) => throw new NotImplementedException();
         }
 
         /// <summary>
@@ -128,8 +128,8 @@ namespace Iot.Device.Mcp23xxx.Tests
             public SpanByte Registers => _registers;
 
             // Can't coalesce here https://github.com/dotnet/roslyn/issues/29927
-            public ReadOnlySpanByte LastReadBuffer => _lastReadBuffer is null ? ReadOnlySpanByte.Empty : _lastReadBuffer;
-            public ReadOnlySpanByte LastWriteBuffer => _lastWriteBuffer is null ? ReadOnlySpanByte.Empty : _lastWriteBuffer;
+            public SpanByte LastReadBuffer => _lastReadBuffer is null ? SpanByte.Empty : _lastReadBuffer;
+            public SpanByte LastWriteBuffer => _lastWriteBuffer is null ? SpanByte.Empty : _lastWriteBuffer;
 
             public void Read(SpanByte buffer)
             {
@@ -153,7 +153,7 @@ namespace Iot.Device.Mcp23xxx.Tests
                 }
             }
 
-            public void Write(ReadOnlySpanByte data)
+            public void Write(SpanByte data)
             {
                 if (_isSpi)
                 {

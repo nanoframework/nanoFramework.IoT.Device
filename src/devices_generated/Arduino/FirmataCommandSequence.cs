@@ -51,7 +51,7 @@ namespace Iot.Device.Arduino
             return true;
         }
 
-        public void AddValuesAsTwo7bitBytes(ReadOnlySpanByte values)
+        public void AddValuesAsTwo7bitBytes(SpanByte values)
         {
             for (int i = 0; i < values.Length; i++)
             {

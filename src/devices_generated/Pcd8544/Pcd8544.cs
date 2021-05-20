@@ -303,7 +303,7 @@ namespace Iot.Device.Display
         /// </remarks>
         /// <param name="location">Should be between 0 and <see cref="NumberOfCustomCharactersSupported"/>.</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
-        public void CreateCustomCharacter(int location, ReadOnlySpanByte characterMap)
+        public void CreateCustomCharacter(int location, SpanByte characterMap)
         {
             if (location >= NumberOfCustomCharactersSupported)
             {
@@ -354,7 +354,7 @@ namespace Iot.Device.Display
         /// Set the byte map
         /// </summary>
         /// <param name="byteMap">A 504 sized byte representing the full image</param>
-        public void SetByteMap(ReadOnlySpanByte byteMap)
+        public void SetByteMap(SpanByte byteMap)
         {
             if (byteMap.Length != ScreenBufferByteSize)
             {
@@ -677,7 +677,7 @@ namespace Iot.Device.Display
 
         #endregion
 
-        private void SpiWrite(bool isData, ReadOnlySpanByte toSend)
+        private void SpiWrite(bool isData, SpanByte toSend)
         {
             _controller.Write(_dataCommandPin, isData ? PinValue.High : PinValue.Low);
             _spiDevice.Write(toSend);

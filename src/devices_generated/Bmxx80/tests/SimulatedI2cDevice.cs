@@ -48,7 +48,7 @@ namespace Iot.Device.Imu.Tests
             _currentRegister = value;
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             _currentRegister = buffer[0];
             int idx = _currentRegister;
@@ -60,7 +60,7 @@ namespace Iot.Device.Imu.Tests
             }
         }
 
-        public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
         {
             Write(writeBuffer);
             Read(readBuffer);

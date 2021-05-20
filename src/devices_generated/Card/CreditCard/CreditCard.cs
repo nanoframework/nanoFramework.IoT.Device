@@ -140,7 +140,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// byte[] pin = new byte[] { 1, 2, 3, 4 };
         /// </param>
         /// <returns>The error status</returns>
-        public ErrorType VerifyPin(ReadOnlySpanByte pindigits)
+        public ErrorType VerifyPin(SpanByte pindigits)
         {
             // Pin can only be 4 to C length
             if ((pindigits.Length < 0x04) && (pindigits.Length > 0x0C))
@@ -247,7 +247,7 @@ namespace Iot.Device.Card.CreditCardProcessing
             return ErrorType.Unknown;
         }
 
-        private void FillTagList(List<Tag> tags, ReadOnlySpanByte span, uint parent = 0x00)
+        private void FillTagList(List<Tag> tags, SpanByte span, uint parent = 0x00)
         {
             // We don't decode template 0x80
             if (span.Length == 0)
@@ -637,7 +637,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <param name="pdolToSend">The PDOL array to send</param>
         /// <param name="pdol">The return PDOL elements</param>
         /// <returns>The error status</returns>
-        public ErrorType GetProcessingOptions(ReadOnlySpanByte pdolToSend, SpanByte pdol)
+        public ErrorType GetProcessingOptions(SpanByte pdolToSend, SpanByte pdol)
         {
             SpanByte toSend = new byte[6 + pdolToSend.Length];
             ApduCommands.GetProcessingOptions.CopyTo(toSend);
@@ -734,7 +734,7 @@ namespace Iot.Device.Card.CreditCardProcessing
             return ErrorType.Unknown;
         }
 
-        private int ReadFromCard(byte target, ReadOnlySpanByte toSend, SpanByte received)
+        private int ReadFromCard(byte target, SpanByte toSend, SpanByte received)
         {
             var ret = _nfc.Transceive(_target, toSend, received);
             if (ret >= TailerSize)

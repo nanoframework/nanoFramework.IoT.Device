@@ -105,7 +105,7 @@ namespace Iot.Device.Seesaw
         /// <param name="moduleAddress">An Seesaw_Module enum that represents the module that we are writing to.</param>
         /// <param name="functionAddress">An Seesaw_Function enum that represents the Seesaw function to be called.</param>
         /// <param name="data">The Span containg data to be send as a parameter or parameters to the Seesaw device.</param>
-        protected void Write(SeesawModule moduleAddress, SeesawFunction functionAddress, ReadOnlySpanByte data)
+        protected void Write(SeesawModule moduleAddress, SeesawFunction functionAddress, SpanByte data)
         {
             const int StackThreshold = 512;
 

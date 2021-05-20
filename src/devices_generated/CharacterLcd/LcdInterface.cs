@@ -68,7 +68,7 @@ namespace Iot.Device.CharacterLcd
         /// Sends data to the LCD device
         /// </summary>
         /// <param name="values">Bytes to be send to the device</param>
-        public abstract void SendData(ReadOnlySpanByte values);
+        public abstract void SendData(SpanByte values);
 
         /// <summary>
         /// Sends data to the LCD device
@@ -80,7 +80,7 @@ namespace Iot.Device.CharacterLcd
         /// Send commands to the LCD device
         /// </summary>
         /// <param name="values">Each byte represents command to be send</param>
-        public abstract void SendCommands(ReadOnlySpanByte values);
+        public abstract void SendCommands(SpanByte values);
 
         /// <summary>
         /// The initialization sequence and some other complex commands should be sent with delays, or the display may
