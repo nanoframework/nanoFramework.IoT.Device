@@ -67,7 +67,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
-  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
