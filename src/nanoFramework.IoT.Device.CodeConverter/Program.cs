@@ -202,7 +202,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             if (newProjectReferences.Any())
             {
-                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed.Replace("$LF$", "\n")}\n    {add.Replace("$LF$", "\n")}");
+                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed}\n    {add}");
+                newProjectReferencesString = newProjectReferencesString.Replace("$LF$", "\n");
 
                 if (projectType == ProjectType.UnitTest ||
                     projectType == ProjectType.Samples)
