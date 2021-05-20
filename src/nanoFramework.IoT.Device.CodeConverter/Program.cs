@@ -91,6 +91,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         {
                             { "stackalloc", "new" },
                             { "Span<byte>", "SpanByte" },
+                            { "DateTime.Now", "DateTime.UtcNow" },
                             { "ReadOnlySpan<byte>", "SpanByte" },
                             { ".AsSpan(start, length)", string.Empty },
                             { "Console.WriteLine(", "Debug.WriteLine(" },
