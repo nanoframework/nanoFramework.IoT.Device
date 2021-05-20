@@ -70,6 +70,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 else
                 {
                     targetDirectoryInfo = targetProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
+
+                    if (projectType == ProjectType.Samples)
+                    {
+                        // need to remove the nuspec template
+                        File.Delete(Path.Combine(targetDirectory, "template.nuspec"));
+                    }
                 }
 
                 sourceProjectFile.Directory.CopyDirectory(targetDirectory);
