@@ -102,9 +102,9 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         new Dictionary<string, string>
                         {
                             { "stackalloc", "new" },
+                            { "ReadOnlySpan<byte>", "SpanByte" },
                             { "Span<byte>", "SpanByte" },
                             { "DateTime.Now", "DateTime.UtcNow" },
-                            { "ReadOnlySpan<byte>", "SpanByte" },
                             { ".AsSpan(start, length)", string.Empty },
                             { "Console.WriteLine(", "Debug.WriteLine(" },
                         },
@@ -409,16 +409,20 @@ EndProject";
                     var token = projectType is ProjectType.Samples ? _sampleProjectPlaceholderToken : _unitTestProjectPlaceholderToken;
 
                     var projFileName = $"{projectName}.nfproj";
-                    var projectDirName = targetDirectoryInfo.GetFiles(projFileName).Single().Directory!.Name;
 
-                    var slnLines = new[]
+                    try
                     {
+                        var projectDirName = targetDirectoryInfo.GetFiles(projFileName).Single().Directory!.Name;
+
+                        var slnLines = new[]
+                        {
                         $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""{projectName}"", ""{projectDirName}\\{projFileName}"", ""{projectGuid}""",
                         "EndProject",
                         token,  // leave token in the solution after replacement in case we need to add more projects
                     };
 
-                    slnContent = slnContent.Replace(token, string.Join(Environment.NewLine, slnLines));
+                        slnContent = slnContent.Replace(token, string.Join(Environment.NewLine, slnLines));
+                    } catch (Exception) { }
                 }
 
                 File.WriteAllText(slnFile, slnContent);
