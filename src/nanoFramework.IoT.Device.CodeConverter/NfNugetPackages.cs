@@ -30,8 +30,8 @@
                             new NugetPackages {
                                 Namespace="System.Device.I2c",
                                 OldProjectReferenceString= @"<ProjectReference Include=""$(MainLibraryPath)System.Device.I2c.csproj"" />",
-                                NewProjectReferenceString = @"<Reference Include=""System.Device.I2c"">$LF$      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.0-preview.33\lib\System.Device.I2c.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.I2c"" version=""1.0.0-preview.33"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Device.I2c"">$LF$      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.I2c"" version=""1.0.1-preview.33"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="RelativeHumidity",
