@@ -1,12 +1,12 @@
 trigger:
   branches:
-    include: [main, develop, "release-*" ]
+    include: ["main", "develop*", "release-*", "refs/tags/*" ]
   paths:
-    exclude: ["*.md", .gitignore]
-  tags:
-    include: ["v*"]
+    exclude: [ "doc", "*.md", ".gitignore", "README.md", "LICENSE.md" ]
 
 # PR always trigger build
+pr:
+  autoCancel: true
 
 # add nf-tools repo to resources (for Azure Pipelines templates)
 resources:
@@ -20,138 +20,112 @@ pool:
   vmImage: 'windows-2019'
 
 variables:
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  solution: '**/*.sln'
+  DOTNET_NOLOGO: true
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  nugetPackageName: 'nanoFramework.IoT.Device'
-  repoName: 'nanoFramework.IoT.Device'
 
 steps:
 
-# step from template @ nf-tools repo
-# build steps only
-- template: azure-pipelines-templates/class-lib-build-only.yml@templates  
-  parameters:
-    sonarCloudProject: 'nanoframework_nanoFramework.IoT.Device'
+# need this here in order to persist GitHub credentials 
+- checkout: self
+  fetchDepth: 1
+  submodules: true
 
-# package steps
-- template: azure-pipelines-templates/class-lib-package.yml@templates  
-  parameters:
-    nugetPackageName: 'nanoFramework.IoT.Device'
+- script: |
+    git config --global user.email "nanoframework@outlook.com"
+    git config --global user.name "nfbot"
+    git config --global core.autocrlf true
+  displayName: Setup git identity
 
-# IMPORTANT:
-# - Create as many entries like this as needed for the nugets
-# - The tasks NuGetCommand needs to be cloned and adjusted as well
-# - The tasks GithubRelease needs to be cloned and adjusted as well
-- template: azure-pipelines-templates/class-lib-package.yml@templates  
-  parameters:
-    nugetPackageName: 'nanoFramework.IoT.Device.Client'
-
-- template: azure-pipelines-templates/class-lib-package.yml@templates  
-  parameters:
-    nugetPackageName: 'nanoFramework.IoT.Device.Server'
-
-- template: azure-pipelines-templates/class-lib-publish.yml@templates  
-
-# need to push remaining packages to NuGet individually because the template above can only push one package (happens on tag builds for any branch)
-- task: NuGetCommand@2
-  inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: 
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).nupkg
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).snupkg
-    publishFeedCredentials: 'AzureArtifacts-$(System.TeamProject)'
-    includeSymbols: true
+- task: NuGetToolInstaller@1
   condition: and( succeeded(), ne( variables['StartReleaseCandidate'], true ) )
-  continueOnError: true
-  displayName: Push "Client" variant NuGet package to Azure Artifacts
-
-- task: NuGetCommand@2
+  displayName: 'Install specific version of NuGet'
   inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: 
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).nupkg
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).snupkg
-    publishFeedCredentials: 'AzureArtifacts-$(System.TeamProject)'
-    includeSymbols: true
-  condition: and( succeeded(), ne( variables['StartReleaseCandidate'], true ) )
-  continueOnError: true
-  displayName: Push "Server" variant NuGet package to Azure Artifacts
+    versionSpec: '>=5.9.x'
 
-- task: NuGetCommand@2
+# buil solutions that need to be build
+- powershell: |
+    $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$(GitHubToken)"))))"
+  
+    if($env:System_PullRequest_PullRequestId -ne $null)
+    {
+        # get files changed in PR, if this is a PR
+        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+
+        # filter removed files              
+        $files = $commit.where{$_.status -ne 'removed'}
+    }
+    else
+    {
+        # get files changed in the commit, if this is NOT a PR
+        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+
+        # filter removed files              
+        $files = $commit.files.where{$_.status -ne 'removed'}
+    }
+
+    # get file names only
+    $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'src/devices*'} 
+
+    Write-host "Files changed:"
+    $files1 | % { Write-host $_ }
+    Write-host ""
+
+    # pattern to select device folder name
+    $pattern = '(devices\/)(?<folder>\w+)'
+
+    # filter out the collection
+    $results = [Regex]::Matches($files1, $pattern)
+
+    # get unique folder names
+    $deviceFolders = $results | Sort-Object |  Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
+
+    foreach ($folder in $deviceFolders)
+    {
+        Write-host "Processing '$folder'"
+        
+        # find solution
+        $solutionFile = Get-ChildItem -Path "src\devices\$folder\" -Include "*.sln" -Recurse
+
+        # find nuspec
+        $nuspecFile = Get-ChildItem -Path "src\devices\$folder\" -Include "*.nuspec" -Recurse
+
+        if($null -eq $solutionFile)
+        {
+            Write-host "Couldn't find any solution file!"
+        }
+        else
+        {
+            # need to restore NuGets first
+            nuget restore $solutionFile
+
+            # build solution
+            msbuild $solutionFile -t:Rebuild -p:Configuration=Release;platform="Any CPU"
+
+            # package NuGet
+            nuget pack $nuspecFile -Version 1.0.0.0 -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+        }
+    }
+
+- task: CopyFiles@1
+  condition: succeeded()
+  displayName: Collecting deployable artifacts
   inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: 
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).nupkg
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Client.$(MY_NUGET_VERSION).snupkg
-    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
-    includeSymbols: true
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne( variables['StartReleaseCandidate'], true ) )
-  continueOnError: true
-  displayName: Push "Client" variant NuGet package to NuGet
+    sourceFolder: $(Agent.TempDirectory)
+    Contents: |
+      *.nupkg
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: true
 
-- task: NuGetCommand@2
+# publish artifacts (only possible if this is not a PR originated on a fork)
+- task: PublishBuildArtifacts@1
+  condition: succeeded()
+  displayName: Publish deployables artifacts
   inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: 
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).nupkg
-      $(Build.ArtifactStagingDirectory)/nanoFramework.IoT.Device.Server.$(MY_NUGET_VERSION).snupkg
-    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
-    includeSymbols: true
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne( variables['StartReleaseCandidate'], true ) )
-  continueOnError: true
-  displayName: Push "Server" variant NuGet package to NuGet
-
-# create or update GitHub release
-- task: GithubRelease@1
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ), ne( variables['StartReleaseCandidate'], true ) )
-  displayName: Create/Update GitHub PREVIEW release
-  inputs:
-    gitHubConnection: 'github.com_nano-$(System.TeamProject)'
-    tagSource: userSpecifiedTag
-    tag: v$(MY_NUGET_VERSION)
-    title: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
-    releaseNotesSource: inline
-    releaseNotesInline: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><br><h4>Install from NuGet</h4><br>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).<br>:package: [.NET (client API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Client/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)<br>:package: [.NET (server API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Server/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)'
-    assets: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
-    assetUploadMode: replace
-    isPreRelease: true
-    addChangeLog: false
-
-# create or update GitHub release ON tags from release or main branches
-- task: GithubRelease@1
-  condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), not(contains(variables['Build.SourceBranch'], 'preview') ), ne( variables['StartReleaseCandidate'], true ) )
-  displayName: Create/Update GitHub stable release
-  inputs:
-    gitHubConnection: 'github.com_nano-$(System.TeamProject)'
-    tagSource: userSpecifiedTag
-    tag: v$(MY_NUGET_VERSION)
-    title: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
-    releaseNotesSource: inline
-    releaseNotesInline: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><br><h4>Install from NuGet</h4><br>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).<br>:package: [.NET (client API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Client/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)<br>:package: [.NET (server API only)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Server/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION)'
-    assets: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
-    assetUploadMode: replace
-    isPreRelease: false
-    addChangeLog: false
-
-# update dependents
-- task: UpdatenFDependencies@1
-  displayName: Update dependent class libs
-  condition: or( and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), eq(variables['StartReleaseCandidate'], 'false') ), and( succeeded(), contains(variables['getCommitMessage.COMMIT_MESSAGE'], '***UPDATE_DEPENDENTS***'), eq(variables['StartReleaseCandidate'], 'false') ), eq(variables['UPDATE_DEPENDENTS'], 'true') )
-  inputs:
-    gitHubToken: $(GitHubToken)
-    repositoriesToUpdate: |
-      nanoFramework.WebServer
-
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: deployables
+    ArtifactType: Container
+  
 # step from template @ nf-tools repo
 # report error
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
