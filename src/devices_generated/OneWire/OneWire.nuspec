@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.OneWire.pdb" target="lib\Iot.Device.OneWire.pdb" />
     <file src="bin\Release\Iot.Device.OneWire.pdbx" target="lib\Iot.Device.OneWire.pdbx" />
     <file src="bin\Release\Iot.Device.OneWire.pe" target="lib\Iot.Device.OneWire.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.OneWire.xml" target="lib\Iot.Device.OneWire.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

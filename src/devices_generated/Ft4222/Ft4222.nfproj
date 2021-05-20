@@ -8,13 +8,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{289832ED-6C07-4AFD-8D18-8E675486F546}</ProjectGuid>
+    <ProjectGuid>{E915C786-84A5-432F-A84F-5629CE483E04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Ft4222</RootNamespace>
     <AssemblyName>Iot.Device.Ft4222</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Ft4222.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -45,6 +46,7 @@
     <Compile Include="*.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>

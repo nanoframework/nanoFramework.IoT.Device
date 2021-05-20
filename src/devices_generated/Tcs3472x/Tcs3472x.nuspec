@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Tcs3472x.pdb" target="lib\Iot.Device.Tcs3472x.pdb" />
     <file src="bin\Release\Iot.Device.Tcs3472x.pdbx" target="lib\Iot.Device.Tcs3472x.pdbx" />
     <file src="bin\Release\Iot.Device.Tcs3472x.pe" target="lib\Iot.Device.Tcs3472x.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Tcs3472x.xml" target="lib\Iot.Device.Tcs3472x.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

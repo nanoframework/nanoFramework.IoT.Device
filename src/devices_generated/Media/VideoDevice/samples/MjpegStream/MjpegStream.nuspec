@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.MjpegStream.pdb" target="lib\Iot.Device.MjpegStream.pdb" />
     <file src="bin\Release\Iot.Device.MjpegStream.pdbx" target="lib\Iot.Device.MjpegStream.pdbx" />
     <file src="bin\Release\Iot.Device.MjpegStream.pe" target="lib\Iot.Device.MjpegStream.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.MjpegStream.xml" target="lib\Iot.Device.MjpegStream.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

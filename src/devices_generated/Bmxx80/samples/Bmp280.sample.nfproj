@@ -8,13 +8,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{D8645468-EB1B-4281-A559-E16259F9502B}</ProjectGuid>
+    <ProjectGuid>{E0DA26A2-FB5A-4722-BE7F-1C4FA328858D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Bmp280.sample</RootNamespace>
     <AssemblyName>Iot.Device.Bmp280.sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Bmp280.sample.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -49,6 +50,7 @@
     <Compile Include="Bme280.sample.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>

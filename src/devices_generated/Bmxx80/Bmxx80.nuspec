@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Bmxx80.pdb" target="lib\Iot.Device.Bmxx80.pdb" />
     <file src="bin\Release\Iot.Device.Bmxx80.pdbx" target="lib\Iot.Device.Bmxx80.pdbx" />
     <file src="bin\Release\Iot.Device.Bmxx80.pe" target="lib\Iot.Device.Bmxx80.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Bmxx80.xml" target="lib\Iot.Device.Bmxx80.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

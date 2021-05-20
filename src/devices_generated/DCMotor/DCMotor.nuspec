@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.DCMotor.pdb" target="lib\Iot.Device.DCMotor.pdb" />
     <file src="bin\Release\Iot.Device.DCMotor.pdbx" target="lib\Iot.Device.DCMotor.pdbx" />
     <file src="bin\Release\Iot.Device.DCMotor.pe" target="lib\Iot.Device.DCMotor.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.DCMotor.xml" target="lib\Iot.Device.DCMotor.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

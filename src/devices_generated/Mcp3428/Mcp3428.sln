@@ -1,53 +1,21 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
-MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{CB8332E3-55C5-401F-A38A-D5FD03A3FA29}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mcp3428.Samples", "samples\Mcp3428.Samples.nfproj", "{C8316C1F-A649-42EB-8816-E9E975AFB3F1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mcp3428", "Mcp3428.nfproj", "{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp3428", "Mcp3428.nfproj", "{426F7147-923A-4DE9-AA6A-00BFC0F33B2D}"
 EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Debug|x64.Build.0 = Debug|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Debug|x86.Build.0 = Debug|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Release|x64.ActiveCfg = Release|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Release|x64.Build.0 = Release|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Release|x86.ActiveCfg = Release|Any CPU
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1}.Release|x86.Build.0 = Release|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Debug|x64.Build.0 = Debug|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Debug|x86.Build.0 = Debug|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Release|x64.ActiveCfg = Release|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Release|x64.Build.0 = Release|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Release|x86.ActiveCfg = Release|Any CPU
-		{F0BF229A-EC87-4B90-BCE3-2EEF3F7B1559}.Release|x86.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{C8316C1F-A649-42EB-8816-E9E975AFB3F1} = {CB8332E3-55C5-401F-A38A-D5FD03A3FA29}
-	EndGlobalSection
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {426F7147-923A-4DE9-AA6A-00BFC0F33B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {426F7147-923A-4DE9-AA6A-00BFC0F33B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {426F7147-923A-4DE9-AA6A-00BFC0F33B2D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {426F7147-923A-4DE9-AA6A-00BFC0F33B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {426F7147-923A-4DE9-AA6A-00BFC0F33B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+        {426F7147-923A-4DE9-AA6A-00BFC0F33B2D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+    EndGlobalSection
 EndGlobal

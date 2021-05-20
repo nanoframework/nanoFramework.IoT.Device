@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Mpu9250.pdb" target="lib\Iot.Device.Mpu9250.pdb" />
     <file src="bin\Release\Iot.Device.Mpu9250.pdbx" target="lib\Iot.Device.Mpu9250.pdbx" />
     <file src="bin\Release\Iot.Device.Mpu9250.pe" target="lib\Iot.Device.Mpu9250.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Mpu9250.xml" target="lib\Iot.Device.Mpu9250.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

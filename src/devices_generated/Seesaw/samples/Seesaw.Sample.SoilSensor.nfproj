@@ -8,13 +8,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{3EB44D25-8DAD-4CFB-85B4-21C2EB738DBE}</ProjectGuid>
+    <ProjectGuid>{6A4DDC52-6616-4221-B674-D67B956B14AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Seesaw.Sample.SoilSensor</RootNamespace>
     <AssemblyName>Iot.Device.Seesaw.Sample.SoilSensor</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Seesaw.Sample.SoilSensor.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -47,6 +48,7 @@
     <Compile Include="Volume.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>

@@ -8,13 +8,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{B786D463-3A39-4CC9-9443-3A57FA5EB2A1}</ProjectGuid>
+    <ProjectGuid>{43B5CEEF-5DB9-4D04-8298-B1876046384A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Hts221.Samples</RootNamespace>
     <AssemblyName>Iot.Device.Hts221.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Hts221.Samples.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -41,6 +42,7 @@
     <!-- INSERT FILE REFERENCES HERE -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>

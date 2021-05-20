@@ -1,53 +1,21 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
-MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{DB4FBAF8-7D61-439C-BA2D-072421D841E3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sht3x.Samples", "samples\Sht3x.Samples.nfproj", "{06397B0C-68EB-4BED-9981-969179E56CCB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sht3x", "Sht3x.nfproj", "{49C509AA-6A3F-4CF3-A28C-A562943AE422}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Sht3x", "Sht3x.nfproj", "{CB0F0E69-201B-457D-88A9-B67C249E70E4}"
 EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Debug|x64.Build.0 = Debug|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Debug|x86.Build.0 = Debug|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Release|x64.ActiveCfg = Release|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Release|x64.Build.0 = Release|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Release|x86.ActiveCfg = Release|Any CPU
-		{06397B0C-68EB-4BED-9981-969179E56CCB}.Release|x86.Build.0 = Release|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Debug|x64.Build.0 = Debug|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Debug|x86.Build.0 = Debug|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Release|x64.ActiveCfg = Release|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Release|x64.Build.0 = Release|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Release|x86.ActiveCfg = Release|Any CPU
-		{49C509AA-6A3F-4CF3-A28C-A562943AE422}.Release|x86.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{06397B0C-68EB-4BED-9981-969179E56CCB} = {DB4FBAF8-7D61-439C-BA2D-072421D841E3}
-	EndGlobalSection
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {CB0F0E69-201B-457D-88A9-B67C249E70E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {CB0F0E69-201B-457D-88A9-B67C249E70E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {CB0F0E69-201B-457D-88A9-B67C249E70E4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {CB0F0E69-201B-457D-88A9-B67C249E70E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {CB0F0E69-201B-457D-88A9-B67C249E70E4}.Release|Any CPU.Build.0 = Release|Any CPU
+        {CB0F0E69-201B-457D-88A9-B67C249E70E4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+    EndGlobalSection
 EndGlobal

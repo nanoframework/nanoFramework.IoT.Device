@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Iot.Device.Gpio.pdb" target="lib\Iot.Device.Iot.Device.Gpio.pdb" />
     <file src="bin\Release\Iot.Device.Iot.Device.Gpio.pdbx" target="lib\Iot.Device.Iot.Device.Gpio.pdbx" />
     <file src="bin\Release\Iot.Device.Iot.Device.Gpio.pe" target="lib\Iot.Device.Iot.Device.Gpio.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Iot.Device.Gpio.xml" target="lib\Iot.Device.Iot.Device.Gpio.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

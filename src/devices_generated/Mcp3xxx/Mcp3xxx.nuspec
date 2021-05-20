@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Mcp3xxx.pdb" target="lib\Iot.Device.Mcp3xxx.pdb" />
     <file src="bin\Release\Iot.Device.Mcp3xxx.pdbx" target="lib\Iot.Device.Mcp3xxx.pdbx" />
     <file src="bin\Release\Iot.Device.Mcp3xxx.pe" target="lib\Iot.Device.Mcp3xxx.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Mcp3xxx.xml" target="lib\Iot.Device.Mcp3xxx.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

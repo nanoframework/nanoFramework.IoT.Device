@@ -8,13 +8,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{8B13527C-A199-4042-8051-A1E73E4D0D97}</ProjectGuid>
+    <ProjectGuid>{5DA2D98B-D633-44F4-B7FE-6B73252FC5FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.RadioTransmitter</RootNamespace>
     <AssemblyName>Iot.Device.RadioTransmitter</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.RadioTransmitter.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -47,6 +48,7 @@
     <Compile Include="Devices\Kt0803\TransmissionPower.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>

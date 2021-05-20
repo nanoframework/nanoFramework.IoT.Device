@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Arduino.pdb" target="lib\Iot.Device.Arduino.pdb" />
     <file src="bin\Release\Iot.Device.Arduino.pdbx" target="lib\Iot.Device.Arduino.pdbx" />
     <file src="bin\Release\Iot.Device.Arduino.pe" target="lib\Iot.Device.Arduino.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Arduino.xml" target="lib\Iot.Device.Arduino.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

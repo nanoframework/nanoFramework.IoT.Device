@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.SoftwareSpi.pdb" target="lib\Iot.Device.SoftwareSpi.pdb" />
     <file src="bin\Release\Iot.Device.SoftwareSpi.pdbx" target="lib\Iot.Device.SoftwareSpi.pdbx" />
     <file src="bin\Release\Iot.Device.SoftwareSpi.pe" target="lib\Iot.Device.SoftwareSpi.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.SoftwareSpi.xml" target="lib\Iot.Device.SoftwareSpi.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

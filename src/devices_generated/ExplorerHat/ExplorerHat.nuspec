@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.ExplorerHat.pdb" target="lib\Iot.Device.ExplorerHat.pdb" />
     <file src="bin\Release\Iot.Device.ExplorerHat.pdbx" target="lib\Iot.Device.ExplorerHat.pdbx" />
     <file src="bin\Release\Iot.Device.ExplorerHat.pe" target="lib\Iot.Device.ExplorerHat.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.ExplorerHat.xml" target="lib\Iot.Device.ExplorerHat.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

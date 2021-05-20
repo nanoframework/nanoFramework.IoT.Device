@@ -15,6 +15,7 @@
     <RootNamespace>Iot.Device.BindingTemplateProject</RootNamespace>
     <AssemblyName>Iot.Device.BindingTemplateProject</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.BindingTemplateProject.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -30,6 +31,7 @@
     <!-- INSERT FILE REFERENCES HERE -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>

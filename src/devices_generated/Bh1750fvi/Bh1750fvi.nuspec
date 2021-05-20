@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Bh1750fvi.pdb" target="lib\Iot.Device.Bh1750fvi.pdb" />
     <file src="bin\Release\Iot.Device.Bh1750fvi.pdbx" target="lib\Iot.Device.Bh1750fvi.pdbx" />
     <file src="bin\Release\Iot.Device.Bh1750fvi.pe" target="lib\Iot.Device.Bh1750fvi.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Bh1750fvi.xml" target="lib\Iot.Device.Bh1750fvi.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

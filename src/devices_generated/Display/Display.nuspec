@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Display.pdb" target="lib\Iot.Device.Display.pdb" />
     <file src="bin\Release\Iot.Device.Display.pdbx" target="lib\Iot.Device.Display.pdbx" />
     <file src="bin\Release\Iot.Device.Display.pe" target="lib\Iot.Device.Display.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Display.xml" target="lib\Iot.Device.Display.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Ads1115.pdb" target="lib\Iot.Device.Ads1115.pdb" />
     <file src="bin\Release\Iot.Device.Ads1115.pdbx" target="lib\Iot.Device.Ads1115.pdbx" />
     <file src="bin\Release\Iot.Device.Ads1115.pe" target="lib\Iot.Device.Ads1115.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Ads1115.xml" target="lib\Iot.Device.Ads1115.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

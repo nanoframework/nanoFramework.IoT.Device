@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Shtc3.pdb" target="lib\Iot.Device.Shtc3.pdb" />
     <file src="bin\Release\Iot.Device.Shtc3.pdbx" target="lib\Iot.Device.Shtc3.pdbx" />
     <file src="bin\Release\Iot.Device.Shtc3.pe" target="lib\Iot.Device.Shtc3.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Shtc3.xml" target="lib\Iot.Device.Shtc3.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

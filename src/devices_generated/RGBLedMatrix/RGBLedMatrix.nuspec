@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.RGBLedMatrix.pdb" target="lib\Iot.Device.RGBLedMatrix.pdb" />
     <file src="bin\Release\Iot.Device.RGBLedMatrix.pdbx" target="lib\Iot.Device.RGBLedMatrix.pdbx" />
     <file src="bin\Release\Iot.Device.RGBLedMatrix.pe" target="lib\Iot.Device.RGBLedMatrix.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.RGBLedMatrix.xml" target="lib\Iot.Device.RGBLedMatrix.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

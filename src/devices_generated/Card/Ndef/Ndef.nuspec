@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Ndef.pdb" target="lib\Iot.Device.Ndef.pdb" />
     <file src="bin\Release\Iot.Device.Ndef.pdbx" target="lib\Iot.Device.Ndef.pdbx" />
     <file src="bin\Release\Iot.Device.Ndef.pe" target="lib\Iot.Device.Ndef.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Ndef.xml" target="lib\Iot.Device.Ndef.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

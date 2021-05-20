@@ -1,0 +1,21 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{6385378B-7792-4F36-A3F1-FFB5970C26DE}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {6385378B-7792-4F36-A3F1-FFB5970C26DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {6385378B-7792-4F36-A3F1-FFB5970C26DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {6385378B-7792-4F36-A3F1-FFB5970C26DE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {6385378B-7792-4F36-A3F1-FFB5970C26DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {6385378B-7792-4F36-A3F1-FFB5970C26DE}.Release|Any CPU.Build.0 = Release|Any CPU
+        {6385378B-7792-4F36-A3F1-FFB5970C26DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+    EndGlobalSection
+EndGlobal

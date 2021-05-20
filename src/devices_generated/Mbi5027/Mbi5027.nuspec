@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.Mbi5027.pdb" target="lib\Iot.Device.Mbi5027.pdb" />
     <file src="bin\Release\Iot.Device.Mbi5027.pdbx" target="lib\Iot.Device.Mbi5027.pdbx" />
     <file src="bin\Release\Iot.Device.Mbi5027.pe" target="lib\Iot.Device.Mbi5027.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.Mbi5027.xml" target="lib\Iot.Device.Mbi5027.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

@@ -28,8 +28,9 @@
     <file src="bin\Release\Iot.Device.CpuTemperature.pdb" target="lib\Iot.Device.CpuTemperature.pdb" />
     <file src="bin\Release\Iot.Device.CpuTemperature.pdbx" target="lib\Iot.Device.CpuTemperature.pdbx" />
     <file src="bin\Release\Iot.Device.CpuTemperature.pe" target="lib\Iot.Device.CpuTemperature.pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\Iot.Device.CpuTemperature.xml" target="lib\Iot.Device.CpuTemperature.xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>
