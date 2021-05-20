@@ -59,8 +59,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
-                var projectPath = sourceProjectFile.Directory.FullName.Replace(configuration.SourceDirectory, string.Empty);
-                var targetDirectory = $"{configuration.OutputDirectoryPath}\\{projectPath}";
+                var projectPath = sourceProjectFile.Directory.FullName.Replace(configuration.SourceDirectory, string.Empty).Trim(Path.DirectorySeparatorChar);
+                var targetDirectory = Path.Combine(configuration.OutputDirectoryPath, projectPath);
                 DirectoryInfo targetDirectoryInfo;
 
                 if (projectType == ProjectType.UnitTest)
@@ -137,7 +137,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         { "[[Assembly]]", $"Iot.Device.{projectName}" },
                         { "[[ProjectName]]", projectName },
                     });
-                targetNuspecFile.MoveTo($"{targetDirectory}\\{projectName}.nuspec", true);
+                targetNuspecFile.MoveTo(Path.Combine(targetDirectory, $"{projectName}.nuspec"), true);
             }
         }
         
@@ -151,7 +151,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             out string projectGuid)
         {
             // Search for project references in old project file
-            var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
+            var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").First();
 
             string unitTestProjectReference = string.Empty;
             var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
@@ -167,7 +167,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             if (projectType == ProjectType.UnitTest)
             {
-                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName));
+                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName), overwrite: true);
 
                 // Update project name 
                 projectReplacements.Add("UnitTestTemplateProject", projectName);
@@ -179,7 +179,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             }
             else
             {
-                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
+                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName), overwrite: true);
 
                 // Update project name 
                 projectReplacements.Add("BindingTemplateProject", projectName);
@@ -216,7 +216,6 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                     // need to also adjust mscorlib from template
                     projectReplacements.Add("<HintPath>packages\\nanoFramework.CoreLibrary", "<HintPath>..\\packages\\nanoFramework.CoreLibrary");
-
                 }
 
                 projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
@@ -245,7 +244,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             if (projectType != ProjectType.UnitTest)
             {
                 // process AssemblyInfo file
-                var assemblyInfoFile = targetDirectoryInfo.GetFiles("Properties\\AssemblyInfo.cs").First();
+                var assemblyInfoFile = targetDirectoryInfo.GetFiles(Path.Combine("Properties", "AssemblyInfo.cs")).First();
 
                 var assemblyInfoReplacements = new Dictionary<string, string>();
 
@@ -343,7 +342,7 @@ EndProject";
 
             var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
             solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
-            File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
+            File.WriteAllText(Path.Combine(targetDirectoryInfo.FullName, $"{projectName}.sln"), solutionFileContent);
         }
 
         private static void UpdateProjectGuidInSolutionFile(
@@ -450,20 +449,20 @@ EndProject");
                 var targetDirectory = Directory.CreateDirectory(targetPath);
                 foreach (var file in sourceDirectory.GetFiles("*", new EnumerationOptions { RecurseSubdirectories = true }).Where(f => filePathFilters == null || filePathFilters.Any(filter => f.FullName.Contains(filter)) == false))
                 {
-                    var path = file.FullName.Replace(sourceDirectory.FullName, string.Empty).Replace(file.Name, string.Empty).Trim('\\');
+                    var path = file.FullName.Replace(sourceDirectory.FullName, string.Empty).Replace(file.Name, string.Empty).Trim(Path.DirectorySeparatorChar);
                     if (string.IsNullOrEmpty(path) == false)
                     {
                         if (new[] { "bin", "obj" }.Any(toIgnore => path.StartsWith(toIgnore)) || file.Directory.GetFiles("*.csproj").Any())
                         {
                             continue;
                         }
-                        path += "\\";
+                        path += Path.DirectorySeparatorChar;
                     }
-                    if (Directory.Exists($"{targetDirectory.FullName}\\{path}") == false)
+                    if (Directory.Exists(Path.Combine(targetDirectory.FullName, path)) == false)
                     {
                         targetDirectory.CreateSubdirectory(path);
                     }
-                    file.CopyTo($"{targetDirectory.FullName}\\{path}{file.Name}", true);
+                    file.CopyTo(Path.Combine(targetDirectory.FullName, path, file.Name), true);
                 }
                 return targetDirectory;
             }
@@ -520,8 +519,10 @@ EndProject");
                             }
                         }
 
-                        // Make sure all line endings are CRLF.
-                        line = line.Replace("\n", "\r\n");
+                        // Make sure all line endings on Windows are CRLF.
+                        // This is important for opening .nfproj flies in Visual Studio,
+                        // and maybe for some other files too.
+                        line = line.Replace("\r", "").Replace("\n", Environment.NewLine);
 
                         output.WriteLine(line);
                     }
