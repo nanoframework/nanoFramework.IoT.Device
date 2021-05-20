@@ -43,12 +43,25 @@ steps:
   inputs:
     versionSpec: '>=5.9.x'
 
+- task: InstallnFBuildComponents@1
+  condition: succeeded()
+  displayName: Install nanoFramework MSBuild components
+
 # buil solutions that need to be build
 - powershell: |
+    # setup msbuild
+    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+    if ($msbuild) {
+        $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
+    }
+
     $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$(GitHubToken)"))))"
   
     if($env:System_PullRequest_PullRequestId -ne $null)
     {
+        Write-host "Building from PR"
+
         # get files changed in PR, if this is a PR
         $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -57,6 +70,8 @@ steps:
     }
     else
     {
+        Write-host "Building from other branch"
+
         # get files changed in the commit, if this is NOT a PR
         $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -65,7 +80,7 @@ steps:
     }
 
     # get file names only
-    $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'src/devices*'} 
+    $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'devices*'} 
 
     Write-host "Files changed:"
     $files1 | % { Write-host $_ }
@@ -85,10 +100,10 @@ steps:
         Write-host "Processing '$folder'"
         
         # find solution
-        $solutionFile = Get-ChildItem -Path "src\devices\$folder\" -Include "*.sln" -Recurse
+        $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "*.sln" -Recurse
 
         # find nuspec
-        $nuspecFile = Get-ChildItem -Path "src\devices\$folder\" -Include "*.nuspec" -Recurse
+        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "*.nuspec" -Recurse
 
         if($null -eq $solutionFile)
         {
@@ -100,13 +115,13 @@ steps:
             nuget restore $solutionFile
 
             # build solution
-            msbuild $solutionFile -t:Rebuild -p:Configuration=Release;platform="Any CPU"
+            & "$msbuild" "$solutionFile" /verbosity:minimal /p:Configuration=Release
 
             # package NuGet
             nuget pack $nuspecFile -Version 1.0.0.0 -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
         }
     }
-
+  
 - task: CopyFiles@1
   condition: succeeded()
   displayName: Collecting deployable artifacts
