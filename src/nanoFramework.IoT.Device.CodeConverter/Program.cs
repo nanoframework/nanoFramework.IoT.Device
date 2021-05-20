@@ -37,8 +37,16 @@ namespace nanoFramework.IoT.Device.CodeConverter
             foreach (var sourceProjectFile in sourceProjectFiles)
             {
                 // check if this a Unit Test project
-                var isUnitTestProject = sourceProjectFile.DirectoryName.EndsWith("tests");
-                var isSamplesProject = sourceProjectFile.DirectoryName.EndsWith("samples");
+                ProjectType projectType = ProjectType.Regular;
+
+                if(sourceProjectFile.DirectoryName.EndsWith("tests"))
+                {
+                    projectType = ProjectType.UnitTest;
+                }
+                else if(sourceProjectFile.DirectoryName.EndsWith("samples"))
+                {
+                    projectType = ProjectType.Samples;
+                }
 
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
@@ -46,7 +54,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 var targetDirectory = $"{configuration.OutputDirectoryPath}\\{projectPath}";
                 DirectoryInfo targetDirectoryInfo;
 
-                if (isUnitTestProject)
+                if (projectType == ProjectType.UnitTest)
                 {
                     targetDirectoryInfo = targetUnitTestProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
                 }
@@ -78,20 +86,20 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // PROJECT FILE
                 string[] oldProjectReferences;
                 string projectGuid;
-                CreateProjectFile(isUnitTestProject, projectName, targetDirectoryInfo, nfNugetPackages, searches, out oldProjectReferences, out projectGuid);
+                CreateProjectFile(projectType, projectName, targetDirectoryInfo, nfNugetPackages, searches, out oldProjectReferences, out projectGuid);
 
                 // PACKAGES
                 CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
 
                 // SOLUTION File
-                if (!isUnitTestProject && !isSamplesProject)
+                if (projectType == ProjectType.Regular)
                 {
                     CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
                     UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
                 }
 
                 // NUSPEC File
-                if (!isUnitTestProject && !isSamplesProject)
+                if (projectType == ProjectType.Regular)
                 {
                     CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
                 }
@@ -115,7 +123,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             }
         }
         private static void CreateProjectFile(
-            bool isUnitTestProject,
+            ProjectType projectType,
             string projectName,
             DirectoryInfo targetDirectoryInfo,
             NugetPackages[] nfNugetPackages,
@@ -138,9 +146,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             var projectReplacements = new Dictionary<string, string>();
 
-            if (isUnitTestProject)
+            if (projectType == ProjectType.UnitTest)
             {
-                // Unit Test project
                 targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName));
 
                 // Update project name 
@@ -153,7 +160,6 @@ namespace nanoFramework.IoT.Device.CodeConverter
             }
             else
             {
-                // Regular code project
                 targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
 
                 // Update project name 
@@ -179,7 +185,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             {
                 var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed.Replace("$LF$", "\n")}\n    {add.Replace("$LF$", "\n")}");
 
-                if (isUnitTestProject)
+                if (projectType == ProjectType.UnitTest)
                 {
                     // add the reference to the project being tested
                     newProjectReferencesString += unitTestProjectReference;
@@ -190,14 +196,28 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
             }
+
             if (oldFileReferences.Any())
             {
                 var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n    {add}");
                 projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
             }
+
+            // set output type
+            if(projectType == ProjectType.Samples)
+            {
+                // samples projects are executables
+                projectReplacements.Add("<!-- OUTPUT TYPE -->", "Executable");
+            }
+            else
+            {
+                // all the others are libraries
+                projectReplacements.Add("<!-- OUTPUT TYPE -->", "Library");
+            }
+
             targetProjectFile.EditFile(projectReplacements);
 
-            if (!isUnitTestProject)
+            if (projectType != ProjectType.UnitTest)
             {
                 // process AssemblyInfo file
                 var assemblyInfoFile = targetDirectoryInfo.GetFiles("Properties\\AssemblyInfo.cs").First();
@@ -432,6 +452,16 @@ EndProject";
 
             return checkIfFound;
         }
+    }
 
+    public enum ProjectType
+    {
+        None,
+
+        Regular,
+
+        Samples,
+
+        UnitTest
     }
 }
