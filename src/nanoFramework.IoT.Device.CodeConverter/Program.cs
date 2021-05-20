@@ -247,7 +247,6 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 assemblyInfoReplacements.Add("//< !--ASSEMBLY COMPANY HERE-->", @"[assembly: AssemblyCompany(""nanoFramework Contributors"")]");
                 assemblyInfoReplacements.Add("//< !--ASSEMBLY COPYRIGHT HERE-->", @"[assembly: AssemblyCopyright(""Copyright(c).NET Foundation and Contributors"")]");
                 assemblyInfoReplacements.Add("//< !--ASSEMBLY COMVISIBLE HERE-->", @"[assembly: ComVisible(false)]");
-                assemblyInfoReplacements.Add("//< !--ASSEMBLY NATIVEVERSION HERE-->", @"[assembly: AssemblyNativeVersion(""0.0.0.0"")]");
 
                 assemblyInfoFile.EditFile(assemblyInfoReplacements);
             }
