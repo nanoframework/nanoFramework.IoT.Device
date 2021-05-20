@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature", "CpuTemperature.nfproj", "{50A0E395-F74A-4F85-801B-55A4A5F12FFB}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature", "CpuTemperature.nfproj", "{8CCCF481-56CC-4FC4-BE07-BB4F26212355}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature.Samples", "samples\CpuTemperature.Samples.nfproj", "{0787676F-DC2C-4CF0-A51A-9ED811824D2C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature.Samples", "samples\CpuTemperature.Samples.nfproj", "{9E72D6F7-7823-41F5-9892-D1C4BCEA92B6}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {50A0E395-F74A-4F85-801B-55A4A5F12FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {50A0E395-F74A-4F85-801B-55A4A5F12FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {50A0E395-F74A-4F85-801B-55A4A5F12FFB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {50A0E395-F74A-4F85-801B-55A4A5F12FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {50A0E395-F74A-4F85-801B-55A4A5F12FFB}.Release|Any CPU.Build.0 = Release|Any CPU
-        {50A0E395-F74A-4F85-801B-55A4A5F12FFB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {8CCCF481-56CC-4FC4-BE07-BB4F26212355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {8CCCF481-56CC-4FC4-BE07-BB4F26212355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {8CCCF481-56CC-4FC4-BE07-BB4F26212355}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {8CCCF481-56CC-4FC4-BE07-BB4F26212355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {8CCCF481-56CC-4FC4-BE07-BB4F26212355}.Release|Any CPU.Build.0 = Release|Any CPU
+        {8CCCF481-56CC-4FC4-BE07-BB4F26212355}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

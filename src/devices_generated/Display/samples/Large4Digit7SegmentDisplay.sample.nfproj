@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{272130FB-7F05-4202-85C5-D808083FFAAF}</ProjectGuid>
-    <OutputType>Ex</OutputType>
+    <ProjectGuid>{27A4662F-ED6D-4AC4-89C9-3FF5C1A49840}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Large4Digit7SegmentDisplay.sample</RootNamespace>

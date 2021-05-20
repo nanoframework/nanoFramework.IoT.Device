@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{55315DBE-A990-4642-B80E-8CD942607C22}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{1730ADEF-80C7-4C7F-A680-CD581025826A}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Samples", "samples\Arduino.Samples.nfproj", "{E494E204-8CB1-41CA-B265-1232E3503DBF}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Samples", "samples\Arduino.Samples.nfproj", "{BC994DF5-7C58-4196-8E12-9F210BCF2FB7}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\Arduino.Tests.nfproj", "{821B3233-3FDD-4C2A-AF29-7390424384E8}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\Arduino.Tests.nfproj", "{2CE7364E-B911-4CEB-A9AA-0F3D9780EA96}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {55315DBE-A990-4642-B80E-8CD942607C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {55315DBE-A990-4642-B80E-8CD942607C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {55315DBE-A990-4642-B80E-8CD942607C22}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {55315DBE-A990-4642-B80E-8CD942607C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {55315DBE-A990-4642-B80E-8CD942607C22}.Release|Any CPU.Build.0 = Release|Any CPU
-        {55315DBE-A990-4642-B80E-8CD942607C22}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Release|Any CPU.Build.0 = Release|Any CPU
+        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

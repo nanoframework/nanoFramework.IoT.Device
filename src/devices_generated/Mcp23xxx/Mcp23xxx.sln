@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx", "Mcp23xxx.nfproj", "{50992C32-0C85-4BB8-AEC6-31E2437BF4B0}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx", "Mcp23xxx.nfproj", "{05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Samples", "samples\Mcp23xxx.Samples.nfproj", "{19FF6029-BDCF-4596-9C9F-099CCF916064}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Samples", "samples\Mcp23xxx.Samples.nfproj", "{B6DE7369-BCFE-4764-96E9-47627D411F2B}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Tests", "tests\Mcp23xxx.Tests.nfproj", "{E93DD27B-CF83-4FD9-87D7-D7AB40250623}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Tests", "tests\Mcp23xxx.Tests.nfproj", "{E8947BC7-CC6E-4D0D-B579-516B5EB03236}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {50992C32-0C85-4BB8-AEC6-31E2437BF4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {50992C32-0C85-4BB8-AEC6-31E2437BF4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {50992C32-0C85-4BB8-AEC6-31E2437BF4B0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {50992C32-0C85-4BB8-AEC6-31E2437BF4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {50992C32-0C85-4BB8-AEC6-31E2437BF4B0}.Release|Any CPU.Build.0 = Release|Any CPU
-        {50992C32-0C85-4BB8-AEC6-31E2437BF4B0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}.Release|Any CPU.Build.0 = Release|Any CPU
+        {05D40C26-E4E6-4CAB-ACC6-DAB2606E5B41}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

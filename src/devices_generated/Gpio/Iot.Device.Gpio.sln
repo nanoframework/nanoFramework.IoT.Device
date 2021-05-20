@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Gpio.Samples", "samples\Gpio.Samples.nfproj", "{28CA87A0-3D75-4CAF-A5F5-64900991D3E6}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Gpio.Samples", "samples\Gpio.Samples.nfproj", "{46962780-917E-4E78-BF5C-E9DD2527D082}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}.Release|Any CPU.Build.0 = Release|Any CPU
-        {5ADD4C37-7B6E-4833-BBA8-C62B0579D5A0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}.Release|Any CPU.Build.0 = Release|Any CPU
+        {37248DF2-C4B3-4CCF-AAB3-1AB641B0862F}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

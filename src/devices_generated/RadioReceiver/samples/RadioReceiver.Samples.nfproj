@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{956C44FC-BAC7-45D6-B0D8-B21585669AD7}</ProjectGuid>
-    <OutputType>Ex</OutputType>
+    <ProjectGuid>{5F8B6335-0B5F-4BCB-9C65-6EBCCB16CC6B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.RadioReceiver.Samples</RootNamespace>
