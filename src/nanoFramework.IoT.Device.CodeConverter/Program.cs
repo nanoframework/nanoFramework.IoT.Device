@@ -38,6 +38,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             {
                 // check if this a Unit Test project
                 var isUnitTestProject = sourceProjectFile.DirectoryName.EndsWith("tests");
+                var isSamplesProject = sourceProjectFile.DirectoryName.EndsWith("samples");
 
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
@@ -83,10 +84,17 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
 
                 // SOLUTION File
-                CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
-                UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
+                if (!isUnitTestProject && !isSamplesProject)
+                {
+                    CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
+                    UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
+                }
 
-                CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
+                // NUSPEC File
+                if (!isUnitTestProject && !isSamplesProject)
+                {
+                    CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
+                }
             }
 
             Console.WriteLine("Completed. Press any key to exit.");
@@ -261,6 +269,23 @@ EndProject";
         {projectGuid}.Release|Any CPU.Deploy.0 = Release|Any CPU";
 
             var solutionProject = solutionProjectTemplate.Replace("nanoFrameworkIoT", projectName);
+
+            // find out if there are sample projects
+            if(targetDirectoryInfo.GetDirectories("samples").Count() > 0)
+            {
+                solutionProject += $@"
+Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Samples"", ""samples\nanoFrameworkIoT.Samples.nfproj"", ""{projectGuid}""
+EndProject";
+            }
+
+            // find out if there are unit test projects
+            if (targetDirectoryInfo.GetDirectories("tests").Count() > 0)
+            {
+                solutionProject += $@"
+Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Tests"", ""tests\nanoFrameworkIoT.Tests.nfproj"", ""{projectGuid}""
+EndProject";
+            }
+
             var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
             solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
             File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
@@ -272,7 +297,8 @@ EndProject";
             {
                 solutionFile.EditFile(new Dictionary<string, string>
                 {
-                    {"csproj", "nfproj" }
+                    {"csproj", "nfproj" },
+                    {"nanoFrameworkIoT", projectName }
                 });
             }
             
