@@ -24,10 +24,26 @@ namespace System.Device.Model
         /// </summary>
         /// <param name="name">Optional name of the command in the interface. If not provided method name will be used.</param>
         /// <param name="displayName">Optional name of the command in the interface.</param>
-        public CommandAttribute(string? name = null, string? displayName = null)
+        public CommandAttribute(string? name, string? displayName)
         {
             Name = name;
             DisplayName = displayName;
+        }
+
+        /// <summary>
+        /// Constructs CommandAttribute
+        /// </summary>
+        /// <param name="name">Optional name of the command in the interface. If not provided method name will be used.</param>
+        public CommandAttribute(string? name)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Constructs CommandAttribute
+        /// </summary>
+        public CommandAttribute()
+        {
         }
     }
 }
