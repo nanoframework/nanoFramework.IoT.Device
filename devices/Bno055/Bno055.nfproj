@@ -16,9 +16,13 @@
     <AssemblyName>Bno055</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <Import Project="..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+  <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
+  <Import Project="..\..\src\System.Numerics\System.Numerics.projitems" Label="Shared" />
+  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.10.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
@@ -40,6 +44,11 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
+    <Reference Include="System.Math, Version=1.4.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.5\lib\System.Math.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
     <Reference Include="UnitsNet.Temperature">
       <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
@@ -53,10 +62,6 @@
   <ItemGroup>
     <Compile Include="*.cs" />
     <None Include="*.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BinaryPrimitives\BinaryPrimitives.nfproj" />
-    <ProjectReference Include="..\..\System.Device.Model\System.Device.Model.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
