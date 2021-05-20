@@ -212,6 +212,10 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                     // packages path are one level up, need to adjust
                     newProjectReferencesString = newProjectReferencesString.Replace("packages\\", "..\\packages\\");
+
+                    // need to also adjust mscorlib from template
+                    projectReplacements.Add("<HintPath>packages\\nanoFramework.CoreLibrary", "<HintPath>..\\packages\\nanoFramework.CoreLibrary");
+
                 }
 
                 projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
