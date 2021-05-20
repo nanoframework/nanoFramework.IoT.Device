@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{D3B37304-47AF-4862-B445-99F1931B832B}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Samples", "samples\LidarLiteV3.Samples.nfproj", "{5D7E1B14-CD89-479A-80B9-B92FB9FAB54C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Samples", "samples\LidarLiteV3.Samples.nfproj", "{7AFB1E4C-5B62-4DDD-B5F9-DFEEDBAAC71A}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}.Release|Any CPU.Build.0 = Release|Any CPU
-        {05B91618-7CFC-4BA6-84BD-DFAAE7CA7DDE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {D3B37304-47AF-4862-B445-99F1931B832B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {D3B37304-47AF-4862-B445-99F1931B832B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {D3B37304-47AF-4862-B445-99F1931B832B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {D3B37304-47AF-4862-B445-99F1931B832B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {D3B37304-47AF-4862-B445-99F1931B832B}.Release|Any CPU.Build.0 = Release|Any CPU
+        {D3B37304-47AF-4862-B445-99F1931B832B}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

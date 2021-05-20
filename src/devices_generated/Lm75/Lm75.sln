@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Lm75", "Lm75.nfproj", "{7E8D7C1E-058B-4544-8FD8-7F3896E28B80}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Lm75", "Lm75.nfproj", "{D4DA73FA-F443-464C-9141-310F7D1BE9B3}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Lm75.Samples", "samples\Lm75.Samples.nfproj", "{48B818AB-96DF-403F-8CD0-62C3F9611DD0}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Lm75.Samples", "samples\Lm75.Samples.nfproj", "{83043DA1-EB0E-4D6B-A13D-F350DAAF6A91}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {7E8D7C1E-058B-4544-8FD8-7F3896E28B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {7E8D7C1E-058B-4544-8FD8-7F3896E28B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {7E8D7C1E-058B-4544-8FD8-7F3896E28B80}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {7E8D7C1E-058B-4544-8FD8-7F3896E28B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {7E8D7C1E-058B-4544-8FD8-7F3896E28B80}.Release|Any CPU.Build.0 = Release|Any CPU
-        {7E8D7C1E-058B-4544-8FD8-7F3896E28B80}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {D4DA73FA-F443-464C-9141-310F7D1BE9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {D4DA73FA-F443-464C-9141-310F7D1BE9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {D4DA73FA-F443-464C-9141-310F7D1BE9B3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {D4DA73FA-F443-464C-9141-310F7D1BE9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {D4DA73FA-F443-464C-9141-310F7D1BE9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+        {D4DA73FA-F443-464C-9141-310F7D1BE9B3}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ssd13xx", "Ssd13xx.nfproj", "{6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ssd13xx", "Ssd13xx.nfproj", "{6F004B74-7DB9-443A-972F-C2883EB6D5CF}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ssd13xx.Samples", "samples\Ssd13xx.Samples.nfproj", "{FA90CBEF-F442-481B-B70A-D82F0053C78C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ssd13xx.Samples", "samples\Ssd13xx.Samples.nfproj", "{BC160D9E-950D-4D67-AD6C-806549F6785C}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ssd13xx.Tests", "tests\Ssd13xx.Tests.nfproj", "{34CFEC94-1BEE-4D51-9313-822262CC8CB8}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ssd13xx.Tests", "tests\Ssd13xx.Tests.nfproj", "{B119C580-BA17-49BA-8D38-E30F5B055077}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}.Release|Any CPU.Build.0 = Release|Any CPU
-        {6DB9B9F5-250B-4652-A8F2-4E24C6FA0144}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {6F004B74-7DB9-443A-972F-C2883EB6D5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {6F004B74-7DB9-443A-972F-C2883EB6D5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {6F004B74-7DB9-443A-972F-C2883EB6D5CF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {6F004B74-7DB9-443A-972F-C2883EB6D5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {6F004B74-7DB9-443A-972F-C2883EB6D5CF}.Release|Any CPU.Build.0 = Release|Any CPU
+        {6F004B74-7DB9-443A-972F-C2883EB6D5CF}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
