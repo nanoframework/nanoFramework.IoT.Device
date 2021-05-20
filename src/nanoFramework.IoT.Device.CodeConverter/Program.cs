@@ -87,6 +87,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                             { "Span<byte>", "SpanByte" },
                             { "ReadOnlySpan<byte>", "SpanByte" },
                             { ".AsSpan(start, length)", string.Empty },
+                            { "Console.WriteLine(", "Debug.WriteLine(" },
                         },
                         nfNugetPackages,
                         searches);
