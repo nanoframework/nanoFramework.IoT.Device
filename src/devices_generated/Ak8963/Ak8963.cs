@@ -208,10 +208,10 @@ namespace Iot.Device.Magnetometer
             // Wait for a data to be present
             if (waitForData)
             {
-                DateTime dt = DateTime.Now.Add(timeout ?? DefaultTimeout);
+                DateTime dt = DateTime.UtcNow.Add(timeout ?? DefaultTimeout);
                 while (!HasDataToRead)
                 {
-                    if (DateTime.Now > dt)
+                    if (DateTime.UtcNow > dt)
                     {
                         throw new TimeoutException($"{nameof(ReadMagnetometer)} timeout reading value");
                     }

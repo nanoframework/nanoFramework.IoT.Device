@@ -213,7 +213,7 @@ void DisplayClock(Ssd1306 ssd1306)
             }
 
             image.Mutate(ctx => ctx
-                .DrawText(DateTime.Now.ToString("HH:mm:ss"), fontsys, Color.White,
+                .DrawText(DateTime.UtcNow.ToString("HH:mm:ss"), fontsys, Color.White,
                     new SixLabors.ImageSharp.PointF(0, y)));
 
             using (Image<L16> image_t = image.CloneAs<L16>())

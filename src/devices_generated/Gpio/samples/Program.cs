@@ -42,7 +42,7 @@ namespace Sunxi.Gpio.Samples
 
             bool Debounce()
             {
-                long debounceTick = DateTime.Now.Ticks;
+                long debounceTick = DateTime.UtcNow.Ticks;
                 PinValue buttonState = controller.Read(pin);
 
                 do
@@ -51,11 +51,11 @@ namespace Sunxi.Gpio.Samples
 
                     if (currentState != buttonState)
                     {
-                        debounceTick = DateTime.Now.Ticks;
+                        debounceTick = DateTime.UtcNow.Ticks;
                         buttonState = currentState;
                     }
                 }
-                while (DateTime.Now.Ticks - debounceTick < debounceDelay);
+                while (DateTime.UtcNow.Ticks - debounceTick < debounceDelay);
 
                 if (buttonState == PinValue.Low)
                 {

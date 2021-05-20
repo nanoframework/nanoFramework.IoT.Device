@@ -98,7 +98,7 @@ namespace CameraIoT
                     video = Device.CaptureContinuous();
                     Bitmap myBitmap = new Bitmap(video);
                     Graphics g = Graphics.FromImage(myBitmap);
-                    g.DrawString(DateTime.Now.AddHours(Timezone).ToString("yyyy-MM-dd HH:mm:ss"), new Font("Tahoma", 20), Brushes.White, new PointF(0, 0));
+                    g.DrawString(DateTime.UtcNow.AddHours(Timezone).ToString("yyyy-MM-dd HH:mm:ss"), new Font("Tahoma", 20), Brushes.White, new PointF(0, 0));
                     using (var ms = new MemoryStream())
                     {
                         myBitmap.Save(ms, ImageFormat.Jpeg);

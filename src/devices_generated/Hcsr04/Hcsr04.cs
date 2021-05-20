@@ -99,17 +99,17 @@ namespace Iot.Device.Hcsr04
             // 100ms was chosen because max measurement time for this sensor is around 24ms for 400cm
             // additionally we need to account 60ms max delay.
             // Rounding this up to a 100 in case of a context switch.
-            long hangTicks = DateTime.Now.Ticks + 100 * TimeSpan.TicksPerMillisecond;
+            long hangTicks = DateTime.UtcNow.Ticks + 100 * TimeSpan.TicksPerMillisecond;
             _timer.Reset();
 
             // Measurements should be 60ms apart, in order to prevent trigger signal mixing with echo signal
             // ref https://components101.com/sites/default/files/component_datasheet/HCSR04%20Datasheet.pdf
-            while (DateTime.Now.Ticks - _lastMeasurment < 60 * TimeSpan.TicksPerMillisecond)
+            while (DateTime.UtcNow.Ticks - _lastMeasurment < 60 * TimeSpan.TicksPerMillisecond)
             {
-                Thread.Sleep(TimeSpan.FromTicks(DateTime.Now.Ticks - _lastMeasurment));
+                Thread.Sleep(TimeSpan.FromTicks(DateTime.UtcNow.Ticks - _lastMeasurment));
             }
 
-            _lastMeasurment = DateTime.Now.Ticks;
+            _lastMeasurment = DateTime.UtcNow.Ticks;
 
             // Trigger input for 10uS to start ranging
             _controller.Write(_trigger, PinValue.High);
@@ -119,7 +119,7 @@ namespace Iot.Device.Hcsr04
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
             while (_controller.Read(_echo) == PinValue.Low)
             {
-                if (DateTime.Now.Ticks - hangTicks > 0)
+                if (DateTime.UtcNow.Ticks - hangTicks > 0)
                 {
                     result = default;
                     return false;
@@ -131,7 +131,7 @@ namespace Iot.Device.Hcsr04
             // Wait until the pin is LOW again, (that marks the end of the pulse we are measuring)
             while (_controller.Read(_echo) == PinValue.High)
             {
-                if (DateTime.Now.Ticks - hangTicks > 0)
+                if (DateTime.UtcNow.Ticks - hangTicks > 0)
                 {
                     result = default;
                     return false;

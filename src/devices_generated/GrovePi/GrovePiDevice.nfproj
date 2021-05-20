@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{EA5F0310-341E-48EF-A56B-122DCEA5BCE3}</ProjectGuid>
+    <ProjectGuid>{B29FB420-C8B8-4426-B665-868CFE4C6D61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -41,7 +41,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>packages\nanoFramework.System.Math.1.0.0-preview.5\lib\System.Math.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

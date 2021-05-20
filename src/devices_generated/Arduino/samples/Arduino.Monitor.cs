@@ -147,7 +147,7 @@ namespace Arduino.Samples
                     case 1:
                     {
                         modeName = "Time";
-                        disp.Output.ReplaceLine(1, DateTime.Now.ToLongTimeString());
+                        disp.Output.ReplaceLine(1, DateTime.UtcNow.ToLongTimeString());
                         sleeptime = TimeSpan.FromMilliseconds(200);
                         break;
                     }
@@ -155,7 +155,7 @@ namespace Arduino.Samples
                     case 2:
                     {
                         modeName = "Date";
-                        disp.Output.ReplaceLine(1, DateTime.Now.ToShortDateString());
+                        disp.Output.ReplaceLine(1, DateTime.UtcNow.ToShortDateString());
                         break;
                     }
 

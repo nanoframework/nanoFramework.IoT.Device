@@ -590,7 +590,7 @@ namespace Iot.Device.Pn5180
             int numBytesPrevious = 0;
 
             // 10 etu needed for 1 byte, 1 etu = 9.4 µs, so about 100 µs are needed to transfer 1 character
-            DateTime dtTimeout = DateTime.Now.AddMilliseconds(timeoutMilliseconds);
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutMilliseconds);
             do
             {
                 (numBytes, _) = GetNumberOfBytesReceivedAndValidBits();
@@ -612,7 +612,7 @@ namespace Iot.Device.Pn5180
                 // transmitted between 2 reads
                 Thread.Sleep(1);
             }
-            while (dtTimeout > DateTime.Now);
+            while (dtTimeout > DateTime.UtcNow);
 
             if (numBytes > 0)
             {
@@ -976,7 +976,7 @@ namespace Iot.Device.Pn5180
             SpanByte sakInterm = new byte[5];
             int numBytes;
 
-            DateTime dtTimeout = DateTime.Now.AddMilliseconds(timeoutPollingMilliseconds);
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutPollingMilliseconds);
             try
             {
                 // Switches off the CRC off in RX and TX direction
@@ -1000,7 +1000,7 @@ namespace Iot.Device.Pn5180
                             return false;
                         }
                     }
-                    else if (dtTimeout < DateTime.Now)
+                    else if (dtTimeout < DateTime.UtcNow)
                     {
                         return false;
                     }
@@ -1187,7 +1187,7 @@ namespace Iot.Device.Pn5180
             CrcReceptionTransfer = true;
             int numBytes;
 
-            DateTime dtTimeout = DateTime.Now.AddMilliseconds(timeoutPollingMilliseconds);
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutPollingMilliseconds);
 
             try
             {
@@ -1210,7 +1210,7 @@ namespace Iot.Device.Pn5180
                             return false;
                         }
                     }
-                    else if (dtTimeout < DateTime.Now)
+                    else if (dtTimeout < DateTime.UtcNow)
                     {
                         return false;
                     }

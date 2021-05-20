@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef", "Ndef.nfproj", "{19750423-9864-4B20-8519-D09BEA25716F}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef", "Ndef.nfproj", "{FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Samples", "samples\Ndef.Samples.nfproj", "{4B3E4E3F-C166-4B17-BF5C-5AB047706FDF}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Samples", "samples\Ndef.Samples.nfproj", "{BCEDB273-9483-4558-BF61-D1FD33E8B571}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Tests", "tests\Ndef.Tests.nfproj", "{43DD2B88-C1D8-4C10-88C9-FCB4B74D6804}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Tests", "tests\Ndef.Tests.nfproj", "{BB3BAA80-B9D5-4BD0-9555-5AA4C14408BA}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {19750423-9864-4B20-8519-D09BEA25716F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {19750423-9864-4B20-8519-D09BEA25716F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {19750423-9864-4B20-8519-D09BEA25716F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {19750423-9864-4B20-8519-D09BEA25716F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {19750423-9864-4B20-8519-D09BEA25716F}.Release|Any CPU.Build.0 = Release|Any CPU
-        {19750423-9864-4B20-8519-D09BEA25716F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}.Release|Any CPU.Build.0 = Release|Any CPU
+        {FF5AC041-FFC1-4014-B57B-96AD4A24A8C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

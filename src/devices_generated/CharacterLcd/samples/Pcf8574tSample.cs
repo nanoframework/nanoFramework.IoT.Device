@@ -68,7 +68,7 @@ namespace Iot.Device.CharacterLcd.Samples
                     timer.Elapsed += (o, e) =>
                     {
                         lcd.SetCursorPosition(0, 1);
-                        lcd.Write(DateTime.Now.ToLongTimeString() + " ");
+                        lcd.Write(DateTime.UtcNow.ToLongTimeString() + " ");
                         if (state == 0)
                         {
                             state = 1;

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Buzzer", "Buzzer.nfproj", "{4B07B314-7414-4F12-B83F-34858A8E4690}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Buzzer", "Buzzer.nfproj", "{3947517C-A12F-4C11-BABF-D7062566D93B}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Buzzer.Samples", "samples\Buzzer.Samples.nfproj", "{A17EB7B6-8CC9-47B3-A3A4-6E9BF276A65E}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Buzzer.Samples", "samples\Buzzer.Samples.nfproj", "{7DFE3CC9-F8A1-4CA6-8E66-C6491E4F9AA3}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {4B07B314-7414-4F12-B83F-34858A8E4690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {4B07B314-7414-4F12-B83F-34858A8E4690}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {4B07B314-7414-4F12-B83F-34858A8E4690}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {4B07B314-7414-4F12-B83F-34858A8E4690}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {4B07B314-7414-4F12-B83F-34858A8E4690}.Release|Any CPU.Build.0 = Release|Any CPU
-        {4B07B314-7414-4F12-B83F-34858A8E4690}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {3947517C-A12F-4C11-BABF-D7062566D93B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {3947517C-A12F-4C11-BABF-D7062566D93B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {3947517C-A12F-4C11-BABF-D7062566D93B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {3947517C-A12F-4C11-BABF-D7062566D93B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {3947517C-A12F-4C11-BABF-D7062566D93B}.Release|Any CPU.Build.0 = Release|Any CPU
+        {3947517C-A12F-4C11-BABF-D7062566D93B}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

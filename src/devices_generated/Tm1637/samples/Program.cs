@@ -87,7 +87,7 @@ tm1637.ScreenOn = true;
 long bright = 0;
 while (!Console.KeyAvailable)
 {
-    var dt = DateTime.Now;
+    var dt = DateTime.UtcNow;
     toDisplay[0] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Minute / 10}");
     toDisplay[1] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Minute % 10}") | Character.Dot;
     toDisplay[2] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Second / 10}");

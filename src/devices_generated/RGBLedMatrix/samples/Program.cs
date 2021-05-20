@@ -147,7 +147,7 @@ unsafe void Demo1(RGBLedMatrix matrix)
                 x = matrix.Width - 1;
             }
 
-            string d = DateTime.Now.ToString("hh:mm:ss");
+            string d = DateTime.UtcNow.ToString("hh:mm:ss");
             matrix.DrawText(0, font.Height + 1, d, font1, 128, 128, 0, 0, 0, 0);
 
             Thread.Sleep(25);
@@ -330,7 +330,7 @@ unsafe void Demo4(RGBLedMatrix matrix)
 
     while (play)
     {
-        DateTime time = DateTime.Now;
+        DateTime time = DateTime.UtcNow;
         if (Math.Abs(time.Minute - lastMinute) > 4)
         {
             lastMinute = time.Minute;

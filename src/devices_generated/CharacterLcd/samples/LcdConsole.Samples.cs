@@ -68,7 +68,7 @@ namespace Iot.Device.CharacterLcd.Samples
             // Let the current time move trought the display on line 1
             while (!Console.KeyAvailable)
             {
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.UtcNow;
                 String time = String.Format(CultureInfo.CurrentCulture, "{0}", now.ToLongTimeString());
                 string printTime = time;
                 if (left > 0)

@@ -65,7 +65,7 @@ void KeyMatrixEventReceived(object sender, KeyMatrixEvent keyMatrixEvent)
 
 void ShowKeyMatrixEvent(KeyMatrix sender, KeyMatrixEvent pinValueChangedEventArgs)
 {
-    Debug.WriteLine($"{DateTime.Now:yyyy/MM/dd HH:mm:ss.fff} {pinValueChangedEventArgs.Output}, {pinValueChangedEventArgs.Input}, {pinValueChangedEventArgs.EventType}");
+    Debug.WriteLine($"{DateTime.UtcNow:yyyy/MM/dd HH:mm:ss.fff} {pinValueChangedEventArgs.Output}, {pinValueChangedEventArgs.Input}, {pinValueChangedEventArgs.EventType}");
     Debug.WriteLine();
 
     // print keyboard status

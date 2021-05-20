@@ -447,9 +447,9 @@ namespace Iot.Device.Card.CreditCardProcessing
                                 // 009A-Transaction Date
                                 else if (dol.TagNumber == 0x9A)
                                 {
-                                    toSend[index] = NumberHelper.Dec2Bcd((DateTime.Now.Year % 100));
-                                    toSend[index + 1] = NumberHelper.Dec2Bcd((DateTime.Now.Month));
-                                    toSend[index + 2] = NumberHelper.Dec2Bcd((DateTime.Now.Day));
+                                    toSend[index] = NumberHelper.Dec2Bcd((DateTime.UtcNow.Year % 100));
+                                    toSend[index + 1] = NumberHelper.Dec2Bcd((DateTime.UtcNow.Month));
+                                    toSend[index + 2] = NumberHelper.Dec2Bcd((DateTime.UtcNow.Day));
                                 }
 
                                 // 0x9F37 Unpredictable number

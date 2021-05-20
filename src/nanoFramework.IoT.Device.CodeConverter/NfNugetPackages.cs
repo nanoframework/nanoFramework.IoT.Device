@@ -67,8 +67,8 @@
                                 Namespace="System.Math",
                                 CodeMatchString="Math.",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""System.Math"">$LF$      <HintPath>packages\nanoFramework.System.Math.1.0.0-preview.5\lib\System.Math.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Math"" version=""1.0.0-preview.5"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Math"">$LF$      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Math"" version=""1.4.0-preview.7"" targetFramework=""netnanoframework10"" />"
                             },
 
                             /*

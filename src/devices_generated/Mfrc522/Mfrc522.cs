@@ -242,7 +242,7 @@ namespace Iot.Device.Mfrc522
         {
             card = new Data106kbpsTypeA(0, 0, 0, new byte[0], null);
             byte[] atqa = new byte[2];
-            DateTime dtTimeout = DateTime.Now.Add(timeout);
+            DateTime dtTimeout = DateTime.UtcNow.Add(timeout);
             // Switch off the cryptography for Mifare card in case it's on
             ClearRegisterBit(Register.Status2, (byte)Status2.MFCrypto1On);
             do
@@ -253,7 +253,7 @@ namespace Iot.Device.Mfrc522
                     break;
                 }
 
-                if (dtTimeout > DateTime.Now)
+                if (dtTimeout > DateTime.UtcNow)
                 {
                     return false;
                 }

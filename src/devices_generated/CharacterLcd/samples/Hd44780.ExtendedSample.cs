@@ -227,7 +227,7 @@ namespace Iot.Device.CharacterLcd.Samples
                     // The callback may be executed in parallel several times, but the display component is not reentrant!
                     if (Monitor.TryEnter(myLock))
                     {
-                        var now = DateTime.Now;
+                        var now = DateTime.UtcNow;
                         lcd.SetCursorPosition(0, 0);
                         lcd.Write(String.Format(CultureInfo.CurrentCulture, "{0:dddd}", now));
                         lcd.SetCursorPosition(0, 1);
