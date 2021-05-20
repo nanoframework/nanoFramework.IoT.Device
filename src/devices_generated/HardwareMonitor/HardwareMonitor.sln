@@ -3,10 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "HardwareMonitor", "HardwareMonitor.nfproj", "{F369D993-2878-49D8-BFFD-C8466F3713A4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "HardwareMonitor", "HardwareMonitor.nfproj", "{5B118C3C-C78C-4D06-AEED-324137E52958}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "HardwareMonitor.Samples", "samples\HardwareMonitor.Samples.nfproj", "{F31B872B-4AC1-470D-A387-CA16F6F8DBD3}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "OpenHardwareMonitor.Samples", "samples\\OpenHardwareMonitor.Samples.nfproj", "{C5BF9241-3520-4864-8DA2-908B6EDF0B14}"
 EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
 Global
@@ -15,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {F369D993-2878-49D8-BFFD-C8466F3713A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {F369D993-2878-49D8-BFFD-C8466F3713A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {F369D993-2878-49D8-BFFD-C8466F3713A4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {F369D993-2878-49D8-BFFD-C8466F3713A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {F369D993-2878-49D8-BFFD-C8466F3713A4}.Release|Any CPU.Build.0 = Release|Any CPU
-        {F369D993-2878-49D8-BFFD-C8466F3713A4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {5B118C3C-C78C-4D06-AEED-324137E52958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {5B118C3C-C78C-4D06-AEED-324137E52958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {5B118C3C-C78C-4D06-AEED-324137E52958}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {5B118C3C-C78C-4D06-AEED-324137E52958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {5B118C3C-C78C-4D06-AEED-324137E52958}.Release|Any CPU.Build.0 = Release|Any CPU
+        {5B118C3C-C78C-4D06-AEED-324137E52958}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

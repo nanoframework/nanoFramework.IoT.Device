@@ -3,10 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bh1745", "Bh1745.nfproj", "{A32ADE39-2785-4872-9E90-353AC109C250}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bh1745", "Bh1745.nfproj", "{0C87B477-A933-430B-80FD-7E5D4B1D57C8}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bh1745.Samples", "samples\Bh1745.Samples.nfproj", "{C18159F4-250B-4911-BB53-F81DB8581592}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bh1745.Sample", "samples\\Bh1745.Sample.nfproj", "{A30E93C7-B9D5-4C92-A6A5-38F0AF4A790A}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bh1745CustomConfiguration.Sample", "samples\\Bh1745CustomConfiguration.Sample.nfproj", "{01C05732-8831-4713-924E-3EC5A9CD5F26}"
+EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
 Global
@@ -15,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {A32ADE39-2785-4872-9E90-353AC109C250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {A32ADE39-2785-4872-9E90-353AC109C250}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {A32ADE39-2785-4872-9E90-353AC109C250}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {A32ADE39-2785-4872-9E90-353AC109C250}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {A32ADE39-2785-4872-9E90-353AC109C250}.Release|Any CPU.Build.0 = Release|Any CPU
-        {A32ADE39-2785-4872-9E90-353AC109C250}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {0C87B477-A933-430B-80FD-7E5D4B1D57C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {0C87B477-A933-430B-80FD-7E5D4B1D57C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {0C87B477-A933-430B-80FD-7E5D4B1D57C8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {0C87B477-A933-430B-80FD-7E5D4B1D57C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {0C87B477-A933-430B-80FD-7E5D4B1D57C8}.Release|Any CPU.Build.0 = Release|Any CPU
+        {0C87B477-A933-430B-80FD-7E5D4B1D57C8}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

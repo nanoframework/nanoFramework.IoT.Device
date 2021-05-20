@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "GrovePiDevice", "GrovePiDevice.nfproj", "{B29FB420-C8B8-4426-B665-868CFE4C6D61}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "GrovePiDevice", "GrovePiDevice.nfproj", "{C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -14,11 +14,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {B29FB420-C8B8-4426-B665-868CFE4C6D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {B29FB420-C8B8-4426-B665-868CFE4C6D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {B29FB420-C8B8-4426-B665-868CFE4C6D61}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {B29FB420-C8B8-4426-B665-868CFE4C6D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {B29FB420-C8B8-4426-B665-868CFE4C6D61}.Release|Any CPU.Build.0 = Release|Any CPU
-        {B29FB420-C8B8-4426-B665-868CFE4C6D61}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}.Release|Any CPU.Build.0 = Release|Any CPU
+        {C35A7D1A-44B7-4ACF-8C7F-E1346B5DE3AE}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

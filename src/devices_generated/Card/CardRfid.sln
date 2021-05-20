@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CardRfid", "CardRfid.nfproj", "{501ACB2B-26CA-4958-84A1-FB2B0D8E7721}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CardRfid", "CardRfid.nfproj", "{0118FCCA-30D7-4173-9E64-5131B9B31D1A}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -14,11 +14,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {501ACB2B-26CA-4958-84A1-FB2B0D8E7721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {501ACB2B-26CA-4958-84A1-FB2B0D8E7721}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {501ACB2B-26CA-4958-84A1-FB2B0D8E7721}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {501ACB2B-26CA-4958-84A1-FB2B0D8E7721}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {501ACB2B-26CA-4958-84A1-FB2B0D8E7721}.Release|Any CPU.Build.0 = Release|Any CPU
-        {501ACB2B-26CA-4958-84A1-FB2B0D8E7721}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {0118FCCA-30D7-4173-9E64-5131B9B31D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {0118FCCA-30D7-4173-9E64-5131B9B31D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {0118FCCA-30D7-4173-9E64-5131B9B31D1A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {0118FCCA-30D7-4173-9E64-5131B9B31D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {0118FCCA-30D7-4173-9E64-5131B9B31D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+        {0118FCCA-30D7-4173-9E64-5131B9B31D1A}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{6D927CBB-C3C6-4820-8E92-82EE72818FFC}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{BB055969-8A49-450C-9F44-64AC74BD1F2A}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Samples", "samples\Charlieplex.Samples.nfproj", "{9BFC8B4E-0F96-4508-8F1F-5F4EA1E478D9}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex-sample", "samples\\Charlieplex-sample.nfproj", "{7B252AD6-9740-4D0F-89D1-4DDBBF424A82}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\Charlieplex.Tests.nfproj", "{48FA7E3E-A180-43D8-BBB8-1E87CF1AEC7F}"
+<!-- SAMPLES PROJECT PLACEHOLDER -->
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\\Charlieplex.Tests.nfproj", "{738B1442-97EC-448F-BD51-BEA6DADB3EF8}"
 EndProject
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {6D927CBB-C3C6-4820-8E92-82EE72818FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {6D927CBB-C3C6-4820-8E92-82EE72818FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {6D927CBB-C3C6-4820-8E92-82EE72818FFC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {6D927CBB-C3C6-4820-8E92-82EE72818FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {6D927CBB-C3C6-4820-8E92-82EE72818FFC}.Release|Any CPU.Build.0 = Release|Any CPU
-        {6D927CBB-C3C6-4820-8E92-82EE72818FFC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {BB055969-8A49-450C-9F44-64AC74BD1F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {BB055969-8A49-450C-9F44-64AC74BD1F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {BB055969-8A49-450C-9F44-64AC74BD1F2A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {BB055969-8A49-450C-9F44-64AC74BD1F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {BB055969-8A49-450C-9F44-64AC74BD1F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+        {BB055969-8A49-450C-9F44-64AC74BD1F2A}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
