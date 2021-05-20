@@ -28,8 +28,9 @@
     <file src="bin\Release\[[Assembly]].pdb" target="lib\[[Assembly]].pdb" />
     <file src="bin\Release\[[Assembly]].pdbx" target="lib\[[Assembly]].pdbx" />
     <file src="bin\Release\[[Assembly]].pe" target="lib\[[Assembly]].pe" />
-    <file src="assets\readme.txt" target="" />
-    <file src="assets\nf-logo.png" target="images" />
-    <file src="LICENSE.md" target="" />
+    <file src="bin\Release\[[Assembly]].xml" target="lib\[[Assembly]].xml" />
+    <file src="readme.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

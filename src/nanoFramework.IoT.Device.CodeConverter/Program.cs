@@ -83,7 +83,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
 
                 // SOLUTION File
-                //CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
+                CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
                 UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
 
                 CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
@@ -188,6 +188,22 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
             }
             targetProjectFile.EditFile(projectReplacements);
+
+            if (!isUnitTestProject)
+            {
+                // process AssemblyInfo file
+                var assemblyInfoFile = targetDirectoryInfo.GetFiles("Properties\\AssemblyInfo.cs").First();
+
+                var assemblyInfoReplacements = new Dictionary<string, string>();
+
+                assemblyInfoReplacements.Add("//< !--ASSEMBLY TITLE HERE-->", $@"[assembly: AssemblyTitle(""Iot.Device.{projectName}"")]");
+                assemblyInfoReplacements.Add("//< !--ASSEMBLY COMPANY HERE-->", @"[assembly: AssemblyCompany(""nanoFramework Contributors"")]");
+                assemblyInfoReplacements.Add("//< !--ASSEMBLY COPYRIGHT HERE-->", @"[assembly: AssemblyCopyright(""Copyright(c).NET Foundation and Contributors"")]");
+                assemblyInfoReplacements.Add("//< !--ASSEMBLY COMVISIBLE HERE-->", @"[assembly: ComVisible(false)]");
+                assemblyInfoReplacements.Add("//< !--ASSEMBLY NATIVEVERSION HERE-->", @"[assembly: AssemblyNativeVersion(""0.0.0.0"")]");
+
+                assemblyInfoFile.EditFile(assemblyInfoReplacements);
+            }
         }
 
         private static void CreatePackagesConfig(
