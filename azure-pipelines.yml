@@ -132,6 +132,29 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 
+- task: DotNetCoreCLI@2
+  displayName: Install SignTool tool
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install --tool-path . SignClient
+
+- pwsh: |
+    .\SignClient "Sign" `
+    --baseDirectory "$(Build.ArtifactStagingDirectory)" `
+    --input "**/*.nupkg" `
+    --config "$(Build.Repository.LocalPath)\config\SignClient.json" `
+    --filelist "$(Build.Repository.LocalPath)\config\filelist.txt" `
+    --user "$(SignClientUser)" `
+    --secret '$(SignClientSecret)' `
+    --name "$(nugetPackageName)" `
+    --description "$(nugetPackageName)" `
+    --descriptionUrl "https://github.com/$env:Build_Repository_Name"
+  displayName: Sign packages
+  continueOnError: true
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  
 # publish artifacts (only possible if this is not a PR originated on a fork)
 - task: PublishBuildArtifacts@1
   condition: succeeded()
@@ -140,7 +163,19 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: deployables
     ArtifactType: Container
-  
+
+# push NuGet class lib package to NuGet (always happens except on PR builds)
+- task: NuGetCommand@2
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+  continueOnError: true
+  displayName: Push NuGet packages to NuGet
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+
 # step from template @ nf-tools repo
 # report error
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
