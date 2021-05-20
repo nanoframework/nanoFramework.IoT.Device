@@ -18,9 +18,16 @@ namespace System.Device.Model
         /// Constructs ComponentAttribute
         /// </summary>
         /// <param name="name">Optional name of the component. If not provided property name will be used.</param>
-        public ComponentAttribute(string? name = null)
+        public ComponentAttribute(string? name)
         {
             Name = name;
+        }
+
+        /// <summary>
+        /// Constructs ComponentAttribute
+        /// </summary>
+        public ComponentAttribute()
+        {
         }
     }
 }

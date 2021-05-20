@@ -24,10 +24,26 @@ namespace System.Device.Model
         /// </summary>
         /// <param name="name">Optional name of the property in the interface. If not provided property name will be used.</param>
         /// <param name="displayName">Optional name of the property in the interface. If not provided it may be infered from the type.</param>
-        public PropertyAttribute(string? name = null, string? displayName = null)
+        public PropertyAttribute(string? name, string? displayName)
         {
             Name = name;
             DisplayName = displayName;
+        }
+
+        /// <summary>
+        /// Constructs PropertyAttribute
+        /// </summary>
+        /// <param name="name">Optional name of the property in the interface. If not provided property name will be used.</param>
+        public PropertyAttribute(string? name)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Constructs PropertyAttribute
+        /// </summary>
+        public PropertyAttribute()
+        {
         }
     }
 }

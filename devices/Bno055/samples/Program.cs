@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Numerics;
@@ -27,9 +26,8 @@ while ((bno055Sensor.GetCalibrationStatus() & CalibrationStatus.MagnetometerSucc
     Thread.Sleep(200);
 }
 
-Debug.WriteLine();
 Debug.WriteLine("Calibration completed");
-while (!Debug.KeyAvailable)
+while (true)
 {
     Vector3 magneto = bno055Sensor.Magnetometer;
     Debug.WriteLine($"Magnetomer X: {magneto.X} Y: {magneto.Y} Z: {magneto.Z}");
