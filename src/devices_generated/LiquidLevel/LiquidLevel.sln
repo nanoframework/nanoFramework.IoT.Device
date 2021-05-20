@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevel", "LiquidLevel.nfproj", "{BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevel", "LiquidLevel.nfproj", "{FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\\Llc200d3sh.Sample.nfproj", "{B02F79B2-6E0A-4AE0-9412-E9DB12A98CB0}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\\LiquidLevelSwitch.Sample.nfproj", "{96044DF8-E1D9-4D3B-BF69-1B4E8EBF73EF}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\\LiquidLevelSwitch.Sample.nfproj", "{8EA25C69-1546-41F2-9D0E-F4A7F9BC9BB1}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\\Llc200d3sh.Sample.nfproj", "{E331D447-F1BC-4C6C-A3DE-994D1D5581E2}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -18,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}.Release|Any CPU.Build.0 = Release|Any CPU
-        {BE8EFEDB-76F5-4F4A-A86D-786AFFFA7E4A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}.Release|Any CPU.Build.0 = Release|Any CPU
+        {FE09CAAF-E4BE-42BB-BC06-44D099E7AAAB}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

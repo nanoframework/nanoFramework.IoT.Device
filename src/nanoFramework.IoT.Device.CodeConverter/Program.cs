@@ -84,6 +84,17 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 NugetPackages[] nfNugetPackages = NfNugetPackages.GetnfNugetPackages();
 
                 var searches = nfNugetPackages.ToDictionary(x => x.Namespace, x => false);
+                SharedProjectImports.GetnfSharedProjectImports().ToList().ForEach(i =>
+                {
+                    if (string.IsNullOrEmpty(i.Namespace) == false)
+                    {
+                        searches.Add(i.Namespace, false);
+                    }
+                    if (string.IsNullOrEmpty(i.CodeMatchString) == false)
+                    {
+                        searches.Add(i.CodeMatchString, false);
+                    }
+                });
 
                 foreach (var file in targetDirectoryInfo.GetFiles("*.cs", new EnumerationOptions { RecurseSubdirectories = true }))
                 {
@@ -228,6 +239,16 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 }
 
                 projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
+            }
+
+            var newImports = SharedProjectImports.GetnfSharedProjectImports()
+                    .Where(x => searches.Any(s => s.Value && (s.Key == x.Namespace || s.Key == x.CodeMatchString)))
+                    .Select(x => x.NewProjectImport);
+            if (newImports.Any())
+            {
+                var newImportsString = newImports.Distinct().Aggregate((seed, add) => $"{seed}\n    {add}");
+                projectReplacements.Add("<!-- INSERT IMPORTS HERE -->", newImportsString);
+
             }
 
             if (oldFileReferences.Any())
