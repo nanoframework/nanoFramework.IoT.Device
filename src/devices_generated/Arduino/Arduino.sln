@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{1730ADEF-80C7-4C7F-A680-CD581025826A}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{E2FFC824-C55B-4FD0-ADCC-76D351117C40}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Samples", "samples\Arduino.Samples.nfproj", "{BC994DF5-7C58-4196-8E12-9F210BCF2FB7}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Samples", "samples\Arduino.Samples.nfproj", "{99D0609D-F20A-43E3-BADE-A1E5C856E5E7}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\Arduino.Tests.nfproj", "{2CE7364E-B911-4CEB-A9AA-0F3D9780EA96}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\Arduino.Tests.nfproj", "{18F10E69-54EB-452C-92CE-0627694F5D1A}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Release|Any CPU.Build.0 = Release|Any CPU
-        {1730ADEF-80C7-4C7F-A680-CD581025826A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {E2FFC824-C55B-4FD0-ADCC-76D351117C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {E2FFC824-C55B-4FD0-ADCC-76D351117C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {E2FFC824-C55B-4FD0-ADCC-76D351117C40}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {E2FFC824-C55B-4FD0-ADCC-76D351117C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {E2FFC824-C55B-4FD0-ADCC-76D351117C40}.Release|Any CPU.Build.0 = Release|Any CPU
+        {E2FFC824-C55B-4FD0-ADCC-76D351117C40}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

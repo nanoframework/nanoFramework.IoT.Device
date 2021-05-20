@@ -3,10 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pcx857x", "Pcx857x.nfproj", "{2D047BB5-1FD8-4744-8704-EFC69B7355A7}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pcx857x", "Pcx857x.nfproj", "{61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pcx857x.Tests", "tests\Pcx857x.Tests.nfproj", "{B19AC312-65E7-49AF-9738-89D4F2C1AF2E}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pcx857x.Tests", "tests\Pcx857x.Tests.nfproj", "{5431CF7D-9F06-411B-B08C-7637426ABEE1}"
 EndProject
 
 Global
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {2D047BB5-1FD8-4744-8704-EFC69B7355A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {2D047BB5-1FD8-4744-8704-EFC69B7355A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {2D047BB5-1FD8-4744-8704-EFC69B7355A7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {2D047BB5-1FD8-4744-8704-EFC69B7355A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {2D047BB5-1FD8-4744-8704-EFC69B7355A7}.Release|Any CPU.Build.0 = Release|Any CPU
-        {2D047BB5-1FD8-4744-8704-EFC69B7355A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}.Release|Any CPU.Build.0 = Release|Any CPU
+        {61AFEDB4-8D38-44D9-8DB1-7496D5F7EB68}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

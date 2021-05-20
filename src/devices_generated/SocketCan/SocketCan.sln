@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan", "SocketCan.nfproj", "{B730E477-8596-49F6-8373-47D6B6AD551B}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan", "SocketCan.nfproj", "{3EDCD36E-908B-4595-8ACF-F710490E830F}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan.Samples", "samples\SocketCan.Samples.nfproj", "{1AA979AD-17B1-488C-833D-B87B0E30D848}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan.Samples", "samples\SocketCan.Samples.nfproj", "{826AA843-8A2B-4559-A2D5-9A38C77B98D4}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {B730E477-8596-49F6-8373-47D6B6AD551B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {B730E477-8596-49F6-8373-47D6B6AD551B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {B730E477-8596-49F6-8373-47D6B6AD551B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {B730E477-8596-49F6-8373-47D6B6AD551B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {B730E477-8596-49F6-8373-47D6B6AD551B}.Release|Any CPU.Build.0 = Release|Any CPU
-        {B730E477-8596-49F6-8373-47D6B6AD551B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {3EDCD36E-908B-4595-8ACF-F710490E830F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {3EDCD36E-908B-4595-8ACF-F710490E830F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {3EDCD36E-908B-4595-8ACF-F710490E830F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {3EDCD36E-908B-4595-8ACF-F710490E830F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {3EDCD36E-908B-4595-8ACF-F710490E830F}.Release|Any CPU.Build.0 = Release|Any CPU
+        {3EDCD36E-908B-4595-8ACF-F710490E830F}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
