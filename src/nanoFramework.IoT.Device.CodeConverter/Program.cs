@@ -226,7 +226,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             if(projectType == ProjectType.Samples)
             {
                 // samples projects are executables
-                projectReplacements.Add(_outputTypeReplacementToken, "Executable");
+                projectReplacements.Add(_outputTypeReplacementToken, "Ex");
             }
             else
             {
