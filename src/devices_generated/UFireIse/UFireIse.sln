@@ -3,10 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "UFireIse", "UFireIse.nfproj", "{7FFD73B3-3531-41F4-BFF9-EABD438684A4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "UFireIse", "UFireIse.nfproj", "{EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "UFireIse.Samples", "samples\UFireIse.Samples.nfproj", "{91A503AB-FCBF-4D5E-BDDC-BC0170E501FD}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "UFireIse.Sample", "samples\\UFireIse.Sample.nfproj", "{B15C2D77-054C-406D-98B0-444B26013BA4}"
 EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
 Global
@@ -15,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {7FFD73B3-3531-41F4-BFF9-EABD438684A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {7FFD73B3-3531-41F4-BFF9-EABD438684A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {7FFD73B3-3531-41F4-BFF9-EABD438684A4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {7FFD73B3-3531-41F4-BFF9-EABD438684A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {7FFD73B3-3531-41F4-BFF9-EABD438684A4}.Release|Any CPU.Build.0 = Release|Any CPU
-        {7FFD73B3-3531-41F4-BFF9-EABD438684A4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}.Release|Any CPU.Build.0 = Release|Any CPU
+        {EC0ECF84-D792-4079-A4D1-E1B6D6A8E9F4}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

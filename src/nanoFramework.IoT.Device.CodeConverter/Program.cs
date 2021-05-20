@@ -39,7 +39,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             var sourceProjectFiles = Directory.GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
                 .Where(x => configuration.FilePathFilters.Any(d => x.Contains(d)))
-                .Select(x => new FileInfo(x));
+                .Select(x => new FileInfo(x))
+                .ToList();
 
             foreach (var sourceProjectFile in sourceProjectFiles)
             {
@@ -120,6 +121,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                     UpdateProjectGuidInSolutionFile(
                         targetDirectoryInfo,
                         projectType,
+                        projectName,
                         projectGuid);
                 }
 
@@ -133,7 +135,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
         }
-
+        
         private static void CreateNuspecFile(DirectoryInfo targetDirectoryInfo, string projectName, string targetDirectory) {
 
             var targetNuspecFile = targetDirectoryInfo.GetFiles("template.nuspec").FirstOrDefault();
@@ -355,6 +357,7 @@ EndProject";
         private static void UpdateProjectGuidInSolutionFile(
             DirectoryInfo targetDirectoryInfo,
             ProjectType projectType,
+            string projectName,
             string projectGuid)
         {
             // find the parent solution file
@@ -379,19 +382,22 @@ EndProject";
                 // add project, if not already there
 
                 // find out if there are sample projects
-                if (projectType == ProjectType.Samples)
+
+                if (projectType is ProjectType.Samples or ProjectType.UnitTest)
                 {
-                    slnContent = slnContent.Replace(
-                        _sampleProjectPlaceholderToken,
-                        $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""{targetDirectoryInfo.Parent.Name}.Samples"", ""samples\{targetDirectoryInfo.Parent.Name}.Samples.nfproj"", ""{projectGuid}""
-EndProject");
-                }
-                else if (projectType == ProjectType.UnitTest)
-                {
-                    slnContent = slnContent.Replace(
-                                  _unitTestProjectPlaceholderToken,
-                                  $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""{targetDirectoryInfo.Parent.Name}.Tests"", ""tests\{targetDirectoryInfo.Parent.Name}.Tests.nfproj"", ""{projectGuid}""
-EndProject");
+                    var token = projectType is ProjectType.Samples ? _sampleProjectPlaceholderToken : _unitTestProjectPlaceholderToken;
+
+                    var projFileName = $"{projectName}.nfproj";
+                    var projectDirName = targetDirectoryInfo.GetFiles(projFileName).Single().Directory!.Name;
+
+                    var slnLines = new[]
+                    {
+                        $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""{projectName}"", ""{projectDirName}\\{projFileName}"", ""{projectGuid}""",
+                        "EndProject",
+                        token,  // leave token in the solution after replacement in case we need to add more projects
+                    };
+
+                    slnContent = slnContent.Replace(token, string.Join(Environment.NewLine, slnLines));
                 }
 
                 File.WriteAllText(slnFile, slnContent);
