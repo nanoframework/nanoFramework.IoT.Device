@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor", "ServoMotor.nfproj", "{FB7895B5-4BE0-4404-8606-728E33C2ABD4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor", "ServoMotor.nfproj", "{D0D1D5D5-5958-4B89-A356-B88E77F0FED1}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Samples", "samples\ServoMotor.Samples.nfproj", "{B7560998-6FAB-4437-8F3A-DD007DB4C9DB}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Samples", "samples\ServoMotor.Samples.nfproj", "{DEBE04ED-D0F3-4F29-83D7-B66B1AD6EDC2}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Tests", "tests\ServoMotor.Tests.nfproj", "{D99DFF24-2634-47E8-89F2-AAF00D6FC44C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ServoMotor.Tests", "tests\ServoMotor.Tests.nfproj", "{DF8137CE-CB74-4D9C-857A-D98176D4E86B}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Release|Any CPU.Build.0 = Release|Any CPU
-        {FB7895B5-4BE0-4404-8606-728E33C2ABD4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {D0D1D5D5-5958-4B89-A356-B88E77F0FED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {D0D1D5D5-5958-4B89-A356-B88E77F0FED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {D0D1D5D5-5958-4B89-A356-B88E77F0FED1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {D0D1D5D5-5958-4B89-A356-B88E77F0FED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {D0D1D5D5-5958-4B89-A356-B88E77F0FED1}.Release|Any CPU.Build.0 = Release|Any CPU
+        {D0D1D5D5-5958-4B89-A356-B88E77F0FED1}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

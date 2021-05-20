@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef", "Ndef.nfproj", "{45C395AD-3EBE-4F4A-B44D-A803861FB263}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef", "Ndef.nfproj", "{5406883E-32D3-45C4-A351-985347F97C75}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Samples", "samples\Ndef.Samples.nfproj", "{B0A36435-8620-48C2-AAB2-10A51F4F43D4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Samples", "samples\Ndef.Samples.nfproj", "{60F8575E-CA16-4056-B78C-48F23628E7C8}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Tests", "tests\Ndef.Tests.nfproj", "{E1CD6DD1-C567-47D5-9BF0-A049085E362A}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef.Tests", "tests\Ndef.Tests.nfproj", "{0971287B-D049-409B-9761-2114696C8348}"
 EndProject
 
 Global
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {45C395AD-3EBE-4F4A-B44D-A803861FB263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {45C395AD-3EBE-4F4A-B44D-A803861FB263}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {45C395AD-3EBE-4F4A-B44D-A803861FB263}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {45C395AD-3EBE-4F4A-B44D-A803861FB263}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {45C395AD-3EBE-4F4A-B44D-A803861FB263}.Release|Any CPU.Build.0 = Release|Any CPU
-        {45C395AD-3EBE-4F4A-B44D-A803861FB263}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {5406883E-32D3-45C4-A351-985347F97C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {5406883E-32D3-45C4-A351-985347F97C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {5406883E-32D3-45C4-A351-985347F97C75}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {5406883E-32D3-45C4-A351-985347F97C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {5406883E-32D3-45C4-A351-985347F97C75}.Release|Any CPU.Build.0 = Release|Any CPU
+        {5406883E-32D3-45C4-A351-985347F97C75}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
