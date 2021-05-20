@@ -11,7 +11,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{4560AFB7-51F4-4090-8B7A-255DBFAB01A4}</ProjectGuid>
+    <ProjectGuid>{35038695-C1B6-45A7-AC5A-97D805662FDF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -53,7 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amg88xx\Amg88xx.nfproj" />
+    <ProjectReference Include="..\Amg88xx.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- INSERT FILE REFERENCES HERE -->
@@ -73,11 +73,11 @@
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
-  <Import Project="packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets" Condition="Exists('packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets')" />
+  <Import Project="..\packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nanoFramework.TestFramework.1.0.114\build\nanoFramework.TestFramework.targets'))" />
   </Target>
 </Project>

@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{BB982FD0-1490-42E4-840B-6513313649EE}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{F836E467-09F1-456C-AD6E-77867A077A16}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Samples", "samples\LidarLiteV3.Samples.nfproj", "{2C2617E1-B117-49DD-BDE1-21402B904153}"
+EndProject
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {BB982FD0-1490-42E4-840B-6513313649EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {BB982FD0-1490-42E4-840B-6513313649EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {BB982FD0-1490-42E4-840B-6513313649EE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {BB982FD0-1490-42E4-840B-6513313649EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {BB982FD0-1490-42E4-840B-6513313649EE}.Release|Any CPU.Build.0 = Release|Any CPU
-        {BB982FD0-1490-42E4-840B-6513313649EE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {F836E467-09F1-456C-AD6E-77867A077A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {F836E467-09F1-456C-AD6E-77867A077A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {F836E467-09F1-456C-AD6E-77867A077A16}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {F836E467-09F1-456C-AD6E-77867A077A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {F836E467-09F1-456C-AD6E-77867A077A16}.Release|Any CPU.Build.0 = Release|Any CPU
+        {F836E467-09F1-456C-AD6E-77867A077A16}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

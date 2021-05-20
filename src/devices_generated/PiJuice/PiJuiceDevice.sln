@@ -3,19 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "PiJuiceDevice", "PiJuiceDevice.nfproj", "{2809D708-AB45-4D0C-9FDE-0FD47BF21340}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "PiJuiceDevice", "PiJuiceDevice.nfproj", "{C4C99282-54DB-4892-9597-96D290CC0094}"
 EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {2809D708-AB45-4D0C-9FDE-0FD47BF21340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {2809D708-AB45-4D0C-9FDE-0FD47BF21340}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {2809D708-AB45-4D0C-9FDE-0FD47BF21340}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {2809D708-AB45-4D0C-9FDE-0FD47BF21340}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {2809D708-AB45-4D0C-9FDE-0FD47BF21340}.Release|Any CPU.Build.0 = Release|Any CPU
-        {2809D708-AB45-4D0C-9FDE-0FD47BF21340}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {C4C99282-54DB-4892-9597-96D290CC0094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {C4C99282-54DB-4892-9597-96D290CC0094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {C4C99282-54DB-4892-9597-96D290CC0094}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {C4C99282-54DB-4892-9597-96D290CC0094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {C4C99282-54DB-4892-9597-96D290CC0094}.Release|Any CPU.Build.0 = Release|Any CPU
+        {C4C99282-54DB-4892-9597-96D290CC0094}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

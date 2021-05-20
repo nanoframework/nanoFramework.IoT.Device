@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Shtc3", "Shtc3.nfproj", "{FE83D996-663C-468C-9B16-F96415FA642F}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Shtc3", "Shtc3.nfproj", "{9E27E99B-4CA9-422C-93E3-27F4EE76026F}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Shtc3.Samples", "samples\Shtc3.Samples.nfproj", "{35EC66C2-77AC-4C9E-BEE9-04C9CCBD6E10}"
+EndProject
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {FE83D996-663C-468C-9B16-F96415FA642F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {FE83D996-663C-468C-9B16-F96415FA642F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {FE83D996-663C-468C-9B16-F96415FA642F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {FE83D996-663C-468C-9B16-F96415FA642F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {FE83D996-663C-468C-9B16-F96415FA642F}.Release|Any CPU.Build.0 = Release|Any CPU
-        {FE83D996-663C-468C-9B16-F96415FA642F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {9E27E99B-4CA9-422C-93E3-27F4EE76026F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {9E27E99B-4CA9-422C-93E3-27F4EE76026F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {9E27E99B-4CA9-422C-93E3-27F4EE76026F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {9E27E99B-4CA9-422C-93E3-27F4EE76026F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {9E27E99B-4CA9-422C-93E3-27F4EE76026F}.Release|Any CPU.Build.0 = Release|Any CPU
+        {9E27E99B-4CA9-422C-93E3-27F4EE76026F}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

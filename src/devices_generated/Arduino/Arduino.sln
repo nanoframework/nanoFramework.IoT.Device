@@ -3,19 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{61D7BE41-C200-4E3B-843C-B7B9137E7467}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{CBF867F6-AEE1-4457-946B-72A6375C865B}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Samples", "samples\Arduino.Samples.nfproj", "{D17771D1-E322-4B5E-B99C-A9E707907A89}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\Arduino.Tests.nfproj", "{7B911092-C9B1-4C86-9090-D93169656480}"
+EndProject
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {61D7BE41-C200-4E3B-843C-B7B9137E7467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {61D7BE41-C200-4E3B-843C-B7B9137E7467}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {61D7BE41-C200-4E3B-843C-B7B9137E7467}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {61D7BE41-C200-4E3B-843C-B7B9137E7467}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {61D7BE41-C200-4E3B-843C-B7B9137E7467}.Release|Any CPU.Build.0 = Release|Any CPU
-        {61D7BE41-C200-4E3B-843C-B7B9137E7467}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {CBF867F6-AEE1-4457-946B-72A6375C865B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {CBF867F6-AEE1-4457-946B-72A6375C865B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {CBF867F6-AEE1-4457-946B-72A6375C865B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {CBF867F6-AEE1-4457-946B-72A6375C865B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {CBF867F6-AEE1-4457-946B-72A6375C865B}.Release|Any CPU.Build.0 = Release|Any CPU
+        {CBF867F6-AEE1-4457-946B-72A6375C865B}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

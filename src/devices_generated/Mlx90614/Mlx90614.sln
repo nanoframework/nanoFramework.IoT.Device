@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mlx90614", "Mlx90614.nfproj", "{6F888322-C765-4B92-9B10-1614CAE7F8EF}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mlx90614", "Mlx90614.nfproj", "{84BCCF09-AF44-4154-B5D0-7E42816CD8C0}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mlx90614.Samples", "samples\Mlx90614.Samples.nfproj", "{34214F35-0E8D-4BCF-8582-A30DA2586647}"
+EndProject
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {6F888322-C765-4B92-9B10-1614CAE7F8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {6F888322-C765-4B92-9B10-1614CAE7F8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {6F888322-C765-4B92-9B10-1614CAE7F8EF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {6F888322-C765-4B92-9B10-1614CAE7F8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {6F888322-C765-4B92-9B10-1614CAE7F8EF}.Release|Any CPU.Build.0 = Release|Any CPU
-        {6F888322-C765-4B92-9B10-1614CAE7F8EF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {84BCCF09-AF44-4154-B5D0-7E42816CD8C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {84BCCF09-AF44-4154-B5D0-7E42816CD8C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {84BCCF09-AF44-4154-B5D0-7E42816CD8C0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {84BCCF09-AF44-4154-B5D0-7E42816CD8C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {84BCCF09-AF44-4154-B5D0-7E42816CD8C0}.Release|Any CPU.Build.0 = Release|Any CPU
+        {84BCCF09-AF44-4154-B5D0-7E42816CD8C0}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
