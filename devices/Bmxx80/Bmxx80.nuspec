@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.Amg88xx</id>
+    <id>nanoFramework.Iot.Device.Bmxx80</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.Amg88xx</title>
+    <title>nanoFramework.Iot.Device.Bmxx80</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,24 +16,28 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Amg88xx for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Amg88xx assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Amg88xx</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Bmxx80 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Bmxx80 assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bmxx80</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.0-preview.26" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.40" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.33" />
-      <dependency id="nanoFramework.System.Math" version="1.4.0-preview.5" />
+      <dependency id="nanoFramework.System.Math" version="1.4.0-preview.7" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.91.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.91.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.91.0" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.91.0" />
+      <dependency id="UnitsNet.nanoFramework.Duration" version="4.91.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricResistance" version="4.91.0" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Amg88xx.dll" target="lib\Iot.Device.Amg88xx.dll" />
-    <file src="bin\Release\Iot.Device.Amg88xx.pdb" target="lib\Iot.Device.Amg88xx.pdb" />
-    <file src="bin\Release\Iot.Device.Amg88xx.pdbx" target="lib\Iot.Device.Amg88xx.pdbx" />
-    <file src="bin\Release\Iot.Device.Amg88xx.pe" target="lib\Iot.Device.Amg88xx.pe" />
-    <file src="bin\Release\Iot.Device.Amg88xx.xml" target="lib\Iot.Device.Amg88xx.xml" />
+    <file src="bin\Release\Iot.Device.Bmxx80.dll" target="lib\Iot.Device.Bmxx80.dll" />
+    <file src="bin\Release\Iot.Device.Bmxx80.pdb" target="lib\Iot.Device.Bmxx80.pdb" />
+    <file src="bin\Release\Iot.Device.Bmxx80.pdbx" target="lib\Iot.Device.Bmxx80.pdbx" />
+    <file src="bin\Release\Iot.Device.Bmxx80.pe" target="lib\Iot.Device.Bmxx80.pe" />
+    <file src="bin\Release\Iot.Device.Bmxx80.xml" target="lib\Iot.Device.Bmxx80.xml" />
     <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
