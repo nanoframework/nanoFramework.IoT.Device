@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.Hcsr04</id>
+    <id>nanoFramework.Iot.Device.Bno055</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.Hcsr04</title>
+    <title>nanoFramework.Iot.Device.Bno055</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,19 +16,19 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Hcsr04 for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Hcsr04 assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hcsr04</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Bno055 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Bno055 assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bno055</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Hcsr04.dll" target="lib\Iot.Device.Hcsr04.dll" />
-    <file src="bin\Release\Iot.Device.Hcsr04.pdb" target="lib\Iot.Device.Hcsr04.pdb" />
-    <file src="bin\Release\Iot.Device.Hcsr04.pdbx" target="lib\Iot.Device.Hcsr04.pdbx" />
-    <file src="bin\Release\Iot.Device.Hcsr04.pe" target="lib\Iot.Device.Hcsr04.pe" />
-    <file src="bin\Release\Iot.Device.Hcsr04.xml" target="lib\Iot.Device.Hcsr04.xml" />
+    <file src="bin\Release\Iot.Device.Bno055.dll" target="lib\Iot.Device.Bno055.dll" />
+    <file src="bin\Release\Iot.Device.Bno055.pdb" target="lib\Iot.Device.Bno055.pdb" />
+    <file src="bin\Release\Iot.Device.Bno055.pdbx" target="lib\Iot.Device.Bno055.pdbx" />
+    <file src="bin\Release\Iot.Device.Bno055.pe" target="lib\Iot.Device.Bno055.pe" />
+    <file src="bin\Release\Iot.Device.Bno055.xml" target="lib\Iot.Device.Bno055.xml" />
     <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
