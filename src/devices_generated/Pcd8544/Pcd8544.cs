@@ -144,7 +144,7 @@ namespace Iot.Device.Display
             Font5x8 font8 = new Font5x8();
             foreach (var charac in font8.SupportedChars)
             {
-                font8.GetCharData((char)charac, out ReadOnlySpan<ushort> charData);
+                font8.GetCharData((char)charac, out SpanUshort charData);
                 byte[] font8Bytes = new byte[8];
                 for (int i = 0; i < 8; i++)
                 {
@@ -396,7 +396,7 @@ namespace Iot.Device.Display
         /// Used if character translation already took place.
         /// </summary>
         /// <param name="text">Text to print</param>
-        public void Write(ReadOnlySpan<char> text)
+        public void Write(SpanChar text)
         {
             foreach (var c in text)
             {

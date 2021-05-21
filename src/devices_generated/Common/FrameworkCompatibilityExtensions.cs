@@ -11,22 +11,22 @@ namespace Iot.Device
     /// </summary>
     public static class FrameworkCompatibilityExtensions
     {
-        public static bool StartsWith(this Span<char> span, string value)
+        public static bool StartsWith(this SpanChar span, string value)
         {
-            return span.StartsWith(new ReadOnlySpan<char>(value.ToCharArray()));
+            return span.StartsWith(new SpanChar(value.ToCharArray()));
         }
 
-        public static bool StartsWith(this Span<char> span, string value, StringComparison comparison)
-        {
-            return span.ToString().StartsWith(value, comparison);
-        }
-
-        public static bool StartsWith(this ReadOnlySpan<char> span, string value, StringComparison comparison)
+        public static bool StartsWith(this SpanChar span, string value, StringComparison comparison)
         {
             return span.ToString().StartsWith(value, comparison);
         }
 
-        public static int CompareTo(this ReadOnlySpan<char> span, string value, StringComparison comparison)
+        public static bool StartsWith(this SpanChar span, string value, StringComparison comparison)
+        {
+            return span.ToString().StartsWith(value, comparison);
+        }
+
+        public static int CompareTo(this SpanChar span, string value, StringComparison comparison)
         {
             return string.Compare(span.ToString(), value, comparison);
         }

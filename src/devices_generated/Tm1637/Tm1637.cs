@@ -256,7 +256,7 @@ namespace Iot.Device.Tm1637
         /// You can build your won characters with the primitives like Bottom, Top, Dot
         /// </summary>
         /// <param name="rawData">The Character to display</param>
-        public void Display(ReadOnlySpan<Character> rawData)
+        public void Display(SpanCharacter rawData)
         {
             Display(MemoryMarshal.AsBytes(rawData));
         }

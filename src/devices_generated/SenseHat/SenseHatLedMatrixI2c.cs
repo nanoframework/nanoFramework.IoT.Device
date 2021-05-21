@@ -36,7 +36,7 @@ namespace Iot.Device.SenseHat
         }
 
         /// <inheritdoc/>
-        public override void Write(ReadOnlySpan<Color> colors)
+        public override void Write(SpanColor colors)
         {
             if (colors.Length != NumberOfPixels)
             {

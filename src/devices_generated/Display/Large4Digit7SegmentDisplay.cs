@@ -169,11 +169,11 @@ namespace Iot.Device.Display
         }
 
         /// <inheritdoc/>
-        public void Write(ReadOnlySpan<Segment> digits, int startAddress = 0) =>
+        public void Write(SpanSegment digits, int startAddress = 0) =>
             Write(MemoryMarshal.Cast<Segment, byte>(digits), startAddress);
 
         /// <inheritdoc/>
-        public void Write(ReadOnlySpan<Font> characters, int startAddress = 0) =>
+        public void Write(SpanFont characters, int startAddress = 0) =>
             Write(MemoryMarshal.Cast<Font, byte>(characters), startAddress);
 
         /// <inheritdoc/>

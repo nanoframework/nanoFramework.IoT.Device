@@ -3,27 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{9FAC1247-FFE2-4A17-A426-C82836452231}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{817BC154-7EA4-402A-B00A-54BE70DDB4C8}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme280.sample", "samples\\Bme280.sample.nfproj", "{F034DE2E-4257-4AE8-930E-DE59B07A3A5C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Samples", "samples\Bmxx80.Samples.nfproj", "{74CD8E0D-3070-4FB3-BA46-729E6937FD4D}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme680.sample", "samples\\Bme680.sample.nfproj", "{A1D82E58-885D-4433-B594-DFF19D038279}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\Bmxx80.Tests.nfproj", "{FD2BD815-FCF3-46DB-BDBC-AAC3E778AAF4}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmp280.sample", "samples\\Bmp280.sample.nfproj", "{5567ABB8-3E09-410A-ABC1-29E8C0FDA076}"
-EndProject
-<!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\\Bmxx80.Tests.nfproj", "{67F4AFD6-2AA4-465A-B5A3-AC25BB263594}"
-EndProject
-<!-- UNIT TESTS PROJECT PLACEHOLDER -->
-=======
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{C8F5F02A-05AD-43F9-A103-5657788D5B71}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Samples", "samples\Bmxx80.Samples.nfproj", "{0C51BF45-1B77-4057-9502-9EF00DB1D3DC}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\Bmxx80.Tests.nfproj", "{7E802B86-5812-49A9-AFB7-2E95203CDEAF}"
-EndProject
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,20 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-        {9FAC1247-FFE2-4A17-A426-C82836452231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {9FAC1247-FFE2-4A17-A426-C82836452231}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {9FAC1247-FFE2-4A17-A426-C82836452231}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {9FAC1247-FFE2-4A17-A426-C82836452231}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {9FAC1247-FFE2-4A17-A426-C82836452231}.Release|Any CPU.Build.0 = Release|Any CPU
-        {9FAC1247-FFE2-4A17-A426-C82836452231}.Release|Any CPU.Deploy.0 = Release|Any CPU
-=======
-        {C8F5F02A-05AD-43F9-A103-5657788D5B71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {C8F5F02A-05AD-43F9-A103-5657788D5B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {C8F5F02A-05AD-43F9-A103-5657788D5B71}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {C8F5F02A-05AD-43F9-A103-5657788D5B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {C8F5F02A-05AD-43F9-A103-5657788D5B71}.Release|Any CPU.Build.0 = Release|Any CPU
-        {C8F5F02A-05AD-43F9-A103-5657788D5B71}.Release|Any CPU.Deploy.0 = Release|Any CPU
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+        {817BC154-7EA4-402A-B00A-54BE70DDB4C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {817BC154-7EA4-402A-B00A-54BE70DDB4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {817BC154-7EA4-402A-B00A-54BE70DDB4C8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {817BC154-7EA4-402A-B00A-54BE70DDB4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {817BC154-7EA4-402A-B00A-54BE70DDB4C8}.Release|Any CPU.Build.0 = Release|Any CPU
+        {817BC154-7EA4-402A-B00A-54BE70DDB4C8}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

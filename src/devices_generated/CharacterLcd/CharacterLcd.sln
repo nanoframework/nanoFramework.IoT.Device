@@ -3,21 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{05D04900-6F77-493E-8A9A-C3BA8B76EF73}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{66A01510-19FC-4AEB-81FB-9EFD71A25ED8}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{FBE39CA8-0837-4C45-8239-1231FB6AFCA5}"
-EndProject
-<!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{F941873B-17D2-4474-BF94-4E3185DF3C2E}"
-=======
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{530B04B9-A154-40B2-8273-CC5067F3BA99}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{402E7DCF-3D49-48A3-A1C9-5FC4C9EEAE01}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{BE6D5D96-69D2-40E5-AA97-93B0A9670CEA}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{17594E4B-86E9-43FE-82B5-CFED2B2EE5B6}"
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{C6B2D422-9BF4-4BF2-BE51-B1DF3116097B}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -27,20 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-        {05D04900-6F77-493E-8A9A-C3BA8B76EF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {05D04900-6F77-493E-8A9A-C3BA8B76EF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {05D04900-6F77-493E-8A9A-C3BA8B76EF73}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {05D04900-6F77-493E-8A9A-C3BA8B76EF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {05D04900-6F77-493E-8A9A-C3BA8B76EF73}.Release|Any CPU.Build.0 = Release|Any CPU
-        {05D04900-6F77-493E-8A9A-C3BA8B76EF73}.Release|Any CPU.Deploy.0 = Release|Any CPU
-=======
-        {530B04B9-A154-40B2-8273-CC5067F3BA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {530B04B9-A154-40B2-8273-CC5067F3BA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {530B04B9-A154-40B2-8273-CC5067F3BA99}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {530B04B9-A154-40B2-8273-CC5067F3BA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {530B04B9-A154-40B2-8273-CC5067F3BA99}.Release|Any CPU.Build.0 = Release|Any CPU
-        {530B04B9-A154-40B2-8273-CC5067F3BA99}.Release|Any CPU.Deploy.0 = Release|Any CPU
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+        {66A01510-19FC-4AEB-81FB-9EFD71A25ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {66A01510-19FC-4AEB-81FB-9EFD71A25ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {66A01510-19FC-4AEB-81FB-9EFD71A25ED8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {66A01510-19FC-4AEB-81FB-9EFD71A25ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {66A01510-19FC-4AEB-81FB-9EFD71A25ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+        {66A01510-19FC-4AEB-81FB-9EFD71A25ED8}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

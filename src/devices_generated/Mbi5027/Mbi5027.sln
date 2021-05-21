@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027", "Mbi5027.nfproj", "{1756AD4B-C85F-4200-8469-25D108027051}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027", "Mbi5027.nfproj", "{005EB10A-24CA-4827-AA45-12B00CD69408}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027-driver", "samples\\Mbi5027-driver.nfproj", "{722525BD-B165-419C-9CB7-EE5D8C115693}"
-=======
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027", "Mbi5027.nfproj", "{B32BE37C-89CF-456F-BC98-58AA8034ABF1}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027-driver", "samples\\Mbi5027-driver.nfproj", "{A2C57BA2-4752-4357-BC0E-3351C4BC8E70}"
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027-driver", "samples\\Mbi5027-driver.nfproj", "{6F55AC20-2A48-447B-9891-2E8762A08283}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -22,20 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-        {1756AD4B-C85F-4200-8469-25D108027051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {1756AD4B-C85F-4200-8469-25D108027051}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {1756AD4B-C85F-4200-8469-25D108027051}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {1756AD4B-C85F-4200-8469-25D108027051}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {1756AD4B-C85F-4200-8469-25D108027051}.Release|Any CPU.Build.0 = Release|Any CPU
-        {1756AD4B-C85F-4200-8469-25D108027051}.Release|Any CPU.Deploy.0 = Release|Any CPU
-=======
-        {B32BE37C-89CF-456F-BC98-58AA8034ABF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {B32BE37C-89CF-456F-BC98-58AA8034ABF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {B32BE37C-89CF-456F-BC98-58AA8034ABF1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {B32BE37C-89CF-456F-BC98-58AA8034ABF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {B32BE37C-89CF-456F-BC98-58AA8034ABF1}.Release|Any CPU.Build.0 = Release|Any CPU
-        {B32BE37C-89CF-456F-BC98-58AA8034ABF1}.Release|Any CPU.Deploy.0 = Release|Any CPU
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+        {005EB10A-24CA-4827-AA45-12B00CD69408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {005EB10A-24CA-4827-AA45-12B00CD69408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {005EB10A-24CA-4827-AA45-12B00CD69408}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {005EB10A-24CA-4827-AA45-12B00CD69408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {005EB10A-24CA-4827-AA45-12B00CD69408}.Release|Any CPU.Build.0 = Release|Any CPU
+        {005EB10A-24CA-4827-AA45-12B00CD69408}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

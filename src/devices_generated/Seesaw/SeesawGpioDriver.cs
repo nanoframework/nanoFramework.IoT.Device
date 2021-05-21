@@ -172,7 +172,7 @@ namespace Iot.Device.Seesaw
         /// Read the given pins with the given pin numbers.
         /// </summary>
         /// <param name="pinValuePairs">The pin/value pairs to read.</param>
-        public void Read(Span<PinValuePair> pinValuePairs)
+        public void Read(SpanPinValuePair pinValuePairs)
         {
             for (int i = 0; i < pinValuePairs.Length; i++)
             {
@@ -225,7 +225,7 @@ namespace Iot.Device.Seesaw
         /// Write the given pins with the given values.
         /// </summary>
         /// <param name="pinValuePairs">The pin/value pairs to write.</param>
-        public void Write(ReadOnlySpan<PinValuePair> pinValuePairs)
+        public void Write(SpanPinValuePair pinValuePairs)
         {
             for (int i = 0; i < pinValuePairs.Length; i++)
             {
