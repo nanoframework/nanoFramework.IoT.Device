@@ -28,6 +28,30 @@ Other folders in [/src](/src) contain nanoFramework projects that you can refere
 
 Please check the [detail list of tips and tricks](./tips-tricks.md) to facilitate the migration. The generator takes care of some heavy lifting but there is always some manual adjustments needed.
 
+We are using the following structure for the bindings:
+
+```text
+/devices
+  /Binding1
+    /samples
+      Binding1.Samples.nfproj
+      AssicateFile.cs
+      Program.cs
+    /test
+      BindingA.Test.nfproj
+      AssociatedTestFile.cs
+    Binding1.nfproj
+    Binding1.nuspec
+    version.json
+    OtherFiles.cs
+    OtherFiles.anythingelse
+    Readme.md
+```
+
+## Using the Code Converter
+
+The Code Converter allows to facilitate migration of .NET Core/.NET 5.0 code into .NET nanoFramework. More information and how to [customize and run it here](./src/nanoFramework.IoT.Device.CodeConverter/README.md).
+
 ## Feedback and documentation
 
 For documentation, providing feedback, issues and finding out how to contribute please refer to the [Home repo](https://github.com/nanoframework/Home).
