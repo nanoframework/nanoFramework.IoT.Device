@@ -12,6 +12,10 @@
     <None Include="UnitTestTemplateProject\UnitTestTemplateProject.nfproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Remove="GenericsTemplates\List.cs" />
+    <None Include="GenericsTemplates\List.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
