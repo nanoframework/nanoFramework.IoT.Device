@@ -16,7 +16,7 @@ namespace Iot.Device.GrovePiDevice.Sensors
         /// <summary>
         /// Only Digital PWM are supported
         /// </summary>
-        public static List<GrovePort> SupportedPorts => new List<GrovePort>()
+        public static ListGrovePort SupportedPorts => new ListGrovePort()
         {
             GrovePort.DigitalPin3,
             GrovePort.DigitalPin5,
@@ -77,7 +77,7 @@ namespace Iot.Device.GrovePiDevice.Sensors
             set
             {
                 var prev = _duty;
-                _duty = Math.Clamp(value, (byte)0, (byte)100);
+                _duty = MathExtensions.Clamp(value, (byte)0, (byte)100);
                 if (prev != _duty)
                 {
                     Start();

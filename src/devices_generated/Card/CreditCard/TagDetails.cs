@@ -44,7 +44,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <summary>
         /// The list of templates that contain this Tag
         /// </summary>
-        public List<ushort>? TagTemplateParent { get; set; }
+        public ListUshort? TagTemplateParent { get; set; }
 
         /// <summary>
         /// True if this Tag is a template

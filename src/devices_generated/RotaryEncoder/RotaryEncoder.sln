@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RotaryEncoder", "RotaryEncoder.nfproj", "{830382A0-C785-44D5-BD06-4243B4869AE8}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RotaryEncoder", "RotaryEncoder.nfproj", "{C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RotaryEncoder.Samples", "samples\\RotaryEncoder.Samples.nfproj", "{30611C97-E8D5-4AAE-BEBB-6E231C6503AB}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RotaryEncoder.Samples", "samples\\RotaryEncoder.Samples.nfproj", "{2560030E-649A-47E3-8913-ABE3FE123928}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {830382A0-C785-44D5-BD06-4243B4869AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {830382A0-C785-44D5-BD06-4243B4869AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {830382A0-C785-44D5-BD06-4243B4869AE8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {830382A0-C785-44D5-BD06-4243B4869AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {830382A0-C785-44D5-BD06-4243B4869AE8}.Release|Any CPU.Build.0 = Release|Any CPU
-        {830382A0-C785-44D5-BD06-4243B4869AE8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}.Release|Any CPU.Build.0 = Release|Any CPU
+        {C80BAE04-BB8A-4EB2-B0AA-BEBC3ED65A82}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -521,7 +521,7 @@ namespace Iot.Device.BrickPi3
                     $"{nameof(GetSensor)} error. Must be one sensor port at a time. PORT_1, PORT_2, PORT_3, or PORT_4.");
             }
 
-            List<byte> outArray = new List<byte>();
+            ListByte outArray = new ListByte();
             byte[] reply;
 
             if (_sensorType[port_index] == Models.SensorType.Custom)
@@ -563,7 +563,7 @@ namespace Iot.Device.BrickPi3
                     if ((reply[4] == (int)_sensorType[port_index]) && (reply[5] == (int)SensorState.ValidData) &&
                         ((reply.Length - 6) == _i2cInBytes[port_index]))
                     {
-                        List<byte> values = new List<byte>();
+                        ListByte values = new ListByte();
                         for (int b = 6; b < _i2cInBytes[port_index]; b++)
                         {
                             values.Add(reply[b]);
@@ -878,7 +878,7 @@ namespace Iot.Device.BrickPi3
                 }
             }
 
-            List<byte> outArray = new List<byte>();
+            ListByte outArray = new ListByte();
             if (param is object && type == Models.SensorType.Custom)
             {
                 outArray.AddRange(new byte[]

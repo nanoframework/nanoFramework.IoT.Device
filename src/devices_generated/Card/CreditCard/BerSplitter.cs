@@ -15,7 +15,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <summary>
         /// A list of Tag
         /// </summary>
-        public List<Tag> Tags { get; set; }
+        public ListTag Tags { get; set; }
 
         /// <summary>
         /// Constructor taking a BER encoded array
@@ -23,7 +23,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <param name="toSplit">The byte array to be decoded</param>
         public BerSplitter(SpanByte toSplit)
         {
-            Tags = new List<Tag>();
+            Tags = new ListTag();
             int index = 0;
             while ((index < toSplit.Length) && (toSplit[index] != 0x00))
             {

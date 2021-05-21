@@ -21,7 +21,7 @@ namespace Iot.Device.Media
         {
             int y, u, v;
 
-            List<Color> colors = new List<Color>();
+            ListColor colors = new ListColor();
             while (stream.Position != stream.Length)
             {
                 y = stream.ReadByte();
@@ -43,7 +43,7 @@ namespace Iot.Device.Media
         {
             int y0, u, y1, v;
 
-            List<Color> colors = new List<Color>();
+            ListColor colors = new ListColor();
             while (stream.Position != stream.Length)
             {
                 y0 = stream.ReadByte();
@@ -74,7 +74,7 @@ namespace Iot.Device.Media
             byte[] yuv = new byte[stream.Length];
             stream.Read(yuv, 0, yuv.Length);
 
-            List<Color> colors = new List<Color>();
+            ListColor colors = new ListColor();
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -108,7 +108,7 @@ namespace Iot.Device.Media
             byte[] yuv = new byte[stream.Length];
             stream.Read(yuv, 0, yuv.Length);
 
-            List<Color> colors = new List<Color>();
+            ListColor colors = new ListColor();
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)

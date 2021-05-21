@@ -14,7 +14,7 @@ namespace System.Device.Analog
     /// </summary>
     public abstract class AnalogController : IDisposable
     {
-        private readonly List<AnalogInputPin> _openPins;
+        private readonly ListAnalogInputPin _openPins;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GpioController"/> class that will use the specified numbering scheme and driver.
@@ -23,7 +23,7 @@ namespace System.Device.Analog
         protected AnalogController(PinNumberingScheme numberingScheme)
         {
             NumberingScheme = numberingScheme;
-            _openPins = new List<AnalogInputPin>();
+            _openPins = new ListAnalogInputPin();
         }
 
         /// <summary>

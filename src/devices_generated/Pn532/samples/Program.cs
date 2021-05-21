@@ -341,7 +341,7 @@ string AddSpace(int level)
     return space;
 }
 
-void DisplayTags(List<Tag> tagToDisplay, int levels)
+void DisplayTags(ListTag tagToDisplay, int levels)
 {
     foreach (var tagparent in tagToDisplay)
     {

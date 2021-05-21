@@ -16,7 +16,7 @@ namespace Iot.Device.GrovePiDevice.Sensors
         /// <summary>
         /// Only Digital ports including the analog sensors (A0 = D14, A1 = D15, A2 = D16)
         /// </summary>
-        public static List<GrovePort> SupportedPorts => new List<GrovePort>()
+        public static ListGrovePort SupportedPorts => new ListGrovePort()
         {
             GrovePort.DigitalPin2,
             GrovePort.DigitalPin3,
