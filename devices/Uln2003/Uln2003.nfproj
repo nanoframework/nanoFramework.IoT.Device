@@ -13,8 +13,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Uln2003</RootNamespace>
-    <AssemblyName>Uln2003</AssemblyName>
+    <RootNamespace>Iot.Device.Uln2003</RootNamespace>
+    <AssemblyName>Iot.Device.Uln2003</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />

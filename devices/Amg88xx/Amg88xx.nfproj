@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Amg88xx</RootNamespace>
-    <AssemblyName>Amg88xx</AssemblyName>
+    <RootNamespace>Iot.Device.Amg88xx</RootNamespace>
+    <AssemblyName>Iot.Device.Amg88xx</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>

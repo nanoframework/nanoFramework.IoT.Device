@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Bno055</RootNamespace>
-    <AssemblyName>Bno055</AssemblyName>
+    <RootNamespace>Iot.Device.Bno055</RootNamespace>
+    <AssemblyName>Iot.Device.Bno055</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
