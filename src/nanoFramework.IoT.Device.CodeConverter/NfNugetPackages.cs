@@ -36,32 +36,86 @@
                             new NugetPackages {
                                 Namespace="RelativeHumidity",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.RelativeHumidity"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.91.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.RelativeHumidity"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.RelativeHumidity"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.RelativeHumidity"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="Temperature",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Temperature"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Temperature"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Temperature"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Temperature"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="ElectricPotential",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricPotential"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricPotential"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricPotential"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricPotential"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="Pressure",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Pressure"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Pressure"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Pressure"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Pressure.4.92.0\lib\UnitsNet.Pressure.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Pressure"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="Length",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Length"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Length"" version=""4.91.0"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Length"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Length"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Density",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Density"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Density.4.92.0\lib\UnitsNet.Density.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Density"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="ElectricCurrent",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricCurrent"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricCurrent.4.92.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricCurrent"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Frequency",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Frequency"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Frequency.4.92.0\lib\UnitsNet.Frequency.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Frequency"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="ElectricCharge",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricCurrent"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricCurrent.4.92.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricCurrent"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Ratio",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Ratio"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Ratio.4.92.0\lib\UnitsNet.Ratio.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Ratio"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="Duration",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Duration"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Duration.4.92.0\lib\UnitsNet.Duration.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Duration"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="VolumeConcentration",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.VolumeConcentration"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.VolumeConcentration.4.92.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.VolumeConcentration"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="ElectricResistance",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricResistance"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricResistance.4.92.0\lib\UnitsNet.ElectricResistance.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricResistance"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
+                                Namespace="ElectricPotentialDc",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricPotentialDc"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotentialDc.4.92.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricPotentialDc"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="System.Math",

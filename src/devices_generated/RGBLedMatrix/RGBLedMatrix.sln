@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RGBLedMatrix", "RGBLedMatrix.nfproj", "{73A6E263-C502-421E-9D23-6593C3E6AF9B}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RGBLedMatrix", "RGBLedMatrix.nfproj", "{AB2A4A73-1765-4005-80C5-5C63A083DD06}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RGBLedMatrix.Samples", "samples\RGBLedMatrix.Samples.nfproj", "{68ED709B-697F-4959-BAEB-65E1328CA719}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RGBLedMatrix.Samples", "samples\RGBLedMatrix.Samples.nfproj", "{CF94C26F-493F-4979-9567-2731E2871A88}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {73A6E263-C502-421E-9D23-6593C3E6AF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {73A6E263-C502-421E-9D23-6593C3E6AF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {73A6E263-C502-421E-9D23-6593C3E6AF9B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {73A6E263-C502-421E-9D23-6593C3E6AF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {73A6E263-C502-421E-9D23-6593C3E6AF9B}.Release|Any CPU.Build.0 = Release|Any CPU
-        {73A6E263-C502-421E-9D23-6593C3E6AF9B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {AB2A4A73-1765-4005-80C5-5C63A083DD06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {AB2A4A73-1765-4005-80C5-5C63A083DD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {AB2A4A73-1765-4005-80C5-5C63A083DD06}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {AB2A4A73-1765-4005-80C5-5C63A083DD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {AB2A4A73-1765-4005-80C5-5C63A083DD06}.Release|Any CPU.Build.0 = Release|Any CPU
+        {AB2A4A73-1765-4005-80C5-5C63A083DD06}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{7F558F4D-83CB-4C1A-A92A-E028F825093C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme280.sample", "samples\\Bme280.sample.nfproj", "{ED01849A-8E99-4871-A97B-D1F6495DCC9F}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme280.sample", "samples\\Bme280.sample.nfproj", "{97A2ED46-3452-4777-AD46-81A806014825}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme680.sample", "samples\\Bme680.sample.nfproj", "{C967EA9E-7FD7-4486-B9BE-2E848950522D}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme680.sample", "samples\\Bme680.sample.nfproj", "{34CDBAEB-C091-44F2-B97C-CFBC7359FD1A}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmp280.sample", "samples\\Bmp280.sample.nfproj", "{D4BCF647-7560-42B2-8824-9FA2FC8DD1BB}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmp280.sample", "samples\\Bmp280.sample.nfproj", "{A47E63A7-E458-4F69-A786-724E3F702820}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\\Bmxx80.Tests.nfproj", "{97D894D6-281E-4554-9E9E-52AF83E183AB}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\\Bmxx80.Tests.nfproj", "{62D972DE-BFE3-48C3-BEE6-7F66DC3364B0}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -22,11 +22,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {7F558F4D-83CB-4C1A-A92A-E028F825093C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {7F558F4D-83CB-4C1A-A92A-E028F825093C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {7F558F4D-83CB-4C1A-A92A-E028F825093C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {7F558F4D-83CB-4C1A-A92A-E028F825093C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {7F558F4D-83CB-4C1A-A92A-E028F825093C}.Release|Any CPU.Build.0 = Release|Any CPU
-        {7F558F4D-83CB-4C1A-A92A-E028F825093C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}.Release|Any CPU.Build.0 = Release|Any CPU
+        {6C82A1D4-2E5A-4B8C-8D3D-FDA67C3BB2E8}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
