@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan", "SocketCan.nfproj", "{C34192FB-15E7-4E14-BCA4-338C80FC5A7D}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan", "SocketCan.nfproj", "{152B7D91-F6F6-480B-BDD6-829B99AC7034}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan.Samples", "samples\\SocketCan.Samples.nfproj", "{826C1EC3-73B9-432C-809D-D23804DCB224}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SocketCan.Samples", "samples\\SocketCan.Samples.nfproj", "{61696602-2047-4CE7-84D3-A525611EE872}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {C34192FB-15E7-4E14-BCA4-338C80FC5A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {C34192FB-15E7-4E14-BCA4-338C80FC5A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {C34192FB-15E7-4E14-BCA4-338C80FC5A7D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {C34192FB-15E7-4E14-BCA4-338C80FC5A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {C34192FB-15E7-4E14-BCA4-338C80FC5A7D}.Release|Any CPU.Build.0 = Release|Any CPU
-        {C34192FB-15E7-4E14-BCA4-338C80FC5A7D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {152B7D91-F6F6-480B-BDD6-829B99AC7034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {152B7D91-F6F6-480B-BDD6-829B99AC7034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {152B7D91-F6F6-480B-BDD6-829B99AC7034}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {152B7D91-F6F6-480B-BDD6-829B99AC7034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {152B7D91-F6F6-480B-BDD6-829B99AC7034}.Release|Any CPU.Build.0 = Release|Any CPU
+        {152B7D91-F6F6-480B-BDD6-829B99AC7034}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

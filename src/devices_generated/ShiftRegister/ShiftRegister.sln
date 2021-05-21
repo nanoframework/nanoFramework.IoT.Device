@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ShiftRegister", "ShiftRegister.nfproj", "{1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ShiftRegister", "ShiftRegister.nfproj", "{48173B3A-6478-4736-AA3A-D32A2A547254}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ShiftRegister-driver", "samples\\ShiftRegister-driver.nfproj", "{B5FFE985-AD2D-41CB-B8BB-200E57CDE93C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ShiftRegister-driver", "samples\\ShiftRegister-driver.nfproj", "{F793E2F8-8EDF-42E1-B39E-59ED0859DF48}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}.Release|Any CPU.Build.0 = Release|Any CPU
-        {1298CCB4-3DF4-46E5-85E4-C58FF167ADCA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {48173B3A-6478-4736-AA3A-D32A2A547254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {48173B3A-6478-4736-AA3A-D32A2A547254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {48173B3A-6478-4736-AA3A-D32A2A547254}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {48173B3A-6478-4736-AA3A-D32A2A547254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {48173B3A-6478-4736-AA3A-D32A2A547254}.Release|Any CPU.Build.0 = Release|Any CPU
+        {48173B3A-6478-4736-AA3A-D32A2A547254}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

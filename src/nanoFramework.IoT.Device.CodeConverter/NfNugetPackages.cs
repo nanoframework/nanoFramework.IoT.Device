@@ -82,6 +82,12 @@
                                 PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Frequency"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
+                                Namespace="Illuminance",
+                                OldProjectReferenceString= @"--NA--",
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.Illuminance"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.Illuminance.4.92.0\lib\UnitsNet.Illuminance.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.Illuminance"" version=""4.92.0"" targetFramework=""netnanoframework10"" />"
+                            },
+                            new NugetPackages {
                                 Namespace="ElectricCharge",
                                 OldProjectReferenceString= @"--NA--",
                                 NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricCurrent"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricCurrent.4.92.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
