@@ -21,7 +21,7 @@ namespace Iot.Device.Ndef
         /// <summary>
         /// List of all NDEF Records
         /// </summary>
-        public List<NdefRecord> Records { get; set; } = new List<NdefRecord>();
+        public ListNdefRecord Records { get; set; } = new ListNdefRecord();
 
         /// <summary>
         /// Create an empty NDEF Message
@@ -34,7 +34,7 @@ namespace Iot.Device.Ndef
         /// Create NDEF Message from a span of bytes
         /// </summary>
         /// <param name="message">the message in span of bytes</param>
-        public NdefMessage(ReadOnlySpanByte message)
+        public NdefMessage(SpanByte message)
         {
             int idxMessage = 0;
             while (idxMessage < message.Length)

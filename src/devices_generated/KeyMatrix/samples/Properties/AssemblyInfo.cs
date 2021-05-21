@@ -8,7 +8,3 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-/////////////////////////////////////////////////////////////////
-// This attribute is mandatory when building Interop libraries //
-[assembly: AssemblyNativeVersion("0.0.0.0")]
-/////////////////////////////////////////////////////////////////

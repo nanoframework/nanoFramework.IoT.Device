@@ -12,6 +12,10 @@
     <None Include="UnitTestTemplateProject\UnitTestTemplateProject.nfproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Remove="GenericsTemplates\List.cs" />
+    <None Include="GenericsTemplates\List.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="appsettings.Development.json.xxx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -3,7 +3,7 @@
 
 using System;
 using System.Reflection;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Iot.Device.Media
 {
@@ -1025,7 +1025,7 @@ namespace Iot.Device.Media
             var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
             foreach (var field in fields)
             {
-                Console.WriteLine($"{field.Name} = {field.GetValue(new RawPixelFormat())},");
+                Debug.WriteLine($"{field.Name} = {field.GetValue(new RawPixelFormat())},");
             }
         }
 

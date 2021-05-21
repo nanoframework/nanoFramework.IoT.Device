@@ -21,7 +21,7 @@ using Iot.Device.Ssd13xx.Samples;
 using Ssd1306Cmnds = Iot.Device.Ssd13xx.Commands.Ssd1306Commands;
 using Ssd1327Cmnds = Iot.Device.Ssd13xx.Commands.Ssd1327Commands;
 
-Console.WriteLine("Hello Ssd1306 Sample!");
+Debug.WriteLine("Hello Ssd1306 Sample!");
 
 #if SSD1327
 using Ssd1327 device = GetSsd1327WithI2c();
@@ -42,7 +42,7 @@ ClearScreenSsd1306(device);
 
 I2cDevice GetI2CDevice()
 {
-    Console.WriteLine("Using I2C protocol");
+    Debug.WriteLine("Using I2C protocol");
 
     I2cConnectionSettings connectionSettings = new(1, 0x3C);
     return I2cDevice.Create(connectionSettings);
@@ -147,7 +147,7 @@ void SendMessageSsd1327(Ssd1327 device, string message)
     foreach (char character in message)
     {
         byte[] charBitMap = BasicFont.GetCharacterBytes(character);
-        List<byte> data = new List<byte>();
+        ListByte data = new ListByte();
         for (var i = 0; i < charBitMap.Length; i = i + 2)
         {
             for (var j = 0; j < 8; j++)
@@ -186,7 +186,7 @@ string DisplayIpAddress()
 
 void DisplayImages(Ssd1306 ssd1306)
 {
-    Console.WriteLine("Display Images");
+    Debug.WriteLine("Display Images");
     foreach (var image_name in Directory.GetFiles("images", "*.bmp").OrderBy(f => f))
     {
         using Image<L16> image = Image.Load<L16>(image_name);
@@ -197,7 +197,7 @@ void DisplayImages(Ssd1306 ssd1306)
 
 void DisplayClock(Ssd1306 ssd1306)
 {
-    Console.WriteLine("Display clock");
+    Debug.WriteLine("Display clock");
     var fontSize = 25;
     var font = "DejaVu Sans";
     var fontsys = SystemFonts.CreateFont(font, fontSize, FontStyle.Italic);
@@ -213,7 +213,7 @@ void DisplayClock(Ssd1306 ssd1306)
             }
 
             image.Mutate(ctx => ctx
-                .DrawText(DateTime.Now.ToString("HH:mm:ss"), fontsys, Color.White,
+                .DrawText(DateTime.UtcNow.ToString("HH:mm:ss"), fontsys, Color.White,
                     new SixLabors.ImageSharp.PointF(0, y)));
 
             using (Image<L16> image_t = image.CloneAs<L16>())

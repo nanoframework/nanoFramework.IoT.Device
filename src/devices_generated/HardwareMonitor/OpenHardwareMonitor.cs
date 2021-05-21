@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -49,8 +49,8 @@ namespace Iot.Device.HardwareMonitor
 
         private Thread? _monitorThread;
         private object _lock;
-        private List<MonitoringJob> _monitoredElements;
-        private List<Sensor> _derivedSensors;
+        private ListMonitoringJob _monitoredElements;
+        private ListSensor _derivedSensors;
         private DateTimeOffset _lastMonitorLoop;
         private TimeSpan _monitoringInterval;
 
@@ -85,11 +85,11 @@ namespace Iot.Device.HardwareMonitor
 
             InitHardwareMonitor();
 
-            _derivedSensors = new List<Sensor>();
+            _derivedSensors = new ListSensor();
 
             _monitorThread = null;
             _lock = new object();
-            _monitoredElements = new List<MonitoringJob>();
+            _monitoredElements = new ListMonitoringJob();
             _lastMonitorLoop = DateTimeOffset.UtcNow;
             MonitoringInterval = DefaultMonitorInterval;
         }
@@ -165,9 +165,9 @@ namespace Iot.Device.HardwareMonitor
         /// </summary>
         /// <returns>A list of <see cref="Sensor"/> instances. May be empty.</returns>
         /// <exception cref="ManagementException">The WMI objects required are not available. Is OpenHardwareMonitor running?</exception>
-        public IList<Sensor> GetSensorList()
+        public ListSensor GetSensorList()
         {
-            List<Sensor> ret = new List<Sensor>();
+            ListSensor ret = new ListSensor();
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(@"root\OpenHardwareMonitor", "SELECT * FROM Sensor");
             if (searcher.Get().Count > 0)
             {
@@ -202,9 +202,9 @@ namespace Iot.Device.HardwareMonitor
         /// <summary>
         /// Returns a list of hardware components, such as "CPU", "GPU" or "Mainboard"
         /// </summary>
-        public IList<Hardware> GetHardwareComponents()
+        public ListHardware GetHardwareComponents()
         {
-            IList<Hardware> ret = new List<Hardware>();
+            ListHardware ret = new ListHardware();
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(@"root\OpenHardwareMonitor", "SELECT * FROM Hardware");
             if (searcher.Get().Count > 0)
             {
@@ -313,7 +313,7 @@ namespace Iot.Device.HardwareMonitor
         /// <exception cref="NotSupportedException">There were multiple sensors found, but they return different units (i.e. CPU temperature is
         /// reported as Celsius for some cores and Fahrenheit for others)</exception>
         public bool TryGetAverage<T>(Hardware hardware,
-#if !NETCOREAPP2_1
+#if NET5_0_OR_GREATER
         [NotNullWhen(true)]
 #endif
         out T? average)
@@ -328,13 +328,13 @@ namespace Iot.Device.HardwareMonitor
                 {
                     if (unitThatWasUsed == null)
                     {
-#if NETCOREAPP2_1
+#if !NET5_0_OR_GREATER
                         unitThatWasUsed = singleValue!.Unit;
 #else
                         unitThatWasUsed = singleValue.Unit;
 #endif
                     }
-#if NETCOREAPP2_1
+#if !NET5_0_OR_GREATER
                     else if (!unitThatWasUsed.Equals(singleValue!.Unit))
 #else
                     else if (!unitThatWasUsed.Equals(singleValue.Unit))
@@ -473,7 +473,7 @@ namespace Iot.Device.HardwareMonitor
                         {
                             if (elem.Sensor.TryGetValue(out IQuantity? value))
                             {
-#if NETCOREAPP2_1
+#if !NET5_0_OR_GREATER
                                 elem.OnNewValue(elem.Sensor, value!, timeSinceLastUpdate);
 #else
                                 elem.OnNewValue(elem.Sensor, value, timeSinceLastUpdate);
@@ -672,7 +672,7 @@ namespace Iot.Device.HardwareMonitor
             /// <param name="value">Returned value</param>
             /// <returns>True if a value was available</returns>
             public bool TryGetValue(
-#if !NETCOREAPP2_1
+#if NET5_0_OR_GREATER
             [NotNullWhen(true)]
 #endif
             out IQuantity? value)
@@ -697,7 +697,7 @@ namespace Iot.Device.HardwareMonitor
             /// <param name="value">The returned value</param>
             /// <returns>True if a value of type T could be retrieved</returns>
             public bool TryGetValue<T>(
-#if !NETCOREAPP2_1
+#if NET5_0_OR_GREATER
             [NotNullWhen(true)]
 #endif
             out T? value)

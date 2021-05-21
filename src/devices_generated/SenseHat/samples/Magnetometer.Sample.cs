@@ -17,7 +17,7 @@ namespace Iot.Device.SenseHat.Samples
         {
             using SenseHatMagnetometer magnetometer = new();
             using SenseHatLedMatrixI2c ledMatrix = new();
-            Console.WriteLine("Move SenseHat around in every direction until dot on the LED matrix stabilizes when not moving.");
+            Debug.WriteLine("Move SenseHat around in every direction until dot on the LED matrix stabilizes when not moving.");
             ledMatrix.Fill();
             Stopwatch sw = Stopwatch.StartNew();
             Vector3 min = magnetometer.MagneticInduction;

@@ -20,17 +20,17 @@ Console.CancelKeyPress += (s, e) =>
     cancellationSource.Cancel();
 };
 
-Console.WriteLine($"Driver for {nameof(ShiftRegister)}");
-Console.WriteLine($"Register bit length: {sr.BitLength}");
+Debug.WriteLine($"Driver for {nameof(ShiftRegister)}");
+Debug.WriteLine($"Register bit length: {sr.BitLength}");
 string interfaceType = sr.UsesSpi ? "SPI" : "GPIO";
-Console.WriteLine($"Using {interfaceType}");
+Debug.WriteLine($"Using {interfaceType}");
 
 sr.OutputEnable = true;
 
 DemonstrateShiftingBits(sr, cancellationSource);
 DemonstrateShiftingBytes(sr, cancellationSource);
 BinaryCounter(sr, cancellationSource);
-Console.WriteLine("done");
+Debug.WriteLine("done");
 
 void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellationSource)
 {
@@ -42,7 +42,7 @@ void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellat
     int delay = 1000;
     sr.ShiftClear();
 
-    Console.WriteLine("Light up three of first four LEDs");
+    Debug.WriteLine("Light up three of first four LEDs");
     sr.ShiftBit(1);
     sr.ShiftBit(1);
     sr.ShiftBit(0);
@@ -52,7 +52,7 @@ void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellat
 
     sr.ShiftClear();
 
-    Console.WriteLine($"Light up all LEDs, with {nameof(sr.ShiftBit)}");
+    Debug.WriteLine($"Light up all LEDs, with {nameof(sr.ShiftBit)}");
 
     for (int i = 0; i < sr.BitLength; i++)
     {
@@ -64,7 +64,7 @@ void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellat
 
     sr.ShiftClear();
 
-    Console.WriteLine($"Dim up all LEDs, with {nameof(sr.ShiftBit)}");
+    Debug.WriteLine($"Dim up all LEDs, with {nameof(sr.ShiftBit)}");
 
     for (int i = 0; i < sr.BitLength; i++)
     {
@@ -83,12 +83,12 @@ void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellat
 void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancellationSource)
 {
     int delay = 1000;
-    Console.WriteLine($"Write a set of values with {nameof(sr.ShiftByte)}");
+    Debug.WriteLine($"Write a set of values with {nameof(sr.ShiftByte)}");
     // this can be specified as ints or binary notation -- its all the same
     var values = new byte[] { 0b1, 23, 56, 127, 128, 170, 0b_1010_1010 };
     foreach (var value in values)
     {
-        Console.WriteLine($"Value: {value}");
+        Debug.WriteLine($"Value: {value}");
         sr.ShiftByte(value);
         Thread.Sleep(delay);
         sr.ShiftClear();
@@ -100,7 +100,7 @@ void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancella
     }
 
     byte litPattern = 0b_1111_1111; // 255
-    Console.WriteLine($"Write {litPattern} to each register with {nameof(sr.ShiftByte)}");
+    Debug.WriteLine($"Write {litPattern} to each register with {nameof(sr.ShiftByte)}");
     for (int i = 0; i < sr.BitLength / 8; i++)
     {
         sr.ShiftByte(litPattern);
@@ -108,15 +108,15 @@ void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancella
 
     Thread.Sleep(delay);
 
-    Console.WriteLine("Output disable");
+    Debug.WriteLine("Output disable");
     sr.OutputEnable = false;
     Thread.Sleep(delay * 2);
 
-    Console.WriteLine("Output enable");
+    Debug.WriteLine("Output enable");
     sr.OutputEnable = true;
     Thread.Sleep(delay * 2);
 
-    Console.WriteLine($"Write 23 then 56 with {nameof(sr.ShiftByte)}");
+    Debug.WriteLine($"Write 23 then 56 with {nameof(sr.ShiftByte)}");
     sr.ShiftByte(23);
     Thread.Sleep(delay);
     sr.ShiftByte(56);
@@ -125,7 +125,7 @@ void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancella
 
 void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
 {
-    Console.WriteLine($"Write 0 through 255");
+    Debug.WriteLine($"Write 0 through 255");
     for (int i = 0; i < 256; i++)
     {
         sr.ShiftByte((byte)i);
@@ -142,7 +142,7 @@ void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
 
     if (sr.BitLength > 8)
     {
-        Console.WriteLine($"Write 256 through 4095; pick up the pace");
+        Debug.WriteLine($"Write 256 through 4095; pick up the pace");
         for (int i = 256; i < 4096; i++)
         {
             ShiftBytes(sr, i);

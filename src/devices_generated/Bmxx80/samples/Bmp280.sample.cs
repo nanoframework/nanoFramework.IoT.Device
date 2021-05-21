@@ -9,7 +9,7 @@ using Iot.Device.Bmxx80.FilteringMode;
 using Iot.Device.Common;
 using UnitsNet;
 
-Console.WriteLine("Hello Bmp280!");
+Debug.WriteLine("Hello Bmp280!");
 
 Length stationHeight = Length.FromMeters(640); // Elevation of the sensor
 
@@ -32,14 +32,14 @@ while (true)
     var readResult = i2CBmp280.Read();
 
     // Print out the measured data
-    Console.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
+    Debug.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
 
     // Note that if you already have the pressure value and the temperature, you could also calculate altitude by using
     // double altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
     i2CBmp280.TryReadAltitude(out var altValue);
 
-    Console.WriteLine($"Calculated Altitude: {altValue.Meters:0.##}m");
+    Debug.WriteLine($"Calculated Altitude: {altValue.Meters:0.##}m");
     Thread.Sleep(1000);
 
     // change sampling rate
@@ -51,14 +51,14 @@ while (true)
     readResult = await i2CBmp280.ReadAsync();
 
     // Print out the measured data
-    Console.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
+    Debug.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
 
     // This time use altitude calculation
     if (readResult.Temperature != null && readResult.Pressure != null)
     {
         altValue = WeatherHelper.CalculateAltitude((Pressure)readResult.Pressure, defaultSeaLevelPressure, (Temperature)readResult.Temperature);
-        Console.WriteLine($"Calculated Altitude: {altValue.Meters:0.##}m");
+        Debug.WriteLine($"Calculated Altitude: {altValue.Meters:0.##}m");
     }
 
     // Calculate the barometric (corrected) pressure for the local position.
@@ -68,7 +68,7 @@ while (true)
     if (readResult.Temperature != null && readResult.Pressure != null)
     {
         var correctedPressure = WeatherHelper.CalculateBarometricPressure((Pressure)readResult.Pressure, (Temperature)readResult.Temperature, stationHeight);
-        Console.WriteLine($"Pressure corrected for altitude {stationHeight:F0}m (with average humidity): {correctedPressure.Hectopascals:0.##} hPa");
+        Debug.WriteLine($"Pressure corrected for altitude {stationHeight:F0}m (with average humidity): {correctedPressure.Hectopascals:0.##} hPa");
     }
 
     Thread.Sleep(5000);

@@ -8,7 +8,7 @@ using Iot.Device.Bmxx80;
 using Iot.Device.Common;
 using UnitsNet;
 
-Console.WriteLine("Hello BME680!");
+Debug.WriteLine("Hello BME680!");
 
 // The I2C bus ID on the Raspberry Pi 3.
 const int busId = 1;
@@ -32,22 +32,22 @@ while (true)
         var readResult = bme680.Read();
 
         // Print out the measured data
-        Console.WriteLine($"Gas resistance: {readResult.GasResistance?.Ohms:0.##}Ohm");
-        Console.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
-        Console.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
-        Console.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
+        Debug.WriteLine($"Gas resistance: {readResult.GasResistance?.Ohms:0.##}Ohm");
+        Debug.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
+        Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
+        Debug.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
 
         if (readResult.Temperature.HasValue && readResult.Pressure.HasValue)
         {
             var altValue = WeatherHelper.CalculateAltitude(readResult.Pressure.Value, defaultSeaLevelPressure, readResult.Temperature.Value);
-            Console.WriteLine($"Altitude: {altValue.Meters:0.##}m");
+            Debug.WriteLine($"Altitude: {altValue.Meters:0.##}m");
         }
 
         if (readResult.Temperature.HasValue && readResult.Humidity.HasValue)
         {
             // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-            Console.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
-            Console.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+            Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+            Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
         }
 
         // when measuring the gas resistance on each cycle it is important to wait a certain interval
@@ -71,22 +71,22 @@ while (true)
         var readResult = await bme680.ReadAsync();
 
         // Print out the measured data
-        Console.WriteLine($"Gas resistance: {readResult.GasResistance?.Ohms:0.##}Ohm");
-        Console.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
-        Console.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
-        Console.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
+        Debug.WriteLine($"Gas resistance: {readResult.GasResistance?.Ohms:0.##}Ohm");
+        Debug.WriteLine($"Temperature: {readResult.Temperature?.DegreesCelsius:0.#}\u00B0C");
+        Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
+        Debug.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
 
         if (readResult.Temperature.HasValue && readResult.Pressure.HasValue)
         {
             var altValue = WeatherHelper.CalculateAltitude(readResult.Pressure.Value, defaultSeaLevelPressure, readResult.Temperature.Value);
-            Console.WriteLine($"Altitude: {altValue.Meters:0.##}m");
+            Debug.WriteLine($"Altitude: {altValue.Meters:0.##}m");
         }
 
         if (readResult.Temperature.HasValue && readResult.Humidity.HasValue)
         {
             // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-            Console.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
-            Console.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+            Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
+            Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature.Value, readResult.Humidity.Value).DegreesCelsius:0.#}\u00B0C");
         }
 
         Thread.Sleep(1000);

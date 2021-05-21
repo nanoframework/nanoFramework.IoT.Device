@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{EA6A3E86-B425-4864-A269-2F1FBE622DFD}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{D561BAE3-E81C-411B-987A-C06377E9A232}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Adxl345.Samples</RootNamespace>
@@ -21,15 +21,15 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Gpio">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference> 
     <Reference Include="System.Device.Spi">
-      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.38\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference> 
   </ItemGroup>
@@ -43,9 +43,11 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project="..\..\System.Numerics\System.Numerics.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
+  <!-- INSERT NBGV IMPORT HERE -->
 </Project>

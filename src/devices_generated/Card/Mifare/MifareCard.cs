@@ -34,24 +34,24 @@ namespace Iot.Device.Card.Mifare
         /// <summary>
         /// Default Key A
         /// </summary>
-        public static ReadOnlySpanByte DefaultKeyA => StaticDefaultKeyA;
+        public static SpanByte DefaultKeyA => StaticDefaultKeyA;
 
         /// <summary>
         /// Default Key B
         /// </summary>
-        public static ReadOnlySpanByte DefaultKeyB => StaticDefaultKeyB;
+        public static SpanByte DefaultKeyB => StaticDefaultKeyB;
 
         /// <summary>
         /// Default first block Key A for NDEF card
         /// </summary>
         /// <remarks>See https://www.nxp.com/docs/en/application-note/AN1304.pdf for more information</remarks>
-        public static ReadOnlySpanByte DefaultFirstBlockNdefKeyA => StaticDefaultFirstBlockNdefKeyA;
+        public static SpanByte DefaultFirstBlockNdefKeyA => StaticDefaultFirstBlockNdefKeyA;
 
         /// <summary>
         /// Default block Key A for NDEF card
         /// </summary>
         /// <remarks>See https://www.nxp.com/docs/en/application-note/AN1304.pdf for more information</remarks>
-        public static ReadOnlySpanByte DefaultBlocksNdefKeyA => StaticDefaultBlocksNdefKeyA;
+        public static SpanByte DefaultBlocksNdefKeyA => StaticDefaultBlocksNdefKeyA;
 
         /// <summary>
         /// The tag number detected by the reader, only 1 or 2
@@ -696,7 +696,7 @@ namespace Iot.Device.Card.Mifare
         /// <param name="resetAccessBytes">True to reset all the access bytes</param>
         /// <returns>True if success</returns>
         /// <remarks>Sector 0 can't be fully erase, only the blocks 1 and 2 will be erased</remarks>
-        public bool EraseSector(ReadOnlySpanByte newKeyA, ReadOnlySpanByte newKeyB, byte sector, bool authenticateWithKeyA, bool resetAccessBytes)
+        public bool EraseSector(SpanByte newKeyA, SpanByte newKeyB, byte sector, bool authenticateWithKeyA, bool resetAccessBytes)
         {
             int nbSectors = GetNumberSectors();
             if (sector >= nbSectors)
@@ -787,7 +787,7 @@ namespace Iot.Device.Card.Mifare
         /// </summary>
         /// <param name="keyB">The key B to be used for formatting, if empty, will use the default key B</param>
         /// <returns>True if success</returns>
-        public bool FormatNdef(ReadOnlySpanByte keyB = default)
+        public bool FormatNdef(SpanByte keyB = default)
         {
             if (Capacity is not MifareCardCapacity.Mifare1K or MifareCardCapacity.Mifare2K or MifareCardCapacity.Mifare4K)
             {

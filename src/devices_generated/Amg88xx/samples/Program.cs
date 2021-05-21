@@ -46,18 +46,18 @@ Amg88xx amg88xx = new Amg88xx(i2cDevice);
 amg88xx.Reset();
 
 amg88xx.OperatingMode = OperatingMode.Normal;
-Console.WriteLine($"Operating mode: {amg88xx.OperatingMode}");
+Debug.WriteLine($"Operating mode: {amg88xx.OperatingMode}");
 
 // Switch moving average mode on.
 // amg88xx.UseMovingAverageMode = true;
 // Note: reading the average mode state doesn't seems to work with current revisions
 //       of the sensor, even though the reference specification defines the register
 //      as R/W type.
-Console.WriteLine($"Average mode: {amg88xx.UseMovingAverageMode}");
+Debug.WriteLine($"Average mode: {amg88xx.UseMovingAverageMode}");
 
 // Set frame rate to 1 fps
 // amg88xx.FrameRate = FrameRate.Rate1FramePerSecond;
-Console.WriteLine($"Frame rate: {amg88xx.FrameRate}");
+Debug.WriteLine($"Frame rate: {amg88xx.FrameRate}");
 
 // set interrupt mode and levels
 amg88xx.InterruptMode = InterruptMode.Absolute;
@@ -72,22 +72,22 @@ amg88xx.InterruptLowerLevel = Temperature.FromDegreesCelsius(10);
 // Due to the hysteresis level the interrupt is not cleared before all pixels are below 24°C.
 amg88xx.InterruptUpperLevel = Temperature.FromDegreesCelsius(28);
 
-Console.WriteLine($"Interrupt mode: {amg88xx.InterruptMode}");
-Console.WriteLine($"Lower interrupt temperature level: {amg88xx.InterruptLowerLevel.DegreesCelsius:F1}°C");
-Console.WriteLine($"Upper interrupt temperature level: {amg88xx.InterruptUpperLevel.DegreesCelsius:F1}°C");
-Console.WriteLine($"Hysteresis level: {amg88xx.InterruptHysteresis.DegreesCelsius:F1}°C");
+Debug.WriteLine($"Interrupt mode: {amg88xx.InterruptMode}");
+Debug.WriteLine($"Lower interrupt temperature level: {amg88xx.InterruptLowerLevel.DegreesCelsius:F1}°C");
+Debug.WriteLine($"Upper interrupt temperature level: {amg88xx.InterruptUpperLevel.DegreesCelsius:F1}°C");
+Debug.WriteLine($"Hysteresis level: {amg88xx.InterruptHysteresis.DegreesCelsius:F1}°C");
 
 while (true)
 {
-    Console.WriteLine($"Thermistor: {amg88xx.SensorTemperature}");
-    Console.WriteLine($"Interrupt occurred: {amg88xx.HasInterrupt()}");
-    Console.WriteLine($"Temperature overflow: {amg88xx.HasTemperatureOverflow()}");
-    Console.WriteLine($"Thermistor overflow: {amg88xx.HasThermistorOverflow()}");
+    Debug.WriteLine($"Thermistor: {amg88xx.SensorTemperature}");
+    Debug.WriteLine($"Interrupt occurred: {amg88xx.HasInterrupt()}");
+    Debug.WriteLine($"Temperature overflow: {amg88xx.HasTemperatureOverflow()}");
+    Debug.WriteLine($"Thermistor overflow: {amg88xx.HasThermistorOverflow()}");
 
     // Optionally check whether the thermistor temperature or any pixel temperature
     // exceeds maximum levels.
-    // Console.WriteLine($"Temperature overrun: {amg88xx.HasTemperatureOverflow()}");
-    // Console.WriteLine($"Thermistor overrun: {amg88xx.HasThermistorOverflow()}");
+    // Debug.WriteLine($"Temperature overrun: {amg88xx.HasTemperatureOverflow()}");
+    // Debug.WriteLine($"Thermistor overrun: {amg88xx.HasThermistorOverflow()}");
 
     // Get the current thermal image and the interrupt flags.
     // Note: this isn't and can't be synchronized with the internal sampling
@@ -104,18 +104,18 @@ while (true)
             Console.Write($"{(intFlags[c, r] ? '*' : ' ')}  {amg88xx[c, r].DegreesCelsius,6:F2}");
         }
 
-        Console.WriteLine("\n------------------------------------------------------------------------");
+        Debug.WriteLine("\n------------------------------------------------------------------------");
     }
 
     // Example how to get all 64 pixels as raw readings in 12-bit two's complement format.
     /*
     for (int n = 0; n < Amg88xx.PixelCount; n += 8)
     {
-        Console.WriteLine($"{amg88xx[n]} {amg88xx[n + 1]} {amg88xx[n + 2]} {amg88xx[n + 3]} {amg88xx[n + 4]} {amg88xx[n + 5]} {amg88xx[n + 6]} {amg88xx[n + 7]} ");
+        Debug.WriteLine($"{amg88xx[n]} {amg88xx[n + 1]} {amg88xx[n + 2]} {amg88xx[n + 3]} {amg88xx[n + 4]} {amg88xx[n + 5]} {amg88xx[n + 6]} {amg88xx[n + 7]} ");
     }
     */
 
-    Console.WriteLine();
+    Debug.WriteLine();
 
     // Resetting flags manually can be used to clear all interrrupt flags and to release the INT pin
     // while all pixels are within the range of the lower and upper interrupt levels but one or more

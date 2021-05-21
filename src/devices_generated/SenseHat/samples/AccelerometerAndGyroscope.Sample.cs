@@ -17,8 +17,8 @@ namespace Iot.Device.SenseHat.Samples
             using SenseHatAccelerometerAndGyroscope ag = new();
             while (true)
             {
-                Console.WriteLine($"Acceleration={ag.Acceleration}");
-                Console.WriteLine($"AngularRate={ag.AngularRate}");
+                Debug.WriteLine($"Acceleration={ag.Acceleration}");
+                Debug.WriteLine($"AngularRate={ag.AngularRate}");
                 Thread.Sleep(100);
             }
         }

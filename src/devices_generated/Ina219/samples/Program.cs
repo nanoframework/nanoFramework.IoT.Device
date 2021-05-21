@@ -23,6 +23,6 @@ device.SetCalibration(33574, 12.2e-6f);
 while (true)
 {
     // write out the current values from the INA219 device.
-    Console.WriteLine($"Bus Voltage {device.ReadBusVoltage()} Shunt Voltage {device.ReadShuntVoltage().Millivolts}mV Current {device.ReadCurrent()} Power {device.ReadPower()}");
+    Debug.WriteLine($"Bus Voltage {device.ReadBusVoltage()} Shunt Voltage {device.ReadShuntVoltage().Millivolts}mV Current {device.ReadCurrent()} Power {device.ReadPower()}");
     Thread.Sleep(1000);
 }

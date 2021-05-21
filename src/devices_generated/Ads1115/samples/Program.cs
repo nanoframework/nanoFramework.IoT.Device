@@ -15,7 +15,7 @@ I2cConnectionSettings settings = new(1, (int)I2cAddress.GND);
 // get I2cDevice (in Linux)
 I2cDevice device = I2cDevice.Create(settings);
 
-Console.WriteLine("Press any key to continue");
+Debug.WriteLine("Press any key to continue");
 // pass in I2cDevice
 // repeatedly measure the voltage AIN0
 // set the maximum range to 4.096V
@@ -28,9 +28,9 @@ using (Iot.Device.Ads1115.Ads1115 adc = new Iot.Device.Ads1115.Ads1115(device, I
         // raw data convert to voltage
         ElectricPotential voltage = adc.RawToVoltage(raw);
 
-        Console.WriteLine($"ADS1115 Raw Data: {raw}");
-        Console.WriteLine($"Voltage: {voltage}");
-        Console.WriteLine();
+        Debug.WriteLine($"ADS1115 Raw Data: {raw}");
+        Debug.WriteLine($"Voltage: {voltage}");
+        Debug.WriteLine();
 
         // wait for 2s
         Thread.Sleep(2000);
@@ -52,12 +52,12 @@ using (var adc = new Iot.Device.Ads1115.Ads1115(device, InputMultiplexer.AIN0, M
         ElectricPotential voltage2 = adc.ReadVoltage(InputMultiplexer.AIN2);
         ElectricPotential voltage3 = adc.ReadVoltage(InputMultiplexer.AIN3);
 
-        Console.WriteLine($"ADS1115 Voltages: (Any key to continue)");
-        Console.WriteLine($"Channel0: {voltage0:s3}");
-        Console.WriteLine($"Channel1: {voltage1:s3}");
-        Console.WriteLine($"Channel2: {voltage2:s3}");
-        Console.WriteLine($"Channel3: {voltage3:s3}");
-        Console.WriteLine();
+        Debug.WriteLine($"ADS1115 Voltages: (Any key to continue)");
+        Debug.WriteLine($"Channel0: {voltage0:s3}");
+        Debug.WriteLine($"Channel1: {voltage1:s3}");
+        Debug.WriteLine($"Channel2: {voltage2:s3}");
+        Debug.WriteLine($"Channel3: {voltage3:s3}");
+        Debug.WriteLine();
 
         // wait for 100ms
         Thread.Sleep(100);
@@ -75,7 +75,7 @@ using (var adc = new Iot.Device.Ads1115.Ads1115(device, InputMultiplexer.AIN0, M
 using (var controller = new GpioController(PinNumberingScheme.Logical))
 {
     Console.Clear();
-    Console.WriteLine("This triggers an interrupt each time a new value is available on AIN0");
+    Debug.WriteLine("This triggers an interrupt each time a new value is available on AIN0");
     using Iot.Device.Ads1115.Ads1115 adc = new Iot.Device.Ads1115.Ads1115(device, controller, 23, false, InputMultiplexer.AIN0, MeasuringRange.FS2048, DataRate.SPS250);
     Stopwatch w = Stopwatch.StartNew();
     int totalInterruptsSeen = 0;
@@ -95,8 +95,8 @@ using (var controller = new GpioController(PinNumberingScheme.Logical))
         int interruptsThisPeriod = totalInterruptsSeen - previousNumberOfInterrupts;
         double intsSecond = interruptsThisPeriod / w.Elapsed.TotalSeconds;
 
-        Console.WriteLine($"ADS1115 Voltage: {lastVoltage}");
-        Console.WriteLine($"Interrups total: {totalInterruptsSeen}, last: {interruptsThisPeriod} Average: {intsSecond}/s (should be ~ {adc.FrequencyFromDataRate(adc.DataRate)})");
+        Debug.WriteLine($"ADS1115 Voltage: {lastVoltage}");
+        Debug.WriteLine($"Interrups total: {totalInterruptsSeen}, last: {interruptsThisPeriod} Average: {intsSecond}/s (should be ~ {adc.FrequencyFromDataRate(adc.DataRate)})");
         w.Restart();
         previousNumberOfInterrupts = totalInterruptsSeen;
         // wait for 2s
@@ -110,7 +110,7 @@ using (var controller = new GpioController(PinNumberingScheme.Logical))
 using (var controller = new GpioController(PinNumberingScheme.Logical))
 {
     Console.Clear();
-    Console.WriteLine("This triggers an interrupt as long as the value is above 2.0V (and then stays above 1.8V)");
+    Debug.WriteLine("This triggers an interrupt as long as the value is above 2.0V (and then stays above 1.8V)");
     using Iot.Device.Ads1115.Ads1115 adc = new Iot.Device.Ads1115.Ads1115(device, controller, 23, false, InputMultiplexer.AIN1, MeasuringRange.FS4096, DataRate.SPS860);
     Stopwatch w = Stopwatch.StartNew();
     int totalInterruptsSeen = 0;
@@ -132,12 +132,12 @@ using (var controller = new GpioController(PinNumberingScheme.Logical))
 
         if (interruptsThisPeriod > 0)
         {
-            Console.WriteLine($"Interrupt voltage: {lastVoltage}");
-            Console.WriteLine($"Interrups total: {totalInterruptsSeen}, last: {interruptsThisPeriod} Average: {intsSecond}/s");
+            Debug.WriteLine($"Interrupt voltage: {lastVoltage}");
+            Debug.WriteLine($"Interrups total: {totalInterruptsSeen}, last: {interruptsThisPeriod} Average: {intsSecond}/s");
         }
         else
         {
-            Console.WriteLine($"Current Voltage (no interrupts seen): {adc.ReadVoltage()}");
+            Debug.WriteLine($"Current Voltage (no interrupts seen): {adc.ReadVoltage()}");
         }
 
         lastVoltage = default;

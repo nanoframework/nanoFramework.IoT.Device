@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Diagnostics.CodeAnalysis;
+
 using Iot.Device.Card;
 using Iot.Device.Card.Mifare;
 using Iot.Device.Common;
@@ -27,7 +27,7 @@ namespace Iot.Device.Pn5180
     {
         private const int TimeoutWaitingMilliseconds = 2_000;
 
-        private static List<SelectedPiccInformation> _activeSelected = new List<SelectedPiccInformation>();
+        private static ListSelectedPiccInformation _activeSelected = new ListSelectedPiccInformation();
 
         private readonly SpiDevice _spiDevice;
         private readonly GpioController _gpioController;
@@ -406,7 +406,7 @@ namespace Iot.Device.Pn5180
         }
 
         /// <inheritdoc/>
-        public override int Transceive(byte targetNumber, ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
         {
             // Check if we have a Mifare Card authentication request
             // Only valid for Type A card so with a target number equal to 0
@@ -446,7 +446,7 @@ namespace Iot.Device.Pn5180
             }
         }
 
-        private int TransceiveClassic(byte targetNumber, ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        private int TransceiveClassic(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
         {
             // type B card have a tag number which is always more than 1
             if (targetNumber == 0)
@@ -573,7 +573,7 @@ namespace Iot.Device.Pn5180
             }
         }
 
-        private int TransceiveTypeB(SelectedPiccInformation card, ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        private int TransceiveTypeB(SelectedPiccInformation card, SpanByte dataToSend, SpanByte dataFromCard)
         {
             var ret = SendDataToCard(dataToSend.ToArray());
             if (!ret)
@@ -590,7 +590,7 @@ namespace Iot.Device.Pn5180
             int numBytesPrevious = 0;
 
             // 10 etu needed for 1 byte, 1 etu = 9.4 µs, so about 100 µs are needed to transfer 1 character
-            DateTime dtTimeout = DateTime.Now.AddMilliseconds(timeoutMilliseconds);
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutMilliseconds);
             do
             {
                 (numBytes, _) = GetNumberOfBytesReceivedAndValidBits();
@@ -612,7 +612,7 @@ namespace Iot.Device.Pn5180
                 // transmitted between 2 reads
                 Thread.Sleep(1);
             }
-            while (dtTimeout > DateTime.Now);
+            while (dtTimeout > DateTime.UtcNow);
 
             if (numBytes > 0)
             {
@@ -626,7 +626,7 @@ namespace Iot.Device.Pn5180
             return numBytes;
         }
 
-        private int TransceiveBuffer(ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        private int TransceiveBuffer(SpanByte dataToSend, SpanByte dataFromCard)
         {
             var ret = SendDataToCard(dataToSend.ToArray());
             if (!ret)
@@ -669,7 +669,7 @@ namespace Iot.Device.Pn5180
         /// <param name="blockAddress">The block address to authenticate</param>
         /// <param name="cardUid">The 4 bytes UUID of the card</param>
         /// <returns>True if success</returns>
-        public bool MifareAuthenticate(ReadOnlySpanByte key, MifareCardCommand mifareCommand, byte blockAddress, ReadOnlySpanByte cardUid)
+        public bool MifareAuthenticate(SpanByte key, MifareCardCommand mifareCommand, byte blockAddress, SpanByte cardUid)
         {
             _logger.LogDebug($"{nameof(MifareAuthenticate)}: ");
             if (key.Length != 6)
@@ -953,7 +953,7 @@ namespace Iot.Device.Pn5180
         /// <param name="timeoutPollingMilliseconds">The time to poll the card in milliseconds. Card detection will stop once the detection time will be over</param>
         /// <returns>True if a 14443 Type A card has been detected</returns>
         public bool ListenToCardIso14443TypeA(TransmitterRadioFrequencyConfiguration transmitter, ReceiverRadioFrequencyConfiguration receiver,
-#if !NETCOREAPP2_1
+#if NET5_0_OR_GREATER
         [NotNullWhen(true)]
 #endif
         out Data106kbpsTypeA? card, int timeoutPollingMilliseconds)
@@ -976,7 +976,7 @@ namespace Iot.Device.Pn5180
             SpanByte sakInterm = new byte[5];
             int numBytes;
 
-            DateTime dtTimeout = DateTime.Now.AddMilliseconds(timeoutPollingMilliseconds);
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutPollingMilliseconds);
             try
             {
                 // Switches off the CRC off in RX and TX direction
@@ -1000,7 +1000,7 @@ namespace Iot.Device.Pn5180
                             return false;
                         }
                     }
-                    else if (dtTimeout < DateTime.Now)
+                    else if (dtTimeout < DateTime.UtcNow)
                     {
                         return false;
                     }
@@ -1112,7 +1112,7 @@ namespace Iot.Device.Pn5180
         /// <param name="timeoutPollingMilliseconds">The time to poll the card in milliseconds. Card detection will stop once the detection time will be over</param>
         /// <returns>True if a 14443 Type B card has been detected</returns>
         public bool ListenToCardIso14443TypeB(TransmitterRadioFrequencyConfiguration transmitter, ReceiverRadioFrequencyConfiguration receiver,
-#if !NETCOREAPP2_1
+#if NET5_0_OR_GREATER
         [NotNullWhen(true)]
 #endif
         out Data106kbpsTypeB? card, int timeoutPollingMilliseconds)
@@ -1187,7 +1187,7 @@ namespace Iot.Device.Pn5180
             CrcReceptionTransfer = true;
             int numBytes;
 
-            DateTime dtTimeout = DateTime.Now.AddMilliseconds(timeoutPollingMilliseconds);
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutPollingMilliseconds);
 
             try
             {
@@ -1210,7 +1210,7 @@ namespace Iot.Device.Pn5180
                             return false;
                         }
                     }
-                    else if (dtTimeout < DateTime.Now)
+                    else if (dtTimeout < DateTime.UtcNow)
                     {
                         return false;
                     }
@@ -1341,7 +1341,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="buffer">The buffer to process</param>
         /// <param name="crc">The CRC, Must be a 2 bytes buffer</param>
-        public void CalculateCrcB(ReadOnlySpanByte buffer, SpanByte crc)
+        public void CalculateCrcB(SpanByte buffer, SpanByte crc)
         {
             if (crc.Length != 2)
             {
@@ -1359,7 +1359,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="buffer">The buffer to process</param>
         /// <param name="crc">The CRC, Must be a 2 bytes buffer</param>
-        public void CalculateCrcA(ReadOnlySpanByte buffer, SpanByte crc)
+        public void CalculateCrcA(SpanByte buffer, SpanByte crc)
         {
             if (crc.Length != 2)
             {
@@ -1371,7 +1371,7 @@ namespace Iot.Device.Pn5180
             crc[1] = (byte)(crcRet >> 8);
         }
 
-        private ushort CalculateCrc(ReadOnlySpanByte buffer, ushort crcB)
+        private ushort CalculateCrc(SpanByte buffer, ushort crcB)
         {
             // Page 42 of ISO14443-3.pdf
             for (int i = 0; i < buffer.Length; i++)
@@ -1433,7 +1433,7 @@ namespace Iot.Device.Pn5180
 
         #region SPI primitives
 
-        private void SpiWriteRegister(Command command, Register register, ReadOnlySpanByte data)
+        private void SpiWriteRegister(Command command, Register register, SpanByte data)
         {
             if (data.Length != 4)
             {
@@ -1458,13 +1458,13 @@ namespace Iot.Device.Pn5180
             SpiRead(readBuffer);
         }
 
-        private void SpiWriteRead(ReadOnlySpanByte toSend, SpanByte toRead)
+        private void SpiWriteRead(SpanByte toSend, SpanByte toRead)
         {
             SpiWrite(toSend);
             SpiRead(toRead);
         }
 
-        private void SpiWrite(ReadOnlySpanByte toSend)
+        private void SpiWrite(SpanByte toSend)
         {
             // Both master and slave devices must operate with the same timing.The master device
             // always places data on the SDO line a half cycle before the clock edge SCK, in order for

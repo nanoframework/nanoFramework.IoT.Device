@@ -106,7 +106,7 @@ namespace Iot.Device.CharacterLcd
                 _i2cDevice.WriteByte((byte)((command & ~ENABLE) | BacklightFlag));
             }
 
-            public override void SendCommands(ReadOnlySpanByte commands)
+            public override void SendCommands(SpanByte commands)
             {
                 foreach (var c in commands)
                 {
@@ -120,7 +120,7 @@ namespace Iot.Device.CharacterLcd
                 Write4Bits((byte)(REGISTERSELECT | ((value << 4) & 0xF0)));
             }
 
-            public override void SendData(ReadOnlySpanByte values)
+            public override void SendData(SpanByte values)
             {
                 foreach (var c in values)
                 {

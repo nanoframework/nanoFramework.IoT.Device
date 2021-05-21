@@ -20,7 +20,7 @@
     <summary>Iot.Device.Mpr121 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mpr121</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.4" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
     </dependencies>
   </metadata>
   <files>

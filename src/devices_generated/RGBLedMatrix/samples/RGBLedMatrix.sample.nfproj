@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{B5132EAC-D4EF-430E-9B37-F72F3C840381}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{043E7FB3-92CC-4A9F-8C2D-541D66884300}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.RGBLedMatrix.sample</RootNamespace>
@@ -21,15 +21,15 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.1\lib\System.Math.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -43,9 +43,12 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project="..\..\Stopwatch\Stopwatch.projitems" Label="Shared" />
+    <Import Project="..\..\System.Numerics\System.Numerics.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
+  <!-- INSERT NBGV IMPORT HERE -->
 </Project>

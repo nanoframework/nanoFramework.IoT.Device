@@ -8,8 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{96D4D0D6-910F-4B4F-8799-C4A67E3C70CD}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{C162210C-7B61-4DE7-8C3A-3A61807E03F3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.Mcp3428.Samples</RootNamespace>
@@ -21,15 +21,15 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.4\lib\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Gpio">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference> 
     <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -43,9 +43,11 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project="..\..\Stopwatch\Stopwatch.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
+  <!-- INSERT NBGV IMPORT HERE -->
 </Project>

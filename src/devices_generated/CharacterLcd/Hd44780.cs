@@ -145,7 +145,7 @@ namespace Iot.Device.CharacterLcd
         /// Sends data to the device
         /// </summary>
         /// <param name="values">Data to be send to the device</param>
-        protected void SendData(ReadOnlySpanByte values) => _lcdInterface.SendData(values);
+        protected void SendData(SpanByte values) => _lcdInterface.SendData(values);
 
         /// <summary>
         /// Sends data to the device
@@ -157,7 +157,7 @@ namespace Iot.Device.CharacterLcd
         /// Send commands to the device
         /// </summary>
         /// <param name="commands">Each byte represents command being sent to the device</param>
-        protected void SendCommands(ReadOnlySpanByte commands) => _lcdInterface.SendCommands(commands);
+        protected void SendCommands(SpanByte commands) => _lcdInterface.SendCommands(commands);
 
         /// <summary>
         /// Determines if the device should use two line mode
@@ -367,7 +367,7 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         /// <param name="location">Should be between 0 and 7</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
-        public void CreateCustomCharacter(int location, ReadOnlySpanByte characterMap)
+        public void CreateCustomCharacter(int location, SpanByte characterMap)
         {
             if (location >= NumberOfCustomCharactersSupported)
             {

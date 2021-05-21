@@ -11,13 +11,13 @@ const byte AdafruitSeesawBreakoutI2cBus = 0x1;
 
 using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(AdafruitSeesawBreakoutI2cBus, AdafruitSeesawBreakoutI2cAddress));
 using Seesaw ssDevice = new(i2cDevice);
-Console.WriteLine();
-Console.WriteLine($"Seesaw Version: {ssDevice.Version}");
-Console.WriteLine();
+Debug.WriteLine();
+Debug.WriteLine($"Seesaw Version: {ssDevice.Version}");
+Debug.WriteLine();
 
 foreach (Seesaw.SeesawModule module in Enum.GetValues(typeof(Seesaw.SeesawModule)))
 {
-    Console.WriteLine($"Module: {Enum.GetName(typeof(Seesaw.SeesawModule), module)} - {(ssDevice.HasModule(module) ? "available" : "not-available")}");
+    Debug.WriteLine($"Module: {Enum.GetName(typeof(Seesaw.SeesawModule), module)} - {(ssDevice.HasModule(module) ? "available" : "not-available")}");
 }
 
-Console.WriteLine();
+Debug.WriteLine();

@@ -16,10 +16,12 @@ namespace Iot.Device.Arduino
     internal class ArduinoI2cDevice : I2cDevice
     {
         private readonly ArduinoBoard _board;
+        private ArduinoI2cBus? _bus;
 
-        public ArduinoI2cDevice(ArduinoBoard board, I2cConnectionSettings connectionSettings)
+        public ArduinoI2cDevice(ArduinoBoard board, ArduinoI2cBus bus, I2cConnectionSettings connectionSettings)
         {
             _board = board ?? throw new ArgumentNullException(nameof(board));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
 
             if (connectionSettings == null)
             {
@@ -89,14 +91,28 @@ namespace Iot.Device.Arduino
             _board.Firmata.WriteReadI2cData(ConnectionSettings.DeviceAddress, bytes, null);
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             _board.Firmata.WriteReadI2cData(ConnectionSettings.DeviceAddress, buffer, null);
         }
 
-        public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
         {
             _board.Firmata.WriteReadI2cData(ConnectionSettings.DeviceAddress, writeBuffer, readBuffer);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_bus != null)
+                {
+                    _bus.RemoveDevice(ConnectionSettings.DeviceAddress);
+                    _bus = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

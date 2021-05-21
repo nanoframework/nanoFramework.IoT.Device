@@ -57,12 +57,12 @@ namespace Iot.Device.Mcp23xxx.Tests
 
             public override byte ReadByte() => 0x42;
 
-            public override void TransferFullDuplex(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+            public override void TransferFullDuplex(SpanByte writeBuffer, SpanByte readBuffer)
             {
                 LastInitialWriteByte = writeBuffer[0];
             }
 
-            public override void Write(ReadOnlySpanByte data)
+            public override void Write(SpanByte data)
             {
                 LastInitialWriteByte = data[0];
             }

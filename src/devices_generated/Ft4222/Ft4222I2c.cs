@@ -43,7 +43,7 @@ namespace Iot.Device.Ft4222
         }
 
         /// <inheritdoc/>
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             _i2cBus.Write(_deviceAddress, buffer);
         }
@@ -59,7 +59,7 @@ namespace Iot.Device.Ft4222
         }
 
         /// <inheritdoc/>
-        public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
         {
             _i2cBus.Write(_deviceAddress, writeBuffer);
             _i2cBus.Read(_deviceAddress, readBuffer);

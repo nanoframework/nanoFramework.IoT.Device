@@ -15,7 +15,7 @@ foreach (PixelFormat item in device.GetSupportedPixelFormats())
     Console.Write($"{item} ");
 }
 
-Console.WriteLine();
+Debug.WriteLine();
 
 // Get the resolutions of the format
 foreach (var resolution in device.GetPixelFormatResolutions(PixelFormat.YUYV))
@@ -23,11 +23,11 @@ foreach (var resolution in device.GetPixelFormatResolutions(PixelFormat.YUYV))
     Console.Write($"[{resolution.MinWidth}x{resolution.MinHeight}]->[{resolution.MaxWidth}x{resolution.MaxHeight}], Step [{resolution.StepWidth},{resolution.StepHeight}] ");
 }
 
-Console.WriteLine();
+Debug.WriteLine();
 
 // Query v4l2 controls default and current value
 VideoDeviceValue value = device.GetVideoDeviceValue(VideoDeviceValueType.Rotate);
-Console.WriteLine($"{value.Name} Min: {value.Minimum} Max: {value.Maximum} Step: {value.Step} Default: {value.DefaultValue} Current: {value.CurrentValue}");
+Debug.WriteLine($"{value.Name} Min: {value.Minimum} Max: {value.Maximum} Step: {value.Step} Default: {value.DefaultValue} Current: {value.CurrentValue}");
 
 string path = Directory.GetCurrentDirectory();
 

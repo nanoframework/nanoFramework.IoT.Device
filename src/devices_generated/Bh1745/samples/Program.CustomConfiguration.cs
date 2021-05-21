@@ -41,12 +41,12 @@ while (true)
 
     if (!i2cBh1745.ReadMeasurementIsValid())
     {
-        Console.WriteLine("Measurement was not valid!");
+        Debug.WriteLine("Measurement was not valid!");
         continue;
     }
 
-    Console.WriteLine("RGB color read: #{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
-    Console.WriteLine($"Raw illumination value: {i2cBh1745.ReadClearDataRegister()}");
+    Debug.WriteLine("RGB color read: #{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+    Debug.WriteLine($"Raw illumination value: {i2cBh1745.ReadClearDataRegister()}");
 
     Thread.Sleep(i2cBh1745.MeasurementTimeAsTimeSpan());
 }

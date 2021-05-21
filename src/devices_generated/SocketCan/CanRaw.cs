@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -34,7 +35,7 @@ namespace Iot.Device.SocketCan
         /// <param name="data">Data to write (at most 8 bytes)</param>
         /// <param name="id">Recipient identifier</param>
         /// <remarks><paramref name="id"/> can be ignored by recipient - anyone connected to the bus can read or write any frames</remarks>
-        public void WriteFrame(ReadOnlySpanByte data, CanId id)
+        public void WriteFrame(SpanByte data, CanId id)
         {
             if (!id.IsValid)
             {
@@ -55,11 +56,10 @@ namespace Iot.Device.SocketCan
             {
                 SpanByte frameData = new SpanByte(frame.Data, data.Length);
                 data.CopyTo(frameData);
-            }
 
-            ReadOnlySpan<CanFrame> frameSpan = MemoryMarshal.CreateReadOnlySpan(ref frame, 1);
-            ReadOnlySpanByte buff = MemoryMarshal.AsBytes(frameSpan);
-            Interop.Write(_handle, buff);
+                byte* buff = (byte*)&frame;
+                Interop.Write(_handle, buff, Marshal.SizeOf<CanFrame>());
+            }
         }
 
         /// <summary>
@@ -78,12 +78,14 @@ namespace Iot.Device.SocketCan
 
             CanFrame frame = new CanFrame();
 
-            Span<CanFrame> frameSpan = MemoryMarshal.CreateSpan(ref frame, 1);
-            SpanByte buff = MemoryMarshal.AsBytes(frameSpan);
-            while (buff.Length > 0)
+            int remainingBytes = Marshal.SizeOf<CanFrame>();
+            unsafe
             {
-                int read = Interop.Read(_handle, buff);
-                buff = buff.Slice(read);
+                while (remainingBytes > 0)
+                {
+                    int read = Interop.Read(_handle, (byte*)&frame, remainingBytes);
+                    remainingBytes -= read;
+                }
             }
 
             id = frame.Id;

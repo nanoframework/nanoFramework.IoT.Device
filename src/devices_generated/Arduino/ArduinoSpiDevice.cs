@@ -34,13 +34,13 @@ namespace Iot.Device.Arduino
 
         public override void Read(SpanByte buffer)
         {
-            ReadOnlySpanByte dummy = new byte[buffer.Length];
+            SpanByte dummy = new byte[buffer.Length];
             Board.Firmata.SpiTransfer(ConnectionSettings.ChipSelectLine, dummy, buffer);
         }
 
         public override void WriteByte(byte value)
         {
-            ReadOnlySpanByte span = new byte[1]
+            SpanByte span = new byte[1]
             {
                 value
             };
@@ -48,12 +48,12 @@ namespace Iot.Device.Arduino
             Write(span);
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public override void Write(SpanByte buffer)
         {
             Board.Firmata.SpiWrite(ConnectionSettings.ChipSelectLine, buffer);
         }
 
-        public override void TransferFullDuplex(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public override void TransferFullDuplex(SpanByte writeBuffer, SpanByte readBuffer)
         {
             Board.Firmata.SpiTransfer(ConnectionSettings.ChipSelectLine, writeBuffer, readBuffer);
         }

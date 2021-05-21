@@ -52,7 +52,7 @@ Thread.Sleep(2000);
 display.BlinkRate = BlinkRate.Off;
 
 // Write time to the display
-display.Write(DateTime.Now.ToString("H:mm").PadLeft(5));
+display.Write(DateTime.UtcNow.ToString("H:mm").PadLeft(5));
 
 // Wait 3 seconds
 Thread.Sleep(3000);

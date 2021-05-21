@@ -41,18 +41,18 @@ while (true)
     var magValue = sh.MagneticInduction;
     var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue);
 
-    Console.WriteLine($"Temperature Sensor 1: {tempValue.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Temperature Sensor 2: {temp2Value.DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Pressure: {preValue.Hectopascals:0.##} hPa");
-    Console.WriteLine($"Altitude: {altValue.Meters:0.##} m");
-    Console.WriteLine($"Acceleration: {sh.Acceleration} g");
-    Console.WriteLine($"Angular rate: {sh.AngularRate} DPS");
-    Console.WriteLine($"Magnetic induction: {sh.MagneticInduction} gauss");
-    Console.WriteLine($"Relative humidity: {humValue.Percent:0.#}%");
+    Debug.WriteLine($"Temperature Sensor 1: {tempValue.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Temperature Sensor 2: {temp2Value.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Pressure: {preValue.Hectopascals:0.##} hPa");
+    Debug.WriteLine($"Altitude: {altValue.Meters:0.##} m");
+    Debug.WriteLine($"Acceleration: {sh.Acceleration} g");
+    Debug.WriteLine($"Angular rate: {sh.AngularRate} DPS");
+    Debug.WriteLine($"Magnetic induction: {sh.MagneticInduction} gauss");
+    Debug.WriteLine($"Relative humidity: {humValue.Percent:0.#}%");
 
     // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-    Console.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
-    Console.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
 
     Thread.Sleep(1000);
 }

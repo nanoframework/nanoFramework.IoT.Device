@@ -54,7 +54,7 @@ namespace Iot.Device.Lps25h
         [Telemetry]
         public Pressure Pressure => Pressure.FromHectopascals(ReadInt24(Register.Pressure) / 4096.0);
 
-        private static int ReadInt24LittleEndian(ReadOnlySpanByte buff)
+        private static int ReadInt24LittleEndian(SpanByte buff)
         {
             Debug.Assert(buff.Length == 3, "Buffer must be 3 bytes long");
 

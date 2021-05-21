@@ -9,6 +9,13 @@ namespace nanoFramework.IoT.Device.CodeConverter
 {
     class Program
     {
+        private const string _repoRoot = "../../../";
+        private const string _unitTestProjectGuidReplacementToken = "<!--UNIT TEST PROJECT GUID GOES HERE-->";
+        private const string _sampleProjectGuidReplacementToken = "<!--SAMPLES PROJECT GUID GOES HERE-->";
+        private const string _outputTypeReplacementToken = "<!-- OUTPUT TYPE -->";
+        private const string _unitTestProjectPlaceholderToken = "<!-- UNIT TESTS PROJECT PLACEHOLDER -->";
+        private const string _sampleProjectPlaceholderToken = "<!-- SAMPLES PROJECT PLACEHOLDER -->";
+
         static void Main(string[] args)
         {
             // Initialize configuration.
@@ -21,38 +28,64 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 outputDirectoryInfo.Delete(true);
             }
 
-            var targetProjectTemplateDirectory = Directory.GetDirectories("../../../", configuration.TargetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetProjectTemplateDirectory = Directory
+                .GetDirectories(_repoRoot, configuration.TargetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
-                .FirstOrDefault();
+                .First();
+
             Console.WriteLine($"targetProjectTemplateDirectory={targetProjectTemplateDirectory}");
 
-            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("../../../", configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetUnitTestProjectTemplateDirectory = Directory
+                .GetDirectories(_repoRoot, configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
-                .FirstOrDefault();
+                .First();
 
-            var sourceProjectFiles = Directory.GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
-                .Where(x => configuration.FilePathFilters.Any(d => x.Contains(d)))
-                .Select(x => new FileInfo(x));
+            var genericsTemplatesDirectory = Directory
+                .GetDirectories(_repoRoot, configuration.GenericsTemplatesFolderName, new EnumerationOptions { RecurseSubdirectories = true })
+                .Select(x => new DirectoryInfo(x))
+                .First();
+
+            var sourceProjectFiles = Directory
+                .GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
+                .Where(x => configuration.FilePathFilters.Any(x.Contains))
+                .Select(x => new FileInfo(x))
+                .ToList();
 
             foreach (var sourceProjectFile in sourceProjectFiles)
             {
                 // check if this a Unit Test project
-                var isUnitTestProject = sourceProjectFile.DirectoryName.EndsWith("tests");
-                var isSamplesProject = sourceProjectFile.DirectoryName.EndsWith("samples");
+                ProjectType projectType = ProjectType.Regular;
+
+                if(sourceProjectFile.DirectoryName.EndsWith("tests") &&
+                    Directory.GetFiles(sourceProjectFile.DirectoryName, "*.csproj").Length > 0)
+                {
+                    projectType = ProjectType.UnitTest;
+                }
+                else if(sourceProjectFile.DirectoryName.EndsWith("samples") &&
+                    Directory.GetFiles(sourceProjectFile.DirectoryName, "*.csproj").Length > 0)
+                {
+                    projectType = ProjectType.Samples;
+                }
 
                 Console.WriteLine($"sourceProjectFile={sourceProjectFile}");
                 var projectName = sourceProjectFile.Name.Replace(".csproj", string.Empty);
-                var projectPath = sourceProjectFile.Directory.FullName.Replace(configuration.SourceDirectory, string.Empty);
-                var targetDirectory = $"{configuration.OutputDirectoryPath}\\{projectPath}";
+                var projectPath = sourceProjectFile.Directory.FullName.Replace(configuration.SourceDirectory, string.Empty).Trim(Path.DirectorySeparatorChar);
+                var targetDirectory = Path.Combine(configuration.OutputDirectoryPath, projectPath);
                 DirectoryInfo targetDirectoryInfo;
 
-                if (isUnitTestProject)
+                if (projectType == ProjectType.UnitTest)
                 {
                     targetDirectoryInfo = targetUnitTestProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
                 }
                 else
                 {
                     targetDirectoryInfo = targetProjectTemplateDirectory.CopyDirectory(targetDirectory, new[] { ".user" });
+
+                    if (projectType == ProjectType.Samples)
+                    {
+                        // need to remove the nuspec template
+                        File.Delete(Path.Combine(targetDirectory, "template.nuspec"));
+                    }
                 }
 
                 sourceProjectFile.Directory.CopyDirectory(targetDirectory);
@@ -60,38 +93,94 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 NugetPackages[] nfNugetPackages = NfNugetPackages.GetnfNugetPackages();
 
                 var searches = nfNugetPackages.ToDictionary(x => x.Namespace, x => false);
+                SharedProjectImports.GetnfSharedProjectImports().ToList().ForEach(i =>
+                {
+                    if (string.IsNullOrEmpty(i.Namespace) == false)
+                    {
+                        searches.Add(i.Namespace, false);
+                    }
+                    if (string.IsNullOrEmpty(i.CodeMatchString) == false)
+                    {
+                        searches.Add(i.CodeMatchString, false);
+                    }
+                });
 
                 foreach (var file in targetDirectoryInfo.GetFiles("*.cs", new EnumerationOptions { RecurseSubdirectories = true }))
                 {
+                    Dictionary<string, string> replacements = new () {
+                        { "stackalloc", "new" },
+                        { "ReadOnlySpan<byte>", "SpanByte" },
+                        { "Span<byte>", "SpanByte" },
+                        { "DateTime.Now", "DateTime.UtcNow" },
+                        { ".AsSpan(start, length)", string.Empty },
+                        { "Console.WriteLine(", "Debug.WriteLine(" },
+                        { "using System.Diagnostics.CodeAnalysis;", "" },
+                        { "\\[MemberNotNull.*\\]", "" },
+                    };
+
+                    var listReplacements = file.GenerateGenerics(
+                        templatesFolder: genericsTemplatesDirectory.FullName, 
+                        containerType: "List",
+                        containerTypeSynonyms: new [] {"List", "IList", "IReadOnlyList"},
+                        // All generics go to the main project of the binding to avoid conflicts between the projects.
+                        // This will cause rare issues when a type is defined int the samples/tests project,
+                        // but the generic container is placed to the main project from where it's not visible.
+                        // There's also an issue if the main project isn't visible from samples/tests which want 
+                        // to use this generic.
+                        // If this proves problematic, one needs to refine the algorithm to choose the target
+                        // directory for the generics individually and more precisely.
+                        outputDirectory: projectType is ProjectType.Regular ? file.DirectoryName : file.Directory!.Parent!.FullName);
+
+                    foreach (var (key, value) in listReplacements)
+                    {
+                        replacements[key] = value;
+                    }
+
                     searches = file.EditFile(
-                        new Dictionary<string, string>
-                        {
-                            { "stackalloc", "new" },
-                            { "Span<byte>", "SpanByte" },
-                            { "ReadOnlySpan<byte>", "SpanByte" },
-                            { ".AsSpan(start, length)", string.Empty },
-                        },
+                        replacements,
                         nfNugetPackages,
                         searches);
                 }
+                
 
                 // PROJECT FILE
                 string[] oldProjectReferences;
                 string projectGuid;
-                CreateProjectFile(isUnitTestProject, projectName, targetDirectoryInfo, nfNugetPackages, searches, out oldProjectReferences, out projectGuid);
+                CreateProjectFile(
+                    projectType,
+                    projectName,
+                    targetDirectoryInfo,
+                    nfNugetPackages,
+                    searches,
+                    out oldProjectReferences,
+                    out projectGuid);
 
                 // PACKAGES
-                CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
+                CreatePackagesConfig(
+                    projectType,
+                    targetDirectoryInfo,
+                    nfNugetPackages,
+                    searches,
+                    oldProjectReferences);
 
                 // SOLUTION File
-                if (!isUnitTestProject && !isSamplesProject)
+                if (projectType == ProjectType.Regular)
                 {
                     CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
                     UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
                 }
+                else
+                {
+                    // fill in project GUID
+                    UpdateProjectGuidInSolutionFile(
+                        targetDirectoryInfo,
+                        projectType,
+                        projectName,
+                        projectGuid);
+                }
 
                 // NUSPEC File
-                if (!isUnitTestProject && !isSamplesProject)
+                if (projectType == ProjectType.Regular)
                 {
                     CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
                 }
@@ -100,7 +189,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
         }
-
+        
         private static void CreateNuspecFile(DirectoryInfo targetDirectoryInfo, string projectName, string targetDirectory) {
 
             var targetNuspecFile = targetDirectoryInfo.GetFiles("template.nuspec").FirstOrDefault();
@@ -111,11 +200,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         { "[[Assembly]]", $"Iot.Device.{projectName}" },
                         { "[[ProjectName]]", projectName },
                     });
-                targetNuspecFile.MoveTo($"{targetDirectory}\\{projectName}.nuspec", true);
+                targetNuspecFile.MoveTo(Path.Combine(targetDirectory, $"{projectName}.nuspec"), true);
             }
         }
+        
         private static void CreateProjectFile(
-            bool isUnitTestProject,
+            ProjectType projectType,
             string projectName,
             DirectoryInfo targetDirectoryInfo,
             NugetPackages[] nfNugetPackages,
@@ -124,7 +214,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             out string projectGuid)
         {
             // Search for project references in old project file
-            var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").FirstOrDefault();
+            var oldProjectFile = targetDirectoryInfo.GetFiles("*.csproj").First();
 
             string unitTestProjectReference = string.Empty;
             var oldProjectFileContents = File.ReadAllText(oldProjectFile.FullName);
@@ -138,10 +228,9 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             var projectReplacements = new Dictionary<string, string>();
 
-            if (isUnitTestProject)
+            if (projectType == ProjectType.UnitTest)
             {
-                // Unit Test project
-                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName));
+                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("UnitTestTemplateProject", projectName), overwrite: true);
 
                 // Update project name 
                 projectReplacements.Add("UnitTestTemplateProject", projectName);
@@ -149,12 +238,11 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // build proper project reference
                 projectReplacements.Add(
                     "<!-- INSERT PROJECT UNDER TEST REFERENCE HERE -->",
-                    $@"<ProjectReference Include=""..\{projectName.Replace(".Tests", "")}\{projectName.Replace(".Tests", "")}.nfproj"" />");
+                    $@"<ProjectReference Include=""..\{projectName.Replace(".Tests", "")}.nfproj"" />");
             }
             else
             {
-                // Regular code project
-                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName));
+                targetProjectFile.MoveTo(targetProjectFile.FullName.Replace("BindingTemplateProject", projectName), overwrite: true);
 
                 // Update project name 
                 projectReplacements.Add("BindingTemplateProject", projectName);
@@ -177,30 +265,72 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             if (newProjectReferences.Any())
             {
-                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed.Replace("$LF$", "\n")}\n    {add.Replace("$LF$", "\n")}");
+                var newProjectReferencesString = newProjectReferences.Distinct().Aggregate((seed, add) => $"{seed}\n    {add}");
+                newProjectReferencesString = newProjectReferencesString.Replace("$LF$", "\n");
 
-                if (isUnitTestProject)
+                if (projectType == ProjectType.UnitTest ||
+                    projectType == ProjectType.Samples)
                 {
                     // add the reference to the project being tested
                     newProjectReferencesString += unitTestProjectReference;
 
                     // packages path are one level up, need to adjust
                     newProjectReferencesString = newProjectReferencesString.Replace("packages\\", "..\\packages\\");
+
+                    // need to also adjust mscorlib from template
+                    projectReplacements.Add("<HintPath>packages\\nanoFramework.CoreLibrary", "<HintPath>..\\packages\\nanoFramework.CoreLibrary");
                 }
 
                 projectReplacements.Add("<!-- INSERT NEW REFERENCES HERE -->", newProjectReferencesString);
             }
+
+            var newImports = SharedProjectImports.GetnfSharedProjectImports()
+                    .Where(x => searches.Any(s => s.Value && (s.Key == x.Namespace || s.Key == x.CodeMatchString)))
+                    .Select(x => x.NewProjectImport);
+            if (newImports.Any())
+            {
+                var newImportsString = newImports.Distinct().Aggregate((seed, add) => $"{seed}\n    {add}");
+                projectReplacements.Add("<!-- INSERT IMPORTS HERE -->", newImportsString);
+
+            }
+
             if (oldFileReferences.Any())
             {
                 var newFileReferencesString = oldFileReferences.Select(x => x.Value).Aggregate((seed, add) => $"{seed}\n    {add}");
                 projectReplacements.Add("<!-- INSERT FILE REFERENCES HERE -->", newFileReferencesString);
             }
+
+            // set output type
+            if(projectType == ProjectType.Samples)
+            {
+                // samples projects are executables
+                projectReplacements.Add(_outputTypeReplacementToken, "Exe");
+            }
+            else
+            {
+                // all the others are libraries
+                projectReplacements.Add(_outputTypeReplacementToken, "Library");
+            }
+
+            if(projectType == ProjectType.Regular)
+            {
+                projectReplacements.Add("<!-- INSERT NBGV IMPORT HERE -->",
+                    @"<Import Project=""packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets"" Condition=""Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')"" />
+  <Target Name = ""EnsureNuGetPackageBuildImports"" BeforeTargets = ""PrepareForBuild"">
+    <PropertyGroup>
+      <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition = ""!Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')"" Text = ""$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets'))"" />
+  </Target>");
+
+            }
+
             targetProjectFile.EditFile(projectReplacements);
 
-            if (!isUnitTestProject)
+            if (projectType != ProjectType.UnitTest)
             {
                 // process AssemblyInfo file
-                var assemblyInfoFile = targetDirectoryInfo.GetFiles("Properties\\AssemblyInfo.cs").First();
+                var assemblyInfoFile = targetDirectoryInfo.GetFiles(Path.Combine("Properties", "AssemblyInfo.cs")).First();
 
                 var assemblyInfoReplacements = new Dictionary<string, string>();
 
@@ -208,13 +338,14 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 assemblyInfoReplacements.Add("//< !--ASSEMBLY COMPANY HERE-->", @"[assembly: AssemblyCompany(""nanoFramework Contributors"")]");
                 assemblyInfoReplacements.Add("//< !--ASSEMBLY COPYRIGHT HERE-->", @"[assembly: AssemblyCopyright(""Copyright(c).NET Foundation and Contributors"")]");
                 assemblyInfoReplacements.Add("//< !--ASSEMBLY COMVISIBLE HERE-->", @"[assembly: ComVisible(false)]");
-                assemblyInfoReplacements.Add("//< !--ASSEMBLY NATIVEVERSION HERE-->", @"[assembly: AssemblyNativeVersion(""0.0.0.0"")]");
 
                 assemblyInfoFile.EditFile(assemblyInfoReplacements);
             }
+
         }
 
         private static void CreatePackagesConfig(
+            ProjectType projectType,
             DirectoryInfo targetDirectoryInfo,
             NugetPackages[] nfNugetPackages,
             Dictionary<string, bool> searches,
@@ -230,6 +361,11 @@ namespace nanoFramework.IoT.Device.CodeConverter
                     searches.Any(s => s.Value && s.Key == x.Namespace))
                 .Distinct()
                 .Select(x => x.PackageConfigReferenceString);
+
+            if(projectType == ProjectType.Regular)
+            {
+                packageReferences = packageReferences.Append(@"  <package id=""Nerdbank.GitVersioning"" version=""3.4.194"" developmentDependency=""true"" targetFramework=""netnanoframework10"" />");
+            }
 
             if (packageReferences.Any())
             {
@@ -250,6 +386,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 [[ INSERT PROJECTS HERE ]]
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
@@ -274,22 +411,87 @@ EndProject";
             if(targetDirectoryInfo.GetDirectories("samples").Count() > 0)
             {
                 solutionProject += $@"
-Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Samples"", ""samples\nanoFrameworkIoT.Samples.nfproj"", ""{projectGuid}""
+Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Samples"", ""samples\nanoFrameworkIoT.Samples.nfproj"", ""{_sampleProjectGuidReplacementToken}""
 EndProject";
+            }
+            else
+            {
+                solutionProject += $@"
+<!-- SAMPLES PROJECT PLACEHOLDER -->";
             }
 
             // find out if there are unit test projects
             if (targetDirectoryInfo.GetDirectories("tests").Count() > 0)
             {
                 solutionProject += $@"
-Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Tests"", ""tests\nanoFrameworkIoT.Tests.nfproj"", ""{projectGuid}""
+Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Tests"", ""tests\nanoFrameworkIoT.Tests.nfproj"", ""{_unitTestProjectGuidReplacementToken}""
 EndProject";
+            }
+            else
+            {
+                solutionProject += $@"
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->";
             }
 
             var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
             solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
-            File.WriteAllText($"{targetDirectoryInfo.FullName}\\{projectName}.sln", solutionFileContent);
+            File.WriteAllText(Path.Combine(targetDirectoryInfo.FullName, $"{projectName}.sln"), solutionFileContent);
         }
+
+        private static void UpdateProjectGuidInSolutionFile(
+            DirectoryInfo targetDirectoryInfo,
+            ProjectType projectType,
+            string projectName,
+            string projectGuid)
+        {
+            // find the parent solution file
+            // it's OK to simplify because there will be only one SLN file there
+            var slnFile = Directory.GetFiles(targetDirectoryInfo.Parent.FullName, "*.sln").FirstOrDefault();
+
+            if (slnFile != null)
+            {
+                // load Solution file content
+                string slnContent = File.ReadAllText(slnFile);
+
+                // replace project GUID
+                if (projectType == ProjectType.Samples)
+                {
+                    slnContent = slnContent.Replace(_sampleProjectGuidReplacementToken, projectGuid);
+                }
+                else if (projectType == ProjectType.UnitTest)
+                {
+                    slnContent = slnContent.Replace(_unitTestProjectGuidReplacementToken, projectGuid);
+                }
+
+                // add project, if not already there
+
+                // find out if there are sample projects
+
+                if (projectType is ProjectType.Samples or ProjectType.UnitTest)
+                {
+                    var token = projectType is ProjectType.Samples ? _sampleProjectPlaceholderToken : _unitTestProjectPlaceholderToken;
+
+                    var projFileName = $"{projectName}.nfproj";
+
+                    try
+                    {
+                        var projectDirName = targetDirectoryInfo.GetFiles(projFileName).Single().Directory!.Name;
+
+                        var slnLines = new[]
+                        {
+                        $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""{projectName}"", ""{projectDirName}\\{projFileName}"", ""{projectGuid}""",
+                        "EndProject",
+                        token,  // leave token in the solution after replacement in case we need to add more projects
+                    };
+
+                        slnContent = slnContent.Replace(token, string.Join(Environment.NewLine, slnLines));
+                    } catch (Exception) { }
+                }
+
+                File.WriteAllText(slnFile, slnContent);
+            }
+        }
+
         private static void UpdateSolutionFile(string projectName, DirectoryInfo targetDirectoryInfo, string projectGuid)
         {
             var solutionFiles = targetDirectoryInfo.GetFiles("*.sln");
@@ -301,7 +503,6 @@ EndProject";
                     {"nanoFrameworkIoT", projectName }
                 });
             }
-            
         }
 
         private static T InitOptions<T>()
@@ -328,6 +529,7 @@ EndProject";
         public string FilePathFilters { get; set; }
         public string TargetProjectTemplateName { get; set; }
         public string TargetUnitTestProjectTemplateName { get; set; }
+        public string GenericsTemplatesFolderName { get; set; }
         public string OutputDirectoryPath { get; set; }
     }
 
@@ -349,29 +551,121 @@ EndProject";
                 var targetDirectory = Directory.CreateDirectory(targetPath);
                 foreach (var file in sourceDirectory.GetFiles("*", new EnumerationOptions { RecurseSubdirectories = true }).Where(f => filePathFilters == null || filePathFilters.Any(filter => f.FullName.Contains(filter)) == false))
                 {
-                    var path = file.FullName.Replace(sourceDirectory.FullName, string.Empty).Replace(file.Name, string.Empty).Trim('\\');
+                    var path = file.FullName.Replace(sourceDirectory.FullName, string.Empty).Replace(file.Name, string.Empty).Trim(Path.DirectorySeparatorChar);
                     if (string.IsNullOrEmpty(path) == false)
                     {
                         if (new[] { "bin", "obj" }.Any(toIgnore => path.StartsWith(toIgnore)) || file.Directory.GetFiles("*.csproj").Any())
                         {
                             continue;
                         }
-                        path += "\\";
+                        path += Path.DirectorySeparatorChar;
                     }
-                    if (Directory.Exists($"{targetDirectory.FullName}\\{path}") == false)
+                    if (Directory.Exists(Path.Combine(targetDirectory.FullName, path)) == false)
                     {
                         targetDirectory.CreateSubdirectory(path);
                     }
-                    file.CopyTo($"{targetDirectory.FullName}\\{path}{file.Name}", true);
+                    file.CopyTo(Path.Combine(targetDirectory.FullName, path, file.Name), true);
                 }
                 return targetDirectory;
             }
             return null;
         }
     }
+    
+    public static class StringExtensions
+    {
+        public static string FirstCharToUpper(this string input) =>
+            input switch
+            {
+                null => throw new ArgumentNullException(nameof(input)),
+                "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
+                _ => input.First().ToString().ToUpper() + input.Substring(1),
+            };
+    }
+
 
     public static class FileInfoExtensions
     {
+        public static Dictionary<string, string> GenerateGenerics(
+            this FileInfo sourceFile,
+            string templatesFolder,
+            string containerType,
+            IList<string> containerTypeSynonyms,
+            string outputDirectory
+        )
+        {
+            if (!sourceFile.Exists)
+            {
+                return null;
+            }
+
+            string fileContent = File.ReadAllText(sourceFile.FullName);
+
+            // e.g. match List<byte> and IList<byte> but avoid matching List<T> or List<byte[]>
+            var listRegex = new Regex(
+                @"\b(" + 
+                string.Join('|', containerTypeSynonyms.Select(Regex.Escape)) +
+                @")<(\w{2,})>");  
+
+            // Extract all used generic types, such as "byte" from "List<byte>" 
+            var types = listRegex.Matches(fileContent).Select(match => match.Groups[2].Value).ToHashSet();
+
+            Dictionary<string, string> result = new();
+            foreach (string type in types)
+            {
+                var newType = GenerateGenericContainer(
+                    templatePath: Path.Combine(templatesFolder, $"{containerType}.cs"),
+                    containerType: containerType,
+                    genericType: type,
+                    outputDirectory: outputDirectory
+                );
+
+                foreach (var oldType in containerTypeSynonyms)
+                {
+                    // This won't replace the type that g
+                    foreach (var prefix in new[] {" ", "\t", "(", "<"})
+                    {
+                        result[$"{prefix}{oldType}<{type}>"] = prefix + newType;
+                    }
+
+                    result["^" + Regex.Escape($"{oldType}<{type}>")] = newType; // replace in the very beginning of the line using regex
+                }
+            }
+            
+            return result;
+        }
+
+        private static string GenerateGenericContainer(
+            string templatePath, 
+            string containerType, 
+            string genericType, 
+            string outputDirectory)
+        {
+            var template = File.ReadAllText(templatePath);
+            var newContainerType = $"{containerType}{genericType.FirstCharToUpper()}";
+            
+            template = template
+                // Replace generic interfaces by their normal forms
+                .Replace("IEnumerable<T>", "IEnumerable")
+                .Replace("IEnumerator<T>", "IEnumerator")
+                // constructor, always public containerType( as it's a function
+                .Replace($"public {containerType}(", $"public {newContainerType}(")
+                .Replace("<T>", genericType.FirstCharToUpper())
+                // then arrays
+                .Replace("T[]", $"{genericType}[]")
+                // Then simple T but check few combinations
+                .Replace(" T ", $" {genericType} ")
+                .Replace(" T>", $" {genericType}>")
+                .Replace("(T)", $"({genericType})")
+                .Replace("(T ", $"({genericType} ")
+                .Replace(" T)", $" {genericType})")
+                .Replace(" T[", $" {genericType}[");
+
+            File.WriteAllText(Path.Combine(outputDirectory, $"{newContainerType}.cs"), template);
+
+            return newContainerType;
+        }
+        
         public static Dictionary<string, bool> EditFile(
             this FileInfo sourceFile,
             Dictionary<string, string> replacements,
@@ -395,15 +689,27 @@ EndProject";
                                 line = line.Replace(replacement.Key, replacement.Value);
                                 replacedKeys.Add(replacement.Key);
                             }
+                            try
+                            {
+                                if (new[] {".*", "^"}.Any(regexHint => replacement.Key.Contains(regexHint)))
+                                {
+                                    var regexMatch = Regex.Match(line, replacement.Key).Value;
+                                    if (string.IsNullOrEmpty(regexMatch) == false)
+                                    {
+                                        line = line.Replace(regexMatch, replacement.Value);
+                                    }
+                                }
+                            }
+                            catch (RegexParseException) { }
                         }
 
                         if (checkIfFound != null)
                         {
-                            foreach (var check in checkIfFound)
+                            foreach (var check in checkIfFound.Keys)
                             {
-                                if (line.Contains(check.Key))
+                                if (line.Contains(check))
                                 {
-                                    checkIfFound[check.Key] = true;
+                                    checkIfFound[check] = true;
                                 }
                             }
                         }
@@ -419,8 +725,10 @@ EndProject";
                             }
                         }
 
-                        // Make sure all line endings are CRLF.
-                        line = line.Replace("\n", "\r\n");
+                        // Make sure all line endings on Windows are CRLF.
+                        // This is important for opening .nfproj flies in Visual Studio,
+                        // and maybe for some other files too.
+                        line = line.Replace("\r", "").Replace("\n", Environment.NewLine);
 
                         output.WriteLine(line);
                     }
@@ -432,6 +740,16 @@ EndProject";
 
             return checkIfFound;
         }
+    }
 
+    public enum ProjectType
+    {
+        None,
+
+        Regular,
+
+        Samples,
+
+        UnitTest
     }
 }

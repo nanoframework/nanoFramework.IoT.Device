@@ -16,15 +16,15 @@ namespace Sunxi.Gpio.Samples
             int debounceDelay = 50000;
             int pin = 7;
 
-            Console.WriteLine($"Let's blink an on-board LED!");
+            Debug.WriteLine($"Let's blink an on-board LED!");
 
             using GpioController controller = new GpioController(PinNumberingScheme.Board, new OrangePiZeroDriver());
             using BoardLed led = new BoardLed("orangepi:red:status");
 
             controller.OpenPin(pin, PinMode.InputPullUp);
             led.Trigger = "none";
-            Console.WriteLine($"GPIO pin enabled for use: {pin}.");
-            Console.WriteLine("Press any key to exit.");
+            Debug.WriteLine($"GPIO pin enabled for use: {pin}.");
+            Debug.WriteLine("Press any key to exit.");
 
             while (!Console.KeyAvailable)
             {
@@ -42,7 +42,7 @@ namespace Sunxi.Gpio.Samples
 
             bool Debounce()
             {
-                long debounceTick = DateTime.Now.Ticks;
+                long debounceTick = DateTime.UtcNow.Ticks;
                 PinValue buttonState = controller.Read(pin);
 
                 do
@@ -51,11 +51,11 @@ namespace Sunxi.Gpio.Samples
 
                     if (currentState != buttonState)
                     {
-                        debounceTick = DateTime.Now.Ticks;
+                        debounceTick = DateTime.UtcNow.Ticks;
                         buttonState = currentState;
                     }
                 }
-                while (DateTime.Now.Ticks - debounceTick < debounceDelay);
+                while (DateTime.UtcNow.Ticks - debounceTick < debounceDelay);
 
                 if (buttonState == PinValue.Low)
                 {

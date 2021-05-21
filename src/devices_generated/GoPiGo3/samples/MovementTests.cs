@@ -14,14 +14,14 @@ namespace GoPiGo3.Samples
         private static void TestMotorTacho()
         {
             Motor motor = new Motor(_goPiGo3, MotorPort.MotorLeft);
-            Console.WriteLine($"Test on Motor class with motor on {motor.Port}.");
+            Debug.WriteLine($"Test on Motor class with motor on {motor.Port}.");
             motor.SetSpeed(10);
             motor.Start();
             Stopwatch stopwatch = Stopwatch.StartNew();
             long initialTick = stopwatch.ElapsedTicks;
             double desiredTicks = 10000.0 / 1000.0 * Stopwatch.Frequency;
             double finalTick = initialTick + desiredTicks;
-            Console.WriteLine("Increase speed on the motor during 10 seconds.");
+            Debug.WriteLine("Increase speed on the motor during 10 seconds.");
             while (stopwatch.ElapsedTicks < finalTick)
             {
                 Console.Write($"Encoder: {motor.GetTachoCount()}");
@@ -33,7 +33,7 @@ namespace GoPiGo3.Samples
             motor.SetPolarity(Polarity.OppositeDirection);
             desiredTicks = 10000.0 / 1000.0 * Stopwatch.Frequency;
             finalTick = stopwatch.ElapsedTicks + desiredTicks;
-            Console.WriteLine("Decrease speed on the motor during 10 seconds.");
+            Debug.WriteLine("Decrease speed on the motor during 10 seconds.");
             while (stopwatch.ElapsedTicks < finalTick)
             {
                 Console.Write($"Encoder: {motor.GetTachoCount()}");
@@ -45,10 +45,10 @@ namespace GoPiGo3.Samples
             desiredTicks = 10000.0 / 1000.0 * Stopwatch.Frequency;
             finalTick = stopwatch.ElapsedTicks + desiredTicks;
             int pos = 0;
-            Console.WriteLine("Set the motor to the 0 position.");
+            Debug.WriteLine("Set the motor to the 0 position.");
             while (stopwatch.ElapsedTicks < finalTick)
             {
-                Console.WriteLine($"Encoder: {motor.GetTachoCount()}");
+                Debug.WriteLine($"Encoder: {motor.GetTachoCount()}");
                 Console.CursorLeft = 0;
                 Thread.Sleep(2000);
                 motor.SetTachoCount(pos);
@@ -59,20 +59,20 @@ namespace GoPiGo3.Samples
 
         private static void Testvehicle()
         {
-            Console.WriteLine("vehicle drive test using Motor left, Motor right, not inverted direction.");
+            Debug.WriteLine("vehicle drive test using Motor left, Motor right, not inverted direction.");
             Vehicle veh = new Vehicle(_goPiGo3);
             veh.DirectionOpposite = true;
-            Console.WriteLine("Driving backward");
+            Debug.WriteLine("Driving backward");
             veh.Backward(30, 5000);
-            Console.WriteLine("Driving forward");
+            Debug.WriteLine("Driving forward");
             veh.Forward(30, 5000);
-            Console.WriteLine("Turning left");
+            Debug.WriteLine("Turning left");
             veh.TrunLeftTime(30, 5000);
-            Console.WriteLine("Turning right");
+            Debug.WriteLine("Turning right");
             veh.TrunRightTime(30, 5000);
-            Console.WriteLine("Turning left");
+            Debug.WriteLine("Turning left");
             veh.TurnLeft(30, 180);
-            Console.WriteLine("Turning right");
+            Debug.WriteLine("Turning right");
             veh.TurnRight(30, 180);
         }
     }

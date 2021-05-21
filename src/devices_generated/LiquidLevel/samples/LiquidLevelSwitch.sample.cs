@@ -10,8 +10,8 @@ using LiquidLevelSwitch sensor = new(23, PinValue.Low);
 while (true)
 {
     // read liquid level switch
-    Console.WriteLine($"Detected: {sensor.IsLiquidPresent()}");
-    Console.WriteLine();
+    Debug.WriteLine($"Detected: {sensor.IsLiquidPresent()}");
+    Debug.WriteLine();
 
     Thread.Sleep(1000);
 }

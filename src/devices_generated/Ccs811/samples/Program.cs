@@ -277,8 +277,8 @@ void TestThresholdAndInterrupt(Ccs811Sensor ccs811)
     WriteLine("Warning: only the first measurement to cross the threshold is raised.");
     ResetColor();
     ccs811.SetThreshold(low, high);
-    DateTime dt = DateTime.Now.AddMinutes(3);
-    while (dt > DateTime.Now)
+    DateTime dt = DateTime.UtcNow.AddMinutes(3);
+    while (dt > DateTime.UtcNow)
     {
         Thread.Sleep(10);
     }
@@ -286,9 +286,9 @@ void TestThresholdAndInterrupt(Ccs811Sensor ccs811)
     low = VolumeConcentration.FromPartsPerMillion(15000);
     high = VolumeConcentration.FromPartsPerMillion(20000);
     WriteLine($"Changing threshold for {low.PartsPerMillion}-{high.PartsPerMillion}, a non reachable range in clear environment. No measurement should appear in next 3 minutes");
-    dt = DateTime.Now.AddMinutes(3);
+    dt = DateTime.UtcNow.AddMinutes(3);
     ccs811.SetThreshold(low, high);
-    while (dt > DateTime.Now)
+    while (dt > DateTime.UtcNow)
     {
         Thread.Sleep(10);
     }
@@ -308,7 +308,7 @@ void ReadAndLog(Ccs811Sensor ccs811, int count = 10)
         }
 
         var error = ccs811.TryReadGasData(out VolumeConcentration eCO2, out VolumeConcentration eTVOC, out ElectricCurrent curr, out int adc);
-        toWrite = $"{DateTime.Now};{error};{eCO2.PartsPerMillion};{eTVOC.PartsPerBillion};{curr.Microamperes};{adc};{adc * 1.65 / 1023};{ccs811.BaselineAlgorithmCalculation}";
+        toWrite = $"{DateTime.UtcNow};{error};{eCO2.PartsPerMillion};{eTVOC.PartsPerBillion};{curr.Microamperes};{adc};{adc * 1.65 / 1023};{ccs811.BaselineAlgorithmCalculation}";
         fl.WriteLine(toWrite);
         WriteLine(toWrite);
         if (i % 100 == 0)

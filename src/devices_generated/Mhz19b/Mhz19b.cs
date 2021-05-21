@@ -75,9 +75,9 @@ namespace Iot.Device.Mhz19b
             // read complete response (9 bytes expected)
             byte[] response = new byte[MessageBytes];
 
-            long endTicks = DateTime.Now.AddMilliseconds(250).Ticks;
+            long endTicks = DateTime.UtcNow.AddMilliseconds(250).Ticks;
             int bytesRead = 0;
-            while (DateTime.Now.Ticks < endTicks && bytesRead < MessageBytes)
+            while (DateTime.UtcNow.Ticks < endTicks && bytesRead < MessageBytes)
             {
                 bytesRead += _serialPortStream.Read(response, bytesRead, response.Length - bytesRead);
                 Thread.Sleep(1);

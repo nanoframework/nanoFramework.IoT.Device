@@ -135,7 +135,7 @@ namespace Iot.Device.Ndef
         /// Create a header from a span of bytes
         /// </summary>
         /// <param name="recordToDecode">A span of bytes</param>
-        public RecordHeader(ReadOnlySpanByte recordToDecode)
+        public RecordHeader(SpanByte recordToDecode)
         {
             int idxRecord = 0;
             // First byte is the Message flag and type name format

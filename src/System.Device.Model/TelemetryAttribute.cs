@@ -25,10 +25,28 @@ namespace System.Device.Model
         /// <param name="name">Name of the telemetry. If not provided property name will be used.</param>
         /// <param name="displayName">Optional display name of the telemetry. If not provided it may be infered from the type.</param>
         /// <remarks>When put on methods name should always be provided.</remarks>
-        public TelemetryAttribute(string? name = null, string? displayName = null)
+        public TelemetryAttribute(string? name, string? displayName)
         {
             Name = name;
             DisplayName = displayName;
+        }
+
+        /// <summary>
+        /// Constructs TelemetryAttribute
+        /// </summary>
+        /// <param name="name">Name of the telemetry. If not provided property name will be used.</param>
+        /// <remarks>When put on methods name should always be provided.</remarks>
+        public TelemetryAttribute(string? name)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Constructs TelemetryAttribute
+        /// </summary>
+        /// <remarks>When put on methods name should always be provided.</remarks>
+        public TelemetryAttribute()
+        {
         }
     }
 }

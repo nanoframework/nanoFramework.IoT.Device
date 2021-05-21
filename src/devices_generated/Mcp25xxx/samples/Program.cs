@@ -14,7 +14,7 @@ using Iot.Device.Mcp25xxx.Register.Interrupt;
 using Iot.Device.Mcp25xxx.Register.MessageReceive;
 using Iot.Device.Mcp25xxx.Register.MessageTransmit;
 
-Console.WriteLine("Hello Mcp25xxx Sample!");
+Debug.WriteLine("Hello Mcp25xxx Sample!");
 
 using Mcp25xxx mcp25xxx = GetMcp25xxxDevice();
 Reset(mcp25xxx);
@@ -41,26 +41,26 @@ Mcp25xxx GetMcp25xxxDevice()
 
 void Reset(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Reset Instruction");
+    Debug.WriteLine("Reset Instruction");
     mcp25xxx.Reset();
 }
 
 void ReadAllRegisters(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Read Instruction for All Registers");
+    Debug.WriteLine("Read Instruction for All Registers");
     Array addresses = Enum.GetValues(typeof(Address));
 
     foreach (Address address in addresses)
     {
         byte addressData = mcp25xxx.Read(address);
-        Console.WriteLine($"0x{(byte)address:X2} - {address,-10}: 0x{addressData:X2}");
+        Debug.WriteLine($"0x{(byte)address:X2} - {address,-10}: 0x{addressData:X2}");
     }
 }
 
 void ReadAllRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Read All Registers");
-    Console.WriteLine();
+    Debug.WriteLine("Read All Registers");
+    Debug.WriteLine();
 
     ReadAllMessageTransmitRegistersWithDetails(mcp25xxx);
     // ReadAllMessageReceiveRegistersWithDetails(mcp25xxx);
@@ -74,7 +74,7 @@ void ReadAllRegistersWithDetails(Mcp25xxx mcp25xxx)
 byte ConsoleWriteRegisterAddressDetails(Mcp25xxx mcp25xxx, Address address)
 {
     byte value = mcp25xxx.Read(address);
-    Console.WriteLine($"  0x{(byte)address:X2} - {address}: 0x{value:X2}");
+    Debug.WriteLine($"  0x{(byte)address:X2} - {address}: 0x{value:X2}");
     return value;
 }
 
@@ -82,13 +82,13 @@ void ConsoleWriteRegisterItemDetails(IRegister register)
 {
     foreach (System.Reflection.PropertyInfo property in register.GetType().GetProperties())
     {
-        Console.WriteLine($"{property.Name,15}: {property.GetValue(register, null)}");
+        Debug.WriteLine($"{property.Name,15}: {property.GetValue(register, null)}");
     }
 }
 
 void ReadAllMessageTransmitRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Message Transmit Registers");
+    Debug.WriteLine("Message Transmit Registers");
 
     ConsoleWriteRegisterItemDetails(
         new TxRtsCtrl(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.TxRtsCtrl)));
@@ -161,7 +161,7 @@ void ReadAllMessageTransmitRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadAllMessageReceiveRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Message Receive Registers");
+    Debug.WriteLine("Message Receive Registers");
 
     ConsoleWriteRegisterItemDetails(new BfpCtrl(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.BfpCtrl)));
     ConsoleWriteRegisterItemDetails(
@@ -211,7 +211,7 @@ void ReadAllMessageReceiveRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadAllAcceptanceFilterRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Acceptance Filter Registers");
+    Debug.WriteLine("Acceptance Filter Registers");
 
     ConsoleWriteRegisterItemDetails(new RxFxSidh(0,
         ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.RxF0Sidh)));
@@ -281,7 +281,7 @@ void ReadAllAcceptanceFilterRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadAllBitTimeConfigurationRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Bit Time Configuration Registers");
+    Debug.WriteLine("Bit Time Configuration Registers");
 
     ConsoleWriteRegisterItemDetails(new Cnf1(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.Cnf1)));
     ConsoleWriteRegisterItemDetails(new Cnf2(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.Cnf2)));
@@ -290,7 +290,7 @@ void ReadAllBitTimeConfigurationRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadAllErrorDetectionRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Error Detection Registers");
+    Debug.WriteLine("Error Detection Registers");
 
     ConsoleWriteRegisterItemDetails(new Tec(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.Tec)));
     ConsoleWriteRegisterItemDetails(new Rec(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.Rec)));
@@ -299,7 +299,7 @@ void ReadAllErrorDetectionRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadAllInterruptRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Interrupt Registers");
+    Debug.WriteLine("Interrupt Registers");
 
     ConsoleWriteRegisterItemDetails(new CanIntE(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.CanIntE)));
     ConsoleWriteRegisterItemDetails(new CanIntF(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.CanIntF)));
@@ -307,7 +307,7 @@ void ReadAllInterruptRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadAllCanControlRegistersWithDetails(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("CAN Control Registers");
+    Debug.WriteLine("CAN Control Registers");
 
     ConsoleWriteRegisterItemDetails(new CanCtrl(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.CanCtrl)));
     ConsoleWriteRegisterItemDetails(new CanStat(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.CanStat)));
@@ -315,7 +315,7 @@ void ReadAllCanControlRegistersWithDetails(Mcp25xxx mcp25xxx)
 
 void ReadRxBuffer(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Read Rx Buffer Instruction");
+    Debug.WriteLine("Read Rx Buffer Instruction");
     ReadRxBufferInteral(mcp25xxx, RxBufferAddressPointer.RxB0Sidh, 1);
     ReadRxBufferInteral(mcp25xxx, RxBufferAddressPointer.RxB0Sidh, 5);
     ReadRxBufferInteral(mcp25xxx, RxBufferAddressPointer.RxB0D0, 8);
@@ -335,19 +335,19 @@ void ReadRxBufferInteral(Mcp25xxx mcp25xxx, RxBufferAddressPointer addressPointe
         Console.Write($"0x{value:X2} ");
     }
 
-    Console.WriteLine();
+    Debug.WriteLine();
 }
 
 void Write(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Write Instruction");
+    Debug.WriteLine("Write Instruction");
     mcp25xxx.Write(Address.CanCtrl, new byte[] { 0b1001_1111 });
     mcp25xxx.Write(Address.TxB0D0, new byte[] { 0b0000_0001, 0b0010_0011, 0b0100_0101, 0b0110_0111 });
 }
 
 void LoadTxBuffer(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Load Tx Buffer Instruction");
+    Debug.WriteLine("Load Tx Buffer Instruction");
     mcp25xxx.LoadTxBuffer(TxBufferAddressPointer.TxB0D0,
         new byte[] { 0b0000_0001, 0b0010_0011, 0b0100_0101, 0b0110_0111 });
     mcp25xxx.LoadTxBuffer(TxBufferAddressPointer.TxB0Sidh, new byte[] { 0b1001_0110 });
@@ -355,7 +355,7 @@ void LoadTxBuffer(Mcp25xxx mcp25xxx)
 
 void RequestToSend(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Request-to-Send Instruction");
+    Debug.WriteLine("Request-to-Send Instruction");
     mcp25xxx.RequestToSend(false, false, false);
     mcp25xxx.RequestToSend(true, false, false);
     mcp25xxx.RequestToSend(false, true, false);
@@ -364,39 +364,39 @@ void RequestToSend(Mcp25xxx mcp25xxx)
 
 void ReadStatus(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Read Status Instruction");
+    Debug.WriteLine("Read Status Instruction");
     ReadStatusResponse readStatusResponse = mcp25xxx.ReadStatus();
-    Console.WriteLine($"Value: 0x{readStatusResponse:X2}");
-    Console.WriteLine($"Rx0If: {readStatusResponse.HasFlag(ReadStatusResponse.Rx0If)}");
-    Console.WriteLine($"Rx1If: {readStatusResponse.HasFlag(ReadStatusResponse.Rx1If)}");
-    Console.WriteLine($"Tx0Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx0Req)}");
-    Console.WriteLine($"Tx0If: {readStatusResponse.HasFlag(ReadStatusResponse.Tx0If)}");
-    Console.WriteLine($"Tx0Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx0Req)}");
-    Console.WriteLine($"Tx1If: {readStatusResponse.HasFlag(ReadStatusResponse.Tx1If)}");
-    Console.WriteLine($"Tx1Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx1Req)}");
-    Console.WriteLine($"Tx2Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx2Req)}");
-    Console.WriteLine($"Tx2If: {readStatusResponse.HasFlag(ReadStatusResponse.Tx2If)}");
+    Debug.WriteLine($"Value: 0x{readStatusResponse:X2}");
+    Debug.WriteLine($"Rx0If: {readStatusResponse.HasFlag(ReadStatusResponse.Rx0If)}");
+    Debug.WriteLine($"Rx1If: {readStatusResponse.HasFlag(ReadStatusResponse.Rx1If)}");
+    Debug.WriteLine($"Tx0Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx0Req)}");
+    Debug.WriteLine($"Tx0If: {readStatusResponse.HasFlag(ReadStatusResponse.Tx0If)}");
+    Debug.WriteLine($"Tx0Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx0Req)}");
+    Debug.WriteLine($"Tx1If: {readStatusResponse.HasFlag(ReadStatusResponse.Tx1If)}");
+    Debug.WriteLine($"Tx1Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx1Req)}");
+    Debug.WriteLine($"Tx2Req: {readStatusResponse.HasFlag(ReadStatusResponse.Tx2Req)}");
+    Debug.WriteLine($"Tx2If: {readStatusResponse.HasFlag(ReadStatusResponse.Tx2If)}");
 }
 
 void RxStatus(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Rx Status Instruction");
+    Debug.WriteLine("Rx Status Instruction");
     RxStatusResponse rxStatusResponse = mcp25xxx.RxStatus();
-    Console.WriteLine($"Value: 0x{rxStatusResponse.ToByte():X2}");
-    Console.WriteLine($"Filter Match: {rxStatusResponse.FilterMatch}");
-    Console.WriteLine($"Message Type Received: {rxStatusResponse.MessageTypeReceived}");
-    Console.WriteLine($"Received Message: {rxStatusResponse.ReceivedMessage}");
+    Debug.WriteLine($"Value: 0x{rxStatusResponse.ToByte():X2}");
+    Debug.WriteLine($"Filter Match: {rxStatusResponse.FilterMatch}");
+    Debug.WriteLine($"Message Type Received: {rxStatusResponse.MessageTypeReceived}");
+    Debug.WriteLine($"Received Message: {rxStatusResponse.ReceivedMessage}");
 }
 
 void BitModify(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Bit Modify Instruction");
+    Debug.WriteLine("Bit Modify Instruction");
     mcp25xxx.BitModify(Address.CanIntE, 0b1010_0110, 0b1111_1111);
 }
 
 void TransmitMessage(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Transmit Message");
+    Debug.WriteLine("Transmit Message");
 
     mcp25xxx.WriteByte(
         new CanCtrl(CanCtrl.PinPrescaler.ClockDivideBy8,
@@ -424,7 +424,7 @@ void TransmitMessage(Mcp25xxx mcp25xxx)
 
 void LoopbackMode(Mcp25xxx mcp25xxx)
 {
-    Console.WriteLine("Loopback Mode");
+    Debug.WriteLine("Loopback Mode");
     mcp25xxx.WriteByte(
         new CanCtrl(
             CanCtrl.PinPrescaler.ClockDivideBy8,

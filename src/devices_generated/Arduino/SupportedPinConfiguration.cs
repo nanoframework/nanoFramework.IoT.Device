@@ -17,7 +17,7 @@ namespace Iot.Device.Arduino
         internal SupportedPinConfiguration(int pin)
         {
             Pin = pin;
-            PinModes = new List<SupportedMode>();
+            PinModes = new ListSupportedMode();
             PwmResolutionBits = 0;
             AnalogInputResolutionBits = 1; // binary
             AnalogPinNumber = 127; // = Not an analog pin
@@ -34,7 +34,7 @@ namespace Iot.Device.Arduino
         /// <summary>
         /// The list of supported modes for this pin
         /// </summary>
-        public List<SupportedMode> PinModes
+        public ListSupportedMode PinModes
         {
             get;
         }

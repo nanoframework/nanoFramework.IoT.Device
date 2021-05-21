@@ -141,7 +141,7 @@ namespace Iot.Device.Spi
         public override SpiConnectionSettings ConnectionSettings => _settings;
 
         /// <inheritdoc />
-        public override void TransferFullDuplex(ReadOnlySpanByte dataToWrite, SpanByte dataToRead)
+        public override void TransferFullDuplex(SpanByte dataToWrite, SpanByte dataToRead)
         {
             if (dataToWrite.Length != dataToRead.Length)
             {
@@ -179,7 +179,7 @@ namespace Iot.Device.Spi
             }
         }
 
-        private void TransferWriteOnly(ReadOnlySpanByte dataToWrite)
+        private void TransferWriteOnly(SpanByte dataToWrite)
         {
             int bitLen = _settings.DataBitLength;
             int lastBit = bitLen - 1;
@@ -218,7 +218,7 @@ namespace Iot.Device.Spi
         }
 
         /// <inheritdoc />
-        public override void Write(ReadOnlySpanByte data) => TransferWriteOnly(data);
+        public override void Write(SpanByte data) => TransferWriteOnly(data);
 
         /// <inheritdoc />
         public override void WriteByte(byte data)

@@ -91,7 +91,7 @@ namespace Iot.Device.Ft4222
             }
         }
 
-        internal void Write(int deviceAddress, ReadOnlySpanByte buffer)
+        internal void Write(int deviceAddress, SpanByte buffer)
         {
             if (deviceAddress < 0 || deviceAddress > ushort.MaxValue)
             {

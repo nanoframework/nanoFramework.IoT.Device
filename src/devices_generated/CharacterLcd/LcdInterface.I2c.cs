@@ -74,7 +74,7 @@ namespace Iot.Device.CharacterLcd
                 _device.Write(buffer);
             }
 
-            public override void SendCommands(ReadOnlySpanByte commands)
+            public override void SendCommands(SpanByte commands)
             {
                 // There is a limit to how much data the controller can accept at once. Haven't found documentation
                 // for this yet, can probably iterate a bit more on this to find a true "max". Not adding additional
@@ -100,7 +100,7 @@ namespace Iot.Device.CharacterLcd
                 _device.Write(buffer);
             }
 
-            public override void SendData(ReadOnlySpanByte values)
+            public override void SendData(SpanByte values)
             {
                 // There is a limit to how much data the controller can accept at once. Haven't found documentation
                 // for this yet, can probably iterate a bit more on this to find a true "max". 40 was too much.
@@ -111,7 +111,7 @@ namespace Iot.Device.CharacterLcd
 
                 while (values.Length > 0)
                 {
-                    ReadOnlySpanByte currentValues = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
+                    SpanByte currentValues = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
                     values = values.Slice(currentValues.Length);
                     currentValues.CopyTo(bufferData);
                     _device.Write(buffer.Slice(0, currentValues.Length + 1));

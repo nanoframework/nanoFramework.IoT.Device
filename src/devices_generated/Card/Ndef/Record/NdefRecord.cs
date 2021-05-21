@@ -38,7 +38,7 @@ namespace Iot.Device.Ndef
         /// </summary>
         /// <param name="payload">The byte payload</param>
         /// <param name="recordHeader">A header, if not header specify, a default empty header will be created</param>
-        public NdefRecord(ReadOnlySpanByte payload, RecordHeader? recordHeader = null)
+        public NdefRecord(SpanByte payload, RecordHeader? recordHeader = null)
         {
             Header = recordHeader ?? new RecordHeader();
             Payload = payload.ToArray();
@@ -50,7 +50,7 @@ namespace Iot.Device.Ndef
         /// Create a NDEF Record from a span of bytes
         /// </summary>
         /// <param name="record">A span of bytes containing the NDEF Record</param>
-        public NdefRecord(ReadOnlySpanByte record)
+        public NdefRecord(SpanByte record)
         {
             Header = new RecordHeader(record);
             var idxRecord = Header.Length;

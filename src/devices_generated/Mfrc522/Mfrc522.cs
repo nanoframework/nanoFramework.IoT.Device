@@ -242,7 +242,7 @@ namespace Iot.Device.Mfrc522
         {
             card = new Data106kbpsTypeA(0, 0, 0, new byte[0], null);
             byte[] atqa = new byte[2];
-            DateTime dtTimeout = DateTime.Now.Add(timeout);
+            DateTime dtTimeout = DateTime.UtcNow.Add(timeout);
             // Switch off the cryptography for Mifare card in case it's on
             ClearRegisterBit(Register.Status2, (byte)Status2.MFCrypto1On);
             do
@@ -253,7 +253,7 @@ namespace Iot.Device.Mfrc522
                     break;
                 }
 
-                if (dtTimeout > DateTime.Now)
+                if (dtTimeout > DateTime.UtcNow)
                 {
                     return false;
                 }
@@ -446,7 +446,7 @@ namespace Iot.Device.Mfrc522
         /// <param name="receiveData">The data to receive. Note that you need to have at least the size of data you expect to receive.</param>
         /// <param name="numberValidBitsLastByte">The number of bits valid in the last byte, 8 is the default.</param>
         /// <returns>True if the operation is successful.</returns>
-        public Status SendAndReceiveData(MfrcCommand command, ReadOnlySpanByte sendData, SpanByte receiveData, byte numberValidBitsLastByte = 8)
+        public Status SendAndReceiveData(MfrcCommand command, SpanByte sendData, SpanByte receiveData, byte numberValidBitsLastByte = 8)
         {
             byte bitFraming = (byte)(numberValidBitsLastByte == 8 ? 0 : numberValidBitsLastByte & (byte)BitFraming.TxLastBitsMask);
             byte waitIrq = command == MfrcCommand.MifareAuthenticate ? (byte)(ComIr.IdleIRq) : (byte)(ComIr.IdleIRq | ComIr.RxIRq);
@@ -590,7 +590,7 @@ namespace Iot.Device.Mfrc522
         /// <param name="blockAddress">The block address to authenticate.</param>
         /// <param name="cardUid">The 4 bytes UUID of the card.</param>
         /// <returns>True if success.</returns>
-        public Status MifareAuthenticate(ReadOnlySpanByte key, MifareCardCommand mifareCommand, byte blockAddress, ReadOnlySpanByte cardUid)
+        public Status MifareAuthenticate(SpanByte key, MifareCardCommand mifareCommand, byte blockAddress, SpanByte cardUid)
         {
             if (mifareCommand != MifareCardCommand.AuthenticationA && mifareCommand != MifareCardCommand.AuthenticationB)
             {
@@ -611,7 +611,7 @@ namespace Iot.Device.Mfrc522
             return SendAndReceiveData(MfrcCommand.MifareAuthenticate, buffer, null);
         }
 
-        private Status CalculateCrc(ReadOnlySpanByte buffer, SpanByte crc)
+        private Status CalculateCrc(SpanByte buffer, SpanByte crc)
         {
             // Timeout for the CRC calculation
             const long Timeout = 89;
@@ -684,7 +684,7 @@ namespace Iot.Device.Mfrc522
             }
         }
 
-        private void WriteRegister(Register register, ReadOnlySpanByte toCard)
+        private void WriteRegister(Register register, SpanByte toCard)
         {
             if (_spiDevice is object)
             {
@@ -756,7 +756,7 @@ namespace Iot.Device.Mfrc522
             _spiDevice!.TransferFullDuplex(toWrite, toWrite);
         }
 
-        private void SpiWriteRegister(Register register, ReadOnlySpanByte toCard)
+        private void SpiWriteRegister(Register register, SpanByte toCard)
         {
             for (int i = 0; i < toCard.Length; i++)
             {
@@ -804,7 +804,7 @@ namespace Iot.Device.Mfrc522
             _i2CDevice!.Write(toWrite);
         }
 
-        private void I2cWriteRegister(Register register, ReadOnlySpanByte toCard)
+        private void I2cWriteRegister(Register register, SpanByte toCard)
         {
             SpanByte toWrite = new byte[1 + toCard.Length];
             toWrite[0] = (byte)((byte)register >> 1);
@@ -848,7 +848,7 @@ namespace Iot.Device.Mfrc522
             _serialPort!.ReadByte();
         }
 
-        private void SerialWriteRegister(Register register, ReadOnlySpanByte toCard)
+        private void SerialWriteRegister(Register register, SpanByte toCard)
         {
             byte[] toSend = new byte[] { (byte)((byte)(register) >> 1), 0x00 };
             for (int i = 0; i < toCard.Length; i++)
@@ -898,7 +898,7 @@ namespace Iot.Device.Mfrc522
         }
 
         /// <inheritdoc/>
-        public override int Transceive(byte targetNumber, ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
         {
             // targetNumber is not used here as only 1 card can be selected at a time so will be ignored
             // The dataToSend buffer contains anyway the unique of the card
@@ -926,7 +926,7 @@ namespace Iot.Device.Mfrc522
             return status == Status.Ok ? dataFromCard.Length : -1;
         }
 
-        private int TwoStepsIncDecRestore(ReadOnlySpanByte dataToSend, SpanByte dataFromCard)
+        private int TwoStepsIncDecRestore(SpanByte dataToSend, SpanByte dataFromCard)
         {
             SpanByte toSendFirst = new byte[4];
             dataToSend.Slice(0, 2).CopyTo(toSendFirst);

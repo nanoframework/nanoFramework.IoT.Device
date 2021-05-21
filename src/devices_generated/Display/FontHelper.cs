@@ -135,7 +135,7 @@ namespace Iot.Device.Display
         /// </summary>
         /// <param name="digits">list of hexadecimal digits (will be converted in place!)</param>
         /// <returns>list of corresponding digit fonts</returns>
-        public static Font[] GetHexDigits(ReadOnlySpanByte digits)
+        public static Font[] GetHexDigits(SpanByte digits)
         {
             var fonts = new Font[digits.Length];
             if (digits.Length > 0)

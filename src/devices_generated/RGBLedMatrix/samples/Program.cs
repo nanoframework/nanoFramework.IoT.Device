@@ -36,7 +36,7 @@ CityData[] citiesData = new CityData[]
     new("Riyadh", "SA", "Asia/Riyadh")
 };
 
-Console.WriteLine($"Hello Matrix World!");
+Debug.WriteLine($"Hello Matrix World!");
 
 // If using 64x64 with Bonnet (https://www.adafruit.com/product/3211), you can just do
 // PinMapping mapping = PinMapping.MatrixBonnetMapping64;
@@ -84,7 +84,7 @@ Task.Run(() =>
 });
 
 ConsoleKeyInfo cki;
-Console.WriteLine($"Press q to exit.");
+Debug.WriteLine($"Press q to exit.");
 System.Interop.ThreadHelper.SetCurrentThreadHighPriority();
 
 do
@@ -94,19 +94,19 @@ do
     if (cki.KeyChar == '+')
     {
         matrix.PWMDuration = matrix.PWMDuration + 100;
-        Console.WriteLine($"     ({matrix.PWMDuration})");
+        Debug.WriteLine($"     ({matrix.PWMDuration})");
     }
 
     if (cki.KeyChar == '-')
     {
         matrix.PWMDuration = matrix.PWMDuration - 100;
-        Console.WriteLine($"     ({matrix.PWMDuration})");
+        Debug.WriteLine($"     ({matrix.PWMDuration})");
     }
 
     if (cki.KeyChar == 'f')
     {
-        Console.WriteLine($"Frame Time: {matrix.FrameTime} \u00B5s");
-        Console.WriteLine($"Duration : {matrix.PWMDuration}");
+        Debug.WriteLine($"Frame Time: {matrix.FrameTime} \u00B5s");
+        Debug.WriteLine($"Duration : {matrix.PWMDuration}");
     }
 
     if (cki.KeyChar >= '1' && cki.KeyChar <= '9')
@@ -147,7 +147,7 @@ unsafe void Demo1(RGBLedMatrix matrix)
                 x = matrix.Width - 1;
             }
 
-            string d = DateTime.Now.ToString("hh:mm:ss");
+            string d = DateTime.UtcNow.ToString("hh:mm:ss");
             matrix.DrawText(0, font.Height + 1, d, font1, 128, 128, 0, 0, 0, 0);
 
             Thread.Sleep(25);
@@ -155,7 +155,7 @@ unsafe void Demo1(RGBLedMatrix matrix)
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
+        Debug.WriteLine(e);
     }
 }
 
@@ -305,7 +305,7 @@ void Demo3(RGBLedMatrix matrix)
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
+        Debug.WriteLine(e);
     }
 }
 
@@ -330,7 +330,7 @@ unsafe void Demo4(RGBLedMatrix matrix)
 
     while (play)
     {
-        DateTime time = DateTime.Now;
+        DateTime time = DateTime.UtcNow;
         if (Math.Abs(time.Minute - lastMinute) > 4)
         {
             lastMinute = time.Minute;
@@ -386,7 +386,7 @@ void Demo5(RGBLedMatrix matrix)
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
+        Debug.WriteLine(e);
     }
 }
 
@@ -428,7 +428,7 @@ unsafe void Demo6(RGBLedMatrix matrix)
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
+        Debug.WriteLine(e);
     }
 }
 
@@ -450,7 +450,7 @@ unsafe void Demo7(RGBLedMatrix matrix)
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
+        Debug.WriteLine(e);
     }
 }
 
@@ -478,7 +478,7 @@ void Demo8(RGBLedMatrix matrix)
     }
     catch (Exception e)
     {
-        Console.WriteLine(e);
+        Debug.WriteLine(e);
     }
 }
 

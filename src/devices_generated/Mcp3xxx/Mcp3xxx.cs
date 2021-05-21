@@ -3,7 +3,7 @@
 
 using System;
 using System.Device.Spi;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Iot.Device.Adc
 {

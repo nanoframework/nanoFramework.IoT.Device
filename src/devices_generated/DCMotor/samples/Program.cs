@@ -43,7 +43,7 @@ while (!done)
     if (disp != lastSpeedDisp)
     {
         lastSpeedDisp = disp;
-        Console.WriteLine(disp);
+        Debug.WriteLine(disp);
     }
 
     Thread.Sleep(1);

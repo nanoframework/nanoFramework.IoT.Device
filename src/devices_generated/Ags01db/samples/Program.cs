@@ -11,12 +11,12 @@ I2cDevice device = I2cDevice.Create(settings);
 
 using Ags01db sensor = new Ags01db(device);
 // read AGS01DB version
-Console.WriteLine($"Version: {sensor.Version}");
-Console.WriteLine();
+Debug.WriteLine($"Version: {sensor.Version}");
+Debug.WriteLine();
 
 while (true)
 {
     // read concentration
-    Console.WriteLine($"VOC Gas Concentration: {sensor.Concentration}ppm");
+    Debug.WriteLine($"VOC Gas Concentration: {sensor.Concentration}ppm");
     Thread.Sleep(3000);
 }

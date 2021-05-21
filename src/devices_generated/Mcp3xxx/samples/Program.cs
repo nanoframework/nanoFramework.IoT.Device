@@ -21,6 +21,6 @@ while (true)
     double value = mcp.Read(0);
     value = value / 10.24;
     value = Math.Round(value);
-    Console.WriteLine($"{value}%");
+    Debug.WriteLine($"{value}%");
     Thread.Sleep(500);
 }

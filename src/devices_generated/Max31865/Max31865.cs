@@ -112,7 +112,7 @@ namespace Iot.Device.Max31865
         /// </remarks>
         private void Initialize()
         {
-            ReadOnlySpanByte configurationSetting = new byte[]
+            SpanByte configurationSetting = new byte[]
             {
                 (byte)Register.ConfigurationWrite,
                 (byte)((byte)(_rtdWires == ResistanceTemperatureDetectorWires.ThreeWire ? Configuration.ThreeWire : Configuration.TwoFourWire) | (byte)(_filterMode == ConversionFilterMode.Filter50Hz ? Configuration.Filter50HZ : Configuration.Filter60HZ))
@@ -256,7 +256,7 @@ namespace Iot.Device.Max31865
         /// Takes the data input byte and writes it to the spi device
         /// </remarks>
         /// <param name="data">Data to write to the device</param>
-        private void Write(ReadOnlySpanByte data) => _spiDevice.Write(data);
+        private void Write(SpanByte data) => _spiDevice.Write(data);
 
         /// <summary>
         /// Full Duplex Read of the Data on the Spi Device

@@ -18,20 +18,20 @@
                             new NugetPackages {
                                 Namespace="System.Device.Gpio",
                                 OldProjectReferenceString= @"<ProjectReference Include=""$(MainLibraryPath)System.Device.Gpio.csproj"" />",
-                                NewProjectReferenceString = @"<Reference Include=""System.Device.Gpio"">$LF$      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.31\lib\System.Device.Gpio.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> ",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.Gpio"" version=""1.0.0-preview.31"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Device.Gpio"">$LF$      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> ",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.Gpio"" version=""1.0.0-preview.40"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="System.Device.Spi",
                                 OldProjectReferenceString= @"<ProjectReference Include=""$(MainLibraryPath)System.Device.Spi.csproj"" />",
-                                NewProjectReferenceString = @"<Reference Include=""System.Device.Spi"">$LF$      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.28\lib\System.Device.Spi.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> ",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.Spi"" version=""1.0.0-preview.28"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Device.Spi"">$LF$      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.0-preview.38\lib\System.Device.Spi.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> ",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.Spi"" version=""1.0.0-preview.38"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="System.Device.I2c",
                                 OldProjectReferenceString= @"<ProjectReference Include=""$(MainLibraryPath)System.Device.I2c.csproj"" />",
-                                NewProjectReferenceString = @"<Reference Include=""System.Device.I2c"">$LF$      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.31\lib\System.Device.I2c.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.I2c"" version=""1.0.1-preview.31"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Device.I2c"">$LF$      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.I2c"" version=""1.0.1-preview.33"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="RelativeHumidity",
@@ -67,8 +67,8 @@
                                 Namespace="System.Math",
                                 CodeMatchString="Math.",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""System.Math"">$LF$      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.1\lib\System.Math.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Math"" version=""1.4.0-preview.1"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Math"">$LF$      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Math"" version=""1.4.0-preview.7"" targetFramework=""netnanoframework10"" />"
                             },
 
                             /*
@@ -76,14 +76,14 @@
                             new NugetPackages {
                                 Namespace="Xunit",
                                 OldProjectReferenceString= @"<PackageReference Include=""xunit"" Version=""2.4.0"" />",
-                                NewProjectReferenceString = @"<Reference Include=""nanoFramework.UnitTestLauncher"">$LF$      <HintPath>packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.TestFramework"" version=""1.0.114"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""nanoFramework.UnitTestLauncher"">$LF$      <HintPath>packages\nanoFramework.TestFramework.1.0.117\lib\nanoFramework.UnitTestLauncher.exe</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.TestFramework"" version=""1.0.117"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="Xunit.Abstractions",
                                 OldProjectReferenceString= @"<PackageReference Include=""xunit"" Version=""2.4.0"" />",
-                                NewProjectReferenceString = @"<Reference Include=""nanoFramework.UnitTestLauncher"">$LF$      <HintPath>packages\nanoFramework.TestFramework.1.0.114\lib\nanoFramework.UnitTestLauncher.exe</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.TestFramework"" version=""1.0.114"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""nanoFramework.UnitTestLauncher"">$LF$      <HintPath>packages\nanoFramework.TestFramework.1.0.117\lib\nanoFramework.UnitTestLauncher.exe</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.TestFramework"" version=""1.0.117"" targetFramework=""netnanoframework10"" />"
                             },
                             */
 

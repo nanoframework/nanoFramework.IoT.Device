@@ -32,7 +32,7 @@ namespace Iot.Device.Max7219
         /// <summary>
         /// Get character information
         /// </summary>
-        public IReadOnlyList<byte> this[char chr]
+        public ListByte this[char chr]
         {
             get
             {

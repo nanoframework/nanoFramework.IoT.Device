@@ -3,19 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Device.Model", "System.Device.Model.nfproj", "{3A2562FA-FFC6-4600-8E58-4AFA93F9A238}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Device.Model", "System.Device.Model.nfproj", "{35834FC4-5EE3-4E52-A2B0-9E65A3542022}"
 EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
+
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {3A2562FA-FFC6-4600-8E58-4AFA93F9A238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {3A2562FA-FFC6-4600-8E58-4AFA93F9A238}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {3A2562FA-FFC6-4600-8E58-4AFA93F9A238}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {3A2562FA-FFC6-4600-8E58-4AFA93F9A238}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {3A2562FA-FFC6-4600-8E58-4AFA93F9A238}.Release|Any CPU.Build.0 = Release|Any CPU
-        {3A2562FA-FFC6-4600-8E58-4AFA93F9A238}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {35834FC4-5EE3-4E52-A2B0-9E65A3542022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {35834FC4-5EE3-4E52-A2B0-9E65A3542022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {35834FC4-5EE3-4E52-A2B0-9E65A3542022}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {35834FC4-5EE3-4E52-A2B0-9E65A3542022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {35834FC4-5EE3-4E52-A2B0-9E65A3542022}.Release|Any CPU.Build.0 = Release|Any CPU
+        {35834FC4-5EE3-4E52-A2B0-9E65A3542022}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -9,7 +9,7 @@ I2cDevice device = I2cDevice.Create(settings);
 
 using Ds3231 rtc = new(device);
 // set time
-rtc.DateTime = DateTime.Now;
+rtc.DateTime = DateTime.UtcNow;
 
 // loop
 while (true)
@@ -17,9 +17,9 @@ while (true)
     // read time
     DateTime dt = rtc.DateTime;
 
-    Console.WriteLine($"Time: {dt.ToString("yyyy/MM/dd HH:mm:ss")}");
-    Console.WriteLine($"Temperature: {rtc.Temperature.DegreesCelsius} ℃");
-    Console.WriteLine();
+    Debug.WriteLine($"Time: {dt.ToString("yyyy/MM/dd HH:mm:ss")}");
+    Debug.WriteLine($"Temperature: {rtc.Temperature.DegreesCelsius} ℃");
+    Debug.WriteLine();
 
     // wait for a second
     Thread.Sleep(1000);

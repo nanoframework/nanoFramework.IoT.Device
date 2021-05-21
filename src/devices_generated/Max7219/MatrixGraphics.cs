@@ -122,7 +122,7 @@ namespace Iot.Device.Max7219
         /// </summary>
         public void ShowMessage(string text, int delayInMilliseconds = 50, bool alwaysScroll = false)
         {
-            IEnumerable<IReadOnlyList<byte>> textCharBytes = text.Select(chr => Font[chr]);
+            IEnumerable<ListByte> textCharBytes = text.Select(chr => Font[chr]);
             int textBytesLength = textCharBytes.Sum(x => x.Count) + text.Length - 1;
 
             bool scroll = alwaysScroll || textBytesLength > _device.Length;

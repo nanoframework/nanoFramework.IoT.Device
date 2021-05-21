@@ -26,10 +26,10 @@ I2cConnectionSettings settings = new(busId, deviceAddress);
 using I2cDevice device = I2cDevice.Create(settings);
 
 using Pca9685 pca9685 = new(device);
-Console.WriteLine(
+Debug.WriteLine(
     $"PCA9685 is ready on I2C bus {device.ConnectionSettings.BusId} with address {device.ConnectionSettings.DeviceAddress}");
-Console.WriteLine($"PWM Frequency: {pca9685.PwmFrequency}Hz");
-Console.WriteLine();
+Debug.WriteLine($"PWM Frequency: {pca9685.PwmFrequency}Hz");
+Debug.WriteLine();
 PrintHelp();
 
 while (true)
@@ -49,7 +49,7 @@ while (true)
         {
             var freq = double.Parse(command[1]);
             pca9685.PwmFrequency = freq;
-            Console.WriteLine($"PWM Frequency has been set to {pca9685.PwmFrequency}Hz");
+            Debug.WriteLine($"PWM Frequency has been set to {pca9685.PwmFrequency}Hz");
             break;
         }
 
@@ -61,7 +61,7 @@ while (true)
                 {
                     double value = double.Parse(command[1]);
                     pca9685.SetDutyCycleAllChannels(value);
-                    Console.WriteLine($"PWM duty cycle has been set to {value}");
+                    Debug.WriteLine($"PWM duty cycle has been set to {value}");
                     break;
                 }
 
@@ -70,7 +70,7 @@ while (true)
                     int channel = int.Parse(command[1]);
                     double value = double.Parse(command[2]);
                     pca9685.SetDutyCycle(channel, value);
-                    Console.WriteLine($"PWM duty cycle has been set to {value}");
+                    Debug.WriteLine($"PWM duty cycle has been set to {value}");
                     break;
                 }
             }
@@ -101,10 +101,10 @@ ServoMotor CreateServo(Pca9685 pca9685, int channel) =>
 
 void PrintServoDemoHelp()
 {
-    Console.WriteLine("Q                   return to previous menu");
-    Console.WriteLine("C                   calibrate");
-    Console.WriteLine("{angle}             set angle (0 - 180)");
-    Console.WriteLine();
+    Debug.WriteLine("Q                   return to previous menu");
+    Debug.WriteLine("C                   calibrate");
+    Debug.WriteLine("{angle}             set angle (0 - 180)");
+    Debug.WriteLine();
 }
 
 void ServoDemo(Pca9685 pca9685, int channel)
@@ -134,21 +134,21 @@ void ServoDemo(Pca9685 pca9685, int channel)
         {
             double value = double.Parse(command);
             servo.WriteAngle(value);
-            Console.WriteLine($"Angle set to {value}. PWM duty cycle = {pca9685.GetDutyCycle(channel)}");
+            Debug.WriteLine($"Angle set to {value}. PWM duty cycle = {pca9685.GetDutyCycle(channel)}");
         }
     }
 }
 
 void PrintHelp()
 {
-    Console.WriteLine("Command:");
-    Console.WriteLine("    F {freq_hz}          set PWM frequency (Hz)");
-    Console.WriteLine("    D {value}            set duty cycle (0.0 .. 1.0) for all channels");
-    Console.WriteLine("    S {channel} {value}  set duty cycle (0.0 .. 1.0) for specific channel");
-    Console.WriteLine("    T {channel}          servo test (defaults to SG90 params)");
-    Console.WriteLine("    H                    prints help");
-    Console.WriteLine("    Q                    quit");
-    Console.WriteLine();
+    Debug.WriteLine("Command:");
+    Debug.WriteLine("    F {freq_hz}          set PWM frequency (Hz)");
+    Debug.WriteLine("    D {value}            set duty cycle (0.0 .. 1.0) for all channels");
+    Debug.WriteLine("    S {channel} {value}  set duty cycle (0.0 .. 1.0) for specific channel");
+    Debug.WriteLine("    T {channel}          servo test (defaults to SG90 params)");
+    Debug.WriteLine("    H                    prints help");
+    Debug.WriteLine("    Q                    quit");
+    Debug.WriteLine();
 }
 
 void CalibrateServo(ServoMotor servo)
@@ -157,28 +157,28 @@ void CalibrateServo(ServoMotor servo)
     int minimumPulseWidthMicroseconds = 520;
     int maximumPulseWidthMicroseconds = 2590;
 
-    Console.WriteLine("Searching for minimum pulse width");
+    Debug.WriteLine("Searching for minimum pulse width");
     CalibratePulseWidth(servo, ref minimumPulseWidthMicroseconds);
-    Console.WriteLine();
+    Debug.WriteLine();
 
-    Console.WriteLine("Searching for maximum pulse width");
+    Debug.WriteLine("Searching for maximum pulse width");
     CalibratePulseWidth(servo, ref maximumPulseWidthMicroseconds);
 
-    Console.WriteLine("Searching for angle range");
-    Console.WriteLine(
+    Debug.WriteLine("Searching for angle range");
+    Debug.WriteLine(
         "What is the angle range? (type integer with your angle range or enter to move to MIN/MAX)");
 
     while (true)
     {
         servo.WritePulseWidth(maximumPulseWidthMicroseconds);
-        Console.WriteLine("Servo is now at MAX");
+        Debug.WriteLine("Servo is now at MAX");
         if (int.TryParse(Console.ReadLine(), out maximumAngle))
         {
             break;
         }
 
         servo.WritePulseWidth(minimumPulseWidthMicroseconds);
-        Console.WriteLine("Servo is now at MIN");
+        Debug.WriteLine("Servo is now at MIN");
 
         if (int.TryParse(Console.ReadLine(), out maximumAngle))
         {
@@ -187,9 +187,9 @@ void CalibrateServo(ServoMotor servo)
     }
 
     servo.Calibrate(maximumAngle, minimumPulseWidthMicroseconds, maximumPulseWidthMicroseconds);
-    Console.WriteLine($"Angle range: {maximumAngle}");
-    Console.WriteLine($"Min PW [uS]: {minimumPulseWidthMicroseconds}");
-    Console.WriteLine($"Max PW [uS]: {maximumPulseWidthMicroseconds}");
+    Debug.WriteLine($"Angle range: {maximumAngle}");
+    Debug.WriteLine($"Min PW [uS]: {minimumPulseWidthMicroseconds}");
+    Debug.WriteLine($"Max PW [uS]: {maximumPulseWidthMicroseconds}");
 }
 
 void CalibratePulseWidth(ServoMotor servo, ref int pulseWidthMicroSeconds)
@@ -200,13 +200,13 @@ void CalibratePulseWidth(ServoMotor servo, ref int pulseWidthMicroSeconds)
         servo.WritePulseWidth(pulseWidth);
     }
 
-    Console.WriteLine("Use A/Z (1x); S/X (10x); D/C (100x)");
-    Console.WriteLine("Press enter to accept value");
+    Debug.WriteLine("Use A/Z (1x); S/X (10x); D/C (100x)");
+    Debug.WriteLine("Press enter to accept value");
 
     while (true)
     {
         SetPulseWidth(ref pulseWidthMicroSeconds);
-        Console.WriteLine($"Current value: {pulseWidthMicroSeconds}");
+        Debug.WriteLine($"Current value: {pulseWidthMicroSeconds}");
 
         switch (Console.ReadKey().Key)
         {

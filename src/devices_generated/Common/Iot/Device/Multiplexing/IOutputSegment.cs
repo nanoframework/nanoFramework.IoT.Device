@@ -41,7 +41,7 @@ namespace Iot.Device.Multiplexing
         /// Writes each byte, left to right. Least significant bit will written to index 0.
         /// Does not display output.
         /// </summary>
-        void Write(ReadOnlySpanByte value);
+        void Write(SpanByte value);
 
         /// <summary>
         /// Turns off all outputs.

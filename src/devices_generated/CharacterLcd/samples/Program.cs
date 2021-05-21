@@ -47,7 +47,7 @@ void UsingHd44780OverI2C()
     hd44780.BacklightOn = true;
     hd44780.DisplayOn = true;
     hd44780.Clear();
-    Console.WriteLine("Display initialized. Press Enter to start tests.");
+    Debug.WriteLine("Display initialized. Press Enter to start tests.");
     Console.ReadLine();
     LcdConsoleSamples.WriteTest(hd44780);
     ExtendedSample.Test(hd44780);

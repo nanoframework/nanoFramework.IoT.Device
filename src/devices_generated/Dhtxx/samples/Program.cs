@@ -7,18 +7,18 @@ using System.Threading;
 using Iot.Device.Common;
 using Iot.Device.DHTxx;
 
-Console.WriteLine("Hello DHT!");
-Console.WriteLine("Select the DHT sensor you want to use:");
-Console.WriteLine(" 1. DHT10 on I2C");
-Console.WriteLine(" 2. DHT11 on GPIO");
-Console.WriteLine(" 3. DHT12 on GPIO");
-Console.WriteLine(" 4. DHT21 on GPIO");
-Console.WriteLine(" 5. DHT22 on GPIO");
+Debug.WriteLine("Hello DHT!");
+Debug.WriteLine("Select the DHT sensor you want to use:");
+Debug.WriteLine(" 1. DHT10 on I2C");
+Debug.WriteLine(" 2. DHT11 on GPIO");
+Debug.WriteLine(" 3. DHT12 on GPIO");
+Debug.WriteLine(" 4. DHT21 on GPIO");
+Debug.WriteLine(" 5. DHT22 on GPIO");
 var choice = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 if (choice.KeyChar == '1')
 {
-    Console.WriteLine("Press any key to stop the reading");
+    Debug.WriteLine("Press any key to stop the reading");
     // Init DHT10 through I2C
     I2cConnectionSettings settings = new(1, Dht10.DefaultI2cAddress);
     I2cDevice device = I2cDevice.Create(settings);
@@ -28,7 +28,7 @@ if (choice.KeyChar == '1')
     return;
 }
 
-Console.WriteLine("Which pin do you want to use in the logical pin schema?");
+Debug.WriteLine("Which pin do you want to use in the logical pin schema?");
 var pinChoise = Console.ReadLine();
 int pin;
 try
@@ -37,16 +37,16 @@ try
 }
 catch (Exception ex) when (ex is FormatException || ex is OverflowException)
 {
-    Console.WriteLine("Can't convert pin number.");
+    Debug.WriteLine("Can't convert pin number.");
     return;
 }
 
-Console.WriteLine("Press any key to stop the reading");
+Debug.WriteLine("Press any key to stop the reading");
 
 switch (choice.KeyChar)
 {
     case '2':
-        Console.WriteLine($"Reading temperature and humidity on DHT11, pin {pin}");
+        Debug.WriteLine($"Reading temperature and humidity on DHT11, pin {pin}");
         using (Dht11 dht11 = new(pin))
         {
             Dht(dht11);
@@ -54,7 +54,7 @@ switch (choice.KeyChar)
 
         break;
     case '3':
-        Console.WriteLine($"Reading temperature and humidity on DHT12, pin {pin}");
+        Debug.WriteLine($"Reading temperature and humidity on DHT12, pin {pin}");
         using (Dht12 dht12 = new(pin))
         {
             Dht(dht12);
@@ -62,7 +62,7 @@ switch (choice.KeyChar)
 
         break;
     case '4':
-        Console.WriteLine($"Reading temperature and humidity on DHT21, pin {pin}");
+        Debug.WriteLine($"Reading temperature and humidity on DHT21, pin {pin}");
         using (Dht21 dht21 = new(pin))
         {
             Dht(dht21);
@@ -70,7 +70,7 @@ switch (choice.KeyChar)
 
         break;
     case '5':
-        Console.WriteLine($"Reading temperature and humidity on DHT22, pin {pin}");
+        Debug.WriteLine($"Reading temperature and humidity on DHT22, pin {pin}");
         using (Dht22 dht22 = new(pin))
         {
             Dht(dht22);
@@ -78,7 +78,7 @@ switch (choice.KeyChar)
 
         break;
     default:
-        Console.WriteLine("Please select one of the option.");
+        Debug.WriteLine("Please select one of the option.");
         break;
 }
 
@@ -92,17 +92,17 @@ void Dht(DhtBase dht)
         // both temperature and humidity are NAN
         if (dht.IsLastReadSuccessful)
         {
-            Console.WriteLine($"Temperature: {temp.DegreesCelsius}\u00B0C, Relative humidity: {hum.Percent}%");
+            Debug.WriteLine($"Temperature: {temp.DegreesCelsius}\u00B0C, Relative humidity: {hum.Percent}%");
 
             // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-            Console.WriteLine(
+            Debug.WriteLine(
                 $"Heat index: {WeatherHelper.CalculateHeatIndex(temp, hum).DegreesCelsius:0.#}\u00B0C");
-            Console.WriteLine(
+            Debug.WriteLine(
                 $"Dew point: {WeatherHelper.CalculateDewPoint(temp, hum).DegreesCelsius:0.#}\u00B0C");
         }
         else
         {
-            Console.WriteLine("Error reading DHT sensor");
+            Debug.WriteLine("Error reading DHT sensor");
         }
 
         // You must wait some time before trying to read the next value

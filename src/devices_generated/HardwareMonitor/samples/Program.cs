@@ -7,12 +7,12 @@ using System.Threading;
 using Iot.Device.HardwareMonitor;
 using UnitsNet;
 
-Console.WriteLine("Press any key to quit");
+Debug.WriteLine("Press any key to quit");
 
 OpenHardwareMonitor hw = new OpenHardwareMonitor();
 if (hw.GetSensorList().Count == 0)
 {
-    Console.WriteLine("OpenHardwareMonitor is not running");
+    Debug.WriteLine("OpenHardwareMonitor is not running");
     return;
 }
 
@@ -21,23 +21,23 @@ hw.EnableDerivedSensors();
 while (!Console.KeyAvailable)
 {
     Console.Clear();
-    Console.WriteLine("Showing all available sensors (press any key to quit)");
+    Debug.WriteLine("Showing all available sensors (press any key to quit)");
     var components = hw.GetHardwareComponents();
     foreach (var component in components)
     {
-        Console.WriteLine("--------------------------------------------------------------------");
-        Console.WriteLine($"{component.Name} Type {component.Type}, Path {component.Identifier}");
-        Console.WriteLine("--------------------------------------------------------------------");
+        Debug.WriteLine("--------------------------------------------------------------------");
+        Debug.WriteLine($"{component.Name} Type {component.Type}, Path {component.Identifier}");
+        Debug.WriteLine("--------------------------------------------------------------------");
         foreach (var sensor in hw.GetSensorList(component))
         {
             Console.Write($"{sensor.Name}: Path {sensor.Identifier}, Parent {sensor.Parent} ");
             if (sensor.TryGetValue(out IQuantity? quantity))
             {
-                Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}: {1:g}", quantity.Type, quantity));
+                Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}: {1:g}", quantity.Type, quantity));
             }
             else
             {
-                Console.WriteLine($"No data");
+                Debug.WriteLine($"No data");
             }
         }
     }
@@ -45,7 +45,7 @@ while (!Console.KeyAvailable)
     if (hw.TryGetAverageGpuTemperature(out Temperature gpuTemp) &&
         hw.TryGetAverageCpuTemperature(out Temperature cpuTemp))
     {
-        Console.WriteLine($"Averages: CPU temp {cpuTemp:s2}, GPU temp {gpuTemp:s2}, CPU Load {hw.GetCpuLoad()}");
+        Debug.WriteLine($"Averages: CPU temp {cpuTemp:s2}, GPU temp {gpuTemp:s2}, CPU Load {hw.GetCpuLoad()}");
     }
 
     Thread.Sleep(1000);

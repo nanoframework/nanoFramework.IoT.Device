@@ -13,7 +13,7 @@ namespace Iot.Device.Arduino
     /// </summary>
     internal class FirmataCommandSequence
     {
-        private List<byte> _sequence;
+        private ListByte _sequence;
 
         /// <summary>
         /// Create a new command sequence
@@ -21,13 +21,13 @@ namespace Iot.Device.Arduino
         /// <param name="command">The first byte of the command</param>
         public FirmataCommandSequence(FirmataCommand command = FirmataCommand.START_SYSEX)
         {
-            _sequence = new List<byte>()
+            _sequence = new ListByte()
             {
                 (byte)command
             };
         }
 
-        internal List<byte> Sequence => _sequence;
+        internal ListByte Sequence => _sequence;
 
         public int Length => _sequence.Count;
 
@@ -51,7 +51,7 @@ namespace Iot.Device.Arduino
             return true;
         }
 
-        public void AddValuesAsTwo7bitBytes(ReadOnlySpanByte values)
+        public void AddValuesAsTwo7bitBytes(SpanByte values)
         {
             for (int i = 0; i < values.Length; i++)
             {

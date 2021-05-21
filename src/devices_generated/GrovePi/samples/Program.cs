@@ -9,13 +9,13 @@ using Iot.Device.GrovePiDevice.Models;
 using Iot.Device.GrovePiDevice;
 using Iot.Device.GrovePiDevice.Sensors;
 
-Console.WriteLine("Hello GrovePi!");
+Debug.WriteLine("Hello GrovePi!");
 PinValue relay = PinValue.Low;
 I2cConnectionSettings i2CConnectionSettings = new(1, GrovePi.DefaultI2cAddress);
 using GrovePi grovePi = new GrovePi(I2cDevice.Create(i2CConnectionSettings));
-Console.WriteLine($"Manufacturer :{grovePi.GrovePiInfo.Manufacturer}");
-Console.WriteLine($"Board: {grovePi.GrovePiInfo.Board}");
-Console.WriteLine($"Firmware version: {grovePi.GrovePiInfo.SoftwareVersion}");
+Debug.WriteLine($"Manufacturer :{grovePi.GrovePiInfo.Manufacturer}");
+Debug.WriteLine($"Board: {grovePi.GrovePiInfo.Board}");
+Debug.WriteLine($"Firmware version: {grovePi.GrovePiInfo.SoftwareVersion}");
 // Specific example to show how to read directly a pin without a high level class
 grovePi.PinMode(GrovePort.AnalogPin0, PinMode.Input);
 grovePi.PinMode(GrovePort.DigitalPin2, PinMode.Output);
@@ -29,14 +29,14 @@ while (!Console.KeyAvailable)
 {
     Console.Clear();
     poten = grovePi.AnalogRead(GrovePort.AnalogPin0);
-    Console.WriteLine($"Potentiometer: {poten}");
+    Debug.WriteLine($"Potentiometer: {poten}");
     relay = (relay == PinValue.Low) ? PinValue.High : PinValue.Low;
     grovePi.DigitalWrite(GrovePort.DigitalPin2, relay);
-    Console.WriteLine($"Relay: {relay}");
+    Debug.WriteLine($"Relay: {relay}");
     grovePi.AnalogWrite(GrovePort.DigitalPin3, (byte)(poten * 100 / 1023));
-    Console.WriteLine($"Button: {grovePi.DigitalRead(GrovePort.DigitalPin4)}");
-    Console.WriteLine($"Ultrasonic: {ultrasonic}");
+    Debug.WriteLine($"Button: {grovePi.DigitalRead(GrovePort.DigitalPin4)}");
+    Debug.WriteLine($"Ultrasonic: {ultrasonic}");
     dhtSensor.Read();
-    Console.WriteLine($"{dhtSensor.DhtType}: {dhtSensor}");
+    Debug.WriteLine($"{dhtSensor.DhtType}: {dhtSensor}");
     Thread.Sleep(2000);
 }

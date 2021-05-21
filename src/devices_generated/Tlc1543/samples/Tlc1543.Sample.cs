@@ -38,7 +38,7 @@ namespace Iot.Device.Tlc1543.Samples
 
             foreach (Channel channel in channels)
             {
-                Console.WriteLine($"Channel {channel}: {adc.ReadChannel(channel)}");
+                Debug.WriteLine($"Channel {channel}: {adc.ReadChannel(channel)}");
             }
 
             // or a bit faster
@@ -49,7 +49,7 @@ namespace Iot.Device.Tlc1543.Samples
                 // For last reading we need to pass something so let's pass test channel
                 Channel nextChannel = i < channels.Length - 1 ? channels[i + 1] : Channel.SelfTestHalf;
                 int previous = adc.ReadPreviousAndChargeChannel(nextChannel);
-                Console.WriteLine($"Channel {channels[i]}: {previous}");
+                Debug.WriteLine($"Channel {channels[i]}: {previous}");
             }
 
             // now continuously read from one channel
@@ -59,7 +59,7 @@ namespace Iot.Device.Tlc1543.Samples
 
             for (int i = 0; i < numberOfReadings; i++)
             {
-                Console.WriteLine($"Channel {ch}: {adc.ReadPreviousAndChargeChannel(ch)}");
+                Debug.WriteLine($"Channel {ch}: {adc.ReadPreviousAndChargeChannel(ch)}");
             }
         }
     }

@@ -13,8 +13,8 @@ using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(AdafruitS
 using Seesaw ssDevice = new(i2cDevice);
 while (true)
 {
-    Console.WriteLine($"Temperature: {ssDevice.GetTemperature()}'C");
-    Console.WriteLine($"Capacitive: {ssDevice.TouchRead(0)}");
+    Debug.WriteLine($"Temperature: {ssDevice.GetTemperature()}'C");
+    Debug.WriteLine($"Capacitive: {ssDevice.TouchRead(0)}");
     ssDevice.SetGpioPinMode(1, PinMode.Output);
     System.Threading.Tasks.Task.Delay(1000).Wait();
 }

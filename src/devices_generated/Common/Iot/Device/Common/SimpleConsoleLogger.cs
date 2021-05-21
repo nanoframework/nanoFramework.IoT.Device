@@ -21,7 +21,7 @@ namespace Iot.Device.Common
         }
 
         /// <summary>
-        /// Specifies the minimum log level that is printed. Default is <see cref="LogLevel.Information"/>
+        /// Specifies the minimum log level that is printed. Default is Information
         /// </summary>
         public LogLevel MinLogLevel
         {
@@ -53,7 +53,7 @@ namespace Iot.Device.Common
             }
 
             string msg = formatter(state, exception);
-            Console.WriteLine($"{logLevel} - {msg}");
+            Debug.WriteLine($"{logLevel} - {msg}");
             Console.ForegroundColor = previousColor;
         }
 

@@ -51,36 +51,30 @@ namespace Iot.Device.SocketCan
         [DllImport("libc", EntryPoint = "setsockopt", CallingConvention = CallingConvention.Cdecl)]
         private static unsafe extern int SetSocketOpt(int fd, int level, int optName, byte* optVal, int optlen);
 
-        public static unsafe void Write(SafeHandle handle, ReadOnlySpanByte buffer)
+        public static unsafe void Write(SafeHandle handle, byte* buffer, int length)
         {
-            fixed (byte* b = buffer)
+            int totalBytesWritten = 0;
+            while (totalBytesWritten < length)
             {
-                int totalBytesWritten = 0;
-                while (totalBytesWritten < buffer.Length)
+                int bytesWritten = Interop.SocketWrite((int)handle.DangerousGetHandle(), buffer, length);
+                if (bytesWritten < 0)
                 {
-                    int bytesWritten = Interop.SocketWrite((int)handle.DangerousGetHandle(), b, buffer.Length);
-                    if (bytesWritten < 0)
-                    {
-                        throw new IOException("`write` operation failed");
-                    }
-
-                    totalBytesWritten += bytesWritten;
+                    throw new IOException("`write` operation failed");
                 }
+
+                totalBytesWritten += bytesWritten;
             }
         }
 
-        public static unsafe int Read(SafeHandle handle, SpanByte buffer)
+        public static unsafe int Read(SafeHandle handle, byte* buffer, int length)
         {
-            fixed (byte* b = buffer)
+            int bytesRead = Interop.SocketRead((int)handle.DangerousGetHandle(), buffer, length);
+            if (bytesRead < 0)
             {
-                int bytesRead = Interop.SocketRead((int)handle.DangerousGetHandle(), b, buffer.Length);
-                if (bytesRead < 0)
-                {
-                    throw new IOException("`read` operation failed");
-                }
-
-                return bytesRead;
+                throw new IOException("`read` operation failed");
             }
+
+            return bytesRead;
         }
 
         public static void CloseSocket(IntPtr fd) =>
@@ -109,7 +103,7 @@ namespace Iot.Device.SocketCan
             where T : struct
         {
             int fd = (int)handle.DangerousGetHandle();
-            ReadOnlySpanByte buf = MemoryMarshal.AsBytes(data);
+            SpanByte buf = MemoryMarshal.AsBytes(data);
             fixed (byte* pinned = buf)
             {
                 return SetSocketOpt(fd, level, (int)optName, pinned, buf.Length) == 0;

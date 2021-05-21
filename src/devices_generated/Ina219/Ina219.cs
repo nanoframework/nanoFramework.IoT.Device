@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Device;
 using System.Device.I2c;
 using System.Device.Model;
-using System.Diagnostics.CodeAnalysis;
+
 using UnitsNet;
 
 namespace Iot.Device.Adc

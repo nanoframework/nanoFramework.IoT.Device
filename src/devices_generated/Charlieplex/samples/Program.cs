@@ -13,7 +13,7 @@ CharlieplexSegmentNode[] nodes = CharlieplexSegment.GetNodes(pins, charlieSegmen
 for (int i = 0; i < charlieSegmentLength; i++)
 {
     CharlieplexSegmentNode node = nodes[i];
-    Console.WriteLine($"Node {i} -- Anode: {node.Anode}; Cathode: {node.Cathode}");
+    Debug.WriteLine($"Node {i} -- Anode: {node.Anode}; Cathode: {node.Cathode}");
 }
 
 using CharlieplexSegment segment = new(pins, charlieSegmentLength);
@@ -27,7 +27,7 @@ Console.CancelKeyPress += (s, e) =>
     segment.Dispose();
 };
 
-Console.WriteLine("Light all LEDs");
+Debug.WriteLine("Light all LEDs");
 for (int i = 0; i < charlieSegmentLength; i++)
 {
     segment.Write(i, 1);
@@ -38,13 +38,13 @@ if (DisplayShouldCancel())
     return;
 }
 
-Console.WriteLine("Dim all LEDs");
+Debug.WriteLine("Dim all LEDs");
 for (int i = 0; i < charlieSegmentLength; i++)
 {
     segment.Write(i, 0);
 }
 
-Console.WriteLine("Light odd values");
+Debug.WriteLine("Light odd values");
 for (int i = 0; i < charlieSegmentLength; i++)
 {
     if (i % 2 == 1)
@@ -66,7 +66,7 @@ for (int i = 0; i < charlieSegmentLength; i++)
 var delayLengths = new int[] { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
 foreach (var delay in delayLengths)
 {
-    Console.WriteLine($"Light one LED at a time -- Delay {delay}");
+    Debug.WriteLine($"Light one LED at a time -- Delay {delay}");
     for (int i = 0; i < charlieSegmentLength; i++)
     {
         segment.Write(i, 1);
@@ -78,7 +78,7 @@ foreach (var delay in delayLengths)
 
 foreach (var delay in delayLengths.Reverse())
 {
-    Console.WriteLine($"Light and then dim all LEDs, in sequence. Delay: {delay}");
+    Debug.WriteLine($"Light and then dim all LEDs, in sequence. Delay: {delay}");
     for (int i = 0; i < charlieSegmentLength; i++)
     {
         segment.Write(i, 1);

@@ -18,10 +18,10 @@ Console.CancelKeyPress += (s, e) =>
     cancellationSource.Cancel();
 };
 
-Console.WriteLine($"Driver for {nameof(Iot.Device.Multiplexing.Sn74hc595)}");
-Console.WriteLine($"Register bit length: {sr.BitLength}");
+Debug.WriteLine($"Driver for {nameof(Iot.Device.Multiplexing.Sn74hc595)}");
+Debug.WriteLine($"Register bit length: {sr.BitLength}");
 string interfaceType = sr.UsesSpi ? "SPI" : "GPIO";
-Console.WriteLine($"Using {interfaceType}");
+Debug.WriteLine($"Using {interfaceType}");
 
 if (!sr.UsesSpi)
 {
@@ -36,7 +36,7 @@ void DemonstrateShiftingBits(Sn74hc595 sr, CancellationTokenSource cancellationS
     int delay = 1000;
     sr.ShiftClear();
 
-    Console.WriteLine("Light up three of first four LEDs");
+    Debug.WriteLine("Light up three of first four LEDs");
     sr.ShiftBit(1);
     sr.ShiftBit(1);
     sr.ShiftBit(0);
@@ -46,7 +46,7 @@ void DemonstrateShiftingBits(Sn74hc595 sr, CancellationTokenSource cancellationS
 
     sr.ShiftClear();
 
-    Console.WriteLine($"Light up all LEDs, with {nameof(sr.ShiftBit)}");
+    Debug.WriteLine($"Light up all LEDs, with {nameof(sr.ShiftBit)}");
 
     for (int i = 0; i < sr.BitLength; i++)
     {
@@ -58,7 +58,7 @@ void DemonstrateShiftingBits(Sn74hc595 sr, CancellationTokenSource cancellationS
 
     sr.ShiftClear();
 
-    Console.WriteLine($"Dim up all LEDs, with {nameof(sr.ShiftBit)}");
+    Debug.WriteLine($"Dim up all LEDs, with {nameof(sr.ShiftBit)}");
 
     for (int i = 0; i < sr.BitLength; i++)
     {
@@ -77,12 +77,12 @@ void DemonstrateShiftingBits(Sn74hc595 sr, CancellationTokenSource cancellationS
 void DemonstrateShiftingBytes(Sn74hc595 sr, CancellationTokenSource cancellationSource)
 {
     int delay = 1000;
-    Console.WriteLine($"Write a set of values with {nameof(sr.ShiftByte)}");
+    Debug.WriteLine($"Write a set of values with {nameof(sr.ShiftByte)}");
     // this can be specified as ints or binary notation -- its all the same
     var values = new byte[] { 0b1, 23, 56, 127, 128, 170, 0b_1010_1010 };
     foreach (var value in values)
     {
-        Console.WriteLine($"Value: {value}");
+        Debug.WriteLine($"Value: {value}");
         sr.ShiftByte(value);
         Thread.Sleep(delay);
         sr.ShiftClear();
@@ -94,7 +94,7 @@ void DemonstrateShiftingBytes(Sn74hc595 sr, CancellationTokenSource cancellation
     }
 
     byte lit = 0b_1111_1111; // 255
-    Console.WriteLine($"Write {lit} to each register with {nameof(sr.ShiftByte)}");
+    Debug.WriteLine($"Write {lit} to each register with {nameof(sr.ShiftByte)}");
     for (int i = 0; i < sr.BitLength / 8; i++)
     {
         sr.ShiftByte(lit);
@@ -102,15 +102,15 @@ void DemonstrateShiftingBytes(Sn74hc595 sr, CancellationTokenSource cancellation
 
     Thread.Sleep(delay);
 
-    Console.WriteLine("Output disable");
+    Debug.WriteLine("Output disable");
     sr.OutputEnable = false;
     Thread.Sleep(delay * 2);
 
-    Console.WriteLine("Output enable");
+    Debug.WriteLine("Output enable");
     sr.OutputEnable = true;
     Thread.Sleep(delay * 2);
 
-    Console.WriteLine($"Write 23 then 56 with {nameof(sr.ShiftByte)}");
+    Debug.WriteLine($"Write 23 then 56 with {nameof(sr.ShiftByte)}");
     sr.ShiftByte(23);
     sr.ShiftByte(56);
     sr.ShiftClear();
@@ -118,7 +118,7 @@ void DemonstrateShiftingBytes(Sn74hc595 sr, CancellationTokenSource cancellation
 
 void BinaryCounter(Sn74hc595 sr, CancellationTokenSource cancellationSource)
 {
-    Console.WriteLine($"Write 0 through 255");
+    Debug.WriteLine($"Write 0 through 255");
     for (int i = 0; i < 256; i++)
     {
         sr.ShiftByte((byte)i);
@@ -135,7 +135,7 @@ void BinaryCounter(Sn74hc595 sr, CancellationTokenSource cancellationSource)
 
     if (sr.BitLength > 8)
     {
-        Console.WriteLine($"Write 256 through 4095; pick up the pace");
+        Debug.WriteLine($"Write 256 through 4095; pick up the pace");
         for (int i = 256; i < 4096; i++)
         {
             ShiftBytes(sr, i);

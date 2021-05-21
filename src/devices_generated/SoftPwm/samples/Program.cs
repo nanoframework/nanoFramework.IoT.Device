@@ -5,7 +5,7 @@ using System;
 using System.Device.Pwm.Drivers;
 using System.Threading;
 
-Console.WriteLine("Hello PWM!");
+Debug.WriteLine("Hello PWM!");
 
 using SoftwarePwmChannel pwmChannel = new(17, 200, 0);
 pwmChannel.Start();

@@ -20,22 +20,22 @@ using Microsoft.Extensions.Logging.Console;
 
 Pn532 pn532;
 
-Console.WriteLine("Welcome to Pn532 example.");
-Console.WriteLine("Which interface do you want to use with your Pn532?");
-Console.WriteLine("1. HSU: Hight Speed UART (high speed serial port)");
-Console.WriteLine("2. I2C");
-Console.WriteLine("3. SPI");
+Debug.WriteLine("Welcome to Pn532 example.");
+Debug.WriteLine("Which interface do you want to use with your Pn532?");
+Debug.WriteLine("1. HSU: Hight Speed UART (high speed serial port)");
+Debug.WriteLine("2. I2C");
+Debug.WriteLine("3. SPI");
 var choiceInterface = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 if (choiceInterface is not { KeyChar: '1' or '2' or '3' })
 {
-    Console.WriteLine($"You can only select 1, 2 or 3");
+    Debug.WriteLine($"You can only select 1, 2 or 3");
     return;
 }
 
-Console.WriteLine("Do you want log level to Debug? Y/N");
+Debug.WriteLine("Do you want log level to Debug? Y/N");
 var debugLevelConsole = Console.ReadKey();
-Console.WriteLine();
+Debug.WriteLine();
 LogLevel debugLevel = debugLevelConsole is { KeyChar: 'Y' or 'y' } ? LogLevel.Debug : LogLevel.Information;
 
 var loggerFactory = LoggerFactory.Create(builder =>
@@ -49,7 +49,7 @@ LogDispatcher.LoggerFactory = loggerFactory;
 
 if (choiceInterface is { KeyChar: '3' })
 {
-    Console.WriteLine("Which pin number do you want as Chip Select?");
+    Debug.WriteLine("Which pin number do you want as Chip Select?");
     var pinSelectConsole = Console.ReadLine();
     int pinSelect;
     try
@@ -58,7 +58,7 @@ if (choiceInterface is { KeyChar: '3' })
     }
     catch (Exception ex) when (ex is FormatException || ex is OverflowException)
     {
-        Console.WriteLine("Impossible to convert the pin number.");
+        Debug.WriteLine("Impossible to convert the pin number.");
         return;
     }
 
@@ -70,7 +70,7 @@ else if (choiceInterface is { KeyChar: '2' })
 }
 else
 {
-    Console.WriteLine("Please enter the serial port to use. ex: COM3 on Windows or /dev/ttyS0 on Linux");
+    Debug.WriteLine("Please enter the serial port to use. ex: COM3 on Windows or /dev/ttyS0 on Linux");
 
     var device = Console.ReadLine();
     pn532 = new Pn532(device!);
@@ -78,7 +78,7 @@ else
 
 if (pn532.FirmwareVersion is FirmwareVersion version)
 {
-    Console.WriteLine(
+    Debug.WriteLine(
         $"Is it a PN532!: {version.IsPn532}, Version: {version.Version}, Version supported: {version.VersionSupported}");
     // To adjust the baud rate, uncomment the next line
     // pn532.SetSerialBaudRate(BaudRate.B0921600);
@@ -96,7 +96,7 @@ if (pn532.FirmwareVersion is FirmwareVersion version)
 }
 else
 {
-    Console.WriteLine($"Error");
+    Debug.WriteLine($"Error");
 }
 
 pn532?.Dispose();
@@ -122,7 +122,7 @@ void DumpAllRegisters(Pn532 pn532)
                 Console.Write($"{span[j].ToString("X2")} ");
             }
 
-            Console.WriteLine();
+            Debug.WriteLine();
         }
     }
 }
@@ -152,16 +152,16 @@ void ReadMiFare(Pn532 pn532)
         Console.Write($"{retData[i]:X} ");
     }
 
-    Console.WriteLine();
+    Debug.WriteLine();
 
     var decrypted = pn532.TryDecode106kbpsTypeA(retData.AsSpan().Slice(1));
     if (decrypted is object)
     {
-        Console.WriteLine(
+        Debug.WriteLine(
             $"Tg: {decrypted.TargetNumber}, ATQA: {decrypted.Atqa} SAK: {decrypted.Sak}, NFCID: {BitConverter.ToString(decrypted.NfcId)}");
         if (decrypted.Ats is object)
         {
-            Console.WriteLine($", ATS: {BitConverter.ToString(decrypted.Ats)}");
+            Debug.WriteLine($", ATS: {BitConverter.ToString(decrypted.Ats)}");
         }
 
         MifareCard mifareCard = new(pn532, decrypted.TargetNumber)
@@ -195,11 +195,11 @@ void ReadMiFare(Pn532 pn532)
                 ret = mifareCard.RunMifareCardCommand();
                 if (ret >= 0 && mifareCard.Data is object)
                 {
-                    Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                    Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
                 }
                 else
                 {
-                    Console.WriteLine($"Error reading bloc: {block}");
+                    Debug.WriteLine($"Error reading bloc: {block}");
                 }
 
                 if (block % 4 == 3 && mifareCard.Data is object)
@@ -208,16 +208,16 @@ void ReadMiFare(Pn532 pn532)
                     for (byte j = 3; j > 0; j--)
                     {
                         var access = mifareCard.BlockAccess((byte)(block - j), mifareCard.Data);
-                        Console.WriteLine($"Bloc: {block - j}, Access: {access}");
+                        Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
                     }
 
                     var sector = mifareCard.SectorTailerAccess(block, mifareCard.Data);
-                    Console.WriteLine($"Bloc: {block}, Access: {sector}");
+                    Debug.WriteLine($"Bloc: {block}, Access: {sector}");
                 }
             }
             else
             {
-                Console.WriteLine($"Authentication error");
+                Debug.WriteLine($"Authentication error");
             }
         }
     }
@@ -225,14 +225,14 @@ void ReadMiFare(Pn532 pn532)
 
 void TestGPIO(Pn532 pn532)
 {
-    Console.WriteLine("Turning Off Port 7!");
+    Debug.WriteLine("Turning Off Port 7!");
     var ret = pn532.WriteGpio((Port7)0);
 
     // Access GPIO
     ret = pn532.ReadGpio(out Port3 p3, out Port7 p7, out OperatingMode l0L1);
-    Console.WriteLine($"P7: {p7}");
-    Console.WriteLine($"P3: {p3}");
-    Console.WriteLine($"L0L1: {l0L1} ");
+    Debug.WriteLine($"P7: {p7}");
+    Debug.WriteLine($"P3: {p3}");
+    Debug.WriteLine($"L0L1: {l0L1} ");
 
     var on = true;
     for (var i = 0; i < 10; i++)
@@ -254,10 +254,10 @@ void TestGPIO(Pn532 pn532)
 
 void RunTests(Pn532 pn532)
 {
-    Console.WriteLine(
+    Debug.WriteLine(
         $"{DiagnoseMode.CommunicationLineTest}: {pn532.RunSelfTest(DiagnoseMode.CommunicationLineTest)}");
-    Console.WriteLine($"{DiagnoseMode.ROMTest}: {pn532.RunSelfTest(DiagnoseMode.ROMTest)}");
-    Console.WriteLine($"{DiagnoseMode.RAMTest}: {pn532.RunSelfTest(DiagnoseMode.RAMTest)}");
+    Debug.WriteLine($"{DiagnoseMode.ROMTest}: {pn532.RunSelfTest(DiagnoseMode.ROMTest)}");
+    Debug.WriteLine($"{DiagnoseMode.RAMTest}: {pn532.RunSelfTest(DiagnoseMode.RAMTest)}");
     // Check couple of SFR registers
     SfrRegister[] regs = new SfrRegister[]
     {
@@ -267,7 +267,7 @@ void RunTests(Pn532 pn532)
     var ret = pn532.ReadRegisterSfr(regs, redSfrs);
     for (int i = 0; i < regs.Length; i++)
     {
-        Console.WriteLine(
+        Debug.WriteLine(
             $"Readregisters: {regs[i]}, value: {BitConverter.ToString(redSfrs.ToArray(), i, 1)} ");
     }
 
@@ -277,16 +277,16 @@ void RunTests(Pn532 pn532)
     ret = pn532.ReadRegister(regus, redSfrus);
     for (int i = 0; i < regus.Length; i++)
     {
-        Console.WriteLine(
+        Debug.WriteLine(
             $"Readregisters: {regus[i]}, value: {BitConverter.ToString(redSfrus.ToArray(), i, 1)} ");
     }
 
-    Console.WriteLine($"Are results same: {redSfrus.SequenceEqual(redSfrs)}");
+    Debug.WriteLine($"Are results same: {redSfrus.SequenceEqual(redSfrs)}");
     // Access GPIO
     ret = pn532.ReadGpio(out Port3 p3, out Port7 p7, out OperatingMode l0L1);
-    Console.WriteLine($"P7: {p7}");
-    Console.WriteLine($"P3: {p3}");
-    Console.WriteLine($"L0L1: {l0L1} ");
+    Debug.WriteLine($"P7: {p7}");
+    Debug.WriteLine($"P3: {p3}");
+    Debug.WriteLine($"L0L1: {l0L1} ");
 }
 
 void ReadCreditCard(Pn532 pn532)
@@ -313,11 +313,11 @@ void ReadCreditCard(Pn532 pn532)
     }
 
     // Check how many tags and the type
-    Console.WriteLine($"Num tags: {retData[0]}, Type: {(PollingType)retData[1]}");
+    Debug.WriteLine($"Num tags: {retData[0]}, Type: {(PollingType)retData[1]}");
     var decrypted = pn532.TryDecodeData106kbpsTypeB(retData.AsSpan().Slice(3));
     if (decrypted is object)
     {
-        Console.WriteLine(
+        Debug.WriteLine(
             $"{decrypted.TargetNumber}, Serial: {BitConverter.ToString(decrypted.NfcId)}, App Data: {BitConverter.ToString(decrypted.ApplicationData)}, " +
             $"{decrypted.ApplicationType}, Bit Rates: {decrypted.BitRates}, CID {decrypted.CidSupported}, Command: {decrypted.Command}, FWT: {decrypted.FrameWaitingTime}, " +
             $"ISO144443 compliance: {decrypted.ISO14443_4Compliance}, Max Frame size: {decrypted.MaxFrameSize}, NAD: {decrypted.NadSupported}");
@@ -325,7 +325,7 @@ void ReadCreditCard(Pn532 pn532)
         CreditCard creditCard = new CreditCard(pn532, decrypted.TargetNumber);
         creditCard.ReadCreditCardInformation();
 
-        Console.WriteLine("All Tags for the Credit Card:");
+        Debug.WriteLine("All Tags for the Credit Card:");
         DisplayTags(creditCard.Tags, 0);
     }
 }
@@ -341,7 +341,7 @@ string AddSpace(int level)
     return space;
 }
 
-void DisplayTags(List<Tag> tagToDisplay, int levels)
+void DisplayTags(ListTag tagToDisplay, int levels)
 {
     foreach (var tagparent in tagToDisplay)
     {
@@ -350,24 +350,24 @@ void DisplayTags(List<Tag> tagToDisplay, int levels)
         var isTemplate = TagList.Tags.Where(m => m.TagNumber == tagparent.TagNumber).FirstOrDefault();
         if ((isTemplate?.IsTemplate == true) || (isTemplate?.IsConstructed == true))
         {
-            Console.WriteLine();
+            Debug.WriteLine();
             DisplayTags(tagparent.Tags, levels + 1);
         }
         else if (isTemplate?.IsDol == true)
         {
             // In this case, all the data inside are 1 byte only
-            Console.WriteLine(", Data Object Length elements:");
+            Debug.WriteLine(", Data Object Length elements:");
             foreach (var dt in tagparent.Tags)
             {
                 Console.Write(AddSpace(levels + 1) +
                                 $"{dt.TagNumber.ToString("X4")}-{TagList.Tags.Where(m => m.TagNumber == dt.TagNumber).FirstOrDefault()?.Description}");
-                Console.WriteLine($", data length: {dt.Data[0]}");
+                Debug.WriteLine($", data length: {dt.Data[0]}");
             }
         }
         else
         {
             TagDetails tg = new TagDetails(tagparent);
-            Console.WriteLine($": {tg.ToString()}");
+            Debug.WriteLine($": {tg.ToString()}");
         }
     }
 }
