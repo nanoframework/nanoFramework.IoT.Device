@@ -117,10 +117,22 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 // PROJECT FILE
                 string[] oldProjectReferences;
                 string projectGuid;
-                CreateProjectFile(projectType, projectName, targetDirectoryInfo, nfNugetPackages, searches, out oldProjectReferences, out projectGuid);
+                CreateProjectFile(
+                    projectType,
+                    projectName,
+                    targetDirectoryInfo,
+                    nfNugetPackages,
+                    searches,
+                    out oldProjectReferences,
+                    out projectGuid);
 
                 // PACKAGES
-                CreatePackagesConfig(targetDirectoryInfo, nfNugetPackages, searches, oldProjectReferences);
+                CreatePackagesConfig(
+                    projectType,
+                    targetDirectoryInfo,
+                    nfNugetPackages,
+                    searches,
+                    oldProjectReferences);
 
                 // SOLUTION File
                 if (projectType == ProjectType.Regular)
@@ -271,6 +283,19 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 projectReplacements.Add(_outputTypeReplacementToken, "Library");
             }
 
+            if(projectType == ProjectType.Regular)
+            {
+                projectReplacements.Add("<!-- INSERT NBGV IMPORT HERE -->",
+                    @"<Import Project=""packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets"" Condition=""Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')"" />
+  <Target Name = ""EnsureNuGetPackageBuildImports"" BeforeTargets = ""PrepareForBuild"">
+    <PropertyGroup>
+      <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition = ""!Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')"" Text = ""$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets'))"" />
+  </Target>");
+
+            }
+
             targetProjectFile.EditFile(projectReplacements);
 
             if (projectType != ProjectType.UnitTest)
@@ -287,9 +312,11 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 assemblyInfoFile.EditFile(assemblyInfoReplacements);
             }
+
         }
 
         private static void CreatePackagesConfig(
+            ProjectType projectType,
             DirectoryInfo targetDirectoryInfo,
             NugetPackages[] nfNugetPackages,
             Dictionary<string, bool> searches,
@@ -305,6 +332,11 @@ namespace nanoFramework.IoT.Device.CodeConverter
                     searches.Any(s => s.Value && s.Key == x.Namespace))
                 .Distinct()
                 .Select(x => x.PackageConfigReferenceString);
+
+            if(projectType == ProjectType.Regular)
+            {
+                packageReferences = packageReferences.Append(@"  <package id=""Nerdbank.GitVersioning"" version=""3.4.194"" developmentDependency=""true"" targetFramework=""netnanoframework10"" />");
+            }
 
             if (packageReferences.Any())
             {
