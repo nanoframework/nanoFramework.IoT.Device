@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{F7487469-EDA1-4245-A15E-6E9C7974B910}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\\LidarLiteV3.Sample.nfproj", "{572FDE76-9F1E-49B9-A883-A1E3635B7C9C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\\LidarLiteV3.Sample.nfproj", "{AF34E8FA-5131-4955-8A3F-8F85E8988F1B}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {F7487469-EDA1-4245-A15E-6E9C7974B910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {F7487469-EDA1-4245-A15E-6E9C7974B910}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {F7487469-EDA1-4245-A15E-6E9C7974B910}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {F7487469-EDA1-4245-A15E-6E9C7974B910}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {F7487469-EDA1-4245-A15E-6E9C7974B910}.Release|Any CPU.Build.0 = Release|Any CPU
-        {F7487469-EDA1-4245-A15E-6E9C7974B910}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}.Release|Any CPU.Build.0 = Release|Any CPU
+        {EB4188FB-0C7B-4DE2-BB7A-1B3167CEB270}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

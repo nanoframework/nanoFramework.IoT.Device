@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{4B4D1213-8298-4C0F-A5D2-D08152A489F6}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd", "CharacterLcd.nfproj", "{BADB30A3-56AE-40D6-B95B-EBE73867BBD5}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{2B6D43C5-63F7-4BC6-95B0-8174668D5285}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Samples", "samples\\CharacterLcd.Samples.nfproj", "{75BFDB57-8BAB-408B-BCC1-0FEEF631A56B}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{2A110D71-BA8F-4DA6-BCE8-E2AFF042777C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CharacterLcd.Tests", "tests\\CharacterLcd.Tests.nfproj", "{19EDC7A4-2465-4ACC-B5A5-86A6115CEB2F}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -18,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {4B4D1213-8298-4C0F-A5D2-D08152A489F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {4B4D1213-8298-4C0F-A5D2-D08152A489F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {4B4D1213-8298-4C0F-A5D2-D08152A489F6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {4B4D1213-8298-4C0F-A5D2-D08152A489F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {4B4D1213-8298-4C0F-A5D2-D08152A489F6}.Release|Any CPU.Build.0 = Release|Any CPU
-        {4B4D1213-8298-4C0F-A5D2-D08152A489F6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {BADB30A3-56AE-40D6-B95B-EBE73867BBD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {BADB30A3-56AE-40D6-B95B-EBE73867BBD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {BADB30A3-56AE-40D6-B95B-EBE73867BBD5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {BADB30A3-56AE-40D6-B95B-EBE73867BBD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {BADB30A3-56AE-40D6-B95B-EBE73867BBD5}.Release|Any CPU.Build.0 = Release|Any CPU
+        {BADB30A3-56AE-40D6-B95B-EBE73867BBD5}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
