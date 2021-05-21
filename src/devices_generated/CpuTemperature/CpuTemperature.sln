@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature", "CpuTemperature.nfproj", "{D5B494A1-3960-411C-AE3B-353EFBC84E70}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature.Samples", "samples\\CpuTemperature.Samples.nfproj", "{8ED81AAA-6164-4E85-B176-7BC69DE41E78}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature", "CpuTemperature.nfproj", "{F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "CpuTemperature.Samples", "samples\\CpuTemperature.Samples.nfproj", "{038CE96E-6E0D-4F4D-9AC1-997888015760}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {D5B494A1-3960-411C-AE3B-353EFBC84E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {D5B494A1-3960-411C-AE3B-353EFBC84E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {D5B494A1-3960-411C-AE3B-353EFBC84E70}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {D5B494A1-3960-411C-AE3B-353EFBC84E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {D5B494A1-3960-411C-AE3B-353EFBC84E70}.Release|Any CPU.Build.0 = Release|Any CPU
+        {D5B494A1-3960-411C-AE3B-353EFBC84E70}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}.Release|Any CPU.Build.0 = Release|Any CPU
         {F8270E9E-0FF5-4B81-8F13-BD0F4E7E909D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

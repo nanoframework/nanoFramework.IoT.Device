@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Nrf24l01", "Nrf24l01.nfproj", "{26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Nrf24l01.Samples", "samples\\Nrf24l01.Samples.nfproj", "{F0EF0BE9-3D2E-4222-9AE8-C78491FAFE24}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Nrf24l01", "Nrf24l01.nfproj", "{0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Nrf24l01.Samples", "samples\\Nrf24l01.Samples.nfproj", "{BCA000A4-36A7-4A3D-AB85-F6A883A88D5B}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+        {26EE03E9-4D56-43C3-B9F6-BD5C9DAFC8B9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}.Release|Any CPU.Build.0 = Release|Any CPU
         {0EF3C1EB-8AEF-4D35-AA85-EC43E9D216EA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

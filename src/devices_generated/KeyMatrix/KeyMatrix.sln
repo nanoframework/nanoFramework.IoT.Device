@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KeyMatrix", "KeyMatrix.nfproj", "{A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KeyMatrix.Sample", "samples\\KeyMatrix.Sample.nfproj", "{E4F733C9-B6FA-443A-8064-9BFEA359D01F}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KeyMatrix", "KeyMatrix.nfproj", "{D66B8953-978B-4EA2-8946-0E7FA8FF4111}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KeyMatrix.Sample", "samples\\KeyMatrix.Sample.nfproj", "{B0E3674C-4A16-4C23-B589-452C0520DE4F}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}.Release|Any CPU.Build.0 = Release|Any CPU
+        {A13DBFF3-8847-4B14-B1B8-0CC0CA4621CC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {D66B8953-978B-4EA2-8946-0E7FA8FF4111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {D66B8953-978B-4EA2-8946-0E7FA8FF4111}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {D66B8953-978B-4EA2-8946-0E7FA8FF4111}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {D66B8953-978B-4EA2-8946-0E7FA8FF4111}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {D66B8953-978B-4EA2-8946-0E7FA8FF4111}.Release|Any CPU.Build.0 = Release|Any CPU
         {D66B8953-978B-4EA2-8946-0E7FA8FF4111}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

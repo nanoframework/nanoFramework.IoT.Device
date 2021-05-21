@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pca95x4", "Pca95x4.nfproj", "{D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pca95x4.Samples", "samples\\Pca95x4.Samples.nfproj", "{FDF140F2-27DF-4BD9-88DC-598528B45308}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pca95x4", "Pca95x4.nfproj", "{BB7AEBE9-5903-4A42-B085-5417D2BD21D5}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pca95x4.Samples", "samples\\Pca95x4.Samples.nfproj", "{004E2844-B0F7-4DE7-8EFF-84CDE4AA59E5}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}.Release|Any CPU.Build.0 = Release|Any CPU
+        {D6FA9C82-2ACA-4D46-B4AF-F35D701828F6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {BB7AEBE9-5903-4A42-B085-5417D2BD21D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {BB7AEBE9-5903-4A42-B085-5417D2BD21D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {BB7AEBE9-5903-4A42-B085-5417D2BD21D5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {BB7AEBE9-5903-4A42-B085-5417D2BD21D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {BB7AEBE9-5903-4A42-B085-5417D2BD21D5}.Release|Any CPU.Build.0 = Release|Any CPU
         {BB7AEBE9-5903-4A42-B085-5417D2BD21D5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

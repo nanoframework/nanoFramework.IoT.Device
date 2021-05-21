@@ -1,3 +1,35 @@
+<<<<<<< HEAD
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Seesaw", "Seesaw.nfproj", "{CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Seesaw.Sample.BlinkingLights", "samples\\Seesaw.Sample.BlinkingLights.nfproj", "{A22ADF48-6393-4A84-ACA1-ED81144E1F97}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Seesaw.Sample.Capabilities", "samples\\Seesaw.Sample.Capabilities.nfproj", "{2FBA6841-F1BA-4901-8244-5ECE0A1C6ADF}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Seesaw.Sample.SoilSensor", "samples\\Seesaw.Sample.SoilSensor.nfproj", "{200882D9-C711-4956-84F0-8E1154F71EEE}"
+EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
+<!-- UNIT TESTS PROJECT PLACEHOLDER -->
+
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+        {CADE7B38-D0FC-40CF-8EC3-B2466C981F2A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+    EndGlobalSection
+EndGlobal
+=======
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
@@ -28,3 +60,4 @@ Global
         {C384ACDD-D67D-4905-AD9B-F90D6DF8CB9C}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437

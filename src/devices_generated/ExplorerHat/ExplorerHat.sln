@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ExplorerHat", "ExplorerHat.nfproj", "{F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ExplorerHat.Sample", "samples\\ExplorerHat.Sample.nfproj", "{EAD507FE-F620-4516-B8BF-1582DB4E0ADF}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ExplorerHat", "ExplorerHat.nfproj", "{3ABE8C45-1232-4451-9F55-998F760946B2}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "ExplorerHat.Sample", "samples\\ExplorerHat.Sample.nfproj", "{6DBF6C2D-4787-4FEF-BB81-DAF89E2C9971}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}.Release|Any CPU.Build.0 = Release|Any CPU
+        {F6E199D5-8E28-4DFA-BAC6-89274EE0A7DF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {3ABE8C45-1232-4451-9F55-998F760946B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {3ABE8C45-1232-4451-9F55-998F760946B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {3ABE8C45-1232-4451-9F55-998F760946B2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {3ABE8C45-1232-4451-9F55-998F760946B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {3ABE8C45-1232-4451-9F55-998F760946B2}.Release|Any CPU.Build.0 = Release|Any CPU
         {3ABE8C45-1232-4451-9F55-998F760946B2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

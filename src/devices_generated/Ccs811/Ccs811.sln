@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ccs811", "Ccs811.nfproj", "{8C398BEF-DBE9-4974-BE38-8115898E7C68}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ccs811.Sample", "samples\\Ccs811.Sample.nfproj", "{DF3DFF79-724F-4D2E-8BDC-D66A3AD75F25}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ccs811", "Ccs811.nfproj", "{04BAB2BB-F861-4329-A9BC-7FA587731FE6}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ccs811.Sample", "samples\\Ccs811.Sample.nfproj", "{B13A9326-FF54-4216-B2D9-D40BE8F455EC}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {8C398BEF-DBE9-4974-BE38-8115898E7C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {8C398BEF-DBE9-4974-BE38-8115898E7C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {8C398BEF-DBE9-4974-BE38-8115898E7C68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {8C398BEF-DBE9-4974-BE38-8115898E7C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {8C398BEF-DBE9-4974-BE38-8115898E7C68}.Release|Any CPU.Build.0 = Release|Any CPU
+        {8C398BEF-DBE9-4974-BE38-8115898E7C68}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {04BAB2BB-F861-4329-A9BC-7FA587731FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {04BAB2BB-F861-4329-A9BC-7FA587731FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {04BAB2BB-F861-4329-A9BC-7FA587731FE6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {04BAB2BB-F861-4329-A9BC-7FA587731FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {04BAB2BB-F861-4329-A9BC-7FA587731FE6}.Release|Any CPU.Build.0 = Release|Any CPU
         {04BAB2BB-F861-4329-A9BC-7FA587731FE6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

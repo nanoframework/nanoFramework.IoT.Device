@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x", "Tsl256x.nfproj", "{4F50E696-60EA-4311-99EE-86FDE4E9E480}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x.sample", "samples\\Tsl256x.sample.nfproj", "{78FBC05B-B51A-46CC-BC57-12353F34761F}"
+=======
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x", "Tsl256x.nfproj", "{8AA5CA98-0578-4347-AE49-9D4A8B72DC89}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x.sample", "samples\\Tsl256x.sample.nfproj", "{BED0269D-6785-4DAC-B64B-4E56A3A27E68}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
+        {4F50E696-60EA-4311-99EE-86FDE4E9E480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {4F50E696-60EA-4311-99EE-86FDE4E9E480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {4F50E696-60EA-4311-99EE-86FDE4E9E480}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {4F50E696-60EA-4311-99EE-86FDE4E9E480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {4F50E696-60EA-4311-99EE-86FDE4E9E480}.Release|Any CPU.Build.0 = Release|Any CPU
+        {4F50E696-60EA-4311-99EE-86FDE4E9E480}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
         {8AA5CA98-0578-4347-AE49-9D4A8B72DC89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {8AA5CA98-0578-4347-AE49-9D4A8B72DC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {8AA5CA98-0578-4347-AE49-9D4A8B72DC89}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {8AA5CA98-0578-4347-AE49-9D4A8B72DC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {8AA5CA98-0578-4347-AE49-9D4A8B72DC89}.Release|Any CPU.Build.0 = Release|Any CPU
         {8AA5CA98-0578-4347-AE49-9D4A8B72DC89}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal
