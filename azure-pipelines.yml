@@ -43,6 +43,18 @@ steps:
   inputs:
     versionSpec: '>=5.9.x'
 
+- task: DotNetCoreCLI@2  
+  displayName: Install NBGV tool
+  condition: succeeded()
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install -g nbgv
+
+- script: nbgv cloud -a -c
+  condition: succeeded()
+  displayName: Set build number
+
 - task: InstallnFBuildComponents@1
   condition: succeeded()
   displayName: Install nanoFramework MSBuild components
@@ -118,7 +130,7 @@ steps:
             & "$msbuild" "$solutionFile" /verbosity:minimal /p:Configuration=Release
 
             # package NuGet
-            nuget pack $nuspecFile -Version 1.0.0.0 -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+            nuget pack $nuspecFile -Version $:env:NBGV_NuGetPackageVersion -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
         }
     }
   
