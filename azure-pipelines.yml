@@ -28,7 +28,6 @@ steps:
 
 # need this here in order to persist GitHub credentials 
 - checkout: self
-  fetchDepth: 1
   submodules: true
 
 - script: |
@@ -43,12 +42,64 @@ steps:
   inputs:
     versionSpec: '>=5.9.x'
 
-# buil solutions that need to be build
+- task: DotNetCoreCLI@2  
+  displayName: Install NBGV tool
+  condition: succeeded()
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install -g nbgv
+
+- script: nbgv cloud -a -c
+  condition: succeeded()
+  displayName: Set build number
+
+- task: PowerShell@2
+  condition: succeeded()
+  displayName: Get NuGet build number
+  inputs:
+    targetType: 'inline'
+    script: |
+      $MyNuGetVersion = $env:NBGV_NuGetPackageVersion -replace ".g$env:NBGV_GitCommitIdShort", ""
+
+      # replace preview with alpha if this is a PR build
+      if($env:System_PullRequest_PullRequestId -ne $null)
+      {
+          # mix PR and VersionHeight
+          $alphaNumber = [int]$env:System_PullRequest_PullRequestNumber + $env:NBGV_VersionHeight;
+
+          $alphaPrString = "alpha." + $alphaNumber.ToString()
+          $MyNuGetVersion = $MyNuGetVersion -replace "preview", $alphaPrString
+      }
+      if ($env:System_PullRequest_SourceBranch -like 'release*')
+      {
+          $MyNuGetVersion = $MyNuGetVersion + "-rc." + $env:NBGV_VersionHeight
+      }
+
+      Write-Host "NuGet build is: $MyNuGetVersion"
+      Write-Host "Assembly version is: $env:NBGV_AssemblyVersion"
+
+      Write-Host "$("##vso[task.setvariable variable=MY_NUGET_VERSION]")$MyNuGetVersion"
+
+- task: InstallnFBuildComponents@1
+  condition: succeeded()
+  displayName: Install nanoFramework MSBuild components
+
+# build solutions that need to be build
 - powershell: |
+    # setup msbuild
+    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+    if ($msbuild) {
+        $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
+    }
+
     $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$(GitHubToken)"))))"
   
     if($env:System_PullRequest_PullRequestId -ne $null)
     {
+        Write-host "Building from PR"
+
         # get files changed in PR, if this is a PR
         $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -57,6 +108,8 @@ steps:
     }
     else
     {
+        Write-host "Building from other branch"
+
         # get files changed in the commit, if this is NOT a PR
         $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -65,7 +118,7 @@ steps:
     }
 
     # get file names only
-    $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'src/devices*'} 
+    $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'devices*'} 
 
     Write-host "Files changed:"
     $files1 | % { Write-host $_ }
@@ -85,10 +138,10 @@ steps:
         Write-host "Processing '$folder'"
         
         # find solution
-        $solutionFile = Get-ChildItem -Path "src\devices\$folder\" -Include "*.sln" -Recurse
+        $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "*.sln" -Recurse
 
         # find nuspec
-        $nuspecFile = Get-ChildItem -Path "src\devices\$folder\" -Include "*.nuspec" -Recurse
+        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "*.nuspec" -Recurse
 
         if($null -eq $solutionFile)
         {
@@ -100,13 +153,14 @@ steps:
             nuget restore $solutionFile
 
             # build solution
-            msbuild $solutionFile -t:Rebuild -p:Configuration=Release;platform="Any CPU"
+            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
 
             # package NuGet
-            nuget pack $nuspecFile -Version 1.0.0.0 -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+            nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
         }
     }
-
+  displayName: Build and pack solutions
+  
 - task: CopyFiles@1
   condition: succeeded()
   displayName: Collecting deployable artifacts
@@ -117,6 +171,29 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 
+- task: DotNetCoreCLI@2
+  displayName: Install SignTool tool
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install --tool-path . SignClient
+
+- pwsh: |
+    .\SignClient "Sign" `
+    --baseDirectory "$(Build.ArtifactStagingDirectory)" `
+    --input "**/*.nupkg" `
+    --config "$(Build.Repository.LocalPath)\config\SignClient.json" `
+    --filelist "$(Build.Repository.LocalPath)\config\filelist.txt" `
+    --user "$(SignClientUser)" `
+    --secret '$(SignClientSecret)' `
+    --name "$(nugetPackageName)" `
+    --description "$(nugetPackageName)" `
+    --descriptionUrl "https://github.com/$env:Build_Repository_Name"
+  displayName: Sign packages
+  continueOnError: true
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  
 # publish artifacts (only possible if this is not a PR originated on a fork)
 - task: PublishBuildArtifacts@1
   condition: succeeded()
@@ -125,7 +202,19 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: deployables
     ArtifactType: Container
-  
+
+# push NuGet class lib package to NuGet (always happens except on PR builds)
+- task: NuGetCommand@2
+  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+  continueOnError: true
+  displayName: Push NuGet packages to NuGet
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+
 # step from template @ nf-tools repo
 # report error
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
