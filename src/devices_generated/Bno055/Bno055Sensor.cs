@@ -536,7 +536,7 @@ namespace Iot.Device.Bno055
 
         private Vector3 GetVectorData(Registers reg)
         {
-            Span<Byte> retArray = new byte[6];
+            SpanByte retArray = new byte[6];
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(retArray);
             var x = BinaryPrimitives.ReadInt16LittleEndian(retArray);

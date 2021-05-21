@@ -509,7 +509,7 @@ namespace Iot.Device.LEDMatrix
         /// <param name="bkG">Green channel of the text background</param>
         /// <param name="bkB">Blue channel of the text background</param>
         /// <param name="backBuffer">Set to true if drawing on the backing buffer. Defaults to false.</param>
-        public void DrawText(int x, int y, ReadOnlySpan<char> text, BdfFont font, byte textR, byte textG, byte textB,
+        public void DrawText(int x, int y, SpanChar text, BdfFont font, byte textR, byte textG, byte textB,
             byte bkR, byte bkG, byte bkB, bool backBuffer = false)
         {
             int charWidth = font.Width;
@@ -589,7 +589,7 @@ namespace Iot.Device.LEDMatrix
             int firstColumnToDraw = x < 0 ? Math.Abs(x) : 0;
             int lastColumnToDraw = x + font.Width > Width ? Width - x : font.Width;
 
-            font.GetCharData(c, out ReadOnlySpan<ushort> charData);
+            font.GetCharData(c, out SpanUshort charData);
 
             int b = 8 * (sizeof(ushort) - (int)Math.Ceiling(((double)font.Width) / 8)) + firstColumnToDraw;
 

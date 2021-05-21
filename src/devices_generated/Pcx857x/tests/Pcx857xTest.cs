@@ -161,7 +161,7 @@ namespace Iot.Device.Pcx857x.Tests
                 return PinValue.Low;
             }
 
-            public void Read(Span<PinValuePair> pinValues)
+            public void Read(SpanPinValuePair pinValues)
             {
                 for (int i = 0; i < pinValues.Length; i++)
                 {
@@ -180,7 +180,7 @@ namespace Iot.Device.Pcx857x.Tests
                 _pinValues[pinNumber] = value;
             }
 
-            public void Write(ReadOnlySpan<PinValuePair> pinValues)
+            public void Write(SpanPinValuePair pinValues)
             {
                 foreach ((int pin, PinValue value) in pinValues)
                 {

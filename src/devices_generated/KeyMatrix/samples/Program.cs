@@ -71,7 +71,7 @@ void ShowKeyMatrixEvent(KeyMatrix sender, KeyMatrixEvent pinValueChangedEventArg
     // print keyboard status
     for (int r = 0; r < sender.OutputPins.Count(); r++)
     {
-        ReadOnlySpan<PinValue> rv = sender[r];
+        SpanPinValue rv = sender[r];
         for (int c = 0; c < sender.InputPins.Count(); c++)
         {
             Console.Write(rv[c] == PinValue.Low ? " ." : " #");

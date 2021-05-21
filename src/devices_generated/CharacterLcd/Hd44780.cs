@@ -151,7 +151,7 @@ namespace Iot.Device.CharacterLcd
         /// Sends data to the device
         /// </summary>
         /// <param name="values">Data to be send to the device</param>
-        protected void SendData(ReadOnlySpan<char> values) => _lcdInterface.SendData(values);
+        protected void SendData(SpanChar values) => _lcdInterface.SendData(values);
 
         /// <summary>
         /// Send commands to the device
@@ -410,7 +410,7 @@ namespace Iot.Device.CharacterLcd
         /// Used if character translation already took place
         /// </summary>
         /// <param name="text">Text to print</param>
-        public void Write(ReadOnlySpan<char> text) => SendData(text);
+        public void Write(SpanChar text) => SendData(text);
 
         /// <summary>
         /// Releases unmanaged resources used by Hd44780

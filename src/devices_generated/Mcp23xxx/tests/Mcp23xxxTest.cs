@@ -214,7 +214,7 @@ namespace Iot.Device.Mcp23xxx.Tests
                 return PinValue.Low;
             }
 
-            public void Read(Span<PinValuePair> pinValuePairs)
+            public void Read(SpanPinValuePair pinValuePairs)
             {
                 for (int i = 0; i < pinValuePairs.Length; i++)
                 {

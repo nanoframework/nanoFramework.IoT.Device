@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{612624E2-56E5-4962-9AEB-B5DDA25DED3B}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio.Samples", "samples\\Iot.Device.Gpio.Samples.nfproj", "{5988625E-E553-4A0A-BAA6-F42E244B0794}"
-=======
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio", "Iot.Device.Gpio.nfproj", "{27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio.Samples", "samples\\Iot.Device.Gpio.Samples.nfproj", "{E6E94D73-BD1A-4725-A081-C6373B583F5B}"
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Gpio.Samples", "samples\\Iot.Device.Gpio.Samples.nfproj", "{A05E1467-F5AD-4219-8EB8-8801C6FC76C6}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -22,20 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-        {014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}.Release|Any CPU.Build.0 = Release|Any CPU
-        {014E03C8-0DEB-4934-8EEA-E5F4FFE35E84}.Release|Any CPU.Deploy.0 = Release|Any CPU
-=======
-        {27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}.Release|Any CPU.Build.0 = Release|Any CPU
-        {27A7B3C9-79DC-475A-A0B3-A3CF1D5ECAFE}.Release|Any CPU.Deploy.0 = Release|Any CPU
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+        {612624E2-56E5-4962-9AEB-B5DDA25DED3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {612624E2-56E5-4962-9AEB-B5DDA25DED3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {612624E2-56E5-4962-9AEB-B5DDA25DED3B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {612624E2-56E5-4962-9AEB-B5DDA25DED3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {612624E2-56E5-4962-9AEB-B5DDA25DED3B}.Release|Any CPU.Build.0 = Release|Any CPU
+        {612624E2-56E5-4962-9AEB-B5DDA25DED3B}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

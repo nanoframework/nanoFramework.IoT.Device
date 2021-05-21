@@ -185,7 +185,7 @@ namespace Iot.Device.CharacterLcd
                 }
             }
 
-            public override void SendData(ReadOnlySpan<char> values)
+            public override void SendData(SpanChar values)
             {
                 _controller.Write(_rsPin, PinValue.High);
                 foreach (byte value in values)
@@ -234,7 +234,7 @@ namespace Iot.Device.CharacterLcd
 
                 if (changedCount > 0)
                 {
-                    _controller.Write(new ReadOnlySpan<PinValuePair>(_pinBuffer, 0, changedCount));
+                    _controller.Write(new SpanPinValuePair(_pinBuffer, 0, changedCount));
                 }
 
                 _useLastByte = true;

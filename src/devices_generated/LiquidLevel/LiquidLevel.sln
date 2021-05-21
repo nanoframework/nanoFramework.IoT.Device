@@ -3,19 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevel", "LiquidLevel.nfproj", "{49107CB7-B740-4816-B210-0EA5E4F41B09}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevel", "LiquidLevel.nfproj", "{38100D7B-175A-4264-8E8D-603FBA5BF2BA}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\\LiquidLevelSwitch.Sample.nfproj", "{A2FDB811-43F3-4FF6-A2AE-70DBB07686E2}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\\Llc200d3sh.Sample.nfproj", "{FCC75CBF-7779-4032-A995-7A4DA650E82C}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\\Llc200d3sh.Sample.nfproj", "{FB31EFA6-A140-4EB8-94F6-6AB3156C9316}"
-=======
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevel", "LiquidLevel.nfproj", "{E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\\Llc200d3sh.Sample.nfproj", "{4BF1C1EF-7565-4DE0-B776-F39614773F52}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\\LiquidLevelSwitch.Sample.nfproj", "{C4F038B4-A25D-4C28-BEE4-07CD16AE8AC1}"
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\\LiquidLevelSwitch.Sample.nfproj", "{C175B6E8-48B1-4A80-BC63-F1115D5CA9C1}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -26,20 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-        {49107CB7-B740-4816-B210-0EA5E4F41B09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {49107CB7-B740-4816-B210-0EA5E4F41B09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {49107CB7-B740-4816-B210-0EA5E4F41B09}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {49107CB7-B740-4816-B210-0EA5E4F41B09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {49107CB7-B740-4816-B210-0EA5E4F41B09}.Release|Any CPU.Build.0 = Release|Any CPU
-        {49107CB7-B740-4816-B210-0EA5E4F41B09}.Release|Any CPU.Deploy.0 = Release|Any CPU
-=======
-        {E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}.Release|Any CPU.Build.0 = Release|Any CPU
-        {E1D7595C-B1D8-4DAE-9D19-99AE4B5A763E}.Release|Any CPU.Deploy.0 = Release|Any CPU
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+        {38100D7B-175A-4264-8E8D-603FBA5BF2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {38100D7B-175A-4264-8E8D-603FBA5BF2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {38100D7B-175A-4264-8E8D-603FBA5BF2BA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {38100D7B-175A-4264-8E8D-603FBA5BF2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {38100D7B-175A-4264-8E8D-603FBA5BF2BA}.Release|Any CPU.Build.0 = Release|Any CPU
+        {38100D7B-175A-4264-8E8D-603FBA5BF2BA}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

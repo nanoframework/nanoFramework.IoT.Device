@@ -13,7 +13,7 @@ namespace Iot.Device.Common.Tests
         public void SpanTests()
         {
             string hello = "Hello!";
-            ReadOnlySpan<char> helloSpan = hello.AsSpan();
+            SpanChar helloSpan = hello.AsSpan();
             Assert.True(helloSpan.StartsWith("He", StringComparison.OrdinalIgnoreCase));
             Assert.True(helloSpan.StartsWith("hello", StringComparison.OrdinalIgnoreCase));
             Assert.True(helloSpan.Contains("!".AsSpan(), StringComparison.Ordinal));

@@ -207,7 +207,7 @@ void DisplayClock(Ssd1306 ssd1306)
     {
         using (Image<Rgba32> image = new Image<Rgba32>(128, 32))
         {
-            if (image.TryGetSinglePixelSpan(out Span<Rgba32> imageSpan))
+            if (image.TryGetSinglePixelSpan(out SpanRgba32 imageSpan))
             {
                 imageSpan.Fill(Color.Black);
             }
