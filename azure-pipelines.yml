@@ -28,7 +28,6 @@ steps:
 
 # need this here in order to persist GitHub credentials 
 - checkout: self
-  fetchDepth: 1
   submodules: true
 
 - script: |
@@ -59,7 +58,7 @@ steps:
   condition: succeeded()
   displayName: Install nanoFramework MSBuild components
 
-# buil solutions that need to be build
+# build solutions that need to be build
 - powershell: |
     # setup msbuild
     $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -127,12 +126,13 @@ steps:
             nuget restore $solutionFile
 
             # build solution
-            & "$msbuild" "$solutionFile" /verbosity:minimal /p:Configuration=Release
+            & "$msbuild" "$solutionFile" /verbosity:detailed /p:Configuration=Release
 
             # package NuGet
-            nuget pack $nuspecFile -Version $:env:NBGV_NuGetPackageVersion -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+            nuget pack $nuspecFile -Version $env:NBGV_NuGetPackageVersion -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
         }
     }
+  displayName: Build and pack solutions
   
 - task: CopyFiles@1
   condition: succeeded()
