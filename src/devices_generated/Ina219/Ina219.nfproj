@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{83ACEAE1-3321-4FB7-BE0F-68316D11ADE0}</ProjectGuid>
+    <ProjectGuid>{510B46D7-10E8-40C0-9C16-1E476F75BC8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -56,4 +56,11 @@
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
+  <Import Project="packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets'))" />
+  </Target>
 </Project>

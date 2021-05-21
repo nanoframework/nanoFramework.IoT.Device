@@ -42,7 +42,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="command">The command to send to the display controller.</param>
         private void SendCommand(ICommand command)
         {
-            SpanByte commandBytes = command?.GetBytes();
+            byte[]? commandBytes = command?.GetBytes();
 
             if (commandBytes is not { Length: >0 })
             {

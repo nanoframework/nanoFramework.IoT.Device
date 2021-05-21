@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx", "Mcp23xxx.nfproj", "{AC220B0B-E098-4832-830F-886EA654C1E4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx", "Mcp23xxx.nfproj", "{36A88CEE-85E2-4CE0-A9AA-1026C014D715}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Samples", "samples\\Mcp23xxx.Samples.nfproj", "{491DC226-0A71-4B79-9F88-EAA81A02A8F0}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Samples", "samples\\Mcp23xxx.Samples.nfproj", "{894428AC-8F4E-4382-B067-A050E27E6C6F}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Tests", "tests\\Mcp23xxx.Tests.nfproj", "{16DBFD81-E60C-4610-A97F-A751020F15E2}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Tests", "tests\\Mcp23xxx.Tests.nfproj", "{9F26CC6E-A133-48B1-87B3-C7F41FC11134}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -18,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {AC220B0B-E098-4832-830F-886EA654C1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {AC220B0B-E098-4832-830F-886EA654C1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {AC220B0B-E098-4832-830F-886EA654C1E4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {AC220B0B-E098-4832-830F-886EA654C1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {AC220B0B-E098-4832-830F-886EA654C1E4}.Release|Any CPU.Build.0 = Release|Any CPU
-        {AC220B0B-E098-4832-830F-886EA654C1E4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {36A88CEE-85E2-4CE0-A9AA-1026C014D715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {36A88CEE-85E2-4CE0-A9AA-1026C014D715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {36A88CEE-85E2-4CE0-A9AA-1026C014D715}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {36A88CEE-85E2-4CE0-A9AA-1026C014D715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {36A88CEE-85E2-4CE0-A9AA-1026C014D715}.Release|Any CPU.Build.0 = Release|Any CPU
+        {36A88CEE-85E2-4CE0-A9AA-1026C014D715}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x", "Tsl256x.nfproj", "{AE03B094-A3A2-49FA-8658-7852D4F3A029}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x", "Tsl256x.nfproj", "{A92661B7-D4F2-4D0B-848D-65C1B1800E1D}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x.sample", "samples\\Tsl256x.sample.nfproj", "{92496AF5-9C57-4222-87C3-B58A484E5719}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tsl256x.sample", "samples\\Tsl256x.sample.nfproj", "{587F3145-28F4-4D18-8178-6DC7E1C5101B}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {AE03B094-A3A2-49FA-8658-7852D4F3A029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {AE03B094-A3A2-49FA-8658-7852D4F3A029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {AE03B094-A3A2-49FA-8658-7852D4F3A029}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {AE03B094-A3A2-49FA-8658-7852D4F3A029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {AE03B094-A3A2-49FA-8658-7852D4F3A029}.Release|Any CPU.Build.0 = Release|Any CPU
-        {AE03B094-A3A2-49FA-8658-7852D4F3A029}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {A92661B7-D4F2-4D0B-848D-65C1B1800E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {A92661B7-D4F2-4D0B-848D-65C1B1800E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {A92661B7-D4F2-4D0B-848D-65C1B1800E1D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {A92661B7-D4F2-4D0B-848D-65C1B1800E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {A92661B7-D4F2-4D0B-848D-65C1B1800E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+        {A92661B7-D4F2-4D0B-848D-65C1B1800E1D}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

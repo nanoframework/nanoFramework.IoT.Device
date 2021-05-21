@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{35650ECB-03A5-4CC3-A45F-E2304FADB06D}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{176553A8-0951-49A2-8F74-D785441FA46F}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme280.sample", "samples\\Bme280.sample.nfproj", "{80F37B58-F4E7-41E5-A085-514DBCF842C0}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme280.sample", "samples\\Bme280.sample.nfproj", "{CDF08B05-ACE0-4411-9C8F-C3F5F1A256A9}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme680.sample", "samples\\Bme680.sample.nfproj", "{3BE78139-5D5D-4869-A88D-7D4EDB6EC1E2}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bme680.sample", "samples\\Bme680.sample.nfproj", "{50058D77-0501-4B1D-9D34-C4D12F07889A}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmp280.sample", "samples\\Bmp280.sample.nfproj", "{6DD03E1C-519E-41BB-897B-EEF8F06C6F19}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmp280.sample", "samples\\Bmp280.sample.nfproj", "{291E1D85-0ABD-4450-8410-19050B3B9838}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\\Bmxx80.Tests.nfproj", "{4998D0E8-BA69-4F4E-B4EB-52C55D56EAD4}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.Tests", "tests\\Bmxx80.Tests.nfproj", "{D6D2BB34-6F82-4C50-A72C-400BA2918F71}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -22,11 +22,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {35650ECB-03A5-4CC3-A45F-E2304FADB06D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {35650ECB-03A5-4CC3-A45F-E2304FADB06D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {35650ECB-03A5-4CC3-A45F-E2304FADB06D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {35650ECB-03A5-4CC3-A45F-E2304FADB06D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {35650ECB-03A5-4CC3-A45F-E2304FADB06D}.Release|Any CPU.Build.0 = Release|Any CPU
-        {35650ECB-03A5-4CC3-A45F-E2304FADB06D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {176553A8-0951-49A2-8F74-D785441FA46F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {176553A8-0951-49A2-8F74-D785441FA46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {176553A8-0951-49A2-8F74-D785441FA46F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {176553A8-0951-49A2-8F74-D785441FA46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {176553A8-0951-49A2-8F74-D785441FA46F}.Release|Any CPU.Build.0 = Release|Any CPU
+        {176553A8-0951-49A2-8F74-D785441FA46F}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
