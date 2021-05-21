@@ -147,7 +147,7 @@ void SendMessageSsd1327(Ssd1327 device, string message)
     foreach (char character in message)
     {
         byte[] charBitMap = BasicFont.GetCharacterBytes(character);
-        List<byte> data = new List<byte>();
+        ListByte data = new ListByte();
         for (var i = 0; i < charBitMap.Length; i = i + 2)
         {
             for (var j = 0; j < 8; j++)

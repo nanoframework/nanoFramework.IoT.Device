@@ -5,7 +5,6 @@ using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Text;
 using Iot.Device.Common;
 using Microsoft.Extensions.Logging;
@@ -48,7 +47,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <summary>
         /// A list of Tags that is contained by the Credit Card
         /// </summary>
-        public List<Tag> Tags { get; internal set; }
+        public ListTag Tags { get; internal set; }
 
         /// <summary>
         /// The list of log entries in binary format
@@ -67,7 +66,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         {
             _nfc = nfc;
             _target = target;
-            Tags = new List<Tag>();
+            Tags = new ListTag();
             LogEntries = new List<byte[]>();
             TailerSize = tailerSize;
             _logger = this.GetCurrentClassLogger();
@@ -247,7 +246,7 @@ namespace Iot.Device.Card.CreditCardProcessing
             return ErrorType.Unknown;
         }
 
-        private void FillTagList(List<Tag> tags, SpanByte span, uint parent = 0x00)
+        private void FillTagList(ListTag tags, SpanByte span, uint parent = 0x00)
         {
             // We don't decode template 0x80
             if (span.Length == 0)
@@ -263,7 +262,7 @@ namespace Iot.Device.Card.CreditCardProcessing
                 {
                     if (tag.Tags is null)
                     {
-                        tag.Tags = new List<Tag>();
+                        tag.Tags = new ListTag();
                     }
 
                     FillTagList(tag.Tags, tag.Data, tag.TagNumber);
@@ -276,7 +275,7 @@ namespace Iot.Device.Card.CreditCardProcessing
                 {
                     if (tag.Tags is null)
                     {
-                        tag.Tags = new List<Tag>();
+                        tag.Tags = new ListTag();
                     }
 
                     DecodeDol(tag);
@@ -354,7 +353,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         private bool FillTags()
         {
             // Find all Application Template = 0x61
-            List<Tag> appTemplates = Tag.SearchTag(Tags, 0x61);
+            ListTag appTemplates = Tag.SearchTag(Tags, 0x61);
             if (appTemplates.Count > 0)
             {
                 _logger.LogDebug($"Number of App Templates: {appTemplates.Count}");
@@ -488,7 +487,7 @@ namespace Iot.Device.Card.CreditCardProcessing
                         {
                             // Now decode the appLocator
                             // Format is SFI - start - stop - number of records
-                            List<ApplicationDataDetail> details = new List<ApplicationDataDetail>();
+                            ListApplicationDataDetail details = new ListApplicationDataDetail();
                             for (int i = 0; i < appLocator.Data.Length / 4; i++)
                             {
                                 ApplicationDataDetail detail = new ApplicationDataDetail()

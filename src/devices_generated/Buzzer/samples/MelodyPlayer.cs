@@ -28,7 +28,7 @@ namespace Iot.Device.Buzzer.Samples
         /// <param name="sequence">Sequence of pauses and notes elements to be played.</param>
         /// <param name="tempo">Tempo of melody playing.</param>
         /// <param name="tonesToTranspose">Tones to transpose</param>
-        public void Play(IList<MelodyElement> sequence, int tempo, int tonesToTranspose = 0)
+        public void Play(ListMelodyElement sequence, int tempo, int tonesToTranspose = 0)
         {
             _wholeNoteDurationInMilliseconds = GetWholeNoteDurationInMilliseconds(tempo);
             sequence = TransposeSequence(sequence, tonesToTranspose);
@@ -38,7 +38,7 @@ namespace Iot.Device.Buzzer.Samples
             }
         }
 
-        private static IList<MelodyElement> TransposeSequence(IList<MelodyElement> sequence, int tonesToTranspose)
+        private static ListMelodyElement TransposeSequence(ListMelodyElement sequence, int tonesToTranspose)
         {
             if (tonesToTranspose == 0)
             {

@@ -21,7 +21,7 @@ namespace Iot.Device.Ndef
         /// <summary>
         /// List of all NDEF Records
         /// </summary>
-        public List<NdefRecord> Records { get; set; } = new List<NdefRecord>();
+        public ListNdefRecord Records { get; set; } = new ListNdefRecord();
 
         /// <summary>
         /// Create an empty NDEF Message

@@ -9,7 +9,7 @@ using UnitsNet;
 
 Debug.WriteLine("Hello Hcsr04 Sample!");
 
-using Hcsr04 sonar = new(4, 17);
+using Hcsr04 sonar = new(12, 14);
 while (true)
 {
     if (sonar.TryGetDistance(out Length distance))

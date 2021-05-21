@@ -9,12 +9,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
 {
     class Program
     {
+        private const string _repoRoot = "../../../";
         private const string _unitTestProjectGuidReplacementToken = "<!--UNIT TEST PROJECT GUID GOES HERE-->";
         private const string _sampleProjectGuidReplacementToken = "<!--SAMPLES PROJECT GUID GOES HERE-->";
         private const string _outputTypeReplacementToken = "<!-- OUTPUT TYPE -->";
         private const string _unitTestProjectPlaceholderToken = "<!-- UNIT TESTS PROJECT PLACEHOLDER -->";
         private const string _sampleProjectPlaceholderToken = "<!-- SAMPLES PROJECT PLACEHOLDER -->";
-
 
         static void Main(string[] args)
         {
@@ -28,17 +28,26 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 outputDirectoryInfo.Delete(true);
             }
 
-            var targetProjectTemplateDirectory = Directory.GetDirectories("../../../", configuration.TargetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetProjectTemplateDirectory = Directory
+                .GetDirectories(_repoRoot, configuration.TargetProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
-                .FirstOrDefault();
+                .First();
+
             Console.WriteLine($"targetProjectTemplateDirectory={targetProjectTemplateDirectory}");
 
-            var targetUnitTestProjectTemplateDirectory = Directory.GetDirectories("../../../", configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
+            var targetUnitTestProjectTemplateDirectory = Directory
+                .GetDirectories(_repoRoot, configuration.TargetUnitTestProjectTemplateName, new EnumerationOptions { RecurseSubdirectories = true })
                 .Select(x => new DirectoryInfo(x))
-                .FirstOrDefault();
+                .First();
 
-            var sourceProjectFiles = Directory.GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
-                .Where(x => configuration.FilePathFilters.Any(d => x.Contains(d)))
+            var genericsTemplatesDirectory = Directory
+                .GetDirectories(_repoRoot, configuration.GenericsTemplatesFolderName, new EnumerationOptions { RecurseSubdirectories = true })
+                .Select(x => new DirectoryInfo(x))
+                .First();
+
+            var sourceProjectFiles = Directory
+                .GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
+                .Where(x => configuration.FilePathFilters.Any(x.Contains))
                 .Select(x => new FileInfo(x))
                 .ToList();
 
@@ -98,21 +107,41 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
                 foreach (var file in targetDirectoryInfo.GetFiles("*.cs", new EnumerationOptions { RecurseSubdirectories = true }))
                 {
+                    Dictionary<string, string> replacements = new () {
+                        { "stackalloc", "new" },
+                        { "ReadOnlySpan<byte>", "SpanByte" },
+                        { "Span<byte>", "SpanByte" },
+                        { "DateTime.Now", "DateTime.UtcNow" },
+                        { ".AsSpan(start, length)", string.Empty },
+                        { "Console.WriteLine(", "Debug.WriteLine(" },
+                        { "using System.Diagnostics.CodeAnalysis;", "" },
+                        { "\\[MemberNotNull.*\\]", "" },
+                    };
+
+                    var listReplacements = file.GenerateGenerics(
+                        templatesFolder: genericsTemplatesDirectory.FullName, 
+                        containerType: "List",
+                        containerTypeSynonyms: new [] {"List", "IList", "IReadOnlyList"},
+                        // All generics go to the main project of the binding to avoid conflicts between the projects.
+                        // This will cause rare issues when a type is defined int the samples/tests project,
+                        // but the generic container is placed to the main project from where it's not visible.
+                        // There's also an issue if the main project isn't visible from samples/tests which want 
+                        // to use this generic.
+                        // If this proves problematic, one needs to refine the algorithm to choose the target
+                        // directory for the generics individually and more precisely.
+                        outputDirectory: projectType is ProjectType.Regular ? file.DirectoryName : file.Directory!.Parent!.FullName);
+
+                    foreach (var (key, value) in listReplacements)
+                    {
+                        replacements[key] = value;
+                    }
+
                     searches = file.EditFile(
-                        new Dictionary<string, string>
-                        {
-                            { "stackalloc", "new" },
-                            { "ReadOnlySpan<byte>", "SpanByte" },
-                            { "Span<byte>", "SpanByte" },
-                            { "DateTime.Now", "DateTime.UtcNow" },
-                            { ".AsSpan(start, length)", string.Empty },
-                            { "Console.WriteLine(", "Debug.WriteLine(" },
-                            { "using System.Diagnostics.CodeAnalysis;", "" },
-                            { "\\[MemberNotNull.*\\]", "" },
-                        },
+                        replacements,
                         nfNugetPackages,
                         searches);
                 }
+                
 
                 // PROJECT FILE
                 string[] oldProjectReferences;
@@ -500,6 +529,7 @@ EndProject";
         public string FilePathFilters { get; set; }
         public string TargetProjectTemplateName { get; set; }
         public string TargetUnitTestProjectTemplateName { get; set; }
+        public string GenericsTemplatesFolderName { get; set; }
         public string OutputDirectoryPath { get; set; }
     }
 
@@ -541,9 +571,101 @@ EndProject";
             return null;
         }
     }
+    
+    public static class StringExtensions
+    {
+        public static string FirstCharToUpper(this string input) =>
+            input switch
+            {
+                null => throw new ArgumentNullException(nameof(input)),
+                "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
+                _ => input.First().ToString().ToUpper() + input.Substring(1),
+            };
+    }
+
 
     public static class FileInfoExtensions
     {
+        public static Dictionary<string, string> GenerateGenerics(
+            this FileInfo sourceFile,
+            string templatesFolder,
+            string containerType,
+            IList<string> containerTypeSynonyms,
+            string outputDirectory
+        )
+        {
+            if (!sourceFile.Exists)
+            {
+                return null;
+            }
+
+            string fileContent = File.ReadAllText(sourceFile.FullName);
+
+            // e.g. match List<byte> and IList<byte> but avoid matching List<T> or List<byte[]>
+            var listRegex = new Regex(
+                @"\b(" + 
+                string.Join('|', containerTypeSynonyms.Select(Regex.Escape)) +
+                @")<(\w{2,})>");  
+
+            // Extract all used generic types, such as "byte" from "List<byte>" 
+            var types = listRegex.Matches(fileContent).Select(match => match.Groups[2].Value).ToHashSet();
+
+            Dictionary<string, string> result = new();
+            foreach (string type in types)
+            {
+                var newType = GenerateGenericContainer(
+                    templatePath: Path.Combine(templatesFolder, $"{containerType}.cs"),
+                    containerType: containerType,
+                    genericType: type,
+                    outputDirectory: outputDirectory
+                );
+
+                foreach (var oldType in containerTypeSynonyms)
+                {
+                    // This won't replace the type that g
+                    foreach (var prefix in new[] {" ", "\t", "(", "<"})
+                    {
+                        result[$"{prefix}{oldType}<{type}>"] = prefix + newType;
+                    }
+
+                    result["^" + Regex.Escape($"{oldType}<{type}>")] = newType; // replace in the very beginning of the line using regex
+                }
+            }
+            
+            return result;
+        }
+
+        private static string GenerateGenericContainer(
+            string templatePath, 
+            string containerType, 
+            string genericType, 
+            string outputDirectory)
+        {
+            var template = File.ReadAllText(templatePath);
+            var newContainerType = $"{containerType}{genericType.FirstCharToUpper()}";
+            
+            template = template
+                // Replace generic interfaces by their normal forms
+                .Replace("IEnumerable<T>", "IEnumerable")
+                .Replace("IEnumerator<T>", "IEnumerator")
+                // constructor, always public containerType( as it's a function
+                .Replace($"public {containerType}(", $"public {newContainerType}(")
+                .Replace("<T>", genericType.FirstCharToUpper())
+                // then arrays
+                .Replace("T[]", $"{genericType}[]")
+                // Then simple T but check few combinations
+                .Replace(" T ", $" {genericType} ")
+                .Replace(" T>", $" {genericType}>")
+                .Replace("(T)", $"({genericType})")
+                .Replace("(T ", $"({genericType} ")
+                .Replace(" T)", $" {genericType})")
+                .Replace(" T[", $" {genericType}[");
+
+            File.WriteAllText(Path.Combine(outputDirectory, $"{newContainerType}.cs"), template);
+
+            return newContainerType;
+        }
+        
         public static Dictionary<string, bool> EditFile(
             this FileInfo sourceFile,
             Dictionary<string, string> replacements,
@@ -569,7 +691,7 @@ EndProject";
                             }
                             try
                             {
-                                if (replacement.Key.Contains(".*"))
+                                if (new[] {".*", "^"}.Any(regexHint => replacement.Key.Contains(regexHint)))
                                 {
                                     var regexMatch = Regex.Match(line, replacement.Key).Value;
                                     if (string.IsNullOrEmpty(regexMatch) == false)
@@ -583,11 +705,11 @@ EndProject";
 
                         if (checkIfFound != null)
                         {
-                            foreach (var check in checkIfFound)
+                            foreach (var check in checkIfFound.Keys)
                             {
-                                if (line.Contains(check.Key))
+                                if (line.Contains(check))
                                 {
-                                    checkIfFound[check.Key] = true;
+                                    checkIfFound[check] = true;
                                 }
                             }
                         }

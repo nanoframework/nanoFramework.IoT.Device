@@ -223,7 +223,7 @@ namespace Iot.Device.CharacterLcd
 
             text = text.Replace("\r\n", "\n"); // Change to linux format only, so we have to consider only this case further
 
-            List<string> lines = text.Split("\n", StringSplitOptions.None).ToList();
+            ListString lines = text.Split('\n').ToList();
             FindLineWraps(CursorLeft, lines);
             for (int i = 0; i < lines.Count; i++)
             {
@@ -282,7 +282,7 @@ namespace Iot.Device.CharacterLcd
         /// <summary>
         /// Find where we need to insert additional newlines
         /// </summary>
-        private void FindLineWraps(int cursorPos, List<string> lines)
+        private void FindLineWraps(int cursorPos, ListString lines)
         {
             if (LineFeedMode == LineWrapMode.Wrap || LineFeedMode == LineWrapMode.WordWrap)
             {

@@ -9,7 +9,7 @@ using Iot.Device.Buzzer;
 using Iot.Device.Buzzer.Samples;
 
 // Alphabet song: https://en.wikipedia.org/wiki/Alphabet_song#/media/File:Alphabet_song.png
-IList<MelodyElement> alphabetSong = new List<MelodyElement>()
+ListMelodyElement alphabetSong = new ListMelodyElement()
 {
     new NoteElement(Note.C, Octave.Fourth, Duration.Quarter),   // A
     new NoteElement(Note.C, Octave.Fourth, Duration.Quarter),   // B

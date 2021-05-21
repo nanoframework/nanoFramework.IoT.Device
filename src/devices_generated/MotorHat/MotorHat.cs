@@ -27,7 +27,7 @@ namespace Iot.Device.MotorHat
         /// <summary>
         /// Holds every channel that is being used by either a DCMotor, Stepper, ServoMotor, or PWM
         /// </summary>
-        private List<PwmChannel> _channelsUsed = new List<PwmChannel>();
+        private ListPwmChannel _channelsUsed = new ListPwmChannel();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MotorHat"/> class with the specified I2C settings and PWM frequency.
