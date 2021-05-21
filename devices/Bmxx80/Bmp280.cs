@@ -5,6 +5,7 @@ using System.Device.I2c;
 using System.Threading;
 using Iot.Device.Bmxx80.PowerMode;
 using Iot.Device.Bmxx80.ReadResult;
+using UnitsNet;
 
 namespace Iot.Device.Bmxx80
 {
@@ -40,10 +41,10 @@ namespace Iot.Device.Bmxx80
                 Thread.Sleep(GetMeasurementDuration());
             }
 
-            var tempSuccess = TryReadTemperatureCore(out var temperature);
-            var pressSuccess = TryReadPressureCore(out var pressure, skipTempFineRead: true);
+            TryReadTemperatureCore(out Temperature temperature);
+            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
 
-            return new Bmp280ReadResult(tempSuccess ? temperature : null, pressSuccess ? pressure : null);
+            return new Bmp280ReadResult(temperature, pressure);
         }
     }
 }

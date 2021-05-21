@@ -6,8 +6,8 @@ using System.Device.I2c;
 using System.IO;
 using Iot.Device.Bmxx80;
 using Iot.Device.Imu.Tests;
+using nanoFramework.TestFramework;
 using UnitsNet;
-using Xunit;
 
 namespace Iot.Device.Bmxx80.Tests
 {
@@ -39,6 +39,7 @@ namespace Iot.Device.Bmxx80.Tests
         TEMPDATA_MSB = 0xFA
     }
 
+    [TestClass]
     public sealed class Bmp280SensorTests : IDisposable
     {
         private SimulatedI2cDevice _i2cDevice;
@@ -73,15 +74,15 @@ namespace Iot.Device.Bmxx80.Tests
         }
 
         // This runs the calculation with the sample values defined in https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
-        [Fact]
+        [TestMethod]
         public void CalculationWithSampleValues()
         {
             Bmp280 sensor = new Bmp280(_i2cDevice);
             sensor.TemperatureSampling = Sampling.HighResolution;
             sensor.TryReadTemperature(out Temperature temperature);
-            Assert.Equal(25.08, temperature.DegreesCelsius, 2);
+            Assert.Equal(25.08, temperature.DegreesCelsius);
             sensor.TryReadPressure(out Pressure pressure);
-            Assert.Equal(100653.27, pressure.Pascals, 2);
+            Assert.Equal(100653.27, pressure.Pascals);
             sensor.Dispose();
         }
 

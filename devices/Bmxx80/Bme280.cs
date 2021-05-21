@@ -5,7 +5,6 @@ using System;
 using System.Device.I2c;
 using System.Device.Model;
 using System.Threading;
-using System.Threading.Tasks;
 using Iot.Device.Bmxx80.CalibrationData;
 using Iot.Device.Bmxx80.PowerMode;
 using Iot.Device.Bmxx80.ReadResult;
@@ -53,7 +52,12 @@ namespace Iot.Device.Bmxx80
             get => _humiditySampling;
             set
             {
-                if (!Enum.IsDefined(typeof(Sampling), value))
+                if (!value.Equals(Sampling.HighResolution) &&
+                    !value.Equals(Sampling.LowPower) &&
+                    !value.Equals(Sampling.Skipped) &&
+                    !value.Equals(Sampling.Standard) &&
+                    !value.Equals(Sampling.UltraHighResolution) &&
+                    !value.Equals(Sampling.UltraLowPower))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -112,30 +116,11 @@ namespace Iot.Device.Bmxx80
                 Thread.Sleep(GetMeasurementDuration());
             }
 
-            var tempSuccess = TryReadTemperatureCore(out var temperature);
-            var pressSuccess = TryReadPressureCore(out var pressure, skipTempFineRead: true);
-            var humiditySuccess = TryReadHumidityCore(out var humidity, skipTempFineRead: true);
+            TryReadTemperatureCore(out Temperature temperature);
+            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
 
-            return new Bme280ReadResult(tempSuccess ? temperature : null, pressSuccess ? pressure : null, humiditySuccess ? humidity : null);
-        }
-
-        /// <summary>
-        /// Performs an asynchronous reading.
-        /// </summary>
-        /// <returns><see cref="Bme280ReadResult"/></returns>
-        public async Task<Bme280ReadResult> ReadAsync()
-        {
-            if (ReadPowerMode() != Bmx280PowerMode.Normal)
-            {
-                SetPowerMode(Bmx280PowerMode.Forced);
-                await Task.Delay(GetMeasurementDuration());
-            }
-
-            var tempSuccess = TryReadTemperatureCore(out var temperature);
-            var pressSuccess = TryReadPressureCore(out var pressure, skipTempFineRead: true);
-            var humiditySuccess = TryReadHumidityCore(out var humidity, skipTempFineRead: true);
-
-            return new Bme280ReadResult(tempSuccess ? temperature : null, pressSuccess ? pressure : null, humiditySuccess ? humidity : null);
+            return new Bme280ReadResult(temperature, pressure, humidity);
         }
 
         /// <summary>
