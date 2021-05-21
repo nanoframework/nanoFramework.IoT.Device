@@ -26,7 +26,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <param name="data">The data of the Tag.</param>
         /// <param name="parent">The Tag parent, 0 is it's a root Tag.</param>
         /// <param name="tags">List of Tag that this Tag can contain if it's a constructed one or a template or a DOL.</param>
-        public Tag(uint tagNumber, byte[] data, uint parent = 0, List<Tag>? tags = null)
+        public Tag(uint tagNumber, byte[] data, uint parent = 0, ListTag? tags = null)
         {
             TagNumber = tagNumber;
             Data = data;
@@ -69,7 +69,7 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// List of Tag that this Tag can contain if it's a constructed one
         /// or a template or a DOL
         /// </summary>
-        public List<Tag> Tags { get; set; } = new List<Tag>();
+        public ListTag Tags { get; set; } = new ListTag();
 
         /// <summary>
         /// Search for a specific tag in a list of Tag including the sub Tags
@@ -77,9 +77,9 @@ namespace Iot.Device.Card.CreditCardProcessing
         /// <param name="tagToSearch">The list of tags to search in</param>
         /// <param name="tagNumber">The tag number to search for</param>
         /// <returns>A list of tags</returns>
-        public static List<Tag> SearchTag(List<Tag> tagToSearch, uint tagNumber)
+        public static ListTag SearchTag(ListTag tagToSearch, uint tagNumber)
         {
-            List<Tag> tags = new List<Tag>();
+            ListTag tags = new ListTag();
 
             foreach (var tagparent in tagToSearch)
             {

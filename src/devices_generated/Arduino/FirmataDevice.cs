@@ -40,9 +40,9 @@ namespace Iot.Device.Arduino
         private Stream? _firmataStream;
         private Thread? _inputThread;
         private bool _inputThreadShouldExit;
-        private List<SupportedPinConfiguration> _supportedPinConfigurations;
-        private IList<byte> _lastResponse;
-        private List<PinValue> _lastPinValues;
+        private ListSupportedPinConfiguration _supportedPinConfigurations;
+        private ListByte _lastResponse;
+        private ListPinValue _lastPinValues;
         private Dictionary<int, uint> _lastAnalogValues;
         private object _lastPinValueLock;
         private object _lastAnalogValueLock;
@@ -65,19 +65,19 @@ namespace Iot.Device.Arduino
             _firmataStream = null;
             _inputThreadShouldExit = false;
             _dataReceived = new AutoResetEvent(false);
-            _supportedPinConfigurations = new List<SupportedPinConfiguration>();
+            _supportedPinConfigurations = new ListSupportedPinConfiguration();
             _synchronisationLock = new object();
-            _lastPinValues = new List<PinValue>();
+            _lastPinValues = new ListPinValue();
             _lastPinValueLock = new object();
             _lastAnalogValues = new Dictionary<int, uint>();
             _lastAnalogValueLock = new object();
             _dataQueue = new Queue<byte>();
-            _lastResponse = new List<byte>();
+            _lastResponse = new ListByte();
             _lastRequestId = 1;
             _firmwareName = string.Empty;
         }
 
-        internal List<SupportedPinConfiguration> PinConfigurations
+        internal ListSupportedPinConfiguration PinConfigurations
         {
             get
             {
@@ -188,7 +188,7 @@ namespace Iot.Device.Arduino
             }
 
             // read the remaining message while keeping track of elapsed time to timeout in case of incomplete message
-            List<byte> message = new List<byte>();
+            ListByte message = new ListByte();
             int bytes_read = 0;
             Stopwatch timeout_start = Stopwatch.StartNew();
             while (bytes_remaining > 0 || isMessageSysex)
@@ -501,7 +501,7 @@ namespace Iot.Device.Arduino
         /// <param name="sequence">The command sequence, typically starting with <see cref="FirmataCommand.START_SYSEX"/> and ending with <see cref="FirmataCommand.END_SYSEX"/></param>
         /// <returns>The raw sequence of sysex reply bytes. The reply does not include the START_SYSEX byte, but it does include the terminating END_SYSEX byte. The first byte is the
         /// <see cref="FirmataSysexCommand"/> command number of the corresponding request</returns>
-        public List<byte> SendCommandAndWait(FirmataCommandSequence sequence)
+        public ListByte SendCommandAndWait(FirmataCommandSequence sequence)
         {
             return SendCommandAndWait(sequence, DefaultReplyTimeout);
         }
@@ -513,7 +513,7 @@ namespace Iot.Device.Arduino
         /// <param name="timeout">A non-default timeout</param>
         /// <returns>The raw sequence of sysex reply bytes. The reply does not include the START_SYSEX byte, but it does include the terminating END_SYSEX byte. The first byte is the
         /// <see cref="FirmataSysexCommand"/> command number of the corresponding request</returns>
-        public List<byte> SendCommandAndWait(FirmataCommandSequence sequence, TimeSpan timeout)
+        public ListByte SendCommandAndWait(FirmataCommandSequence sequence, TimeSpan timeout)
         {
             if (!sequence.Validate())
             {
@@ -541,7 +541,7 @@ namespace Iot.Device.Arduino
                     throw new TimeoutException("Timeout waiting for command answer");
                 }
 
-                return new List<byte>(_lastResponse);
+                return new ListByte(_lastResponse);
             }
         }
 
@@ -1132,7 +1132,7 @@ namespace Iot.Device.Arduino
         /// Firmata uses 2 bytes to encode 8-bit data, because byte values with the top bit set
         /// are reserved for commands. This decodes such data chunks.
         /// </summary>
-        private int ReassembleByteString(IList<byte> byteStream, int startIndex, int length, SpanByte reply)
+        private int ReassembleByteString(ListByte byteStream, int startIndex, int length, SpanByte reply)
         {
             int num;
             if (reply.Length < length / 2)

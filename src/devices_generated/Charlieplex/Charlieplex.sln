@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{861F6339-4A34-4E5A-B750-A4500779EA9B}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex", "Charlieplex.nfproj", "{A61AABA0-DACE-40DA-96CA-6C4623218068}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex-sample", "samples\\Charlieplex-sample.nfproj", "{C3A9F732-F649-4316-A12D-6E9B0F9B982A}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex-sample", "samples\\Charlieplex-sample.nfproj", "{75F3D26A-6DE3-4D9E-82DB-629AFD7E000E}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\\Charlieplex.Tests.nfproj", "{9D6073A6-8780-4EA2-ABC2-22B003C5D00F}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Charlieplex.Tests", "tests\\Charlieplex.Tests.nfproj", "{CA9199DE-3336-4A4B-B301-3C371AC4970D}"
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -18,11 +18,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {861F6339-4A34-4E5A-B750-A4500779EA9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {861F6339-4A34-4E5A-B750-A4500779EA9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {861F6339-4A34-4E5A-B750-A4500779EA9B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {861F6339-4A34-4E5A-B750-A4500779EA9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {861F6339-4A34-4E5A-B750-A4500779EA9B}.Release|Any CPU.Build.0 = Release|Any CPU
-        {861F6339-4A34-4E5A-B750-A4500779EA9B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {A61AABA0-DACE-40DA-96CA-6C4623218068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {A61AABA0-DACE-40DA-96CA-6C4623218068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {A61AABA0-DACE-40DA-96CA-6C4623218068}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {A61AABA0-DACE-40DA-96CA-6C4623218068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {A61AABA0-DACE-40DA-96CA-6C4623218068}.Release|Any CPU.Build.0 = Release|Any CPU
+        {A61AABA0-DACE-40DA-96CA-6C4623218068}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
