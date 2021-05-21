@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
 using System.Device.I2c;
-using System.Text;
 using Iot.Device.Bmxx80.Tests;
 
 namespace Iot.Device.Imu.Tests
@@ -15,6 +13,7 @@ namespace Iot.Device.Imu.Tests
         private byte _currentRegister;
 
         public SimulatedI2cDevice(I2cConnectionSettings connectionSettings)
+            : base(connectionSettings)
         {
             _registers = new byte[256];
             _currentRegister = 0;
@@ -26,14 +25,14 @@ namespace Iot.Device.Imu.Tests
         {
         }
 
-        public override I2cConnectionSettings ConnectionSettings { get; }
+        public new I2cConnectionSettings ConnectionSettings { get; }
 
-        public override byte ReadByte()
+        public new byte ReadByte()
         {
             return _registers[_currentRegister];
         }
 
-        public override void Read(SpanByte buffer)
+        public new void Read(SpanByte buffer)
         {
             int idx = _currentRegister;
             for (int i = 0; i < buffer.Length; i++)
@@ -43,12 +42,12 @@ namespace Iot.Device.Imu.Tests
             }
         }
 
-        public override void WriteByte(byte value)
+        public new void WriteByte(byte value)
         {
             _currentRegister = value;
         }
 
-        public override void Write(ReadOnlySpanByte buffer)
+        public new void Write(SpanByte buffer)
         {
             _currentRegister = buffer[0];
             int idx = _currentRegister;
@@ -60,7 +59,7 @@ namespace Iot.Device.Imu.Tests
             }
         }
 
-        public override void WriteRead(ReadOnlySpanByte writeBuffer, SpanByte readBuffer)
+        public new void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
         {
             Write(writeBuffer);
             Read(readBuffer);

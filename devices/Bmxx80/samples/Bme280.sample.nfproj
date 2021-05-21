@@ -27,7 +27,7 @@
     <Reference Include="System.Device.Gpio">
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
-    </Reference> 
+    </Reference>
     <Reference Include="System.Device.I2c">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
@@ -44,15 +44,28 @@
       <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="UnitsNet.RelativeHumidity">
+      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.91.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>    <Reference Include="UnitsNet.ElectricResistance, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricResistance.4.91.0\lib\UnitsNet.ElectricResistance.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="UnitsNet.Duration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Duration.4.91.0\lib\UnitsNet.Duration.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="Bme280.sample.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bmxx80.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
