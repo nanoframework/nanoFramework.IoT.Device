@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.Dhtxxx</id>
+    <id>nanoFramework.[[Assembly]]</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.Dhtxxx</title>
+    <title>nanoFramework.[[Assembly]]</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,21 +16,21 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Dhtxxx for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Dhtxxx assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Dhtxxx</tags>
+    <description>This package includes the .NET IoT Core binding [[Assembly]] for .NET nanoFramework C# projects.</description>
+    <summary>[[Assembly]] assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf [[Assembly]]</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Dhtxxx.dll" target="lib\Iot.Device.Dhtxxx.dll" />
-    <file src="bin\Release\Iot.Device.Dhtxxx.pdb" target="lib\Iot.Device.Dhtxxx.pdb" />
-    <file src="bin\Release\Iot.Device.Dhtxxx.pdbx" target="lib\Iot.Device.Dhtxxx.pdbx" />
-    <file src="bin\Release\Iot.Device.Dhtxxx.pe" target="lib\Iot.Device.Dhtxxx.pe" />
-    <file src="bin\Release\Iot.Device.Dhtxxx.xml" target="lib\Iot.Device.Dhtxxx.xml" />
+    <file src="bin\Release\[[Assembly]].dll" target="lib\[[Assembly]].dll" />
+    <file src="bin\Release\[[Assembly]].pdb" target="lib\[[Assembly]].pdb" />
+    <file src="bin\Release\[[Assembly]].pdbx" target="lib\[[Assembly]].pdbx" />
+    <file src="bin\Release\[[Assembly]].pe" target="lib\[[Assembly]].pe" />
+    <file src="bin\Release\[[Assembly]].xml" target="lib\[[Assembly]].xml" />
     <file src="readme.md" target="" />
-    <file src="..\..\assets\nf-logo.png" target="images" />
-    <file src="..\..\LICENSE.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

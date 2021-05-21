@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Display", "Display.nfproj", "{D0489296-E4C0-49D5-BF71-1AF32E35B4DA}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Display", "Display.nfproj", "{234804D1-811B-4041-A9F9-6E76FF739448}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Large4Digit7SegmentDisplay.sample", "samples\\Large4Digit7SegmentDisplay.sample.nfproj", "{C223A123-AAD5-448C-8B81-170F28DD179E}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Large4Digit7SegmentDisplay.sample", "samples\\Large4Digit7SegmentDisplay.sample.nfproj", "{6F651F80-6345-430D-AE3A-5FB1C59246B7}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {D0489296-E4C0-49D5-BF71-1AF32E35B4DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {D0489296-E4C0-49D5-BF71-1AF32E35B4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {D0489296-E4C0-49D5-BF71-1AF32E35B4DA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {D0489296-E4C0-49D5-BF71-1AF32E35B4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {D0489296-E4C0-49D5-BF71-1AF32E35B4DA}.Release|Any CPU.Build.0 = Release|Any CPU
-        {D0489296-E4C0-49D5-BF71-1AF32E35B4DA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {234804D1-811B-4041-A9F9-6E76FF739448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {234804D1-811B-4041-A9F9-6E76FF739448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {234804D1-811B-4041-A9F9-6E76FF739448}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {234804D1-811B-4041-A9F9-6E76FF739448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {234804D1-811B-4041-A9F9-6E76FF739448}.Release|Any CPU.Build.0 = Release|Any CPU
+        {234804D1-811B-4041-A9F9-6E76FF739448}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
