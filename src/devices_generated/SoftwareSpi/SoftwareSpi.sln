@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SoftwareSpi", "SoftwareSpi.nfproj", "{3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SoftwareSpi", "SoftwareSpi.nfproj", "{5F07A928-30C2-400D-BD0F-4C6137E7ECAF}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SoftwareSpi.Samples", "samples\SoftwareSpi.Samples.nfproj", "<!--SAMPLES PROJECT GUID GOES HERE-->"
 EndProject
@@ -15,11 +15,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}.Release|Any CPU.Build.0 = Release|Any CPU
-        {3473B6B2-DEEB-49DE-8A4F-AEA047E4B228}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {5F07A928-30C2-400D-BD0F-4C6137E7ECAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {5F07A928-30C2-400D-BD0F-4C6137E7ECAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {5F07A928-30C2-400D-BD0F-4C6137E7ECAF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {5F07A928-30C2-400D-BD0F-4C6137E7ECAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {5F07A928-30C2-400D-BD0F-4C6137E7ECAF}.Release|Any CPU.Build.0 = Release|Any CPU
+        {5F07A928-30C2-400D-BD0F-4C6137E7ECAF}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
