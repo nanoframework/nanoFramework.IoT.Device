@@ -52,3 +52,19 @@ The project conversion, transformation os `Span<byte>` to `SpanByte` and other a
 
 - Issue: `Console` is not available in .NET nanoFramework. It does only appear on the sample side.
 - Resolution: can be replaced by `Debug`. And the `Console.Read` and other elements like this from the samples can be replaced by hard coded data or constants. 
+
+## Unsafe
+
+You may have to compile some of the projects in unsafe mode. This is needed if you are using unsafe blocks or unsafe instructions into your project.
+
+Add `<AllowUnsafeBlocks>true</AllowUnsafeBlocks>` in the nfproj in the property group `PropertyGroup` right after then language version.
+
+## Adjust the documentation
+
+When converting, you may move some code, change some properties or functions a bit, that may need adjustment in README and other documentation, don't forget to adjust those! This does include as well replacing schema from Raspberry Pi to our lovely MCU. Any ESP32 or any STM32 or any supported MCU will be enough.
+
+## Nuget restore and updates
+
+It is recommended to update the nugets with a `dotnet restore` before opening the solution.
+
+You may be stuck sometimes because some references may be corrupted and you won't be able to update or add a new nuget. In this case, you can try to downgrade by one version all the nugets and then update them again, this will pull potential missing references.
