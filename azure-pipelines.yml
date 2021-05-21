@@ -96,42 +96,52 @@ steps:
 
     $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$(GitHubToken)"))))"
   
-    if($env:System_PullRequest_PullRequestId -ne $null)
+    if($null -eq $env:DEVICE_TO_BUILD)
     {
-        Write-host "Building from PR"
+        if($env:System_PullRequest_PullRequestId -ne $null)
+        {
+            Write-host "Building from PR"
 
-        # get files changed in PR, if this is a PR
-        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            # get files changed in PR, if this is a PR
+            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:Build_Repository_Name/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
-        # filter removed files              
-        $files = $commit.where{$_.status -ne 'removed'}
+            # filter removed files              
+            $files = $commit.where{$_.status -ne 'removed'}
+        }
+        else
+        {
+            Write-host "Building from other branch"
+
+            # get files changed in the commit, if this is NOT a PR
+            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:Build_Repository_Name/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+
+            # filter removed files              
+            $files = $commit.files.where{$_.status -ne 'removed'}
+        }
+
+        # get file names only
+        $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'devices*'} 
+
+        Write-host "Files changed:"
+        $files1 | % { Write-host $_ }
+        Write-host ""
+
+        # pattern to select device folder name
+        $pattern = '(devices\/)(?<folder>\w+)'
+
+        # filter out the collection
+        $results = [Regex]::Matches($files1, $pattern)
+
+        # get unique folder names
+        $deviceFolders = $results | Sort-Object |  Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
     }
     else
     {
-        Write-host "Building from other branch"
+        # build for a specific device
 
-        # get files changed in the commit, if this is NOT a PR
-        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
-
-        # filter removed files              
-        $files = $commit.files.where{$_.status -ne 'removed'}
+        $deviceFolders = New-Object System.Collections.ArrayList
+        $deviceFolders.Add("$env:DEVICE_TO_BUILD")
     }
-
-    # get file names only
-    $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'devices*'} 
-
-    Write-host "Files changed:"
-    $files1 | % { Write-host $_ }
-    Write-host ""
-
-    # pattern to select device folder name
-    $pattern = '(devices\/)(?<folder>\w+)'
-
-    # filter out the collection
-    $results = [Regex]::Matches($files1, $pattern)
-
-    # get unique folder names
-    $deviceFolders = $results | Sort-Object |  Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
 
     foreach ($folder in $deviceFolders)
     {
@@ -200,8 +210,8 @@ steps:
     --filelist "$(Build.Repository.LocalPath)\config\filelist.txt" `
     --user "$(SignClientUser)" `
     --secret '$(SignClientSecret)' `
-    --name "$(nugetPackageName)" `
-    --description "$(nugetPackageName)" `
+    --name "IoT.Device" `
+    --description "IoT.Device" `
     --descriptionUrl "https://github.com/$env:Build_Repository_Name"
   displayName: Sign packages
   continueOnError: true
