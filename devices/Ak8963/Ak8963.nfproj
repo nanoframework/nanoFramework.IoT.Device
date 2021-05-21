@@ -8,43 +8,22 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>07518c87-d7d1-4de2-a34b-d19bcce8aa42</ProjectGuid>
+    <ProjectGuid>{8F39A428-925A-4788-B263-B95761334BCE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Bno055</RootNamespace>
-    <AssemblyName>Iot.Device.Bno055</AssemblyName>
+    <RootNamespace>Iot.Device.Ak8963</RootNamespace>
+    <AssemblyName>Iot.Device.Ak8963</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Ak8963.xml</DocumentationFile>
+    <LangVersion>9.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Nullable>enable</Nullable>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Bno055.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Bno055Sensor.cs" />
-    <Compile Include="Models\AxisRemap.cs" />
-    <Compile Include="Models\CalibrationStatus.cs" />
-    <Compile Include="Models\Error.cs" />
-    <Compile Include="Models\Info.cs" />
-    <Compile Include="Models\InteruptStatus.cs" />
-    <Compile Include="Models\OperationMode.cs" />
-    <Compile Include="Models\PowerMode.cs" />
-    <Compile Include="Models\Registers.cs" />
-    <Compile Include="Models\Status.cs" />
-    <Compile Include="Models\TemperatureSource.cs" />
-    <Compile Include="Models\TestResult.cs" />
-    <Compile Include="Models\Units.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib, Version=1.10.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+    <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.9.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.1.9.0-preview.26\lib\nanoFramework.Runtime.Events.dll</HintPath>
@@ -66,11 +45,14 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="*.md" />
   </ItemGroup>
   <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
