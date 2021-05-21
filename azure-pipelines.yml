@@ -135,29 +135,42 @@ steps:
 
     foreach ($folder in $deviceFolders)
     {
-        Write-host "Processing '$folder'"
+        "Processing '$folder'..." | Write-Host -ForegroundColor Yellow
         
-        # find solution
+        # try to find the solution
         $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "*.sln" -Recurse
-
-        # find nuspec
-        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "*.nuspec" -Recurse
 
         if($null -eq $solutionFile)
         {
-            Write-host "Couldn't find any solution file!"
+            "Couldn't find any solution file!"  | Write-Host -ForegroundColor Red
+            throw "Couldn't the solution for '$folder'..."
         }
         else
         {
-            # need to restore NuGets first
-            nuget restore $solutionFile
-
-            # build solution
-            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
-
-            # package NuGet
-            nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+            "Solution file is: '$solutionFile'" | Write-Host -ForegroundColor Yellow
         }
+
+        # try to find the nuspec
+        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "*.nuspec" -Recurse
+  
+        if($null -eq $nuspecFile)
+        {
+            "Couldn't find the nuspec file!"  | Write-Host -ForegroundColor Red
+            throw "Couldn't the nuspec for '$folder'..."
+        }
+        else
+        {
+            "nuspec file is: '$nuspecFile'" | Write-Host -ForegroundColor Yellow
+        }
+
+        # need to restore NuGets first
+        nuget restore $solutionFile
+
+        # build solution
+        & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
+
+        # package NuGet
+        nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
     }
   displayName: Build and pack solutions
   
