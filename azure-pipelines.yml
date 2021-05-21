@@ -96,24 +96,24 @@ steps:
 
     $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$(GitHubToken)"))))"
   
-    if($null -eq $env:DEVICE_TO_BUILD)
+    if($env:DEVICE_TO_BUILD -eq "")
     {
         if($env:System_PullRequest_PullRequestId -ne $null)
         {
             Write-host "Building from PR"
 
             # get files changed in PR, if this is a PR
-            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:Build_Repository_Name/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
             # filter removed files              
             $files = $commit.where{$_.status -ne 'removed'}
         }
         else
         {
-            Write-host "Building from other branch"
+            Write-host "Building from a commit"
 
             # get files changed in the commit, if this is NOT a PR
-            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:Build_Repository_Name/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
             # filter removed files              
             $files = $commit.files.where{$_.status -ne 'removed'}
@@ -148,7 +148,7 @@ steps:
         "Processing '$folder'..." | Write-Host -ForegroundColor Yellow
         
         # try to find the solution
-        $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "*.sln" -Recurse
+        $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "$folder.sln" -Recurse
 
         if($null -eq $solutionFile)
         {
@@ -161,7 +161,7 @@ steps:
         }
 
         # try to find the nuspec
-        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "*.nuspec" -Recurse
+        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "$folder.nuspec" -Recurse
   
         if($null -eq $nuspecFile)
         {
