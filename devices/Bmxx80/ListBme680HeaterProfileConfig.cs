@@ -38,7 +38,7 @@ namespace System.Collections.Generic
         {
             if (collection == null)
             {
-                throw new ArgumentNullException($"collection is null");
+                throw new ArgumentNullException();
             }
 
             _list = new ArrayList();
@@ -58,7 +58,7 @@ namespace System.Collections.Generic
         {
             if (capacity < 0)
             {
-                throw new ArgumentOutOfRangeException($"capacity is less than 0.");
+                throw new ArgumentOutOfRangeException();
             }
             _list = new ArrayList();
             _list.Capacity = capacity;
@@ -76,7 +76,7 @@ namespace System.Collections.Generic
             {
                 if ((index < 0) || (index >= _list.Count))
                 {
-                    throw new ArgumentOutOfRangeException("index is less than 0. -or- index is equal to or greater than System.Collections.Generic.List.Count.");
+                    throw new ArgumentOutOfRangeException();
                 }
 
                 return (Bme680HeaterProfileConfig)_list[index];
@@ -86,7 +86,7 @@ namespace System.Collections.Generic
             {
                 if ((index < 0) || (index >= _list.Count))
                 {
-                    throw new ArgumentOutOfRangeException("index is less than 0. -or- index is equal to or greater than System.Collections.Generic.List.Count.");
+                    throw new ArgumentOutOfRangeException();
                 }
 
                 _list[index] = value;
@@ -111,7 +111,7 @@ namespace System.Collections.Generic
             {
                 if (value < _list.Count)
                 {
-                    throw new ArgumentOutOfRangeException("Capacity is set to a value that is less than Count");
+                    throw new ArgumentOutOfRangeException();
                 }
 
                 _list.Capacity = value;
@@ -138,7 +138,7 @@ namespace System.Collections.Generic
         {
             if (collection == null)
             {
-                throw new ArgumentNullException("collection is null.");
+                throw new ArgumentNullException();
             }
 
             foreach (var elem in collection)
@@ -278,17 +278,17 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array is null.");
+                throw new ArgumentNullException();
             }
 
             if ((index < 0) || (arrayIndex < 0) || (count < 0))
             {
-                throw new ArgumentOutOfRangeException("index is less than 0. -or- arrayIndex is less than 0. -or- count is less than 0.");
+                throw new ArgumentOutOfRangeException();
             }
 
             if ((index >= _list.Count) || (_list.Count - index < count) || (count > array.Length - arrayIndex) || (arrayIndex + count > array.Length))
             {
-                throw new ArgumentException("index is equal to or greater than the System.Collections.Generic.List.Count of the source System.Collections.Generic.List. -or- The number of elements from index to the end of the source System.Collections.Generic.List is greater than the available space from arrayIndex to the end of the destination array.");
+                throw new ArgumentException();
             }
             for (int i = index; i < count; i++)
             {
@@ -308,12 +308,12 @@ namespace System.Collections.Generic
         {
             if ((index < 0) || (count < 0))
             {
-                throw new ArgumentOutOfRangeException("index is less than 0. -or- count is less than 0.");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (count > _list.Count - index)
             {
-                throw new ArgumentException("index and count do not denote a valid range of elements in the System.Collections.Generic.List.");
+                throw new ArgumentException();
             }
 
             var list = new ListBme680HeaterProfileConfig();
@@ -381,12 +381,12 @@ namespace System.Collections.Generic
         {
             if (collection == null)
             {
-                throw new ArgumentNullException("collection is null");
+                throw new ArgumentNullException();
             }
 
             if ((index < 0) || (index > _list.Count))
             {
-                throw new ArgumentOutOfRangeException("index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.");
+                throw new ArgumentOutOfRangeException();
             }
 
             foreach (var elem in collection)
@@ -432,7 +432,7 @@ namespace System.Collections.Generic
         {
             if ((index < 0) || (count < 0) || (index + count > _list.Count))
             {
-                throw new ArgumentOutOfRangeException("index is outside the range of valid indexes for the System.Collections.Generic.List. -or- count is less than 0. -or- index and count do not specify a valid section in the System.Collections.Generic.List.");
+                throw new ArgumentOutOfRangeException();
             }
 
             for (int i = index; i >= _list.Count - count - index; i--)
@@ -480,12 +480,12 @@ namespace System.Collections.Generic
         {
             if ((index < 0) || (count < 0))
             {
-                throw new ArgumentOutOfRangeException("index is less than 0. -or- count is less than 0.");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (index + count > _list.Count)
             {
-                throw new ArgumentException("index and count do not denote a valid range of elements in the System.Collections.Generic.List.");
+                throw new ArgumentException();
             }
 
             for (int i = 0; i < count; i++)

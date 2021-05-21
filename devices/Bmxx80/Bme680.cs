@@ -499,7 +499,7 @@ namespace Iot.Device.Bmxx80
         {
             if (_bme680Calibration is null)
             {
-                throw new Exception($"{nameof(Bme680)} is incorrectly configured.");
+                throw new Exception();
             }
 
             // Calculate the humidity.
@@ -532,7 +532,7 @@ namespace Iot.Device.Bmxx80
         {
             if (_bme680Calibration is null)
             {
-                throw new Exception($"{nameof(Bme680)} is incorrectly configured.");
+                throw new Exception();
             }
 
             // Calculate the pressure.
@@ -574,7 +574,7 @@ namespace Iot.Device.Bmxx80
         {
             if (_bme680Calibration is null)
             {
-                throw new Exception($"{nameof(Bme680)} is incorrectly configured.");
+                throw new Exception();
             }
 
             var var1 = 1340.0 + 5.0 * _bme680Calibration.RangeSwErr;
@@ -589,7 +589,7 @@ namespace Iot.Device.Bmxx80
         {
             if (_bme680Calibration is null)
             {
-                throw new Exception($"{nameof(Bme680)} is incorrectly configured.");
+                throw new Exception();
             }
 
             // limit maximum temperature to 400°C

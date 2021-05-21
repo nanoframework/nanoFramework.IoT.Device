@@ -126,6 +126,7 @@ namespace Iot.Device.Common
             return Temperature.FromDegreesCelsius(dewPoint);
         }
 
+        // TODO: once UnitsNet.Density is available as NuGet package, uncomment this method.
         /*
         /// <summary>
         /// Calculates the absolute humidity in g/m³
@@ -144,6 +145,7 @@ namespace Iot.Device.Common
         }
         */
 
+        // TODO: once UnitsNet.Density is available as NuGet package, uncomment this method.
         /*
         /// <summary>
         /// Calculates a corrected relative humidity. This is useful if you have a temperature/humidity sensor that is

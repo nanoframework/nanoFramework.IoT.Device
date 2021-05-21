@@ -70,14 +70,14 @@ namespace Iot.Device.Bmxx80
         /// <exception cref="IOException">Thrown when the device cannot be found on the bus.</exception>
         protected Bmxx80Base(byte deviceId, I2cDevice i2cDevice)
         {
-            _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+            _i2cDevice = i2cDevice ?? throw new ArgumentNullException();
             _i2cDevice.WriteByte((byte)Bmxx80Register.CHIPID);
 
             byte readSignature = _i2cDevice.ReadByte();
 
             if (readSignature != deviceId)
             {
-                throw new IOException($"Unable to find a chip with id {deviceId}. Found one with id {readSignature}");
+                throw new IOException();
             }
 
             ReadCalibrationData();
@@ -225,7 +225,7 @@ namespace Iot.Device.Bmxx80
             {
                 Endianness.LittleEndian => BinaryPrimitives.ReadUInt16LittleEndian(bytes),
                 Endianness.BigEndian => BinaryPrimitives.ReadUInt16BigEndian(bytes),
-                _ => throw new ArgumentOutOfRangeException(nameof(endianness), endianness.ToString())
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
@@ -252,7 +252,7 @@ namespace Iot.Device.Bmxx80
             {
                 Endianness.LittleEndian => BinaryPrimitives.ReadUInt32LittleEndian(bytes),
                 Endianness.BigEndian => BinaryPrimitives.ReadUInt32BigEndian(bytes),
-                _ => throw new ArgumentOutOfRangeException(nameof(endianness), endianness.ToString())
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
@@ -314,7 +314,7 @@ namespace Iot.Device.Bmxx80
                     _controlRegister = (byte)Bme680Register.CTRL_MEAS;
                     break;
                 default:
-                    throw new Exception("Bmxx80 device not correctly configured. Could not find calibration data.");
+                    throw new Exception();
             }
 
             _calibrationData.ReadFromDevice(this);

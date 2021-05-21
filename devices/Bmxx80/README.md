@@ -17,20 +17,20 @@ The implementation supports the following devices:
 
 3 examples on how to use this device binding are available in the [samples](samples) folder.
 
-The following fritzing diagram illustrates one way to wire up the BMP280 with a Raspberry Pi using I2C:
+The following fritzing diagram illustrates one way to wire up the BMP280 with an MCU using I2C:
 
-![Raspberry Pi Breadboard diagram](samples/rpi-bmp280_i2c.png)
+![MCU Breadboard diagram](samples/rpi-bmp280_i2c.png)
 
 General:
 
-| Bmp280 | Raspberry |
+| Bmp280 | MCU |
 |--------|:---------:|
 |Vin| Power pin|
 |GND| Ground|
 
 I2C:
 
-| Bmp280 | Raspberry |
+| Bmp280 | MCU |
 |--------|:---------:|
 |SCK| I2C clock pin|
 |SDI| I2C data pin|

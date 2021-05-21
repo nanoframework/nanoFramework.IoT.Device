@@ -123,7 +123,7 @@ namespace Iot.Device.Bmxx80
                 !powerMode.Equals(Bmx280PowerMode.Normal) &&
                 !powerMode.Equals(Bmx280PowerMode.Sleep))
             {
-                throw new IOException("Read unexpected power mode");
+                throw new IOException();
             }
 
             return (Bmx280PowerMode)powerMode;
