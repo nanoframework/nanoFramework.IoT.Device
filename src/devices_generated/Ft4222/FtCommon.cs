@@ -19,9 +19,9 @@ namespace Iot.Device.Ft4222
         /// Returns the list of FT4222 connected
         /// </summary>
         /// <returns>A list of devices connected</returns>
-        public static List<FtDevice> GetDevices()
+        public static ListFtDevice GetDevices()
         {
-            List<FtDevice> devInfos = new List<FtDevice>();
+            ListFtDevice devInfos = new ListFtDevice();
             FtStatus ftStatus = 0;
 
             // Check device

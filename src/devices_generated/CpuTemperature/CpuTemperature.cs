@@ -25,7 +25,7 @@ namespace Iot.Device.CpuTemperature
         private bool _isAvailable;
         private bool _checkedIfAvailable;
         private bool _windows;
-        private List<ManagementObjectSearcher> _managementObjectSearchers;
+        private ListManagementObjectSearcher _managementObjectSearchers;
         private OpenHardwareMonitor? _hardwareMonitorInUse;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Iot.Device.CpuTemperature
             _checkedIfAvailable = false;
             _windows = false;
 #pragma warning disable CA1416 // ManagementObjectSearcher class is only functional on windows
-            _managementObjectSearchers = new List<ManagementObjectSearcher>();
+            _managementObjectSearchers = new ListManagementObjectSearcher();
 #pragma warning restore CA1416
             _hardwareMonitorInUse = null;
 

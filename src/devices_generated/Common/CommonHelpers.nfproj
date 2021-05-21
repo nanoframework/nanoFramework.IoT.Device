@@ -8,7 +8,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+<<<<<<< HEAD
     <ProjectGuid>{48AC67EC-B746-410D-A9B3-22ABD709723A}</ProjectGuid>
+=======
+    <ProjectGuid>{8626DCCA-5E03-4C26-9627-583055C3590C}</ProjectGuid>
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -67,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
+    <Compile Include="MathExtensions.cs" />
     <Compile Include="Iot/Device/Common/*.cs" />
     <Compile Include="Iot/Device/Graphics/*.cs" />
     <Compile Include="Iot/Device/Multiplexing/*.cs" />
@@ -75,6 +79,8 @@
     <Compile Include="System/Device/Gpio/*.cs" />
     <Compile Include="System/Device/Analog/*.cs" />
     <Compile Include="System/Device/Spi/*.cs" />
+    <Compile Include="FrameworkCompatibilityExtensions.cs" />
+    <Compile Include="IsExternalInit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

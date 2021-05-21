@@ -96,7 +96,7 @@ Pn5180 HardwareSpi()
 
 Pn5180 Ft4222()
 {
-    List<FtDevice> devices = FtCommon.GetDevices();
+    ListFtDevice devices = FtCommon.GetDevices();
     Debug.WriteLine($"{devices.Count} FT4222 elements found");
     foreach (var device in devices)
     {
@@ -362,7 +362,7 @@ string AddSpace(int level)
     return space;
 }
 
-void DisplayTags(List<Tag> tagToDisplay, int levels)
+void DisplayTags(ListTag tagToDisplay, int levels)
 {
     foreach (var tagparent in tagToDisplay)
     {
@@ -391,7 +391,7 @@ void DisplayTags(List<Tag> tagToDisplay, int levels)
     }
 }
 
-void DisplayLogEntries(List<byte[]> entries, List<Tag> format)
+void DisplayLogEntries(List<byte[]> entries, ListTag format)
 {
     for (int i = 0; i < format.Count; i++)
     {

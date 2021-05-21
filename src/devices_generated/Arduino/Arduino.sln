@@ -3,12 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{9FE2A819-1388-4D83-B512-B901F446A9B9}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Monitor", "samples\\Arduino.Monitor.nfproj", "{2815A6A6-FC08-4EE6-A285-AD5FC447EE64}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\\Arduino.Tests.nfproj", "{D12883FD-27B1-4131-8927-90947D2CE6D6}"
+=======
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino", "Arduino.nfproj", "{A6289C00-6FEF-4D30-AC12-57BC974DB826}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Monitor", "samples\\Arduino.Monitor.nfproj", "{76DDECC4-F10A-436D-9079-583F3ABA4EA7}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.sample", "samples\\Arduino.sample.nfproj", "{ADF04ABC-C980-4901-BCC2-5B7859CA7D7C}"
+EndProject
+<!-- SAMPLES PROJECT PLACEHOLDER -->
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Arduino.Tests", "tests\\Arduino.Tests.nfproj", "{BCBBE1FF-9BE3-4E1E-A4C7-402B84D20811}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
 
@@ -18,11 +29,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
         {9FE2A819-1388-4D83-B512-B901F446A9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {9FE2A819-1388-4D83-B512-B901F446A9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {9FE2A819-1388-4D83-B512-B901F446A9B9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {9FE2A819-1388-4D83-B512-B901F446A9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {9FE2A819-1388-4D83-B512-B901F446A9B9}.Release|Any CPU.Build.0 = Release|Any CPU
         {9FE2A819-1388-4D83-B512-B901F446A9B9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
+        {A6289C00-6FEF-4D30-AC12-57BC974DB826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {A6289C00-6FEF-4D30-AC12-57BC974DB826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {A6289C00-6FEF-4D30-AC12-57BC974DB826}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {A6289C00-6FEF-4D30-AC12-57BC974DB826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {A6289C00-6FEF-4D30-AC12-57BC974DB826}.Release|Any CPU.Build.0 = Release|Any CPU
+        {A6289C00-6FEF-4D30-AC12-57BC974DB826}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

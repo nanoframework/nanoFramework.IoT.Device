@@ -33,7 +33,7 @@ namespace Iot.Device.Max7219
         /// <summary>
         /// Returns a list of bytes for a given character to be written to a matrix.
         /// </summary>
-        IReadOnlyList<byte> this[char chr]
+        ListByte this[char chr]
         {
             get;
         }

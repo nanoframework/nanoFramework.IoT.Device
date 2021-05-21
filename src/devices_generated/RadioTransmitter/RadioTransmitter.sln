@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter", "RadioTransmitter.nfproj", "{1CDD7434-B0B5-4763-AB63-58FDFE89A428}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter.Samples", "samples\\RadioTransmitter.Samples.nfproj", "{5C378C41-FF1E-4CAD-B004-F630F93A9147}"
+=======
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter", "RadioTransmitter.nfproj", "{CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter.Samples", "samples\\RadioTransmitter.Samples.nfproj", "{C25B4B16-8564-4B9F-8A9C-A6EC1F6EA849}"
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +22,20 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
         {1CDD7434-B0B5-4763-AB63-58FDFE89A428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {1CDD7434-B0B5-4763-AB63-58FDFE89A428}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {1CDD7434-B0B5-4763-AB63-58FDFE89A428}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
         {1CDD7434-B0B5-4763-AB63-58FDFE89A428}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {1CDD7434-B0B5-4763-AB63-58FDFE89A428}.Release|Any CPU.Build.0 = Release|Any CPU
         {1CDD7434-B0B5-4763-AB63-58FDFE89A428}.Release|Any CPU.Deploy.0 = Release|Any CPU
+=======
+        {CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}.Release|Any CPU.Build.0 = Release|Any CPU
+        {CAE1107F-7CA1-453C-A0A7-2AF7BE053D36}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     EndGlobalSection
 EndGlobal

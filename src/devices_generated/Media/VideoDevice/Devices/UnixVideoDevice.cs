@@ -143,7 +143,7 @@ namespace Iot.Device.Media
                 type = v4l2_buf_type.V4L2_BUF_TYPE_VIDEO_CAPTURE
             };
 
-            List<PixelFormat> result = new List<PixelFormat>();
+            ListPixelFormat result = new ListPixelFormat();
             while (V4l2Struct(V4l2Request.VIDIOC_ENUM_FMT, ref fmtdesc) != -1)
             {
                 result.Add(fmtdesc.pixelformat);
@@ -168,7 +168,7 @@ namespace Iot.Device.Media
                 pixel_format = format
             };
 
-            List<Resolution> result = new List<Resolution>();
+            ListResolution result = new ListResolution();
             while (V4l2Struct(V4l2Request.VIDIOC_ENUM_FRAMESIZES, ref size) != -1)
             {
                 Resolution resolution;

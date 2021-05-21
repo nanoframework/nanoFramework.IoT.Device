@@ -231,7 +231,7 @@ namespace Iot.Device.Mcp3428
         /// <exception cref="ArgumentOutOfRangeException">channel</exception>
         protected bool SetConfig(int channel = 0, AdcMode mode = AdcMode.Continuous,
             AdcResolution resolution = AdcResolution.Bit12, AdcGain pgaGain = AdcGain.X1,
-            IList<string>? errorList = null)
+            ListString? errorList = null)
         {
             if (channel < 0 || channel > ChannelCount - 1)
             {

@@ -20,7 +20,7 @@ namespace Iot.Device.ExplorerHat
 
         private GpioController _controller;
 
-        private List<Led> LedArray { get; set; }
+        private ListLed LedArray { get; set; }
 
         /// <summary>
         /// Blue led (#1)
@@ -72,7 +72,7 @@ namespace Iot.Device.ExplorerHat
             _controller = controller ?? new();
             _shouldDispose = shouldDispose || controller is null;
 
-            LedArray = new List<Led>()
+            LedArray = new ListLed()
             {
                 new(LED1_PIN, _controller),
                 new(LED2_PIN, _controller),

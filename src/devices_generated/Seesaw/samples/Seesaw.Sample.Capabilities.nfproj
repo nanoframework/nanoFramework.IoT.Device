@@ -8,7 +8,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+<<<<<<< HEAD
     <ProjectGuid>{2FBA6841-F1BA-4901-8244-5ECE0A1C6ADF}</ProjectGuid>
+=======
+    <ProjectGuid>{3B72B3B6-827B-4E02-AA2E-EBA3C17AC35D}</ProjectGuid>
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -43,9 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="Seesaw.Sample.BlinkingLights.cs" />
-    <Compile Include="../../../../samples/led-more-blinking-lights/TimeEnvelope.cs" />
-    <Compile Include="Volume.cs" />
+    <Compile Include="Seesaw.Sample.Capabilities.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

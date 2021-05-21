@@ -8,7 +8,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+<<<<<<< HEAD
     <ProjectGuid>{408DF6C5-8CB5-4342-9137-6B50AC895CF5}</ProjectGuid>
+=======
+    <ProjectGuid>{C31C9409-BEC9-497B-8FCF-DD1B9D71A026}</ProjectGuid>
+>>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -50,7 +54,6 @@
     <Compile Include="Gpio.cs" />
     <Compile Include="PinMapping.cs" />
     <Compile Include="RgbLedMatrix.cs" />
-    <Compile Include="../Common/Iot/Device/Graphics/BdfFont.cs" />
     <Compile Include="../Interop/Unix/ThreadHelper.cs" />
   </ItemGroup>
   <ItemGroup>

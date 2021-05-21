@@ -62,7 +62,7 @@ namespace Iot.Device.GoPiGo3.Sensors
             set
             {
                 var prev = _duty;
-                _duty = Math.Clamp(value, (byte)0, (byte)100);
+                _duty = MathExtensions.Clamp(value, (byte)0, (byte)100);
                 if (prev != _duty)
                 {
                     Start();
@@ -116,7 +116,7 @@ namespace Iot.Device.GoPiGo3.Sensors
         /// <summary>
         /// List the supported Grove ports for the sensor
         /// </summary>
-        public List<GrovePort> SupportedPorts => new List<GrovePort>() { GrovePort.Grove1, GrovePort.Grove2 };
+        public ListGrovePort SupportedPorts => new ListGrovePort() { GrovePort.Grove1, GrovePort.Grove2 };
 
         /// <summary>
         /// Get the sensor name "Buzzer"

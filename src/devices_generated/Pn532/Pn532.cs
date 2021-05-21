@@ -866,7 +866,7 @@ namespace Iot.Device.Pn532
             }
 
             // Then serialize all buffer and add them
-            List<byte> toSend = new List<byte>();
+            ListByte toSend = new ListByte();
             toSend.Add((byte)mode);
             toSend.AddRange(mifare.Serialize());
             toSend.AddRange(feliCa.Serialize());
