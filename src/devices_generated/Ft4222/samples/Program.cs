@@ -22,7 +22,7 @@ Debug.WriteLine(" 4 Run callback test event on GPIO2 on Failing and Rising");
 var key = Console.ReadKey();
 Debug.WriteLine();
 
-List<FtDevice> devices = FtCommon.GetDevices();
+ListFtDevice devices = FtCommon.GetDevices();
 Debug.WriteLine($"{devices.Count} FT4222 elements found");
 foreach (FtDevice device in devices)
 {

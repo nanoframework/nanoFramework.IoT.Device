@@ -73,7 +73,7 @@ namespace Iot.Device.BrickPi3.Models
         private int[] GetVersionsFromString(string toconvert)
         {
             var split = toconvert.Split('.');
-            List<int> ret = new List<int>();
+            ListInt ret = new ListInt();
             foreach (var elem in split)
             {
                 ret.Add(int.Parse(elem));

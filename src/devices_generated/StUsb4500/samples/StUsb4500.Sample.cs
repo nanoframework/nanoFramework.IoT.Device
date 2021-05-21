@@ -126,7 +126,7 @@ void UpdateLocalPdo()
     }
     else
     {
-        List<PowerDeliveryObject> objects = sinkPdos.ToList();
+        ListPowerDeliveryObject objects = sinkPdos.ToList();
         objects.Add(new FixedSupplyObject(sinkPdos.First().Value)
             {
                 Voltage = ElectricPotentialDc.FromVoltsDc(12),
@@ -142,7 +142,7 @@ void UpdateLocalPdo()
     }
     else
     {
-        List<PowerDeliveryObject> objects = sinkPdos.ToList();
+        ListPowerDeliveryObject objects = sinkPdos.ToList();
         objects.Add(new FixedSupplyObject(sinkPdos.First().Value)
             {
                 Voltage = ElectricPotentialDc.FromVoltsDc(20),

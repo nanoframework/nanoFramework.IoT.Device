@@ -63,7 +63,7 @@ namespace Iot.Device.GoPiGo3.Sensors
         /// <summary>
         /// List the supported Grove ports for the sensor
         /// </summary>
-        public static List<GrovePort> SupportedPorts => new List<GrovePort> { GrovePort.Grove1, GrovePort.Grove2 };
+        public static ListGrovePort SupportedPorts => new ListGrovePort { GrovePort.Grove1, GrovePort.Grove2 };
 
         /// <summary>
         /// Get the sensor name "Ultrasonic Sensor"

@@ -16,7 +16,7 @@ namespace Iot.Device.GrovePiDevice.Sensors
         /// <summary>
         /// Only Analogic ports are supported
         /// </summary>
-        public static List<GrovePort> SupportedPorts => new List<GrovePort>()
+        public static ListGrovePort SupportedPorts => new ListGrovePort()
         {
             GrovePort.AnalogPin0,
             GrovePort.AnalogPin1,
