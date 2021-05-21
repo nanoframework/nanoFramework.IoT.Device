@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp25xxx", "Mcp25xxx.nfproj", "{08774624-BE4D-46BC-94C9-8B736B653007}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp25xxx", "Mcp25xxx.nfproj", "{1639250E-4A31-48B6-9F58-11E8E4607AE2}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp25xxx.Samples", "samples\\Mcp25xxx.Samples.nfproj", "{44ECEB26-E2F3-4710-8D5A-E6A12BA1593B}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp25xxx.Samples", "samples\\Mcp25xxx.Samples.nfproj", "{7F7F1C62-B72C-4B4D-ACB5-FF34A797BD79}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp25xxx.Tests", "tests\Mcp25xxx.Tests.nfproj", "{8DD5F250-0160-4781-AF9D-2935F843CDA6}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp25xxx.Tests", "tests\Mcp25xxx.Tests.nfproj", "{3647A0A1-B5DA-4627-9E47-DB227B91A0EA}"
 EndProject
 
 Global
@@ -17,11 +17,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {08774624-BE4D-46BC-94C9-8B736B653007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {08774624-BE4D-46BC-94C9-8B736B653007}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {08774624-BE4D-46BC-94C9-8B736B653007}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {08774624-BE4D-46BC-94C9-8B736B653007}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {08774624-BE4D-46BC-94C9-8B736B653007}.Release|Any CPU.Build.0 = Release|Any CPU
-        {08774624-BE4D-46BC-94C9-8B736B653007}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {1639250E-4A31-48B6-9F58-11E8E4607AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {1639250E-4A31-48B6-9F58-11E8E4607AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {1639250E-4A31-48B6-9F58-11E8E4607AE2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {1639250E-4A31-48B6-9F58-11E8E4607AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {1639250E-4A31-48B6-9F58-11E8E4607AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+        {1639250E-4A31-48B6-9F58-11E8E4607AE2}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal
