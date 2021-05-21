@@ -33,7 +33,7 @@
     <file src="bin\Release\Iot.Device.Apa102.pe" target="lib\Iot.Device.Apa102.pe" />
     <file src="bin\Release\Iot.Device.Apa102.xml" target="lib\Iot.Device.Apa102.xml" />
     <file src="readme.md" target="" />
-    <file src="..\assets\nf-logo.png" target="images" />
-    <file src="..\LICENSE.md" target="" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
   </files>
 </package>
