@@ -129,7 +129,7 @@ namespace Iot.Device.CharacterLcd
                 }
             }
 
-            public override void SendData(ReadOnlySpan<char> values)
+            public override void SendData(SpanChar values)
             {
                 foreach (var c in values)
                 {

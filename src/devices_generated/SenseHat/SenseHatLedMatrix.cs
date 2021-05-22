@@ -81,7 +81,7 @@ namespace Iot.Device.SenseHat
         /// Write colors to the device
         /// </summary>
         /// <param name="colors">Array of colors</param>
-        public abstract void Write(ReadOnlySpan<Color> colors);
+        public abstract void Write(SpanColor colors);
 
         /// <summary>
         /// Fill LED matrix with a specific color

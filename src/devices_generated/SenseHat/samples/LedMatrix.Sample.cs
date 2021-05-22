@@ -62,7 +62,7 @@ namespace Iot.Device.SenseHat.Samples
             }
         }
 
-        private static void Frame(Span<Color> colors, float time)
+        private static void Frame(SpanColor colors, float time)
         {
             for (int i = 0; i < colors.Length; i++)
             {

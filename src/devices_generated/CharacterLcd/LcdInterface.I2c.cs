@@ -118,7 +118,7 @@ namespace Iot.Device.CharacterLcd
                 }
             }
 
-            public override void SendData(ReadOnlySpan<char> values)
+            public override void SendData(SpanChar values)
             {
                 // There is a limit to how much data the controller can accept at once. Haven't found documentation
                 // for this yet, can probably iterate a bit more on this to find a true "max". 40 was too much.
@@ -129,7 +129,7 @@ namespace Iot.Device.CharacterLcd
 
                 while (values.Length > 0)
                 {
-                    ReadOnlySpan<char> buff = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
+                    SpanChar buff = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
                     // As we are in a while loop, we can't use new
                     SpanByte currentValues = new byte[buff.Length];
                     for (int i = 0; i < buff.Length; i++)

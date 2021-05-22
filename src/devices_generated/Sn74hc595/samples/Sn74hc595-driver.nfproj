@@ -8,11 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-<<<<<<< HEAD
-    <ProjectGuid>{BD83E81F-4EE1-466A-8FD9-4DB13C988E61}</ProjectGuid>
-=======
-    <ProjectGuid>{EFD8D81B-9EEA-4802-903B-29BBE512C2B8}</ProjectGuid>
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+    <ProjectGuid>{E80F884D-4AFB-4936-B8D2-A4F999E2EFF3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
