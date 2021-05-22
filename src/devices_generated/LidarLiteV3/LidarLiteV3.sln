@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{5178896A-04E3-4772-9AFC-2EC0BF34A035}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\\LidarLiteV3.Sample.nfproj", "{B53EEC9D-71C8-4213-BC13-42447A0E67ED}"
-=======
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{9037658A-8EC9-42E7-BB69-EE422CC47667}"
-EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\\LidarLiteV3.Sample.nfproj", "{68595A34-7AAB-4874-962A-5FD4E9B32101}"
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\\LidarLiteV3.Sample.nfproj", "{169114FE-33A5-41DA-AB06-75A378C6D03D}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -22,20 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-        {A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}.Release|Any CPU.Build.0 = Release|Any CPU
-        {A407ABEC-8D4B-47FD-9D75-69A459D8E6E1}.Release|Any CPU.Deploy.0 = Release|Any CPU
-=======
-        {9037658A-8EC9-42E7-BB69-EE422CC47667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {9037658A-8EC9-42E7-BB69-EE422CC47667}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {9037658A-8EC9-42E7-BB69-EE422CC47667}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {9037658A-8EC9-42E7-BB69-EE422CC47667}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {9037658A-8EC9-42E7-BB69-EE422CC47667}.Release|Any CPU.Build.0 = Release|Any CPU
-        {9037658A-8EC9-42E7-BB69-EE422CC47667}.Release|Any CPU.Deploy.0 = Release|Any CPU
->>>>>>> 209f1bf2c74c8b011c27f4f865042bb02006d437
+        {5178896A-04E3-4772-9AFC-2EC0BF34A035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {5178896A-04E3-4772-9AFC-2EC0BF34A035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {5178896A-04E3-4772-9AFC-2EC0BF34A035}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {5178896A-04E3-4772-9AFC-2EC0BF34A035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {5178896A-04E3-4772-9AFC-2EC0BF34A035}.Release|Any CPU.Build.0 = Release|Any CPU
+        {5178896A-04E3-4772-9AFC-2EC0BF34A035}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

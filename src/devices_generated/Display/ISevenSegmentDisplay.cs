@@ -26,13 +26,13 @@ namespace Iot.Device.Display
         /// </summary>
         /// <param name="digits">a list of digits represented in segments</param>
         /// <param name="startAddress">Address to start writing from</param>
-        void Write(ReadOnlySpan<Segment> digits, int startAddress = 0);
+        void Write(SpanSegment digits, int startAddress = 0);
 
         /// <summary>
         /// Write a series of characters to the display buffer
         /// </summary>
         /// <param name="characters">a list of characters represented in fonts</param>
         /// <param name="startAddress">Address to start writing from</param>
-        void Write(ReadOnlySpan<Font> characters, int startAddress = 0);
+        void Write(SpanFont characters, int startAddress = 0);
     }
 }

@@ -74,7 +74,7 @@ namespace Iot.Device.CharacterLcd
         /// Sends data to the LCD device
         /// </summary>
         /// <param name="values">Char to be send to the device</param>
-        public abstract void SendData(ReadOnlySpan<char> values);
+        public abstract void SendData(SpanChar values);
 
         /// <summary>
         /// Send commands to the LCD device

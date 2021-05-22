@@ -36,7 +36,7 @@ namespace System.Device.Gpio
         /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown if <paramref name="pinValues"/> contains negative pin numbers or pin numbers higher than 63.
         /// </exception>
-        public PinVector64(ReadOnlySpan<PinValuePair> pinValues)
+        public PinVector64(SpanPinValuePair pinValues)
         {
             Pins = 0;
             Values = 0;

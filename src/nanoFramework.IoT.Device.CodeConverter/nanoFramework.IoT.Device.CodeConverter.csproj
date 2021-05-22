@@ -16,6 +16,11 @@
     <None Include="GenericsTemplates\List.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Remove="GenericsTemplates\Span.cs" />
+    <None Include="GenericsTemplates\Span.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Compile Remove="GenericsTemplates\ReadOnlySpan.cs" />
   </ItemGroup>
 
   <ItemGroup>

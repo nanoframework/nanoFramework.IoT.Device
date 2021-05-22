@@ -29,7 +29,7 @@ namespace Iot.Device.KeyMatrix
         /// <summary>
         /// Get all buttons' values
         /// </summary>
-        public ReadOnlySpan<PinValue> Values => _buttonValues.AsSpan();
+        public SpanPinValue Values => _buttonValues.AsSpan();
 
         /// <summary>
         /// Get or set interval in milliseconds
@@ -40,7 +40,7 @@ namespace Iot.Device.KeyMatrix
         /// Get buttons' values by output
         /// </summary>
         /// <param name="output">Output index</param>
-        public ReadOnlySpan<PinValue> this[int output] => _buttonValues.AsSpan(output * _outputPins.Length, _inputPins.Length);
+        public SpanPinValue this[int output] => _buttonValues.AsSpan(output * _outputPins.Length, _inputPins.Length);
 
         private int[] _outputPins;
         private int[] _inputPins;
