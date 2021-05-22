@@ -1,6 +1,7 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System.Collections;
-using System.Diagnostics;
 
 namespace System.Threading
 {
@@ -36,7 +37,7 @@ namespace System.Threading
         private const int CannotBeCancelled = 0;
         private const int NotCancelled = 1;
         private const int Notifying = 2;
-        private const int NotifyingCompleted = 3;
+        private const int NotifyingCompleted = 3; 
 
         private int _state;
         private bool _disposed;

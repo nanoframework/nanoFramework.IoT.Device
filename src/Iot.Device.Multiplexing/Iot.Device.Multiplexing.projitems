@@ -7,10 +7,14 @@
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Iot.Device.Multiplexing</Import_RootNamespace>
-  </PropertyGroup>
+  </PropertyGroup> 
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\CancellationToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\CancellationTokenRegistration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\CancellationTokenSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GpioOutputSegment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IOutputSegment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\OperationCanceledException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VirtualOutputSegment.cs" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,8 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
-using System.Linq;
+using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Multiplexing;
 
@@ -19,13 +22,6 @@ for (int i = 0; i < charlieSegmentLength; i++)
 using CharlieplexSegment segment = new(pins, charlieSegmentLength);
 
 CancellationTokenSource cts = new();
-CancellationToken token = cts.Token;
-Console.CancelKeyPress += (s, e) =>
-{
-    controlCRequested = true;
-    cts.Cancel();
-    segment.Dispose();
-};
 
 Debug.WriteLine("Light all LEDs");
 for (int i = 0; i < charlieSegmentLength; i++)
@@ -33,10 +29,7 @@ for (int i = 0; i < charlieSegmentLength; i++)
     segment.Write(i, 1);
 }
 
-if (DisplayShouldCancel())
-{
-    return;
-}
+DisplayShouldCancel();
 
 Debug.WriteLine("Dim all LEDs");
 for (int i = 0; i < charlieSegmentLength; i++)
@@ -53,10 +46,7 @@ for (int i = 0; i < charlieSegmentLength; i++)
     }
 }
 
-if (DisplayShouldCancel())
-{
-    return;
-}
+DisplayShouldCancel();
 
 for (int i = 0; i < charlieSegmentLength; i++)
 {
@@ -76,7 +66,8 @@ foreach (var delay in delayLengths)
     }
 }
 
-foreach (var delay in delayLengths.Reverse())
+Reverse(delayLengths);
+foreach (var delay in delayLengths)
 {
     Debug.WriteLine($"Light and then dim all LEDs, in sequence. Delay: {delay}");
     for (int i = 0; i < charlieSegmentLength; i++)
@@ -92,22 +83,27 @@ foreach (var delay in delayLengths.Reverse())
     }
 }
 
-bool DisplayShouldCancel(int delay = -1)
+void DisplayShouldCancel(int delay = -1)
 {
-    if (controlCRequested)
-    {
-        return controlCRequested;
-    }
 
     if (delay == -1)
     {
         delay = twoSeconds;
     }
 
-    using CancellationTokenSource displaySource = CancellationTokenSource.CreateLinkedTokenSource(token);
-    displaySource.CancelAfter(delay);
-    segment.Display(displaySource.Token);
-    return controlCRequested;
+    cts.CancelAfter(delay);
+    segment.Display(cts.Token);
 }
 
 segment.Dispose();
+
+void Reverse(int[] array)
+{
+    int[] reversed = new int[array.Length];
+    for (int i = 0; i < array.Length; i++)
+    {
+        reversed[reversed.Length - 1 - i] = array[i];
+    }
+
+    array = reversed;
+}

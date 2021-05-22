@@ -55,7 +55,6 @@
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
-  <Import Project="..\..\src\Iot.Device.Common\Multiplexing\Iot.Device.Common.Multiplexing.projitems" Label="Shared" />
   <Import Project="..\..\src\Iot.Device.Multiplexing\Iot.Device.Multiplexing.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>

@@ -113,7 +113,7 @@ namespace Iot.Device.Multiplexing.Utility
         /// Displays current state of segment.
         /// Segment is displayed at least until token receives a cancellation signal, possibly due to a specified duration expiring.
         /// </summary>
-        public void Display() => Thread.SpinWait(1);
+        public void Display(CancellationToken token) => token.WaitHandle.WaitOne();
 
         /// <summary>
         /// Disposes any native resources.

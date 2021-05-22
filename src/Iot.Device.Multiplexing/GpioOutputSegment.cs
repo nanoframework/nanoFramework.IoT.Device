@@ -4,7 +4,6 @@
 
 using System;
 using System.Device.Gpio;
-using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Multiplexing.Utility;
 
@@ -95,7 +94,17 @@ namespace Iot.Device.Multiplexing
         /// Displays current state of segment.
         /// Segment is displayed at least until token receives a cancellation signal, possibly due to a specified duration expiring.
         /// </summary>
-        public void Display()
+        public void Display(CancellationToken token)
+        {
+            Display();
+            _segment.Display(token);
+        }
+
+        /// <summary>
+        /// Displays current state of segment.
+        /// Segment is displayed at least until token receives a cancellation signal, possibly due to a specified duration expiring.
+        /// </summary>
+        private void Display()
         {
             for (int i = 0; i < _pins.Length; i++)
             {

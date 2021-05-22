@@ -51,6 +51,6 @@ namespace Iot.Device.Multiplexing
         /// Displays current state of segment.
         /// Segment is displayed at least until token receives a cancellation signal, possibly due to a specified duration expiring.
         /// </summary>
-        void Display();
+        void Display(CancellationToken token);
     }
 }
