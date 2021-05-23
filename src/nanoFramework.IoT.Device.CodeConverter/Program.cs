@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace nanoFramework.IoT.Device.CodeConverter
@@ -175,28 +176,14 @@ namespace nanoFramework.IoT.Device.CodeConverter
                     searches,
                     oldProjectReferences);
 
-                // SOLUTION File
-                if (projectType == ProjectType.Regular)
-                {
-                    CreateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
-                    UpdateSolutionFile(projectName, targetDirectoryInfo, projectGuid);
-                }
-                else
-                {
-                    // fill in project GUID
-                    UpdateProjectGuidInSolutionFile(
-                        targetDirectoryInfo,
-                        projectType,
-                        projectName,
-                        projectGuid);
-                }
-
                 // NUSPEC File
                 if (projectType == ProjectType.Regular)
                 {
                     CreateNuspecFile(targetDirectoryInfo, projectName, targetDirectory);
                 }
             }
+
+            UpdateSolutionFiles(outputDirectoryInfo);
 
             Console.WriteLine("Completed. Press any key to exit.");
             Console.ReadLine();
@@ -215,7 +202,17 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 targetNuspecFile.MoveTo(Path.Combine(targetDirectory, $"{projectName}.nuspec"), true);
             }
         }
-        
+        public static Guid ToHashGuid(string src)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(src);
+
+            using var sha256 = System.Security.Cryptography.SHA256.Create();
+            byte[] hashedBytes = sha256.ComputeHash(bytes);
+
+            Array.Resize(ref hashedBytes, 16);
+            return new Guid(hashedBytes);
+        }
+
         private static void CreateProjectFile(
             ProjectType projectType,
             string projectName,
@@ -261,7 +258,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
             }
 
             // new GUID for project
-            projectGuid = Guid.NewGuid().ToString("B").ToUpper();
+            projectGuid = ToHashGuid(projectName).ToString("B").ToUpper();
             projectReplacements.Add("<!-- NEW PROJECT GUID -->", projectGuid);
 
             // Update project references
@@ -390,132 +387,18 @@ namespace nanoFramework.IoT.Device.CodeConverter
             }
         }
 
-        private static void CreateSolutionFile(string projectName, DirectoryInfo targetDirectoryInfo, string projectGuid)
+        static void UpdateSolutionFiles(DirectoryInfo outputDirectory)
         {
-            var solutionFileTemplate = @"
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
-MinimumVisualStudioVersion = 10.0.40219.1
-[[ INSERT PROJECTS HERE ]]
-
-Global
-    GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Debug|Any CPU = Debug|Any CPU
-        Release|Any CPU = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        [[ INSERT BUILD CONFIGURATIONS HERE ]]
-    EndGlobalSection
-EndGlobal";
-            var solutionProjectTemplate = $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT"", ""nanoFrameworkIoT.nfproj"", ""{projectGuid}""
-EndProject";
-            var solutionBuildConfigTemplate = $@"{projectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {projectGuid}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {projectGuid}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {projectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {projectGuid}.Release|Any CPU.Build.0 = Release|Any CPU
-        {projectGuid}.Release|Any CPU.Deploy.0 = Release|Any CPU";
-
-            var solutionProject = solutionProjectTemplate.Replace("nanoFrameworkIoT", projectName);
-
-            // find out if there are sample projects
-            if(targetDirectoryInfo.GetDirectories("samples").Count() > 0)
-            {
-                solutionProject += $@"
-Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Samples"", ""samples\nanoFrameworkIoT.Samples.nfproj"", ""{_sampleProjectGuidReplacementToken}""
-EndProject";
-            }
-            else
-            {
-                solutionProject += $@"
-<!-- SAMPLES PROJECT PLACEHOLDER -->";
-            }
-
-            // find out if there are unit test projects
-            if (targetDirectoryInfo.GetDirectories("tests").Count() > 0)
-            {
-                solutionProject += $@"
-Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""nanoFrameworkIoT.Tests"", ""tests\nanoFrameworkIoT.Tests.nfproj"", ""{_unitTestProjectGuidReplacementToken}""
-EndProject";
-            }
-            else
-            {
-                solutionProject += $@"
-<!-- UNIT TESTS PROJECT PLACEHOLDER -->";
-            }
-
-            var solutionFileContent = solutionFileTemplate.Replace("[[ INSERT PROJECTS HERE ]]", solutionProject);
-            solutionFileContent = solutionFileContent.Replace("[[ INSERT BUILD CONFIGURATIONS HERE ]]", solutionBuildConfigTemplate);
-            File.WriteAllText(Path.Combine(targetDirectoryInfo.FullName, $"{projectName}.sln"), solutionFileContent);
-        }
-
-        private static void UpdateProjectGuidInSolutionFile(
-            DirectoryInfo targetDirectoryInfo,
-            ProjectType projectType,
-            string projectName,
-            string projectGuid)
-        {
-            // find the parent solution file
-            // it's OK to simplify because there will be only one SLN file there
-            var slnFile = Directory.GetFiles(targetDirectoryInfo.Parent.FullName, "*.sln").FirstOrDefault();
-
-            if (slnFile != null)
-            {
-                // load Solution file content
-                string slnContent = File.ReadAllText(slnFile);
-
-                // replace project GUID
-                if (projectType == ProjectType.Samples)
-                {
-                    slnContent = slnContent.Replace(_sampleProjectGuidReplacementToken, projectGuid);
-                }
-                else if (projectType == ProjectType.UnitTest)
-                {
-                    slnContent = slnContent.Replace(_unitTestProjectGuidReplacementToken, projectGuid);
-                }
-
-                // add project, if not already there
-
-                // find out if there are sample projects
-
-                if (projectType is ProjectType.Samples or ProjectType.UnitTest)
-                {
-                    var token = projectType is ProjectType.Samples ? _sampleProjectPlaceholderToken : _unitTestProjectPlaceholderToken;
-
-                    var projFileName = $"{projectName}.nfproj";
-
-                    try
-                    {
-                        var projectDirName = targetDirectoryInfo.GetFiles(projFileName).Single().Directory!.Name;
-
-                        var slnLines = new[]
-                        {
-                        $@"Project(""{{11A8DD76-328B-46DF-9F39-F559912D0360}}"") = ""{projectName}"", ""{projectDirName}\\{projFileName}"", ""{projectGuid}""",
-                        "EndProject",
-                        token,  // leave token in the solution after replacement in case we need to add more projects
-                    };
-
-                        slnContent = slnContent.Replace(token, string.Join(Environment.NewLine, slnLines));
-                    } catch (Exception) { }
-                }
-
-                File.WriteAllText(slnFile, slnContent);
-            }
-        }
-
-        private static void UpdateSolutionFile(string projectName, DirectoryInfo targetDirectoryInfo, string projectGuid)
-        {
-            var solutionFiles = targetDirectoryInfo.GetFiles("*.sln");
-            foreach(var solutionFile in solutionFiles)
+            foreach (var solutionFile in outputDirectory.GetFiles("*.sln", new EnumerationOptions { RecurseSubdirectories = true }))
             {
                 solutionFile.EditFile(new Dictionary<string, string>
                 {
-                    {"csproj", "nfproj" },
-                    {"nanoFrameworkIoT", projectName }
+                    { ".csproj", ".nfproj" },
+                    { "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "11A8DD76-328B-46DF-9F39-F559912D0360" },
                 });
             }
         }
+
 
         private static T InitOptions<T>()
             where T : new()
