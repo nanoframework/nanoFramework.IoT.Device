@@ -117,6 +117,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         { "Console.WriteLine(", "Debug.WriteLine(" },
                         { "using System.Diagnostics.CodeAnalysis;", "" },
                         { "\\[MemberNotNull.*\\]", "" },
+                        { "Environment.TickCount", "DateTime.UtcNow.Ticks" },
                     };
                     
                     // All generics go to the main project of the binding to avoid conflicts between the projects.
