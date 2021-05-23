@@ -10,12 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Project", "Shared Pr
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{E86896A2-B40C-4C03-B0E3-979DAF764CD6}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{e86896a2-b40c-4c03-b0e3-979daf764cd6}*SharedItemsImports = 13
+		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,7 +40,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{23325B14-3651-4879-9697-9846FF123FEB} = {DDFFEC3A-0FFB-4CF6-BB2E-30C09AFCDB1F}
-		{E86896A2-B40C-4C03-B0E3-979DAF764CD6} = {DDFFEC3A-0FFB-4CF6-BB2E-30C09AFCDB1F}
+		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {DDFFEC3A-0FFB-4CF6-BB2E-30C09AFCDB1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8ECBE2FD-796C-4D37-B27C-27AB2EE0618B}
