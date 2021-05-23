@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{4F2CEAC0-D363-421B-90CA-08FC6F10952E}</ProjectGuid>
+    <ProjectGuid>{11722AC0-55A5-4C13-B182-F027CE7F2091}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -33,11 +33,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.91.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">

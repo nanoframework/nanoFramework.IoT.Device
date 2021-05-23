@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{D6F64E98-520B-4E98-B61B-6DFE9B5788D9}</ProjectGuid>
+    <ProjectGuid>{820ADB2F-D289-4506-B6E8-B0C4945E9D35}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -29,7 +29,11 @@
       <Private>True</Private>
     </Reference> 
     <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.VolumeConcentration">
+      <HintPath>packages\UnitsNet.nanoFramework.VolumeConcentration.4.92.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

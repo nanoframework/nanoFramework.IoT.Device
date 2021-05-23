@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{F9055784-5E09-478D-858C-1F1F0E24C58B}</ProjectGuid>
+    <ProjectGuid>{B6377CF3-3490-4330-84B3-F62EC1C8E9DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -28,6 +28,10 @@
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference> 
+    <Reference Include="UnitsNet.Frequency">
+      <HintPath>packages\UnitsNet.nanoFramework.Frequency.4.92.0\lib\UnitsNet.Frequency.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

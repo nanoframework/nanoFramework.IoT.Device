@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioReceiver", "RadioReceiver.nfproj", "{8524D158-5F30-4AE9-8D0D-A5F78213EC53}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioReceiver", "RadioReceiver.nfproj", "{35D9C196-5388-4F7B-B81A-21719C829033}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioReceiver.Samples", "samples\\RadioReceiver.Samples.nfproj", "{20B73E43-A274-4154-B206-8A4252816103}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioReceiver.Samples", "samples\\RadioReceiver.Samples.nfproj", "{1EA287A4-D47D-4988-9A72-1DEC394B92C7}"
 EndProject
 <!-- SAMPLES PROJECT PLACEHOLDER -->
 <!-- UNIT TESTS PROJECT PLACEHOLDER -->
@@ -16,11 +16,11 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {8524D158-5F30-4AE9-8D0D-A5F78213EC53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {8524D158-5F30-4AE9-8D0D-A5F78213EC53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {8524D158-5F30-4AE9-8D0D-A5F78213EC53}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-        {8524D158-5F30-4AE9-8D0D-A5F78213EC53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {8524D158-5F30-4AE9-8D0D-A5F78213EC53}.Release|Any CPU.Build.0 = Release|Any CPU
-        {8524D158-5F30-4AE9-8D0D-A5F78213EC53}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {35D9C196-5388-4F7B-B81A-21719C829033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {35D9C196-5388-4F7B-B81A-21719C829033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {35D9C196-5388-4F7B-B81A-21719C829033}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+        {35D9C196-5388-4F7B-B81A-21719C829033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {35D9C196-5388-4F7B-B81A-21719C829033}.Release|Any CPU.Build.0 = Release|Any CPU
+        {35D9C196-5388-4F7B-B81A-21719C829033}.Release|Any CPU.Deploy.0 = Release|Any CPU
     EndGlobalSection
 EndGlobal

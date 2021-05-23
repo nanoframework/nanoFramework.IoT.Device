@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{8C466F3F-BF49-4986-99AB-B76A70737F46}</ProjectGuid>
+    <ProjectGuid>{75303D9F-E94D-479D-8026-02F5A8D11322}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -33,15 +33,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Pressure">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Pressure.4.92.0\lib\UnitsNet.Pressure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Duration">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Duration.4.92.0\lib\UnitsNet.Duration.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

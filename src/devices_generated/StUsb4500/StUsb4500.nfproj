@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{21E71652-715C-4F10-AAEA-81966B0EE0B0}</ProjectGuid>
+    <ProjectGuid>{52F6BB49-9DBF-4D98-87B3-11CCDA8E8848}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -33,11 +33,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.ElectricCurrent">
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricCurrent.4.92.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.ElectricPotentialDc">
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotentialDc.4.92.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace Iot.Device.Apa102
         /// <summary>
         /// Colors of LEDs
         /// </summary>
-        public Span<Color> Pixels => _pixels;
+        public SpanColor Pixels => _pixels;
 
         private SpiDevice _spiDevice;
         private Color[] _pixels;

@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{48638A93-172F-446D-9898-7EEEAF6A397E}</ProjectGuid>
+    <ProjectGuid>{34DCD45B-145C-4BA3-BDDE-FDD3EE39643C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -33,7 +33,15 @@
       <Private>True</Private>
     </Reference> 
     <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Frequency">
+      <HintPath>packages\UnitsNet.nanoFramework.Frequency.4.92.0\lib\UnitsNet.Frequency.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Ratio">
+      <HintPath>packages\UnitsNet.nanoFramework.Ratio.4.92.0\lib\UnitsNet.Ratio.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">

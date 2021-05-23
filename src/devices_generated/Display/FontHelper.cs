@@ -174,7 +174,7 @@ namespace Iot.Device.Display
         /// </summary>
         /// <param name="input">input string</param>
         /// <param name="output">list of corresponding character fonts</param>
-        public static void ConvertString(ReadOnlySpan<char> input, Span<Font> output)
+        public static void ConvertString(SpanChar input, SpanFont output)
         {
             if (input.Length != output.Length)
             {

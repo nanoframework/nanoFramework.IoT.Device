@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{A6289C00-6FEF-4D30-AC12-57BC974DB826}</ProjectGuid>
+    <ProjectGuid>{60C4D871-A121-4A48-974B-2E34D419BAFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -37,19 +37,23 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.91.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Frequency">
+      <HintPath>packages\UnitsNet.nanoFramework.Frequency.4.92.0\lib\UnitsNet.Frequency.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">

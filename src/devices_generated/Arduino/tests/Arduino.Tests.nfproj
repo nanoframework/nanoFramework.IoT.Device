@@ -11,7 +11,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{BCBBE1FF-9BE3-4E1E-A4C7-402B84D20811}</ProjectGuid>
+    <ProjectGuid>{1BE38FD9-77BF-49E8-A32B-BD1BA2CA981F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -44,7 +44,7 @@
       <Private>True</Private>
     </Reference> 
     <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.91.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

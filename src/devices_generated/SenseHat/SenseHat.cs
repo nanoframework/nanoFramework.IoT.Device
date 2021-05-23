@@ -97,7 +97,7 @@ namespace Iot.Device.SenseHat
         /// Write colors to LED matrix
         /// </summary>
         /// <param name="colors">Buffer of colors</param>
-        public void Write(ReadOnlySpan<Color> colors) => LedMatrix.Write(colors);
+        public void Write(SpanColor colors) => LedMatrix.Write(colors);
 
         // JOYSTICK
 

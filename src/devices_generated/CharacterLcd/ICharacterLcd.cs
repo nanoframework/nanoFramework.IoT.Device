@@ -115,6 +115,6 @@ namespace Iot.Device.CharacterLcd
         /// Used if character translation already took place.
         /// </summary>
         /// <param name="text">Text to print</param>
-        void Write(ReadOnlySpan<char> text);
+        void Write(SpanChar text);
     }
 }

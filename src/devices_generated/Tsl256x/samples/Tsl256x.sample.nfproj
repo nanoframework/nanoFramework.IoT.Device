@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{BED0269D-6785-4DAC-B64B-4E56A3A27E68}</ProjectGuid>
+    <ProjectGuid>{00EBD3D8-2BF7-4826-9687-51AE0FA896E8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -30,6 +30,10 @@
     </Reference> 
     <Reference Include="System.Device.I2c">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Illuminance">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.4.92.0\lib\UnitsNet.Illuminance.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -80,7 +80,7 @@ namespace Iot.Device.Graphics
             BdfFont font = new BdfFont();
             while (!sr.EndOfStream)
             {
-                ReadOnlySpan<char> span = sr.ReadLine().AsSpan().Trim();
+                SpanChar span = sr.ReadLine().AsSpan().Trim();
                 if (span.StartsWith(FontBoundingBoxString, StringComparison.Ordinal))
                 {
                     span = span.Slice(FontBoundingBoxString.Length).Trim();
@@ -120,7 +120,7 @@ namespace Iot.Device.Graphics
             return font;
         }
 
-        private static int ReadNextDecimalNumber(ref ReadOnlySpan<char> span)
+        private static int ReadNextDecimalNumber(ref SpanChar span)
         {
             span = span.Trim();
 
@@ -141,7 +141,7 @@ namespace Iot.Device.Graphics
             return number * sign;
         }
 
-        private static int ReadNextHexaDecimalNumber(ref ReadOnlySpan<char> span)
+        private static int ReadNextHexaDecimalNumber(ref SpanChar span)
         {
             span = span.Trim();
 
@@ -174,7 +174,7 @@ namespace Iot.Device.Graphics
         /// </summary>
         /// <param name="character">Character whose data needs to be retrieved</param>
         /// <param name="charData">Character data</param>
-        public void GetCharData(char character, out ReadOnlySpan<ushort> charData)
+        public void GetCharData(char character, out SpanUshort charData)
         {
             if (GlyphMapper is object &&
                (GlyphMapper.TryGetValue((int)character, out int index) ||
@@ -215,7 +215,7 @@ namespace Iot.Device.Graphics
         /// <param name="data">Buffer to be sliced and filled with character data</param>
         /// <param name="useDefaultChar">Use default character if not found</param>
         /// <returns>True if data could be retrieved</returns>
-        public bool GetCharData(int charOrdinal, ref Span<int> data, bool useDefaultChar = true)
+        public bool GetCharData(int charOrdinal, ref SpanInt data, bool useDefaultChar = true)
         {
             if (data.Length < Height || GlyphMapper is null)
             {
@@ -261,7 +261,7 @@ namespace Iot.Device.Graphics
             int index = 0;
             for (int i = 0; i < CharsCount; i++)
             {
-                ReadOnlySpan<char> span = sr.ReadLine().AsSpan().Trim();
+                SpanChar span = sr.ReadLine().AsSpan().Trim();
                 if (!span.StartsWith(StartCharString, StringComparison.Ordinal))
                 {
                     throw new InvalidDataException(

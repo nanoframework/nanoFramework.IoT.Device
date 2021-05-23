@@ -118,21 +118,32 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         { "\\[MemberNotNull.*\\]", "" },
                         { "Environment.TickCount", "DateTime.UtcNow.Ticks" },
                     };
+                    
+                    // All generics go to the main project of the binding to avoid conflicts between the projects.
+                    // This will cause rare issues when a type is defined int the samples/tests project,
+                    // but the generic container is placed to the main project from where it's not visible.
+                    // There's also an issue if the main project isn't visible from samples/tests which want 
+                    // to use this generic.
+                    // If this proves problematic, one needs to refine the algorithm to choose the target
+                    // directory for the generics individually and more precisely.
+                    var genericsOutputDirectory = projectType is ProjectType.Regular
+                        ? file.DirectoryName
+                        : file.Directory!.Parent!.FullName;
 
                     var listReplacements = file.GenerateGenerics(
                         templatesFolder: genericsTemplatesDirectory.FullName, 
                         containerType: "List",
-                        containerTypeSynonyms: new [] {"List", "IList", "IReadOnlyList"},
-                        // All generics go to the main project of the binding to avoid conflicts between the projects.
-                        // This will cause rare issues when a type is defined int the samples/tests project,
-                        // but the generic container is placed to the main project from where it's not visible.
-                        // There's also an issue if the main project isn't visible from samples/tests which want 
-                        // to use this generic.
-                        // If this proves problematic, one needs to refine the algorithm to choose the target
-                        // directory for the generics individually and more precisely.
-                        outputDirectory: projectType is ProjectType.Regular ? file.DirectoryName : file.Directory!.Parent!.FullName);
-
-                    foreach (var (key, value) in listReplacements)
+                        outputDirectory: genericsOutputDirectory,
+                        containerTypeSynonyms: new [] {"IList", "IReadOnlyList"});
+                    
+                    var spanReplacements = file.GenerateGenerics(
+                        templatesFolder: genericsTemplatesDirectory.FullName, 
+                        containerType: "Span",
+                        outputDirectory: genericsOutputDirectory,
+                        containerTypeSynonyms: new [] {"ReadOnlySpan"},
+                        alreadyExistingContainers: new [] {"SpanByte"});
+                    
+                    foreach (var (key, value) in listReplacements.Concat(spanReplacements))
                     {
                         replacements[key] = value;
                     }
@@ -587,12 +598,39 @@ EndProject";
 
     public static class FileInfoExtensions
     {
+        private static readonly string[] RegexHints = {".*", "^"};
+        
+        /// <summary>
+        /// This is a complex operation that:
+        /// 1. Finds all generics of a given type in the source file;
+        /// 2. Generates non-generic classes that simulate behaviour of these generics (such as Span<byte> -> SpanByte);
+        /// 3. Writes these new classes to the files in the given folder;
+        /// 4. Returns the replacements one has to do in the source file so that it uses the new classes instead of generics.
+        /// </summary>
+        /// <param name="sourceFile">Source code file in which to search for generics usage</param>
+        /// <param name="templatesFolder">Folder that contains all .cs templates for generics</param>
+        /// <param name="containerType">
+        /// Generic container such as List<int> or Span<byte>, for which we will search in the source file
+        /// </param>
+        /// <param name="containerTypeSynonyms">
+        /// Synonymous generics that we also count as containerType usage.
+        /// E.g. if you want to replace both IList<byte> and List<byte> with ListByte, make IList a synonym for List.
+        /// </param>
+        /// <param name="alreadyExistingContainers">
+        /// Containers that don't need to be created from the template because they already exist in the visible scope.
+        /// E.g. SpanByte exists in mscorlib, and there's no need to generate SpanByte.cs. 
+        /// </param>
+        /// <param name="outputDirectory">Where to put the generated replacements for the generics.</param>
+        /// <returns>
+        /// A dictionary of replacements one has to do in the file so that it uses the new classes instead of generics
+        /// </returns>
         public static Dictionary<string, string> GenerateGenerics(
             this FileInfo sourceFile,
             string templatesFolder,
             string containerType,
-            IList<string> containerTypeSynonyms,
-            string outputDirectory
+            string outputDirectory,
+            IList<string> containerTypeSynonyms = null,
+            IList<string> alreadyExistingContainers = null
         )
         {
             if (!sourceFile.Exists)
@@ -600,9 +638,14 @@ EndProject";
                 return null;
             }
 
+            containerTypeSynonyms ??= new List<string>();
+            alreadyExistingContainers ??= new List<string>();
+
+            containerTypeSynonyms = containerTypeSynonyms.Append(containerType).ToList();
+
             string fileContent = File.ReadAllText(sourceFile.FullName);
 
-            // e.g. match List<byte> and IList<byte> but avoid matching List<T> or List<byte[]>
+            // e.g. match List<byte> and IList<byte> but avoid matching List<T>, List<byte[]> or MyList<byte>
             var listRegex = new Regex(
                 @"\b(" + 
                 string.Join('|', containerTypeSynonyms.Select(Regex.Escape)) +
@@ -618,21 +661,21 @@ EndProject";
                     templatePath: Path.Combine(templatesFolder, $"{containerType}.cs"),
                     containerType: containerType,
                     genericType: type,
+                    alreadyExistingContainers: alreadyExistingContainers,
                     outputDirectory: outputDirectory
                 );
 
                 foreach (var oldType in containerTypeSynonyms)
                 {
-                    // This won't replace the type that g
                     foreach (var prefix in new[] {" ", "\t", "(", "<"})
                     {
                         result[$"{prefix}{oldType}<{type}>"] = prefix + newType;
                     }
 
-                    result["^" + Regex.Escape($"{oldType}<{type}>")] = newType; // replace in the very beginning of the line using regex
+                    // replace in the very beginning of the line using regex
+                    result["^" + Regex.Escape($"{oldType}<{type}>")] = newType; 
                 }
             }
-            
             return result;
         }
 
@@ -640,11 +683,20 @@ EndProject";
             string templatePath, 
             string containerType, 
             string genericType, 
+            IEnumerable<string> alreadyExistingContainers,
             string outputDirectory)
         {
             var template = File.ReadAllText(templatePath);
             var newContainerType = $"{containerType}{genericType.FirstCharToUpper()}";
-            
+
+            if (alreadyExistingContainers.Contains(newContainerType))
+            {
+                // Don't create a container if a container with the same name is visible in the scope of this project.
+                // E.g. a container SpanByte from mscorlib is globally visible, and we want to replace
+                // Span<byte> and ReadOnlySpan<byte> with SpanByte, but we don't want to generate our own SpanByte.cs.
+                return newContainerType;
+            }
+
             template = template
                 // Replace generic interfaces by their normal forms
                 .Replace("IEnumerable<T>", "IEnumerable")
@@ -673,49 +725,52 @@ EndProject";
             NugetPackages[] nugetPackages = null,
             Dictionary<string, bool> checkIfFound = null)
         {
-            var replacedKeys = new List<string>();
-            if (sourceFile.Exists)
+            if (!sourceFile.Exists)
             {
-                var tempFilename = $"{sourceFile.FullName}.edited";
-                using (var input = sourceFile.OpenText())
-                using (var output = new StreamWriter(tempFilename))
+                return checkIfFound;
+            }
+            
+            var tempFilename = $"{sourceFile.FullName}.edited";
+            using (var input = sourceFile.OpenText())
+            using (var output = new StreamWriter(tempFilename))
+            {
+                string line;
+                while (null != (line = input.ReadLine()))
                 {
-                    string line;
-                    while (null != (line = input.ReadLine()))
+                    // Replacing longer matches first is a safeguard heuristic.
+                    // It ensures we don't accidentally replace "List<int>"
+                    // before "IList<int>", which would break "IList<int>" replacement.
+                    foreach (var (key, value) in replacements.OrderByDescending(r => r.Key.Length))
                     {
-                        foreach (var replacement in replacements)
+                        if (line.Contains(key))
                         {
-                            if (line.Contains(replacement.Key))
-                            {
-                                line = line.Replace(replacement.Key, replacement.Value);
-                                replacedKeys.Add(replacement.Key);
-                            }
-                            try
-                            {
-                                if (new[] {".*", "^"}.Any(regexHint => replacement.Key.Contains(regexHint)))
-                                {
-                                    var regexMatch = Regex.Match(line, replacement.Key).Value;
-                                    if (string.IsNullOrEmpty(regexMatch) == false)
-                                    {
-                                        line = line.Replace(regexMatch, replacement.Value);
-                                    }
-                                }
-                            }
-                            catch (RegexParseException) { }
+                            line = line.Replace(key, value);
                         }
-
-                        if (checkIfFound != null)
+                        try
                         {
-                            foreach (var check in checkIfFound.Keys)
+                            if (RegexHints.Any(regexHint => key.Contains(regexHint)))
                             {
-                                if (line.Contains(check))
+                                var regexMatch = Regex.Match(line, key).Value;
+                                if (string.IsNullOrEmpty(regexMatch) == false)
                                 {
-                                    checkIfFound[check] = true;
+                                    line = line.Replace(regexMatch, value);
                                 }
                             }
                         }
+                        catch (RegexParseException) { }
+                    }
 
-                        if (nugetPackages != null && nugetPackages.Length > 0)
+                    if (checkIfFound != null)
+                    {
+                        foreach (var check in checkIfFound.Keys)
+                        {
+                            if (line.Contains(check))
+                            {
+                                checkIfFound[check] = true;
+                            }
+                        }
+
+                        if (nugetPackages is {Length: > 0})
                         {
                             foreach (var nugetPackage in nugetPackages)
                             {
@@ -725,19 +780,19 @@ EndProject";
                                 }
                             }
                         }
-
-                        // Make sure all line endings on Windows are CRLF.
-                        // This is important for opening .nfproj flies in Visual Studio,
-                        // and maybe for some other files too.
-                        line = line.Replace("\r", "").Replace("\n", Environment.NewLine);
-
-                        output.WriteLine(line);
                     }
-                }
 
-                sourceFile.Delete();
-                new FileInfo(tempFilename).MoveTo(sourceFile.FullName);
+                    // Make sure all line endings on Windows are CRLF.
+                    // This is important for opening .nfproj flies in Visual Studio,
+                    // and maybe for some other files too.
+                    line = line.Replace("\r", "").Replace("\n", Environment.NewLine);
+
+                    output.WriteLine(line);
+                }
             }
+
+            sourceFile.Delete();
+            new FileInfo(tempFilename).MoveTo(sourceFile.FullName);
 
             return checkIfFound;
         }
@@ -745,8 +800,6 @@ EndProject";
 
     public enum ProjectType
     {
-        None,
-
         Regular,
 
         Samples,
