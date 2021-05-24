@@ -370,7 +370,7 @@ namespace Iot.Device.Bh1745
                 byte[] reverse = new byte[source.Length];
                 for (int i = 0; i < reverse.Length; i++)
                 {
-                    reverse[i] = source[source.Length - i];
+                    reverse[i] = source[source.Length - 1 - i];
                 }
 
                 source = reverse;
