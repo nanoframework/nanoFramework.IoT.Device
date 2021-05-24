@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>76377fe4-14c9-44b9-ad9a-f9f361d06ae6</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>System.Device.Gpio</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)GpioDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PinVector32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PinVector64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SpanPinValuePair.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\CancellationToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\CancellationTokenRegistration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\CancellationTokenSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\System.Threading.CancellationToken\OperationCanceledException.cs" />
+  </ItemGroup>
+</Project>

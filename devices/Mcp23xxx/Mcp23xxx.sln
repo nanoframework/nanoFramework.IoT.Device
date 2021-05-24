@@ -1,0 +1,56 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx", "Mcp23xxx.nfproj", "{BE8D68F8-0D89-41F1-A9F0-84930B55A681}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Samples", "samples\Mcp23xxx.Samples.nfproj", "{E824499F-CB26-47F4-B2F1-5F417CBBAF71}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp23xxx.Tests", "tests\Mcp23xxx.Tests.nfproj", "{729E6512-0C3E-44FE-871E-2FB9D7D35A30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{DF710FA4-B8C0-4081-9CAD-B379D9AB4648}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Gpio", "..\..\src\System.Device.Gpio\System.Device.Gpio.shproj", "{76377FE4-14C9-44B9-AD9A-F9F361D06AE6}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Threading.CancellationToken", "..\..\src\System.Threading.CancellationToken\System.Threading.CancellationToken.shproj", "{809A6044-F4F6-4E6F-8C44-EB5A54B71AB2}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\src\System.Device.Gpio\System.Device.Gpio.projitems*{76377fe4-14c9-44b9-ad9a-f9f361d06ae6}*SharedItemsImports = 13
+		..\..\src\System.Threading.CancellationToken\System.Threading.CancellationToken.projitems*{809a6044-f4f6-4e6f-8c44-eb5a54b71ab2}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE8D68F8-0D89-41F1-A9F0-84930B55A681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8D68F8-0D89-41F1-A9F0-84930B55A681}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8D68F8-0D89-41F1-A9F0-84930B55A681}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BE8D68F8-0D89-41F1-A9F0-84930B55A681}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8D68F8-0D89-41F1-A9F0-84930B55A681}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8D68F8-0D89-41F1-A9F0-84930B55A681}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E824499F-CB26-47F4-B2F1-5F417CBBAF71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E824499F-CB26-47F4-B2F1-5F417CBBAF71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E824499F-CB26-47F4-B2F1-5F417CBBAF71}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E824499F-CB26-47F4-B2F1-5F417CBBAF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E824499F-CB26-47F4-B2F1-5F417CBBAF71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E824499F-CB26-47F4-B2F1-5F417CBBAF71}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{729E6512-0C3E-44FE-871E-2FB9D7D35A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729E6512-0C3E-44FE-871E-2FB9D7D35A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729E6512-0C3E-44FE-871E-2FB9D7D35A30}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{729E6512-0C3E-44FE-871E-2FB9D7D35A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729E6512-0C3E-44FE-871E-2FB9D7D35A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729E6512-0C3E-44FE-871E-2FB9D7D35A30}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76377FE4-14C9-44B9-AD9A-F9F361D06AE6} = {DF710FA4-B8C0-4081-9CAD-B379D9AB4648}
+		{809A6044-F4F6-4E6F-8C44-EB5A54B71AB2} = {DF710FA4-B8C0-4081-9CAD-B379D9AB4648}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7BB850F-A4BB-4B7A-82D9-1D23B4F334B3}
+	EndGlobalSection
+EndGlobal
