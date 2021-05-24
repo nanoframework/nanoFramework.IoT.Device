@@ -47,7 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <!-- INSERT FILE REFERENCES HERE -->
   </ItemGroup>
