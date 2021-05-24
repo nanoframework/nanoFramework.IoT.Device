@@ -36,7 +36,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Compile Include="*.cs" />
     <None Include="README.md" />
