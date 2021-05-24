@@ -55,7 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Compile Include="Bmp180.cs" />
     <Compile Include="CalibrationData.cs" />
