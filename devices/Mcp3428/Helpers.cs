@@ -18,7 +18,7 @@ namespace Iot.Device.Mcp3428
             AdcResolution.Bit12 => 1e-3,
             AdcResolution.Bit14 => 250e-6,
             AdcResolution.Bit16 => 62.5e-6,
-            _ => throw new ArgumentOutOfRangeException(nameof(res), res, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(res)),
         };
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Iot.Device.Mcp3428
             AdcResolution.Bit12 => 1000,
             AdcResolution.Bit14 => 4000,
             AdcResolution.Bit16 => 16000,
-            _ => throw new ArgumentOutOfRangeException(nameof(res), res, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(res)),
         };
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Iot.Device.Mcp3428
             AdcResolution.Bit12 => 240,
             AdcResolution.Bit14 => 60,
             AdcResolution.Bit16 => 15,
-            _ => throw new ArgumentOutOfRangeException(nameof(res), res, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(res)),
         };
 
         // From datasheet 5.2

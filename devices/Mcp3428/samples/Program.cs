@@ -20,12 +20,12 @@ while (true)
         var last = watch.ElapsedMilliseconds;
         var value = adc.ReadChannel(i);
 
-        foreach (var b in adc.LastBytes.ToArray())
+        foreach (var b in adc.LastBytes)
         {
-            Console.Write($"{b:X} ");
+            Debug.Write($"{b:X} ");
         }
 
-        Debug.WriteLine();
+        Debug.WriteLine("");
         Debug.WriteLine($"ADC Channel[{adc.LastChannel + 1}] read in {watch.ElapsedMilliseconds - last} ms, value: {value} V");
         Thread.Sleep(500);
     }
