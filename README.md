@@ -10,6 +10,7 @@
 
 This repository contains bindings which can be sensors, small screen and anything else that you can connect to your nanoFramework chip!
 
+Most of the bindings have been migrated from [.NET IoT repository](https://github.com/dotnet/iot/tree/main/src/devices). Not all the bindings make sense to migrate to .NET nanoFramework, so the effort of migration has been placed into devices that can work with .NET nanoFramework. Please note as well that some devices have been migrated without been tested, so they main contain problems.
 
 ## Folder Structure
 
@@ -24,6 +25,32 @@ Other folders in [/src](/src) contain nanoFramework projects that you can refere
 ## Contributing
 
 **Important:** If you plan to clean up the code in [/src/devices_generated/](/src/devices_generated/), please copy your work to the [/src/devices/](/src/devices/) folder as the content of [/src/devices_generated/](/src/devices_generated/) will be overwritten by the generator tool.
+
+Please check the [detail list of tips and tricks](./tips-tricks.md) to facilitate the migration. The generator takes care of some heavy lifting but there is always some manual adjustments needed.
+
+We are using the following structure for the bindings:
+
+```text
+/devices
+  /Binding1
+    /samples
+      Binding1.Samples.nfproj
+      AssicateFile.cs
+      Program.cs
+    /test
+      BindingA.Test.nfproj
+      AssociatedTestFile.cs
+    Binding1.nfproj
+    Binding1.nuspec
+    version.json
+    OtherFiles.cs
+    OtherFiles.anythingelse
+    Readme.md
+```
+
+## Using the Code Converter
+
+The Code Converter allows to facilitate migration of .NET Core/.NET 5.0 code into .NET nanoFramework. More information and how to [customize and run it here](./src/nanoFramework.IoT.Device.CodeConverter/README.md).
 
 ## Feedback and documentation
 
