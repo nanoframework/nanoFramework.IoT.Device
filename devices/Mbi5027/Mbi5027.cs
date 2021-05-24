@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.Spi;
 
@@ -24,7 +23,7 @@ namespace Iot.Device.Multiplexing
         /// <param name="bitLength">Bit length of register, including chained registers. Default is 16 bits.</param>
         /// <param name="gpioController">The GPIO Controller used for interrupt handling.</param>
         /// <param name="shouldDispose">Option (true by default) to dispose the GPIO controller when disposing this instance.</param>
-        public Mbi5027(Mbi5027PinMapping pinMapping, int bitLength = 16, GpioController? gpioController = null,  bool shouldDispose = true)
+        public Mbi5027(Mbi5027PinMapping pinMapping, int bitLength = 16, GpioController? gpioController = null, bool shouldDispose = true)
         : base(new ShiftRegisterPinMapping(pinMapping.Sdi, pinMapping.Clk, pinMapping.LE, pinMapping.OE), bitLength, gpioController, shouldDispose)
         {
             _pinMapping = pinMapping;
@@ -74,7 +73,7 @@ namespace Iot.Device.Multiplexing
         /// Read output error status.
         /// Requires use of GPIO controller.
         /// </summary>
-        public IEnumerable<PinValue> ReadOutputErrorStatus()
+        public PinValue[] ReadOutputErrorStatus()
         {
             if (GpioController is null)
             {
@@ -134,13 +133,16 @@ namespace Iot.Device.Multiplexing
             // Phase 3: Read status for each output (normal or error codes)
             // read error codes from SDO, with OE high
             GpioController.Write(_pinMapping.OE, 1);
+            PinValue[] retSdo = new PinValue[BitLength];
             for (int i = 0; i < BitLength; i++)
             {
                 PinValue sdo = GpioController.Read(_pinMapping.Sdo);
-                yield return sdo;
+                retSdo[i] = sdo;
                 GpioController.Write(_pinMapping.Clk, 1);
                 GpioController.Write(_pinMapping.Clk, 0);
             }
+
+            return retSdo;
         }
 
         /// <summary>

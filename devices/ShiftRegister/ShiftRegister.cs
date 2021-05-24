@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Device.Gpio;
 using System.Device.Spi;
 using Iot.Device.Multiplexing.Utility;
@@ -291,27 +290,6 @@ namespace Iot.Device.Multiplexing
             Latch();
 
             _segment.Display(token);
-        }
-
-        /// <summary>
-        /// Displays current state of segment.
-        /// Segment is displayed at least until token receives a cancellation signal, possibly due to a specified duration expiring.
-        /// </summary>
-        Task IOutputSegment.DisplayAsync(CancellationToken token)
-        {
-            if (_segment is null)
-            {
-                throw new Exception("`IOutputSegment` is not supported for `ShiftRegister` when using SPI.");
-            }
-
-            for (int i = _segment.Length - 1; i >= 0; i--)
-            {
-                ShiftBit(_segment[i]);
-            }
-
-            Latch();
-
-            return _segment.DisplayAsync(token);
         }
 
         private void SetupPins()

@@ -24,6 +24,11 @@
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.9.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.9.0-preview.26\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
     <Reference Include="System.Device.Gpio">
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
@@ -47,8 +52,10 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ShiftRegister\ShiftRegister.nfproj" />
     <ProjectReference Include="..\Mbi5027.nfproj" />
   </ItemGroup>
+  <Import Project="..\..\..\src\Iot.Device.Multiplexing\Iot.Device.Multiplexing.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
   <ProjectExtensions>

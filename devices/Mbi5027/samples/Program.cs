@@ -4,26 +4,21 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Multiplexing;
 
 using Mbi5027 sr = new(Mbi5027PinMapping.Complete);
-CancellationTokenSource cancellationSource = new();
-Console.CancelKeyPress += (s, e) =>
-{
-    e.Cancel = true;
-    cancellationSource.Cancel();
-};
 
 Debug.WriteLine($"Driver for {nameof(Mbi5027)}");
 Debug.WriteLine($"Register bit length: {sr.BitLength}");
 
 CheckCircuit(sr);
-BinaryCounter(sr, cancellationSource);
+BinaryCounter(sr);
 CheckCircuit(sr);
 sr.ShiftClear();
 
-void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
+void BinaryCounter(ShiftRegister sr)
 {
     int endValue = 65_536;
     Debug.WriteLine($"Write 0 through {endValue}");
@@ -39,12 +34,7 @@ void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
         }
 
         sr.ShiftByte((byte)i);
-        Thread.Sleep(delay);
-
-        if (IsCanceled(sr, cancellationSource))
-        {
-            return;
-        }
+        Thread.Sleep(delay);       
     }
 }
 
