@@ -8,33 +8,21 @@ using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Multiplexing;
 
-using ShiftRegister sr = new ShiftRegister(ShiftRegisterPinMapping.Complete, 8);
-
-// Uncomment this code to use SPI (and comment the line above)
+using Sn74hc595 sr = new(Sn74hc595PinMapping.Complete);
 // SpiConnectionSettings settings = new(0, 0);
 // using var spiDevice = SpiDevice.Create(settings);
 // var sr = new Sn74hc595(spiDevice, Sn74hc595.PinMapping.Standard);
-CancellationTokenSource cancellationSource = new();
 
-Debug.WriteLine($"Driver for {nameof(ShiftRegister)}");
+Debug.WriteLine($"Driver for {nameof(Iot.Device.Multiplexing.Sn74hc595)}");
 Debug.WriteLine($"Register bit length: {sr.BitLength}");
 string interfaceType = sr.UsesSpi ? "SPI" : "GPIO";
 Debug.WriteLine($"Using {interfaceType}");
 
-sr.OutputEnable = true;
-
-DemonstrateShiftingBits(sr);
 DemonstrateShiftingBytes(sr);
 BinaryCounter(sr);
-Debug.WriteLine("done");
 
-void DemonstrateShiftingBits(ShiftRegister sr)
+void DemonstrateShiftingBits(Sn74hc595 sr)
 {
-    if (sr.UsesSpi)
-    {
-        return;
-    }
-
     int delay = 1000;
     sr.ShiftClear();
 
@@ -71,7 +59,7 @@ void DemonstrateShiftingBits(ShiftRegister sr)
     Thread.Sleep(delay);
 }
 
-void DemonstrateShiftingBytes(ShiftRegister sr)
+void DemonstrateShiftingBytes(Sn74hc595 sr)
 {
     int delay = 1000;
     Debug.WriteLine($"Write a set of values with {nameof(sr.ShiftByte)}");
@@ -85,11 +73,11 @@ void DemonstrateShiftingBytes(ShiftRegister sr)
         sr.ShiftClear();
     }
 
-    byte litPattern = 0b_1111_1111; // 255
-    Debug.WriteLine($"Write {litPattern} to each register with {nameof(sr.ShiftByte)}");
+    byte lit = 0b_1111_1111; // 255
+    Debug.WriteLine($"Write {lit} to each register with {nameof(sr.ShiftByte)}");
     for (int i = 0; i < sr.BitLength / 8; i++)
     {
-        sr.ShiftByte(litPattern);
+        sr.ShiftByte(lit);
     }
 
     Thread.Sleep(delay);
@@ -104,19 +92,18 @@ void DemonstrateShiftingBytes(ShiftRegister sr)
 
     Debug.WriteLine($"Write 23 then 56 with {nameof(sr.ShiftByte)}");
     sr.ShiftByte(23);
-    Thread.Sleep(delay);
     sr.ShiftByte(56);
     sr.ShiftClear();
 }
 
-void BinaryCounter(ShiftRegister sr)
+void BinaryCounter(Sn74hc595 sr)
 {
     Debug.WriteLine($"Write 0 through 255");
     for (int i = 0; i < 256; i++)
     {
         sr.ShiftByte((byte)i);
         Thread.Sleep(50);
-        sr.ShiftClear();
+        sr.ClearStorage();
     }
 
     sr.ShiftClear();
@@ -127,14 +114,15 @@ void BinaryCounter(ShiftRegister sr)
         for (int i = 256; i < 4096; i++)
         {
             ShiftBytes(sr, i);
-            Thread.Sleep(20);
+            Thread.Sleep(25);
+            sr.ClearStorage();
         }
     }
 
     sr.ShiftClear();
 }
 
-void ShiftBytes(ShiftRegister sr, int value)
+void ShiftBytes(Sn74hc595 sr, int value)
 {
     if (sr.BitLength > 32)
     {
@@ -145,9 +133,8 @@ void ShiftBytes(ShiftRegister sr, int value)
     {
         int shift = i * 8;
         int downShiftedValue = value >> shift;
-        sr.ShiftByte((byte)downShiftedValue, false);
+        sr.ShiftByte((byte)downShiftedValue);
     }
 
     sr.ShiftByte((byte)value);
 }
-
