@@ -114,7 +114,7 @@ namespace Iot.Device.Common.Tests
         public void DewPointIsCalculatedCorrectly(double expected, double fahrenheit, double relativeHumidity)
         {
             Temperature dewPoint = WeatherHelper.CalculateDewPoint(Temperature.FromDegreesFahrenheit(fahrenheit), RelativeHumidity.FromPercent(relativeHumidity));
-            Assert.Equal(expected * 100, Math.Round(dewPoint.DegreesFahrenheit * 100));
+            Assert.Equal(Math.Round(expected * 100), Math.Round(dewPoint.DegreesFahrenheit * 100));
         }
 
         // RTODO: uncomment once the Density UnitsNet will be there
@@ -270,7 +270,7 @@ namespace Iot.Device.Common.Tests
         {
             Pressure result = WeatherHelper.CalculateBarometricPressure(Pressure.FromHectopascals(measuredValue),
                 Temperature.FromDegreesCelsius(temperature), Length.FromMeters(altitude));
-            Assert.Equal((long)(expected * 100), (long)(result.Hectopascals * 100));
+            Assert.Equal((long)(Math.Round(expected * 100)), (long)(Math.Round(result.Hectopascals * 100)));
         }
 
         [TestMethod]
@@ -294,7 +294,7 @@ namespace Iot.Device.Common.Tests
         {
             Pressure result = WeatherHelper.CalculateBarometricPressure(Pressure.FromHectopascals(measuredValue),
                 Temperature.FromDegreesCelsius(temperature), Length.FromMeters(altitude), RelativeHumidity.FromPercent(relativeHumidity));
-            Assert.Equal((long)(expected * 100), (long)(result.Hectopascals * 100));
+            Assert.Equal((long)Math.Round(expected * 100), (long)Math.Round(result.Hectopascals * 100));
         }
 
         // TODO: uncomment once Dentisity will be added to UnitsNet
