@@ -124,6 +124,7 @@ steps:
 
         if($null -eq $files1)
         {
+            Write-host "No 'bindings' to build"
             exit
         }
 
@@ -258,11 +259,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      git add README.md ./devices/README.md
-      git commit -m "Update device lists" -m"***NO_CI***"
       git config user.email 'nanoframework@outlook.com'
       git config user.name 'nfbot'
-      
+
+      git add README.md
+      git add devices/README.md
+      git commit -m "Update device lists" -m"***NO_CI***"
+
+      git rebase develop
+
       # compute authorization header in format "AUTHORIZATION: basic 'encoded token'"
       # 'encoded token' is the Base64 of the string "nfbot:personal-token"
       $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:$(GitHubToken)"))))"
