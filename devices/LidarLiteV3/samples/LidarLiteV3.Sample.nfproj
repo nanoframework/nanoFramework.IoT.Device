@@ -38,8 +38,8 @@
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.1\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
