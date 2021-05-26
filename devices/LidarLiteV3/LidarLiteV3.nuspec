@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.LidarLiteV3</id>
@@ -24,7 +24,7 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.9.0-preview.26" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.40" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.33" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.92.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.92.1" />
     </dependencies>
   </metadata>
   <files>
