@@ -58,6 +58,11 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 * [Quadrature Rotary Encoder](RotaryEncoder/README.md)
 * [Radio Receiver](RadioReceiver/README.md)
 * [Radio Transmitter](RadioTransmitter/README.md)
+* [Si7021 - Temperature & Humidity Sensor](Si7021/README.md)
+* [SHT3x - Temperature & Humidity Sensor](Shtc3/README.md)
+* [SHTC3 - Temperature & Humidity Sensor](Sht3x/README.md)
+* [SN74HC595 -- 8-bit shift register](Sn74hc595/README.md)
+* [Solomon Systech Ssd1306 OLED display](Ssd13xx/README.md)
 * [VL53L0X - distance sensor](Vl53L0X/README.md)
 
 ## Folder Structure
