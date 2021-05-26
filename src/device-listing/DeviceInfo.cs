@@ -12,6 +12,7 @@ namespace Iot.Tools.DeviceListing
     class DeviceInfo : IComparable<DeviceInfo>
     {
         public string Title { get; private set; }
+        public string Name { get; private set; }
         public string ReadmePath { get; private set; }
         public HashSet<string> Categories { get; private set; } = new HashSet<string>();
         public string CategoriesFilePath { get; private set; }
@@ -20,6 +21,7 @@ namespace Iot.Tools.DeviceListing
         public DeviceInfo(string readmePath, string categoriesFilePath)
         {
             ReadmePath = readmePath;
+            Name = new DirectoryInfo(readmePath).Parent?.Name;
             Title = GetTitle(readmePath) ?? "Error";
             CategoriesFilePath = categoriesFilePath;
             CategoriesFileExists = File.Exists(categoriesFilePath);

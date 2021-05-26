@@ -194,7 +194,7 @@ string GetDeviceListing(string devicesPath, IEnumerable<DeviceInfo> devices)
     var deviceListing = new StringBuilder();
     foreach (DeviceInfo device in devices)
     {
-        deviceListing.AppendLine($"* [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+        deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
     }
 
     return deviceListing.ToString();
@@ -210,7 +210,7 @@ string GetCategorizedDeviceListing(string devicesPath, IEnumerable<DeviceInfo> d
             string listingInCurrentCategory = GetDeviceListing(devicesPath, devices.Where((d) => d.Categories.Contains(categoryToDisplay)));
             if (!string.IsNullOrEmpty(listingInCurrentCategory))
             {
-                deviceListing.AppendLine($"### {categoryDescription}");
+                deviceListing.AppendLine($"## {categoryDescription}");
                 deviceListing.AppendLine();
                 deviceListing.AppendLine(listingInCurrentCategory);
             }
