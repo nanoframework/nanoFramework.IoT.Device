@@ -4,6 +4,7 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Multiplexing;
 
@@ -14,11 +15,6 @@ using ShiftRegister sr = new ShiftRegister(ShiftRegisterPinMapping.Complete, 8);
 // using var spiDevice = SpiDevice.Create(settings);
 // var sr = new Sn74hc595(spiDevice, Sn74hc595.PinMapping.Standard);
 CancellationTokenSource cancellationSource = new();
-Console.CancelKeyPress += (s, e) =>
-{
-    e.Cancel = true;
-    cancellationSource.Cancel();
-};
 
 Debug.WriteLine($"Driver for {nameof(ShiftRegister)}");
 Debug.WriteLine($"Register bit length: {sr.BitLength}");
@@ -27,12 +23,12 @@ Debug.WriteLine($"Using {interfaceType}");
 
 sr.OutputEnable = true;
 
-DemonstrateShiftingBits(sr, cancellationSource);
-DemonstrateShiftingBytes(sr, cancellationSource);
-BinaryCounter(sr, cancellationSource);
+DemonstrateShiftingBits(sr);
+DemonstrateShiftingBytes(sr);
+BinaryCounter(sr);
 Debug.WriteLine("done");
 
-void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellationSource)
+void DemonstrateShiftingBits(ShiftRegister sr)
 {
     if (sr.UsesSpi)
     {
@@ -73,14 +69,9 @@ void DemonstrateShiftingBits(ShiftRegister sr, CancellationTokenSource cancellat
 
     sr.Latch();
     Thread.Sleep(delay);
-
-    if (IsCanceled(sr, cancellationSource))
-    {
-        return;
-    }
 }
 
-void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancellationSource)
+void DemonstrateShiftingBytes(ShiftRegister sr)
 {
     int delay = 1000;
     Debug.WriteLine($"Write a set of values with {nameof(sr.ShiftByte)}");
@@ -92,11 +83,6 @@ void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancella
         sr.ShiftByte(value);
         Thread.Sleep(delay);
         sr.ShiftClear();
-
-        if (IsCanceled(sr, cancellationSource))
-        {
-            return;
-        }
     }
 
     byte litPattern = 0b_1111_1111; // 255
@@ -123,7 +109,7 @@ void DemonstrateShiftingBytes(ShiftRegister sr, CancellationTokenSource cancella
     sr.ShiftClear();
 }
 
-void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
+void BinaryCounter(ShiftRegister sr)
 {
     Debug.WriteLine($"Write 0 through 255");
     for (int i = 0; i < 256; i++)
@@ -131,11 +117,6 @@ void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
         sr.ShiftByte((byte)i);
         Thread.Sleep(50);
         sr.ShiftClear();
-
-        if (IsCanceled(sr, cancellationSource))
-        {
-            return;
-        }
     }
 
     sr.ShiftClear();
@@ -147,11 +128,6 @@ void BinaryCounter(ShiftRegister sr, CancellationTokenSource cancellationSource)
         {
             ShiftBytes(sr, i);
             Thread.Sleep(20);
-
-            if (IsCanceled(sr, cancellationSource))
-            {
-                return;
-            }
         }
     }
 
@@ -175,13 +151,3 @@ void ShiftBytes(ShiftRegister sr, int value)
     sr.ShiftByte((byte)value);
 }
 
-bool IsCanceled(ShiftRegister sr, CancellationTokenSource cancellationSource)
-{
-    if (cancellationSource.IsCancellationRequested)
-    {
-        sr.ShiftClear();
-        return true;
-    }
-
-    return false;
-}

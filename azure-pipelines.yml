@@ -2,7 +2,7 @@ trigger:
   branches:
     include: ["main", "develop*", "release-*", "refs/tags/*" ]
   paths:
-    exclude: [ "doc", "*.md", ".gitignore", "README.md", "LICENSE.md" ]
+    exclude: [ "doc", "*.md", ".gitignore", "README.md", "devices/README.md", "tips-trick.md", "src/devices_generated_status.md", "LICENSE.md" ]
 
 # PR always trigger build
 pr:
