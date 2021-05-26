@@ -12,6 +12,8 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 
 ## List of devices
 
+<devices>
+
 * [28BYJ-48 Stepper Motor 5V 4-Phase 5-Wire & ULN2003 Driver Board](devices/Uln2003/README.md)
 * [AD5328 - Digital to Analog Convertor](devices/AD5328/README.md)
 * [ADS1115 - Analog to Digital Converter](devices/Ads1115/README.md)
@@ -58,12 +60,14 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 * [Quadrature Rotary Encoder](devices/RotaryEncoder/README.md)
 * [Radio Receiver](devices/RadioReceiver/README.md)
 * [Radio Transmitter](devices/RadioTransmitter/README.md)
+* [Realtime Clock](devices/Rtc/README.md)
+* [SHT3x - Temperature & Humidity Sensor](devices/Sht3x/README.md)
+* [SHTC3 - Temperature & Humidity Sensor](devices/Shtc3/README.md)
 * [Si7021 - Temperature & Humidity Sensor](devices/Si7021/README.md)
-* [SHT3x - Temperature & Humidity Sensor](devices/Shtc3/README.md)
-* [SHTC3 - Temperature & Humidity Sensor](devices/Sht3x/README.md)
 * [SN74HC595 -- 8-bit shift register](devices/Sn74hc595/README.md)
 * [Solomon Systech Ssd1306 OLED display](devices/Ssd13xx/README.md)
 * [VL53L0X - distance sensor](devices/Vl53L0X/README.md)
+</devices>
 
 ## Folder Structure
 
