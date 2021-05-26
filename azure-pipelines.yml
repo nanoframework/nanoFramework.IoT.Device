@@ -259,7 +259,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      git add README.md ./devices/README.md
+      git add README.md
+      git add devices/README.md
       git commit -m "Update device lists" -m"***NO_CI***"
       git config user.email 'nanoframework@outlook.com'
       git config user.name 'nfbot'
