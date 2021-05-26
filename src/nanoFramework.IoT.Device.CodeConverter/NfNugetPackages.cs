@@ -18,8 +18,9 @@
                             new NugetPackages {
                                 Namespace="System.Device.Gpio",
                                 OldProjectReferenceString= @"<ProjectReference Include=""$(MainLibraryPath)System.Device.Gpio.csproj"" />",
-                                NewProjectReferenceString = @"<Reference Include=""System.Device.Gpio"">$LF$      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> ",
-                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.Gpio"" version=""1.0.0-preview.40"" targetFramework=""netnanoframework10"" />"
+                                NewProjectReferenceString = @"<Reference Include=""System.Device.Gpio"">$LF$      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.0-preview.40\lib\System.Device.Gpio.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> $LF$<Reference Include=""nanoFramework.Runtime.Events"">$LF$      <HintPath>packages\nanoFramework.Runtime.Events.1.9.0-preview.26\lib\nanoFramework.Runtime.Events.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference> ",
+                                PackageConfigReferenceString = @"  <package id=""nanoFramework.System.Device.Gpio"" version=""1.0.0-preview.40"" targetFramework=""netnanoframework10"" />
+  <package id=""nanoFramework.Runtime.Events"" version=""1.9.0-preview.26"" targetFramework=""netnanoframework10"" />"
                             },
                             new NugetPackages {
                                 Namespace="System.Device.Spi",
