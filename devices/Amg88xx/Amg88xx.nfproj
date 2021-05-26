@@ -15,7 +15,7 @@
     <RootNamespace>Iot.Device.Amg88xx</RootNamespace>
     <AssemblyName>Iot.Device.Amg88xx</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <LangVersion>9.0</LangVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Amg88xx.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -39,24 +39,39 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.Temperature">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="System.Math, Version=1.4.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.9\lib\System.Math.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="UnitsNet.Temperature, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.1\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BinaryPrimitives\BinaryPrimitives.nfproj" />
+    <Compile Include="Amg88xx.cs" />
+    <Compile Include="Amg88xxUtils.cs" />
+    <Compile Include="FrameRate.cs" />
+    <Compile Include="FrameRateBit.cs" />
+    <Compile Include="InterruptMode.cs" />
+    <Compile Include="InterruptModeBit.cs" />
+    <Compile Include="MovingAverageModeBit.cs" />
+    <Compile Include="OperatingMode.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Register.cs" />
+    <Compile Include="ResetType.cs" />
+    <Compile Include="StatusClearBit.cs" />
+    <Compile Include="StatusFlagBit.cs" />
+    <Compile Include="TemperatureLowHighBytes.cs" />
   </ItemGroup>
-  <Import Project="..\..\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
