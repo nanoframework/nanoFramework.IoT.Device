@@ -42,35 +42,43 @@ namespace Iot.Device.Bmxx80.Tests
     [TestClass]
     public sealed class Bmp280SensorTests : IDisposable
     {
-        private SimulatedI2cDevice _i2cDevice;
-
-        public Bmp280SensorTests()
+        private static SimulatedI2cDevice _i2cDevice;
+        
+        [Setup]
+        public void SetupBmp280SensorTests()
         {
-            _i2cDevice = new SimulatedI2cDevice();
-            _i2cDevice.SetRegister(0xD0, 0x58);
-            // Calibration data
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_T1, 27504);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_T2, 26435);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_T3, -1000);
+            try
+            {
+                _i2cDevice = new SimulatedI2cDevice();
+                _i2cDevice.SetRegister(0xD0, 0x58);
+                // Calibration data
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_T1, 27504);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_T2, 26435);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_T3, -1000);
 
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P1, 36477);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P2, -10685);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P3, 3024);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P4, 2855);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P5, 140);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P6, -7);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P7, 15500);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P8, -14600);
-            _i2cDevice.SetRegister((int)Bmx280Register.DIG_P9, 6000);
-            // Together, the next three registers give the 20 bit temperature readout, with the last 4 bits unused. The hex value is 0x655AC
-            _i2cDevice.SetRegister(0xFA, 0x7E);
-            _i2cDevice.SetRegister(0xFB, 0xED);
-            _i2cDevice.SetRegister(0xFC, 0x00);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P1, 36477);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P2, -10685);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P3, 3024);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P4, 2855);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P5, 140);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P6, -7);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P7, 15500);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P8, -14600);
+                _i2cDevice.SetRegister((int)Bmx280Register.DIG_P9, 6000);
+                // Together, the next three registers give the 20 bit temperature readout, with the last 4 bits unused. The hex value is 0x655AC
+                _i2cDevice.SetRegister(0xFA, 0x7E);
+                _i2cDevice.SetRegister(0xFB, 0xED);
+                _i2cDevice.SetRegister(0xFC, 0x00);
 
-            // And the 20 bit pressure readout
-            _i2cDevice.SetRegister(0xF7, 0x65);
-            _i2cDevice.SetRegister(0xF8, 0x5A);
-            _i2cDevice.SetRegister(0xF9, 0xC0);
+                // And the 20 bit pressure readout
+                _i2cDevice.SetRegister(0xF7, 0x65);
+                _i2cDevice.SetRegister(0xF8, 0x5A);
+                _i2cDevice.SetRegister(0xF9, 0xC0);
+            }
+            catch
+            {
+                Assert.SkipTest("Not supported tests, skipping all of them");
+            }
         }
 
         // This runs the calculation with the sample values defined in https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
