@@ -36,51 +36,50 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="nanoFramework.TestFramework, Version=1.0.110.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.110\lib\nanoFramework.TestFramework.dll</HintPath>
+    <Reference Include="nanoFramework.TestFramework, Version=1.0.121.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.121\lib\nanoFramework.TestFramework.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.110\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.121\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Math, Version=1.4.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.System.Math.1.4.0-preview.9\lib\System.Math.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Length.4.91.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Length.4.92.1\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Pressure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Pressure.4.91.0\lib\UnitsNet.Pressure.dll</HintPath>
+      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Pressure.4.92.1\lib\UnitsNet.Pressure.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.RelativeHumidity.4.91.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.1\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Temperature.4.91.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Temperature.4.92.1\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="nano.runsettings" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\..\src\Iot.Device.Common\Iot.Device.Common.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- MANUAL UPDATE HERE -->
-  <Import Project="..\packages\nanoFramework.TestFramework.1.0.110\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.1.0.110\build\nanoFramework.TestFramework.targets')" />
+  <Import Project="..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.121\build\nanoFramework.TestFramework.targets" Condition="Exists('..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.121\build\nanoFramework.TestFramework.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
@@ -90,6 +89,6 @@
     <PropertyGroup>
       <WarningText>Update the Import path in nfproj to the correct nanoFramework.TestFramework NuGet package folder.</WarningText>
     </PropertyGroup>
-    <Warning Condition="!Exists('..\packages\nanoFramework.TestFramework.1.0.110\build\nanoFramework.TestFramework.targets')" Text="'$(WarningText)'" />
+    <Warning Condition="!Exists('..\..\src\Iot.Device.Common\packages\nanoFramework.TestFramework.1.0.121\build\nanoFramework.TestFramework.targets')" Text="'$(WarningText)'" />
   </Target>
 </Project>
