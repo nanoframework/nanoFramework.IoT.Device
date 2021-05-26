@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Apa102</id>
@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.40" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.38" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.91.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.92.1" />
     </dependencies>
   </metadata>
   <files>
