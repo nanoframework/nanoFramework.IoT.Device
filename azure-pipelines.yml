@@ -122,6 +122,12 @@ steps:
         # get file names only
         $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'devices/*'} 
 
+        if($null -eq $files1)
+        {
+            Write-host "No 'bindings' to build"
+            exit
+        }
+
         Write-host "Files changed:"
         $files1 | % { Write-host $_ }
         Write-host ""
@@ -244,7 +250,7 @@ steps:
   inputs:
     command: custom
     custom: run
-    arguments: $(Build.Repository.LocalPath)/src/device-listing/device-listing.csproj
+    projects: '**/device-listing.csproj'
 
 - task: PowerShell@2
   condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
