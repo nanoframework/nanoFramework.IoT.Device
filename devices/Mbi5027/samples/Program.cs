@@ -1,12 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Device.Gpio;
-using System.Device.Spi;
+using Iot.Device.Multiplexing;
 using System.Diagnostics;
 using System.Threading;
-using Iot.Device.Multiplexing;
 
 using Mbi5027 sr = new(Mbi5027PinMapping.Complete);
 
@@ -18,7 +15,7 @@ BinaryCounter(sr);
 CheckCircuit(sr);
 sr.ShiftClear();
 
-void BinaryCounter(ShiftRegister sr)
+void BinaryCounter(Mbi5027 sr)
 {
     int endValue = 65_536;
     Debug.WriteLine($"Write 0 through {endValue}");
