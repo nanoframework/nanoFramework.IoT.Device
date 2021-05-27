@@ -122,7 +122,7 @@ namespace Iot.Device.DHTxx
         internal virtual void ReadData()
         {
             // The time of two measurements should be more than 1s.
-            if (Environment.TickCount - _lastMeasurement < 1000)
+            if (DateTime.UtcNow.Ticks - _lastMeasurement < 1000)
             {
                 return;
             }
@@ -235,7 +235,7 @@ namespace Iot.Device.DHTxx
                 }
             }
 
-            _lastMeasurement = Environment.TickCount;
+            _lastMeasurement = DateTime.UtcNow.Ticks;
 
             if ((_readBuff[4] == ((_readBuff[0] + _readBuff[1] + _readBuff[2] + _readBuff[3]) & 0xFF)))
             {
@@ -262,7 +262,7 @@ namespace Iot.Device.DHTxx
             // humidity int, humidity decimal, temperature int, temperature decimal, checksum
             _i2cDevice.Read(_readBuff);
 
-            _lastMeasurement = Environment.TickCount;
+            _lastMeasurement = DateTime.UtcNow.Ticks;
 
             if ((_readBuff[4] == ((_readBuff[0] + _readBuff[1] + _readBuff[2] + _readBuff[3]) & 0xFF)))
             {

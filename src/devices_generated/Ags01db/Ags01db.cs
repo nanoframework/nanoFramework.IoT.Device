@@ -56,9 +56,9 @@ namespace Iot.Device.Ags01db
         private double GetConcentration()
         {
             // The time of two measurements should be more than 2s.
-            while (Environment.TickCount - _lastMeasurement < 2000)
+            while (DateTime.UtcNow.Ticks - _lastMeasurement < 2000)
             {
-                Thread.Sleep(Environment.TickCount - _lastMeasurement);
+                Thread.Sleep(DateTime.UtcNow.Ticks - _lastMeasurement);
             }
 
             // Details in the Datasheet P5
@@ -73,7 +73,7 @@ namespace Iot.Device.Ags01db
             _i2cDevice.Write(writeBuff);
             _i2cDevice.Read(readBuff);
 
-            _lastMeasurement = Environment.TickCount;
+            _lastMeasurement = DateTime.UtcNow.Ticks;
 
             // CRC check error
             if (!CheckCrc8(readBuff.Slice(0, 2), 2, readBuff[2]))

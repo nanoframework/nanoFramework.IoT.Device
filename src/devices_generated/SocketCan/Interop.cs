@@ -51,30 +51,36 @@ namespace Iot.Device.SocketCan
         [DllImport("libc", EntryPoint = "setsockopt", CallingConvention = CallingConvention.Cdecl)]
         private static unsafe extern int SetSocketOpt(int fd, int level, int optName, byte* optVal, int optlen);
 
-        public static unsafe void Write(SafeHandle handle, byte* buffer, int length)
+        public static unsafe void Write(SafeHandle handle, SpanByte buffer)
         {
-            int totalBytesWritten = 0;
-            while (totalBytesWritten < length)
+            fixed (byte* b = buffer)
             {
-                int bytesWritten = Interop.SocketWrite((int)handle.DangerousGetHandle(), buffer, length);
-                if (bytesWritten < 0)
+                int totalBytesWritten = 0;
+                while (totalBytesWritten < buffer.Length)
                 {
-                    throw new IOException("`write` operation failed");
-                }
+                    int bytesWritten = Interop.SocketWrite((int)handle.DangerousGetHandle(), b, buffer.Length);
+                    if (bytesWritten < 0)
+                    {
+                        throw new IOException("`write` operation failed");
+                    }
 
-                totalBytesWritten += bytesWritten;
+                    totalBytesWritten += bytesWritten;
+                }
             }
         }
 
-        public static unsafe int Read(SafeHandle handle, byte* buffer, int length)
+        public static unsafe int Read(SafeHandle handle, SpanByte buffer)
         {
-            int bytesRead = Interop.SocketRead((int)handle.DangerousGetHandle(), buffer, length);
-            if (bytesRead < 0)
+            fixed (byte* b = buffer)
             {
-                throw new IOException("`read` operation failed");
-            }
+                int bytesRead = Interop.SocketRead((int)handle.DangerousGetHandle(), b, buffer.Length);
+                if (bytesRead < 0)
+                {
+                    throw new IOException("`read` operation failed");
+                }
 
-            return bytesRead;
+                return bytesRead;
+            }
         }
 
         public static void CloseSocket(IntPtr fd) =>
