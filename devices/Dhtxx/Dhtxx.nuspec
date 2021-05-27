@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.Dhtxxx</id>
+    <id>nanoFramework.Iot.Device.Dhtxx</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.Dhtxxx</title>
+    <title>nanoFramework.Iot.Device.Dhtxx</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,9 +16,9 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Dhtxxx for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Dhtxxx assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Dhtxxx</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Dhtxx for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Dhtxx assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Dhtxx</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.0-preview.26" />
