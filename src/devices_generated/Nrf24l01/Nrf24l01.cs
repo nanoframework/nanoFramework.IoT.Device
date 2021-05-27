@@ -159,7 +159,7 @@ namespace Iot.Device.Nrf24l01
 
             Initialize(pinNumberingScheme, outputPower, dataRate, channel, gpioController);
             InitializePipe();
-#if !NET5_0_OR_GREATER
+#if NETCOREAPP2_1
             if (_gpio is null ||
                 Pipe0 is null ||
                 Pipe1 is null ||
@@ -260,7 +260,7 @@ namespace Iot.Device.Nrf24l01
         /// <summary>
         /// Initialize
         /// </summary>
-#if NET5_0_OR_GREATER
+#if !NETCOREAPP2_1
         
 #endif
         private void Initialize(PinNumberingScheme pinNumberingScheme, OutputPower outputPower, DataRate dataRate, byte channel, GpioController? gpioController)
@@ -292,7 +292,7 @@ namespace Iot.Device.Nrf24l01
         /// <summary>
         /// Initialize nRF24L01 Pipe
         /// </summary>
-#if NET5_0_OR_GREATER
+#if !NETCOREAPP2_1
         
 #endif
         private void InitializePipe()

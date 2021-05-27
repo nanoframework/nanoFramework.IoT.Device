@@ -21,7 +21,7 @@ namespace Iot.Device.Common
         }
 
         /// <summary>
-        /// Specifies the minimum log level that is printed. Default is Information
+        /// Specifies the minimum log level that is printed. Default is <see cref="LogLevel.Information"/>
         /// </summary>
         public LogLevel MinLogLevel
         {

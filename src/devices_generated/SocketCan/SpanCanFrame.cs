@@ -4,9 +4,9 @@ namespace System
     /// Provides a type- and memory-safe representation of a contiguous region of arbitrary array.
     /// </summary>
     [Serializable, CLSCompliant(false)]
-    public readonly ref struct SpanChar
+    public readonly ref struct SpanCanFrame
     {
-        private readonly char[] _array;  // internal array
+        private readonly CanFrame[] _array;  // internal array
         private readonly int _start;  // offset in the internal array
         private readonly int _length; // accessible length after offset in the internal array
 
@@ -14,7 +14,7 @@ namespace System
         /// Creates a new Span object over the entirety of a specified array.
         /// </summary>
         /// <param name="array">The array from which to create the System.Span object.</param>
-        public SpanChar(char[] array)
+        public SpanCanFrame(CanFrame[] array)
         {
             _array = array;
             _length = array?.Length ?? 0;
@@ -32,7 +32,7 @@ namespace System
         /// array is null, but start or length is non-zero. -or- start is outside the bounds
         /// of the array. -or- start and length exceeds the number of elements in the array.
         /// </exception>
-        public SpanChar(char[] array, int start, int length)
+        public SpanCanFrame(CanFrame[] array, int start, int length)
         {
             if (array != null)
             {
@@ -64,8 +64,8 @@ namespace System
         /// </summary>
         /// <param name="index">The zero-based index of the element.</param>
         /// <returns>The element at the specified index.</returns>
-        // public ref char this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
-        public char this[int index]
+        // public ref CanFrame this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
+        public CanFrame this[int index]
         {
             get
             {
@@ -91,7 +91,7 @@ namespace System
         /// <summary>
         /// Returns an empty System.Span object.
         /// </summary>
-        public static SpanChar Empty => new SpanChar();
+        public static SpanCanFrame Empty => new SpanCanFrame();
 
         /// <summary>
         /// Returns the length of the current span.
@@ -111,7 +111,7 @@ namespace System
         /// <exception cref="System.ArgumentException">
         /// destination is shorter than the source System.Span.
         /// </exception>
-        public void CopyTo(SpanChar destination)
+        public void CopyTo(SpanCanFrame destination)
         {
             if (destination.Length < _length)
             {
@@ -130,7 +130,7 @@ namespace System
         /// <param name="start">The index at which to begin the slice.</param>
         /// <returns>A span that consists of all elements of the current span from start to the end of the span.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">start is less than zero or greater than System.Span.Length.</exception>
-        public SpanChar Slice(int start)
+        public SpanCanFrame Slice(int start)
         {
             return Slice(start, _length - start);
         }
@@ -142,7 +142,7 @@ namespace System
         /// <param name="length">The desired length for the slice.</param>
         /// <returns>A span that consists of length elements from the current span starting at start.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">start or start + length is less than zero or greater than System.Span.Length.</exception>
-        public SpanChar Slice(int start, int length)
+        public SpanCanFrame Slice(int start, int length)
         {
             if ((start < 0) || (length < 0) || (start + length > _length))
             {
@@ -150,16 +150,16 @@ namespace System
                 throw new ArgumentOutOfRangeException();
             }
 
-            return new SpanChar(_array, _start + start, length);
+            return new SpanCanFrame(_array, _start + start, length);
         }
 
         /// <summary>
         /// Copies the contents of this span into a new array.
         /// </summary>
         /// <returns> An array containing the data in the current span.</returns>
-        public char[] ToArray()
+        public CanFrame[] ToArray()
         {
-            var array = new char[_length];
+            var array = new CanFrame[_length];
             for (int i = 0; i < _length; i++)
             {
                 array[i] = _array[_start + i];
@@ -168,7 +168,7 @@ namespace System
             return array;
         }
 
-        public static implicit operator SpanChar(char[] array)
+        public static implicit operator SpanCanFrame(CanFrame[] array)
         {
             return new(array);
         }

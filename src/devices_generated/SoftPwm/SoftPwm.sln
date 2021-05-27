@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{AC7A4A9E-32CC-4DA3-BF8B-41645D129738}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftPwm.sample", "samples\SoftPwm.sample.nfproj", "{0C72BA0F-1A68-47FF-9846-A65BDF5A213D}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SoftPwm.sample", "samples\SoftPwm.sample.nfproj", "{0C72BA0F-1A68-47FF-9846-A65BDF5A213D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwarePwm", "SoftwarePwm.nfproj", "{3F506C36-EE7B-4716-AFB7-DEF354D18DFD}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SoftwarePwm", "SoftwarePwm.nfproj", "{3F506C36-EE7B-4716-AFB7-DEF354D18DFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

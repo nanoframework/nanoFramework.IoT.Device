@@ -224,7 +224,7 @@ namespace Iot.Device.BrickPi3.Movement
 
         private void StartMotor(int port, int speed)
         {
-            speed = MathExtensions.Clamp(speed, -255, 255);
+            speed = Math.Clamp(speed, -255, 255);
             _brick.SetMotorPower((byte)port, speed);
         }
 

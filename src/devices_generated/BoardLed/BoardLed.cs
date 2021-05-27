@@ -66,7 +66,7 @@ namespace Iot.Device.BoardLed
         {
             Name = name;
             Initialize();
-#if !NET5_0_OR_GREATER
+#if NETCOREAPP2_1
             if (_brightnessReader is null ||
                 _brightnessWriter is null ||
                 _maxBrightnessReader is null ||
@@ -119,8 +119,7 @@ namespace Iot.Device.BoardLed
 
         private void SetBrightness(int value)
         {
-            value = MathExtensions.Clamp(value, 0, 255);
-
+            value = Math.Clamp(value, 0, 255);
             _brightnessWriter.BaseStream.SetLength(0);
             _brightnessWriter.Write(value);
             _brightnessWriter.Flush();
@@ -146,7 +145,7 @@ namespace Iot.Device.BoardLed
             _triggerWriter.Flush();
         }
 
-#if NET5_0_OR_GREATER
+#if !NETCOREAPP2_1
         
 #endif
         private void Initialize()

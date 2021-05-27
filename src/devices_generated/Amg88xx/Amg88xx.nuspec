@@ -30,7 +30,7 @@
     <file src="bin\Release\Iot.Device.Amg88xx.pe" target="lib\Iot.Device.Amg88xx.pe" />
     <file src="bin\Release\Iot.Device.Amg88xx.xml" target="lib\Iot.Device.Amg88xx.xml" />
     <file src="readme.md" target="" />
-    <file src="..\..\assets\nf-logo.png" target="images" />
-    <file src="..\..\LICENSE.md" target="" />
+    <file src="..\assets\nf-logo.png" target="images" />
+    <file src="..\LICENSE.md" target="" />
   </files>
 </package>

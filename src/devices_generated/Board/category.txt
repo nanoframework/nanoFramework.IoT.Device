@@ -1,5 +1,0 @@
-i2c
-usb
-gpio
-adc
-protocol
