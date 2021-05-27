@@ -48,6 +48,7 @@ string[] categoriesToDisplay = new string[]
     "multi",
     "protocol",
     "power",
+    "dac"
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -105,6 +106,7 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "grovepi", null },
     { "i2c", null },
     { "multiplexer", null },
+    { "dac", "Digital/Analog converters" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()
@@ -251,7 +253,7 @@ string CreateMarkdownLinkFromPath(string path, string parentPath)
             throw new Exception($"No common path between `{path}` and `{parentPath}`");
         }
 
-        var relativePath = path.Substring(parentPath.Length + 1);
+        var relativePath = path.Substring(parentPath.Length + 1).Replace("\\README.md", "");
         UriBuilder uriBuilder = new UriBuilder() { Path = relativePath };
 
         return uriBuilder.Path;
