@@ -30,7 +30,6 @@ namespace Iot.Device.Bmxx80.sample
                 TemperatureSampling = Sampling.LowPower,
                 PressureSampling = Sampling.UltraHighResolution,
                 HumiditySampling = Sampling.Standard,
-
             };
 
             while (true)
@@ -42,16 +41,16 @@ namespace Iot.Device.Bmxx80.sample
                 // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
                 bme80.TryReadAltitude(defaultSeaLevelPressure, out var altValue);
 
-                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius:0.#}\u00B0C");
-                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals:0.##}hPa");
-                Debug.WriteLine($"Altitude: {altValue.Meters:0.##}m");
-                Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent:0.#}%");
+                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                Debug.WriteLine($"Altitude: {altValue.Meters}m");
+                Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
 
                 // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
                 if (!readResult.Temperature.Equals(null) && !readResult.Humidity.Equals(null))
                 {
-                    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius:0.#}\u00B0C");
-                    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius:0.#}\u00B0C");
+                    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
+                    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
                 }
 
                 Thread.Sleep(1000);
@@ -69,16 +68,16 @@ namespace Iot.Device.Bmxx80.sample
                 // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
                 bme80.TryReadAltitude(defaultSeaLevelPressure, out altValue);
 
-                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius:0.#}\u00B0C");
-                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals:0.##}hPa");
-                Debug.WriteLine($"Altitude: {altValue.Meters:0.##}m");
-                Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent:0.#}%");
+                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                Debug.WriteLine($"Altitude: {altValue.Meters}m");
+                Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
 
                 // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
                 if (!readResult.Temperature.Equals(null) && !readResult.Humidity.Equals(null))
                 {
-                    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius:0.#}\u00B0C");
-                    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius:0.#}\u00B0C");
+                    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
+                    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
                 }
 
                 Thread.Sleep(5000);

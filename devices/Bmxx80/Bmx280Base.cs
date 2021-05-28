@@ -119,9 +119,9 @@ namespace Iot.Device.Bmxx80
             var powerMode = (byte)(read & 0b_0000_0011);
 
             //if (Enum.IsDefined(typeof(Bmx280PowerMode), powerMode) == false)
-            if (!powerMode.Equals(Bmx280PowerMode.Forced) &&
-                !powerMode.Equals(Bmx280PowerMode.Normal) &&
-                !powerMode.Equals(Bmx280PowerMode.Sleep))
+            if ((powerMode != (byte)Bmx280PowerMode.Forced) &&
+                (powerMode != (byte)Bmx280PowerMode.Normal) &&
+                (powerMode != (byte)Bmx280PowerMode.Sleep))
             {
                 throw new IOException();
             }

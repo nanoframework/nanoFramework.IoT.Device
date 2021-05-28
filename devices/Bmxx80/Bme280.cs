@@ -52,12 +52,12 @@ namespace Iot.Device.Bmxx80
             get => _humiditySampling;
             set
             {
-                if (!value.Equals(Sampling.HighResolution) &&
-                    !value.Equals(Sampling.LowPower) &&
-                    !value.Equals(Sampling.Skipped) &&
-                    !value.Equals(Sampling.Standard) &&
-                    !value.Equals(Sampling.UltraHighResolution) &&
-                    !value.Equals(Sampling.UltraLowPower))
+                if ((value != Sampling.HighResolution) &&
+                    (value != Sampling.LowPower) &&
+                    (value != Sampling.Skipped) &&
+                    (value != Sampling.Standard) &&
+                    (value != Sampling.UltraHighResolution) &&
+                    (value != Sampling.UltraLowPower))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
