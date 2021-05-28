@@ -1,4 +1,0 @@
-imu
-accelerometer
-gyroscope
-magnetometer
