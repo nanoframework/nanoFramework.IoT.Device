@@ -49,9 +49,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ShiftRegister\ShiftRegister.nfproj" />
-  </ItemGroup>
+  <Import Project="..\ShiftRegister\ShiftRegister.Shared\ShiftRegister.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\src\Iot.Device.Multiplexing\Iot.Device.Multiplexing.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
   <ProjectExtensions>
