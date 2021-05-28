@@ -46,10 +46,15 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 .Select(x => new DirectoryInfo(x))
                 .First();
 
+            var projectsToFilterOut = configuration.ProjectConversionBlackList.Split(',').ToList();
+            var convertedProjects = new DirectoryInfo(configuration.ConvertedProjectsPath).GetDirectories().Select(x => x.Name);
+            projectsToFilterOut.AddRange(convertedProjects);
+
             var sourceProjectFiles = Directory
                 .GetFiles(configuration.SourceDirectory, "*.csproj", new EnumerationOptions { RecurseSubdirectories = true })
                 .Where(x => configuration.FilePathFilters.Any(x.Contains))
                 .Select(x => new FileInfo(x))
+                .Where(x => projectsToFilterOut.Any(f => x.FullName.Split('\\').Contains(f)) == false)
                 .ToList();
 
             foreach (var sourceProjectFile in sourceProjectFiles)
@@ -426,6 +431,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
         public string TargetUnitTestProjectTemplateName { get; set; }
         public string GenericsTemplatesFolderName { get; set; }
         public string OutputDirectoryPath { get; set; }
+        public string ConvertedProjectsPath { get; set; }
+        public string ProjectConversionBlackList { get; set; }
     }
 
     public class NugetPackages
