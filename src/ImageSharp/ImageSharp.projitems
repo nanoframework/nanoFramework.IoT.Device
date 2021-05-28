@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>be103ccc-7515-45d3-865b-516457594911</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ImageSharp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\CieLab.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\CieLch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\CieLchuv.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\CieLuv.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\CieXyy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\CieXyz.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\Cmyk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\Hsl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\Hsv.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\HunterLab.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\Illuminants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\LinearRgb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\Lms.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\Rgb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\RgbWorkingSpaces.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorSpaces\YCbCr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Color\Color.Conversions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Color\Color.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\ColorMatrix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Complex64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\ComplexVector4.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\DenseMatrix{T}.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\LongRational.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Matrix3x2Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Number.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Point.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\PointF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Rational.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Rectangle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\RectangleF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\SignedRational.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\Size.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\SizeF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Primitives\ValueSize.cs" />
+  </ItemGroup>
+</Project>

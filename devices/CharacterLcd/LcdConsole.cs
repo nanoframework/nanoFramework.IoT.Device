@@ -343,37 +343,23 @@ namespace Iot.Device.CharacterLcd
         /// <param name="times">Number of times to blink. The blink rate is 1 Hz</param>
         public void BlinkDisplay(int times)
         {
-            var blinkTask = BlinkDisplayAsync(times);
-            blinkTask.Wait();
-        }
-
-        /// <summary>
-        /// Blinks the display in the background
-        /// </summary>
-        /// <param name="times">Number of times to blink</param>
-        /// <returns>A task handle</returns>
-        public Task BlinkDisplayAsync(int times)
-        {
-            return Task.Factory.StartNew(() =>
+            for (int i = 0; i < times; i++)
             {
-                for (int i = 0; i < times; i++)
+                lock (_lock)
                 {
-                    lock (_lock)
-                    {
-                        _lcd.DisplayOn = false;
-                        _lcd.BacklightOn = false;
-                    }
-
-                    Thread.Sleep(500);
-                    lock (_lock)
-                    {
-                        _lcd.DisplayOn = true;
-                        _lcd.BacklightOn = true;
-                    }
-
-                    Thread.Sleep(500);
+                    _lcd.DisplayOn = false;
+                    _lcd.BacklightOn = false;
                 }
-            });
+
+                Thread.Sleep(500);
+                lock (_lock)
+                {
+                    _lcd.DisplayOn = true;
+                    _lcd.BacklightOn = true;
+                }
+
+                Thread.Sleep(500);
+            }
         }
 
         private void NewLine()

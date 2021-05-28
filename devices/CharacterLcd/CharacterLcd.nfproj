@@ -73,6 +73,9 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
+  <Import Project="..\..\src\ImageSharp\ImageSharp.projitems" Label="Shared" />
+  <Import Project="..\..\src\IoT.Device.Graphics\IoT.Device.Graphics.projitems" Label="Shared" />
+  <Import Project="..\..\src\System.Drawing\System.Drawing.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
   <ProjectExtensions>
