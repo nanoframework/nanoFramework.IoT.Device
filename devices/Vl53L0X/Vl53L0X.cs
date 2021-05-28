@@ -71,7 +71,6 @@ namespace Iot.Device.Vl53L0X
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _shouldDispose = shouldDispose;
             _operationTimeout = operationTimeoutMilliseconds;
-            Reset();
             Init();
             GetInfo();
             MaxTryReadSingle = 3;
@@ -442,9 +441,11 @@ namespace Iot.Device.Vl53L0X
         }
 
         /// <summary>
-        /// Reset the sensor
+        /// Performs a soft reset of the sensor
         /// </summary>
-        private void Reset()
+        /// <remarks>If you change the I2C address and perform a soft reset, the default
+        /// I2C address will be setup again.</remarks>
+        public void Reset()
         {
             WriteRegister((byte)Registers.SOFT_RESET_GO2_SOFT_RESET_N, 0x00);
             Thread.Sleep(5);
