@@ -56,10 +56,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="Bme280.sample.cs" />
+    <Compile Include="Bme680.sample.cs" />
+    <Compile Include="Bmp280.sample.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>

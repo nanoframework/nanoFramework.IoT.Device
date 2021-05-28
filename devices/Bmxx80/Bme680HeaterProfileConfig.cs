@@ -35,16 +35,16 @@ namespace Iot.Device.Bmxx80
         /// <exception cref="ArgumentOutOfRangeException">Unknown profile setting used</exception>
         public Bme680HeaterProfileConfig(Bme680HeaterProfile profile, ushort heaterResistance, Duration heaterDuration)
         {
-            if(!profile.Equals(Bme680HeaterProfile.Profile1) &&
-                !profile.Equals(Bme680HeaterProfile.Profile2) &&
-                !profile.Equals(Bme680HeaterProfile.Profile3) &&
-                !profile.Equals(Bme680HeaterProfile.Profile4) &&
-                !profile.Equals(Bme680HeaterProfile.Profile5) &&
-                !profile.Equals(Bme680HeaterProfile.Profile6) &&
-                !profile.Equals(Bme680HeaterProfile.Profile7) &&
-                !profile.Equals(Bme680HeaterProfile.Profile8) &&
-                !profile.Equals(Bme680HeaterProfile.Profile9) &&
-                !profile.Equals(Bme680HeaterProfile.Profile10))
+            if ((profile != Bme680HeaterProfile.Profile1) &&
+                (profile != Bme680HeaterProfile.Profile2) &&
+                (profile != Bme680HeaterProfile.Profile3) &&
+                (profile != Bme680HeaterProfile.Profile4) &&
+                (profile != Bme680HeaterProfile.Profile5) &&
+                (profile != Bme680HeaterProfile.Profile6) &&
+                (profile != Bme680HeaterProfile.Profile7) &&
+                (profile != Bme680HeaterProfile.Profile8) &&
+                (profile != Bme680HeaterProfile.Profile9) &&
+                (profile != Bme680HeaterProfile.Profile10))
             {
                 throw new ArgumentOutOfRangeException();
             }

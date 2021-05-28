@@ -8,8 +8,9 @@ namespace Iot.Device.Bmxx80.sample
     {
         public static void Main()
         {
-            Bme280_sample.RunSample();
-            Bme680_sample.RunSample();
+            // Choose your sensor and uncomment accordingly
+            //Bme280_sample.RunSample();
+            //Bme680_sample.RunSample();
             Bmp280_sample.RunSample();
 
             Thread.Sleep(Timeout.Infinite);

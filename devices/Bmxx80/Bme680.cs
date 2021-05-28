@@ -93,12 +93,12 @@ namespace Iot.Device.Bmxx80
             set
             {
                 //if (!Enum.IsDefined(typeof(Sampling), value))
-                if (!value.Equals(Sampling.HighResolution) &&
-                    !value.Equals(Sampling.LowPower) &&
-                    !value.Equals(Sampling.Skipped) &&
-                    !value.Equals(Sampling.Standard) &&
-                    !value.Equals(Sampling.UltraHighResolution) &&
-                    !value.Equals(Sampling.UltraLowPower))
+                if ((value != Sampling.HighResolution) &&
+                    (value != Sampling.LowPower) &&
+                    (value != Sampling.Skipped) &&
+                    (value != Sampling.Standard) &&
+                    (value != Sampling.UltraHighResolution) &&
+                    (value != Sampling.UltraLowPower))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -130,16 +130,16 @@ namespace Iot.Device.Bmxx80
                 {
                     if (heaterConfig.HeaterProfile == value)
                     {
-                        if (!value.Equals(Bme680HeaterProfile.Profile1) &&
-                            !value.Equals(Bme680HeaterProfile.Profile2) &&
-                            !value.Equals(Bme680HeaterProfile.Profile3) &&
-                            !value.Equals(Bme680HeaterProfile.Profile4) &&
-                            !value.Equals(Bme680HeaterProfile.Profile5) &&
-                            !value.Equals(Bme680HeaterProfile.Profile6) &&
-                            !value.Equals(Bme680HeaterProfile.Profile7) &&
-                            !value.Equals(Bme680HeaterProfile.Profile8) &&
-                            !value.Equals(Bme680HeaterProfile.Profile9) &&
-                            !value.Equals(Bme680HeaterProfile.Profile10))
+                        if ((value !=Bme680HeaterProfile.Profile1) &&
+                            (value !=Bme680HeaterProfile.Profile2) &&
+                            (value !=Bme680HeaterProfile.Profile3) &&
+                            (value !=Bme680HeaterProfile.Profile4) &&
+                            (value !=Bme680HeaterProfile.Profile5) &&
+                            (value !=Bme680HeaterProfile.Profile6) &&
+                            (value !=Bme680HeaterProfile.Profile7) &&
+                            (value !=Bme680HeaterProfile.Profile8) &&
+                            (value !=Bme680HeaterProfile.Profile9) &&
+                            (value !=Bme680HeaterProfile.Profile10))
                         {
                             throw new ArgumentOutOfRangeException();
                         }
@@ -168,14 +168,14 @@ namespace Iot.Device.Bmxx80
             get => _filterMode;
             set
             {
-                if (!value.Equals(Bme680FilteringMode.C0) &&
-                    !value.Equals(Bme680FilteringMode.C1) &&
-                    !value.Equals(Bme680FilteringMode.C127) &&
-                    !value.Equals(Bme680FilteringMode.C15) &&
-                    !value.Equals(Bme680FilteringMode.C3) &&
-                    !value.Equals(Bme680FilteringMode.C31) &&
-                    !value.Equals(Bme680FilteringMode.C63) &&
-                    !value.Equals(Bme680FilteringMode.C7))
+                if ((value !=Bme680FilteringMode.C0) &&
+                    (value !=Bme680FilteringMode.C1) &&
+                    (value !=Bme680FilteringMode.C127) &&
+                    (value !=Bme680FilteringMode.C15) &&
+                    (value !=Bme680FilteringMode.C3) &&
+                    (value !=Bme680FilteringMode.C31) &&
+                    (value !=Bme680FilteringMode.C63) &&
+                    (value !=Bme680FilteringMode.C7))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -312,16 +312,16 @@ namespace Iot.Device.Bmxx80
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the heating profile does not match a defined profile in <see cref="Bme680HeaterProfile"/>.</exception>
         public void ConfigureHeatingProfile(Bme680HeaterProfile profile, Temperature targetTemperature, Duration duration, Temperature ambientTemperature)
         {
-            if (!profile.Equals(Bme680HeaterProfile.Profile1) &&
-                !profile.Equals(Bme680HeaterProfile.Profile2) &&
-                !profile.Equals(Bme680HeaterProfile.Profile3) &&
-                !profile.Equals(Bme680HeaterProfile.Profile4) &&
-                !profile.Equals(Bme680HeaterProfile.Profile5) &&
-                !profile.Equals(Bme680HeaterProfile.Profile6) &&
-                !profile.Equals(Bme680HeaterProfile.Profile7) &&
-                !profile.Equals(Bme680HeaterProfile.Profile8) &&
-                !profile.Equals(Bme680HeaterProfile.Profile9) &&
-                !profile.Equals(Bme680HeaterProfile.Profile10))
+            if ((profile !=Bme680HeaterProfile.Profile1) &&
+                (profile !=Bme680HeaterProfile.Profile2) &&
+                (profile !=Bme680HeaterProfile.Profile3) &&
+                (profile !=Bme680HeaterProfile.Profile4) &&
+                (profile !=Bme680HeaterProfile.Profile5) &&
+                (profile !=Bme680HeaterProfile.Profile6) &&
+                (profile !=Bme680HeaterProfile.Profile7) &&
+                (profile !=Bme680HeaterProfile.Profile8) &&
+                (profile !=Bme680HeaterProfile.Profile9) &&
+                (profile !=Bme680HeaterProfile.Profile10))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -342,7 +342,7 @@ namespace Iot.Device.Bmxx80
             _i2cDevice.Write(durationCommand);
 
             // cache heater configuration
-            foreach(Bme680HeaterProfileConfig heaterConfig in _heaterConfigs)
+            foreach (Bme680HeaterProfileConfig heaterConfig in _heaterConfigs)
             {
                 if (heaterConfig.HeaterProfile == profile)
                 {
@@ -396,7 +396,7 @@ namespace Iot.Device.Bmxx80
             measDuration += 1;                      // wake up duration of 1ms
 
             if (GasConversionIsEnabled)
-            { 
+            {
                 foreach (Bme680HeaterProfileConfig heaterConfig in _heaterConfigs)
                 {
                     if (heaterConfig.HeaterProfile == profile)
