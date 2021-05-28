@@ -29,9 +29,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricResistance, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricResistance.4.92.1\lib\UnitsNet.ElectricResistance.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricResistance.4.92.2\lib\UnitsNet.ElectricResistance.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Frequency, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.4.92.1\lib\UnitsNet.Frequency.dll</HintPath>
@@ -39,9 +38,8 @@
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.1\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.2\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>

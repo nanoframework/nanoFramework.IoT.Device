@@ -34,24 +34,20 @@
       <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.1\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.2\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Pressure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Pressure.4.92.1\lib\UnitsNet.Pressure.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Pressure.4.92.2\lib\UnitsNet.Pressure.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.1\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.2\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.1\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.2\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
