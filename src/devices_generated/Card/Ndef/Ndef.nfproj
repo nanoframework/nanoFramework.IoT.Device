@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{9FEA4C2E-C27D-49B0-869B-833873733FCB}</ProjectGuid>
+    <ProjectGuid>{26219362-89DF-41A2-2C7C-4E49EA36C07F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -40,7 +40,8 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+  <Import Project="..\..src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+    <Import Project="..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />

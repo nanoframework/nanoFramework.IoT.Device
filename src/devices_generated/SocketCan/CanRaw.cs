@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -56,10 +55,11 @@ namespace Iot.Device.SocketCan
             {
                 SpanByte frameData = new SpanByte(frame.Data, data.Length);
                 data.CopyTo(frameData);
-
-                byte* buff = (byte*)&frame;
-                Interop.Write(_handle, buff, Marshal.SizeOf<CanFrame>());
             }
+
+            SpanCanFrame frameSpan = MemoryMarshal.CreateReadOnlySpan(ref frame, 1);
+            SpanByte buff = MemoryMarshal.AsBytes(frameSpan);
+            Interop.Write(_handle, buff);
         }
 
         /// <summary>
@@ -78,14 +78,12 @@ namespace Iot.Device.SocketCan
 
             CanFrame frame = new CanFrame();
 
-            int remainingBytes = Marshal.SizeOf<CanFrame>();
-            unsafe
+            SpanCanFrame frameSpan = MemoryMarshal.CreateSpan(ref frame, 1);
+            SpanByte buff = MemoryMarshal.AsBytes(frameSpan);
+            while (buff.Length > 0)
             {
-                while (remainingBytes > 0)
-                {
-                    int read = Interop.Read(_handle, (byte*)&frame, remainingBytes);
-                    remainingBytes -= read;
-                }
+                int read = Interop.Read(_handle, buff);
+                buff = buff.Slice(read);
             }
 
             id = frame.Id;

@@ -223,7 +223,7 @@ namespace Iot.Device.CharacterLcd
 
             text = text.Replace("\r\n", "\n"); // Change to linux format only, so we have to consider only this case further
 
-            ListString lines = text.Split('\n').ToList();
+            ListString lines = text.Split("\n", StringSplitOptions.None).ToList();
             FindLineWraps(CursorLeft, lines);
             for (int i = 0; i < lines.Count; i++)
             {
