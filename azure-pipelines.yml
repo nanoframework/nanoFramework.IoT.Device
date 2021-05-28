@@ -266,7 +266,7 @@ steps:
       git add devices/README.md
       git commit -m "Update device lists" -m"***NO_CI***"
 
-      git rebase develop
+      git rebase origin/develop
 
       # compute authorization header in format "AUTHORIZATION: basic 'encoded token'"
       # 'encoded token' is the Base64 of the string "nfbot:personal-token"
