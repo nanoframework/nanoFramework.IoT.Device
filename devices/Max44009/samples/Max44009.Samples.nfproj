@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Illuminance, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.4.92.2\lib\UnitsNet.Illuminance.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.4.93.0\lib\UnitsNet.Illuminance.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
