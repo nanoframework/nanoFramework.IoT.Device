@@ -36,11 +36,7 @@ steps:
     git config --global core.autocrlf true
   displayName: Setup git identity
 
-- task: NuGetToolInstaller@1
-  condition: and( succeeded(), ne( variables['StartReleaseCandidate'], true ) )
-  displayName: 'Install specific version of NuGet'
-  inputs:
-    versionSpec: '>=5.9.x'
+- template: azure-pipelines-templates/install-nuget.yml@templates
 
 - task: DotNetCoreCLI@2  
   displayName: Install NBGV tool
