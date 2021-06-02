@@ -12,10 +12,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Apa102</RootNamespace>
-    <AssemblyName>Iot.Device.Apa102</AssemblyName>
+    <RootNamespace>Iot.Device.At24C128C</RootNamespace>
+    <AssemblyName>Iot.Device.At24C128C</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Apa102.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.At24C128C.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
