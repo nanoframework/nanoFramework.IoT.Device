@@ -12,10 +12,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Vy5300</RootNamespace>
-    <AssemblyName>Iot.Device.Vy5300</AssemblyName>
+    <RootNamespace>Iot.Device.Yx5300</RootNamespace>
+    <AssemblyName>Iot.Device.Yx5300</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Vy5300.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Yx5300.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>

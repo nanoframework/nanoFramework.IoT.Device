@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.Vy5300</id>
+    <id>nanoFramework.Iot.Device.Yx5300</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.Vy5300</title>
+    <title>nanoFramework.Iot.Device.Yx5300</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework project contributors,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,9 +16,9 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Vy5300 for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Vy5300 assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Vy5300</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Yx5300 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Yx5300 assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Yx5300</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1-preview.1" />
@@ -28,11 +28,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Vy5300.dll" target="lib\Iot.Device.Vy5300.dll" />
-    <file src="bin\Release\Iot.Device.Vy5300.pdb" target="lib\Iot.Device.Vy5300.pdb" />
-    <file src="bin\Release\Iot.Device.Vy5300.pdbx" target="lib\Iot.Device.Vy5300.pdbx" />
-    <file src="bin\Release\Iot.Device.Vy5300.pe" target="lib\Iot.Device.Vy5300.pe" />
-    <file src="bin\Release\Iot.Device.Vy5300.xml" target="lib\Iot.Device.Vy5300.xml" />
+    <file src="bin\Release\Iot.Device.Yx5300.dll" target="lib\Iot.Device.Yx5300.dll" />
+    <file src="bin\Release\Iot.Device.Yx5300.pdb" target="lib\Iot.Device.Yx5300.pdb" />
+    <file src="bin\Release\Iot.Device.Yx5300.pdbx" target="lib\Iot.Device.Yx5300.pdbx" />
+    <file src="bin\Release\Iot.Device.Yx5300.pe" target="lib\Iot.Device.Yx5300.pe" />
+    <file src="bin\Release\Iot.Device.Yx5300.xml" target="lib\Iot.Device.Yx5300.xml" />
     <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

@@ -12,10 +12,10 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Vy5300.Samples</RootNamespace>
-    <AssemblyName>Iot.Device.Vy5300.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.Yx5300.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.Yx5300.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Vy5300.Samples.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Yx5300.Samples.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -29,7 +29,7 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vy5300.nfproj" />
+    <ProjectReference Include="..\Yx5300.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.10.5.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
