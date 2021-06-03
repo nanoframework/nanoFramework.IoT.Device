@@ -6,10 +6,7 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Yx5300", "Yx5300.nfproj", "
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Yx5300.Samples", "samples\Yx5300.Samples.nfproj", "{D8D03F9E-81C2-4A67-9C95-95E5EBE097B2}"
 EndProject
-Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Drawing\System.Drawing.projitems*{e86896a2-b40c-4c03-b0e3-979daf764cd6}*SharedItemsImports = 13
-	EndGlobalSection
+Global	
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
