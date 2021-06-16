@@ -173,4 +173,8 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.AD5328.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.AD5328/) [AD5328 - Digital to Analog Convertor](AD5328)
 
+## EEPROM
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.At24C128C.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.At24C128C/) [AT24C128C - I2C EEPROM read/write](At24C128C)
+
 </categorizedDevices>
