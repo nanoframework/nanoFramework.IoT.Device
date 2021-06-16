@@ -12,13 +12,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Iot.Device.Multiplexing", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ShiftRegister.Shared", "..\ShiftRegister\ShiftRegister.Shared\ShiftRegister.Shared.shproj", "{518E3787-17B4-4E4E-9240-5535C2698617}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Threading.CancellationToken", "..\..\src\System.Threading.CancellationToken\System.Threading.CancellationToken.shproj", "{809A6044-F4F6-4E6F-8C44-EB5A54B71AB2}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\ShiftRegister\ShiftRegister.Shared\ShiftRegister.Shared.projitems*{518e3787-17b4-4e4e-9240-5535c2698617}*SharedItemsImports = 13
 		..\..\src\Iot.Device.Multiplexing\Iot.Device.Multiplexing.projitems*{5a827316-0b28-435d-a021-43ed47cabd78}*SharedItemsImports = 13
-		..\..\src\System.Threading.CancellationToken\System.Threading.CancellationToken.projitems*{809a6044-f4f6-4e6f-8c44-eb5a54b71ab2}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,7 +41,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5A827316-0B28-435D-A021-43ED47CABD78} = {7F803178-D551-4C8C-B0A6-A5D7401753E9}
 		{518E3787-17B4-4E4E-9240-5535C2698617} = {7F803178-D551-4C8C-B0A6-A5D7401753E9}
-		{809A6044-F4F6-4E6F-8C44-EB5A54B71AB2} = {7F803178-D551-4C8C-B0A6-A5D7401753E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88AC0A2C-E624-4AD1-B94E-2E9F4345B326}
