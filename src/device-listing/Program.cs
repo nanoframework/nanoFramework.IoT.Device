@@ -48,7 +48,8 @@ string[] categoriesToDisplay = new string[]
     "multi",
     "protocol",
     "power",
-    "dac"
+    "dac",
+    "eeprom"
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -107,6 +108,7 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "i2c", null },
     { "multiplexer", null },
     { "dac", "Digital/Analog converters" },
+    { "eeprom", "EEPROM" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()
