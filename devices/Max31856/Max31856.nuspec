@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.38" />
       <dependency id="UnitsNet.nanoFramework.Frequency" version="4.92.1" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.93.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.94.0" />
     </dependencies>
   </metadata>
   <files>

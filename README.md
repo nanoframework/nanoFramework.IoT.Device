@@ -83,7 +83,7 @@ Other folders in [/src](/src) contain nanoFramework projects that you can refere
 
 **Important:** If you plan to clean up the code in [/src/devices_generated/](/src/devices_generated/), please copy your work to the [/src/devices/](/src/devices/) folder as the content of [/src/devices_generated/](/src/devices_generated/) will be overwritten by the generator tool.
 
-Please check the [detail list of tips and tricks](./tips-tricks.md) to facilitate the migration. The generator takes care of some heavy lifting but there is always some manual adjustments needed.
+Please check the [detail list of tips and tricks](./tips-trick.md) to facilitate the migration. The generator takes care of some heavy lifting but there is always some manual adjustments needed.
 
 We are using the following structure for the bindings:
 
