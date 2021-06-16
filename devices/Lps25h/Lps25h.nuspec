@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.33" />
       <dependency id="UnitsNet.nanoFramework.Pressure" version="4.92.2" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.93.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.94.0" />
     </dependencies>
   </metadata>
   <files>
