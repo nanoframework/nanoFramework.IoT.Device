@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Hcsr04</id>
@@ -20,10 +20,10 @@
     <summary>Iot.Device.Hcsr04 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hcsr04</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.40" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.48" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.33" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.91.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.96.0" />
       <dependency id="nanoFramework.System.Math.1.4.0" version="1.4.0-preview.7" />
     </dependencies>
   </metadata>

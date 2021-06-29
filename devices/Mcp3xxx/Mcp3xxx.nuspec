@@ -20,8 +20,8 @@
     <summary>Iot.Device.Mcp3xxx assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mcp3xxx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.38" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.70" />
     </dependencies>
   </metadata>
   <files>
