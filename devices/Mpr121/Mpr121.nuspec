@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Mpr121</id>
@@ -20,8 +20,8 @@
     <summary>Iot.Device.Mpr121 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mpr121</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.33" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.38" />
     </dependencies>
   </metadata>
   <files>
