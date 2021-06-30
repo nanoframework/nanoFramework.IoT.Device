@@ -33,7 +33,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Frequency, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.4.96.0\lib\UnitsNet.Frequency.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.4.97.0\lib\UnitsNet.Frequency.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
