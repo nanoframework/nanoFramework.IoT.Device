@@ -512,7 +512,7 @@ namespace Iot.Device.Bno055
                 // If unit is Farenheit, then divide by 2, otherwise no convertion
                 if ((_units & Units.TemperatureFarenheit) == Units.TemperatureFarenheit)
                 {
-                    return Temperature.FromDegreesFahrenheit(ReadByte(Registers.TEMP) / 2.0f);
+                    return Temperature.FromDegreesFahrenheit(ReadByte(Registers.TEMP) / 2.0);
                 }
                 else
                 {
