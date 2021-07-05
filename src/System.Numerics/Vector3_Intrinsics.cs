@@ -14,29 +14,29 @@ namespace System.Numerics
         /// <summary>
         /// The X component of the vector.
         /// </summary>
-        public Single X;
+        public double X;
         /// <summary>
         /// The Y component of the vector.
         /// </summary>
-        public Single Y;
+        public double Y;
         /// <summary>
         /// The Z component of the vector.
         /// </summary>
-        public Single Z;
+        public double Z;
 
         #region Constructors
         /// <summary>
         /// Constructs a vector whose elements are all the single specified value.
         /// </summary>
         /// <param name="value">The element to fill the vector with.</param>
-        public Vector3(Single value) : this(value, value, value) { }
+        public Vector3(double value) : this(value, value, value) { }
 
         /// <summary>
         /// Constructs a Vector3 from the given Vector2 and a third value.
         /// </summary>
         /// <param name="value">The Vector to extract X and Y components from.</param>
         /// <param name="z">The Z component.</param>
-        public Vector3(Vector2 value, float z) : this(value.X, value.Y, z) { }
+        public Vector3(Vector2 value, double z) : this(value.X, value.Y, z) { }
 
         /// <summary>
         /// Constructs a vector with the given individual elements.
@@ -44,7 +44,7 @@ namespace System.Numerics
         /// <param name="x">The X component.</param>
         /// <param name="y">The Y component.</param>
         /// <param name="z">The Z component.</param>
-        public Vector3(Single x, Single y, Single z)
+        public Vector3(double x, double y, double z)
         {
             X = x;
             Y = y;
@@ -56,7 +56,7 @@ namespace System.Numerics
         /// <summary>
         /// Copies the contents of the vector into the given array.
         /// </summary>
-        public void CopyTo(Single[] array)
+        public void CopyTo(double[] array)
         {
             CopyTo(array, 0);
         }
@@ -68,7 +68,7 @@ namespace System.Numerics
         /// <exception cref="RankException">If array is multidimensional.</exception>
         /// <exception cref="ArgumentOutOfRangeException">If index is greater than end of the array or index is less than zero.</exception>
         /// <exception cref="ArgumentException">If number of elements in source vector is greater than those available in destination array.</exception>
-        public void CopyTo(Single[] array, int index)
+        public void CopyTo(double[] array, int index)
         {
             if (array == null)
             {
@@ -108,7 +108,7 @@ namespace System.Numerics
         /// <param name="vector1">The first vector.</param>
         /// <param name="vector2">The second vector.</param>
         /// <returns>The dot product.</returns>
-        public static float Dot(Vector3 vector1, Vector3 vector2)
+        public static double Dot(Vector3 vector1, Vector3 vector2)
         {
             return vector1.X * vector2.X +
                    vector1.Y * vector2.Y +
@@ -160,7 +160,7 @@ namespace System.Numerics
         /// <returns>The square root vector.</returns>
         public static Vector3 SquareRoot(Vector3 value)
         {
-            return new Vector3((Single)Math.Sqrt(value.X), (Single)Math.Sqrt(value.Y), (Single)Math.Sqrt(value.Z));
+            return new Vector3(Math.Sqrt(value.X), Math.Sqrt(value.Y), Math.Sqrt(value.Z));
         }
         #endregion Public Static Methods
 
@@ -204,7 +204,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="right">The scalar value.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 operator *(Vector3 left, Single right)
+        public static Vector3 operator *(Vector3 left, double right)
         {
             return left * new Vector3(right);
         }
@@ -215,7 +215,7 @@ namespace System.Numerics
         /// <param name="left">The scalar value.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 operator *(Single left, Vector3 right)
+        public static Vector3 operator *(double left, Vector3 right)
         {
             return new Vector3(left) * right;
         }
@@ -237,9 +237,9 @@ namespace System.Numerics
         /// <param name="value1">The source vector.</param>
         /// <param name="value2">The scalar value.</param>
         /// <returns>The result of the division.</returns>
-        public static Vector3 operator /(Vector3 value1, float value2)
+        public static Vector3 operator /(Vector3 value1, double value2)
         {
-            float invDiv = 1.0f / value2;
+            double invDiv = 1.0 / value2;
 
             return new Vector3(
                 value1.X * invDiv,

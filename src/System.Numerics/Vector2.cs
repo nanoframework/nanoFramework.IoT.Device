@@ -4,7 +4,7 @@
 namespace System.Numerics
 {
     /// <summary>
-    /// A structure encapsulating two single precision floating point values and provides hardware accelerated methods.
+    /// A structure encapsulating two double values and provides hardware accelerated methods.
     /// </summary>
     public partial struct Vector2
     {
@@ -16,15 +16,15 @@ namespace System.Numerics
         /// <summary>
         /// Returns the vector (1,1).
         /// </summary>
-        public static Vector2 One { get { return new Vector2(1.0f, 1.0f); } }
+        public static Vector2 One { get { return new Vector2(1.0, 1.0); } }
         /// <summary>
         /// Returns the vector (1,0).
         /// </summary>
-        public static Vector2 UnitX { get { return new Vector2(1.0f, 0.0f); } }
+        public static Vector2 UnitX { get { return new Vector2(1.0, 0.0); } }
         /// <summary>
         /// Returns the vector (0,1).
         /// </summary>
-        public static Vector2 UnitY { get { return new Vector2(0.0f, 1.0f); } }
+        public static Vector2 UnitY { get { return new Vector2(0.0, 1.0); } }
         #endregion Public Static Properties
 
         #region Public instance methods
@@ -74,17 +74,17 @@ namespace System.Numerics
         /// Returns the length of the vector.
         /// </summary>
         /// <returns>The vector's length.</returns>
-        public float Length()
+        public double Length()
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float ls = Vector2.Dot(this, this);
-                return (float)Math.Sqrt(ls);
+                double ls = Vector2.Dot(this, this);
+                return Math.Sqrt(ls);
             }
             else
             {
-                float ls = X * X + Y * Y;
-                return (float)Math.Sqrt((double)ls);
+                double ls = X * X + Y * Y;
+                return Math.Sqrt(ls);
             }
         }
 
@@ -92,7 +92,7 @@ namespace System.Numerics
         /// Returns the length of the vector squared. This operation is cheaper than Length().
         /// </summary>
         /// <returns>The vector's length squared.</returns>
-        public float LengthSquared()
+        public double LengthSquared()
         {
             if (Vector.IsHardwareAccelerated)
             {
@@ -112,22 +112,22 @@ namespace System.Numerics
         /// <param name="value1">The first point.</param>
         /// <param name="value2">The second point.</param>
         /// <returns>The distance.</returns>
-        public static float Distance(Vector2 value1, Vector2 value2)
+        public static double Distance(Vector2 value1, Vector2 value2)
         {
             if (Vector.IsHardwareAccelerated)
             {
                 Vector2 difference = value1 - value2;
-                float ls = Vector2.Dot(difference, difference);
-                return (float)System.Math.Sqrt(ls);
+                double ls = Vector2.Dot(difference, difference);
+                return Math.Sqrt(ls);
             }
             else
             {
-                float dx = value1.X - value2.X;
-                float dy = value1.Y - value2.Y;
+                double dx = value1.X - value2.X;
+                double dy = value1.Y - value2.Y;
 
-                float ls = dx * dx + dy * dy;
+                double ls = dx * dx + dy * dy;
 
-                return (float)Math.Sqrt((double)ls);
+                return Math.Sqrt(ls);
             }
         }
 
@@ -137,7 +137,7 @@ namespace System.Numerics
         /// <param name="value1">The first point.</param>
         /// <param name="value2">The second point.</param>
         /// <returns>The distance squared.</returns>
-        public static float DistanceSquared(Vector2 value1, Vector2 value2)
+        public static double DistanceSquared(Vector2 value1, Vector2 value2)
         {
             if (Vector.IsHardwareAccelerated)
             {
@@ -146,8 +146,8 @@ namespace System.Numerics
             }
             else
             {
-                float dx = value1.X - value2.X;
-                float dy = value1.Y - value2.Y;
+                double dx = value1.X - value2.X;
+                double dy = value1.Y - value2.Y;
 
                 return dx * dx + dy * dy;
             }
@@ -162,13 +162,13 @@ namespace System.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float length = value.Length();
+                double length = value.Length();
                 return value / length;
             }
             else
             {
-                float ls = value.X * value.X + value.Y * value.Y;
-                float invNorm = 1.0f / (float)Math.Sqrt((double)ls);
+                double ls = value.X * value.X + value.Y * value.Y;
+                double invNorm = 1.0 / Math.Sqrt(ls);
 
                 return new Vector2(
                     value.X * invNorm,
@@ -186,16 +186,16 @@ namespace System.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float dot = Vector2.Dot(vector, normal);
+                double dot = Vector2.Dot(vector, normal);
                 return vector - (2 * dot * normal);
             }
             else
             {
-                float dot = vector.X * normal.X + vector.Y * normal.Y;
+                double dot = vector.X * normal.X + vector.Y * normal.Y;
 
                 return new Vector2(
-                    vector.X - 2.0f * dot * normal.X,
-                    vector.Y - 2.0f * dot * normal.Y);
+                    vector.X - 2.0 * dot * normal.X,
+                    vector.Y - 2.0 * dot * normal.Y);
             }
         }
 
@@ -209,11 +209,11 @@ namespace System.Numerics
         {
             // This compare order is very important!!!
             // We must follow HLSL behavior in the case user specified min value is bigger than max value.
-            float x = value1.X;
+            double x = value1.X;
             x = (x > max.X) ? max.X : x;
             x = (x < min.X) ? min.X : x;
 
-            float y = value1.Y;
+            double y = value1.Y;
             y = (y > max.Y) ? max.Y : y;
             y = (y < min.Y) ? min.Y : y;
 
@@ -227,7 +227,7 @@ namespace System.Numerics
         /// <param name="value2">The second source vector.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of the second source vector.</param>
         /// <returns>The interpolated vector.</returns>
-        public static Vector2 Lerp(Vector2 value1, Vector2 value2, float amount)
+        public static Vector2 Lerp(Vector2 value1, Vector2 value2, double amount)
         {
             return new Vector2(
                 value1.X + (value2.X - value1.X) * amount,
@@ -294,19 +294,19 @@ namespace System.Numerics
         /// <returns>The transformed vector.</returns>
         public static Vector2 Transform(Vector2 value, Quaternion rotation)
         {
-            float x2 = rotation.X + rotation.X;
-            float y2 = rotation.Y + rotation.Y;
-            float z2 = rotation.Z + rotation.Z;
+            double x2 = rotation.X + rotation.X;
+            double y2 = rotation.Y + rotation.Y;
+            double z2 = rotation.Z + rotation.Z;
 
-            float wz2 = rotation.W * z2;
-            float xx2 = rotation.X * x2;
-            float xy2 = rotation.X * y2;
-            float yy2 = rotation.Y * y2;
-            float zz2 = rotation.Z * z2;
+            double wz2 = rotation.W * z2;
+            double xx2 = rotation.X * x2;
+            double xy2 = rotation.X * y2;
+            double yy2 = rotation.Y * y2;
+            double zz2 = rotation.Z * z2;
 
             return new Vector2(
-                value.X * (1.0f - yy2 - zz2) + value.Y * (xy2 - wz2),
-                value.X * (xy2 + wz2) + value.Y * (1.0f - xx2 - zz2));
+                value.X * (1.0 - yy2 - zz2) + value.Y * (xy2 - wz2),
+                value.X * (xy2 + wz2) + value.Y * (1.0 - xx2 - zz2));
         }
         #endregion Public Static Methods
 
@@ -353,7 +353,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="right">The scalar value.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector2 Multiply(Vector2 left, Single right)
+        public static Vector2 Multiply(Vector2 left, double right)
         {
             return left * right;
         }
@@ -364,7 +364,7 @@ namespace System.Numerics
         /// <param name="left">The scalar value.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector2 Multiply(Single left, Vector2 right)
+        public static Vector2 Multiply(double left, Vector2 right)
         {
             return left * right;
         }
@@ -386,7 +386,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="divisor">The scalar value.</param>
         /// <returns>The result of the division.</returns>
-        public static Vector2 Divide(Vector2 left, Single divisor)
+        public static Vector2 Divide(Vector2 left, double divisor)
         {
             return left / divisor;
         }

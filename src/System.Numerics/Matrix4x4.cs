@@ -14,78 +14,78 @@ namespace System.Numerics
         /// <summary>
         /// Value at row 1, column 1 of the matrix.
         /// </summary>
-        public float M11;
+        public double M11;
         /// <summary>
         /// Value at row 1, column 2 of the matrix.
         /// </summary>
-        public float M12;
+        public double M12;
         /// <summary>
         /// Value at row 1, column 3 of the matrix.
         /// </summary>
-        public float M13;
+        public double M13;
         /// <summary>
         /// Value at row 1, column 4 of the matrix.
         /// </summary>
-        public float M14;
+        public double M14;
 
         /// <summary>
         /// Value at row 2, column 1 of the matrix.
         /// </summary>
-        public float M21;
+        public double M21;
         /// <summary>
         /// Value at row 2, column 2 of the matrix.
         /// </summary>
-        public float M22;
+        public double M22;
         /// <summary>
         /// Value at row 2, column 3 of the matrix.
         /// </summary>
-        public float M23;
+        public double M23;
         /// <summary>
         /// Value at row 2, column 4 of the matrix.
         /// </summary>
-        public float M24;
+        public double M24;
 
         /// <summary>
         /// Value at row 3, column 1 of the matrix.
         /// </summary>
-        public float M31;
+        public double M31;
         /// <summary>
         /// Value at row 3, column 2 of the matrix.
         /// </summary>
-        public float M32;
+        public double M32;
         /// <summary>
         /// Value at row 3, column 3 of the matrix.
         /// </summary>
-        public float M33;
+        public double M33;
         /// <summary>
         /// Value at row 3, column 4 of the matrix.
         /// </summary>
-        public float M34;
+        public double M34;
 
         /// <summary>
         /// Value at row 4, column 1 of the matrix.
         /// </summary>
-        public float M41;
+        public double M41;
         /// <summary>
         /// Value at row 4, column 2 of the matrix.
         /// </summary>
-        public float M42;
+        public double M42;
         /// <summary>
         /// Value at row 4, column 3 of the matrix.
         /// </summary>
-        public float M43;
+        public double M43;
         /// <summary>
         /// Value at row 4, column 4 of the matrix.
         /// </summary>
-        public float M44;
+        public double M44;
         #endregion Public Fields
 
         private static readonly Matrix4x4 _identity = new Matrix4x4
         (
-            1f, 0f, 0f, 0f,
-            0f, 1f, 0f, 0f,
-            0f, 0f, 1f, 0f,
-            0f, 0f, 0f, 1f
+            1f, 0, 0, 0,
+            0, 1f, 0, 0,
+            0, 0, 1f, 0,
+            0, 0, 0, 1f
         );
 
         /// <summary>
@@ -104,10 +104,10 @@ namespace System.Numerics
             get
             {
                 return M11 == 1f && M22 == 1f && M33 == 1f && M44 == 1f && // Check diagonal element first for early out.
-                                    M12 == 0f && M13 == 0f && M14 == 0f &&
-                       M21 == 0f && M23 == 0f && M24 == 0f &&
-                       M31 == 0f && M32 == 0f && M34 == 0f &&
-                       M41 == 0f && M42 == 0f && M43 == 0f;
+                                    M12 == 0 && M13 == 0 && M14 == 0 &&
+                       M21 == 0 && M23 == 0 && M24 == 0 &&
+                       M31 == 0 && M32 == 0 && M34 == 0 &&
+                       M41 == 0 && M42 == 0 && M43 == 0;
             }
         }
 
@@ -131,10 +131,10 @@ namespace System.Numerics
         /// <summary>
         /// Constructs a Matrix4x4 from the given components.
         /// </summary>
-        public Matrix4x4(float m11, float m12, float m13, float m14,
-                         float m21, float m22, float m23, float m24,
-                         float m31, float m32, float m33, float m34,
-                         float m41, float m42, float m43, float m44)
+        public Matrix4x4(double m11, double m12, double m13, double m14,
+                         double m21, double m22, double m23, double m24,
+                         double m31, double m32, double m33, double m34,
+                         double m41, double m42, double m43, double m44)
         {
             this.M11 = m11;
             this.M12 = m12;
@@ -165,19 +165,19 @@ namespace System.Numerics
         {
             M11 = value.M11;
             M12 = value.M12;
-            M13 = 0f;
-            M14 = 0f;
+            M13 = 0;
+            M14 = 0;
             M21 = value.M21;
             M22 = value.M22;
-            M23 = 0f;
-            M24 = 0f;
-            M31 = 0f;
-            M32 = 0f;
+            M23 = 0;
+            M24 = 0;
+            M31 = 0;
+            M32 = 0;
             M33 = 1f;
-            M34 = 0f;
+            M34 = 0;
             M41 = value.M31;
             M42 = value.M32;
-            M43 = 0f;
+            M43 = 0;
             M44 = 1f;
         }
 
@@ -191,14 +191,14 @@ namespace System.Numerics
         /// <returns>The created billboard matrix</returns>
         public static Matrix4x4 CreateBillboard(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
         {
-            const float epsilon = 1e-4f;
+            const double epsilon = 1e-4f;
 
             Vector3 zaxis = new Vector3(
                 objectPosition.X - cameraPosition.X,
                 objectPosition.Y - cameraPosition.Y,
                 objectPosition.Z - cameraPosition.Z);
 
-            float norm = zaxis.LengthSquared();
+            double norm = zaxis.LengthSquared();
 
             if (norm < epsilon)
             {
@@ -206,7 +206,7 @@ namespace System.Numerics
             }
             else
             {
-                zaxis = Vector3.Multiply(zaxis, 1.0f / (float)Math.Sqrt(norm));
+                zaxis = Vector3.Multiply(zaxis, 1.0 / Math.Sqrt(norm));
             }
 
             Vector3 xaxis = Vector3.Normalize(Vector3.Cross(cameraUpVector, zaxis));
@@ -218,20 +218,20 @@ namespace System.Numerics
             result.M11 = xaxis.X;
             result.M12 = xaxis.Y;
             result.M13 = xaxis.Z;
-            result.M14 = 0.0f;
+            result.M14 = 0.0;
             result.M21 = yaxis.X;
             result.M22 = yaxis.Y;
             result.M23 = yaxis.Z;
-            result.M24 = 0.0f;
+            result.M24 = 0.0;
             result.M31 = zaxis.X;
             result.M32 = zaxis.Y;
             result.M33 = zaxis.Z;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
 
             result.M41 = objectPosition.X;
             result.M42 = objectPosition.Y;
             result.M43 = objectPosition.Z;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -247,8 +247,8 @@ namespace System.Numerics
         /// <returns>The created billboard matrix.</returns>
         public static Matrix4x4 CreateConstrainedBillboard(Vector3 objectPosition, Vector3 cameraPosition, Vector3 rotateAxis, Vector3 cameraForwardVector, Vector3 objectForwardVector)
         {
-            const float epsilon = 1e-4f;
-            const float minAngle = 1.0f - (0.1f * ((float)Math.PI / 180.0f)); // 0.1 degrees
+            const double epsilon = 1e-4;
+            const double minAngle = 1.0 - (0.1 * (Math.PI / 180.0)); // 0.1 degrees
 
             // Treat the case when object and camera positions are too close.
             Vector3 faceDir = new Vector3(
@@ -256,7 +256,7 @@ namespace System.Numerics
                 objectPosition.Y - cameraPosition.Y,
                 objectPosition.Z - cameraPosition.Z);
 
-            float norm = faceDir.LengthSquared();
+            double norm = faceDir.LengthSquared();
 
             if (norm < epsilon)
             {
@@ -264,7 +264,7 @@ namespace System.Numerics
             }
             else
             {
-                faceDir = Vector3.Multiply(faceDir, (1.0f / (float)Math.Sqrt(norm)));
+                faceDir = Vector3.Multiply(faceDir, (1.0 / Math.Sqrt(norm)));
             }
 
             Vector3 yaxis = rotateAxis;
@@ -272,7 +272,7 @@ namespace System.Numerics
             Vector3 zaxis;
 
             // Treat the case when angle between faceDir and rotateAxis is too close to 0.
-            float dot = Vector3.Dot(rotateAxis, faceDir);
+            double dot = Vector3.Dot(rotateAxis, faceDir);
 
             if (Math.Abs(dot) > minAngle)
             {
@@ -300,20 +300,20 @@ namespace System.Numerics
             result.M11 = xaxis.X;
             result.M12 = xaxis.Y;
             result.M13 = xaxis.Z;
-            result.M14 = 0.0f;
+            result.M14 = 0.0;
             result.M21 = yaxis.X;
             result.M22 = yaxis.Y;
             result.M23 = yaxis.Z;
-            result.M24 = 0.0f;
+            result.M24 = 0.0;
             result.M31 = zaxis.X;
             result.M32 = zaxis.Y;
             result.M33 = zaxis.Z;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
 
             result.M41 = objectPosition.X;
             result.M42 = objectPosition.Y;
             result.M43 = objectPosition.Z;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -327,23 +327,23 @@ namespace System.Numerics
         {
             Matrix4x4 result;
 
-            result.M11 = 1.0f;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
-            result.M22 = 1.0f;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
-            result.M33 = 1.0f;
-            result.M34 = 0.0f;
+            result.M11 = 1.0;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
+            result.M22 = 1.0;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
+            result.M33 = 1.0;
+            result.M34 = 0.0;
 
             result.M41 = position.X;
             result.M42 = position.Y;
             result.M43 = position.Z;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -355,27 +355,27 @@ namespace System.Numerics
         /// <param name="yPosition">The amount to translate on the Y-axis.</param>
         /// <param name="zPosition">The amount to translate on the Z-axis.</param>
         /// <returns>The translation matrix.</returns>
-        public static Matrix4x4 CreateTranslation(float xPosition, float yPosition, float zPosition)
+        public static Matrix4x4 CreateTranslation(double xPosition, double yPosition, double zPosition)
         {
             Matrix4x4 result;
 
-            result.M11 = 1.0f;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
-            result.M22 = 1.0f;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
-            result.M33 = 1.0f;
-            result.M34 = 0.0f;
+            result.M11 = 1.0;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
+            result.M22 = 1.0;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
+            result.M33 = 1.0;
+            result.M34 = 0.0;
 
             result.M41 = xPosition;
             result.M42 = yPosition;
             result.M43 = zPosition;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -387,26 +387,26 @@ namespace System.Numerics
         /// <param name="yScale">Value to scale by on the Y-axis.</param>
         /// <param name="zScale">Value to scale by on the Z-axis.</param>
         /// <returns>The scaling matrix.</returns>
-        public static Matrix4x4 CreateScale(float xScale, float yScale, float zScale)
+        public static Matrix4x4 CreateScale(double xScale, double yScale, double zScale)
         {
             Matrix4x4 result;
 
             result.M11 = xScale;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = yScale;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
             result.M33 = zScale;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -419,30 +419,30 @@ namespace System.Numerics
         /// <param name="zScale">Value to scale by on the Z-axis.</param>
         /// <param name="centerPoint">The center point.</param>
         /// <returns>The scaling matrix.</returns>
-        public static Matrix4x4 CreateScale(float xScale, float yScale, float zScale, Vector3 centerPoint)
+        public static Matrix4x4 CreateScale(double xScale, double yScale, double zScale, Vector3 centerPoint)
         {
             Matrix4x4 result;
 
-            float tx = centerPoint.X * (1 - xScale);
-            float ty = centerPoint.Y * (1 - yScale);
-            float tz = centerPoint.Z * (1 - zScale);
+            double tx = centerPoint.X * (1 - xScale);
+            double ty = centerPoint.Y * (1 - yScale);
+            double tz = centerPoint.Z * (1 - zScale);
 
             result.M11 = xScale;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = yScale;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
             result.M33 = zScale;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
             result.M41 = tx;
             result.M42 = ty;
             result.M43 = tz;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -457,21 +457,21 @@ namespace System.Numerics
             Matrix4x4 result;
 
             result.M11 = scales.X;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = scales.Y;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
             result.M33 = scales.Z;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -486,26 +486,26 @@ namespace System.Numerics
         {
             Matrix4x4 result;
 
-            float tx = centerPoint.X * (1 - scales.X);
-            float ty = centerPoint.Y * (1 - scales.Y);
-            float tz = centerPoint.Z * (1 - scales.Z);
+            double tx = centerPoint.X * (1 - scales.X);
+            double ty = centerPoint.Y * (1 - scales.Y);
+            double tz = centerPoint.Z * (1 - scales.Z);
 
             result.M11 = scales.X;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = scales.Y;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
             result.M33 = scales.Z;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
             result.M41 = tx;
             result.M42 = ty;
             result.M43 = tz;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -515,26 +515,26 @@ namespace System.Numerics
         /// </summary>
         /// <param name="scale">The uniform scaling factor.</param>
         /// <returns>The scaling matrix.</returns>
-        public static Matrix4x4 CreateScale(float scale)
+        public static Matrix4x4 CreateScale(double scale)
         {
             Matrix4x4 result;
 
             result.M11 = scale;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = scale;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
             result.M33 = scale;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -545,30 +545,30 @@ namespace System.Numerics
         /// <param name="scale">The uniform scaling factor.</param>
         /// <param name="centerPoint">The center point.</param>
         /// <returns>The scaling matrix.</returns>
-        public static Matrix4x4 CreateScale(float scale, Vector3 centerPoint)
+        public static Matrix4x4 CreateScale(double scale, Vector3 centerPoint)
         {
             Matrix4x4 result;
 
-            float tx = centerPoint.X * (1 - scale);
-            float ty = centerPoint.Y * (1 - scale);
-            float tz = centerPoint.Z * (1 - scale);
+            double tx = centerPoint.X * (1 - scale);
+            double ty = centerPoint.Y * (1 - scale);
+            double tz = centerPoint.Z * (1 - scale);
 
             result.M11 = scale;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = scale;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
             result.M33 = scale;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
             result.M41 = tx;
             result.M42 = ty;
             result.M43 = tz;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -578,33 +578,33 @@ namespace System.Numerics
         /// </summary>
         /// <param name="radians">The amount, in radians, by which to rotate around the X-axis.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateRotationX(float radians)
+        public static Matrix4x4 CreateRotationX(double radians)
         {
             Matrix4x4 result;
 
-            float c = (float)Math.Cos(radians);
-            float s = (float)Math.Sin(radians);
+            double c = (double)Math.Cos(radians);
+            double s = (double)Math.Sin(radians);
 
             // [  1  0  0  0 ]
             // [  0  c  s  0 ]
             // [  0 -s  c  0 ]
             // [  0  0  0  1 ]
-            result.M11 = 1.0f;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M11 = 1.0;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = c;
             result.M23 = s;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
             result.M32 = -s;
             result.M33 = c;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -615,36 +615,36 @@ namespace System.Numerics
         /// <param name="radians">The amount, in radians, by which to rotate around the X-axis.</param>
         /// <param name="centerPoint">The center point.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateRotationX(float radians, Vector3 centerPoint)
+        public static Matrix4x4 CreateRotationX(double radians, Vector3 centerPoint)
         {
             Matrix4x4 result;
 
-            float c = (float)Math.Cos(radians);
-            float s = (float)Math.Sin(radians);
+            double c = (double)Math.Cos(radians);
+            double s = (double)Math.Sin(radians);
 
-            float y = centerPoint.Y * (1 - c) + centerPoint.Z * s;
-            float z = centerPoint.Z * (1 - c) - centerPoint.Y * s;
+            double y = centerPoint.Y * (1 - c) + centerPoint.Z * s;
+            double z = centerPoint.Z * (1 - c) - centerPoint.Y * s;
 
             // [  1  0  0  0 ]
             // [  0  c  s  0 ]
             // [  0 -s  c  0 ]
             // [  0  y  z  1 ]
-            result.M11 = 1.0f;
-            result.M12 = 0.0f;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
+            result.M11 = 1.0;
+            result.M12 = 0.0;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
             result.M22 = c;
             result.M23 = s;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
             result.M32 = -s;
             result.M33 = c;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
             result.M42 = y;
             result.M43 = z;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -654,33 +654,33 @@ namespace System.Numerics
         /// </summary>
         /// <param name="radians">The amount, in radians, by which to rotate around the Y-axis.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateRotationY(float radians)
+        public static Matrix4x4 CreateRotationY(double radians)
         {
             Matrix4x4 result;
 
-            float c = (float)Math.Cos(radians);
-            float s = (float)Math.Sin(radians);
+            double c = (double)Math.Cos(radians);
+            double s = (double)Math.Sin(radians);
 
             // [  c  0 -s  0 ]
             // [  0  1  0  0 ]
             // [  s  0  c  0 ]
             // [  0  0  0  1 ]
             result.M11 = c;
-            result.M12 = 0.0f;
+            result.M12 = 0.0;
             result.M13 = -s;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
-            result.M22 = 1.0f;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
+            result.M22 = 1.0;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
             result.M31 = s;
-            result.M32 = 0.0f;
+            result.M32 = 0.0;
             result.M33 = c;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -691,36 +691,36 @@ namespace System.Numerics
         /// <param name="radians">The amount, in radians, by which to rotate around the Y-axis.</param>
         /// <param name="centerPoint">The center point.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateRotationY(float radians, Vector3 centerPoint)
+        public static Matrix4x4 CreateRotationY(double radians, Vector3 centerPoint)
         {
             Matrix4x4 result;
 
-            float c = (float)Math.Cos(radians);
-            float s = (float)Math.Sin(radians);
+            double c = (double)Math.Cos(radians);
+            double s = (double)Math.Sin(radians);
 
-            float x = centerPoint.X * (1 - c) - centerPoint.Z * s;
-            float z = centerPoint.Z * (1 - c) + centerPoint.X * s;
+            double x = centerPoint.X * (1 - c) - centerPoint.Z * s;
+            double z = centerPoint.Z * (1 - c) + centerPoint.X * s;
 
             // [  c  0 -s  0 ]
             // [  0  1  0  0 ]
             // [  s  0  c  0 ]
             // [  x  0  z  1 ]
             result.M11 = c;
-            result.M12 = 0.0f;
+            result.M12 = 0.0;
             result.M13 = -s;
-            result.M14 = 0.0f;
-            result.M21 = 0.0f;
-            result.M22 = 1.0f;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
+            result.M14 = 0.0;
+            result.M21 = 0.0;
+            result.M22 = 1.0;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
             result.M31 = s;
-            result.M32 = 0.0f;
+            result.M32 = 0.0;
             result.M33 = c;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
             result.M41 = x;
-            result.M42 = 0.0f;
+            result.M42 = 0.0;
             result.M43 = z;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -730,12 +730,12 @@ namespace System.Numerics
         /// </summary>
         /// <param name="radians">The amount, in radians, by which to rotate around the Z-axis.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateRotationZ(float radians)
+        public static Matrix4x4 CreateRotationZ(double radians)
         {
             Matrix4x4 result;
 
-            float c = (float)Math.Cos(radians);
-            float s = (float)Math.Sin(radians);
+            double c = (double)Math.Cos(radians);
+            double s = (double)Math.Sin(radians);
 
             // [  c  s  0  0 ]
             // [ -s  c  0  0 ]
@@ -743,20 +743,20 @@ namespace System.Numerics
             // [  0  0  0  1 ]
             result.M11 = c;
             result.M12 = s;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
             result.M21 = -s;
             result.M22 = c;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
-            result.M33 = 1.0f;
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
+            result.M33 = 1.0;
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -767,15 +767,15 @@ namespace System.Numerics
         /// <param name="radians">The amount, in radians, by which to rotate around the Z-axis.</param>
         /// <param name="centerPoint">The center point.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateRotationZ(float radians, Vector3 centerPoint)
+        public static Matrix4x4 CreateRotationZ(double radians, Vector3 centerPoint)
         {
             Matrix4x4 result;
 
-            float c = (float)Math.Cos(radians);
-            float s = (float)Math.Sin(radians);
+            double c = (double)Math.Cos(radians);
+            double s = (double)Math.Sin(radians);
 
-            float x = centerPoint.X * (1 - c) + centerPoint.Y * s;
-            float y = centerPoint.Y * (1 - c) - centerPoint.X * s;
+            double x = centerPoint.X * (1 - c) + centerPoint.Y * s;
+            double y = centerPoint.Y * (1 - c) - centerPoint.X * s;
 
             // [  c  s  0  0 ]
             // [ -s  c  0  0 ]
@@ -783,20 +783,20 @@ namespace System.Numerics
             // [  x  y  0  1 ]
             result.M11 = c;
             result.M12 = s;
-            result.M13 = 0.0f;
-            result.M14 = 0.0f;
+            result.M13 = 0.0;
+            result.M14 = 0.0;
             result.M21 = -s;
             result.M22 = c;
-            result.M23 = 0.0f;
-            result.M24 = 0.0f;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
-            result.M33 = 1.0f;
-            result.M34 = 0.0f;
+            result.M23 = 0.0;
+            result.M24 = 0.0;
+            result.M31 = 0.0;
+            result.M32 = 0.0;
+            result.M33 = 1.0;
+            result.M34 = 0.0;
             result.M41 = x;
             result.M42 = y;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -807,7 +807,7 @@ namespace System.Numerics
         /// <param name="axis">The axis to rotate around.</param>
         /// <param name="angle">The angle to rotate around the given axis, in radians.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateFromAxisAngle(Vector3 axis, float angle)
+        public static Matrix4x4 CreateFromAxisAngle(Vector3 axis, double angle)
         {
             // a: angle
             // x, y, z: unit vector for axis.
@@ -834,29 +834,29 @@ namespace System.Numerics
             // M = [ xy-cosa*yx+sina*z    yy+cosa(1-yy)  yz-cosa*yz-sina*x ]
             //     [ zx-cosa*zx-sina*y zy-cosa*zy+sina*x   zz+cosa*(1-zz)  ]
             //
-            float x = axis.X, y = axis.Y, z = axis.Z;
-            float sa = (float)Math.Sin(angle), ca = (float)Math.Cos(angle);
-            float xx = x * x, yy = y * y, zz = z * z;
-            float xy = x * y, xz = x * z, yz = y * z;
+            double x = axis.X, y = axis.Y, z = axis.Z;
+            double sa = (double)Math.Sin(angle), ca = (double)Math.Cos(angle);
+            double xx = x * x, yy = y * y, zz = z * z;
+            double xy = x * y, xz = x * z, yz = y * z;
 
             Matrix4x4 result;
 
-            result.M11 = xx + ca * (1.0f - xx);
+            result.M11 = xx + ca * (1.0 - xx);
             result.M12 = xy - ca * xy + sa * z;
             result.M13 = xz - ca * xz - sa * y;
-            result.M14 = 0.0f;
+            result.M14 = 0.0;
             result.M21 = xy - ca * xy - sa * z;
-            result.M22 = yy + ca * (1.0f - yy);
+            result.M22 = yy + ca * (1.0 - yy);
             result.M23 = yz - ca * yz + sa * x;
-            result.M24 = 0.0f;
+            result.M24 = 0.0;
             result.M31 = xz - ca * xz + sa * y;
             result.M32 = yz - ca * yz - sa * x;
-            result.M33 = zz + ca * (1.0f - zz);
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M33 = zz + ca * (1.0 - zz);
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -869,36 +869,36 @@ namespace System.Numerics
         /// <param name="nearPlaneDistance">Distance to the near view plane.</param>
         /// <param name="farPlaneDistance">Distance to the far view plane.</param>
         /// <returns>The perspective projection matrix.</returns>
-        public static Matrix4x4 CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix4x4 CreatePerspectiveFieldOfView(double fieldOfView, double aspectRatio, double nearPlaneDistance, double farPlaneDistance)
         {
-            if (fieldOfView <= 0.0f || fieldOfView >= Math.PI)
+            if (fieldOfView <= 0.0 || fieldOfView >= Math.PI)
                 throw new ArgumentOutOfRangeException("fieldOfView");
 
-            if (nearPlaneDistance <= 0.0f)
+            if (nearPlaneDistance <= 0.0)
                 throw new ArgumentOutOfRangeException("nearPlaneDistance");
 
-            if (farPlaneDistance <= 0.0f)
+            if (farPlaneDistance <= 0.0)
                 throw new ArgumentOutOfRangeException("farPlaneDistance");
 
             if (nearPlaneDistance >= farPlaneDistance)
                 throw new ArgumentOutOfRangeException("nearPlaneDistance");
 
-            float yScale = 1.0f / (float)Math.Tan(fieldOfView * 0.5f);
-            float xScale = yScale / aspectRatio;
+            double yScale = 1.0 / (double)Math.Tan(fieldOfView * 0.5f);
+            double xScale = yScale / aspectRatio;
 
             Matrix4x4 result;
 
             result.M11 = xScale;
-            result.M12 = result.M13 = result.M14 = 0.0f;
+            result.M12 = result.M13 = result.M14 = 0.0;
 
             result.M22 = yScale;
-            result.M21 = result.M23 = result.M24 = 0.0f;
+            result.M21 = result.M23 = result.M24 = 0.0;
 
-            result.M31 = result.M32 = 0.0f;
+            result.M31 = result.M32 = 0.0;
             result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-            result.M34 = -1.0f;
+            result.M34 = -1.0;
 
-            result.M41 = result.M42 = result.M44 = 0.0f;
+            result.M41 = result.M42 = result.M44 = 0.0;
             result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
 
             return result;
@@ -912,12 +912,12 @@ namespace System.Numerics
         /// <param name="nearPlaneDistance">Distance to the near view plane.</param>
         /// <param name="farPlaneDistance">Distance to the far view plane.</param>
         /// <returns>The perspective projection matrix.</returns>
-        public static Matrix4x4 CreatePerspective(float width, float height, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix4x4 CreatePerspective(double width, double height, double nearPlaneDistance, double farPlaneDistance)
         {
-            if (nearPlaneDistance <= 0.0f)
+            if (nearPlaneDistance <= 0.0)
                 throw new ArgumentOutOfRangeException("nearPlaneDistance");
 
-            if (farPlaneDistance <= 0.0f)
+            if (farPlaneDistance <= 0.0)
                 throw new ArgumentOutOfRangeException("farPlaneDistance");
 
             if (nearPlaneDistance >= farPlaneDistance)
@@ -925,17 +925,17 @@ namespace System.Numerics
 
             Matrix4x4 result;
 
-            result.M11 = 2.0f * nearPlaneDistance / width;
-            result.M12 = result.M13 = result.M14 = 0.0f;
+            result.M11 = 2.0 * nearPlaneDistance / width;
+            result.M12 = result.M13 = result.M14 = 0.0;
 
-            result.M22 = 2.0f * nearPlaneDistance / height;
-            result.M21 = result.M23 = result.M24 = 0.0f;
+            result.M22 = 2.0 * nearPlaneDistance / height;
+            result.M21 = result.M23 = result.M24 = 0.0;
 
             result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-            result.M31 = result.M32 = 0.0f;
-            result.M34 = -1.0f;
+            result.M31 = result.M32 = 0.0;
+            result.M34 = -1.0;
 
-            result.M41 = result.M42 = result.M44 = 0.0f;
+            result.M41 = result.M42 = result.M44 = 0.0;
             result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
 
             return result;
@@ -951,12 +951,12 @@ namespace System.Numerics
         /// <param name="nearPlaneDistance">Distance to the near view plane.</param>
         /// <param name="farPlaneDistance">Distance to of the far view plane.</param>
         /// <returns>The perspective projection matrix.</returns>
-        public static Matrix4x4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix4x4 CreatePerspectiveOffCenter(double left, double right, double bottom, double top, double nearPlaneDistance, double farPlaneDistance)
         {
-            if (nearPlaneDistance <= 0.0f)
+            if (nearPlaneDistance <= 0.0)
                 throw new ArgumentOutOfRangeException("nearPlaneDistance");
 
-            if (farPlaneDistance <= 0.0f)
+            if (farPlaneDistance <= 0.0)
                 throw new ArgumentOutOfRangeException("farPlaneDistance");
 
             if (nearPlaneDistance >= farPlaneDistance)
@@ -964,19 +964,19 @@ namespace System.Numerics
 
             Matrix4x4 result;
 
-            result.M11 = 2.0f * nearPlaneDistance / (right - left);
-            result.M12 = result.M13 = result.M14 = 0.0f;
+            result.M11 = 2.0 * nearPlaneDistance / (right - left);
+            result.M12 = result.M13 = result.M14 = 0.0;
 
-            result.M22 = 2.0f * nearPlaneDistance / (top - bottom);
-            result.M21 = result.M23 = result.M24 = 0.0f;
+            result.M22 = 2.0 * nearPlaneDistance / (top - bottom);
+            result.M21 = result.M23 = result.M24 = 0.0;
 
             result.M31 = (left + right) / (right - left);
             result.M32 = (top + bottom) / (top - bottom);
             result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-            result.M34 = -1.0f;
+            result.M34 = -1.0;
 
             result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-            result.M41 = result.M42 = result.M44 = 0.0f;
+            result.M41 = result.M42 = result.M44 = 0.0;
 
             return result;
         }
@@ -989,22 +989,22 @@ namespace System.Numerics
         /// <param name="zNearPlane">Minimum Z-value of the view volume.</param>
         /// <param name="zFarPlane">Maximum Z-value of the view volume.</param>
         /// <returns>The orthographic projection matrix.</returns>
-        public static Matrix4x4 CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane)
+        public static Matrix4x4 CreateOrthographic(double width, double height, double zNearPlane, double zFarPlane)
         {
             Matrix4x4 result;
 
-            result.M11 = 2.0f / width;
-            result.M12 = result.M13 = result.M14 = 0.0f;
+            result.M11 = 2.0 / width;
+            result.M12 = result.M13 = result.M14 = 0.0;
 
-            result.M22 = 2.0f / height;
-            result.M21 = result.M23 = result.M24 = 0.0f;
+            result.M22 = 2.0 / height;
+            result.M21 = result.M23 = result.M24 = 0.0;
 
-            result.M33 = 1.0f / (zNearPlane - zFarPlane);
-            result.M31 = result.M32 = result.M34 = 0.0f;
+            result.M33 = 1.0 / (zNearPlane - zFarPlane);
+            result.M31 = result.M32 = result.M34 = 0.0;
 
-            result.M41 = result.M42 = 0.0f;
+            result.M41 = result.M42 = 0.0;
             result.M43 = zNearPlane / (zNearPlane - zFarPlane);
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -1019,23 +1019,23 @@ namespace System.Numerics
         /// <param name="zNearPlane">Minimum Z-value of the view volume.</param>
         /// <param name="zFarPlane">Maximum Z-value of the view volume.</param>
         /// <returns>The orthographic projection matrix.</returns>
-        public static Matrix4x4 CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
+        public static Matrix4x4 CreateOrthographicOffCenter(double left, double right, double bottom, double top, double zNearPlane, double zFarPlane)
         {
             Matrix4x4 result;
 
-            result.M11 = 2.0f / (right - left);
-            result.M12 = result.M13 = result.M14 = 0.0f;
+            result.M11 = 2.0 / (right - left);
+            result.M12 = result.M13 = result.M14 = 0.0;
 
-            result.M22 = 2.0f / (top - bottom);
-            result.M21 = result.M23 = result.M24 = 0.0f;
+            result.M22 = 2.0 / (top - bottom);
+            result.M21 = result.M23 = result.M24 = 0.0;
 
-            result.M33 = 1.0f / (zNearPlane - zFarPlane);
-            result.M31 = result.M32 = result.M34 = 0.0f;
+            result.M33 = 1.0 / (zNearPlane - zFarPlane);
+            result.M31 = result.M32 = result.M34 = 0.0;
 
             result.M41 = (left + right) / (left - right);
             result.M42 = (top + bottom) / (bottom - top);
             result.M43 = zNearPlane / (zNearPlane - zFarPlane);
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -1058,19 +1058,19 @@ namespace System.Numerics
             result.M11 = xaxis.X;
             result.M12 = yaxis.X;
             result.M13 = zaxis.X;
-            result.M14 = 0.0f;
+            result.M14 = 0.0;
             result.M21 = xaxis.Y;
             result.M22 = yaxis.Y;
             result.M23 = zaxis.Y;
-            result.M24 = 0.0f;
+            result.M24 = 0.0;
             result.M31 = xaxis.Z;
             result.M32 = yaxis.Z;
             result.M33 = zaxis.Z;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
             result.M41 = -Vector3.Dot(xaxis, cameraPosition);
             result.M42 = -Vector3.Dot(yaxis, cameraPosition);
             result.M43 = -Vector3.Dot(zaxis, cameraPosition);
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -1093,19 +1093,19 @@ namespace System.Numerics
             result.M11 = xaxis.X;
             result.M12 = xaxis.Y;
             result.M13 = xaxis.Z;
-            result.M14 = 0.0f;
+            result.M14 = 0.0;
             result.M21 = yaxis.X;
             result.M22 = yaxis.Y;
             result.M23 = yaxis.Z;
-            result.M24 = 0.0f;
+            result.M24 = 0.0;
             result.M31 = zaxis.X;
             result.M32 = zaxis.Y;
             result.M33 = zaxis.Z;
-            result.M34 = 0.0f;
+            result.M34 = 0.0;
             result.M41 = position.X;
             result.M42 = position.Y;
             result.M43 = position.Z;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -1119,33 +1119,33 @@ namespace System.Numerics
         {
             Matrix4x4 result;
 
-            float xx = quaternion.X * quaternion.X;
-            float yy = quaternion.Y * quaternion.Y;
-            float zz = quaternion.Z * quaternion.Z;
+            double xx = quaternion.X * quaternion.X;
+            double yy = quaternion.Y * quaternion.Y;
+            double zz = quaternion.Z * quaternion.Z;
 
-            float xy = quaternion.X * quaternion.Y;
-            float wz = quaternion.Z * quaternion.W;
-            float xz = quaternion.Z * quaternion.X;
-            float wy = quaternion.Y * quaternion.W;
-            float yz = quaternion.Y * quaternion.Z;
-            float wx = quaternion.X * quaternion.W;
+            double xy = quaternion.X * quaternion.Y;
+            double wz = quaternion.Z * quaternion.W;
+            double xz = quaternion.Z * quaternion.X;
+            double wy = quaternion.Y * quaternion.W;
+            double yz = quaternion.Y * quaternion.Z;
+            double wx = quaternion.X * quaternion.W;
 
-            result.M11 = 1.0f - 2.0f * (yy + zz);
-            result.M12 = 2.0f * (xy + wz);
-            result.M13 = 2.0f * (xz - wy);
-            result.M14 = 0.0f;
-            result.M21 = 2.0f * (xy - wz);
-            result.M22 = 1.0f - 2.0f * (zz + xx);
-            result.M23 = 2.0f * (yz + wx);
-            result.M24 = 0.0f;
-            result.M31 = 2.0f * (xz + wy);
-            result.M32 = 2.0f * (yz - wx);
-            result.M33 = 1.0f - 2.0f * (yy + xx);
-            result.M34 = 0.0f;
-            result.M41 = 0.0f;
-            result.M42 = 0.0f;
-            result.M43 = 0.0f;
-            result.M44 = 1.0f;
+            result.M11 = 1.0 - 2.0 * (yy + zz);
+            result.M12 = 2.0 * (xy + wz);
+            result.M13 = 2.0 * (xz - wy);
+            result.M14 = 0.0;
+            result.M21 = 2.0 * (xy - wz);
+            result.M22 = 1.0 - 2.0 * (zz + xx);
+            result.M23 = 2.0 * (yz + wx);
+            result.M24 = 0.0;
+            result.M31 = 2.0 * (xz + wy);
+            result.M32 = 2.0 * (yz - wx);
+            result.M33 = 1.0 - 2.0 * (yy + xx);
+            result.M34 = 0.0;
+            result.M41 = 0.0;
+            result.M42 = 0.0;
+            result.M43 = 0.0;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -1157,7 +1157,7 @@ namespace System.Numerics
         /// <param name="pitch">Angle of rotation, in radians, around the X-axis.</param>
         /// <param name="roll">Angle of rotation, in radians, around the Z-axis.</param>
         /// <returns>The rotation matrix.</returns>
-        public static Matrix4x4 CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+        public static Matrix4x4 CreateFromYawPitchRoll(double yaw, double pitch, double roll)
         {
             Quaternion q = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
 
@@ -1174,11 +1174,11 @@ namespace System.Numerics
         {
             Plane p = Plane.Normalize(plane);
 
-            float dot = p.Normal.X * lightDirection.X + p.Normal.Y * lightDirection.Y + p.Normal.Z * lightDirection.Z;
-            float a = -p.Normal.X;
-            float b = -p.Normal.Y;
-            float c = -p.Normal.Z;
-            float d = -p.D;
+            double dot = p.Normal.X * lightDirection.X + p.Normal.Y * lightDirection.Y + p.Normal.Z * lightDirection.Z;
+            double a = -p.Normal.X;
+            double b = -p.Normal.Y;
+            double c = -p.Normal.Z;
+            double d = -p.D;
 
             Matrix4x4 result;
 
@@ -1197,9 +1197,9 @@ namespace System.Numerics
             result.M33 = c * lightDirection.Z + dot;
             result.M43 = d * lightDirection.Z;
 
-            result.M14 = 0.0f;
-            result.M24 = 0.0f;
-            result.M34 = 0.0f;
+            result.M14 = 0.0;
+            result.M24 = 0.0;
+            result.M34 = 0.0;
             result.M44 = dot;
 
             return result;
@@ -1214,35 +1214,35 @@ namespace System.Numerics
         {
             value = Plane.Normalize(value);
 
-            float a = value.Normal.X;
-            float b = value.Normal.Y;
-            float c = value.Normal.Z;
+            double a = value.Normal.X;
+            double b = value.Normal.Y;
+            double c = value.Normal.Z;
 
-            float fa = -2.0f * a;
-            float fb = -2.0f * b;
-            float fc = -2.0f * c;
+            double fa = -2.0 * a;
+            double fb = -2.0 * b;
+            double fc = -2.0 * c;
 
             Matrix4x4 result;
 
-            result.M11 = fa * a + 1.0f;
+            result.M11 = fa * a + 1.0;
             result.M12 = fb * a;
             result.M13 = fc * a;
-            result.M14 = 0.0f;
+            result.M14 = 0.0;
 
             result.M21 = fa * b;
-            result.M22 = fb * b + 1.0f;
+            result.M22 = fb * b + 1.0;
             result.M23 = fc * b;
-            result.M24 = 0.0f;
+            result.M24 = 0.0;
 
             result.M31 = fa * c;
             result.M32 = fb * c;
-            result.M33 = fc * c + 1.0f;
-            result.M34 = 0.0f;
+            result.M33 = fc * c + 1.0;
+            result.M34 = 0.0;
 
             result.M41 = fa * value.D;
             result.M42 = fb * value.D;
             result.M43 = fc * value.D;
-            result.M44 = 1.0f;
+            result.M44 = 1.0;
 
             return result;
         }
@@ -1251,7 +1251,7 @@ namespace System.Numerics
         /// Calculates the determinant of the matrix.
         /// </summary>
         /// <returns>The determinant of the matrix.</returns>
-        public float GetDeterminant()
+        public double GetDeterminant()
         {
             // | a b c d |     | f g h |     | e g h |     | e f h |     | e f g |
             // | e f g h | = a | j k l | - b | i k l | + c | i j l | - d | i j k |
@@ -1280,17 +1280,17 @@ namespace System.Numerics
             // add: 6 + 8 + 3 = 17
             // mul: 12 + 16 = 28
 
-            float a = M11, b = M12, c = M13, d = M14;
-            float e = M21, f = M22, g = M23, h = M24;
-            float i = M31, j = M32, k = M33, l = M34;
-            float m = M41, n = M42, o = M43, p = M44;
+            double a = M11, b = M12, c = M13, d = M14;
+            double e = M21, f = M22, g = M23, h = M24;
+            double i = M31, j = M32, k = M33, l = M34;
+            double m = M41, n = M42, o = M43, p = M44;
 
-            float kp_lo = k * p - l * o;
-            float jp_ln = j * p - l * n;
-            float jo_kn = j * o - k * n;
-            float ip_lm = i * p - l * m;
-            float io_km = i * o - k * m;
-            float in_jm = i * n - j * m;
+            double kp_lo = k * p - l * o;
+            double jp_ln = j * p - l * n;
+            double jo_kn = j * o - k * n;
+            double ip_lm = i * p - l * m;
+            double io_km = i * o - k * m;
+            double in_jm = i * n - j * m;
 
             return a * (f * kp_lo - g * jp_ln + h * jo_kn) -
                    b * (e * kp_lo - g * ip_lm + h * io_km) +
@@ -1398,35 +1398,35 @@ namespace System.Numerics
             //
             // Cost of operation
             // 53 adds, 104 muls, and 1 div.
-            float a = matrix.M11, b = matrix.M12, c = matrix.M13, d = matrix.M14;
-            float e = matrix.M21, f = matrix.M22, g = matrix.M23, h = matrix.M24;
-            float i = matrix.M31, j = matrix.M32, k = matrix.M33, l = matrix.M34;
-            float m = matrix.M41, n = matrix.M42, o = matrix.M43, p = matrix.M44;
+            double a = matrix.M11, b = matrix.M12, c = matrix.M13, d = matrix.M14;
+            double e = matrix.M21, f = matrix.M22, g = matrix.M23, h = matrix.M24;
+            double i = matrix.M31, j = matrix.M32, k = matrix.M33, l = matrix.M34;
+            double m = matrix.M41, n = matrix.M42, o = matrix.M43, p = matrix.M44;
 
-            float kp_lo = k * p - l * o;
-            float jp_ln = j * p - l * n;
-            float jo_kn = j * o - k * n;
-            float ip_lm = i * p - l * m;
-            float io_km = i * o - k * m;
-            float in_jm = i * n - j * m;
+            double kp_lo = k * p - l * o;
+            double jp_ln = j * p - l * n;
+            double jo_kn = j * o - k * n;
+            double ip_lm = i * p - l * m;
+            double io_km = i * o - k * m;
+            double in_jm = i * n - j * m;
 
-            float a11 = +(f * kp_lo - g * jp_ln + h * jo_kn);
-            float a12 = -(e * kp_lo - g * ip_lm + h * io_km);
-            float a13 = +(e * jp_ln - f * ip_lm + h * in_jm);
-            float a14 = -(e * jo_kn - f * io_km + g * in_jm);
+            double a11 = +(f * kp_lo - g * jp_ln + h * jo_kn);
+            double a12 = -(e * kp_lo - g * ip_lm + h * io_km);
+            double a13 = +(e * jp_ln - f * ip_lm + h * in_jm);
+            double a14 = -(e * jo_kn - f * io_km + g * in_jm);
 
-            float det = a * a11 + b * a12 + c * a13 + d * a14;
+            double det = a * a11 + b * a12 + c * a13 + d * a14;
 
-            if (Math.Abs(det) < float.Epsilon)
+            if (Math.Abs(det) < double.Epsilon)
             {
-                result = new Matrix4x4(float.NaN, float.NaN, float.NaN, float.NaN,
-                                       float.NaN, float.NaN, float.NaN, float.NaN,
-                                       float.NaN, float.NaN, float.NaN, float.NaN,
-                                       float.NaN, float.NaN, float.NaN, float.NaN);
+                result = new Matrix4x4(double.NaN, double.NaN, double.NaN, double.NaN,
+                                       double.NaN, double.NaN, double.NaN, double.NaN,
+                                       double.NaN, double.NaN, double.NaN, double.NaN,
+                                       double.NaN, double.NaN, double.NaN, double.NaN);
                 return false;
             }
 
-            float invDet = 1.0f / det;
+            double invDet = 1.0 / det;
 
             result.M11 = a11 * invDet;
             result.M21 = a12 * invDet;
@@ -1438,24 +1438,24 @@ namespace System.Numerics
             result.M32 = -(a * jp_ln - b * ip_lm + d * in_jm) * invDet;
             result.M42 = +(a * jo_kn - b * io_km + c * in_jm) * invDet;
 
-            float gp_ho = g * p - h * o;
-            float fp_hn = f * p - h * n;
-            float fo_gn = f * o - g * n;
-            float ep_hm = e * p - h * m;
-            float eo_gm = e * o - g * m;
-            float en_fm = e * n - f * m;
+            double gp_ho = g * p - h * o;
+            double fp_hn = f * p - h * n;
+            double fo_gn = f * o - g * n;
+            double ep_hm = e * p - h * m;
+            double eo_gm = e * o - g * m;
+            double en_fm = e * n - f * m;
 
             result.M13 = +(b * gp_ho - c * fp_hn + d * fo_gn) * invDet;
             result.M23 = -(a * gp_ho - c * ep_hm + d * eo_gm) * invDet;
             result.M33 = +(a * fp_hn - b * ep_hm + d * en_fm) * invDet;
             result.M43 = -(a * fo_gn - b * eo_gm + c * en_fm) * invDet;
 
-            float gl_hk = g * l - h * k;
-            float fl_hj = f * l - h * j;
-            float fk_gj = f * k - g * j;
-            float el_hi = e * l - h * i;
-            float ek_gi = e * k - g * i;
-            float ej_fi = e * j - f * i;
+            double gl_hk = g * l - h * k;
+            double fl_hj = f * l - h * j;
+            double fk_gj = f * k - g * j;
+            double el_hi = e * l - h * i;
+            double ek_gi = e * k - g * i;
+            double ej_fi = e * j - f * i;
 
             result.M14 = -(b * gl_hk - c * fl_hj + d * fk_gj) * invDet;
             result.M24 = +(a * gl_hk - c * el_hi + d * ek_gi) * invDet;
@@ -1496,9 +1496,9 @@ namespace System.Numerics
             {
                 fixed (Vector3* scaleBase = &scale)
                 {
-                    float* pfScales = (float*)scaleBase;
-                    const float EPSILON = 0.0001f;
-                    float det;
+                    double* pfScales = (double*)scaleBase;
+                    const double EPSILON = 0.0001f;
+                    double det;
 
                     VectorBasis vectorBasis;
                     Vector3** pVectorBasis = (Vector3**)&vectorBasis;
@@ -1507,9 +1507,9 @@ namespace System.Numerics
                     CanonicalBasis canonicalBasis = new CanonicalBasis();
                     Vector3* pCanonicalBasis = &canonicalBasis.Row0;
 
-                    canonicalBasis.Row0 = new Vector3(1.0f, 0.0f, 0.0f);
-                    canonicalBasis.Row1 = new Vector3(0.0f, 1.0f, 0.0f);
-                    canonicalBasis.Row2 = new Vector3(0.0f, 0.0f, 1.0f);
+                    canonicalBasis.Row0 = new Vector3(1.0, 0.0, 0.0);
+                    canonicalBasis.Row1 = new Vector3(0.0, 1.0, 0.0);
+                    canonicalBasis.Row2 = new Vector3(0.0, 0.0, 1.0);
 
                     translation = new Vector3(
                         matrix.M41,
@@ -1530,7 +1530,7 @@ namespace System.Numerics
 
                     uint a, b, c;
                     #region Ranking
-                    float x = pfScales[0], y = pfScales[1], z = pfScales[2];
+                    double x = pfScales[0], y = pfScales[1], z = pfScales[2];
                     if (x < y)
                     {
                         if (y < z)
@@ -1591,11 +1591,11 @@ namespace System.Numerics
                     if (pfScales[b] < EPSILON)
                     {
                         uint cc;
-                        float fAbsX, fAbsY, fAbsZ;
+                        double fAbsX, fAbsY, fAbsZ;
 
-                        fAbsX = (float)Math.Abs(pVectorBasis[a]->X);
-                        fAbsY = (float)Math.Abs(pVectorBasis[a]->Y);
-                        fAbsZ = (float)Math.Abs(pVectorBasis[a]->Z);
+                        fAbsX = (double)Math.Abs(pVectorBasis[a]->X);
+                        fAbsY = (double)Math.Abs(pVectorBasis[a]->Y);
+                        fAbsZ = (double)Math.Abs(pVectorBasis[a]->Z);
 
                         #region Ranking
                         if (fAbsX < fAbsY)
@@ -1651,7 +1651,7 @@ namespace System.Numerics
                     det = matTemp.GetDeterminant();
 
                     // use Kramer's rule to check for handedness of coordinate system
-                    if (det < 0.0f)
+                    if (det < 0.0)
                     {
                         // switch coordinate system by negating the scale and inverting the basis vector on the x-axis
                         pfScales[a] = -pfScales[a];
@@ -1660,7 +1660,7 @@ namespace System.Numerics
                         det = -det;
                     }
 
-                    det -= 1.0f;
+                    det -= 1.0;
                     det *= det;
 
                     if ((EPSILON < det))
@@ -1689,31 +1689,31 @@ namespace System.Numerics
         public static Matrix4x4 Transform(Matrix4x4 value, Quaternion rotation)
         {
             // Compute rotation matrix.
-            float x2 = rotation.X + rotation.X;
-            float y2 = rotation.Y + rotation.Y;
-            float z2 = rotation.Z + rotation.Z;
+            double x2 = rotation.X + rotation.X;
+            double y2 = rotation.Y + rotation.Y;
+            double z2 = rotation.Z + rotation.Z;
 
-            float wx2 = rotation.W * x2;
-            float wy2 = rotation.W * y2;
-            float wz2 = rotation.W * z2;
-            float xx2 = rotation.X * x2;
-            float xy2 = rotation.X * y2;
-            float xz2 = rotation.X * z2;
-            float yy2 = rotation.Y * y2;
-            float yz2 = rotation.Y * z2;
-            float zz2 = rotation.Z * z2;
+            double wx2 = rotation.W * x2;
+            double wy2 = rotation.W * y2;
+            double wz2 = rotation.W * z2;
+            double xx2 = rotation.X * x2;
+            double xy2 = rotation.X * y2;
+            double xz2 = rotation.X * z2;
+            double yy2 = rotation.Y * y2;
+            double yz2 = rotation.Y * z2;
+            double zz2 = rotation.Z * z2;
 
-            float q11 = 1.0f - yy2 - zz2;
-            float q21 = xy2 - wz2;
-            float q31 = xz2 + wy2;
+            double q11 = 1.0 - yy2 - zz2;
+            double q21 = xy2 - wz2;
+            double q31 = xz2 + wy2;
 
-            float q12 = xy2 + wz2;
-            float q22 = 1.0f - xx2 - zz2;
-            float q32 = yz2 - wx2;
+            double q12 = xy2 + wz2;
+            double q22 = 1.0 - xx2 - zz2;
+            double q32 = yz2 - wx2;
 
-            float q13 = xz2 - wy2;
-            float q23 = yz2 + wx2;
-            float q33 = 1.0f - xx2 - yy2;
+            double q13 = xz2 - wy2;
+            double q23 = yz2 + wx2;
+            double q33 = 1.0 - xx2 - yy2;
 
             Matrix4x4 result;
 
@@ -1780,7 +1780,7 @@ namespace System.Numerics
         /// <param name="matrix2">The second source matrix.</param>
         /// <param name="amount">The relative weight of the second source matrix.</param>
         /// <returns>The interpolated matrix.</returns>
-        public static Matrix4x4 Lerp(Matrix4x4 matrix1, Matrix4x4 matrix2, float amount)
+        public static Matrix4x4 Lerp(Matrix4x4 matrix1, Matrix4x4 matrix2, double amount)
         {
             Matrix4x4 result;
 
@@ -1943,7 +1943,7 @@ namespace System.Numerics
         /// <param name="value1">The source matrix.</param>
         /// <param name="value2">The scaling factor.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix4x4 Multiply(Matrix4x4 value1, float value2)
+        public static Matrix4x4 Multiply(Matrix4x4 value1, double value2)
         {
             Matrix4x4 result;
 
@@ -2099,7 +2099,7 @@ namespace System.Numerics
         /// <param name="value1">The source matrix.</param>
         /// <param name="value2">The scaling factor.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix4x4 operator *(Matrix4x4 value1, float value2)
+        public static Matrix4x4 operator *(Matrix4x4 value1, double value2)
         {
             Matrix4x4 m;
 
