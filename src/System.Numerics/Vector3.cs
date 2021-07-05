@@ -4,7 +4,7 @@
 namespace System.Numerics
 {
     /// <summary>
-    /// A structure encapsulating three single precision floating point values and provides hardware accelerated methods.
+    /// A structure encapsulating three doule values and provides hardware accelerated methods.
     /// </summary>
     public partial struct Vector3
     {
@@ -16,19 +16,18 @@ namespace System.Numerics
         /// <summary>
         /// Returns the vector (1,1,1).
         /// </summary>
-        public static Vector3 One { get { return new Vector3(1.0f, 1.0f, 1.0f); } }
+        public static Vector3 One { get { return new Vector3(1.0, 1.0, 1.0); } }
         /// <summary>
         /// Returns the vector (1,0,0).
         /// </summary>
-        public static Vector3 UnitX { get { return new Vector3(1.0f, 0.0f, 0.0f); } }
+        public static Vector3 UnitX { get { return new Vector3(1.0, 0.0, 0.0); } }
         /// <summary>
         /// Returns the vector (0,1,0).
-        /// </summary>
-        public static Vector3 UnitY { get { return new Vector3(0.0f, 1.0f, 0.0f); } }
+        /// </summary>        public static Vector3 UnitY { get { return new Vector3(0.0, 1.0, 0.0); } }
         /// <summary>
         /// Returns the vector (0,0,1).
         /// </summary>
-        public static Vector3 UnitZ { get { return new Vector3(0.0f, 0.0f, 1.0f); } }
+        public static Vector3 UnitZ { get { return new Vector3(0.0, 0.0, 1.0); } }
         #endregion Public Static Properties
 
         #region Public Instance Methods
@@ -80,17 +79,17 @@ namespace System.Numerics
         /// Returns the length of the vector.
         /// </summary>
         /// <returns>The vector's length.</returns>
-        public float Length()
+        public double Length()
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float ls = Vector3.Dot(this, this);
-                return (float)System.Math.Sqrt(ls);
+                double ls = Vector3.Dot(this, this);
+                return Math.Sqrt(ls);
             }
             else
             {
-                float ls = X * X + Y * Y + Z * Z;
-                return (float)System.Math.Sqrt(ls);
+                double ls = X * X + Y * Y + Z * Z;
+                return Math.Sqrt(ls);
             }
         }
 
@@ -98,7 +97,7 @@ namespace System.Numerics
         /// Returns the length of the vector squared. This operation is cheaper than Length().
         /// </summary>
         /// <returns>The vector's length squared.</returns>
-        public float LengthSquared()
+        public double LengthSquared()
         {
             if (Vector.IsHardwareAccelerated)
             {
@@ -118,23 +117,23 @@ namespace System.Numerics
         /// <param name="value1">The first point.</param>
         /// <param name="value2">The second point.</param>
         /// <returns>The distance.</returns>
-        public static float Distance(Vector3 value1, Vector3 value2)
+        public static double Distance(Vector3 value1, Vector3 value2)
         {
             if (Vector.IsHardwareAccelerated)
             {
                 Vector3 difference = value1 - value2;
-                float ls = Vector3.Dot(difference, difference);
-                return (float)System.Math.Sqrt(ls);
+                double ls = Vector3.Dot(difference, difference);
+                return Math.Sqrt(ls);
             }
             else
             {
-                float dx = value1.X - value2.X;
-                float dy = value1.Y - value2.Y;
-                float dz = value1.Z - value2.Z;
+                double dx = value1.X - value2.X;
+                double dy = value1.Y - value2.Y;
+                double dz = value1.Z - value2.Z;
 
-                float ls = dx * dx + dy * dy + dz * dz;
+                double ls = dx * dx + dy * dy + dz * dz;
 
-                return (float)System.Math.Sqrt((double)ls);
+                return Math.Sqrt(ls);
             }
         }
 
@@ -144,7 +143,7 @@ namespace System.Numerics
         /// <param name="value1">The first point.</param>
         /// <param name="value2">The second point.</param>
         /// <returns>The distance squared.</returns>
-        public static float DistanceSquared(Vector3 value1, Vector3 value2)
+        public static double DistanceSquared(Vector3 value1, Vector3 value2)
         {
             if (Vector.IsHardwareAccelerated)
             {
@@ -153,9 +152,9 @@ namespace System.Numerics
             }
             else
             {
-                float dx = value1.X - value2.X;
-                float dy = value1.Y - value2.Y;
-                float dz = value1.Z - value2.Z;
+                double dx = value1.X - value2.X;
+                double dy = value1.Y - value2.Y;
+                double dz = value1.Z - value2.Z;
 
                 return dx * dx + dy * dy + dz * dz;
             }
@@ -170,13 +169,13 @@ namespace System.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float length = value.Length();
+                double length = value.Length();
                 return value / length;
             }
             else
             {
-                float ls = value.X * value.X + value.Y * value.Y + value.Z * value.Z;
-                float length = (float)System.Math.Sqrt(ls);
+                double ls = value.X * value.X + value.Y * value.Y + value.Z * value.Z;
+                double length = System.Math.Sqrt(ls);
                 return new Vector3(value.X / length, value.Y / length, value.Z / length);
             }
         }
@@ -205,16 +204,16 @@ namespace System.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float dot = Vector3.Dot(vector, normal);
-                Vector3 temp = normal * dot * 2f;
+                double dot = Vector3.Dot(vector, normal);
+                Vector3 temp = normal * dot * 2;
                 return vector - temp;
             }
             else
             {
-                float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
-                float tempX = normal.X * dot * 2f;
-                float tempY = normal.Y * dot * 2f;
-                float tempZ = normal.Z * dot * 2f;
+                double dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+                double tempX = normal.X * dot * 2f;
+                double tempY = normal.Y * dot * 2f;
+                double tempZ = normal.Z * dot * 2f;
                 return new Vector3(vector.X - tempX, vector.Y - tempY, vector.Z - tempZ);
             }
         }
@@ -231,15 +230,15 @@ namespace System.Numerics
             // This compare order is very important!!!
             // We must follow HLSL behavior in the case user specified min value is bigger than max value.
 
-            float x = value1.X;
+            double x = value1.X;
             x = (x > max.X) ? max.X : x;
             x = (x < min.X) ? min.X : x;
 
-            float y = value1.Y;
+            double y = value1.Y;
             y = (y > max.Y) ? max.Y : y;
             y = (y < min.Y) ? min.Y : y;
 
-            float z = value1.Z;
+            double z = value1.Z;
             z = (z > max.Z) ? max.Z : z;
             z = (z < min.Z) ? min.Z : z;
 
@@ -253,11 +252,11 @@ namespace System.Numerics
         /// <param name="value2">The second source vector.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of the second source vector.</param>
         /// <returns>The interpolated vector.</returns>
-        public static Vector3 Lerp(Vector3 value1, Vector3 value2, float amount)
+        public static Vector3 Lerp(Vector3 value1, Vector3 value2, double amount)
         {
             if (Vector.IsHardwareAccelerated)
             {
-                Vector3 firstInfluence = value1 * (1f - amount);
+                Vector3 firstInfluence = value1 * (1 - amount);
                 Vector3 secondInfluence = value2 * amount;
                 return firstInfluence + secondInfluence;
             }
@@ -306,24 +305,24 @@ namespace System.Numerics
         /// <returns>The transformed vector.</returns>
         public static Vector3 Transform(Vector3 value, Quaternion rotation)
         {
-            float x2 = rotation.X + rotation.X;
-            float y2 = rotation.Y + rotation.Y;
-            float z2 = rotation.Z + rotation.Z;
+            double x2 = rotation.X + rotation.X;
+            double y2 = rotation.Y + rotation.Y;
+            double z2 = rotation.Z + rotation.Z;
 
-            float wx2 = rotation.W * x2;
-            float wy2 = rotation.W * y2;
-            float wz2 = rotation.W * z2;
-            float xx2 = rotation.X * x2;
-            float xy2 = rotation.X * y2;
-            float xz2 = rotation.X * z2;
-            float yy2 = rotation.Y * y2;
-            float yz2 = rotation.Y * z2;
-            float zz2 = rotation.Z * z2;
+            double wx2 = rotation.W * x2;
+            double wy2 = rotation.W * y2;
+            double wz2 = rotation.W * z2;
+            double xx2 = rotation.X * x2;
+            double xy2 = rotation.X * y2;
+            double xz2 = rotation.X * z2;
+            double yy2 = rotation.Y * y2;
+            double yz2 = rotation.Y * z2;
+            double zz2 = rotation.Z * z2;
 
             return new Vector3(
-                value.X * (1.0f - yy2 - zz2) + value.Y * (xy2 - wz2) + value.Z * (xz2 + wy2),
-                value.X * (xy2 + wz2) + value.Y * (1.0f - xx2 - zz2) + value.Z * (yz2 - wx2),
-                value.X * (xz2 - wy2) + value.Y * (yz2 + wx2) + value.Z * (1.0f - xx2 - yy2));
+                value.X * (1.0 - yy2 - zz2) + value.Y * (xy2 - wz2) + value.Z * (xz2 + wy2),
+                value.X * (xy2 + wz2) + value.Y * (1.0 - xx2 - zz2) + value.Z * (yz2 - wx2),
+                value.X * (xz2 - wy2) + value.Y * (yz2 + wx2) + value.Z * (1.0 - xx2 - yy2));
         }
         #endregion Public Static Methods
 
@@ -371,7 +370,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="right">The scalar value.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 Multiply(Vector3 left, Single right)
+        public static Vector3 Multiply(Vector3 left, double right)
         {
             return left * right;
         }
@@ -382,7 +381,7 @@ namespace System.Numerics
         /// <param name="left">The scalar value.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector3 Multiply(Single left, Vector3 right)
+        public static Vector3 Multiply(double left, Vector3 right)
         {
             return left * right;
         }
@@ -404,7 +403,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="divisor">The scalar value.</param>
         /// <returns>The result of the division.</returns>
-        public static Vector3 Divide(Vector3 left, Single divisor)
+        public static Vector3 Divide(Vector3 left, double divisor)
         {
             return left / divisor;
         }

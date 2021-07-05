@@ -13,19 +13,19 @@ namespace System.Numerics
         /// <summary>
         /// The X component of the vector.
         /// </summary>
-        public Single X;
+        public double X;
         /// <summary>
         /// The Y component of the vector.
         /// </summary>
-        public Single Y;
+        public double Y;
         /// <summary>
         /// The Z component of the vector.
         /// </summary>
-        public Single Z;
+        public double Z;
         /// <summary>
         /// The W component of the vector.
         /// </summary>
-        public Single W;
+        public double W;
 
         #region Constructors
 
@@ -33,7 +33,7 @@ namespace System.Numerics
         /// Constructs a vector whose elements are all the single specified value.
         /// </summary>
         /// <param name="value">The element to fill the vector with.</param>
-        public Vector4(Single value)
+        public Vector4(double value)
             : this(value, value, value, value)
         {
         }
@@ -44,7 +44,7 @@ namespace System.Numerics
         /// <param name="x">X component.</param>
         /// <param name="y">Y component.</param>
         /// <param name="z">Z component.</param>
-        public Vector4(Single x, Single y, Single z, Single w)
+        public Vector4(double x, double y, double z, double w)
         {
             W = w;
             X = x;
@@ -58,7 +58,7 @@ namespace System.Numerics
         /// <param name="value">The vector to use as the X and Y components.</param>
         /// <param name="z">The Z component.</param>
         /// <param name="w">The W component.</param>
-        public Vector4(Vector2 value, Single z, Single w)
+        public Vector4(Vector2 value, double z, double w)
         {
             X = value.X;
             Y = value.Y;
@@ -71,7 +71,7 @@ namespace System.Numerics
         /// </summary>
         /// <param name="value">The vector to use as the X, Y, and Z components.</param>
         /// <param name="w">The W component.</param>
-        public Vector4(Vector3 value, Single w)
+        public Vector4(Vector3 value, double w)
         {
             X = value.X;
             Y = value.Y;
@@ -85,7 +85,7 @@ namespace System.Numerics
         /// Copies the contents of the vector into the given array.
         /// </summary>
         
-        public void CopyTo(Single[] array)
+        public void CopyTo(double[] array)
         {
             CopyTo(array, 0);
         }
@@ -97,7 +97,7 @@ namespace System.Numerics
         /// <exception cref="RankException">If array is multidimensional.</exception>
         /// <exception cref="ArgumentOutOfRangeException">If index is greater than end of the array or index is less than zero.</exception>
         /// <exception cref="ArgumentException">If number of elements in source vector is greater than those available in destination array.</exception>
-        public void CopyTo(Single[] array, int index)
+        public void CopyTo(double[] array, int index)
         {
             if (array == null)
             {
@@ -139,7 +139,7 @@ namespace System.Numerics
         /// <param name="vector1">The first vector.</param>
         /// <param name="vector2">The second vector.</param>
         /// <returns>The dot product.</returns>
-        public static float Dot(Vector4 vector1, Vector4 vector2)
+        public static double Dot(Vector4 vector1, Vector4 vector2)
         {
             return vector1.X * vector2.X +
                    vector1.Y * vector2.Y +
@@ -194,7 +194,7 @@ namespace System.Numerics
         /// <returns>The square root vector.</returns>
         public static Vector4 SquareRoot(Vector4 value)
         {
-            return new Vector4((Single)Math.Sqrt(value.X), (Single)Math.Sqrt(value.Y), (Single)Math.Sqrt(value.Z), (Single)Math.Sqrt(value.W));
+            return new Vector4(Math.Sqrt(value.X), Math.Sqrt(value.Y), Math.Sqrt(value.Z), Math.Sqrt(value.W));
         }
         #endregion Public Static Methods
 
@@ -238,7 +238,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="right">The scalar value.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector4 operator *(Vector4 left, Single right)
+        public static Vector4 operator *(Vector4 left, double right)
         {
             return left * new Vector4(right);
         }
@@ -249,7 +249,7 @@ namespace System.Numerics
         /// <param name="left">The scalar value.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector4 operator *(Single left, Vector4 right)
+        public static Vector4 operator *(double left, Vector4 right)
         {
             return new Vector4(left) * right;
         }
@@ -271,9 +271,9 @@ namespace System.Numerics
         /// <param name="value1">The source vector.</param>
         /// <param name="value2">The scalar value.</param>
         /// <returns>The result of the division.</returns>
-        public static Vector4 operator /(Vector4 value1, float value2)
+        public static Vector4 operator /(Vector4 value1, double value2)
         {
-            float invDiv = 1.0f / value2;
+            double invDiv = 1.0 / value2;
 
             return new Vector4(
                 value1.X * invDiv,

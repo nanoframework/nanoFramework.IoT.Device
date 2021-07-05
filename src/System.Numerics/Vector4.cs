@@ -4,7 +4,7 @@
 namespace System.Numerics
 {
     /// <summary>
-    /// A structure encapsulating four single precision floating point values and provides hardware accelerated methods.
+    /// A structure encapsulating four doublevalues and provides hardware accelerated methods.
     /// </summary>
     public partial struct Vector4
     {
@@ -16,23 +16,23 @@ namespace System.Numerics
         /// <summary>
         /// Returns the vector (1,1,1,1).
         /// </summary>
-        public static Vector4 One { get { return new Vector4(1.0f, 1.0f, 1.0f, 1.0f); } }
+        public static Vector4 One { get { return new Vector4(1.0, 1.0, 1.0, 1.0); } }
         /// <summary>
         /// Returns the vector (1,0,0,0).
         /// </summary>
-        public static Vector4 UnitX { get { return new Vector4(1.0f, 0.0f, 0.0f, 0.0f); } }
+        public static Vector4 UnitX { get { return new Vector4(1.0, 0.0, 0.0, 0.0); } }
         /// <summary>
         /// Returns the vector (0,1,0,0).
         /// </summary>
-        public static Vector4 UnitY { get { return new Vector4(0.0f, 1.0f, 0.0f, 0.0f); } }
+        public static Vector4 UnitY { get { return new Vector4(0.0, 1.0, 0.0, 0.0); } }
         /// <summary>
         /// Returns the vector (0,0,1,0).
         /// </summary>
-        public static Vector4 UnitZ { get { return new Vector4(0.0f, 0.0f, 1.0f, 0.0f); } }
+        public static Vector4 UnitZ { get { return new Vector4(0.0, 0.0, 1.0, 0.0); } }
         /// <summary>
         /// Returns the vector (0,0,0,1).
         /// </summary>
-        public static Vector4 UnitW { get { return new Vector4(0.0f, 0.0f, 0.0f, 1.0f); } }
+        public static Vector4 UnitW { get { return new Vector4(0.0, 0.0, 0.0, 1.0); } }
         #endregion Public Static Properties
 
         #region Public instance methods
@@ -84,18 +84,18 @@ namespace System.Numerics
         /// Returns the length of the vector. This operation is cheaper than Length().
         /// </summary>
         /// <returns>The vector's length.</returns>
-        public float Length()
+        public double Length()
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float ls = Vector4.Dot(this, this);
-                return (float)System.Math.Sqrt(ls);
+                double ls = Vector4.Dot(this, this);
+                return (double)System.Math.Sqrt(ls);
             }
             else
             {
-                float ls = X * X + Y * Y + Z * Z + W * W;
+                double ls = X * X + Y * Y + Z * Z + W * W;
 
-                return (float)Math.Sqrt((double)ls);
+                return (double)Math.Sqrt((double)ls);
             }
         }
 
@@ -103,7 +103,7 @@ namespace System.Numerics
         /// Returns the length of the vector squared.
         /// </summary>
         /// <returns>The vector's length squared.</returns>
-        public float LengthSquared()
+        public double LengthSquared()
         {
             if (Vector.IsHardwareAccelerated)
             {
@@ -123,24 +123,24 @@ namespace System.Numerics
         /// <param name="value1">The first point.</param>
         /// <param name="value2">The second point.</param>
         /// <returns>The distance.</returns>
-        public static float Distance(Vector4 value1, Vector4 value2)
+        public static double Distance(Vector4 value1, Vector4 value2)
         {
             if (Vector.IsHardwareAccelerated)
             {
                 Vector4 difference = value1 - value2;
-                float ls = Vector4.Dot(difference, difference);
-                return (float)System.Math.Sqrt(ls);
+                double ls = Vector4.Dot(difference, difference);
+                return (double)System.Math.Sqrt(ls);
             }
             else
             {
-                float dx = value1.X - value2.X;
-                float dy = value1.Y - value2.Y;
-                float dz = value1.Z - value2.Z;
-                float dw = value1.W - value2.W;
+                double dx = value1.X - value2.X;
+                double dy = value1.Y - value2.Y;
+                double dz = value1.Z - value2.Z;
+                double dw = value1.W - value2.W;
 
-                float ls = dx * dx + dy * dy + dz * dz + dw * dw;
+                double ls = dx * dx + dy * dy + dz * dz + dw * dw;
 
-                return (float)Math.Sqrt((double)ls);
+                return (double)Math.Sqrt((double)ls);
             }
         }
 
@@ -150,7 +150,7 @@ namespace System.Numerics
         /// <param name="value1">The first point.</param>
         /// <param name="value2">The second point.</param>
         /// <returns>The distance squared.</returns>
-        public static float DistanceSquared(Vector4 value1, Vector4 value2)
+        public static double DistanceSquared(Vector4 value1, Vector4 value2)
         {
             if (Vector.IsHardwareAccelerated)
             {
@@ -159,10 +159,10 @@ namespace System.Numerics
             }
             else
             {
-                float dx = value1.X - value2.X;
-                float dy = value1.Y - value2.Y;
-                float dz = value1.Z - value2.Z;
-                float dw = value1.W - value2.W;
+                double dx = value1.X - value2.X;
+                double dy = value1.Y - value2.Y;
+                double dz = value1.Z - value2.Z;
+                double dw = value1.W - value2.W;
 
                 return dx * dx + dy * dy + dz * dz + dw * dw;
             }
@@ -177,13 +177,13 @@ namespace System.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-                float length = vector.Length();
+                double length = vector.Length();
                 return vector / length;
             }
             else
             {
-                float ls = vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z + vector.W * vector.W;
-                float invNorm = 1.0f / (float)Math.Sqrt((double)ls);
+                double ls = vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z + vector.W * vector.W;
+                double invNorm = 1.0 / Math.Sqrt(ls);
 
                 return new Vector4(
                     vector.X * invNorm,
@@ -205,19 +205,19 @@ namespace System.Numerics
             // This compare order is very important!!!
             // We must follow HLSL behavior in the case user specified min value is bigger than max value.
 
-            float x = value1.X;
+            double x = value1.X;
             x = (x > max.X) ? max.X : x;
             x = (x < min.X) ? min.X : x;
 
-            float y = value1.Y;
+            double y = value1.Y;
             y = (y > max.Y) ? max.Y : y;
             y = (y < min.Y) ? min.Y : y;
 
-            float z = value1.Z;
+            double z = value1.Z;
             z = (z > max.Z) ? max.Z : z;
             z = (z < min.Z) ? min.Z : z;
 
-            float w = value1.W;
+            double w = value1.W;
             w = (w > max.W) ? max.W : w;
             w = (w < min.W) ? min.W : w;
 
@@ -231,7 +231,7 @@ namespace System.Numerics
         /// <param name="value2">The second source vector.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of the second source vector.</param>
         /// <returns>The interpolated vector.</returns>
-        public static Vector4 Lerp(Vector4 value1, Vector4 value2, float amount)
+        public static Vector4 Lerp(Vector4 value1, Vector4 value2, double amount)
         {
             return new Vector4(
                 value1.X + (value2.X - value1.X) * amount,
@@ -293,25 +293,25 @@ namespace System.Numerics
         /// <returns>The transformed vector.</returns>
         public static Vector4 Transform(Vector2 value, Quaternion rotation)
         {
-            float x2 = rotation.X + rotation.X;
-            float y2 = rotation.Y + rotation.Y;
-            float z2 = rotation.Z + rotation.Z;
+            double x2 = rotation.X + rotation.X;
+            double y2 = rotation.Y + rotation.Y;
+            double z2 = rotation.Z + rotation.Z;
 
-            float wx2 = rotation.W * x2;
-            float wy2 = rotation.W * y2;
-            float wz2 = rotation.W * z2;
-            float xx2 = rotation.X * x2;
-            float xy2 = rotation.X * y2;
-            float xz2 = rotation.X * z2;
-            float yy2 = rotation.Y * y2;
-            float yz2 = rotation.Y * z2;
-            float zz2 = rotation.Z * z2;
+            double wx2 = rotation.W * x2;
+            double wy2 = rotation.W * y2;
+            double wz2 = rotation.W * z2;
+            double xx2 = rotation.X * x2;
+            double xy2 = rotation.X * y2;
+            double xz2 = rotation.X * z2;
+            double yy2 = rotation.Y * y2;
+            double yz2 = rotation.Y * z2;
+            double zz2 = rotation.Z * z2;
 
             return new Vector4(
-                value.X * (1.0f - yy2 - zz2) + value.Y * (xy2 - wz2),
-                value.X * (xy2 + wz2) + value.Y * (1.0f - xx2 - zz2),
+                value.X * (1.0 - yy2 - zz2) + value.Y * (xy2 - wz2),
+                value.X * (xy2 + wz2) + value.Y * (1.0 - xx2 - zz2),
                 value.X * (xz2 - wy2) + value.Y * (yz2 + wx2),
-                1.0f);
+                1.0);
         }
 
         /// <summary>
@@ -322,25 +322,25 @@ namespace System.Numerics
         /// <returns>The transformed vector.</returns>
         public static Vector4 Transform(Vector3 value, Quaternion rotation)
         {
-            float x2 = rotation.X + rotation.X;
-            float y2 = rotation.Y + rotation.Y;
-            float z2 = rotation.Z + rotation.Z;
+            double x2 = rotation.X + rotation.X;
+            double y2 = rotation.Y + rotation.Y;
+            double z2 = rotation.Z + rotation.Z;
 
-            float wx2 = rotation.W * x2;
-            float wy2 = rotation.W * y2;
-            float wz2 = rotation.W * z2;
-            float xx2 = rotation.X * x2;
-            float xy2 = rotation.X * y2;
-            float xz2 = rotation.X * z2;
-            float yy2 = rotation.Y * y2;
-            float yz2 = rotation.Y * z2;
-            float zz2 = rotation.Z * z2;
+            double wx2 = rotation.W * x2;
+            double wy2 = rotation.W * y2;
+            double wz2 = rotation.W * z2;
+            double xx2 = rotation.X * x2;
+            double xy2 = rotation.X * y2;
+            double xz2 = rotation.X * z2;
+            double yy2 = rotation.Y * y2;
+            double yz2 = rotation.Y * z2;
+            double zz2 = rotation.Z * z2;
 
             return new Vector4(
-                value.X * (1.0f - yy2 - zz2) + value.Y * (xy2 - wz2) + value.Z * (xz2 + wy2),
-                value.X * (xy2 + wz2) + value.Y * (1.0f - xx2 - zz2) + value.Z * (yz2 - wx2),
-                value.X * (xz2 - wy2) + value.Y * (yz2 + wx2) + value.Z * (1.0f - xx2 - yy2),
-                1.0f);
+                value.X * (1.0 - yy2 - zz2) + value.Y * (xy2 - wz2) + value.Z * (xz2 + wy2),
+                value.X * (xy2 + wz2) + value.Y * (1.0 - xx2 - zz2) + value.Z * (yz2 - wx2),
+                value.X * (xz2 - wy2) + value.Y * (yz2 + wx2) + value.Z * (1.0 - xx2 - yy2),
+                1.0);
         }
 
         /// <summary>
@@ -351,24 +351,24 @@ namespace System.Numerics
         /// <returns>The transformed vector.</returns>
         public static Vector4 Transform(Vector4 value, Quaternion rotation)
         {
-            float x2 = rotation.X + rotation.X;
-            float y2 = rotation.Y + rotation.Y;
-            float z2 = rotation.Z + rotation.Z;
+            double x2 = rotation.X + rotation.X;
+            double y2 = rotation.Y + rotation.Y;
+            double z2 = rotation.Z + rotation.Z;
 
-            float wx2 = rotation.W * x2;
-            float wy2 = rotation.W * y2;
-            float wz2 = rotation.W * z2;
-            float xx2 = rotation.X * x2;
-            float xy2 = rotation.X * y2;
-            float xz2 = rotation.X * z2;
-            float yy2 = rotation.Y * y2;
-            float yz2 = rotation.Y * z2;
-            float zz2 = rotation.Z * z2;
+            double wx2 = rotation.W * x2;
+            double wy2 = rotation.W * y2;
+            double wz2 = rotation.W * z2;
+            double xx2 = rotation.X * x2;
+            double xy2 = rotation.X * y2;
+            double xz2 = rotation.X * z2;
+            double yy2 = rotation.Y * y2;
+            double yz2 = rotation.Y * z2;
+            double zz2 = rotation.Z * z2;
 
             return new Vector4(
-                value.X * (1.0f - yy2 - zz2) + value.Y * (xy2 - wz2) + value.Z * (xz2 + wy2),
-                value.X * (xy2 + wz2) + value.Y * (1.0f - xx2 - zz2) + value.Z * (yz2 - wx2),
-                value.X * (xz2 - wy2) + value.Y * (yz2 + wx2) + value.Z * (1.0f - xx2 - yy2),
+                value.X * (1.0 - yy2 - zz2) + value.Y * (xy2 - wz2) + value.Z * (xz2 + wy2),
+                value.X * (xy2 + wz2) + value.Y * (1.0 - xx2 - zz2) + value.Z * (yz2 - wx2),
+                value.X * (xz2 - wy2) + value.Y * (yz2 + wx2) + value.Z * (1.0 - xx2 - yy2),
                 value.W);
         }
         #endregion Public Static Methods
@@ -416,7 +416,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="right">The scalar value.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector4 Multiply(Vector4 left, Single right)
+        public static Vector4 Multiply(Vector4 left, double right)
         {
             return left * new Vector4(right, right, right, right);
         }
@@ -427,7 +427,7 @@ namespace System.Numerics
         /// <param name="left">The scalar value.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Vector4 Multiply(Single left, Vector4 right)
+        public static Vector4 Multiply(double left, Vector4 right)
         {
             return new Vector4(left, left, left, left) * right;
         }
@@ -449,7 +449,7 @@ namespace System.Numerics
         /// <param name="left">The source vector.</param>
         /// <param name="divisor">The scalar value.</param>
         /// <returns>The result of the division.</returns>
-        public static Vector4 Divide(Vector4 left, Single divisor)
+        public static Vector4 Divide(Vector4 left, double divisor)
         {
             return left / divisor;
         }
