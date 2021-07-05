@@ -22,7 +22,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.38" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.97.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.97.1" />
     </dependencies>
   </metadata>
   <files>
