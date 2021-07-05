@@ -27,13 +27,13 @@ Console.WriteLine($"Temperature source: {bno055Sensor.TemperatureSource}, Operat
 Console.WriteLine($"Powermode: {bno055Sensor.PowerMode}");
 ```
 
-You can easilly access the sensor information and settings thru the properties.
+You can easily access the sensor information and settings thru the properties.
 
 ## Calibration
 
-To get accurate measurement, it is better to wait for the Magnetometer to calibrate. As in your phone, when the calibration is needed, it is necessary to move the sensor in the air to help for the qualibration.
+To get accurate measurement, it is better to wait for the Magnetometer to calibrate. As in your phone, when the calibration is needed, it is necessary to move the sensor in the air to help for the calibration.
 
-The following code shows how to check the qualibration:
+The following code shows how to check the calibration:
 
 ```csharp
 Console.WriteLine("Checking the magnetometer calibration, move the sensor up to the calibration will be complete if needed");
@@ -49,13 +49,13 @@ Console.WriteLine();
 Console.WriteLine("Calibration completed");
 ```
 
-Please note that it is not really necessary to check the qualibration of the other senosors and the system. The qualibraiton is done all the time. The important one is the Magnetometer.
+Please note that it is not really necessary to check the calibration of the other sensors and the system. The calibration is done all the time. The important one is the Magnetometer.
 
 ## Accessing sensor data
 
 Simply access the various sensor data thru their properties. Note that it is better to read at once the data and then display them, or manipulate them rather than acccessing the sub element everytime. The reason is because in the first case, you'll do 1 measurement and the data will be consistent, in the second case, you'll do 1 measurement every time you access 1 sub property which means, the data will be inconsistent.
 
-*Wrong way:*
+**Wrong way:**
 
 ```csharp
 // Data will be inconsistent in this case!
@@ -104,7 +104,7 @@ while(!Console.KeyAvailable)
     * Absolute Orientation (Euler Vector, 100Hz)
     * Three axis orientation data based on a 360° sphere
     * Heading = Vector3.X; Roll = Vector3.Y; Pitch = Vector3.Z
-    * Units availabel are Degrees (default) or Radians, you can change with
+    * Units available are Degrees (default) or Radians, you can change with
     ```csharp
     bno055Sensor.Units = bno055Sensor.Units | Units.EulerAnglesRadians;
     ```
@@ -139,8 +139,8 @@ while(!Console.KeyAvailable)
 
 * *Temperature*
     * Temperature (1Hz)
-    * Ambient temperature in degrees celsius
-    * Default can be changed for Farenheit
+    * Ambient temperature in degrees Celsius
+    * Default can be changed for Fahrenheit
     * Temperature can be measured thru the Gyroscope or the Accelerometer
     * Precision seems better with the Gyroscope, so it is set by default. You can change the source like this:
     ```csharp
@@ -149,7 +149,7 @@ while(!Console.KeyAvailable)
 
 ## Sensor data calibration
 
-You can get and set the sensor data qualibration. Every sensor which permit the operation has a function to get the calibration data and set the calibration data.
+You can get and set the sensor data calibration. Every sensor which permit the operation has a function to get the calibration data and set the calibration data.
 
 This is an example of how to get and set the calibration data for the Accelerometer.
 
@@ -161,9 +161,9 @@ bno055Sensor.SetAccelerometerCalibrationData(calib);
 
 ## Remapping the accelerometer axis
 
-It is possible to remap the acceleroter axis as well as get their configuration.
+It is possible to remap the accelerometer axis as well as get their configuration.
 
-For example, you can change the X axis for a negative signe likle this:
+For example, you can change the X axis for a negative sign like this:
 
 ```csharp
 var axisMap = bno055Sensor.GetAxisMap();
