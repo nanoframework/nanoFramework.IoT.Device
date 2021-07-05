@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.97.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.97.1\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

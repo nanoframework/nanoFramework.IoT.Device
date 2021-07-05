@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.40" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.70" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.97.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.97.1" />
     </dependencies>
   </metadata>
   <files>
