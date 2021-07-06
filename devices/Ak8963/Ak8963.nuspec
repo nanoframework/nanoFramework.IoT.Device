@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1-preview.7" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.48" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.38" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.39" />
       <dependency id="nanoFramework.System.Math" version="1.4.0-preview.7" />
     </dependencies>
   </metadata>
