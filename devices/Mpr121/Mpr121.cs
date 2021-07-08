@@ -31,7 +31,7 @@ namespace Iot.Device.Mpr121
         /// Notifies about a the channel statuses have been changed.
         /// Refresh period can be changed by setting PeriodRefresh property.
         /// </summary>
-        public event EventHandler<ChannelStatusesChangedEventArgs>? ChannelStatusesChanged;
+        public event ChannelStatusesChanged ChannelStatusesChanged;
 
         /// <summary>
         /// Gets or sets the period in milliseconds to refresh the channels statuses.
