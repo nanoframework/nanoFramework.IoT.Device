@@ -20,7 +20,7 @@
     <summary>[[Assembly]] assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf [[Assembly]]</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
     </dependencies>
   </metadata>
   <files>
