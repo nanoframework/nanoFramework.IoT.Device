@@ -25,7 +25,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Spi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.70\lib\System.Device.Spi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.75\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
