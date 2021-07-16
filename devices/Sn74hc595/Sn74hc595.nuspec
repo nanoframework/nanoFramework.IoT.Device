@@ -22,8 +22,8 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.52" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.75" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.77" />
     </dependencies>
   </metadata>
   <files>

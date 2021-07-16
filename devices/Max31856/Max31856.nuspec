@@ -21,7 +21,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Max31856</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.75" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.77" />
       <dependency id="UnitsNet.nanoFramework.Frequency" version="4.97.1" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.97.1" />
     </dependencies>

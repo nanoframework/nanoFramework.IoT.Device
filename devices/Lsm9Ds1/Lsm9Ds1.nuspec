@@ -21,7 +21,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Lsm9Ds1</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Math" version="1.4.1-preview.12" />
+      <dependency id="nanoFramework.System.Math" version="1.4.1" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.40" />
     </dependencies>
   </metadata>

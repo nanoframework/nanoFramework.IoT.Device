@@ -22,7 +22,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.40" />
-      <dependency id="nanoFramework.System.Threading" version="1.0.1-preview.47" />
+      <dependency id="nanoFramework.System.Threading" version="1.0.2" />
     </dependencies>
   </metadata>
   <files>
