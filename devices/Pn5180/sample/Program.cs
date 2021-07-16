@@ -19,44 +19,37 @@ Debug.WriteLine("Hello Pn5180!");
 // Statically register our factory. Note that this must be done before instantiation of any class that wants to use logging.
 // LogDispatcher.LoggerFactory = new DebugLoggerFactory();
 
-SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(0, 1) { ClockFrequency = Pn5180.MaximumSpiClockFrequency, Mode = Pn5180.DefaultSpiMode, DataFlow = DataFlow.MsbFirst });
+SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(1, 12) { ClockFrequency = Pn5180.MaximumSpiClockFrequency, Mode = Pn5180.DefaultSpiMode, DataFlow = DataFlow.MsbFirst });
 
 // Reset the device
 using GpioController gpioController = new();
-gpioController.OpenPin(4, PinMode.Output);
-gpioController.Write(4, PinValue.Low);
+gpioController.OpenPin(22, PinMode.Output);
+gpioController.Write(22, PinValue.Low);
 Thread.Sleep(10);
-gpioController.Write(4, PinValue.High);
+gpioController.Write(22, PinValue.High);
 Thread.Sleep(10);
 
 // Adjust the IO
-Pn5180 pn5180 = new Pn5180(spi, 2, 3, null, true);
+Pn5180 pn5180 = new Pn5180(spi, 27, 18, null, true);
 
 
 var versions = pn5180.GetVersions();
 Debug.WriteLine($"Product: {versions.Product}, Firmware: {versions.Firmware}, EEPROM: {versions.Eeprom}");
 
-Debug.WriteLine($"2 ");
-Debug.WriteLine($"3 ");
-Debug.WriteLine($"4 ");
-Debug.WriteLine($"5 ");
-Debug.WriteLine($"6 Pull ISO 14443 B cards, display information");
-Debug.WriteLine($"7 ");
-
 // Dump a Mifare ISO 14443 type A
-TypeA();
+//TypeA();
 
 // EEPROM operations
-Eeprom();
+//Eeprom();
 
 //Radio Frequency operations
-RfConfiguration();
+//RfConfiguration();
 
 // Pull ISO 14443 Type A and B cards, display information
-PullDifferentCards();
+//PullDifferentCards();
 
 // Pull ISO 14443 B cards, display information
-PullTypeBCards();
+//PullTypeBCards();
 
 // Dump Ultralight card and various tests
 ProcessUltralight();

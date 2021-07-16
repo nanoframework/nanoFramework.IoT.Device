@@ -21,9 +21,8 @@ GpioController gpioController = new GpioController();
 // adjust the GPIO used for the hard reset
 int pinReset = 21;
 
-nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(Gpio.IO23, DeviceFunction.SPI1_MOSI);
-nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(Gpio.IO25, DeviceFunction.SPI1_MISO);
-nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+// Default on ESP32:
+// GPIO23 = MOSI; GPIO25 = MISO; GPIO19 = Clock
 
 // Uncomment for SPI
 SpiConnectionSettings connection = new(1, 22);

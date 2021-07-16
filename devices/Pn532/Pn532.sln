@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared P
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn532.sample", "..\Pn532.sample\Pn532.sample.nfproj", "{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn532.sample", "samples\Pn532.sample.nfproj", "{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

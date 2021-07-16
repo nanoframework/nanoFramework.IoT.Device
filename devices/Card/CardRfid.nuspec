@@ -16,11 +16,12 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.CardRfid for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.CardRfid assembly for .NET nanoFramework C# projects</summary>
+    <description>This package includes the .NET IoT Core binding Iot.Device.CardRfid, Mifare, Ultralight and NDEF for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.CardRfid, Mifare, Ultralight and NDEF assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.CardRfid</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
+      <dependency id="nanoFramework.System.Text" version="1.1.1-preview.70" />
     </dependencies>
   </metadata>
   <files>
@@ -29,8 +30,23 @@
     <file src="bin\Release\Iot.Device.CardRfid.pdbx" target="lib\Iot.Device.CardRfid.pdbx" />
     <file src="bin\Release\Iot.Device.CardRfid.pe" target="lib\Iot.Device.CardRfid.pe" />
     <file src="bin\Release\Iot.Device.CardRfid.xml" target="lib\Iot.Device.CardRfid.xml" />
+    <file src="Mifare\bin\Release\Iot.Device.Mifare.dll" target="lib\Iot.Device.Mifare.dll" />
+    <file src="Mifare\bin\Release\Iot.Device.Mifare.pdb" target="lib\Iot.Device.Mifare.pdb" />
+    <file src="Mifare\bin\Release\Iot.Device.Mifare.pdbx" target="lib\Iot.Device.Mifare.pdbx" />
+    <file src="Mifare\bin\Release\Iot.Device.Mifare.pe" target="lib\Iot.Device.Mifare.pe" />
+    <file src="Mifare\bin\Release\Iot.Device.Mifare.xml" target="lib\Iot.Device.Mifare.xml" />
+    <file src="Ndef\bin\Release\Iot.Device.Ndef.dll" target="lib\Iot.Device.Ndef.dll" />
+    <file src="Ndef\bin\Release\Iot.Device.Ndef.pdb" target="lib\Iot.Device.Ndef.pdb" />
+    <file src="Ndef\bin\Release\Iot.Device.Ndef.pdbx" target="lib\Iot.Device.Ndef.pdbx" />
+    <file src="Ndef\bin\Release\Iot.Device.Ndef.pe" target="lib\Iot.Device.Ndef.pe" />
+    <file src="Ndef\bin\Release\Iot.Device.Ndef.xml" target="lib\Iot.Device.Ndef.xml" />
+    <file src="Ultralight\bin\Release\Iot.Device.Ultralight.dll" target="lib\Iot.Device.Ultralight.dll" />
+    <file src="Ultralight\bin\Release\Iot.Device.Ultralight.pdb" target="lib\Iot.Device.Ultralight.pdb" />
+    <file src="Ultralight\bin\Release\Iot.Device.Ultralight.pdbx" target="lib\Iot.Device.Ultralight.pdbx" />
+    <file src="Ultralight\bin\Release\Iot.Device.Ultralight.pe" target="lib\Iot.Device.Ultralight.pe" />
+    <file src="Ultralight\bin\Release\Iot.Device.Ultralight.xml" target="lib\Iot.Device.Ultralight.xml" />
     <file src="readme.md" target="" />
-    <file src="..\assets\nf-logo.png" target="images" />
-    <file src="..\LICENSE.md" target="" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
   </files>
 </package>
