@@ -15,7 +15,7 @@ using I2cDevice device = I2cDevice.Create(settings);
 Debug.WriteLine(
         $"UFire_ISE is ready on I2C bus {device.ConnectionSettings.BusId} with address {device.ConnectionSettings.DeviceAddress}");
 
-Debug.WriteLine();
+Debug.WriteLine("");
 
 while (true)
 {
@@ -45,7 +45,7 @@ void PrintHelp()
     Debug.WriteLine("    B           Basic");
     Debug.WriteLine("    O           Read Orp (Oxidation-reduction potential) value");
     Debug.WriteLine("    P           Read pH (Power of Hydrogen) value");
-    Debug.WriteLine();
+    Debug.WriteLine("");
 }
 
 void Basic(I2cDevice device)

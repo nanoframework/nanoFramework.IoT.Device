@@ -169,14 +169,14 @@ namespace Iot.Device.Max7219
             /// <param name="collection"></param>
             public Enumerator(ListByte collection)
             {
-                _index = 0;
+                _index = -1;
                 _collection = collection;
             }
 
             /// <summary>
             /// Gets the element at the current position of the enumerator.
             /// </summary>
-            public byte Current => _collection[_index];
+            public byte Current => _collection[_index == -1 ? 0 : _index];
 
             object IEnumerator.Current => Current;
 
@@ -193,7 +193,7 @@ namespace Iot.Device.Max7219
             /// the enumerator has passed the end of the collection.</returns>
             public bool MoveNext()
             {
-                if (_index >= _collection.Count)
+                if ((_index + 1) >= _collection.Count)
                 {
                     return false;
                 }
@@ -207,7 +207,7 @@ namespace Iot.Device.Max7219
             /// </summary>
             public void Reset()
             {
-                _index = 0;
+                _index = -1;
             }
         }
 
