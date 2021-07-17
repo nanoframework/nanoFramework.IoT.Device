@@ -23,9 +23,9 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1-preview.40" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
       <dependency id="nanoFramework.System.Math" version="1.4.0-preview.9" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.97.1" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.98.0" />
     </dependencies>
   </metadata>
   <files>
