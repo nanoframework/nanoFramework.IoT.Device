@@ -88,7 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Card\CardRfid.nfproj" />
+    <ProjectReference Include="..\Card\Card.nfproj" />
     <ProjectReference Include="..\Card\Mifare\Mifare.nfproj" />
     <ProjectReference Include="..\Card\Ultralight\Ultralight.nfproj" />
   </ItemGroup>

@@ -23,7 +23,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CardRfid.nfproj" />
+    <ProjectReference Include="..\Card.nfproj" />
     <ProjectReference Include="..\Ndef\Ndef.nfproj" />
   </ItemGroup>
   <ItemGroup>
