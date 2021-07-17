@@ -16,14 +16,15 @@ You will find different implementation of this board. All boards should have ful
 
 ## Usage
 
-You will find a full example in the [samples directory](./samples/Pn5180sample.cs). This example covers the usage of most of the public functions and properties. This example shows as well how to use the [FT4222](../FT4222/README.md) as a SPI and GPIO controller. Note that the development for the PN5180 has been done fully on a Windows 10 64 bit machine using this FT42222 to add the IoT capabilities.
+You will find a full example in the [samples directory](./samples/Pn5180sample.cs). This example covers the usage of most of the public functions and properties. This example shows as well how to use [Ultralight cards](../Card/Ultralight).
 
 PN5180 is operated thru SPI and GPIO. GPIO is used to control the SPI behavior as the PN5180 is using SPI in specific way. This does then require to manually manage the pin selection for SPI. And another pin called pin busy is used to understand when the PN5180 is available to receive and send information.
 
 The following code shows how to create a SPI driver, reset the PN5180 and create the class.
 
 ```csharp
-var spi = SpiDevice.Create(new SpiConnectionSettings(0, 1) { ClockFrequency = Pn5180.SpiClockFrequency, Mode = Pn5180.SpiMode, DataFlow = DataFlow.MsbFirst });
+// Note: the chip select used here won't be used by the module, so don't use the same pin
+var spi = SpiDevice.Create(new SpiConnectionSettings(1, 12) { ClockFrequency = Pn5180.SpiClockFrequency, Mode = Pn5180.SpiMode, DataFlow = DataFlow.MsbFirst });
 
 // Reset the device
 var gpioController = new GpioController();
@@ -33,7 +34,7 @@ Thread.Sleep(10);
 gpioController.Write(4, PinValue.High);
 Thread.Sleep(10);
 
-var pn5180 = new Pn5180(spi, 2, 3);
+var pn5180 = new Pn5180(spi, 27, 18);
 ```
 
 You will note that the SPI maximum clock frenquency is preset with ```Pn5180.MaximumSpiClockFrequency```, the maximum operation frequency is 7MHz. Same for the mode thru ```Pn5180.DefaultSpiMode```. Data Flow has to be ```DataFlow.MsbFirst```.
@@ -52,10 +53,10 @@ do
     var retok = _pn5180.ListenToCardIso14443TypeA(TransmitterRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106, ReceiverRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106, out cardTypeA, 1000);
     if (retok)
     {
-        Console.WriteLine($"ISO 14443 Type A found:");
-        Console.WriteLine($"  ATQA: {cardTypeA.Atqa}");
-        Console.WriteLine($"  SAK: {cardTypeA.Sak}");
-        Console.WriteLine($"  UID: {BitConverter.ToString(cardTypeA.NfcId)}");
+        Debug.WriteLine($"ISO 14443 Type A found:");
+        Debug.WriteLine($"  ATQA: {cardTypeA.Atqa}");
+        Debug.WriteLine($"  SAK: {cardTypeA.Sak}");
+        Debug.WriteLine($"  UID: {BitConverter.ToString(cardTypeA.NfcId)}");
         // This is where you do something with the card
     }
     else
@@ -81,28 +82,28 @@ do
         continue;
     }
 
-    Console.WriteLine($"ISO 14443 Type B found:");
-    Console.WriteLine($"  Target number: {card.TargetNumber}");
-    Console.WriteLine($"  App data: {BitConverter.ToString(card.ApplicationData)}");
-    Console.WriteLine($"  App type: {card.ApplicationType}");
-    Console.WriteLine($"  UID: {BitConverter.ToString(card.NfcId)}");
-    Console.WriteLine($"  Bit rates: {card.BitRates}");
-    Console.WriteLine($"  Cid support: {card.CidSupported}");
-    Console.WriteLine($"  Command: {card.Command}");
-    Console.WriteLine($"  Frame timing: {card.FrameWaitingTime}");
-    Console.WriteLine($"  Iso 14443-4 compliance: {card.ISO14443_4Compliance}");
-    Console.WriteLine($"  Max frame size: {card.MaxFrameSize}");
-    Console.WriteLine($"  Nad support: {card.NadSupported}");
+    Debug.WriteLine($"ISO 14443 Type B found:");
+    Debug.WriteLine($"  Target number: {card.TargetNumber}");
+    Debug.WriteLine($"  App data: {BitConverter.ToString(card.ApplicationData)}");
+    Debug.WriteLine($"  App type: {card.ApplicationType}");
+    Debug.WriteLine($"  UID: {BitConverter.ToString(card.NfcId)}");
+    Debug.WriteLine($"  Bit rates: {card.BitRates}");
+    Debug.WriteLine($"  Cid support: {card.CidSupported}");
+    Debug.WriteLine($"  Command: {card.Command}");
+    Debug.WriteLine($"  Frame timing: {card.FrameWaitingTime}");
+    Debug.WriteLine($"  Iso 14443-4 compliance: {card.ISO14443_4Compliance}");
+    Debug.WriteLine($"  Max frame size: {card.MaxFrameSize}");
+    Debug.WriteLine($"  Nad support: {card.NadSupported}");
 
     // Do something else, all operations you want with the card
     // Halt card
     if (_pn5180.DeselecCardTypeB(card))
     {
-        Console.WriteLine($"Card unselected properly");
+        Debug.WriteLine($"Card unselected properly");
     }
     else
     {
-        Console.WriteLine($"ERROR: Card can't be unselected");
+        Debug.WriteLine($"ERROR: Card can't be unselected");
     }
 }
 while (!Console.KeyAvailable);
@@ -125,30 +126,30 @@ You can fully access the PN5180 EEPROM. Here is an example on how to do it:
 Span<byte> eeprom = stackalloc byte[255];
 // This will read fully the EEPROM
 var ret = _pn5180.ReadAllEeprom(eeprom);
-Console.WriteLine($"EEPROM dump: success: {ret}, Data: {BitConverter.ToString(eeprom.ToArray())}");
+Debug.WriteLine($"EEPROM dump: success: {ret}, Data: {BitConverter.ToString(eeprom.ToArray())}");
 // This reads only the unique Identifier
 ret = _pn5180.ReadEeprom(EepromAddress.DieIdentifier, eeprom.Slice(0, 16));
-Console.WriteLine($"EEPROM read, unique identifier: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 16).ToArray())}");
+Debug.WriteLine($"EEPROM read, unique identifier: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 16).ToArray())}");
 // Same as above
 ret = _pn5180.GetIdentifier(eeprom.Slice(0, 16));
 // So you should see the exact same result than from reading manully the 16 bytes of the unique identifier
-Console.WriteLine($"GetIdentifier: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 16).ToArray())}");
+Debug.WriteLine($"GetIdentifier: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 16).ToArray())}");
 // This tries to write in a read only part of the EEPROM
 ret = _pn5180.WriteEeprom(EepromAddress.DieIdentifier, eeprom.Slice(0, 1));
 // So you'll receive false as an answer from the PN5180
-Console.WriteLine($"Trying to write a read only EEPROM, this should return false: {ret}");
+Debug.WriteLine($"Trying to write a read only EEPROM, this should return false: {ret}");
 // This is important to understand, if you write in the EEPROM and then try to read right after,
 // in most of the cases, the value won't change. After a reboot, you'll get the new value
-Console.WriteLine($"EEPROM writing will not be immediate. Some are only active after a reboot");
-Console.WriteLine($"changing second byte of UUID when acting as a card (first is always fix to 0x08)");
+Debug.WriteLine($"EEPROM writing will not be immediate. Some are only active after a reboot");
+Debug.WriteLine($"changing second byte of UUID when acting as a card (first is always fix to 0x08)");
 ret = _pn5180.ReadEeprom(EepromAddress.NFCID1, eeprom.Slice(0, 3));
 eeprom[0]++;
-Console.WriteLine($"IRQ_PIN_CONFIG: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 3).ToArray())}");
-Console.WriteLine($"New value to write: {BitConverter.ToString(eeprom.Slice(0, 1).ToArray())}");
+Debug.WriteLine($"IRQ_PIN_CONFIG: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 3).ToArray())}");
+Debug.WriteLine($"New value to write: {BitConverter.ToString(eeprom.Slice(0, 1).ToArray())}");
 ret = _pn5180.WriteEeprom(EepromAddress.NFCID1, eeprom.Slice(0, 3));
-Console.WriteLine($"Wrote IRQ_PIN_CONFIG: {ret}");
+Debug.WriteLine($"Wrote IRQ_PIN_CONFIG: {ret}");
 ret = _pn5180.ReadEeprom(EepromAddress.NFCID1, eeprom.Slice(0, 3));
-Console.WriteLine($"IRQ_PIN_CONFIG: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 3).ToArray())}");
+Debug.WriteLine($"IRQ_PIN_CONFIG: success: {ret}, Data: {BitConverter.ToString(eeprom.Slice(0, 3).ToArray())}");
 ```
 
 Functions has been implemented to read and write part or all the EEPROM. You need to be careful of the size of the buffer, it can't exceed 255 bytes and can't be larger than the base address you want to write and total size. So if you write at position 250, your buffer size and only be 5 maximum.
@@ -158,8 +159,8 @@ Functions has been implemented to read and write part or all the EEPROM. You nee
 You can retreive the PN5180 version thru the ```GetVersion``` function. 3 versions will be returned, the product, firmware and EEPROM ones.
 
 ```csharp
-var (product, firmware, eeprom) = _pn5180.GetVersion();
-Console.WriteLine($"Product: {product.ToString()}, Firmware: {firmware.ToString()}, EEPROM: {eeprom.ToString()}");
+var versions = _pn5180.GetVersion();
+Debug.WriteLine($"Product: {versions.Product.ToString()}, Firmware: {versions.Firmware.ToString()}, EEPROM: {versions.Eeprom.ToString()}");
 ```
 
 You should see something like this:
@@ -168,11 +169,11 @@ You should see something like this:
 Product: 3.5, Firmware: 3.5, EEPROM: 145.0
 ```
 
-Current firmware versions are 3.12 (3.C) and 4.0. That said, this implementation supports older firmware. Newer firmware have better support for auto callibration, fixes bugs and added specific EMVco (payment) low level features. Note that the product version is the original firmware version installed. so if you've done firmware upgrade, the product version will always remain the one from the original firmware.
+Current firmware versions are 3.12 (3.C) and 4.0. That said, this implementation supports older firmware. Newer firmware have better support for auto calibration, fixes bugs and added specific EMVco (payment) low level features. Note that the product version is the original firmware version installed. so if you've done firmware upgrade, the product version will always remain the one from the original firmware.
 
 Note that this implementation does not support firmware update. You should use NXP tools if you want to update the firmare
 
-## Radio Frenquence Configuration
+## Radio Frequency Configuration
 
 The PN5180 offers the possibility to set a lot of configurations. The good news is that those configurations are stored and can be loaded. You can adjust them as well. The following code shows an example on how to load, extract the configuration and with the same way, you can write back a configuration if you need. Please refer to the documentation in this case to understand the changes you want to make:
 
@@ -180,11 +181,11 @@ The PN5180 offers the possibility to set a lot of configurations. The good news 
 // Number of configuration
 var sizeConfig = _pn5180.GetRadioFrequencyConfigSize(TransmitterRadioFrequencyConfiguration.Iso14443B_106);
 // The RadioFrequencyConfiguraitonSize is 5, 1 for the register and 4 for the register data
-Span<byte> configBuff = stackalloc byte[Pn5180.RadioFrequencyConfiguraitonSize * sizeConfig];
+SpanByte configBuff = new byte[Pn5180.RadioFrequencyConfiguraitonSize * sizeConfig];
 var ret = _pn5180.RetrieveRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration.Iso14443B_106, configBuff);
 for (int i = 0; i < sizeConfig; i++)
 {
-    Console.WriteLine($"Register: {configBuff[Pn5180.RadioFrequencyConfiguraitonSize * i]}, Data: {BitConverter.ToString(configBuff.Slice(Pn5180.RadioFrequencyConfiguraitonSize * i + 1, Pn5180.RadioFrequencyConfiguraitonSize - 1).ToArray())}");
+    Debug.WriteLine($"Register: {configBuff[Pn5180.RadioFrequencyConfiguraitonSize * i]}, Data: {BitConverter.ToString(configBuff.Slice(Pn5180.RadioFrequencyConfiguraitonSize * i + 1, Pn5180.RadioFrequencyConfiguraitonSize - 1).ToArray())}");
 }
 ```
 
@@ -192,7 +193,7 @@ Every configuration has the size of 5 bytes, first byte is the register number, 
 
 ## Transceive data with a card
 
-Once the card is selected properly, you can use the CardTranscive class to exchange data with the card. See [Mifare](../Card/Mifare/README.md) and [Credit Card](../Card/CreditCard/README.md) for detailed examples.
+Once the card is selected properly, you can use the CardTranscive class to exchange data with the card. See [Mifare](../Card/Mifare/README.md) and [Ultralight](../Card/Ultralight/README.md) for detailed examples.
 
 This shows how to dump a Mifare (ISO 14443 type A) card fully:
 
@@ -201,17 +202,17 @@ Data106kbpsTypeA cardTypeA;
 
 // Let's pull for 20 seconds and see the result
 var retok = _pn5180.ListenToCardIso14443TypeA(TransmitterRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106, ReceiverRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106, out cardTypeA, 20000);
-Console.WriteLine();
+Debug.WriteLine();
 
 if (!retok)
 {
-    Console.WriteLine("Can't read properly the card");
+    Debug.WriteLine("Can't read properly the card");
 }
 else
 {
-    Console.WriteLine($"ATQA: {cardTypeA.Atqa}");
-    Console.WriteLine($"SAK: {cardTypeA.Sak}");
-    Console.WriteLine($"UID: {BitConverter.ToString(cardTypeA.NfcId)}");
+    Debug.WriteLine($"ATQA: {cardTypeA.Atqa}");
+    Debug.WriteLine($"SAK: {cardTypeA.Sak}");
+    Debug.WriteLine($"UID: {BitConverter.ToString(cardTypeA.NfcId)}");
 
     MifareCard mifareCard = new MifareCard(_pn5180, cardTypeA.TargetNumber) { BlockNumber = 0, Command = MifareCardCommand.AuthenticationA };
     mifareCard.SetCapacity(cardTypeA.Atqa, cardTypeA.Sak);
@@ -237,11 +238,11 @@ else
             ret = mifareCard.RunMifiCardCommand();
             if (ret >= 0)
             {
-                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
             }
             else
             {
-                Console.WriteLine($"Error reading bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                Debug.WriteLine($"Error reading bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
             }
 
             if (block % 4 == 3)
@@ -250,22 +251,22 @@ else
                 for (byte j = 3; j > 0; j--)
                 {
                     var access = mifareCard.BlockAccess((byte)(block - j), mifareCard.Data);
-                    Console.WriteLine($"Bloc: {block - j}, Access: {access}");
+                    Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
                 }
 
                 var sector = mifareCard.SectorTailerAccess(block, mifareCard.Data);
-                Console.WriteLine($"Bloc: {block}, Access: {sector}");
+                Debug.WriteLine($"Bloc: {block}, Access: {sector}");
             }
         }
         else
         {
-            Console.WriteLine($"Authentication error");
+            Debug.WriteLine($"Authentication error");
         }
     }
 }
 ```
 
-The [example](./samples/Pn5180sample.cs) contains as well an implementation to fully dump the content of a credit card.
+The [example](./samples/Pn5180sample.cs) contains as well an implementation to fully dump the content of other cards.
 
 ## Current implementation
 

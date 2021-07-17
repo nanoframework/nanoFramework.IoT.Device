@@ -4,17 +4,15 @@ PN532 is a RFID and NFC reader. It does supports various standards: IsoIec14443T
 
 ## Documentation
 
-Official documentation can be fond here: https://www.nxp.com/docs/en/user-guide/141520.pdf
+- Official documentation can be fond [here](https://www.nxp.com/docs/en/user-guide/141520.pdf)
+- Check out the [sample]'./samples) which contains more detailed on how to read other type of cards like [Ultralight](../Cards/Ultralight)
 
 ## Usage
 
 You first need to create the class thru I2C, SPI or Serial.
 
 ```csharp
-// Embedded serial port on Raspberry Pi
-string device = "/dev/ttyS0";
-// or like this on Windows:
-// string device = "COM7";
+string device = "COM2";
 pn532 = new Pn532(device);
 ```
 
@@ -62,7 +60,7 @@ if (retData is null)
     return;
 
 // Check how many tags and the type
-Console.WriteLine($"Num tags: {retData[0]}, Type: {(PollingType)retData[1]}");
+Debug.WriteLine($"Num tags: {retData[0]}, Type: {(PollingType)retData[1]}");
 // See documentation page 145
 // You need to remove the first element at it's the number of tags read
 // In, this case we will assume we are reading only 1 tag at a time
@@ -80,9 +78,9 @@ Once detected and selected like in the previous example, this fully dump the con
 ```csharp
 if (decrypted is object)
 {
-    Console.WriteLine($"Tg: {decrypted.TargetNumber}, ATQA: {decrypted.Atqa} SAK: {decrypted.Sak}, NFCID: {BitConverter.ToString(decrypted.NfcId)}");
+    Debug.WriteLine($"Tg: {decrypted.TargetNumber}, ATQA: {decrypted.Atqa} SAK: {decrypted.Sak}, NFCID: {BitConverter.ToString(decrypted.NfcId)}");
     if (decrypted.Ats is object)
-    Console.WriteLine($", ATS: {BitConverter.ToString(decrypted.Ats)}");
+    Debug.WriteLine($", ATS: {BitConverter.ToString(decrypted.Ats)}");
     
     MifareCard mifareCard = new MifareCard(pn532, decrypted.TargetNumber) { BlockNumber = 0, Command = MifareCardCommand.AuthenticationA };
     mifareCard.SetCapacity(decrypted.Atqa, decrypted.Sak);
@@ -107,10 +105,10 @@ if (decrypted is object)
             mifareCard.Command = MifareCardCommand.Read16Bytes;
             ret = mifareCard.RunMifiCardCommand();
             if (ret >= 0)
-                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
             else
             {
-                Console.WriteLine($"Error reading bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                Debug.WriteLine($"Error reading bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
             }
 
             if (block % 4 == 3)
@@ -119,15 +117,15 @@ if (decrypted is object)
                 for (byte j = 3; j > 0; j--)
                 {
                     var access = mifareCard.BlockAccess((byte)(block - j), mifareCard.Data);
-                    Console.WriteLine($"Bloc: {block - j}, Access: {access}");
+                    Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
                 }
                 var sector = mifareCard.SectorTailerAccess(block, mifareCard.Data);
-                Console.WriteLine($"Bloc: {block}, Access: {sector}");
+                Debug.WriteLine($"Bloc: {block}, Access: {sector}");
             }
         }
         else
         {
-            Console.WriteLine($"Autentication error");
+            Debug.WriteLine($"Authentication error");
         }
     }
 ```
@@ -157,8 +155,8 @@ static void AsTarget(Pn532 pn532)
     if (modeInitialized is null)
         return;
 
-    Console.WriteLine($"PN532 as a target: ISDep: {modeInitialized.IsDep}, IsPicc {modeInitialized.IsISO14443_4Picc}, {modeInitialized.TargetBaudRate}, {modeInitialized.TargetFramingType}");
-    Console.WriteLine($"Initiator: {BitConverter.ToString(retData)}");
+    Debug.WriteLine($"PN532 as a target: ISDep: {modeInitialized.IsDep}, IsPicc {modeInitialized.IsISO14443_4Picc}, {modeInitialized.TargetBaudRate}, {modeInitialized.TargetFramingType}");
+    Debug.WriteLine($"Initiator: {BitConverter.ToString(retData)}");
     // 25-D4-00-E8-11-6A-0A-69-1C-46-5D-2D-7C-00-00-00-32-46-66-6D-01-01-12-02-02-07-FF-03-02-00-13-04-01-64-07-01-03
     // 11-D4-00-01-FE-A2-A3-A4-A5-A6-A7-00-00-00-00-00-30            
     // E0-80
@@ -169,7 +167,7 @@ static void AsTarget(Pn532 pn532)
         ret = pn532.ReadDataAsTarget(read);
 
     // For example: 00-00-A4-04-00-0E-32-50-41-59-2E-53-59-53-2E-44-44-46-30-31-00
-    Console.WriteLine($"Status: {read[0]}, Data: {BitConverter.ToString(read.Slice(1).ToArray())}");            
+    Debug.WriteLine($"Status: {read[0]}, Data: {BitConverter.ToString(read.Slice(1).ToArray())}");            
 }
 ```
 

@@ -1,6 +1,6 @@
 # Mifare card - RFID Card
 
-This class supports Mifare cards. They are RFID cards responding to ISO 14443 type A. You need a specific card reader like PN532, PN5180 to read, write those kind of cards.
+This class supports Mifare cards. They are RFID cards responding to ISO 14443 type A. You need a specific card reader like [MFRC522](../../Mfrc522), [PN532](../../Pn532), [PN5180](../../Pn5180) to read, write those kind of cards.
 
 ## Creating a card and reading it
 
@@ -8,7 +8,7 @@ You'll need first to get the card from an RFID reader. The example below shows h
 
 ```csharp
 byte[] retData = null;
-while (!Console.KeyAvailable)
+while (true)
 {
     retData = pn532.ListPassiveTarget(MaxTarget.One, TargetBaudRate.B106kbpsTypeA);
     if (retData is object)
@@ -21,9 +21,9 @@ if (retData is null)
 var decrypted = pn532.Decode106kbpsTypeA(retData.AsSpan().Slice(1));
 if (decrypted is object)
 {
-    Console.WriteLine($"Tg: {decrypted.TargetNumber}, ATQA: {decrypted.Atqa} SAK: {decrypted.Sak}, NFCID: {BitConverter.ToString(decrypted.NfcId)}");
+    Debug.WriteLine($"Tg: {decrypted.TargetNumber}, ATQA: {decrypted.Atqa} SAK: {decrypted.Sak}, NFCID: {BitConverter.ToString(decrypted.NfcId)}");
     if (decrypted.Ats is object)
-        Console.WriteLine($", ATS: {BitConverter.ToString(decrypted.Ats)}");
+        Debug.WriteLine($", ATS: {BitConverter.ToString(decrypted.Ats)}");
     MifareCard mifareCard = new MifareCard(pn532, decrypted.TargetNumber) { BlockNumber = 0, Command = MifareCardCommand.AuthenticationA };
     mifareCard.SetCapacity(decrypted.Atqa, decrypted.Sak);
     mifareCard.SerialNumber = decrypted.NfcId;
@@ -47,10 +47,10 @@ if (decrypted is object)
             mifareCard.Command = MifareCardCommand.Read16Bytes;
             ret = mifareCard.RunMifiCardCommand();
             if (ret >= 0)
-                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
             else
             {
-                Console.WriteLine($"Error reading bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
+                Debug.WriteLine($"Error reading bloc: {block}, Data: {BitConverter.ToString(mifareCard.Data)}");
             }
             if (block % 4 == 3)
             {
@@ -58,18 +58,16 @@ if (decrypted is object)
                 for (byte j = 3; j > 0; j--)
                 {
                     var access = mifareCard.BlockAccess((byte)(block - j), mifareCard.Data);
-                    Console.WriteLine($"Bloc: {block - j}, Access: {access}");
+                    Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
                 }
                 var sector = mifareCard.SectorTailerAccess(block, mifareCard.Data);
-                Console.WriteLine($"Bloc: {block}, Access: {sector}");
+                Debug.WriteLine($"Bloc: {block}, Access: {sector}");
             }
         }
         else
         {
-            Console.WriteLine($"Authentication error");
+            Debug.WriteLine($"Authentication error");
         }
     }
 }
 ```
-
-

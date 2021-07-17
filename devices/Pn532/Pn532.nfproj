@@ -63,7 +63,6 @@
     <Compile Include="VersionSupported.cs" />
     <Compile Include="WakeUpEnable.cs" />
     <None Include="*.md" />
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

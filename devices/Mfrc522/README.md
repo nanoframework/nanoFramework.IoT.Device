@@ -1,6 +1,6 @@
 # MFRC522 - RFID reader
 
-MFRC522 is a very cheap RFID/NFC reader for Iso 14443 Type A cards. Part of those cars are the [Mifare](../Card/Mifare) family. This reader implement the proprietary Mifare cryptography protocol and can be used transparently.
+MFRC522 is a very cheap RFID/NFC reader for Iso 14443 Type A cards. Part of those cars are the [Mifare](../Card/Mifare) and [Ultralight](../Card/Ultralight) family. This reader implement the proprietary Mifare cryptography protocol and can be used transparently.
 
 ## Usage
 
@@ -9,20 +9,28 @@ MFRC522 supports SPI, I2C and UART (Serial Port). You can create the reader with
 **Note**: most of the popular boards you'll buy are SPI only. This documentation will focus on SPI. You have in the [samples](./samples) more information on how to setup I2C and UART.
 
 ```csharp
-SpiConnectionSettings connection = new(0, 1);
+GpioController gpioController = new GpioController();
+// adjust the GPIO used for the hard reset
+int pinReset = 21;
+
+// Default on ESP32:
+// GPIO23 = MOSI; GPIO25 = MISO; GPIO19 = Clock
+
+// Uncomment for SPI
+SpiConnectionSettings connection = new(1, 22);
 // Here you can use as well MfRc522.MaximumSpiClockFrequency which is 10_000_000
 // Anything lower will work as well
 connection.ClockFrequency = 5_000_000;
-SpiDevice spi = SpiDevice.Create(connection)
-mfrc522 = new(spi, 4);
+SpiDevice spi = SpiDevice.Create(connection);
+MfRc522 mfrc522 = new(spi, pinReset, gpioController, false);
 ```
 
-The code will create an instance of MFRC522 and will use the pin GPIO4 as the hardware rest pin and will create an GpioController automatically from the default driver. The [samples](./samples) folder have more advance setup using for example an [FT4222](../Ft4222) dongle as a SPI controller.
+The code will create an instance of MFRC522 and will use the pin GPIO21 as the hardware rest pin and will create an GpioController automatically from the default driver. Check the detailed [samples] for more elements. More detailed examples shows how to use other type or cards.
 
 You can get the version using the `Version` property.
 
 ```csharp
-Console.WriteLine($"Version: {mfrc522.Version}, version should be 1 or 2. Some clones may appear with version 0");
+Debug.WriteLine($"Version: {mfrc522.Version}, version should be 1 or 2. Some clones may appear with version 0");
 ```
 
 Keep in mind that having a version which is 0.0 doesn't necessary means that your reader is not working properly, if you bought a cheap copy of an original MFRC522, the internal version may not be recognized.
@@ -57,7 +65,7 @@ ret = mifare.RunMifareCardCommand();
 if (ret < 0)
 {
     mifare.ReselectCard();
-    Console.WriteLine($"Error reading bloc: {mifare.BlockNumber}");
+    Debug.WriteLine($"Error reading bloc: {mifare.BlockNumber}");
 }
 else
 {
@@ -67,13 +75,13 @@ else
     {
         if (mifare.Data is object)
         {
-            Console.WriteLine($"Bloc: {mifare.BlockNumber}, Data: {BitConverter.ToString(mifare.Data)}");
+            Debug.WriteLine($"Bloc: {mifare.BlockNumber}, Data: {BitConverter.ToString(mifare.Data)}");
         }
     }
     else
     {
         mifare.ReselectCard();
-        Console.WriteLine($"Error reading bloc: {mifare.BlockNumber}");
+        Debug.WriteLine($"Error reading bloc: {mifare.BlockNumber}");
     }
 }
 ```
