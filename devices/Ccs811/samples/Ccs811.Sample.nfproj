@@ -21,44 +21,44 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.10.5.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5-preview.18\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.1.0.0-preview.110\lib\nanoFramework.Logging.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Logging.1.0.0-preview.118\lib\nanoFramework.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Logging.Stream, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.Logging.Stream.1.0.0-preview.110\lib\nanoFramework.Logging.Stream.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Logging.Stream.1.0.0-preview.118\lib\nanoFramework.Logging.Stream.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.System.Text, Version=1.1.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Text.1.1.1-preview.64\lib\nanoFramework.System.Text.dll</HintPath>
+    <Reference Include="nanoFramework.System.Text, Version=1.1.1.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Text.1.1.1\lib\nanoFramework.System.Text.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.I2c, Version=1.0.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.39\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="System.Device.I2c, Version=1.0.1.2, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.FileSystem, Version=1.0.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.0.1-preview.31\lib\System.IO.FileSystem.dll</HintPath>
+    <Reference Include="System.IO.FileSystem, Version=1.0.1.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.0.1\lib\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricCurrent, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.4.97.1\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.4.98.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.97.1\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.98.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.97.1\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.98.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.VolumeConcentration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.VolumeConcentration.4.97.1\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.VolumeConcentration.4.98.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

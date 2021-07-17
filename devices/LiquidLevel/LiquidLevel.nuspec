@@ -20,9 +20,9 @@
     <summary>Iot.Device.LiquidLevel assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.LiquidLevel</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.1-preview.7" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.48" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
     </dependencies>
   </metadata>
   <files>

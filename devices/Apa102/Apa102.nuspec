@@ -20,10 +20,10 @@
     <summary>Iot.Device.Apa102 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Apa102</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.40" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.70" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.97.1" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.2-preview.5" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.98.0" />
     </dependencies>
   </metadata>
   <files>

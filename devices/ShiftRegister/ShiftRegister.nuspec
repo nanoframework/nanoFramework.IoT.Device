@@ -20,11 +20,11 @@
     <summary>Iot.Device.ShiftRegister assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.ShiftRegister</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.18" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.1-preview.7" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.0-preview.48" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.0-preview.70" />
-      <dependency id="nanoFramework.System.Threading" version="1.0.1-preview.42" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.2-preview.5" />
+      <dependency id="nanoFramework.System.Threading" version="1.0.2" />
     </dependencies>
   </metadata>
   <files>
