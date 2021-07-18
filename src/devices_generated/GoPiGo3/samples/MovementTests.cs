@@ -24,7 +24,7 @@ namespace GoPiGo3.Samples
             Debug.WriteLine("Increase speed on the motor during 10 seconds.");
             while (stopwatch.ElapsedTicks < finalTick)
             {
-                Console.Write($"Encoder: {motor.GetTachoCount()}");
+                Debug.Write($"Encoder: {motor.GetTachoCount()}");
                 Console.CursorLeft = 0;
                 Thread.Sleep(200);
                 motor.SetSpeed(motor.GetSpeed() + 10);
@@ -36,7 +36,7 @@ namespace GoPiGo3.Samples
             Debug.WriteLine("Decrease speed on the motor during 10 seconds.");
             while (stopwatch.ElapsedTicks < finalTick)
             {
-                Console.Write($"Encoder: {motor.GetTachoCount()}");
+                Debug.Write($"Encoder: {motor.GetTachoCount()}");
                 Console.CursorLeft = 0;
                 Thread.Sleep(200);
                 motor.SetSpeed(motor.GetSpeed() + 10);

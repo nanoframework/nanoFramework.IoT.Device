@@ -55,7 +55,7 @@ void PrintLocalPdo()
         Debug.WriteLine($"PDO #{i + 1}: {pdo}");
     }
 
-    Debug.WriteLine();
+    Debug.WriteLine("");
 }
 
 void PrintNvmData()

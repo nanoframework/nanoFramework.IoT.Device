@@ -29,7 +29,7 @@ using Pca9685 pca9685 = new(device);
 Debug.WriteLine(
     $"PCA9685 is ready on I2C bus {device.ConnectionSettings.BusId} with address {device.ConnectionSettings.DeviceAddress}");
 Debug.WriteLine($"PWM Frequency: {pca9685.PwmFrequency}Hz");
-Debug.WriteLine();
+Debug.WriteLine("");
 PrintHelp();
 
 while (true)
@@ -104,7 +104,7 @@ void PrintServoDemoHelp()
     Debug.WriteLine("Q                   return to previous menu");
     Debug.WriteLine("C                   calibrate");
     Debug.WriteLine("{angle}             set angle (0 - 180)");
-    Debug.WriteLine();
+    Debug.WriteLine("");
 }
 
 void ServoDemo(Pca9685 pca9685, int channel)
@@ -148,7 +148,7 @@ void PrintHelp()
     Debug.WriteLine("    T {channel}          servo test (defaults to SG90 params)");
     Debug.WriteLine("    H                    prints help");
     Debug.WriteLine("    Q                    quit");
-    Debug.WriteLine();
+    Debug.WriteLine("");
 }
 
 void CalibrateServo(ServoMotor servo)
@@ -159,7 +159,7 @@ void CalibrateServo(ServoMotor servo)
 
     Debug.WriteLine("Searching for minimum pulse width");
     CalibratePulseWidth(servo, ref minimumPulseWidthMicroseconds);
-    Debug.WriteLine();
+    Debug.WriteLine("");
 
     Debug.WriteLine("Searching for maximum pulse width");
     CalibratePulseWidth(servo, ref maximumPulseWidthMicroseconds);

@@ -163,7 +163,7 @@ namespace GoPiGo3.Samples
                 var status = _goPiGo3.GetMotorStatus(MotorPort.MotorLeft);
                 Debug.WriteLine($"MotorLeft Target DPS: {target} Speed: {status.Speed} DPS: {status.Dps} Encoder: {status.Encoder} Flags: {status.Flags}");
                 status = _goPiGo3.GetMotorStatus(MotorPort.MotorRight);
-                Console.Write($"MotorRight Target DPS: {target} Speed: {status.Speed} DPS: {status.Dps} Encoder: {status.Encoder} Flags: {status.Flags}");
+                Debug.Write($"MotorRight Target DPS: {target} Speed: {status.Speed} DPS: {status.Dps} Encoder: {status.Encoder} Flags: {status.Flags}");
                 Thread.Sleep(20);
                 CleanALine();
                 Console.CursorTop -= 1;
@@ -175,14 +175,14 @@ namespace GoPiGo3.Samples
         {
             Console.CursorLeft = 0;
             // Create a space string of size of the Window
-            Console.Write(" ".PadLeft(Console.LargestWindowWidth));
+            Debug.Write(" ".PadLeft(Console.LargestWindowWidth));
             Console.CursorLeft = 0;
         }
 
         private static void AddLines()
         {
-            Debug.WriteLine();
-            Debug.WriteLine();
+            Debug.WriteLine("");
+            Debug.WriteLine("");
             Console.CursorTop -= 2;
         }
 
@@ -194,7 +194,7 @@ namespace GoPiGo3.Samples
             while (!Console.KeyAvailable)
             {
                 var encodermotor = _goPiGo3.GetMotorEncoder(MotorPort.MotorRight);
-                Console.Write($"Encoder: {encodermotor}");
+                Debug.Write($"Encoder: {encodermotor}");
                 Console.CursorLeft = 0;
                 Thread.Sleep(200);
             }

@@ -168,14 +168,14 @@ namespace System.Collections.Generic
             /// <param name="collection"></param>
             public Enumerator(ListPwmChannel collection)
             {
-                _index = 0;
+                _index = -1;
                 _collection = collection;
             }
 
             /// <summary>
             /// Gets the element at the current position of the enumerator.
             /// </summary>
-            public PwmChannel Current => _collection[_index];
+            public PwmChannel Current => _collection[_index == -1 ? 0 : _index];
 
             object IEnumerator.Current => Current;
 
@@ -192,7 +192,7 @@ namespace System.Collections.Generic
             /// the enumerator has passed the end of the collection.</returns>
             public bool MoveNext()
             {
-                if (_index >= _collection.Count)
+                if ((_index + 1) >= _collection.Count)
                 {
                     return false;
                 }
@@ -206,7 +206,7 @@ namespace System.Collections.Generic
             /// </summary>
             public void Reset()
             {
-                _index = 0;
+                _index = -1;
             }
         }
 

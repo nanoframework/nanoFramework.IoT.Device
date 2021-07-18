@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
+    <Compile Include="MathExtensions.cs" />
     <Compile Include="Iot/Device/Common/*.cs" />
     <Compile Include="Iot/Device/Graphics/*.cs" />
     <Compile Include="Iot/Device/Multiplexing/*.cs" />
@@ -79,6 +79,8 @@
     <Compile Include="System/Device/Gpio/*.cs" />
     <Compile Include="System/Device/Analog/*.cs" />
     <Compile Include="System/Device/Spi/*.cs" />
+    <Compile Include="FrameworkCompatibilityExtensions.cs" />
+    <Compile Include="IsExternalInit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -120,6 +120,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         { "DateTime.Now", "DateTime.UtcNow" },
                         { ".AsSpan(start, length)", string.Empty },
                         { "Console.WriteLine(", "Debug.WriteLine(" },
+                        { "Console.WriteLine()", "Debug.WriteLine(\"\")" },
+                        { "Console.Write(", "Debug.Write(" },
                         { "using System.Diagnostics.CodeAnalysis;", "" },
                         { "\\[MemberNotNull.*\\]", "" },
                         { "Environment.TickCount", "DateTime.UtcNow.Ticks" },

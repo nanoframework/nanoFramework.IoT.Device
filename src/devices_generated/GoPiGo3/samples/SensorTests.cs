@@ -18,7 +18,7 @@ namespace GoPiGo3.Samples
             while (!Console.KeyAvailable)
             {
                 Console.CursorLeft = 0;
-                Console.Write($"Value: {ultraSonic.Value}, ValueAsString: {ultraSonic.ToString()}");
+                Debug.Write($"Value: {ultraSonic.Value}, ValueAsString: {ultraSonic.ToString()}");
                 Thread.Sleep(100);
                 CleanALine();
             }
@@ -99,7 +99,7 @@ namespace GoPiGo3.Samples
             while (!Console.KeyAvailable)
             {
                 Console.CursorLeft = 0;
-                Console.Write($"{soundSensor.SensorName}: {soundSensor} which is {soundSensor.ValueAsPercent} %");
+                Debug.Write($"{soundSensor.SensorName}: {soundSensor} which is {soundSensor.ValueAsPercent} %");
                 Thread.Sleep(100);
                 CleanALine();
             }
@@ -142,7 +142,7 @@ namespace GoPiGo3.Samples
             while (!Console.KeyAvailable)
             {
                 Console.CursorLeft = 0;
-                Console.Write($"{button.SensorName} is {button.IsPressed} so it is {button}");
+                Debug.Write($"{button.SensorName} is {button.IsPressed} so it is {button}");
                 Thread.Sleep(20);
                 CleanALine();
             }
@@ -157,7 +157,7 @@ namespace GoPiGo3.Samples
             while (!Console.KeyAvailable)
             {
                 Console.CursorLeft = 0;
-                Console.Write($"Intensity: {lightSensor.ValueAsPercent} %");
+                Debug.Write($"Intensity: {lightSensor.ValueAsPercent} %");
                 ledPwm.Duty = lightSensor.ValueAsPercent;
                 Thread.Sleep(50);
                 CleanALine();

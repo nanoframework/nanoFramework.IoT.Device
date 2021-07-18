@@ -22,7 +22,7 @@ Debug.WriteLine("Please select the platform you want to use:");
 Debug.WriteLine("  1. Native device like a Raspberry Pi");
 Debug.WriteLine("  2. FT4222");
 var platformChoice = Console.ReadKey();
-Debug.WriteLine();
+Debug.WriteLine("");
 
 if (platformChoice is not object or { KeyChar: not ('1' or '2') })
 {
@@ -104,7 +104,7 @@ Debug.WriteLine("  4. Display images, resize images");
 Debug.WriteLine("  5. Display lines, points, rectangles");
 Debug.WriteLine("  6. Use the LcdConsole and display texts");
 var demoChoice = Console.ReadKey();
-Debug.WriteLine();
+Debug.WriteLine("");
 
 if (demoChoice is not object or { KeyChar: < '1' or > '6' })
 {
