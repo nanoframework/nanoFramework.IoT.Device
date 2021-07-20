@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pn5180", "Pn5180.nfproj", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Card Projects", "Card Projects", "{7DE389DF-FE19-440A-A172-1D7B8D601303}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\CardRfid.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCardProcessing", "..\Card\CreditCard\CreditCardProcessing.nfproj", "{88B63840-FE53-4FC7-B687-88437D8269D9}"
 EndProject
