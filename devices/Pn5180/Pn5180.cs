@@ -241,7 +241,9 @@ namespace Iot.Device.Pn5180
             try
             {
                 SpiWrite(dumpEeprom);
+#if DEBUG
                 _logger.LogDebug($"{nameof(WriteEeprom)}, {nameof(dumpEeprom)}: {BitConverter.ToString(dumpEeprom.ToArray())}");
+#endif
 
                 SpanByte irqStatus = new byte[4];
                 ret = GetIrqStatus(irqStatus);
@@ -260,9 +262,9 @@ namespace Iot.Device.Pn5180
             return ret;
         }
 
-        #endregion
+#endregion
 
-        #region SEND and READ data from card
+#region SEND and READ data from card
 
         /// <summary>
         /// Send data to a card.
@@ -713,9 +715,9 @@ namespace Iot.Device.Pn5180
             return false;
         }
 
-        #endregion
+#endregion
 
-        #region Mifare specific
+#region Mifare specific
 
         /// <summary>
         /// Specific function to authenticate Mifare cards
@@ -776,9 +778,9 @@ namespace Iot.Device.Pn5180
             return response[0] == 0;
         }
 
-        #endregion
+#endregion
 
-        #region RadioFrequency
+#region RadioFrequency
 
         /// <summary>
         /// Load a specific radio frequency configuration
@@ -1004,9 +1006,9 @@ namespace Iot.Device.Pn5180
             return true;
         }
 
-        #endregion
+#endregion
 
-        #region Listen to cards
+#region Listen to cards
 
         /// <summary>
         /// Listen to any 14443 Type A card
@@ -1535,9 +1537,9 @@ namespace Iot.Device.Pn5180
             return true;
         }
 
-        #endregion
+#endregion
 
-        #region SPI primitives
+#region SPI primitives
 
         private void SpiWriteRegister(Command command, Register register, SpanByte data)
         {
@@ -1656,6 +1658,6 @@ namespace Iot.Device.Pn5180
             _gpioController.Write(_pinNss, PinValue.High);
         }
 
-        #endregion
+#endregion
     }
 }
