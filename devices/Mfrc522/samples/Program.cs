@@ -13,7 +13,6 @@ using Iot.Device.Card.Ultralight;
 using Iot.Device.Mfrc522;
 using Iot.Device.Ndef;
 using Iot.Device.Rfid;
-using nanoFramework.Hardware.Esp32;
 
 Debug.WriteLine("Hello MFRC522!");
 
