@@ -269,6 +269,7 @@ namespace System.Numerics
             }
         }
 
+        /*
         /// <summary>
         /// Transforms a vector by the given matrix.
         /// </summary>
@@ -296,6 +297,7 @@ namespace System.Numerics
                 normal.X * matrix.M12 + normal.Y * matrix.M22 + normal.Z * matrix.M32,
                 normal.X * matrix.M13 + normal.Y * matrix.M23 + normal.Z * matrix.M33);
         }
+        */
 
         /// <summary>
         /// Transforms a vector by the given Quaternion rotation value.
