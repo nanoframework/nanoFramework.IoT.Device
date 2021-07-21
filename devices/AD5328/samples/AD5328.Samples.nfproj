@@ -37,7 +37,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.98.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.99.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
