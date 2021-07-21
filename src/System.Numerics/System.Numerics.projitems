@@ -11,8 +11,11 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)HashCodeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix3x2.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Matrix4x4.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Plane.cs" />
+    <!--
+      Removing as it require some rework 
+      <Compile Include="$(MSBuildThisFileDirectory)Matrix4x4.cs" />
+      <Compile Include="$(MSBuildThisFileDirectory)Plane.cs" />
+    -->    
     <Compile Include="$(MSBuildThisFileDirectory)Quaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Vector2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Vector2_Intrinsics.cs" />
