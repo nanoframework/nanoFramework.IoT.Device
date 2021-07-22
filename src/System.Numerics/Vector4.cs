@@ -240,6 +240,7 @@ namespace System.Numerics
                 value1.W + (value2.W - value1.W) * amount);
         }
 
+        /*
         /// <summary>
         /// Transforms a vector by the given matrix.
         /// </summary>
@@ -269,6 +270,7 @@ namespace System.Numerics
                 position.X * matrix.M13 + position.Y * matrix.M23 + position.Z * matrix.M33 + matrix.M43,
                 position.X * matrix.M14 + position.Y * matrix.M24 + position.Z * matrix.M34 + matrix.M44);
         }
+        */
 
         /// <summary>
         /// Transforms a vector by the given matrix.

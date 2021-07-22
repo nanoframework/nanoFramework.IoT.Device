@@ -247,6 +247,7 @@ namespace System.Numerics
                 position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M32);
         }
 
+        /*
         /// <summary>
         /// Transforms a vector by the given matrix.
         /// </summary>
@@ -259,6 +260,7 @@ namespace System.Numerics
                 position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41,
                 position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42);
         }
+        */
 
         /// <summary>
         /// Transforms a vector normal by the given matrix.
