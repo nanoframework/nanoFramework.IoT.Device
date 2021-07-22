@@ -275,6 +275,7 @@ namespace System.Numerics
                 normal.X * matrix.M12 + normal.Y * matrix.M22);
         }
 
+        /*
         /// <summary>
         /// Transforms a vector normal by the given matrix.
         /// </summary>
@@ -287,6 +288,7 @@ namespace System.Numerics
                 normal.X * matrix.M11 + normal.Y * matrix.M21,
                 normal.X * matrix.M12 + normal.Y * matrix.M22);
         }
+        */
 
         /// <summary>
         /// Transforms a vector by the given Quaternion rotation value.
