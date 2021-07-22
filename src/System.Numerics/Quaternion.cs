@@ -209,6 +209,7 @@ namespace System.Numerics
             return result;
         }
 
+        /*
         /// <summary>
         /// Creates a Quaternion from the given rotation matrix.
         /// </summary>
@@ -262,6 +263,7 @@ namespace System.Numerics
 
             return q;
         }
+        */
 
         /// <summary>
         /// Calculates the dot product of two Quaternions.
