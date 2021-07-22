@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Card Projects", "Card Proje
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCardProcessing", "..\Card\CreditCard\CreditCardProcessing.nfproj", "{88B63840-FE53-4FC7-B687-88437D8269D9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "..\Card\Mifare\Mifare.nfproj", "{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ndef", "..\Card\Ndef\Ndef.nfproj", "{150CED27-7CF0-4671-9370-B330D2D49066}"

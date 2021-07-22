@@ -45,6 +45,7 @@
     <Compile Include="RotationType.cs" />
     <Compile Include="Fonts.cs" />
     <Compile Include="FixedSizeFont.cs" />
+    <Compile Include="ListByte.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

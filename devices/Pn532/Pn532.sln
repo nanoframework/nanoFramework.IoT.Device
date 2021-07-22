@@ -12,8 +12,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\Card.nf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "..\Card\Mifare\Mifare.nfproj", "{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCardProcessing", "..\Card\CreditCard\CreditCardProcessing.nfproj", "{A4130820-1E4C-4825-823E-2784C613F5D7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultralight", "..\Card\Ultralight\Ultralight.nfproj", "{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ndef", "..\Card\Ndef\Ndef.nfproj", "{150CED27-7CF0-4671-9370-B330D2D49066}"

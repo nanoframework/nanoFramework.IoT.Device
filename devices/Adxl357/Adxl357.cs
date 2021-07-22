@@ -90,7 +90,7 @@ namespace Iot.Device.Adxl357
 
         private float CaclulateAverage(Vector3[] buffer, int dim)
         {
-            float avg = 0;
+            double avg = 0;
             for (int i = 0; i < buffer.Length; i++)
             {
                 switch (dim)
@@ -106,7 +106,7 @@ namespace Iot.Device.Adxl357
                         break;
                 }
             }
-            return avg / buffer.Length;
+            return (float)(avg / buffer.Length);
         }
 
         /// <summary>
