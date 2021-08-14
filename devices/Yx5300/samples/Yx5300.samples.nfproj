@@ -52,8 +52,8 @@
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.2-preview.5\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=4.100.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.100.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=4.101.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.101.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
