@@ -24,8 +24,8 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.100.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.100.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.101.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.101.0" />
     </dependencies>
   </metadata>
   <files>

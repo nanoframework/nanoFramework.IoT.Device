@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
       <dependency id="nanoFramework.System.Math" version="1.4.1" />
-      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.100.0" />
+      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.101.0" />
     </dependencies>
   </metadata>
   <files>
