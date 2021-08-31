@@ -20,11 +20,11 @@
     <summary>Iot.Device.Mbi5027 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mbi5027</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5-preview.13" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.0.2-preview.5" />
-      <dependency id="nanoFramework.System.Threading" version="1.0.1-preview.41" />
+      <dependency id="nanoFramework.System.Threading" version="1.0.2" />
     </dependencies>
   </metadata>
   <files>

@@ -89,14 +89,14 @@ namespace Iot.Device.DHTxx
         {
             int raw = (((readBuff[1] << 8) | readBuff[2]) << 4) | readBuff[3] >> 4;
 
-            return RelativeHumidity.FromPercent(100.0 * raw / Math.Pow(2, 20));
+            return RelativeHumidity.FromPercent(100.0 * raw / Math.Pow(2.0, 20));
         }
 
         internal override Temperature GetTemperature(byte[] readBuff)
         {
             int raw = ((((readBuff[3] & 0b_0000_1111) << 8) | readBuff[4]) << 8) | readBuff[5];
 
-            return Temperature.FromDegreesCelsius(raw / Math.Pow(2, 20) * 200 - 50);
+            return Temperature.FromDegreesCelsius(raw / Math.Pow(2.0, 20) * 200 - 50);
         }
     }
 }

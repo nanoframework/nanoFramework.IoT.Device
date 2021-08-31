@@ -22,9 +22,9 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
-      <dependency id="nanoFramework.System.Collections" version="1.2.0-preview.62" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.0.0-preview.27" />
-      <dependency id="nanoFramework.System.Text" version="1.1.1-preview.57" />
+      <dependency id="nanoFramework.System.Collections" version="1.2.0" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.0.1-preview.3" />
+      <dependency id="nanoFramework.System.Text" version="1.1.1" />
     </dependencies>
   </metadata>
   <files>
