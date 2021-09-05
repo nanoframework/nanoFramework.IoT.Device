@@ -49,7 +49,7 @@
     <None Include="nano.runsettings" />
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+  <ProjectReference Include="..\..\devices\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- MANUAL UPDATE HERE -->
   <Import Project="..\..\src\BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.117\build\nanoFramework.TestFramework.targets" Condition="Exists('..\..\src\BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.117\build\nanoFramework.TestFramework.targets')" />
