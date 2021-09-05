@@ -77,7 +77,9 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
-  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+    <ItemGroup>
+    <ProjectReference Include="..\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
+  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>

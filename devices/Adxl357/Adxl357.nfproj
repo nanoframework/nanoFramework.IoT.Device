@@ -62,7 +62,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>
-  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+    <ItemGroup>
+    <ProjectReference Include="..\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
+  </ItemGroup>
   <Import Project="..\..\src\System.Numerics\System.Numerics.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

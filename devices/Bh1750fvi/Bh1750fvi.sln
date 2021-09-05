@@ -11,12 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Project", "Shared Pr
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Buffers.Binary.BinaryPrimitives", "..\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj", "{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,13 +34,19 @@ Global
 		{15CE15B2-AE83-4670-90A2-E36C3A9EFB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15CE15B2-AE83-4670-90A2-E36C3A9EFB03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15CE15B2-AE83-4670-90A2-E36C3A9EFB03}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Release|Any CPU.Deploy.0 = Release|Any CPU			
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{23325B14-3651-4879-9697-9846FF123FEB} = {DDFFEC3A-0FFB-4CF6-BB2E-30C09AFCDB1F}
-		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {DDFFEC3A-0FFB-4CF6-BB2E-30C09AFCDB1F}
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F} = {DDFFEC3A-0FFB-4CF6-BB2E-30C09AFCDB1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8ECBE2FD-796C-4D37-B27C-27AB2EE0618B}

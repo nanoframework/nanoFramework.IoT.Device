@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bno055", "Bno055.nfproj", "{07518C87-D7D1-4DE2-A34B-D19BCCE8AA42}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Buffers.Binary.BinaryPrimitives", "..\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj", "{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
 EndProject
@@ -16,7 +16,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
 		..\..\src\System.Numerics\System.Numerics.projitems*{f5ccb96c-70b1-4f0a-9f0e-bb912b6a996c}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +35,12 @@ Global
 		{C1737013-0BB7-4603-B0BA-6FD2895DF627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1737013-0BB7-4603-B0BA-6FD2895DF627}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C1737013-0BB7-4603-B0BA-6FD2895DF627}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007E2F1F-5F28-4A9D-B2F8-0C730454F55F}.Release|Any CPU.Deploy.0 = Release|Any CPU			
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
