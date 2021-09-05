@@ -29,7 +29,6 @@
     <file src="bin\Release\System.Diagnostics.Stopwatch.pdbx" target="lib\System.Diagnostics.Stopwatch.pdbx" />
     <file src="bin\Release\System.Diagnostics.Stopwatch.pe" target="lib\System.Diagnostics.Stopwatch.pe" />
     <file src="bin\Release\System.Diagnostics.Stopwatch.xml" target="lib\System.Diagnostics.Stopwatch.xml" />
-    <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
   </files>

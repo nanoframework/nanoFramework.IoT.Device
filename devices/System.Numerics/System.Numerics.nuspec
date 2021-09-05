@@ -30,7 +30,6 @@
     <file src="bin\Release\System.Numerics.pdbx" target="lib\System.Numerics.pdbx" />
     <file src="bin\Release\System.Numerics.pe" target="lib\System.Numerics.pe" />
     <file src="bin\Release\System.Numerics.xml" target="lib\System.Numerics.xml" />
-    <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
   </files>

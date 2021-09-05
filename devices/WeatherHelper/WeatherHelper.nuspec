@@ -35,7 +35,6 @@
     <file src="bin\Release\Iot.Device.Common.WeatherHelper.pdbx" target="lib\Iot.Device.Common.WeatherHelper.pdbx" />
     <file src="bin\Release\Iot.Device.Common.WeatherHelper.pe" target="lib\Iot.Device.Common.WeatherHelper.pe" />
     <file src="bin\Release\Iot.Device.Common.WeatherHelper.xml" target="lib\Iot.Device.Common.WeatherHelper.xml" />
-    <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
   </files>
