@@ -99,7 +99,8 @@ steps:
             Write-host "Building from PR"
 
             # get files changed in PR, if this is a PR
-            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            # can get max of 100 files using this method (for more requires paging)
+            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
             # filter removed files              
             $files = $commit.where{$_.status -ne 'removed'}
@@ -129,7 +130,7 @@ steps:
         Write-host ""
 
         # pattern to select device folder name
-        $pattern = '(devices\/)(?<folder>.+)(\/)'
+        $pattern = '(devices\/)(?<folder>[a-zA-z.]+)(?>\/)'
 
         # filter out the collection
         $results = [Regex]::Matches($files1, $pattern)
