@@ -15,6 +15,7 @@
     <RootNamespace>System.Diagnostics.Stopwatch</RootNamespace>
     <AssemblyName>System.Diagnostics.Stopwatch</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\System.Diagnostics.Stopwatch.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
