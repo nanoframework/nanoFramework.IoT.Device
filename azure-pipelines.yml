@@ -129,7 +129,7 @@ steps:
         Write-host ""
 
         # pattern to select device folder name
-        $pattern = '(devices\/)(?<folder>\w+)(\/)'
+        $pattern = '(devices\/)(?<folder>.+)(\/)'
 
         # filter out the collection
         $results = [Regex]::Matches($files1, $pattern)
