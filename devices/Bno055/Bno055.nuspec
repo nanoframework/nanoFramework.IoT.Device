@@ -34,6 +34,11 @@
     <file src="bin\Release\Iot.Device.Bno055.pdbx" target="lib\Iot.Device.Bno055.pdbx" />
     <file src="bin\Release\Iot.Device.Bno055.pe" target="lib\Iot.Device.Bno055.pe" />
     <file src="bin\Release\Iot.Device.Bno055.xml" target="lib\Iot.Device.Bno055.xml" />
+    <file src="..\System.Buffers.Binary.BinaryPrimitives\bin\Release\System.Buffers.Binary.dll" target="lib\System.Buffers.Binary.dll" />
+    <file src="..\System.Buffers.Binary.BinaryPrimitives\bin\Release\System.Buffers.Binary.pdb" target="lib\System.Buffers.Binary.pdb" />
+    <file src="..\System.Buffers.Binary.BinaryPrimitives\bin\Release\System.Buffers.Binary.pdbx" target="lib\System.Buffers.Binary.pdbx" />
+    <file src="..\System.Buffers.Binary.BinaryPrimitives\bin\Release\System.Buffers.Binary.pe" target="lib\System.Buffers.Binary.pe" />
+    <file src="..\System.Buffers.Binary.BinaryPrimitives\bin\Release\System.Buffers.Binary.xml" target="lib\System.Buffers.Binary.xml" />
     <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
