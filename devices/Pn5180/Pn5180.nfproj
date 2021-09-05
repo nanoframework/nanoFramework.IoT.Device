@@ -82,7 +82,7 @@
     <ProjectReference Include="..\Card\Mifare\Mifare.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-      <ItemGroup>
+    <ItemGroup>
     <ProjectReference Include="..\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
   </ItemGroup>
     <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />

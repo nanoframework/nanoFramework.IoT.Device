@@ -92,7 +92,7 @@
     <ProjectReference Include="..\Card\Mifare\Mifare.nfproj" />
     <ProjectReference Include="..\Card\Ultralight\Ultralight.nfproj" />
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
   </ItemGroup>
   <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
