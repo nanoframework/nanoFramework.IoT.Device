@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Multiplexing", "Multiplexing.nfproj", "{82EFB396-B670-412D-871A-5C32EE51D472}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82EFB396-B670-412D-871A-5C32EE51D472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82EFB396-B670-412D-871A-5C32EE51D472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82EFB396-B670-412D-871A-5C32EE51D472}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{82EFB396-B670-412D-871A-5C32EE51D472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82EFB396-B670-412D-871A-5C32EE51D472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82EFB396-B670-412D-871A-5C32EE51D472}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23AD8C74-625B-4F79-9A1B-44C5211E8EDF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.System.Buffers.Binary.BinaryPrimitives</id>
+    <version>$version$</version>
+    <title>nanoFramework.System.Buffers.Binary.BinaryPrimitives</title>
+    <authors>nanoFramework project contributors</authors>
+    <owners>nanoFramework project contributors,dotnetfoundation</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET System.Buffers.Binary.BinaryPrimitives for .NET nanoFramework C# projects.</description>
+    <summary>System.Buffers.Binary.BinaryPrimitives assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf System.Buffers.Binary.BinaryPrimitives</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\System.Buffers.Binary.dll" target="lib\System.Buffers.Binary.dll" />
+    <file src="bin\Release\System.Buffers.Binary.pdb" target="lib\System.Buffers.Binary.pdb" />
+    <file src="bin\Release\System.Buffers.Binary.pdbx" target="lib\System.Buffers.Binary.pdbx" />
+    <file src="bin\Release\System.Buffers.Binary.pe" target="lib\System.Buffers.Binary.pe" />
+    <file src="bin\Release\System.Buffers.Binary.xml" target="lib\System.Buffers.Binary.xml" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
