@@ -49,7 +49,10 @@ string[] categoriesToDisplay = new string[]
     "protocol",
     "power",
     "dac",
-    "eeprom"
+    "eeprom",
+    "helper",
+    "system",
+    "lidar"
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -109,6 +112,9 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "multiplexer", null },
     { "dac", "Digital/Analog converters" },
     { "eeprom", "EEPROM" },
+    { "helper", "Iot.Device helpers and common" },
+    { "system", ".NET System libraries" },
+    { "lidar", "Lidar" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()
@@ -198,7 +204,25 @@ string GetDeviceListing(string devicesPath, IEnumerable<DeviceInfo> devices)
     var deviceListing = new StringBuilder();
     foreach (DeviceInfo device in devices)
     {
-        deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+        if (device.Name.StartsWith("System"))
+        {
+            deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+        }
+        else
+        {
+            if ((device.Name == "NumberHelper") || (device.Name == "WeatherHelper"))
+            {
+                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Common.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Common.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+            }
+            else if (device.Name == "Card")
+            {
+                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.CardRfid.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.CardRfid/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+            }
+            else
+            {
+                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+            }
+        }
     }
 
     return deviceListing.ToString();
