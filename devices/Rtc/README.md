@@ -1,10 +1,10 @@
 # Realtime Clock
-The RTC devices supported by the project include DS1307, DS3231, PCF8563 / BM8563.
+The RTC devices supported by the project include DS1307, DS3231, PCF8563 (or compatible BM8563).
 
 ## Documentation
 - DS1307 [datasheet](https://cdn.datasheetspdf.com/pdf-down/D/S/1/DS1307-Maxim.pdf)
 - DS3231 [datasheet](https://datasheets.maximintegrated.com/en/ds/DS3231.pdf)
-- PCF8563 [datasheet](https://cdn.datasheetspdf.com/pdf-down/P/C/F/PCF-856.pdf)
+- PCF8563 / BM8563 [datasheet](https://cdn.datasheetspdf.com/pdf-down/P/C/F/PCF-856.pdf)
 
 ## Board
 
@@ -14,7 +14,7 @@ The RTC devices supported by the project include DS1307, DS3231, PCF8563 / BM856
 
 ### Hardware Required
 
-- DS1307/DS3231/PCF8563
+- DS1307/DS3231/PCF8563/BM8563
 - Male/Female Jumper Wires
  
 ```C#
