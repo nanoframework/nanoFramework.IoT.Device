@@ -4,7 +4,7 @@ The AK8963 is a magnetometer that can be controlled either thru I2C either thru 
 
 ## Usage
 
-You can find an example in the [sample](./samples/ak8963.sample.cs) directory. Usage is straight forward including the possibility to have a calibration.
+You can find an example in the [sample](./samples/Program.cs) directory. Usage is straight forward including the possibility to have a calibration.
 
 ```csharp
 var mpui2CConnectionSettingmpus = new I2cConnectionSettings(1, Ak8963.Ak8963.DefaultI2cAddress);
@@ -39,7 +39,7 @@ Console.WriteLine($"Mag Y = {ak8963.MagnometerBias.Y}");
 Console.WriteLine($"Mag Z = {ak8963.MagnometerBias.Z}");
 ```
 
-You will find a full example on how to extract raw data without calibration on the [MPU9250 sample](../Mpu9250/samples/Mpu9250.sample.cs).
+You will find a full example on how to extract raw data without calibration on the [MPU9250 sample](../Mpu9250/samples/Program.cs).
 
 If no calibration is performed, you will get a raw data cloud which looks like this:
 
