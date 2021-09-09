@@ -22,8 +22,8 @@ using System.Device.I2c;
 using Iot.Device.Rtc;
 using nanoFramework.Hardware.Esp32;
 
-// The I2C pins 21 and 22 in the sample below are MCU specific
-// Please double check it in your MCU datasheet
+// The I2C pins 21 and 22 in the sample below are ESP32 specific and may differ from other platforms.
+// Please double check your device datasheet.
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
