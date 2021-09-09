@@ -197,7 +197,7 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// True if there is a data to read
         /// </summary>
-        public bool HasDataToRead => (ReadByte(Register.ST1) & 0x01) == 0x01;
+        public bool HasDataToRead => (ReadByte(Register.DATA_READY_STATUS) & 0x01) == 0x01;
 
         /// <summary>
         /// Check if the version is the correct one (0x48). This is fixed for this device
@@ -263,28 +263,28 @@ namespace Iot.Device.Magnetometer
 
             ReadBytes(Register.HXL, rawData);
             // In continuous mode, make sure to read the ST2 data to clear up
-            if ((_measurementMode == MeasurementMode.ContinuousMeasurement100Hz) ||
-                (_measurementMode == MeasurementMode.ContinuousMeasurement8Hz))
-            {
-                ReadByte(Register.ST2);
-            }
+            //if ((_measurementMode == MeasurementMode.ContinuousMeasurement100Hz) ||
+            //    (_measurementMode == MeasurementMode.ContinuousMeasurement8Hz))
+            //{
+            //    ReadByte(Register.ST2);
+            //}
 
             Vector3 magneto = new Vector3();
             magneto.X = BinaryPrimitives.ReadInt16LittleEndian(rawData);
             magneto.Y = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(2));
             magneto.Z = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(4));
 
-            if (OutputBitMode == OutputBitMode.Output16bit)
-            {
-                // From the documentation range is from 32760 which does represent 4912 µT
-                // result of 4912.0f / 32760.0f
-                magneto *= 0.1499389499389499f;
-            }
-            else
-            {
-                // result of 4912.0f / 8192.0f
-                magneto *= 0.599609375f;
-            }
+            //if (OutputBitMode == OutputBitMode.Output16bit)
+            //{
+            //    // From the documentation range is from 32760 which does represent 4912 µT
+            //    // result of 4912.0f / 32760.0f
+            //    magneto *= 0.1499389499389499f;
+            //}
+            //else
+            //{
+            //    // result of 4912.0f / 8192.0f
+            //    magneto *= 0.599609375f;
+            //}
 
             return magneto;
 

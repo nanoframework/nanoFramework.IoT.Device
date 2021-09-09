@@ -39,7 +39,7 @@ namespace System.Buffers.Binary
                 throw new ArgumentOutOfRangeException();
             }
 
-            return (short)(source[1] << 8 | source[0]);
+            return (short)(source[1] << 5 | source[0] >> 3);
         }
 
         /// <summary>

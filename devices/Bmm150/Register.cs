@@ -19,39 +19,39 @@ namespace Iot.Device.Magnetometer
         INFO = 0x01,
 
         /// <summary>
-        /// ST1: Status 1
+        /// DATA_READY_STATUS: Page 25, data ready status
         /// </summary>
-        ST1 = 0x02,
+        DATA_READY_STATUS = 0x48,
 
         /// <summary>
         /// X-axis measurement data lower 8bit
         /// </summary>
-        HXL = 0x03,
+        HXL = 0x42,
 
         /// <summary>
         /// X-axis measurement data higher 8bit
         /// </summary>
-        HXH = 0x04,
+        HXH = 0x43,
 
         /// <summary>
         /// Y-axis measurement data lower 8bit
         /// </summary>
-        HYL = 0x05,
+        HYL = 0x44,
 
         /// <summary>
         /// Y-axis measurement data higher 8bit
         /// </summary>
-        HYH = 0x06,
+        HYH = 0x45,
 
         /// <summary>
         /// Z-axis measurement data lower 8bit
         /// </summary>
-        HZL = 0x07,
+        HZL = 0x46,
 
         /// <summary>
         /// Z-axis measurement data higher 8bit
         /// </summary>
-        HZH = 0x08,
+        HZH = 0x47,
 
         /// <summary>
         /// ST2: Status 2
