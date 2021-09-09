@@ -26,8 +26,10 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// Default I2C address for the Bmm150
+        /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10
+        /// more info: https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L163
         /// </summary>
-        public const byte DefaultI2cAddress = 0x13;
+        public const byte DefaultI2cAddress = 0x10;
 
         /// <summary>
         /// Default timeout to use when timeout is not provided in the reading methods
@@ -57,13 +59,20 @@ namespace Iot.Device.Magnetometer
             _Bmm150Interface = Bmm150Interface;
 
             // Set Sleep mode
-            SpanByte sleepMode = new byte[]
-            {
-                (byte)Register.POWER_CONTROL_ADDR, 0b_0000_0001
-            };  
-            _i2cDevice.Write(sleepMode);
+            //SpanByte sleepMode = new byte[]
+            //{
+            //    (byte)Register.POWER_CONTROL_ADDR, 0b_0000_0001
+            //};  
+            //_i2cDevice.Write(sleepMode);
+
+            WriteRegister(Register.POWER_CONTROL_ADDR, 0x01);
 
             Thread.Sleep(100);
+
+            if (!IsVersionCorrect())
+            {
+                throw new IOException($"This device does not contain the correct signature 0x48 for a Bmm150");
+            }
 
             // Set "Normal Mode"
             SpanByte normalMode = new byte[]
@@ -81,10 +90,7 @@ namespace Iot.Device.Magnetometer
             //_shouldDispose = shouldDispose;
             //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
             //WriteRegister(Register.CNTL, mode);
-            if (!IsVersionCorrect())
-            {
-                throw new IOException($"This device does not contain the correct signature 0x48 for a Bmm150");
-            }
+            
         }
 
         /// <summary>
