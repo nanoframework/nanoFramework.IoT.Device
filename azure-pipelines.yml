@@ -130,13 +130,15 @@ steps:
         Write-host ""
 
         # pattern to select device folder name
-        $pattern = '(devices\/)(?<folder>[a-zA-z.]+)(?>\/)'
+        $pattern = '(devices\/)(?<folder>[a-zA-Z0-9._]+)(?>\/)'
 
         # filter out the collection
         $results = [Regex]::Matches($files1, $pattern)
 
         # get unique folder names
         $deviceFolders = $results | Sort-Object |  Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
+
+        Write-host "Found $($deviceFolders.count) packages to build"
     }
     else
     {
