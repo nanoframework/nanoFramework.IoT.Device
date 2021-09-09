@@ -150,6 +150,9 @@ steps:
 
     foreach ($folder in $deviceFolders)
     {
+        "" | Write-Host -ForegroundColor Yellow
+        "***********************" | Write-Host -ForegroundColor Yellow
+        "***********************" | Write-Host -ForegroundColor Yellow
         "Processing '$folder'..." | Write-Host -ForegroundColor Yellow
         
         # try to find the solution
