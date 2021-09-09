@@ -9,10 +9,10 @@ using System.Numerics;
 using Iot.Device.Magnetometer;
 
 //I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.DefaultI2cAddress);
-//using Bmm150 ak8963 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
+//using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
 //Debug.WriteLine(
 //    "Magnetometer calibration is taking couple of seconds, move your sensor in all possible directions! Make sure you don't have a magnet or phone close by.");
-//Vector3 mag = ak8963.CalibrateMagnetometer();
+//Vector3 mag = bmm150.CalibrateMagnetometer();
 //Debug.WriteLine($"Bias:");
 //Debug.WriteLine($"Mag X = {mag.X}");
 //Debug.WriteLine($"Mag Y = {mag.Y}");
@@ -22,7 +22,7 @@ using Iot.Device.Magnetometer;
 
 while (true)
 {
-    //Vector3 magne = ak8963.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
+    //Vector3 magne = bmm150.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
     //Debug.WriteLine($"Mag X = {magne.X,15}");
     //Debug.WriteLine($"Mag Y = {magne.Y,15}");
     //Debug.WriteLine($"Mag Z = {magne.Z,15}");

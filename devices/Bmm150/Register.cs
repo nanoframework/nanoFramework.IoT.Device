@@ -4,7 +4,7 @@
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// Registers of the AK8963.
+    /// Registers of the Bmm150.
     /// </summary>
     internal enum Register
     {

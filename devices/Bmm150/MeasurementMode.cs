@@ -4,7 +4,7 @@
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// Measurement used by the AK8963
+    /// Measurement used by the Bmm150
     /// </summary>
     public enum MeasurementMode
     {

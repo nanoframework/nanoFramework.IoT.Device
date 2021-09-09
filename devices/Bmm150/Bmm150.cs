@@ -12,20 +12,20 @@ using System.Threading;
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// AK8963 class implementing a magnetometer
+    /// Bmm150 class implementing a magnetometer
     /// </summary>
-    [Interface("AK8963 class implementing a magnetometer")]
+    [Interface("Bmm150 class implementing a magnetometer")]
     public sealed class Bmm150 : IDisposable
     {
         private I2cDevice _i2cDevice;
         private MeasurementMode _measurementMode;
         private OutputBitMode _outputBitMode;
         private bool _selfTest = false;
-        private Bmm150I2cBase _ak8963Interface;
+        private Bmm150I2cBase _Bmm150Interface;
         private bool _shouldDispose = true;
 
         /// <summary>
-        /// Default I2C address for the AK8963
+        /// Default I2C address for the Bmm150
         /// </summary>
         public const byte DefaultI2cAddress = 0x0C;
 
@@ -36,7 +36,7 @@ namespace Iot.Device.Magnetometer
         public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        /// Default constructor for an independent AK8963
+        /// Default constructor for an independent Bmm150
         /// </summary>
         /// <param name="i2CDevice">The I2C device</param>
         public Bmm150(I2cDevice i2CDevice)
@@ -45,16 +45,16 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Constructor to use if AK8963 is behind another element and need a special I2C protocol like
+        /// Constructor to use if Bmm150 is behind another element and need a special I2C protocol like
         /// when used with the MPU9250
         /// </summary>
         /// <param name="i2cDevice">The I2C device</param>
-        /// <param name="ak8963Interface">The specific interface to communicate with the AK8963</param>
+        /// <param name="Bmm150Interface">The specific interface to communicate with the Bmm150</param>
         /// <param name="shouldDispose">True to dispose the I2C device when class is disposed</param>
-        public Bmm150(I2cDevice i2cDevice, Bmm150I2cBase ak8963Interface, bool shouldDispose = true)
+        public Bmm150(I2cDevice i2cDevice, Bmm150I2cBase Bmm150Interface, bool shouldDispose = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
-            _ak8963Interface = ak8963Interface;
+            _Bmm150Interface = Bmm150Interface;
             // Initialize the default modes
             _measurementMode = MeasurementMode.PowerDown;
             _outputBitMode = OutputBitMode.Output14bit;
@@ -64,7 +64,7 @@ namespace Iot.Device.Magnetometer
             WriteRegister(Register.CNTL, mode);
             if (!IsVersionCorrect())
             {
-                throw new IOException($"This device does not contain the correct signature 0x48 for a AK8963");
+                throw new IOException($"This device does not contain the correct signature 0x48 for a Bmm150");
             }
         }
 
@@ -78,7 +78,7 @@ namespace Iot.Device.Magnetometer
             _measurementMode = MeasurementMode.PowerDown;
             _outputBitMode = OutputBitMode.Output14bit;
             _selfTest = false;
-            // When powering the AK893, doc says 50 ms needed
+            // When powering the Bmm150, doc says 50 ms needed
             Thread.Sleep(50);
         }
 
@@ -368,11 +368,11 @@ namespace Iot.Device.Magnetometer
             }
         }
 
-        private void WriteRegister(Register reg, byte data) => _ak8963Interface.WriteRegister(_i2cDevice, (byte)reg, data);
+        private void WriteRegister(Register reg, byte data) => _Bmm150Interface.WriteRegister(_i2cDevice, (byte)reg, data);
 
-        private byte ReadByte(Register reg) => _ak8963Interface.ReadByte(_i2cDevice, (byte)reg);
+        private byte ReadByte(Register reg) => _Bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
 
-        private void ReadBytes(Register reg, SpanByte readBytes) => _ak8963Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
+        private void ReadBytes(Register reg, SpanByte readBytes) => _Bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
 
         /// <summary>
         /// Cleanup everything

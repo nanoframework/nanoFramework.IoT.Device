@@ -7,7 +7,7 @@ using System.Device.I2c;
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// Default I2C interface for the AK8963
+    /// Default I2C interface for the Bmm150
     /// </summary>
     public class Bmm150I2c : Bmm150I2cBase
     {
