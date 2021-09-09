@@ -11,7 +11,7 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// WIA: Device ID
         /// </summary>
-        WIA = 0x00,
+        WIA = 0x40,
 
         /// <summary>
         /// INFO: Information
@@ -105,5 +105,15 @@ namespace Iot.Device.Magnetometer
         /// Magnetic sensor Z-axis sensitivity adjustment value
         /// </summary>
         ASAZ = 0x12,
+
+        /// <summary>
+        /// Power control address
+        /// </summary>
+        POWER_CONTROL_ADDR = 0x4B,
+
+        /// <summary>
+        /// Op mode address
+        /// </summary>
+        OP_MODE_ADDR = 0x4C,
     }
 }

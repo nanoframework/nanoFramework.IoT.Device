@@ -14,8 +14,13 @@ using nanoFramework.Hardware.Esp32;
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
-//I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.DefaultI2cAddress);
-//using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
+I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.DefaultI2cAddress);
+
+using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
+
+
+
+
 //Debug.WriteLine(
 //    "Magnetometer calibration is taking couple of seconds, move your sensor in all possible directions! Make sure you don't have a magnet or phone close by.");
 //Vector3 mag = bmm150.CalibrateMagnetometer();

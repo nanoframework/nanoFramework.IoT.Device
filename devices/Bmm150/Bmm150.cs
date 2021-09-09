@@ -27,7 +27,7 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Default I2C address for the Bmm150
         /// </summary>
-        public const byte DefaultI2cAddress = 0x0C;
+        public const byte DefaultI2cAddress = 0x13;
 
         /// <summary>
         /// Default timeout to use when timeout is not provided in the reading methods
@@ -55,13 +55,32 @@ namespace Iot.Device.Magnetometer
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _Bmm150Interface = Bmm150Interface;
+
+            // Set Sleep mode
+            SpanByte sleepMode = new byte[]
+            {
+                (byte)Register.POWER_CONTROL_ADDR, 0b_0000_0001
+            };  
+            _i2cDevice.Write(sleepMode);
+
+            Thread.Sleep(100);
+
+            // Set "Normal Mode"
+            SpanByte normalMode = new byte[]
+            {
+                (byte)Register.OP_MODE_ADDR, 0b_0000_0000
+            };
+            _i2cDevice.Write(normalMode);
+
+            Thread.Sleep(3);
+
             // Initialize the default modes
-            _measurementMode = MeasurementMode.PowerDown;
-            _outputBitMode = OutputBitMode.Output14bit;
-            _selfTest = false;
-            _shouldDispose = shouldDispose;
-            byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
-            WriteRegister(Register.CNTL, mode);
+            //_measurementMode = MeasurementMode.PowerDown;
+            //_outputBitMode = OutputBitMode.Output14bit;
+            //_selfTest = false;
+            //_shouldDispose = shouldDispose;
+            //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
+            //WriteRegister(Register.CNTL, mode);
             if (!IsVersionCorrect())
             {
                 throw new IOException($"This device does not contain the correct signature 0x48 for a Bmm150");
@@ -182,7 +201,7 @@ namespace Iot.Device.Magnetometer
         /// <returns>Returns true if the version match</returns>
         public bool IsVersionCorrect()
         {
-            return ReadByte(Register.WIA) == 0x48;
+            return ReadByte(Register.WIA) == 0x32;
         }
 
         /// <summary>
