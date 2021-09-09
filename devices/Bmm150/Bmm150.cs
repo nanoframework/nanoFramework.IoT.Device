@@ -57,40 +57,40 @@ namespace Iot.Device.Magnetometer
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _Bmm150Interface = Bmm150Interface;
+            _selfTest = false;
+            _shouldDispose = shouldDispose;
 
-            // Set Sleep mode
-            //SpanByte sleepMode = new byte[]
-            //{
-            //    (byte)Register.POWER_CONTROL_ADDR, 0b_0000_0001
-            //};  
-            //_i2cDevice.Write(sleepMode);
-
-            WriteRegister(Register.POWER_CONTROL_ADDR, 0x01);
-
-            Thread.Sleep(100);
-
-            if (!IsVersionCorrect())
-            {
-                throw new IOException($"This device does not contain the correct signature 0x48 for a Bmm150");
-            }
-
-            // Set "Normal Mode"
-            SpanByte normalMode = new byte[]
-            {
-                (byte)Register.OP_MODE_ADDR, 0b_0000_0000
-            };
-            _i2cDevice.Write(normalMode);
-
-            Thread.Sleep(3);
+            Initialize();
 
             // Initialize the default modes
             //_measurementMode = MeasurementMode.PowerDown;
             //_outputBitMode = OutputBitMode.Output14bit;
-            //_selfTest = false;
-            //_shouldDispose = shouldDispose;
+            
             //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
             //WriteRegister(Register.CNTL, mode);
-            
+
+        }
+
+        /// <summary>
+        /// Starts the Bmm150 init sequence
+        /// </summary>
+        private void Initialize()
+        {
+            // Set Sleep mode
+            WriteRegister(Register.POWER_CONTROL_ADDR, 0x01);
+            Wait(6);
+
+            // Check for a valid chip ID
+            if (!IsVersionCorrect())
+            {
+                throw new IOException($"This device does not contain the correct signature (0x32) for a Bmm150");
+            }
+
+            // Set "Normal Mode"
+            WriteRegister(Register.OP_MODE_ADDR, 0x00);
+
+            // TODO: Check if we should set it in Lowe Power mode also
+            // https://github.com/Seeed-Studio/Grove_3_Axis_Compass_V2.0_BMM150/blob/master/bmm150.cpp
         }
 
         /// <summary>
@@ -398,6 +398,11 @@ namespace Iot.Device.Magnetometer
         private byte ReadByte(Register reg) => _Bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
 
         private void ReadBytes(Register reg, SpanByte readBytes) => _Bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
+
+        private void Wait(int milisecondsTimeout)
+        {
+            Thread.Sleep(milisecondsTimeout);
+        }
 
         /// <summary>
         /// Cleanup everything
