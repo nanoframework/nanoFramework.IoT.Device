@@ -23,6 +23,7 @@ namespace Iot.Device.Magnetometer
         private bool _selfTest = false;
         private Bmm150I2cBase _Bmm150Interface;
         private bool _shouldDispose = true;
+        private Bmm150TrimRegister trimData;
 
         /// <summary>
         /// Default I2C address for the Bmm150
@@ -61,14 +62,41 @@ namespace Iot.Device.Magnetometer
             _shouldDispose = shouldDispose;
 
             Initialize();
+            // read trim registers
+            SpanByte trim_x1y1 = new byte[2];
+            SpanByte trim_xyz_data = new byte[4];
+            SpanByte trim_xy1xy2 = new byte[10];
+            int temp_msb = 0;
+
+            ReadBytes(Register.BMM150_DIG_X1, trim_x1y1);
+            ReadBytes(Register.BMM150_DIG_Z4_LSB, trim_xyz_data);
+            ReadBytes(Register.BMM150_DIG_Z2_LSB, trim_xy1xy2);
+
+            trimData = new Bmm150TrimRegister();
+
+            trimData.dig_x1 = (byte)trim_x1y1[0];
+            trimData.dig_y1 = (byte)trim_x1y1[1];
+            trimData.dig_x2 = (byte)trim_xyz_data[2];
+            trimData.dig_y2 = (byte)trim_xyz_data[3];
+            temp_msb = ((int)trim_xy1xy2[3]) << 8;
+            trimData.dig_z1 = (int)(temp_msb | trim_xy1xy2[2]);
+            temp_msb = ((int)trim_xy1xy2[1]) << 8;
+            trimData.dig_z2 = (int)(temp_msb | trim_xy1xy2[0]);
+            temp_msb = ((int)trim_xy1xy2[7]) << 8;
+            trimData.dig_z3 = (int)(temp_msb | trim_xy1xy2[6]);
+            temp_msb = ((int)trim_xyz_data[1]) << 8;
+            trimData.dig_z4 = (int)(temp_msb | trim_xyz_data[0]);
+            trimData.dig_xy1 = trim_xy1xy2[9];
+            trimData.dig_xy2 = (int)trim_xy1xy2[8];
+            temp_msb = ((int)(trim_xy1xy2[5] & 0x7F)) << 8;
+            trimData.dig_xyz1 = (int)(temp_msb | trim_xy1xy2[4]);
 
             // Initialize the default modes
             //_measurementMode = MeasurementMode.PowerDown;
             //_outputBitMode = OutputBitMode.Output14bit;
-            
+
             //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
             //WriteRegister(Register.CNTL, mode);
-
         }
 
         /// <summary>
@@ -247,7 +275,8 @@ namespace Iot.Device.Magnetometer
         /// <returns>The data from the magnetometer</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
-            SpanByte rawData = new byte[6];
+            SpanByte rawData = new byte[8];
+            
             // Wait for a data to be present
             if (waitForData)
             {
@@ -262,32 +291,115 @@ namespace Iot.Device.Magnetometer
             }
 
             ReadBytes(Register.HXL, rawData);
-            // In continuous mode, make sure to read the ST2 data to clear up
-            //if ((_measurementMode == MeasurementMode.ContinuousMeasurement100Hz) ||
-            //    (_measurementMode == MeasurementMode.ContinuousMeasurement8Hz))
-            //{
-            //    ReadByte(Register.ST2);
-            //}
 
-            Vector3 magneto = new Vector3();
-            magneto.X = BinaryPrimitives.ReadInt16LittleEndian(rawData);
-            magneto.Y = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(2));
-            magneto.Z = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(4));
+            Vector3 magnetoRaw = new Vector3();
+            magnetoRaw.X = BinaryPrimitives.ReadInt16LittleEndian(rawData);
+            magnetoRaw.Y = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(2));
+            magnetoRaw.Z = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(4));
+            
+            var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
 
-            //if (OutputBitMode == OutputBitMode.Output16bit)
-            //{
-            //    // From the documentation range is from 32760 which does represent 4912 µT
-            //    // result of 4912.0f / 32760.0f
-            //    magneto *= 0.1499389499389499f;
-            //}
-            //else
-            //{
-            //    // result of 4912.0f / 8192.0f
-            //    magneto *= 0.599609375f;
-            //}
+            Vector3 magnetoCompensated = new Vector3();
+            magnetoCompensated.X = compensate_x(magnetoRaw, rhall, trimData);
+            magnetoCompensated.Y = compensate_y(magnetoRaw, rhall, trimData);
+            magnetoCompensated.Z = compensate_z(magnetoRaw, rhall, trimData);
 
-            return magneto;
+            return magnetoCompensated;
+        }
 
+        private double compensate_x(Vector3 raw, short rhall, Bmm150TrimRegister trimData)
+        {
+            float retval = 0;
+            float process_comp_x0;
+            float process_comp_x1;
+            float process_comp_x2;
+            float process_comp_x3;
+            float process_comp_x4;
+            int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
+
+            /* Overflow condition check */
+            if ((raw.X != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
+            {
+                /* Processing compensation equations */
+                process_comp_x0 = (((float)trimData.dig_xyz1) * 16384.0f / rhall);
+                retval = (process_comp_x0 - 16384.0f);
+                process_comp_x1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
+                process_comp_x2 = process_comp_x1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
+                process_comp_x3 = ((float)trimData.dig_x2) + 160.0f;
+                process_comp_x4 = (float)(raw.X * ((process_comp_x2 + 256.0f) * process_comp_x3));
+                retval = ((process_comp_x4 / 8192.0f) + (((float)trimData.dig_x1) * 8.0f)) / 16.0f;
+            }
+            else
+            {
+                /* Overflow, set output to 0.0f */
+                retval = 0.0f;
+            }
+
+            return retval;
+        }
+
+        private double compensate_y(Vector3 raw, short rhall, Bmm150TrimRegister trimData)
+        {
+            float retval = 0;
+            float process_comp_y0;
+            float process_comp_y1;
+            float process_comp_y2;
+            float process_comp_y3;
+            float process_comp_y4;
+            int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
+
+            /* Overflow condition check */
+            if ((raw.Y != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
+            {
+                /* Processing compensation equations */
+                process_comp_y0 = ((float)trimData.dig_xyz1) * 16384.0f / rhall;
+                retval = process_comp_y0 - 16384.0f;
+                process_comp_y1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
+                process_comp_y2 = process_comp_y1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
+                process_comp_y3 = ((float)trimData.dig_y2) + 160.0f;
+                process_comp_y4 = (float)(raw.Y * (((process_comp_y2) + 256.0f) * process_comp_y3));
+                retval = ((process_comp_y4 / 8192.0f) + (((float)trimData.dig_y1) * 8.0f)) / 16.0f;
+            }
+            else
+            {
+                /* Overflow, set output to 0.0f */
+                retval = 0.0f;
+            }
+
+            return retval;
+        }
+
+        private double compensate_z(Vector3 raw, short rhall, Bmm150TrimRegister trimData)
+        {
+            float retval = 0;
+            float process_comp_z0;
+            float process_comp_z1;
+            float process_comp_z2;
+            float process_comp_z3;
+            float process_comp_z4;
+            float process_comp_z5;
+            int BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL = -16384;
+
+            /* Overflow condition check */
+            if ((raw.Z != BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL) && (trimData.dig_z2 != 0) &&
+                (trimData.dig_z1 != 0) && (trimData.dig_xyz1 != 0) && (rhall != 0))
+            {
+                /* Processing compensation equations */
+                process_comp_z0 = ((float)raw.Z) - ((float)trimData.dig_z4);
+                process_comp_z1 = ((float)rhall) - ((float)trimData.dig_xyz1);
+                process_comp_z2 = (((float)trimData.dig_z3) * process_comp_z1);
+                process_comp_z3 = ((float)trimData.dig_z1) * ((float)rhall) / 32768.0f;
+                process_comp_z4 = ((float)trimData.dig_z2) + process_comp_z3;
+                process_comp_z5 = (process_comp_z0 * 131072.0f) - process_comp_z2;
+                retval = (process_comp_z5 / ((process_comp_z4) * 4.0f)) / 16.0f;
+            }
+            else
+            {
+                /* Overflow, set output to 0.0f */
+                retval = 0.0f;
+            }
+
+            return retval;
         }
 
         /// <summary>

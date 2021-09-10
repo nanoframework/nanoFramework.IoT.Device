@@ -8,6 +8,10 @@ namespace Iot.Device.Magnetometer
     /// </summary>
     internal enum Register
     {
+        BMM150_DIG_X1 = 0x5D,
+        BMM150_DIG_Z4_LSB = 0x62,
+        BMM150_DIG_Z2_LSB = 0x68,
+
         /// <summary>
         /// WIA: Device ID
         /// </summary>
