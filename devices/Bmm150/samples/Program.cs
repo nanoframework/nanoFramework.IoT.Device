@@ -21,7 +21,7 @@ using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
 while (true)
 {
     Vector3 magne = bmm150.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
-    Debug.WriteLine($"Mag X = {magne.X,15}, Y = {magne.Y,15}, Z = {magne.Z,15}");
+    Debug.WriteLine($"{magne.X,15},{magne.Y,15},{magne.Z,15}");
     
     Thread.Sleep(100);
 }

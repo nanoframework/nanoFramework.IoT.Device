@@ -74,7 +74,7 @@ namespace Iot.Device.Magnetometer
         }
 
         private Bmm150TrimRegister ReadTrimRegisters()
-        {   
+        {
             // read trim registers
             SpanByte trim_x1y1 = new byte[2];
             SpanByte trim_xyz_data = new byte[4];
@@ -91,18 +91,13 @@ namespace Iot.Device.Magnetometer
             trimData.dig_y1 = (byte)trim_x1y1[1];
             trimData.dig_x2 = (byte)trim_xyz_data[2];
             trimData.dig_y2 = (byte)trim_xyz_data[3];
-            temp_msb = ((int)trim_xy1xy2[3]) << 8;
-            trimData.dig_z1 = (int)(temp_msb | trim_xy1xy2[2]);
-            temp_msb = ((int)trim_xy1xy2[1]) << 8;
-            trimData.dig_z2 = (int)(temp_msb | trim_xy1xy2[0]);
-            temp_msb = ((int)trim_xy1xy2[7]) << 8;
-            trimData.dig_z3 = (int)(temp_msb | trim_xy1xy2[6]);
-            temp_msb = ((int)trim_xyz_data[1]) << 8;
-            trimData.dig_z4 = (int)(temp_msb | trim_xyz_data[0]);
+            trimData.dig_z1 = trim_xy1xy2[3] << 8 | trim_xy1xy2[2];
+            trimData.dig_z2 = (short)(trim_xy1xy2[1] << 8 | trim_xy1xy2[0]);
+            trimData.dig_z3 = (short)(trim_xy1xy2[7] << 8 | trim_xy1xy2[6]);
+            trimData.dig_z4 = (short)(trim_xyz_data[1] << 8 | trim_xyz_data[0]);
             trimData.dig_xy1 = trim_xy1xy2[9];
-            trimData.dig_xy2 = (int)trim_xy1xy2[8];
-            temp_msb = ((int)(trim_xy1xy2[5] & 0x7F)) << 8;
-            trimData.dig_xyz1 = (int)(temp_msb | trim_xy1xy2[4]);
+            trimData.dig_xy2 = (sbyte)trim_xy1xy2[8];
+            trimData.dig_xyz1 = ((trim_xy1xy2[5] & 0x7F) << 8) | trim_xy1xy2[4];
 
             return trimData;
         }
@@ -282,9 +277,9 @@ namespace Iot.Device.Magnetometer
         /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
-        { 
+        {
             SpanByte rawData = new byte[8];
-            
+
             // Wait for a data to be present
             if (waitForData)
             {
@@ -325,25 +320,26 @@ namespace Iot.Device.Magnetometer
 
             /* Shift the MSB data to left by 5 bits */
             /* Multiply by 32 to get the shift left by 5 value */
-            rawData[0] = ((byte)((rawData[0] & (0xF8)) >> (0x03)));
-            var msb_data = ((short)((byte)rawData[1])) * 32;
-            magnetoRaw.X = (short)(msb_data | rawData[0]);
+            magnetoRaw.X = (rawData[1] & 0x7F) << 5 | rawData[0] >> 3;
+            if ((rawData[1] & 0x80) == 0x80)
+            {
+                magnetoRaw.X = -magnetoRaw.X;
+            }
 
             /* Shift the MSB data to left by 5 bits */
             /* Multiply by 32 to get the shift left by 5 value */
-            rawData[2] = ((byte)((rawData[2] & (0xF8)) >> (0x03)));
-            msb_data = ((short)((byte)rawData[3])) * 32;
-            magnetoRaw.Y = (short)(msb_data | rawData[2]);
+            magnetoRaw.Y = (rawData[3] & 0x07F) << 5 | rawData[2] >> 3;
+            if ((rawData[3] & 0x80) == 0x80)
+            {
+                magnetoRaw.Y = -magnetoRaw.Y;
+            }
 
             /* Shift the MSB data to left by 7 bits */
             /* Multiply by 128 to get the shift left by 7 value */
-            rawData[4] = ((byte)((rawData[4] & (0xFE)) >> (0x01)));
-            msb_data = ((short)((byte)rawData[5])) * 128;
-            magnetoRaw.Z = (short)(msb_data | rawData[4]);
+            magnetoRaw.Z = rawData[5] << 7 | rawData[4] >> 1;
 
             //var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
-            rawData[6] = ((byte)((rawData[6] & (0xFC)) >> (0x02)));
-            var rhall = (int)(((int)rawData[7] << 6) | rawData[6]);
+            var rhall = (rawData[7] << 8 | rawData[6]) >> 2;
 
             Vector3 magnetoCompensated = new Vector3();
             magnetoCompensated.X = compensate_x(magnetoRaw, rhall, _trimData);
