@@ -23,7 +23,7 @@ namespace Iot.Device.Magnetometer
         private bool _selfTest = false;
         private Bmm150I2cBase _Bmm150Interface;
         private bool _shouldDispose = true;
-        private Bmm150TrimRegister trimData;
+        private Bmm150TrimRegister _trimData;
 
         /// <summary>
         /// Default I2C address for the Bmm150
@@ -62,6 +62,19 @@ namespace Iot.Device.Magnetometer
             _shouldDispose = shouldDispose;
 
             Initialize();
+
+            _trimData = ReadTrimRegisters();
+
+            // Initialize the default modes
+            //_measurementMode = MeasurementMode.PowerDown;
+            //_outputBitMode = OutputBitMode.Output14bit;
+
+            //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
+            //WriteRegister(Register.CNTL, mode);
+        }
+
+        private Bmm150TrimRegister ReadTrimRegisters()
+        {   
             // read trim registers
             SpanByte trim_x1y1 = new byte[2];
             SpanByte trim_xyz_data = new byte[4];
@@ -72,7 +85,7 @@ namespace Iot.Device.Magnetometer
             ReadBytes(Register.BMM150_DIG_Z4_LSB, trim_xyz_data);
             ReadBytes(Register.BMM150_DIG_Z2_LSB, trim_xy1xy2);
 
-            trimData = new Bmm150TrimRegister();
+            var trimData = new Bmm150TrimRegister();
 
             trimData.dig_x1 = (byte)trim_x1y1[0];
             trimData.dig_y1 = (byte)trim_x1y1[1];
@@ -91,12 +104,7 @@ namespace Iot.Device.Magnetometer
             temp_msb = ((int)(trim_xy1xy2[5] & 0x7F)) << 8;
             trimData.dig_xyz1 = (int)(temp_msb | trim_xy1xy2[4]);
 
-            // Initialize the default modes
-            //_measurementMode = MeasurementMode.PowerDown;
-            //_outputBitMode = OutputBitMode.Output14bit;
-
-            //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
-            //WriteRegister(Register.CNTL, mode);
+            return trimData;
         }
 
         /// <summary>
@@ -274,7 +282,7 @@ namespace Iot.Device.Magnetometer
         /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
-        {
+        { 
             SpanByte rawData = new byte[8];
             
             // Wait for a data to be present
@@ -290,24 +298,62 @@ namespace Iot.Device.Magnetometer
                 }
             }
 
+
+            // https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921
+
             ReadBytes(Register.HXL, rawData);
 
             Vector3 magnetoRaw = new Vector3();
-            magnetoRaw.X = BinaryPrimitives.ReadInt16LittleEndian(rawData);
-            magnetoRaw.Y = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(2));
-            magnetoRaw.Z = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(4));
-            
-            var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
+            //magnetoRaw.X = BinaryPrimitives.ReadInt16LittleEndian(rawData);
+            //magnetoRaw.Y = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(2));
+            //magnetoRaw.Z = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(4));
+
+            //#define BMM150_DATA_X_MSK                         UINT8_C(0xF8)
+            //#define BMM150_DATA_X_POS                         UINT8_C(0x03)
+
+            //#define BMM150_DATA_Y_MSK                         UINT8_C(0xF8)
+            //#define BMM150_DATA_Y_POS                         UINT8_C(0x03)
+
+            //#define BMM150_DATA_Z_MSK                         UINT8_C(0xFE)
+            //#define BMM150_DATA_Z_POS                         UINT8_C(0x01)
+
+            //#define BMM150_DATA_RHALL_MSK                     UINT8_C(0xFC)
+            //#define BMM150_DATA_RHALL_POS                     UINT8_C(0x02)
+
+            // BMM150_GET_BITS(reg_data[0], BMM150_DATA_X);
+            // #define BMM150_GET_BITS(reg_data, bitname)        ((reg_data & (bitname##_MSK)) >> (bitname##_POS))
+
+            /* Shift the MSB data to left by 5 bits */
+            /* Multiply by 32 to get the shift left by 5 value */
+            rawData[0] = ((byte)((rawData[0] & (0xF8)) >> (0x03)));
+            var msb_data = ((short)((byte)rawData[1])) * 32;
+            magnetoRaw.X = (short)(msb_data | rawData[0]);
+
+            /* Shift the MSB data to left by 5 bits */
+            /* Multiply by 32 to get the shift left by 5 value */
+            rawData[2] = ((byte)((rawData[2] & (0xF8)) >> (0x03)));
+            msb_data = ((short)((byte)rawData[3])) * 32;
+            magnetoRaw.Y = (short)(msb_data | rawData[2]);
+
+            /* Shift the MSB data to left by 7 bits */
+            /* Multiply by 128 to get the shift left by 7 value */
+            rawData[4] = ((byte)((rawData[4] & (0xFE)) >> (0x01)));
+            msb_data = ((short)((byte)rawData[5])) * 128;
+            magnetoRaw.Z = (short)(msb_data | rawData[4]);
+
+            //var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
+            rawData[6] = ((byte)((rawData[6] & (0xFC)) >> (0x02)));
+            var rhall = (int)(((int)rawData[7] << 6) | rawData[6]);
 
             Vector3 magnetoCompensated = new Vector3();
-            magnetoCompensated.X = compensate_x(magnetoRaw, rhall, trimData);
-            magnetoCompensated.Y = compensate_y(magnetoRaw, rhall, trimData);
-            magnetoCompensated.Z = compensate_z(magnetoRaw, rhall, trimData);
+            magnetoCompensated.X = compensate_x(magnetoRaw, rhall, _trimData);
+            magnetoCompensated.Y = compensate_y(magnetoRaw, rhall, _trimData);
+            magnetoCompensated.Z = compensate_z(magnetoRaw, rhall, _trimData);
 
             return magnetoCompensated;
         }
 
-        private double compensate_x(Vector3 raw, short rhall, Bmm150TrimRegister trimData)
+        private double compensate_x(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
         {
             float retval = 0;
             float process_comp_x0;
@@ -338,7 +384,7 @@ namespace Iot.Device.Magnetometer
             return retval;
         }
 
-        private double compensate_y(Vector3 raw, short rhall, Bmm150TrimRegister trimData)
+        private double compensate_y(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
         {
             float retval = 0;
             float process_comp_y0;
@@ -369,7 +415,7 @@ namespace Iot.Device.Magnetometer
             return retval;
         }
 
-        private double compensate_z(Vector3 raw, short rhall, Bmm150TrimRegister trimData)
+        private double compensate_z(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
         {
             float retval = 0;
             float process_comp_z0;

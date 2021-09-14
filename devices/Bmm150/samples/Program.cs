@@ -18,20 +18,10 @@ I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.DefaultI2cAddr
 
 using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
 
-//Debug.WriteLine(
-//    "Magnetometer calibration is taking couple of seconds, move your sensor in all possible directions! Make sure you don't have a magnet or phone close by.");
-//Vector3 mag = bmm150.CalibrateMagnetometer();
-//Debug.WriteLine($"Bias:");
-//Debug.WriteLine($"Mag X = {mag.X}");
-//Debug.WriteLine($"Mag Y = {mag.Y}");
-//Debug.WriteLine($"Mag Z = {mag.Z}");
-//Debug.WriteLine("Press a key to continue");
-//Thread.Sleep(1000);
-
 while (true)
 {
     Vector3 magne = bmm150.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
     Debug.WriteLine($"Mag X = {magne.X,15}, Y = {magne.Y,15}, Z = {magne.Z,15}");
     
-    Thread.Sleep(200);
+    Thread.Sleep(100);
 }
