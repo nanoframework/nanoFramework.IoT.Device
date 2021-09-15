@@ -26,6 +26,7 @@ namespace Iot.Device.Magnetometer
         private bool _shouldDispose = true;
         public Bmm150TrimRegister _trimData;
         private Vector3 _calib;
+        private uint _rHall;
 
         /// <summary>
         /// Default I2C address for the Bmm150
@@ -327,12 +328,12 @@ namespace Iot.Device.Magnetometer
             }
 
             //var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
-            var rhall = (rawData[7] << 8 | rawData[6]) >> 2;
+            _rHall = (uint)(rawData[7] << 6 | rawData[6] >> 2);
 
             return magnetoRaw;
         }
 
-        private double compensate_x(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
+        private double compensate_x(double x, uint rhall, Bmm150TrimRegister trimData)
         {
             float retval = 0;
             float process_comp_x0;
@@ -343,7 +344,7 @@ namespace Iot.Device.Magnetometer
             int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
 
             /* Overflow condition check */
-            if ((raw.X != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
+            if ((x != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
             {
                 /* Processing compensation equations */
                 process_comp_x0 = (((float)trimData.dig_xyz1) * 16384.0f / rhall);
@@ -351,7 +352,7 @@ namespace Iot.Device.Magnetometer
                 process_comp_x1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
                 process_comp_x2 = process_comp_x1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
                 process_comp_x3 = ((float)trimData.dig_x2) + 160.0f;
-                process_comp_x4 = (float)(raw.X * ((process_comp_x2 + 256.0f) * process_comp_x3));
+                process_comp_x4 = (float)(x * ((process_comp_x2 + 256.0f) * process_comp_x3));
                 retval = ((process_comp_x4 / 8192.0f) + (((float)trimData.dig_x1) * 8.0f)) / 16.0f;
             }
             else
@@ -363,7 +364,7 @@ namespace Iot.Device.Magnetometer
             return retval;
         }
 
-        private double compensate_y(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
+        private double compensate_y(double y, uint rhall, Bmm150TrimRegister trimData)
         {
             float retval = 0;
             float process_comp_y0;
@@ -374,7 +375,7 @@ namespace Iot.Device.Magnetometer
             int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
 
             /* Overflow condition check */
-            if ((raw.Y != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
+            if ((y != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
             {
                 /* Processing compensation equations */
                 process_comp_y0 = ((float)trimData.dig_xyz1) * 16384.0f / rhall;
@@ -382,7 +383,7 @@ namespace Iot.Device.Magnetometer
                 process_comp_y1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
                 process_comp_y2 = process_comp_y1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
                 process_comp_y3 = ((float)trimData.dig_y2) + 160.0f;
-                process_comp_y4 = (float)(raw.Y * (((process_comp_y2) + 256.0f) * process_comp_y3));
+                process_comp_y4 = (float)(y * (((process_comp_y2) + 256.0f) * process_comp_y3));
                 retval = ((process_comp_y4 / 8192.0f) + (((float)trimData.dig_y1) * 8.0f)) / 16.0f;
             }
             else
@@ -394,7 +395,7 @@ namespace Iot.Device.Magnetometer
             return retval;
         }
 
-        private double compensate_z(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
+        private double compensate_z(double z, uint rhall, Bmm150TrimRegister trimData)
         {
             float retval = 0;
             float process_comp_z0;
@@ -406,11 +407,11 @@ namespace Iot.Device.Magnetometer
             int BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL = -16384;
 
             /* Overflow condition check */
-            if ((raw.Z != BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL) && (trimData.dig_z2 != 0) &&
+            if ((z != BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL) && (trimData.dig_z2 != 0) &&
                 (trimData.dig_z1 != 0) && (trimData.dig_xyz1 != 0) && (rhall != 0))
             {
                 /* Processing compensation equations */
-                process_comp_z0 = ((float)raw.Z) - ((float)trimData.dig_z4);
+                process_comp_z0 = ((float)z) - ((float)trimData.dig_z4);
                 process_comp_z1 = ((float)rhall) - ((float)trimData.dig_xyz1);
                 process_comp_z2 = (((float)trimData.dig_z3) * process_comp_z1);
                 process_comp_z3 = ((float)trimData.dig_z1) * ((float)rhall) / 32768.0f;
@@ -470,8 +471,11 @@ namespace Iot.Device.Magnetometer
 
             //magn *= MagnetometerAdjustment;
             //magn -= MagnetometerBias;
+            magn.X = compensate_x(magn.X - _calib.X, _rHall, _trimData);
+            magn.Y = compensate_y(magn.Y - _calib.Y, _rHall, _trimData);
+            magn.Z = compensate_z(magn.Z - _calib.Z, _rHall, _trimData);
 
-            return magn - _calib;
+            return magn;
         }
 
         // https://platformio.org/lib/show/12697/M5_BMM150
@@ -503,8 +507,8 @@ namespace Iot.Device.Magnetometer
                     mag_max.Z = (magData.Z > mag_max.Z) ? magData.Z : mag_max.Z;
                 }
 
-                Debug.WriteLine($"mag_min: {mag_min.X}, {mag_min.Y}, {mag_min.Z}");
-                Debug.WriteLine($"mag_max: {mag_max.X}, {mag_max.Y}, {mag_max.Z}");
+                //Debug.WriteLine($"mag_min: {mag_min.X}, {mag_min.Y}, {mag_min.Z}");
+                //Debug.WriteLine($"mag_max: {mag_max.X}, {mag_max.Y}, {mag_max.Z}");
 
                 Wait(100);
             }
