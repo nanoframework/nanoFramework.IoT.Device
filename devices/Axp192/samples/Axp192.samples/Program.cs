@@ -99,6 +99,13 @@ while (true)
         Debug.WriteLine($"  Status    : {power.GetInputPowerStatus()}");
         Debug.WriteLine($"  USB volt  : {power.GetUsbVoltageInput().Volts} V");
         Debug.WriteLine($"  USB Curr  : {power.GetUsbCurrentInput().Milliamperes} mA");
+        Debug.WriteLine($"Battery:");
+        Debug.WriteLine($"  Charge curr  : {power.GetBatteryChargeCurrent().Milliamperes} mA");
+        Debug.WriteLine($"  Status       : {power.GetBatteryChargingStatus()}");
+        Debug.WriteLine($"  Dicharge curr: {power.GetBatteryDischargeCurrent().Milliamperes} mA");
+        Debug.WriteLine($"  Inst Power   : {power.GetBatteryInstantaneousPower().Milliwatts} mW");
+        Debug.WriteLine($"  Voltage      : {power.GetBatteryVoltage().Volts} V");
+        Debug.WriteLine($"  Is battery   : {power.IsBatteryConnected()} ");
         dt = DateTime.UtcNow.AddSeconds(10);
     }
 
