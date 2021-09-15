@@ -5,6 +5,7 @@ using System;
 using System.Buffers.Binary;
 using System.Device.I2c;
 using System.Device.Model;
+using System.Diagnostics;
 using System.IO;
 using System.Numerics;
 using System.Threading;
@@ -24,6 +25,7 @@ namespace Iot.Device.Magnetometer
         private Bmm150I2cBase _Bmm150Interface;
         private bool _shouldDispose = true;
         public Bmm150TrimRegister _trimData;
+        private Vector3 _calib;
 
         /// <summary>
         /// Default I2C address for the Bmm150
@@ -294,7 +296,7 @@ namespace Iot.Device.Magnetometer
             }
 
 
-            // https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921
+            // https://github.com/BoschSensortec/BMM150-Sensor-API/blob/master/bmm150.c#L788
 
             ReadBytes(Register.HXL, rawData);
 
@@ -317,17 +319,17 @@ namespace Iot.Device.Magnetometer
 
             /* Shift the MSB data to left by 7 bits */
             /* Multiply by 128 to get the shift left by 7 value */
-            magnetoRaw.Z = rawData[5] << 7 | rawData[4] >> 1;
+            magnetoRaw.Z = (rawData[5] & 0x07F) << 7 | rawData[4] >> 1;
+
+            if ((rawData[5] & 0x80) == 0x80)
+            {
+                magnetoRaw.Z = -magnetoRaw.Z;
+            }
 
             //var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
             var rhall = (rawData[7] << 8 | rawData[6]) >> 2;
 
-            Vector3 magnetoCompensated = new Vector3();
-            magnetoCompensated.X = compensate_x(magnetoRaw, rhall, _trimData);
-            magnetoCompensated.Y = compensate_y(magnetoRaw, rhall, _trimData);
-            magnetoCompensated.Z = compensate_z(magnetoRaw, rhall, _trimData);
-
-            return magnetoCompensated;
+            return magnetoRaw;
         }
 
         private double compensate_x(Vector3 raw, int rhall, Bmm150TrimRegister trimData)
@@ -465,21 +467,23 @@ namespace Iot.Device.Magnetometer
         public Vector3 ReadMagnetometer(bool waitForData, TimeSpan timeout)
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
-            magn *= MagnetometerAdjustment;
-            magn -= MagnetometerBias;
-            return magn;
+
+            //magn *= MagnetometerAdjustment;
+            //magn -= MagnetometerBias;
+
+            return magn - _calib;
         }
 
         // https://platformio.org/lib/show/12697/M5_BMM150
-        public Vector3 bmm150_calibrate(int iterationsCount = 200)
+        public void bmm150_calibrate(int iterationsCount = 200)
         {
-            Vector3 mag_min = new Vector3() { X = 2000, Y = 2000, Z = 2000 };
-            Vector3 mag_max = new Vector3() { X = -2000, Y = -2000, Z = -2000 };
+            Vector3 mag_min = new Vector3() { X = 9000, Y = 9000, Z = 30000 };
+            Vector3 mag_max = new Vector3() { X = -9000, Y = -9000, Z = -30000 };
+            Vector3 magData;
 
             for (int i = 0; i < iterationsCount; i++)
             {
-
-                var magData = ReadMagnetometer();
+                magData = ReadMagnetometerWithoutCorrection();
 
                 if (magData.X != 0)
                 {
@@ -499,16 +503,17 @@ namespace Iot.Device.Magnetometer
                     mag_max.Z = (magData.Z > mag_max.Z) ? magData.Z : mag_max.Z;
                 }
 
+                Debug.WriteLine($"mag_min: {mag_min.X}, {mag_min.Y}, {mag_min.Z}");
+                Debug.WriteLine($"mag_max: {mag_max.X}, {mag_max.Y}, {mag_max.Z}");
+
                 Wait(100);
             }
 
-            Vector3 mag_offset = new Vector3();
+            _calib = new Vector3();
 
-            mag_offset.X = (mag_max.X + mag_min.X) / 2;
-            mag_offset.Y = (mag_max.Y + mag_min.Y) / 2;
-            mag_offset.Z = (mag_max.Z + mag_min.Z) / 2;
-
-            return mag_offset;
+            _calib.X = (mag_max.X + mag_min.X) / 2;
+            _calib.Y = (mag_max.Y + mag_min.Y) / 2;
+            _calib.Z = (mag_max.Z + mag_min.Z) / 2;
         }
 
         /// <summary>

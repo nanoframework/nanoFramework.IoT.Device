@@ -19,16 +19,16 @@ I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.DefaultI2cAddr
 using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
 
 Debug.WriteLine($"move it now...");
-var offset = bmm150.bmm150_calibrate();
+bmm150.bmm150_calibrate();
 Debug.WriteLine($"bmm150_calibrate done!");
 
 while (true)
 {
     Vector3 magne = bmm150.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
 
-    var head_dir = Math.Atan2(magne.X - offset.X, magne.Y - offset.Y) * 180.0 / Math.PI;
+    //var head_dir = Math.Atan2(magne.X - offset.X, magne.Y - offset.Y) * 180.0 / Math.PI;
 
-    Debug.WriteLine($"head_dir: {head_dir}");
+    // Debug.WriteLine($"head_dir: {head_dir}");
     Debug.WriteLine($"Mag data: {magne.X,15},{magne.Y,15},{magne.Z,15}");
 
     Thread.Sleep(100);
