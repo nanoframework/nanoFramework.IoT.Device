@@ -23,7 +23,7 @@ namespace Iot.Device.Magnetometer
         private bool _selfTest = false;
         private Bmm150I2cBase _Bmm150Interface;
         private bool _shouldDispose = true;
-        private Bmm150TrimRegister _trimData;
+        public Bmm150TrimRegister _trimData;
 
         /// <summary>
         /// Default I2C address for the Bmm150
@@ -299,25 +299,6 @@ namespace Iot.Device.Magnetometer
             ReadBytes(Register.HXL, rawData);
 
             Vector3 magnetoRaw = new Vector3();
-            //magnetoRaw.X = BinaryPrimitives.ReadInt16LittleEndian(rawData);
-            //magnetoRaw.Y = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(2));
-            //magnetoRaw.Z = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(4));
-
-            //#define BMM150_DATA_X_MSK                         UINT8_C(0xF8)
-            //#define BMM150_DATA_X_POS                         UINT8_C(0x03)
-
-            //#define BMM150_DATA_Y_MSK                         UINT8_C(0xF8)
-            //#define BMM150_DATA_Y_POS                         UINT8_C(0x03)
-
-            //#define BMM150_DATA_Z_MSK                         UINT8_C(0xFE)
-            //#define BMM150_DATA_Z_POS                         UINT8_C(0x01)
-
-            //#define BMM150_DATA_RHALL_MSK                     UINT8_C(0xFC)
-            //#define BMM150_DATA_RHALL_POS                     UINT8_C(0x02)
-
-            // BMM150_GET_BITS(reg_data[0], BMM150_DATA_X);
-            // #define BMM150_GET_BITS(reg_data, bitname)        ((reg_data & (bitname##_MSK)) >> (bitname##_POS))
-
             /* Shift the MSB data to left by 5 bits */
             /* Multiply by 32 to get the shift left by 5 value */
             magnetoRaw.X = (rawData[1] & 0x7F) << 5 | rawData[0] >> 3;
@@ -487,6 +468,47 @@ namespace Iot.Device.Magnetometer
             magn *= MagnetometerAdjustment;
             magn -= MagnetometerBias;
             return magn;
+        }
+
+        // https://platformio.org/lib/show/12697/M5_BMM150
+        public Vector3 bmm150_calibrate(int iterationsCount = 200)
+        {
+            Vector3 mag_min = new Vector3() { X = 2000, Y = 2000, Z = 2000 };
+            Vector3 mag_max = new Vector3() { X = -2000, Y = -2000, Z = -2000 };
+
+            for (int i = 0; i < iterationsCount; i++)
+            {
+
+                var magData = ReadMagnetometer();
+
+                if (magData.X != 0)
+                {
+                    mag_min.X = (magData.X < mag_min.X) ? magData.X : mag_min.X;
+                    mag_max.X = (magData.X > mag_max.X) ? magData.X : mag_max.X;
+                }
+
+                if (magData.Y != 0)
+                {
+                    mag_max.Y = (magData.Y > mag_max.Y) ? magData.Y : mag_max.Y;
+                    mag_min.Y = (magData.Y < mag_min.Y) ? magData.Y : mag_min.Y;
+                }
+
+                if (magData.Z != 0)
+                {
+                    mag_min.Z = (magData.Z < mag_min.Z) ? magData.Z : mag_min.Z;
+                    mag_max.Z = (magData.Z > mag_max.Z) ? magData.Z : mag_max.Z;
+                }
+
+                Wait(100);
+            }
+
+            Vector3 mag_offset = new Vector3();
+
+            mag_offset.X = (mag_max.X + mag_min.X) / 2;
+            mag_offset.Y = (mag_max.Y + mag_min.Y) / 2;
+            mag_offset.Z = (mag_max.Z + mag_min.Z) / 2;
+
+            return mag_offset;
         }
 
         /// <summary>
