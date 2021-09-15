@@ -13,6 +13,8 @@ namespace mpu8668test
     {
         public static void Main()
         {
+            // I2C pins need to be configured, for example for pin 22 & 21 for 
+            // the M5StickC Plus. These pins might be different for other boards.
             Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
             Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
@@ -20,14 +22,14 @@ namespace mpu8668test
 
             using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
             {
-                Debug.WriteLine($"Temp {ag.GetTemperature()} C");
+                Debug.WriteLine($"Internal temperature: {ag.GetTemperature()} C");
 
                 while (true)
                 {
                     var acc = ag.GetAccelerometer();
                     var gyr = ag.GetGyroscope();
-                    Debug.WriteLine($"ACC x:{acc.X} y:{acc.Y} z:{acc.Z}");
-                    Debug.WriteLine($"GYR x:{gyr.X} y:{gyr.Y} z:{gyr.Z}");
+                    Debug.WriteLine($"Accelerometer data x:{acc.X} y:{acc.Y} z:{acc.Z}");
+                    Debug.WriteLine($"Gyroscope data x:{gyr.X} y:{gyr.Y} z:{gyr.Z}\n");
                     Thread.Sleep(100);
                 }
             }
