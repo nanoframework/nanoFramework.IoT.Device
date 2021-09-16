@@ -22,7 +22,7 @@ namespace mpu8668test
 
             using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
             {
-                Debug.WriteLine($"Internal temperature: {ag.GetTemperature()} C");
+                Debug.WriteLine($"Internal temperature: {ag.GetInternalTemperature().DegreesCelsius} C");
 
                 while (true)
                 {

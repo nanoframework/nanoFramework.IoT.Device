@@ -8,6 +8,7 @@ using System.Device.Model;
 using System.IO;
 using System.Numerics;
 using System.Threading;
+using UnitsNet;
 
 namespace Iot.Device.Mpu6886
 {
@@ -118,7 +119,7 @@ namespace Iot.Device.Mpu6886
             return new Vector3(x, y, z);
         }
 
-        private int GetRawTemperature()
+        private int GetRawInternalTemperature()
         {
             SpanByte vec = new byte[2];
             Read(Mpu6886.Register.TemperatureMeasurementHighByte, vec);
@@ -142,7 +143,13 @@ namespace Iot.Device.Mpu6886
         /// Reads the register of the on-chip temperature sensor which represents the MPU-6886 die temperature.
         /// </summary>
         /// <returns>Temperature in degrees Celcius</returns>
-        public double GetTemperature() => GetRawTemperature() / 326.8 + 25.0; // p43 of datasheet describes the room temp. compensation calcuation
+        public Temperature GetInternalTemperature()
+        {
+            var rawInternalTemperature = GetRawInternalTemperature(); 
+            
+            // p43 of datasheet describes the room temp. compensation calcuation
+            return new Temperature(rawInternalTemperature / 326.8 + 25.0, UnitsNet.Units.TemperatureUnit.DegreeCelsius);
+        }
 
         private void WriteByte(Register register, byte data)
         {
