@@ -59,7 +59,6 @@
   <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
   <Import Project="..\..\src\System.Numerics\System.Numerics.projitems" Label="Shared" />
-  <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
