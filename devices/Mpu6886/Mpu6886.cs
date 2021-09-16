@@ -18,8 +18,8 @@ namespace Iot.Device.Mpu6886
     public class Mpu6886AccelerometerGyroscope : IDisposable
     {
         private I2cDevice _i2c;
-        private const double gyroscopeResolution = 2000.0 / 32768.0;
-        private const double accelerometerResolution = 8.0 / 32768.0;
+        private const double GyroscopeResolution = 2000.0 / 32768.0; // default gyro scale 2000 dps
+        private const double AccelerometerResolution = 8.0 / 32768.0; // default accelerometer res 8G
         /// <summary>
         /// Mpu6886 - Accelerometer and Gyroscope bus
         /// </summary>
@@ -33,62 +33,64 @@ namespace Iot.Device.Mpu6886
             _i2c.WriteByte((byte)Mpu6886.Register.WhoAmI);
             _i2c.Read(readBuffer);
             if (readBuffer[0] != 0x19)
+            {
                 throw new IOException($"This device does not contain the correct signature 0x19 for a MPU6886");
+            }
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0x00 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b00000_00000 }));
             Thread.Sleep(10);
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0x01 << 7 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b01000_0000 }));
             Thread.Sleep(10);
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0x01 << 0 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b00000_00001 }));
             Thread.Sleep(10);
 
             // ACCEL_CONFIG(0x1c) : +-8G
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, 0x10 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, 0b00001_00000 }));
             Thread.Sleep(1);
 
             // GYRO_CONFIG(0x1b) : +-2000dps
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, 0x18 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, 0b00001_10000 }));
             Thread.Sleep(1);
 
             // CONFIG(0x1a) 1khz output
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.Configuration, 0x01 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.Configuration, 0b00000_00001 }));
             Thread.Sleep(1);
 
             // SMPLRT_DIV(0x19) 2 div, FIFO 500hz out
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.SampleRateDevicer, 0x01 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.SampleRateDevicer, 0b00000_00001 }));
             Thread.Sleep(1);
 
             // INT_ENABLE(0x38)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, 0x00 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, 0b00000_00000 }));
             Thread.Sleep(1);
 
             // ACCEL_CONFIG 2(0x1d)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, 0x00 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, 0b00000_00000 }));
             Thread.Sleep(1);
 
             // USER_CTRL(0x6a)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.UserControl, 0x00 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.UserControl, 0b00000_00000 }));
             Thread.Sleep(1);
 
             // FIFO_EN(0x23)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.FifoEnable, 0x00 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.FifoEnable, 0b00000_00000 }));
             Thread.Sleep(1);
 
             // INT_PIN_CFG(0x37)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.IntPinBypassEnabled, 0x22 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.IntPinBypassEnabled, 0b00010_00010 }));
             Thread.Sleep(1);
 
             // INT_ENABLE(0x38)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, 0x01 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, 0b00000_00001 }));
             Thread.Sleep(100);
 
             //setGyroFsr
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, 3 << 3 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, 0b00001_10000 }));
             Thread.Sleep(10);
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, 2 << 3 }));
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, 0b00001_00000 }));
             Thread.Sleep(10);
         }
 
@@ -128,13 +130,13 @@ namespace Iot.Device.Mpu6886
         /// Reads the current accelerometer values from the registers, and compensates them with the accelerometer resolution.
         /// </summary>
         /// <returns>Vector of acceleration</returns>
-        public Vector3 GetAccelerometer() => GetRawAccelerometer() * accelerometerResolution;
+        public Vector3 GetAccelerometer() => GetRawAccelerometer() * AccelerometerResolution;
 
         /// <summary>
         /// Reads the current gyroscope values from the registers, and compensates them with the gyroscope resolution.
         /// </summary>
         /// <returns>Vector of the rotation</returns>
-        public Vector3 GetGyroscope() => GetRawGyroscope() * gyroscopeResolution;
+        public Vector3 GetGyroscope() => GetRawGyroscope() * GyroscopeResolution;
 
         /// <summary>
         /// Reads the register of the on-chip temperature sensor which represents the MPU-6886 die temperature.
