@@ -31,29 +31,36 @@ while (true)
 {
     Vector3 magne = bmm150.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
 
-    Debug.WriteLine($"Mag data: X={magne.X,15}, Y={magne.Y,15}, Z={magne.Z,15}");
+    var offset = bmm150.CalibrationCompensation;
+    var head_dir = Math.Atan2(magne.X - offset.X, magne.Y - offset.Y) * 180.0 / Math.PI;
+
+    Debug.WriteLine($"Mag data: X={magne.X,15}, Y={magne.Y,15}, Z={magne.Z,15}, head_dir: {head_dir}");
 
     Thread.Sleep(100);
 }
 ```
+
 ### Expected output
 
 ```console
 Please move your device in all directions...
 Calibration completed.
-Mag data: X=    19.79405975, Y=   -38.48844909, Z=   -17.28075408
-Mag data: X=     9.16391563, Y=   -25.65896606, Z=   -26.12207031
-Mag data: X=     5.49845027, Y=    -4.39876031, Z=   -28.53705596
-Mag data: X=     8.79735946, Y=    -3.66556644, Z=   -17.68263244
-Mag data: X=    12.82971763, Y=    -4.39876031, Z=   -19.29265785
-Mag data: X=    13.92915248, Y=     2.93245315, Z=    -5.22441434
-Mag data: X=    14.66280078, Y=    -0.36657002, Z=    -2.81387901
-Mag data: X=    12.46315383, Y=    1.099690079, Z=     5.62702512
-Mag data: X=    10.63053035, Y=     3.66570019, Z=     6.43172311
-Mag data: X=     6.23157691, Y=     0.36656334, Z=     2.81351256
-Mag data: X=     3.66549944, Y=              0, Z=      2.8127799
-Mag data: X=     2.56589651, Y=              0, Z=     4.42065811
-Mag data: X=     0.73312669, Y=    -2.19938015, Z=    6.028955459
+Mag data: X=   -14.47845935, Y=   -25.84130096, Z=     3.21418666, head_dir: 53.048122434
+Mag data: X=    -8.61376667, Y=   -34.27179336, Z=      5.6248269, head_dir: 53.20645987
+Mag data: X=     8.24737358, Y=   -24.37557029, Z=   -14.46572494, head_dir: 53.23982193
+Mag data: X=    16.67771911, Y=   -13.74537277, Z=   -21.69576072, head_dir: 53.1867377
+Mag data: X=    25.47522163, Y=     0.54982489, Z=   -23.30589103, head_dir: 53.092716739
+Mag data: X=    38.30377197, Y=    29.87327575, Z=    -5.22305345, head_dir: 52.85469147
+Mag data: X=   39.036857604, Y=    34.63833999, Z=    8.035467147, head_dir: 52.80400464
+Mag data: X=    40.50302886, Y=    37.93722915, Z=     17.6780281, head_dir: 52.77772207
+Mag data: X=    39.40196228, Y=    34.63707351, Z=   22.091781616, head_dir: 52.80735485
+Mag data: X=    37.20346069, Y=    30.60580253, Z=     23.7015419, head_dir: 52.83581966
+Mag data: X=    41.23611831, Y=   28.040559768, Z=    20.89221382, head_dir: 52.90353415
+Mag data: X=   43.069618225, Y=     26.9414196, Z=    18.88580703, head_dir: 52.93349136
+Mag data: X=    47.83301925, Y=    15.57780361, Z=    15.26539993, head_dir: 53.11403375
+Mag data: X=    46.73426437, Y=   10.079939842, Z=    14.46384048, head_dir: 53.17062529
+Mag data: X=      47.100811, Y=     6.41450691, Z=    15.66916084, head_dir: 53.21839222
+Mag data: X=  46.0020179748, Y=   -2.016024589, Z=    20.49311065, head_dir: 53.3108490
 ```
 
 ## Calibration

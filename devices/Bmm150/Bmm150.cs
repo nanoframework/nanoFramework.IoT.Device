@@ -34,11 +34,6 @@ namespace Iot.Device.Magnetometer
         private Bmm150TrimRegisterData _trimData;
 
         /// <summary>
-        /// Magnetometer calibration compensation vector
-        /// </summary>
-        private Vector3 _calibrationCompensation;
-
-        /// <summary>
         /// Magnetometer (R-HALL) temperature compensation value, used in axis compensation calculation functions
         /// </summary>
         private uint _rHall;
@@ -47,7 +42,12 @@ namespace Iot.Device.Magnetometer
         /// Flag to evaluate disposal of resources
         /// </summary>
         private bool _shouldDispose = true;
-        
+
+        /// <summary>
+        /// Gets or sets Magnetometer calibration compensation vector
+        /// </summary>
+        public Vector3 CalibrationCompensation { get; set; } = new Vector3();
+
         /// <summary>
         /// Default I2C address for the Bmm150
         /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10
@@ -170,6 +170,7 @@ namespace Iot.Device.Magnetometer
                         mag_max.Z = (rawMagnetometerData.Z > mag_max.Z) ? rawMagnetometerData.Z : mag_max.Z;
                     }
 
+                    // It is plausible to wait for 100ms, this means we could top out 10 reads/sec * 100 iterations = 1000 sensor reads.
                     Wait(100);
                 }
                 catch
@@ -178,9 +179,13 @@ namespace Iot.Device.Magnetometer
                 }
             }
 
-            _calibrationCompensation.X = (mag_max.X + mag_min.X) / 2;
-            _calibrationCompensation.Y = (mag_max.Y + mag_min.Y) / 2;
-            _calibrationCompensation.Z = (mag_max.Z + mag_min.Z) / 2;
+            // Refresh CalibrationCompensation vector
+            CalibrationCompensation = new Vector3()
+            {
+                X = (mag_max.X + mag_min.X) / 2,
+                Y = (mag_max.Y + mag_min.Y) / 2,
+                Z = (mag_max.Z + mag_min.Z) / 2
+            };
         }
 
         /// <summary>
@@ -189,9 +194,7 @@ namespace Iot.Device.Magnetometer
         public bool HasDataToRead => (ReadByte(Register.DATA_READY_STATUS) & 0x01) == 0x01;
 
         /// <summary>
-        /// Check if the version is the correct one (0x48). This is fixed for this device
-        /// Page 28 from the documentation :
-        /// Device ID of AKM. It is described in one byte and fixed value.  48H: fixed
+        /// Check if the version is the correct one (0x32). This is fixed for this device
         /// </summary>
         /// <returns>Returns true if the version match</returns>
         public bool IsVersionCorrect()
@@ -202,17 +205,6 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Read the magnetometer without Bias correction and can wait for new data to be present
         /// </summary>
-        /// <remarks>
-        /// Vector axes are the following:
-        ///         +X
-        ///  \  |  /
-        ///   \ | /
-        ///    \|/
-        ///    /|\
-        ///   / | \
-        ///  /  |  \
-        ///    +Z   +Y
-        /// </remarks>
         /// <param name="waitForData">true to wait for new data</param>
         /// <returns>The data from the magnetometer</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData = true) => ReadMagnetometerWithoutCorrection(waitForData, DefaultTimeout);
@@ -221,17 +213,6 @@ namespace Iot.Device.Magnetometer
         /// Read the magnetometer without Bias correction and can wait for new data to be present
         /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921
         /// </summary>
-        /// <remarks>
-        /// Vector axes are the following:
-        ///         +X
-        ///  \  |  /
-        ///   \ | /
-        ///    \|/
-        ///    /|\
-        ///   / | \
-        ///  /  |  \
-        ///    +Z   +Y
-        /// </remarks>
         /// <param name="waitForData">true to wait for new data</param>
         /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
@@ -289,17 +270,6 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Read the magnetometer with bias correction and can wait for new data to be present
         /// </summary>
-        /// <remarks>
-        /// Vector axes are the following:
-        ///         +X
-        ///  \  |  /
-        ///   \ | /
-        ///    \|/
-        ///    /|\
-        ///   / | \
-        ///  /  |  \
-        ///    +Z   +Y
-        /// </remarks>
         /// <param name="waitForData">true to wait for new data</param>
         /// <returns>The data from the magnetometer</returns>
         [Telemetry("Magnetometer")]
@@ -308,17 +278,6 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Read the magnetometer with compensation calculation and can wait for new data to be present
         /// </summary>
-        /// <remarks>
-        /// Vector axes are the following:
-        ///         +X
-        ///  \  |  /
-        ///   \ | /
-        ///    \|/
-        ///    /|\
-        ///   / | \
-        ///  /  |  \
-        ///    +Z   +Y
-        /// </remarks>
         /// <param name="waitForData">true to wait for new data</param>
         /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
@@ -326,9 +285,9 @@ namespace Iot.Device.Magnetometer
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
 
-            magn.X = Bmm150Compensation.Compensate_x(magn.X - _calibrationCompensation.X, _rHall, _trimData);
-            magn.Y = Bmm150Compensation.Compensate_y(magn.Y - _calibrationCompensation.Y, _rHall, _trimData);
-            magn.Z = Bmm150Compensation.Compensate_z(magn.Z - _calibrationCompensation.Z, _rHall, _trimData);
+            magn.X = Bmm150Compensation.Compensate_x(magn.X - CalibrationCompensation.X, _rHall, _trimData);
+            magn.Y = Bmm150Compensation.Compensate_y(magn.Y - CalibrationCompensation.Y, _rHall, _trimData);
+            magn.Z = Bmm150Compensation.Compensate_z(magn.Z - CalibrationCompensation.Z, _rHall, _trimData);
 
             return magn;
         }
