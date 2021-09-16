@@ -18,16 +18,36 @@ namespace Iot.Device.Magnetometer
     [Interface("Bmm150 class implementing a magnetometer")]
     public sealed class Bmm150 : IDisposable
     {
+        /// <summary>
+        /// I2c device comm channel
+        /// </summary>
         private I2cDevice _i2cDevice;
-        private MeasurementMode _measurementMode;
-        private OutputBitMode _outputBitMode;
-        private bool _selfTest = false;
+
+        /// <summary>
+        /// Bmm150 device interface
+        /// </summary>
         private Bmm150I2cBase _Bmm150Interface;
-        private bool _shouldDispose = true;
-        public Bmm150TrimRegister _trimData;
-        private Vector3 _calib;
+
+        /// <summary>
+        /// Bmm150 Trim extended register data
+        /// </summary>
+        private Bmm150TrimRegisterData _trimData;
+
+        /// <summary>
+        /// Magnetometer calibration compensation vector
+        /// </summary>
+        private Vector3 _calibrationCompensation;
+
+        /// <summary>
+        /// Magnetometer (R-HALL) temperature compensation value, used in axis compensation calculation functions
+        /// </summary>
         private uint _rHall;
 
+        /// <summary>
+        /// Flag to evaluate disposal of resources
+        /// </summary>
+        private bool _shouldDispose = true;
+        
         /// <summary>
         /// Default I2C address for the Bmm150
         /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10
@@ -61,48 +81,31 @@ namespace Iot.Device.Magnetometer
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _Bmm150Interface = Bmm150Interface;
-            _selfTest = false;
             _shouldDispose = shouldDispose;
 
             Initialize();
 
+            // After initializing the device we read the 
             _trimData = ReadTrimRegisters();
-
-            // Initialize the default modes
-            //_measurementMode = MeasurementMode.PowerDown;
-            //_outputBitMode = OutputBitMode.Output14bit;
-
-            //byte mode = (byte)((byte)_measurementMode | ((byte)_outputBitMode << 4));
-            //WriteRegister(Register.CNTL, mode);
         }
 
-        private Bmm150TrimRegister ReadTrimRegisters()
+        /// <summary>
+        /// Reads the trim registers of the sensor, used in compensation (x,y,z) calculation
+        /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L1199
+        /// </summary>
+        /// <returns>Trim registers value</returns>
+        private Bmm150TrimRegisterData ReadTrimRegisters()
         {
-            // read trim registers
-            SpanByte trim_x1y1 = new byte[2];
+            SpanByte trim_x1y1_data = new byte[2];
             SpanByte trim_xyz_data = new byte[4];
-            SpanByte trim_xy1xy2 = new byte[10];
-            int temp_msb = 0;
+            SpanByte trim_xy1xy2_data = new byte[10];
 
-            ReadBytes(Register.BMM150_DIG_X1, trim_x1y1);
+            // Read trim extended registers
+            ReadBytes(Register.BMM150_DIG_X1, trim_x1y1_data);
             ReadBytes(Register.BMM150_DIG_Z4_LSB, trim_xyz_data);
-            ReadBytes(Register.BMM150_DIG_Z2_LSB, trim_xy1xy2);
+            ReadBytes(Register.BMM150_DIG_Z2_LSB, trim_xy1xy2_data);
 
-            var trimData = new Bmm150TrimRegister();
-
-            trimData.dig_x1 = (byte)trim_x1y1[0];
-            trimData.dig_y1 = (byte)trim_x1y1[1];
-            trimData.dig_x2 = (byte)trim_xyz_data[2];
-            trimData.dig_y2 = (byte)trim_xyz_data[3];
-            trimData.dig_z1 = trim_xy1xy2[3] << 8 | trim_xy1xy2[2];
-            trimData.dig_z2 = (short)(trim_xy1xy2[1] << 8 | trim_xy1xy2[0]);
-            trimData.dig_z3 = (short)(trim_xy1xy2[7] << 8 | trim_xy1xy2[6]);
-            trimData.dig_z4 = (short)(trim_xyz_data[1] << 8 | trim_xyz_data[0]);
-            trimData.dig_xy1 = trim_xy1xy2[9];
-            trimData.dig_xy2 = (sbyte)trim_xy1xy2[8];
-            trimData.dig_xyz1 = ((trim_xy1xy2[5] & 0x7F) << 8) | trim_xy1xy2[4];
-
-            return trimData;
+            return new Bmm150TrimRegisterData(trim_x1y1_data, trim_xyz_data, trim_xy1xy2_data);
         }
 
         /// <summary>
@@ -120,25 +123,8 @@ namespace Iot.Device.Magnetometer
                 throw new IOException($"This device does not contain the correct signature (0x32) for a Bmm150");
             }
 
-            // Set "Normal Mode"
+            // Set operation mode to: "Normal Mode"
             WriteRegister(Register.OP_MODE_ADDR, 0x00);
-
-            // TODO: Check if we should set it in Lowe Power mode also
-            // https://github.com/Seeed-Studio/Grove_3_Axis_Compass_V2.0_BMM150/blob/master/bmm150.cpp
-        }
-
-        /// <summary>
-        /// Reset the device
-        /// </summary>
-        [Command]
-        public void Reset()
-        {
-            WriteRegister(Register.RSV, 0x01);
-            _measurementMode = MeasurementMode.PowerDown;
-            _outputBitMode = OutputBitMode.Output14bit;
-            _selfTest = false;
-            // When powering the Bmm150, doc says 50 ms needed
-            Thread.Sleep(50);
         }
 
         /// <summary>
@@ -148,84 +134,53 @@ namespace Iot.Device.Magnetometer
         public byte GetDeviceInfo() => ReadByte(Register.INFO);
 
         /// <summary>
-        /// Get the magnetometer bias
-        /// </summary>
-        [Property]
-        public Vector3 MagnetometerBias { get; set; } = Vector3.Zero;
-
-        /// <summary>
-        /// Get the magnetometer hardware adjustment bias
-        /// </summary>
-        [Property]
-        public Vector3 MagnetometerAdjustment { get; set; } = Vector3.One;
-
-        /// <summary>
-        /// Calibrate the magnetometer. Make sure your sensor is as far as possible of magnet
-        /// Calculate as well the magnetometer bias. Please make sure you are moving the magnetometer all over space, rotating it.
+        /// Calibrate the magnetometer. 
         /// Please make sure you are not close to any magnetic field like magnet or phone
+        /// Please make sure you are moving the magnetometer all over space, rotating it.
         /// </summary>
-        /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 1000</param>
-        /// <returns>Returns the factory calibration data</returns>
-        public Vector3 CalibrateMagnetometer(int numberOfMeasurements = 1000)
+        /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 100</param>
+        // https://platformio.org/lib/show/12697/M5_BMM150
+        public void CalibrateMagnetometer(int numberOfMeasurements = 100)
         {
-            Vector3 calib = new Vector3();
-            SpanByte rawData = new byte[3];
+            Vector3 mag_min = new Vector3() { X = 9000, Y = 9000, Z = 30000 };
+            Vector3 mag_max = new Vector3() { X = -9000, Y = -9000, Z = -30000 };
+            Vector3 rawMagnetometerData;
 
-            var oldPower = MeasurementMode;
-
-            // Stop the magnetometer
-            MeasurementMode = MeasurementMode.PowerDown;
-            // Enter the magnetometer Fuse mode to read the calibration data
-            // Page 13 of documentation
-            MeasurementMode = MeasurementMode.FuseRomAccess;
-            // Read the data
-            // See http://www.invensense.com/wp-content/uploads/2017/11/RM-MPU-9250A-00-v1.6.pdf
-            // Page 53
-            ReadBytes(Register.ASAX, rawData);
-            calib.X = (float)(((rawData[0] - 128) / 256.0 + 1.0));
-            calib.Y = (float)(((rawData[1] - 128) / 256.0 + 1.0));
-            calib.Z = (float)(((rawData[2] - 128) / 256.0 + 1.0));
-            MeasurementMode = MeasurementMode.PowerDown;
-            MeasurementMode = oldPower;
-
-            // Now calculate the bias
-            // Store old mode to restore after
-            var oldMode = MeasurementMode;
-            Vector3 minbias = new Vector3();
-            Vector3 maxbias = new Vector3();
-
-            // Setup the 100Hz continuous mode
-            MeasurementMode = MeasurementMode.ContinuousMeasurement100Hz;
-            for (int reading = 0; reading < numberOfMeasurements; reading++)
+            for (int i = 0; i < numberOfMeasurements; i++)
             {
-                // Timeout = 100Hz = 10 ms + 2 ms for propagation
-                // First read may not go thru correctly
                 try
                 {
-                    var bias = ReadMagnetometerWithoutCorrection(true, TimeSpan.FromMilliseconds(12));
-                    minbias.X = (float)Math.Min(bias.X, minbias.X);
-                    minbias.Y = (float)Math.Min(bias.Y, minbias.Y);
-                    minbias.Z = (float)Math.Min(bias.Z, minbias.Z);
-                    maxbias.X = (float)Math.Max(bias.X, maxbias.X);
-                    maxbias.Y = (float)Math.Max(bias.Y, maxbias.Y);
-                    maxbias.Z = (float)Math.Max(bias.Z, maxbias.Z);
-                    // 10 ms = 100Hz, so waiting to make sure we have new data
-                    Thread.Sleep(10);
-                }
-                catch (TimeoutException)
-                {
-                    // We skip the reading
-                }
+                    rawMagnetometerData = ReadMagnetometerWithoutCorrection();
 
+                    if (rawMagnetometerData.X != 0)
+                    {
+                        mag_min.X = (rawMagnetometerData.X < mag_min.X) ? rawMagnetometerData.X : mag_min.X;
+                        mag_max.X = (rawMagnetometerData.X > mag_max.X) ? rawMagnetometerData.X : mag_max.X;
+                    }
+
+                    if (rawMagnetometerData.Y != 0)
+                    {
+                        mag_max.Y = (rawMagnetometerData.Y > mag_max.Y) ? rawMagnetometerData.Y : mag_max.Y;
+                        mag_min.Y = (rawMagnetometerData.Y < mag_min.Y) ? rawMagnetometerData.Y : mag_min.Y;
+                    }
+
+                    if (rawMagnetometerData.Z != 0)
+                    {
+                        mag_min.Z = (rawMagnetometerData.Z < mag_min.Z) ? rawMagnetometerData.Z : mag_min.Z;
+                        mag_max.Z = (rawMagnetometerData.Z > mag_max.Z) ? rawMagnetometerData.Z : mag_max.Z;
+                    }
+
+                    Wait(100);
+                }
+                catch
+                {
+                    // skip this reading
+                }
             }
 
-            // Store the bias
-            var magBias = (maxbias + minbias) / 2;
-            magBias *= calib;
-            MagnetometerBias = magBias;
-            MagnetometerAdjustment = calib;
-
-            return calib;
+            _calibrationCompensation.X = (mag_max.X + mag_min.X) / 2;
+            _calibrationCompensation.Y = (mag_max.Y + mag_min.Y) / 2;
+            _calibrationCompensation.Z = (mag_max.Z + mag_min.Z) / 2;
         }
 
         /// <summary>
@@ -264,6 +219,7 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// Read the magnetometer without Bias correction and can wait for new data to be present
+        /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921
         /// </summary>
         /// <remarks>
         /// Vector axes are the following:
@@ -291,17 +247,15 @@ namespace Iot.Device.Magnetometer
                 {
                     if (DateTime.UtcNow > dt)
                     {
-                        throw new TimeoutException($"{nameof(ReadMagnetometer)} timeout reading value");
+                        throw new TimeoutException($"{nameof(ReadMagnetometerWithoutCorrection)} timeout reading value");
                     }
                 }
             }
 
-
-            // https://github.com/BoschSensortec/BMM150-Sensor-API/blob/master/bmm150.c#L788
-
             ReadBytes(Register.HXL, rawData);
 
             Vector3 magnetoRaw = new Vector3();
+
             /* Shift the MSB data to left by 5 bits */
             /* Multiply by 32 to get the shift left by 5 value */
             magnetoRaw.X = (rawData[1] & 0x7F) << 5 | rawData[0] >> 3;
@@ -327,105 +281,9 @@ namespace Iot.Device.Magnetometer
                 magnetoRaw.Z = -magnetoRaw.Z;
             }
 
-            //var rhall = BinaryPrimitives.ReadInt16LittleEndian(rawData.Slice(6));
             _rHall = (uint)(rawData[7] << 6 | rawData[6] >> 2);
 
             return magnetoRaw;
-        }
-
-        private double compensate_x(double x, uint rhall, Bmm150TrimRegister trimData)
-        {
-            float retval = 0;
-            float process_comp_x0;
-            float process_comp_x1;
-            float process_comp_x2;
-            float process_comp_x3;
-            float process_comp_x4;
-            int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
-
-            /* Overflow condition check */
-            if ((x != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
-            {
-                /* Processing compensation equations */
-                process_comp_x0 = (((float)trimData.dig_xyz1) * 16384.0f / rhall);
-                retval = (process_comp_x0 - 16384.0f);
-                process_comp_x1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
-                process_comp_x2 = process_comp_x1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
-                process_comp_x3 = ((float)trimData.dig_x2) + 160.0f;
-                process_comp_x4 = (float)(x * ((process_comp_x2 + 256.0f) * process_comp_x3));
-                retval = ((process_comp_x4 / 8192.0f) + (((float)trimData.dig_x1) * 8.0f)) / 16.0f;
-            }
-            else
-            {
-                /* Overflow, set output to 0.0f */
-                retval = 0.0f;
-            }
-
-            return retval;
-        }
-
-        private double compensate_y(double y, uint rhall, Bmm150TrimRegister trimData)
-        {
-            float retval = 0;
-            float process_comp_y0;
-            float process_comp_y1;
-            float process_comp_y2;
-            float process_comp_y3;
-            float process_comp_y4;
-            int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
-
-            /* Overflow condition check */
-            if ((y != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
-            {
-                /* Processing compensation equations */
-                process_comp_y0 = ((float)trimData.dig_xyz1) * 16384.0f / rhall;
-                retval = process_comp_y0 - 16384.0f;
-                process_comp_y1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
-                process_comp_y2 = process_comp_y1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
-                process_comp_y3 = ((float)trimData.dig_y2) + 160.0f;
-                process_comp_y4 = (float)(y * (((process_comp_y2) + 256.0f) * process_comp_y3));
-                retval = ((process_comp_y4 / 8192.0f) + (((float)trimData.dig_y1) * 8.0f)) / 16.0f;
-            }
-            else
-            {
-                /* Overflow, set output to 0.0f */
-                retval = 0.0f;
-            }
-
-            return retval;
-        }
-
-        private double compensate_z(double z, uint rhall, Bmm150TrimRegister trimData)
-        {
-            float retval = 0;
-            float process_comp_z0;
-            float process_comp_z1;
-            float process_comp_z2;
-            float process_comp_z3;
-            float process_comp_z4;
-            float process_comp_z5;
-            int BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL = -16384;
-
-            /* Overflow condition check */
-            if ((z != BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL) && (trimData.dig_z2 != 0) &&
-                (trimData.dig_z1 != 0) && (trimData.dig_xyz1 != 0) && (rhall != 0))
-            {
-                /* Processing compensation equations */
-                process_comp_z0 = ((float)z) - ((float)trimData.dig_z4);
-                process_comp_z1 = ((float)rhall) - ((float)trimData.dig_xyz1);
-                process_comp_z2 = (((float)trimData.dig_z3) * process_comp_z1);
-                process_comp_z3 = ((float)trimData.dig_z1) * ((float)rhall) / 32768.0f;
-                process_comp_z4 = ((float)trimData.dig_z2) + process_comp_z3;
-                process_comp_z5 = (process_comp_z0 * 131072.0f) - process_comp_z2;
-                retval = (process_comp_z5 / ((process_comp_z4) * 4.0f)) / 16.0f;
-            }
-            else
-            {
-                /* Overflow, set output to 0.0f */
-                retval = 0.0f;
-            }
-
-            return retval;
         }
 
         /// <summary>
@@ -443,13 +301,12 @@ namespace Iot.Device.Magnetometer
         ///    +Z   +Y
         /// </remarks>
         /// <param name="waitForData">true to wait for new data</param>
-        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
         /// <returns>The data from the magnetometer</returns>
         [Telemetry("Magnetometer")]
         public Vector3 ReadMagnetometer(bool waitForData = true) => ReadMagnetometer(waitForData, DefaultTimeout);
 
         /// <summary>
-        /// Read the magnetometer with bias correction and can wait for new data to be present
+        /// Read the magnetometer with compensation calculation and can wait for new data to be present
         /// </summary>
         /// <remarks>
         /// Vector axes are the following:
@@ -469,113 +326,11 @@ namespace Iot.Device.Magnetometer
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
 
-            //magn *= MagnetometerAdjustment;
-            //magn -= MagnetometerBias;
-            magn.X = compensate_x(magn.X - _calib.X, _rHall, _trimData);
-            magn.Y = compensate_y(magn.Y - _calib.Y, _rHall, _trimData);
-            magn.Z = compensate_z(magn.Z - _calib.Z, _rHall, _trimData);
+            magn.X = Bmm150Compensation.Compensate_x(magn.X - _calibrationCompensation.X, _rHall, _trimData);
+            magn.Y = Bmm150Compensation.Compensate_y(magn.Y - _calibrationCompensation.Y, _rHall, _trimData);
+            magn.Z = Bmm150Compensation.Compensate_z(magn.Z - _calibrationCompensation.Z, _rHall, _trimData);
 
             return magn;
-        }
-
-        // https://platformio.org/lib/show/12697/M5_BMM150
-        public void bmm150_calibrate(int iterationsCount = 200)
-        {
-            Vector3 mag_min = new Vector3() { X = 9000, Y = 9000, Z = 30000 };
-            Vector3 mag_max = new Vector3() { X = -9000, Y = -9000, Z = -30000 };
-            Vector3 magData;
-
-            for (int i = 0; i < iterationsCount; i++)
-            {
-                magData = ReadMagnetometerWithoutCorrection();
-
-                if (magData.X != 0)
-                {
-                    mag_min.X = (magData.X < mag_min.X) ? magData.X : mag_min.X;
-                    mag_max.X = (magData.X > mag_max.X) ? magData.X : mag_max.X;
-                }
-
-                if (magData.Y != 0)
-                {
-                    mag_max.Y = (magData.Y > mag_max.Y) ? magData.Y : mag_max.Y;
-                    mag_min.Y = (magData.Y < mag_min.Y) ? magData.Y : mag_min.Y;
-                }
-
-                if (magData.Z != 0)
-                {
-                    mag_min.Z = (magData.Z < mag_min.Z) ? magData.Z : mag_min.Z;
-                    mag_max.Z = (magData.Z > mag_max.Z) ? magData.Z : mag_max.Z;
-                }
-
-                //Debug.WriteLine($"mag_min: {mag_min.X}, {mag_min.Y}, {mag_min.Z}");
-                //Debug.WriteLine($"mag_max: {mag_max.X}, {mag_max.Y}, {mag_max.Z}");
-
-                Wait(100);
-            }
-
-            _calib = new Vector3();
-
-            _calib.X = (mag_max.X + mag_min.X) / 2;
-            _calib.Y = (mag_max.Y + mag_min.Y) / 2;
-            _calib.Z = (mag_max.Z + mag_min.Z) / 2;
-        }
-
-        /// <summary>
-        /// <![CDATA[
-        /// Get or set the device self test mode.
-        /// If set to true, this creates a magnetic field
-        /// Once you read it, you will have the results of the self test
-        /// 14-bit output(BIT=“0”)
-        ///          | HX[15:0]        | HY[15:0]        | HZ[15:0]
-        /// Criteria | -50 =< HX =< 50 | -50 =< HY =< 50 | -800 =< HZ =< -200
-        /// 16-bit output(BIT=“1”)
-        ///          | HX[15:0]          | HY[15:0]          | HZ[15:0]
-        /// Criteria | -200 =< HX =< 200 | -200 =< HY =< 200 | -3200 =< HZ =< -800
-        /// ]]>
-        /// </summary>
-        [Property]
-        public bool MageneticFieldGeneratorEnabled
-        {
-            get => _selfTest;
-            set
-            {
-                byte mode = value ? (byte)0b01000_0000 : (byte)0b0000_0000;
-                WriteRegister(Register.ASTC, mode);
-                _selfTest = value;
-            }
-        }
-
-        /// <summary>
-        /// Select the measurement mode
-        /// </summary>
-        [Property]
-        public MeasurementMode MeasurementMode
-        {
-            get => _measurementMode;
-            set
-            {
-                byte mode = (byte)((byte)value | ((byte)_outputBitMode << 4));
-                WriteRegister(Register.CNTL, mode);
-                _measurementMode = value;
-                // according to documentation:
-                // After power-down mode is set, at least 100µs is needed before setting another mode
-                Thread.Sleep(1);
-            }
-        }
-
-        /// <summary>
-        /// Select the output bit rate
-        /// </summary>
-        [Property]
-        public OutputBitMode OutputBitMode
-        {
-            get => _outputBitMode;
-            set
-            {
-                byte mode = (byte)(((byte)value << 4) | (byte)_measurementMode);
-                WriteRegister(Register.CNTL, mode);
-                _outputBitMode = value;
-            }
         }
 
         private void WriteRegister(Register reg, byte data) => _Bmm150Interface.WriteRegister(_i2cDevice, (byte)reg, data);

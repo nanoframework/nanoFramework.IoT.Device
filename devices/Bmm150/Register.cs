@@ -8,8 +8,19 @@ namespace Iot.Device.Magnetometer
     /// </summary>
     internal enum Register
     {
+        /// <summary>
+        /// Trim extended register
+        /// </summary>
         BMM150_DIG_X1 = 0x5D,
+
+        /// <summary>
+        /// Trim extended register
+        /// </summary>
         BMM150_DIG_Z4_LSB = 0x62,
+
+        /// <summary>
+        /// Trim extended register
+        /// </summary>
         BMM150_DIG_Z2_LSB = 0x68,
 
         /// <summary>
@@ -56,59 +67,6 @@ namespace Iot.Device.Magnetometer
         /// Z-axis measurement data higher 8bit
         /// </summary>
         HZH = 0x47,
-
-        /// <summary>
-        /// ST2: Status 2
-        /// </summary>
-        ST2 = 0x09,
-
-        /// <summary>
-        /// CNTL1: Control1
-        /// </summary>
-        CNTL = 0x0A,
-
-        /// <summary>
-        /// Do not access in theory but
-        /// Used to reset the device
-        /// </summary>
-        RSV = 0x0B,
-
-        /// <summary>
-        /// ASTC: Self Test Control
-        /// </summary>
-        ASTC = 0x0C,
-
-        /// <summary>
-        /// Documentation says do not access
-        /// This is a test register
-        /// </summary>
-        TS1 = 0x0D,
-
-        /// <summary>
-        /// Documentation says do not access
-        /// This is a test register
-        /// </summary>
-        TS2 = 0x0E,
-
-        /// <summary>
-        /// I2CDIS: I2C Disable
-        /// </summary>
-        I2CDIS = 0x0F,
-
-        /// <summary>
-        /// Magnetic sensor X-axis sensitivity adjustment value
-        /// </summary>
-        ASAX = 0x10,
-
-        /// <summary>
-        /// Magnetic sensor Y-axis sensitivity adjustment value
-        /// </summary>
-        ASAY = 0x11,
-
-        /// <summary>
-        /// Magnetic sensor Z-axis sensitivity adjustment value
-        /// </summary>
-        ASAZ = 0x12,
 
         /// <summary>
         /// Power control address
