@@ -1,6 +1,7 @@
 # Bmm150 - Magnetometer
 
-The Bmm150 is a magnetometer that can be controlled either thru I2C either thru SPI. This implementation fully supports the I2C mode and the usage thru the MPU9250. It does not support SPI.
+The Bmm150 is a magnetometer that can be controlled either thru I2C either thru SPI. 
+This implementation was tested in a ESP32 platform, specificaly in a  [M5Stack Gray](https://shop.m5stack.com/products/grey-development-core).
 
 ## Usage
 
