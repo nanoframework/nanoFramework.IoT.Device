@@ -17,6 +17,10 @@ I2cConnectionSettings settings = new(1, 0x68);
 
 using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
 {
+    Debug.WriteLine("Start calibration ...");
+    var offset = ag.Calibrate(1000);
+    Debug.WriteLine($"Calibration done, calculated offsets {offset.X} {offset.Y} {offset.Y}");
+
     Debug.WriteLine($"Internal temperature: {ag.GetInternalTemperature().DegreesCelsius} C");
 
     while (true)
@@ -33,21 +37,20 @@ using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
 ### Sample output
 
 ```text
-Internal temperature: 64.81028151 C
-Accelerometer data x:11.92480468 y:15.99902343 z:2.27246093
-Gyroscope data x:4.94384765 y:3985.9008789 z:271.484375
+Start calibration ...
+Calibration done, calculated offsets 49.189 -86.21099999 -86.21099999
+Internal temperature: 64.21664626 C
+Accelerometer data x:-0.041503906 y:0 z:1.056884765
+Gyroscope data x:4.94384765 y:-8.60595703 z:-15.68603515
 
-Accelerometer data x:11.90234375 y:15.984375 z:2.28320312
-Gyroscope data x:3.96728515 y:3985.47363281 z:271.24023437
+Accelerometer data x:-0.040771484 y:-0.0051269531 z:1.062988281
+Gyroscope data x:4.94384765 y:-7.56835937 z:-15.014648437
 
-Accelerometer data x:11.87988281 y:15.96386718 z:2.27148437
-Gyroscope data x:5.49316406 y:3985.9008789 z:272.82714843
+Accelerometer data x:-0.046630859 y:-0.0068359375 z:1.055175781
+Gyroscope data x:3.60107421 y:-7.62939453 z:-15.1977539
 
-Accelerometer data x:11.9140625 y:15.94726562 z:2.32421875
-Gyroscope data x:2.62451171 y:3986.51123046 z:273.31542968
-
-Accelerometer data x:11.87695312 y:15.9765625 z:2.31445312
-Gyroscope data x:3.54003906 y:3987.3046875 z:273.80371093
+Accelerometer data x:-0.049560546 y:-0 z:1.061279296
+Gyroscope data x:4.39453125 y:-7.32421875 z:-14.28222656
 ```
 
 See [samples](samples) for a complete sample application.

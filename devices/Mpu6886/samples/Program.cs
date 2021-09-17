@@ -6,6 +6,8 @@ using System.Device.I2c;
 using System.Diagnostics;
 using nanoFramework.Hardware.Esp32;
 using System.Threading;
+using System.Buffers.Binary;
+using System;
 
 namespace mpu8668test
 {
@@ -22,6 +24,10 @@ namespace mpu8668test
 
             using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
             {
+                Debug.WriteLine("Start calibration ...");
+                var offset = ag.Calibrate(1000);
+                Debug.WriteLine($"Calibration done, calculated offsets {offset.X} {offset.Y} {offset.Y}");
+
                 Debug.WriteLine($"Internal temperature: {ag.GetInternalTemperature().DegreesCelsius} C");
 
                 while (true)

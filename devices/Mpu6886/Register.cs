@@ -38,5 +38,11 @@ namespace Iot.Device.Mpu6886
         AccelerometerConfiguration2 = 0x1D, //MPU6886_ACCEL_CONFIG2 
         FifoEnable = 0x23, //MPU6886_FIFO_EN 
 
+        GyroscopeOffsetAdjustmentXHighByte = 0x13, // X-GYRO OFFSET ADJUSTMENT REGISTER – HIGH BYTE 
+        GyroscopeOffsetAdjustmentXLowByte = 0x14, // X-GYRO OFFSET ADJUSTMENT REGISTER – LOW BYTE
+        GyroscopeOffsetAdjustmentYHighByte = 0x15, // Y-GYRO OFFSET ADJUSTMENT REGISTER – HIGH BYTE 
+        GyroscopeOffsetAdjustmentYLowByte = 0x16, // Y-GYRO OFFSET ADJUSTMENT REGISTER – LOW BYTE
+        GyroscopeOffsetAdjustmentZHighByte = 0x17, // Z-GYRO OFFSET ADJUSTMENT REGISTER – HIGH BYTE 
+        GyroscopeOffsetAdjustmentZLowByte = 0x18, // Z-GYRO OFFSET ADJUSTMENT REGISTER – LOW BYTE
     }
 }
