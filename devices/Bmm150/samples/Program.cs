@@ -14,7 +14,7 @@ using nanoFramework.Hardware.Esp32;
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
-I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.DefaultI2cAddress);
+I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Bmm150.SecondaryI2cAddress);
 
 using Bmm150 bmm150 = new Bmm150(I2cDevice.Create(mpui2CConnectionSettingmpus));
 

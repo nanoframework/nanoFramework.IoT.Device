@@ -49,11 +49,16 @@ namespace Iot.Device.Magnetometer
         public Vector3 CalibrationCompensation { get; set; } = new Vector3();
 
         /// <summary>
-        /// Default I2C address for the Bmm150
-        /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10
-        /// more info: https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L163
+        /// Primary I2C address for the Bmm150
+        /// In the official sheet (P36) states that address is 0x13: https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L163
         /// </summary>
-        public const byte DefaultI2cAddress = 0x10;
+        public const byte PrimaryI2cAddress = 0x13;
+
+        /// <summary>
+        /// Secondary I2C address for the Bmm150
+        /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10
+        /// </summary>
+        public const byte SecondaryI2cAddress = 0x10;
 
         /// <summary>
         /// Default timeout to use when timeout is not provided in the reading methods
@@ -256,7 +261,6 @@ namespace Iot.Device.Magnetometer
             /* Shift the MSB data to left by 7 bits */
             /* Multiply by 128 to get the shift left by 7 value */
             magnetoRaw.Z = (rawData[5] & 0x07F) << 7 | rawData[4] >> 1;
-
             if ((rawData[5] & 0x80) == 0x80)
             {
                 magnetoRaw.Z = -magnetoRaw.Z;
@@ -285,9 +289,9 @@ namespace Iot.Device.Magnetometer
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
 
-            magn.X = Bmm150Compensation.Compensate_x(magn.X - CalibrationCompensation.X, _rHall, _trimData);
-            magn.Y = Bmm150Compensation.Compensate_y(magn.Y - CalibrationCompensation.Y, _rHall, _trimData);
-            magn.Z = Bmm150Compensation.Compensate_z(magn.Z - CalibrationCompensation.Z, _rHall, _trimData);
+            magn.X = Bmm150Compensation.CompensateX(magn.X - CalibrationCompensation.X, _rHall, _trimData);
+            magn.Y = Bmm150Compensation.CompensateY(magn.Y - CalibrationCompensation.Y, _rHall, _trimData);
+            magn.Z = Bmm150Compensation.CompensateZ(magn.Z - CalibrationCompensation.Z, _rHall, _trimData);
 
             return magn;
         }

@@ -15,22 +15,22 @@ namespace Bmm150.tests
             Vector3 rawMagnetormeterData = new Vector3 { X = 13.91375923, Y = -28.74289894, Z = 10.16711997 };
             Bmm150TrimRegisterData trimRegisterData = new Bmm150TrimRegisterData()
             {
-                dig_x1 = 0,
-                dig_x2 = 26,
-                dig_xy1 = 29,
-                dig_xy2 = -3,
-                dig_xyz1 = 7053,
-                dig_y1 = 0,
-                dig_y2 = 26,
-                dig_z1 = 24747,
-                dig_z2 = 763,
-                dig_z3 = 0,
-                dig_z4 = 0
+                DigX1 = 0,
+                DigX2 = 26,
+                DigXy1 = 29,
+                DigXy2 = -3,
+                DigXyz1 = 7053,
+                DigY1 = 0,
+                DigY2 = 26,
+                DigZ1 = 24747,
+                DigZ2 = 763,
+                DigZ3 = 0,
+                DigZ4 = 0
             };
 
-            double x = Bmm150Compensation.Compensate_x(rawMagnetormeterData.X, rhall, trimRegisterData);
-            double y = Bmm150Compensation.Compensate_y(rawMagnetormeterData.Y, rhall, trimRegisterData);
-            double z = Bmm150Compensation.Compensate_z(rawMagnetormeterData.Z, rhall, trimRegisterData);
+            double x = Bmm150Compensation.CompensateX(rawMagnetormeterData.X, rhall, trimRegisterData);
+            double y = Bmm150Compensation.CompensateY(rawMagnetormeterData.Y, rhall, trimRegisterData);
+            double z = Bmm150Compensation.CompensateZ(rawMagnetormeterData.Z, rhall, trimRegisterData);
 
             // Calculated value should be: -1549.91882323
             Assert.Equal(Math.Ceiling(x), Math.Ceiling(-1549.918823), "Unexpected x-axis value.");

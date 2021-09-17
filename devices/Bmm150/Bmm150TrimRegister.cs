@@ -11,59 +11,59 @@ namespace Iot.Device.Magnetometer
     public class Bmm150TrimRegisterData
     {
         /// <summary>
-        /// trim dig_x1 data
+        /// trim DigX1 data
         /// </summary>
-        public byte dig_x1 { get; set; }
+        public byte DigX1 { get; set; }
 
         /// <summary>
-        /// trim dig_y1 data
+        /// trim DigY1 data
         /// </summary>
-        public byte dig_y1 { get; set; }
+        public byte DigY1 { get; set; }
 
         /// <summary>
-        /// trim dig_x2 data
+        /// trim DigX2 data
         /// </summary>
-        public byte dig_x2 { get; set; }
+        public byte DigX2 { get; set; }
 
         /// <summary>
-        /// trim dig_y2 data
+        /// trim DigY2 data
         /// </summary>
-        public byte dig_y2 { get; set; }
+        public byte DigY2 { get; set; }
 
         /// <summary>
-        /// trim dig_z1 data
+        /// trim DigZ1 data
         /// </summary>
-        public int dig_z1 { get; set; }
+        public int DigZ1 { get; set; }
 
         /// <summary>
-        /// trim dig_z2 data
+        /// trim DigZ2 data
         /// </summary>
-        public int dig_z2 { get; set; }
+        public int DigZ2 { get; set; }
 
         /// <summary>
-        /// trim dig_z3 data
+        /// trim DigZ3 data
         /// </summary>
-        public int dig_z3 { get; set; }
+        public int DigZ3 { get; set; }
 
         /// <summary>
-        /// trim dig_z4 data
+        /// trim DigZ4 data
         /// </summary>
-        public int dig_z4 { get; set; }
+        public int DigZ4 { get; set; }
 
         /// <summary>
-        /// trim dig_xy1 data
+        /// trim DigXy1 data
         /// </summary>
-        public int dig_xy1 { get; set; }
+        public int DigXy1 { get; set; }
 
         /// <summary>
-        /// trim dig_xy2 data
+        /// trim DigXy2 data
         /// </summary>
-        public int dig_xy2 { get; set; }
+        public int DigXy2 { get; set; }
 
         /// <summary>
-        /// trim dig_xyz1 data
+        /// trim DigXyz1 data
         /// </summary>
-        public int dig_xyz1 { get; set; }
+        public int DigXyz1 { get; set; }
 
         /// <summary>
         /// Creates a new instace
@@ -75,22 +75,22 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Creates a new instace based on the trim registers SpanBytes
         /// </summary>
-        /// <param name="trim_x1y1_data">trim_x1y1_data bytes</param>
-        /// <param name="trim_xyz_data">trim_xyz_data bytes</param>
-        /// <param name="trim_xy1xy2_data">trim_xy1xy2_data bytes</param>
-        public Bmm150TrimRegisterData(SpanByte trim_x1y1_data, SpanByte trim_xyz_data, SpanByte trim_xy1xy2_data)
+        /// <param name="trimX1y1Data">trimX1y1Data bytes</param>
+        /// <param name="trimXyzData">trimXyzData bytes</param>
+        /// <param name="trimXy1Xy2Data">trimXy1Xy2Data bytes</param>
+        public Bmm150TrimRegisterData(SpanByte trimX1y1Data, SpanByte trimXyzData, SpanByte trimXy1Xy2Data)
         {
-            dig_x1 = (byte)trim_x1y1_data[0];
-            dig_y1 = (byte)trim_x1y1_data[1];
-            dig_x2 = (byte)trim_xyz_data[2];
-            dig_y2 = (byte)trim_xyz_data[3];
-            dig_z1 = trim_xy1xy2_data[3] << 8 | trim_xy1xy2_data[2];
-            dig_z2 = (short)(trim_xy1xy2_data[1] << 8 | trim_xy1xy2_data[0]);
-            dig_z3 = (short)(trim_xy1xy2_data[7] << 8 | trim_xy1xy2_data[6]);
-            dig_z4 = (short)(trim_xyz_data[1] << 8 | trim_xyz_data[0]);
-            dig_xy1 = trim_xy1xy2_data[9];
-            dig_xy2 = (sbyte)trim_xy1xy2_data[8];
-            dig_xyz1 = ((trim_xy1xy2_data[5] & 0x7F) << 8) | trim_xy1xy2_data[4];
+            DigX1 = (byte)trimX1y1Data[0];
+            DigY1 = (byte)trimX1y1Data[1];
+            DigX2 = (byte)trimXyzData[2];
+            DigY2 = (byte)trimXyzData[3];
+            DigZ1 = trimXy1Xy2Data[3] << 8 | trimXy1Xy2Data[2];
+            DigZ2 = (short)(trimXy1Xy2Data[1] << 8 | trimXy1Xy2Data[0]);
+            DigZ3 = (short)(trimXy1Xy2Data[7] << 8 | trimXy1Xy2Data[6]);
+            DigZ4 = (short)(trimXyzData[1] << 8 | trimXyzData[0]);
+            DigXy1 = trimXy1Xy2Data[9];
+            DigXy2 = (sbyte)trimXy1Xy2Data[8];
+            DigXyz1 = ((trimXy1Xy2Data[5] & 0x7F) << 8) | trimXy1Xy2Data[4];
         }
     }
 

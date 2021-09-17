@@ -21,27 +21,27 @@ namespace Iot.Device.Magnetometer
         /// <param name="rhall">temperature compensation value (RHALL) </param>
         /// <param name="trimData">trim registers values</param>
         /// <returns>compensated magnetometer x axis data(micro-tesla) in float</returns>
-        public static double Compensate_x(double x, uint rhall, Bmm150TrimRegisterData trimData)
+        public static double CompensateX(double x, uint rhall, Bmm150TrimRegisterData trimData)
         {
             float retval = 0;
-            float process_comp_x0;
-            float process_comp_x1;
-            float process_comp_x2;
-            float process_comp_x3;
-            float process_comp_x4;
+            float processCompX0;
+            float processCompX1;
+            float processCompX2;
+            float processCompX3;
+            float processCompX4;
             int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
 
             /* Overflow condition check */
-            if ((x != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
+            if ((x != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.DigXyz1 != 0))
             {
                 /* Processing compensation equations */
-                process_comp_x0 = (((float)trimData.dig_xyz1) * 16384.0f / rhall);
-                retval = (process_comp_x0 - 16384.0f);
-                process_comp_x1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
-                process_comp_x2 = process_comp_x1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
-                process_comp_x3 = ((float)trimData.dig_x2) + 160.0f;
-                process_comp_x4 = (float)(x * ((process_comp_x2 + 256.0f) * process_comp_x3));
-                retval = ((process_comp_x4 / 8192.0f) + (((float)trimData.dig_x1) * 8.0f)) / 16.0f;
+                processCompX0 = (((float)trimData.DigXyz1) * 16384.0f / rhall);
+                retval = (processCompX0 - 16384.0f);
+                processCompX1 = ((float)trimData.DigXy2) * (retval * retval / 268435456.0f);
+                processCompX2 = processCompX1 + retval * ((float)trimData.DigXy1) / 16384.0f;
+                processCompX3 = ((float)trimData.DigX2) + 160.0f;
+                processCompX4 = (float)(x * ((processCompX2 + 256.0f) * processCompX3));
+                retval = ((processCompX4 / 8192.0f) + (((float)trimData.DigX1) * 8.0f)) / 16.0f;
             }
             else
             {
@@ -60,27 +60,27 @@ namespace Iot.Device.Magnetometer
         /// <param name="rhall">temperature compensation value (RHALL) </param>
         /// <param name="trimData">trim registers values</param>
         /// <returns>compensated magnetometer y axis data(micro-tesla) in float</returns>
-        public static double Compensate_y(double y, uint rhall, Bmm150TrimRegisterData trimData)
+        public static double CompensateY(double y, uint rhall, Bmm150TrimRegisterData trimData)
         {
             float retval = 0;
-            float process_comp_y0;
-            float process_comp_y1;
-            float process_comp_y2;
-            float process_comp_y3;
-            float process_comp_y4;
+            float processCompY0;
+            float processCompY1;
+            float processCompY2;
+            float processCompY3;
+            float processCompY4;
             int BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP = -4096;
 
             /* Overflow condition check */
-            if ((y != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.dig_xyz1 != 0))
+            if ((y != BMM150_OVERFLOW_ADCVAL_XYAXES_FLIP) && (rhall != 0) && (trimData.DigXyz1 != 0))
             {
                 /* Processing compensation equations */
-                process_comp_y0 = ((float)trimData.dig_xyz1) * 16384.0f / rhall;
-                retval = process_comp_y0 - 16384.0f;
-                process_comp_y1 = ((float)trimData.dig_xy2) * (retval * retval / 268435456.0f);
-                process_comp_y2 = process_comp_y1 + retval * ((float)trimData.dig_xy1) / 16384.0f;
-                process_comp_y3 = ((float)trimData.dig_y2) + 160.0f;
-                process_comp_y4 = (float)(y * (((process_comp_y2) + 256.0f) * process_comp_y3));
-                retval = ((process_comp_y4 / 8192.0f) + (((float)trimData.dig_y1) * 8.0f)) / 16.0f;
+                processCompY0 = ((float)trimData.DigXyz1) * 16384.0f / rhall;
+                retval = processCompY0 - 16384.0f;
+                processCompY1 = ((float)trimData.DigXy2) * (retval * retval / 268435456.0f);
+                processCompY2 = processCompY1 + retval * ((float)trimData.DigXy1) / 16384.0f;
+                processCompY3 = ((float)trimData.DigY2) + 160.0f;
+                processCompY4 = (float)(y * (((processCompY2) + 256.0f) * processCompY3));
+                retval = ((processCompY4 / 8192.0f) + (((float)trimData.DigY1) * 8.0f)) / 16.0f;
             }
             else
             {
@@ -99,29 +99,29 @@ namespace Iot.Device.Magnetometer
         /// <param name="rhall">temperature compensation value (RHALL) </param>
         /// <param name="trimData">trim registers values</param>
         /// <returns>compensated magnetometer z axis data(micro-tesla) in float</returns>
-        public static double Compensate_z(double z, uint rhall, Bmm150TrimRegisterData trimData)
+        public static double CompensateZ(double z, uint rhall, Bmm150TrimRegisterData trimData)
         {
             float retval = 0;
-            float process_comp_z0;
-            float process_comp_z1;
-            float process_comp_z2;
-            float process_comp_z3;
-            float process_comp_z4;
-            float process_comp_z5;
+            float processCompX0;
+            float processCompX1;
+            float processCompZ2;
+            float processCompZ3;
+            float processCompZ4;
+            float processCompZ5;
             int BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL = -16384;
 
             /* Overflow condition check */
-            if ((z != BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL) && (trimData.dig_z2 != 0) &&
-                (trimData.dig_z1 != 0) && (trimData.dig_xyz1 != 0) && (rhall != 0))
+            if ((z != BMM150_OVERFLOW_ADCVAL_ZAXIS_HALL) && (trimData.DigZ2 != 0) &&
+                (trimData.DigZ1 != 0) && (trimData.DigXyz1 != 0) && (rhall != 0))
             {
                 /* Processing compensation equations */
-                process_comp_z0 = ((float)z) - ((float)trimData.dig_z4);
-                process_comp_z1 = ((float)rhall) - ((float)trimData.dig_xyz1);
-                process_comp_z2 = (((float)trimData.dig_z3) * process_comp_z1);
-                process_comp_z3 = ((float)trimData.dig_z1) * ((float)rhall) / 32768.0f;
-                process_comp_z4 = ((float)trimData.dig_z2) + process_comp_z3;
-                process_comp_z5 = (process_comp_z0 * 131072.0f) - process_comp_z2;
-                retval = (process_comp_z5 / ((process_comp_z4) * 4.0f)) / 16.0f;
+                processCompX0 = ((float)z) - ((float)trimData.DigZ4);
+                processCompX1 = ((float)rhall) - ((float)trimData.DigXyz1);
+                processCompZ2 = (((float)trimData.DigZ3) * processCompX1);
+                processCompZ3 = ((float)trimData.DigZ1) * ((float)rhall) / 32768.0f;
+                processCompZ4 = ((float)trimData.DigZ2) + processCompZ3;
+                processCompZ5 = (processCompX0 * 131072.0f) - processCompZ2;
+                retval = (processCompZ5 / ((processCompZ4) * 4.0f)) / 16.0f;
             }
             else
             {

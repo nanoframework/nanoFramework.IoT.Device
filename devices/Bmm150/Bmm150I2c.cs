@@ -50,10 +50,5 @@ namespace Iot.Device.Magnetometer
             };
             i2cDevice.Write(dataout);
         }
-
-        public static double Compensate_z(double z)
-        {
-            return z + 1;
-        }
     }
 }

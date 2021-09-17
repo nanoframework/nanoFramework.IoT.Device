@@ -3,7 +3,7 @@
 The Bmm150 is a magnetometer that can be controlled either thru I2C either thru SPI. 
 This implementation was tested in a ESP32 platform, specificaly in a  [M5Stack Gray](https://shop.m5stack.com/products/grey-development-core).
 
-## Reference
+## Documentation
 
 Documentation for the Bmm150 can be [found here](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmm150-ds001.pdf)
 
@@ -89,7 +89,6 @@ Once the calibration is done, you will be able to read the data with the bias co
 * Device Reset
 * Toggle operation modes (defaults to normal mode)
 
-
 ## Testing
 
 Unit tests project is in \Bmm150.tests. You can use VS2019 built-in test capabilites as follows:
@@ -132,3 +131,6 @@ public void TestCompensateVector3()
 }
 ```
 
+## Notes
+
+* The BMI160 embedd this BMM150.
