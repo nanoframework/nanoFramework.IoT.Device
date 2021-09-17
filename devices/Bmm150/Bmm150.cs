@@ -170,7 +170,7 @@ namespace Iot.Device.Magnetometer
                         mag_max.Z = (rawMagnetometerData.Z > mag_max.Z) ? rawMagnetometerData.Z : mag_max.Z;
                     }
 
-                    // It is plausible to wait for 100ms, this means we could top out 10 reads/sec * 100 iterations = 1000 sensor reads.
+                    // Wait for 100ms until next reading
                     Wait(100);
                 }
                 catch
