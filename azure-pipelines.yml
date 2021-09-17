@@ -90,13 +90,17 @@ steps:
         $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
     }
 
-    $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$(GitHubToken)"))))"
+    $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
   
     if($env:DEVICE_TO_BUILD -eq "")
     {
         if($env:System_PullRequest_PullRequestId -ne $null)
         {
-            Write-host "Building from PR"
+            "" | Write-Host -ForegroundColor Yellow
+            "**********************" | Write-Host -ForegroundColor Yellow
+            "* Building from a PR *" | Write-host -ForegroundColor Yellow
+            "**********************" | Write-Host -ForegroundColor Yellow
+            "" | Write-Host -ForegroundColor Yellow
 
             # get files changed in PR, if this is a PR
             # can get max of 100 files using this method (for more requires paging)
@@ -107,7 +111,11 @@ steps:
         }
         else
         {
-            Write-host "Building from a commit"
+            "" | Write-Host -ForegroundColor Yellow
+            "**************************" | Write-Host -ForegroundColor Yellow
+            "* Building from a commit *" | Write-host -ForegroundColor Yellow
+            "**************************" | Write-Host -ForegroundColor Yellow
+            "" | Write-Host -ForegroundColor Yellow
 
             # get files changed in the commit, if this is NOT a PR
             $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
@@ -136,9 +144,9 @@ steps:
         $results = [Regex]::Matches($files1, $pattern)
 
         # get unique folder names
-        $deviceFolders = $results | Sort-Object |  Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
+        $deviceFolders = $results | Sort-Object | Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
 
-        Write-host "Found $($deviceFolders.count) packages to build"
+        Write-host "Found $($deviceFolders.count) package(s) to build"
     }
     else
     {
@@ -152,8 +160,9 @@ steps:
     {
         "" | Write-Host -ForegroundColor Yellow
         "***********************" | Write-Host -ForegroundColor Yellow
+        "Processing binding '$folder'..." | Write-Host -ForegroundColor Yellow
         "***********************" | Write-Host -ForegroundColor Yellow
-        "Processing '$folder'..." | Write-Host -ForegroundColor Yellow
+        "" | Write-Host -ForegroundColor Yellow
         
         # try to find the solution
         $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "$folder.sln" -Recurse
@@ -165,7 +174,11 @@ steps:
         }
         else
         {
-            "Solution file is: '$solutionFile'" | Write-Host -ForegroundColor Yellow
+            "" | Write-Host -ForegroundColor Yellow
+            "***********************" | Write-Host -ForegroundColor Yellow
+            "Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
+            "***********************" | Write-Host -ForegroundColor Yellow
+            "" | Write-Host -ForegroundColor Yellow
         }
 
         # try to find the nuspec
@@ -183,15 +196,20 @@ steps:
 
         # need to restore NuGets first
         nuget restore $solutionFile
+        if (-not $?) { throw "Error restoring '$solutionFile'" }
 
         # build solution
         & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
+        if (-not $?) { throw "Error building '$solutionFile'" }
 
         # package NuGet
-        nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+        nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -Symbols -SymbolPackageFormat snupkg -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+        if (-not $?) { throw "Error packaging '$nuspecFile'" }
     }
   displayName: Build and pack solutions
-  
+  env:
+    MY_GITHUBTOKEN: $(GitHubToken)
+
 - task: CopyFiles@1
   condition: succeeded()
   displayName: Collecting deployable artifacts
@@ -199,6 +217,7 @@ steps:
     sourceFolder: $(Agent.TempDirectory)
     Contents: |
       *.nupkg
+      *.snupkg
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 
