@@ -9,7 +9,7 @@ namespace Iot.Device.Mpu6886
         Address = 0x68, //MPU6886_ADDRESS
         WhoAmI = 0x75, //MPU6886_WHOAMI 
         AccelerometerIntelligenceControl = 0x69, //MPU6886_ACCEL_INTEL_CTRL 
-        SampleRateDevicer = 0x19, //MPU6886_SMPLRT_DIV 
+        SampleRateDevider = 0x19, //MPU6886_SMPLRT_DIV 
         IntPinBypassEnabled = 0x37, //MPU6886_INT_PIN_CFG 
         InteruptEnable = 0x38, //MPU6886_INT_ENABLE 
         AccelerometerMeasurementXHighByte = 0x3B, //MPU6886_ACCEL_XOUT_H 

@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="AccelerometerLowPowerMode.cs" />
+    <Compile Include="AccelerometerScale.cs" />
+    <Compile Include="AxisEnabled.cs" />
+    <Compile Include="GyroscopeScale.cs" />
+    <Compile Include="InterruptEnable.cs" />
     <Compile Include="Mpu6886.cs" />
     <Compile Include="Register.cs" />
     <None Include="README.md" />
