@@ -28,8 +28,7 @@ while (true)
 {
     Vector3 magne = bmm150.ReadMagnetometer(true, TimeSpan.FromMilliseconds(11));
 
-    var offset = bmm150.CalibrationCompensation;
-    var head_dir = Math.Atan2(magne.X - offset.X, magne.Y - offset.Y) * 180.0 / Math.PI;
+    var head_dir = Math.Atan2(magne.X, magne.Y) * 180.0 / Math.PI;
 
     Debug.WriteLine($"Mag data: X={magne.X,15}, Y={magne.Y,15}, Z={magne.Z,15}, head_dir: {head_dir}");
 
