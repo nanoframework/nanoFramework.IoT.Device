@@ -101,16 +101,16 @@ namespace Iot.Device.Magnetometer
         /// <returns>Trim registers value</returns>
         private Bmm150TrimRegisterData ReadTrimRegisters()
         {
-            SpanByte trim_x1y1_data = new byte[2];
-            SpanByte trim_xyz_data = new byte[4];
-            SpanByte trim_xy1xy2_data = new byte[10];
+            SpanByte trimX1y1Data = new byte[2];
+            SpanByte trimXyzData = new byte[4];
+            SpanByte trimXy1xy2Data = new byte[10];
 
             // Read trim extended registers
-            ReadBytes(Register.BMM150_DIG_X1, trim_x1y1_data);
-            ReadBytes(Register.BMM150_DIG_Z4_LSB, trim_xyz_data);
-            ReadBytes(Register.BMM150_DIG_Z2_LSB, trim_xy1xy2_data);
+            ReadBytes(Register.BMM150_DIG_X1, trimX1y1Data);
+            ReadBytes(Register.BMM150_DIG_Z4_LSB, trimXyzData);
+            ReadBytes(Register.BMM150_DIG_Z2_LSB, trimXy1xy2Data);
 
-            return new Bmm150TrimRegisterData(trim_x1y1_data, trim_xyz_data, trim_xy1xy2_data);
+            return new Bmm150TrimRegisterData(trimX1y1Data, trimXyzData, trimXy1xy2Data);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Iot.Device.Magnetometer
             Wait(6);
 
             // Check for a valid chip ID
-            if (!IsVersionCorrect())
+            if (!IsVersionCorrect)
             {
                 throw new IOException($"This device does not contain the correct signature (0x32) for a Bmm150");
             }
@@ -202,10 +202,7 @@ namespace Iot.Device.Magnetometer
         /// Check if the version is the correct one (0x32). This is fixed for this device
         /// </summary>
         /// <returns>Returns true if the version match</returns>
-        public bool IsVersionCorrect()
-        {
-            return ReadByte(Register.WIA) == 0x32;
-        }
+        public bool IsVersionCorrect => ReadByte(Register.WIA) == 0x32;
 
         /// <summary>
         /// Read the magnetometer without Bias correction and can wait for new data to be present

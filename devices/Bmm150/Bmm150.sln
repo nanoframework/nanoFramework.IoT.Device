@@ -6,19 +6,9 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmm150", "Bmm150.nfproj", "
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmm150.sample", "samples\Bmm150.sample.nfproj", "{B40F21A9-D8BA-453A-B05F-3892B807322F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{A20ED3D6-DB55-4F60-A4E4-00DE769B2281}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Numerics", "..\..\src\System.Numerics\System.Numerics.shproj", "{F5CCB96C-70B1-4F0A-9F0E-BB912B6A996C}"
-EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmm150.tests", "Bmm150.tests\Bmm150.tests.nfproj", "{4BFD0B43-1F01-40E3-95EC-8C22D4FE1477}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\System.Numerics\System.Numerics.projitems*{f5ccb96c-70b1-4f0a-9f0e-bb912b6a996c}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -45,10 +35,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{23325B14-3651-4879-9697-9846FF123FEB} = {A20ED3D6-DB55-4F60-A4E4-00DE769B2281}
-		{F5CCB96C-70B1-4F0A-9F0E-BB912B6A996C} = {A20ED3D6-DB55-4F60-A4E4-00DE769B2281}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E71DA3D1-E38D-4F07-8C38-F237B984FC0D}
