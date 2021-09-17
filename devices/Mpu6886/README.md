@@ -15,7 +15,7 @@ Create the `Mpu6886` class and pass the I2C device. By default the I2C address f
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
-I2cConnectionSettings settings = new(1, 0x68);
+I2cConnectionSettings settings = new(1, Mpu6886AccelerometerGyroscope.DefaultI2cAddress);
 
 using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
 {
@@ -82,16 +82,16 @@ you will have to run the calibration method every time the device boots.
 
 ## Sleep mode
 
-The sensor can be put in sleep mode by calling the `Sleep` function.
+The sensor can be put in sleep mode by calling the `Sleep` function. After that the `WakeUp` function should be called.
 
 ## Setting scales
 
-Both for the gyroscope and accelerometer you can set the desired scales using the `SetAccelerometerScale` and `SetGyroscopeScale`
-functions.
+Both for the gyroscope and accelerometer you can set the desired scales using the `AccelerometerScale` and `GyroscopeScale`
+properties.
 
 ```csharp
 // Set the scale of the accelerometer to 2G
-ag.SetAccelerometerScale(AccelerometerScale.Scale2G);
+ag.AccelerometerScale = AccelerometerScale.Scale2G;
 ```
 
 ## Setting enabled axes

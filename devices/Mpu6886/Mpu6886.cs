@@ -6,9 +6,9 @@ using System.Buffers.Binary;
 using System.Device.I2c;
 using System.Device.Model;
 using System.IO;
-using System.Numerics;
 using System.Threading;
 using UnitsNet;
+using System.Numerics;
 
 namespace Iot.Device.Mpu6886
 {
@@ -18,6 +18,12 @@ namespace Iot.Device.Mpu6886
     [Interface("Mpu6886 accelerometer and gyroscope")]
     public class Mpu6886AccelerometerGyroscope : IDisposable
     {
+        /// <summary>
+        /// The default I2C address for the MPU6886 sensor. (Datasheet page 49)
+        /// Mind that the address can be configured as well for 0x69 depending upon the value driven on AD0 pin.
+        /// </summary>
+        public const int DefaultI2cAddress = 0x68;
+
         private I2cDevice _i2c;
         private const double GyroscopeResolution = 2000.0 / 32768.0; // default gyro scale 2000 dps
         private const double AccelerometerResolution = 8.0 / 32768.0; // default accelerometer res 8G
@@ -50,8 +56,8 @@ namespace Iot.Device.Mpu6886
             _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0001 }));
             Thread.Sleep(10);
 
-            SetAccelerometerScale(AccelerometerScale.Scale8G);
-            SetGyroscopeScale(GyroscopeScale.Scale2000dps);
+            AccelerometerScale = AccelerometerScale.Scale8G;
+            GyroscopeScale = GyroscopeScale.Scale2000dps;
 
             // CONFIG(0x1a) 1khz output
             _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.Configuration, 0b0000_0001 }));
@@ -180,7 +186,7 @@ namespace Iot.Device.Mpu6886
         /// <returns>The calulated offset vector</returns>
         public Vector3 Calibrate(int iterations)
         {
-            SetGyroscopeOffset(new Vector3(0, 0, 0));
+            GyroscopeOffset = new Vector3(0, 0, 0);
             Thread.Sleep(2);
 
             var gyrSum = new double[3];
@@ -198,53 +204,50 @@ namespace Iot.Device.Mpu6886
 
             Vector3 offset = new Vector3(gyrSum[0] / iterations, gyrSum[1] / iterations, gyrSum[2] / iterations);
 
-            SetGyroscopeOffset(offset);
+            GyroscopeOffset = offset;
 
             return offset;
         }
 
         /// <summary>
-        /// Write the gyroscope offset in the GyroscopeOffsetAdjustment registers of the MPU6886.
-        /// This function can be usefull when a custom callibration calculation is used, instead of the Calibrate function of this class.
+        /// Gets and sets the gyroscope offset in the GyroscopeOffsetAdjustment registers of the MPU6886.
+        /// Setting the offset can be usefull when a custom callibration calculation is used, instead of the Calibrate function of this class.
         /// </summary>
-        /// <param name="offset">The vector containing the offsets for the 3 axes.</param>
-        public void SetGyroscopeOffset(Vector3 offset)
+        public Vector3 GyroscopeOffset
         {
-            SpanByte registerAndOffset = new byte[7];
-            SpanByte offsetbyte = new byte[2];
+            get
+            {
+                SpanByte vec = new byte[6];
+                Read(Mpu6886.Register.GyroscopeOffsetAdjustmentXHighByte, vec);
 
-            registerAndOffset[0] = (byte)Mpu6886.Register.GyroscopeOffsetAdjustmentXHighByte;
+                Vector3 v = new Vector3();
+                v.X = (short)(vec[0] << 8 | vec[1]);
+                v.Y = (short)(vec[2] << 8 | vec[3]);
+                v.Z = (short)(vec[4] << 8 | vec[5]);
 
-            BinaryPrimitives.WriteInt16BigEndian(offsetbyte, (short)offset.X);
-            registerAndOffset[1] = offsetbyte[0];
-            registerAndOffset[2] = offsetbyte[1];
+                return v;
+            }
+            set
+            {
+                SpanByte registerAndOffset = new byte[7];
+                SpanByte offsetbyte = new byte[2];
 
-            BinaryPrimitives.WriteInt16BigEndian(offsetbyte, (short)offset.Y);
-            registerAndOffset[3] = offsetbyte[0];
-            registerAndOffset[4] = offsetbyte[1];
+                registerAndOffset[0] = (byte)Mpu6886.Register.GyroscopeOffsetAdjustmentXHighByte;
 
-            BinaryPrimitives.WriteInt16BigEndian(offsetbyte, (short)offset.Z);
-            registerAndOffset[5] = offsetbyte[0];
-            registerAndOffset[6] = offsetbyte[1];
+                BinaryPrimitives.WriteInt16BigEndian(offsetbyte, (short)value.X);
+                registerAndOffset[1] = offsetbyte[0];
+                registerAndOffset[2] = offsetbyte[1];
 
-            _i2c.Write(registerAndOffset);
-        }
+                BinaryPrimitives.WriteInt16BigEndian(offsetbyte, (short)value.Y);
+                registerAndOffset[3] = offsetbyte[0];
+                registerAndOffset[4] = offsetbyte[1];
 
-        /// <summary>
-        /// Read the gyroscope offset from the GyroscopeOffsetAdjustment registers of the MPU6886.
-        /// </summary>
-        /// <returns>The vector containing the offsets for the 3 axes.</returns>
-        public Vector3 GetGyroscopeOffset()
-        {
-            SpanByte vec = new byte[6];
-            Read(Mpu6886.Register.GyroscopeOffsetAdjustmentXHighByte, vec);
+                BinaryPrimitives.WriteInt16BigEndian(offsetbyte, (short)value.Z);
+                registerAndOffset[5] = offsetbyte[0];
+                registerAndOffset[6] = offsetbyte[1];
 
-            Vector3 v = new Vector3();
-            v.X = (short)(vec[0] << 8 | vec[1]);
-            v.Y = (short)(vec[2] << 8 | vec[3]);
-            v.Z = (short)(vec[4] << 8 | vec[5]);
-
-            return v;
+                _i2c.Write(registerAndOffset);
+            }
         }
 
         /// <summary>
@@ -266,24 +269,50 @@ namespace Iot.Device.Mpu6886
         }
 
         /// <summary>
-        /// Sets the accelerometer full scale. (Datasheet page 37)
+        /// Disables the sleep mode. (Datasheet, page 47)
         /// </summary>
-        /// <param name="scale">The scale to set.</param>
-        public void SetAccelerometerScale(AccelerometerScale scale)
+        public void WakeUp()
         {
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, (byte)scale }));
-            Thread.Sleep(1);
+            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0000 }));
+            Thread.Sleep(10);
         }
 
         /// <summary>
-        /// Sets the gyroscope full scale. (Datasheet page 37)
+        /// Gets and sets the accelerometer full scale. (Datasheet page 37)
         /// </summary>
-        /// <param name="scale">The scale to set.</param>
-        public void SetGyroscopeScale(GyroscopeScale scale)
+        public AccelerometerScale AccelerometerScale
         {
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, (byte)scale }));
-            Thread.Sleep(1);
+            get
+            {
+                SpanByte buffer = new byte[1];
+                Read(Mpu6886.Register.AccelerometerConfiguration1, buffer);
+                return (AccelerometerScale)buffer[0];
+            }
+            set
+            {
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, (byte)value }));
+                Thread.Sleep(1);
+            }
         }
+
+        /// <summary>
+        /// Gets and sets the gyroscope full scale. (Datasheet page 37)
+        /// </summary>
+        public GyroscopeScale GyroscopeScale
+        {
+            get
+            {
+                SpanByte buffer = new byte[1];
+                Read(Mpu6886.Register.GyroscopeConfiguration, buffer);
+                return (GyroscopeScale)buffer[0];
+            }
+            set
+            {
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, (byte)value }));
+                Thread.Sleep(1);
+            }
+        }
+
 
         /// <summary>
         /// Sets the enabled axes of the gyroscope and accelerometer. (Datasheet page 47)
@@ -308,24 +337,36 @@ namespace Iot.Device.Mpu6886
         }
 
         /// <summary>
-        /// Sets the averaging filter settings for low power accelerometer mode. (Datasheet page 37)
+        /// Gets and sets the averaging filter settings for low power accelerometer mode. (Datasheet page 37)
         /// </summary>
-        /// <param name="mode">The mode to set.</param>
-        public void SetAcceleratorLowPowerMode(AccelerometerLowPowerMode mode)
+        public AccelerometerLowPowerMode AccelerometerLowPowerMode
         {
-            // First read the current register values
-            SpanByte currentRegisterValues = new byte[1];
-            _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
-            _i2c.Read(currentRegisterValues);
+            get {
+                SpanByte currentRegisterValues = new byte[1];
+                _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
+                _i2c.Read(currentRegisterValues);
 
-            byte mask = 0b1100_1111; // we leave all bits except bit 4 and 5 untouched with this mask
-            byte cleaned = (byte)(currentRegisterValues[0] & mask);
+                byte mask = 0b0011_0000; // we leave all bits except bit 4 and 5 untouched with this mask
+                byte cleaned = (byte)(currentRegisterValues[0] & mask);
 
-            byte newvalue = (byte)(cleaned | (byte)mode); // apply the new power mode
+                return (AccelerometerLowPowerMode)cleaned;
+            }
+            set
+            {
+                // First read the current register values
+                SpanByte currentRegisterValues = new byte[1];
+                _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
+                _i2c.Read(currentRegisterValues);
 
-            // write the new register value
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, newvalue }));
-            Thread.Sleep(2);
+                byte mask = 0b1100_1111; // we leave all bits except bit 4 and 5 untouched with this mask
+                byte cleaned = (byte)(currentRegisterValues[0] & mask);
+
+                byte newvalue = (byte)(cleaned | (byte)value); // apply the new power mode
+
+                // write the new register value
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, newvalue }));
+                Thread.Sleep(2);
+            }
         }
 
         /// <summary>
@@ -362,7 +403,7 @@ namespace Iot.Device.Mpu6886
             }
             set
             {
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, (byte)value}));
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, (byte)value }));
                 Thread.Sleep(1);
             }
         }

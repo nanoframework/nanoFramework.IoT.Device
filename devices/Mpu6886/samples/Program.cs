@@ -6,7 +6,6 @@ using System.Device.I2c;
 using System.Diagnostics;
 using nanoFramework.Hardware.Esp32;
 using System.Threading;
-using System.Buffers.Binary;
 using System;
 
 namespace mpu8668test
@@ -20,7 +19,7 @@ namespace mpu8668test
             Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
             Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
-            I2cConnectionSettings settings = new(1, 0x68);
+            I2cConnectionSettings settings = new(1, Mpu6886AccelerometerGyroscope.DefaultI2cAddress);
 
             using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
             {
