@@ -239,24 +239,24 @@ namespace Iot.Device.Magnetometer
 
             Vector3 magnetoRaw = new Vector3();
 
-            /* Shift the MSB data to left by 5 bits */
-            /* Multiply by 32 to get the shift left by 5 value */
+            // Shift the MSB data to left by 5 bits
+            // Multiply by 32 to get the shift left by 5 value
             magnetoRaw.X = (rawData[1] & 0x7F) << 5 | rawData[0] >> 3;
             if ((rawData[1] & 0x80) == 0x80)
             {
                 magnetoRaw.X = -magnetoRaw.X;
             }
 
-            /* Shift the MSB data to left by 5 bits */
-            /* Multiply by 32 to get the shift left by 5 value */
+            // Shift the MSB data to left by 5 bits
+            // Multiply by 32 to get the shift left by 5 value
             magnetoRaw.Y = (rawData[3] & 0x07F) << 5 | rawData[2] >> 3;
             if ((rawData[3] & 0x80) == 0x80)
             {
                 magnetoRaw.Y = -magnetoRaw.Y;
             }
 
-            /* Shift the MSB data to left by 7 bits */
-            /* Multiply by 128 to get the shift left by 7 value */
+            // Shift the MSB data to left by 7 bits
+            // Multiply by 128 to get the shift left by 7 value
             magnetoRaw.Z = (rawData[5] & 0x07F) << 7 | rawData[4] >> 1;
             if ((rawData[5] & 0x80) == 0x80)
             {
