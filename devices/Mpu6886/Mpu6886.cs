@@ -24,11 +24,6 @@ namespace Iot.Device.Mpu6886
         /// </summary>
         public const int DefaultI2cAddress = 0x68;
 
-        /// <summary>
-        /// The secondary I2C address for the MPU6886 sensor. (Datasheet page 49)
-        /// </summary>
-        public const int SecondaryI2cAddress = 0x69 ;
-
         private I2cDevice _i2c;
         private const double GyroscopeResolution = 2000.0 / 32768.0; // default gyro scale 2000 dps
         private const double AccelerometerResolution = 8.0 / 32768.0; // default accelerometer res 8G
@@ -302,11 +297,8 @@ namespace Iot.Device.Mpu6886
                 _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration1);
                 _i2c.Read(currentRegisterValues);
 
-                byte mask = 0b1110_0111; // we leave all bits except bit 3 and 4 untouched with this mask
-                byte cleaned = (byte)(currentRegisterValues[0] & mask);
-
-                byte newvalue = (byte)(cleaned | (byte)value); // apply the new scale
-
+                byte newvalue = (byte)((currentRegisterValues[0] & 0b1110_0111) | (byte)value); // apply the new scale, we leave all bits except bit 3 and 4 untouched with mask 0b1110_0111
+                
                 // write the new register value
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, newvalue }));
 
@@ -332,11 +324,8 @@ namespace Iot.Device.Mpu6886
                 SpanByte currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.GyroscopeConfiguration);
                 _i2c.Read(currentRegisterValues);
-
-                byte mask = 0b1110_0111; // we leave all bits except bit 3 and 4 untouched with this mask
-                byte cleaned = (byte)(currentRegisterValues[0] & mask);
-
-                byte newvalue = (byte)(cleaned | (byte)value); // apply the new scale
+                
+                byte newvalue = (byte)((currentRegisterValues[0] & 0b1110_0111) | (byte)value); // apply the new scale, we leave all bits except bit 3 and 4 untouched with this mask 0b1110_0111
 
                 // write the new register value
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, newvalue }));
@@ -368,10 +357,7 @@ namespace Iot.Device.Mpu6886
                 _i2c.WriteByte((byte)Mpu6886.Register.PowerManagement2);
                 _i2c.Read(currentRegisterValues);
 
-                byte mask = 0b1100_0000; // we leave all bits except bit 7 and 6 untouched with this mask
-                byte cleaned = (byte)(currentRegisterValues[0] & mask);
-
-                byte newvalue = (byte)(cleaned | (byte)value); // apply the new enabled axes
+                byte newvalue = (byte)((currentRegisterValues[0] & 0b1100_0000) | (byte)value); // apply the new enabled axes, we leave all bits except bit 7 and 6 untouched with mask 0b1100_0000
 
                 // write the new register value
                 // bit 1 in the register means disabled, so using bitwise not to flip bits.
@@ -391,8 +377,7 @@ namespace Iot.Device.Mpu6886
                 _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
                 _i2c.Read(currentRegisterValues);
 
-                byte mask = 0b0011_0000; // we leave all bits except bit 4 and 5 untouched with this mask
-                byte cleaned = (byte)(currentRegisterValues[0] & mask);
+                byte cleaned = (byte)(currentRegisterValues[0] & 0b0011_0000); // we leave all bits except bit 4 and 5 untouched with this mask
 
                 return (AccelerometerLowPowerMode)cleaned;
             }
@@ -404,10 +389,7 @@ namespace Iot.Device.Mpu6886
                 _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
                 _i2c.Read(currentRegisterValues);
 
-                byte mask = 0b1100_1111; // we leave all bits except bit 4 and 5 untouched with this mask
-                byte cleaned = (byte)(currentRegisterValues[0] & mask);
-
-                byte newvalue = (byte)(cleaned | (byte)value); // apply the new power mode
+                byte newvalue = (byte)((currentRegisterValues[0] & 0b1100_1111) | (byte)value); // apply the new enabled axes, we leave all bits except bit 4 and 5 untouched with mask 0b1100_1111
 
                 // write the new register value
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, newvalue }));
@@ -456,14 +438,12 @@ namespace Iot.Device.Mpu6886
                 _i2c.WriteByte((byte)Mpu6886.Register.InteruptEnable);
                 _i2c.Read(currentRegisterValues);
 
-                byte mask = 0b0011_1111; // we leave all bits except bit 4 and 5 untouched with this mask
-                byte cleaned = (byte)(currentRegisterValues[0] & mask);
-
-                byte newvalue = (byte)(cleaned | (byte)value); // apply the new axes settings
+                byte newvalue = (byte)((currentRegisterValues[0] & 0b0011_1111) | (byte)value); // apply the new enabled axes, we leave all bits except bit 4 and 5 untouched with mask 0b0011_1111
 
                 // write the new register value
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, newvalue }));
                 Thread.Sleep(2);
+
             }
         }
 
