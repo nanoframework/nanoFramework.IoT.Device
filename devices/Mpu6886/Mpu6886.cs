@@ -24,6 +24,11 @@ namespace Iot.Device.Mpu6886
         /// </summary>
         public const int DefaultI2cAddress = 0x68;
 
+        /// <summary>
+        /// The secondary I2C address for the MPU6886 sensor. (Datasheet page 49)
+        /// </summary>
+        public const int SecondaryI2cAddress = 0x69;
+
         private I2cDevice _i2c;
         private const double GyroscopeResolution = 2000.0 / 32768.0; // default gyro scale 2000 dps
         private const double AccelerometerResolution = 8.0 / 32768.0; // default accelerometer res 8G
