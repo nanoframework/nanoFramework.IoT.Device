@@ -109,3 +109,20 @@ change anymore.
 // Enable only the X axis of the gyroscope and accelerometer
 ag.EnabledAxes = EnabledAxis.GyroscopeX | EnabledAxis.AccelerometerX;
 ```
+
+## Features not implemented
+
+The following features are enabled in the MPU6886 but not yet implemented in this driver:
+
+- registers `0x05` to `0x0b`: low noise to low power offset
+- registers `0x0d` to `0x0F`: self test
+- register `0x1a`: FIFO mode, DLPF (digital low pass filter)
+- register `0x1d` bit 0 to 3: DLPF
+- register `0x1e` bit 4 to 6: averaging filter for low power mode
+- registers `0x20` to `0x22`: threshold for wake-on motion
+- register `0x36`: fsync interrupt status
+- register `0x37`: INT/DRDY pin config
+- register `0x39` and `0x3a`: FIFO watermark interrupt
+- register `0x60` and `0x61`: FIFO watermark interrupt
+- register `0x68`: signal path reset
+- register `0x69`: acc. intelligence control

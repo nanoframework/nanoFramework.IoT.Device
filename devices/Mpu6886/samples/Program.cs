@@ -23,15 +23,6 @@ namespace mpu8668test
 
             using (Mpu6886AccelerometerGyroscope ag = new(I2cDevice.Create(settings)))
             {
-                ag.AccelerometerInterruptEnabled = InterruptEnable.Xaxis | InterruptEnable.Zaxis;
-
-                if (ag.AccelerometerInterruptEnabled.HasFlag(InterruptEnable.Xaxis))
-                    Debug.WriteLine("x ok");
-                if (ag.AccelerometerInterruptEnabled.HasFlag(InterruptEnable.Yaxis))
-                    Debug.WriteLine("x ok");
-                if (ag.AccelerometerInterruptEnabled.HasFlag(InterruptEnable.Zaxis))
-                    Debug.WriteLine("x ok");
-
                 Debug.WriteLine("Start calibration ...");
                 var offset = ag.Calibrate(1000);
                 Debug.WriteLine($"Calibration done, calculated offsets {offset.X} {offset.Y} {offset.Y}");
