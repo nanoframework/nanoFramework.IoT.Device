@@ -1,5 +1,10 @@
 ﻿# Mpu6886 - accelerometer and gyroscope
 
+The MPU-6886 is a 6-axis motion tracking sensor that combines a 3-axis gyroscope and a 3-axis accelerometer including the following features:
+
+- gyroscope programmable FSR of ±250 dps, ±500 dps, ±1000 dps, and ±2000 dps
+- accelerometer with programmable FSR of ±2g, ±4g, ±8g, and ±16g
+
 ## Documentation
 
 - [Datasheet](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/core/MPU-6886-000193%2Bv1.1_GHIC_en.pdf), register descriptions start at page 32.

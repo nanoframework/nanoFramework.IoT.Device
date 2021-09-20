@@ -227,6 +227,7 @@ namespace Iot.Device.Mpu6886
 
                 return v;
             }
+
             set
             {
                 SpanByte registerAndOffset = new byte[7];
@@ -288,6 +289,7 @@ namespace Iot.Device.Mpu6886
                 Read(Mpu6886.Register.AccelerometerConfiguration1, buffer);
                 return (AccelerometerScale)buffer[0];
             }
+
             set
             {
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, (byte)value }));
@@ -306,6 +308,7 @@ namespace Iot.Device.Mpu6886
                 Read(Mpu6886.Register.GyroscopeConfiguration, buffer);
                 return (GyroscopeScale)buffer[0];
             }
+
             set
             {
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, (byte)value }));
@@ -328,6 +331,7 @@ namespace Iot.Device.Mpu6886
                 // bit 1 in the register means disabled, so using bitwise not to flip bits.
                 return (EnabledAxis)~readBuffer[0];
             }
+
             set
             {
                 // bit 1 in the register means disabled, so using bitwise not to flip bits.
@@ -351,6 +355,7 @@ namespace Iot.Device.Mpu6886
 
                 return (AccelerometerLowPowerMode)cleaned;
             }
+
             set
             {
                 // First read the current register values
@@ -382,6 +387,7 @@ namespace Iot.Device.Mpu6886
                 _i2c.Read(readbuffer);
                 return readbuffer[0];
             }
+
             set
             {
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.SampleRateDevider, value }));
@@ -401,6 +407,7 @@ namespace Iot.Device.Mpu6886
                 _i2c.Read(readbuffer);
                 return (InterruptEnable)readbuffer[0];
             }
+            
             set
             {
                 _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, (byte)value }));
