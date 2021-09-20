@@ -287,12 +287,24 @@ namespace Iot.Device.Mpu6886
             {
                 SpanByte buffer = new byte[1];
                 Read(Mpu6886.Register.AccelerometerConfiguration1, buffer);
-                return (AccelerometerScale)buffer[0];
+                return (AccelerometerScale)(buffer[0] & 0b0001_1000);
             }
 
             set
             {
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, (byte)value }));
+                // First read the current register values
+                SpanByte currentRegisterValues = new byte[1];
+                _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration1);
+                _i2c.Read(currentRegisterValues);
+
+                byte mask = 0b1110_0111; // we leave all bits except bit 3 and 4 untouched with this mask
+                byte cleaned = (byte)(currentRegisterValues[0] & mask);
+
+                byte newvalue = (byte)(cleaned | (byte)value); // apply the new power mode
+
+                // write the new register value
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, newvalue }));
+
                 Thread.Sleep(1);
             }
         }
