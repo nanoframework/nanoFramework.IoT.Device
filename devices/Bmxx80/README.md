@@ -42,3 +42,20 @@ The following connection types are supported by this binding.
 - [X] I2C
 - [ ] SPI
 
+### I2C bus ID
+
+.NET nanoFramework devices can have multiple I2C buses available. Please check the device pin mapping or use a board support package to address the correct bus when instantiating the `I2cConnectionSettings()`.
+
+### Using on ESP32 devices
+
+To use this binding with an ESP32 device, the following extra steps are required:
+
+1. Add a reference to the [nanoFramework.Hardware.Esp32](https://www.nuget.org/packages/nanoFramework.Hardware.Esp32/) NuGet.
+1. Configure the I2C GPIO pins for SDA and SCL. 
+
+For example, to connect to an M5Stack using the side headers, according the the [pin map](https://docs.m5stack.com/en/core/basic) SDA connects to GPIO21 and SCL connects to GPIO22. The code to accomplish this will be:
+
+```csharp
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+```

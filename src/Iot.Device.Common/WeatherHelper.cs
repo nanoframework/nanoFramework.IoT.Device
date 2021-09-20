@@ -12,7 +12,8 @@ namespace Iot.Device.Common
     public static class WeatherHelper
     {
         /// <summary>
-        /// The mean sea-level pressure (MSLP) is the average atmospheric pressure at mean sea level
+        /// The mean sea-level pressure (MSLP) is the average atmospheric pressure at mean sea level.
+        /// See https://en.wikipedia.org/wiki/Atmospheric_pressure#Mean_sea-level_pressure.
         /// </summary>
         public static readonly Pressure MeanSeaLevel = Pressure.FromPascals(101325);
 
@@ -174,8 +175,7 @@ namespace Iot.Device.Common
         #endregion TemperatureAndRelativeHumidity
 
         #region Pressure
-        // Formula  from https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Internationale_Höhenformel, solved
-        // for different parameters
+        // Formula  from https://en.wikipedia.org/wiki/Barometric_formula, solved for different parameters
 
         /// <summary>
         /// Calculates the altitude in meters from the given pressure, sea-level pressure and air temperature
