@@ -353,13 +353,25 @@ namespace Iot.Device.Mpu6886
                 _i2c.Read(readBuffer);
 
                 // bit 1 in the register means disabled, so using bitwise not to flip bits.
-                return (EnabledAxis)~readBuffer[0];
+                return (EnabledAxis)(~readBuffer[0] & 0b0011_1111);
             }
 
             set
             {
+                // First read the current register values
+                SpanByte currentRegisterValues = new byte[1];
+                _i2c.WriteByte((byte)Mpu6886.Register.PowerManagement2);
+                _i2c.Read(currentRegisterValues);
+
+                byte mask = 0b1100_0000; // we leave all bits except bit 7 and 6 untouched with this mask
+                byte cleaned = (byte)(currentRegisterValues[0] & mask);
+
+                byte newvalue = (byte)(cleaned | (byte)value); // apply the new enabled axes
+
+                // write the new register value
                 // bit 1 in the register means disabled, so using bitwise not to flip bits.
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement2, (byte)~value }));
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement2, (byte)~newvalue }));
+
                 Thread.Sleep(1);
             }
         }
@@ -429,13 +441,24 @@ namespace Iot.Device.Mpu6886
                 SpanByte readbuffer = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.InteruptEnable);
                 _i2c.Read(readbuffer);
-                return (InterruptEnable)readbuffer[0];
+                return (InterruptEnable)(readbuffer[0] & 0b1110_0000);
             }
             
             set
             {
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, (byte)value }));
-                Thread.Sleep(1);
+                // First read the current register values
+                SpanByte currentRegisterValues = new byte[1];
+                _i2c.WriteByte((byte)Mpu6886.Register.InteruptEnable);
+                _i2c.Read(currentRegisterValues);
+
+                byte mask = 0b0011_1111; // we leave all bits except bit 4 and 5 untouched with this mask
+                byte cleaned = (byte)(currentRegisterValues[0] & mask);
+
+                byte newvalue = (byte)(cleaned | (byte)value); // apply the new axes settings
+
+                // write the new register value
+                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, newvalue }));
+                Thread.Sleep(2);
             }
         }
 
