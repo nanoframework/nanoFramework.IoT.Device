@@ -8,6 +8,7 @@ using Iot.Device.Bmxx80;
 using Iot.Device.Bmxx80.FilteringMode;
 using Iot.Device.Common;
 using UnitsNet;
+//using nanoFramework.Hardware.Esp32;
 
 namespace Iot.Device.Bmxx80.sample
 {
@@ -19,9 +20,18 @@ namespace Iot.Device.Bmxx80.sample
 
             Length stationHeight = Length.FromMeters(640); // Elevation of the sensor
 
-            // bus id on the raspberry pi 3 and 4
+            // check the I2C bus that you're connecting on your .NET nanoFramework device
             const int busId = 1;
-            // set this to the current sea level pressure in the area for correct altitude readings
+
+            //////////////////////////////////////////////////////////////////////
+            // when connecting to an ESP32 device, need to configure the I2C GPIOs
+            // used for the bus
+            //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+            //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            // Set this to the current sea level pressure in the area for correct altitude readings.
+            // Default is the agreed MSL value.
             Pressure defaultSeaLevelPressure = WeatherHelper.MeanSeaLevel;
 
             I2cConnectionSettings i2cSettings = new(busId, Bmp280.DefaultI2cAddress);

@@ -258,3 +258,4 @@ paket-files/
 
 #Development App Settings
 appsettings.Development.json
+.vscode/settings.json
