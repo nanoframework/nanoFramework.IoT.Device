@@ -101,7 +101,7 @@ namespace Iot.Device.Ip5306
         /// Boost enabled.
         /// True as default.
         /// </summary>
-        public bool BostEnabled
+        public bool BoostEnabled
         {
             get => (I2cRead(Register.SYS_CTL0) & 0b0010_0000) == 0b0010_0000;
             set
@@ -369,14 +369,11 @@ namespace Iot.Device.Ip5306
         /// <summary>
         /// Gets the button status.
         /// </summary>
-        public ButtonStatus ButtonStatus
+        public ButtonPressed GetButtonStatus()
         {
-            get
-            {
                 var buf = I2cRead(Register.REG_READ3);
                 I2cWrite(Register.REG_READ3, buf);
-                return (ButtonStatus)(buf & 0b0000_0111);
-            }
+                return (ButtonPressed)(buf & 0b0000_0111);
         }
 
         private void I2cWrite(Register reg, byte data)

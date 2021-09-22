@@ -9,16 +9,16 @@ namespace Iot.Device.Ip5306
     /// Button status
     /// </summary>
     [Flags]
-    public enum ButtonStatus
+    public enum ButtonPressed
     {
         /// <summary>Double click</summary>
-        DoubleClick = 0b0000_0100,
+        DoubleClicked = 0b0000_0100,
 
         /// <summary>Long press</summary>
-        LongPress = 0b0000_0010,
+        LongPressed = 0b0000_0010,
 
         /// <summary>Short press</summary>
-        ShortPress = 0b0000_0001,
+        ShortPressed = 0b0000_0001,
 
         /// <summary>Not pressed</summary>
         NotPressed = 0b0000_0000,
