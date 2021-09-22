@@ -94,7 +94,7 @@ MelodyElement is a base class for two types of elements:
 Following example demonstrates how to create MelodyElement sequence and how to play it using MelodyPlayer:
 
 ```csharp
-IList<MelodyElement> sequence = new List<MelodyElement>()
+IListMelodyElement sequence = new ListMelodyElement()
 {
     new NoteElement(Note.C, Octave.Fourth, Duration.Quarter),
     new PauseElement(Duration.Quarter),
@@ -121,13 +121,9 @@ player.Play(sequence, 100, -12);
 As far as `MelodyPlayer.Play` method is not asynchronous, calls of this method are wrapped by task like this:
 
 ```csharp
-using (var player1 = new MelodyPlayer(new Buzzer(21)))
-using (var player2 = new MelodyPlayer(new Buzzer(26)))
-{
-    Task.WaitAll(
-        Task.Run(() => player1.Play(AlphabetSong, 100, -12)),
-        Task.Run(() => player2.Play(AlphabetSong, 100)));
-}
+var player1 = new MelodyPlayer(new Buzzer(21));
+player1.Play(AlphabetSong, 100, -12);
+player1.Play(AlphabetSong, 100);
 ```
 
 This approach allows playing two melodies independently however example above plays a single melody in the same time using two different buzzers.
