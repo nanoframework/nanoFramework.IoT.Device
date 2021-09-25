@@ -164,6 +164,7 @@ namespace Iot.Device.Mcp3428
             {
                 waitSpan = TimeSpan.FromMilliseconds(WaitTime);
             }
+
             var allms = 0;
             _isReadyBit = false;
             while (!_isReadyBit && !cancellationToken.IsCancellationRequested)
@@ -177,7 +178,7 @@ namespace Iot.Device.Mcp3428
 
                 Thread.Sleep((int)waitSpan.TotalMilliseconds);
                 cancellationToken.ThrowIfCancellationRequested();
-                allms += (int)((int)waitSpan.TotalMilliseconds);
+                allms += (int)waitSpan.TotalMilliseconds;
             }
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -239,7 +240,7 @@ namespace Iot.Device.Mcp3428
         /// <exception cref="ArgumentOutOfRangeException">channel</exception>
         protected bool SetConfig(int channel = 0, AdcMode mode = AdcMode.Continuous,
             AdcResolution resolution = AdcResolution.Bit12, AdcGain pgaGain = AdcGain.X1,
-            ListString? errorList = null)
+            ListString errorList = null)
         {
             if (channel < 0 || channel > ChannelCount - 1)
             {
@@ -316,16 +317,23 @@ namespace Iot.Device.Mcp3428
         }
 
         /// <summary>
+        /// Event handler for ConversionResult
+        /// </summary>
+        /// <param name="sender">This class</param>
+        /// <param name="conversionResult">Convertion results</param>
+        public delegate void ConversionResultHandler(object sender, ConversionResult conversionResult);
+
+        /// <summary>
         /// Event called when conversion is complete
         /// </summary>
-        public event EventHandler<ConversionResult>? OnConversion;
+        public event ConversionResultHandler OnConversion;
 
         /// <summary>
         /// Writes configuration
         /// </summary>
         /// <param name="configByte">Configuration to write</param>
         protected void WriteConfig(byte configByte) => _i2cDevice.WriteByte(configByte);
-        
+
 
         /// <inheritdoc/>
         public void Dispose()
