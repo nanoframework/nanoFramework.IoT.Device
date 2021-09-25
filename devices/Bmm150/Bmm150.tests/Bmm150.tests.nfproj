@@ -36,15 +36,13 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="nanoFramework.TestFramework, Version=1.0.154.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.TestFramework.1.0.154\lib\nanoFramework.TestFramework.dll</HintPath>
+    <Reference Include="nanoFramework.TestFramework, Version=1.0.157.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.TestFramework.1.0.157\lib\nanoFramework.TestFramework.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.TestFramework.1.0.154\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\packages\nanoFramework.TestFramework.1.0.157\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Math, Version=1.4.1.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
@@ -77,5 +75,7 @@
       <WarningText>Update the Import path in nfproj to the correct nanoFramework.TestFramework NuGet package folder.</WarningText>
     </PropertyGroup>
     <Warning Condition="!Exists('..\packages\nanoFramework.TestFramework.1.0.150\build\nanoFramework.TestFramework.targets')" Text="'$(WarningText)'" />
+    <Error Condition="!Exists('..\packages\nanoFramework.TestFramework.1.0.157\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nanoFramework.TestFramework.1.0.157\build\nanoFramework.TestFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\nanoFramework.TestFramework.1.0.157\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.1.0.157\build\nanoFramework.TestFramework.targets')" />
 </Project>
