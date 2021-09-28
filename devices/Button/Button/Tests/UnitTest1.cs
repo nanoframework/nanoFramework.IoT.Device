@@ -12,9 +12,8 @@ namespace Tests
         {
             string buttonStatus = null;
             Button button = new Button();
-            button.OnButtonClicked += delegate (object sender, ButtonClickedEventArgs e)
+            button.Click += (sender, e) =>
             {
-                buttonStatus = e.ButtonStatus;
             };
 
             //button.ButtonStateChangedSinglePress(button, new PinValueChangedEventArgs(changeType: PinEventTypes.Rising, 0));
