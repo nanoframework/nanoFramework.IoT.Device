@@ -12,15 +12,16 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Button</RootNamespace>
+    <RootNamespace>Iot.Device.Button</RootNamespace>
     <AssemblyName>Button</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Button.cs" />
+    <Compile Include="ButtonBase.cs" />
     <Compile Include="ButtonHoldingEventArgs.cs" />
     <Compile Include="ButtonHoldingState.cs" />
+    <Compile Include="GpioButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

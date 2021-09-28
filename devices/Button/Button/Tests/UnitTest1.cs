@@ -11,7 +11,7 @@ namespace Tests
         public void TestOne()
         {
             string buttonStatus = null;
-            Button button = new Button();
+            ButtonBase button = new ButtonBase();
             button.Click += (sender, e) =>
             {
             };
