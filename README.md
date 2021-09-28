@@ -130,7 +130,7 @@ We are using the following structure for the bindings:
 
 The Code Converter allows to facilitate migration of .NET Core/.NET 5.0 code into .NET nanoFramework. More information and how to [customize and run it here](./src/nanoFramework.IoT.Device.CodeConverter/README.md).
 
-## Porting a nanoFramework binding to .NET IoT
+## Porting a .NET nanoFramework binding to .NET IoT
 
 Did you know that with minimal efforts you can make a nanoFramework binding available for .NET IoT as well? More information and guidance on the steps to take, can be found in [this article](migrate-binding-to-dotnetiot.md).
 
