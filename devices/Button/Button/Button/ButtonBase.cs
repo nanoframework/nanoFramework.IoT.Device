@@ -49,7 +49,7 @@ namespace Iot.Device.Button
         /// <summary>
         /// 
         /// </summary>
-        internal void HandleButtonReleased()
+        protected void HandleButtonReleased()
         {
             _holdingTimer?.Dispose();
             _holdingTimer = null;
@@ -85,7 +85,7 @@ namespace Iot.Device.Button
         /// <summary>
         /// 
         /// </summary>
-        internal void HandleButtonPressed()
+        protected void HandleButtonPressed()
         {
             IsPressed = true;
 

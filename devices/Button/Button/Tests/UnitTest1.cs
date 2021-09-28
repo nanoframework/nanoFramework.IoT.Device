@@ -1,4 +1,5 @@
 using Iot.Device.Button;
+using Iot.Device.Tests;
 using nanoFramework.TestFramework;
 
 // DOES NOT WORK YET
@@ -10,16 +11,20 @@ namespace Tests
         [TestMethod]
         public void TestOne()
         {
-            string buttonStatus = null;
-            ButtonBase button = new ButtonBase();
+
+            TestButton button = new TestButton();
+
+            bool IsPressed = false;
+
             button.Click += (sender, e) =>
             {
+                IsPressed = true;
             };
 
-            //button.ButtonStateChangedSinglePress(button, new PinValueChangedEventArgs(changeType: PinEventTypes.Rising, 0));
+            button.PressButton();
+            button.ReleaseButton();
 
-            Assert.NotNull(buttonStatus);
-            Assert.Equals(buttonStatus, "click");
+            Assert.Equals(IsPressed, true);
         }
     }
 }
