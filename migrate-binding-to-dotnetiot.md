@@ -28,15 +28,16 @@ To verify your development environment has the correct .NET SDK's, and all depen
 
 In the `/src/devices` folder, create a new subfolder for your binding (e.g. by using the name of the sensor).
 
-In this folder , create a new empty .NET project. This can be done with the Visual Studio UI, or by using the command line:
+In this folder , create a new empty .NET project. Make sure to create the solution file (.sln) file as well. This can be done with the Visual Studio UI, or by using the command line:
 
 ```shell
 dotnet new classlib
+dotnet new sln
 ```
 
 You can delete the .cs files (e.g. `Class1.cs`) which could have been created automatically based on your chosen template.
 
-From your nanoFramework binding source code, copy over all .cs files and the .sln file to the folder you created in step 3.
+From your nanoFramework binding source code, copy over all .cs files to the folder you created in step 3.
 
 Repead the process (project creation and copying .cs files) for the code samples as well.
 
@@ -44,35 +45,64 @@ Repead the process (project creation and copying .cs files) for the code samples
 
 At this point in time, probably your code does not build correctly. Here are some pointers on how to fix them:
 
-- **Solution (.sln) file**: the binding and sample projects are now normal .NET projects instead of nanoFramework projects, their file extension are `.csproj` instead of `.nfproj`. In the `.sln` file, fix the projects filenames (by replacing `.nfpro` with `.csproj`). Additionally in the solution file, make sure the `ProjectConfigurationPlatforms` section, make sure all your projects have all platforms used by .NET IoT. In the sample below you see 6 lines for Release and 6 lines for Debug builds, per project, per project (typically the binding project and the samples project):
+- **Adjust the Solution (.sln) file**: Modify the newly created `.sln` file so it matches the structure below. Pay attention to:
+  - `SENSORNAME`: replace it with the name of the sensor for which you are creating the binding.
+  - All GUIDS should be replaced with new GUID's and  should be formatted following this sample: `{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}`. It could be you manually have to add the references to your samples project.
+  - Pay attention to the `ProjectConfigurationPlatforms` section, it should include the 6 configurations per project, both for `Debug` and `Release`.
 
 ```text
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x64.ActiveCfg = Debug|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x64.Build.0 = Debug|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x86.ActiveCfg = Debug|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x86.Build.0 = Debug|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Release|Any CPU.Build.0 = Release|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Release|x64.ActiveCfg = Release|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Release|x64.Build.0 = Release|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Release|x86.ActiveCfg = Release|Any CPU
-        {E6797049-4558-4E85-81CF-18576A6D384C}.Release|x86.Build.0 = Release|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x64.ActiveCfg = Debug|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x64.Build.0 = Debug|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x86.ActiveCfg = Debug|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x86.Build.0 = Debug|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|Any CPU.Build.0 = Release|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x64.ActiveCfg = Release|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x64.Build.0 = Release|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x86.ActiveCfg = Release|Any CPU
-        {4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x86.Build.0 = Release|Any CPU
-    EndGlobalSection
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{48D9E6A2-6DF4-4A4F-87E3-70B961F344F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SENSORNAME.Samples", "samples\SENSORNAME.Samples.csproj", "{E6797049-4558-4E85-81CF-18576A6D384C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SENSORNAME", "SENSORNAME.csproj", "{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x64.Build.0 = Debug|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Debug|x86.Build.0 = Debug|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Release|x64.ActiveCfg = Release|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Release|x64.Build.0 = Release|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6797049-4558-4E85-81CF-18576A6D384C}.Release|x86.Build.0 = Release|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x64.Build.0 = Debug|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Debug|x86.Build.0 = Debug|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x64.ActiveCfg = Release|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x64.Build.0 = Release|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E23EAAD-D6CF-451C-AAD0-E80991CF8EDD}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6797049-4558-4E85-81CF-18576A6D384C} = {48D9E6A2-6DF4-4A4F-87E3-70B961F344F4}
+	EndGlobalSection
+EndGlobal
 ```
 
 - **Project (.csproj) files**: modify your `.csproj` files so they match the settings used across the .NET IoT repo:
@@ -141,6 +171,8 @@ Thread.Sleep(Timeout.Infinite);
 // Replace with:
 Console.ReadKey();
 ```
+
+- **Replace `GpioPin` with the corresponding code to use `GpioController`** : `GpioPin` doesn't exist in .NET IoT, see the [docs here](https://docs.microsoft.com/en-us/uwp/api/Windows.Devices.Gpio.GpioController) to learn how to use the `GpioController` instead. This will change the way how I2C and SPI devices are instantiated in code, see the [I2C docs](https://docs.microsoft.com/en-us/dotnet/api/system.device.i2c.i2cdevice) and [SPI docs](https://docs.microsoft.com/en-us/dotnet/api/iot.device.spi.softwarespi?view=iot-dotnet-1.5).
 
 ### 5. Create PR
 
