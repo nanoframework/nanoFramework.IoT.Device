@@ -1,4 +1,4 @@
-# Migrate binding to .NET IoT
+# Migrate binding from .NET nanoFramework to .NET IoT
 
 So you have created your shiney .NET nanoFramework binding for a cool sensor or device. **That's great!** But did you know that with minimal efforts you can make your hard word available for even more .NET developers? This article describes the steps you can take to port a .NET nanoFramework binding to [.NET IoT](https://github.com/dotnet/iot).
 
