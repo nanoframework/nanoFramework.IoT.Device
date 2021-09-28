@@ -19,9 +19,8 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Button.cs" />
-    <Compile Include="ButtonLongPressedEventArgs.cs" />
-    <Compile Include="ButtonPressedEventArgs.cs" />
-    <Compile Include="ButtonDoublePressedEventArgs.cs" />
+    <Compile Include="ButtonHoldingEventArgs.cs" />
+    <Compile Include="ButtonHoldingState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

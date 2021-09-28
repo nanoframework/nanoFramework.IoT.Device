@@ -6,19 +6,19 @@ using Button button = new Button();
 
 Debug.WriteLine("Button is initialized, starting to read state");
 
-button.OnButtonClicked += (object sender, ButtonClickedEventArgs e) =>
+button.Click += (sender, e) =>
 {
-    Debug.WriteLine(e.ButtonStatus);
+    Debug.WriteLine("click");
 };
 
-button.OnButtonDoubleClicked += (object sender, ButtonDoubleClickedEventArgs e) =>
+button.DoubleClick += (sender, e) =>
 {
-    Debug.WriteLine(e.ButtonStatus);
+    Debug.WriteLine("double click");
 };
 
-button.OnButtonLongClicked += (object sender, ButtonLongClickedEventArgs e) =>
+button.Holding += (sender, e) =>
 {
-    Debug.WriteLine(e.ButtonStatus);
+    Debug.WriteLine($"{e.HoldingState}");
 };
 
 Thread.Sleep(Timeout.Infinite);

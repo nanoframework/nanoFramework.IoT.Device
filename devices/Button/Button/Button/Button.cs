@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Device.Gpio;
+using System.Threading;
 
 namespace Iot.Device.Button
 {
@@ -8,198 +9,127 @@ namespace Iot.Device.Button
     /// </summary>
     public class Button : IDisposable
     {
-        // TO DO: Click --> press
+        private const int DEFAULT_BUTTON_PIN = 37;
+        // TO DO: Add other defaults
+
+        // TO DO: Long to hold?
         // Setting up variables and stuff
         private GpioController _gpioController;
-        private bool _shouldDispose = true;
+        private bool _disposed = false;
         private int _ButtonPin;
         private int _DoublePressMs;
         private int _LongPressMs;
 
-        private int _State = 0;
-        private EventsRegistration _EventsRegistration = 0;
+        private ButtonHoldingState _holdingState = ButtonHoldingState.Completed;
 
-        private DateTime _TimeButtonPressed;
-        private DateTime _TimeButtonReleased;
+        private DateTime _lastClick = DateTime.MinValue;
 
-        public event ButtonClicked OnButtonClicked;
-        public event ButtonDoubleClicked OnButtonDoubleClicked;
-        public event ButtonLongClicked OnButtonLongClicked;
+        public delegate void ButtonPressedDelegate(object sender, EventArgs e);
+        public delegate void ButtonHoldingDelegate(object sender, ButtonHoldingEventArgs e);
 
-        // TO DO: Add those rising types
+        public event ButtonPressedDelegate ButtonUp;
+        public event ButtonPressedDelegate ButtonDown;
+        public event ButtonPressedDelegate Click;
+        public event ButtonPressedDelegate DoubleClick;
+        public event ButtonHoldingDelegate Holding;
+
+        private Timer _holdingTimer;
+
+        // TO DO: Add rising types to revert - gpio controller?
         // Changetype 1 = Rising = released
         // Changetype 2 = Falling = pressed
 
-        // TO DO: Change long to something else?
+        public bool IsHoldingEnabled { get; set; } = false;
+        public bool IsDoubleClickEnabled { get; set; } = false;
+        public bool IsPressed { get; set; } = false;
 
-        // TO DO: Move to new file
-        public enum EventsRegistration
-        {
-            SinglePress = 1,
-            SingleAndDoublePress = 2,
-            SingleAndLongPress = 3,
-            SingleAndDoubleAndLongPress = 4
-        }
 
-        /// <summary>
-        /// Initializes the buttons
-        /// </summary>
-        public Button() : this(
-            buttonPin: 37,
-            doublePressMs: 500,
-            longPressMs: 1000,
-            eventsRegistration: EventsRegistration.SingleAndDoubleAndLongPress
-            )
-        {
-        }
-
-        public Button(int buttonPin, int doublePressMs, int longPressMs, EventsRegistration eventsRegistration)
+        public Button(int buttonPin = DEFAULT_BUTTON_PIN, int doublePressMs = 500, int longPressMs = 1000)
         {
             _gpioController = new GpioController();
             _ButtonPin = buttonPin;
             _DoublePressMs = doublePressMs;
             _LongPressMs = longPressMs;
-            _EventsRegistration = eventsRegistration;
-            _TimeButtonPressed = DateTime.UtcNow;
+            _lastClick = DateTime.UtcNow;
 
             // Add function that sets pin as buttons 
             _gpioController.OpenPin(_ButtonPin, PinMode.Input);
 
-            if (_EventsRegistration == EventsRegistration.SinglePress)
+            _gpioController.RegisterCallbackForPinValueChangedEvent(_ButtonPin, PinEventTypes.Falling | PinEventTypes.Rising, ButtonStateChanged);
+
+        }
+
+        internal void ButtonStateChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
+        {
+            switch (pinValueChangedEventArgs.ChangeType)
             {
-                _gpioController.RegisterCallbackForPinValueChangedEvent(_ButtonPin, PinEventTypes.Falling | PinEventTypes.Rising, ButtonStateChangedSinglePress);
-            }
-            if (_EventsRegistration == EventsRegistration.SingleAndDoublePress)
-            {
-                _gpioController.RegisterCallbackForPinValueChangedEvent(_ButtonPin, PinEventTypes.Falling | PinEventTypes.Rising, ButtonStateChangedSingleAndDoublePress);
-            }
-            if (_EventsRegistration == EventsRegistration.SingleAndLongPress)
-            {
-                _gpioController.RegisterCallbackForPinValueChangedEvent(_ButtonPin, PinEventTypes.Falling | PinEventTypes.Rising, ButtonStateChangedSingleAndLongPress);
-            }
-            if (_EventsRegistration == EventsRegistration.SingleAndDoubleAndLongPress)
-            {
-                _gpioController.RegisterCallbackForPinValueChangedEvent(_ButtonPin, PinEventTypes.Falling | PinEventTypes.Rising, ButtonStateChangedSingleAndDoubleAndLongPress);
+                case PinEventTypes.Rising:
+                    _holdingTimer?.Dispose();
+                    _holdingTimer = null;
+                    IsPressed = false;
+                    if (IsHoldingEnabled && _holdingState == ButtonHoldingState.Started)
+                    {
+                        _holdingState = ButtonHoldingState.Completed;
+                        Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = ButtonHoldingState.Completed });
+                    }
+                    ButtonUp?.Invoke(this, new EventArgs());
+                    Click?.Invoke(this, new EventArgs());
+
+                    if (IsDoubleClickEnabled)
+                    {
+                        if (_lastClick == DateTime.MinValue)
+                        {
+                            _lastClick = DateTime.UtcNow;
+                        }
+                        else
+                        {
+                            if (DateTime.UtcNow.Subtract(_lastClick).TotalMilliseconds <= _DoublePressMs)
+                            {
+                                DoubleClick.Invoke(this, new EventArgs());
+                            }
+                            _lastClick = DateTime.MinValue;
+                        }
+                    }
+
+                    break;
+
+                case PinEventTypes.Falling:
+                    IsPressed = true;
+                    ButtonDown?.Invoke(this, new EventArgs());
+                    if (IsHoldingEnabled)
+                    {
+                        _holdingTimer = new Timer(StartHoldingHandler, null, _LongPressMs, Timeout.Infinite);
+                    }
+                    break;
             }
         }
 
-        internal void ButtonStateChangedSinglePress(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
+        private void StartHoldingHandler(object state)
         {
-            if ((int)pinValueChangedEventArgs.ChangeType == 1)
-            {
-                OnButtonPressed();
-            }
-        }
+            _holdingTimer.Dispose();
+            _holdingTimer = null;
+            _holdingState = ButtonHoldingState.Started;
 
-        private void ButtonStateChangedSingleAndDoublePress(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
-        {
-            if ((int)pinValueChangedEventArgs.ChangeType == 1)
-            {
-                ButtonDoublePressed();
-
-                if (_State == 0)
-                {
-                    OnButtonPressed();
-                }
-
-                _State = 0;
-            }
-        }
-
-        private void ButtonStateChangedSingleAndLongPress(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
-        {
-            if ((int)pinValueChangedEventArgs.ChangeType == 2)
-            {
-                _TimeButtonPressed = DateTime.UtcNow;
-            }
-            if ((int)pinValueChangedEventArgs.ChangeType == 1)
-            {
-                ButtonLongPressed(_TimeButtonPressed);
-
-                if (_State == 0)
-                {
-                    OnButtonPressed();
-                }
-
-                _State = 0;
-            }
-        }
-
-
-        private void ButtonStateChangedSingleAndDoubleAndLongPress(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
-        {
-            if ((int)pinValueChangedEventArgs.ChangeType == 2)
-            {
-                _TimeButtonPressed = DateTime.UtcNow;
-            }
-            if ((int)pinValueChangedEventArgs.ChangeType == 1)
-            {
-                ButtonLongPressed(_TimeButtonPressed);
-
-                ButtonDoublePressed();
-
-                if (_State == 0)
-                {
-                    OnButtonPressed();
-                }
-                else
-                {
-                    _State = 0;
-                }
-            }
-        }
-
-        private void ButtonDoublePressed()
-        {
-            DateTime timeReleased = DateTime.UtcNow;
-
-            //Time between previous released and new released
-            double betweenClicksMs = timeReleased.Subtract(_TimeButtonReleased).TotalMilliseconds;
-
-            if (betweenClicksMs <= _DoublePressMs)
-            {
-                OnButtonDoublePressed();
-                _State = 2;
-                // TO DO: double click after double click?
-            }
-
-            _TimeButtonReleased = DateTime.UtcNow;
-        }
-
-        private void ButtonLongPressed(DateTime timePressed)
-        {
-            DateTime timeReleased = DateTime.UtcNow;
-
-            //Time between pressed and released
-            double buttonPressedMs = timeReleased.Subtract(timePressed).TotalMilliseconds;
-
-            if (buttonPressedMs >= _LongPressMs)
-            {
-                OnButtonLongPressed();
-                _State = 1;
-            }
-        }
-
-        private void OnButtonPressed()
-        {
-            //Change these from strings into enum
-            OnButtonClicked?.Invoke(this, new ButtonClickedEventArgs("click"));
-        }
-
-        private void OnButtonDoublePressed()
-        {
-            OnButtonDoubleClicked?.Invoke(this, new ButtonDoubleClickedEventArgs("double click"));
-        }
-
-        private void OnButtonLongPressed()
-        {
-            OnButtonLongClicked?.Invoke(this, new ButtonLongClickedEventArgs("long click"));
+            Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = ButtonHoldingState.Started});
         }
 
         public void Dispose()
         {
-            if (_shouldDispose)
+            Dispose(true);
+        }
+
+        protected virtual void Dispose (bool disposing)
+        {
+            if (_disposed)
             {
+                return;
+            }
+
+            if (disposing)
+            {
+                _holdingTimer?.Dispose();
+                _holdingTimer = null;
+
                 _gpioController?.Dispose();
                 _gpioController = null!;
             }
