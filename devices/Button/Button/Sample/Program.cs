@@ -21,12 +21,12 @@ button.IsHoldingEnabled = true;
 
 button.Click += (sender, e) =>
 {
-    Debug.WriteLine($"click");
+    Debug.WriteLine($"Click");
 };
 
 button.DoubleClick += (sender, e) =>
 {
-    Debug.WriteLine($"double click");
+    Debug.WriteLine($"Double click");
 };
 
 button.Holding += (sender, e) =>

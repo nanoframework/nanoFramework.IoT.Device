@@ -1,6 +1,8 @@
 using Iot.Device.Button;
 using Iot.Device.Tests;
 using nanoFramework.TestFramework;
+using System;
+using System.Diagnostics;
 using System.Threading;
 
 // DOES NOT WORK YET
@@ -9,47 +11,217 @@ namespace Tests
     [TestClass]
     class Buttontests
     {
+        // WORKS: Test if click works
         [TestMethod]
-        public void Test_click()
+        public void If_Button_Is_Once_Pressed_Click_Event_Fires()
         {
-            bool IsPressed = false;
+            bool Pressed = false;
+            bool Holding = false;
+            bool DoublePressed = false;
 
             TestButton button = new TestButton();
+            
             button.Click += (sender, e) =>
             {
-                IsPressed = true;
+                Pressed = true;
             };
 
-            button.PressButton();
-            Thread.Sleep(200);
-            button.ReleaseButton();
-
-            Assert.Equals(IsPressed, false);
-        }
-
-        [TestMethod]
-        public void Test_double_click()
-        {
-            TestButton button = new TestButton();
-            button.IsDoubleClickEnabled = true;
-            bool IsPressed = false;
+            button.Holding += (sender, e) =>
+            {
+                Holding = true;
+            };
 
             button.DoubleClick += (sender, e) =>
             {
-                IsPressed = true;
+                DoublePressed = true;
+            };
+
+            button.PressButton();
+            Thread.Sleep(100);
+            button.ReleaseButton();
+
+            Assert.Equal(Pressed, true);
+            Assert.Equal(Holding, false);
+            Assert.Equal(DoublePressed, false);
+        }
+
+        // WORKS: Test long press works
+        [TestMethod]
+        public void If_Button_Is_Held_Holding_Event_Fires()
+        {
+            bool Pressed = false;
+            bool Holding = false;
+            bool DoublePressed = false;
+
+            TestButton button = new TestButton();
+            button.IsHoldingEnabled = true;
+
+            button.Click += (sender, e) =>
+            {
+                Pressed = true;
+            };
+
+            button.Holding += (sender, e) =>
+            {
+                Holding = true;
+            };
+
+            button.DoubleClick += (sender, e) =>
+            {
+                DoublePressed = true;
+            };
+
+            button.PressButton();
+            Thread.Sleep(2100);
+            button.ReleaseButton();
+
+            Assert.Equal(Pressed, true);
+            Assert.Equal(Holding, true);
+            Assert.Equal(DoublePressed, false);
+        }
+
+        // WORKS: Test long press without flag
+        [TestMethod]
+        public void If_Button_Is_Held_And_Holding_Is_Disabled_Holding_Event_Does_Not_Fire()
+        {
+            bool Pressed = false;
+            bool Holding = false;
+            bool DoublePressed = false;
+
+            TestButton button = new TestButton();
+            button.IsHoldingEnabled = false;
+
+            button.Click += (sender, e) =>
+            {
+                Pressed = true;
+            };
+
+            button.Holding += (sender, e) =>
+            {
+                Holding = true;
+            };
+
+            button.DoubleClick += (sender, e) =>
+            {
+                DoublePressed = true;
+            };
+
+            button.PressButton();
+            Thread.Sleep(1100);
+            button.ReleaseButton();
+
+            Assert.Equal(Pressed, true);
+            Assert.Equal(Holding, false);
+            Assert.Equal(DoublePressed, false);
+        }
+
+        [TestMethod]
+        public void If_Button_Is_Double_Pressed_DoublePress_Event_Fires()
+        {
+            bool Pressed = false;
+            bool Holding = false;
+            bool DoublePressed = false;
+
+            TestButton button = new TestButton();
+            button.IsDoubleClickEnabled = true;
+
+            button.Click += (sender, e) =>
+            {
+                Pressed = true;
+            };
+
+            button.Holding += (sender, e) =>
+            {
+                Holding = true;
+            };
+
+            button.DoubleClick += (sender, e) =>
+            {
+                DoublePressed = true;
             };
 
             button.PressButton();
             Thread.Sleep(200);
             button.ReleaseButton();
 
-            Thread.Sleep(400);
+            Thread.Sleep(100);
 
             button.PressButton();
             Thread.Sleep(200);
             button.ReleaseButton();
 
-            Assert.Equals(IsPressed, true);
+            Assert.Equal(Pressed, true);
+            Assert.Equal(Holding, false);
+            Assert.Equal(DoublePressed, true);
+        }
+
+        [TestMethod]
+        public void If_Button_Is_Pressed_Twice_DoublePress_Event_Does_Not_Fire()
+        {
+            bool Pressed = false;
+            bool Holding = false;
+            bool DoublePressed = false;
+
+            TestButton button = new TestButton();
+
+            button.IsDoubleClickEnabled = true;
+
+            button.Click += (sender, e) =>
+            {
+                Pressed = true;
+            };
+
+            button.Holding += (sender, e) =>
+            {
+                Holding = true;
+            };
+
+            button.DoubleClick += (sender, e) =>
+            {
+                DoublePressed = true;
+            };
+
+            button.PressButton();
+            Thread.Sleep(200);
+            button.ReleaseButton();
+
+            Thread.Sleep(3000);
+
+            button.PressButton();
+            Thread.Sleep(200);
+            button.ReleaseButton();
+
+
+            Assert.Equal(Pressed, true);
+            Assert.Equal(Holding, false);
+            Assert.Equal(DoublePressed, false);
+        }
+
+        // Test if double click works without flag
+        [TestMethod]
+        public void If_Button_Is_Double_Pressed_And_DoublePress_Is_Disabled_DoublePress_Event_Does_Not_Fire()
+        {
+            bool Pressed = false;
+
+            TestButton button = new TestButton();
+            button.IsDoubleClickEnabled = false;
+
+            button.DoubleClick += (sender, e) =>
+            {
+                Pressed = true;
+            };
+
+            button.PressButton();
+            Thread.Sleep(200);
+            button.ReleaseButton();
+
+            Thread.Sleep(6000);
+
+            button.PressButton();
+            Thread.Sleep(200);
+            button.ReleaseButton();
+
+            Assert.Equal(Pressed, false);
         }
     }
 }

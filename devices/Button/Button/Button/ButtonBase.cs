@@ -9,8 +9,8 @@ namespace Iot.Device.Button
     /// </summary>
     public class ButtonBase : IDisposable
     {
-        internal const int DEFAULT_DOUBLE_PRESS_MS = 500;
-        internal const int DEFAULT_LONG_PRESS_MS = 1000;
+        internal const int DEFAULT_DOUBLE_PRESS_MS = 1500;
+        internal const int DEFAULT_LONG_PRESS_MS = 2000;
 
         private bool _disposed = false;
 
@@ -42,8 +42,6 @@ namespace Iot.Device.Button
         {
             _doublePressMs = doublePressMs;
             _longPressMs = longPressMs;
-
-            _lastClick = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace Iot.Device.Button
                 }
                 else
                 {
-                    if (DateTime.UtcNow.Subtract(_lastClick).TotalMilliseconds <= _doublePressMs)
+                    if (DateTime.UtcNow.Subtract(_lastClick).TotalMilliseconds <= _doublePressMs) //Ticks per ms
                     {
                         DoubleClick.Invoke(this, new EventArgs());
                     }
