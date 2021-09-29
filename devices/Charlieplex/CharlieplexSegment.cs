@@ -85,7 +85,7 @@ namespace Iot.Device.Multiplexing
 
             if (nodeCount == 0)
             {
-                nodeCount = (int)Math.Pow(pinCount, 2) - pinCount;
+                nodeCount = (int)Math.Pow(pinCount, 2.0) - pinCount;
             }
 
             CharlieplexSegmentNode[] nodes = new CharlieplexSegmentNode[nodeCount];
