@@ -9,7 +9,7 @@ namespace Iot.Device.Button
     /// </summary>
     public class ButtonBase : IDisposable
     {
-        internal const int DEFAULT_DOUBLE_PRESS_MS = 1500;
+        internal const int DEFAULT_DOUBLE_PRESS_TICKS = 15000000;
         internal const int DEFAULT_HOLDING_MS = 2000;
 
         private bool _disposed = false;
@@ -19,7 +19,7 @@ namespace Iot.Device.Button
 
         private ButtonHoldingState _holdingState = ButtonHoldingState.Completed;
 
-        private DateTime _lastPress = DateTime.MinValue;
+        private long _lastPress = DateTime.MinValue.Ticks;
         private Timer _holdingTimer;
 
         public delegate void ButtonPressedDelegate(object sender, EventArgs e);
@@ -38,7 +38,7 @@ namespace Iot.Device.Button
         /// <summary>
         /// Initialization of the button.
         /// </summary>
-        public ButtonBase(int doublePressMs = DEFAULT_DOUBLE_PRESS_MS, int holdingMs = DEFAULT_HOLDING_MS)
+        public ButtonBase(int doublePressMs = DEFAULT_DOUBLE_PRESS_TICKS, int holdingMs = DEFAULT_HOLDING_MS)
         {
             _doublePressMs = doublePressMs;
             _holdingMs = holdingMs;
@@ -80,17 +80,18 @@ namespace Iot.Device.Button
 
             if (IsDoublePressEnabled)
             {
-                if (_lastPress == DateTime.MinValue)
+                if (_lastPress == DateTime.MinValue.Ticks)
                 {
-                    _lastPress = DateTime.UtcNow;
+                    _lastPress = DateTime.UtcNow.Ticks;
                 }
                 else
                 {
-                    if (DateTime.UtcNow.Subtract(_lastPress).TotalMilliseconds <= _doublePressMs) // TO DO: Ticks per ms
+                    if (DateTime.UtcNow.Ticks - _lastPress <= _doublePressMs)
+                    //if (DateTime.UtcNow.Subtract(_lastPress).TotalMilliseconds <= _doublePressMs) // TO DO: Ticks per ms
                     {
                         DoublePress.Invoke(this, new EventArgs());
                     }
-                    _lastPress = DateTime.MinValue;
+                    _lastPress = DateTime.MinValue.Ticks;
                 }
             }
         }

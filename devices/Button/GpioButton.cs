@@ -25,7 +25,7 @@ namespace Iot.Device.Button
         /// <param name="pullUp">If the system is pullup (false = pulldown).</param>
         /// <param name="doublePressMs">Max ms between button presses to count as doublepress.</param>
         /// <param name="holdingMs">Min ms a button is pressed to count as holding.</param>
-        public GpioButton(int buttonPin = DEFAULT_BUTTON_PIN, bool pullUp = true, int doublePressMs = DEFAULT_DOUBLE_PRESS_MS, int holdingMs = DEFAULT_HOLDING_MS)
+        public GpioButton(int buttonPin = DEFAULT_BUTTON_PIN, bool pullUp = true, int doublePressMs = DEFAULT_DOUBLE_PRESS_TICKS, int holdingMs = DEFAULT_HOLDING_MS)
             : base(doublePressMs, holdingMs)
         {
             _gpioController = new GpioController();
