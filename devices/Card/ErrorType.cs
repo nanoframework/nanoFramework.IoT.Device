@@ -4,7 +4,7 @@
 namespace Iot.Device.Card
 {
     /// <summary>
-    /// The type of error
+    /// The type of error.
     /// </summary>
     public enum ErrorType
     {
