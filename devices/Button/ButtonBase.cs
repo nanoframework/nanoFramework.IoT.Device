@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 
 namespace Iot.Device.Button
@@ -105,14 +104,14 @@ namespace Iot.Device.Button
             _holdingTimer = null;
             _holdingState = ButtonHoldingState.Started;
 
-            Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = ButtonHoldingState.Started});
+            Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = ButtonHoldingState.Started });
         }
 
         /// <summary>
         /// Cleanup resources.
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose (bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
             {

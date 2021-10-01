@@ -7,8 +7,8 @@ namespace Iot.Device.Tests
     {
         public TestButton() : base()
         {
-
         }
+
         public void PressButton()
         {
             HandleButtonPressed();

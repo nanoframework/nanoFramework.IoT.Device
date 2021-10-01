@@ -18,7 +18,7 @@ namespace Tests
             bool DoublePressed = false;
 
             TestButton button = new TestButton();
-            
+
             button.Press += (sender, e) =>
             {
                 Pressed = true;
