@@ -6,27 +6,27 @@ GpioButton button = new GpioButton();
 
 Debug.WriteLine("Button is initialized, starting to read state");
 
-button.IsDoubleClickEnabled = true;
+button.IsDoublePressEnabled = true;
 button.IsHoldingEnabled = true;
 
-//button.ButtonDown += (sender, e) =>
-//{
-//    Debug.WriteLine($"buttondown IsPressed={button.IsPressed}");
-//};
-
-//button.ButtonUp += (sender, e) =>
-//{
-//    Debug.WriteLine($"buttonup IsPressed={button.IsPressed}");
-//};
-
-button.Click += (sender, e) =>
+button.ButtonDown += (sender, e) =>
 {
-    Debug.WriteLine($"Click");
+    Debug.WriteLine($"buttondown IsPressed={button.IsPressed}");
 };
 
-button.DoubleClick += (sender, e) =>
+button.ButtonUp += (sender, e) =>
 {
-    Debug.WriteLine($"Double click");
+    Debug.WriteLine($"buttonup IsPressed={button.IsPressed}");
+};
+
+button.Press += (sender, e) =>
+{
+    Debug.WriteLine($"Press");
+};
+
+button.DoublePress += (sender, e) =>
+{
+    Debug.WriteLine($"Double press");
 };
 
 button.Holding += (sender, e) =>

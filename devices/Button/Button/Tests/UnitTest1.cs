@@ -5,15 +5,13 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-// DOES NOT WORK YET
 namespace Tests
 {
     [TestClass]
     class Buttontests
     {
-        // WORKS: Test if click works
         [TestMethod]
-        public void If_Button_Is_Once_Pressed_Click_Event_Fires()
+        public void If_Button_Is_Once_Pressed_Press_Event_Fires()
         {
             bool Pressed = false;
             bool Holding = false;
@@ -21,7 +19,7 @@ namespace Tests
 
             TestButton button = new TestButton();
             
-            button.Click += (sender, e) =>
+            button.Press += (sender, e) =>
             {
                 Pressed = true;
             };
@@ -31,7 +29,7 @@ namespace Tests
                 Holding = true;
             };
 
-            button.DoubleClick += (sender, e) =>
+            button.DoublePress += (sender, e) =>
             {
                 DoublePressed = true;
             };
@@ -45,7 +43,6 @@ namespace Tests
             Assert.Equal(DoublePressed, false);
         }
 
-        // WORKS: Test long press works
         [TestMethod]
         public void If_Button_Is_Held_Holding_Event_Fires()
         {
@@ -56,7 +53,7 @@ namespace Tests
             TestButton button = new TestButton();
             button.IsHoldingEnabled = true;
 
-            button.Click += (sender, e) =>
+            button.Press += (sender, e) =>
             {
                 Pressed = true;
             };
@@ -66,7 +63,7 @@ namespace Tests
                 Holding = true;
             };
 
-            button.DoubleClick += (sender, e) =>
+            button.DoublePress += (sender, e) =>
             {
                 DoublePressed = true;
             };
@@ -80,7 +77,6 @@ namespace Tests
             Assert.Equal(DoublePressed, false);
         }
 
-        // WORKS: Test long press without flag
         [TestMethod]
         public void If_Button_Is_Held_And_Holding_Is_Disabled_Holding_Event_Does_Not_Fire()
         {
@@ -91,7 +87,7 @@ namespace Tests
             TestButton button = new TestButton();
             button.IsHoldingEnabled = false;
 
-            button.Click += (sender, e) =>
+            button.Press += (sender, e) =>
             {
                 Pressed = true;
             };
@@ -101,7 +97,7 @@ namespace Tests
                 Holding = true;
             };
 
-            button.DoubleClick += (sender, e) =>
+            button.DoublePress += (sender, e) =>
             {
                 DoublePressed = true;
             };
@@ -123,9 +119,9 @@ namespace Tests
             bool DoublePressed = false;
 
             TestButton button = new TestButton();
-            button.IsDoubleClickEnabled = true;
+            button.IsDoublePressEnabled = true;
 
-            button.Click += (sender, e) =>
+            button.Press += (sender, e) =>
             {
                 Pressed = true;
             };
@@ -135,7 +131,7 @@ namespace Tests
                 Holding = true;
             };
 
-            button.DoubleClick += (sender, e) =>
+            button.DoublePress += (sender, e) =>
             {
                 DoublePressed = true;
             };
@@ -164,9 +160,9 @@ namespace Tests
 
             TestButton button = new TestButton();
 
-            button.IsDoubleClickEnabled = true;
+            button.IsDoublePressEnabled = true;
 
-            button.Click += (sender, e) =>
+            button.Press += (sender, e) =>
             {
                 Pressed = true;
             };
@@ -176,7 +172,7 @@ namespace Tests
                 Holding = true;
             };
 
-            button.DoubleClick += (sender, e) =>
+            button.DoublePress += (sender, e) =>
             {
                 DoublePressed = true;
             };
@@ -197,16 +193,15 @@ namespace Tests
             Assert.Equal(DoublePressed, false);
         }
 
-        // Test if double click works without flag
         [TestMethod]
         public void If_Button_Is_Double_Pressed_And_DoublePress_Is_Disabled_DoublePress_Event_Does_Not_Fire()
         {
             bool Pressed = false;
 
             TestButton button = new TestButton();
-            button.IsDoubleClickEnabled = false;
+            button.IsDoublePressEnabled = false;
 
-            button.DoubleClick += (sender, e) =>
+            button.DoublePress += (sender, e) =>
             {
                 Pressed = true;
             };

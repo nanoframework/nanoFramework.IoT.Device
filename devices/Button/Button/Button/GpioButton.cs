@@ -5,7 +5,8 @@ using System.Diagnostics;
 namespace Iot.Device.Button
 {
     /// <summary>
-    /// 
+    /// GPIO implementation of Button.
+    /// Inherits from ButtonBase.
     /// </summary>
     public class GpioButton : ButtonBase
     {
@@ -18,14 +19,14 @@ namespace Iot.Device.Button
         private bool _disposed = false;
 
         /// <summary>
-        /// 
+        /// Initialization of the button.
         /// </summary>
-        /// <param name="buttonPin"></param>
-        /// <param name="pullUp"></param>
-        /// <param name="doublePressMs"></param>
-        /// <param name="longPressMs"></param>
-        public GpioButton(int buttonPin = DEFAULT_BUTTON_PIN, bool pullUp = true, int doublePressMs = DEFAULT_DOUBLE_PRESS_MS, int longPressMs = DEFAULT_LONG_PRESS_MS)
-            : base(doublePressMs, longPressMs)
+        /// <param name="buttonPin">GPIO pin of the button.</param>
+        /// <param name="pullUp">If the system is pullup (false = pulldown).</param>
+        /// <param name="doublePressMs">Max ms between button presses to count as doublepress.</param>
+        /// <param name="holdingMs">Min ms a button is pressed to count as holding.</param>
+        public GpioButton(int buttonPin = DEFAULT_BUTTON_PIN, bool pullUp = true, int doublePressMs = DEFAULT_DOUBLE_PRESS_MS, int holdingMs = DEFAULT_HOLDING_MS)
+            : base(doublePressMs, holdingMs)
         {
             _gpioController = new GpioController();
             _buttonPin = buttonPin;
@@ -54,10 +55,10 @@ namespace Iot.Device.Button
         }
 
         /// <summary>
-        /// Handle pull up or pull down setting. In case of pull down
-        /// we'll flip the event type for consistant handling in <see cref="PinStateChanged(object, PinValueChangedEventArgs)"/>.
+        /// Handle pull up or pull down setting. In case of pull down,
+        /// we flip the event type for consistent handling in <see cref="PinStateChanged(object, PinValueChangedEventArgs)"/>.
         /// </summary>
-        /// <param name="changeType">Original type</param>
+        /// <param name="changeType">Original type.</param>
         /// <returns>Proper type for handling.</returns>
         private PinEventTypes GetPinEvent(PinEventTypes changeType)
         {
@@ -86,7 +87,7 @@ namespace Iot.Device.Button
         }
 
         /// <summary>
-        /// Iternal cleanup.
+        /// Internal cleanup.
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
