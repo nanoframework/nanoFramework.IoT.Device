@@ -5,7 +5,7 @@ namespace Iot.Device.Button
     public class ButtonHoldingEventArgs : EventArgs
     {
         /// <summary>
-        /// The button states.
+        /// Button holding state.
         /// </summary>
         public ButtonHoldingState HoldingState { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿# Button
 
-The ButtonBase class is a base implementation for buttons that is hardware independent and can be used across devices. 
+The ButtonBase class is a base implementation for buttons that is hardware independent and can be used across devices.
 The GpioButton is a GPIO implementation of the button and inherits from the ButtonBase class. This implementation has been tested on an ESP32 platform, specificaly on the [M5StickC Plus](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit).
 
 ## Documentation
@@ -9,7 +9,7 @@ Documentation for the M5StickC Plus, including pin mapping, can be [found here](
 
 ## Usage
 
-You can find an example in the [samples](./Samples/Program.cs) directory. 
+You can find an example in the [samples](./Samples/Program.cs) directory.
 
 ```csharp
 // Initialize a new button
@@ -85,4 +85,3 @@ Holding Completed
 The unit test project can be found in the [tests](./Tests/ButtonTests.cs) directory. You can simply run them using the VS2019 built-in test capabilites:
 
 ![unit tests](./unittests.png)
-

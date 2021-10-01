@@ -4,7 +4,7 @@ using System.Threading;
 namespace Iot.Device.Button
 {
     /// <summary>
-    /// Base implementation of Button logic. 
+    /// Base implementation of Button logic.
     /// Hardware independent. Inherit for specific hardware handling.
     /// </summary>
     public class ButtonBase : IDisposable
@@ -87,7 +87,6 @@ namespace Iot.Device.Button
                 else
                 {
                     if (DateTime.UtcNow.Ticks - _lastPress <= _doublePressMs)
-                    //if (DateTime.UtcNow.Subtract(_lastPress).TotalMilliseconds <= _doublePressMs) // TO DO: Ticks per ms
                     {
                         DoublePress.Invoke(this, new EventArgs());
                     }
@@ -127,7 +126,7 @@ namespace Iot.Device.Button
         }
 
         /// <summary>
-        /// public dispose method for IDisposable interface.
+        /// Public dispose method for IDisposable interface.
         /// </summary>
         public void Dispose()
         {
