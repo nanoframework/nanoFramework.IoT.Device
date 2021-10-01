@@ -5,7 +5,7 @@ The GpioButton is a GPIO implementation of the button and inherits from the Butt
 
 ## Documentation
 
-Documentation for the M5StickC Plus, including pin mapping, can be [found here](https://docs.m5stack.com/en/core/m5stickc_plus)
+Documentation for the M5StickC Plus, including pin mapping, can be [found here](https://docs.m5stack.com/en/core/m5stickc_plus).
 
 ## Usage
 
