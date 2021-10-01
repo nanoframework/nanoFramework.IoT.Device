@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Button.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

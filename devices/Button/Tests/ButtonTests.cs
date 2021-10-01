@@ -1,8 +1,5 @@
-using Iot.Device.Button;
 using Iot.Device.Tests;
 using nanoFramework.TestFramework;
-using System;
-using System.Diagnostics;
 using System.Threading;
 
 namespace Tests

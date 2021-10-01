@@ -1,5 +1,4 @@
 ﻿using Iot.Device.Button;
-using System;
 
 namespace Iot.Device.Tests
 {

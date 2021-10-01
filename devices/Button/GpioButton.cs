@@ -1,6 +1,4 @@
-﻿using System;
-using System.Device.Gpio;
-using System.Diagnostics;
+﻿using System.Device.Gpio;
 
 namespace Iot.Device.Button
 {
