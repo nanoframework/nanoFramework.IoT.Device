@@ -5,8 +5,8 @@ using Iot.Device.Button;
 using System.Diagnostics;
 using System.Threading;
 
-// Initialize a new button
-GpioButton button = new GpioButton();
+// Initialize a new button with the corresponding button pin
+GpioButton button = new GpioButton(buttonPin: 37);
 
 Debug.WriteLine("Button is initialized, starting to read state");
 

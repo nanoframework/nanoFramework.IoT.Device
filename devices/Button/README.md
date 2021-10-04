@@ -12,8 +12,8 @@ Documentation for the M5StickC Plus, including pin mapping, can be [found here](
 You can find an example in the [samples](./Samples/Program.cs) directory.
 
 ```csharp
-// Initialize a new button
-GpioButton button = new GpioButton();
+// Initialize a new button with the corresponding button pin
+GpioButton button = new GpioButton(buttonPin: 37);
 
 Debug.WriteLine("Button is initialized, starting to read state");
 
