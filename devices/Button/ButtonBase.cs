@@ -9,8 +9,8 @@ namespace Iot.Device.Button
     /// </summary>
     public class ButtonBase : IDisposable
     {
-        internal const int DEFAULT_DOUBLE_PRESS_TICKS = 15000000;
-        internal const int DEFAULT_HOLDING_MS = 2000;
+        internal const int DefaultDoublePressTicks = 15000000;
+        internal const int DefaultHoldingMilliseconds = 2000;
 
         private bool _disposed = false;
 
