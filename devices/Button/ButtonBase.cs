@@ -22,23 +22,64 @@ namespace Iot.Device.Button
         private long _lastPress = DateTime.MinValue.Ticks;
         private Timer _holdingTimer;
 
+        /// <summary>
+        /// Delegate for button pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void ButtonPressedDelegate(object sender, EventArgs e);
+
+        /// <summary>
+        /// Delegate for button holding.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void ButtonHoldingDelegate(object sender, ButtonHoldingEventArgs e);
 
+        /// <summary>
+        /// Delegate for button up event.
+        /// </summary>
         public event ButtonPressedDelegate ButtonUp;
+
+        /// <summary>
+        /// Delegate for button down event.
+        /// </summary>
         public event ButtonPressedDelegate ButtonDown;
+
+        /// <summary>
+        /// Delegate for button pressed event.
+        /// </summary>
         public event ButtonPressedDelegate Press;
+
+        /// <summary>
+        /// Delegate for button double pressed event.
+        /// </summary>
         public event ButtonPressedDelegate DoublePress;
+
+        /// <summary>
+        /// Delegate for button holding event.
+        /// </summary>
         public event ButtonHoldingDelegate Holding;
 
+        /// <summary>
+        /// Define if holding event is enabled or disabled on the button.
+        /// </summary>
         public bool IsHoldingEnabled { get; set; } = false;
+
+        /// <summary>
+        /// Define if double press event is enabled or disabled on the button.
+        /// </summary>
         public bool IsDoublePressEnabled { get; set; } = false;
+
+        /// <summary>
+        /// Define if single press event is enabled or disabled on the button.
+        /// </summary>
         public bool IsPressed { get; set; } = false;
 
         /// <summary>
         /// Initialization of the button.
         /// </summary>
-        public ButtonBase(int doublePressMs = DEFAULT_DOUBLE_PRESS_TICKS, int holdingMs = DEFAULT_HOLDING_MS)
+        public ButtonBase(int doublePressMs = DefaultDoublePressTicks, int holdingMs = DefaultHoldingMilliseconds)
         {
             _doublePressMs = doublePressMs;
             _holdingMs = holdingMs;
