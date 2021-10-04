@@ -36,44 +36,34 @@ namespace Iot.Device.Button
         }
 
         /// <summary>
-        /// Handles changes in GPIO pin.
+        /// Handles changes in GPIO pin, based on whether the system is pullup or pulldown.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="pinValueChangedEventArgs"></param>
         private void PinStateChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
-            switch (GetPinEvent(pinValueChangedEventArgs.ChangeType))
+            switch (pinValueChangedEventArgs.ChangeType)
             {
                 case PinEventTypes.Falling:
-                    HandleButtonPressed();
+                    if (_pullUp)
+                    {
+                        HandleButtonPressed();
+                    }
+                    else
+                    {
+                        HandleButtonReleased();
+                    }
                     break;
                 case PinEventTypes.Rising:
-                    HandleButtonReleased();
+                    if (_pullUp)
+                    {
+                        HandleButtonReleased();
+                    }
+                    else
+                    {
+                        HandleButtonPressed();
+                    }
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Handle pull up or pull down setting. In case of pull down,
-        /// we flip the event type for consistent handling in <see cref="PinStateChanged(object, PinValueChangedEventArgs)"/>.
-        /// </summary>
-        /// <param name="changeType">Original type.</param>
-        /// <returns>Proper type for handling.</returns>
-        private PinEventTypes GetPinEvent(PinEventTypes changeType)
-        {
-            if (_pullUp)
-            {
-                return changeType;
-            }
-
-            switch (changeType)
-            {
-                case PinEventTypes.Falling:
-                    return PinEventTypes.Rising;
-                case PinEventTypes.Rising:
-                    return PinEventTypes.Falling;
-                default:
-                    return PinEventTypes.None;
             }
         }
 

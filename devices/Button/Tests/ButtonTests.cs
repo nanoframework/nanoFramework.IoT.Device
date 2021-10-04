@@ -35,7 +35,10 @@ namespace Tests
             };
 
             button.PressButton();
+
+            // Wait a little bit to mimic actual user behavior.
             Thread.Sleep(100);
+
             button.ReleaseButton();
 
             Assert.Equal(Pressed, true);
@@ -69,7 +72,10 @@ namespace Tests
             };
 
             button.PressButton();
+
+            // Wait longer than default holding threshold milliseconds, for the click to be recognized as a holding event.
             Thread.Sleep(2100);
+
             button.ReleaseButton();
 
             Assert.Equal(Pressed, true);
@@ -103,7 +109,10 @@ namespace Tests
             };
 
             button.PressButton();
-            Thread.Sleep(1100);
+
+            // Wait longer than default holding threshold milliseconds, for the press to be recognized as a holding event.
+            Thread.Sleep(2100);
+
             button.ReleaseButton();
 
             Assert.Equal(Pressed, true);
@@ -137,13 +146,20 @@ namespace Tests
             };
 
             button.PressButton();
-            Thread.Sleep(200);
-            button.ReleaseButton();
 
+            // Wait a little bit to mimic actual user behavior.
             Thread.Sleep(100);
 
-            button.PressButton();
+            button.ReleaseButton();
+
+            // Wait shorter than default double press threshold milliseconds, for the press to be recognized as a double press event.
             Thread.Sleep(200);
+
+            button.PressButton();
+
+            // Wait a little bit to mimic actual user behavior.
+            Thread.Sleep(100);
+
             button.ReleaseButton();
 
             Assert.Equal(Pressed, true);
@@ -178,15 +194,21 @@ namespace Tests
             };
 
             button.PressButton();
-            Thread.Sleep(200);
+
+            // Wait a little bit to mimic actual user behavior.
+            Thread.Sleep(100);
+
             button.ReleaseButton();
 
+            // Wait longer than default double press threshold milliseconds, for the press to be recognized as two separate presses.
             Thread.Sleep(3000);
 
             button.PressButton();
-            Thread.Sleep(200);
-            button.ReleaseButton();
 
+            // Wait a little bit to mimic actual user behavior.
+            Thread.Sleep(100);
+
+            button.ReleaseButton();
 
             Assert.Equal(Pressed, true);
             Assert.Equal(Holding, false);
@@ -207,13 +229,20 @@ namespace Tests
             };
 
             button.PressButton();
-            Thread.Sleep(200);
-            button.ReleaseButton();
 
+            // Wait a little bit to mimic actual user behavior.
             Thread.Sleep(100);
 
-            button.PressButton();
+            button.ReleaseButton();
+
+            // Wait shorter than default double press threshold milliseconds, for the press to be recognized as a double press event.
             Thread.Sleep(200);
+
+            button.PressButton();
+
+            // Wait a little bit to mimic actual user behavior.
+            Thread.Sleep(100);
+
             button.ReleaseButton();
 
             Assert.Equal(Pressed, false);
