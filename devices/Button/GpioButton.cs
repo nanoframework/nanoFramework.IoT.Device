@@ -15,15 +15,18 @@ namespace Iot.Device.Button
         private GpioController _gpioController;
         private int _buttonPin;
         private bool _pullUp;
+        private bool _shouldDispose;
 
         private bool _disposed = false;
 
         /// <summary>
         /// Initialization of the button.
         /// </summary>
-        /// <param name="buttonPin"></param>
-        /// <param name="pullUp"></param>
-        public GpioButton(int buttonPin, bool pullUp = true) : this(buttonPin, pullUp, TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds))
+        /// <param name="buttonPin">GPIO pin of the button.</param>
+        /// <param name="pullUp">If the system is pullup (false = pulldown).</param>
+        /// <param name="gpio">Gpio Controller.</param>
+        /// <param name="shouldDispose">True to dispose the GpioController.</param>
+        public GpioButton(int buttonPin, bool pullUp = true, GpioController gpio = null, bool shouldDispose = true) : this(buttonPin, pullUp, TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds), gpio, shouldDispose)
         {
         }
 
@@ -34,10 +37,13 @@ namespace Iot.Device.Button
         /// <param name="pullUp">If the system is pullup (false = pulldown).</param>
         /// <param name="doublePress">Max ticks between button presses to count as doublepress.</param>
         /// <param name="holding">Min ms a button is pressed to count as holding.</param>
-        public GpioButton(int buttonPin, bool pullUp, TimeSpan doublePress, TimeSpan holding)
+        /// <param name="gpio">Gpio Controller.</param>
+        /// <param name="shouldDispose">True to dispose the GpioController.</param>
+        public GpioButton(int buttonPin, bool pullUp, TimeSpan doublePress, TimeSpan holding, GpioController gpio = null, bool shouldDispose = true)
             : base(doublePress, holding)
         {
-            _gpioController = new GpioController();
+            _gpioController = gpio ?? new GpioController();
+            _shouldDispose = shouldDispose;
             _buttonPin = buttonPin;
             _pullUp = pullUp;
 
@@ -48,8 +54,8 @@ namespace Iot.Device.Button
         /// <summary>
         /// Handles changes in GPIO pin, based on whether the system is pullup or pulldown.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="pinValueChangedEventArgs"></param>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="pinValueChangedEventArgs">The pin argument changes.</param>
         private void PinStateChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
             switch (pinValueChangedEventArgs.ChangeType)
@@ -100,9 +106,19 @@ namespace Iot.Device.Button
 
             if (disposing)
             {
-                _gpioController?.Dispose();
-                _gpioController = null!;
+                if (_shouldDispose)
+                {
+                    _gpioController?.Dispose();
+                    _gpioController = null!;
+                }
+                else
+                {
+                    _gpioController.UnregisterCallbackForPinValueChangedEvent(_buttonPin, PinStateChanged);
+                    _gpioController.ClosePin(_buttonPin);
+                }
+
                 base.Dispose(disposing);
+                _disposed = true;
             }
         }
     }

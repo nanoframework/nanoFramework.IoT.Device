@@ -5,6 +5,9 @@ using System;
 
 namespace Iot.Device.Button
 {
+    /// <summary>
+    /// Button holding event arguments.
+    /// </summary>
     public class ButtonHoldingEventArgs : EventArgs
     {
         /// <summary>

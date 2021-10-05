@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 
 // Initialize a new button with the corresponding button pin
-GpioButton button = new GpioButton(buttonPin: 37);
+GpioButton button = new(buttonPin: 37);
 
 Debug.WriteLine("Button is initialized, starting to read state");
 

@@ -8,8 +8,13 @@ namespace Iot.Device.Button
     /// </summary>
     public enum ButtonHoldingState
     {
+        /// <summary>Started</summary>
         Started,
+
+        /// <summary>Completed</summary>
         Completed,
-        Cancelled,
+
+        /// <summary>Canceled</summary>
+        Canceled,
     }
 }

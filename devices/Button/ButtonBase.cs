@@ -143,6 +143,7 @@ namespace Iot.Device.Button
                     {
                         DoublePress.Invoke(this, new EventArgs());
                     }
+
                     _lastPress = DateTime.MinValue.Ticks;
                 }
             }
@@ -176,6 +177,8 @@ namespace Iot.Device.Button
                 _holdingTimer?.Dispose();
                 _holdingTimer = null;
             }
+
+            _disposed = true;
         }
 
         /// <summary>
