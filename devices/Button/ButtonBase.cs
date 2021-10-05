@@ -12,13 +12,13 @@ namespace Iot.Device.Button
     /// </summary>
     public class ButtonBase : IDisposable
     {
-        internal const int DefaultDoublePressTicks = 15000000;
-        internal const int DefaultHoldingMilliseconds = 2000;
+        internal const long DefaultDoublePressTicks = 15000000;
+        internal const long DefaultHoldingMilliseconds = 2000;
 
         private bool _disposed = false;
 
-        private int _doublePressMs;
-        private int _holdingMs;
+        private long _doublePressTicks;
+        private long _holdingMs;
 
         private ButtonHoldingState _holdingState = ButtonHoldingState.Completed;
 
@@ -82,10 +82,19 @@ namespace Iot.Device.Button
         /// <summary>
         /// Initialization of the button.
         /// </summary>
-        public ButtonBase(int doublePressMs = DefaultDoublePressTicks, int holdingMs = DefaultHoldingMilliseconds)
+        public ButtonBase() : this(TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds))
         {
-            _doublePressMs = doublePressMs;
-            _holdingMs = holdingMs;
+        }
+
+        /// <summary>
+        /// Initialization of the button.
+        /// </summary>
+        /// <param name="doublePress"></param>
+        /// <param name="holding"></param>
+        public ButtonBase(TimeSpan doublePress, TimeSpan holding)
+        {
+            _doublePressTicks = doublePress.Ticks;
+            _holdingMs = (long)holding.TotalMilliseconds;
         }
 
         /// <summary>
@@ -99,7 +108,7 @@ namespace Iot.Device.Button
 
             if (IsHoldingEnabled)
             {
-                _holdingTimer = new Timer(StartHoldingHandler, null, _holdingMs, Timeout.Infinite);
+                _holdingTimer = new Timer(StartHoldingHandler, null, (int)_holdingMs, Timeout.Infinite);
             }
         }
 
@@ -130,7 +139,7 @@ namespace Iot.Device.Button
                 }
                 else
                 {
-                    if (DateTime.UtcNow.Ticks - _lastPress <= _doublePressMs)
+                    if (DateTime.UtcNow.Ticks - _lastPress <= _doublePressTicks)
                     {
                         DoublePress.Invoke(this, new EventArgs());
                     }

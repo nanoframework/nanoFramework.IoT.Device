@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Device.Gpio;
 
 namespace Iot.Device.Button
@@ -20,12 +21,21 @@ namespace Iot.Device.Button
         /// <summary>
         /// Initialization of the button.
         /// </summary>
+        /// <param name="buttonPin"></param>
+        /// <param name="pullUp"></param>
+        public GpioButton(int buttonPin, bool pullUp = true) : this(buttonPin, pullUp, TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds))
+        {
+        }
+
+        /// <summary>
+        /// Initialization of the button.
+        /// </summary>
         /// <param name="buttonPin">GPIO pin of the button.</param>
         /// <param name="pullUp">If the system is pullup (false = pulldown).</param>
-        /// <param name="doublePressMs">Max ticks between button presses to count as doublepress.</param>
-        /// <param name="holdingMs">Min ms a button is pressed to count as holding.</param>
-        public GpioButton(int buttonPin, bool pullUp = true, int doublePressMs = DefaultDoublePressTicks, int holdingMs = DefaultHoldingMilliseconds)
-            : base(doublePressMs, holdingMs)
+        /// <param name="doublePress">Max ticks between button presses to count as doublepress.</param>
+        /// <param name="holding">Min ms a button is pressed to count as holding.</param>
+        public GpioButton(int buttonPin, bool pullUp, TimeSpan doublePress, TimeSpan holding)
+            : base(doublePress, holding)
         {
             _gpioController = new GpioController();
             _buttonPin = buttonPin;
@@ -53,6 +63,7 @@ namespace Iot.Device.Button
                     {
                         HandleButtonReleased();
                     }
+
                     break;
                 case PinEventTypes.Rising:
                     if (_pullUp)
@@ -63,6 +74,7 @@ namespace Iot.Device.Button
                     {
                         HandleButtonPressed();
                     }
+
                     break;
             }
         }
