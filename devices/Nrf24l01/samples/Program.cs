@@ -8,14 +8,27 @@ using System.Text;
 using System.Threading;
 using Iot.Device.Nrf24l01;
 
-// SPI0 CS0
-SpiConnectionSettings senderSettings = new(0, 0)
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
+SpiConnectionSettings senderSettings = new(1, 42)
 {
     ClockFrequency = Nrf24l01.SpiClockFrequency,
     Mode = Nrf24l01.SpiMode
 };
-// SPI1 CS0
-SpiConnectionSettings receiverSettings = new(1, 2)
+
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(24, DeviceFunction.SPI2_MOSI);
+//Configuration.SetPinFunction(25, DeviceFunction.SPI2_MISO);
+//Configuration.SetPinFunction(26, DeviceFunction.SPI2_CLOCK);
+// Make sure as well you are using the right chip select
+SpiConnectionSettings receiverSettings = new(2, 44)
 {
     ClockFrequency = Nrf24l01.SpiClockFrequency,
     Mode = Nrf24l01.SpiMode

@@ -7,6 +7,12 @@ using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Bh1745;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 // bus id on the raspberry pi 3
 const int busId = 1;
 

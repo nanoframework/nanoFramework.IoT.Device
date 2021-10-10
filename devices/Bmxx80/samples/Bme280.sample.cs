@@ -17,6 +17,12 @@ namespace Iot.Device.Bmxx80.sample
         {
             Debug.WriteLine("Hello Bme280!");
 
+            //////////////////////////////////////////////////////////////////////
+            // when connecting to an ESP32 device, need to configure the I2C GPIOs
+            // used for the bus
+            //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+            //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
             // bus id on the raspberry pi 3
             const int busId = 1;
             // set this to the current sea level pressure in the area for correct altitude readings

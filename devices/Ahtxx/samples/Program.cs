@@ -7,6 +7,12 @@ using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Ahtxx;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 const int I2cBus = 1;
 I2cConnectionSettings i2cSettings = new(I2cBus, Aht20.DefaultI2cAddress);
 I2cDevice i2cDevice = I2cDevice.Create(i2cSettings);

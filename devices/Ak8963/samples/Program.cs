@@ -8,6 +8,12 @@ using System.Threading;
 using System.Numerics;
 using Iot.Device.Magnetometer;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 I2cConnectionSettings mpui2CConnectionSettingmpus = new(1, Ak8963.DefaultI2cAddress);
 using Ak8963 ak8963 = new Ak8963(I2cDevice.Create(mpui2CConnectionSettingmpus));
 Debug.WriteLine(

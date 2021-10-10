@@ -36,17 +36,17 @@ using (Dht11 dht = new Dht11(26))
     // both temperature and humidity are NAN
     if (dht.IsLastReadSuccessful)
     {
-        Console.WriteLine($"Temperature: {temperature.DegreesCelsius} \u00B0C, Humidity: {humidity.Percent} %");
+        Debug.WriteLine($"Temperature: {temperature.DegreesCelsius} \u00B0C, Humidity: {humidity.Percent} %");
 
         // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-        Console.WriteLine(
+        Debug.WriteLine(
             $"Heat index: {WeatherHelper.CalculateHeatIndex(temperature, humidity).Celsius:0.#}\u00B0C");
-        Console.WriteLine(
+        Debug.WriteLine(
             $"Dew point: {WeatherHelper.CalculateDewPoint(temperature, humidity).Celsius:0.#}\u00B0C");
     }
     else
     {
-        Console.WriteLine("Error reading DHT sensor");
+        Debug.WriteLine("Error reading DHT sensor");
     }
 }
 ```

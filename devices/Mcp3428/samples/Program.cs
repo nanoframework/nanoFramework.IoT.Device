@@ -8,6 +8,13 @@ using System.Threading;
 using Iot.Device.Mcp3428;
 
 Debug.WriteLine("Hello Mcp3428 Sample!");
+
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 I2cConnectionSettings options = new(1, Mcp3428.I2CAddressFromPins(PinState.Low, PinState.Low));
 using I2cDevice i2cDevice = I2cDevice.Create(options);
 using Mcp3428 adc = new(i2cDevice, AdcMode.OneShot, resolution: AdcResolution.Bit16, pgaGain: AdcGain.X1);

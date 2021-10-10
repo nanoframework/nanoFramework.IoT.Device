@@ -9,6 +9,12 @@ using Iot.Device.Lps25h;
 using UnitsNet;
 using System.Diagnostics;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 // I2C address on SenseHat board
 const int I2cAddress = 0x5c;
 

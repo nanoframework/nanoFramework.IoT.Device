@@ -11,7 +11,14 @@ using Iot.Device.Multiplexing;
 using ShiftRegister sr = new ShiftRegister(ShiftRegisterPinMapping.Complete, 8);
 
 // Uncomment this code to use SPI (and comment the line above)
-// SpiConnectionSettings settings = new(0, 0);
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
+// SpiConnectionSettings settings = new(1, 42);
 // using var spiDevice = SpiDevice.Create(settings);
 // var sr = new Sn74hc595(spiDevice, Sn74hc595.PinMapping.Standard);
 CancellationTokenSource cancellationSource = new();

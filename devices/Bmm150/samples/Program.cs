@@ -9,6 +9,12 @@ using System.Numerics;
 using Iot.Device.Magnetometer;
 using nanoFramework.Hardware.Esp32;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 // The I2C pins 21 and 22 in the sample below are ESP32 specific and may differ from other platforms.
 // Please double check your device datasheet.
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);

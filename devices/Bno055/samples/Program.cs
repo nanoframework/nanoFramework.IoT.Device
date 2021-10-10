@@ -8,6 +8,13 @@ using System.Threading;
 using Iot.Device.Bno055;
 
 Debug.WriteLine("Hello BNO055!");
+
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(1, Bno055Sensor.DefaultI2cAddress));
 using Bno055Sensor bno055Sensor = new(i2cDevice);
 Debug.WriteLine(

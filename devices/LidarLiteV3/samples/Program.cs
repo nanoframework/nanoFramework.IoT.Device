@@ -8,6 +8,12 @@ using Iot.Device.DistanceSensor;
 using UnitsNet;
 using System.Diagnostics;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using (var llv3 = new LidarLiteV3(CreateI2cDevice()))
 {
     // Take 10 measurements, each one second apart.

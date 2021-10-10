@@ -45,6 +45,12 @@ Debug.WriteLine("Creating an instance of a CCS811 using native I2C/GPIO");
 
 Debug.WriteLine("Creating an instance of a CCS811 using the platform drivers.");
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using (var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(3, addressChoice)), pinWake: wakeupPin, pinInterruption: pinInterrupt, pinReset: pinReset))
 {
     Sample(ccs811);

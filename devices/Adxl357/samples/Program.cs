@@ -8,6 +8,12 @@ using System.Threading;
 using Iot.Device.Adxl357;
 using System.Diagnostics;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 I2cConnectionSettings i2CConnectionSettings = new I2cConnectionSettings(1, Adxl357.DefaultI2CAddress);
 I2cDevice device = I2cDevice.Create(i2CConnectionSettings);
 using Adxl357 sensor = new Adxl357(device, AccelerometerRange.Range40G);

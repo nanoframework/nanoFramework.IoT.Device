@@ -11,7 +11,14 @@ string message = "Hello World from MAX7219!";
 
 Debug.WriteLine(message);
 
-SpiConnectionSettings connectionSettings = new(0, 0)
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
+SpiConnectionSettings connectionSettings = new(1, 42)
 {
     ClockFrequency = Iot.Device.Max7219.Max7219.SpiClockFrequency,
     Mode = Iot.Device.Max7219.Max7219.SpiMode

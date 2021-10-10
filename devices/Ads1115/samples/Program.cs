@@ -9,6 +9,12 @@ using System.Device.Gpio;
 using Iot.Device.Ads1115;
 using UnitsNet;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 // set I2C bus ID: 1
 // ADS1115 Addr Pin connect to GND
 I2cConnectionSettings settings = new(1, (int)I2cAddress.GND);

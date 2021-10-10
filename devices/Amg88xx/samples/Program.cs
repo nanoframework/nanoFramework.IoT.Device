@@ -9,6 +9,12 @@ using System.Threading;
 using Iot.Device.Amg88xx;
 using UnitsNet;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 // Setup I2C bus for communicating with the AMG8833 sensor.
 // Note: if you're using a breakout board check which address is configured by the logic level
 // of the sensor's AD_SELECT pin.

@@ -10,6 +10,12 @@ using Iot.Device.Magnetometer;
 
 Debug.WriteLine("Hello MPU9250!");
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 Debug.WriteLine("This will run the calibration on 1000, comment if you've done it already.");
 Debug.WriteLine("Note that you'll be able to copy/paste the data easily from the debug output and create a csv file that you'll be able to exploit in Excel for example.");
 MagnetometerCalibrationDeepDive(1000);

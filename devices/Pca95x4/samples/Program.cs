@@ -12,6 +12,12 @@ int s_deviceAddress = 0x38;
 
 Debug.WriteLine("Hello Pca95x4 Sample!");
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using Pca95x4 pca95x4 = GetPca95x4Device();
 ////CycleOutputBits(pca95x4);
 ////ReadInputPort(pca95x4);
