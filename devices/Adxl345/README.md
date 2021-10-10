@@ -60,10 +60,10 @@ using (Adxl345 sensor = new Adxl345(device, GravityRange.Range04))
 
 * VCC - 3.3 V
 * GND -  GND
-* CS - CS0(Pin24)
-* SDO - SPI0 MISO(Pin21)
-* SDA - SPI0 MOSI (Pin19)
-* SCL - SPI0 SCLK(Pin23)
+* CS - CS
+* SDO - SPI1 MISO
+* SDA - SPI1 MOSI
+* SCL - SPI1 SCLK
 
 ### Code
 
