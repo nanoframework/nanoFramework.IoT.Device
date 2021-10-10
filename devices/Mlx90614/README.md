@@ -31,10 +31,10 @@ For other devices like STM32, please make sure you're using the preset pins for 
 
 ### Circuit
 
-![MLX90614 circuit](MLX90614_circuit_bb.jpg)
+![MLX90614 circuit](MLX90614_circuit_bb.png)
 
-- SCL - SCL (GPIO 3)
-- SDA - SDA (GPIO 2)
+- SCL - SCL
+- SDA - SDA
 - VCC - 5V/3V
 - GND - GND
 
