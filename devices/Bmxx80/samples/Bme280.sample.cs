@@ -23,7 +23,7 @@ namespace Iot.Device.Bmxx80.sample
             //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
             //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-            // bus id on the raspberry pi 3
+            // bus id on the MCU
             const int busId = 1;
             // set this to the current sea level pressure in the area for correct altitude readings
             Pressure defaultSeaLevelPressure = WeatherHelper.MeanSeaLevel;

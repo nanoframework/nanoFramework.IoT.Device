@@ -71,7 +71,7 @@ using (var adc = new Iot.Device.Ads1115.Ads1115(device, InputMultiplexer.AIN0, M
 }
 
 // Provide a callback that triggers each time the ADC has a new value available. The DataRate parameter will define the sample rate.
-// We are using pin 23 as interrupt input from the ADC, but note that the trigger signal from the ADC may be to short to be properly recognized by the Raspberry Pi and
+// We are using pin 23 as interrupt input from the ADC, but note that the trigger signal from the ADC may be to short to be properly recognized by the MCU and
 // some extra electronics is required to make this reliably work (see readme).
 using (var controller = new GpioController(PinNumberingScheme.Logical))
 {

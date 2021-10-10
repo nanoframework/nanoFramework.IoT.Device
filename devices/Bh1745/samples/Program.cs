@@ -13,7 +13,7 @@ using Iot.Device.Bh1745;
 //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-// bus id on the raspberry pi 3
+// bus id on the MCU
 const int busId = 1;
 
 // create device
