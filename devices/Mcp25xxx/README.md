@@ -1,6 +1,6 @@
 ﻿# Mcp25xxx device family - CAN bus
 
-**This binding is currently not finished. Please consider contributing to help us finish it. In the meantime consider using [SocketCan](../SocketCan/README.md)**
+**This binding is currently not finished. Please consider contributing to help us finish it.**
 
 The MCP25XXX is a stand-alone CAN controller and includes features like faster throughput, databyte filtering, and support for time-triggered protocols.
 

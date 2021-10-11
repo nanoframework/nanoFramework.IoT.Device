@@ -21,7 +21,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
-You can find an example in the [sample](./samples/Bmm150.sample.cs) directory. Usage is straight forward including the possibility to have a calibration.
+You can find an example in the [sample](./samples/Program.cs) directory. Usage is straight forward including the possibility to have a calibration.
 
 ```csharp
 // The I2C pins 21 and 22 in the sample below are ESP32 specific and may differ from other platforms.

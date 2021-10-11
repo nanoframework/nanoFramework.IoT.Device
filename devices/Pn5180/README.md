@@ -10,9 +10,7 @@ Application note on how to operate PN5180 without a [library](https://www.nxp.co
 
 ## Board
 
-You will find different implementation of this board. All boards should have full SPI pins plus the reset and busy ones and additionnaly 5V and or 3.3V plus ground. This pictures shows an example of one of the implementation connected with a [FT4222](../FT4222/README.md) chipset to provide the necessary GPIO and SPI features:
-
-![PN5180](./samples/pn8150_ft4222.png)
+You will find different implementation of this board. All boards should have full SPI pins plus the reset and busy ones and additionally 5V and or 3.3V plus ground. 
 
 ## Usage
 
@@ -30,7 +28,7 @@ Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the SPI bus you want to use. The chip select can as well be pre setup.
 
-You will find a full example in the [samples directory](./samples/Pn5180sample.cs). This example covers the usage of most of the public functions and properties. This example shows as well how to use [Ultralight cards](../Card/Ultralight).
+You will find a full example in the [samples directory](./samples/Program.cs). This example covers the usage of most of the public functions and properties. This example shows as well how to use [Ultralight cards](../Card/Ultralight).
 
 PN5180 is operated thru SPI and GPIO. GPIO is used to control the SPI behavior as the PN5180 is using SPI in specific way. This does then require to manually manage the pin selection for SPI. And another pin called pin busy is used to understand when the PN5180 is available to receive and send information.
 
@@ -280,7 +278,7 @@ else
 }
 ```
 
-The [example](./samples/Pn5180sample.cs) contains as well an implementation to fully dump the content of other cards.
+The [example](./samples/Program.cs) contains as well an implementation to fully dump the content of other cards.
 
 ## Current implementation
 

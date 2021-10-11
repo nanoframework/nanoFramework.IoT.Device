@@ -13,7 +13,6 @@ The 28BYJ-48 is a small stepper motor suitable for a large range of applications
 ## Board
 
 ![Uln2003](Uln2003.png)
-![Schematics](Uln2003-diagram.png)
 
 On schematics ULN2003APG driver is being used. You can use  external power (9V as on scheme above) or just 5V Rapberry Pi PIN instead (Physical pin 2,4).
 
