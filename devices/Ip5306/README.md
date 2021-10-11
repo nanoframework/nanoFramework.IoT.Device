@@ -1,24 +1,24 @@
- # IP5306 - Power management
+# IP5306 - Power management
 
- This chip is used mainly in power bank and embedded devices as a power management device. It is connected using I2C and allows to adjust the charging current,voltage, cutoff voltage. It has the capacity to light up 4 leds displaying the charge of the battery. This device is used in the M5Stack.
+This chip is used mainly in power bank and embedded devices as a power management device. It is connected using I2C and allows to adjust the charging current,voltage, cutoff voltage. It has the capacity to light up 4 leds displaying the charge of the battery. This device is used in the M5Stack.
 
- ## Documentation
+## Documentation
 
- The datasheet in Chinese can be found [here](https://github.com/m5stack/M5-Schematic/blob/master/Core/IIC_IP5306_REG_V1.4.pdf).
+The datasheet in Chinese can be found [here](https://github.com/m5stack/M5-Schematic/blob/master/Core/IIC_IP5306_REG_V1.4.pdf).
 
- ## Usage
+## Usage
 
- As always when using I2C, you need to make sure you're using the right pins. En ESP32, you need the register the pins if not using the default one.
+As always when using I2C, you need to make sure you're using the right pins. En ESP32, you need the register the pins if not using the default one.
 
- ```csharp
- Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+```csharp
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 
 I2cDevice i2c = new(new I2cConnectionSettings(1, Ip5306.SecondaryI2cAddress));
 Ip5306 power = new(i2c);
- ```
+```
 
- Note the default address of the IP5306 is 0xEA, the address used in M5Stack is 0x75 (here setup as `SecondaryI2cAddress`).
+Note the default address of the IP5306 is 0xEA, the address used in M5Stack is 0x75 (here setup as `SecondaryI2cAddress`).
 
 ### Getting access to the properties
 
