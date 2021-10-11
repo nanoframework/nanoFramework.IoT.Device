@@ -35,8 +35,8 @@ namespace GenerateDocFxStructure
         /// <summary>
         /// Gets or sets the main repository.
         /// </summary>
-        [Option('r', "repo", Required = false, HelpText = "The main repository with the branch to target pointing on the folder used as a source. Default value is 'https://github.com/nanoFramework/nanoFramework.IoT.Device/tree/main/devices'.")]
-        public string Repo { get; set; } = "https://github.com/nanoFramework/nanoFramework.IoT.Device/tree/main/devices";
+        [Option('r', "repo", Required = false, HelpText = "The main repository with the branch to target pointing on the folder used as a source. Default value is 'https://github.com/nanoFramework/nanoFramework.IoT.Device/tree/develop/devices'.")]
+        public string Repo { get; set; } = "https://github.com/nanoFramework/nanoFramework.IoT.Device/tree/develop/devices";
 
         /// <summary>
         /// Gets or sets a value indicating whether verbose information is shown in the output.

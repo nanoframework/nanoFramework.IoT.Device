@@ -12,17 +12,18 @@ On top, the links on the internal structure need to be adjusted as well from rel
 
 The tool can be used like this:
 
-`GenerateDocFxStructure -d includesDirectory -m mediaDirectory -s sourceDirectory -r repoUrl`
+`GenerateDocFxStructure -d includesDirectory -m mediaDirectory -s sourceDirectory -r repoUrl -i ignore`
 
 - `includesDirectory`: the includes destination directory. ex: `c:\iot-page-docfx\includes`
 - `mediaDirectory`: the media destination directory. ex: `c:\iot-page-docfx\media`
 - `sourceDirectory`: the source directory. ex: `c:\iot\src\devices`. It is important to point on the devices directory where all the markdown files will be extracted and analyzed.
-- `repoUrl`: the repository UR, by default: `https://github.com/dotnet/iot/tree/main/src/devices`
+- `repoUrl`: the repository UR, by default: `https://github.com/nanoFramework/nanoFramework.IoT.Device/tree/develop/devices`
+- `ignore`: the folder names to ignore, for examples packages, tests and any other that may contain markdown that you don't want to move.
 
 **Important**:
 
 - The links on media will be transformed from `something.jpg` to `~/media/Binding/something.jpg` assuming the previous example with the media directory. Binding is the name of the binding, more precisely the name of the directory containing the Markdown file.
-- The links on the repository will be transformed into absolute URL. For example `./sample/program.cs` into `https://github.com/dotnet/iot/tree/main/src/devices/Binding/sample/program.cs` assuming the previous repository and as for the media, Binding is the name of the directory containing the Markdown
+- The links on the repository will be transformed into absolute URL. For example `./sample/program.cs` into `https://github.com/nanoFramework/nanoFramework.IoT.Device/tree/develop/devices/Binding/sample/program.cs` assuming the previous repository and as for the media, Binding is the name of the directory containing the Markdown
 - If the Markdown is in a series of directories, they will all be replaced the proper way.
 
 The tool can be used with `-v` option to show verbose.
