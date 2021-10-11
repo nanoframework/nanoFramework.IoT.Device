@@ -2,6 +2,13 @@
 
 This binding is used used to read and write data via I2C from the external EEPROM memory.
 
+## Documentation
+
+[Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/AT24C128C-I%C2%B2C-Compatible-(Two-Wire)-Serial-EEPROM-128-Kbit-(16,384x8)-20006110B.pdf)
+
+Original code was written for MIMXRT1060 Evaluation Board by BusKetZz <busketz2k@gmail.com>
+
+
 ## Usage
 
 ```csharp
@@ -23,9 +30,3 @@ byte[] receivedData = eeprom.Read(memoryAddress, message.Length);
 string dataConvertedToString = System.Text.Encoding.UTF8.GetString(receivedData, 0, receivedData.Length);
 Debug.WriteLine($"Message read from EEPROM: {dataConvertedToString}");
 ```
-
-# Datasheet
-
-[Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/AT24C128C-I%C2%B2C-Compatible-(Two-Wire)-Serial-EEPROM-128-Kbit-(16,384x8)-20006110B.pdf)
-
-Original code was written for MIMXRT1060 Evaluation Board by BusKetZz <busketz2k@gmail.com>

@@ -18,7 +18,13 @@ Debug.WriteLine("Hello Pn5180!");
 
 // Statically register our factory. Note that this must be done before instantiation of any class that wants to use logging.
 // LogDispatcher.LoggerFactory = new DebugLoggerFactory();
-
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
 SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(1, 12) { ClockFrequency = Pn5180.MaximumSpiClockFrequency, Mode = Pn5180.DefaultSpiMode, DataFlow = DataFlow.MsbFirst });
 
 // Reset the device

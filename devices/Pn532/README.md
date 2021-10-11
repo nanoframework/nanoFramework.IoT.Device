@@ -22,7 +22,7 @@ Example with polling a simple passive 14443 type A card like a Mifare:
 
 ```csharp
 byte[] retData = null;
-while ((!Console.KeyAvailable))
+while (true)
 {
     retData = pn532.ListPassiveTarget(MaxTarget.One, TargetBaudRate.B106kbpsTypeA);
     if (retData is object)
@@ -43,7 +43,7 @@ Example pooling a 14443 type B card like a credit card:
 
 ```csharp
 byte[] retData = null;
-while ((!Console.KeyAvailable))
+while (true)
 {
     retData = pn532.AutoPoll(5, 300, new PollingType[] { PollingType.Passive106kbpsISO144443_4B });
     if (retData is object)
@@ -139,7 +139,7 @@ static void AsTarget(Pn532 pn532)
 {
     byte[] retData = null;
     TargetModeInitialized modeInitialized = null;
-    while ((!Console.KeyAvailable))
+    while (true)
     {
         (modeInitialized, retData) = pn532.InitAsTarget(
             TargetModeInitialization.PiccOnly, 
@@ -152,6 +152,7 @@ static void AsTarget(Pn532 pn532)
         // Give time to PN532 to process
         Thread.Sleep(200);
     }
+    
     if (modeInitialized is null)
         return;
 

@@ -15,6 +15,12 @@ namespace Iot.Device.Lsm9Ds1.Samples
 
         public static void Run()
         {
+            //////////////////////////////////////////////////////////////////////
+            // when connecting to an ESP32 device, need to configure the I2C GPIOs
+            // used for the bus
+            //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+            //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
             using (Lsm9Ds1Magnetometer m = new(CreateI2cDevice()))
             {
                 Debug.WriteLine("Calibrating...");

@@ -46,6 +46,20 @@ The following [diagram](../Sn74hc595/sn74hc595-minimal-led-bar-graph.fzz) demons
 
 ## Using SPI
 
+**Important**: make sure you properly setup the SPI pins especially for ESP32 before creating the `SpiDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
+
+```csharp
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
+```
+
+For other devices like STM32, please make sure you're using the preset pins for the SPI bus you want to use. The chip select can as well be pre setup.
+
 The bindings can use a `SpiDevice` to control the shift register. The shift register timing maps to the SPI protocol, enabling SPI to be used. The wiring from is straightforward, from [SPI pins](https://pinout.xyz/pinout/spi) to the shift register: SDI (MOSI) -> SDI; SCLK -> CLK; CEO -> LE.
 
 Note: The SPI protocol has terms with [casual references to slavery](https://hackaday.com/2020/06/29/updating-the-language-of-spi-pin-labels-to-remove-casual-references-to-slavery/). We're doing our part to avoid them.
@@ -54,7 +68,7 @@ The following example code demonstrates how to use a shift register with SPI.
 
 ```csharp
 // assuming an 8-bit shift register
-ShiftRegister sr = new(SpiDevice.Create(new(0, 0)), 8);
+ShiftRegister sr = new(SpiDevice.Create(new(1, 42)), 8);
 
 // Light up three of first four LEDs
 // The ShiftBit() method is disallowed when using SPI
@@ -70,8 +84,6 @@ sr.ShiftByte(0b_1010_1010);
 The following [diagram](../Sn74hc595/sn74hc595-led-bar-graph-spi.fzz) demonstrates the required wiring for using the SN74HC595 with SPI. Other shift registers will be similar.
 
 ![sn74hc595-led-bar-graph-spi_bb](../Sn74hc595/sn74hc595-led-bar-graph-spi_bb.png)
-
-Note: You need to [enable SPI on the Raspberry Pi](https://www.raspberrypi.org/documentation/configuration/raspi-config.md) in order to use it.
 
 ## Daisy-chaining
 

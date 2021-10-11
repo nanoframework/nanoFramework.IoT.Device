@@ -12,6 +12,12 @@ using System.Diagnostics;
 // I2C address on SenseHat board
 const int I2cAddress = 0x5F;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using Hts221 th = new(CreateI2cDevice());
 while (true)
 {

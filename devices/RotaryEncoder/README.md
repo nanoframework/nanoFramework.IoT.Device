@@ -1,8 +1,8 @@
 ﻿# Quadrature Rotary Encoder
 
-## Summary
-
 A Rotary encoder is a device that detects angular position. One use of this is similar to a volume control on an FM radio where the user turns a shaft and the loudness of the broadcast is changed. Incremental rotary encoders do not provide information on their exact position but supply information about how much they have moved and in which direction.
+
+## Board
 
 ![image of rotary encoder](pec11r.png)
 
@@ -12,7 +12,11 @@ Typically a quadrature rotary encoder will have two outputs A and B, perhaps cal
 
 From above if we look at Pin B (data) at the time of a falling edge on Pin A (clk) then the if the value of pin P is 1 then the direction is clockwise and if it is 0 then the rotation is counter clockwise.
 
-## Binding Notes
+## Usage
+
+This sample shows how to implement an FM radio tuner control using the `ScaledQuadradureEncoder` binding. It simply prints the tuner value to the console as the knob is turned.
+
+![rotary example](RotaryEncoder.Sample_bb.png)
 
 This binding implements scaled quadrature rotary encoder as `ScaledQuadratureEncoder`. The value is a double. You can for example set it up as a tuning dial for an FM radio with a range of 88.0 to 108.0 with a step of 0.1.
 
@@ -26,7 +30,7 @@ encoder.Debounce = TimeSpan.FromMilliseconds(2);
 // Register to Value change events
 encoder.ValueChanged += (o, e) =>
 {
-    Console.WriteLine($"Tuned to {e.Value}MHz");
+    Debug.WriteLine($"Tuned to {e.Value}MHz");
 };
 ```
 
@@ -40,7 +44,7 @@ Also available is a `QuadratureRotaryEncoder` binding which has properties that 
 
 ## Limitations
 
-This binding is suitable for manual and small rotations where it is not a big deal if one or few rotations may be lost.
+This binding is suitable for **manual** and **small rotations** where it is not a big deal if one or few rotations may be lost.
 
 This binding **is not** suitable for motor control with a very high rate and very precise number of counts.
 

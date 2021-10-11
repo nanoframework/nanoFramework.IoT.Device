@@ -23,6 +23,13 @@ int pinReset = 21;
 // Default on ESP32:
 // GPIO23 = MOSI; GPIO25 = MISO; GPIO19 = Clock
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(23, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(25, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(19, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
 // Uncomment for SPI
 SpiConnectionSettings connection = new(1, 22);
 // Here you can use as well MfRc522.MaximumSpiClockFrequency which is 10_000_000
@@ -32,6 +39,11 @@ SpiDevice spi = SpiDevice.Create(connection);
 MfRc522 mfrc522 = new(spi, pinReset, gpioController, false);
 
 // Uncomment for I2C. WARNING: you need to know the correct address (it's programmable)
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 ////int i2cAddress = 0x40;
 ////I2cDevice i2c = I2cDevice.Create(new I2cConnectionSettings(1, i2cAddress));
 ////MfRc522 mfrc522 = new(i2c, pinReset, gpioController, false);

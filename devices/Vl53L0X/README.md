@@ -1,33 +1,45 @@
 # VL53L0X - distance sensor
 
-## Summary
-
 The VL53L0X sensor is a Time-to-Flight sensor measuring precisely distances. The sensor allows you to get precise short distance measurement (from 5 millimeters to 2 meters) as well as long distance measurement (up to 8 meters but with a decreased precision). This sensor is a laser ranging sensor. It is using laser pulses to measure the distances.
 
-## Device Family
-
-![VL53L0X](./VL53L0X.jpg)
+## Documentation
 
 **VL53L0X** [datasheet](https://www.st.com/content/st_com/en/products/embedded-software/proximity-sensors-software/stsw-img005.html)
 
 You will find this device as ["Distance Sensor"](https://www.dexterindustries.com/product/distance-sensor/) or ["Adafruit VL53L0X Time of Flight Distance Sensor - ~30 to 1000mm"](https://www.adafruit.com/product/3317)
 
+## Board
+
+![VL53L0X](./VL53L0X.jpg)
+
 ## Usage
+
+**Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
+
+```csharp
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+```
+
+For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
 All calibration and all setup of the sensor is done fully transparently for you. Just create a class and read either once the distance, either using the continuous measurement method.
 
 ```csharp
 Vl53L0X vL53L0X = new Vl53L0X(I2cDevice.Create(new I2cConnectionSettings(1, Vl53L0X.DefaultI2cAddress)));
-Console.WriteLine($"Rev: {vL53L0X.Information.Revision}, Prod: {vL53L0X.Information.ProductId}, Mod: {vL53L0X.Information.ModuleId}");
-while (!Console.KeyAvailable)
+Debug.WriteLine($"Rev: {vL53L0X.Information.Revision}, Prod: {vL53L0X.Information.ProductId}, Mod: {vL53L0X.Information.ModuleId}");
+while (true)
 {
     try
     {
-        Console.WriteLine($"Distance: {vL53L0X.Distance}");
+        Debug.WriteLine($"Distance: {vL53L0X.Distance}");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Exception: {ex.Message}");
+        Debug.WriteLine($"Exception: {ex.Message}");
     }
     Thread.Sleep(500);
 }

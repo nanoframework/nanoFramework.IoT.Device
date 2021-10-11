@@ -4,7 +4,7 @@ An M×N key matrix driver.
 
 (M is number of output pins and N is number of input pins.)
 
-## Summary
+## Documentation
 
 These key matrices look like this:
 
@@ -16,13 +16,16 @@ You can connect any M×N key matrix, theoretically, by using M+N GPIO pins.
 
 You can also use any compatible GPIO controller like [Mcp23xxx](../Mcp23xxx) instead of native controller.
 
+- [How Key Matrices works](http://pcbheaven.com/wikipages/How_Key_Matrices_Works/)
+- [4x4 Keypad](https://www.waveshare.com/wiki/4x4_Keypad)
+
 ## Usage
 
-You need to create 2 lists of int, one for the input and one for the output. 
+You need to create 2 lists of int, one for the input and one for the output.
 
 ```csharp
-IEnumerable<int> outputs = new int[] { 26, 19, 13, 6 };
-IEnumerable<int> inputs = new int[] { 21, 20, 16, 12 };
+int[] outputs = new int[] { 26, 19, 13, 6 };
+int[] inputs = new int[] { 21, 20, 16, 12 };
 KeyMatrix mk = new KeyMatrix(outputs, inputs, TimeSpan.FromMilliseconds(20));
 ```
 
@@ -33,8 +36,8 @@ var settings = new System.Device.I2c.I2cConnectionSettings(1, 0x20);
 var i2cDevice = System.Device.I2c.I2cDevice.Create(settings);
 var mcp23017 = new Iot.Device.Mcp23xxx.Mcp23017(i2cDevice);
 GpioController gpio = new GpioController(PinNumberingScheme.Logical, mcp23017);
-IEnumerable<int> outputs = new int[] { 26, 19, 13, 6 };
-IEnumerable<int> inputs = new int[] { 21, 20, 16, 12 };
+int[] outputs = new int[] { 26, 19, 13, 6 };
+int[] inputs = new int[] { 21, 20, 16, 12 };
 KeyMatrix mk = new KeyMatrix(outputs, inputs, TimeSpan.FromMilliseconds(20), gpio, true);
 ```
 
@@ -46,20 +49,17 @@ To read a key, just the `ReadKey` function:
 KeyMatrixEvent? key = mk.ReadKey();
 ```
 
-KeyMatrixEvent contains the event that happened. Please note that ReadKey is blocked up to the moment an event is detected. 
+KeyMatrixEvent contains the event that happened. Please note that ReadKey is blocked up to the moment an event is detected.
 
 ## Event based approach
 
 `KeyMatrix` supports events. Just subscribe to the event and have a function to handle the events:
 
 ```csharp
-Console.WriteLine("This will now start listening to events and display them. Press a key to finish.");
+Debug.WriteLine("This will now start listening to events and display them for 60 seconds.");
 mk.KeyEvent += KeyMatrixEventReceived;
 mk.StartListeningKeyEvent();
-while (!Console.KeyAvailable)
-{
-    Thread.Sleep(1);
-}
+Thread.Sleep(60000);
 
 mk.StopListeningKeyEvent();
 
@@ -72,10 +72,19 @@ void KeyMatrixEventReceived(object sender, KeyMatrixEvent keyMatrixEvent)
 ## Tips and tricks
 
 - Using diodes(eg. 1N4148) for each button prevents "ghosting" or "masking" problem.
-- Input pins need pull-down resistors connect to ground if your MCU doesn't have it. So you need to have a pull-down on a Raspberry Pi for example.
+- Input pins need pull-down resistors connect to ground if your MCU doesn't have it. So you need to have a pull-down on a the MCU for example.
 - If your key matrix doesn't work well, try to swap output and input pins. Some includes diodes and if they are used the reverse way won't work properly.
 
-## References
+## Key Matrix Samples
 
-- http://pcbheaven.com/wikipages/How_Key_Matrices_Works/
-- https://www.waveshare.com/wiki/4x4_Keypad
+This shows how to connect the matrix.
+
+**Important**: Please make you don't forget to place a pull down on the input matrix.
+
+## Connection using on-board GPIO
+
+![Connection using MCU](4x4kb.png)
+
+## Connection using MCP23017
+
+![Connection using a MCP23017](4x4kb_via_mcp23017.png)

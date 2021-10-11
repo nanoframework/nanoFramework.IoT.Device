@@ -62,8 +62,8 @@ This example will play tone with frequency 440 for a second and then will play t
 
 ### Schematic
 
-This sample demonstrates using two types of buzzers.
-For buzzer with 3 pins: simply connect *signal* pin of buzzer to commutation pin (GPIO26), *vcc* pin to *+5v*, *gnd* pin to ground. For buzzer with 2 pins: connect *vcc* pin of buzzer to commutation pin (GPIO21) and *gnd* to ground.
+You have 2 types of buzzers. Those with 2 pins only and those with 3 pins.
+For buzzer with 3 pins: simply connect *signal* pin of buzzer to commutation pin (any valid GPIO), *vcc* pin to *+5v*, *gnd* pin to ground. For buzzer with 2 pins: connect *vcc* pin of buzzer to commutation pin (any valid GPIO) and *gnd* to ground.
 
 You could use any types of buzzers in any order. No changes to code are required.
 

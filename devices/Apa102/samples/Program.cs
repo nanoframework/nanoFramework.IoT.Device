@@ -9,7 +9,14 @@ using Iot.Device.Apa102;
 
 var random = new Random();
 
-using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(0, 0)
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
+using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(1, 42)
 {
     ClockFrequency = 20_000_000,
     DataFlow = DataFlow.MsbFirst,

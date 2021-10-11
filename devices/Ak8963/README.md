@@ -2,9 +2,25 @@
 
 The AK8963 is a magnetometer that can be controlled either thru I2C either thru SPI. It is present in other sensors like the [MPU9250](../Mpu9250/README.md). This implementation fully supports the I2C mode and the usage thru the MPU9250. It does not support SPI.
 
+## Documentation
+
+Documentation for the AK8963 can be found [here](https://www.akm.com/akm/en/file/datasheet/AK8963C.pdf)
+
 ## Usage
 
-You can find an example in the [sample](./samples/Program.cs) directory. Usage is straight forward including the possibility to have a calibration.
+**Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
+
+```csharp
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+```
+
+For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
+
+You can find an example in the [sample](https://github.com/dotnet/iot/tree/main/src/devices/Ak8963/samples/ak8963.sample.cs) directory. Usage is straight forward including the possibility to have a calibration.
 
 ```csharp
 var mpui2CConnectionSettingmpus = new I2cConnectionSettings(1, Ak8963.Ak8963.DefaultI2cAddress);
@@ -12,13 +28,13 @@ var mpui2CConnectionSettingmpus = new I2cConnectionSettings(1, Ak8963.Ak8963.Def
 Ak8963 ak8963 = new Ak8963(I2cDevice.Create(mpui2CConnectionSettingmpus));
 if (!ak8963.CheckVersion())
     throw new IOException($"This device does not contain the correct signature 0x48 for a AK8963");
-Console.Clear();
-while (!Console.KeyAvailable)
+
+while (true)
 {
     var magne = ak8963.ReadMagnetometer(true);
-    Console.WriteLine($"Mag X = {magne.X, 15}");
-    Console.WriteLine($"Mag Y = {magne.Y, 15}");
-    Console.WriteLine($"Mag Z = {magne.Z, 15}");
+    Debug.WriteLine($"Mag X = {magne.X, 15}");
+    Debug.WriteLine($"Mag Y = {magne.Y, 15}");
+    Debug.WriteLine($"Mag Z = {magne.Z, 15}");
     Thread.Sleep(100);
 }
 ```
@@ -29,14 +45,14 @@ You can get access to the self tests and calibration thru the ```CalibrateMagnet
 
 ```csharp
 var magBias = ak8963.CalibrateMagnetometer();
-Console.WriteLine($"Factory Bias:");
-Console.WriteLine($"Mag X = {magBias.X}");
-Console.WriteLine($"Mag Y = {magBias.Y}");
-Console.WriteLine($"Mag Z = {magBias.Z}");
-Console.WriteLine($"Bias from calibration:");
-Console.WriteLine($"Mag X = {ak8963.MagnometerBias.X}");
-Console.WriteLine($"Mag Y = {ak8963.MagnometerBias.Y}");
-Console.WriteLine($"Mag Z = {ak8963.MagnometerBias.Z}");
+Debug.WriteLine($"Factory Bias:");
+Debug.WriteLine($"Mag X = {magBias.X}");
+Debug.WriteLine($"Mag Y = {magBias.Y}");
+Debug.WriteLine($"Mag Z = {magBias.Z}");
+Debug.WriteLine($"Bias from calibration:");
+Debug.WriteLine($"Mag X = {ak8963.MagnometerBias.X}");
+Debug.WriteLine($"Mag Y = {ak8963.MagnometerBias.Y}");
+Debug.WriteLine($"Mag Z = {ak8963.MagnometerBias.Z}");
 ```
 
 You will find a full example on how to extract raw data without calibration on the [MPU9250 sample](../Mpu9250/samples/Program.cs).
@@ -49,13 +65,13 @@ Running the calibration properly require to **move the sensor in all the possibl
 
 ![raw data](./corrcalib.png)
 
-To create those cloud point graphs, every cloud is a coordinate of X-Y, Y-Z and Z-X. 
+To create those cloud point graphs, every cloud is a coordinate of X-Y, Y-Z and Z-X.
 
 Once the calibration is done, you will be able to read the data with the bias corrected using the ```ReadMagnetometer``` function. You will still be able to read the data without any calibration using the ```ReadMagnetometerWithoutCalibration``` function.
 
 ## Using a different I2C interface
 
-This sensor is used for example in the [MPU9250](../Mpu9250/README.md). The MPU9250 is in this case a master I2C controlling the slave AK8963 I2C sensor. An abstract class is available to implement basic I2C operation:
+This sensor is used for example in the [MPU9250](../Mpu9250/README.md). The MPU9250 is in this case a master I2C controlling the secondary AK8963 I2C sensor. An abstract class is available to implement basic I2C operation:
 
 ```csharp
 public abstract class Ak8963I2cBase
@@ -125,8 +141,4 @@ Only I2C is supported in this version.
 * VCC - 3.3V
 * GND - GND
 
-Depending on the version you have, you may have to select I2C over SPI. This is done in different way depending on the board you'll have. 
-
-## Reference
-
-Documentation for the AK8963 can be found here: https://www.akm.com/akm/en/file/datasheet/AK8963C.pdf
+Depending on the version you have, you may have to select I2C over SPI. This is done in different way depending on the board you'll have.

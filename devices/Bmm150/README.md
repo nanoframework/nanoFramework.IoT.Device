@@ -9,6 +9,18 @@ Documentation for the Bmm150 can be [found here](https://www.bosch-sensortec.com
 
 ## Usage
 
+**Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
+
+```csharp
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+```
+
+For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
+
 You can find an example in the [sample](./samples/Bmm150.sample.cs) directory. Usage is straight forward including the possibility to have a calibration.
 
 ```csharp

@@ -6,7 +6,14 @@ using System.Threading;
 using Iot.Device.DAC;
 using UnitsNet;
 
-var spisettings = new SpiConnectionSettings(0, 1)
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the SPI GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+//Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
+// Make sure as well you are using the right chip select
+var spisettings = new SpiConnectionSettings(1, 42)
 {
     Mode = SpiMode.Mode2
 };

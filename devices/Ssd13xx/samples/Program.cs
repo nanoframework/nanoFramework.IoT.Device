@@ -4,6 +4,8 @@
 using System.Diagnostics;
 
 Debug.WriteLine("Tis example is not ported");
+Debug.WriteLine("Initialization are correct, copy/paste what you need");
+Debug.WriteLine("Help needed to port elements related to ImageSharp!");
 
 /*
 using System;
@@ -27,6 +29,12 @@ using Ssd1306Cmnds = Iot.Device.Ssd13xx.Commands.Ssd1306Commands;
 using Ssd1327Cmnds = Iot.Device.Ssd13xx.Commands.Ssd1327Commands;
 
 Debug.WriteLine("Hello Ssd1306 Sample!");
+
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 #if SSD1327
 using Ssd1327 device = GetSsd1327WithI2c();

@@ -7,6 +7,12 @@ using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Mpr121;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(busId: 1, deviceAddress: Mpr121.DefaultI2cAddress));
 
 // Initialize controller with default configuration and auto-refresh the channel statuses every 100 ms.

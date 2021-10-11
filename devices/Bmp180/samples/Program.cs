@@ -11,7 +11,13 @@ using UnitsNet;
 
 Debug.WriteLine("Hello Bmp180!");
 
-// bus id on the raspberry pi 3
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+//Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+//Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
+// bus id on the MCU
 const int busId = 1;
 
 I2cConnectionSettings i2cSettings = new(busId, Bmp180.DefaultI2cAddress);

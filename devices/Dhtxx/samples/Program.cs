@@ -34,6 +34,12 @@ namespace Dhtxx_sample
 
             if (device == '1')
             {
+                //////////////////////////////////////////////////////////////////////
+                // when connecting to an ESP32 device, need to configure the I2C GPIOs
+                // used for the bus
+                //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+                //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
                 // Init DHT10 through I2C
                 Debug.WriteLine($"Using DHT10 on I2C.");
                 I2cConnectionSettings settings = new(1, Dht10.DefaultI2cAddress);
