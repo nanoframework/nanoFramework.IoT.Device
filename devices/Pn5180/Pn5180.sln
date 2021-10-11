@@ -4,8 +4,6 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{30DD3C9B-D513-4B55-A6FF-B034687BCE9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pn5180", "Pn5180.nfproj", "{8092E07C-4965-0F38-F578-CD82F4124BBC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Card Projects", "Card Projects", "{7DE389DF-FE19-440A-A172-1D7B8D601303}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
@@ -17,6 +15,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultralight", "..\Card\Ultralight\Ultralight.nfproj", "{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{83C919C4-91F2-46C4-9769-C85C7DB61975}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pn5180", "Pn5180.nfproj", "{8092E07C-4965-0F38-F578-CD82F4124BBC}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
 EndProject
