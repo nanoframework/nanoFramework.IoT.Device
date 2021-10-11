@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GenerateDocFxStructure": {
+      "commandName": "Project",
+      "commandLineArgs": "-d \"c:\\tmp\\nano\\devices\" -m \"c:\\tmp\\nano\\devices-media\" -s \"c:\\repos\\nanoFramework\\nanoFramework.IoT.Device\\devices\" -v -r \"https://github.com/nanoFramework/nanoFramework.IoT.Device\" -i packages,tests"
+    }
+  }
+}
