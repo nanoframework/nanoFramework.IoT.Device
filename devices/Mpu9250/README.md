@@ -198,7 +198,7 @@ It is then up to you to transform them into the correct data. You can multiply y
   * address: The I2C address of the replica I2C element
   * register: The register to write to the replica I2C element
   * data: The byte data to write to the replica I2C element
-* ```I2cRead(I2cChannel i2cChannel, byte address, byte register, Span<byte> readBytes)```
+* ```I2cRead(I2cChannel i2cChannel, byte address, byte register, SpanByte readBytes)```
   * i2cChannel: The replica channel to attached to the I2C device
   * address: The I2C address of the replica I2C element
   * register: The register to write to the replica I2C element

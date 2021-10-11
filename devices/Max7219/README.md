@@ -42,11 +42,11 @@ var devices = new Max7219(spi, cascadedDevices: 4);
 
 The following pin layout:
 
-* MAX7219 VCC to RPi 5V, Pin 2
-* MAX7219 GND to RPi GND, Pin 6
-* MAX7219 DIN to RPi GPIO 10 (MOSI), Pin 10
-* MAX7219 CS to RPi GPIO 8 (SPI CSO), Pin 8
-* MAX7219 CLK to RPi GPIO11 (SPI CLK), Pin 11
+* MAX7219 VCC to MCU 5V
+* MAX7219 GND to MCU GND
+* MAX7219 DIN to MCU MOSI
+* MAX7219 CS to MCU Chip Select
+* MAX7219 CLK to MCU SPI Clock
 
 ### Writing to the Matrix
 

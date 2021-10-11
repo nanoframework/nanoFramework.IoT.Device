@@ -37,7 +37,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
-This example shows how to write value out to 8 LEDs using a PCA95x4 device and a RPi3.
+This example shows how to write value out to 8 LEDs using a PCA95x4 device and a MCU.
 
 ```csharp
 I2cConnectionSettings i2cConnectionSettings = new(1, 0x38);

@@ -38,4 +38,4 @@ using (var sonar = new Hcsr04(4, 17))
 * Trig - Any valid GPIO
 * Echo - Any valid GPIO
 
-The fritz diagram above depicts how you should wire your RPi in order to run the program, the resistance for R1 is 1kOhm. (Optional).
+The fritz diagram above depicts how you should wire your MCU in order to run the program, the resistance for R1 is 1kOhm. (Optional). As the HCSR04 works only with 5V and the MCU are mainly 3.3V, this resistor will help protecting the MCU. Check your MCU to see if the pin is 5V tolerant or not.
