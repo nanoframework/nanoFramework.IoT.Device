@@ -181,20 +181,18 @@ using (var llv3 = new LidarLiteV3(CreateI2cDevice()))
 }
 ```
 
-## Raspberry PI Wiring
+## MCU Wiring
 
 The device communicates over I2C and while there's a PWN mode supported by the device, it is not
 implemented.
 
-I2C Wiring on the Raspberry PI:
+I2C Wiring on the MCU:
 
-| LidarLiteV3 Wire      | Raspberry PI GPIO Pin (Physical Numbering) |
+| LidarLiteV3 Wire      | MCU GPIO Pin (Physical Numbering) |
 |-----------------------|--------------------------------------------|
-| 5V (red)              | 5V (pin 2)                                 |
-| Ground (black)        | Ground (pin 6)                             |
-| Power enable (orange) | Optional, an available IO pin (pin 33)     |
+| 5V (red)              | 5V                                 |
+| Ground (black)        | Ground                             |
+| Power enable (orange) | Optional, an available IO pin    |
 | Mode control (yellow) | Not used                                   |
-| I2C SCL (green)       | SCL (pin 5)                                |
-| I2C SDA (blue)        | SDA (pin 3)                                |
-
-> Important! Don't forget to enable I2C via `raspi-config`.
+| I2C SCL (green)       | SCL                                 |
+| I2C SDA (blue)        | SDA                                 |

@@ -72,7 +72,7 @@ void KeyMatrixEventReceived(object sender, KeyMatrixEvent keyMatrixEvent)
 ## Tips and tricks
 
 - Using diodes(eg. 1N4148) for each button prevents "ghosting" or "masking" problem.
-- Input pins need pull-down resistors connect to ground if your MCU doesn't have it. So you need to have a pull-down on a Raspberry Pi for example.
+- Input pins need pull-down resistors connect to ground if your MCU doesn't have it. So you need to have a pull-down on a the MCU for example.
 - If your key matrix doesn't work well, try to swap output and input pins. Some includes diodes and if they are used the reverse way won't work properly.
 
 ## Key Matrix Samples
@@ -83,7 +83,7 @@ This shows how to connect the matrix.
 
 ## Connection using on-board GPIO
 
-![Connection using Raspberry Pi](4x4kb.png)
+![Connection using MCU](4x4kb.png)
 
 ## Connection using MCP23017
 

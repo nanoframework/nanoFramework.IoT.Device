@@ -2,7 +2,7 @@
 
 The Max31856 device is a SPI interface cold-junction compensated thermocouple to digital converter.
 
-![Illustration of wiring from a Raspberry Pi device](device.jpg)
+![Illustration of wiring from an ESP32 device](MAX31856_circuit_bb.png)
 
 **Note:** _ThermocoupleType.K is configured for a K type thermocouple if you want to use a B,E,J,K,N,R,S, or T simply change the K to the thermocouple type of your choosing._
 
@@ -28,7 +28,7 @@ For other devices like STM32, please make sure you're using the preset pins for 
 
 The Max31856.samples file contains a sample usage of the device. Note that this reads two temperatures. One is a connected thermocouple reading which can be read using the  ```TryGetTemperature``` command and the other is the temperature of the device itself which can be read using the ```GetColdJunctionTemperature``` command. The Cold Junction Temperature is used internally to increase the accuracy of the thermocouple but can also be read if you find a use for it.
 
-Create a new ```SpiConnectionSettings``` Class if using a Raspberry Pi do not change these settings.
+Create a new ```SpiConnectionSettings``` Class if using a MCU do not change these settings.
 
 ```csharp
 SpiConnectionSettings settings = new(1, 42)

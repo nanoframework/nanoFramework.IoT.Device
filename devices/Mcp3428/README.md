@@ -12,11 +12,11 @@ The  3 devices differ only in addressing capability and channel number. The libr
 
 ## Board
 
-![Raspberry Pi Breadboard diagram](rpi_led_adc_i2c.png)
+![MCU Breadboard diagram](rpi_led_adc_i2c.png)
 
 ## Usage
 
-Simple example for measuring LED forward voltage using the MCP3428 ADC and a Raspberry Pi.
+Simple example for measuring LED forward voltage using the MCP3428 ADC and a MCU.
 
 ```csharp
 // I2C addres based on pin configuration

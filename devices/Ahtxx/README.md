@@ -66,6 +66,6 @@ Refer to the [sample application](https://github.com/dotnet/iot/tree/main/src/de
 
 ## Wiring
 
-The AHTxx sensor is wired to the I2C interface (SDC/SDA) of the Raspberry Pi. The sensor is supplied with 3.3V to comply with the 3.3V interface level of the RPi.
+The AHTxx sensor is wired to the I2C interface (SDC/SDA) of the MCU. The sensor is supplied with 3.3V to comply with the 3.3V interface level of the RPi.
 
 ![Sample wiring](./Ahtxx_sample.png)

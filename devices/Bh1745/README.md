@@ -38,7 +38,7 @@ using System.Device.I2c;
 using System.Threading;
 using Iot.Device.Bh1745;
 
-// bus id on the raspberry pi 3
+// bus id on the MCU
 const int busId = 1;
 
 // create device
@@ -61,7 +61,7 @@ while (true)
 Advance usage with configuration:
 
 ```csharp
-// bus id on the raspberry pi 3
+// bus id on the MCU
 const int busId = 1;
 
 // create device

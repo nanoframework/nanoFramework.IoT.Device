@@ -53,9 +53,9 @@ while (true)
 
 ## Circuit
 
-The following fritzing diagram illustrates one way to wire up the MAX31865 Resistance Temperature Detector to Digital Converter with a Raspberry Pi
+The following fritzing diagram illustrates one way to wire up the MAX31865 Resistance Temperature Detector to Digital Converter with a MCU
 
-![Raspberry Pi circuit diagram](MAX31865_circuit_bb.png)
+![MCU circuit diagram](MAX31865_circuit_bb.png)
 
 * SDI - MOSI
 * SDO - MISO

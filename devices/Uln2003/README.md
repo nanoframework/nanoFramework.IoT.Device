@@ -20,7 +20,8 @@ On schematics ULN2003APG driver is being used. You can use  external power (9V a
 ## Usage
 
 ```csharp
-// Pinout for Raspberry Pi 3
+// Pinout for MCU please adapt depending on your MCU
+// Any regular GPIO will work
 const int bluePin = 4;
 const int pinkPin = 17;
 const int yellowPin = 27;

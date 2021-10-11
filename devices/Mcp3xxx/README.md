@@ -1,12 +1,12 @@
 # MCP3xxx family of Analog to Digital Converters
 
-Some devices like the Raspberry Pi cannot read analog values directly so rely on  [analog to digital converters](https://en.wikipedia.org/wiki/Analog-to-digital_converter), like the ones available from Microchip in the Mcp3000, Mcp3200 and Mcp3300 ranges. These chips can be accessed as an [SPI device](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) or manually via raw GPIO pins.
+Some devices like the Raspberry Pi cannot read analog values directly so rely on  [analog to digital converters](https://en.wikipedia.org/wiki/Analog-to-digital_converter), like the ones available from Microchip in the Mcp3000, Mcp3200 and Mcp3300 ranges. These chips can be accessed as an [SPI device](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) or manually via raw GPIO pins. Normally all MCU has an analogic capability but the number of pins can be limited. This is typically useful when you want your MCU to have more than the number of ADC available. Another case is if you need a different resolution or voltage reference.
 
 You can use these converters in your project to access analog devices.
 
-The following fritzing diagram illustrates one way to wire up the Mcp3008, with a Raspberry Pi and a potentiometer.
+The following fritzing diagram illustrates one way to wire up the Mcp3008, with an ESP32 and a potentiometer.
 
-![Raspberry Pi Breadboard diagram](rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](rpi-trimpot_spi.png)
 
 ## Documentation
 
@@ -44,7 +44,7 @@ The following elements are used in this sample:
 
 ### Accessing the MCP3008 via SPI
 
-The Raspberry Pi has support for SPI. You need to [enable the SPI interface on the Raspberry Pi](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) since it is not enabled by default.
+The MCU has support for SPI. 
 
 You can use the following code to [access the MCP3008 via hardware SPI](./samples/Program.cs):
 
@@ -70,16 +70,16 @@ using (Mcp3008 mcp = new Mcp3008(spi))
 
 The following pin layout can be used:
 
-- MCP3008 VDD to RPi 3.3V
-- MCP3008 VREF to RPi 3.3V
-- MCP3008 AGND to RPi GND
-- MCP3008 DGND to RPi GND
-- MCP3008 CLK to RPi SCLK
-- MCP3008 DOUT to RPi MISO
-- MCP3008 DIN to RPi MOSI
-- MCP3008 CS/SHDN to RPi CE0
+- MCP3008 VDD to MCU 3.3V
+- MCP3008 VREF to MCU 3.3V
+- MCP3008 AGND to MCU GND
+- MCP3008 DGND to MCU GND
+- MCP3008 CLK to MCU SCLK
+- MCP3008 DOUT to MCU MISO
+- MCP3008 DIN to MCU MOSI
+- MCP3008 CS/SHDN to MCU CE0
 
-![Raspberry Pi Breadboard diagram](./rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_spi.png)
 
 ### Accessing the MCP3008 via GPIO
 
@@ -104,16 +104,16 @@ using (Mcp3008 mcp = new Mcp3008(spi))
 
 The following pin layout can be used:
 
-- MCP3008 VDD to RPi 3.3V
-- MCP3008 VREF to RPi 3.3V
-- MCP3008 AGND to RPi GND
-- MCP3008 DGND to RPi GND
-- MCP3008 CLK to RPi pin 18
-- MCP3008 DOUT to RPi pin 23
-- MCP3008 DIN to RPi pin 24
-- MCP3008 CS/SHDN to RPi pin 25
+- MCP3008 VDD to MCU 3.3V
+- MCP3008 VREF to MCU 3.3V
+- MCP3008 AGND to MCU GND
+- MCP3008 DGND to MCU GND
+- MCP3008 CLK to any valid GPIO on the MCU
+- MCP3008 DOUT to any valid GPIO on the MCU
+- MCP3008 DIN to any valid GPIO on the MCU
+- MCP3008 CS/SHDN to any valid GPIO on the MCU
 
-![Raspberry Pi Breadboard diagram](./rpi-trimpot_gpio.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_gpio.png)
 
 ### Processing the data
 

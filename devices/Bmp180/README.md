@@ -23,7 +23,7 @@ For other devices like STM32, please make sure you're using the preset pins for 
 An example on how to use this device binding is available in the [samples](samples) folder.
 
 ```csharp
-// bus id on the raspberry pi 3
+// bus id on the MCU
 const int busId = 1;
 
 I2cConnectionSettings i2cSettings = new(busId, Bmp180.DefaultI2cAddress);
@@ -61,6 +61,6 @@ altValue = i2cBmp280.ReadAltitude(WeatherHelper.MeanSeaLevel);
 Debug.WriteLine($"Altitude: {altValue:0.##}m");
 ```
 
-The following fritzing diagram illustrates one way to wire up the BMP180 with a Raspberry Pi using I2C.
+The following fritzing diagram illustrates one way to wire up the BMP180 with an MCU like ESP32 using I2C.
 
-![Raspberry Pi Breadboard diagram](rpi-bmp180_i2c_bb.png)
+![ESP32 Breadboard diagram](rpi-bmp180_i2c_bb.png)

@@ -85,8 +85,6 @@ The following [diagram](../Sn74hc595/sn74hc595-led-bar-graph-spi.fzz) demonstrat
 
 ![sn74hc595-led-bar-graph-spi_bb](../Sn74hc595/sn74hc595-led-bar-graph-spi_bb.png)
 
-Note: You need to [enable SPI on the Raspberry Pi](https://www.raspberrypi.org/documentation/configuration/raspi-config.md) in order to use it.
-
 ## Daisy-chaining
 
 The binding supports daisy chaining, using either GPIO or SPI. The GPIO-based example below demonstrates how to instantiate the binding for controlling/addressing two -- daisy-chained -- 8-bit shift registers. This is specified by the integer value in the constructor.

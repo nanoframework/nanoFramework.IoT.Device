@@ -35,7 +35,7 @@ using (var sonar = new Hcsr04(4, 17))
 
 * VCC - 5V
 * GND - GND
-* Trig - GPIO 4
-* Echo - GPIO 17
+* Trig - Any valid GPIO
+* Echo - Any valid GPIO
 
 The fritz diagram above depicts how you should wire your RPi in order to run the program, the resistance for R1 is 1kOhm. (Optional).

@@ -30,49 +30,7 @@ Understanding the measurement:
 
 **Important** to understand:
 
-In order to have this sensor working on a Raspberry Pi, you need to lower the bus speed. This sensor uses a mode called I2C stretching and it is not supported natively on Raspberry Pi. So you **must** lower the I2C clock to the minimum to make it working properly or use a software I2C with a low clock as well.
-
-In order to do so, open a ssh session with your Raspberry and edit the /boot/config.txt file:
-
-```bash
-sudo nano /boot/config.txt
-```
-
-## Lowering the hardware I2C clock
-
-Locate the line where you have ```dtparam=i2c_arm=on```, make sure you'll remove any # which can be in front and add ```,i2c_arm_baudrate=10000``` so the line will now bocome: ```dtparam=i2c_arm=on,i2c_arm_baudrate=10000```
-
-Reboot:
-
-```bash
-sudo reboot
-```
-
-*Notes*:
-
-- This has an impact on the all bus! So if you are using other sensors, this will decrease the speed of all other sensors.
-- Even with the bus speed reduced, you may have issues.
-
-## Activating the Sofware I2C
-
-Add the following line to use GPIO 17 for SCA and GPIO 27 for SCL:
-
-```text
-dtoverlay=i2c-gpio,i2c_gpio_sda=17,i2c_gpio_scl=27,bus=3,i2c_gpio_delay_us=20
-```
-
-You can of course adjust the GPIO you want to use. The delay os 20 micro seconds correspond to about 10000 Hz. You can change as well the bus number. In this case, bus 3 will be used.
-
-Reboot:
-
-```bash
-sudo reboot
-```
-
-Notes:
-
-- This uses 2 extra GPIO
-- This is the best solution especially if you are using extra I2C devices
+In order to have this sensor working on an MCU, you need to lower the bus speed. This sensor uses a mode called I2C stretching and it *may* not be supported natively on your MCU. So you **must** lower the I2C clock to the minimum to make it working properly or use a software I2C with a low clock as well.
 
 ## Usage
 
@@ -88,7 +46,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
-You'll find below how to use the sensor. A full example covering in details all the usage can be found in the [samples directory](https://github.com/dotnet/iot/tree/main/src/devices/Ccs811/samples).
+You'll find below how to use the sensor. A full example covering in details all the usage can be found in the [samples directory](./samples).
 
 ### Create the device
 
@@ -213,8 +171,7 @@ This [sample application](https://github.com/dotnet/iot/tree/main/src/devices/Cc
 
 You can test it thru:
 
-- A native platform like a Raspberry PI
-- A chip set providing GPIO and I2C like the FT4222
+- A native platform like an ESP32
 
 You can use the native GPIO support for the following pins or not:
 
@@ -235,8 +192,6 @@ You can log the date an nicely import them later on in Excel. The following exam
 
 **Important** to understand:
 
-In order to have this sensor working on a Raspberry Pi, you need to lower the bus speed. This sensor uses a mode called I2C stretching and it is not supported natively on Raspberry Pi. So you **must** lower the I2C clock to the minimum to make it working properly or use a software I2C with a low clock as well. See the section above.
-
-This example uses the software I2C with GPIO 17 and 27 as explained in the previous section on a Raspberry Pi, Wake pin on GPIO 23 and Interrupt on GPIO 22.
+In order to have this sensor working on a MCU, you need to lower the bus speed. This sensor uses a mode called I2C stretching and it *may* not be supported natively on your MCU. So you **must** lower the I2C clock to the minimum to make it working properly or use a software I2C with a low clock as well
 
 ![Wiring sample](ccs811_bb.png)

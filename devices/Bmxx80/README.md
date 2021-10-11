@@ -29,7 +29,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
 ```csharp
-// bus id on the raspberry pi 3
+// bus id on the MCU
 const int busId = 1;
 I2cConnectionSettings i2cSettings = new(busId, Bme280.DefaultI2cAddress);
 using I2cDevice i2cDevice = I2cDevice.Create(i2cSettings);
@@ -58,7 +58,7 @@ Debug.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
 ### BMP680
 
 ```csharp
-// The I2C bus ID on the Raspberry Pi 3.
+// The I2C bus ID on the MCU
 const int busId = 1;
 
 I2cConnectionSettings i2cSettings = new(busId, Bme680.DefaultI2cAddress);
@@ -82,7 +82,7 @@ Debug.WriteLine($"Relative humidity: {readResult.Humidity?.Percent:0.#}%");
 ### BMP280
 
 ```csharp
-// bus id on the raspberry pi 3 and 4
+// bus id on the MCU
 const int busId = 1;
 
 I2cConnectionSettings i2cSettings = new(busId, Bmp280.DefaultI2cAddress);
@@ -103,20 +103,20 @@ Debug.WriteLine($"Pressure: {readResult.Pressure?.Hectopascals:0.##}hPa");
 
 You also have 3 examples on how to use this device binding are available in the [samples](samples) folder.
 
-The following fritzing diagram illustrates one way to wire up the BMP280 with a Raspberry Pi using I2C:
+The following fritzing diagram illustrates one way to wire up the BMP280 with an MCU like ESP32 using I2C:
 
-![Raspberry Pi Breadboard diagram](rpi-bmp280_i2c.png)
+![ESP32 Breadboard diagram](rpi-bmp280_i2c.png)
 
 General:
 
-| Bmp280 | Raspberry |
+| Bmp280 | MCU |
 |--------|:---------:|
 |Vin| Power pin|
 |GND| Ground|
 
 I2C:
 
-| Bmp280 | Raspberry |
+| Bmp280 | MCU |
 |--------|:---------:|
 |SCK| I2C clock pin|
 |SDI| I2C data pin|

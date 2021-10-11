@@ -51,7 +51,6 @@ It is critical to understand the difference between anode (typically longer) and
 The binding includes an API that returns a description of the circuit you need to use. The [sample](samples/Program.cs) calls this API and prints this information to the terminal, using the same pins as the code example above. This information is very helpful to have to configure the circuit correctly.
 
 ```console
-pi@raspberrypi:~ $ ./charlie/charlieplex-test
 Node 0 -- Anode: 6; Cathode: 13
 Node 1 -- Anode: 13; Cathode: 6
 Node 2 -- Anode: 13; Cathode: 19

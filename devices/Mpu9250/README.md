@@ -206,6 +206,6 @@ It is then up to you to transform them into the correct data. You can multiply y
 
 ## Circuit
 
-The following fritzing diagram illustrates one way to wire up the MPU9250 with a Raspberry Pi using I2C.
+The following fritzing diagram illustrates one way to wire up the MPU9250 with a MCU like ESP32 using I2C.
 
-![Raspberry Pi Breadboard diagram](./Mpu9250_bb.png)
+![ESP32 Breadboard diagram](./Mpu9250_bb.png)

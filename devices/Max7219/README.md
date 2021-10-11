@@ -2,9 +2,9 @@
 
  You can use [Max7219.cs](Max7219.cs) in your project to drive a Max7219 based Dot Matrix Module. Write to a 8x8 Dot Matrix Module demonstrates a concrete example using this class.
 
- The following fritzing diagram illustrates one way to wire up the Max7219, with a Raspberry Pi.
+ The following fritzing diagram illustrates one way to wire up the Max7219, with a MCU like ESP32.
 
-![Raspberry Pi Breadboard diagram](./Schema_bb.png)
+![ESP32 Breadboard diagram](./Schema_bb.png)
 
 ## Usage
 
@@ -28,7 +28,7 @@ These Modules can be cascaded to get a bigger matrix.
 
 ### Accessing the MAX7219 via SPI
 
-The Raspberry Pi has support for SPI. You need to [enable the SPI interface on the Raspberry Pi](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) since it is not enabled by default.
+The MCU has support for SPI. 
 
 ```csharp
 var connectionSettings = new SpiConnectionSettings(1, 42)
@@ -94,29 +94,4 @@ foreach (var font in new[]{Fonts.CP437, Fonts.LCD, Fonts.Sinclair, Fonts.Tiny, F
     writer.Font = font;
     writer.ShowMessage("Hello World from MAX7219!", alwaysScroll: true);
 }
-```
-
-## How to Cross Compile and Run this sample
-
-This example can also be cross-compiled on another machine and then executed on the Raspberry PI. This can be achieved with enabled SSH access to the RaspPi as follows.
-
-* Publish project on the development machine
-
-```shell
-cd ~/Projects/iot/src/devices/Max7219/samples
-dotnet publish -c Release -r linux-arm
-```
-
-* Synchronize published folder to the RaspPi via rsync over ssh
-
-```shell
-rsync -avz -e 'ssh' bin/Release/netcoreapp3.1/linux-arm/publish/  pi@192.168.1.192:/home/pi/max-sample/
-```
-
-* Execute the program on the RaspPi or remote via SSH
-
-```shell
-ssh pi@192.168.1.192
-cd /home/pi/max-sample/
-./Max7219.sample
 ```
