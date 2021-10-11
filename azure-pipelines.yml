@@ -198,6 +198,14 @@ steps:
         nuget restore $solutionFile
         if (-not $?) { throw "Error restoring '$solutionFile'" }
 
+        # for NFC solutions the projects on Card solution needs to be restored too
+        if ($solutionFile.Name -eq "Mfrc522.sln" -or
+            $solutionFile.Name -eq "Pn5180.sln" -or 
+            $solutionFile.Name -eq "Pn532.sln")
+        {
+            nuget restore devices\Card\Card.sln
+        }
+
         # build solution
         & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
         if (-not $?) { throw "Error building '$solutionFile'" }
