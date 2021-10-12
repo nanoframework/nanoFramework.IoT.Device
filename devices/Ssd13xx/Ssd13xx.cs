@@ -202,6 +202,24 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
+        /// Draws a rectangle that is solid/filled.
+        /// </summary>
+        /// <param name="x0">x coordinate starting of the top left.</param>
+        /// <param name="y0">y coordinate starting of the top left.</param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
+        public void DrawFilledRectangle(int x0, int y0, int width, int height, bool inverted = true)
+        {
+            // width--;
+            // height--;
+            for (int i = 0; i <= height; i++)
+            {
+                DrawHorizontalLine(x0, y0 + i, width, inverted);
+            }
+        }
+
+        /// <summary>
         /// Displays the  1 bit bit map.
         /// </summary>
         /// <param name="x">The x coordinate on the screen.</param>
@@ -209,7 +227,8 @@ namespace Iot.Device.Ssd13xx
         /// <param name="width">Width in bytes.</param>
         /// <param name="height">Height in bytes.</param>
         /// <param name="bitmap">Bitmap to display.</param>
-        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap)
+        /// <param name="size">Drawing size, normal = 1, larger use 2,3 etc.</param>
+        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, byte size = 1)
         {
             if ((width * height) != bitmap.Length)
             {
@@ -226,7 +245,14 @@ namespace Iot.Device.Ssd13xx
 
                     for (var pixel = 0; pixel < 8; pixel++)
                     {
-                        DrawPixel(x + (8 * xA) + pixel, y + yO, (b & mask) > 0);
+                        if (size == 1)
+                        {
+                            DrawPixel(x + (8 * xA) + pixel, y + yO, (b & mask) > 0);
+                        }
+                        else
+                        {
+                            DrawFilledRectangle((x + (8 * xA) + pixel) * size, (y + yO) * size, size, size, (b & mask) > 0);
+                        }
                         mask <<= 1;
                     }
 
@@ -241,11 +267,21 @@ namespace Iot.Device.Ssd13xx
         /// <param name="x">The x pixel-coordinate on the screen.</param>
         /// <param name="y">The y pixel-coordinate on the screen.</param>
         /// <param name="str">Text string to display.</param>
+        /// <param name="size">Text size, normal = 1, larger use 2,3, 4 etc.</param>
+		/// <param name="center">Indicates if text should be centered if possible.</param>
         /// <seealso cref="Write"/>
-        public void DrawString(int x, int y, string str)
+        public void DrawString(int x, int y, string str, byte size = 1, bool center = false)
         {
+            if (center && str != null)
+            {
+                int padSize = (Width / size / Font.Width - str.Length) / 2;
+                if (padSize > 0)
+                    str = str.PadLeft(str.Length + padSize);
+            }
+
             byte[] bitMap = this.GetTextBytes(str);
-            this.DrawBitmap(x, y, bitMap.Length / Font.Height, Font.Height, bitMap);
+
+            this.DrawBitmap(x, y, bitMap.Length / Font.Height, Font.Height, bitMap, size);
         }
 
         /// <summary>
@@ -254,10 +290,12 @@ namespace Iot.Device.Ssd13xx
         /// <param name="x">The x text-coordinate on the screen.</param>
         /// <param name="y">The y text-coordinate on the screen.</param>
         /// <param name="str">Text string to display.</param>
+        /// <param name="size">Text size, normal = 1, larger use 2,3, 4 etc.</param>
+		/// <param name="center">Indicates if text should be centered if possible.</param>
         /// <seealso cref="DrawString"/>
-        public void Write(int x, int y, string str)
+        public void Write(int x, int y, string str, byte size = 1, bool center = false)
         {
-            this.DrawString(x * Font.Width, y * Font.Height, str);
+            DrawString(x * Font.Width, y * Font.Height, str, size, center);
         }
 
         /// <summary>
