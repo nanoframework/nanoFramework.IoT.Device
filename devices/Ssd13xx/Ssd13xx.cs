@@ -22,7 +22,6 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         protected I2cDevice _i2cDevice;
 
-
         /// <summary>
         /// Screen Resolution Width in Pixels
         /// </summary>
@@ -42,10 +41,6 @@ namespace Iot.Device.Ssd13xx
         /// Font to use.
         /// </summary>
         public IFont Font { get; set; }
-
-
-        
-
 
         /// <summary>
         /// Constructs instance of Ssd13xx
@@ -150,7 +145,6 @@ namespace Iot.Device.Ssd13xx
             return _genericBuffer;
         }
 
-
         /// <summary>
         /// Draws a pixel on the screen.
         /// </summary>
@@ -176,7 +170,6 @@ namespace Iot.Device.Ssd13xx
                 _genericBuffer[idx] &= (byte)~(1 << (y & 7));
             }
         }
-
 
         /// <summary>
         /// Draws a horizontal line.
@@ -208,7 +201,6 @@ namespace Iot.Device.Ssd13xx
             }
         }
 
-
         /// <summary>
         /// Displays the  1 bit bit map.
         /// </summary>
@@ -226,10 +218,10 @@ namespace Iot.Device.Ssd13xx
 
             for (var yO = 0; yO < height; yO++)
             {
+                byte mask = 0x01;
                 for (var xA = 0; xA < width; xA++)
                 {
                     var b = bitmap[(yO * width) + xA];
-                    byte mask = 0x01;
                     for (var pixel = 0; pixel < 8; pixel++)
                     {
                         DrawPixel(x + (8 * xA) + pixel, y + yO, (b & mask) > 0);
@@ -263,7 +255,6 @@ namespace Iot.Device.Ssd13xx
         {
             this.DrawString(x * this.Font.Width, y * this.Font.Height, str);
         }
-
 
         /// <summary>
         /// Get the bytes to be drawn on the screen for text, from the font
@@ -322,7 +313,6 @@ namespace Iot.Device.Ssd13xx
             Display();
         }
 
-
         /// <summary>
         /// Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
         /// First byte is the command byte 0x00.
@@ -375,7 +365,6 @@ namespace Iot.Device.Ssd13xx
             0xaf        // turn display on 0xaf
         };
 
-
         /// <summary>
 		/// Sequence of bytes that should be sent to a 96x16 OLED display to setup the device.
 		///	First byte is the command byte 0x00.
@@ -415,12 +404,11 @@ namespace Iot.Device.Ssd13xx
             /// Option for 128x32 OLED
             /// </summary>
             OLED128x32,
-            // <summary>
+            /// <summary>
             /// Option for 96x16 OLED
             /// </summary>
             OLED96x16
         }
-
 
         /// <summary>
         /// Page mode output command bytes.

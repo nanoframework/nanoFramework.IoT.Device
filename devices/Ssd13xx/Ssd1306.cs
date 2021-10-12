@@ -13,12 +13,10 @@ namespace Iot.Device.Ssd13xx
     /// </summary>
     public class Ssd1306 : Ssd13xx
     {
-
         /// <summary>
         /// Default I2C bus address.
         /// </summary>
         public const byte DefaultI2cAddress = 0x3C;
-
 
         /// <summary>
         /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.

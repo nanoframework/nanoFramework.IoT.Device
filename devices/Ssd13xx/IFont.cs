@@ -2,6 +2,9 @@
 
 namespace Iot.Device.Ssd13xx
 {
+    /// <summary>
+    /// Base class for font implementation.
+    /// </summary>
     public abstract class IFont
     {
         /// <summary>
