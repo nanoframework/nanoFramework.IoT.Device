@@ -5,12 +5,14 @@ using System;
 
 namespace Iot.Device.Ssd13xx.Samples
 {
-    // NOTE: As mentioned in GitHub issue #189 (Need OLED Graphics API).
-    // https://github.com/dotnet/iot/issues/189
-    // Until then, this is a basic uppercase-only font library.
+    /// <summary>
+    /// A basic font  8x8 size.
+    /// </summary>
     public class BasicFont : IFont
     {
-        //
+        /// <summary>
+        /// The font definition.
+        /// </summary>
         private static readonly byte[][] _fontTable =
         {
             new byte [] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0020 (space)
@@ -110,10 +112,6 @@ namespace Iot.Device.Ssd13xx.Samples
             new byte [] { 0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+007E (~)
             new byte [] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}    // U+007F
         };
-
-        public BasicFont()
-        {
-        }
 
         /// <summary>
         /// Font width.

@@ -44,6 +44,9 @@ namespace Iot.Device.Ssd13xx
         public IFont Font { get; set; }
 
 
+        
+
+
         /// <summary>
         /// Constructs instance of Ssd13xx
         /// </summary>
@@ -53,17 +56,22 @@ namespace Iot.Device.Ssd13xx
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
-            Width = 128;
-
             switch (resolution)
             {
                 case DisplayResolution.OLED128x64:
+                    Width = 128;
                     Height = 64;
                     _i2cDevice.Write(_oled128x64Init);
                     break;
                 case DisplayResolution.OLED128x32:
+                    Width = 128;
                     Height = 32;
                     _i2cDevice.Write(_oled128x32Init);
+                    break;
+                case DisplayResolution.OLED96x16:
+                    Width = 96;
+                    Height = 16;
+                    _i2cDevice.Write(_oled96x16Init);
                     break;
             }
 
@@ -108,7 +116,6 @@ namespace Iot.Device.Ssd13xx
             _i2cDevice.Write(writeBuffer);
         }
 
-
         /// <inheritdoc/>
         public void Dispose()
         {
@@ -149,36 +156,73 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="x">The x coordinate on the screen.</param>
         /// <param name="y">The y coordinate on the screen.</param>
-        /// <param name="useWhite">Indicates if color to be used, default yes unless is inverted screen.</param>
-        public void DrawPixel(int x, int y, bool useWhite = true)
+        /// <param name="inverted">Indicates if color to be used turn the pixel on, or leave off.</param>
+        public void DrawPixel(int x, int y, bool inverted = true)
         {
             if ((x >= Width) || (y >= Height))
+            {
                 return;
+            }
 
             // x specifies the column
             int idx = x + (y / 8) * Width;
 
-            if (useWhite)
+            if (inverted)
+            {
                 _genericBuffer[idx] |= (byte)(1 << (y & 7));
+            }
             else
+            {
                 _genericBuffer[idx] &= (byte)~(1 << (y & 7));
-
-            //INVERSE COLOR: _genericBuffer[idx] ^= (byte)(1 << (y & 7));
+            }
         }
 
 
         /// <summary>
-        /// 
+        /// Draws a horizontal line.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="bitmap"></param>
+        /// <param name="x0">x coordinate starting of the line.</param>
+        /// <param name="y0">y coordinate starting of line.</param>
+        /// <param name="length">Line length.</param>
+        /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
+        public void DrawHorizontalLine(int x0, int y0, int length, bool inverted = true)
+        {
+            for (var x = x0; (x - x0) < length; x++)
+            {
+                DrawPixel(x, y0, inverted);
+            }
+        }
+
+        /// <summary>
+        /// Draws a vertical line.
+        /// </summary>
+        /// <param name="x0">x coordinate starting of the line.</param>
+        /// <param name="y0">y coordinate starting of line.</param>
+        /// <param name="length">Line length.</param>
+        /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
+        public void DrawVerticalLine(int x0, int y0, int length, bool inverted = true)
+        {
+            for (var y = y0; (y - y0) < length; y++)
+            {
+                DrawPixel(x0, y, inverted);
+            }
+        }
+
+
+        /// <summary>
+        /// Displays the  1 bit bit map.
+        /// </summary>
+        /// <param name="x">The x coordinate on the screen.</param>
+        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="width">Width in bytes.</param>
+        /// <param name="height">Height in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
         public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap)
         {
             if ((width * height) != bitmap.Length)
+            {
                 throw new ArgumentException("Width and height do not match the bitmap size.");
+            }
 
             for (var yO = 0; yO < height; yO++)
             {
@@ -196,12 +240,12 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// 
+        /// Writes a text message on the screen with font in use.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="str"></param>
-        public void DrawString(int x, int y, string str)
+        /// <param name="x">The x coordinate on the screen.</param>
+        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="str">Text string to display.</param>
+        public void WriteString(int x, int y, string str)
         {
             byte[] bitMap = GetTextBytes(str);
 
@@ -213,7 +257,7 @@ namespace Iot.Device.Ssd13xx
         /// Get the bytes to be drawn on the screen for text, from the font
         /// </summary>
         /// <param name="text">Strint to be shown on the screen.</param>
-        /// <returns></returns>
+        /// <returns>The bytes to be drawn using current font.</returns>
         byte[] GetTextBytes(string text)
         {
             byte[] bitMap;
@@ -241,7 +285,7 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// Displays the information on the screen.
+        /// Displays the information on the screen using page mode.
         /// </summary>
         public void Display()
         {
@@ -267,35 +311,102 @@ namespace Iot.Device.Ssd13xx
         }
 
 
-
         /// <summary>
-        ///     Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
-        ///		First byte is the command byte 0x00.
+        /// Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
+        /// First byte is the command byte 0x00.
         /// </summary>
         private readonly byte[] _oled128x64Init =
         {
-            0x00, 0xae, 0xd5, 0x80, 0xa8, 0x3f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8,
-            0xda, 0x12, 0x81, 0xcf, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
+            0x00,       // is command
+            0xae,       // turn display off
+            0xd5,0x80,  // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x3f, // set multiplex ratio 0x00-0x3f        
+            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x1, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x12, // set COM pins HW configuration
+            0x81, 0xcf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
         };
 
         /// <summary>
-		///     Sequence of bytes that should be sent to a 128x32 OLED display to setup the device.
-		///		First byte is the command byte 0x00.
+		/// Sequence of bytes that should be sent to a 128x32 OLED display to setup the device.
+		/// First byte is the command byte 0x00.
 		/// </summary>
 		private readonly byte[] _oled128x32Init =
         {
-            0x00,0xae, 0xd5, 0x80, 0xa8, 0x1f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8,
-            0xda, 0x02, 0x81, 0x8f, 0xd9, 0x1f, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
+            0x00,       // is command
+            0xae,       // turn display off
+            0xd5,0x80,  // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
+            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x1, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x02, // set COM pins HW configuration
+            0x81, 0x8f, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
         };
 
+
+        /// <summary>
+		/// Sequence of bytes that should be sent to a 96x16 OLED display to setup the device.
+		///	First byte is the command byte 0x00.
+		/// </summary>
+		private readonly byte[] _oled96x16Init =
+        {
+            0x00,       // is command
+            0xae,       // turn display off
+            0xd5,0x80,  // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
+            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x1, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x02, // set COM pins HW configuration
+            0x81, 0xaf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
+        };
 
         /// <summary>
         /// Resolution specifier.
         /// </summary>
         public enum DisplayResolution
         {
+            /// <summary>
+            /// Option for 128x64 OLED
+            /// </summary>
             OLED128x64,
-            OLED128x32
+            /// <summary>
+            /// Option for 128x32 OLED
+            /// </summary>
+            OLED128x32,
+            // <summary>
+            /// Option for 96x16 OLED
+            /// </summary>
+            OLED96x16
         }
 
 
