@@ -206,8 +206,8 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="x0">x coordinate starting of the top left.</param>
         /// <param name="y0">y coordinate starting of the top left.</param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">Width of rectabgle in pixels.</param>
+        /// <param name="height">Height of rectangle in pixels</param>
         /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
         public void DrawFilledRectangle(int x0, int y0, int width, int height, bool inverted = true)
         {
