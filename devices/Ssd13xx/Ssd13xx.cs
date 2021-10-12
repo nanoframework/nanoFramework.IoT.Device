@@ -251,7 +251,7 @@ namespace Iot.Device.Ssd13xx
                         }
                         else
                         {
-                            DrawFilledRectangle((x + (8 * xA) + pixel) * size, (y + yO) * size, size, size, (b & mask) > 0);
+                            DrawFilledRectangle((x + (8 * xA) + pixel) * size, (y / size + yO) * size, size, size, (b & mask) > 0);
                         }
                         mask <<= 1;
                     }
