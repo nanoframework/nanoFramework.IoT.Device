@@ -71,7 +71,7 @@ namespace Iot.Device.Ssd13xx
             }
 
             Pages = (byte)(Height / 8);
-            _genericBuffer = new byte[Pages * Width];
+            _genericBuffer = new byte[Pages * Width + 4];//adding 4 bytes make it SSH1106 IC OLED compatible
             _pageData = new byte[Width + 1];
         }
 
@@ -219,14 +219,18 @@ namespace Iot.Device.Ssd13xx
             for (var yO = 0; yO < height; yO++)
             {
                 byte mask = 0x01;
+
                 for (var xA = 0; xA < width; xA++)
                 {
                     var b = bitmap[(yO * width) + xA];
+
                     for (var pixel = 0; pixel < 8; pixel++)
                     {
                         DrawPixel(x + (8 * xA) + pixel, y + yO, (b & mask) > 0);
                         mask <<= 1;
                     }
+
+                    mask = 0x01;//reset each time to support SSH1106 OLEDs
                 }
             }
         }
@@ -241,7 +245,7 @@ namespace Iot.Device.Ssd13xx
         public void DrawString(int x, int y, string str)
         {
             byte[] bitMap = this.GetTextBytes(str);
-            this.DrawBitmap(x, y, bitMap.Length / this.Font.Height, this.Font.Height, bitMap);
+            this.DrawBitmap(x, y, bitMap.Length / Font.Height, Font.Height, bitMap);
         }
 
         /// <summary>
@@ -253,7 +257,7 @@ namespace Iot.Device.Ssd13xx
         /// <seealso cref="DrawString"/>
         public void Write(int x, int y, string str)
         {
-            this.DrawString(x * this.Font.Width, y * this.Font.Height, str);
+            this.DrawString(x * Font.Width, y * Font.Height, str);
         }
 
         /// <summary>

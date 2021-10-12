@@ -8,10 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 
 
-
-
 Debug.WriteLine("Hello Ssd1306 Sample!");
-
 
 //////////////////////////////////////////////////////////////////////
 // when connecting to an ESP32 device, need to configure the I2C GPIOs
@@ -19,8 +16,6 @@ Debug.WriteLine("Hello Ssd1306 Sample!");
 //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 //////////////////////////////////////////////////////////////////////
-
-
 
 //Tested with 128x64 and 128x32 OLEDs
 using Ssd1306 device = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(2, Ssd1306.DefaultI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64);
