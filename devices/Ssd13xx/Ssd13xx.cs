@@ -242,14 +242,26 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Writes a text message on the screen with font in use.
         /// </summary>
-        /// <param name="x">The x coordinate on the screen.</param>
-        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="x">The x pixel-coordinate on the screen.</param>
+        /// <param name="y">The y pixel-coordinate on the screen.</param>
         /// <param name="str">Text string to display.</param>
-        public void WriteString(int x, int y, string str)
+        /// <seealso cref="Write"/>
+        public void DrawString(int x, int y, string str)
         {
-            byte[] bitMap = GetTextBytes(str);
+            byte[] bitMap = this.GetTextBytes(str);
+            this.DrawBitmap(x, y, bitMap.Length / this.Font.Height, this.Font.Height, bitMap);
+        }
 
-            DrawBitmap(x, y, bitMap.Length / Font.Height, Font.Height, bitMap);
+        /// <summary>
+        /// Writes a text message on the screen with font in use.
+        /// </summary>
+        /// <param name="x">The x text-coordinate on the screen.</param>
+        /// <param name="y">The y text-coordinate on the screen.</param>
+        /// <param name="str">Text string to display.</param>
+        /// <seealso cref="DrawString"/>
+        public void Write(int x, int y, string str)
+        {
+            this.DrawString(x * this.Font.Width, y * this.Font.Height, str);
         }
 
 

@@ -26,7 +26,7 @@ Debug.WriteLine("Hello Ssd1306 Sample!");
 using Ssd1306 device = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(2, Ssd1306.DefaultI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64);
 device.ClearScreen();
 device.Font = new BasicFont();
-device.WriteString(2, 2, "Hello nF IOT!");
+device.DrawString(2, 2, "Hello nF IOT!");
 device.Display();
 
 Thread.Sleep(-1);
