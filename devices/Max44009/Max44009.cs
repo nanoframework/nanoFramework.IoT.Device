@@ -85,7 +85,7 @@ namespace Iot.Device.Max44009
             byte exponent = (byte)((readBuff[0] & 0b_1111_0000) >> 4);
             byte mantissa = (byte)(((readBuff[0] & 0b_0000_1111) << 4) | (readBuff[1]) & 0b_0000_1111);
 
-            double lux = Math.Pow(2, exponent) * mantissa * 0.045;
+            double lux = Math.Pow(2.0, exponent) * mantissa * 0.045;
 
             return Math.Round(lux * 1000) / 1000.0;
         }
