@@ -27,7 +27,7 @@
     <Reference Include="System.Device.Spi">
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.38\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
-    </Reference> 
+    </Reference>
     <Reference Include="UnitsNet.Length">
       <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
@@ -46,9 +46,11 @@
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ws28xx.nfproj" />
+  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
-    <Import Project="..\..\src\System.Drawing\System.Drawing.projitems" Label="Shared" />
+  <Import Project="..\..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
