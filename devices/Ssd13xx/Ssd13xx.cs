@@ -211,8 +211,6 @@ namespace Iot.Device.Ssd13xx
         /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
         public void DrawFilledRectangle(int x0, int y0, int width, int height, bool inverted = true)
         {
-            // width--;
-            // height--;
             for (int i = 0; i <= height; i++)
             {
                 DrawHorizontalLine(x0, y0 + i, width, inverted);
@@ -235,13 +233,14 @@ namespace Iot.Device.Ssd13xx
                 throw new ArgumentException("Width and height do not match the bitmap size.");
             }
 
+            byte mask = 0x01;
+            byte b;
+
             for (var yO = 0; yO < height; yO++)
             {
-                byte mask = 0x01;
-
                 for (var xA = 0; xA < width; xA++)
                 {
-                    var b = bitmap[(yO * width) + xA];
+                    b = bitmap[(yO * width) + xA];
 
                     for (var pixel = 0; pixel < 8; pixel++)
                     {
@@ -363,7 +362,7 @@ namespace Iot.Device.Ssd13xx
         {
             0x00,       // is command
             0xae,       // turn display off
-            0xd5,0x80,  // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
             0xa8, 0x3f, // set multiplex ratio 0x00-0x3f        
             0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
             0x40 | 0x0, // set display start line 0x40-0x7F
@@ -389,7 +388,7 @@ namespace Iot.Device.Ssd13xx
         {
             0x00,       // is command
             0xae,       // turn display off
-            0xd5,0x80,  // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
             0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
             0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
             0x40 | 0x0, // set display start line 0x40-0x7F
@@ -415,7 +414,7 @@ namespace Iot.Device.Ssd13xx
         {
             0x00,       // is command
             0xae,       // turn display off
-            0xd5,0x80,  // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
             0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
             0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
             0x40 | 0x0, // set display start line 0x40-0x7F
