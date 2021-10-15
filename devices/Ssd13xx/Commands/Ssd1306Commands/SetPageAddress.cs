@@ -9,28 +9,28 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
     public enum PageAddress
     {
         /// <summary>Page0</summary>
-        Page0 = 0x00,
+        Page0 = 0xB0,
 
         /// <summary>Page1</summary>
-        Page1 = 0x01,
+        Page1 = 0xB1,
 
         /// <summary>Page2</summary>
-        Page2 = 0x02,
+        Page2 = 0xB2,
 
         /// <summary>Page3</summary>
-        Page3 = 0x03,
+        Page3 = 0xB3,
 
         /// <summary>Page4</summary>
-        Page4 = 0x04,
+        Page4 = 0xB4,
 
         /// <summary>Page5</summary>
-        Page5 = 0x05,
+        Page5 = 0xB5,
 
         /// <summary>Page6</summary>
-        Page6 = 0x06,
+        Page6 = 0xB6,
 
         /// <summary>Page6</summary>
-        Page7 = 0x07
+        Page7 = 0xB7
     }
 
     /// <summary>

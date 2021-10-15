@@ -14,13 +14,28 @@ namespace Iot.Device.Ssd13xx
     public class Ssd1306 : Ssd13xx
     {
         /// <summary>
+        /// Default I2C bus address.
+        /// </summary>
+        public const byte DefaultI2cAddress = 0x3C;
+
+        /// <summary>
         /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
         /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
         /// light emitting diode dot-matrix graphic display system.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        public Ssd1306(I2cDevice i2cDevice)
-        : base(i2cDevice)
+        public Ssd1306(I2cDevice i2cDevice) : base(i2cDevice)
+        {
+        }
+
+        /// <summary>
+        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
+        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
+        /// light emitting diode dot-matrix graphic display system.
+        /// </summary>
+        /// <param name="i2cDevice">The I2C device used for communication.</param>
+        /// <param name="res">Display resolution</param>
+        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res) : base(i2cDevice, res)
         {
         }
 
@@ -44,7 +59,7 @@ namespace Iot.Device.Ssd13xx
         {
             SpanByte commandBytes = command?.GetBytes();
 
-            if (commandBytes is not { Length: >0 })
+            if (commandBytes is not { Length: > 0 })
             {
                 throw new ArgumentNullException(nameof(command), "Argument is either null or there were no bytes to send.");
             }
