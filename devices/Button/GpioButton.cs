@@ -106,6 +106,8 @@ namespace Iot.Device.Button
 
             if (disposing)
             {
+                _gpioController.UnregisterCallbackForPinValueChangedEvent(_buttonPin, PinStateChanged);
+
                 if (_shouldDispose)
                 {
                     _gpioController?.Dispose();
@@ -113,7 +115,6 @@ namespace Iot.Device.Button
                 }
                 else
                 {
-                    _gpioController.UnregisterCallbackForPinValueChangedEvent(_buttonPin, PinStateChanged);
                     _gpioController.ClosePin(_buttonPin);
                 }
             }
