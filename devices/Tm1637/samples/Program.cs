@@ -7,7 +7,7 @@ using System.Threading;
 using Iot.Device.Tm1637;
 
 Debug.WriteLine("Hello Tm1637!");
-using Tm1637 tm1637 = new Tm1637(20, 21);
+using Tm1637 tm1637 = new Tm1637(4, 0);
 tm1637.Brightness = 7;
 tm1637.ScreenOn = true;
 tm1637.ClearDisplay();
@@ -78,7 +78,7 @@ for (int i = 0; i < 6; i++)
 tm1637.Display(rawData);
 Thread.Sleep(3000);
 
-// If you have a 4 display, only the fisrt 4 will be displayed, as like as [6549]
+// If you have a 4 display, only the first 4 will be displayed, as like as [6549]
 // on a 6 segment one, all 6 will be displayed, as like as [654987]
 for (int i = 0; i < 6; i++)
 {
