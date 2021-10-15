@@ -1,3 +1,8 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Tm1637;
+
 namespace System
 {
     /// <summary>
@@ -17,7 +22,7 @@ namespace System
         public SpanCharacter(Character[] array)
         {
             _array = array;
-            _length = array?.Length ?? 0;
+            _length = array is null ? 0 : array.Length;
             _start = 0;
         }
 

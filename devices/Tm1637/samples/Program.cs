@@ -2,11 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Tm1637;
 
 Debug.WriteLine("Hello Tm1637!");
-using Tm1637 tm1637 = new(20, 21);
+using Tm1637 tm1637 = new Tm1637(4, 0);
 tm1637.Brightness = 7;
 tm1637.ScreenOn = true;
 tm1637.ClearDisplay();
@@ -50,23 +51,38 @@ Character[] rawData = new Character[6]
     // half off half on
     Character.SegmentTopLeft | Character.SegmentBottomLeft | Character.SegmentMiddle | Character.Dot,
 };
-// If you have a 4 display, only the fisrt 4 will be displayed
+// If you have a 4 display, only the first 4 will be displayed
 // on a 6 segment one, all 6 will be displayed
 tm1637.Display(rawData);
 Thread.Sleep(3000);
+
+var digits = new Character[]
+{
+    Character.Digit0,
+    Character.Digit1,
+    Character.Digit2,
+    Character.Digit3,
+    Character.Digit4,
+    Character.Digit5,
+    Character.Digit6,
+    Character.Digit7,
+    Character.Digit8,
+    Character.Digit9
+};
+
 for (int i = 0; i < 6; i++)
 {
-    rawData[i] = (Character)Enum.Parse(typeof(Character), $"Digit{i}");
+    rawData[i] = digits[i];
 }
 
 tm1637.Display(rawData);
 Thread.Sleep(3000);
 
-// If you have a 4 display, only the fisrt 4 will be displayed, as like as [6549]
+// If you have a 4 display, only the first 4 will be displayed, as like as [6549]
 // on a 6 segment one, all 6 will be displayed, as like as [654987]
 for (int i = 0; i < 6; i++)
 {
-    tm1637.Display((byte)i, (Character)Enum.Parse(typeof(Character), $"Digit{4 + i}"));
+    tm1637.Display((byte)i, digits[i]);
 }
 
 Thread.Sleep(3000);
@@ -85,16 +101,18 @@ for (int i = 0; i < 10; i++)
 tm1637.ScreenOn = true;
 
 long bright = 0;
-while (!Console.KeyAvailable)
+var counter = 0;
+while (counter < 100)
 {
     var dt = DateTime.UtcNow;
-    toDisplay[0] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Minute / 10}");
-    toDisplay[1] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Minute % 10}") | Character.Dot;
-    toDisplay[2] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Second / 10}");
-    toDisplay[3] = (Character)Enum.Parse(typeof(Character), $"Digit{dt.Second % 10}");
+    toDisplay[0] = digits[dt.Minute / 10];
+    toDisplay[1] = digits[dt.Minute % 10];
+    toDisplay[2] = digits[dt.Second / 10];
+    toDisplay[3] = digits[dt.Second % 10];
     tm1637.Brightness = (byte)(bright++ % 8);
     tm1637.Display(toDisplay);
     Thread.Sleep(100);
+    counter++;
 }
 
 tm1637.ScreenOn = false;

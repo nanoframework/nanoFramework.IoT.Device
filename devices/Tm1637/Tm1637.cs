@@ -5,7 +5,6 @@ using System;
 using System.Device;
 using System.Device.Gpio;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 // using System.Runtime.InteropServices.WindowsRuntime;
 namespace Iot.Device.Tm1637
@@ -79,7 +78,7 @@ namespace Iot.Device.Tm1637
                 bool allExist = true;
                 for (int i = 0; i < MaxCharacters; i++)
                 {
-                    allExist &= Array.Exists(value, e => e == i);
+                    allExist &= Array.IndexOf(value, i) != -1;
                 }
 
                 if (!allExist)
@@ -253,12 +252,18 @@ namespace Iot.Device.Tm1637
 
         /// <summary>
         /// Displays a series of prebuild characters including the dot or not
-        /// You can build your won characters with the primitives like Bottom, Top, Dot
+        /// You can build your own characters with the primitives like Bottom, Top, Dot
         /// </summary>
         /// <param name="rawData">The Character to display</param>
         public void Display(SpanCharacter rawData)
         {
-            Display(MemoryMarshal.AsBytes(rawData));
+            var byteArray = new byte[rawData.Length] ;
+            for (var j = 0; j < rawData.Length; j++)
+            {
+                byteArray[j] = (byte)rawData[j];
+            }
+
+            Display(new SpanByte(byteArray));
         }
 
         /// <summary>
