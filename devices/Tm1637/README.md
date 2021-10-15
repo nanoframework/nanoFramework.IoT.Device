@@ -17,7 +17,7 @@ Testing was performed with a [HiLetgo part](https://www.amazon.com/dp/B01DKISMXK
 You need to create a ```Tm1637``` class with 2 pins, the clock one and the data one.
 
 ```csharp
-Tm1637 tm1637 = new Tm1637(21, 20);
+Tm1637 tm1637 = new Tm1637(4, 0);
 ```
 
 ![tm1637](./tm1637_fritzing.png)
