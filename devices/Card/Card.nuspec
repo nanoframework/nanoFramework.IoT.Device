@@ -22,7 +22,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.System.Text" version="1.1.1" />
-      <dependency id="nanoFramework.Logging" version="1.0.0-preview.131" />
+      <dependency id="nanoFramework.Logging" version="1.0.0-preview.133" />
     </dependencies>
   </metadata>
   <files>
