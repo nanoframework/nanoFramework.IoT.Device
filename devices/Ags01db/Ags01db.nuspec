@@ -21,8 +21,8 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ags01db</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2-preview.5" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.2-preview.5" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
       <dependency id="UnitsNet.nanoFramework.Length" version="4.102.0" />
       <dependency id="UnitsNet.nanoFramework.Ratio" version="4.102.0" />
