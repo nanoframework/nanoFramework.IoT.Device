@@ -20,7 +20,11 @@
     <summary>Iot.Device.Ws28xx assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ws28xx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.1" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.1" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.1" />
+      <dependency id="Nerdbank.GitVersioning" version="3.4.240" />
     </dependencies>
   </metadata>
   <files>

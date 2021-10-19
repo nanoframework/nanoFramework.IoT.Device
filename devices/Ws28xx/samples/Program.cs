@@ -10,12 +10,13 @@ using System.Drawing;
 // Configure the count of pixels
 const int Count = 16;
 
-
+// Must specify pin functions on ESP32
 Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
 Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
 Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
 Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
 
+// Using VSPI on bus 2 for ESP32 and pin 22 for chipselect
 SpiConnectionSettings settings = new(2, 22)
 {
     ClockFrequency = 2_400_000,

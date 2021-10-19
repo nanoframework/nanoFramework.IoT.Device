@@ -13,13 +13,10 @@ To see how to use the binding in code, see the [sample](samples/Program.cs).
 
 ## Board
 
-### Neo pixels
+### WS2812B
 
 ![Raspberry Pi Breadboard diagram](rpi-neo-pixels_bb.png)
 
-### WS2808
-
-![WS2808 diagram](WS2808.png)
 
 ## Usage
 
@@ -35,7 +32,14 @@ using Iot.Device.Ws28xx;
 const int Count = 8;
 Console.Clear();
 
-SpiConnectionSettings settings = new(0, 0)
+// Must specify pin functions on ESP32
+Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
+Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
+Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
+Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
+
+// Using VSPI on bus 2 for ESP32 and pin 22 for chipselect
+SpiConnectionSettings settings = new(2, 22)
 {
     ClockFrequency = 2_400_000,
     Mode = SpiMode.Mode0,
@@ -65,21 +69,4 @@ void Rainbow(Ws28xx neo, int count, int iterations = 1)
         neo.Update();
     }
 }
-```
-
-## Binding Notes
-
-### Raspberry Pi setup (/boot/config.txt)
-
-* Make sure spi is enabled
-
-```text
-dtparam=spi=on
-```
-
-* Make sure SPI don't change speed fix the core clock:
-
-```text
-core_freq=250
-core_freq_min=250
 ```
