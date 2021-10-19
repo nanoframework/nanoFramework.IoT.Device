@@ -26,11 +26,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.1.0.0-preview.133\lib\nanoFramework.Logging.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Logging.1.0.0-preview.137\lib\nanoFramework.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Logging.Stream, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.Logging.Stream.1.0.0-preview.133\lib\nanoFramework.Logging.Stream.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Logging.Stream.1.0.0-preview.137\lib\nanoFramework.Logging.Stream.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.9.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -46,7 +46,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=1.0.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.0.2-preview.8\lib\System.IO.FileSystem.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.0.2-preview.10\lib\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricCurrent, Version=4.102.0.0, Culture=neutral, PublicKeyToken=null">
