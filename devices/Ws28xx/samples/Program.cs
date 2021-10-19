@@ -2,16 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ws28xx;
+using nanoFramework.Hardware.Esp32;
 using System;
 using System.Device.Spi;
 using System.Drawing;
 
 // Configure the count of pixels
-const int Count = 8;
-// TODO - replace or remove
-//Console.Clear();
+const int Count = 16;
 
-SpiConnectionSettings settings = new(0, 0)
+
+Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
+Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
+Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
+Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
+
+SpiConnectionSettings settings = new(2, 22)
 {
     ClockFrequency = 2_400_000,
     Mode = SpiMode.Mode0,
@@ -25,14 +30,6 @@ Ws28xx neo = new Ws2808(spi, count);
 Ws28xx neo = new Ws2812b(spi, Count);
 #endif
 
-// TODO - refactor once able to test with device
-//Console.CancelKeyPress += (o, e) =>
-//{
-//    BitmapImage img = neo.Image;
-//    img.Clear();
-//    neo.Update();
-//    Console.Clear();
-//};
 
 while (true)
 {
