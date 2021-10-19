@@ -34,7 +34,7 @@
     <file src="bin\Release\Iot.Device.Ws28xx.pe" target="lib\Iot.Device.Ws28xx.pe" />
     <file src="bin\Release\Iot.Device.Ws28xx.xml" target="lib\Iot.Device.Ws28xx.xml" />
     <file src="readme.md" target="" />
-    <file src="..\assets\nf-logo.png" target="images" />
-    <file src="..\LICENSE.md" target="" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
   </files>
 </package>
