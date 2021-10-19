@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Button", "Button.nfproj", "{954E94A7-75BA-4F8E-876F-E9C90BDCBEFE}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Samples", "Sample\Samples.nfproj", "{0B4708C9-EBFE-4B43-A79A-A9F6E7D7C486}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Samples", "samples\Samples.nfproj", "{0B4708C9-EBFE-4B43-A79A-A9F6E7D7C486}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Tests", "Tests\Tests.nfproj", "{83306802-B317-4851-9673-8CFBA215F749}"
 EndProject
