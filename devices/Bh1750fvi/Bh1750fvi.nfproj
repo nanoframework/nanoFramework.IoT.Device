@@ -28,10 +28,9 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.Illuminance, Version=4.101.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Illuminance.4.101.0\lib\UnitsNet.Illuminance.dll</HintPath>
+    <Reference Include="UnitsNet.Illuminance, Version=4.102.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Illuminance.4.102.0\lib\UnitsNet.Illuminance.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
