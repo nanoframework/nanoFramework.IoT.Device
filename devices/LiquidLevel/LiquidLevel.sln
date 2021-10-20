@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevel", "LiquidLevel.nfproj", "{38100D7B-175A-4264-8E8D-603FBA5BF2BA}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\Llc200d3sh.Sample.nfproj", "{FCC75CBF-7779-4032-A995-7A4DA650E82C}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Llc200d3sh.Sample", "samples\Llc200d3sh\Llc200d3sh.Sample.nfproj", "{FCC75CBF-7779-4032-A995-7A4DA650E82C}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\LiquidLevelSwitch.Sample.nfproj", "{C175B6E8-48B1-4A80-BC63-F1115D5CA9C1}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LiquidLevelSwitch.Sample", "samples\LiquidLevelSwitch\LiquidLevelSwitch.Sample.nfproj", "{C175B6E8-48B1-4A80-BC63-F1115D5CA9C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Project", "Shared Project", "{A6258CFA-1735-4D65-8DF4-D09A928DA55C}"
 EndProject
