@@ -15,7 +15,7 @@ To see how to use the binding in code, see the [sample](samples/Program.cs).
 
 ### WS2812B
 
-![image](https://user-images.githubusercontent.com/1071761/137989148-38f5aea9-bcb6-4a44-8844-f46a998554c6.png)
+![image](./WS2812B.png)
 
 
 
