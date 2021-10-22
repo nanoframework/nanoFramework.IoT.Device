@@ -23,6 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.102.0" />
+      <dependency id="nanoFramework.Iot.Device.Common.NumberHelper" version="1.0.160" />
     </dependencies>
   </metadata>
   <files>
