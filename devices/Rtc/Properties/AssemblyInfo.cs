@@ -7,4 +7,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright(c).NET Foundation and Contributors")]
 
 [assembly: ComVisible(false)]
-
