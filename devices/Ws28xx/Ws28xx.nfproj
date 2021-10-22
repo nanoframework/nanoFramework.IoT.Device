@@ -52,7 +52,6 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
   <Import Project="..\..\src\System.Drawing\System.Drawing.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>

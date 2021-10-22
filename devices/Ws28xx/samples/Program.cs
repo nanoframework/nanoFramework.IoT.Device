@@ -14,6 +14,7 @@ const int Count = 16;
 Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
 Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
 Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
+// Pin 22 must be set to ADC to use as the chip selector 
 Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
 
 // Using VSPI on bus 2 for ESP32 and pin 22 for chipselect
