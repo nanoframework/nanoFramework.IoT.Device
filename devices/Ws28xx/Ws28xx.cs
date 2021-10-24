@@ -3,7 +3,6 @@
 
 using System;
 using System.Device.Spi;
-using Iot.Device.Graphics;
 
 namespace Iot.Device.Ws28xx
 {

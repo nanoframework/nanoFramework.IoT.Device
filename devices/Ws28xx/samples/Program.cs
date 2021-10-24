@@ -1,18 +1,24 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Iot.Device.Ws28xx;
+using nanoFramework.Hardware.Esp32;
 using System;
-using System.Collections.Generic;
 using System.Device.Spi;
 using System.Drawing;
-using Iot.Device.Graphics;
-using Iot.Device.Ws28xx;
 
 // Configure the count of pixels
-const int Count = 8;
-Console.Clear();
+const int Count = 16;
 
-SpiConnectionSettings settings = new(0, 0)
+// Must specify pin functions on ESP32
+Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
+Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
+Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
+// Pin 22 must be set to ADC to use as the chip selector 
+Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
+
+// Using VSPI on bus 2 for ESP32 and pin 22 for chipselect
+SpiConnectionSettings settings = new(2, 22)
 {
     ClockFrequency = 2_400_000,
     Mode = SpiMode.Mode0,
@@ -26,13 +32,6 @@ Ws28xx neo = new Ws2808(spi, count);
 Ws28xx neo = new Ws2812b(spi, Count);
 #endif
 
-Console.CancelKeyPress += (o, e) =>
-{
-    BitmapImage img = neo.Image;
-    img.Clear();
-    neo.Update();
-    Console.Clear();
-};
 
 while (true)
 {
