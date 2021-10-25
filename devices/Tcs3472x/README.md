@@ -8,9 +8,14 @@ Device Family contains TCS34721, TCS34723, TCS34725 and TCS34727.
 
 - TCS3472x [datasheet](https://cdn-shop.adafruit.com/datasheets/TCS34725.pdf)
 
-You will find this device as ["Light and Color Sensor" at Dexter Industries"](https://www.dexterindustries.com/product/light-color-sensor/) or ["RGB Color Sensor with IR filter and White LED - TCS34725"](https://www.adafruit.com/product/1334)
+You will find this device as  ["RGB Color Sensor with IR filter and White LED - TCS34725"](https://www.adafruit.com/product/1334)
 
 Note: TCS34721 and TCS34723 have a default I2C address which is 0x39 while TCS34725 and TCS34727 have 0x29.
+
+
+## Board
+
+![image](./Tcs34725Fitzing.png)
 
 ## Usage
 
