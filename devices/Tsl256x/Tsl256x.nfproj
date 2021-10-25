@@ -20,20 +20,21 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Illuminance">
-      <HintPath>packages\UnitsNet.nanoFramework.Illuminance.4.92.0\lib\UnitsNet.Illuminance.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Illuminance.4.102.0\lib\UnitsNet.Illuminance.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -47,19 +48,19 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
     <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
-    <Import Project="..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
+    <!-- <Import Project="..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" /> -->
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
-  <Import Project="packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets')" />
   <Target Name = "EnsureNuGetPackageBuildImports" BeforeTargets = "PrepareForBuild">
     <PropertyGroup>
       <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition = "!Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')" Text = "$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition = "!Exists('packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets')" Text = "$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
 </Project>
