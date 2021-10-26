@@ -10,6 +10,7 @@ using System.Threading;
 using IoT.Device.Tsl256x;
 using nanoFramework.Hardware.Esp32;
 
+// Must specify pin functions on ESP32, not needed for most other boards
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
