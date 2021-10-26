@@ -29,6 +29,18 @@
       <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives">
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.160\lib\System.Buffers.Binary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device.Model">
+      <HintPath>packages\nanoFramework.System.Device.Model.1.0.176\lib\System.Device.Model.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>packages\nanoFramework.System.Drawing.1.0.160\lib\System.Drawing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -40,9 +52,6 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
-    <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
-    <Import Project="..\..\src\System.Drawing\System.Drawing.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
