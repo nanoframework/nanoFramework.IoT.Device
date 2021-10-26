@@ -8,7 +8,7 @@ using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
 
-
+// Must specify pin functions on ESP32, not needed for most other boards
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
