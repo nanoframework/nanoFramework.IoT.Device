@@ -203,20 +203,24 @@ namespace Iot.Device.Tcs3472x
                 Thread.Sleep((int)(IntegrationTime * 1000));
             }
 
-            var divide = ((256 - _integrationTimeByte) * 1024);
+            var divide = ((256 - _integrationTimeByte) * 1024 * 12);
             // If we are in long wait, we'll need to divide even more
             if (_isLongTime)
             {
                 divide *= 12;
             }
 
-            int r = (int)(I2cRead16(Registers.RDATAL) * 255 / divide);
+            var rdata = I2cRead16(Registers.RDATAL);
+            int r = (int)(rdata * 255 / divide);
             r = MathExtensions.Clamp(r, 0, 255);
-            int g = (int)(I2cRead16(Registers.GDATAL) * 255 / divide);
+            var gdata = I2cRead16(Registers.GDATAL);
+            int g = (int)(gdata * 255 / divide);
             g = MathExtensions.Clamp(g, 0, 255);
-            int b = (int)(I2cRead16(Registers.BDATAL) * 255 / divide);
+            var bdata = I2cRead16(Registers.BDATAL);
+            int b = (int)(bdata * 255 / divide);
             b = MathExtensions.Clamp(b, 0, 255);
-            int a = (int)(I2cRead16(Registers.CDATAL) * 255 / divide);
+            var adata = I2cRead16(Registers.CDATAL);
+            int a = (int)(adata * 255 / divide);
             a = MathExtensions.Clamp(a, 0, 255);
             return Color.FromArgb(a, r, g, b);
         }
