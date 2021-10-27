@@ -23,16 +23,15 @@
     <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.9.1.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
-      <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="System.Device.Gpio, Version=1.0.1.2, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.1\lib\System.Device.Gpio.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.9.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.2-preview.5\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Device.Gpio, Version=1.0.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.2-preview.5\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.160\lib\System.Diagnostics.Stopwatch.dll</HintPath>
