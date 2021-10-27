@@ -12,6 +12,10 @@ clears it.
 
 - TSL256x [datasheet](https://cdn-shop.adafruit.com/datasheets/TSL2561.pdf)
 
+## Board
+
+![image](./Tsl256xBoard.png)
+
 ## Usage
 
 ### Basic usage
