@@ -9,11 +9,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tcs3472x", "Tcs3472x.nfproj", "{7B0B301E-0F4C-296C-7E1A-216E7E6DDBF5}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{7b0b301e-0f4c-296c-7e1a-216e7e6ddbf5}*SharedItemsImports = 5
-		..\..\src\System.Device.Model\System.Device.Model.projitems*{7b0b301e-0f4c-296c-7e1a-216e7e6ddbf5}*SharedItemsImports = 5
-		..\..\src\System.Drawing\System.Drawing.projitems*{7b0b301e-0f4c-296c-7e1a-216e7e6ddbf5}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
