@@ -1,12 +1,16 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Buffers.Binary;
 using System.Device.Gpio;
 using System.Device.I2c;
+using System.Diagnostics;
 using System.Threading;
 using IoT.Device.Tsl256x;
+using nanoFramework.Hardware.Esp32;
+
+// Must specify pin functions on ESP32, not needed for most other boards
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 const int PinInterrupt = 4;
 
@@ -22,7 +26,7 @@ tsl256X.Gain = Gain.Normal;
 
 Debug.WriteLine("This will get the illuminance with the standard period of 402 ms integration and normal gain");
 
-while (!Console.KeyAvailable)
+for (var j = 0; j < 20; j++)
 {
     var lux = tsl256X.MeasureAndGetIlluminance();
     Debug.WriteLine($"Illuminance is {lux.Lux} Lux");
