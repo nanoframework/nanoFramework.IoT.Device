@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
 using UnitsNet;
 using UnitsNet.Units;
@@ -408,18 +409,93 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets GPIO0 state
+        /// Gets or sets the GPIO0 behavior
         /// </summary>
-        /// <param name="state">The GPIO0 behavior</param>
-        /// <param name="currentSink">The current sink from 0 to 31 mA.</param>
-        public void SetGPIO0(Gpio0Behavior state, byte currentSink)
+        public Gpio0Behavior Gpio0Behavior
         {
-            if (currentSink > 31)
-            {
-                currentSink = 31;
-            }
+            get => (Gpio0Behavior)I2cRead(Register.ControlGpio0);
+            set => I2cWrite(Register.ControlGpio0, (byte)value);
+        }
 
-            I2cWrite(Register.ControlGpio0, (byte)((byte)state | currentSink));
+        /// <summary>
+        /// Gets or sets the GPIO1 behavior
+        /// </summary>
+        public Gpio12Behavior Gpio1Behavior
+        {
+            get => (Gpio12Behavior)I2cRead(Register.ControlGpio1);
+            set => I2cWrite(Register.ControlGpio1, (byte)value);
+        }
+
+        /// <summary>
+        /// Gets or sets the GPIO2 behavior
+        /// </summary>
+        public Gpio12Behavior Gpio2Behavior
+        {
+            get => (Gpio12Behavior)I2cRead(Register.ControlGpio2);
+            set => I2cWrite(Register.ControlGpio2, (byte)value);
+        }
+
+        /// <summary>
+        /// Gets or sets the GPIO3 behavior
+        /// </summary>
+        public Gpio3Behavior Gpio3Behavior
+        {
+            get => (Gpio3Behavior)(I2cRead(Register.ControlGpio34) & 0b0000_0011);
+            set => I2cWrite(Register.ControlGpio34, (byte)((I2cRead(Register.ControlGpio34) & 0b1111_1100) | (byte)value | 0b1000_0000));
+        }
+
+        /// <summary>
+        /// Gets or sets the GPIO4 behavior
+        /// </summary>
+        public Gpio4Behavior Gpio4Behavior
+        {
+            get => (Gpio4Behavior)(I2cRead(Register.ControlGpio34) & 0b0000_1100);
+            set => I2cWrite(Register.ControlGpio34, (byte)((I2cRead(Register.ControlGpio34) & 0b1111_0011) | (byte)value | 0b1000_0000));
+        }
+
+        /// <summary>
+        /// Gets or sets the pin value for GPIO0
+        /// </summary>
+        public PinValue Gpio0Value
+        {
+            get => (I2cRead(Register.GpioState012) & 0b0001_0000) == 0b0001_0000 ? PinValue.High : PinValue.Low;
+            set => I2cWrite(Register.GpioState012, (byte)(I2cRead(Register.GpioState012) & 0b0000_0110 | (value == PinValue.High ? 0b0000_0001 : 0)));
+        }
+
+        /// <summary>
+        /// Gets or sets the pin value for GPIO1
+        /// </summary>
+        public PinValue Gpio1Value
+        {
+            get => (I2cRead(Register.GpioState012) & 0b0010_0000) == 0b0010_0000 ? PinValue.High : PinValue.Low;
+            set => I2cWrite(Register.GpioState012, (byte)(I2cRead(Register.GpioState012) & 0b0000_0101 | (value == PinValue.High ? 0b0000_0010 : 0)));
+        }
+
+        /// <summary>
+        /// Gets or sets the pin value for GPIO2
+        /// </summary>
+        public PinValue Gpio2Value
+        {
+            get => (I2cRead(Register.GpioState012) & 0b0100_0000) == 0b0100_0000 ? PinValue.High : PinValue.Low;
+            set => I2cWrite(Register.GpioState012, (byte)(I2cRead(Register.GpioState012) & 0b0000_0011 | (value == PinValue.High ? 0b0000_0100 : 0)));
+        }
+
+        /// <summary>
+        /// Gets or sets the pin value for GPIO3
+        /// </summary>
+        public PinValue Gpio3Value
+        {
+            get => (I2cRead(Register.GpioState34) & 0b0001_0000) == 0b0001_0000 ? PinValue.High : PinValue.Low;
+            set => I2cWrite(Register.GpioState34, (byte)(I2cRead(Register.GpioState34) & 0b0000_0010 | (value == PinValue.High ? 0b0000_0001 : 0)));
+        }
+
+        /// <summary>
+        /// Gets or sets the pin value for GPIO4
+        /// </summary>
+        public PinValue Gpio4Value
+        {
+            get => (I2cRead(Register.GpioState34) & 0b0010_0000) == 0b0010_0000 ? PinValue.High : PinValue.Low;
+            set => I2cWrite(Register.GpioState34, (byte)(I2cRead(Register.GpioState34) & 0b0000_0001 | (value == PinValue.High ? 0b0000_0010 : 0)));
         }
 
         /// <summary>
