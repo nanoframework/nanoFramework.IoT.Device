@@ -14,9 +14,10 @@ namespace Iot.Device.Axp192
         Storage5 = 0x0A,
         Storage6 = 0x0B,
         SwitchControleDcDC1_3LDO2_3 = 0x12,
-        
+
+        VoltageSettingDcDc2 = 0x23,
         VoltageSettingDcDc1 = 0x26,
-        VoltageSettingDcDC3 = 0x27,
+        VoltageSettingDcDc3 = 0x27,
         VoltageSettingLdo2_3 = 0x28,
         
         PathSettingVbus = 0x30,

@@ -23,8 +23,8 @@ Axp192 power = new Axp192(i2cAxp192);
 // This allows to understand the selection dome.
 // Set LDO2 & LDO3(TFT_LED & TFT) 3.0V
 // I2cWrite(Register.VoltageSettingLdo2_3, 0xcc);
-power.SetLDO2Output(0xC);
-power.SetLDO3Output(0xC);
+power.LDO2OutputVoltage = ElectricPotential.FromVolts(3.0);
+power.LDO3OutputVoltage = ElectricPotential.FromVolts(3.0);
 // Set ADC sample rate to 200hz
 // I2cWrite(Register.AdcFrequency, 0xF2);
 power.AdcFrequency = AdcFrequency.Frequency200Hz;

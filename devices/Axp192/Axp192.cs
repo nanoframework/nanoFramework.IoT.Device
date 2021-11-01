@@ -22,33 +22,123 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets LDO2 output
+        /// Gets or sets LDO2 output voltage.
         /// </summary>
-        /// <param name="output">From 0 (dark) to 12 representing 1.8 to 3.3V</param>
-        public void SetLDO2Output(byte output)
+        /// <remarks>Range is from 1.8 to 3.3V, steps of 100 mV</remarks>
+        public ElectricPotential LDO2OutputVoltage
         {
-            // TODO: this should not be part of this binding, needs to move to the board support and accessing only the higher level functions
-            if (output > 12)
+            get
             {
-                output = 12;
+                byte buf = I2cRead(Register.VoltageSettingLdo2_3);
+                return ElectricPotential.FromVolts((buf >> 4) / 10.0 + 1.8);
             }
-            byte buf = I2cRead(Register.VoltageSettingLdo2_3);
-            I2cWrite(Register.VoltageSettingLdo2_3, (byte)((buf & 0x0f) | (output << 4)));
+
+            set
+            {
+                ElectricPotential volt = GetProperVoltValue(value, 1.8, 3.3);
+                byte output = (byte)((volt.Volts - 1.8) * 10.0);
+                byte buf = I2cRead(Register.VoltageSettingLdo2_3);
+                I2cWrite(Register.VoltageSettingLdo2_3, (byte)((buf & 0x0f) | (output << 4)));
+            }
         }
 
         /// <summary>
-        /// Sets LDO3 output
+        /// Gets or sets LDO3 output voltage.
         /// </summary>
-        /// <param name="output">From 0 (dark) to 12 representing 1.8 to 3.3V</param>
-        public void SetLDO3Output(byte output)
+        /// <remarks>Range is from 1.8 to 3.3V, steps of 100 mV</remarks>
+        public ElectricPotential LDO3OutputVoltage
         {
-            // TODO: this should not be part of this binding, needs to move to the board support and accessing only the higher level functions
-            if (output > 12)
+            get
             {
-                output = 12;
+                byte buf = I2cRead(Register.VoltageSettingLdo2_3);
+                return ElectricPotential.FromVolts((buf & 0x0f) / 10.0 + 1.8);
             }
-            byte buf = I2cRead(Register.VoltageSettingLdo2_3);
-            I2cWrite(Register.VoltageSettingLdo2_3, (byte)((buf & 0xF0) | output));
+
+            set
+            {
+                ElectricPotential volt = GetProperVoltValue(value, 1.8, 3.3);
+                byte output = (byte)((volt.Volts - 1.8) * 10.0);
+                byte buf = I2cRead(Register.VoltageSettingLdo2_3);
+                I2cWrite(Register.VoltageSettingLdo2_3, (byte)((buf & 0xF0) | output));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets DC-DC2 voltage.
+        /// </summary>
+        /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
+        public ElectricPotential DcDc2Volvate
+        {
+            get
+            {
+                byte buf = I2cRead(Register.VoltageSettingDcDc2);
+                return ElectricPotential.FromVolts(buf * 0.025 + 0.7);
+            }
+
+            set
+            {
+                ElectricPotential volt = GetProperVoltValue(value, 0.7, 2.275);
+                byte output = (byte)((volt.Volts - 0.7) / 0.025);
+                I2cWrite(Register.VoltageSettingDcDc2, output);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets DC-DC1 voltage.
+        /// </summary>
+        /// <remarks>Range is from 0.7 to 3.5V, steps of 25 mV</remarks>
+        public ElectricPotential DcDc1Volvate
+        {
+            get
+            {
+                byte buf = I2cRead(Register.VoltageSettingDcDc1);
+                return ElectricPotential.FromVolts(buf * 0.025 + 0.7);
+            }
+
+            set
+            {
+                ElectricPotential volt = GetProperVoltValue(value, 0.7, 3.5);
+                byte output = (byte)((volt.Volts - 0.7) / 0.025);
+                I2cWrite(Register.VoltageSettingDcDc1, output);
+            }
+        }
+        /// <summary>
+        /// Gets or sets DC-DC3 voltage.
+        /// </summary>
+        /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
+        public ElectricPotential DcDc3Volvate
+        {
+            get
+            {
+                byte buf = I2cRead(Register.VoltageSettingDcDc3);
+                return ElectricPotential.FromVolts(buf * 0.025 + 0.7);
+            }
+
+            set
+            {
+                ElectricPotential volt = GetProperVoltValue(value, 0.7, 3.5);
+                byte output = (byte)((volt.Volts - 0.7) / 0.025);
+                I2cWrite(Register.VoltageSettingDcDc3, output);
+            }
+        }
+
+        private ElectricPotential GetProperVoltValue(ElectricPotential value, double minVal, double maxVal)
+        {
+            ElectricPotential volt;
+            if (value.Volts > maxVal)
+            {
+                volt = ElectricPotential.FromVolts(maxVal);
+            }
+            else if (value.Volts < minVal)
+            {
+                volt = ElectricPotential.FromVolts(minVal);
+            }
+            else
+            {
+                volt = value;
+            }
+
+            return volt;
         }
 
         /*
@@ -240,9 +330,9 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// 
+        /// Gets internal temperature.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The temperature</returns>
         public Temperature GetInternalTemperature()
         {
             byte[] buf = new byte[2];
@@ -251,6 +341,10 @@ namespace Iot.Device.Axp192
             return new Temperature(temp * 0.1 - 144.7, TemperatureUnit.DegreeCelsius);
         }
 
+        /// <summary>
+        /// Gets the battery instantaneous consumption.
+        /// </summary>
+        /// <returns>The power consumption</returns>
         public Power GetBatteryInstantaneousPower()
         {
             uint power = 0;
