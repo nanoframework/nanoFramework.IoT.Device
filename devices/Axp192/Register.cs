@@ -68,6 +68,12 @@ namespace Iot.Device.Axp192
 
         ControlGpio0 = 0x90,
         VoltageOutputSettingGpio0Ldo = 0x91,
+        ControlGpio1 = 0x92,
+        ControlGpio2 = 0x93,
+        GpioState012 = 0x94,
+        ControlGpio34 = 0x95,
+        GpioState34 = 0x96,        
+        GpioInpputSetting012 = 0x97,
 
         CoulombCounterChargingData1 = 0xB0,
         CoulombCounterChargingData2 = 0xB1,

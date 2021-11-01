@@ -50,7 +50,7 @@ power.SetButtonBehavior(LongPressTiming.S1, ShortPressTiming.Ms128, true, Signal
 power.PinOutputVoltage = PinOutputVoltage.V3_3;
 // Set GPIO0 to LDO
 // I2cWrite(Register.ControlGpio0, 0x02);
-power.SetGPIO0(Gpio0Behavior.LowNoiseLDO, 0);
+power.Gpio0Behavior = Gpio0Behavior.LowNoiseLDO;
 // Disable vbus hold limit
 // I2cWrite(Register.PathSettingVbus, 0x80);
 power.SetVbusSettings(true, false, VholdVoltage.V4_0, false, VbusCurrentLimit.MilliAmper500);
