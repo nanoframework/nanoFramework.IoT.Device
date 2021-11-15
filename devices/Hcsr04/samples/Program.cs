@@ -9,6 +9,7 @@ using UnitsNet;
 
 Debug.WriteLine("Hello Hcsr04 Sample!");
 
+// You can use as well the same pin: using Hcsr04 sonar = new(5, 5);
 using Hcsr04 sonar = new(12, 14);
 while (true)
 {

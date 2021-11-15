@@ -8,6 +8,8 @@ Device bindings for the HC-SR04 sonar distance sensor. Calculates the distance f
 
 ## Usage
 
+In most of the cases, you just need to pass the 2 pins you're going to use: the Echo and Trigger pins.
+
 ```sharp
 using (var sonar = new Hcsr04(4, 17))
 {
@@ -23,6 +25,8 @@ using (var sonar = new Hcsr04(4, 17))
     Thread.Sleep(1000);
 }
 ```
+
+> Note: it is possible to use the same pin for both Trigger and Echo but it's not recommended.
 
 ### Hardware Required
 

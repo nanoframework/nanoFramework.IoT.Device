@@ -23,12 +23,24 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.9.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Events.1.9.2-preview.5\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Events.1.9.2-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.0.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.2-preview.5\lib\System.Device.Gpio.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.2-preview.7\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Device.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\nanoFramework.System.Device.Model.1.0.176\lib\System.Device.Model.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Diagnostics.Stopwatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.160\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=4.102.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.Length.4.102.0\lib\UnitsNet.Length.dll</HintPath>
@@ -44,8 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>
-  <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
-  <Import Project="..\..\src\Stopwatch\Stopwatch.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>
