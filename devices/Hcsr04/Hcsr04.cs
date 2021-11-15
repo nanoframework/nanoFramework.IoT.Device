@@ -45,7 +45,12 @@ namespace Iot.Device.Hcsr04
             _echo = echoPin;
             _trigger = triggerPin;
 
-            _controller.OpenPin(_echo, PinMode.Input);
+            if (_echo != _trigger)
+            {
+                // In case the echo and trigger pins are different
+                _controller.OpenPin(_echo, PinMode.Input);
+            }
+
             _controller.OpenPin(_trigger, PinMode.Output);
 
             _controller.Write(_trigger, PinValue.Low);
@@ -53,7 +58,10 @@ namespace Iot.Device.Hcsr04
             // Call Read once to make sure method is JITted
             // Too long JITting is causing that initial echo pulse is frequently missed on the first run
             // which would cause unnecessary retry
-            _controller.Read(_echo);
+            if (_echo != _trigger)
+            {
+                _controller.Read(_echo);
+            }
         }
 
         /// <summary>
@@ -111,10 +119,21 @@ namespace Iot.Device.Hcsr04
 
             _lastMeasurment = DateTime.UtcNow.Ticks;
 
+            if (_trigger == _echo)
+            {
+                // Set back to output
+                _controller.SetPinMode(_trigger, PinMode.Output);
+            }
+
             // Trigger input for 10uS to start ranging
             _controller.Write(_trigger, PinValue.High);
             DelayHelper.DelayMicroseconds(10, true);
             _controller.Write(_trigger, PinValue.Low);
+            // In case we are using the same pin, switch it to input
+            if (_trigger == _echo)
+            {
+                _controller.SetPinMode(_trigger, PinMode.Input);
+            }
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
             while (_controller.Read(_echo) == PinValue.Low)
@@ -157,6 +176,19 @@ namespace Iot.Device.Hcsr04
         /// <inheritdoc/>
         public void Dispose()
         {
+            if (_controller is not null)
+            {
+                if (_controller.IsPinOpen(_echo))
+                {
+                    _controller.ClosePin(_echo);
+                }
+
+                if (_controller.IsPinOpen(_trigger))
+                {
+                    _controller.ClosePin(_trigger);
+                }
+            }
+
             if (_shouldDispose)
             {
                 _controller?.Dispose();
