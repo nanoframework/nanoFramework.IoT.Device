@@ -7,6 +7,9 @@ using System;
 
 namespace Iot.Device.Swarm
 {
+    /// <summary>
+    /// Exception when executing a command.
+    /// </summary>
     public class ErrorExecutingCommandException : Exception
     {
         public ErrorExecutingCommandException()
