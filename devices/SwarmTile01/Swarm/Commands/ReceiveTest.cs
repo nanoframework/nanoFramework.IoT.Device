@@ -48,7 +48,7 @@ namespace Iot.Device.Swarm
                                 BackgroundRssi = int.Parse(sentence.Data.Substring(8));
                             }
                         }
-                        else
+                        else if(!sentence.Data.Contains("OK"))
                         {
                             // this is a rate reply
                             // $DT <rate>* xx 

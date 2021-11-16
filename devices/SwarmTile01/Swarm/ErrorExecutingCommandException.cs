@@ -15,5 +15,9 @@ namespace Iot.Device.Swarm
         public ErrorExecutingCommandException()
         {
         }
+
+        public ErrorExecutingCommandException(string message) : base(message)
+        {
+        }
     }
 }

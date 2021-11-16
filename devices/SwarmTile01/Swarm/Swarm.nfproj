@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\DateTimeStatus.cs" />
+    <Compile Include="Commands\TransmitData.cs" />
     <Compile Include="Commands\SleepMode.cs" />
     <Compile Include="Commands\ReceiveTest.cs" />
     <Compile Include="Commands\RetreiveFirmwareVersion.cs" />

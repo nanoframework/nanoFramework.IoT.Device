@@ -241,77 +241,107 @@ namespace Iot.Device.Swarm
 
         private void ProcessIncommingMessage(NmeaSentence nmeaSentence)
         {
-            // start checking OK and ERROR
-            // check for OK...
-            if (nmeaSentence.Data.Substring(2, 3) == " OK")
+            var prefix = nmeaSentence.Data.Substring(0, 2);
+
+            switch (prefix)
             {
-                // we're good
-                // flag any command waiting for processing
-                _commandProcessed.Set();
-            }
-            // ... ERROR messages
-            else if (nmeaSentence.Data.Substring(2, 4) == " ERR")
-            {
-                // error 
-                // flag any command waiting for processing
-                _commandProcessed.Set();
-            }
-            else
-            {
-                var prefix = nmeaSentence.Data.Substring(0, 2);
+                case TileCommands.DateTimeStatus.Command:
+                    var dtStatus = new TileCommands.DateTimeStatus.Reply(nmeaSentence);
 
-                switch (prefix)
-                {
-                    case TileCommands.DateTimeStatus.Command:
-                        var dtStatus = new TileCommands.DateTimeStatus.Reply(nmeaSentence);
+                    if (dtStatus.Value >= DateTime.MinValue)
+                    {
+                        _dateTimeStatus = dtStatus;
+                    }
+                    break;
 
-                        if (dtStatus.Value >= DateTime.MinValue)
-                        {
-                            _dateTimeStatus = dtStatus;
-                        }
-                        break;
+                case TileCommands.ReceiveTest.Command:
+                    var receiveTest = new TileCommands.ReceiveTest.Reply(nmeaSentence);
 
-                    case TileCommands.ReceiveTest.Command:
-                        var receiveTest = new TileCommands.ReceiveTest.Reply(nmeaSentence);
+                    if (receiveTest.BackgroundRssi > int.MinValue)
+                    {
+                        // this reply it's a RT satellite message
+                        BackgroundNoiseRssi = receiveTest.BackgroundRssi;
+                        //_dateTimeStatus = dtStatus;
+                    }
+                    else if (receiveTest.Rate > uint.MinValue)
+                    {
+                        // reply it's the RT rate, store
+                        _commandProcessedReply = receiveTest;
 
-                        if (receiveTest.BackgroundRssi > int.MinValue)
-                        {
-                            // this reply it's a RT satellite message
-                            BackgroundNoiseRssi = receiveTest.BackgroundRssi;
-                            //_dateTimeStatus = dtStatus;
-                        }
-                        else if (receiveTest.Rate > uint.MinValue)
-                        {
-                            // reply it's the RT rate, store
-                            _commandProcessedReply = receiveTest;
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    else if(nmeaSentence.Data.Substring(2, 3) == " OK")
+                    {
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
 
-                            // signal event 
-                            _commandProcessed.Set();
-                        }
-                        break;
+                    break;
 
-                    case TileCommands.RetreiveFirmwareVersion.Command:
-                        var fwVersion = new TileCommands.RetreiveFirmwareVersion.Reply(nmeaSentence);
+                case TileCommands.RetreiveFirmwareVersion.Command:
+                    var fwVersion = new TileCommands.RetreiveFirmwareVersion.Reply(nmeaSentence);
 
-                        if (fwVersion.FirmwareVersion != null)
-                        {
-                            FirmwareVersion = fwVersion.FirmwareVersion;
-                            FirmwareTimeStamp = fwVersion.FirmwareTimeStamp;
-                        }
-                        break;
+                    if (fwVersion.FirmwareVersion != null)
+                    {
+                        FirmwareVersion = fwVersion.FirmwareVersion;
+                        FirmwareTimeStamp = fwVersion.FirmwareTimeStamp;
+                    }
+                    break;
 
-                    default:
-                        if (ProcessKnownPrompts(nmeaSentence))
-                        {
+                case TileCommands.TransmitData.Command:
+                    var txData = new TileCommands.TransmitData.Reply(nmeaSentence);
 
-                        }
-                        else
-                        {
-                            // unknow message
-                            Debug.WriteLine($"Unknown message NOT processed: {nmeaSentence.Data}");
-                        }
-                        break;
-                }
+                    if (txData.MessageId != null)
+                    {
+                        // store reply
+                        _commandProcessedReply = txData;
+
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    else if (txData.ErrorMessage != null)
+                    {
+                        // store reply, which contains the error
+                        _commandProcessedReply = txData;
+
+                        // set error flag 
+                        _errorOccurredWhenProcessingCommand = true;
+
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    break;
+
+                default:
+                    // start checking OK and ERROR
+                    // check for OK...
+                    if (nmeaSentence.Data.Substring(2, 3) == " OK")
+                    {
+                        // we're good
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
+                    // ... ERROR messages
+                    else if (nmeaSentence.Data.Substring(2, 4) == " ERR")
+                    {
+                        // error 
+                        // set error flag 
+                        _errorOccurredWhenProcessingCommand = true;
+
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
+                    else if (ProcessKnownPrompts(nmeaSentence))
+                    {
+
+                    }
+                    else
+                    {
+                        // unknow message
+                        Debug.WriteLine($"Unknown message NOT processed: {nmeaSentence.Data}");
+                    }
+                    break;
             }
         }
 
@@ -321,6 +351,12 @@ namespace Iot.Device.Swarm
             {
                 // device woke up
                 _tileIsOperational = true;
+
+                return true;
+            }
+            else if(nmeaSentence.Data.StartsWith("TILE"))
+            {
+                Debug.WriteLine(nmeaSentence.Data);
 
                 return true;
             }
@@ -526,6 +562,44 @@ namespace Iot.Device.Swarm
                     {
                         // device is now in sleep mode
                         _tileIsOperational = false;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Transmits data to the Swarm network.
+        /// </summary>
+        /// <param name="message">The message with the data to be transmited.</param>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public string TransmitData(Message message)
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.TransmitData(message).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException(((TileCommands.TransmitData.Reply)_commandProcessedReply).ErrorMessage);
+                    }
+                    else
+                    {
+                        return ((TileCommands.TransmitData.Reply)_commandProcessedReply).MessageId;
                     }
                 }
                 else

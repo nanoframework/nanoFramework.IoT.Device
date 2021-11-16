@@ -22,7 +22,12 @@ Thread.Sleep(10_000);
 //var rt = swarmTile.GetReceiveTestRate();
 //swarmTile.SetReceiveTestRate(10);
 
-swarmTile.SendToSleep(20);
+//swarmTile.SendToSleep(20);
+
+Message message = new Message("Hello Space! 1805", 12345);
+message.HoldDuration = 60;
+
+var msgId = swarmTile.TransmitData(message);
 
 Thread.Sleep(Timeout.Infinite);
 
