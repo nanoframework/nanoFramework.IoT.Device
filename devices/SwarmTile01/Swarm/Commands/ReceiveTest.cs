@@ -11,7 +11,7 @@ namespace Iot.Device.Swarm
         {
             public const string Command = "RT";
 
-            public uint Value;
+            public int Value;
 
             public class Reply
             {
@@ -65,7 +65,7 @@ namespace Iot.Device.Swarm
                 }
             }
 
-            public ReceiveTest(uint value = 0)
+            public ReceiveTest(int value = 0)
             {
                 Value = value;
             }
@@ -75,7 +75,7 @@ namespace Iot.Device.Swarm
                 // set command data
                 // query if value is 0
                 // rate value otherwise
-                string data = Value == 0 ? "?" : $"{Value}";
+                string data = Value < 0 ? "?" : $"{Value}";
 
                 return new NmeaSentence($"{Command} {data}");
             }

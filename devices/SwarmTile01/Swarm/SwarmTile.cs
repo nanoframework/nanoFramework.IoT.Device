@@ -426,17 +426,11 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Set the rate for unsolicited report messages for device power state.
         /// </summary>
-        /// <param name="rate">Number of seconds in between each message.</param>
-        /// <exception cref="ArgumentException">If rate is &lt; 1.</exception>
+        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
         /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
         public void SetReceiveTestRate(uint rate)
         {
-            if(rate < 1)
-            {
-                throw new ArgumentException();
-            }
-
             lock (_commandLock)
             {
                 // reset error flag
@@ -445,7 +439,7 @@ namespace Iot.Device.Swarm
                 // reset event
                 _commandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.ReceiveTest(rate).ComposeToSend().ToString());
+                _tileSerialPort.WriteLine(new TileCommands.ReceiveTest((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
                 if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
@@ -479,7 +473,8 @@ namespace Iot.Device.Swarm
                 // reset event
                 _commandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.ReceiveTest(0).ComposeToSend().ToString());
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(new TileCommands.ReceiveTest(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
                 if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
