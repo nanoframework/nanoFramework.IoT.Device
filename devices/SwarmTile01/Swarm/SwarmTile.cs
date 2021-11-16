@@ -317,6 +317,14 @@ namespace Iot.Device.Swarm
 
         private bool ProcessKnownPrompts(NmeaSentence nmeaSentence)
         {
+            if(nmeaSentence.Data.Contains("SL WAKE"))
+            {
+                // device woke up
+                _tileIsOperational = true;
+
+                return true;
+            }
+
             return false;
         }
 
@@ -434,6 +442,90 @@ namespace Iot.Device.Swarm
                     else
                     {
                         return ((TileCommands.ReceiveTest.Reply)_commandProcessedReply).Rate;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Puts the device into a low-power sleep mode.
+        /// </summary>
+        /// <param name="value">Sleep for this many seconds.</param>
+        /// <exception cref="ArgumentException">If rate is &lt; 5.</exception>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public void SendToSleep(uint value)
+        {
+            if (value < 1)
+            {
+                throw new ArgumentException();
+            }
+
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.SleepMode(value).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        // device is now in sleep mode
+                        _tileIsOperational = false;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Puts the device into a low-power sleep mode.
+        /// </summary>
+        /// <param name="wakeupTime">Sleep until date and time.</param>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public void SendToSleep(DateTime wakeupTime)
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.SleepMode(wakeupTime).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        // device is now in sleep mode
+                        _tileIsOperational = false;
                     }
                 }
                 else

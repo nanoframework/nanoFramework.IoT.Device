@@ -20,7 +20,9 @@ Thread.Sleep(10_000);
 //swarmTile.PowerOff();
 
 //var rt = swarmTile.GetReceiveTestRate();
-swarmTile.SetReceiveTestRate(10);
+//swarmTile.SetReceiveTestRate(10);
+
+swarmTile.SendToSleep(20);
 
 Thread.Sleep(Timeout.Infinite);
 
