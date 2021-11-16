@@ -35,11 +35,6 @@ namespace Iot.Device.Swarm
         // flag to signal that an error has occurred when processing the command
         private bool _errorOccurredWhenProcessingCommand = false;
 
-        // flag to store device operational state
-        // starts as NOT operational
-        // this setting goes false in case the device is sent to power off
-        private bool _tileIsOperational = false;
-
         // variable holding the reply of the last command executed
         private object _commandProcessedReply;
 
@@ -51,8 +46,8 @@ namespace Iot.Device.Swarm
         private readonly Queue _incommingMessagesQueue = new();
 
         // backing fields 
-        TileCommands.DateTimeStatus.Reply _dateTimeStatus;
-
+        internal TileCommands.DateTimeStatus.Reply _dateTimeStatus;
+        internal PowerState _powerState = PowerState.Unknown;
 
         /// <summary>
         /// Timeout for command exection (in miliseconds).
@@ -129,6 +124,24 @@ namespace Iot.Device.Swarm
         public int SatelliteId { get; private set; } = 0;
 
         /// <summary>
+        /// Power state of the Swarm Tile
+        /// </summary>
+        public PowerState PowerState
+        {
+            get { return _powerState; }
+            internal set
+            {
+                if (_powerState != value)
+                {
+                    _powerState = value;
+
+                    // raise event for power status changed on a thread
+                    new Thread(() => { OnPowerStateChanged(_powerState); }).Start();
+                }
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="portName"></param>
@@ -153,10 +166,6 @@ namespace Iot.Device.Swarm
             // incomming messages worker thread
             _processIncommingMessagesThread = new Thread(ProcessIncommingMessagesWorkerThread);
             _processIncommingMessagesThread.Start();
-
-            //// commands to process worker thread
-            //_processCommandsThread = new Thread(ProcessCommandsWorkerThread);
-            //_processCommandsThread.Start();
         }
 
         private void Tile_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -193,13 +202,12 @@ namespace Iot.Device.Swarm
                 _messageReceived.Set();
 
                 // check if this is the very 1st message receveide
-                if(_isFirstMessage)
+                if (_isFirstMessage)
                 {
                     // reset flag
                     _isFirstMessage = false;
 
-                    // set operational flag
-                    _tileIsOperational = true;
+                    PowerState = PowerState.On;
 
                     // fire thread to get general details
                     var getDetailsThread = new Thread(GetGeneralDetailsThread);
@@ -225,7 +233,7 @@ namespace Iot.Device.Swarm
 
                         var nmeaSentence = NmeaSentence.FromRawSentence(receivedMessage);
 
-                        if(nmeaSentence != null)
+                        if (nmeaSentence != null)
                         {
                             ProcessIncommingMessage(nmeaSentence);
                         }
@@ -271,7 +279,7 @@ namespace Iot.Device.Swarm
                         // signal event 
                         _commandProcessed.Set();
                     }
-                    else if(nmeaSentence.Data.Substring(2, 3) == " OK")
+                    else if (nmeaSentence.Data.Substring(2, 3) == " OK")
                     {
                         // flag any command waiting for processing
                         _commandProcessed.Set();
@@ -347,14 +355,15 @@ namespace Iot.Device.Swarm
 
         private bool ProcessKnownPrompts(NmeaSentence nmeaSentence)
         {
-            if(nmeaSentence.Data.Contains("SL WAKE"))
+            if (nmeaSentence.Data.Contains("SL WAKE"))
             {
                 // device woke up
-                _tileIsOperational = true;
+                // update property
+                PowerState = PowerState.On;
 
                 return true;
             }
-            else if(nmeaSentence.Data.StartsWith("TILE"))
+            else if (nmeaSentence.Data.StartsWith("TILE"))
             {
                 Debug.WriteLine(nmeaSentence.Data);
 
@@ -400,6 +409,11 @@ namespace Iot.Device.Swarm
                     if (_errorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        // update property
+                        PowerState = PowerState.Off;
                     }
                 }
                 else
@@ -522,7 +536,8 @@ namespace Iot.Device.Swarm
                     else
                     {
                         // device is now in sleep mode
-                        _tileIsOperational = false;
+                        // update property
+                        PowerState = PowerState.Sleep;
                     }
                 }
                 else
@@ -561,7 +576,8 @@ namespace Iot.Device.Swarm
                     else
                     {
                         // device is now in sleep mode
-                        _tileIsOperational = false;
+                        // update property
+                        PowerState = PowerState.Sleep;
                     }
                 }
                 else
@@ -611,6 +627,32 @@ namespace Iot.Device.Swarm
 
         #endregion
 
+        #region Power State handlers and events
+
+        /// <summary>
+        /// Represents the delegate used for the <see cref="PowerStateChanged"/> event.
+        /// </summary>
+        /// <param name="powerState"> new power status of the device</param>
+        public delegate void PowerStateChangedHandler(PowerState powerState);
+
+        /// <summary>
+        /// Event raised when the power state of the device changes.
+        /// </summary>
+        public static event PowerStateChangedHandler PowerStateChanged;
+        private PowerStateChangedHandler onPowerStateChanged;
+
+        /// <summary>
+        /// Raises the <see cref="PowerStateChanged"/> event.
+        /// </summary>
+        /// <param name="powerStatus"> new power status of the device</param>
+        protected virtual void OnPowerStateChanged(PowerState powerStatus)
+        {
+            if (onPowerStateChanged == null) onPowerStateChanged = new PowerStateChangedHandler(PowerStateChanged);
+            PowerStateChanged?.Invoke(powerStatus);
+        }
+
+        #endregion
+
         #region IDisposable implementation
 
         /// <inheritdoc/>
@@ -652,6 +694,6 @@ namespace Iot.Device.Swarm
             _disposed = true;
         }
 
-#endregion
+        #endregion
     }
 }
