@@ -18,7 +18,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="CommandBase.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\DateTimeStatus.cs" />
+    <Compile Include="Commands\SleepMode.cs" />
+    <Compile Include="Commands\ReceiveTest.cs" />
+    <Compile Include="Commands\RetreiveFirmwareVersion.cs" />
     <Compile Include="ErrorExecutingCommandException.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="NMEA\NmeaUtilities.cs" />
@@ -27,7 +31,7 @@
     <Compile Include="SwarmTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwarmUtilities.cs" />
-    <Compile Include="TileCommands.cs" />
+    <Compile Include="Commands\TileCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
