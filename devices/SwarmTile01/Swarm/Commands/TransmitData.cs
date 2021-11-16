@@ -27,6 +27,11 @@ namespace Iot.Device.Swarm
                 /// </summary>
                 public string ErrorMessage { get; }
 
+                /// <summary>
+                /// Event for a message.
+                /// </summary>
+                public MessageEvent Event { get; }
+
                 public Reply(NmeaSentence sentence)
                 {
                     if (sentence.Data.StartsWith("TD OK"))
@@ -42,15 +47,36 @@ namespace Iot.Device.Swarm
                     }
                     else if (sentence.Data.StartsWith("TD ERROR"))
                     {
-                        // $TD ERR,BADDATA*0e
-                        //         |     |
-                        //         7                     
+                        // handle expired error differently
+                        if (sentence.Data.Contains("HOLDTIMEEXPIRED"))
+                        {
+                            // $TD ERR,HOLDTIMEEXPIRED,<msg_id>*xx
+                            //                         |      |
+                            //                         23                     
 
-                        int startIndex = 7;
+                            int startIndex = 23;
 
-                        // get error message
-                        ErrorMessage = sentence.Data.Substring(startIndex);
+                            // get message ID
+                            MessageId = sentence.Data.Substring(startIndex);
+
+                            Event = MessageEvent.Expired;
+                        }
+                        else
+                        {
+                            // $TD ERR,BADDATA*0e
+                            //         |     |
+                            //         7                     
+
+                            int startIndex = 7;
+
+                            // get error message
+                            ErrorMessage = sentence.Data.Substring(startIndex);
+                        }
                     }
+                    else if (sentence.Data.StartsWith("TD SENT"))
+                    {
+                        Event = MessageEvent.Sent;
+                    }                    
                 }
             }
 

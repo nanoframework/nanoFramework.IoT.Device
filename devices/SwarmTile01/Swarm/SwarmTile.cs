@@ -319,6 +319,20 @@ namespace Iot.Device.Swarm
                         // signal event 
                         _commandProcessed.Set();
                     }
+                    else if(txData.Event == Swarm.MessageEvent.Received)
+                    {
+                        // $TD SENT RSSI=<rssi_sat>,SNR=<snr>,FDEV=<fdev>,<msg_id>*xx
+                        //          |              |         |           |       |
+                        //          7                     
+
+                        int startIndex = 7;
+                        ProcessMessageReceivedEvent(nmeaSentence.Data.Substring(startIndex));
+                    }
+                    else if(txData.Event == Swarm.MessageEvent.Expired)
+                    {
+                        // raise event for message expired on a thread
+                        new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Expired, txData.MessageId); }).Start();
+                    }
                     break;
 
                 default:
@@ -350,6 +364,36 @@ namespace Iot.Device.Swarm
                         Debug.WriteLine($"Unknown message NOT processed: {nmeaSentence.Data}");
                     }
                     break;
+            }
+        }
+
+        private void ProcessMessageReceivedEvent(string eventData)
+        {
+            // RSSI=<rssi_sat>,SNR=<snr>,FDEV=<fdev>,<msg_id>
+
+            try
+            {
+                // split data and fill in properties
+                var eventDetails = eventData.Split(',');
+
+                // RSSI
+                var rssi = eventDetails[0].Split('=');
+                SatelliteRssi = int.Parse(rssi[1]);
+
+                // SNR
+                var snr = eventDetails[1].Split('=');
+                SignalToNoiseRatio = int.Parse(snr[1]);
+
+                // FDEV
+                var fdev = eventDetails[2].Split('=');
+                FrequencyDeviation = int.Parse(fdev[1]);
+
+                // raise event for message received on a thread
+                new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Received, eventDetails[3]); }).Start();
+            }
+            catch
+            {
+                // ignore any exceptions that occurr during processing
             }
         }
 
@@ -644,6 +688,35 @@ namespace Iot.Device.Swarm
         {
             if (onPowerStateChanged == null) onPowerStateChanged = new PowerStateChangedHandler(PowerStateChanged);
             PowerStateChanged?.Invoke(powerStatus);
+        }
+
+        #endregion
+
+
+        #region Message events
+
+        /// <summary>
+        /// Represents the delegate used for the <see cref="MessageEvent"/> event.
+        /// </summary>
+        /// <param name="messageEvent">Event occurred about a message</param>
+        /// <param name="messageId">Id of message the event is related with</param>
+        public delegate void MessageEventHandler(MessageEvent messageEvent, string messageId);
+
+        /// <summary>
+        /// Event raised related with a message.
+        /// </summary>
+        public static event MessageEventHandler MessageEvent;
+        private MessageEventHandler onMessageEvent;
+
+        /// <summary>
+        /// Raises the <see cref="MessageEvent"/> event.
+        /// </summary>
+        /// <param name="messageEvent">Event occurred about a message</param>
+        /// <param name="messageId">Id of message the event is related with</param>
+        protected virtual void OnMessageEvent(MessageEvent messageEvent, string messageId)
+        {
+            if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageEvent);
+            MessageEvent?.Invoke(messageEvent, messageId);
         }
 
         #endregion

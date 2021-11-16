@@ -28,6 +28,7 @@
     <Compile Include="Message.cs" />
     <Compile Include="NMEA\NmeaUtilities.cs" />
     <Compile Include="NMEA\NmeaSentence.cs" />
+    <Compile Include="MessageEvent.cs" />
     <Compile Include="PowerState.cs" />
     <Compile Include="OperationalQuality.cs" />
     <Compile Include="SwarmTile.cs" />
