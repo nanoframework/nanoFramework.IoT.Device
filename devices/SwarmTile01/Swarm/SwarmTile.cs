@@ -46,7 +46,6 @@ namespace Iot.Device.Swarm
         private readonly Queue _incommingMessagesQueue = new();
 
         // backing fields 
-        internal TileCommands.DateTimeStatus.Reply _dateTimeStatus;
         internal PowerState _powerState = PowerState.Unknown;
 
         /// <summary>
@@ -73,16 +72,6 @@ namespace Iot.Device.Swarm
         /// Device type name.
         /// </summary>
         public string DeviceName { get; private set; }
-
-        /// <summary>
-        /// Current DateTime value as received from the module.
-        /// </summary>
-        public DateTime CurrentDateTime => _dateTimeStatus.Value;
-
-        /// <summary>
-        /// Information on ether CurrentDateTime.
-        /// </summary>
-        public bool DateTimeIsValid => _dateTimeStatus.IsValid;
 
         /// <summary>
         /// Received background noise signal strength in dBm.
@@ -187,7 +176,7 @@ namespace Iot.Device.Swarm
             //Debug.WriteLine($"chars ava1>>{_tileSerialPort.BytesToRead}");
 
             var receivedMessage = _tileSerialPort.ReadLine();
-            //Debug.WriteLine($">>{receivedMessage}");
+            Debug.WriteLine($">>{receivedMessage}");
 
             //Debug.WriteLine($"chars ava2>>{_tileSerialPort.BytesToRead}");
 
@@ -256,10 +245,28 @@ namespace Iot.Device.Swarm
                 case TileCommands.DateTimeStatus.Command:
                     var dtStatus = new TileCommands.DateTimeStatus.Reply(nmeaSentence);
 
-                    if (dtStatus.Value >= DateTime.MinValue)
+                    if (dtStatus.DateTimeInfo != null)
                     {
-                        _dateTimeStatus = dtStatus;
+                        // reply it's the RT rate, store
+                        _commandProcessedReply = dtStatus;
+
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
                     }
+                    else if (dtStatus.Rate > uint.MinValue)
+                    {
+                        // reply it's the DT rate, store
+                        _commandProcessedReply = dtStatus;
+
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    else if (nmeaSentence.Data.Substring(2, 3) == " OK")
+                    {
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
+
                     break;
 
                 case TileCommands.ReceiveTest.Command:
@@ -726,6 +733,117 @@ namespace Iot.Device.Swarm
                     else
                     {
                         return ((TileCommands.TransmitData.Reply)_commandProcessedReply).MessageId;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Set the rate for unsolicited report messages for date and time.
+        /// </summary>
+        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public void SetDateTimeStatusRate(uint rate)
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.DateTimeStatus((int)rate).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the rate for unsolicited report messages for date and time.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public uint GetDateTimeStatusRate()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(new TileCommands.DateTimeStatus(-1).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.DateTimeStatus.Reply)_commandProcessedReply).Rate;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the current <see cref="DateTimeInfo"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public DateTimeInfo GetDateTimeStatus()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(TileCommands.DateTimeStatus.GetLast().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.DateTimeStatus.Reply)_commandProcessedReply).DateTimeInfo;
                     }
                 }
                 else

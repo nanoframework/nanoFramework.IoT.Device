@@ -27,6 +27,7 @@
     <Compile Include="Commands\SleepMode.cs" />
     <Compile Include="Commands\ReceiveTest.cs" />
     <Compile Include="Commands\RetreiveFirmwareVersion.cs" />
+    <Compile Include="DateTimeInfo.cs" />
     <Compile Include="ErrorExecutingCommandException.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="NMEA\NmeaUtilities.cs" />

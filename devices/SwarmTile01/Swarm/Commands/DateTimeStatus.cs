@@ -10,32 +10,28 @@ namespace Iot.Device.Swarm
     public static partial class TileCommands
     {
         /// <summary>
-        /// Command to set and query to send the Tile to power off mode.
+        /// Command to set and query the data time of the device.
         /// </summary>
         public class DateTimeStatus : CommandBase
         {
             public const string Command = "DT";
 
+            public int Value;
+
             public class Reply
             {
                 /// <summary>
-                /// <see cref="DateTime"/> value of the last date & time information.
+                /// <see cref="DateTimeInfo"/> details.
                 /// </summary>
-                public DateTime Value { get; } = DateTime.MinValue;
-
-                /// <summary>
-                /// Information if the available <see cref="DateTime"/> of the module is valid.
-                /// </summary>
-                public bool IsValid { get; }
+                public DateTimeInfo DateTimeInfo { get; }
 
                 /// <summary>
                 /// Current rate (in seconds) between each message.
                 /// </summary>
-                public int Rate { get; set; } = int.MinValue;
+                public uint Rate { get; set; } = uint.MinValue;
 
                 public Reply(NmeaSentence sentence)
                 {
-
                     try
                     {
                         // $DT <YYYY><MM><DD><hh><mm><ss>,<flag>*xx
@@ -65,7 +61,9 @@ namespace Iot.Device.Swarm
                             var second = int.Parse(sentence.Data.Substring(startIndex, 2));
                             startIndex += 2;
 
-                            Value = new DateTime(
+                            DateTimeInfo = new DateTimeInfo();
+
+                            DateTimeInfo.Value = new DateTime(
                                 year,
                                 month,
                                 day,
@@ -79,21 +77,23 @@ namespace Iot.Device.Swarm
                             if (sentence.Data[startIndex] == 'V')
                             {
                                 // date time information is vcalid
-                                IsValid = true;
+                                DateTimeInfo.IsValid = true;
                             }
                             else
                             {
                                 // all the rest assume invalid
-                                IsValid = false;
+                                DateTimeInfo.IsValid = false;
                             }
                         }
-                        else
+                        else if (!sentence.Data.Contains("OK"))
                         {
+                            // must be the current DT rate
+
                             // $DT <rate>* xx 
                             //     |    |
                             //     3       
-                            // must be the current DT rate
-                            Rate = int.Parse(sentence.Data.Substring(1));
+
+                            Rate = uint.Parse(sentence.Data.Substring(3));
                         }
                     }
                     catch
@@ -103,9 +103,24 @@ namespace Iot.Device.Swarm
                 }
             }
 
+            public DateTimeStatus(int value = 0)
+            {
+                Value = value;
+            }
+
+            public static NmeaSentence GetLast()
+            {
+                return new NmeaSentence($"{Command} @");
+            }
+
             internal override NmeaSentence ComposeToSend()
             {
-                return new NmeaSentence(Command);
+                // set command data
+                // query if value is 0
+                // rate value otherwise
+                string data = Value < 0 ? "?" : $"{Value}";
+
+                return new NmeaSentence($"{Command} {data}");
             }
         }
     }
