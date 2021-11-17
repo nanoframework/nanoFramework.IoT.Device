@@ -288,6 +288,25 @@ namespace Iot.Device.Swarm
 
                     break;
 
+                case TileCommands.GeospatialInfo.Command:
+                    var geoInfo = new TileCommands.GeospatialInfo.Reply(nmeaSentence);
+
+                    if (geoInfo.Information != null)
+                    {
+                        // this reply it's a GN information, store
+                        _commandProcessedReply = geoInfo;
+
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
+                    {
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
+
+                    break;
+
                 case TileCommands.ReceiveTest.Command:
                     var receiveTest = new TileCommands.ReceiveTest.Reply(nmeaSentence);
 
@@ -973,6 +992,116 @@ namespace Iot.Device.Swarm
                     else
                     {
                         return ((TileCommands.GpsJammingSpoofing.Reply)_commandProcessedReply).Indication;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the rate for unsolicited report messages for geospatial information.
+        /// </summary>
+        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public void SetGeospatialInformationRate(uint rate)
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.GeospatialInfo((int)rate).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the rate for unsolicited report messages for geospatial information.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public uint GetGeospatialInformationRate()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(new TileCommands.GeospatialInfo(-1).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.GeospatialInfo.Reply)_commandProcessedReply).Rate;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the current <see cref="GeospatialInformation"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public GeospatialInformation GetGeospatialInformation()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(TileCommands.GeospatialInfo.GetLast().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.GeospatialInfo.Reply)_commandProcessedReply).Information;
                     }
                 }
                 else
