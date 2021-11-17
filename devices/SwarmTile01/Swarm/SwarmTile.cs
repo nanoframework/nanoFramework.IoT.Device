@@ -261,7 +261,7 @@ namespace Iot.Device.Swarm
                         // signal event 
                         _commandProcessed.Set();
                     }
-                    else if (nmeaSentence.Data.Substring(2, 3) == " OK")
+                    else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
                         _commandProcessed.Set();
@@ -305,7 +305,7 @@ namespace Iot.Device.Swarm
                         // signal event 
                         _commandProcessed.Set();
                     }
-                    else if (nmeaSentence.Data.Substring(2, 3) == " OK")
+                    else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
                         _commandProcessed.Set();
@@ -377,7 +377,7 @@ namespace Iot.Device.Swarm
                 default:
                     // start checking OK and ERROR
                     // check for OK...
-                    if (nmeaSentence.Data.Substring(2, 3) == " OK")
+                    if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // we're good
                         // flag any command waiting for processing
