@@ -7,6 +7,9 @@ namespace Iot.Device.Swarm
 {
     public abstract class CommandBase
     {
+        // this is the prompt found on OK replies from the Tile.
+        public const string PromptOkReply = " OK";
+
         /// <summary>
         /// Command prefix.
         /// </summary>
