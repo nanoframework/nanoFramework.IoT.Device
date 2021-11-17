@@ -80,6 +80,22 @@ namespace Iot.Device.Swarm
         /// The maximum message size is 192 bytes.
         /// </remarks>
         public string Data { get; set; }
+        
+        /// <summary>
+        /// Message identifier assigned by the device.
+        /// </summary>
+        /// <remarks>
+        /// This property is empty for messages that have been created by code.
+        /// </remarks>
+        public string ID { get; internal set; }
+
+        /// <summary>
+        /// Time-stamp of the moment the message was received by the Tile.
+        /// </summary>
+        /// <remarks>
+        /// This property is empty for messages that have been created by code.
+        /// </remarks>
+        public DateTime TimeStamp { get; internal set; }
 
         /// <summary>
         /// Create a Message to be sent to the Swarm network. 

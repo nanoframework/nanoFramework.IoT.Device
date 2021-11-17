@@ -10,6 +10,9 @@ namespace Iot.Device.Swarm
         // this is the prompt found on OK replies from the Tile.
         public const string PromptOkReply = " OK";
 
+        // this is the prompt found on ERROR replies from the Tile.
+        public const string PromptErrorReply = " ERR";
+
         /// <summary>
         /// Command prefix.
         /// </summary>

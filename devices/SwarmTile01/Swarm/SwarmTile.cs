@@ -14,29 +14,29 @@ namespace Iot.Device.Swarm
     /// <summary>
     /// Swarm Tile class.
     /// </summary>
-    public class SwarmTile : IDisposable
+    public partial class SwarmTile : IDisposable
     {
         // private static readonly SwarmTile _instance = new SwarmTile();
 
         private readonly object _lock = new object();
-        private readonly object _commandLock = new object();
+        internal readonly object CommandLock = new object();
 
-        private SerialPort _tileSerialPort;
+        internal SerialPort TileSerialPort;
 
         // event to signal that a new message has been received and placed on the queue
         private readonly AutoResetEvent _messageReceived = new AutoResetEvent(false);
 
         // event to signal that a new command has been added to the queue for processing
-        private readonly AutoResetEvent _commandProcessed = new AutoResetEvent(false);
+        internal readonly AutoResetEvent CommandProcessed = new AutoResetEvent(false);
 
         // flag to signal that the very 1st message from the Tile was received
         private bool _isFirstMessage = true;
 
         // flag to signal that an error has occurred when processing the command
-        private bool _errorOccurredWhenProcessingCommand = false;
+        internal bool ErrorOccurredWhenProcessingCommand = false;
 
         // variable holding the reply of the last command executed
-        private object _commandProcessedReply;
+        internal object CommandProcessedReply;
 
         private bool _disposed;
 
@@ -131,26 +131,31 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
+        /// Messages received database.
+        /// </summary>
+        public MessagesReceivedManagement MessagesReceived { get; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="portName"></param>
         public SwarmTile(string portName)
         {
             // configure SerialPort and...
-            _tileSerialPort = new SerialPort(portName, 115200);
+            TileSerialPort = new SerialPort(portName, 115200);
 
             //... try opening it
             // failure to open the SerialPort will throw an exception
-            _tileSerialPort.Open();
+            TileSerialPort.Open();
 
             // set new line char
-            _tileSerialPort.NewLine = "\n";
+            TileSerialPort.NewLine = "\n";
 
             // set watch char: LF
-            _tileSerialPort.WatchChar = '\n';
+            TileSerialPort.WatchChar = '\n';
 
             // setup event handler for receive buffer
-            _tileSerialPort.DataReceived += Tile_DataReceived;
+            TileSerialPort.DataReceived += Tile_DataReceived;
 
             // incoming NMEA sentences worker thread
             _processIncommingSentencesThread = new Thread(ProcessIncommingSentencesWorkerThread);
@@ -169,7 +174,7 @@ namespace Iot.Device.Swarm
             // discard event if there is nothing to read or if this is not a WatchChar event
             // meaning that there isn't yet a full NMEA sentence to read in the buffer
             if (e.EventType != SerialData.WatchChar
-                || _tileSerialPort.BytesToRead == 0)
+                || TileSerialPort.BytesToRead == 0)
             {
                 return;
             }
@@ -178,7 +183,7 @@ namespace Iot.Device.Swarm
 
             //Debug.WriteLine($"chars ava1>>{_tileSerialPort.BytesToRead}");
 
-            var receivedMessage = _tileSerialPort.ReadLine();
+            var receivedMessage = TileSerialPort.ReadLine();
             Debug.WriteLine($">>{receivedMessage}");
 
             //Debug.WriteLine($"chars ava2>>{_tileSerialPort.BytesToRead}");
@@ -251,23 +256,23 @@ namespace Iot.Device.Swarm
                     if (dtStatus.DateTimeInfo != null)
                     {
                         // reply it's the RT rate, store
-                        _commandProcessedReply = dtStatus;
+                        CommandProcessedReply = dtStatus;
 
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (dtStatus.Rate > uint.MinValue)
                     {
                         // reply it's the DT rate, store
-                        _commandProcessedReply = dtStatus;
+                        CommandProcessedReply = dtStatus;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
 
                     break;
@@ -278,15 +283,15 @@ namespace Iot.Device.Swarm
                     if (jsIndication.Indication != null)
                     {
                         // this reply it's a GJ indication, store
-                        _commandProcessedReply = jsIndication;
+                        CommandProcessedReply = jsIndication;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
 
                     break;
@@ -297,15 +302,15 @@ namespace Iot.Device.Swarm
                     if (geoInfo.Information != null)
                     {
                         // this reply it's a GN information, store
-                        _commandProcessedReply = geoInfo;
+                        CommandProcessedReply = geoInfo;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
 
                     break;
@@ -316,15 +321,15 @@ namespace Iot.Device.Swarm
                     if (gpsFixInfo.Information != null)
                     {
                         // this reply it's a GS, store
-                        _commandProcessedReply = gpsFixInfo;
+                        CommandProcessedReply = gpsFixInfo;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
 
                     break;
@@ -336,15 +341,15 @@ namespace Iot.Device.Swarm
                     if (gpioMode.Mode != GpioMode.Unknwon)
                     {
                         // this reply it's a GP, store
-                        _commandProcessedReply = gpioMode;
+                        CommandProcessedReply = gpioMode;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
 
                     break;
@@ -361,15 +366,15 @@ namespace Iot.Device.Swarm
                     else if (receiveTest.Rate > uint.MinValue)
                     {
                         // reply it's the RT rate, store
-                        _commandProcessedReply = receiveTest;
+                        CommandProcessedReply = receiveTest;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
 
                     break;
@@ -403,21 +408,21 @@ namespace Iot.Device.Swarm
                     if (txData.MessageId != null)
                     {
                         // store reply
-                        _commandProcessedReply = txData;
+                        CommandProcessedReply = txData;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (txData.ErrorMessage != null)
                     {
                         // store reply, which contains the error
-                        _commandProcessedReply = txData;
+                        CommandProcessedReply = txData;
 
                         // set error flag 
-                        _errorOccurredWhenProcessingCommand = true;
+                        ErrorOccurredWhenProcessingCommand = true;
 
                         // signal event 
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if(txData.Event == Swarm.MessageEvent.Received)
                     {
@@ -435,6 +440,10 @@ namespace Iot.Device.Swarm
                     }
                     break;
 
+                case TileCommands.MessagesReceivedManagement.Command:
+                    MessagesReceived.ProcessIncomingSentence(nmeaSentence);
+                    break;
+
                 default:
                     // start checking OK and ERROR
                     // check for OK...
@@ -442,17 +451,17 @@ namespace Iot.Device.Swarm
                     {
                         // we're good
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     // ... ERROR messages
                     else if (nmeaSentence.Data.Substring(2, 4) == " ERR")
                     {
                         // error 
                         // set error flag 
-                        _errorOccurredWhenProcessingCommand = true;
+                        ErrorOccurredWhenProcessingCommand = true;
 
                         // flag any command waiting for processing
-                        _commandProcessed.Set();
+                        CommandProcessed.Set();
                     }
                     else if (ProcessKnownPrompts(nmeaSentence))
                     {
@@ -543,11 +552,11 @@ namespace Iot.Device.Swarm
         {
             if (string.IsNullOrEmpty(FirmwareVersion) || string.IsNullOrEmpty(FirmwareTimeStamp))
             {
-                _tileSerialPort.WriteLine(new TileCommands.RetreiveFirmwareVersion().ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.RetreiveFirmwareVersion().ComposeToSend().ToString());
             }
             if (string.IsNullOrEmpty(DeviceID) || string.IsNullOrEmpty(DeviceName))
             {
-                _tileSerialPort.WriteLine(new TileCommands.ConfigurationSettings().ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.ConfigurationSettings().ComposeToSend().ToString());
             }
         }
 
@@ -562,21 +571,21 @@ namespace Iot.Device.Swarm
         /// </remarks>
         public void PowerOff()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.PowerOff().ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.PowerOff().ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -599,21 +608,21 @@ namespace Iot.Device.Swarm
         /// </summary>
         public void RestartDevice()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.RestartDevice().ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.RestartDevice().ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -633,21 +642,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetReceiveTestRate(uint rate)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.ReceiveTest((int)rate).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.ReceiveTest((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -667,28 +676,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetReceiveTestRate()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(new TileCommands.ReceiveTest(-1).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.ReceiveTest(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.ReceiveTest.Reply)_commandProcessedReply).Rate;
+                        return ((TileCommands.ReceiveTest.Reply)CommandProcessedReply).Rate;
                     }
                 }
                 else
@@ -712,21 +721,21 @@ namespace Iot.Device.Swarm
                 throw new ArgumentException();
             }
 
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.SleepMode(value).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.SleepMode(value).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -752,21 +761,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SendToSleep(DateTime wakeupTime)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.SleepMode(wakeupTime).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.SleepMode(wakeupTime).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -792,27 +801,27 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public string TransmitData(Message message)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.TransmitData(message).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.TransmitData(message).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
-                        throw new ErrorExecutingCommandException(((TileCommands.TransmitData.Reply)_commandProcessedReply).ErrorMessage);
+                        throw new ErrorExecutingCommandException(((TileCommands.TransmitData.Reply)CommandProcessedReply).ErrorMessage);
                     }
                     else
                     {
-                        return ((TileCommands.TransmitData.Reply)_commandProcessedReply).MessageId;
+                        return ((TileCommands.TransmitData.Reply)CommandProcessedReply).MessageId;
                     }
                 }
                 else
@@ -831,21 +840,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetDateTimeStatusRate(uint rate)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.DateTimeStatus((int)rate).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.DateTimeStatus((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -864,28 +873,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetDateTimeStatusRate()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(new TileCommands.DateTimeStatus(-1).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.DateTimeStatus(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.DateTimeStatus.Reply)_commandProcessedReply).Rate;
+                        return ((TileCommands.DateTimeStatus.Reply)CommandProcessedReply).Rate;
                     }
                 }
                 else
@@ -902,28 +911,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public DateTimeInfo GetDateTimeStatus()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(TileCommands.DateTimeStatus.GetLast().ToString());
+                TileSerialPort.WriteLine(TileCommands.DateTimeStatus.GetLast().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.DateTimeStatus.Reply)_commandProcessedReply).DateTimeInfo;
+                        return ((TileCommands.DateTimeStatus.Reply)CommandProcessedReply).DateTimeInfo;
                     }
                 }
                 else
@@ -941,21 +950,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetJammingSpoofingIndicationRate(uint rate)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing((int)rate).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -974,28 +983,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetJammingSpoofingIndicationRate()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing(-1).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.GpsJammingSpoofing.Reply)_commandProcessedReply).Rate;
+                        return ((TileCommands.GpsJammingSpoofing.Reply)CommandProcessedReply).Rate;
                     }
                 }
                 else
@@ -1012,28 +1021,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public JammingSpoofingIndication GetJammingSpoofingIndication()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(TileCommands.GpsJammingSpoofing.GetLast().ToString());
+                TileSerialPort.WriteLine(TileCommands.GpsJammingSpoofing.GetLast().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.GpsJammingSpoofing.Reply)_commandProcessedReply).Indication;
+                        return ((TileCommands.GpsJammingSpoofing.Reply)CommandProcessedReply).Indication;
                     }
                 }
                 else
@@ -1051,21 +1060,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetGeospatialInformationRate(uint rate)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.GeospatialInfo((int)rate).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.GeospatialInfo((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -1084,28 +1093,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetGeospatialInformationRate()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(new TileCommands.GeospatialInfo(-1).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.GeospatialInfo(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.GeospatialInfo.Reply)_commandProcessedReply).Rate;
+                        return ((TileCommands.GeospatialInfo.Reply)CommandProcessedReply).Rate;
                     }
                 }
                 else
@@ -1122,28 +1131,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public GeospatialInformation GetGeospatialInformation()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(TileCommands.GeospatialInfo.GetLast().ToString());
+                TileSerialPort.WriteLine(TileCommands.GeospatialInfo.GetLast().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.GeospatialInfo.Reply)_commandProcessedReply).Information;
+                        return ((TileCommands.GeospatialInfo.Reply)CommandProcessedReply).Information;
                     }
                 }
                 else
@@ -1162,21 +1171,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetGpsFixQualityRate(uint rate)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd((int)rate).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -1195,28 +1204,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetGpsFixQualityRate()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd(-1).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.GpsFixQualityCmd.Reply)_commandProcessedReply).Rate;
+                        return ((TileCommands.GpsFixQualityCmd.Reply)CommandProcessedReply).Rate;
                     }
                 }
                 else
@@ -1233,28 +1242,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public GpsFixQuality GetGpsFixQuality()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(TileCommands.GpsFixQualityCmd.GetLast().ToString());
+                TileSerialPort.WriteLine(TileCommands.GpsFixQualityCmd.GetLast().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.GpsFixQualityCmd.Reply)_commandProcessedReply).Information;
+                        return ((TileCommands.GpsFixQualityCmd.Reply)CommandProcessedReply).Information;
                     }
                 }
                 else
@@ -1272,21 +1281,21 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetGpio1Mode(GpioMode mode)
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
-                _tileSerialPort.WriteLine(new TileCommands.Gpio1Control(mode).ComposeToSend().ToString());
+                TileSerialPort.WriteLine(new TileCommands.Gpio1Control(mode).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
@@ -1305,28 +1314,28 @@ namespace Iot.Device.Swarm
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public GpioMode GetGpio1Mode()
         {
-            lock (_commandLock)
+            lock (CommandLock)
             {
                 // reset error flag
-                _errorOccurredWhenProcessingCommand = false;
+                ErrorOccurredWhenProcessingCommand = false;
 
                 // reset event
-                _commandProcessed.Reset();
+                CommandProcessed.Reset();
 
                 // send the command with -1 to get the current setting
-                _tileSerialPort.WriteLine(TileCommands.Gpio1Control.GetMode().ToString());
+                TileSerialPort.WriteLine(TileCommands.Gpio1Control.GetMode().ToString());
 
                 // wait from command to be processed
-                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
                 {
                     // check for error
-                    if (_errorOccurredWhenProcessingCommand)
+                    if (ErrorOccurredWhenProcessingCommand)
                     {
                         throw new ErrorExecutingCommandException();
                     }
                     else
                     {
-                        return ((TileCommands.Gpio1Control.Reply)_commandProcessedReply).Mode;
+                        return ((TileCommands.Gpio1Control.Reply)CommandProcessedReply).Mode;
                     }
                 }
                 else

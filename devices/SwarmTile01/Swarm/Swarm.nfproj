@@ -19,6 +19,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\MessagesReceivedManagement.cs" />
     <Compile Include="Commands\Gpio1Control.cs" />
     <Compile Include="Commands\GpsFixQualityCmd.cs" />
     <Compile Include="Commands\GeospatialInfo.cs" />
@@ -38,6 +39,7 @@
     <Compile Include="DateTimeInfo.cs" />
     <Compile Include="ErrorExecutingCommandException.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="MessagesReceivedManagement.cs" />
     <Compile Include="NMEA\NmeaUtilities.cs" />
     <Compile Include="NMEA\NmeaSentence.cs" />
     <Compile Include="MessageEvent.cs" />
