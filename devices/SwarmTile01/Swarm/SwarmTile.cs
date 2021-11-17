@@ -467,6 +467,38 @@ namespace Iot.Device.Swarm
             }
         }
 
+
+        /// <summary>
+        /// Perform a software cold restart of the device.
+        /// </summary>
+        public void RestartDevice()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.RestartDevice().ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
         /// <summary>
         /// Set the rate for unsolicited report messages for device power state.
         /// </summary>
