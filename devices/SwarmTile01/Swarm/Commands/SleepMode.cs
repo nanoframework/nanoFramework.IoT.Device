@@ -10,6 +10,9 @@ namespace Iot.Device.Swarm
 {
     public  static partial class TileCommands
     {
+        /// <summary>
+        /// Command to send the Tile to sleep mode for a defined time.
+        /// </summary>
         public class SleepMode : CommandBase
         {
             public const string Command = "SL";

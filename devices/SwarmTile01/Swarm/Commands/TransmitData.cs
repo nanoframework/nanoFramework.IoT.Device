@@ -9,6 +9,9 @@ namespace Iot.Device.Swarm
 {
     public  static partial class TileCommands
     {
+        /// <summary>
+        /// Command to transmit a message to the Swarm network.
+        /// </summary>
         public class TransmitData : CommandBase
         {
             public const string Command = "TD";

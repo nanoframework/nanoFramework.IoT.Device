@@ -5,8 +5,11 @@
 
 namespace Iot.Device.Swarm
 {
-    public  static partial class TileCommands
+    public static partial class TileCommands
     {
+        /// <summary>
+        /// Command to set and query the receive test message rate.
+        /// </summary>
         public class ReceiveTest : CommandBase
         {
             public const string Command = "RT";

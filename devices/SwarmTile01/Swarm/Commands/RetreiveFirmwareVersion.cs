@@ -7,6 +7,9 @@ namespace Iot.Device.Swarm
 {
     public  static partial class TileCommands
     {
+        /// <summary>
+        /// Command to retrieve the firwmware details.
+        /// </summary>
         public class RetreiveFirmwareVersion : CommandBase
         {
             public const string Command = "FV";

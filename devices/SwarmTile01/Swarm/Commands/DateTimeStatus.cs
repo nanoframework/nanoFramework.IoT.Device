@@ -9,6 +9,9 @@ namespace Iot.Device.Swarm
 {
     public static partial class TileCommands
     {
+        /// <summary>
+        /// Command to set and query to send the Tile to power off mode.
+        /// </summary>
         public class DateTimeStatus : CommandBase
         {
             public const string Command = "DT";
