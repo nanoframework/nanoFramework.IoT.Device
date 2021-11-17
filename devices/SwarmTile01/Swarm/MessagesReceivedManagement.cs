@@ -80,8 +80,11 @@ namespace Iot.Device.Swarm
         /// Reads the specified message from the device database.
         /// </summary>
         /// <param name="id">ID of message</param>
-        /// <returns>The <see cref="Message"/> read.</returns>
-        public Message ReadMessage(string id)
+        /// <returns>The <see cref="MessageReceived"/> read.</returns>
+        /// <remarks>
+        /// This is will return <see langword="null"/> if there message doesn't exist in the device database.
+        /// </remarks>
+        public MessageReceived ReadMessage(string id)
         {
             return ReadMessageHelper(id);
         }
@@ -89,11 +92,11 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Reads the newest message from the device database.
         /// </summary>
-        /// <returns>The <see cref="Message"/> message read.</returns>
+        /// <returns>The <see cref="MessageReceived"/> message read.</returns>
         /// <remarks>
         /// This is will return <see langword="null"/> if there are no messages in the device database.
         /// </remarks>
-        public Message ReadNewestMessage()
+        public MessageReceived ReadNewestMessage()
         {
             return ReadMessageHelper(null, true);
         }
@@ -101,11 +104,11 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Reads the oldest message from the device database.
         /// </summary>
-        /// <returns>The <see cref="Message"/> message read.</returns>
+        /// <returns>The <see cref="MessageReceived"/> message read.</returns>
         /// <remarks>
         /// This is will return <see langword="null"/> if there are no messages in the device database.
         /// </remarks>
-        public Message ReadOldestMessage()
+        public MessageReceived ReadOldestMessage()
         {
             return ReadMessageHelper(null, false);
         }
@@ -248,7 +251,7 @@ namespace Iot.Device.Swarm
             }
         }
 
-        private Message ReadMessageHelper(string id, bool newest = false)
+        private MessageReceived ReadMessageHelper(string id, bool newest = false)
         {
             lock (_device.CommandLock)
             {

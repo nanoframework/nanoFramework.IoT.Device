@@ -8,24 +8,15 @@ using System;
 namespace Iot.Device.Swarm
 {
     /// <summary>
-    /// Message to send to the Swarm network.
+    /// Message to be transmitted to the Swarm network.
     /// </summary>
-    public class Message
+    public class MessageToTransmit : MessageBase
     {
         private const long _minExpiryDateTime = 637134336000000000;
         private const long _maxExpiryDateTime = 642830804470000000;
 
         private uint _holdDuration = 0;
         private DateTime _expireTime = DateTime.MinValue;
-
-        /// <summary>
-        /// Application ID tag for message.
-        /// </summary>
-        /// <remarks>
-        /// This is optional. If not specified the message will be sent with ID 0.
-        /// Swarm reserves the use of application IDs 65000 to 65535.
-        /// </remarks>
-        public uint ApplicationID { get; set; }
 
         /// <summary>
         /// Is the number of seconds to hold the message if it has not been sent before expiring it from the database.
@@ -74,14 +65,6 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// Payload of data.
-        /// </summary>
-        /// <remarks>
-        /// The maximum message size is 192 bytes.
-        /// </remarks>
-        public string Data { get; set; }
-        
-        /// <summary>
         /// Message identifier assigned by the device.
         /// </summary>
         /// <remarks>
@@ -102,32 +85,17 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="data">Data to be sent.</param>
         /// <param name="applicationId">The application ID tag for the message.</param>
-        public Message(string data, uint applicationId = 0)
+        public MessageToTransmit(string data, uint applicationId = 0) : base(data, applicationId)
         {
-            if(data.Length > 192)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            Data = data;
-            ApplicationID = applicationId;
         }
-
 
         /// <summary>
         /// Create a Message to be sent to the Swarm network. 
         /// </summary>
         /// <param name="data">Data to be sent.</param>
         /// <param name="applicationId">The application ID tag for the message.</param>
-        public Message(byte[] data, uint applicationId = 0)
+        public MessageToTransmit(byte[] data, uint applicationId = 0) : base(data, applicationId)
         {
-            if (data.Length > 192)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            Data = BitConverter.ToString(data);
-            ApplicationID = applicationId;
         }
     }
 }

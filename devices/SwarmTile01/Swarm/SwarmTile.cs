@@ -799,7 +799,7 @@ namespace Iot.Device.Swarm
         /// <param name="message">The message with the data to be transmitted.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public string TransmitData(Message message)
+        public string TransmitData(MessageToTransmit message)
         {
             lock (CommandLock)
             {

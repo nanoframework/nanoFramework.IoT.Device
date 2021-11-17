@@ -16,7 +16,7 @@ namespace Iot.Device.Swarm
         {
             public const string Command = "TD";
 
-            private Message _message;
+            private MessageToTransmit _message;
 
             public class Reply
             {
@@ -83,7 +83,7 @@ namespace Iot.Device.Swarm
                 }
             }
 
-            public TransmitData(Message message)
+            public TransmitData(MessageToTransmit message)
             {
                 _message = message;
             }

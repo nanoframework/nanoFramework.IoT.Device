@@ -32,7 +32,7 @@ namespace Iot.Device.Swarm
                 /// <summary>
                 /// Message read.
                 /// </summary>
-                public Message Message { get; }
+                public MessageReceived Message { get; }
 
                 public Reply(NmeaSentence sentence)
                 {
@@ -65,7 +65,7 @@ namespace Iot.Device.Swarm
                             var applicationID = uint.Parse(messageData[_indexOfAppId]);
 
                             // build message
-                            Message = new Message(
+                            Message = new MessageReceived(
                                 messageData[_indexOfData],
                                 applicationID);
 
@@ -79,11 +79,6 @@ namespace Iot.Device.Swarm
                     }
                 }
             }
-
-            //public MessagesReceivedManagement(GpioMode mode)
-            //{
-            //    Mode = mode;
-            //}
 
             public static NmeaSentence GetMessageCount(bool unreadOnly)
             {

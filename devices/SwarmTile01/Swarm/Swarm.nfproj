@@ -38,7 +38,9 @@
     <Compile Include="JammingSpoofingIndication.cs" />
     <Compile Include="DateTimeInfo.cs" />
     <Compile Include="ErrorExecutingCommandException.cs" />
-    <Compile Include="Message.cs" />
+    <Compile Include="MessageReceived.cs" />
+    <Compile Include="MessageToTransmit.cs" />
+    <Compile Include="MessageBase.cs" />
     <Compile Include="MessagesReceivedManagement.cs" />
     <Compile Include="NMEA\NmeaUtilities.cs" />
     <Compile Include="NMEA\NmeaSentence.cs" />
