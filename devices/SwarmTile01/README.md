@@ -1,37 +1,76 @@
-# Radio Transmitter
+# Swarm Tile
 
-The radio transmitter devices supported by the project include KT0803.
+This library allows using all the features of the satellite module from [Swarm](https://swarm.space/).
+
+![Swarm Tile modem](./tile-trans.-600x278.jpg)
 
 ## Documentation
 
-- KT0803 radio transmitter [datasheet](https://cdn.datasheetspdf.com/pdf-down/K/T/0/KT0803L-KTMicro.pdf)
+- Swarm Tile [datasheet](https://swarm.space/wp-content/uploads/2020/10/Swarm-Tile-Spec-Sheet.pdf)
+- Swarm Tile Product Manual [datasheet](https://swarm.space/wp-content/uploads/2021/11/Swarm-Tile-Product-Manual.pdf)
+- Swarm Evaluation Kit Guide [datasheet](https://swarm.space/wp-content/uploads/2021/09/Swarm-Eval-Kit-Quickstart-Guide.pdf)
 
 ## Usage
 
-**Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
-
-```csharp
-//////////////////////////////////////////////////////////////////////
-// when connecting to an ESP32 device, need to configure the I2C GPIOs
-// used for the bus
-Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
-Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
-```
-
-For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
-
 ### Hardware Required
 
-- KT0803
-- Male/Female Jumper Wires
+- Swarm Evaluation Kit
+
+![Swarm Eval Kit](./swarm-eval-kit-01.png)
+
+The Swarm Evaluation Kit contains a [Feather S2](https://feathers2.io/) module inside. The code described here (and in the sample application) is based on this hardware. If you're using the library with another nanoFramework module and/or connected to your Swarm Tile you may have to adjust the COM port where it's connected.
+
+For a smoother experience it's recommended that you follow the instructions on Swarm Evaluation Kit guide on how to properly setup the Kit.
+
+### Setup the device in a C# application
+
+You just need to instantiate the `SwarmTile` object and pass the COM port where it's connected to.
+On the code snippet bellow that's what's happening along with displaying the device IDs and queueing up a message for transmition.
 
 ```csharp
-I2cConnectionSettings settings = new I2cConnectionSettings(1, Kt0803.DefaultI2cAddress);
-I2cDevice device = I2cDevice.Create(settings);
 
-// The radio is running on FM 106.6MHz
-using (Kt0803 radio = new Kt0803(device, 106.6, Region.China))
-{
-    // Connect a sound sources to the 3.5mm earphone jack of the module
-}
+// The COM port where the Tile is connected to
+// Using COM1 for the Swarm Evaluation Kit
+var swarmTile = new SwarmTile("COM1");
+
+// let it settle for a couple of seconds
+Thread.Sleep(5_000);
+
+// output device IDs
+Debug.WriteLine($"DeviceID: {swarmTile.DeviceID}");
+Debug.WriteLine($"DeviceName: {swarmTile.DeviceName}");
+
+// transmit a message to the Swarm network
+MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
+var msgId = swarmTile.TransmitData(message);
+
+Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+
 ```
+
+### Adding event handlers
+
+You just need to instantiate the `SwarmTile` object and pass the COM port where it's connected to.
+On the code snippet bellow that's what's happening along with displaying the device IDs and queueing up a message for transmition.
+
+```csharp
+
+// The COM port where the Tile is connected to
+// Using COM1 for the Swarm Evaluation Kit
+var swarmTile = new SwarmTile("COM1");
+
+// let it settle for a couple of seconds
+Thread.Sleep(5_000);
+
+// output device IDs
+Debug.WriteLine($"DeviceID: {swarmTile.DeviceID}");
+Debug.WriteLine($"DeviceName: {swarmTile.DeviceName}");
+
+// transmit a message to the Swarm network
+MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
+var msgId = swarmTile.TransmitData(message);
+
+Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+
+```
+
