@@ -40,7 +40,7 @@ namespace Iot.Device.Swarm
 
         private bool _disposed;
 
-        private Thread _processIncommingMessagesThread;
+        private Thread _processIncommingSentencesThread;
 
 
         private readonly Queue _incommingMessagesQueue = new();
@@ -152,13 +152,16 @@ namespace Iot.Device.Swarm
             // setup event handler for receive buffer
             _tileSerialPort.DataReceived += Tile_DataReceived;
 
-            // incomming messages worker thread
-            _processIncommingMessagesThread = new Thread(ProcessIncommingMessagesWorkerThread);
-            _processIncommingMessagesThread.Start();
+            // incoming NMEA sentences worker thread
+            _processIncommingSentencesThread = new Thread(ProcessIncommingSentencesWorkerThread);
+            _processIncommingSentencesThread.Start();
 
             // fire thread to get general details
             var getDetailsThread = new Thread(GetGeneralDetailsThread);
             getDetailsThread.Start();
+
+            // create accessors to messages received database
+            MessagesReceived = new MessagesReceivedManagement(this);
         }
 
         private void Tile_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -206,9 +209,9 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// The thread used to process asynchronously incomming NMEA sentences
+        /// The thread used to process asynchronously incoming NMEA sentences
         /// </summary>
-        private void ProcessIncommingMessagesWorkerThread()
+        private void ProcessIncommingSentencesWorkerThread()
         {
             while (true)
             {
@@ -224,7 +227,7 @@ namespace Iot.Device.Swarm
 
                         if (nmeaSentence != null)
                         {
-                            ProcessIncommingMessage(nmeaSentence);
+                            ProcessIncommingSentence(nmeaSentence);
                         }
                         else
                         {
@@ -236,7 +239,7 @@ namespace Iot.Device.Swarm
             }
         }
 
-        private void ProcessIncommingMessage(NmeaSentence nmeaSentence)
+        private void ProcessIncommingSentence(NmeaSentence nmeaSentence)
         {
             var prefix = nmeaSentence.Data.Substring(0, 2);
 
