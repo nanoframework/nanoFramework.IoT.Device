@@ -307,6 +307,25 @@ namespace Iot.Device.Swarm
 
                     break;
 
+                case TileCommands.GpsFixQualityCmd.Command:
+                    var gpsFixInfo = new TileCommands.GpsFixQualityCmd.Reply(nmeaSentence);
+
+                    if (gpsFixInfo.Information != null)
+                    {
+                        // this reply it's a GS, store
+                        _commandProcessedReply = gpsFixInfo;
+
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
+                    {
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
+
+                    break;
+
                 case TileCommands.ReceiveTest.Command:
                     var receiveTest = new TileCommands.ReceiveTest.Reply(nmeaSentence);
 
@@ -1102,6 +1121,117 @@ namespace Iot.Device.Swarm
                     else
                     {
                         return ((TileCommands.GeospatialInfo.Reply)_commandProcessedReply).Information;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Set the rate for unsolicited report messages for GPS fix quality.
+        /// </summary>
+        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public void SetGpsFixQualityRate(uint rate)
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd((int)rate).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the rate for unsolicited report messages for GPS fix quality.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public uint GetGpsFixQualityRate()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd(-1).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.GpsFixQualityCmd.Reply)_commandProcessedReply).Rate;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the current <see cref="GpsFixQuality"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public GpsFixQuality GetGpsFixQuality()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(TileCommands.GpsFixQualityCmd.GetLast().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.GpsFixQualityCmd.Reply)_commandProcessedReply).Information;
                     }
                 }
                 else
