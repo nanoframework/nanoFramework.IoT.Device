@@ -183,7 +183,7 @@ namespace Iot.Device.Swarm
             //Debug.WriteLine($"chars ava1>>{_tileSerialPort.BytesToRead}");
 
             var receivedMessage = _tileSerialPort.ReadLine();
-            Debug.WriteLine($">>{receivedMessage}");
+            //Debug.WriteLine($">>{receivedMessage}");
 
             //Debug.WriteLine($"chars ava2>>{_tileSerialPort.BytesToRead}");
 
@@ -409,7 +409,29 @@ namespace Iot.Device.Swarm
             }
             else if (nmeaSentence.Data.StartsWith("TILE"))
             {
-                Debug.WriteLine(nmeaSentence.Data);
+                if (nmeaSentence.Data.Contains(",VERSION"))
+                {
+                    // TILE BOOT,VERSION,2021-07-21-23:19:41,v1.1.0
+                    //                   |
+                    //                   18 
+
+                    int startIndex = 18;
+
+                    // get version now
+                    var fwInfo = nmeaSentence.Data.Substring(startIndex).Split(',');
+
+                    FirmwareTimeStamp = fwInfo[0];
+                    FirmwareVersion = fwInfo[1];
+                }
+                if (nmeaSentence.Data.Contains(",RUNNING"))
+                {
+
+                }
+                else
+                {
+
+                    Debug.WriteLine(nmeaSentence.Data);
+                }
 
                 return true;
             }
