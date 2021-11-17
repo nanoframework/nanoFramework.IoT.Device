@@ -67,12 +67,12 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Device ID that identifies this device on the Swarm network.
         /// </summary>
-        public string DeviceID { get; }
+        public string DeviceID { get; private set; }
 
         /// <summary>
         /// Device type name.
         /// </summary>
-        public string DeviceName { get; }
+        public string DeviceName { get; private set; }
 
         /// <summary>
         /// Current DateTime value as received from the module.
@@ -166,6 +166,10 @@ namespace Iot.Device.Swarm
             // incomming messages worker thread
             _processIncommingMessagesThread = new Thread(ProcessIncommingMessagesWorkerThread);
             _processIncommingMessagesThread.Start();
+
+            // fire thread to get general details
+            var getDetailsThread = new Thread(GetGeneralDetailsThread);
+            getDetailsThread.Start();
         }
 
         private void Tile_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -208,10 +212,6 @@ namespace Iot.Device.Swarm
                     _isFirstMessage = false;
 
                     PowerState = PowerState.On;
-
-                    // fire thread to get general details
-                    var getDetailsThread = new Thread(GetGeneralDetailsThread);
-                    getDetailsThread.Start();
                 }
             }
         }
@@ -294,6 +294,19 @@ namespace Iot.Device.Swarm
                     {
                         FirmwareVersion = fwVersion.FirmwareVersion;
                         FirmwareTimeStamp = fwVersion.FirmwareTimeStamp;
+                    }
+                    break;
+
+                case TileCommands.ConfigurationSettings.Command:
+                    var configDetails = new TileCommands.ConfigurationSettings.Reply(nmeaSentence);
+
+                    if (!string.IsNullOrEmpty(configDetails.DeviceId))
+                    {
+                        DeviceID = configDetails.DeviceId;
+                    }
+                    if (!string.IsNullOrEmpty(configDetails.DeviceName))
+                    {
+                        DeviceName = configDetails.DeviceName;
                     }
                     break;
 
@@ -444,6 +457,10 @@ namespace Iot.Device.Swarm
             if (string.IsNullOrEmpty(FirmwareVersion) || string.IsNullOrEmpty(FirmwareTimeStamp))
             {
                 _tileSerialPort.WriteLine(new TileCommands.RetreiveFirmwareVersion().ComposeToSend().ToString());
+            }
+            if (string.IsNullOrEmpty(DeviceID) || string.IsNullOrEmpty(DeviceName))
+            {
+                _tileSerialPort.WriteLine(new TileCommands.ConfigurationSettings().ComposeToSend().ToString());
             }
         }
 

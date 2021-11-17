@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\DateTimeStatus.cs" />
+    <Compile Include="Commands\ConfigurationSettings.cs" />
     <Compile Include="Commands\RestartDevice.cs" />
     <Compile Include="Commands\PowerOff.cs" />
     <Compile Include="Commands\TransmitData.cs" />
