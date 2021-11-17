@@ -136,6 +136,11 @@ namespace Iot.Device.Swarm
         public MessagesReceivedManagement MessagesReceived { get; }
 
         /// <summary>
+        /// Messages to transmit database.
+        /// </summary>
+        public MessagesToTransmitManagement MessagesToTransmit { get; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="portName"></param>
@@ -165,8 +170,9 @@ namespace Iot.Device.Swarm
             var getDetailsThread = new Thread(GetGeneralDetailsThread);
             getDetailsThread.Start();
 
-            // create accessors to messages received database
+            // create accessors to messages received and to transmit databases
             MessagesReceived = new MessagesReceivedManagement(this);
+            MessagesToTransmit = new MessagesToTransmitManagement(this);
         }
 
         private void Tile_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -442,6 +448,10 @@ namespace Iot.Device.Swarm
 
                 case TileCommands.MessagesReceivedManagement.Command:
                     MessagesReceived.ProcessIncomingSentence(nmeaSentence);
+                    break;
+
+                case TileCommands.MessagesToTransmitManagement.Command:
+                    MessagesToTransmit.ProcessIncomingSentence(nmeaSentence);
                     break;
 
                 default:
