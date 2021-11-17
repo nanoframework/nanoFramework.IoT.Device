@@ -19,6 +19,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\Gpio1Control.cs" />
     <Compile Include="Commands\GpsFixQualityCmd.cs" />
     <Compile Include="Commands\GeospatialInfo.cs" />
     <Compile Include="Commands\GpsJammingSpoofing.cs" />
@@ -30,6 +31,7 @@
     <Compile Include="Commands\SleepMode.cs" />
     <Compile Include="Commands\ReceiveTest.cs" />
     <Compile Include="Commands\RetreiveFirmwareVersion.cs" />
+    <Compile Include="GpioMode.cs" />
     <Compile Include="GpsFixQuality.cs" />
     <Compile Include="GeospatialInformation.cs" />
     <Compile Include="JammingSpoofingIndication.cs" />

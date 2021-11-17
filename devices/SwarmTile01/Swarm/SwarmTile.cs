@@ -326,6 +326,26 @@ namespace Iot.Device.Swarm
 
                     break;
 
+
+                case TileCommands.Gpio1Control.Command:
+                    var gpioMode = new TileCommands.Gpio1Control.Reply(nmeaSentence);
+
+                    if (gpioMode.Mode != GpioMode.Unknwon)
+                    {
+                        // this reply it's a GP, store
+                        _commandProcessedReply = gpioMode;
+
+                        // signal event 
+                        _commandProcessed.Set();
+                    }
+                    else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
+                    {
+                        // flag any command waiting for processing
+                        _commandProcessed.Set();
+                    }
+
+                    break;
+
                 case TileCommands.ReceiveTest.Command:
                     var receiveTest = new TileCommands.ReceiveTest.Reply(nmeaSentence);
 
@@ -1232,6 +1252,78 @@ namespace Iot.Device.Swarm
                     else
                     {
                         return ((TileCommands.GpsFixQualityCmd.Reply)_commandProcessedReply).Information;
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set mode for GPIO1 pin.
+        /// </summary>
+        /// <param name="mode">Mode for GPIO1 pin.</param>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        public void SetGpio1Mode(GpioMode mode)
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                _tileSerialPort.WriteLine(new TileCommands.Gpio1Control(mode).ComposeToSend().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set mode for GPIO1 pin.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public GpioMode GetGpio1Mode()
+        {
+            lock (_commandLock)
+            {
+                // reset error flag
+                _errorOccurredWhenProcessingCommand = false;
+
+                // reset event
+                _commandProcessed.Reset();
+
+                // send the command with -1 to get the current setting
+                _tileSerialPort.WriteLine(TileCommands.Gpio1Control.GetMode().ToString());
+
+                // wait from command to be processed
+                if (_commandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                {
+                    // check for error
+                    if (_errorOccurredWhenProcessingCommand)
+                    {
+                        throw new ErrorExecutingCommandException();
+                    }
+                    else
+                    {
+                        return ((TileCommands.Gpio1Control.Reply)_commandProcessedReply).Mode;
                     }
                 }
                 else
