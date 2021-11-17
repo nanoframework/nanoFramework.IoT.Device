@@ -24,15 +24,15 @@ namespace Iot.Device.Swarm
         /// <remarks>
         /// This is optional. The default is 172800 seconds, minimum is 60 seconds.
         /// </remarks>
-        public uint HoldDuration 
-        { 
+        public uint HoldDuration
+        {
             get
             {
                 return _holdDuration;
             }
             set
             {
-                if(value < 60 || value > 31536000)
+                if (value < 60 || value > 31536000)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -47,15 +47,15 @@ namespace Iot.Device.Swarm
         /// <remarks>
         /// The message will be considered expired if not sent before the specified time.
         /// </remarks>
-        public DateTime ExpireTime 
-        { 
+        public DateTime ExpireTime
+        {
             get
             {
                 return _expireTime;
             }
             set
             {
-                if(value.Ticks < _minExpiryDateTime || value.Ticks > _maxExpiryDateTime)
+                if (value.Ticks < _minExpiryDateTime || value.Ticks > _maxExpiryDateTime)
                 {
                     throw new ArgumentOutOfRangeException();
                 }

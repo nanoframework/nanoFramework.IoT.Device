@@ -29,7 +29,7 @@ namespace Iot.Device.Swarm
         public DateTime TimeStamp { get; internal set; }
 
         /// <inheritdoc/>
-        public MessageReceived(string data, uint applicationId = 0): base(data, applicationId)
+        public MessageReceived(string data, uint applicationId = 0) : base(data, applicationId)
         {
         }
 

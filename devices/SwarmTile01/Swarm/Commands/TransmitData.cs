@@ -7,7 +7,7 @@ using System;
 
 namespace Iot.Device.Swarm
 {
-    public  static partial class TileCommands
+    public static partial class TileCommands
     {
         /// <summary>
         /// Command to transmit a message to the Swarm network.
@@ -79,7 +79,7 @@ namespace Iot.Device.Swarm
                     else if (sentence.Data.StartsWith("TD SENT"))
                     {
                         Event = MessageEvent.Sent;
-                    }                    
+                    }
                 }
             }
 
@@ -99,7 +99,7 @@ namespace Iot.Device.Swarm
                     hdParam = $",HD={_message.HoldDuration}";
                 }
 
-                if(_message.ExpireTime > DateTime.MinValue)
+                if (_message.ExpireTime > DateTime.MinValue)
                 {
                     etParam = $",ET={_message.ExpireTime.ToUnixTimeSeconds()}";
                 }

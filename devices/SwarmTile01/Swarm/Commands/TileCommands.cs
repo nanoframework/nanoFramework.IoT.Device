@@ -5,7 +5,7 @@
 
 namespace Iot.Device.Swarm
 {
-    public  static partial class TileCommands
+    public static partial class TileCommands
     {
 
     }

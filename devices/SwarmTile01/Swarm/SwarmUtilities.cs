@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
 
         public static OperationalQuality GetOperationalQuality(int backgroundNoiseRssi)
         {
-            if(backgroundNoiseRssi >= -90)
+            if (backgroundNoiseRssi >= -90)
             {
                 return OperationalQuality.Bad;
             }

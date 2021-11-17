@@ -37,7 +37,7 @@ namespace Iot.Device.Swarm
                             // $GS <hdop>,<vdop>,<gnss_sats>,<unused>,<fix>*xx
                             //     |                                                |
                             //     3
-                            
+
                             int startIndex = 3;
 
                             // get details now
@@ -50,8 +50,8 @@ namespace Iot.Device.Swarm
                             Information.Vdop = uint.Parse(fixInfo[1]);
                             Information.GnssSatellitesCount = uint.Parse(fixInfo[2]);
                             // 3rd position is unused
-                            
-                            switch(fixInfo[4])
+
+                            switch (fixInfo[4])
                             {
                                 case "DR":
                                     Information.FixType = GpsFixType.DeadReckoning;

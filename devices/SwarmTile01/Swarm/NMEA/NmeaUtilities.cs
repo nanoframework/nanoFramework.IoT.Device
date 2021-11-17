@@ -19,7 +19,7 @@ namespace Iot.Device.Swarm
             byte checksum = 0;
 
             // check for $ start of sentence
-            if(payload[0] == '$')
+            if (payload[0] == '$')
             {
                 index++;
             }

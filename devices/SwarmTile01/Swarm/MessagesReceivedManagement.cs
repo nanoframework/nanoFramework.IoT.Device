@@ -117,7 +117,7 @@ namespace Iot.Device.Swarm
         {
             var msgManagement = new TileCommands.MessagesReceivedManagement.Reply(nmeaSentence);
 
-            if(msgManagement.MessageCount >= 0
+            if (msgManagement.MessageCount >= 0
                || msgManagement.Message != null)
             {
                 // got reply, store
@@ -126,7 +126,7 @@ namespace Iot.Device.Swarm
                 // flag any command waiting for processing
                 _device.CommandProcessed.Set();
             }
-            else if(nmeaSentence.Data.Contains("MARKED,")
+            else if (nmeaSentence.Data.Contains("MARKED,")
                     || nmeaSentence.Data.Contains("DELETED,")
                     || nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
             {

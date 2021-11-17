@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace Iot.Device.Swarm
 {
-    public  static partial class TileCommands
+    public static partial class TileCommands
     {
         /// <summary>
         /// Command to send the Tile to sleep mode for a defined time.

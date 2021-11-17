@@ -430,7 +430,7 @@ namespace Iot.Device.Swarm
                         // signal event 
                         CommandProcessed.Set();
                     }
-                    else if(txData.Event == Swarm.MessageEvent.Received)
+                    else if (txData.Event == Swarm.MessageEvent.Received)
                     {
                         // $TD SENT RSSI=<rssi_sat>,SNR=<snr>,FDEV=<fdev>,<msg_id>*xx
                         //          |              |         |           |       |
@@ -439,7 +439,7 @@ namespace Iot.Device.Swarm
                         int startIndex = 7;
                         ProcessMessageReceivedEvent(nmeaSentence.Data.Substring(startIndex));
                     }
-                    else if(txData.Event == Swarm.MessageEvent.Expired)
+                    else if (txData.Event == Swarm.MessageEvent.Expired)
                     {
                         // raise event for message expired on a thread
                         new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Expired, txData.MessageId); }).Start();
@@ -612,7 +612,6 @@ namespace Iot.Device.Swarm
             }
         }
 
-
         /// <summary>
         /// Perform a software cold restart of the device.
         /// </summary>
@@ -681,7 +680,6 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Get the rate for unsolicited report messages for device power state.
         /// </summary>
-        /// <param name="rate">Number of seconds in between each message.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetReceiveTestRate()

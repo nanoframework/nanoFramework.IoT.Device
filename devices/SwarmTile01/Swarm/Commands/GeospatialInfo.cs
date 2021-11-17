@@ -37,7 +37,7 @@ namespace Iot.Device.Swarm
                             // $GN <latitude>,<longitude>,<altitude>,<course>,<speed>*xx
                             //     |                                                |
                             //     3
-                            
+
                             int startIndex = 3;
 
                             // get details now

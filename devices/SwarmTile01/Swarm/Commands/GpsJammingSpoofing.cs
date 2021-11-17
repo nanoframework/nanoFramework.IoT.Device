@@ -37,7 +37,7 @@ namespace Iot.Device.Swarm
                             // $GJ <spoof_state>,<jamming_level>*xx
                             //     |                           |
                             //     3
-                            
+
                             int startIndex = 3;
 
                             // get details now
