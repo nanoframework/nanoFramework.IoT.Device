@@ -14,7 +14,7 @@ namespace Iot.Device.Swarm
     /// <summary>
     /// Swarm Tile class.
     /// </summary>
-    public partial class SwarmTile : IDisposable
+    public class SwarmTile : IDisposable
     {
         // private static readonly SwarmTile _instance = new SwarmTile();
 
@@ -1366,14 +1366,14 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Event raised when the power state of the device changes.
         /// </summary>
-        public static event PowerStateChangedHandler PowerStateChanged;
+        public event PowerStateChangedHandler PowerStateChanged;
         private PowerStateChangedHandler onPowerStateChanged;
 
         /// <summary>
         /// Raises the <see cref="PowerStateChanged"/> event.
         /// </summary>
         /// <param name="powerStatus"> new power status of the device</param>
-        protected virtual void OnPowerStateChanged(PowerState powerStatus)
+        protected void OnPowerStateChanged(PowerState powerStatus)
         {
             if (onPowerStateChanged == null) onPowerStateChanged = new PowerStateChangedHandler(PowerStateChanged);
             PowerStateChanged?.Invoke(powerStatus);
@@ -1385,7 +1385,7 @@ namespace Iot.Device.Swarm
         #region Message events
 
         /// <summary>
-        /// Represents the delegate used for the <see cref="MessageEvent"/> event.
+        /// Represents the delegate used for the <see cref="MessageReceived"/> event.
         /// </summary>
         /// <param name="messageEvent">Event occurred about a message</param>
         /// <param name="messageId">Id of message the event is related with</param>
@@ -1394,18 +1394,18 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Event raised related with a message.
         /// </summary>
-        public static event MessageEventHandler MessageEvent;
+        public event MessageEventHandler MessageReceived;
         private MessageEventHandler onMessageEvent;
 
         /// <summary>
-        /// Raises the <see cref="MessageEvent"/> event.
+        /// Raises the <see cref="MessageReceived"/> event.
         /// </summary>
         /// <param name="messageEvent">Event occurred about a message</param>
         /// <param name="messageId">Id of message the event is related with</param>
-        protected virtual void OnMessageEvent(MessageEvent messageEvent, string messageId)
+        protected void OnMessageEvent(MessageEvent messageEvent, string messageId)
         {
-            if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageEvent);
-            MessageEvent?.Invoke(messageEvent, messageId);
+            if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageReceived);
+            MessageReceived?.Invoke(messageEvent, messageId);
         }
 
         #endregion
