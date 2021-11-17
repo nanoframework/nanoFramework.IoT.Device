@@ -7,7 +7,7 @@ using System;
 
 namespace Iot.Device.Swarm
 {
-    public static partial class TileCommands
+    internal static partial class TileCommands
     {
         /// <summary>
         /// Command to set and query the data time of the device.

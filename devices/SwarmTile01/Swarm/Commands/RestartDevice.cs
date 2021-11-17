@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace Iot.Device.Swarm
 {
-    public static partial class TileCommands
+    internal static partial class TileCommands
     {
         /// <summary>
         /// Command to perform a hardware reset on the Tile.

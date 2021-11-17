@@ -5,7 +5,7 @@
 
 namespace Iot.Device.Swarm
 {
-    public static partial class TileCommands
+    internal static partial class TileCommands
     {
         /// <summary>
         /// Command to send the Tile to power off mode.

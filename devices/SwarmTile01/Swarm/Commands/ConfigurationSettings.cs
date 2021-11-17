@@ -5,7 +5,7 @@
 
 namespace Iot.Device.Swarm
 {
-    public static partial class TileCommands
+    internal static partial class TileCommands
     {
         /// <summary>
         /// Command to retrieve the configuration settings for the Swarm device ID.

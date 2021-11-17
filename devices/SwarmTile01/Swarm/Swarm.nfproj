@@ -54,7 +54,6 @@
     <Compile Include="SwarmTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwarmUtilities.cs" />
-    <Compile Include="Commands\TileCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">

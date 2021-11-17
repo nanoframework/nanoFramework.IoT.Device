@@ -5,18 +5,21 @@
 
 namespace Iot.Device.Swarm
 {
+    /// <summary>
+    /// Base class for commands.
+    /// </summary>
     public abstract class CommandBase
     {
-        // this is the prompt found on OK replies from the Tile.
+        /// <summary>
+        /// This is the prompt found on OK replies from the Tile.
+        /// </summary>
         public const string PromptOkReply = " OK";
 
-        // this is the prompt found on ERROR replies from the Tile.
-        public const string PromptErrorReply = " ERR";
 
         /// <summary>
-        /// Command prefix.
+        /// this is the prompt found on ERROR replies from the Tile.
         /// </summary>
-        //public static string Command { get; internal set; }
+        public const string PromptErrorReply = " ERR";
 
         internal abstract NmeaSentence ComposeToSend();
     }

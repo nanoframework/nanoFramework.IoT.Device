@@ -7,7 +7,10 @@ using System;
 
 namespace Iot.Device.Swarm
 {
-    public static partial class TileCommands
+    /// <summary>
+    /// Class holding all commands that are sent to the Tile.
+    /// </summary>
+    internal static partial class TileCommands
     {
         /// <summary>
         /// Command to manage messages received database.

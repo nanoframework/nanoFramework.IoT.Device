@@ -7,6 +7,9 @@ using System;
 
 namespace Iot.Device.Swarm
 {
+    /// <summary>
+    /// Base class for the received and transmitted messages.
+    /// </summary>
     public class MessageBase
     {
 

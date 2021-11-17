@@ -80,6 +80,7 @@ namespace Iot.Device.Swarm
             return newNemaSentence;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             // compute checksum
