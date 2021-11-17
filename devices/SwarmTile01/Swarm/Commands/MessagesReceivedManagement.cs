@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
     public static partial class TileCommands
     {
         /// <summary>
-        /// Command to set, query and control of the GPIO1 pin to allow indications or control the operation of the Tile.
+        /// Command to manage messages received database.
         /// </summary>
         public class MessagesReceivedManagement : CommandBase
         {
