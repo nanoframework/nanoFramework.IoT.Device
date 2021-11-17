@@ -49,7 +49,7 @@ namespace Iot.Device.Swarm
         internal PowerState _powerState = PowerState.Unknown;
 
         /// <summary>
-        /// Timeout for command exection (in miliseconds).
+        /// Timeout for command execution (in milliseconds).
         /// </summary>
         public int TimeoutForCommandExecution { get; set; } = 5000;
 
@@ -103,7 +103,7 @@ namespace Iot.Device.Swarm
         public int FrequencyDeviation { get; private set; } = 0;
 
         /// <summary>
-        /// Timestamp of the last packet received.
+        /// Time-stamp of the last packet received.
         /// </summary>
         public DateTime LastPacketReceivedTimestamp { get; private set; } = DateTime.MinValue;
 
@@ -136,7 +136,7 @@ namespace Iot.Device.Swarm
         /// <param name="portName"></param>
         public SwarmTile(string portName)
         {
-            // config SerialPort and...
+            // configure SerialPort and...
             _tileSerialPort = new SerialPort(portName, 115200);
 
             //... try opening it
@@ -156,7 +156,7 @@ namespace Iot.Device.Swarm
             _processIncommingSentencesThread = new Thread(ProcessIncommingSentencesWorkerThread);
             _processIncommingSentencesThread.Start();
 
-            // fire thread to get general details
+            // start thread to get general details
             var getDetailsThread = new Thread(GetGeneralDetailsThread);
             getDetailsThread.Start();
 
@@ -197,7 +197,7 @@ namespace Iot.Device.Swarm
                 // signal event
                 _messageReceived.Set();
 
-                // check if this is the very 1st message receveide
+                // check if this is the very 1st message received
                 if (_isFirstMessage)
                 {
                     // reset flag
@@ -460,7 +460,7 @@ namespace Iot.Device.Swarm
                     }
                     else
                     {
-                        // unknow message
+                        // unknown message
                         Debug.WriteLine($"Unknown message NOT processed: {nmeaSentence.Data}");
                     }
                     break;
@@ -493,7 +493,7 @@ namespace Iot.Device.Swarm
             }
             catch
             {
-                // ignore any exceptions that occurr during processing
+                // ignore any exceptions that occur during processing
             }
         }
 
@@ -630,7 +630,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetReceiveTestRate(uint rate)
         {
             lock (_commandLock)
@@ -664,7 +664,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="rate">Number of seconds in between each message.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetReceiveTestRate()
         {
             lock (_commandLock)
@@ -704,7 +704,7 @@ namespace Iot.Device.Swarm
         /// <param name="value">Sleep for this many seconds.</param>
         /// <exception cref="ArgumentException">If rate is &lt; 5.</exception>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SendToSleep(uint value)
         {
             if (value < 1)
@@ -749,7 +749,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="wakeupTime">Sleep until date and time.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SendToSleep(DateTime wakeupTime)
         {
             lock (_commandLock)
@@ -787,9 +787,9 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Transmits data to the Swarm network.
         /// </summary>
-        /// <param name="message">The message with the data to be transmited.</param>
+        /// <param name="message">The message with the data to be transmitted.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public string TransmitData(Message message)
         {
             lock (_commandLock)
@@ -828,7 +828,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetDateTimeStatusRate(uint rate)
         {
             lock (_commandLock)
@@ -861,7 +861,7 @@ namespace Iot.Device.Swarm
         /// Get the rate for unsolicited report messages for date and time.
         /// </summary>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetDateTimeStatusRate()
         {
             lock (_commandLock)
@@ -899,7 +899,7 @@ namespace Iot.Device.Swarm
         /// Get the current <see cref="DateTimeInfo"/> from the Tile.
         /// </summary>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public DateTimeInfo GetDateTimeStatus()
         {
             lock (_commandLock)
@@ -938,7 +938,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetJammingSpoofingIndicationRate(uint rate)
         {
             lock (_commandLock)
@@ -971,7 +971,7 @@ namespace Iot.Device.Swarm
         /// Get the rate for unsolicited report messages for jamming and spoofing indicators.
         /// </summary>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetJammingSpoofingIndicationRate()
         {
             lock (_commandLock)
@@ -1009,7 +1009,7 @@ namespace Iot.Device.Swarm
         /// Get the current <see cref="JammingSpoofingIndication"/> from the Tile.
         /// </summary>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public JammingSpoofingIndication GetJammingSpoofingIndication()
         {
             lock (_commandLock)
@@ -1048,7 +1048,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetGeospatialInformationRate(uint rate)
         {
             lock (_commandLock)
@@ -1081,7 +1081,7 @@ namespace Iot.Device.Swarm
         /// Get the rate for unsolicited report messages for geospatial information.
         /// </summary>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public uint GetGeospatialInformationRate()
         {
             lock (_commandLock)
@@ -1119,7 +1119,7 @@ namespace Iot.Device.Swarm
         /// Get the current <see cref="GeospatialInformation"/> from the Tile.
         /// </summary>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public GeospatialInformation GetGeospatialInformation()
         {
             lock (_commandLock)
@@ -1159,7 +1159,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetGpsFixQualityRate(uint rate)
         {
             lock (_commandLock)
@@ -1269,7 +1269,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         /// <param name="mode">Mode for GPIO1 pin.</param>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timout occurred when waiting for command execution.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
         public void SetGpio1Mode(GpioMode mode)
         {
             lock (_commandLock)

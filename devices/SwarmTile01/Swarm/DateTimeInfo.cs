@@ -13,7 +13,7 @@ namespace Iot.Device.Swarm
     public class DateTimeInfo
     {
         /// <summary>
-        /// <see cref="DateTime"/> value availabel from the Tile.
+        /// <see cref="DateTime"/> value available from the Tile.
         /// </summary>
         public DateTime Value { get; internal set; } = DateTime.MinValue;
 

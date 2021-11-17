@@ -76,7 +76,7 @@ namespace Iot.Device.Swarm
 
                             if (sentence.Data[startIndex] == 'V')
                             {
-                                // date time information is vcalid
+                                // date time information is valid
                                 DateTimeInfo.IsValid = true;
                             }
                             else

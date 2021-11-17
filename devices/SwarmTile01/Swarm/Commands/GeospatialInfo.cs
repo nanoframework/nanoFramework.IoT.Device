@@ -8,7 +8,7 @@ namespace Iot.Device.Swarm
     public static partial class TileCommands
     {
         /// <summary>
-        /// Command to set or query the unsolicited report messages for geopspacial information.
+        /// Command to set or query the unsolicited report messages for geospatial information.
         /// </summary>
         public class GeospatialInfo : CommandBase
         {

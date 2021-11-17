@@ -8,7 +8,7 @@ namespace Iot.Device.Swarm
     public  static partial class TileCommands
     {
         /// <summary>
-        /// Command to retrieve the firwmware details.
+        /// Command to retrieve the firmware details.
         /// </summary>
         public class RetreiveFirmwareVersion : CommandBase
         {

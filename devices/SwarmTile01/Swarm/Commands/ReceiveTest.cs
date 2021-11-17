@@ -47,7 +47,7 @@ namespace Iot.Device.Swarm
                                 // $RT RSSI=<rssi_background>*xx
                                 //          |               |
                                 //          8
-                                // get value at this postion
+                                // get value at this position
                                 BackgroundRssi = int.Parse(sentence.Data.Substring(8));
                             }
                         }
