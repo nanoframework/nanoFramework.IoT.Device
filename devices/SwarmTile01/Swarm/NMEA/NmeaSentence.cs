@@ -63,7 +63,9 @@ namespace Iot.Device.Swarm
             }
 
             // compute NMEA checksum for this sentence
-            var checksum = NmeaUtilities.ComputeChecksum(sentence);
+            var checksum = NmeaUtilities.ComputeChecksum(
+                sentence,
+                true);
 
             if (checksum.ToString("x2")
                 != sentence.Substring(sentence.Length - _asteriskPosition + 1, 2))
@@ -81,7 +83,9 @@ namespace Iot.Device.Swarm
         public override string ToString()
         {
             // compute checksum
-            var checksum = NmeaUtilities.ComputeChecksum(Data);
+            var checksum = NmeaUtilities.ComputeChecksum(
+                Data,
+                false);
 
             return $"${Data}*{checksum.ToString("x2")}";
         }

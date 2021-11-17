@@ -11,8 +11,9 @@ namespace Iot.Device.Swarm
         /// Computes NMEA checksum of a NMEA message.
         /// </summary>
         /// <param name="payload">Payload message to compute checksum</param>
+        /// <param name="receivedSentence">Set to <see langword="true"/> if this a received sentence.</param>
         /// <returns>Th NMEA checksum of the <paramref name="payload"/>.</returns>
-        public static byte ComputeChecksum(string payload)
+        public static byte ComputeChecksum(string payload, bool receivedSentence = true)
         {
             int index = 0;
             byte checksum = 0;
@@ -25,8 +26,10 @@ namespace Iot.Device.Swarm
 
             for (; index < payload.Length; index++)
             {
-                // stop at '*'
-                if (payload[index] == '*')
+                // stop at '*' if this is a received sentence
+                // if 
+                if (receivedSentence
+                    && payload[index] == '*')
                 {
                     // done here
                     break;
