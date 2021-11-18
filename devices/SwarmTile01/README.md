@@ -56,14 +56,23 @@ else
 
 ### Sending a message
 
-Composing and queuing up a message for transmission requires only a couple of lines of code.
+Composing and queuing up a message for transmission requires only a few lines  of code.
 
 ```csharp
 // transmit a message to the Swarm network
 MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
-var msgId = swarmTile.TransmitData(message);
 
-Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+// send message
+string msgId;
+
+if (swarmTile.TryToSendMessage(message, out msgId))
+{
+    Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+}
+else
+{
+    Debug.WriteLine($"Failed to send message. Error: {swarmTile.LastErrorMessage}.");
+}
 ```
 
 ### Handling events

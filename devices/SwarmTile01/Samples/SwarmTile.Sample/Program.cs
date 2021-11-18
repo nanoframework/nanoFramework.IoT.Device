@@ -90,9 +90,16 @@ namespace NFApp28
                 message.ApplicationID = 12345;
 
                 // send message
-                var msgId = swarmTile.TransmitData(message);
+                string msgId;
 
-                Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+                if (swarmTile.TryToSendMessage(message, out msgId))
+                {
+                    Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+                }
+                else
+                {
+                    Debug.WriteLine($"Failed to send message. Error: {swarmTile.LastErrorMessage}.");
+                }
             }
 
             Thread.Sleep(Timeout.Infinite);
