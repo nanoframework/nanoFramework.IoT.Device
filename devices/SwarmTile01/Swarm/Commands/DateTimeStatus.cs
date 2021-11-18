@@ -93,7 +93,7 @@ namespace Iot.Device.Swarm
                             //     |    |
                             //     3       
 
-                            Rate = uint.Parse(sentence.Data.Substring(3));
+                            Rate = uint.Parse(sentence.Data.Substring(ReplyStartIndex));
                         }
                     }
                     catch

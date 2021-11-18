@@ -16,6 +16,9 @@ namespace Iot.Device.Swarm
 
             public class Reply
             {
+                private const int _indexOfTimeStamp = 0;
+                private const int _indexOfVersion = 1;
+
                 /// <summary>
                 /// Returns the device firmware version.
                 /// </summary>
@@ -37,8 +40,8 @@ namespace Iot.Device.Swarm
                     // get version now
                     var fwInfo = sentence.Data.Substring(startIndex).Split(',');
 
-                    FirmwareTimeStamp = fwInfo[0];
-                    FirmwareVersion = fwInfo[1];
+                    FirmwareTimeStamp = fwInfo[_indexOfTimeStamp];
+                    FirmwareVersion = fwInfo[_indexOfVersion];
                 }
             }
 

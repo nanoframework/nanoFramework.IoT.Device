@@ -18,6 +18,11 @@ namespace Iot.Device.Swarm
 
             public class Reply
             {
+                private const int _indexOfHdop = 0;
+                private const int _indexOfVdop = 1;
+                private const int _indexOfGnssSatellitesCount = 2;
+                private const int _indexOfFixType = 4;
+
                 /// <summary>
                 /// <see cref="GpsFixQuality"/> information.
                 /// </summary>
@@ -46,12 +51,11 @@ namespace Iot.Device.Swarm
                             Information = new GpsFixQuality();
 
                             // fill in all details
-                            Information.Hdop = uint.Parse(fixInfo[0]);
-                            Information.Vdop = uint.Parse(fixInfo[1]);
-                            Information.GnssSatellitesCount = uint.Parse(fixInfo[2]);
-                            // 3rd position is unused
-
-                            switch (fixInfo[4])
+                            Information.Hdop = uint.Parse(fixInfo[_indexOfHdop]);
+                            Information.Vdop = uint.Parse(fixInfo[_indexOfVdop]);
+                            Information.GnssSatellitesCount = uint.Parse(fixInfo[_indexOfGnssSatellitesCount]);
+                            
+                            switch (fixInfo[_indexOfFixType])
                             {
                                 case "DR":
                                     Information.FixType = GpsFixType.DeadReckoning;
@@ -96,7 +100,7 @@ namespace Iot.Device.Swarm
                             //     |    |
                             //     3       
 
-                            Rate = uint.Parse(sentence.Data.Substring(3));
+                            Rate = uint.Parse(sentence.Data.Substring(ReplyStartIndex));
                         }
                     }
                     catch

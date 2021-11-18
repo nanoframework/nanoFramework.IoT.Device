@@ -53,12 +53,12 @@ namespace Iot.Device.Swarm
                         }
                         else if (!sentence.Data.Contains("OK"))
                         {
-                            // this is a rate reply
+                            // must be the current RT rate
                             // $DT <rate>* xx 
                             //     |    |
                             //     3       
-                            // must be the current RT rate
-                            Rate = uint.Parse(sentence.Data.Substring(3));
+
+                            Rate = uint.Parse(sentence.Data.Substring(ReplyStartIndex));
                         }
                     }
                     catch

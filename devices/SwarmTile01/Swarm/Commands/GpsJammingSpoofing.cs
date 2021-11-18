@@ -18,6 +18,9 @@ namespace Iot.Device.Swarm
 
             public class Reply
             {
+                private const int _indexOfSpoofState = 0;
+                private const int _indexOfJammingLevel = 1;
+
                 /// <summary>
                 /// <see cref="JammingSpoofingIndication"/> information.
                 /// </summary>
@@ -46,10 +49,10 @@ namespace Iot.Device.Swarm
                             Indication = new JammingSpoofingIndication();
 
                             // spoof state
-                            Indication.SpoofState = byte.Parse(indication[0]);
+                            Indication.SpoofState = byte.Parse(indication[_indexOfSpoofState]);
 
                             // jamming 
-                            Indication.SpoofState = byte.Parse(indication[1]);
+                            Indication.JammingLevel = byte.Parse(indication[_indexOfJammingLevel]);
                         }
                         else if (!sentence.Data.Contains(PromptOkReply))
                         {
@@ -59,7 +62,7 @@ namespace Iot.Device.Swarm
                             //     |    |
                             //     3       
 
-                            Rate = uint.Parse(sentence.Data.Substring(3));
+                            Rate = uint.Parse(sentence.Data.Substring(ReplyStartIndex));
                         }
                     }
                     catch

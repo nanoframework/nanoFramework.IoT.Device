@@ -18,6 +18,12 @@ namespace Iot.Device.Swarm
 
             public class Reply
             {
+                private const int _indexOfLatitude = 0;
+                private const int _indexOfLongitude = 1;
+                private const int _indexOfAltitude = 2;
+                private const int _indexOfCourse = 3;
+                private const int _indexOfSpeed = 4;
+
                 /// <summary>
                 /// <see cref="GeospatialInformation"/> information.
                 /// </summary>
@@ -46,11 +52,11 @@ namespace Iot.Device.Swarm
                             Information = new GeospatialInformation();
 
                             // fill in all details
-                            Information.Latitude = float.Parse(geoInfo[0]);
-                            Information.Longitude = float.Parse(geoInfo[1]);
-                            Information.Altitude = float.Parse(geoInfo[2]);
-                            Information.Course = float.Parse(geoInfo[3]);
-                            Information.Speed = float.Parse(geoInfo[4]);
+                            Information.Latitude = float.Parse(geoInfo[_indexOfLatitude]);
+                            Information.Longitude = float.Parse(geoInfo[_indexOfLongitude]);
+                            Information.Altitude = float.Parse(geoInfo[_indexOfAltitude]);
+                            Information.Course = float.Parse(geoInfo[_indexOfCourse]);
+                            Information.Speed = float.Parse(geoInfo[_indexOfSpeed]);
                         }
                         else if (!sentence.Data.Contains(PromptOkReply))
                         {
@@ -60,7 +66,7 @@ namespace Iot.Device.Swarm
                             //     |    |
                             //     3       
 
-                            Rate = uint.Parse(sentence.Data.Substring(3));
+                            Rate = uint.Parse(sentence.Data.Substring(ReplyStartIndex));
                         }
                     }
                     catch

@@ -16,6 +16,9 @@ namespace Iot.Device.Swarm
 
             public class Reply
             {
+                private const int _indexOfDeviceId = 0;
+                private const int _indexOfDeviceName = 1;
+
                 /// <summary>
                 /// Device ID that identifies this device on the Swarm network
                 /// </summary>
@@ -40,11 +43,11 @@ namespace Iot.Device.Swarm
                         var configuration = sentence.Data.Substring(startIndex).Split(',');
 
                         // device ID
-                        var deviceIdRaw = configuration[0].Split('=');
+                        var deviceIdRaw = configuration[_indexOfDeviceId].Split('=');
                         DeviceId = deviceIdRaw[1];
 
                         // device name
-                        var deviceNameRaw = configuration[1].Split('=');
+                        var deviceNameRaw = configuration[_indexOfDeviceName].Split('=');
                         DeviceName = deviceNameRaw[1];
                     }
                     catch

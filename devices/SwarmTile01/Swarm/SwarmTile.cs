@@ -469,7 +469,7 @@ namespace Iot.Device.Swarm
                         CommandProcessed.Set();
                     }
                     // ... ERROR messages
-                    else if (nmeaSentence.Data.Substring(2, 4) == " ERR")
+                    else if (nmeaSentence.Data.Contains(CommandBase.PromptErrorReply))
                     {
                         // error 
                         // set error flag 

@@ -34,7 +34,8 @@ namespace Iot.Device.Swarm
             {
                 // set command data
                 // rate value otherwise
-                string data = "";
+                string data;
+
                 if (SleepInterval > 0)
                 {
                     data = $"S={SleepInterval}";
