@@ -25,52 +25,113 @@ For a smoother experience it's recommended that you follow the instructions on S
 ### Setup the device in a C# application
 
 You just need to instantiate the `SwarmTile` object and pass the COM port where it's connected to.
-On the code snippet bellow that's what's happening along with displaying the device IDs and queueing up a message for transmition.
+On the code snippet bellow that's what's happening along with a event being awaited for the device to become ready.
 
 ```csharp
-
 // The COM port where the Tile is connected to
 // Using COM1 for the Swarm Evaluation Kit
 var swarmTile = new SwarmTile("COM1");
 
-// let it settle for a couple of seconds
-Thread.Sleep(5_000);
+// wait 5 seconds for the Tile to become operational
+if(!swarmTile.DeviceReady.WaitOne(5_000, false))
+{
+    /////////////////////////
+    // Tile is not responsive
+    /////////////////////////
 
-// output device IDs
-Debug.WriteLine($"DeviceID: {swarmTile.DeviceID}");
-Debug.WriteLine($"DeviceName: {swarmTile.DeviceName}");
+    Debug.WriteLine("****************************************************************");
+    Debug.WriteLine("*** TILE IS NOT RESPONSIVE, POSSIBLY POWERED OFF OR SLEEPING ***");
+    Debug.WriteLine("****************************************************************");
+}
+else
+{
+    // output device IDs
+    Debug.WriteLine($"DeviceID: {swarmTile.DeviceID}");
+    Debug.WriteLine($"DeviceName: {swarmTile.DeviceName}");
+}
+```
 
+### Sending a message
+
+Composing and queuing up a message for transmission requires only a couple of lines of code.
+
+```csharp
 // transmit a message to the Swarm network
 MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
 var msgId = swarmTile.TransmitData(message);
 
 Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
-
 ```
 
-### Adding event handlers
+### Handling events
 
-You just need to instantiate the `SwarmTile` object and pass the COM port where it's connected to.
-On the code snippet bellow that's what's happening along with displaying the device IDs and queueing up a message for transmition.
+The library offers several events to allow using it in a "reactive" fashion. With those one doesn't have to worry about asynchronous events or keep pooling for updates or state changes.
+
+To get notified on a message event (transmitted, expired or received) just add the handler, like this:
 
 ```csharp
-
-// The COM port where the Tile is connected to
-// Using COM1 for the Swarm Evaluation Kit
-var swarmTile = new SwarmTile("COM1");
-
-// let it settle for a couple of seconds
-Thread.Sleep(5_000);
-
-// output device IDs
-Debug.WriteLine($"DeviceID: {swarmTile.DeviceID}");
-Debug.WriteLine($"DeviceName: {swarmTile.DeviceName}");
-
-// transmit a message to the Swarm network
-MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
-var msgId = swarmTile.TransmitData(message);
-
-Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
-
+// setup handler for message events
+swarmTile.MessageEvent += SwarmTile_MessageReceived;
 ```
 
+And add code to process the event.
+
+```csharp
+private static void SwarmTile_MessageEvent(MessageEvent messageEvent, string messageId)
+{
+    switch(messageEvent)
+    {
+        case MessageEvent.Expired:
+            Debug.WriteLine($"Message {messageId} expired without being transmitted.");
+            break;
+
+        case MessageEvent.Sent:
+            Debug.WriteLine($"Message {messageId} has been successfully transmitted.");
+            break;
+
+        case MessageEvent.Received:
+            Debug.WriteLine($"Just received message {messageId}.");
+            break;
+
+    }
+}
+```
+
+There are other events available, like power state change, updated date and time, background noise reading and geospatial information.
+
+### Controlling power mode
+
+The Swarm Tile allows controlling the power state of the device to better manage power usage.
+
+To completely power off the device, call this `swarmTile.PowerOff()`.
+
+To have the Tile go into sleep for 60 minutes and wake-up again: `swarmTile.SendToSleep(60 * 60)`.
+Upon wake-up a `PowerStateChanged` event is raised.
+
+### Managing messages
+
+To manage messages the Swarm Tile has a local database with two tables: one for messages waiting to be transmitted and another for received messages.
+Those tables can be queried, read from and items deleted. The `SwarmTile` expose those as two properties, respectively: `MessagesToTransmit` and `MessagesReceived`.
+
+Available operations to `MessagesToTransmit` table:
+
+- List all messages: `GetAllMessages()`.
+- List a specific message: `GetMessage(id)`.
+- Delete all messages: `DeleteAllMessages()`.
+- Delete a specific message: `DeleteMessage(id)`.
+- Number of messages in the table: `Count` property.
+
+Available operations to `MessagesReceived` table:
+
+- List all messages: `GetAllMessages()`.
+- List a specific message: `GetMessage(id)`.
+- Read a specific message: `ReadMessage(id)`.
+- Read the newest received message: `ReadNewestMessage()`.
+- Read the oldest message received: `ReadOldestMessage()`.
+- Mark a message as read: `MarkMessageRead(id)`.
+- Mark all messages as read: `MarkAllMessagesRead()`.
+- Delete all messages: `DeleteAllMessages()`.
+- Delete all messages that have been read: `DeleteAllReadMessages()`.
+- Delete a specific message: `DeleteMessage(id)`.
+- Number of messages in the table: `Count` property.
+- Number of unread messages in the table: `UnreadCount` property.
