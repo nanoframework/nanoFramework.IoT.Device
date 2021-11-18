@@ -49,7 +49,7 @@ namespace Iot.Device.Swarm
                         // get message ID
                         MessageId = sentence.Data.Substring(startIndex);
                     }
-                    else if (sentence.Data.StartsWith("TD ERROR"))
+                    else if (sentence.Data.Contains(PromptErrorReply))
                     {
                         // handle expired error differently
                         if (sentence.Data.Contains("HOLDTIMEEXPIRED"))
@@ -67,6 +67,8 @@ namespace Iot.Device.Swarm
                         }
                         else
                         {
+                            // for all the rest extract the error detail
+
                             // $TD ERR,BADDATA*0e
                             //         |     |
                             //         7                     
