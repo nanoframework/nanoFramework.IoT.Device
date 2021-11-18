@@ -42,7 +42,7 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// is an epoch second date after which the message will be expired if it has not been sent.
+        /// <see cref="DateTime"/> value after which the message will be expired if it has not been sent.
         /// </summary>
         /// <remarks>
         /// The message will be considered expired if not sent before the specified time.
