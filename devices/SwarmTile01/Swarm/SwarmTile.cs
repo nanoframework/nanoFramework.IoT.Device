@@ -141,6 +141,11 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// 
         /// </summary>
+        public AutoResetEvent DeviceReady = new AutoResetEvent(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="portName"></param>
         public SwarmTile(string portName)
         {
@@ -310,6 +315,9 @@ namespace Iot.Device.Swarm
                     {
                         // this reply it's a GN information, store
                         CommandProcessedReply = geoInfo;
+
+                        // raise event for GeospatialInfo available on a thread
+                        new Thread(() => { OnGeospatialInfoAvailable(geoInfo.Information); }).Start();
 
                         // signal event 
                         CommandProcessed.Set();
@@ -1476,6 +1484,39 @@ namespace Iot.Device.Swarm
             }
 
             BackgroundNoiseInfoAvailable?.Invoke(rssi);
+        }
+
+        #endregion
+
+        #region GeospatialInfo handlers and events
+
+        /// <summary>
+        /// Represents the delegate used for the <see cref="GeospatialInfoAvailable"/> event.
+        /// </summary>
+        /// <param name="geoSpatialInfo"> data available</param>
+        public delegate void GeospatialInfoHandler(GeospatialInformation geoSpatialInfo);
+
+        /// <summary>
+        /// Event raised when there is an updated <see cref="GeospatialInformation"/>.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetGeospatialInformationRate"/> to configure the rate that this event is generated.
+        /// </remarks>
+        public event GeospatialInfoHandler GeospatialInfoAvailable;
+        private GeospatialInfoHandler onGeospatialInfoAvailable;
+
+        /// <summary>
+        /// Raises the <see cref="GeospatialInfoAvailable"/> event.
+        /// </summary>
+        /// Updated <param name="geoSpatialInfo"> data.</param>
+        protected void OnGeospatialInfoAvailable(GeospatialInformation geoSpatialInfo)
+        {
+            if (onGeospatialInfoAvailable == null)
+            {
+                onGeospatialInfoAvailable = new GeospatialInfoHandler(GeospatialInfoAvailable);
+            }
+
+            GeospatialInfoAvailable?.Invoke(geoSpatialInfo);
         }
 
         #endregion
