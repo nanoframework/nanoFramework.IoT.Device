@@ -20,6 +20,9 @@ This library allows using all the features of the satellite module from [Swarm](
 
 The Swarm Evaluation Kit contains a [Feather S2](https://feathers2.io/) module inside. The code described here (and in the sample application) is based on this hardware. If you're using the library with another nanoFramework module and/or connected to your Swarm Tile you may have to adjust the COM port where it's connected.
 
+The Feather S2 module is connected to Visual Studio using an USB cable like this.
+![Feather USB connection](./eval-kit-usb.jpg)
+
 For a smoother experience it's recommended that you follow the instructions on Swarm Evaluation Kit guide on how to properly setup the Kit.
 
 ### Setup the device in a C# application
@@ -97,7 +100,7 @@ private static void SwarmTile_MessageEvent(MessageEvent messageEvent, string mes
 }
 ```
 
-There are other events available, like power state change, updated date and time, background noise reading and geospatial information.
+There are other events available, like power state change, date and time updated, background noise reading, geospatial information and tile status.
 
 ### Controlling power mode
 
