@@ -16,8 +16,6 @@ namespace Iot.Device.Swarm
     /// </summary>
     public class SwarmTile : IDisposable
     {
-        // private static readonly SwarmTile _instance = new SwarmTile();
-
         private readonly object _lock = new object();
         internal readonly object CommandLock = new object();
 
