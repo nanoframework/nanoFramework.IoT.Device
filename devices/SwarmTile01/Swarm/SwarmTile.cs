@@ -140,6 +140,11 @@ namespace Iot.Device.Swarm
         public MessagesToTransmitManagement MessagesToTransmit { get; }
 
         /// <summary>
+        /// Last error message from the Tile.
+        /// </summary>
+        public string LastErrorMessage { get; private set; }
+
+        /// <summary>
         /// Event signaling that the Tile is ready for operation.
         /// </summary>
         /// <remarks>
@@ -572,11 +577,41 @@ namespace Iot.Device.Swarm
 
                     FirmwareTimeStamp = fwInfo[0];
                     FirmwareVersion = fwInfo[1];
-                }
-                if (nmeaSentence.Data.Contains(",RUNNING"))
-                {
 
+                    // start thread to get general details
+                    var getDetailsThread = new Thread(GetGeneralDetailsThread);
+                    getDetailsThread.Start();
                 }
+                else if (nmeaSentence.Data.Contains(",RUNNING"))
+                {
+                    // update power state
+                    PowerState = PowerState.On;
+                }
+                else if (nmeaSentence.Data.Contains("DATETIME"))
+                {
+                    // raise event for new tile status on a thread
+                    new Thread(() => { OnTileStatusEvent(TileStatus.DateTimeAvailable); }).Start();
+                }
+                else if (nmeaSentence.Data.Contains("POSITION"))
+                {
+                    // raise event for new tile status on a thread
+                    new Thread(() => { OnTileStatusEvent(TileStatus.PositionAvailable); }).Start();
+                }
+                else if (nmeaSentence.Data.Contains("ERROR"))
+                {
+                    // $TILE <msg>,[<data>]*xx
+                    //       |             |
+                    //       5
+
+                    // extract error message
+                    var errorMessage = nmeaSentence.Data.Substring(5).Split(',');
+
+                    LastErrorMessage = errorMessage[1];
+
+                    // raise event for new tile status on a thread
+                    new Thread(() => { OnTileStatusEvent(TileStatus.Error); }).Start();
+                }
+
                 else
                 {
 
@@ -1535,6 +1570,36 @@ namespace Iot.Device.Swarm
             }
 
             GeospatialInfoAvailable?.Invoke(geoSpatialInfo);
+        }
+
+        #endregion
+
+        #region Status message events
+
+        /// <summary>
+        /// Represents the delegate used for the <see cref="TileStatusEvent"/> event.
+        /// </summary>
+        /// <param name="status">Tile status</param>
+        public delegate void TileStatusEventHandler(TileStatus status);
+
+        /// <summary>
+        /// Event raised when there is a new Tile Status.
+        /// </summary>
+        public event TileStatusEventHandler TileStatusEvent;
+        private TileStatusEventHandler onTileStatusEvent;
+
+        /// <summary>
+        /// Raises the <see cref="TileStatusEvent"/> event.
+        /// </summary>
+        /// <param name="status">Event occurred about a message</param>
+        protected void OnTileStatusEvent(TileStatus status)
+        {
+            if (onTileStatusEvent == null)
+            {
+                onTileStatusEvent = new TileStatusEventHandler(TileStatusEvent);
+            }
+
+            TileStatusEvent?.Invoke(status);
         }
 
         #endregion
