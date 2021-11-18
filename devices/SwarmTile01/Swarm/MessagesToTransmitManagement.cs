@@ -71,10 +71,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesToTransmitManagement.Command;
+
                 _device.TileSerialPort.WriteLine(TileCommands.MessagesToTransmitManagement.ListMessage(id).ToString());
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)
@@ -124,10 +132,18 @@ namespace Iot.Device.Swarm
                 // set flag that we're listing messages
                 _listingMessages = true;
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesToTransmitManagement.Command;
+
                 _device.TileSerialPort.WriteLine(TileCommands.MessagesToTransmitManagement.ListMessage(null).ToString());
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // clear flag
                     _listingMessages = false;
@@ -211,10 +227,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesToTransmitManagement.Command;
+
                 _device.TileSerialPort.WriteLine(TileCommands.MessagesToTransmitManagement.GetMessageCount().ToString());
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)
@@ -243,10 +267,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesToTransmitManagement.Command;
+
                 _device.TileSerialPort.WriteLine(TileCommands.MessagesToTransmitManagement.DeleteMessages(id).ToString());
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)

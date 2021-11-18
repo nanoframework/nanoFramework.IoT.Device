@@ -20,6 +20,9 @@ namespace Iot.Device.Swarm
         private readonly object _lock = new object();
         internal readonly object CommandLock = new object();
 
+        // variable holding the command that's being executed, if any
+        internal string CommandInExecution;
+
         internal SerialPort TileSerialPort;
 
         // event to signal that a new message has been received and placed on the queue
@@ -279,6 +282,8 @@ namespace Iot.Device.Swarm
         {
             var prefix = nmeaSentence.Data.Substring(0, 2);
 
+            bool signalCommandEvent = false;
+
             switch (prefix)
             {
                 case TileCommands.DateTimeStatus.Command:
@@ -292,8 +297,7 @@ namespace Iot.Device.Swarm
                         // reply it's the RT rate, store
                         CommandProcessedReply = dtStatus;
 
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (dtStatus.Rate > uint.MinValue)
                     {
@@ -303,13 +307,11 @@ namespace Iot.Device.Swarm
                         // raise event for DateTimeInfo available on a thread
                         new Thread(() => { OnDateTimeStatusAvailable(dtStatus.DateTimeInfo); }).Start();
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
 
                     break;
@@ -322,13 +324,11 @@ namespace Iot.Device.Swarm
                         // this reply it's a GJ indication, store
                         CommandProcessedReply = jsIndication;
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
 
                     break;
@@ -347,13 +347,11 @@ namespace Iot.Device.Swarm
                         // raise event for GeospatialInfo available on a thread
                         new Thread(() => { OnGeospatialInfoAvailable(geoInfo.Information); }).Start();
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
 
                     break;
@@ -366,13 +364,11 @@ namespace Iot.Device.Swarm
                         // this reply it's a GS, store
                         CommandProcessedReply = gpsFixInfo;
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
 
                     break;
@@ -386,13 +382,11 @@ namespace Iot.Device.Swarm
                         // this reply it's a GP, store
                         CommandProcessedReply = gpioMode;
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
 
                     break;
@@ -407,21 +401,17 @@ namespace Iot.Device.Swarm
 
                         // raise event for background noise info available
                         new Thread(() => { OnBackgroundNoiseInfoAvailable(receiveTest.BackgroundRssi); }).Start();
-
-                        //_dateTimeStatus = dtStatus;
                     }
                     else if (receiveTest.Rate > uint.MinValue)
                     {
                         // reply it's the RT rate, store
                         CommandProcessedReply = receiveTest;
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
 
                     break;
@@ -468,8 +458,7 @@ namespace Iot.Device.Swarm
                         // store reply
                         CommandProcessedReply = txData;
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (txData.ErrorMessage != null)
                     {
@@ -479,8 +468,7 @@ namespace Iot.Device.Swarm
                         // set error flag 
                         ErrorOccurredWhenProcessingCommand = true;
 
-                        // signal event 
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (txData.Event == Swarm.MessageEvent.Received)
                     {
@@ -512,8 +500,7 @@ namespace Iot.Device.Swarm
                     if (nmeaSentence.Data.Contains(CommandBase.PromptOkReply))
                     {
                         // we're good
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     // ... ERROR messages
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptErrorReply))
@@ -522,8 +509,7 @@ namespace Iot.Device.Swarm
                         // set error flag 
                         ErrorOccurredWhenProcessingCommand = true;
 
-                        // flag any command waiting for processing
-                        CommandProcessed.Set();
+                        signalCommandEvent = true;
                     }
                     else if (ProcessKnownPrompts(nmeaSentence))
                     {
@@ -535,6 +521,13 @@ namespace Iot.Device.Swarm
                         Debug.WriteLine($"Unknown message NOT processed: {nmeaSentence.Data}");
                     }
                     break;
+            }
+
+            if (signalCommandEvent
+                && prefix == CommandInExecution)
+            {
+                // flag any command waiting for processing
+                CommandProcessed.Set();
             }
         }
 
@@ -677,10 +670,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.PowerOff.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.PowerOff().ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -713,10 +714,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.RestartDevice.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.RestartDevice().ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -747,10 +756,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.ReceiveTest.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.ReceiveTest((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -780,11 +797,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.ReceiveTest.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(new TileCommands.ReceiveTest(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -825,10 +850,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.SleepMode.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.SleepMode(value).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -865,10 +898,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.SleepMode.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.SleepMode(wakeupTime).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -911,10 +952,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.TransmitData.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.TransmitData(message).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -958,10 +1007,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.DateTimeStatus.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.DateTimeStatus((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -991,11 +1048,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.DateTimeStatus.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(new TileCommands.DateTimeStatus(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1029,11 +1094,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.DateTimeStatus.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(TileCommands.DateTimeStatus.GetLast().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1068,10 +1141,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1101,11 +1182,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1139,11 +1228,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(TileCommands.GpsJammingSpoofing.GetLast().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1178,10 +1275,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GeospatialInfo.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.GeospatialInfo((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1211,11 +1316,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GeospatialInfo.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(new TileCommands.GeospatialInfo(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1249,11 +1362,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GeospatialInfo.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(TileCommands.GeospatialInfo.GetLast().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1289,10 +1410,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd((int)rate).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1322,11 +1451,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd(-1).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1360,11 +1497,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(TileCommands.GpsFixQualityCmd.GetLast().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
@@ -1399,14 +1544,23 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.Gpio1Control.Command;
+
                 TileSerialPort.WriteLine(new TileCommands.Gpio1Control(mode).ComposeToSend().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
                     {
+
                         throw new ErrorExecutingCommandException();
                     }
                 }
@@ -1432,11 +1586,19 @@ namespace Iot.Device.Swarm
                 // reset event
                 CommandProcessed.Reset();
 
+                // store command
+                CommandInExecution = TileCommands.Gpio1Control.Command;
+
                 // send the command with -1 to get the current setting
                 TileSerialPort.WriteLine(TileCommands.Gpio1Control.GetMode().ToString());
 
                 // wait from command to be processed
-                if (CommandProcessed.WaitOne(TimeoutForCommandExecution, false))
+                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                // clear command
+                CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)

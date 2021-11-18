@@ -159,10 +159,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesReceivedManagement.Command;
+
                 _device.TileSerialPort.WriteLine(TileCommands.MessagesReceivedManagement.GetMessageCount(unreadOnly).ToString());
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)
@@ -176,6 +184,9 @@ namespace Iot.Device.Swarm
                 }
                 else
                 {
+                    // clear command
+                    _device.CommandInExecution = "";
+
                     throw new TimeoutException();
                 }
             }
@@ -191,6 +202,9 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesReceivedManagement.Command;
+
                 if (id == null)
                 {
                     _device.TileSerialPort.WriteLine(TileCommands.MessagesReceivedManagement.DeleteMessages(readOnly).ToString());
@@ -201,7 +215,12 @@ namespace Iot.Device.Swarm
                 }
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)
@@ -215,6 +234,9 @@ namespace Iot.Device.Swarm
                 }
                 else
                 {
+                    // clear command
+                    _device.CommandInExecution = "";
+
                     throw new TimeoutException();
                 }
             }
@@ -230,10 +252,18 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesReceivedManagement.Command;
+
                 _device.TileSerialPort.WriteLine(TileCommands.MessagesReceivedManagement.MarkMessagesRead(id).ToString());
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)
@@ -247,6 +277,9 @@ namespace Iot.Device.Swarm
                 }
                 else
                 {
+                    // clear command
+                    _device.CommandInExecution = "";
+
                     throw new TimeoutException();
                 }
             }
@@ -262,6 +295,9 @@ namespace Iot.Device.Swarm
                 // reset event
                 _device.CommandProcessed.Reset();
 
+                // store command
+                _device.CommandInExecution = TileCommands.MessagesReceivedManagement.Command;
+
                 if (id == null)
                 {
                     _device.TileSerialPort.WriteLine(TileCommands.MessagesReceivedManagement.ReadMessage(newest).ToString());
@@ -272,7 +308,12 @@ namespace Iot.Device.Swarm
                 }
 
                 // wait from command to be processed
-                if (_device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false))
+                var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
+
+                // clear command
+                _device.CommandInExecution = "";
+
+                if (eventSignaled)
                 {
                     // check for error
                     if (_device.ErrorOccurredWhenProcessingCommand)
@@ -286,6 +327,9 @@ namespace Iot.Device.Swarm
                 }
                 else
                 {
+                    // clear command
+                    _device.CommandInExecution = "";
+
                     throw new TimeoutException();
                 }
             }
