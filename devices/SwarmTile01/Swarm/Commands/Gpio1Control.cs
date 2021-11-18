@@ -34,7 +34,7 @@ namespace Iot.Device.Swarm
                             //     |     |
                             //     3
 
-                            int startIndex = 3;
+                            int startIndex = ReplyStartIndex;
 
                             Mode = (GpioMode)byte.Parse(sentence.Data.Substring(startIndex));
                         }

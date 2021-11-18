@@ -34,7 +34,7 @@ namespace Iot.Device.Swarm
                         //     |                       |
                         //     3
 
-                        int startIndex = 3;
+                        int startIndex = ReplyStartIndex;
 
                         // get version now
                         var configuration = sentence.Data.Substring(startIndex).Split(',');

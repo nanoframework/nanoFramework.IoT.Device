@@ -46,7 +46,7 @@ namespace Iot.Device.Swarm
                             //     |     |
                             //     3
 
-                            int startIndex = 3;
+                            int startIndex = ReplyStartIndex;
 
                             MessageCount = int.Parse(sentence.Data.Substring(startIndex));
                         }
@@ -57,7 +57,7 @@ namespace Iot.Device.Swarm
                             //     |                   |
                             //     3
 
-                            int startIndex = 3;
+                            int startIndex = ReplyStartIndex;
 
                             // get details now
                             var messageData = sentence.Data.Substring(startIndex).Split(',');

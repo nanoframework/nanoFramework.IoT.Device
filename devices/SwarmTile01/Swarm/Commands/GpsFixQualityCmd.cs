@@ -38,7 +38,7 @@ namespace Iot.Device.Swarm
                             //     |                                                |
                             //     3
 
-                            int startIndex = 3;
+                            int startIndex = ReplyStartIndex;
 
                             // get details now
                             var fixInfo = sentence.Data.Substring(startIndex).Split(',');

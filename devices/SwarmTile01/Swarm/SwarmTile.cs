@@ -435,7 +435,7 @@ namespace Iot.Device.Swarm
                         // signal event 
                         CommandProcessed.Set();
                     }
-                    else if (txData.Event == Swarm.MessageEvent.Received)
+                    else if (txData.Event == MessageEvent.Received)
                     {
                         // $TD SENT RSSI=<rssi_sat>,SNR=<snr>,FDEV=<fdev>,<msg_id>*xx
                         //          |              |         |           |       |
@@ -444,10 +444,10 @@ namespace Iot.Device.Swarm
                         int startIndex = 7;
                         ProcessMessageReceivedEvent(nmeaSentence.Data.Substring(startIndex));
                     }
-                    else if (txData.Event == Swarm.MessageEvent.Expired)
+                    else if (txData.Event == MessageEvent.Expired)
                     {
                         // raise event for message expired on a thread
-                        new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Expired, txData.MessageId); }).Start();
+                        new Thread(() => { OnMessageEvent(MessageEvent.Expired, txData.MessageId); }).Start();
                     }
                     break;
 
@@ -513,7 +513,7 @@ namespace Iot.Device.Swarm
                 FrequencyDeviation = int.Parse(fdev[1]);
 
                 // raise event for message received on a thread
-                new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Received, eventDetails[3]); }).Start();
+                new Thread(() => { OnMessageEvent(MessageEvent.Received, eventDetails[3]); }).Start();
             }
             catch
             {

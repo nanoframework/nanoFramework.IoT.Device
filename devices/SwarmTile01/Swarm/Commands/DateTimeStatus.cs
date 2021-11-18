@@ -41,7 +41,7 @@ namespace Iot.Device.Swarm
                         if (sentence.Data.Length > 10)
                         {
                             // try to parse NMEA sentence
-                            int startIndex = 3;
+                            int startIndex = ReplyStartIndex;
 
                             var year = int.Parse(sentence.Data.Substring(startIndex, 4));
                             startIndex += 4;
