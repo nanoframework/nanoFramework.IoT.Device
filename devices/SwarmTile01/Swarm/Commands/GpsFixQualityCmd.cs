@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to set or query the unsolicited report messages for GPS fix quality.
         /// </summary>
-        public class GpsFixQualityCmd : CommandBase
+        internal class GpsFixQualityCmd : CommandBase
         {
             public const string Command = "GS";
 

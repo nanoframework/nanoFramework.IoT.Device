@@ -13,7 +13,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to perform a hardware reset on the Tile.
         /// </summary>
-        public class RestartDevice : CommandBase
+        internal class RestartDevice : CommandBase
         {
             public const string Command = "RS";
 

@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to set or query the unsolicited report messages for geospatial information.
         /// </summary>
-        public class GeospatialInfo : CommandBase
+        internal class GeospatialInfo : CommandBase
         {
             public const string Command = "GN";
 

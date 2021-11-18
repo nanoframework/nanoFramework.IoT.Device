@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to set, query and control of the GPIO1 pin to allow indications or control the operation of the Tile.
         /// </summary>
-        public class Gpio1Control : CommandBase
+        internal class Gpio1Control : CommandBase
         {
             public const string Command = "GP";
 

@@ -12,7 +12,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to set and query the data time of the device.
         /// </summary>
-        public class DateTimeStatus : CommandBase
+        internal class DateTimeStatus : CommandBase
         {
             public const string Command = "DT";
 

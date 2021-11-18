@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to send the Tile to power off mode.
         /// </summary>
-        public class PowerOff : CommandBase
+        internal class PowerOff : CommandBase
         {
             public const string Command = "PO";
 

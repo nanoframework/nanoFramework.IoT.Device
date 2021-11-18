@@ -3,16 +3,13 @@
 // See LICENSE file in the project root for full license information.
 //
 
-using System;
-using System.Diagnostics;
-
 namespace Iot.Device.Swarm
 {
     /// <summary>
     /// Represents a NMEA-0183 sentence
     /// </summary>
     /// <remarks>For NMEN specs, please check http://freenmea.net/docs </remarks>
-    public class NmeaSentence
+    internal class NmeaSentence
     {
         // asterisk position in the string counting backwards
         // nnnn*CC

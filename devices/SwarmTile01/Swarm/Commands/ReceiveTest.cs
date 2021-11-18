@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to set and query the receive test message rate.
         /// </summary>
-        public class ReceiveTest : CommandBase
+        internal class ReceiveTest : CommandBase
         {
             public const string Command = "RT";
 

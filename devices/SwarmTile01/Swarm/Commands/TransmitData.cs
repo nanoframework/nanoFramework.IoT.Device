@@ -12,7 +12,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to transmit a message to the Swarm network.
         /// </summary>
-        public class TransmitData : CommandBase
+        internal class TransmitData : CommandBase
         {
             public const string Command = "TD";
 

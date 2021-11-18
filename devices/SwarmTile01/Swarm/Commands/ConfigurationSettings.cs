@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to retrieve the configuration settings for the Swarm device ID.
         /// </summary>
-        public class ConfigurationSettings : CommandBase
+        internal class ConfigurationSettings : CommandBase
         {
             public const string Command = "CS";
 

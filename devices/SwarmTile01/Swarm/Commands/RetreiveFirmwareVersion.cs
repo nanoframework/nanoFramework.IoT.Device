@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to retrieve the firmware details.
         /// </summary>
-        public class RetreiveFirmwareVersion : CommandBase
+        internal class RetreiveFirmwareVersion : CommandBase
         {
             public const string Command = "FV";
 

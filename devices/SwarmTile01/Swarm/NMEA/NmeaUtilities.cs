@@ -13,7 +13,7 @@ namespace Iot.Device.Swarm
         /// <param name="payload">Payload message to compute checksum</param>
         /// <param name="receivedSentence">Set to <see langword="true"/> if this a received sentence.</param>
         /// <returns>Th NMEA checksum of the <paramref name="payload"/>.</returns>
-        public static byte ComputeChecksum(string payload, bool receivedSentence = true)
+        internal static byte ComputeChecksum(string payload, bool receivedSentence = true)
         {
             int index = 0;
             byte checksum = 0;

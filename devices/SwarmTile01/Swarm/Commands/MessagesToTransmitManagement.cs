@@ -15,7 +15,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to manage messages received database.
         /// </summary>
-        public class MessagesToTransmitManagement : CommandBase
+        internal class MessagesToTransmitManagement : CommandBase
         {
             private const int _indexOfData = 0;
             private const int _indexOfMessageId = 1;

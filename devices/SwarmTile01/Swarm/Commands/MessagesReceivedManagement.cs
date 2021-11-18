@@ -12,7 +12,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to manage messages received database.
         /// </summary>
-        public class MessagesReceivedManagement : CommandBase
+        internal class MessagesReceivedManagement : CommandBase
         {
             private const int _indexOfAppId = 0;
             private const int _indexOfData = 1;

@@ -10,7 +10,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Command to set or query the unsolicited report messages for GPS jamming and spoofing indicators.
         /// </summary>
-        public class GpsJammingSpoofing : CommandBase
+        internal class GpsJammingSpoofing : CommandBase
         {
             public const string Command = "GJ";
 
