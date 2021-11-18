@@ -435,7 +435,7 @@ namespace Iot.Device.Swarm
                         // signal event 
                         CommandProcessed.Set();
                     }
-                    else if (txData.Event == MessageEvent.Received)
+                    else if (txData.Event == Swarm.MessageEvent.Received)
                     {
                         // $TD SENT RSSI=<rssi_sat>,SNR=<snr>,FDEV=<fdev>,<msg_id>*xx
                         //          |              |         |           |       |
@@ -444,10 +444,10 @@ namespace Iot.Device.Swarm
                         int startIndex = 7;
                         ProcessMessageReceivedEvent(nmeaSentence.Data.Substring(startIndex));
                     }
-                    else if (txData.Event == MessageEvent.Expired)
+                    else if (txData.Event == Swarm.MessageEvent.Expired)
                     {
                         // raise event for message expired on a thread
-                        new Thread(() => { OnMessageEvent(MessageEvent.Expired, txData.MessageId); }).Start();
+                        new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Expired, txData.MessageId); }).Start();
                     }
                     break;
 
@@ -513,7 +513,7 @@ namespace Iot.Device.Swarm
                 FrequencyDeviation = int.Parse(fdev[1]);
 
                 // raise event for message received on a thread
-                new Thread(() => { OnMessageEvent(MessageEvent.Received, eventDetails[3]); }).Start();
+                new Thread(() => { OnMessageEvent(Swarm.MessageEvent.Received, eventDetails[3]); }).Start();
             }
             catch
             {
@@ -1389,7 +1389,7 @@ namespace Iot.Device.Swarm
         #region Message events
 
         /// <summary>
-        /// Represents the delegate used for the <see cref="MessageReceived"/> event.
+        /// Represents the delegate used for the <see cref="MessageEvent"/> event.
         /// </summary>
         /// <param name="messageEvent">Event occurred about a message</param>
         /// <param name="messageId">Id of message the event is related with</param>
@@ -1398,18 +1398,18 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Event raised related with a message.
         /// </summary>
-        public event MessageEventHandler MessageReceived;
+        public event MessageEventHandler MessageEvent;
         private MessageEventHandler onMessageEvent;
 
         /// <summary>
-        /// Raises the <see cref="MessageReceived"/> event.
+        /// Raises the <see cref="MessageEvent"/> event.
         /// </summary>
         /// <param name="messageEvent">Event occurred about a message</param>
         /// <param name="messageId">Id of message the event is related with</param>
         protected void OnMessageEvent(MessageEvent messageEvent, string messageId)
         {
-            if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageReceived);
-            MessageReceived?.Invoke(messageEvent, messageId);
+            if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageEvent);
+            MessageEvent?.Invoke(messageEvent, messageId);
         }
 
         #endregion
