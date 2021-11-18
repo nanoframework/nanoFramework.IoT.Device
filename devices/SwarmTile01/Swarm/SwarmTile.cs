@@ -272,6 +272,9 @@ namespace Iot.Device.Swarm
                         // reply it's the DT rate, store
                         CommandProcessedReply = dtStatus;
 
+                        // raise event for DateTimeInfo available on a thread
+                        new Thread(() => { OnDateTimeStatusAvailable(dtStatus.DateTimeInfo); }).Start();
+
                         // signal event 
                         CommandProcessed.Set();
                     }
@@ -365,8 +368,12 @@ namespace Iot.Device.Swarm
 
                     if (receiveTest.BackgroundRssi > int.MinValue)
                     {
-                        // this reply it's a RT satellite message
+                        // this reply it's a RT with background noise info
                         BackgroundNoiseRssi = receiveTest.BackgroundRssi;
+
+                        // raise event for background noise info available
+                        new Thread(() => { OnBackgroundNoiseInfoAvailable(receiveTest.BackgroundRssi); }).Start();
+
                         //_dateTimeStatus = dtStatus;
                     }
                     else if (receiveTest.Rate > uint.MinValue)
@@ -1381,7 +1388,6 @@ namespace Iot.Device.Swarm
 
         #endregion
 
-
         #region Message events
 
         /// <summary>
@@ -1406,6 +1412,72 @@ namespace Iot.Device.Swarm
         {
             if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageReceived);
             MessageReceived?.Invoke(messageEvent, messageId);
+        }
+
+        #endregion
+
+        #region Date time handlers and events
+
+        /// <summary>
+        /// Represents the delegate used for the <see cref="DateTimeStatusAvailable"/> event.
+        /// </summary>
+        /// <param name="dateTimeInfo"> data available</param>
+        public delegate void DateTimeStatusHandler(DateTimeInfo dateTimeInfo);
+
+        /// <summary>
+        /// Event raised when there is an updated <see cref="DateTimeInfo"/>.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetDateTimeStatusRate"/> to configure the rate that this event is generated.
+        /// </remarks>
+        public event DateTimeStatusHandler DateTimeStatusAvailable;
+        private DateTimeStatusHandler onDateTimeStatusAvailable;
+
+        /// <summary>
+        /// Raises the <see cref="DateTimeStatusAvailable"/> event.
+        /// </summary>
+        /// Updated <param name="dateTimeInfo"> data.</param>
+        protected void OnDateTimeStatusAvailable(DateTimeInfo dateTimeInfo)
+        {
+            if (onDateTimeStatusAvailable == null)
+            {
+                onDateTimeStatusAvailable = new DateTimeStatusHandler(DateTimeStatusAvailable);
+            }
+
+            DateTimeStatusAvailable?.Invoke(dateTimeInfo);
+        }
+
+        #endregion
+
+        #region Background noise info handlers and events
+
+        /// <summary>
+        /// Represents the delegate used for the <see cref="BackgroundNoiseInfoAvailable"/> event.
+        /// </summary>
+        /// <param name="rssi">Value for background noise RSSI</param>
+        public delegate void BackgroundNoiseInfoHandler(int rssi);
+
+        /// <summary>
+        /// Event raised when there is a new reading of background noise RSSI.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetReceiveTestRate"/> to configure the rate that this event is generated.
+        /// </remarks>
+        public event BackgroundNoiseInfoHandler BackgroundNoiseInfoAvailable;
+        private BackgroundNoiseInfoHandler onBackgroundNoiseInfoAvailable;
+
+        /// <summary>
+        /// Raises the <see cref="DateTimeStatusAvailable"/> event.
+        /// </summary>
+        /// <param name="rssi">Value for background noise RSSI</param>
+        protected void OnBackgroundNoiseInfoAvailable(int rssi)
+        {
+            if (onBackgroundNoiseInfoAvailable == null)
+            {
+                onBackgroundNoiseInfoAvailable = new BackgroundNoiseInfoHandler(BackgroundNoiseInfoAvailable);
+            }
+
+            BackgroundNoiseInfoAvailable?.Invoke(rssi);
         }
 
         #endregion
