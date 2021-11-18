@@ -890,12 +890,18 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// Transmits data to the Swarm network.
+        /// Tries to send a message to the Swarm network.
         /// </summary>
         /// <param name="message">The message with the data to be transmitted.</param>
+        /// <param name="messageId">The ID assigned to this message.</param>
+        /// <returns><see langword="true"/> if the message has been successfully added to the queue for transmission, <see langword="false"/> otherwise.</returns>
         /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
         /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public string TransmitData(MessageToTransmit message)
+        /// <remarks>
+        /// Sending messages it's only possible if the Tile has a valid date and time information. That can be checked with <see cref="DateTimeIsValid"/>.
+        /// In case of failure, the error is stored in the <see cref="LastErrorMessage"/> property.
+        /// </remarks>
+        public bool TryToSendMessage(MessageToTransmit message, out string messageId)
         {
             lock (CommandLock)
             {
@@ -913,11 +919,19 @@ namespace Iot.Device.Swarm
                     // check for error
                     if (ErrorOccurredWhenProcessingCommand)
                     {
-                        throw new ErrorExecutingCommandException(((TileCommands.TransmitData.Reply)CommandProcessedReply).ErrorMessage);
+                        // update the error message
+                        LastErrorMessage = ((TileCommands.TransmitData.Reply)CommandProcessedReply).ErrorMessage;
+
+                        messageId = "";
+
+                        return false;
                     }
                     else
                     {
-                        return ((TileCommands.TransmitData.Reply)CommandProcessedReply).MessageId;
+                        // update message ID
+                        messageId = ((TileCommands.TransmitData.Reply)CommandProcessedReply).MessageId;
+
+                        return true;
                     }
                 }
                 else
