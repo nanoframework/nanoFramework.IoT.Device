@@ -168,6 +168,721 @@ namespace Iot.Device.Swarm
         public AutoResetEvent DeviceReady = new AutoResetEvent(false);
 
         /// <summary>
+        /// Gets or sets the rate of unsolicited report messages for date and time.
+        /// </summary>
+        /// <value>Number of seconds in between each message. Set to 0 to disable.</value>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public uint DateTimeStatusRate
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.DateTimeStatus.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(new TileCommands.DateTimeStatus(-1).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.DateTimeStatus.Reply)CommandProcessedReply).Rate;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+            set
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.DateTimeStatus.Command;
+
+                    TileSerialPort.WriteLine(new TileCommands.DateTimeStatus((int)value).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// Gets or sets the rate of unsolicited report messages for device power state.
+        /// </summary>
+        /// <value>Number of seconds in between each message. Set to 0 to disable.</value>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public uint ReceiveTestRate
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.ReceiveTest.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(new TileCommands.ReceiveTest(-1).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.ReceiveTest.Reply)CommandProcessedReply).Rate;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+            set
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.ReceiveTest.Command;
+
+                    TileSerialPort.WriteLine(new TileCommands.ReceiveTest((int)value).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the rate of unsolicited report messages for jamming and spoofing indicators.
+        /// </summary>
+        /// <value>Number of seconds in between each message. Set to 0 to disable.</value>>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public uint JammingSpoofingIndicationRate
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing(-1).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.GpsJammingSpoofing.Reply)CommandProcessedReply).Rate;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+            set
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
+
+                    TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing((int)value).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the rate of unsolicited report messages for geospatial information.
+        /// </summary>
+        /// <value>Number of seconds in between each message. Set to 0 to disable.</value>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public uint GeospatialInformationRate
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GeospatialInfo.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(new TileCommands.GeospatialInfo(-1).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.GeospatialInfo.Reply)CommandProcessedReply).Rate;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+            set
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GeospatialInfo.Command;
+
+                    TileSerialPort.WriteLine(new TileCommands.GeospatialInfo((int)value).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the rate of unsolicited report messages for GPS fix quality.
+        /// </summary>
+        /// <value>Number of seconds in between each message. Set to 0 to disable.</value>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public uint GpsFixQualityRate
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd(-1).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.GpsFixQualityCmd.Reply)CommandProcessedReply).Rate;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+            set
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
+
+                    TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd((int)value).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the mode for GPIO1 pin.
+        /// </summary>
+        /// <value>Mode for GPIO1 pin.</value>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public GpioMode SetGpio1Mode
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.Gpio1Control.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(TileCommands.Gpio1Control.GetMode().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.Gpio1Control.Reply)CommandProcessedReply).Mode;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+
+            set
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.Gpio1Control.Command;
+
+                    TileSerialPort.WriteLine(new TileCommands.Gpio1Control(value).ComposeToSend().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+
+                            throw new ErrorExecutingCommandException();
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current <see cref="DateTimeInfo"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public DateTimeInfo DateTimeStatus
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.DateTimeStatus.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(TileCommands.DateTimeStatus.GetLast().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.DateTimeStatus.Reply)CommandProcessedReply).DateTimeInfo;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current <see cref="JammingSpoofingIndication"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public JammingSpoofingIndication JammingSpoofingIndication
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(TileCommands.GpsJammingSpoofing.GetLast().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.GpsJammingSpoofing.Reply)CommandProcessedReply).Indication;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current <see cref="GeospatialInformation"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public GeospatialInformation GeospatialInformation
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GeospatialInfo.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(TileCommands.GeospatialInfo.GetLast().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.GeospatialInfo.Reply)CommandProcessedReply).Information;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current <see cref="GpsFixQuality"/> from the Tile.
+        /// </summary>
+        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
+        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
+        public GpsFixQuality GpsFixQuality
+        {
+            get
+            {
+                lock (CommandLock)
+                {
+                    // reset error flag
+                    ErrorOccurredWhenProcessingCommand = false;
+
+                    // reset event
+                    CommandProcessed.Reset();
+
+                    // store command
+                    CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
+
+                    // send the command with -1 to get the current setting
+                    TileSerialPort.WriteLine(TileCommands.GpsFixQualityCmd.GetLast().ToString());
+
+                    // wait from command to be processed
+                    var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
+
+                    // clear command
+                    CommandInExecution = "";
+
+                    if (eventSignaled)
+                    {
+                        // check for error
+                        if (ErrorOccurredWhenProcessingCommand)
+                        {
+                            throw new ErrorExecutingCommandException();
+                        }
+                        else
+                        {
+                            return ((TileCommands.GpsFixQualityCmd.Reply)CommandProcessedReply).Information;
+                        }
+                    }
+                    else
+                    {
+                        throw new TimeoutException();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="portName"></param>
@@ -741,94 +1456,6 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// Set the rate for unsolicited report messages for device power state.
-        /// </summary>
-        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public void SetReceiveTestRate(uint rate)
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.ReceiveTest.Command;
-
-                TileSerialPort.WriteLine(new TileCommands.ReceiveTest((int)rate).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the rate for unsolicited report messages for device power state.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public uint GetReceiveTestRate()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.ReceiveTest.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(new TileCommands.ReceiveTest(-1).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.ReceiveTest.Reply)CommandProcessedReply).Rate;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
         /// Puts the device into a low-power sleep mode.
         /// </summary>
         /// <param name="value">Sleep for this many seconds.</param>
@@ -981,633 +1608,6 @@ namespace Iot.Device.Swarm
                         messageId = ((TileCommands.TransmitData.Reply)CommandProcessedReply).MessageId;
 
                         return true;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Set the rate for unsolicited report messages for date and time.
-        /// </summary>
-        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public void SetDateTimeStatusRate(uint rate)
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.DateTimeStatus.Command;
-
-                TileSerialPort.WriteLine(new TileCommands.DateTimeStatus((int)rate).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the rate for unsolicited report messages for date and time.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public uint GetDateTimeStatusRate()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.DateTimeStatus.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(new TileCommands.DateTimeStatus(-1).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.DateTimeStatus.Reply)CommandProcessedReply).Rate;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the current <see cref="DateTimeInfo"/> from the Tile.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public DateTimeInfo GetDateTimeStatus()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.DateTimeStatus.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(TileCommands.DateTimeStatus.GetLast().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.DateTimeStatus.Reply)CommandProcessedReply).DateTimeInfo;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Set the rate for unsolicited report messages for jamming and spoofing indicators.
-        /// </summary>
-        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public void SetJammingSpoofingIndicationRate(uint rate)
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
-
-                TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing((int)rate).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the rate for unsolicited report messages for jamming and spoofing indicators.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public uint GetJammingSpoofingIndicationRate()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(new TileCommands.GpsJammingSpoofing(-1).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.GpsJammingSpoofing.Reply)CommandProcessedReply).Rate;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the current <see cref="JammingSpoofingIndication"/> from the Tile.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public JammingSpoofingIndication GetJammingSpoofingIndication()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GpsJammingSpoofing.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(TileCommands.GpsJammingSpoofing.GetLast().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.GpsJammingSpoofing.Reply)CommandProcessedReply).Indication;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Set the rate for unsolicited report messages for geospatial information.
-        /// </summary>
-        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public void SetGeospatialInformationRate(uint rate)
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GeospatialInfo.Command;
-
-                TileSerialPort.WriteLine(new TileCommands.GeospatialInfo((int)rate).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the rate for unsolicited report messages for geospatial information.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public uint GetGeospatialInformationRate()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GeospatialInfo.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(new TileCommands.GeospatialInfo(-1).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.GeospatialInfo.Reply)CommandProcessedReply).Rate;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the current <see cref="GeospatialInformation"/> from the Tile.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public GeospatialInformation GetGeospatialInformation()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GeospatialInfo.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(TileCommands.GeospatialInfo.GetLast().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.GeospatialInfo.Reply)CommandProcessedReply).Information;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Set the rate for unsolicited report messages for GPS fix quality.
-        /// </summary>
-        /// <param name="rate">Number of seconds in between each message. Set to 0 to disable.</param>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public void SetGpsFixQualityRate(uint rate)
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
-
-                TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd((int)rate).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the rate for unsolicited report messages for GPS fix quality.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public uint GetGpsFixQualityRate()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(new TileCommands.GpsFixQualityCmd(-1).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.GpsFixQualityCmd.Reply)CommandProcessedReply).Rate;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the current <see cref="GpsFixQuality"/> from the Tile.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public GpsFixQuality GetGpsFixQuality()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.GpsFixQualityCmd.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(TileCommands.GpsFixQualityCmd.GetLast().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.GpsFixQualityCmd.Reply)CommandProcessedReply).Information;
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Set mode for GPIO1 pin.
-        /// </summary>
-        /// <param name="mode">Mode for GPIO1 pin.</param>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public void SetGpio1Mode(GpioMode mode)
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.Gpio1Control.Command;
-
-                TileSerialPort.WriteLine(new TileCommands.Gpio1Control(mode).ComposeToSend().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-
-                        throw new ErrorExecutingCommandException();
-                    }
-                }
-                else
-                {
-                    throw new TimeoutException();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Set mode for GPIO1 pin.
-        /// </summary>
-        /// <exception cref="ErrorExecutingCommandException">Tile returned error when executing the command.</exception>
-        /// <exception cref="TimeoutException">Timeout occurred when waiting for command execution.</exception>
-        public GpioMode GetGpio1Mode()
-        {
-            lock (CommandLock)
-            {
-                // reset error flag
-                ErrorOccurredWhenProcessingCommand = false;
-
-                // reset event
-                CommandProcessed.Reset();
-
-                // store command
-                CommandInExecution = TileCommands.Gpio1Control.Command;
-
-                // send the command with -1 to get the current setting
-                TileSerialPort.WriteLine(TileCommands.Gpio1Control.GetMode().ToString());
-
-                // wait from command to be processed
-                var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
-
-                // clear command
-                CommandInExecution = "";
-
-                if (eventSignaled)
-                {
-                    // check for error
-                    if (ErrorOccurredWhenProcessingCommand)
-                    {
-                        throw new ErrorExecutingCommandException();
-                    }
-                    else
-                    {
-                        return ((TileCommands.Gpio1Control.Reply)CommandProcessedReply).Mode;
                     }
                 }
                 else

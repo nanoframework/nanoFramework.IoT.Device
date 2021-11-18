@@ -47,10 +47,10 @@ namespace NFApp28
                 swarmTile.MessageEvent += SwarmTile_MessageEvent;
 
                 // set GPS info rate to each 5 minutes
-                swarmTile.SetGeospatialInformationRate(5 * 60);
+                swarmTile.GeospatialInformationRate = 5 * 60;
 
                 // set date time information to each minute
-                swarmTile.SetDateTimeStatusRate(60);
+                swarmTile.DateTimeStatusRate = 60;
 
                 // get count on how many received messages are waiting to be read
                 var unreadCount = swarmTile.MessagesReceived.UnreadCount;
