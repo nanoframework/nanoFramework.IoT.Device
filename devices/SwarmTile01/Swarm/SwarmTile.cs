@@ -130,6 +130,16 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
+        /// GPS has acquired a valid date/time reference.
+        /// </summary>
+        public bool DateTimeIsValid { get; private set; }
+
+        /// <summary>
+        /// GPS has acquired a valid position 3D fix.
+        /// </summary>
+        public bool PostionIsValid { get; private set; }
+
+        /// <summary>
         /// Messages received database.
         /// </summary>
         public MessagesReceivedManagement MessagesReceived { get; }
@@ -276,6 +286,9 @@ namespace Iot.Device.Swarm
 
                     if (dtStatus.DateTimeInfo != null)
                     {
+                        // update property, just in case
+                        DateTimeIsValid = true;
+
                         // reply it's the RT rate, store
                         CommandProcessedReply = dtStatus;
 
@@ -325,6 +338,9 @@ namespace Iot.Device.Swarm
 
                     if (geoInfo.Information != null)
                     {
+                        // update property, just in case
+                        PostionIsValid = true;
+
                         // this reply it's a GN information, store
                         CommandProcessedReply = geoInfo;
 
@@ -589,11 +605,17 @@ namespace Iot.Device.Swarm
                 }
                 else if (nmeaSentence.Data.Contains("DATETIME"))
                 {
+                    // update property
+                    DateTimeIsValid = true;
+
                     // raise event for new tile status on a thread
                     new Thread(() => { OnTileStatusEvent(TileStatus.DateTimeAvailable); }).Start();
                 }
                 else if (nmeaSentence.Data.Contains("POSITION"))
                 {
+                    // update property
+                    PostionIsValid = true;
+
                     // raise event for new tile status on a thread
                     new Thread(() => { OnTileStatusEvent(TileStatus.PositionAvailable); }).Start();
                 }
