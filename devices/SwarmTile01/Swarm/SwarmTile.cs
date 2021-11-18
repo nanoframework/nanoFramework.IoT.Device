@@ -139,8 +139,13 @@ namespace Iot.Device.Swarm
         public MessagesToTransmitManagement MessagesToTransmit { get; }
 
         /// <summary>
-        /// 
+        /// Event signaling that the Tile is ready for operation.
         /// </summary>
+        /// <remarks>
+        /// This event indicates that there is communication to/from the Tile.
+        /// In case the Tile is powered off or in sleep mode it won't be able to respond to commands, therefore this event won't be immediately signaled.
+        /// Despite this, there is nothing preventing the application from using the library. As soon as the Tile is responsive, this event will be signaled and the <see cref="PowerStateChanged"/> will be raised.
+        /// </remarks>
         public AutoResetEvent DeviceReady = new AutoResetEvent(false);
 
         /// <summary>
@@ -216,6 +221,9 @@ namespace Iot.Device.Swarm
                 {
                     // reset flag
                     _isFirstMessage = false;
+
+                    // signal event
+                    DeviceReady.Set();
 
                     PowerState = PowerState.On;
                 }
