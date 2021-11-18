@@ -223,9 +223,7 @@ namespace Iot.Device.Swarm
                     // reset flag
                     _isFirstMessage = false;
 
-                    // signal event
-                    DeviceReady.Set();
-
+                    // seems that the Tile is ON
                     PowerState = PowerState.On;
                 }
             }
@@ -428,6 +426,17 @@ namespace Iot.Device.Swarm
                     {
                         DeviceName = configDetails.DeviceName;
                     }
+
+                    // if all goes as expected, by now we should have fw details and device IDs
+                    if (!(string.IsNullOrEmpty(FirmwareVersion)
+                        || string.IsNullOrEmpty(FirmwareTimeStamp)
+                        || string.IsNullOrEmpty(DeviceID)
+                        || string.IsNullOrEmpty(DeviceName)))
+                    {
+                        // signal event that device is operational
+                        DeviceReady.Set();
+                    }
+
                     break;
 
                 case TileCommands.TransmitData.Command:
