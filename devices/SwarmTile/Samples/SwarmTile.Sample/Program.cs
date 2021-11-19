@@ -8,7 +8,7 @@ using Iot.Device.Swarm;
 using System.Diagnostics;
 using System.Threading;
 
-namespace NFApp28
+namespace Swarm.Sample
 {
     public class Program
     {
