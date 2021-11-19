@@ -13,7 +13,7 @@ namespace Iot.Device.Swarm
     /// </summary>
     public class MessagesReceivedManagement
     {
-        SwarmTile _device;
+        private readonly SwarmTile _device;
 
         internal MessagesReceivedManagement(SwarmTile device)
         {

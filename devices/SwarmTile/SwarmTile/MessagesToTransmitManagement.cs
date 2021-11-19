@@ -15,14 +15,14 @@ namespace Iot.Device.Swarm
     /// </summary>
     public class MessagesToTransmitManagement
     {
+        // queue to hold messages being listed
+        private readonly Queue _msgCollection = new Queue();
+        private readonly SwarmTile _device;
+
         // flag to signal that we're listing messages
         private bool _listingMessages = false;
 
-        // queue to hold messages being listed
-        private readonly Queue _msgCollection = new Queue();
         private int _expectedMessageCount;
-
-        private readonly SwarmTile _device;
 
         internal MessagesToTransmitManagement(SwarmTile device)
         {

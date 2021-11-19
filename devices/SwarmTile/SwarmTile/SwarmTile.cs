@@ -31,6 +31,8 @@ namespace Iot.Device.Swarm
         // event to signal that a new command has been added to the queue for processing
         internal readonly AutoResetEvent CommandProcessed = new AutoResetEvent(false);
 
+        private readonly Queue _incommingMessagesQueue = new();
+
         // flag to signal that the very 1st message from the Tile was received
         private bool _isFirstMessage = true;
 
@@ -44,9 +46,6 @@ namespace Iot.Device.Swarm
 
         private Thread _processIncommingSentencesThread;
 
-
-        private readonly Queue _incommingMessagesQueue = new();
-
         // backing fields 
         internal PowerState _powerState = PowerState.Unknown;
 
@@ -58,22 +57,22 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Returns the device firmware version.
         /// </summary>
-        public string FirmwareVersion { get; private set; }
+        public string FirmwareVersion { get; private set; } = string.Empty;
 
         /// <summary>
         /// Returns the time stamp of the device firmware.
         /// </summary>
-        public string FirmwareTimeStamp { get; private set; }
+        public string FirmwareTimeStamp { get; private set; } = string.Empty;
 
         /// <summary>
         /// Device ID that identifies this device on the Swarm network.
         /// </summary>
-        public string DeviceID { get; private set; }
+        public string DeviceID { get; private set; } = string.Empty;
 
         /// <summary>
         /// Device type name.
         /// </summary>
-        public string DeviceName { get; private set; }
+        public string DeviceName { get; private set; } = string.Empty;
 
         /// <summary>
         /// Received background noise signal strength in dBm.
@@ -119,7 +118,7 @@ namespace Iot.Device.Swarm
         /// </summary>
         public PowerState PowerState
         {
-            get { return _powerState; }
+            get => _powerState;
             internal set
             {
                 if (_powerState != value)
@@ -155,7 +154,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Last error message from the Tile.
         /// </summary>
-        public string LastErrorMessage { get; private set; }
+        public string LastErrorMessage { get; private set; } = string.Empty;
 
         /// <summary>
         /// Event signaling that the Tile is ready for operation.
@@ -883,9 +882,9 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// 
+        /// Constructor for <see cref="SwarmTile"/>.
         /// </summary>
-        /// <param name="portName"></param>
+        /// <param name="portName">The port where the Swarm Tile is connected to (for example, COM1).</param>
         public SwarmTile(string portName)
         {
             // configure SerialPort and...
@@ -975,7 +974,7 @@ namespace Iot.Device.Swarm
                 {
                     lock (_lock)
                     {
-                        var receivedMessage = (string)_incommingMessagesQueue.Dequeue();
+                        var receivedMessage = _incommingMessagesQueue.Dequeue() as string;
 
                         var nmeaSentence = NmeaSentence.FromRawSentence(receivedMessage);
 
@@ -1631,7 +1630,6 @@ namespace Iot.Device.Swarm
         /// Event raised when the power state of the device changes.
         /// </summary>
         public event PowerStateChangedHandler PowerStateChanged;
-        private PowerStateChangedHandler onPowerStateChanged;
 
         /// <summary>
         /// Raises the <see cref="PowerStateChanged"/> event.
@@ -1639,7 +1637,6 @@ namespace Iot.Device.Swarm
         /// <param name="powerStatus"> new power status of the device</param>
         protected void OnPowerStateChanged(PowerState powerStatus)
         {
-            if (onPowerStateChanged == null) onPowerStateChanged = new PowerStateChangedHandler(PowerStateChanged);
             PowerStateChanged?.Invoke(powerStatus);
         }
 
@@ -1658,7 +1655,6 @@ namespace Iot.Device.Swarm
         /// Event raised related with a message.
         /// </summary>
         public event MessageEventHandler MessageEvent;
-        private MessageEventHandler onMessageEvent;
 
         /// <summary>
         /// Raises the <see cref="MessageEvent"/> event.
@@ -1667,7 +1663,6 @@ namespace Iot.Device.Swarm
         /// <param name="messageId">Id of message the event is related with</param>
         protected void OnMessageEvent(MessageEvent messageEvent, string messageId)
         {
-            if (onMessageEvent == null) onMessageEvent = new MessageEventHandler(MessageEvent);
             MessageEvent?.Invoke(messageEvent, messageId);
         }
 
@@ -1685,10 +1680,9 @@ namespace Iot.Device.Swarm
         /// Event raised when there is an updated <see cref="DateTimeInfo"/>.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="SetDateTimeStatusRate"/> to configure the rate that this event is generated.
+        /// Use <see cref="DateTimeStatusRate"/> property to configure the rate that this event is generated.
         /// </remarks>
         public event DateTimeStatusHandler DateTimeStatusAvailable;
-        private DateTimeStatusHandler onDateTimeStatusAvailable;
 
         /// <summary>
         /// Raises the <see cref="DateTimeStatusAvailable"/> event.
@@ -1696,11 +1690,6 @@ namespace Iot.Device.Swarm
         /// Updated <param name="dateTimeInfo"> data.</param>
         protected void OnDateTimeStatusAvailable(DateTimeInfo dateTimeInfo)
         {
-            if (onDateTimeStatusAvailable == null)
-            {
-                onDateTimeStatusAvailable = new DateTimeStatusHandler(DateTimeStatusAvailable);
-            }
-
             DateTimeStatusAvailable?.Invoke(dateTimeInfo);
         }
 
@@ -1718,10 +1707,9 @@ namespace Iot.Device.Swarm
         /// Event raised when there is a new reading of background noise RSSI.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="SetReceiveTestRate"/> to configure the rate that this event is generated.
+        /// Use <see cref="ReceiveTestRate"/> property to configure the rate that this event is generated.
         /// </remarks>
         public event BackgroundNoiseInfoHandler BackgroundNoiseInfoAvailable;
-        private BackgroundNoiseInfoHandler onBackgroundNoiseInfoAvailable;
 
         /// <summary>
         /// Raises the <see cref="DateTimeStatusAvailable"/> event.
@@ -1729,11 +1717,6 @@ namespace Iot.Device.Swarm
         /// <param name="rssi">Value for background noise RSSI</param>
         protected void OnBackgroundNoiseInfoAvailable(int rssi)
         {
-            if (onBackgroundNoiseInfoAvailable == null)
-            {
-                onBackgroundNoiseInfoAvailable = new BackgroundNoiseInfoHandler(BackgroundNoiseInfoAvailable);
-            }
-
             BackgroundNoiseInfoAvailable?.Invoke(rssi);
         }
 
@@ -1751,10 +1734,9 @@ namespace Iot.Device.Swarm
         /// Event raised when there is an updated <see cref="GeospatialInformation"/>.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="SetGeospatialInformationRate"/> to configure the rate that this event is generated.
+        /// Use <see cref="GeospatialInformationRate"/> property to configure the rate that this event is generated.
         /// </remarks>
         public event GeospatialInfoHandler GeospatialInfoAvailable;
-        private GeospatialInfoHandler onGeospatialInfoAvailable;
 
         /// <summary>
         /// Raises the <see cref="GeospatialInfoAvailable"/> event.
@@ -1762,11 +1744,6 @@ namespace Iot.Device.Swarm
         /// Updated <param name="geoSpatialInfo"> data.</param>
         protected void OnGeospatialInfoAvailable(GeospatialInformation geoSpatialInfo)
         {
-            if (onGeospatialInfoAvailable == null)
-            {
-                onGeospatialInfoAvailable = new GeospatialInfoHandler(GeospatialInfoAvailable);
-            }
-
             GeospatialInfoAvailable?.Invoke(geoSpatialInfo);
         }
 
@@ -1784,7 +1761,6 @@ namespace Iot.Device.Swarm
         /// Event raised when there is a new Tile Status.
         /// </summary>
         public event TileStatusEventHandler TileStatusEvent;
-        private TileStatusEventHandler onTileStatusEvent;
 
         /// <summary>
         /// Raises the <see cref="TileStatusEvent"/> event.
@@ -1792,11 +1768,6 @@ namespace Iot.Device.Swarm
         /// <param name="status">Event occurred about a message</param>
         protected void OnTileStatusEvent(TileStatus status)
         {
-            if (onTileStatusEvent == null)
-            {
-                onTileStatusEvent = new TileStatusEventHandler(TileStatusEvent);
-            }
-
             TileStatusEvent?.Invoke(status);
         }
 
@@ -1804,7 +1775,9 @@ namespace Iot.Device.Swarm
 
         #region IDisposable implementation
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Finalizes an instance of the <see cref="SwarmTile"/> class.
+        /// </summary>
         ~SwarmTile()
         {
             Dispose(false);
@@ -1830,13 +1803,12 @@ namespace Iot.Device.Swarm
                 // Release managed resources
                 try
                 {
-                    //_asyncTaskQueueThread.Abort();
-                    //_asyncTaskQueueThread.Join();
-                    //_serialDevice.Dispose();
+                    _processIncommingSentencesThread.Abort();
+                    TileSerialPort.Dispose();
                 }
-                finally
+                catch
                 {
-                    //Instance.Release();
+                    // don't care
                 }
             }
 
