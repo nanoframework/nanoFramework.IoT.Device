@@ -149,6 +149,9 @@ namespace Iot.Device.QtrSensors
         /// <returns></returns>
         public override CalibrationData[] Calibrate(int iteration, bool emitterOn)
         {
+            PinValue oldEmit = _emitterValue;
+            EmitterSelection oldSection = EmitterSelection;
+
             if (emitterOn)
             {
                 _calibOn = _calibOn ?? new CalibrationData[_qtrSensors.Length];
@@ -156,8 +159,11 @@ namespace Iot.Device.QtrSensors
                 EmitterSelection = EmitterSelection.All;
                 for (int i = 0; i < _calibOn.Length; i++)
                 {
-                    _calibOn[i].MaximumValue = _adc.MinValue;
-                    _calibOn[i].MinimumValue = _adc.MaxValue;
+                    _calibOn[i] = new CalibrationData()
+                    {
+                        MaximumValue = _adc.MinValue,
+                        MinimumValue = _adc.MaxValue
+                    };
                 }
             }
             else
@@ -167,8 +173,11 @@ namespace Iot.Device.QtrSensors
                 EmitterSelection = EmitterSelection.All;
                 for (int i = 0; i < _calibOff.Length; i++)
                 {
-                    _calibOff[i].MaximumValue = _adc.MinValue;
-                    _calibOff[i].MinimumValue = _adc.MaxValue;
+                    _calibOff[i] = new CalibrationData()
+                    {
+                        MaximumValue = _adc.MinValue,
+                        MinimumValue = _adc.MaxValue
+                    };
                 }
             }
 
@@ -191,6 +200,8 @@ namespace Iot.Device.QtrSensors
                 }
             }
 
+            _emitterValue = oldEmit;
+            EmitterSelection = oldSection;
             return emitterOn ? _calibOn : _calibOff;
         }
 
