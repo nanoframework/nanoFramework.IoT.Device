@@ -916,6 +916,14 @@ namespace Iot.Device.Swarm
             MessagesToTransmit = new MessagesToTransmitManagement(this);
         }
 
+        /// <summary>
+        /// Close connection to Swarm Tile.
+        /// </summary>
+        public void Close()
+        {
+            TileSerialPort?.Close();
+        }
+
         private void Tile_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             // discard event if there is nothing to read or if this is not a WatchChar event
