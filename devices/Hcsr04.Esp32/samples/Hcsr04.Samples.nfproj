@@ -12,10 +12,10 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Hcsr04.Samples</RootNamespace>
-    <AssemblyName>Iot.Device.Hcsr04.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.Hcsr04.Esp32.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.Hcsr04.Esp32.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Hcsr04.Samples.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Hcsr04.Esp32.Samples.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -24,29 +24,19 @@
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.9.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.2-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    <Reference Include="nanoFramework.Hardware.Esp32.Rmt">
+      <HintPath>..\packages\nanoFramework.Hardware.Esp32.Rmt.1.2.1-preview.7\lib\nanoFramework.Hardware.Esp32.Rmt.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.Gpio, Version=1.0.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.2-preview.7\lib\System.Device.Gpio.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.2-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\nanoFramework.System.Device.Model.1.0.176\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="System.Diagnostics.Stopwatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.160\lib\System.Diagnostics.Stopwatch.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
-    </Reference>
-    <Reference Include="UnitsNet.Length, Version=4.102.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.102.0\lib\UnitsNet.Length.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="UnitsNet.Length">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.104.0\lib\UnitsNet.Length.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -55,11 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="*.cs" />
-    <None Include="*.md" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hcsr04.nfproj" />
+    <ProjectReference Include="..\Hcsr04.Esp32.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
