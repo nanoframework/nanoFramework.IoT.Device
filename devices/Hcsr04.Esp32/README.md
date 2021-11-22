@@ -10,7 +10,7 @@ Device bindings for the HC-SR04 sonar distance sensor. Calculates the distance f
 
 In most of the cases, you just need to pass the 2 pins you're going to use: the Echo and Trigger pins.
 
-```sharp
+```csharp
 using (var sonar = new Hcsr04(4, 17))
 {
     if (sonar.TryGetDistance(out Length distance))
