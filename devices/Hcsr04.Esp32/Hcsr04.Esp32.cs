@@ -20,6 +20,7 @@ namespace Iot.Device.Hcsr04.Esp32
         ReceiverChannel _rxChannel;
         TransmitterChannel _txChannel;
         RmtCommand _txPulse;
+        long _lastMeasurment;
 
         const double _speedOfSound = 340.29;
 
@@ -39,10 +40,8 @@ namespace Iot.Device.Hcsr04.Esp32
             // Set-up TX & RX channels
             // We need to send a 10us pulse to initiate measurement
             _txChannel = new TransmitterChannel(trigger);
-
-            _txPulse = new RmtCommand(10, true, 10, false);
-            _txChannel.AddCommand(_txPulse);
-            _txChannel.AddCommand(new RmtCommand(20, true, 15, false));
+            // we only need 1 pulse of 10 us high
+            _txChannel.AddCommand(new RmtCommand(10, true, 0, false));
 
             _txChannel.ClockDivider = 80;
             _txChannel.CarrierEnabled = false;
@@ -52,10 +51,14 @@ namespace Iot.Device.Hcsr04.Esp32
             // 150us to 38ms
             _rxChannel = new ReceiverChannel(echo);
 
-            _rxChannel.ClockDivider = 80; // 1us clock ( 80Mhz / 80 ) = 1Mhz
-            _rxChannel.EnableFilter(true, 100); // filter out 100Us / noise 
-            _rxChannel.SetIdleThresold(40000);  // 40ms based on 1us clock
-            _rxChannel.ReceiveTimeout = new TimeSpan(0, 0, 0, 0, 60);
+            // 1us clock ( 80Mhz / 80 ) = 1Mhz
+            _rxChannel.ClockDivider = 80;
+            // filter out 200Us / noise 
+            _rxChannel.EnableFilter(true, 200);
+            // 40ms based on 1us clock
+            _rxChannel.SetIdleThresold(40000);
+            // 100 millisecond timeout is enough
+            _rxChannel.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
         }
 
         /// <summary>
@@ -87,24 +90,20 @@ namespace Iot.Device.Hcsr04.Esp32
         public bool TryGetDistance(out Length result)
         {
             RmtCommand[] response = null;
+            // Make sure we don't measure before the 60 ms
+            while (DateTime.UtcNow.Ticks - _lastMeasurment < 60 * TimeSpan.TicksPerMillisecond)
+            {
+                Thread.Sleep(TimeSpan.FromTicks(DateTime.UtcNow.Ticks - _lastMeasurment));
+            }
+
+            _lastMeasurment = DateTime.UtcNow.Ticks;
 
             _rxChannel.Start(true);
 
             // Send 10us pulse
             _txChannel.Send(false);
 
-            // Try 5 times to get valid response
-            for (int count = 0; count < 5; count++)
-            {
-                response = _rxChannel.GetAllItems();
-                if (response != null)
-                {
-                    break;
-                }
-
-                // Retry every 60 ms
-                Thread.Sleep(60);
-            }
+            response = _rxChannel.GetAllItems();
 
             _rxChannel.Stop();
 
@@ -121,7 +120,7 @@ namespace Iot.Device.Hcsr04.Esp32
             // Distance calculated as  (speed of sound) * duration(meters) / 2 
             result = Length.FromMeters(_speedOfSound * duration / (1000000 * 2));
 
-            if (result.Value > 400)
+            if (result.Value > 0.4)
             {
                 // result is more than sensor supports
                 // something went wrong
