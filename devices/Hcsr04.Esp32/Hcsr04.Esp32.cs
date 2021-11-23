@@ -51,10 +51,13 @@ namespace Iot.Device.Hcsr04.Esp32
             // 150us to 38ms
             _rxChannel = new ReceiverChannel(echo);
 
-            _rxChannel.ClockDivider = 80; // 1us clock ( 80Mhz / 80 ) = 1Mhz
-            _rxChannel.EnableFilter(true, 200); // filter out 100Us / noise 
-            _rxChannel.SetIdleThresold(40000);  // 40ms based on 1us clock
-            // 100 millisecond timetout is enough
+            // 1us clock ( 80Mhz / 80 ) = 1Mhz
+            _rxChannel.ClockDivider = 80;
+            // filter out 200Us / noise 
+            _rxChannel.EnableFilter(true, 200);
+            // 40ms based on 1us clock
+            _rxChannel.SetIdleThresold(40000);
+            // 100 millisecond timeout is enough
             _rxChannel.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
         }
 
