@@ -4,25 +4,66 @@
 // See LICENSE file in the project root for full license information.
 //
 
+using Iot.Device.Ws28xx;
 using Iot.Device.Swarm;
+using nanoFramework.Hardware.Esp32;
+using System.Device.Spi;
 using System.Diagnostics;
+using System.Drawing;
 using System.Threading;
+using Iot.Device.Ssd13xx;
+using System.Device.I2c;
 
 namespace Swarm.Sample
 {
     public class Program
     {
+        private const int NeoPixelCount = 2;
+
+        private static Ws28xx _neoPixel;
+        private static SwarmTile _swarmTile;
+        private static Ssd1306 _oledScreen;
+
         public static void Main()
         {
             Debug.WriteLine("Starting SWARM Tile demo");
 
-            SwarmTile swarmTile = new SwarmTile("COM1");
+            ///////////////////////////////////////////////////
+            // setup SPI GPIOs to connecting to NeoPixel LED with SPI
+            Configuration.SetPinFunction(38, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(42, DeviceFunction.SPI1_MISO);
+            Configuration.SetPinFunction(45, DeviceFunction.SPI1_CLOCK);
+            // setup I2C GPIOs for the OLED
+            Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+            Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
+            // Make sure as well you are using the right chip select
+            using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(1, 37)
+            {
+                ClockFrequency = 20_000_000,
+                DataFlow = DataFlow.MsbFirst,
+                Mode = SpiMode.Mode0 
+            });
+
+            _neoPixel = new Ws2808(spiDevice, NeoPixelCount);
+
+            // clear LED
+            ColorWipe(_neoPixel, Color.White, NeoPixelCount);
+            ColorWipe(_neoPixel, Color.Red, NeoPixelCount);
+            ColorWipe(_neoPixel, Color.Green, NeoPixelCount);
+            ColorWipe(_neoPixel, Color.Blue, NeoPixelCount);
+
+            _oledScreen = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(1, Ssd1306.DefaultI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64);
+            _oledScreen.ClearScreen();
+            _oledScreen.Font = new BasicFont();
+
+            _swarmTile = new SwarmTile("COM1");
 
             // set this here just for debugging
-            swarmTile.TimeoutForCommandExecution = 50_000;
+            _swarmTile.TimeoutForCommandExecution = 50_000;
 
             // wait 5 seconds for the Tile to become operational
-            if (!swarmTile.DeviceReady.WaitOne(5_000, false))
+            if (!_swarmTile.DeviceReady.WaitOne(5_000, false))
             {
                 ////////////////////////////
                 // Tile is not responsive //
@@ -37,23 +78,29 @@ namespace Swarm.Sample
                 // Tile is operational
 
                 // output device IDs
-                Debug.WriteLine($"DeviceID: {swarmTile.DeviceID}");
-                Debug.WriteLine($"DeviceName: {swarmTile.DeviceName}");
+                Debug.WriteLine($"DeviceID: {_swarmTile.DeviceID}");
+                Debug.WriteLine($"DeviceName: {_swarmTile.DeviceName}");
 
                 // setup event to handle power state change notifications
-                swarmTile.PowerStateChanged += SwarmTile_PowerStateChanged;
+                _swarmTile.PowerStateChanged += SwarmTile_PowerStateChanged;
 
                 // setup handler for message events
-                swarmTile.MessageEvent += SwarmTile_MessageEvent;
+                _swarmTile.MessageEvent += SwarmTile_MessageEvent;
+
+                // setup hander to process RSSI updates
+                _swarmTile.BackgroundNoiseInfoAvailable += SwarmTile_BackgroundNoiseInfoAvailable;   
 
                 // set GPS info rate to each 5 minutes
-                swarmTile.GeospatialInformationRate = 5 * 60;
+                _swarmTile.GeospatialInformationRate = 5 * 60;
 
                 // set date time information to each minute
-                swarmTile.DateTimeStatusRate = 60;
+                _swarmTile.DateTimeStatusRate = 60;
+
+                // set noise indicator update rate to 5 seconds
+                _swarmTile.ReceiveTestRate = 5;
 
                 // get count on how many received messages are waiting to be read
-                var unreadCount = swarmTile.MessagesReceived.UnreadCount;
+                var unreadCount = _swarmTile.MessagesReceived.UnreadCount;
 
                 Debug.WriteLine($"There are {unreadCount} unread messages.");
 
@@ -64,7 +111,7 @@ namespace Swarm.Sample
                     while (keepReading)
                     {
                         // read newest message
-                        var newestMessage = swarmTile.MessagesReceived.ReadNewestMessage();
+                        var newestMessage = _swarmTile.MessagesReceived.ReadNewestMessage();
 
                         if (newestMessage == null)
                         {
@@ -81,7 +128,7 @@ namespace Swarm.Sample
                 }
 
                 // get count on how many messages are queued for transmission
-                var toTxCount = swarmTile.MessagesToTransmit.Count;
+                var toTxCount = _swarmTile.MessagesToTransmit.Count;
 
                 Debug.WriteLine($"There are {toTxCount} messages queued for transmission.");
 
@@ -92,17 +139,45 @@ namespace Swarm.Sample
                 // send message
                 string msgId;
 
-                if (swarmTile.TryToSendMessage(message, out msgId))
+                if (_swarmTile.TryToSendMessage(message, out msgId))
                 {
                     Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
                 }
                 else
                 {
-                    Debug.WriteLine($"Failed to send message. Error: {swarmTile.LastErrorMessage}.");
+                    Debug.WriteLine($"Failed to send message. Error: {_swarmTile.LastErrorMessage}.");
                 }
             }
 
             Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void SwarmTile_BackgroundNoiseInfoAvailable(int rssi)
+        {
+            // process value and
+
+            var pixels = _neoPixel.Image;
+
+            if (_swarmTile.OperationalQuality > OperationalQuality.Bad)
+            {
+                // set RED
+                pixels.Clear(Color.FromArgb(50, 255, 0, 0));
+            }
+            else if (_swarmTile.OperationalQuality < OperationalQuality.Marginal)
+            {
+                // set GREEN
+                pixels.Clear(Color.FromArgb(50, 0, 250, 0));
+            }
+            else
+            {
+                // set ORANGE
+                pixels.Clear(Color.FromArgb(50, 255, 255, 0));
+            }
+
+            _neoPixel.Update();
+
+            // update screen too
+            _oledScreen.DrawString(0, 56, $"RSSI: {rssi}dB");
         }
 
         private static void SwarmTile_MessageEvent(MessageEvent messageEvent, string messageId)
@@ -145,5 +220,16 @@ namespace Swarm.Sample
                     break;
             }
         }
+        private static void ColorWipe(Ws28xx neo, Color color, int count)
+        {
+            BitmapImage img = neo.Image;
+
+            for (var i = 0; i < count; i++)
+            {
+                img.SetPixel(i, 0, color);
+                neo.Update();
+            }
+        }
+
     }
 }
