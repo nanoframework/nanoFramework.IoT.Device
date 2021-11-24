@@ -11,18 +11,13 @@ using System.Device.Spi;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
-using Iot.Device.Ssd13xx;
-using System.Device.I2c;
 
 namespace Swarm.Sample
 {
     public class Program
     {
-        private const int NeoPixelCount = 2;
-
         private static Ws28xx _neoPixel;
         private static SwarmTile _swarmTile;
-        private static Ssd1306 _oledScreen;
 
         public static void Main()
         {
@@ -31,31 +26,21 @@ namespace Swarm.Sample
             ///////////////////////////////////////////////////
             // setup SPI GPIOs to connecting to NeoPixel LED with SPI
             Configuration.SetPinFunction(38, DeviceFunction.SPI1_MOSI);
-            Configuration.SetPinFunction(42, DeviceFunction.SPI1_MISO);
+            Configuration.SetPinFunction(40, DeviceFunction.SPI1_MISO);
             Configuration.SetPinFunction(45, DeviceFunction.SPI1_CLOCK);
-            // setup I2C GPIOs for the OLED
-            Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
             // Make sure as well you are using the right chip select
             using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(1, 37)
             {
                 ClockFrequency = 20_000_000,
-                DataFlow = DataFlow.MsbFirst,
-                Mode = SpiMode.Mode0 
+                Mode = SpiMode.Mode0,
+                DataBitLength = 8
             });
 
-            _neoPixel = new Ws2808(spiDevice, NeoPixelCount);
+            _neoPixel = new Ws2808(spiDevice, 2);
 
             // clear LED
-            ColorWipe(_neoPixel, Color.White, NeoPixelCount);
-            ColorWipe(_neoPixel, Color.Red, NeoPixelCount);
-            ColorWipe(_neoPixel, Color.Green, NeoPixelCount);
-            ColorWipe(_neoPixel, Color.Blue, NeoPixelCount);
-
-            _oledScreen = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(1, Ssd1306.DefaultI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64);
-            _oledScreen.ClearScreen();
-            _oledScreen.Font = new BasicFont();
+            ColorWipe(_neoPixel, Color.Transparent);
 
             _swarmTile = new SwarmTile("COM1");
 
@@ -132,21 +117,21 @@ namespace Swarm.Sample
 
                 Debug.WriteLine($"There are {toTxCount} messages queued for transmission.");
 
-                // compose message to transmit
-                MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
-                message.ApplicationID = 12345;
+                //// compose message to transmit
+                //MessageToTransmit message = new MessageToTransmit("Hello from .NET nanoFramework!");
+                //message.ApplicationID = 12345;
 
-                // send message
-                string msgId;
+                //// send message
+                //string msgId;
 
-                if (_swarmTile.TryToSendMessage(message, out msgId))
-                {
-                    Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
-                }
-                else
-                {
-                    Debug.WriteLine($"Failed to send message. Error: {_swarmTile.LastErrorMessage}.");
-                }
+                //if (_swarmTile.TryToSendMessage(message, out msgId))
+                //{
+                //    Debug.WriteLine($"Message {msgId} waiting to be transmitted!");
+                //}
+                //else
+                //{
+                //    Debug.WriteLine($"Failed to send message. Error: {_swarmTile.LastErrorMessage}.");
+                //}
             }
 
             Thread.Sleep(Timeout.Infinite);
@@ -156,28 +141,23 @@ namespace Swarm.Sample
         {
             // process value and
 
-            var pixels = _neoPixel.Image;
-
             if (_swarmTile.OperationalQuality > OperationalQuality.Bad)
             {
                 // set RED
-                pixels.Clear(Color.FromArgb(50, 255, 0, 0));
+                ColorWipe(_neoPixel, Color.FromArgb(50, 255, 0, 0));
             }
             else if (_swarmTile.OperationalQuality < OperationalQuality.Marginal)
             {
                 // set GREEN
-                pixels.Clear(Color.FromArgb(50, 0, 250, 0));
+                ColorWipe(_neoPixel, Color.FromArgb(50, 0, 250, 0));
             }
             else
             {
                 // set ORANGE
-                pixels.Clear(Color.FromArgb(50, 255, 255, 0));
+                ColorWipe(_neoPixel, Color.FromArgb(50, 255, 255, 0));
             }
 
             _neoPixel.Update();
-
-            // update screen too
-            _oledScreen.DrawString(0, 56, $"RSSI: {rssi}dB");
         }
 
         private static void SwarmTile_MessageEvent(MessageEvent messageEvent, string messageId)
@@ -220,16 +200,13 @@ namespace Swarm.Sample
                     break;
             }
         }
-        private static void ColorWipe(Ws28xx neo, Color color, int count)
+        private static void ColorWipe(Ws28xx neo, Color color)
         {
             BitmapImage img = neo.Image;
 
-            for (var i = 0; i < count; i++)
-            {
-                img.SetPixel(i, 0, color);
-                neo.Update();
-            }
+            img.SetPixel(0, 0, color);
+            img.SetPixel(1, 0, color);
+            neo.Update();
         }
-
     }
 }

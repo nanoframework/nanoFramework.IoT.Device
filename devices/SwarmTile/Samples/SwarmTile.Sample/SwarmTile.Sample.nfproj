@@ -19,16 +19,12 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="BasicFont.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Iot.Device.Ssd13xx">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Ssd13xx.1.0.212\lib\Iot.Device.Ssd13xx.dll</HintPath>
-    </Reference>
     <Reference Include="Iot.Device.Ws28xx">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Ws28xx.1.0.226\lib\Iot.Device.Ws28xx.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Ws28xx.1.0.248\lib\Iot.Device.Ws28xx.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
