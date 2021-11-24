@@ -29,6 +29,8 @@ steps:
 # need this here in order to persist GitHub credentials 
 - checkout: self
   submodules: true
+- checkout: templates
+  fetchDepth: 1
 
 - script: |
     git config --global user.email "nanoframework@outlook.com"
@@ -45,10 +47,6 @@ steps:
     command: custom
     custom: tool
     arguments: install -g nbgv
-
-- script: nbgv cloud -a -c
-  condition: succeeded()
-  displayName: Set build number
 
 - task: PowerShell@2
   condition: succeeded()
@@ -156,6 +154,9 @@ steps:
         $deviceFolders.Add("$env:DEVICE_TO_BUILD")
     }
 
+    # flag for any build 'failure'
+    $buildFailed = $false
+
     foreach ($folder in $deviceFolders)
     {
         "" | Write-Host -ForegroundColor Yellow
@@ -175,9 +176,9 @@ steps:
         else
         {
             "" | Write-Host -ForegroundColor Yellow
-            "***********************" | Write-Host -ForegroundColor Yellow
-            "Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
-            "***********************" | Write-Host -ForegroundColor Yellow
+            "*************************" | Write-Host -ForegroundColor Yellow
+            "Processing '$solutionFile'" | Write-Host -ForegroundColor Yellow
+            "*************************" | Write-Host -ForegroundColor Yellow
             "" | Write-Host -ForegroundColor Yellow
         }
 
@@ -206,15 +207,61 @@ steps:
             nuget restore devices\Card\Card.sln
         }
 
-        # build solution
-        & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
-        if (-not $?) { throw "Error building '$solutionFile'" }
+        try
+        {
+            Clear-Variable LastExitCode
 
-        # package NuGet
-        nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -Symbols -SymbolPackageFormat snupkg -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
-        if (-not $?) { throw "Error packaging '$nuspecFile'" }
+            # perform versions check
+            Invoke-Expression "$(Pipeline.Workspace)/s/nf-tools/azure-pipelines-scripts/versions-check.ps1 -SolutionToCheck $solutionFile -WorkingDirectory $(Build.SourcesDirectory)\nanoFramework.IoT.Device\devices\$folder\ -NuspecFile $nuspecFile"
+            
+            if($LASTEXITCODE -eq 0)
+            {
+                "" | Write-Host -ForegroundColor Yellow
+                "***********************" | Write-Host -ForegroundColor Yellow
+                "Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
+                "***********************" | Write-Host -ForegroundColor Yellow
+                "" | Write-Host -ForegroundColor Yellow
+    
+                # build solution
+                & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
+                if (-not $?) { throw "Error building '$solutionFile'" }
+    
+                # package NuGet
+                nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -Symbols -SymbolPackageFormat snupkg -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
+                if (-not $?) { throw "Error packaging '$nuspecFile'" }
+            }
+            else
+            {
+                "" | Write-Host -ForegroundColor Red
+                "*************************************" | Write-Host -ForegroundColor Red
+                ">>> Errors occurred, check output <<<" | Write-Host -ForegroundColor Red
+                "*************************************" | Write-Host -ForegroundColor Red
+                "" | Write-Host -ForegroundColor Red
+    
+                # set flag
+                $buildFailed = $true                  
+            }
+        }
+        catch
+        {
+            "" | Write-Host -ForegroundColor Red
+            "*************************************" | Write-Host -ForegroundColor Red
+            ">>> Errors occurred, check output <<<" | Write-Host -ForegroundColor Red
+            "*************************************" | Write-Host -ForegroundColor Red
+            "" | Write-Host -ForegroundColor Red
+
+            # set flag
+            $buildFailed = $true
+
+        }
+    }
+
+    if($buildFailed)
+    {      
+        exit 1
     }
   displayName: Build and pack solutions
+  workingDirectory: 'nanoFramework.IoT.Device'
   env:
     MY_GITHUBTOKEN: $(GitHubToken)
 
