@@ -288,8 +288,8 @@ steps:
     .\SignClient "Sign" `
     --baseDirectory "$(Build.ArtifactStagingDirectory)" `
     --input "**/*.nupkg" `
-    --config "$(Build.Repository.LocalPath)\config\SignClient.json" `
-    --filelist "$(Build.Repository.LocalPath)\config\filelist.txt" `
+    --config "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\SignClient.json" `
+    --filelist "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
     --user "$(SignClientUser)" `
     --secret '$(SignClientSecret)' `
     --name "IoT.Device" `
@@ -333,6 +333,7 @@ steps:
   displayName: Push READMEs to GitHub
   continueOnError: true
   inputs:
+    workingDirectory: nanoFramework.IoT.Device
     targetType: 'inline'
     script: |
       git config user.email 'nanoframework@outlook.com'
