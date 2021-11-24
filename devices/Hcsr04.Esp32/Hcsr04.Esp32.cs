@@ -120,7 +120,7 @@ namespace Iot.Device.Hcsr04.Esp32
             // Distance calculated as  (speed of sound) * duration(meters) / 2 
             result = Length.FromMeters(_speedOfSound * duration / (1000000 * 2));
 
-            if (result.Value > 0.4)
+            if (result.Value > 4)
             {
                 // result is more than sensor supports
                 // something went wrong
