@@ -22,8 +22,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\s
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Stopwatch", "..\..\src\Stopwatch\Stopwatch.shproj", "{875D133B-033B-4D11-B1A2-DEF898349AD5}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn5180.sample", "sample\Pn5180.sample.nfproj", "{9B1E2539-EBC9-4266-BB40-6C3079591B87}"
-EndProject
+# Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn5180.sample", "sample\Pn5180.sample.nfproj", "{9B1E2539-EBC9-4266-BB40-6C3079591B87}"
+# EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{150ced27-7cf0-4671-9370-b330d2d49066}*SharedItemsImports = 5
