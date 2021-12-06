@@ -13,7 +13,6 @@
     <readme>docs\README.md</readme>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
