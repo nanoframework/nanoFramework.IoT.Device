@@ -25,9 +25,9 @@
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
       <dependency id="nanoFramework.System.Math" version="1.4.3" />
-      <dependency id="UnitsNet.nanoFramework.ElectricResistance" version="4.109.0" />
-      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.109.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.109.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricResistance" version="4.110.0" />
+      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.110.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.110.0" />
     </dependencies>
   </metadata>
   <files>
