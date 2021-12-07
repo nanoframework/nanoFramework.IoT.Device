@@ -62,10 +62,6 @@ steps:
   env:
     MY_GITHUBTOKEN: $(GitHubToken)
 
-# check for app.config files
-- powershell: |
-    Write-host "TODO: check for app.config files!"
-
 - task: CopyFiles@1
   condition: succeeded()
   displayName: Collecting deployable artifacts
@@ -155,6 +151,7 @@ steps:
 # report error
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
   parameters:
+    workingDirectory: 'nanoFramework.IoT.Device'
     status: 'failure'
     webhookUrl: '$(DiscordWebhook)'
     message: ''

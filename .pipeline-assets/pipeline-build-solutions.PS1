@@ -55,7 +55,7 @@ if($env:DEVICE_TO_BUILD -eq "")
         "" | Write-Host -ForegroundColor Yellow
 
         # get files changed in the commit, if this is NOT a PR
-        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
         # filter removed files              
         $files = $commit.files.where{$_.status -ne 'removed'}
