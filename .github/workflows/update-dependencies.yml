@@ -7,8 +7,8 @@ name: Daily update dependencies
 
 on:
   schedule:
-  # Update daily at 00:00 UTC
-  - cron:  '0 0 * * *'
+  # Update At 00:00 UTC on Tuesday and Friday
+  - cron:  '0 0 * * 2,5'
   repository_dispatch:
     types: update-dependencies
 
@@ -19,7 +19,7 @@ defaults:
 jobs:
   update-nuget-dependencies:
     name: Update .NET nanoFramework dependencies
-    timeout-minutes: 60 # Non default as IoT devices has lots of solutions to update!
+    timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
     runs-on: windows-latest
     steps:
       - name: Checkout
