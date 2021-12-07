@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Tcs3472x</id>
@@ -20,8 +20,8 @@
     <summary>Iot.Device.Tcs3472x assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Tcs3472x</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-			<dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />      
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.2" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.160" />
       <dependency id="nanoFramework.System.Device.Model" version="1.0.176" />
       <dependency id="nanoFramework.System.Drawing" version="1.0.160" />
@@ -33,7 +33,6 @@
     <file src="bin\Release\Iot.Device.Tcs3472x.pdbx" target="lib\Iot.Device.Tcs3472x.pdbx" />
     <file src="bin\Release\Iot.Device.Tcs3472x.pe" target="lib\Iot.Device.Tcs3472x.pe" />
     <file src="bin\Release\Iot.Device.Tcs3472x.xml" target="lib\Iot.Device.Tcs3472x.xml" />
-
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

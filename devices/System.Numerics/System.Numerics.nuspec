@@ -20,8 +20,8 @@
     <summary>System.Numerics assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf System.Numerics</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Math" version="1.4.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.System.Math" version="1.4.3" />
     </dependencies>
   </metadata>
   <files>

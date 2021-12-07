@@ -20,11 +20,11 @@
     <summary>Iot.Device.Lps25h assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Lps25h</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
-      <dependency id="nanoFramework.System.Math" version="1.4.1" />
-      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.102.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.102.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.2" />
+      <dependency id="nanoFramework.System.Math" version="1.4.3" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.109.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.109.0" />
     </dependencies>
   </metadata>
   <files>
@@ -33,7 +33,6 @@
     <file src="bin\Release\Iot.Device.Lps25h.pdbx" target="lib\Iot.Device.Lps25h.pdbx" />
     <file src="bin\Release\Iot.Device.Lps25h.pe" target="lib\Iot.Device.Lps25h.pe" />
     <file src="bin\Release\Iot.Device.Lps25h.xml" target="lib\Iot.Device.Lps25h.xml" />
-
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

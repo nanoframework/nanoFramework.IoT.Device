@@ -20,11 +20,11 @@
     <summary>Iot.Device.Charlieplex assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Charlieplex</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.2-preview.8" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2-preview.5" />
-      <dependency id="nanoFramework.System.Threading" version="1.0.2" />
-      <dependency id="nanoFramework.System.Math" version="1.4.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2" />
+      <dependency id="nanoFramework.System.Threading" version="1.0.3" />
+      <dependency id="nanoFramework.System.Math" version="1.4.3" />
     </dependencies>
   </metadata>
   <files>
@@ -33,7 +33,6 @@
     <file src="bin\Release\Iot.Device.Charlieplex.pdbx" target="lib\Iot.Device.Charlieplex.pdbx" />
     <file src="bin\Release\Iot.Device.Charlieplex.pe" target="lib\Iot.Device.Charlieplex.pe" />
     <file src="bin\Release\Iot.Device.Charlieplex.xml" target="lib\Iot.Device.Charlieplex.xml" />
-
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
