@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared P
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Drawing", "..\..\src\System.Drawing\System.Drawing.shproj", "{E86896A2-B40C-4C03-B0E3-979DAF764CD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bh1745CustomConfiguration.Sample", "samples\Bh1745CustomConfiguration.Sample.csproj", "{9E92F204-AFDD-4F26-AA87-35B9AEDB8F9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bh1745CustomConfiguration.Sample", "samples\Bh1745CustomConfiguration.Sample.nfproj", "{9E92F204-AFDD-4F26-AA87-35B9AEDB8F9E}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
