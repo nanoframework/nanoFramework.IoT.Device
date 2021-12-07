@@ -13,9 +13,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>System.Buffers.Binary</RootNamespace>
-    <AssemblyName>System.Buffers.Binary</AssemblyName>
+    <AssemblyName>System.Buffers.Binary.BinaryPrimitives</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\System.Buffers.Binary.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\System.Buffers.Binary.BinaryPrimitives.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>

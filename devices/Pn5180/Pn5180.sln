@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{30DD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Card Projects", "Card Projects", "{7DE389DF-FE19-440A-A172-1D7B8D601303}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Card", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "..\Card\Mifare\Mifare.nfproj", "{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}"
 EndProject
@@ -22,7 +22,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\s
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Stopwatch", "..\..\src\Stopwatch\Stopwatch.shproj", "{875D133B-033B-4D11-B1A2-DEF898349AD5}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn5180.sample", "sample\Pn5180.sample.nfproj", "{9B1E2539-EBC9-4266-BB40-6C3079591B87}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn5180.sample", "samples\Pn5180.sample.nfproj", "{9B1E2539-EBC9-4266-BB40-6C3079591B87}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -41,18 +41,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x64.Build.0 = Debug|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x86.Build.0 = Debug|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x64.ActiveCfg = Release|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x64.Build.0 = Release|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x86.ActiveCfg = Release|Any CPU
-		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x86.Build.0 = Release|Any CPU
 		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -101,6 +89,18 @@ Global
 		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Release|x64.Build.0 = Release|Any CPU
 		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Release|x86.Build.0 = Release|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x64.Build.0 = Debug|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Debug|x86.Build.0 = Debug|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x64.ActiveCfg = Release|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x64.Build.0 = Release|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x86.ActiveCfg = Release|Any CPU
+		{8092E07C-4965-0F38-F578-CD82F4124BBC}.Release|x86.Build.0 = Release|Any CPU
 		{9B1E2539-EBC9-4266-BB40-6C3079591B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B1E2539-EBC9-4266-BB40-6C3079591B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B1E2539-EBC9-4266-BB40-6C3079591B87}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

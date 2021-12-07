@@ -62,6 +62,10 @@ steps:
   env:
     MY_GITHUBTOKEN: $(GitHubToken)
 
+# check for app.config files
+- powershell: |
+    Write-host "TODO: check for app.config files!"
+
 - task: CopyFiles@1
   condition: succeeded()
   displayName: Collecting deployable artifacts
