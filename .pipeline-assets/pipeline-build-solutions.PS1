@@ -145,7 +145,13 @@ foreach ($folder in $deviceFolders)
         $solutionFile.Name -eq "Pn5180.sln" -or 
         $solutionFile.Name -eq "Pn532.sln")
     {
-        nuget restore devices\Card\Card.sln
+        nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Card\Card.sln
+    }
+
+    # Mpu9250 solutions requires Ak8963 to be restored too
+    if ($solutionFile.Name -eq "Mpu9250.sln")
+    {
+        nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Ak8963\Ak8963.sln
     }
 
     try
