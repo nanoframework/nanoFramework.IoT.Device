@@ -20,17 +20,16 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.11.7.2, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.11.7\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.160\lib\System.Buffers.Binary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device.I2c, Version=1.0.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.2\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Model">
@@ -58,10 +57,10 @@
     </ProjectCapabilities>
   </ProjectExtensions>
   <Import Project="packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets')" />
-  <Target Name = "EnsureNuGetPackageBuildImports" BeforeTargets = "PrepareForBuild">
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition = "!Exists('packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets')" Text = "$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.240\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
 </Project>

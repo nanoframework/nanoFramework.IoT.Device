@@ -20,9 +20,9 @@
     <summary>Iot.Device.Ip5306 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ip5306</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
-      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="4.102.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.2" />
+      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="4.109.0" />
     </dependencies>
   </metadata>
   <files>
@@ -31,7 +31,6 @@
     <file src="bin\Release\Iot.Device.Ip5306.pdbx" target="lib\Iot.Device.Ip5306.pdbx" />
     <file src="bin\Release\Iot.Device.Ip5306.pe" target="lib\Iot.Device.Ip5306.pe" />
     <file src="bin\Release\Iot.Device.Ip5306.xml" target="lib\Iot.Device.Ip5306.xml" />
-
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

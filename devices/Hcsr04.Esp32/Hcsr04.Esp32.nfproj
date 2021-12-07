@@ -23,21 +23,24 @@
     <Compile Include="Hcsr04.Esp32.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.11.7.2, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.11.7\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Hardware.Esp32.Rmt">
-      <HintPath>packages\nanoFramework.Hardware.Esp32.Rmt.1.2.1-preview.7\lib\nanoFramework.Hardware.Esp32.Rmt.dll</HintPath>
+    <Reference Include="nanoFramework.Hardware.Esp32.Rmt, Version=1.2.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Hardware.Esp32.Rmt.1.2.1-preview.14\lib\nanoFramework.Hardware.Esp32.Rmt.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>packages\nanoFramework.Runtime.Events.1.9.2-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.9.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.9.2\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Model">
       <HintPath>packages\nanoFramework.System.Device.Model.1.0.176\lib\System.Device.Model.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.104.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=4.109.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.109.0\lib\UnitsNet.Length.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +52,7 @@
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
-    <Import Project="packages\Nerdbank.GitVersioning.3.4.244\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.4.244\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.4.244\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.4.244\build\Nerdbank.GitVersioning.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>

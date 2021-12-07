@@ -20,11 +20,11 @@
     <summary>Iot.Device.Max7219 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Max7219</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.2-preview.11" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2-preview.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.2-preview.8" />
-      <dependency id="nanoFramework.System.Math" version="1.4.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.2" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
+      <dependency id="nanoFramework.System.Math" version="1.4.3" />
     </dependencies>
   </metadata>
   <files>
@@ -33,7 +33,6 @@
     <file src="bin\Release\Iot.Device.Max7219.pdbx" target="lib\Iot.Device.Max7219.pdbx" />
     <file src="bin\Release\Iot.Device.Max7219.pe" target="lib\Iot.Device.Max7219.pe" />
     <file src="bin\Release\Iot.Device.Max7219.xml" target="lib\Iot.Device.Max7219.xml" />
-
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
