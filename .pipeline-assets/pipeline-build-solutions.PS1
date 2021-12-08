@@ -13,7 +13,7 @@ if ($msbuild)
 
 $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
 
-if($env:DEVICE_TO_BUILD -eq "")
+if($env:DEVICE_TO_BUILD -eq "" -Or $env:DEVICE_TO_BUILD -eq "ALL")
 {
     if($null -ne $env:System_PullRequest_PullRequestId)
     {
