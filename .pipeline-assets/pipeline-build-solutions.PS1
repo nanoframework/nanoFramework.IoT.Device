@@ -87,6 +87,8 @@ if($env:DEVICE_TO_BUILD -eq "")
 }
 elseif($env:DEVICE_TO_BUILD -eq "ALL")
 {
+    Write-Host "Building 'all' packages"
+
     # pattern to select device folder name
     $files | ForEach-Object {$_.filename} | Where-Object {$_ -match 'devices/*'} 
     $pattern = '(devices\/)(?<folder>[a-zA-Z0-9._]+)(?>\/)'
@@ -95,6 +97,8 @@ elseif($env:DEVICE_TO_BUILD -eq "ALL")
     $results = [Regex]::Matches($files, $pattern)
 
     $deviceFolders = $results | Sort-Object | Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique
+
+    Write-Host "Found $($deviceFolders.count) package(s) to build"
 }
 else
 {
