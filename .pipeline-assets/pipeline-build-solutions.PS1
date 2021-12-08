@@ -13,7 +13,7 @@ if ($msbuild)
 
 $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
 
-if($env:DEVICE_TO_BUILD -eq "" -Or $env:DEVICE_TO_BUILD -eq "ALL")
+if($env:DEVICE_TO_BUILD -eq "")
 {
     if($null -ne $env:System_PullRequest_PullRequestId)
     {
@@ -84,6 +84,17 @@ if($env:DEVICE_TO_BUILD -eq "" -Or $env:DEVICE_TO_BUILD -eq "ALL")
     $deviceFolders = $results | Sort-Object | Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
 
     Write-Host "Found $($deviceFolders.count) package(s) to build"
+}
+elseif($env:DEVICE_TO_BUILD -eq "ALL")
+{
+    # pattern to select device folder name
+    $files | ForEach-Object {$_.filename} | Where-Object {$_ -match 'devices/*'} 
+    $pattern = '(devices\/)(?<folder>[a-zA-Z0-9._]+)(?>\/)'
+
+    # filter out the collection
+    $results = [Regex]::Matches($files, $pattern)
+
+    $deviceFolders = $results | Sort-Object | Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique
 }
 else
 {
