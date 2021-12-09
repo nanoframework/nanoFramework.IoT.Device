@@ -85,6 +85,13 @@ if($env:DEVICE_TO_BUILD -eq "")
 
     Write-Host "Found $($deviceFolders.count) package(s) to build"
 }
+elseif($env:DEVICE_TO_BUILD -eq "ALL")
+{
+    Write-Host "Building 'all' packages"
+
+    $files = (Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\" -Include "*.sln"  -Recurse)
+    $deviceFolders = $files | Foreach-Object {$_.Directory.Name}
+}
 else
 {
     # build for a specific device
