@@ -27,10 +27,9 @@
       <HintPath>packages\nanoFramework.Runtime.Events.1.9.2\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Buffers.Binary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.160\lib\System.Buffers.Binary.dll</HintPath>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.259\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.0.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.2\lib\System.Device.Gpio.dll</HintPath>
@@ -41,9 +40,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\nanoFramework.System.Device.Model.1.0.176\lib\System.Device.Model.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Model.1.0.259\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Math, Version=1.4.3.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Math.1.4.3\lib\System.Math.dll</HintPath>
