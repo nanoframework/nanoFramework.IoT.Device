@@ -15,20 +15,9 @@ This sample shows how to calculate position of line under matrix of 5 IR sensors
 ### Initialization
 
 ```csharp
-SoftwareSpi spi = new SoftwareSpi(
-    clk: 25,
-    sdi: 23,
-    sdo: 24,
-    cs: 5,
-    settings: new SpiConnectionSettings(-1) { DataBitLength = Tlc1543.SpiDataBitLength });
-
-Tlc1543 adc = new Tlc1543(spi);
+SpiDevice spi = SpiDevice.Create(
+    new SpiConnectionSettings(-1) { DataBitLength = Tlc1543.SpiDataBitLength, ChipSelectLine = 5 });
 ```
-
-- 24 is our address pin,
-- 5 chip select,
-- 23 data out pin
-- and 25 is input output clock.
 
 ### Changing Charge Channel
 

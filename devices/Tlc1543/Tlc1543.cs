@@ -4,14 +4,10 @@
 using System;
 using System.Device;
 using System.Device.Gpio;
-using System.Collections.Generic;
 using System.Device.Spi;
 
 namespace Iot.Device.Tlc1543
 {
-    /// <summary>
-    /// Add documentation here
-    /// </summary>
     public class Tlc1543 : IDisposable
     {
         /// <summary>
@@ -79,16 +75,9 @@ namespace Iot.Device.Tlc1543
             _spiDevice.TransferFullDuplex(writeBuffer, readBuffer);
 
             int previousReading = ((readBuffer[0] & 0b11111) << 5) | (readBuffer[1] & 0b11111);
-            if (_endOfConversion != -1)
-            {
-                // Wait for ADC to report end of conversion or timeout at max conversion time
-                _controller.WaitForEvent(_endOfConversion, PinEventTypes.Rising, _conversionTime);
-            }
-            else
-            {
-                // Max conversion time (21us) as seen in table on page 10 in TLC1543 documentation
-                DelayHelper.Delay(_conversionTime, false);
-            }
+
+            // Max conversion time (21us) as seen in table on page 10 in TLC1543 documentation
+            DelayHelper.Delay(_conversionTime, false);
 
             return previousReading;
         }

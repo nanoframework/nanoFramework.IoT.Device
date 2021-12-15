@@ -2,10 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
 using System.Device.Spi;
-using Iot.Device.Spi;
+using System.Diagnostics;
 
 namespace Iot.Device.Tlc1543.Samples
 {
@@ -19,13 +17,7 @@ namespace Iot.Device.Tlc1543.Samples
         /// </summary>
         public static void Main()
         {
-            SoftwareSpi spi = new SoftwareSpi(
-                clk: 25,
-                sdi: 23,
-                sdo: 24,
-                cs: 5,
-                settings: new SpiConnectionSettings(-1) { DataBitLength = Tlc1543.SpiDataBitLength });
-
+            SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(-1) { DataBitLength = Tlc1543.SpiDataBitLength, ChipSelectLine = 5,  });
             Tlc1543 adc = new Tlc1543(spi);
             Channel[] channels = new Channel[]
             {
