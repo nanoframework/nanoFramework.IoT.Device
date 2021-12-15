@@ -41,9 +41,6 @@
     <Reference Include="System.Device.Spi">
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.2\lib\System.Device.Spi.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.110.0\lib\UnitsNet.Length.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
