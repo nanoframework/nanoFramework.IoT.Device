@@ -8,6 +8,9 @@ using System.Device.Spi;
 
 namespace Iot.Device.Tlc1543
 {
+    /// <summary>
+    /// Tlc1543 device
+    /// </summary>
     public class Tlc1543 : IDisposable
     {
         /// <summary>
