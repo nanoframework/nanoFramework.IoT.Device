@@ -17,7 +17,15 @@ namespace Iot.Device.Tlc1543.Samples
         /// </summary>
         public static void Main()
         {
-            SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(-1) { DataBitLength = Tlc1543.SpiDataBitLength, ChipSelectLine = 5,  });
+            //////////////////////////////////////////////////////////////////////
+            // when connecting to this device, you need to configure the SPI GPIOs
+            // used for the bus
+            // Configuration.SetPinFunction(24, DeviceFunction.SPI1_MOSI);
+            // Configuration.SetPinFunction(23, DeviceFunction.SPI1_MISO);
+            // Configuration.SetPinFunction(25, DeviceFunction.SPI1_CLOCK);
+            //////////////////////////////////////////////////////////////////////
+            SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(5) { DataBitLength = Tlc1543.SpiDataBitLength, ChipSelectLine = 5,  });
+
             Tlc1543 adc = new Tlc1543(spi);
             Channel[] channels = new Channel[]
             {
