@@ -1,7 +1,7 @@
 # DHTxx - Digital-Output Relative Humidity & Temperature Sensor Module
 
-> **IMPORTANT** This sensor is very time sensitive. This implementation will only work on few boards. It doesn't work on nay ESP32. Don't use this implementation for those MCU.
-> To use any of the DHT with 1 wire protocol, with an ESP32, please use the [Dhtxx.Esp32](../Dthxx.Esp32/README.md) version.
+> **IMPORTANT** This sensor is very time sensitive. This implementation will only work on few boards. Do not use with ESP32.
+> If you an ESP32, to use any of the DHT with 1 wire protocol, please use the [Dhtxx.Esp32](../Dthxx.Esp32/README.md) version.
 
 The DHT temperature and humidity sensors are very popular. This projects support DHT10, DHT11, DHT12, DHT21(AM2301), DHT22(AM2302).
 
