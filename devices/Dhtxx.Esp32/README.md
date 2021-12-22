@@ -1,7 +1,7 @@
-# DHTxx - Digital-Output Relative Humidity & Temperature Sensor Module
+# DHTxx.Esp32 - Digital-Output Relative Humidity & Temperature Sensor Module
 
-> **IMPORTANT** This sensor is very time sensitive. This implementation will only work on few boards. It doesn't work on nay ESP32. Don't use this implementation for those MCU.
-> To use any of the DHT with 1 wire protocol, with an ESP32, please use the [Dhtxx.Esp32](../Dthxx.Esp32/README.md) version.
+> **IMPORTANT** This implementation will only work on with ESP32. Don't use this implementation for those MCU.
+> This implementation requires 2 pins. One is used to write to the sensor and the other is used to read the data using RMT.
 
 The DHT temperature and humidity sensors are very popular. This projects support DHT10, DHT11, DHT12, DHT21(AM2301), DHT22(AM2302).
 
@@ -28,7 +28,7 @@ The DHT temperature and humidity sensors are very popular. This projects support
 
 ```csharp
 // GPIO Pin
-using (Dht11 dht = new Dht11(26))
+using (Dht11 dht = new Dht11(12, 24))
 {
     var temperature = dht.Temperature;
     var humidity = dht.Humidity;
@@ -137,26 +137,6 @@ if (dht.IsLastReadSuccessful)
 }
 ```
 
-**I have a Raspberry Pi 4 and I get an exception when creating the DHT sensor**
-
-See this [issue 1145](https://github.com/dotnet/iot/issues/1145). We're actively trying to fix it automatically. You will have to force using either the Raspberry Pi 3 driver, either the LibGpiodDriver. This is how you can force using a specific drive, in this case the Raspberry Pi 3 one which will work:
-
-```csharp
-GpioDriver driver = new RaspberryPi3Driver();
-var controller = new GpioController(PinNumberingScheme.Logical, driver);
-// This uses pin 4 in the logical schema so pin 7 in the physical schema
-var dht = new Dht11(4, gpioController: controller);
-```
-
-**My DHT sensor using 1 wire protocol is not working on my Raspberry Pi with Windows 10 IoT Core, what can I do?**
-
-On the RPi with any of the DHT sensor, 1-Wire works using Raspian but not with Windows 10 IoT Core. The device has to switch the 1-wire pin between input and output and vice versa. It seems that Windows IoT Core OS can't switch the pin direction quick enough. There have been suggestions for using two pins; one for input and one for output. This solution has not been implemented here, but these are some handy links that may help setting that up:_
-
-* <https://github.com/ms-iot/samples/tree/develop/GpioOneWire>
-* And on Hackster.io: <https://www.hackster.io/porrey/go-native-c-with-the-dht22-a8e8eb>
-
-Now if your sensor is an I2C sensor, it should just work perfectly on Windows 10 IoT Core.
-
 ## Example of DHTxx
 
 ### Hardware Required
@@ -168,11 +148,11 @@ Now if your sensor is an I2C sensor, it should just work perfectly on Windows 10
 
 #### 1-Wire Protocol Circuit
 
-Simply connect your DHTxx data pin to GPIO26 (physical pin 37), the ground to the ground (physical pin 6) and the VCC to +5V (physical pin 2).
+Simply connect your DHTxx data pin to GPIO12 and GPIO14, the ground to the ground and the VCC to +3.3V.
 
 ![schema](./dht22.png)
 
-Some sensors are already sold with the 10K resistor. Connect the GPIO26 to the *data* pin, its position can vary depending on the integrator.
+Some sensors are already sold with the 10K resistor. Connect the both GPIO12 and GPIO14 to the *data* pin, its position can vary depending on the integrator.
 
 #### I2C Protocol Circuit
 
@@ -223,15 +203,16 @@ Select the DHT sensor you want to use:
  5. DHT22 on GPIO
 ```
 
-Just select the sensor you want to test and use by typing the number. For example, if you want to test a DHT22, type 5.
+Just adjust the `device` variable. For example, if you want to test a DHT22, adjust it to 5.
 
-Then, you are prompted to type the pin number in the logical schema:
-
-```text
-Which pin do you want to use in the logical pin schema?
+```csharp
+// Set these values to test according to the list below:
+var pinEcho = 12;
+var pinTrigger = 14;
+var device = 5;
 ```
 
-If you want to use the pin 26, then type 26 and enter. This will then create a DHT22 sensor attached to pin 26 and start the measurement.
+This samples uses the pins 12 and 14. If you want to use the pin 26 and 10, then adjust the `pinEcho` and `pinTrigger` variables. This will then create a DHT22 sensor attached to pin 26 and start the measurement.
 
 Please note that the few first measurements won't be correct, that's totally normal and related to the fact the sensor needs a bit of time to warm up and give data. Those sensors are very sensitive and too long wires, many perturbations, code compile as debug will increase the numbers of bad readings.
 

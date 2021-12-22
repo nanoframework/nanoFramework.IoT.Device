@@ -1,0 +1,34 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Dhtxx.Esp32", "Dhtxx.Esp32.nfproj", "{581E6493-7362-4A43-ACD2-6734F090F2B5}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Dhtxx-Sample", "samples\Dhtxx-Sample.nfproj", "{58EC5F81-006A-47FB-AFE6-01EE88AA695E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{581E6493-7362-4A43-ACD2-6734F090F2B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581E6493-7362-4A43-ACD2-6734F090F2B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581E6493-7362-4A43-ACD2-6734F090F2B5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{581E6493-7362-4A43-ACD2-6734F090F2B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581E6493-7362-4A43-ACD2-6734F090F2B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581E6493-7362-4A43-ACD2-6734F090F2B5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{58EC5F81-006A-47FB-AFE6-01EE88AA695E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58EC5F81-006A-47FB-AFE6-01EE88AA695E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58EC5F81-006A-47FB-AFE6-01EE88AA695E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{58EC5F81-006A-47FB-AFE6-01EE88AA695E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58EC5F81-006A-47FB-AFE6-01EE88AA695E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58EC5F81-006A-47FB-AFE6-01EE88AA695E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D40C08C-13EA-4E5E-8F28-6A53B88B5BE2}
+	EndGlobalSection
+EndGlobal
