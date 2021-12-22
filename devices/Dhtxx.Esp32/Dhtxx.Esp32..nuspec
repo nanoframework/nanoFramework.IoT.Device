@@ -17,7 +17,6 @@
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.Dhtxx.Esp32 for .NET nanoFramework C# projects. Only working with ESP32.</description>
-    <summary>Iot.Device.Dhtxx.Esp32 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Dhtxx</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />

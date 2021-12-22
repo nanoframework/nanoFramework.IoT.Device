@@ -18,7 +18,7 @@ namespace Iot.Device.DHTxx.Esp32
         /// <param name="pinTrigger">The pin number which is used as trigger (GPIO number)</param>
         /// <param name="pinNumberingScheme">The GPIO pin numbering scheme</param>
         /// <param name="gpioController"><see cref="GpioController"/> related with operations on pins</param>
-        /// <param name="shouldDispose">True to dispose the Gpio Controller</param>
+        /// <param name="shouldDispose"><see langword="true"/> to dispose the <see cref="GpioController"/></param>
         public Dht11(int pinEcho, int pinTrigger, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical, GpioController? gpioController = null, bool shouldDispose = true)
             : base(pinEcho, pinTrigger, pinNumberingScheme, gpioController, shouldDispose)
         {
