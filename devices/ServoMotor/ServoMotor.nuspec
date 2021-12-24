@@ -21,7 +21,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.ServoMotor</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="1.0.0-preview.20" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="1.0.0" />
     </dependencies>
   </metadata>
   <files>
