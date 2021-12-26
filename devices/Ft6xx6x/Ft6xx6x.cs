@@ -55,10 +55,10 @@ namespace Iot.Device.Ft6xx6x
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentException(nameof(i2cDevice));
             // Check if we do have a valid chip code high. Must be 0x64
-            //if (ReadByte(Register.ID_G_CIPHER_HIGH) != 0x64)
-            //{
-            //    throw new IOException("Not a valid Ft6xx6x");
-            //}
+            if (ReadByte(Register.ID_G_CIPHER_HIGH) != 0x64)
+            {
+                throw new IOException("Not a valid Ft6xx6x");
+            }
 
             // Switch to normal mode
             WriteByte(Register.Mode_Switch, (byte)workingMode.Normal);
