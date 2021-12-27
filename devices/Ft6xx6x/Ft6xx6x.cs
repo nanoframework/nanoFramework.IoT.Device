@@ -14,6 +14,7 @@ namespace Iot.Device.Ft6xx6x
     {
         private I2cDevice _i2cDevice;
         private byte[] _data = new byte[2];
+        private byte[] _toReadPoint = new byte[6];
 
         /// <summary>
         /// Ft6xx6x I2C Address
@@ -45,6 +46,25 @@ namespace Iot.Device.Ft6xx6x
         {
             get => ReadByte(Register.ID_G_FREQ_HOPPING_EN) == 0x01;
             set => WriteByte(Register.ID_G_FREQ_HOPPING_EN, (byte)(value ? 0x01 : 0x00));
+        }
+
+        /// <summary>
+        /// Gets or sets the touch screen to go to monitor mode.
+        /// </summary>
+        public bool MonitorModeEnabled
+        {
+            get => ReadByte(Register.ID_G_CTRL) == 0x01;
+            set => WriteByte(Register.ID_G_CTRL, (byte)(value ? 0x01 : 0x00));
+        }
+
+        /// <summary>
+        /// Gets or sets the time to go to monitor mode in seconds.
+        /// Maximum is 0x64.
+        /// </summary>
+        public byte MonitorModeDElaySeconds
+        {
+            get => ReadByte(Register.ID_G_TIMEENTERMONITOR);
+            set => WriteByte(Register.ID_G_TIMEENTERMONITOR, (byte)(value > 0x64 ? 0x64 : value));
         }
 
         /// <summary>
@@ -120,26 +140,12 @@ namespace Iot.Device.Ft6xx6x
         public Point GetPoint(bool first)
         {
             Point pt = new Point();
-            if (first)
-            {
-                byte touchId = ReadByte(Register.P1_YH);
-                pt.X = (ReadByte(Register.P1_XH) << 8 | ReadByte(Register.P1_XL)) & 0x0FFF;
-                pt.Y = (touchId << 8 | ReadByte(Register.P1_YL)) & 0x0FFF;
-                pt.TouchId = (byte)(touchId >> 4);
-                pt.Weigth = ReadByte(Register.P1_WEIGHT);
-                pt.Miscelaneous = ReadByte(Register.P1_MISC);
-            }
-            else
-            {
-                byte touchId = ReadByte(Register.P2_YH);
-                pt.X = (ReadByte(Register.P2_XH) << 8 | ReadByte(Register.P2_XL)) & 0x0FFF;
-                pt.Y = (touchId << 8 | ReadByte(Register.P2_YL)) & 0x0FFF;
-                pt.TouchId = (byte)(touchId >> 4);
-                pt.Weigth = ReadByte(Register.P2_WEIGHT);
-                pt.Miscelaneous = ReadByte(Register.P2_MISC);
-
-            }
-
+            Read(first ? Register.P1_XH : Register.P2_XH, _toReadPoint);
+            pt.X = (_toReadPoint[0] << 8 | _toReadPoint[1]) & 0x0FFF;
+            pt.Y = (_toReadPoint[2] << 8 | _toReadPoint[3]) & 0x0FFF;
+            pt.TouchId = (byte)(_toReadPoint[2] >> 4);
+            pt.Weigth = _toReadPoint[4];
+            pt.Miscelaneous = _toReadPoint[5];
             return pt;
         }
 
@@ -175,6 +181,12 @@ namespace Iot.Device.Ft6xx6x
             _data[0] = (byte)reg;
             _data[1] = data;
             _i2cDevice.Write(_data);
+        }
+
+        private void Read(Register reg, SpanByte data)
+        {
+            _i2cDevice.WriteByte((byte)reg);
+            _i2cDevice.Read(data);
         }
     }
 }
