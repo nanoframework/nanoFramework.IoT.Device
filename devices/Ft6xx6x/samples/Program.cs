@@ -1,15 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Ft6xx6x;
-using nanoFramework.Hardware.Esp32;
 using nanoFramework.M5Stack;
 
+// Note: this sample requires a M5Core2.
+// If you want to use another device, just remove all the related nugets
+// And comments the following line
+// You will need as well to set the pins if needed.
 M5Core2.InitializeScreen();
 
 I2cConnectionSettings settings = new(1, Ft6xx6x.DefaultI2cAddress);
@@ -17,7 +19,6 @@ using I2cDevice device = I2cDevice.Create(settings);
 using GpioController gpio = new();
 
 using Ft6xx6x sensor = new(device);
-//sensor.ChargerOn = true;
 var ver = sensor.GetVersion();
 Debug.WriteLine($"version: {ver}");
 sensor.SetInterruptMode(false);
@@ -28,6 +29,7 @@ Debug.WriteLine($"Monitor mode: {sensor.MonitorModeEnabled}");
 Debug.WriteLine($"Proximity sensing: {sensor.ProximitySensingEnabled}");
 
 gpio.OpenPin(39, PinMode.Input);
+// This will enable an event on GPIO39 on falling edge when the screen if touched
 gpio.RegisterCallbackForPinValueChangedEvent(39, PinEventTypes.Falling, TouchInterrupCallback);
 
 while (true)
