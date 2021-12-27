@@ -195,6 +195,7 @@ namespace Iot.Device.Ft6xx6x
             pt.TouchId = (byte)(_toReadPoint[2] >> 4);
             pt.Weigth = _toReadPoint[4];
             pt.Miscelaneous = _toReadPoint[5];
+            pt.Event = (Event)(_toReadPoint[0] >> 6);
             return pt;
         }
 

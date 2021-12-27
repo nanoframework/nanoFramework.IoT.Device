@@ -32,5 +32,10 @@ namespace Iot.Device.Ft6xx6x
         /// Gets or sets miscelaneous.
         /// </summary>
         public byte Miscelaneous { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event type.
+        /// </summary>
+        public Event Event { get; set; }
     }
 }

@@ -5,6 +5,7 @@ The FT6xx6x are touch screens controllers. [M5Core2](https://github.com/nanofram
 ## Documentation
 
 - You can find [the registers here](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/core/Ft6336GU_Firmware%20%E5%A4%96%E9%83%A8%E5%AF%84%E5%AD%98%E5%99%A8_20151112-%20EN.xlsx).
+- [More information](https://www.buydisplay.com/download/ic/FT6236-FT6336-FT6436L-FT6436_Datasheet.pdf) on the touch controller, events, gesture.
 
 ## Usage
 
@@ -55,6 +56,7 @@ void TouchInterrupCallback(object sender, PinValueChangedEventArgs pinValueChang
     if (points == 1)
     {
         var point = sensor.GetPoint(true);
+                // Some controllers supports as well events, you can get access to them as well thru point.Event
         Debug.WriteLine($"ID: {point.TouchId}, X: {point.X}, Y: {point.Y}, Weight: {point.Weigth}, Misc: {point.Miscelaneous}");
     }
     else if (points == 2)
