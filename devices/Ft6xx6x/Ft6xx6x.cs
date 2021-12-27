@@ -61,10 +61,59 @@ namespace Iot.Device.Ft6xx6x
         /// Gets or sets the time to go to monitor mode in seconds.
         /// Maximum is 0x64.
         /// </summary>
-        public byte MonitorModeDElaySeconds
+        public byte MonitorModeDelaySeconds
         {
             get => ReadByte(Register.ID_G_TIMEENTERMONITOR);
             set => WriteByte(Register.ID_G_TIMEENTERMONITOR, (byte)(value > 0x64 ? 0x64 : value));
+        }
+
+        /// <summary>
+        /// Period for scaning and making results available.
+        /// Values between 0x04 and 0x14.
+        /// </summary>
+        /// <remarks>Do not pull results faster than this perdiod.</remarks>
+        public byte PeriodActive
+        {
+            get => ReadByte(Register.ID_G_PERIODACTIVE);
+            set => WriteByte(Register.ID_G_PERIODACTIVE, (byte)(value > 0x14 ? 0x14 : (value < 0x04 ? 0x04 : value)));
+        }
+
+        /// <summary>
+        /// Gets or sets the period for scaning and making results available.
+        /// Values between 0x04 and 0x14.
+        /// </summary>
+        /// <remarks>Do not pull results faster than this perdiod.</remarks>
+        public byte MonitorModePeriodActive
+        {
+            get => ReadByte(Register.ID_G_PERIODMONITOR);
+            set => WriteByte(Register.ID_G_PERIODMONITOR, (byte)(value > 0x14 ? 0x14 : (value < 0x04 ? 0x04 : value)));
+        }
+
+        /// <summary>
+        /// Gets or setes the touch threshold
+        /// </summary>
+        public byte TouchThreshold
+        {
+            get => ReadByte(Register.ID_G_THGROUP);
+            set => WriteByte(Register.ID_G_THGROUP, value);
+        }
+
+        /// <summary>
+        /// Gets or setes the point filter threshold
+        /// </summary>
+        public byte PointFilterThreshold
+        {
+            get => ReadByte(Register.ID_G_THDIFF);
+            set => WriteByte(Register.ID_G_THDIFF, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the gesture.
+        /// </summary>
+        public bool GestureEnabled
+        {
+            get => ReadByte(Register.ID_G_SPEC_GESTURE_ENABLE) == 0x01;
+            set => WriteByte(Register.ID_G_SPEC_GESTURE_ENABLE, (byte)(value ? 0x01 : 0x00));
         }
 
         /// <summary>

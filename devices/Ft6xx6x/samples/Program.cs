@@ -21,6 +21,11 @@ using Ft6xx6x sensor = new(device);
 var ver = sensor.GetVersion();
 Debug.WriteLine($"version: {ver}");
 sensor.SetInterruptMode(false);
+Debug.WriteLine($"Period active: {sensor.PeriodActive}");
+Debug.WriteLine($"Period active in monitor mode: {sensor.MonitorModePeriodActive}");
+Debug.WriteLine($"Time to enter monitor: {sensor.MonitorModeDelaySeconds} seconds");
+Debug.WriteLine($"Monitor mode: {sensor.MonitorModeEnabled}");
+Debug.WriteLine($"Proximity sensing: {sensor.ProximitySensingEnabled}");
 
 gpio.OpenPin(39, PinMode.Input);
 gpio.RegisterCallbackForPinValueChangedEvent(39, PinEventTypes.Falling, TouchInterrupCallback);
