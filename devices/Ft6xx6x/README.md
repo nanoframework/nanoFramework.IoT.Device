@@ -20,7 +20,15 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
+> Note: this sample requires a M5Core2.
+> If you want to use another device, just remove all the related nugets.
+
 ```csharp
+M5Core2.InitializeScreen();
+I2cConnectionSettings settings = new(1, Ft6xx6x.DefaultI2cAddress);
+using I2cDevice device = I2cDevice.Create(settings);
+using GpioController gpio = new();
+
 using Ft6xx6x sensor = new(device);
 var ver = sensor.GetVersion();
 Debug.WriteLine($"version: {ver}");
