@@ -60,7 +60,7 @@ namespace GenerateDocFxStructure.Helpers
         public void Error(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
+            Console.WriteLine($"ERROR: {message}");
             Console.ResetColor();
         }
     }
