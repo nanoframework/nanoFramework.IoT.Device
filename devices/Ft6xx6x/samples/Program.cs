@@ -105,7 +105,7 @@ void DiscrimitateButtons(int x, int y)
                     nanoFramework.Console.WriteLine(strRB);
                 }
                 else {
-                    Debug.WriteLine(strXY1 + x.ToString() + strXY1 + y.ToString());
+                    Debug.WriteLine(strXY1 + x.ToString() + strXY2 + y.ToString());
                     nanoFramework.Console.WriteLine(strXY1 + x.ToString() + strXY2 + y.ToString());
                 }
             }
