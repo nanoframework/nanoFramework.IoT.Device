@@ -45,6 +45,7 @@ void TouchInterrupCallback(object sender, PinValueChangedEventArgs pinValueChang
     {
         var point = sensor.GetPoint(true);
         Debug.WriteLine($"ID: {point.TouchId}, X: {point.X}, Y: {point.Y}, Weight: {point.Weigth}, Misc: {point.Miscelaneous}, Event: {point.Event}");
+        discrimitateButtons(point.X, point.Y);
     }
     else if (points == 2)
     {
@@ -53,3 +54,55 @@ void TouchInterrupCallback(object sender, PinValueChangedEventArgs pinValueChang
         Debug.WriteLine($"ID: {dp.Point2.TouchId}, X: {dp.Point2.X}, Y: {dp.Point2.Y}, Weight: {dp.Point2.Weigth}, Misc: {dp.Point2.Miscelaneous}, Event: {dp.Point1.Event}");
     }
 }
+
+static void discrimitateButtons(int x, int y)
+            {
+
+                
+                const double px_per_mm = 6.90415;
+                const double  R_mm = 3.5; 
+                const int x0L = 83;
+                const int x0M = 182;
+                const int x0R = 271;
+                const int y0 = 263;
+
+                int R2 = (int) ((R_mm * px_per_mm)*(R_mm * px_per_mm)); //R^2 in pixels^2
+                
+                int tmpL = 0;
+                int tmpM = 0;
+                int tmpR = 0;
+                int tmpY = 0;
+
+                tmpY = (y - y0) * (y - y0);
+                tmpL = (x - x0L) * (x - x0L);
+                tmpL += tmpY;
+                tmpM = (x - x0M) * (x - x0M);
+                tmpM += tmpY;
+                tmpR = (x - x0R) * (x - x0R);
+                tmpR += tmpY;
+
+                nanoFramework.Console.Clear();
+
+                if (tmpL <= R2)
+                {
+                    Debug.WriteLine("LEFT BUTTON PRESSED");
+                    nanoFramework.Console.WriteLine("LEFT BUTTON PRESSED");
+                }
+                else if (tmpM <= R2)
+                {
+                    Debug.WriteLine("MIDDLE BUTTON PRESSED");
+                    nanoFramework.Console.WriteLine("MIDDLE BUTTON PRESSED");
+                }
+                else if (tmpR <= R2)
+                {
+                    Debug.WriteLine("RIGHT BUTTON PRESSED");
+                    nanoFramework.Console.WriteLine("RIGHT BUTTON PRESSED");
+                }
+                else {
+                    Debug.WriteLine("Touch Panel touched at X= " + x.ToString() + " Y= " + y.ToString());
+                    nanoFramework.Console.WriteLine("Touch Panel touched at X= " + x.ToString() + " Y= " + y.ToString());
+                }
+
+
+
+            }
