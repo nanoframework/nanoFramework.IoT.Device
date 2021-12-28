@@ -45,7 +45,7 @@ void TouchInterrupCallback(object sender, PinValueChangedEventArgs pinValueChang
     {
         var point = sensor.GetPoint(true);
         Debug.WriteLine($"ID: {point.TouchId}, X: {point.X}, Y: {point.Y}, Weight: {point.Weigth}, Misc: {point.Miscelaneous}, Event: {point.Event}");
-        discrimitateButtons(point.X, point.Y);
+        DiscrimitateButtons(point.X, point.Y);
     }
     else if (points == 2)
     {
@@ -55,18 +55,23 @@ void TouchInterrupCallback(object sender, PinValueChangedEventArgs pinValueChang
     }
 }
 
-static void discrimitateButtons(int x, int y)
-            {
-
-                
-                const double px_per_mm = 6.90415;
-                const double  R_mm = 3.5; 
+void DiscrimitateButtons(int x, int y)
+            {  
+                const double pxPerMm = 6.90415;
+                //r in milimeters is the radious of sensitivity to detect any of the given 3 buttons
+                const double  rMm = 3.5; 
                 const int x0L = 83;
                 const int x0M = 182;
                 const int x0R = 271;
                 const int y0 = 263;
+                const String strLB = "LEFT BUTTON PRESSED";
+                const String strMB = "MIDDLE BUTTON PRESSED";
+                const String strRB = "RIGHT BUTTON PRESSED";
+                const String strXY1 = "TOUCH PANEL TOUCHED at X= ";
+                const String strXY2 = ",Y= ";
 
-                int R2 = (int) ((R_mm * px_per_mm)*(R_mm * px_per_mm)); //R^2 in pixels^2
+                //r^2 in pixels^2
+                int r2 = (int) ((rMm * pxPerMm) *(rMm * pxPerMm)); 
                 
                 int tmpL = 0;
                 int tmpM = 0;
@@ -83,26 +88,23 @@ static void discrimitateButtons(int x, int y)
 
                 nanoFramework.Console.Clear();
 
-                if (tmpL <= R2)
+                if (tmpL <= r2)
                 {
-                    Debug.WriteLine("LEFT BUTTON PRESSED");
-                    nanoFramework.Console.WriteLine("LEFT BUTTON PRESSED");
+                    Debug.WriteLine(strLB);
+                    nanoFramework.Console.WriteLine(strLB);
                 }
-                else if (tmpM <= R2)
+                else if (tmpM <= r2)
                 {
-                    Debug.WriteLine("MIDDLE BUTTON PRESSED");
-                    nanoFramework.Console.WriteLine("MIDDLE BUTTON PRESSED");
+                    Debug.WriteLine(strMB);
+                    nanoFramework.Console.WriteLine(strMB);
                 }
-                else if (tmpR <= R2)
+                else if (tmpR <= r2)
                 {
-                    Debug.WriteLine("RIGHT BUTTON PRESSED");
-                    nanoFramework.Console.WriteLine("RIGHT BUTTON PRESSED");
+                    Debug.WriteLine(strRB);
+                    nanoFramework.Console.WriteLine(strRB);
                 }
                 else {
-                    Debug.WriteLine("Touch Panel touched at X= " + x.ToString() + " Y= " + y.ToString());
-                    nanoFramework.Console.WriteLine("Touch Panel touched at X= " + x.ToString() + " Y= " + y.ToString());
+                    Debug.WriteLine(strXY1 + x.ToString() + strXY1 + y.ToString());
+                    nanoFramework.Console.WriteLine(strXY1 + x.ToString() + strXY2 + y.ToString());
                 }
-
-
-
             }
