@@ -165,7 +165,7 @@ namespace NFAppCore2App2
             args.X1 = x1;
             args.Y1 = y1;
             args.X2 = x2;
-            args.Y2 = y1;
+            args.Y2 = y2;
 
             TouchedEvent?.Invoke(null, args);
 
