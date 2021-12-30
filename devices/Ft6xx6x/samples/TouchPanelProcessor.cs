@@ -4,6 +4,7 @@ using nanoFramework.Runtime.Events;
 namespace NFAppCore2App2
 {
     public delegate void TouchEventHandler(object sender, TouchEventArgs e);
+    
     public class TouchPanelProcessor
     {
         public static event TouchEventHandler TouchedEvent;
