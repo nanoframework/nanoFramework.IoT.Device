@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Iot.Device.Ft6xx6x;
 using nanoFramework.M5Stack;
 using nanoFramework.Runtime.Events;
 using System;
@@ -11,13 +10,31 @@ using System.Diagnostics;
 using System.Threading;
 using Console = nanoFramework.M5Stack.Console;
 
-namespace NFAppCore2App2
+namespace Iot.Device.Ft6xx6x.Samples
 {
+    /// <summary>
+    /// Sample program to show how to use the FT6336U on a M5Core2.
+    /// </summary>
     public class Program
     {
         private static GpioPin _touchInterruptPin;
         private static Ft6xx6x _touchController;
 
+        /// <summary>
+        /// Touch event handler for the touch event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The touch event argument.</param>
+        public delegate void TouchEventHandler(object sender, TouchEventArgs e);
+
+        /// <summary>
+        /// Touch event handler.
+        /// </summary>
+        public static event TouchEventHandler TouchedEvent;
+
+        /// <summary>
+        /// Main function to run the app.
+        /// </summary>
         public static void Main()
         {
             // Note: this sample requires a M5Core2.
@@ -51,15 +68,13 @@ namespace NFAppCore2App2
             GpioController gpio = new();
             _touchInterruptPin = gpio.OpenPin(39, PinMode.Input);
             // register event handler for screen touched
-            _touchInterruptPin.ValueChanged += TouchInterruptPin_ValueChanged;
+            _touchInterruptPin.ValueChanged += TouchInterruptPinValueChanged;
 
-            TouchPanelUserAppTemplate touchPanelUserApp = new TouchPanelUserAppTemplate();
-            TouchPanelProcessor.TouchedEvent += touchPanelUserApp.UserDefinedTouchPanelBehaviourSkeleton;
-
+            TouchedEvent += UserDefinedTouchPanelBehaviourSkeleton;
             Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void TouchInterruptPin_ValueChanged(object sender, PinValueChangedEventArgs e)
+        private static void TouchInterruptPinValueChanged(object sender, PinValueChangedEventArgs e)
         {
             // only care about falling events
             if (e.ChangeType == PinEventTypes.Falling)
@@ -103,7 +118,7 @@ namespace NFAppCore2App2
 
             //r^2 in pixels^2
             int r2 = (int)((rMm * pxPerMm) * (rMm * pxPerMm));
-            
+
             int tmpY = (y - y0) * (y - y0);
             int tmpL = (x - x0L) * (x - x0L);
             tmpL += tmpY;
@@ -114,71 +129,25 @@ namespace NFAppCore2App2
 
             if (tmpL <= r2)
             {
-                touchEventArgs.SubCategory = (int)TouchEventSubcategory.LeftButton;
+                touchEventArgs.SubCategory = (int)(TouchEventSubcategory.LeftButton | TouchEventSubcategory.SingleTouch);
             }
             else if (tmpM <= r2)
             {
-                touchEventArgs.SubCategory = (int)TouchEventSubcategory.MiddleButton;
+                touchEventArgs.SubCategory = (int)(TouchEventSubcategory.MiddleButton | TouchEventSubcategory.SingleTouch);
             }
             else if (tmpR <= r2)
             {
-                touchEventArgs.SubCategory = (int)TouchEventSubcategory.RightButton;
+                touchEventArgs.SubCategory = (int)(TouchEventSubcategory.RightButton | TouchEventSubcategory.SingleTouch);
             }
             else
             {
-                touchEventArgs.SubCategory = (int)TouchEventSubcategory.SingleTouch;
+                touchEventArgs.SubCategory = (int)(TouchEventSubcategory.SingleTouch | TouchEventSubcategory.SingleTouch);
             }
 
-            TouchPanelProcessor.OnTouchedEvent(touchEventArgs.SubCategory, touchEventArgs.X1, touchEventArgs.Y1);
+            OnTouchedEvent(touchEventArgs.SubCategory, touchEventArgs.X1, touchEventArgs.Y1);
         }
-    }
 
-    internal class TouchEventArgs : EventArgs
-    {
-        public EventCategory Category { get; set; }
-        public int SubCategory { get; set; }
-        public int X1 { get; set; }
-        public int Y1 { get; set; }
-        public int X2 { get; set; }
-        public int Y2 { get; set; }
-
-        //public DateTime TimeReached { get; set; }
-    }
-
-    internal enum TouchEventSubcategory
-    {
-        Unknown = 1000,
-        LeftButton = 1001,
-        MiddleButton = 1002,
-        RightButton = 1003,
-        SingleTouch = 1004,
-        DoubleTouch = 1005
-    }
-
-    internal delegate void TouchEventHandler(object sender, TouchEventArgs e);
-
-    internal class TouchPanelProcessor
-    {
-        public static event TouchEventHandler TouchedEvent;
-
-        public static void OnTouchedEvent(int eventSubCategory, int x1, int y1, int x2 = 0, int y2 = 0)
-        {
-            TouchEventArgs args = new();
-
-            args.Category = EventCategory.Unknown;
-            args.SubCategory = eventSubCategory;
-            args.X1 = x1;
-            args.Y1 = y1;
-            args.X2 = x2;
-            args.Y2 = y2;
-
-            TouchedEvent?.Invoke(null, args);
-        }
-    }
-
-    internal class TouchPanelUserAppTemplate
-    {
-        public void UserDefinedTouchPanelBehaviourSkeleton(object sender, TouchEventArgs e)
+        private static void UserDefinedTouchPanelBehaviourSkeleton(object sender, TouchEventArgs e)
         {
             const string strLB = "LEFT BUTTON PRESSED";
             const string strMB = "MIDDLE BUTTON PRESSED";
@@ -220,6 +189,28 @@ namespace NFAppCore2App2
                     Debug.WriteLine("ERROR: UKNOWN TouchEventSubcategory");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Invoke the touch event.
+        /// </summary>
+        /// <param name="eventSubCategory">The event touch sub category.</param>
+        /// <param name="x1">The first point X coordinate.</param>
+        /// <param name="y1">The first point Y coordinate.</param>
+        /// <param name="x2">The second point X coordinate.</param>
+        /// <param name="y2">The second point Y coordinate.</param>
+        private static void OnTouchedEvent(int eventSubCategory, int x1, int y1, int x2 = 0, int y2 = 0)
+        {
+            TouchEventArgs args = new();
+
+            args.Category = EventCategory.Unknown;
+            args.SubCategory = eventSubCategory;
+            args.X1 = x1;
+            args.Y1 = y1;
+            args.X2 = x2;
+            args.Y2 = y2;
+
+            TouchedEvent?.Invoke(null, args);
         }
     }
 }
