@@ -18,22 +18,22 @@ namespace System.Drawing
         /// <summary>
         /// Gets the alpha component value of this System.Drawing.Color structure.
         /// </summary>
-        public byte A { get => (byte)((_color >> 24) & 0xFF); }
+        public byte A { get => (byte)(_color >> 24); }
 
         /// <summary>
         /// Gets the blue component value of this System.Drawing.Color structure.
         /// </summary>
-        public byte B { get => (byte)((_color >> 16) & 0xFF); }
+        public byte B { get => (byte)(_color); }
 
         /// <summary>
         /// Gets the red component value of this System.Drawing.Color structure.
         /// </summary>
-        public byte R { get => (byte)(_color & 0xFF); }
+        public byte R { get => (byte)(_color >> 16); }
 
         /// <summary>
         /// Gets the green component value of this System.Drawing.Color structure.
         /// </summary>
-        public byte G { get => (byte)((_color >> 8) & 0xFF); }
+        public byte G { get => (byte)(_color >> 8); }
 
         /// <summary>
         /// Creates a System.Drawing.Color structure from the specified 8-bit color values
@@ -47,7 +47,7 @@ namespace System.Drawing
         /// <returns>The System.Drawing.Color structure that this method creates.</returns>
         public static Color FromArgb(int r, int g, int b)
         {
-            return new Color((uint)((0xFF << 24) | ((b & 0xFF) << 16) | ((g & 0xFF) << 8) | (r & 0xFF)));
+            return new Color((uint)((0xFF << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF)));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace System.Drawing
         /// <returns>The System.Drawing.Color structure that this method creates.</returns>
         public static Color FromArgb(int a, int r, int g, int b)
         {
-            return new Color((uint)(((a & 0xFF) << 24) | ((b & 0xFF) << 16) | ((g & 0xFF) << 8) | (r & 0xFF)));
+            return new Color((uint)(((a & 0xFF) << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF)));
         }
 
         /// <summary>
@@ -179,12 +179,8 @@ namespace System.Drawing
             return (max == 0) ? 0.0f : (1.0f - (min / max));
         }
 
-        //
-        // Summary:
-        //     Gets the 32-bit ARGB value of this System.Drawing.Color structure.
-        //
-        // Returns:
-        //     The 32-bit ARGB value of this System.Drawing.Color.
+        /// <Summary>Gets the 32-bit ARGB value of this System.Drawing.Color structure.</Summary>
+        /// <returns>The 32-bit ARGB value of this System.Drawing.Color.</returns>     
         public int ToArgb() => (int)_color;
 
         #region Known colors
