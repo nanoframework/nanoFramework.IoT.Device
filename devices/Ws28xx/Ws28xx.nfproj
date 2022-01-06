@@ -23,16 +23,21 @@
     <Reference Include="mscorlib, Version=1.11.7.2, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.11.7\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>packages\nanoFramework.Runtime.Events.1.9.2\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Gpio">
+    <Reference Include="System.Device.Gpio, Version=1.0.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.2\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Spi">
+    <Reference Include="System.Device.Spi, Version=1.0.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Spi.1.0.2\lib\System.Device.Spi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +51,6 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..\src\System.Drawing\System.Drawing.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
