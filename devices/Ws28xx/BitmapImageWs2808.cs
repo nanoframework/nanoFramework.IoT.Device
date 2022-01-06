@@ -21,5 +21,13 @@ namespace Iot.Device.Ws28xx
             Data[offset++] = c.G;
             Data[offset++] = c.B;
         }
+
+        public override void SetPixel(int x, int y, ushort r, ushort g, ushort b)
+        {
+            var offset = y * Stride + x * BytesPerPixel;
+            Data[offset++] = (byte)r;
+            Data[offset++] = (byte)g;
+            Data[offset++] = (byte)b;
+        }
     }
 }

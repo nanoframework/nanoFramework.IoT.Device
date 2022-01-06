@@ -57,6 +57,16 @@ namespace Iot.Device.Ws28xx
         public abstract void SetPixel(int x, int y, Color color);
 
         /// <summary>
+        /// Sets pixel at specific position
+        /// </summary>
+        /// <param name="x">X coordinate of the pixel</param>
+        /// <param name="y">Y coordinate of the pixel</param>
+        /// <param name="r">Red color</param>
+        /// <param name="g">Green color</param>
+        /// <param name="b">Blue color</param>
+        public abstract void SetPixel(int x, int y, ushort r, ushort g, ushort b);
+
+        /// <summary>
         /// Clears the image to specific color
         /// </summary>
         /// <param name="color">Color to clear the image. Defaults to black.</param>
