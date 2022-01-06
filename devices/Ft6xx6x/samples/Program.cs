@@ -73,11 +73,6 @@ namespace NFAppCore2App2
                     Debug.WriteLine($"ID: {dp.Point2.TouchId}, X: {dp.Point2.X}, Y: {dp.Point2.Y}, Weight: {dp.Point2.Weigth}, Misc: {dp.Point2.Miscelaneous}, Event: {dp.Point1.Event}");
                 }
             }
-
-            
        }
-
     }
-    
-    
 }
