@@ -35,7 +35,7 @@
       <HintPath>packages\nanoFramework.System.Device.Spi.1.0.2\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing">
+    <Reference Include="System.Drawing, Version=1.0.268.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=4.110.0.0, Culture=neutral, PublicKeyToken=null">

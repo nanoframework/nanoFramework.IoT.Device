@@ -43,7 +43,7 @@
       <HintPath>packages\nanoFramework.System.Device.Model.1.0.259\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing">
+    <Reference Include="System.Drawing, Version=1.0.268.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=1.4.3.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">

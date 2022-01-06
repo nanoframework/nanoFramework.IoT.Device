@@ -43,7 +43,7 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="System.Drawing">
+    <Reference Include="System.Drawing, Version=1.0.268.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
