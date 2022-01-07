@@ -64,13 +64,13 @@ namespace Iot.Device.Ws28xx
         /// <param name="r">Red color</param>
         /// <param name="g">Green color</param>
         /// <param name="b">Blue color</param>
-        public abstract void SetPixel(int x, int y, ushort r, ushort g, ushort b);
+        public abstract void SetPixel(int x, int y, byte r, byte g, byte b);
 
         /// <summary>
         /// Clears the image to specific color
         /// </summary>
         /// <param name="color">Color to clear the image. Defaults to black.</param>
-        public virtual void Clear(Color color = default)
+        public virtual void Clear(Color color)
         {
             for (int y = 0; y < Height; y++)
             {
@@ -80,5 +80,15 @@ namespace Iot.Device.Ws28xx
                 }
             }
         }
+
+        /// <summary>
+        /// Clears whole image
+        /// </summary>
+        public abstract void Clear();
+
+        /// <summary>
+        /// Clears selected pixel
+        /// </summary>
+        public abstract void Clear(int x, int y);
     }
 }
