@@ -169,8 +169,9 @@ foreach ($folder in $deviceFolders)
 
         ########################
         # perform versions check
-        Invoke-Expression "$env:Build_Repository_LocalPath\nf-tools\azure-pipelines-scripts\versions-check.ps1 -SolutionToCheck $solutionFile -WorkingDirectory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\ -NuspecFile $nuspecFile"
-        
+
+        nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+
         if($LASTEXITCODE -eq 0)
         {
             "" | Write-Host -ForegroundColor Yellow

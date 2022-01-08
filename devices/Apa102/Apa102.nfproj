@@ -35,6 +35,10 @@
       <HintPath>packages\nanoFramework.System.Device.Spi.1.0.2\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="UnitsNet.Length, Version=4.110.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.Length.4.110.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
@@ -49,7 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>
-  <Import Project="..\..\src\System.Drawing\System.Drawing.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
   <ProjectExtensions>

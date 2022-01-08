@@ -36,12 +36,13 @@
     <Reference Include="System.Device.Gpio, Version=1.0.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.2\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="System.Device.Spi, Version=1.0.2.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.2\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>..\packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +58,6 @@
     <ProjectReference Include="..\Ws28xx.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <Import Project="..\..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />

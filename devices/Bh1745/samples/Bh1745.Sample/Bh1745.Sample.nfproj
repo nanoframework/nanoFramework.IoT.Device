@@ -43,6 +43,9 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.0.259\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\packages\nanoFramework.System.Drawing.1.0.268\lib\System.Drawing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
