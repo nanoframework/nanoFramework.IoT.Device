@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.CardRfid</id>
+    <id>nanoFramework.Iot.Device.Card</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.CardRfid</title>
+    <title>nanoFramework.Iot.Device.Card</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,21 +16,21 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.CardRfid, Mifare, Ultralight and NDEF for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.CardRfid, Mifare, Ultralight and NDEF assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.CardRfid</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Card, Mifare, Ultralight and NDEF for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Card, Mifare, Ultralight and NDEF assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Card</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.System.Text" version="1.1.2" />
-      <dependency id="nanoFramework.Logging" version="1.0.0" />
+      <dependency id="nanoFramework.System.Text" version="1.1.3-preview.4" />
+      <dependency id="nanoFramework.Logging" version="1.0.1-preview.4" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.CardRfid.dll" target="lib\Iot.Device.CardRfid.dll" />
-    <file src="bin\Release\Iot.Device.CardRfid.pdb" target="lib\Iot.Device.CardRfid.pdb" />
-    <file src="bin\Release\Iot.Device.CardRfid.pdbx" target="lib\Iot.Device.CardRfid.pdbx" />
-    <file src="bin\Release\Iot.Device.CardRfid.pe" target="lib\Iot.Device.CardRfid.pe" />
-    <file src="bin\Release\Iot.Device.CardRfid.xml" target="lib\Iot.Device.CardRfid.xml" />
+    <file src="bin\Release\Iot.Device.Card.dll" target="lib\Iot.Device.Card.dll" />
+    <file src="bin\Release\Iot.Device.Card.pdb" target="lib\Iot.Device.Card.pdb" />
+    <file src="bin\Release\Iot.Device.Card.pdbx" target="lib\Iot.Device.Card.pdbx" />
+    <file src="bin\Release\Iot.Device.Card.pe" target="lib\Iot.Device.Card.pe" />
+    <file src="bin\Release\Iot.Device.Card.xml" target="lib\Iot.Device.Card.xml" />
     <file src="Mifare\bin\Release\Iot.Device.Mifare.dll" target="lib\Iot.Device.Mifare.dll" />
     <file src="Mifare\bin\Release\Iot.Device.Mifare.pdb" target="lib\Iot.Device.Mifare.pdb" />
     <file src="Mifare\bin\Release\Iot.Device.Mifare.pdbx" target="lib\Iot.Device.Mifare.pdbx" />
