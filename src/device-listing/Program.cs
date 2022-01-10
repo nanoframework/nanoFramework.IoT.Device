@@ -216,7 +216,7 @@ string GetDeviceListing(string devicesPath, IEnumerable<DeviceInfo> devices)
             }
             else if (device.Name == "Card")
             {
-                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.CardRfid.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.CardRfid/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Card.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Card/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
             }
             else
             {

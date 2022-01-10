@@ -34,11 +34,11 @@
     <file src="bin\Release\Iot.Device.Pn5180.pdbx" target="lib\Iot.Device.Pn5180.pdbx" />
     <file src="bin\Release\Iot.Device.Pn5180.pe" target="lib\Iot.Device.Pn5180.pe" />
     <file src="bin\Release\Iot.Device.Pn5180.xml" target="lib\Iot.Device.Pn5180.xml" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.dll" target="lib\Iot.Device.CardRfid.dll" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.pdb" target="lib\Iot.Device.CardRfid.pdb" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.pdbx" target="lib\Iot.Device.CardRfid.pdbx" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.pe" target="lib\Iot.Device.CardRfid.pe" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.xml" target="lib\Iot.Device.CardRfid.xml" />
+    <file src="..\Card\bin\Release\Iot.Device.Card.dll" target="lib\Iot.Device.Card.dll" />
+    <file src="..\Card\bin\Release\Iot.Device.Card.pdb" target="lib\Iot.Device.Card.pdb" />
+    <file src="..\Card\bin\Release\Iot.Device.Card.pdbx" target="lib\Iot.Device.Card.pdbx" />
+    <file src="..\Card\bin\Release\Iot.Device.Card.pe" target="lib\Iot.Device.Card.pe" />
+    <file src="..\Card\bin\Release\Iot.Device.Card.xml" target="lib\Iot.Device.Card.xml" />
     <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.dll" target="lib\Iot.Device.Mifare.dll" />
     <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pdb" target="lib\Iot.Device.Mifare.pdb" />
     <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pdbx" target="lib\Iot.Device.Mifare.pdbx" />
