@@ -21,12 +21,12 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ads1115</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.1" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.3" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.2" />
       <dependency id="nanoFramework.System.Math" version="1.4.3" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="4.110.0" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.110.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="4.112.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.112.0" />
     </dependencies>
   </metadata>
   <files>
