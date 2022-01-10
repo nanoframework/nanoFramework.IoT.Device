@@ -10,7 +10,7 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef", "Ndef\Ndef.nfproj", 
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ultralight", "Ultralight\Ultralight.nfproj", "{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Project", "{1DB0B9F5-6A23-4E2A-9478-7106E8BFE212}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{1DB0B9F5-6A23-4E2A-9478-7106E8BFE212}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
 EndProject
