@@ -30,7 +30,7 @@
     <Compile Include="Tailer\Triplet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Card.nfproj" />
+    <ProjectReference Include="..\CardRfid.nfproj" />
     <ProjectReference Include="..\Ndef\Ndef.nfproj" />
   </ItemGroup>
   <ItemGroup>
