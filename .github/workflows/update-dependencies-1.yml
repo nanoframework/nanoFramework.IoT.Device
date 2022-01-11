@@ -3,7 +3,7 @@
 
 # This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
 
-name: Daily update dependencies
+name: Update dependencies (round 1)
 
 on:
   schedule:
@@ -26,8 +26,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Update dependencies
         uses: nanoframework/nanodu@v1
         with:
           solutionsToCheck: '*.sln'
           workingDirectory: '${{ github.workspace }}/devices'
+          exclusionList: 'Ft6xx6x'
