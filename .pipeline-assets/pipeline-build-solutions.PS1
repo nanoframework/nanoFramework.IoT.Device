@@ -216,9 +216,9 @@ foreach ($folder in $deviceFolders)
         else
         {
             "" | Write-Host -ForegroundColor Red
-            "*************************************" | Write-Host -ForegroundColor Red
-            ">>> Errors occurred, check output <<<" | Write-Host -ForegroundColor Red
-            "*************************************" | Write-Host -ForegroundColor Red
+            "*****************************************" | Write-Host -ForegroundColor Red
+            ">>> ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
+            "*****************************************" | Write-Host -ForegroundColor Red
             "" | Write-Host -ForegroundColor Red
 
             # set flag
@@ -228,13 +228,13 @@ foreach ($folder in $deviceFolders)
     catch
     {
         "" | Write-Host -ForegroundColor Red
-        "*************************************" | Write-Host -ForegroundColor Red
-        ">>> Errors occurred, check output <<<" | Write-Host -ForegroundColor Red
-        "*************************************" | Write-Host -ForegroundColor Red
+        "*****************************************" | Write-Host -ForegroundColor Red
+        ">>> ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
+        "*****************************************" | Write-Host -ForegroundColor Red
         "" | Write-Host -ForegroundColor Red
 
         "" | Write-Host -ForegroundColor Red
-        "ERROR: $_" | Write-Host -ForegroundColor Red
+        "Eception was: $_" | Write-Host -ForegroundColor Red
         "" | Write-Host -ForegroundColor Red
 
         # set flag
@@ -243,6 +243,10 @@ foreach ($folder in $deviceFolders)
 }
 
 if($buildFailed)
-{      
+{
+    "********************************" | Write-Host -ForegroundColor Red
+    "Check >>>ERROR<<< messages above" | Write-Host -ForegroundColor Red
+    "********************************" | Write-Host -ForegroundColor Red
+
     exit 1
 }
