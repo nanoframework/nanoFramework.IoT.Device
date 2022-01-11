@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Tm1637</id>
@@ -21,8 +21,8 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Tm1637</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.1" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.3" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.259" />
       <dependency id="Nerdbank.GitVersioning" version="3.4.240" />
     </dependencies>
