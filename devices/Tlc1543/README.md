@@ -15,8 +15,7 @@ This sample shows how to calculate position of line under matrix of 5 IR sensors
 ### Initialization
 
 ```csharp
-SpiDevice spi = SpiDevice.Create(
-    new SpiConnectionSettings(-1) { DataBitLength = Tlc1543.SpiDataBitLength, ChipSelectLine = 5 });
+SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(1, 5) { DataBitLength = Tlc1543.SpiDataBitLength });
 ```
 
 ### Changing Charge Channel
