@@ -33,12 +33,14 @@ The sample application demonstrates the use of the binding API for sensor calibr
 
 The MH-Z19B gas module provides a serial communication interface (UART) which can be directly wired to a ESP32 board. The module is supplied with 5V. The UART level is at 3.3V and no level shifter is required.
 
+![Mhz19B_bb](https://user-images.githubusercontent.com/71304298/149633116-bc10424b-8d61-439c-b059-b305dd3fbf05.png)
+
 |Function| ESP32Pin| MH-Z19 pin|
 |--------|-----------|------------|
 |Vcc +5V |(+5V)      |6 (Vin)     |
 |GND	 |(GND)      |7 (GND)     |
-|UART    |33 (TXD0)  |2 (RXD)     |
-|UART    |32 (RXD0)  |3 (TXD)     |
+|UART    |32 (TXD0)  |2 (RXD)     |
+|UART    |33 (RXD0)  |3 (TXD)     |
 Table: MH-Z19B to ESP32 connection
 
 The binding supports the connection through an UART interface (e.g. ``COM2```) or (serial port) stream.
@@ -48,3 +50,8 @@ In either case the binding supports all commands of the module.
 
 **Make sure that you read the datasheet carefully before altering the default calibration behaviour.
 Automatic baseline correction is enabled by default.**
+
+An example of the expected output from the sample :
+![ExpectedOutput](https://user-images.githubusercontent.com/71304298/149633134-001c57cf-f45a-4547-aa69-6248b8e16803.png)
+
+
