@@ -37,8 +37,8 @@ The MH-Z19B gas module provides a serial communication interface (UART) which ca
 |--------|-----------|------------|
 |Vcc +5V |(+5V)      |6 (Vin)     |
 |GND	 |(GND)      |7 (GND)     |
-|UART    |33 (TXD0)  |2 (RXD)     |
-|UART    |32 (RXD0)  |3 (TXD)     |
+|UART    |32 (TXD0)  |2 (RXD)     |
+|UART    |33 (RXD0)  |3 (TXD)     |
 Table: MH-Z19B to ESP32 connection
 
 The binding supports the connection through an UART interface (e.g. ``COM2```) or (serial port) stream.
