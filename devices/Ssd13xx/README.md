@@ -27,3 +27,49 @@ The following connection types are supported by this binding.
 
 - [X] I2C
 - [ ] SPI
+
+## Performance suggestions
+
+If you wish to update big part of screen (e.g. drawing images or shapes instead of printing text) 
+then you may find that API methods like ````DrawFilledRectangle(...)```` or ````DrawBitmap(...)````
+not performing fast enough. These methods are using ````DrawPixel(...)```` method internally which means
+the expected drawing task will be accomplished via pixel-by-pixel drawing.
+
+There are two methods to overcome this problem if you have ready bitmaps to display.
+
+Assuming the bitmaps are in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode")
+the ````DrawDirectAligned(...)```` method simply copies the incoming byte array to appropriate place in internal buffer
+which results is ~100 times faster display speed.
+There are constraints: no bit operations occure with existing buffer data (pixels drawn via other means), 
+so the "y" coordinate and the bitmap height must be byte aligned!
+
+Same constraints apply to ````ClearDirectAligned(...)```` method which allow partial (rectangle) screen clearing
+by setting appropriate internal buffer bytes to 0x00. This is also ~100 times faster than doing same with ````DrawFilledRectangle(...)```` method.
+
+````csharp
+// There are superb online helpers like the one below which are able to
+// create an appropriate byte array from an image in code use ready format.
+// https://www.mischianti.org/images-to-byte-array-online-converter-cpp-arduino/
+// On the site above use these settings to get bytes needed here:
+// - "plain bytes"
+// - "vertical - 1 bit per pixel"
+var buffer = new byte[] { ... }; 
+var width = 16;
+var height = 16;
+
+// instantiation example
+var ssd1306 = new Ssd1306(
+    I2cDevice.Create(
+        new I2cConnectionSettings(
+            1, 
+            Ssd1306.DefaultI2cAddress, 
+            I2cBusSpeed.FastMode)), 
+    Ssd13xx.DisplayResolution.OLED128x64);
+
+// this line sends the image data to the screen
+ssd1306.DrawDirectAligned(x, y, width, height, buffer);
+
+// this one wipes its place to blank
+ssd1306.ClearDirectAligned(x, y, width, height);
+
+````
