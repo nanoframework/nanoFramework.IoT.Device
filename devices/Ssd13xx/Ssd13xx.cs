@@ -154,7 +154,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="y">The y coordinate on the screen.</param>
         /// <param name="width">Width of buffer content in pixels.</param>
         /// <param name="height">Height of buffer content in pixels.</param>
-        /// <param name="buffer">Data to copy.</param>
+        /// <param name="buffer">Data to copy. Buffer size must be equal to height * width / 8.</param>
         public void DrawDirectAligned(int x, int y, int width, int height, byte[] buffer)
         {
             if ((y % 8) != 0)
@@ -174,7 +174,7 @@ namespace Iot.Device.Ssd13xx
 
             var genericBufferIdx = y / 8 * Width + x;
             var srcIdx = 0;
-            for (int i=0; i<dataHeightInBytes; i++)
+            for (int i = 0; i < dataHeightInBytes; i++)
             {
                 Array.Copy(buffer, srcIdx, _genericBuffer, genericBufferIdx, width);
                 srcIdx += width;
