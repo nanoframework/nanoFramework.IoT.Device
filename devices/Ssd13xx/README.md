@@ -27,3 +27,61 @@ The following connection types are supported by this binding.
 
 - [X] I2C
 - [ ] SPI
+
+## Usage notes
+
+There are two groups of drawing methods.
+
+1. Various specialized drawing methods allowing to draw on screen pixel-by-pixel, like:
+    - ````DrawPixel(...)````: draws one pixel
+    - ````DrawHorizontalLine(...)````: draws a horizontal line
+    - ````DrawVerticalLine(...)````: draws a vertical line
+    - ````DrawFilledRectangle(...)````: draws a filled rectangle
+    - ````DrawBitmap(...)````: draws a bitmap
+    - ````DrawString(...)````: draws a string with preset font
+    
+    Using these methods you do not need to care about any technique the driver uses to display 
+    your drawing instructions.
+   
+2. Methods allowing to modify screen content by blocks of internal representation (screen buffer), like:
+    - ````DrawDirectAligned(...)````: overwrites screen buffer with given content
+    - ````ClearDirectAligned(...)````: clears out (with 0x00) given part of screen buffer
+    
+    These methods allow faster (~100 times) display access but with some constraints. 
+    - bitmaps handed over here must be in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode").
+    - no bit operations occure with existing buffer data (with pixels drawn via other means), the new data will overwrite the pixels "below" newly drawed content.
+    - the "y" coordinate and the bitmap height must be byte aligned with screen buffer (again, see above docs)
+
+The use of two groups can be freely mixed (e.g. display text via ````DrawString(...)```` and displaying an image below via ````DrawDirectAligned(...)````)
+
+Examples for 1. can be found in ````samples```` folder.
+
+Example for 2. follows here.
+
+````csharp
+// There are superb online helpers like the one below which are able to
+// create an appropriate byte array from an image in code use ready format.
+// https://www.mischianti.org/images-to-byte-array-online-converter-cpp-arduino/
+// On the site above use these settings to get bytes needed here:
+// - "plain bytes"
+// - "vertical - 1 bit per pixel"
+var buffer = new byte[] { ... }; 
+var width = 16;
+var height = 16;
+
+// instantiation example
+var ssd1306 = new Ssd1306(
+    I2cDevice.Create(
+        new I2cConnectionSettings(
+            1, 
+            Ssd1306.DefaultI2cAddress, 
+            I2cBusSpeed.FastMode)), 
+    Ssd13xx.DisplayResolution.OLED128x64);
+
+// this line sends the image data to the screen
+ssd1306.DrawDirectAligned(x, y, width, height, buffer);
+
+// this one wipes its place to blank
+ssd1306.ClearDirectAligned(x, y, width, height);
+
+````
