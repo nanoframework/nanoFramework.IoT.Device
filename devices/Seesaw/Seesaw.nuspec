@@ -22,10 +22,10 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
       <dependency id="nanoFramework.Runtime.Events" version="1.9.2" />
       <dependency id="nanoFramework.System.Collections" version="1.3.0" />
-      <dependency id="System.Buffers.Binary.BinaryPrimitives" version="1.0.0" />
+      <dependency id="System.Buffers.Binary.BinaryPrimitives" version="1.0.259" />
       <dependency id="System.Device.Gpio" version="1.0.2" />
       <dependency id="System.Device.I2c" version="1.0.2" />
-      <dependency id="System.Diagnostics.Stopwatch" version="1.0.0" />
+      <dependency id="System.Diagnostics.Stopwatch" version="1.0.259" />
     </dependencies>
   </metadata>
   <files>
