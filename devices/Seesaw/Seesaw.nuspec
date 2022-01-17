@@ -19,7 +19,7 @@
     <summary>Iot.Device.Seesaw assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Seesaw</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
     </dependencies>
   </metadata>
   <files>
@@ -30,7 +30,7 @@
     <file src="bin\Release\Iot.Device.Seesaw.xml" target="lib\Iot.Device.Seesaw.xml" />
 
     <file src="README.md" target="docs\" />
-    <file src="..\assets\nf-logo.png" target="images" />
-    <file src="..\LICENSE.md" target="" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
   </files>
 </package>
