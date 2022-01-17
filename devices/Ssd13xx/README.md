@@ -28,23 +28,35 @@ The following connection types are supported by this binding.
 - [X] I2C
 - [ ] SPI
 
-## Performance suggestions
+## Usage notes
 
-If you wish to update big part of screen (e.g. drawing images or shapes instead of printing text) 
-then you may find that API methods like ````DrawFilledRectangle(...)```` or ````DrawBitmap(...)````
-not performing fast enough. These methods are using ````DrawPixel(...)```` method internally which means
-the expected drawing task will be accomplished via pixel-by-pixel drawing.
+There are two groups of drawing methods.
 
-There are two methods to overcome this problem if you have ready bitmaps to display.
+1. Various specialized drawing methods allowing to draw on screen pixel-by-pixel, like:
+    - ````DrawPixel(...)````: draws one pixel
+    - ````DrawHorizontalLine(...)````: draws a horizontal line
+    - ````DrawVerticalLine(...)````: draws a vertical line
+    - ````DrawFilledRectangle(...)````: draws a filled rectangle
+    - ````DrawBitmap(...)````: draws a bitmap
+    - ````DrawString(...)````: draws a string with preset font
+    
+    Using these methods you do not need to care about any technique the driver uses to display 
+    your drawing instructions.
+   
+2. Methods allowing to modify screen content by blocks of internal representation (screen buffer), like:
+    - ````DrawDirectAligned(...)````: overwrites screen buffer with given content
+    - ````ClearDirectAligned(...)````: clears out (with 0x00) given part of screen buffer
+    
+    These methods allow faster (~100 times) display access but with some constraints. 
+    - bitmaps handed over here must be in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode").
+    - no bit operations occure with existing buffer data (with pixels drawn via other means), the new data will overwrite the pixels "below" newly drawed content.
+    - the "y" coordinate and the bitmap height must be byte aligned with screen buffer (again, see above docs)
 
-Assuming the bitmaps are in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode")
-the ````DrawDirectAligned(...)```` method simply copies the incoming byte array to appropriate place in internal buffer
-which results is ~100 times faster display speed.
-There are constraints: no bit operations occure with existing buffer data (pixels drawn via other means), 
-so the "y" coordinate and the bitmap height must be byte aligned!
+The use of two groups can be freely mixed (e.g. display text via ````DrawString(...)```` and displaying an image below via ````DrawDirectAligned(...)````)
 
-Same constraints apply to ````ClearDirectAligned(...)```` method which allow partial (rectangle) screen clearing
-by setting appropriate internal buffer bytes to 0x00. This is also ~100 times faster than doing same with ````DrawFilledRectangle(...)```` method.
+Examples for 1. can be found in ````samples```` folder.
+
+Example for 2. follows here.
 
 ````csharp
 // There are superb online helpers like the one below which are able to
