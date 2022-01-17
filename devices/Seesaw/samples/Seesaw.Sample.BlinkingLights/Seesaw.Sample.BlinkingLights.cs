@@ -19,7 +19,7 @@ const int volumeSleep = 50;
 // volume support
 const int initialSleep = 100;
 int sleep = initialSleep;
-Volume? volume = null;
+Volume volume = null;
 
 TimeEnvelope[] envelopes = new TimeEnvelope[] { new(1000), new(1000), new(4000) };
 
