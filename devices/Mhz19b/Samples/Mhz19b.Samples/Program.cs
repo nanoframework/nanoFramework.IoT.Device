@@ -10,7 +10,6 @@ using Iot.Device.Mhz19b;
 using nanoFramework.Hardware.Esp32; //This is required for ESP32 only and will need to be altered to suit your board. See samples.
 using UnitsNet;
 
-
 //This is required for ESP32 only and will need to be altered to suit your board. See samples.
 Configuration.SetPinFunction(32, DeviceFunction.COM2_RX);
 Configuration.SetPinFunction(33, DeviceFunction.COM2_TX);
@@ -27,7 +26,6 @@ Mhz19b sensor = new Mhz19b("COM2");
 
 //serialPort.Open();
 //using Mhz19b sensor = new(serialPort.BaseStream, true);
-
 
 // Switch ABM on (default).
 // sensor.SetAutomaticBaselineCorrection(AbmState.On);
