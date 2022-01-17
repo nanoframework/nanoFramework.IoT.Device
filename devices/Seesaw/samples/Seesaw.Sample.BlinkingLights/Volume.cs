@@ -29,22 +29,22 @@ internal class Volume
     private void Init() =>
         _lastValue = GetVolumeValue();
 
-    public (bool Update, int Value) GetSleepForVolume(int sleep)
+    public VolumeResult GetSleepForVolume(int sleep)
     {
         var value = GetVolumeValue();
         if (value > _lastValue - 2 && value < _lastValue + 2)
         {
-            return (false, 0);
+            return new VolumeResult(false, 0);
         }
 
         _lastValue = value;
-        Debug.WriteLine($"Volume: {value}");
+        Console.WriteLine($"Volume: {value}");
 
         var tenth = value / 10;
 
         if (tenth == 5)
         {
-            return (true, sleep);
+            return new VolumeResult(true, sleep);
         }
 
         double factor = 5 - tenth;
@@ -62,9 +62,21 @@ internal class Volume
 
         if (newValue >= 10 && newValue <= 1000)
         {
-            return (true, newValue);
+            return new VolumeResult(true, newValue);
         }
 
-        return (true, sleep);
+        return new VolumeResult(true, sleep);
+    }
+}
+
+internal struct VolumeResult
+{
+    public bool Update;
+    public int Value;
+
+    public VolumeResult(bool update, int value)
+    {
+        Update = update;
+        Value = value;
     }
 }

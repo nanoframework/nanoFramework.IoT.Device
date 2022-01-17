@@ -23,13 +23,12 @@ Volume? volume = null;
 
 TimeEnvelope[] envelopes = new TimeEnvelope[] { new(1000), new(1000), new(4000) };
 
-Debug.WriteLine("Hello World!");
+Console.WriteLine("Hello World!");
 
-Debug.WriteLine($"Let's blink some LEDs!");
+Console.WriteLine($"Let's blink some LEDs!");
 
 using Seesaw seesawDevice = new Seesaw(I2cDevice.Create(new I2cConnectionSettings(1, 0x49)));
-using SeesawGpioDriver seesawGpioDevice = new SeesawGpioDriver(seesawDevice);
-using GpioController controller = new GpioController(PinNumberingScheme.Logical, seesawGpioDevice);
+using GpioController controller = new GpioController(PinNumberingScheme.Logical);
 // this line should only be enabled if a trimpot is connected
 volume = Volume.EnableVolume(seesawDevice);
 
@@ -38,47 +37,41 @@ controller.OpenPin(ledTwo, PinMode.Output);
 controller.OpenPin(ledThree, PinMode.Output);
 controller.OpenPin(buttonOne, PinMode.InputPullDown);
 
-Console.CancelKeyPress += (object? sender, ConsoleCancelEventArgs eventArgs) =>
-{
-    controller.Dispose();
-    Debug.WriteLine("Pin cleanup complete!");
-};
-
 while (true)
 {
     // behavior for ledOne
     if (envelopes[0].Time == 0)
     {
-        Debug.WriteLine($"Light LED one for 800ms");
+        Console.WriteLine($"Light LED one for 800ms");
         controller.Write(ledOne, PinValue.High);
     }
     else if (envelopes[0].IsLastMultiple(200))
     {
-        Debug.WriteLine($"Dim LED one for 200ms");
+        Console.WriteLine($"Dim LED one for 200ms");
         controller.Write(ledOne, PinValue.Low);
     }
 
     // behavior for ledTwo
     if (envelopes[1].IsMultiple(200))
     {
-        Debug.WriteLine($"Light LED two for 100ms");
+        Console.WriteLine($"Light LED two for 100ms");
         controller.Write(ledTwo, PinValue.High);
     }
     else if (envelopes[1].IsMultiple(100))
     {
-        Debug.WriteLine($"Dim LED two for 100ms");
+        Console.WriteLine($"Dim LED two for 100ms");
         controller.Write(ledTwo, PinValue.Low);
     }
 
     // behavior for ledThree
     if (envelopes[2].Time == 0)
     {
-        Debug.WriteLine("Light LED three for 2000 ms");
+        Console.WriteLine("Light LED three for 2000 ms");
         controller.Write(ledThree, PinValue.High);
     }
     else if (envelopes[2].IsFirstMultiple(2000))
     {
-        Debug.WriteLine("Dim LED three for 2000 ms");
+        Console.WriteLine("Dim LED three for 2000 ms");
         controller.Write(ledThree, PinValue.Low);
     }
 
@@ -89,7 +82,9 @@ while (true)
         var value = 0;
         while (update)
         {
-            (update, value) = volume.GetSleepForVolume(initialSleep);
+            VolumeResult result = volume.GetSleepForVolume(initialSleep);
+            update = result.Update;
+            value = result.Value;
             if (update)
             {
                 sleep = value;
@@ -100,14 +95,14 @@ while (true)
 
     while (controller.Read(buttonOne) == PinValue.High)
     {
-        Debug.WriteLine("Button one pin value high!");
+        Console.WriteLine("Button one pin value high!");
         controller.Write(ledOne, PinValue.High);
         controller.Write(ledTwo, PinValue.High);
         controller.Write(ledThree, PinValue.High);
         Thread.Sleep(buttonSleep);
     }
 
-    Debug.WriteLine($"Sleep: {sleep}");
+    Console.WriteLine($"Sleep: {sleep}");
     Thread.Sleep(sleep); // starts at 100ms
     TimeEnvelope.AddTime(envelopes, 100); // always stays at 100
 }
