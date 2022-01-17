@@ -2,7 +2,7 @@
 
 Adafruit Seesaw is a near-universal converter framework which allows you to add and extend hardware support to any I2C-capable microcontroller or microcomputer. Instead of getting separate I2C GPIO expanders, ADCs, PWM drivers, etc, seesaw can be configured to give a wide range of capabilities.
 
-This binding provides an Api which is close to the one provided by Adafruit themselves but also implements IGpioController so that available Gpio pins can be used in place of any 'on board' ones but using the standard IoT API.
+This binding provides an API which is close to the one provided by Adafruit themselves but also implements IGpioController so that available Gpio pins can be used in place of any 'on board' ones but using the standard IoT API.
 
 This binding was developed using the Adafruit Seesaw breakout board which uses the ATSAMD09 and the default firmware exposes the following capabilities:
 
@@ -28,6 +28,51 @@ These samples connect to a Raspberry Pi via the first I2C interface. Issues were
 This sample simply connects to an Adafruit Seesaw breakout board, reads and then displays the capabilities of the board firmware
 
 ```csharp
+const byte Adafruit_Seesaw_Breakout_I2cAddress = 0x49;
+const byte Adafruit_Seesaw_Breakout_I2cBus = 0x1;
+
+using (I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(Adafruit_Seesaw_Breakout_I2cBus, Adafruit_Seesaw_Breakout_I2cAddress)))
+using (Seesaw ssDevice = new Seesaw(i2cDevice))
+{
+    Console.WriteLine();
+    Console.WriteLine($"Seesaw Version: {ssDevice.Version}");
+    Console.WriteLine();
+
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Status));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Gpio));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Sercom0));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Timer));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Adc));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Dac));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Interrupt));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Dap));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Eeprom));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Neopixel));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Touch));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Keypad));
+    Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Encoder));
+
+    Console.WriteLine("");
+}
+```
+
+Where the aforementioned `GetModuleAvailability` is defined as follows:
+
+```csharp
+static string GetModuleAvailability(Seesaw ssDevice, Seesaw.SeesawModule module)
+{
+    var moduleAvailable = ssDevice.HasModule(module) ? "available" : "not-available";
+    return $"Module: {module.ToString()} - {moduleAvailable}";
+}
+```
+
+![Seesaw capabilities](SeesawSampleCapabilities_bb.png)
+
+### Connecting to a Seesaw based soil mositure sensor
+
+This sample connects a Raspberry Pi to an Adafruit capacitive soil sensor
+
+```csharp
     const byte Adafruit_Seesaw_SoilSensor_I2cAddress = 0x36;
     const byte Adafruit_Seesaw_SoilSensor_I2cBus = 0x1;
 
@@ -39,33 +84,9 @@ This sample simply connects to an Adafruit Seesaw breakout board, reads and then
             Console.WriteLine($"Temperature: {ssDevice.GetTemperature()}'C");
             Console.WriteLine($"Capacitive: {ssDevice.TouchRead(0)}");
             ssDevice.SetGpioPinMode(1, PinMode.Output);
-            System.Threading.Tasks.Task.Delay(1000).Wait();
+            Thread.Sleep(1000);
         }
     }
-```
-
-![Seesaw capabilities](SeesawSampleCapabilities_bb.png)
-
-### Connecting to a Seesaw based soil mositure sensor
-
-This sample connects a Raspberry Pi to an Adafruit capacitive soil sensor
-
-```csharp
-const byte Adafruit_Seesaw_Breakout_I2cAddress = 0x49;
-const byte Adafruit_Seesaw_Breakout_I2cBus = 0x1;
-
-using (I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(Adafruit_Seesaw_Breakout_I2cBus, Adafruit_Seesaw_Breakout_I2cAddress)))
-using (Seesaw ssDevice = new Seesaw(i2cDevice))
-{
-    Console.WriteLine();
-    Console.WriteLine($"Seesaw Version: {ssDevice.Version}");
-    Console.WriteLine();
-    foreach (Seesaw.Seesaw_Module module in Enum.GetValues(typeof(Seesaw.Seesaw_Module)))
-    {
-        Console.WriteLine($"Module: {Enum.GetName(typeof(Seesaw.Seesaw_Module), module)} - {(ssDevice.HasModule(module) ? "available" : "not-available")}");
-    }
-    Console.WriteLine();
-}
 ```
 
 ![Seesaw sample soil sensor](SeesawSampleSoilSensor_bb.png)
