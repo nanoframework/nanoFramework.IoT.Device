@@ -8,11 +8,11 @@ Binding for the MH-Z19B NDIR infrared gas module. The gas module measures the CO
 
 ## Usage
 
+**Important**: Make sure you install the `nanoFramework.Hardware.ESP32 nuget` and properly setup the UART pins especially for ESP32 before creating the `Serialport`.
+
 The binding can be instantiated using an existing serial UART stream or with the name (e.g. ```COM2``` ) of the serial interface to be used.
 If using an existing stream ```shouldDispose``` indicates whether the stream shall be disposed when the binding gets disposed.
 If providing the name of the serial interface the connection gets closed and disposed when the binding is disposed.
-
-**Important**: make sure you properly setup the UART pins especially for ESP32 before creating the `Serialport`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`
 
 ```csharp
 public Mhz19b(Stream stream, bool shouldDispose)
