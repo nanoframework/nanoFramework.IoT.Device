@@ -4,6 +4,7 @@
 using System;
 using System.Device.I2c;
 using System.Device.Gpio;
+using System.Threading;
 using Iot.Device.Seesaw;
 
 const byte AdafruitSeesawSoilSensorI2cAddress = 0x36;
@@ -13,8 +14,8 @@ using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(AdafruitS
 using Seesaw ssDevice = new(i2cDevice);
 while (true)
 {
-    Debug.WriteLine($"Temperature: {ssDevice.GetTemperature()}'C");
-    Debug.WriteLine($"Capacitive: {ssDevice.TouchRead(0)}");
+    Console.WriteLine($"Temperature: {ssDevice.GetTemperature()}'C");
+    Console.WriteLine($"Capacitive: {ssDevice.TouchRead(0)}");
     ssDevice.SetGpioPinMode(1, PinMode.Output);
-    System.Threading.Tasks.Task.Delay(1000).Wait();
+    Thread.Sleep(1000);
 }
