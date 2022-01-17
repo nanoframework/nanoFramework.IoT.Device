@@ -51,14 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="*.cs" />
-    <None Include="*.md" />
+    <Compile Include="SeesawAdc.cs" />
+    <Compile Include="SeesawBase.cs" />
+    <Compile Include="SeesawEeprom.cs" />
+    <Compile Include="SeesawGpio.cs" />
+    <Compile Include="SeesawModules.cs" />
+    <Compile Include="SeesawTouch.cs" />
+    <Compile Include="SpanPinValuePair.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
