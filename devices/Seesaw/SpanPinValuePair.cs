@@ -1,9 +1,12 @@
-namespace System
+using System;
+using System.Device.Gpio;
+
+namespace Iot.Device.Seesaw
 {
     /// <summary>
     /// Provides a type- and memory-safe representation of a contiguous region of arbitrary array.
     /// </summary>
-    [Serializable, CLSCompliant(false)]
+    [Serializable]
     public readonly ref struct SpanPinValuePair
     {
         private readonly PinValuePair[] _array;  // internal array
@@ -17,7 +20,7 @@ namespace System
         public SpanPinValuePair(PinValuePair[] array)
         {
             _array = array;
-            _length = array?.Length ?? 0;
+            _length = array != null ? array.Length : 0;
             _start = 0;
         }
 
@@ -64,7 +67,6 @@ namespace System
         /// </summary>
         /// <param name="index">The zero-based index of the element.</param>
         /// <returns>The element at the specified index.</returns>
-        // public ref PinValuePair this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
         public PinValuePair this[int index]
         {
             get
