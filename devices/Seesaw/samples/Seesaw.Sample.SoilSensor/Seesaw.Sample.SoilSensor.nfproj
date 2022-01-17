@@ -22,8 +22,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>
