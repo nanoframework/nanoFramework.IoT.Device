@@ -146,6 +146,72 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
+        /// Copies buffer content directly to display buffer.
+        /// Y and height must be byte aligned because buffer will 
+        /// be copied without any logical operations on existing content.
+        /// </summary>
+        /// <param name="x">The x coordinate on the screen.</param>
+        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="width">Width of buffer content in pixels.</param>
+        /// <param name="height">Height of buffer content in pixels.</param>
+        /// <param name="buffer">Data to copy. Buffer size must be equal to height * width / 8.</param>
+        public void DrawDirectAligned(int x, int y, int width, int height, byte[] buffer)
+        {
+            if ((y % 8) != 0)
+            {
+                throw new ArgumentException("Y must be aligned to byte boundary.");
+            }
+            if ((height % 8) != 0)
+            {
+                throw new ArgumentException("Height must be aligned to byte boundary.");
+            }
+
+            var dataHeightInBytes = height / 8;
+            if ((dataHeightInBytes * width) != buffer.Length)
+            {
+                throw new ArgumentException("Width and height do not match the bitmap size.");
+            }
+
+            var genericBufferIdx = y / 8 * Width + x;
+            var srcIdx = 0;
+            for (int i = 0; i < dataHeightInBytes; i++)
+            {
+                Array.Copy(buffer, srcIdx, _genericBuffer, genericBufferIdx, width);
+                srcIdx += width;
+                genericBufferIdx += Width;
+            }
+        }
+
+        /// <summary>
+        /// Clears portion of display via writing 0x00 directly to display buffer.
+        /// Y and height must be byte aligned because bytes will 
+        /// be written without any logical operations on existing content.
+        /// </summary>
+        /// <param name="x">The x coordinate on the screen.</param>
+        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="width">Width of area in pixels.</param>
+        /// <param name="height">Height of area in pixels.</param>
+        public void ClearDirectAligned(int x, int y, int width, int height)
+        {
+            if ((y % 8) != 0)
+            {
+                throw new ArgumentException("Y must be aligned to byte boundary.");
+            }
+            if ((height % 8) != 0)
+            {
+                throw new ArgumentException("Height must be aligned to byte boundary.");
+            }
+
+            var dataHeightInBytes = height / 8;
+            var genericBufferIdx = y / 8 * Width + x;
+            for (int i = 0; i < dataHeightInBytes; i++)
+            {
+                Array.Clear(_genericBuffer, genericBufferIdx, width);
+                genericBufferIdx += Width;
+            }
+        }
+
+        /// <summary>
         /// Draws a pixel on the screen.
         /// </summary>
         /// <param name="x">The x coordinate on the screen.</param>
