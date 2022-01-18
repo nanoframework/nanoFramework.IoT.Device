@@ -15,6 +15,8 @@
     <RootNamespace>Iot.Device.MS5611</RootNamespace>
     <AssemblyName>Iot.Device.MS5611</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.MS5611.xml</DocumentationFile>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -50,6 +52,10 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="*.md" />
   </ItemGroup>
   <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
   <Import Project="..\..\src\Iot.Device.Common\Iot.Device.Common.projitems" Label="Shared" />
