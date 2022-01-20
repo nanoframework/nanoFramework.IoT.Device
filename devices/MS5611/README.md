@@ -1,10 +1,10 @@
-# MS5611 in GY-63 module - temperature and pressure sensor
+# Ms5611 in GY-63 module - temperature and pressure sensor
 
-MS5611 is a device that reads barometric pressure, altitude and temperature. I2C can be used to communicate with the device.
+Ms5611 is a device that reads barometric pressure, altitude and temperature. I2C can be used to communicate with the device.
 
 ## Documentation
 
-[Datasheet](https://datasheetspdf.com/pdf-file/921406/measurement/MS5611-01BA03/1) for the MS5611.
+[Datasheet](https://datasheetspdf.com/pdf-file/921406/measurement/MS5611-01BA03/1) for the Ms5611.
 
 ## Usage
 
@@ -43,4 +43,6 @@ while (true)
 
 The following fritzing diagram illustrates one way to wire up the GY-63 module with an MCU like ESP32 using I2C.
 
-![ESP32 Breadboard diagram](MS5611_bb.png)
+![ESP32 Breadboard diagram](Ms5611_bb.png)
+
+SPI implementation hasn't been done.

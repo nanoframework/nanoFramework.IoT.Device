@@ -9,7 +9,7 @@ using nanoFramework.Hardware.Esp32;
 using UnitsNet;
 using UnitsNet.Units;
 
-namespace MS5611.Sample
+namespace Iot.Device.Ms5611.Sample
 {
     public class Program
     {
@@ -23,7 +23,7 @@ namespace MS5611.Sample
             // Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
             // Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-            //Czestochowa, Poland ,3rd floor
+            //Czestochowa, Poland, 3rd floor
             double altitude = 250;
             // bus id on the MCU
             const int busId = 1;

@@ -1,29 +1,32 @@
-﻿namespace Iot.Device.MS5611
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+namespace Iot.Device.MS5611
 {
     /// <summary>
-    /// MS5611 calibration data
+    /// MS5611 calibration data. Check data sheet, page 7, read calibration data from PROM section
     /// </summary>
     internal class CalibrationData
     {
-        public int PressureSensitivity { private set; get; }
-        public int PressureOffset { private set; get; }
-        public int TemperatureCoefficientOfPressureSensitivity { private set; get; }
-        public int TemperatureCoefficientOfPressureOffset { private set; get; }
-        public int ReferenceTemperature { private set; get; }
-        public int TemperatureCoefficientOfTheTemperature { private set; get; }
+        public int PressureSensitivity { get; private set; }
+        public int PressureOffset { get; private set; }
+        public int TemperatureCoefficientOfPressureSensitivity { get; private set; }
+        public int TemperatureCoefficientOfPressureOffset { get; private set; }
+        public int ReferenceTemperature { get; private set; }
+        public int TemperatureCoefficientOfTheTemperature { get; private set; }
 
         /// <summary>
-        /// Reads data from device
+        /// Reads data from device.
         /// </summary>
         /// <param name="ms5611">Sensor object</param>
-        internal void ReadFromDevice(Ms5611 ms5611)
+        internal void ReadFromDevice(Ms5611.Ms5611 ms5611)
         {
-            PressureSensitivity = ms5611.ReadRegister((int)CommandAddresses.MS5611_CMD_READ_PROM);
-            PressureOffset = ms5611.ReadRegister((int)CommandAddresses.MS5611_CMD_READ_PROM + 2);
-            TemperatureCoefficientOfPressureSensitivity = ms5611.ReadRegister((int)CommandAddresses.MS5611_CMD_READ_PROM + 4);
-            TemperatureCoefficientOfPressureOffset = ms5611.ReadRegister((int)CommandAddresses.MS5611_CMD_READ_PROM + 6);
-            ReferenceTemperature = ms5611.ReadRegister((int)CommandAddresses.MS5611_CMD_READ_PROM + 8);
-            TemperatureCoefficientOfTheTemperature = ms5611.ReadRegister((int)CommandAddresses.MS5611_CMD_READ_PROM + 10);
+            PressureSensitivity = ms5611.ReadRegister(CommandAddress.PressureSensitivity);
+            PressureOffset = ms5611.ReadRegister(CommandAddress.PressureOffset);
+            TemperatureCoefficientOfPressureSensitivity = ms5611.ReadRegister(CommandAddress.TemperatureCoefficientOfPressureSensitivity);
+            TemperatureCoefficientOfPressureOffset = ms5611.ReadRegister(CommandAddress.TemperatureCoefficientOfPressureOffset);
+            ReferenceTemperature = ms5611.ReadRegister(CommandAddress.ReferenceTemperature);
+            TemperatureCoefficientOfTheTemperature = ms5611.ReadRegister(CommandAddress.TemperatureCoefficientOfTheTemperature);
         }
     }
 }

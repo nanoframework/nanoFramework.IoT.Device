@@ -12,16 +12,16 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.MS5611</RootNamespace>
-    <AssemblyName>Iot.Device.MS5611</AssemblyName>
+    <RootNamespace>Iot.Device.Ms5611</RootNamespace>
+    <AssemblyName>Iot.Device.Ms5611</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.MS5611.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Ms5611.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="CalibrationData.cs" />
-    <Compile Include="CommandAddresses.cs" />
+    <Compile Include="CommandAddress.cs" />
     <Compile Include="Ms5611.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sampling.cs" />
