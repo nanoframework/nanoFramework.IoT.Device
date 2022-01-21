@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.ServoMotor</id>
@@ -20,8 +20,8 @@
     <summary>Iot.Device.ServoMotor assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.ServoMotor</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="1.0.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="1.0.1-preview.4" />
     </dependencies>
   </metadata>
   <files>
