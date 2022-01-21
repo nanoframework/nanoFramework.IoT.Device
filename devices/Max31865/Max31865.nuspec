@@ -20,14 +20,14 @@
     <summary>Iot.Device.Max31865 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Max31865</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.3-preview.3" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.3-preview.9" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.3" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.1" />
-      <dependency id="nanoFramework.System.Math" version="1.4.3" />
-      <dependency id="UnitsNet.nanoFramework.ElectricResistance" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.112.0" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.5" />
+      <dependency id="UnitsNet.nanoFramework.ElectricResistance" version="4.113.0" />
+      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.113.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.113.0" />
     </dependencies>
   </metadata>
   <files>
