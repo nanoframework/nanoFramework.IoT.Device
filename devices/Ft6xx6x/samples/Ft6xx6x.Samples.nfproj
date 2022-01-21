@@ -36,7 +36,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.1.0.259\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ft6xx6x, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.1.0.20\lib\Iot.Device.Ft6xx6x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.1.0.21-preview.1\lib\Iot.Device.Ft6xx6x.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Mpu6886, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -60,7 +60,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.M5Core2, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.M5Core2.1.0.1-preview.18\lib\nanoFramework.M5Core2.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.M5Core2.1.0.1-preview.19\lib\nanoFramework.M5Core2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager, Version=1.1.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -85,8 +85,9 @@
       <HintPath>..\packages\nanoFramework.System.Device.Adc.1.0.2-preview.4\lib\System.Device.Adc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Dac">
-      <HintPath>..\packages\nanoFramework.System.Device.Dac.1.4.2\lib\System.Device.Dac.dll</HintPath>
+    <Reference Include="System.Device.Dac, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.Dac.1.4.3-preview.4\lib\System.Device.Dac.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.0.3-preview.3\lib\System.Device.Gpio.dll</HintPath>
@@ -104,14 +105,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Spi, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.3-preview.5\lib\System.Device.Spi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.3-preview.7\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch">
       <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.259\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Ports, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.Ports.1.0.3-preview.6\lib\System.IO.Ports.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.Ports.1.0.3-preview.8\lib\System.IO.Ports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.4.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
