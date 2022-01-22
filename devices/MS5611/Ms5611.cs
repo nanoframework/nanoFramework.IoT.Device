@@ -6,7 +6,7 @@ using System.Device.Model;
 using System.Device.I2c;
 using System.Threading;
 using Iot.Device.Common;
-using Iot.Device.MS5611;
+using Iot.Device.Ms5611;
 using UnitsNet;
 
 namespace Iot.Device.Ms5611

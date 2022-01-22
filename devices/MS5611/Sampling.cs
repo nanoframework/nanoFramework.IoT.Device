@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.MS5611
+namespace Iot.Device.Ms5611
 {
     /// <summary>
     /// MS5611 sampling, check data sheet, page 9, commands section

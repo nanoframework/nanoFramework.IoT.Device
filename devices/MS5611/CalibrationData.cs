@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.MS5611
+namespace Iot.Device.Ms5611
 {
     /// <summary>
     /// MS5611 calibration data. Check data sheet, page 7, read calibration data from PROM section
@@ -19,7 +19,7 @@ namespace Iot.Device.MS5611
         /// Reads data from device.
         /// </summary>
         /// <param name="ms5611">Sensor object</param>
-        internal void ReadFromDevice(Ms5611.Ms5611 ms5611)
+        internal void ReadFromDevice(Ms5611 ms5611)
         {
             PressureSensitivity = ms5611.ReadRegister(CommandAddress.PressureSensitivity);
             PressureOffset = ms5611.ReadRegister(CommandAddress.PressureOffset);

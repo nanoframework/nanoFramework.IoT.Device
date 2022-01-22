@@ -4,7 +4,7 @@
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
-using Iot.Device.MS5611;
+using Iot.Device.Ms5611;
 using nanoFramework.Hardware.Esp32;
 using UnitsNet;
 using UnitsNet.Units;
