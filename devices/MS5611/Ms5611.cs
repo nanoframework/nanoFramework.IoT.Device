@@ -185,7 +185,6 @@ namespace Iot.Device.Ms5611
                     compensatedSensitivity = 5 * (actualTemperature - 2000) * (actualTemperature - 2000) / 4;
                 }
 
-
                 offset = offset - compensatedOffset;
                 sensitivity = sensitivity - compensatedSensitivity;
             }
