@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.4" />
       <dependency id="nanoFramework.System.Device.Model" version="1.0.259" />
       <dependency id="nanoFramework.System.IO.Ports" version="1.0.3-preview.12" />
-      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.113.0" />
+      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.114.0" />
     </dependencies>
   </metadata>
   <files>
