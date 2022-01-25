@@ -124,7 +124,11 @@ HashSet<string> ignoredDeviceDirectories = new()
     "Interop",
 };
 
-string? repoRoot = FindRepoRoot(Environment.CurrentDirectory);
+var repoRootPath = Path.Combine(Environment.GetEnvironmentVariable("BUILD_SOURCESDIRECTORY"), "nanoFramework.IoT.Device");
+
+Console.WriteLine($"Finding repository root. Starting point is: {repoRootPath}");
+
+string? repoRoot = CheckRepoRoot(repoRootPath);
 
 if (repoRoot is null)
 {
@@ -252,7 +256,7 @@ string GetCategorizedDeviceListing(string devicesPath, IEnumerable<DeviceInfo> d
     return deviceListing.ToString();
 }
 
-string? FindRepoRoot(string dir)
+string? CheckRepoRoot(string dir)
 {
     if (dir is { Length: > 0 })
     {
@@ -263,7 +267,7 @@ string? FindRepoRoot(string dir)
         else
         {
             DirectoryInfo? parentDir = new DirectoryInfo(dir).Parent;
-            return parentDir?.FullName == null ? null : FindRepoRoot(parentDir.FullName);
+            return parentDir?.FullName == null ? null : CheckRepoRoot(parentDir.FullName);
         }
     }
 
