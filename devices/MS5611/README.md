@@ -43,6 +43,6 @@ while (true)
 
 The following fritzing diagram illustrates one way to wire up the GY-63 module with an MCU like ESP32 using I2C.
 
-![ESP32 Breadboard diagram](Ms5611_bb.png)
+![ESP32 Breadboard diagram](MS5611_bb.png)
 
 SPI implementation hasn't been done.
