@@ -153,9 +153,6 @@
     <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ft6xx6x.nfproj" />
-  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
   <ProjectExtensions>
