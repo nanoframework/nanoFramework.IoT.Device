@@ -42,7 +42,7 @@ namespace System.Diagnostics
         /// <summary>
         /// Gets the total elapsed time measured by the current instance, in timer ticks.
         /// </summary>
-        public long ElapsedTicks => IsRunning ? DateTime.UtcNow.Ticks - _initialTicks : _finalTicks - _initialTicks;
+        public long ElapsedTicks => IsRunning ? Environment.TickCount64 - _initialTicks : _finalTicks - _initialTicks;
 
         /// <summary>
         /// Gets a value indicating whether the System.Diagnostics.Stopwatch timer is running.
@@ -53,7 +53,7 @@ namespace System.Diagnostics
         /// Gets the current number of ticks in the timer mechanism.
         /// </summary>
         /// <returns></returns>
-        public static long GetTimestamp() => DateTime.UtcNow.Ticks;
+        public static long GetTimestamp() => Environment.TickCount64;
 
         /// <summary>
         /// Initializes a new System.Diagnostics.Stopwatch instance, sets the elapsed time
@@ -73,7 +73,7 @@ namespace System.Diagnostics
         public void Reset()
         {
             IsRunning = false;
-            _initialTicks = DateTime.UtcNow.Ticks;
+            _initialTicks = Environment.TickCount64;
             _finalTicks = _initialTicks;
         }
 
@@ -91,7 +91,7 @@ namespace System.Diagnostics
         /// </summary>
         public void Start()
         {
-            _initialTicks = DateTime.UtcNow.Ticks;
+            _initialTicks = Environment.TickCount64;
             IsRunning = true;
         }
     
@@ -100,7 +100,7 @@ namespace System.Diagnostics
         /// </summary>
         public void Stop()
         {
-            _finalTicks = DateTime.UtcNow.Ticks;
+            _finalTicks = Environment.TickCount64;
             IsRunning = false;
         }
     }

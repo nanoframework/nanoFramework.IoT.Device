@@ -43,8 +43,7 @@ namespace System.Device
             {
                 do
                 {
-                    // No spin wait
-                    ;
+                    Thread.SpinWait(1);
                 }
                 while (Stopwatch.GetTimestamp() < target);
             }
