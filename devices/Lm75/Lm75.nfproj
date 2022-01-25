@@ -18,6 +18,15 @@
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Lm75.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.12.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
