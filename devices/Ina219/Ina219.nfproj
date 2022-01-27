@@ -8,6 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+<<<<<<< HEAD
     <ProjectGuid>{B6CCC350-F739-17FD-CD00-45080F7DC9DB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -16,6 +17,16 @@
     <AssemblyName>Iot.Device.Ina219</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Ina219.xml</DocumentationFile>
+=======
+    <ProjectGuid>{7C1ECF03-9D23-87C9-067B-13D2AE6E7C07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Iot.Device.Sht4x</RootNamespace>
+    <AssemblyName>Iot.Device.Sht4x</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Sht4x.xml</DocumentationFile>
+>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -37,12 +48,31 @@
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.160\lib\System.Buffers.Binary.dll</HintPath>
       <Private>True</Private>
     </Reference>
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/devices_generated/Sht4x/Sht4x.nfproj
+    <Reference Include="UnitsNet.RelativeHumidity">
+      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.4.0-preview.7\lib\System.Math.dll</HintPath>
+========
+>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
     <Reference Include="UnitsNet.ElectricPotential">
       <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.102.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricCurrent">
       <HintPath>packages\UnitsNet.nanoFramework.ElectricCurrent.4.102.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+<<<<<<< HEAD
+=======
+>>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c:devices/Ina219/Ina219.nfproj
+>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Power">
@@ -57,8 +87,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+<<<<<<< HEAD
     <Compile Include="*.cs" />
     <None Include="README.md" />
+=======
+<<<<<<<< HEAD:src/devices_generated/Sht4x/Sht4x.nfproj
+    <Compile Include="Sht4x.cs" />
+    <Compile Include="Sht4xRepeatability.cs" />
+    <Compile Include="..\Shared\Sensirion.cs" />
+========
+    <Compile Include="*.cs" />
+    <None Include="README.md" />
+>>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c:devices/Ina219/Ina219.nfproj
+>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +107,14 @@
     <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/devices_generated/Sht4x/Sht4x.nfproj
+  <Import Project="..\..\src\System.Device.Model\System.Device.Model.projitems" Label="Shared" />
+    <Import Project="..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems" Label="Shared" />
+========
+>>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c:devices/Ina219/Ina219.nfproj
+>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
