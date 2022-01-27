@@ -50,6 +50,10 @@
       <HintPath>packages\nanoFramework.Runtime.Events.1.10.0-preview.4\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.Runtime.Native, Version=1.5.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Native.1.5.4-preview.1\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Device.Gpio, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.3-preview.6\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
@@ -61,19 +65,20 @@
     <Reference Include="System.Device.Model">
       <HintPath>packages\nanoFramework.System.Device.Model.1.0.259\lib\System.Device.Model.dll</HintPath>
     </Reference>
-    <Reference Include="System.Diagnostics.Stopwatch">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.259\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+    <Reference Include="System.Diagnostics.Stopwatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.288-preview.7\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.4.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Math.1.4.4-preview.5\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity, Version=4.114.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.114.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="UnitsNet.RelativeHumidity, Version=4.115.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.115.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=4.114.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.114.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=4.115.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.115.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
