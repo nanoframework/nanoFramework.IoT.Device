@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers.Binary;
-using System.Collections.Generic;
 using System.Device;
 using System.Device.I2c;
 using System.Device.Model;
@@ -26,20 +25,24 @@ namespace Iot.Device.Adc
     {
         // These values are the datasheet defined delays in micro seconds between requesting a Current or Power value from the INA219 and the ADC sampling having completed
         // along with any conversions.
-        private static readonly Dictionary<Ina219AdcResolutionOrSamples, int> s_readDelays = new()
+        private static int s_readDelays(Ina219AdcResolutionOrSamples adc)
         {
-            { Ina219AdcResolutionOrSamples.Adc9Bit, 84 },
-            { Ina219AdcResolutionOrSamples.Adc10Bit, 148 },
-            { Ina219AdcResolutionOrSamples.Adc11Bit, 276 },
-            { Ina219AdcResolutionOrSamples.Adc12Bit, 532 },
-            { Ina219AdcResolutionOrSamples.Adc2Sample, 1006 },
-            { Ina219AdcResolutionOrSamples.Adc4Sample, 2130 },
-            { Ina219AdcResolutionOrSamples.Adc8Sample, 4260 },
-            { Ina219AdcResolutionOrSamples.Adc16Sample, 8510 },
-            { Ina219AdcResolutionOrSamples.Adc32Sample, 17020 },
-            { Ina219AdcResolutionOrSamples.Adc64Sample, 34050 },
-            { Ina219AdcResolutionOrSamples.Adc128Sample, 68100 }
-        };
+            switch(adc)
+            {
+                case Ina219AdcResolutionOrSamples.Adc9Bit: return 84;
+                case Ina219AdcResolutionOrSamples.Adc10Bit: return 148;
+                case Ina219AdcResolutionOrSamples.Adc11Bit: return 276;
+                case Ina219AdcResolutionOrSamples.Adc12Bit: return 532;
+                case Ina219AdcResolutionOrSamples.Adc2Sample: return 1006;
+                case Ina219AdcResolutionOrSamples.Adc4Sample: return 2130;
+                case Ina219AdcResolutionOrSamples.Adc8Sample: return 4260;
+                case Ina219AdcResolutionOrSamples.Adc16Sample: return 8510;
+                case Ina219AdcResolutionOrSamples.Adc32Sample: return 17020;
+                case Ina219AdcResolutionOrSamples.Adc64Sample: return 34050;
+                case Ina219AdcResolutionOrSamples.Adc128Sample: return 68100;
+                default: return -1;
+            }
+        }
 
         private I2cDevice _i2cDevice;
         private bool _disposeI2cDevice = false;
@@ -241,7 +244,7 @@ namespace Iot.Device.Adc
         /// <returns>The shunt potential difference</returns>
         // read the shunt voltage. LSB = 10uV then convert to Volts
         [Telemetry("ShuntVoltage")]
-        public ElectricPotential ReadShuntVoltage() => ElectricPotential.FromVolts(ReadRegister(Ina219Register.ShuntVoltage, s_readDelays[(Ina219AdcResolutionOrSamples)_shuntAdcResSamp]) * 10.0 / 1000000.0);
+        public ElectricPotential ReadShuntVoltage() => ElectricPotential.FromVolts(ReadRegister(Ina219Register.ShuntVoltage, s_readDelays(_shuntAdcResSamp)) * 10.0 / 1000000.0);
 
         /// <summary>
         /// Read the measured Bus voltage.
@@ -249,7 +252,7 @@ namespace Iot.Device.Adc
         /// <returns>The Bus potential (voltage)</returns>
         // read the bus voltage. LSB = 4mV then convert to Volts
         [Telemetry("BusVoltage")]
-        public ElectricPotential ReadBusVoltage() => ElectricPotential.FromVolts(((short)ReadRegister(Ina219Register.BusVoltage, s_readDelays[_busAdcResSamp]) >> 3) * 4 / 1000.0);
+        public ElectricPotential ReadBusVoltage() => ElectricPotential.FromVolts(((short)ReadRegister(Ina219Register.BusVoltage, s_readDelays(_busAdcResSamp)) >> 3) * 4 / 1000.0);
 
         /// <summary>
         /// Read the calculated current through the INA219.
@@ -267,7 +270,7 @@ namespace Iot.Device.Adc
             // whenever needed.
             SetCalibration(_calibrationValue, _currentLsb);
 
-            return ElectricCurrent.FromAmperes(ReadRegister(Ina219Register.Current, s_readDelays[(Ina219AdcResolutionOrSamples)_shuntAdcResSamp]) * _currentLsb);
+            return ElectricCurrent.FromAmperes(ReadRegister(Ina219Register.Current, s_readDelays(_shuntAdcResSamp)) * _currentLsb);
         }
 
         /// <summary>
@@ -286,7 +289,7 @@ namespace Iot.Device.Adc
             // whenever needed.
             SetCalibration(_calibrationValue, _currentLsb);
 
-            return Power.FromWatts(ReadRegister(Ina219Register.Power, s_readDelays[(Ina219AdcResolutionOrSamples)_shuntAdcResSamp]) * _currentLsb * 20);
+            return Power.FromWatts(ReadRegister(Ina219Register.Power, s_readDelays(_shuntAdcResSamp)) * _currentLsb * 20);
         }
 
         /// <summary>
