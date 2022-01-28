@@ -8,7 +8,6 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-<<<<<<< HEAD
     <ProjectGuid>{A9A1A6D6-C30A-7911-C4E4-63AE0A28F456}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -17,27 +16,10 @@
     <AssemblyName>Iot.Device.Ina219.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Ina219.Samples.xml</DocumentationFile>
-=======
-    <ProjectGuid>{3DA13792-8E73-B532-2FAA-E45FCC51148F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.BuildHat.samples</RootNamespace>
-    <AssemblyName>Iot.Device.BuildHat.samples</AssemblyName>
-    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.BuildHat.samples.xml</DocumentationFile>
->>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:src/devices_generated/BuildHat/samples/BuildHat.samples.nfproj
-    <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
-========
->>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
     <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
@@ -75,15 +57,9 @@
     </Reference>
     <Reference Include="UnitsNet.Power">
       <HintPath>..\packages\UnitsNet.nanoFramework.Power.4.102.0\lib\UnitsNet.Power.dll</HintPath>
-<<<<<<< HEAD
-      <Private>True</Private>
-    </Reference>
-=======
->>>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c:devices/Ina219/samples/Ina219.Samples.nfproj
       <Private>True</Private>
     </Reference>
     <!-- INSERT NEW REFERENCES HERE -->
->>>>>>> 4513715e66a02c8a82f17080cb807fbf4aac079c
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
