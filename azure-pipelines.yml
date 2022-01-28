@@ -1,8 +1,20 @@
 trigger:
   branches:
-    include: ["main", "develop*", "release-*", "refs/tags/*" ]
+    include:
+      - main
+      - develop
+      - release-*
+      - refs/tags/*
   paths:
-    exclude: [ "doc", "*.md", ".gitignore", "README.md", "devices/README.md", "tips-trick.md", "src/devices_generated_status.md", "LICENSE.md" ]
+    exclude:
+      - src/*
+      - tests/*
+      - devices/README.md
+      - devices/key.snk
+      - .gitignore
+      - LICENSE.md
+      - README.md
+      - tips-trick.md
 
 # PR always trigger build
 pr:
@@ -83,7 +95,11 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: Install SignTool tool
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  condition: >-
+    and(
+      succeeded(),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   inputs:
     command: custom
     custom: tool
@@ -115,7 +131,11 @@ steps:
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
 - task: NuGetCommand@2
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+  condition: >-
+    and(
+      succeeded(),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   continueOnError: true
   displayName: Push NuGet packages to NuGet
   inputs:
@@ -139,7 +159,11 @@ steps:
     workingDirectory: 'nanoFramework.IoT.Device'
 
 - task: PowerShell@2
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+  condition: >-
+    and(
+      succeeded(),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   displayName: Push READMEs to GitHub
   continueOnError: true
   inputs:
