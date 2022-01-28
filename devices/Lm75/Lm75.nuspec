@@ -20,10 +20,10 @@
     <summary>Iot.Device.Lm75 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Lm75</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.4" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.115.0" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.5" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.8" />
     </dependencies>
   </metadata>
   <files>
