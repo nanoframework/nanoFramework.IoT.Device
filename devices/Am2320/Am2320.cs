@@ -155,7 +155,7 @@ namespace Iot.Device.Am2320
         private bool IsCrcValid(SpanByte buff)
         {
             var crc = Crc16(buff.Slice(0, buff.Length - 2));
-            return (crc >> 8 == buff[buff.Length - 2]) && ((crc & 0xFF) == _readBuff[buff[buff.Length - 2]]);
+            return (crc >> 8 == buff[buff.Length - 1]) && ((crc & 0xFF) == _readBuff[buff[buff.Length - 2]]);
         }
 
         private Temperature GetTemperature()
