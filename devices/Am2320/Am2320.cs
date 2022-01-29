@@ -87,12 +87,12 @@ namespace Iot.Device.Am2320
                 Thread.Sleep(1);
                 _i2c.Read(buff);
                 // Check if it is valid
-                if (!IsValidReadBuffer(0x04))
+                if (!IsValidReadBuffer(0x07))
                 {                    
                     return null;
                 }
 
-                if (!IsCrcValid(buff.Slice(0, 9)))
+                if (!IsCrcValid(buff))
                 {                    
                     return null;
                 }
@@ -141,7 +141,7 @@ namespace Iot.Device.Am2320
                 return;
             }
 
-            if (!IsCrcValid((new SpanByte(_readBuff)).Slice(0, 6)))
+            if (!IsCrcValid(_readBuff))
             {
                 IsLastReadSuccessful = false;
                 return;
@@ -154,8 +154,8 @@ namespace Iot.Device.Am2320
 
         private bool IsCrcValid(SpanByte buff)
         {
-            var crc = Crc16(buff);
-            return (crc >> 8 == _readBuff[6]) && ((crc & 0xFF) == _readBuff[7]);
+            var crc = Crc16(buff.Slice(0, buff.Length - 2));
+            return (crc >> 8 == buff[buff.Length - 2]) && ((crc & 0xFF) == _readBuff[buff[buff.Length - 2]]);
         }
 
         private Temperature GetTemperature()
@@ -177,7 +177,7 @@ namespace Iot.Device.Am2320
             byte inc = 0;
             while (inc < ptr.Length)
             {
-                crc = ptr[inc++];
+                crc ^= ptr[inc++];
                 for (i = 0; i < 8; i++)
                 {
                     if ((crc & 0x01) == 0x01)
