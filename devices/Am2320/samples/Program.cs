@@ -14,8 +14,10 @@ Debug.WriteLine("Hello from AM2320!");
 // used for the bus
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 using Am2320 am2330 = new(new I2cDevice(new I2cConnectionSettings(1, Am2320.DefaultI2cAddress, I2cBusSpeed.StandardMode)));
 
+// On some copies, the device information contains only 0
 var deviceInfo = am2330.DeviceInformation;
 Debug.WriteLine($"Model: {deviceInfo.Model}");
 Debug.WriteLine($"Version: {deviceInfo.Version}");
