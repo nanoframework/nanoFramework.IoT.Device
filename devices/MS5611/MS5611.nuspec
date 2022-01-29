@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Ms5611</id>
@@ -19,13 +19,13 @@
     <description>This package includes the .NET IoT Core binding Iot.Device.Ms5611 for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ms5611</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.2" />
-      <dependency id="nanoFramework.System.Math" version="1.4.3" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.112.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.10" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.115.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.115.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.115.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.115.0" />
     </dependencies>
   </metadata>
   <files>
