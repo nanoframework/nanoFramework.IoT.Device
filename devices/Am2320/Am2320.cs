@@ -119,7 +119,7 @@ namespace Iot.Device.Am2320
         private void ReadData()
         {
             // Doc says, we can't read more often than 1.5 seconds
-            if (_lastMeasurement < DateTime.UtcNow.Add(MinimumReadPeriod))
+            if (_lastMeasurement.Add(MinimumReadPeriod) < DateTime.UtcNow)
             {
                 IsLastReadSuccessful = false;
                 return;
