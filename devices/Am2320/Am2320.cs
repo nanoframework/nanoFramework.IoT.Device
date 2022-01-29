@@ -153,7 +153,7 @@ namespace Iot.Device.Am2320
             IsLastReadSuccessful = true;
         }
 
-        private bool IsValidReadBuffer(byte[] buff, byte expected) => (buff[0] == 0x03) && (buff[1] == expected);
+        private bool IsValidReadBuffer(SpanByte buff, byte expected) => (buff[0] == 0x03) && (buff[1] == expected);
 
         private bool IsCrcValid(SpanByte buff)
         {

@@ -20,33 +20,61 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the pre-set pins for the SPI bus you want to use. The chip select can as well be pre setup.
 
-Here is an example how to use the APA102:
+Here is an example how to use the AM2320:
 
 ```csharp
-using System;
-using System.Device.Spi;
-using System.Drawing;
+using Iot.Device.Am2320;
+using nanoFramework.Hardware.Esp32;
+using System.Device.I2c;
+using System.Diagnostics;
 using System.Threading;
-using Iot.Device.Apa102;
 
-var random = new Random();
+Debug.WriteLine("Hello from AM2320!");
 
-using SpiDevice spiDevice = SpiDevice.Create(new SpiConnectionSettings(1, 42)
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
+using Am2320 am2330 = new(new I2cDevice(new I2cConnectionSettings(1, Am2320.DefaultI2cAddress, I2cBusSpeed.StandardMode)));
+
+while(true)
 {
-    ClockFrequency = 20_000_000,
-    DataFlow = DataFlow.MsbFirst,
-    Mode = SpiMode.Mode0 // ensure data is ready at clock rising edge
-});
-using Apa102 apa102 = new Apa102(spiDevice, 16);
-
-while (true)
-{
-    for (var i = 0; i < apa102.Pixels.Length; i++)
+    var temp = am2330.Temperature;
+    var hum = am2330.Humidity;
+    if(am2330.IsLastReadSuccessful)
     {
-        apa102.Pixels[i] = Color.FromArgb(255, random.Next(256), random.Next(256), random.Next(256));
+        Debug.WriteLine($"Temp = {temp.DegreesCelsius} C, Hum = {hum.Percent} %");
+    }
+    else
+    {
+        Debug.WriteLine("Not sucessfull read");
     }
 
-    apa102.Flush();
-    Thread.Sleep(1000);
+    Thread.Sleep(Am2320.MinimumReadPeriod);
 }
 ```
+
+### Device Information
+
+You can read the Device Information.
+
+> Note: on some copies, the device information only returns 0.
+
+```csharp
+// On some copies, the device information contains only 0
+var deviceInfo = am2330.DeviceInformation;
+if (deviceInfo != null)
+{
+    Debug.WriteLine($"Model: {deviceInfo.Model}");
+    Debug.WriteLine($"Version: {deviceInfo.Version}");
+    Debug.WriteLine($"Device ID: {deviceInfo.DeviceId}");
+}
+```
+
+## Limitations
+
+Only the I2C implementation is available, not the 1 wire one.
+
+The user registers and the status register are not implemented. The status register is just a register the user can store data. It is not currently used for any usage according to the documentation.

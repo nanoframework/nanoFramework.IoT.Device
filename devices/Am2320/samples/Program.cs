@@ -19,9 +19,12 @@ using Am2320 am2330 = new(new I2cDevice(new I2cConnectionSettings(1, Am2320.Defa
 
 // On some copies, the device information contains only 0
 var deviceInfo = am2330.DeviceInformation;
-Debug.WriteLine($"Model: {deviceInfo.Model}");
-Debug.WriteLine($"Version: {deviceInfo.Version}");
-Debug.WriteLine($"Device ID: {deviceInfo.DeviceId}");
+if (deviceInfo != null)
+{
+    Debug.WriteLine($"Model: {deviceInfo.Model}");
+    Debug.WriteLine($"Version: {deviceInfo.Version}");
+    Debug.WriteLine($"Device ID: {deviceInfo.DeviceId}");
+}
 
 while(true)
 {
