@@ -47,7 +47,11 @@ namespace Iot.Device.Am2320
         {
             get
             {
-                ReadData();
+                if (IsOutDated())
+                {
+                    ReadData();
+                }
+
                 return IsLastReadSuccessful ? GetTemperature() : default(Temperature);
             }
         }
@@ -63,7 +67,11 @@ namespace Iot.Device.Am2320
         {
             get
             {
-                ReadData();
+                if (IsOutDated())
+                {
+                    ReadData();
+                }
+
                 return IsLastReadSuccessful ? GetHumidity() : default(RelativeHumidity);
             }
         }
@@ -116,15 +124,10 @@ namespace Iot.Device.Am2320
             _i2c = i2c ?? throw new ArgumentNullException(nameof(i2c));
         }
 
+        private bool IsOutDated() => !(_lastMeasurement.Add(MinimumReadPeriod) < DateTime.UtcNow);
+
         private void ReadData()
         {
-            // Doc says, we can't read more often than 1.5 seconds
-            if (_lastMeasurement.Add(MinimumReadPeriod) < DateTime.UtcNow)
-            {
-                IsLastReadSuccessful = false;
-                return;
-            }
-
             // Forces the sensor to wake up and wait 10 ms according to documentation
             _i2c.WriteByte(0x00);
             Thread.Sleep(10);
