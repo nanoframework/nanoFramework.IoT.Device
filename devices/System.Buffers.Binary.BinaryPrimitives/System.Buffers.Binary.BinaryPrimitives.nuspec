@@ -20,7 +20,7 @@
     <summary>System.Buffers.Binary.BinaryPrimitives assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf System.Buffers.Binary.BinaryPrimitives</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
     </dependencies>
   </metadata>
   <files>

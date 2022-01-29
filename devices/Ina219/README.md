@@ -15,14 +15,19 @@ This binding is intended to support both the A and B grades of the INA219. The g
 
 * [INA219 Datasheet](http://www.ti.com/lit/ds/symlink/ina219.pdf)
 
+## Board
+
+![image](./Ina219.png)
+
+
 ## Usage
 
 ```csharp
-const byte Adafruit_Ina219_I2cAddress = 0x40;
-const byte Adafruit_Ina219_I2cBus = 0x1;
+const byte Ina219_I2cAddress = 0x40;
+const byte Ina219_I2cBus = 0x1;
 
 // create an INA219 device on I2C bus 1 addressing channel 64
-using (Ina219 device = new Ina219(new I2cConnectionSettings(Adafruit_Ina219_I2cBus, Adafruit_Ina219_I2cAddress)))
+using (Ina219 device = new Ina219(new I2cConnectionSettings(Ina219_I2cBus, Ina219_I2cAddress)))
 {
     // reset the device 
     device.Reset();
@@ -43,7 +48,7 @@ using (Ina219 device = new Ina219(new I2cConnectionSettings(Adafruit_Ina219_I2cB
 
 ### Notes
 
-This sample uses an Adafruit INA219 breakout board and monitors a LED wired into the 3.3 volts supply with a 150 ohm current limiting resistor. It prints the bus voltage, shunt voltage, current and power every second.
+This sample uses an INA219 breakout board and monitors a LED wired into the 3.3 volts supply with a 150 ohm current limiting resistor. It prints the bus voltage, shunt voltage, current and power every second.
 
 The configuration and calibration is determinined as follows.
 
@@ -53,5 +58,3 @@ at 5mV. Given this we can use a shunt voltage range of +/- 40mV
 * The maximum possible current would then be 40mV / 0.1 = 400mA
 * With a 400mA maximum current and a range of the ADC of 15bits then the LSB of the current would be 400mA/32767 = 12.2207 microamps. We will chose 12.2uA as a round number.
 * From the [INA219 Datasheet](http://www.ti.com/lit/ds/symlink/ina219.pdf) the calibration register should be set at 0.04096/(currentLSB * shunt resistance) = 33574 = 0x8326
-
-![circuit](Ina219.Sample_bb.png)

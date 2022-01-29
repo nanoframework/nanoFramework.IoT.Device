@@ -20,10 +20,10 @@
     <summary>Iot.Device.Mcp3428 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mcp3428</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.4" />
-      <dependency id="nanoFramework.System.Threading" version="1.0.4-preview.8" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.259" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
+      <dependency id="nanoFramework.System.Threading" version="1.0.4-preview.12" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.20" />
     </dependencies>
   </metadata>
   <files>
