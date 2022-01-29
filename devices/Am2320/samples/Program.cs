@@ -36,7 +36,7 @@ while(true)
     }
     else
     {
-        Debug.WriteLine("Not sucessfull read");
+        Debug.WriteLine("Not sucessful reading.");
     }
 
     Thread.Sleep(Am2320.MinimumReadPeriod);
