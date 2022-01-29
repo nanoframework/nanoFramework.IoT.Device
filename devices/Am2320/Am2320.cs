@@ -96,12 +96,12 @@ namespace Iot.Device.Am2320
                 _i2c.Read(buff);
                 // Check if it is valid
                 if (!IsValidReadBuffer(0x07))
-                {                    
+                {
                     return null;
                 }
 
                 if (!IsCrcValid(buff))
-                {                    
+                {
                     return null;
                 }
 
@@ -124,7 +124,7 @@ namespace Iot.Device.Am2320
             _i2c = i2c ?? throw new ArgumentNullException(nameof(i2c));
         }
 
-        private bool IsOutDated() => !(_lastMeasurement.Add(MinimumReadPeriod) < DateTime.UtcNow);
+        private bool IsOutDated() => !(_lastMeasurement.Add(MinimumReadPeriod) > DateTime.UtcNow);
 
         private void ReadData()
         {
