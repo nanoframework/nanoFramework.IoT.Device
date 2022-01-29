@@ -82,7 +82,7 @@ namespace Iot.Device.Am2320
                 _i2c.WriteByte(0x00);
                 Thread.Sleep(10);
                 // Sending functin code 0x03, start regster 0x00 and 4 registers
-                _i2c.Write(new byte[] { 0x03, 0x0B, 0x07 });
+                _i2c.Write(new byte[] { 0x03, 0x08, 0x07 });
                 // Wait at least 30 micro seconds
                 Thread.Sleep(1);
                 _i2c.Read(buff);
