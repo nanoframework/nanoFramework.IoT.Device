@@ -160,13 +160,13 @@ namespace Iot.Device.Am2320
 
         private Temperature GetTemperature()
         {
-            short temp = BinaryPrimitives.ReadInt16BigEndian((new SpanByte(_readBuff)).Slice(2));
+            short temp = BinaryPrimitives.ReadInt16BigEndian((new SpanByte(_readBuff)).Slice(4));
             return Temperature.FromDegreesCelsius(temp / 10.0);
         }
 
         private RelativeHumidity GetHumidity()
         {
-            short hum = BinaryPrimitives.ReadInt16BigEndian((new SpanByte(_readBuff)).Slice(4));
+            short hum = BinaryPrimitives.ReadInt16BigEndian((new SpanByte(_readBuff)).Slice(2));
             return RelativeHumidity.FromPercent(hum / 10.0);
         }
 
