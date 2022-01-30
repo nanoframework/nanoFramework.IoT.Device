@@ -25,11 +25,11 @@
       <dependency id="nanoFramework.Runtime.Native" version="1.5.4-preview.3" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.8" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.10" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.11" />
       <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.20" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.288-preview.20" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.115.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.115.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.116.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.116.0" />
     </dependencies>
   </metadata>
   <files>
