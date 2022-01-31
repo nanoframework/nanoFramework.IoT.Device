@@ -116,7 +116,9 @@ foreach ($folder in $deviceFolders)
 
     if($null -eq $solutionFile)
     {
-        "Couldn't find any solution file!"  | Write-Host -ForegroundColor Red
+        "" | Write-Host -ForegroundColor Red
+        "*****************************************" | Write-Host -ForegroundColor Red
+        ">>>ERROR: Couldn't find any solution file!"  | Write-Host -ForegroundColor Red
         throw "Couldn't find the solution for '$folder'..."
     }
     else
@@ -131,7 +133,9 @@ foreach ($folder in $deviceFolders)
 
     if($null -eq $nuspecFile)
     {
-        "ERROR: Couldn't find the nuspec file!"  | Write-Host -ForegroundColor Red
+        "" | Write-Host -ForegroundColor Red
+        "*****************************************" | Write-Host -ForegroundColor Red
+        ">>>ERROR: Couldn't find the nuspec file!"  | Write-Host -ForegroundColor Red
         throw "Couldn't find the nuspec for '$folder'..."
     }
     else
@@ -143,7 +147,9 @@ foreach ($folder in $deviceFolders)
     nuget restore $solutionFile
     if (-not $?)
     { 
-        "ERROR: Couldn't restore solution '$solutionFile'!"  | Write-Host -ForegroundColor Red
+        "" | Write-Host -ForegroundColor Red
+        "*****************************************" | Write-Host -ForegroundColor Red
+        ">>>ERROR: Couldn't restore solution '$solutionFile'!"  | Write-Host -ForegroundColor Red
         throw "Error restoring '$solutionFile'"
     }
 
@@ -217,7 +223,7 @@ foreach ($folder in $deviceFolders)
         {
             "" | Write-Host -ForegroundColor Red
             "*****************************************" | Write-Host -ForegroundColor Red
-            ">>> ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
+            ">>>ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
             "*****************************************" | Write-Host -ForegroundColor Red
             "" | Write-Host -ForegroundColor Red
 
@@ -229,7 +235,7 @@ foreach ($folder in $deviceFolders)
     {
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
-        ">>> ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
+        ">>>ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
         "" | Write-Host -ForegroundColor Red
 
