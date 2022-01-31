@@ -37,7 +37,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Ft6xx6x, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.1.0.21-preview.34\lib\Iot.Device.Ft6xx6x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.1.0.21-preview.35\lib\Iot.Device.Ft6xx6x.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Mpu6886, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
