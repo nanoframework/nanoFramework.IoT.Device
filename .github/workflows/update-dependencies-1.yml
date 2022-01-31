@@ -31,6 +31,12 @@ jobs:
       - name: Update dependencies
         uses: nanoframework/nanodu@v1
         with:
-          solutionsToCheck: '*.sln'
+          solutionsToCheck: |
+            NumberHelper.sln
+            System.Buffers.Binary.BinaryPrimitives.sln
+            System.Device.Model.sln
+            System.Diagnostics.Stopwatch.sln
+            System.Drawing.sln
+            System.Numerics.sln
+            WeatherHelper.sln
           workingDirectory: '${{ github.workspace }}/devices'
-          exclusionList: 'Ft6xx6x'
