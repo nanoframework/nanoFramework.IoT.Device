@@ -51,8 +51,8 @@
       <HintPath>packages\nanoFramework.System.IO.Ports.1.0.3-preview.18\lib\System.IO.Ports.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.VolumeConcentration, Version=4.115.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.VolumeConcentration.4.115.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+    <Reference Include="UnitsNet.VolumeConcentration, Version=4.116.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.VolumeConcentration.4.116.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
