@@ -180,8 +180,81 @@ namespace System.Drawing
         }
 
         /// <Summary>Gets the 32-bit ARGB value of this System.Drawing.Color structure.</Summary>
-        /// <returns>The 32-bit ARGB value of this System.Drawing.Color.</returns>     
+        /// <returns>The 32-bit ARGB value of this System.Drawing.Color.</returns>
         public int ToArgb() => (int)_color;
+
+        /// <summary>
+        /// Internal Helper function for ParseHex
+        /// </summary>
+        private static int ParseHexChar(char c)
+        {
+            const int zeroChar = (int)'0';
+            const int aLowerChar = (int)'a';
+            const int aUpperChar = (int)'A';
+            var intChar = (int)c;
+
+            return intChar switch
+            {
+                >= zeroChar and <= zeroChar + 9 => (intChar - zeroChar),
+                >= aLowerChar and <= aLowerChar + 5 => (intChar - aLowerChar + 10),
+                >= aUpperChar and <= aUpperChar + 5 => (intChar - aUpperChar + 10),
+                _ => throw new FormatException($"Illegal token. {c} can't be converted")
+            };
+        }
+
+        /// <summary>
+        /// Convert String into an Color struct.
+        /// </summary>
+        /// <param name="hexString">Color String. Allowed formats are #AARRGGBB #RRGGBB #ARGB #RGB</param>
+        /// <returns>returns an Color struct otherwise throws an exception</returns>
+        /// <exception>ArgumentException or FormatException</exception>
+        public static Color ParseHex(string hexString)
+        {
+            int r, g, b;
+            var a = 255;
+            if (hexString[0] != '#')
+                throw new ArgumentException("Leading # is missing.");
+            switch (hexString.Length)
+            {
+                case 9: // #AARRGGBB
+                    a = ParseHexChar(hexString[1]) * 16 + ParseHexChar(hexString[2]);
+                    r = ParseHexChar(hexString[3]) * 16 + ParseHexChar(hexString[4]);
+                    g = ParseHexChar(hexString[5]) * 16 + ParseHexChar(hexString[6]);
+                    b = ParseHexChar(hexString[7]) * 16 + ParseHexChar(hexString[8]);
+                    break;
+
+                case 7: // #RRGGBB
+                    r = ParseHexChar(hexString[1]) * 16 + ParseHexChar(hexString[2]);
+                    g = ParseHexChar(hexString[3]) * 16 + ParseHexChar(hexString[4]);
+                    b = ParseHexChar(hexString[5]) * 16 + ParseHexChar(hexString[6]);
+                    break;
+
+                case 5: // #ARGB
+                    a = ParseHexChar(hexString[1]);
+                    a = a + a * 16;
+                    r = ParseHexChar(hexString[2]);
+                    r = r + r * 16;
+                    g = ParseHexChar(hexString[3]);
+                    g = g + g * 16;
+                    b = ParseHexChar(hexString[4]);
+                    b = b + b * 16;
+                    break;
+
+                case 4: // #RGB
+                    r = ParseHexChar(hexString[1]);
+                    r = r + r * 16;
+                    g = ParseHexChar(hexString[2]);
+                    g = g + g * 16;
+                    b = ParseHexChar(hexString[3]);
+                    b = b + b * 16;
+                    break;
+
+                default:
+                    throw new ArgumentException("Length of {} not match any know format");
+            }
+
+            return (Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b));
+        }
 
         #region Known colors
 
@@ -1032,6 +1105,6 @@ namespace System.Drawing
         /// A System.Drawing.Color representing a system-defined color.</returns>
         public static Color DarkSalmon { get => new Color(0xFFE9967A); }
 
-        #endregion
+        #endregion Known colors
     }
 }
