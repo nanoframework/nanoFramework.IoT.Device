@@ -58,32 +58,42 @@ namespace System.Drawing.Tests
             Assert.Equal((byte)0x00, color.B, "B should be 0x00");
         }
 
-        // Method set to private
-        // [TestMethod]
-        // public void ParseHexCharTest()
-        // {
-        //     //TODO: Rewrite to [DataTestMethod] [DataRow('1',1)] when become supported
-        //     var result1 = Color.ParseHexChar('1');
-        //     Assert.Equal(result1, 1);
-        //     var result9 = Color.ParseHexChar('9');
-        //     Assert.Equal(result9, 9);
-        //     var resulta = Color.ParseHexChar('a');
-        //     Assert.Equal(resulta, 10);
-        //     var resultf = Color.ParseHexChar('f');
-        //     Assert.Equal(resultf, 15);
-        //     var resultA = Color.ParseHexChar('A');
-        //     Assert.Equal(resultA, 10);
-        //     var resultF = Color.ParseHexChar('F');
-        //     Assert.Equal(resultF, 15);
-        // }
         //
-        // [TestMethod]
-        // public void ParseHexChar_Exceptions_Test()
-        // {
-        //     Assert.Throws(typeof(FormatException), () => Color.ParseHexChar('x'));
-        //     Assert.Throws(typeof(FormatException), () => Color.ParseHexChar(Char.MinValue));
-        //     Assert.Throws(typeof(FormatException), () => Color.ParseHexChar(Char.MaxValue));
-        // }
+        // Method ParseHexChar is private change to public and uncomment tests
+        [TestMethod]
+        public void ParseHexCharTest()
+        {
+            //TODO: Rewrite to [DataTestMethod] [DataRow('1',1)] when become supported
+            var result1 = Color.ParseHexChar('1');
+            Assert.Equal(result1, 1);
+            var result9 = Color.ParseHexChar('9');
+            Assert.Equal(result9, 9);
+            var resulta = Color.ParseHexChar('a');
+            Assert.Equal(resulta, 10);
+
+            var resultb = Color.ParseHexChar('b');
+            Assert.Equal(resultb, 11);
+            var resultc = Color.ParseHexChar('c');
+            Assert.Equal(resultc, 12);
+            var resultf = Color.ParseHexChar('f');
+            Assert.Equal(resultf, 15);
+            var resultA = Color.ParseHexChar('A');
+            Assert.Equal(resultA, 10);
+            var resultD = Color.ParseHexChar('D');
+            Assert.Equal(resultD, 13);
+            var resultE = Color.ParseHexChar('E');
+            Assert.Equal(resultE, 14);
+            var resultF = Color.ParseHexChar('F');
+            Assert.Equal(resultF, 15);
+        }
+
+        [TestMethod]
+        public void ParseHexChar_Exceptions_Test()
+        {
+            Assert.Throws(typeof(FormatException), () => Color.ParseHexChar('x'));
+            Assert.Throws(typeof(FormatException), () => Color.ParseHexChar(Char.MinValue));
+            Assert.Throws(typeof(FormatException), () => Color.ParseHexChar(Char.MaxValue));
+        }
 
         [TestMethod]
         public void ParseHexColor_AARRGGBB_Test()
