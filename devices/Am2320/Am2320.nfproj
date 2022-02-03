@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>3a7f0d96-a043-43f6-aa80-cf9a31f37220</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Iot.Device.Am2320</RootNamespace>
+    <AssemblyName>Iot.Device.Am2320</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Am2320.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="Am2320.cs" />
+    <Compile Include="DeviceInformation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.12.0-preview.5\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives">
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.288-preview.20\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.I2c">
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.3-preview.6\lib\System.Device.I2c.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Model">
+      <HintPath>packages\nanoFramework.System.Device.Model.1.0.288-preview.20\lib\System.Device.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.RelativeHumidity">
+      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.116.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.116.0\lib\UnitsNet.Temperature.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>

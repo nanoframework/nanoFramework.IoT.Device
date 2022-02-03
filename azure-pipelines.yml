@@ -129,6 +129,22 @@ steps:
     ArtifactName: deployables
     ArtifactType: Container
 
+# push NuGet class lib package to Azure Artifacts (always happens except on PR builds)
+- task: NuGetCommand@2
+  condition: >-
+    and(
+      succeeded(),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
+  continueOnError: true
+  displayName: Push NuGet packages to Azure Artifacts
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'AzureArtifacts-$(System.TeamProject)'
+
 # push NuGet class lib package to NuGet (always happens except on PR builds)
 - task: NuGetCommand@2
   condition: >-
