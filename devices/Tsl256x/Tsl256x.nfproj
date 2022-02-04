@@ -46,7 +46,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.4.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.1.4.4-preview.11\lib\System.Math.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Math.1.4.4-preview.13\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Illuminance, Version=4.116.0.0, Culture=neutral, PublicKeyToken=null">
