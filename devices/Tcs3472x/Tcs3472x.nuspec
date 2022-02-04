@@ -24,7 +24,7 @@
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.20" />
       <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.20" />
-      <dependency id="nanoFramework.System.Drawing" version="1.0.288-preview.20" />
+      <dependency id="nanoFramework.System.Drawing" version="1.0.288-preview.45" />
     </dependencies>
   </metadata>
   <files>

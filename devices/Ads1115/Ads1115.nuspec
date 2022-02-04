@@ -24,7 +24,7 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.6" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.8" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.11" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.13" />
       <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="4.116.0" />
       <dependency id="UnitsNet.nanoFramework.Length" version="4.116.0" />
     </dependencies>
