@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Hdc1080</RootNamespace>
-    <AssemblyName>Hdc1080</AssemblyName>
+    <RootNamespace>Iot.Device.Hdc1080</RootNamespace>
+    <AssemblyName>Iot.Device.Hdc1080</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Hdc1080.xml</DocumentationFile>
   </PropertyGroup>
