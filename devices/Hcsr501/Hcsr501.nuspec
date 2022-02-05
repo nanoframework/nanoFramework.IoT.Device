@@ -20,9 +20,9 @@
     <summary>Iot.Device.Hcsr501 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hcsr501</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.4" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.6" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.8" />
     </dependencies>
   </metadata>
   <files>

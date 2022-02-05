@@ -20,10 +20,10 @@
     <summary>Iot.Device.Nrf24l01 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Nrf24l01</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.1" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.6" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.0.3-preview.11" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.8" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.0.3-preview.19" />
     </dependencies>
   </metadata>
   <files>
