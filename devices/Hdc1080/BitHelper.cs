@@ -6,12 +6,14 @@ namespace Iot.Device.Hdc1080
     /// <summary>
     /// Helper that allows setting and getting each bit separately
     /// </summary>
-    public static class BitHelper
+    internal static class BitHelper
     {
         public static byte SetBit(this byte b, int pos, bool value)
         {
             if (value)
+            {
                 return (byte)(b | (1 << pos));
+            }
             return (byte)(b & ~(1 << pos));
         }
 

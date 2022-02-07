@@ -1,6 +1,6 @@
 # Hdc1080 - temperature and humidity sensor
 
-Ms5611 is a device that reads barometric pressure, altitude and temperature. I2C can be used to communicate with the device.
+Hdc1080 is a device that reads barometric pressure, altitude and temperature. I2C can be used to communicate with the device.
 
 ## Documentation
 

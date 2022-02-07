@@ -16,6 +16,7 @@ namespace Iot.Device.Hdc1080
     public class Hdc1080 : IDisposable
     {
         private I2cDevice _i2cDevice;
+        private int _wakeUpTimeMilliseconds = 20;
 
         /// <summary>
         /// Default I2C address
@@ -33,7 +34,7 @@ namespace Iot.Device.Hdc1080
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
             // According to data sheet sensor needs at least 15ms after wake up to be ready.
-            Thread.Sleep(20);
+            Thread.Sleep(_wakeUpTimeMilliseconds);
             SetTemperatureResolution(temperatureResolution);
             SetHumidityResolution(humidityResolution);
         }
@@ -105,19 +106,26 @@ namespace Iot.Device.Hdc1080
         }
 
         /// <summary>
-        /// Runs heater for given number of milliseconds, check data sheet, page 9, 8.3.3 section
+        /// Runs heater for given time, check data sheet, page 9, 8.3.3 section
         /// </summary>
-        /// <param name="milliseconds">Number of milliseconds</param>
-        public void HeatUp(int milliseconds)
+        /// <param name="heatingTime">Heating time. Must be greater than 1 second</param>
+        public void HeatUp(TimeSpan heatingTime)
         {
+            if (heatingTime.Seconds < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(heatingTime), "Heating time can't be lower than 1 second.");
+            }
+
             SetHeater(true);
-            for (int i = 1; i < (milliseconds); i++)
+            for (int i = 0; i < heatingTime.Seconds; i++)
             {
                 _i2cDevice.Write(new byte[] { (byte)RegisterAddress.TemperatureMeasurement });
                 // wait SCL free
-                Thread.Sleep(20);
+                Thread.Sleep(_wakeUpTimeMilliseconds);
                 _i2cDevice.Read(new byte[4]);
+                Thread.Sleep(1000 - _wakeUpTimeMilliseconds);
             }
+
             SetHeater(false);
         }
 
@@ -129,11 +137,13 @@ namespace Iot.Device.Hdc1080
             _i2cDevice?.Dispose();
             _i2cDevice = null!;
         }
+
         private long ReadData(RegisterAddress address)
         {
             byte[] resultData = new byte[2];
-            _i2cDevice.Write(new byte[] {(byte) address });
-           //  Thread.Sleep(9);
+            _i2cDevice.Write(new byte[] { (byte)address });
+            // wait SCL free
+            Thread.Sleep(_wakeUpTimeMilliseconds);
             _i2cDevice.Read(resultData);
             return resultData[0] << 8 | resultData[1];
         }
@@ -142,7 +152,7 @@ namespace Iot.Device.Hdc1080
         {
             _i2cDevice.Write(new byte[] { (byte)RegisterAddress.Configuration, register.GetData(), (byte)RegisterAddress.TemperatureMeasurement });
             // wait SCL free
-            Thread.Sleep(20);
+            Thread.Sleep(_wakeUpTimeMilliseconds);
         }
 
         private ConfigurationRegister ReadRegister()
