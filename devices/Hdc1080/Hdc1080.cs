@@ -95,6 +95,7 @@ namespace Iot.Device.Hdc1080
                 ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
                 return (HumidityResolution)register.HumidityMeasurementResolution;
             }
+
             set
             {
                 ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
@@ -115,6 +116,7 @@ namespace Iot.Device.Hdc1080
                 ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
                 return (TemperatureResolution)register.TemperatureMeasurementResolution;
             }
+
             set
             {
                 ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
