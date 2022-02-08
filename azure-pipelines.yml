@@ -53,14 +53,6 @@ steps:
 - template: azure-pipelines-templates/install-nuget.yml@templates
 
 - task: DotNetCoreCLI@2  
-  displayName: Install NBGV tool
-  condition: succeeded()
-  inputs:
-    command: custom
-    custom: tool
-    arguments: install -g nbgv
-
-- task: DotNetCoreCLI@2  
   displayName: Install nanovc tool
   condition: succeeded()
   inputs:

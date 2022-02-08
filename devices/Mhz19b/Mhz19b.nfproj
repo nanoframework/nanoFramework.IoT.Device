@@ -48,7 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Ports, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Ports.1.0.3-preview.18\lib\System.IO.Ports.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.IO.Ports.1.0.3-preview.23\lib\System.IO.Ports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.VolumeConcentration, Version=4.116.0.0, Culture=neutral, PublicKeyToken=null">
