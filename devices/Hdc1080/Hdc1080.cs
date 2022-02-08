@@ -35,8 +35,8 @@ namespace Iot.Device.Hdc1080
 
             // According to data sheet sensor needs at least 15ms after wake up to be ready.
             Thread.Sleep(_wakeUpTimeMilliseconds);
-            SetTemperatureResolution(temperatureResolution);
-            SetHumidityResolution(humidityResolution);
+            TemperatureResolution = temperatureResolution;
+            HumidityResolution = humidityResolution;
         }
 
         /// <summary>
@@ -63,7 +63,8 @@ namespace Iot.Device.Hdc1080
         /// <returns>
         /// Device id
         /// </returns>
-        public string ReadDeviceId() => ReadData(RegisterAddress.DeviceId).ToString();
+        [Property("DeviceId")]
+        public string DeviceId => ReadData(RegisterAddress.DeviceId).ToString();
 
         /// <summary>
         /// Reads manufacturer id, check data sheet, page 14, 8.6.5 section
@@ -71,7 +72,8 @@ namespace Iot.Device.Hdc1080
         /// <returns>
         /// Manufacturer id
         /// </returns>
-        public string ReadManufacturerId() => ReadData(RegisterAddress.ManufacturerId).ToString();
+        [Property("ManufacturerId")]
+        public string ManufacturerId => ReadData(RegisterAddress.ManufacturerId).ToString();
 
         /// <summary>
         /// Reads serial number, check data sheet, page 14, 8.6.4 section
@@ -79,30 +81,47 @@ namespace Iot.Device.Hdc1080
         /// <returns>
         /// Serial number
         /// </returns>
-        public string ReadSerialNumber() => $"{ReadData(RegisterAddress.SerialIdFirstByte)}{ReadData(RegisterAddress.SerialIdSecondByte)}{ReadData(RegisterAddress.SerialIdThirdByte)}";
+        [Property("SerialNumber")]
+        public string SerialNumber => $"{ReadData(RegisterAddress.SerialIdFirstByte)}{ReadData(RegisterAddress.SerialIdSecondByte)}{ReadData(RegisterAddress.SerialIdThirdByte)}";
 
         /// <summary>
-        /// Sets humidity resolution
+        /// Sets or gets humidity resolution
         /// </summary>
-        /// <param name="resolution">Humidity resolution</param>
-        public void SetHumidityResolution(HumidityResolution resolution)
+        [Property("HumidityResolution")]
+        public HumidityResolution HumidityResolution
         {
-            ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
-            register.HumidityMeasurementResolution = (byte)resolution;
+            get
+            {
+                ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
+                return (HumidityResolution)register.HumidityMeasurementResolution;
+            }
+            set
+            {
+                ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
+                register.HumidityMeasurementResolution = (byte)value;
 
-            WriteRegister(register);
+                WriteRegister(register);
+            }
         }
 
         /// <summary>
-        /// Sets temperature resolution
+        /// Sets or gets temperature resolution
         /// </summary>
-        /// <param name="resolution">Temperature resolution</param>
-        public void SetTemperatureResolution(TemperatureResolution resolution)
+        [Property("TemperatureResolution")]
+        public TemperatureResolution TemperatureResolution
         {
-            ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
-            register.TemperatureMeasurementResolution = (byte)resolution;
+            get
+            {
+                ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
+                return (TemperatureResolution)register.TemperatureMeasurementResolution;
+            }
+            set
+            {
+                ConfigurationRegister register = (ConfigurationRegister)ReadRegister();
+                register.TemperatureMeasurementResolution = (byte)value;
 
-            WriteRegister(register);
+                WriteRegister(register);
+            }
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Iot.Device.Hdc1080.Sample
 
             var tempSensor = new Hdc1080(I2cDevice.Create(settings));
 
-            Debug.WriteLine($"SN: {tempSensor.ReadSerialNumber()}\r\nDeviceId: {tempSensor.ReadDeviceId()}\r\nManufacturerId: {tempSensor.ReadManufacturerId()}");
+            Debug.WriteLine($"SN: {tempSensor.SerialNumber}\r\nDeviceId: {tempSensor.DeviceId}\r\nManufacturerId: {tempSensor.ManufacturerId}");
             while (true)
             {
                 var temperature = tempSensor.ReadTemperature();

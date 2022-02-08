@@ -26,7 +26,7 @@ An example on how to use this device binding is available in the [samples](sampl
 I2cConnectionSettings settings = new I2cConnectionSettings(1, Hdc1080.DefaultI2cAddress, I2cBusSpeed.FastMode);
 
 var tempSensor = new Hdc1080(I2cDevice.Create(settings);
-Debug.WriteLine($"SN: {tempSensor.ReadSerialNumber()}\r\nDeviceId: {tempSensor.ReadDeviceId()}\r\nManufacturerId: {tempSensor.ReadManufacturerId()}");
+Debug.WriteLine($"SN: {tempSensor.SerialNumber}\r\nDeviceId: {tempSensor.DeviceId}\r\nManufacturerId: {tempSensor.ManufacturerId}");
 while (true)
 {
     var temperature = tempSensor.ReadTemperature();
