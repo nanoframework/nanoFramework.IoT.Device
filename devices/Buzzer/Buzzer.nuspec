@@ -24,7 +24,7 @@
       <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.20" />
       <dependency id="nanoFramework.System.Device.Pwm" version="1.0.1-preview.6" />
       <dependency id="nanoFramework.System.Math" version="1.4.4-preview.13" />
-      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.116.0" />
+      <dependency id="UnitsNet.nanoFramework.Frequency" version="4.118.0" />
     </dependencies>
   </metadata>
   <files>
