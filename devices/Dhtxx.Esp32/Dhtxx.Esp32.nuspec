@@ -28,8 +28,8 @@
       <dependency id="nanoFramework.System.Math" version="1.4.4-preview.13" />
       <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.20" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.289-preview.1" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.116.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.116.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.118.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.118.0" />
     </dependencies>
   </metadata>
   <files>
