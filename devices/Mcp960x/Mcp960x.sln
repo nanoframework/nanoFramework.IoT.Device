@@ -6,10 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mcp960x", "Mcp960x.nfproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mcp960x.Samples", "Samples\Mcp960x.Samples.nfproj", "{7745867C-1E31-162E-E8A0-9E65A6327349}"
 EndProject
-Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Runtime.CompilerService\System.Runtime.CompilerService.projitems*{b16d750d-0001-48f9-863d-fd876e8c79a7}*SharedItemsImports = 5
-	EndGlobalSection
+Global	
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

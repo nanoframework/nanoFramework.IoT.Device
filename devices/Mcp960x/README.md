@@ -27,8 +27,6 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 ```
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
-
-
 The sample reads two temperatures. One is a connected thermocouple reading which can be read using the  ```GetTemperature``` command and the other is the temperature of the device itself which can be read using the ```GetColdJunctionTemperature``` command. The Cold Junction Temperature is used internally to increase the accuracy of the thermocouple.
 
 ```csharp
