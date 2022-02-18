@@ -1,0 +1,34 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mcp960x", "Mcp960x.nfproj", "{B16D750D-0001-48F9-863D-FD876E8C79A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mcp960x.Samples", "Samples\Mcp960x.Samples.nfproj", "{7745867C-1E31-162E-E8A0-9E65A6327349}"
+EndProject
+Global	
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B16D750D-0001-48F9-863D-FD876E8C79A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16D750D-0001-48F9-863D-FD876E8C79A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16D750D-0001-48F9-863D-FD876E8C79A7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B16D750D-0001-48F9-863D-FD876E8C79A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16D750D-0001-48F9-863D-FD876E8C79A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16D750D-0001-48F9-863D-FD876E8C79A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7745867C-1E31-162E-E8A0-9E65A6327349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7745867C-1E31-162E-E8A0-9E65A6327349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7745867C-1E31-162E-E8A0-9E65A6327349}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7745867C-1E31-162E-E8A0-9E65A6327349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7745867C-1E31-162E-E8A0-9E65A6327349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7745867C-1E31-162E-E8A0-9E65A6327349}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA83FA6B-C117-4046-8D28-B075AC23F7A1}
+	EndGlobalSection
+EndGlobal
