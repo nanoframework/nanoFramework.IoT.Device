@@ -20,12 +20,12 @@
     <summary>Iot.Device.Bmm150 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bmm150</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.20" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.20" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.13" />
-      <dependency id="nanoFramework.System.Numerics" version="1.0.288-preview.49" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.9" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.64" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.8" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.64" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.15" />
+      <dependency id="nanoFramework.System.Numerics" version="1.0.288-preview.64" />
     </dependencies>
   </metadata>
   <files>
