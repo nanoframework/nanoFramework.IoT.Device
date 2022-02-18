@@ -20,8 +20,8 @@
     <summary>System.Diagnostics.Stopwatch assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf System.Diagnostics.Stopwatch</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.5.4-preview.3" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.9" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.5.4-preview.5" />
     </dependencies>
   </metadata>
   <files>
