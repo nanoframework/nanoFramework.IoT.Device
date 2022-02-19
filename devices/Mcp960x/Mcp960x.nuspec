@@ -20,8 +20,8 @@
     <summary>Iot.Device.Mcp960x assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mcp960x</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.6" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.9" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.8" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.121.0" />
     </dependencies>
   </metadata>
@@ -31,7 +31,6 @@
     <file src="bin\Release\Iot.Device.Mcp960x.pdbx" target="lib\Iot.Device.Mcp960x.pdbx" />
     <file src="bin\Release\Iot.Device.Mcp960x.pe" target="lib\Iot.Device.Mcp960x.pe" />
     <file src="bin\Release\Iot.Device.Mcp960x.xml" target="lib\Iot.Device.Mcp960x.xml" />
-
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
