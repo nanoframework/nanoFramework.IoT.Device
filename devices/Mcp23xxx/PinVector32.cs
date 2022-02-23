@@ -34,12 +34,12 @@ namespace Iot.Device.Mcp23xxx
         }
 
         /// <summary>
-        /// Construct from a span of <see cref="PinValuePair"/>s.
+        /// Construct from an array of <see cref="PinValuePair"/>s.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown if <paramref name="pinValues"/> contains negative pin numbers or pin numbers higher than 31.
         /// </exception>
-        public PinVector32(SpanPinValuePair pinValues)
+        public PinVector32(PinValuePair[] pinValues)
         {
             Pins = 0;
             Values = 0;
