@@ -559,12 +559,6 @@ namespace Iot.Device.Mcp23xxx
         /// <inheritdoc/>
         protected override int ConvertPinNumberToLogicalNumberingScheme(int pinNumber) => pinNumber;
 
-        /*
-        /// <inheritdoc/>
-        protected override WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes,
-            CancellationToken cancellationToken) => throw new NotImplementedException();
-        */
-
         /// <inheritdoc/>
         protected override bool IsPinModeSupported(int pinNumber, PinMode mode) =>
             (mode == PinMode.Input || mode == PinMode.Output);

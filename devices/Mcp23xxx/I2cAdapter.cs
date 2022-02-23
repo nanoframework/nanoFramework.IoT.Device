@@ -38,9 +38,12 @@ namespace Iot.Device.Mcp23xxx
             {
                 SpanByte output = new byte[data.Length + 1];
                 output[0] = registerAddress;
-                // SpanByte slice is different to Span<Byte> slice in case that index argument (here 1) is equal to size of slice
+                // SpanByte slice method is different to Span<Byte> slice method in case that index argument (here 1) is equal to size of slice
                 if (data.Length > 0)
-                    data.CopyTo(output.Slice(1));       // do not override output[0]                
+                {
+                    // do not override output[0]
+                    data.CopyTo(output.Slice(1));
+                }
                 _device.Write(output);
             }
         }

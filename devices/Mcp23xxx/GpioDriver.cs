@@ -72,8 +72,6 @@ namespace System.Device.Gpio
         /// <param name="value">The value to be written to the pin.</param>
         protected abstract void Write(int pinNumber, PinValue value);
 
- 
-
         /// <summary>
         /// Adds a handler for a pin value changed event.
         /// </summary>

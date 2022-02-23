@@ -44,10 +44,11 @@ namespace Iot.Device.Mcp23xxx
             Pins = 0;
             Values = 0;
 
-            foreach (var p in pinValues)
+            for (var i = 0; i < pinValues.Length; i++)
             {
-                var pin = ((PinValuePair)p).PinNumber;
-                var value = ((PinValuePair)p).PinValue;
+                var p = pinValues[i];
+                var pin = p.PinNumber;
+                var value = p.PinValue;
                 if (pin < 0 || pin >= sizeof(uint) * 8)
                 {
                     throw new ArgumentOutOfRangeException(nameof(pinValues));
