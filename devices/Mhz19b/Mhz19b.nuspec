@@ -24,7 +24,7 @@
       <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.64" />
       <dependency id="nanoFramework.System.IO.Ports" version="1.0.3-preview.33" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.0.0-preview.12" />
-      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.121.0" />
+      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.122.0" />
     </dependencies>
   </metadata>
   <files>
