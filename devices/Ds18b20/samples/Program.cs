@@ -23,7 +23,7 @@ namespace Iot.Device.Ds18b20.Samples
 
             ds18b20.Reset();
             ds18b20.Initialize(); //again, if initialization is successful, object will have valid address (see above)
-            int i = 10;
+            int i = 3;
             while (i-- > 0)
             {
                 ds18b20.PrepareToRead();
@@ -32,6 +32,7 @@ namespace Iot.Device.Ds18b20.Samples
                 Debug.WriteLine($"Temperature: {ds18b20.Temperature.DegreesCelsius.ToString("F")}\u00B0C");
                 Thread.Sleep(5000);
             }
+            oneWire.Dispose();
         }
     }
 }
