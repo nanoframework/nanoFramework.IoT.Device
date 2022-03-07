@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Concurrent;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Iot.Device.Pcx857x
 {
@@ -85,7 +83,7 @@ namespace Iot.Device.Pcx857x
         /// <returns>16-bit unsigned integer read from the device</returns>
         protected ushort InternalReadUInt16()
         {
-            Span<byte> buffer = stackalloc byte[2];
+            SpanByte buffer = new byte[2];
             Device.Read(buffer);
             return (ushort)(buffer[0] | buffer[1] << 8);
         }
@@ -96,7 +94,7 @@ namespace Iot.Device.Pcx857x
         /// <param name="value">16-vit unsigned integer to be written to the device</param>
         protected void InternalWriteUInt16(ushort value)
         {
-            Span<byte> buffer = stackalloc byte[2];
+            SpanByte buffer = new byte[2];
             buffer[0] = (byte)value;
             buffer[1] = (byte)(value >> 8);
             Device.Write(buffer);
@@ -129,7 +127,7 @@ namespace Iot.Device.Pcx857x
         /// <inheritdoc/>
         protected override PinValue Read(int pinNumber)
         {
-            Span<PinValuePair> values = stackalloc PinValuePair[]
+            var values = new PinValuePair[]
             {
                 new PinValuePair(pinNumber, default)
             };
@@ -141,7 +139,7 @@ namespace Iot.Device.Pcx857x
         /// Reads multiple pins from the device
         /// </summary>
         /// <param name="pinValues">Pins and values to be read</param>
-        public void Read(Span<PinValuePair> pinValues)
+        public void Read(PinValuePair[] pinValues)
         {
             (uint pins, _) = new PinVector32(pinValues);
             if (pins >> PinCount > 0)
@@ -219,7 +217,7 @@ namespace Iot.Device.Pcx857x
         /// <inheritdoc/>
         protected override void Write(int pinNumber, PinValue value)
         {
-            Span<PinValuePair> values = stackalloc PinValuePair[]
+            PinValuePair[] values = new PinValuePair[]
             {
                 new PinValuePair(pinNumber, value)
             };
@@ -229,7 +227,7 @@ namespace Iot.Device.Pcx857x
         /// <summary>
         /// Writes a value to a set of pins.
         /// </summary>
-        public void Write(ReadOnlySpan<PinValuePair> pinValues)
+        public void Write(PinValuePair[] pinValues)
         {
             (uint pins, uint values) = new PinVector32(pinValues);
             if (pins >> PinCount > 0)
@@ -270,10 +268,5 @@ namespace Iot.Device.Pcx857x
         /// <inheritdoc/>
         protected override void RemoveCallbackForPinValueChangedEvent(int pinNumber, PinChangeEventHandler callback) => throw new NotImplementedException();
 
-        /// <inheritdoc/>
-        protected override WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes, CancellationToken cancellationToken) => throw new NotImplementedException();
-
-        /// <inheritdoc/>
-        protected override ValueTask<WaitForEventResult> WaitForEventAsync(int pinNumber, PinEventTypes eventTypes, CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }
