@@ -23,4 +23,24 @@ namespace SixLabors.ImageSharp
         }
 
     }
+
+    //public class PixelFormats //.Color
+    //{
+    //    /// <summary>
+    //    /// Represents a <see paramref="Color"/> matching the W3C definition that has an hex value of #000000.
+    //    /// </summary>
+    //    public static readonly Color Black = FromRgba(0, 0, 0, 255);
+
+
+    //    /// <summary>
+    //    /// Represents a <see paramref="Color"/> matching the W3C definition that has an hex value of #FFFFFF.
+    //    /// </summary>
+    //    public static readonly Color White = FromRgba(255, 255, 255, 255);
+
+    //    public static int ToPixel(int color)
+    //    {
+    //        return color;
+    //    }
+
+    //}
 }

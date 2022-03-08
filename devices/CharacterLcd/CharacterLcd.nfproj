@@ -27,6 +27,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="custom\*.cs" />
     <Compile Include="*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

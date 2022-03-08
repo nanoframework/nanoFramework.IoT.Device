@@ -145,19 +145,19 @@ namespace Iot.Device.CharacterLcd
         /// Sends data to the device
         /// </summary>
         /// <param name="values">Data to be send to the device</param>
-        protected void SendData(ReadOnlySpan<byte> values) => _lcdInterface.SendData(values);
+        protected void SendData(SpanByte values) => _lcdInterface.SendData(values);
 
         /// <summary>
         /// Sends data to the device
         /// </summary>
         /// <param name="values">Data to be send to the device</param>
-        protected void SendData(ReadOnlySpan<char> values) => _lcdInterface.SendData(values);
+        protected void SendData(SpanChar values) => _lcdInterface.SendData(values);
 
         /// <summary>
         /// Send commands to the device
         /// </summary>
         /// <param name="commands">Each byte represents command being sent to the device</param>
-        protected void SendCommands(ReadOnlySpan<byte> commands) => _lcdInterface.SendCommands(commands);
+        protected void SendCommands(SpanByte commands) => _lcdInterface.SendCommands(commands);
 
         /// <summary>
         /// Determines if the device should use two line mode
@@ -367,7 +367,7 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         /// <param name="location">Should be between 0 and 7</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
-        public void CreateCustomCharacter(int location, ReadOnlySpan<byte> characterMap)
+        public void CreateCustomCharacter(int location, SpanByte characterMap)
         {
             if (location >= NumberOfCustomCharactersSupported)
             {
@@ -392,7 +392,7 @@ namespace Iot.Device.CharacterLcd
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
-            CreateCustomCharacter(location, new ReadOnlySpan<byte>(characterMap));
+            CreateCustomCharacter(location, new SpanByte(characterMap));
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         public void Write(string text)
         {
-            Span<byte> buffer = stackalloc byte[text.Length];
+            SpanByte buffer = new byte[text.Length];
             for (int i = 0; i < text.Length; ++i)
             {
                 buffer[i] = (byte)text[i];
@@ -421,7 +421,7 @@ namespace Iot.Device.CharacterLcd
         /// Used if character translation already took place
         /// </summary>
         /// <param name="text">Text to print</param>
-        public void Write(ReadOnlySpan<char> text) => SendData(text);
+        public void Write(SpanChar text) => SendData(text);
 
         /// <summary>
         /// Write a raw byte stream to the display.
