@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.9" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.4" />
       <dependency id="nanoFramework.Runtime.Native" version="1.5.4-preview.5" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.10" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.14" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.289-preview.25" />
       <dependency id="Nerdbank.GitVersioning" version="3.4.240" />
     </dependencies>
