@@ -222,8 +222,9 @@ namespace Iot.Device.Ft6xx6x
 
         private byte ReadByte(Register reg)
         {
-            _i2cDevice.WriteByte((byte)reg);
-            return _i2cDevice.ReadByte();
+            var dev = _i2cDevice.WriteByte((byte)reg);
+            var ret =  _i2cDevice.ReadByte();
+            return ret;
         }
 
         private void WriteByte(Register reg, byte data)
