@@ -42,7 +42,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives">
-      <HintPath>..\..\Mfrc522\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.288-preview.64\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.288-preview.64\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
