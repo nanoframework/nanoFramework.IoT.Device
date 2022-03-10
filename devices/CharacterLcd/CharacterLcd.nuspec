@@ -30,6 +30,7 @@
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.289-preview.25" />
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.0.277-preview.99" />
       <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.0.277-preview.99" />
+      <dependency id="nanoFramework.System.Drawing" version="1.0.288-preview.64" />
     </dependencies>
   </metadata>
   <files>

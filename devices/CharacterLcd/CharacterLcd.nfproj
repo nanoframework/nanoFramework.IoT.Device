@@ -68,6 +68,9 @@
     <Reference Include="System.Device.Spi">
       <HintPath>packages\nanoFramework.System.Device.Spi.1.0.4-preview.3\lib\System.Device.Spi.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>packages\nanoFramework.System.Drawing.1.0.288-preview.64\lib\System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.0.4-preview.16\lib\System.Threading.dll</HintPath>
     </Reference>
