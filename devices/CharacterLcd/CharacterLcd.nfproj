@@ -15,6 +15,8 @@
     <RootNamespace>Iot.Device.CharacterLcd</RootNamespace>
     <AssemblyName>Iot.Device.CharacterLcd</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.CharacterLcd.xml</DocumentationFile>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
