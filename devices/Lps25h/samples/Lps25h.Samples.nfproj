@@ -20,13 +20,28 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Reference Include="Iot.Device.Common.WeatherHelper">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.0.288-preview.81\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib, Version=1.12.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0-preview.9\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>..\packages\nanoFramework.Runtime.Native.1.5.4-preview.5\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives">
+      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.288-preview.64\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Device.I2c, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.3-preview.8\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device.Model">
+      <HintPath>..\packages\nanoFramework.System.Device.Model.1.0.288-preview.64\lib\System.Device.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Stopwatch">
+      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289-preview.25\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=1.4.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Math.1.4.4-preview.15\lib\System.Math.dll</HintPath>
@@ -61,7 +76,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Lps25h.nfproj" />
   </ItemGroup>
-  <Import Project="..\..\..\src\Iot.Device.Common\Iot.Device.Common.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
   <ProjectExtensions>

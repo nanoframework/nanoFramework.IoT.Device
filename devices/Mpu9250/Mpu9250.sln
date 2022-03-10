@@ -1,31 +1,14 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mpu9250", "Mpu9250.nfproj", "{1BE8E2EE-E6D5-4419-81E1-3CE6736AFE2D}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mpu9250.sample", "samples\Mpu9250.sample.nfproj", "{83728888-9D05-48E7-8FA6-20127A9E8924}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{E7D342DA-ECB6-436E-B9D5-6CE3F50D00AF}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Numerics", "..\..\src\System.Numerics\System.Numerics.shproj", "{F5CCB96C-70B1-4F0A-9F0E-BB912B6A996C}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Stopwatch", "..\..\src\Stopwatch\Stopwatch.shproj", "{875D133B-033B-4D11-B1A2-DEF898349AD5}"
-EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ak8963", "..\Ak8963\Ak8963.nfproj", "{8F39A428-925A-4788-B263-B95761334BCE}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
-		..\..\src\Stopwatch\Stopwatch.projitems*{875d133b-033b-4d11-b1a2-def898349ad5}*SharedItemsImports = 13
-		..\..\src\System.Numerics\System.Numerics.projitems*{f5ccb96c-70b1-4f0a-9f0e-bb912b6a996c}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -52,12 +35,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {E7D342DA-ECB6-436E-B9D5-6CE3F50D00AF}
-		{23325B14-3651-4879-9697-9846FF123FEB} = {E7D342DA-ECB6-436E-B9D5-6CE3F50D00AF}
-		{F5CCB96C-70B1-4F0A-9F0E-BB912B6A996C} = {E7D342DA-ECB6-436E-B9D5-6CE3F50D00AF}
-		{875D133B-033B-4D11-B1A2-DEF898349AD5} = {E7D342DA-ECB6-436E-B9D5-6CE3F50D00AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A48FE82A-F6F1-4372-A6D2-D2CD15B7CFAD}
