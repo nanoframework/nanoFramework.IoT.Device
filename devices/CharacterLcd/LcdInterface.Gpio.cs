@@ -164,9 +164,9 @@ namespace Iot.Device.CharacterLcd
             public override void SendCommands(SpanByte commands)
             {
                 _controller.Write(_rsPin, PinValue.Low);
-                foreach (byte command in commands)
+                for (int i = 0; i < commands.Length; i++)
                 {
-                    SendByte(command);
+                    SendCommand(commands[i]);
                 }
             }
 
@@ -179,18 +179,18 @@ namespace Iot.Device.CharacterLcd
             public override void SendData(SpanByte values)
             {
                 _controller.Write(_rsPin, PinValue.High);
-                foreach (byte value in values)
+                for (int i = 0; i < values.Length; i++)
                 {
-                    SendByte(value);
+                    SendCommand(values[i]);
                 }
             }
 
             public override void SendData(SpanChar values)
             {
                 _controller.Write(_rsPin, PinValue.High);
-                foreach (byte value in values)
+                for (int i = 0; i < values.Length; i++)
                 {
-                    SendByte(value);
+                    SendCommand((byte)values[i]);
                 }
             }
 
@@ -234,7 +234,11 @@ namespace Iot.Device.CharacterLcd
 
                 if (changedCount > 0)
                 {
-                    _controller.Write(new SpanPinValuePair(_pinBuffer, 0, changedCount));
+                    var pinValuePairs = new SpanPinValuePair(_pinBuffer, 0, changedCount);
+                    for (int i = 0; i < pinValuePairs.Length; i++)
+                    {
+                        _controller.Write(pinValuePairs[i].PinNumber, pinValuePairs[i].PinValue);
+                    }
                 }
 
                 _useLastByte = true;
