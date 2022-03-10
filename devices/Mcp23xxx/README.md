@@ -1,14 +1,12 @@
-﻿# porting started from .NET IoT to .NET nanoframework
-
-actually only I2C devices are supported
-
-# Mcp23xxx - I/O Expander device family
+﻿# Mcp23xxx - I/O Expander device family
 
 The MCP23XXX device family provides 8/16-bit, general purpose parallel I/O expansion for I2C or SPI applications.  These devices include a range of addressing schemes and I/O configurations including pull-up resistors, polarity inverting, and interrupts.
 
+>Note: this port was started from .NET IoT to .NET nanoframework. Currently only I2C devices are supported.
+
 ## Documentation
 
-- The docuementation from [Adafruit](https://www.adafruit.com/product/732)
+- The documentation from [Adafruit](https://www.adafruit.com/product/732)
 - [Learn how to use MCP23008 and MCP23017 with Python](https://learn.adafruit.com/using-mcp23008-mcp23017-with-circuitpython/overview) from the Adafruit learn courses used to create this binding.
 
 ### Device Family

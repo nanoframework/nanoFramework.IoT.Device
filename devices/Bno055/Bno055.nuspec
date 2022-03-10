@@ -21,11 +21,14 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bno055</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.9" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.64" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.64" />
+      <dependency id="nanoFramework.System.Numerics" version="1.0.288-preview.64" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.4" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.10" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.14" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.8" />
       <dependency id="nanoFramework.System.Math" version="1.4.4-preview.15" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.123.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.125.0" />
     </dependencies>
   </metadata>
   <files>

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Card", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
 EndProject
@@ -24,10 +24,7 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mfrc522.samples", "samples\
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{150ced27-7cf0-4671-9370-b330d2d49066}*SharedItemsImports = 5
 		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{4ba8e406-def9-921a-8ac2-dbfdc60132d1}*SharedItemsImports = 5
-		..\..\src\Stopwatch\Stopwatch.projitems*{4ba8e406-def9-921a-8ac2-dbfdc60132d1}*SharedItemsImports = 5
 		..\..\src\Stopwatch\Stopwatch.projitems*{875d133b-033b-4d11-b1a2-def898349ad5}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
