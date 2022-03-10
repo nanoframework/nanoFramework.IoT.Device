@@ -83,7 +83,7 @@ namespace Iot.Device.CharacterLcd
 
         /// <summary>
         /// Returns the number of custom characters for this display.
-        /// A custom character is one that can be user-defined and assigned to a slot using <see cref="CreateCustomCharacter(int,System.ReadOnlySpan{byte})"/>
+        /// A custom character is one that can be user-defined and assigned to a slot using <see cref="CreateCustomCharacter(int,System.SpanByte)"/>
         /// </summary>
         public virtual int NumberOfCustomCharactersSupported => 8;
 
@@ -386,7 +386,7 @@ namespace Iot.Device.CharacterLcd
 
         /// <summary>
         /// Fill one of the 8 CGRAM locations (character codes 0 - 7) with custom characters.
-        /// See <see cref="CreateCustomCharacter(int,System.ReadOnlySpan{byte})"/> for details.
+        /// See <see cref="CreateCustomCharacter(int,System.SpanByte)"/> for details.
         /// </summary>
         /// <param name="location">Should be between 0 and 7</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
