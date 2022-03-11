@@ -45,7 +45,7 @@
       <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.0.277-preview.99\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister">
-      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.0.277-preview.99\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.0.277-preview.102\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0-preview.9\lib\mscorlib.dll</HintPath>
@@ -71,6 +71,9 @@
     <Reference Include="System.Drawing">
       <HintPath>packages\nanoFramework.System.Drawing.1.0.288-preview.64\lib\System.Drawing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.4.4-preview.15\lib\System.Math.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.0.4-preview.16\lib\System.Threading.dll</HintPath>
     </Reference>
@@ -78,6 +81,7 @@
       <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289-preview.25\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <Import Project="..\..\src\IoT.Device.Graphics\IoT.Device.Graphics.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>
