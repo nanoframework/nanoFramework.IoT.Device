@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BitmapImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CharByte.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DictionaryCharByte.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Font5x8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LcdCharacterEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LcdCharacterEncodingFactory.cs" />

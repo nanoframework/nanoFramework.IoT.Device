@@ -4,6 +4,8 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections;
+using IoT.Device.Graphics;
 
 namespace Iot.Device.Graphics
 {
@@ -46,7 +48,7 @@ namespace Iot.Device.Graphics
         /// <summary>
         /// GlyphMapper is mapping from the character number to the index of the character bitmap data in the buffer GlyphUshortData.
         /// </summary>
-        protected Dictionary<int, int>? GlyphMapper { get; set; }
+        protected Hashtable GlyphMapper { get; set; }
         private int BytesPerGlyph { get; set; }
 
         /// <summary>
@@ -122,7 +124,8 @@ namespace Iot.Device.Graphics
 
         private static int ReadNextDecimalNumber(ref SpanChar span)
         {
-            span = span.Trim();
+            // Original code: span = span.Trim();
+            // Note: we won't do it
 
             int sign = 1;
             if (span.Length > 0 && span[0] == '-')
@@ -143,9 +146,11 @@ namespace Iot.Device.Graphics
 
         private static int ReadNextHexaDecimalNumber(ref SpanChar span)
         {
-            span = span.Trim();
+            // Original code: span = span.Trim();
+            // Note: we won't do it
 
             int number = 0;
+            var car = ;
             while (span.Length > 0)
             {
                 if ((uint)(span[0] - '0') <= 9)
@@ -154,9 +159,9 @@ namespace Iot.Device.Graphics
                     span = span.Slice(1);
                     continue;
                 }
-                else if ((uint)(Char.ToLowerInvariant(span[0]) - 'a') <= ((uint)('f' - 'a')))
+                else if ((uint)((char)((char)(span[0]) - 'a')).ToLower() <= ((uint)('f' - 'a')))
                 {
-                    number = number * 16 + (Char.ToLowerInvariant(span[0]) - 'a') + 10;
+                    number = number * 16 + ((char)((char)(span[0]) - 'a')).ToLower() + 10;
                     span = span.Slice(1);
                     continue;
                 }
@@ -184,7 +189,7 @@ namespace Iot.Device.Graphics
             }
             else
             {
-                throw new InvalidDataException("Couldn't get the glyph data");
+                throw new Exception("Couldn't get the glyph data");
             }
         }
 
@@ -201,7 +206,7 @@ namespace Iot.Device.Graphics
                     throw new Exception($"{nameof(GlyphMapper)} is null");
                 }
 
-                Dictionary<int, int>.KeyCollection collection = GlyphMapper.Keys;
+                var collection = GlyphMapper.Keys;
                 int[] values = new int[collection.Count];
                 collection.CopyTo(values, 0);
                 return values;
