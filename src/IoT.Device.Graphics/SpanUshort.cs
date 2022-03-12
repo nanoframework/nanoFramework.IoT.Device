@@ -46,22 +46,23 @@ namespace System
                     start + length > array.Length ||
                     (start == array.Length && start > 0))
                 {
-                    // Array length too small
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Array length too small");
                 }
-            }
-            else
-            {
-                if ((start != 0) || (length != 0))
+                else
                 {
-                    // Array is null but start and length are not 0
-                    throw new ArgumentOutOfRangeException();
+                    _array = array;
+                    _start = start;
+                    _length = length;
                 }
             }
-
-            _array = array;
-            _start = start;
-            _length = length;
+            else if ((start != 0) || (length != 0))
+            {
+                throw new ArgumentOutOfRangeException($"Array is null but start and length are not 0");
+            }
+            else 
+            {
+                throw new Exception("Could not generate SpanUShort");
+            }
         }
 
         /// <summary>

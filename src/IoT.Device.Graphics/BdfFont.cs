@@ -47,7 +47,7 @@ namespace Iot.Device.Graphics
         /// <summary>
         /// GlyphMapper is mapping from the character number to the index of the character bitmap data in the buffer GlyphUshortData.
         /// </summary>
-        protected Hashtable GlyphMapper { get; set; }
+        protected Hashtable? GlyphMapper { get; set; }
         private int BytesPerGlyph { get; set; }
 
         /// <summary>

@@ -48,18 +48,21 @@ namespace System
                 {
                     throw new ArgumentOutOfRangeException($"Array length too small");
                 }
+                else
+                {
+                    _array = array;
+                    _start = start;
+                    _length = length;
+                }
+            }
+            else if ((start != 0) || (length != 0))
+            {
+                throw new ArgumentOutOfRangeException($"Array is null but start and length are not 0");
             }
             else
             {
-                if ((start != 0) || (length != 0))
-                {
-                    throw new ArgumentOutOfRangeException($"Array is null but start and length are not 0");
-                }
+                throw new Exception("Could not generate SpanChar");
             }
-
-            _array = array;
-            _start = start;
-            _length = length;
         }
 
         /// <summary>
