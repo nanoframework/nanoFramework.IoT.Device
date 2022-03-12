@@ -172,6 +172,10 @@ namespace System
             return array;
         }
 
+        /// <summary>
+        /// Implicit conversion of an array to a span of char
+        /// </summary>
+        /// <param name="array"></param>
         public static implicit operator SpanChar(char[] array)
         {
             return new(array);

@@ -77,46 +77,47 @@ namespace Iot.Device.Graphics
         /// <returns>BdfFont instance</returns>
         public static BdfFont Load(string fontFilePath)
         {
-            //using StreamReader sr = new StreamReader(fontFilePath);
+            using FileStream fontStream = new FileStream(fontFilePath, FileMode.Open);
+            using StreamReader sr = new StreamReader(fontStream);
             BdfFont font = new BdfFont();
-            //while (!sr.EndOfStream)
-            //{
-            //    SpanChar span = sr.ReadLine().AsSpan().Trim();
-            //    if (span.StartsWith(FontBoundingBoxString, StringComparison.Ordinal))
-            //    {
-            //        span = span.Slice(FontBoundingBoxString.Length).Trim();
-            //        font.Width = ReadNextDecimalNumber(ref span);
-            //        font.Height = ReadNextDecimalNumber(ref span);
-            //        font.XDisplacement = ReadNextDecimalNumber(ref span);
-            //        font.YDisplacement = ReadNextDecimalNumber(ref span);
-            //        font.BytesPerGlyph = (int)Math.Ceiling(((double)font.Width) / 8);
-            //    }
-            //    else if (span.StartsWith(CharSetString, StringComparison.Ordinal))
-            //    {
-            //        span = span.Slice(CharSetString.Length).Trim();
-            //        if (span.CompareTo(IsoCharsetString, StringComparison.Ordinal) != 0)
-            //        {
-            //            throw new NotSupportedException("We only support ISO10646 for now.");
-            //        }
-            //    }
-            //    else if (span.StartsWith(DefaultCharString, StringComparison.Ordinal))
-            //    {
-            //        span = span.Slice(DefaultCharString.Length).Trim();
-            //        font.DefaultChar = ReadNextDecimalNumber(ref span);
-            //    }
-            //    else if (span.StartsWith(CharsString, StringComparison.Ordinal))
-            //    {
-            //        span = span.Slice(CharsString.Length).Trim();
-            //        font.CharsCount = ReadNextDecimalNumber(ref span);
+            while (!sr.EndOfStream)
+            {
+                //    SpanChar span = sr.ReadLine().AsSpan().Trim();
+                //    if (span.StartsWith(FontBoundingBoxString, StringComparison.Ordinal))
+                //    {
+                //        span = span.Slice(FontBoundingBoxString.Length).Trim();
+                //        font.Width = ReadNextDecimalNumber(ref span);
+                //        font.Height = ReadNextDecimalNumber(ref span);
+                //        font.XDisplacement = ReadNextDecimalNumber(ref span);
+                //        font.YDisplacement = ReadNextDecimalNumber(ref span);
+                //        font.BytesPerGlyph = (int)Math.Ceiling(((double)font.Width) / 8);
+                //    }
+                //    else if (span.StartsWith(CharSetString, StringComparison.Ordinal))
+                //    {
+                //        span = span.Slice(CharSetString.Length).Trim();
+                //        if (span.CompareTo(IsoCharsetString, StringComparison.Ordinal) != 0)
+                //        {
+                //            throw new NotSupportedException("We only support ISO10646 for now.");
+                //        }
+                //    }
+                //    else if (span.StartsWith(DefaultCharString, StringComparison.Ordinal))
+                //    {
+                //        span = span.Slice(DefaultCharString.Length).Trim();
+                //        font.DefaultChar = ReadNextDecimalNumber(ref span);
+                //    }
+                //    else if (span.StartsWith(CharsString, StringComparison.Ordinal))
+                //    {
+                //        span = span.Slice(CharsString.Length).Trim();
+                //        font.CharsCount = ReadNextDecimalNumber(ref span);
 
-            //        if (font.Width == 0 || font.Height == 0 || font.CharsCount <= 0)
-            //        {
-            //            throw new Exception("The font data is not well formed.");
-            //        }
+                if (font.Width == 0 || font.Height == 0 || font.CharsCount <= 0)
+                {
+                    throw new Exception("The font data is not well formed.");
+                }
 
-            //        font.ReadGlyphsData(sr);
-            //    }
-            //}
+                //    font.ReadGlyphsData(sr);
+                //    }
+            }
 
             return font;
         }
@@ -251,83 +252,83 @@ namespace Iot.Device.Graphics
 
         private void ReadGlyphsData(StreamReader sr)
         {
-            //if (BytesPerGlyph <= 2)
-            //{
-            //    GlyphUshortData = new ushort[CharsCount * Height];
-            //}
-            //else
-            //{
-            //    throw new NotSupportedException("Fonts with width more than 16 pixels is not supported.");
-            //}
+            if (BytesPerGlyph <= 2)
+            {
+                GlyphUshortData = new ushort[CharsCount * Height];
+            }
+            else
+            {
+                throw new NotSupportedException("Fonts with width more than 16 pixels is not supported.");
+            }
 
-            //GlyphMapper = newArrayList(); //Dictionary<int, int>();
-            //int index = 0;
-            //for (int i = 0; i < CharsCount; i++)
-            //{
-            //    SpanChar span = sr.ReadLine().AsSpan().Trim();
-            //    if (!span.StartsWith(StartCharString, StringComparison.Ordinal))
-            //    {
-            //        throw new Exception(
-            //            "The font data is not well formed. expected STARTCHAR tag in the beginning of glyoh data.");
-            //    }
+            GlyphMapper = new Hashtable(); //Dictionary<int, int>();
+            int index = 0;
+            for (int i = 0; i < CharsCount; i++)
+            {
+                //    SpanChar span = sr.ReadLine().AsSpan().Trim();
+                //    if (!span.StartsWith(StartCharString, StringComparison.Ordinal))
+                //    {
+                //        throw new Exception(
+                //            "The font data is not well formed. expected STARTCHAR tag in the beginning of glyoh data.");
+                //    }
 
-            //    span = sr.ReadLine().AsSpan().Trim();
-            //    if (!span.StartsWith(EncodingString, StringComparison.Ordinal))
-            //    {
-            //        throw new Exception("The font data is not well formed. expected ENCODING tag.");
-            //    }
+                //    span = sr.ReadLine().AsSpan().Trim();
+                //    if (!span.StartsWith(EncodingString, StringComparison.Ordinal))
+                //    {
+                //        throw new Exception("The font data is not well formed. expected ENCODING tag.");
+                //    }
 
-            //    span = span.Slice(EncodingString.Length).Trim();
-            //    int charNumber = ReadNextDecimalNumber(ref span);
-            //    GlyphMapper.Add(charNumber, index);
+                //    span = span.Slice(EncodingString.Length).Trim();
+                //    int charNumber = ReadNextDecimalNumber(ref span);
+                //    GlyphMapper.Add(charNumber, index);
 
-            //    do
-            //    {
-            //        span = sr.ReadLine().AsSpan().Trim();
-            //    }
-            //    while (!span.StartsWith(BbxString, StringComparison.Ordinal));
+                //    do
+                //    {
+                //        span = sr.ReadLine().AsSpan().Trim();
+                //    }
+                //    while (!span.StartsWith(BbxString, StringComparison.Ordinal));
 
-            //    span = span.Slice(BbxString.Length).Trim();
-            //    if (ReadNextDecimalNumber(ref span) != Width ||
-            //        ReadNextDecimalNumber(ref span) != Height ||
-            //        ReadNextDecimalNumber(ref span) != XDisplacement ||
-            //        ReadNextDecimalNumber(ref span) != YDisplacement)
-            //    {
-            //        throw new NotSupportedException(
-            //            "We don't support fonts have BBX values different than FONTBOUNDINGBOX values.");
-            //    }
+                //    span = span.Slice(BbxString.Length).Trim();
+                //    if (ReadNextDecimalNumber(ref span) != Width ||
+                //        ReadNextDecimalNumber(ref span) != Height ||
+                //        ReadNextDecimalNumber(ref span) != XDisplacement ||
+                //        ReadNextDecimalNumber(ref span) != YDisplacement)
+                //    {
+                //        throw new NotSupportedException(
+                //            "We don't support fonts have BBX values different than FONTBOUNDINGBOX values.");
+                //    }
 
-            //    span = sr.ReadLine().AsSpan().Trim();
-            //    if (span.CompareTo(BitmapString, StringComparison.Ordinal) != 0)
-            //    {
-            //        throw new Exception("The font data is not well formed. expected BITMAP tag.");
-            //    }
+                //    span = sr.ReadLine().AsSpan().Trim();
+                //    if (span.CompareTo(BitmapString, StringComparison.Ordinal) != 0)
+                //    {
+                //        throw new Exception("The font data is not well formed. expected BITMAP tag.");
+                //    }
 
-            //    span = sr.ReadLine().AsSpan().Trim();
-            //    int heightData = 0;
-            //    while (heightData < Height)
-            //    {
-            //        if (span.Length > 0)
-            //        {
-            //            int data = ReadNextHexaDecimalNumber(ref span);
-            //            GlyphUshortData[index] = (ushort)data;
+                //    span = sr.ReadLine().AsSpan().Trim();
+                //    int heightData = 0;
+                //    while (heightData < Height)
+                //    {
+                //        if (span.Length > 0)
+                //        {
+                //            int data = ReadNextHexaDecimalNumber(ref span);
+                //            GlyphUshortData[index] = (ushort)data;
 
-            //            heightData++;
-            //            index++;
-            //        }
-            //        else
-            //        {
-            //            span = sr.ReadLine().AsSpan().Trim();
-            //        }
-            //    }
+                //            heightData++;
+                //            index++;
+                //        }
+                //        else
+                //        {
+                //            span = sr.ReadLine().AsSpan().Trim();
+                //        }
+                //    }
 
-            //    span = sr.ReadLine().AsSpan().Trim();
-            //    if (!span.StartsWith(EndCharString, StringComparison.Ordinal))
-            //    {
-            //        throw new Exception(
-            //            "The font data is not well formed. expected ENDCHAR tag in the beginning of glyph data.");
-            //    }
-            //}
+                //    span = sr.ReadLine().AsSpan().Trim();
+                //    if (!span.StartsWith(EndCharString, StringComparison.Ordinal))
+                //    {
+                //        throw new Exception(
+                //            "The font data is not well formed. expected ENDCHAR tag in the beginning of glyph data.");
+                //    }
+            }
         }
     }
 }

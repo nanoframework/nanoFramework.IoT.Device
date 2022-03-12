@@ -8,7 +8,7 @@ namespace System
     /// <summary>
     /// Provides a type- and memory-safe representation of a contiguous region of arbitrary array.
     /// </summary>
-    [Serializable, CLSCompliant(false)]
+    //[Serializable, CLSCompliant(false)]
     public readonly ref struct SpanInt
     {
         private readonly int[] _array;  // internal array
@@ -173,6 +173,10 @@ namespace System
             return array;
         }
 
+        /// <summary>
+        /// Implicit conversion of an array to a span of int
+        /// </summary>
+        /// <param name="array"></param>
         public static implicit operator SpanInt(int[] array)
         {
             return new(array);

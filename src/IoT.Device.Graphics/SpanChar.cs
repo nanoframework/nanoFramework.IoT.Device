@@ -23,7 +23,7 @@
 //        public SpanChar(char[] array)
 //        {
 //            _array = array;
-//            _length = array?.Length ?? 0;
+//            _length = array != null ? array.Length : 0;
 //            _start = 0;
 //        }
 
@@ -174,6 +174,10 @@
 //            return array;
 //        }
 
+//      /// <summary>
+//      /// Implicit conversion of an array to a span of char
+//      /// </summary>
+//      /// <param name="array"></param>
 //        public static implicit operator SpanChar(char[] array)
 //        {
 //            return new(array);

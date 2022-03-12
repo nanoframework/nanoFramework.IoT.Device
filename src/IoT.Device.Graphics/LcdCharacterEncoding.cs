@@ -19,6 +19,7 @@ namespace Iot.Device.Graphics
         private readonly ArrayList _extraCharacters;
         private readonly string _cultureName;
 
+        /// <inheritDoc/>
         public override Decoder GetDecoder()
         {
             return GetDecoder();

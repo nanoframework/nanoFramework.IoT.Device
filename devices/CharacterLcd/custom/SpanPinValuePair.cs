@@ -174,6 +174,10 @@ namespace System
             return array;
         }
 
+        /// <summary>
+        /// Implicit conversion of an array to a span of PinValuePair
+        /// </summary>
+        /// <param name="array"></param>
         public static implicit operator SpanPinValuePair(PinValuePair[] array)
         {
             return new(array);
