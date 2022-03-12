@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 
 namespace Iot.Device.Graphics
@@ -13,11 +13,16 @@ namespace Iot.Device.Graphics
     /// </summary>
     public class LcdCharacterEncoding : Encoding
     {
-        private readonly Dictionary<char, byte> _characterMapping;
+        private readonly DictionaryCharByte _characterMapping;
         private readonly char _unknownLetter;
         // Character pixel maps for characters that will need to be written to the character RAM for this code page
-        private readonly List<byte[]> _extraCharacters;
+        private readonly ArrayList _extraCharacters;
         private readonly string _cultureName;
+
+        public override Decoder GetDecoder()
+        {
+            return GetDecoder();
+    }
 
         /// <summary>
         /// Creates an instance of <see cref="LcdCharacterEncoding"/>.
@@ -26,12 +31,12 @@ namespace Iot.Device.Graphics
         /// <param name="readOnlyMemoryName">Name of the ROM (hard coded read-only character memory) on the display</param>
         /// <param name="characterMap">The character map to use</param>
         /// <param name="unknownLetter">The character to print when a letter not in the map is found. This letter must be part of the map</param>
-        public LcdCharacterEncoding(string cultureName, string readOnlyMemoryName, Dictionary<char, byte> characterMap, char unknownLetter)
+        public LcdCharacterEncoding(string cultureName, string readOnlyMemoryName, DictionaryCharByte characterMap, char unknownLetter)
         {
             _cultureName = cultureName;
             _characterMapping = characterMap;
             _unknownLetter = unknownLetter;
-            _extraCharacters = new List<byte[]>();
+            _extraCharacters = new ArrayList();
             AllCharactersSupported = true;
             ReadOnlyMemoryName = readOnlyMemoryName;
             if (!_characterMapping.ContainsKey(unknownLetter))
@@ -48,7 +53,7 @@ namespace Iot.Device.Graphics
         /// <param name="characterMap">The character map to use</param>
         /// <param name="unknownLetter">The character to print when a letter not in the map is found</param>
         /// <param name="extraCharacters">The pixel map of characters required for this culture but not found in the character ROM</param>
-        public LcdCharacterEncoding(string cultureName, string readOnlyMemoryName, Dictionary<char, byte> characterMap, char unknownLetter, List<byte[]> extraCharacters)
+        public LcdCharacterEncoding(string cultureName, string readOnlyMemoryName, DictionaryCharByte characterMap, char unknownLetter, ArrayList extraCharacters)
             : this(cultureName, readOnlyMemoryName, characterMap, unknownLetter)
         {
             _extraCharacters = extraCharacters;
@@ -58,15 +63,15 @@ namespace Iot.Device.Graphics
         /// <summary>
         /// Always returns true for this class.
         /// </summary>
-        public override bool IsSingleByte => true;
+        public bool IsSingleByte => true;
 
         /// <inheritDoc/>
-        public override string EncodingName => _cultureName;
+        public string EncodingName => _cultureName;
 
         /// <summary>
         /// The list of pixel maps for extra characters that are required for this culture.
         /// </summary>
-        public virtual List<byte[]> ExtraCharacters => _extraCharacters;
+        public virtual ArrayList ExtraCharacters => _extraCharacters;
 
         /// <summary>
         /// This is internally set to false if we already know that we won't be able to display all required characters
@@ -80,7 +85,7 @@ namespace Iot.Device.Graphics
         public string ReadOnlyMemoryName { get; }
 
         /// <inheritDoc/>
-        public override int GetByteCount(char[] chars, int index, int count)
+        public int GetByteCount(char[] chars, int index, int count)
         {
             if (index + count > chars.Length || index < 0 || count < 0)
             {
@@ -91,7 +96,7 @@ namespace Iot.Device.Graphics
         }
 
         /// <inheritDoc/>
-        public override int GetBytes(char[] chars, int charIndex, int charCount, byte[] bytes, int byteIndex)
+        public int GetBytes(char[] chars, int charIndex, int charCount, ArrayList bytes, int byteIndex)
         {
             for (int i = 0; i < charCount; i++)
             {
@@ -106,7 +111,8 @@ namespace Iot.Device.Graphics
                 }
                 else
                 {
-                    bytes[byteIndex] = _characterMapping[_unknownLetter];
+                    //bytes[byteIndex] = _characterMapping[_unknownLetter];
+                    throw new Exception("TODO!!!");
                 }
 
                 byteIndex++;
@@ -117,18 +123,18 @@ namespace Iot.Device.Graphics
         }
 
         /// <inheritDoc/>
-        public override int GetCharCount(byte[] bytes, int index, int count) => Math.Min(bytes.Length, count);
+        public int GetCharCount(byte[] bytes, int index, int count) => Math.Min(bytes.Length, count);
 
         /// <summary>
         /// Reverse mapping is not supported for this encoding.
         /// </summary>
-        public override int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex) => throw new NotSupportedException("Reverse conversion not supported");
+        public int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex) => throw new NotSupportedException("Reverse conversion not supported");
 
         /// <inheritDoc/>
         // This encoder always does a 1:1 mapping
-        public override int GetMaxByteCount(int charCount) => charCount;
+        public int GetMaxByteCount(int charCount) => charCount;
 
         /// <inheritDoc/>
-        public override int GetMaxCharCount(int byteCount) => byteCount;
+        public int GetMaxCharCount(int byteCount) => byteCount;
     }
 }

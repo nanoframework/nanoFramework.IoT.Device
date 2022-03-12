@@ -2,7 +2,7 @@
 
 namespace Iot.Device.Graphics
 {
-    internal class CharByte
+    public class CharByte
     {
         public CharByte(char cr, byte bt)
         {

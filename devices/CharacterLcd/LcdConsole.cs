@@ -515,7 +515,7 @@ namespace Iot.Device.CharacterLcd
 
                 for (byte i = 0; i < numberOfCharactersToLoad; i++)
                 {
-                    byte[] pixelMap = encoding.ExtraCharacters[i];
+                    var pixelMap = (SpanByte)encoding.ExtraCharacters[i];
                     _lcd.CreateCustomCharacter(i, pixelMap);
                 }
 

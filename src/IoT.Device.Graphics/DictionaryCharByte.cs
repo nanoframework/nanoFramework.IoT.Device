@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Iot.Device.Graphics
 {
-    internal class DictionaryCharByte
+    public class DictionaryCharByte
     {
         ArrayList _array = new ArrayList();
         public DictionaryCharByte()
