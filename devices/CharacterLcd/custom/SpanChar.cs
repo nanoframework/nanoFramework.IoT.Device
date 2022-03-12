@@ -21,7 +21,7 @@ namespace System
         public SpanChar(char[] array)
         {
             _array = array;
-            _length = array.Length;
+            _length = array != null ? array.Length : 0;
             _start = 0;
         }
 

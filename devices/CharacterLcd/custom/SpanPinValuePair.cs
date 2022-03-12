@@ -23,7 +23,7 @@ namespace System
         public SpanPinValuePair(PinValuePair[] array)
         {
             _array = array;
-            _length = array.Length;
+            _length = array != null ? array.Length : 0;
             _start = 0;
         }
 
