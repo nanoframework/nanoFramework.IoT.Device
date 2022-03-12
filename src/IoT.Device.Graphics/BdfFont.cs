@@ -55,20 +55,20 @@ namespace Iot.Device.Graphics
         /// </summary>
         protected ushort[]? GlyphUshortData { get; set; }
 
-        private static readonly string FontBoundingBoxString = "FONTBOUNDINGBOX ";
-        private static readonly string CharSetString = "CHARSET_REGISTRY ";
-        private static readonly string IsoCharsetString = "\"ISO10646\"";
-        private static readonly string DefaultCharString = "DEFAULT_CHAR ";
-        private static readonly string CharsString = "CHARS ";
-        private static readonly string StartCharString = "STARTCHAR ";
-        private static readonly string EncodingString = "ENCODING ";
-        // Those next ones are comments as not implemented but for further usage
-        // private static readonly string SWidthString = "SWIDTH";
-        // private static readonly string DWidthString = "DWIDTH";
-        // private static readonly string VVectorString = "VVECTOR";
-        private static readonly string BbxString = "BBX ";
-        private static readonly string EndCharString = "ENDCHAR";
-        private static readonly string BitmapString = "BITMAP";
+        //private static readonly string FontBoundingBoxString = "FONTBOUNDINGBOX ";
+        //private static readonly string CharSetString = "CHARSET_REGISTRY ";
+        //private static readonly string IsoCharsetString = "\"ISO10646\"";
+        //private static readonly string DefaultCharString = "DEFAULT_CHAR ";
+        //private static readonly string CharsString = "CHARS ";
+        //private static readonly string StartCharString = "STARTCHAR ";
+        //private static readonly string EncodingString = "ENCODING ";
+        //// Those next ones are comments as not implemented but for further usage
+        //// private static readonly string SWidthString = "SWIDTH";
+        //// private static readonly string DWidthString = "DWIDTH";
+        //// private static readonly string VVectorString = "VVECTOR";
+        //private static readonly string BbxString = "BBX ";
+        //private static readonly string EndCharString = "ENDCHAR";
+        //private static readonly string BitmapString = "BITMAP";
 
         /// <summary>
         /// Loads BdfFont from a specified path
@@ -180,15 +180,15 @@ namespace Iot.Device.Graphics
         /// <param name="charData">Character data</param>
         public void GetCharData(char character, out SpanUshort charData)
         {
-            //if (GlyphMapper is object &&
-            //   (GlyphMapper.TryGetValue((int)character, out int index) ||
-            //    GlyphMapper.TryGetValue((int)DefaultChar, out index)))
-            //{
-            //    charData = GlyphUshortData.AsSpan().Slice(index, Height);
-            //}
+            if (GlyphMapper is object &&
+               (GlyphMapper.TryGetValue((int)character, out int index) ||
+                GlyphMapper.TryGetValue((int)DefaultChar, out index)))
+            {
+                //    charData = GlyphUshortData.AsSpan().Slice(index, Height);
+            }
             //else
             //{
-                throw new Exception("Couldn't get the glyph data");
+            throw new Exception("Couldn't get the glyph data");
             //}
         }
 
@@ -262,7 +262,7 @@ namespace Iot.Device.Graphics
             }
 
             GlyphMapper = new Hashtable(); //Dictionary<int, int>();
-            int index = 0;
+            //int index = 0;
             for (int i = 0; i < CharsCount; i++)
             {
                 //    SpanChar span = sr.ReadLine().AsSpan().Trim();

@@ -113,7 +113,7 @@ namespace Iot.Device.Graphics
                 else
                 {
                     //bytes[byteIndex] = _characterMapping[_unknownLetter];
-                    throw new Exception("TODO!!!");
+                    throw new Exception("TODO!!! - Convert unknown letter!");
                 }
 
                 byteIndex++;

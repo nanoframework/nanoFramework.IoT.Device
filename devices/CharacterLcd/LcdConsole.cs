@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-//using System.Linq;
-//using System.Threading.Tasks;
 using System.Globalization;
 using SixLabors.ImageSharp;
 using Iot.Device.Graphics;
