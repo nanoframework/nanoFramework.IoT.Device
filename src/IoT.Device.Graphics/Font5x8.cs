@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
+using System.Collections;
 
 namespace Iot.Device.Graphics
 {
@@ -126,7 +126,7 @@ namespace Iot.Device.Graphics
             YDisplacement = 0;
             DefaultChar = 0x20;
             CharsCount = Ascii.Length;
-            GlyphMapper = new Dictionary<int, int>();
+            GlyphMapper = new Hashtable();
             GlyphUshortData = new ushort[CharsCount * Height];
             for (int i = 0; i < CharsCount; i++)
             {

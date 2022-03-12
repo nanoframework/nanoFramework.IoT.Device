@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 namespace System
 {
     /// <summary>
@@ -17,7 +20,8 @@ namespace System
         public SpanUshort(ushort[] array)
         {
             _array = array;
-            _length = array?.Length ?? 0;
+            //_length = array?.Length ?? 0; //TODO: nullable not working!
+            _length = array.Length;
             _start = 0;
         }
 
