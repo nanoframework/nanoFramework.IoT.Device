@@ -48,8 +48,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Logging, Version=1.0.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.1.0.1-preview.23\lib\nanoFramework.Logging.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Logging.1.0.1-preview.24\lib\nanoFramework.Logging.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives">
+      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.288-preview.64\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,23 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{5178896A-04E3-4772-9AFC-2EC0BF34A035}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\LidarLiteV3.Sample.nfproj", "{169114FE-33A5-41DA-AB06-75A378C6D03D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{02E62B1F-178C-47AA-9446-FF62232EAD16}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Stopwatch", "..\..\src\Stopwatch\Stopwatch.shproj", "{875D133B-033B-4D11-B1A2-DEF898349AD5}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
-		..\..\src\Stopwatch\Stopwatch.projitems*{875d133b-033b-4d11-b1a2-def898349ad5}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -38,10 +27,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {02E62B1F-178C-47AA-9446-FF62232EAD16}
-		{875D133B-033B-4D11-B1A2-DEF898349AD5} = {02E62B1F-178C-47AA-9446-FF62232EAD16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16BE7B51-F611-4B9C-9794-0D45D98CAD5C}
