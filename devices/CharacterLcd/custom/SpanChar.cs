@@ -6,16 +6,17 @@
 namespace System
 {
     /// <summary>
-    /// Provides a type- and memory-safe representation of a contiguous region of arbitrary array.
+    /// Provides a type- and memory-safe representation of a contiguous region of arbitrary char array
     /// </summary>
+    //[Serializable, CLSCompliant(false)]
     public readonly ref struct SpanChar
     {
-        private readonly char[] _array;  // internal array
-        private readonly int _start;  // offset in the internal array
-        private readonly int _length; // accessible length after offset in the internal array
+        private readonly char[] _array;
+        private readonly int _start;
+        private readonly int _length;
 
         /// <summary>
-        /// Creates a new Span object over the entirety of a specified array.
+        /// Creates a new System.SpanChar object over the entirety of a specified array.
         /// </summary>
         /// <param name="array">The array from which to create the System.Span object.</param>
         public SpanChar(char[] array)
@@ -26,7 +27,7 @@ namespace System
         }
 
         /// <summary>
-        /// Creates a new Span object that includes a specified number of elements
+        /// Creates a new System.SpanChar object that includes a specified number of elements
         /// of an array starting at a specified index.
         /// </summary>
         /// <param name="array">The source array.</param>
@@ -45,16 +46,14 @@ namespace System
                     start + length > array.Length ||
                     (start == array.Length && start > 0))
                 {
-                    // Array length too small
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Array length too small");
                 }
             }
             else
             {
                 if ((start != 0) || (length != 0))
                 {
-                    // Array is null but start and length are not 0
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Array is null but start and length are not 0");
                 }
             }
 
@@ -68,24 +67,22 @@ namespace System
         /// </summary>
         /// <param name="index">The zero-based index of the element.</param>
         /// <returns>The element at the specified index.</returns>
-        // public ref char this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
         public char this[int index]
         {
             get
             {
                 if (index >= _length)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Index out of range");
                 }
 
                 return _array[_start + index];
             }
-
             set
             {
                 if (index >= _length)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Index out of range");
                 }
 
                 _array[_start + index] = value;
@@ -119,7 +116,7 @@ namespace System
         {
             if (destination.Length < _length)
             {
-                throw new ArgumentException();
+                throw new ArgumentException($"Destination too small");
             }
 
             for (int i = 0; i < _length; i++)
@@ -150,8 +147,7 @@ namespace System
         {
             if ((start < 0) || (length < 0) || (start + length > _length))
             {
-                // start or start + length is less than zero or greater than length
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"start or start + length is less than zero or greater than length");
             }
 
             return new SpanChar(_array, _start + start, length);
@@ -163,7 +159,7 @@ namespace System
         /// <returns> An array containing the data in the current span.</returns>
         public char[] ToArray()
         {
-            var array = new char[_length];
+            char[] array = new char[_length];
             for (int i = 0; i < _length; i++)
             {
                 array[i] = _array[_start + i];
@@ -178,7 +174,7 @@ namespace System
         /// <param name="array"></param>
         public static implicit operator SpanChar(char[] array)
         {
-            return new(array);
+            return new SpanChar(array);
         }
     }
 }
