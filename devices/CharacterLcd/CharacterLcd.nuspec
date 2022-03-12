@@ -31,6 +31,7 @@
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.0.277-preview.99" />
       <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.0.277-preview.99" />
       <dependency id="nanoFramework.System.Drawing" version="1.0.288-preview.64" />
+      <dependency id="nanoFramework.System.Collections" version="1.4.0-preview.21" />
     </dependencies>
   </metadata>
   <files>
