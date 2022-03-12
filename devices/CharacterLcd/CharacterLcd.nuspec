@@ -29,7 +29,7 @@
       <dependency id="nanoFramework.System.Threading" version="1.0.4-preview.16" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.289-preview.25" />
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.0.277-preview.99" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.0.277-preview.99" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.0.277-preview.102" />
       <dependency id="nanoFramework.System.Drawing" version="1.0.288-preview.64" />
       <dependency id="nanoFramework.System.Collections" version="1.4.0-preview.21" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.0.0-preview.12" />
