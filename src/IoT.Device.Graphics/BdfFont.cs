@@ -150,7 +150,6 @@ namespace Iot.Device.Graphics
             // Note: we won't do it
 
             int number = 0;
-            var car = ;
             while (span.Length > 0)
             {
                 if ((uint)(span[0] - '0') <= 9)
