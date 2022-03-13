@@ -55,20 +55,20 @@ namespace Iot.Device.Graphics
         /// </summary>
         protected ushort[]? GlyphUshortData { get; set; }
 
-        //private static readonly string FontBoundingBoxString = "FONTBOUNDINGBOX ";
-        //private static readonly string CharSetString = "CHARSET_REGISTRY ";
-        //private static readonly string IsoCharsetString = "\"ISO10646\"";
-        //private static readonly string DefaultCharString = "DEFAULT_CHAR ";
-        //private static readonly string CharsString = "CHARS ";
-        //private static readonly string StartCharString = "STARTCHAR ";
-        //private static readonly string EncodingString = "ENCODING ";
-        //// Those next ones are comments as not implemented but for further usage
-        //// private static readonly string SWidthString = "SWIDTH";
-        //// private static readonly string DWidthString = "DWIDTH";
-        //// private static readonly string VVectorString = "VVECTOR";
-        //private static readonly string BbxString = "BBX ";
-        //private static readonly string EndCharString = "ENDCHAR";
-        //private static readonly string BitmapString = "BITMAP";
+        private static readonly string FontBoundingBoxString = "FONTBOUNDINGBOX ";
+        private static readonly string CharSetString = "CHARSET_REGISTRY ";
+        private static readonly string IsoCharsetString = "\"ISO10646\"";
+        private static readonly string DefaultCharString = "DEFAULT_CHAR ";
+        private static readonly string CharsString = "CHARS ";
+        private static readonly string StartCharString = "STARTCHAR ";
+        private static readonly string EncodingString = "ENCODING ";
+        // Those next ones are comments as not implemented but for further usage
+        // private static readonly string SWidthString = "SWIDTH";
+        // private static readonly string DWidthString = "DWIDTH";
+        // private static readonly string VVectorString = "VVECTOR";
+        private static readonly string BbxString = "BBX ";
+        private static readonly string EndCharString = "ENDCHAR";
+        private static readonly string BitmapString = "BITMAP";
 
         /// <summary>
         /// Loads BdfFont from a specified path
@@ -82,41 +82,41 @@ namespace Iot.Device.Graphics
             BdfFont font = new BdfFont();
             while (!sr.EndOfStream)
             {
-                //    SpanChar span = sr.ReadLine().AsSpan().Trim();
-                //    if (span.StartsWith(FontBoundingBoxString, StringComparison.Ordinal))
-                //    {
-                //        span = span.Slice(FontBoundingBoxString.Length).Trim();
-                //        font.Width = ReadNextDecimalNumber(ref span);
-                //        font.Height = ReadNextDecimalNumber(ref span);
-                //        font.XDisplacement = ReadNextDecimalNumber(ref span);
-                //        font.YDisplacement = ReadNextDecimalNumber(ref span);
-                //        font.BytesPerGlyph = (int)Math.Ceiling(((double)font.Width) / 8);
-                //    }
-                //    else if (span.StartsWith(CharSetString, StringComparison.Ordinal))
-                //    {
-                //        span = span.Slice(CharSetString.Length).Trim();
-                //        if (span.CompareTo(IsoCharsetString, StringComparison.Ordinal) != 0)
-                //        {
-                //            throw new NotSupportedException("We only support ISO10646 for now.");
-                //        }
-                //    }
-                //    else if (span.StartsWith(DefaultCharString, StringComparison.Ordinal))
-                //    {
-                //        span = span.Slice(DefaultCharString.Length).Trim();
-                //        font.DefaultChar = ReadNextDecimalNumber(ref span);
-                //    }
-                //    else if (span.StartsWith(CharsString, StringComparison.Ordinal))
-                //    {
-                //        span = span.Slice(CharsString.Length).Trim();
-                //        font.CharsCount = ReadNextDecimalNumber(ref span);
-
-                if (font.Width == 0 || font.Height == 0 || font.CharsCount <= 0)
+                SpanChar span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                if (span.StartsWith(FontBoundingBoxString))
                 {
-                    throw new Exception("The font data is not well formed.");
+                    span = span.Slice(FontBoundingBoxString.Length).Trim();
+                    font.Width = ReadNextDecimalNumber(ref span);
+                    font.Height = ReadNextDecimalNumber(ref span);
+                    font.XDisplacement = ReadNextDecimalNumber(ref span);
+                    font.YDisplacement = ReadNextDecimalNumber(ref span);
+                    font.BytesPerGlyph = (int)Math.Ceiling(((double)font.Width) / 8);
                 }
+                else if (span.StartsWith(CharSetString)
+                {
+                    span = span.Slice(CharSetString.Length).Trim();
+                    if (span.CompareTo(IsoCharsetString) != 0)
+                    {
+                        throw new NotSupportedException("We only support ISO10646 for now.");
+                    }
+                }
+                else if (span.StartsWith(DefaultCharString, StringComparison.Ordinal))
+                {
+                    span = span.Slice(DefaultCharString.Length).Trim();
+                    font.DefaultChar = ReadNextDecimalNumber(ref span);
+                }
+                else if (span.StartsWith(CharsString, StringComparison.Ordinal))
+                {
+                    span = span.Slice(CharsString.Length).Trim();
+                    font.CharsCount = ReadNextDecimalNumber(ref span);
 
-                //    font.ReadGlyphsData(sr);
-                //    }
+                    if (font.Width == 0 || font.Height == 0 || font.CharsCount <= 0)
+                    {
+                        throw new Exception("The font data is not well formed.");
+                    }
+
+                    font.ReadGlyphsData(sr);
+                }
             }
 
             return font;
@@ -184,12 +184,13 @@ namespace Iot.Device.Graphics
                (GlyphMapper.TryGetValue((int)character, out int index) ||
                 GlyphMapper.TryGetValue((int)DefaultChar, out index)))
             {
-                //    charData = GlyphUshortData.AsSpan().Slice(index, Height);
+                // Original code: charData = GlyphUshortData.AsSpan().Slice(index, Height);
+                charData = (new SpanUshort(GlyphUshortData)).Slice(index, Height);
             }
-            //else
-            //{
-            throw new Exception("Couldn't get the glyph data");
-            //}
+            else
+            {
+                throw new Exception("Couldn't get the glyph data");
+            }
         }
 
         /// <summary>
