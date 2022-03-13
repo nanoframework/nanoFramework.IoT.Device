@@ -20,5 +20,15 @@ namespace Iot.Device.Graphics
 
             return found;
         }
+
+        internal static int CompareTo(this SpanChar spanCar, string toSearch)
+        {
+            if ( spanCar.StartsWith(toSearch) && spanCar.Length == toSearch.Length)
+            {
+                return 0;
+            }
+
+            return spanCar.Length > toSearch.Length ? -1 : 1;
+        }
     }
 }

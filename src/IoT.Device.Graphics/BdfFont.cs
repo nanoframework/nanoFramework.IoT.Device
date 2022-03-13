@@ -85,29 +85,29 @@ namespace Iot.Device.Graphics
                 SpanChar span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
                 if (span.StartsWith(FontBoundingBoxString))
                 {
-                    span = span.Slice(FontBoundingBoxString.Length).Trim();
+                    span = span.Slice(FontBoundingBoxString.Length); // Original: .Trim();
                     font.Width = ReadNextDecimalNumber(ref span);
                     font.Height = ReadNextDecimalNumber(ref span);
                     font.XDisplacement = ReadNextDecimalNumber(ref span);
                     font.YDisplacement = ReadNextDecimalNumber(ref span);
                     font.BytesPerGlyph = (int)Math.Ceiling(((double)font.Width) / 8);
                 }
-                else if (span.StartsWith(CharSetString)
+                else if (span.StartsWith(CharSetString))
                 {
-                    span = span.Slice(CharSetString.Length).Trim();
+                    span = span.Slice(CharSetString.Length); // Original: .Trim();
                     if (span.CompareTo(IsoCharsetString) != 0)
                     {
                         throw new NotSupportedException("We only support ISO10646 for now.");
                     }
                 }
-                else if (span.StartsWith(DefaultCharString, StringComparison.Ordinal))
+                else if (span.StartsWith(DefaultCharString))
                 {
-                    span = span.Slice(DefaultCharString.Length).Trim();
+                    span = span.Slice(DefaultCharString.Length); // Original: .Trim();
                     font.DefaultChar = ReadNextDecimalNumber(ref span);
                 }
-                else if (span.StartsWith(CharsString, StringComparison.Ordinal))
+                else if (span.StartsWith(CharsString))
                 {
-                    span = span.Slice(CharsString.Length).Trim();
+                    span = span.Slice(CharsString.Length); // Original: .Trim();
                     font.CharsCount = ReadNextDecimalNumber(ref span);
 
                     if (font.Width == 0 || font.Height == 0 || font.CharsCount <= 0)
@@ -263,72 +263,72 @@ namespace Iot.Device.Graphics
             }
 
             GlyphMapper = new Hashtable(); //Dictionary<int, int>();
-            //int index = 0;
+            int index = 0;
             for (int i = 0; i < CharsCount; i++)
             {
-                //    SpanChar span = sr.ReadLine().AsSpan().Trim();
-                //    if (!span.StartsWith(StartCharString, StringComparison.Ordinal))
-                //    {
-                //        throw new Exception(
-                //            "The font data is not well formed. expected STARTCHAR tag in the beginning of glyoh data.");
-                //    }
+                SpanChar span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                if (!span.StartsWith(StartCharString))
+                {
+                    throw new Exception(
+                        "The font data is not well formed. expected STARTCHAR tag in the beginning of glyoh data.");
+                }
 
-                //    span = sr.ReadLine().AsSpan().Trim();
-                //    if (!span.StartsWith(EncodingString, StringComparison.Ordinal))
-                //    {
-                //        throw new Exception("The font data is not well formed. expected ENCODING tag.");
-                //    }
+                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                if (!span.StartsWith(EncodingString))
+                {
+                    throw new Exception("The font data is not well formed. expected ENCODING tag.");
+                }
 
-                //    span = span.Slice(EncodingString.Length).Trim();
-                //    int charNumber = ReadNextDecimalNumber(ref span);
-                //    GlyphMapper.Add(charNumber, index);
+                span = span.Slice(EncodingString.Length); // Original: .Trim();
+                int charNumber = ReadNextDecimalNumber(ref span);
+                GlyphMapper.Add(charNumber, index);
 
-                //    do
-                //    {
-                //        span = sr.ReadLine().AsSpan().Trim();
-                //    }
-                //    while (!span.StartsWith(BbxString, StringComparison.Ordinal));
+                do
+                {
+                    span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                }
+                while (!span.StartsWith(BbxString));
 
-                //    span = span.Slice(BbxString.Length).Trim();
-                //    if (ReadNextDecimalNumber(ref span) != Width ||
-                //        ReadNextDecimalNumber(ref span) != Height ||
-                //        ReadNextDecimalNumber(ref span) != XDisplacement ||
-                //        ReadNextDecimalNumber(ref span) != YDisplacement)
-                //    {
-                //        throw new NotSupportedException(
-                //            "We don't support fonts have BBX values different than FONTBOUNDINGBOX values.");
-                //    }
+                span = span.Slice(BbxString.Length); // Original: .Trim();
+                if (ReadNextDecimalNumber(ref span) != Width ||
+                    ReadNextDecimalNumber(ref span) != Height ||
+                    ReadNextDecimalNumber(ref span) != XDisplacement ||
+                    ReadNextDecimalNumber(ref span) != YDisplacement)
+                {
+                    throw new NotSupportedException(
+                        "We don't support fonts have BBX values different than FONTBOUNDINGBOX values.");
+                }
 
-                //    span = sr.ReadLine().AsSpan().Trim();
-                //    if (span.CompareTo(BitmapString, StringComparison.Ordinal) != 0)
-                //    {
-                //        throw new Exception("The font data is not well formed. expected BITMAP tag.");
-                //    }
+                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                if (span.CompareTo(BitmapString) != 0)
+                {
+                    throw new Exception("The font data is not well formed. expected BITMAP tag.");
+                }
 
-                //    span = sr.ReadLine().AsSpan().Trim();
-                //    int heightData = 0;
-                //    while (heightData < Height)
-                //    {
-                //        if (span.Length > 0)
-                //        {
-                //            int data = ReadNextHexaDecimalNumber(ref span);
-                //            GlyphUshortData[index] = (ushort)data;
+                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                int heightData = 0;
+                while (heightData < Height)
+                {
+                    if (span.Length > 0)
+                    {
+                        int data = ReadNextHexaDecimalNumber(ref span);
+                        GlyphUshortData[index] = (ushort)data;
 
-                //            heightData++;
-                //            index++;
-                //        }
-                //        else
-                //        {
-                //            span = sr.ReadLine().AsSpan().Trim();
-                //        }
-                //    }
+                        heightData++;
+                        index++;
+                    }
+                    else
+                    {
+                        span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                    }
+                }
 
-                //    span = sr.ReadLine().AsSpan().Trim();
-                //    if (!span.StartsWith(EndCharString, StringComparison.Ordinal))
-                //    {
-                //        throw new Exception(
-                //            "The font data is not well formed. expected ENDCHAR tag in the beginning of glyph data.");
-                //    }
+                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                if (!span.StartsWith(EndCharString))
+                {
+                    throw new Exception(
+                        "The font data is not well formed. expected ENDCHAR tag in the beginning of glyph data.");
+                }
             }
         }
     }
