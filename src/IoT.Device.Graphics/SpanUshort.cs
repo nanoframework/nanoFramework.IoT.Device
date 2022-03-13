@@ -61,7 +61,7 @@ namespace System
             }
             else 
             {
-                throw new Exception("Could not generate SpanUShort");
+                throw new NullReferenceException("Array is null");
             }
         }
 
