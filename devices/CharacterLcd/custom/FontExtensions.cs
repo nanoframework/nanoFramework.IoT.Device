@@ -7,14 +7,23 @@ using System.Drawing;
 
 namespace Iot.Device.Graphics
 {
+    /// <summary>
+    /// Font Extensions for nanoFramework
+    /// </summary>
     public static class FontExtensions
     {
-        internal static bool StartsWith(this SpanChar spanCar, string toSearch)
+        /// <summary>
+        /// Checks if it Starts With
+        /// </summary>
+        /// <param name="spanChar">The SpanChar</param>
+        /// <param name="toSearch">The string to search</param>
+        /// <returns>True or False</returns>
+        internal static bool StartsWith(this SpanChar spanChar, string toSearch)
         {
             bool found = true;
             for (int i = 0; i < toSearch.Length; i++)
             {
-                if (spanCar[i] != toSearch[i])
+                if (spanChar[i] != toSearch[i])
                 {
                     found = false;
                     break;
@@ -24,16 +33,23 @@ namespace Iot.Device.Graphics
             return found;
         }
 
-        internal static int CompareTo(this SpanChar spanCar, string toSearch)
+        internal static int CompareTo(this SpanChar spanChar, string toSearch)
         {
-            if (spanCar.StartsWith(toSearch) && spanCar.Length == toSearch.Length)
+            if (spanChar.StartsWith(toSearch) && spanChar.Length == toSearch.Length)
             {
                 return 0;
             }
 
-            return spanCar.Length > toSearch.Length ? -1 : 1;
+            return spanChar.Length > toSearch.Length ? -1 : 1;
         }
 
+        /// <summary>
+        /// Tries to get the value from an integer
+        /// </summary>
+        /// <param name="table">The table</param>
+        /// <param name="character">The character</param>
+        /// <param name="index">The index</param>
+        /// <returns>True or False</returns>
         public static bool TryGetValue(this Hashtable table, int character, out int index)
         {
             if (table[character] != null)
@@ -46,6 +62,13 @@ namespace Iot.Device.Graphics
             return false;
         }
 
+        /// <summary>
+        /// Tries to get the value from an index
+        /// </summary>
+        /// <param name="table">The table</param>
+        /// <param name="index">The index</param>
+        /// <param name="data">The data</param>
+        /// <returns>True or False</returns>
         public static bool TryGetValue(this Hashtable table, int index, out byte[]? data)
         {
             if (table[index] != null)
@@ -58,6 +81,11 @@ namespace Iot.Device.Graphics
             return false;
         }
 
+        /// <summary>
+        /// Converts color to hex
+        /// </summary>
+        /// <param name="color">The Color</param>
+        /// <returns>The color as hex</returns>
         public static string ToHex(this Color color)
         {
             return $"{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
