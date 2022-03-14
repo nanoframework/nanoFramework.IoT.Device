@@ -317,7 +317,10 @@ namespace Iot.Device.CharacterLcd
             {
                 if (_font.TryGetValue(c, out byte[]? value))
                 {
-                    Insert(value.Length / 4, value);
+                    if (value != null)
+                    {
+                        Insert(value.Length / 4, value);
+                    }
                 }
             }
 
