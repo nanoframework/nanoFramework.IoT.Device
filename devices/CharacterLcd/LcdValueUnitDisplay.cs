@@ -196,7 +196,7 @@ namespace Iot.Device.CharacterLcd
         /// since only 6 chars (and two separators) fit on the display.</param>
         public void DisplayTime(DateTime dateTime, string format = "t")
         {
-            string toDisplay = dateTime.ToString(format, _culture);
+            string toDisplay = dateTime.ToString(format);
             string smallText = string.Empty;
             int spaceIdx = toDisplay.IndexOf(' ');
             if (spaceIdx > 0)
@@ -299,20 +299,20 @@ namespace Iot.Device.CharacterLcd
             }
 
             // Only one of these can be printed simultaneously
-            if (bigText.Contains(':'))
+            if (bigText.Contains(":"))
             {
                 LoadSeparationChar(':');
             }
-            else if (bigText.Contains('.'))
+            else if (bigText.Contains("."))
             {
                 LoadSeparationChar('.');
             }
-            else if (bigText.Contains(','))
+            else if (bigText.Contains(","))
             {
                 LoadSeparationChar(',');
             }
 
-            foreach (var c in bigText)
+            foreach (char c in bigText)
             {
                 if (_font.TryGetValue(c, out byte[]? value))
                 {
