@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IoT.Device.Graphics
 {
-    internal static class GraphicsExtensions
+    public static class GraphicsExtensions
     {
         public static bool TryGetValue(this Hashtable table, int character, out int index)
         {

@@ -31,7 +31,11 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="custom\*.cs" />
-    <Compile Include="*.cs" />
+    <Compile Include="*.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +54,9 @@
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0-preview.9\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.ResourceManager">
+      <HintPath>packages\nanoFramework.ResourceManager.1.1.4-preview.8\lib\nanoFramework.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>packages\nanoFramework.Runtime.Events.1.10.0-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
@@ -90,6 +97,15 @@
     <Reference Include="System.Diagnostics.Stopwatch">
       <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289-preview.25\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>nFResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BigFontMap.txt" />
   </ItemGroup>
   <Import Project="..\..\src\IoT.Device.Graphics\IoT.Device.Graphics.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

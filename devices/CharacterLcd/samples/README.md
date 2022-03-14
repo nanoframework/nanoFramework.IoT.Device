@@ -1,1 +1,0 @@
-To be added (or taken from `devices_generated` folder)

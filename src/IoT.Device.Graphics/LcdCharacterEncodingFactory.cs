@@ -384,7 +384,7 @@ namespace Iot.Device.Graphics
         /// <param name="maxNumberOfCustomCharacters">Maximum number of custom characters supported on the hardware. Should be 8 for Hd44780-controlled displays.</param>
         /// <returns>The newly created encoding. Whether the encoding can be loaded to a certain display will be decided later.</returns>
         /// <exception cref="ArgumentException">The character specified as unknownLetter must be part of the mapping.</exception>
-        public LcdCharacterEncoding Create(CultureInfo culture, string romName, char unknownLetter, int maxNumberOfCustomCharacters)
+        public LcdCharacterEncoding Create(string culture, string romName, char unknownLetter, int maxNumberOfCustomCharacters)
         {
             if (culture is null)
             {
@@ -416,7 +416,7 @@ namespace Iot.Device.Graphics
         /// <summary>
         /// Tries to generate letters important in that culture but missing from the current rom set
         /// </summary>
-        private bool AssignLettersForCurrentCulture(DictionaryCharByte characterMapping, CultureInfo culture, string romName, ArrayList extraCharacters, int maxNumberOfCustomCharacters)
+        private bool AssignLettersForCurrentCulture(DictionaryCharByte characterMapping, string culture, string romName, ArrayList extraCharacters, int maxNumberOfCustomCharacters)
         {
             string specialLetters = SpecialLettersForCulture(culture, characterMapping); // Special letters this language group uses, in order of importance
 
@@ -460,9 +460,9 @@ namespace Iot.Device.Graphics
         /// <param name="characterMapping">The character map, pre-loaded with the characters from the character ROM. This may be extended by explicitly adding direct mappings
         /// where an alternative is allowed (i.e. mapping capital diacritics to normal capital letters É -> E, when there's not enough room to put É into character RAM.</param>
         /// <returns>A string with the set of special characters for a language, i.e. "äöüß€ÄÖÜ" for German</returns>
-        protected virtual string SpecialLettersForCulture(CultureInfo culture, DictionaryCharByte characterMapping)
+        protected virtual string SpecialLettersForCulture(string culture, DictionaryCharByte characterMapping)
         {
-            string mainCultureName = culture.Name;
+            string mainCultureName = culture;
             int idx = mainCultureName.IndexOf('-');
             if (idx > 0)
             {
