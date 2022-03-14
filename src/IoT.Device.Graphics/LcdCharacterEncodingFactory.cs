@@ -408,7 +408,7 @@ namespace Iot.Device.Graphics
                 throw new ArgumentException("The replacement letter is not part of the mapping", nameof(unknownLetter));
             }
 
-            var encoding = new LcdCharacterEncoding(culture.Name, romName, newMap, unknownLetter, extraCharacters);
+            var encoding = new LcdCharacterEncoding(culture, romName, newMap, unknownLetter, extraCharacters);
             encoding.AllCharactersSupported = !supported;
             return encoding;
         }

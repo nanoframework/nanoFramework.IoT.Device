@@ -1,5 +1,8 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using Iot.Device.CharacterLcd;
 
@@ -14,25 +17,25 @@ namespace CharacterLcd.Samples
         /// <param name="lcd">The display</param>
         public static void LargeValueDemo(Hd44780 lcd)
         {
-            LcdValueUnitDisplay value = new LcdValueUnitDisplay(lcd, CultureInfo.CurrentCulture);
+            LcdValueUnitDisplay value = new LcdValueUnitDisplay(lcd, "en");
             value.InitForRom("A00");
             value.Clear();
             Debug.WriteLine("Big clock test");
-            while (!Console.KeyAvailable)
+            int count = 0;
+            while (count++ < 50)
             {
                 value.DisplayTime(DateTime.UtcNow, "T");
                 Thread.Sleep(200);
             }
-
-            Console.ReadKey(true);
+            
             Debug.WriteLine("Showing fake temperature");
             value.DisplayValue("24.2 °C", "Temperature");
-            Console.ReadKey(true);
+            Thread.Sleep(2000);
 
             Debug.WriteLine("Now showing a text");
             CancellationTokenSource src = new CancellationTokenSource();
-            value.DisplayBigTextAsync("The quick brown fox jumps over the lazy dog at 10.45PM on May, 3rd", TimeSpan.FromSeconds(0.5), src.Token);
-            Console.ReadKey(true);
+            value.DisplayBigTextAsync("The quick brown fox jumps over the lazy dog at 10.45PM on May, 3rd", TimeSpan.FromMilliseconds(500), src.Token);
+            Thread.Sleep(2000);
             src.Cancel();
         }
     }

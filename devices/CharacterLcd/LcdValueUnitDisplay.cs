@@ -82,7 +82,7 @@ namespace Iot.Device.CharacterLcd
                 CreateSpecialChars(specialGraphicsRequired);
                 for (byte i = 0; i < specialGraphicsRequired.Count; i++)
                 {
-                    _lcd.CreateCustomCharacter(i, specialGraphicsRequired[i]);
+                    _lcd.CreateCustomCharacter(i, (byte[])specialGraphicsRequired[i]);
                 }
 
                 _currentSeparationChar = ' '; // To make sure the next function doesn't just skip the initialization
@@ -117,16 +117,8 @@ namespace Iot.Device.CharacterLcd
             _font.Clear();
             var assembly = Assembly.GetExecutingAssembly();
             // Get our resource file (independent of default namespace of project)
-            string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("BigFontMap.txt"));
 
-            string mapFile;
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName)!)
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    mapFile = reader.ReadToEnd();
-                }
-            }
+            string mapFile = Resource.GetString(Resource.StringResources.BigFontMap);
 
             // -1: init
             // 0: char seen, awaiting first line
