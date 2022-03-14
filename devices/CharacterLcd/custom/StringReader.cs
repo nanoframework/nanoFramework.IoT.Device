@@ -1,12 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+
 namespace Iot.Device.CharacterLcd
 {
     /// <summary>
     /// A simple String Reader class
     /// </summary>
-    internal class StringReader
+    internal class StringReader:IDisposable
     {
         private string _str;
         private int _pos;
@@ -42,6 +44,11 @@ namespace Iot.Device.CharacterLcd
             _pos = nl + NewLine.Length;
 
             return toReturn;
+        }
+
+        public void Dispose()
+        {
+            // Nothing to do
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Iot.Device.Graphics
 {
-    internal static class FontExtensions
+    public static class FontExtensions
     {
         internal static bool StartsWith(this SpanChar spanCar, string toSearch)
         {

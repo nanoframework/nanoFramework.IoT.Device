@@ -135,7 +135,8 @@ namespace Iot.Device.CharacterLcd
                 while ((line = r.ReadLine()) != null)
                 {
                     lineNo++;
-                    if (line.StartsWith("//") || string.IsNullOrWhiteSpace(line))
+                    // Normally check for whitespace, won't do here
+                    if (line.StartsWith("//") || string.IsNullOrEmpty(line))
                     {
                         continue;
                     }
@@ -145,7 +146,7 @@ namespace Iot.Device.CharacterLcd
                         line = line.TrimEnd();
                         if (line.Length != 2 || line[1] != ':')
                         {
-                            throw new InvalidDataException($"Line {lineNo}: Expected character followed by ':', found {line}");
+                            throw new Exception($"Line {lineNo}: Expected character followed by ':', found {line}");
                         }
 
                         currentChar = line[0];
@@ -153,7 +154,7 @@ namespace Iot.Device.CharacterLcd
                         continue;
                     }
 
-                    string[] splits = line.Split(new char[] { ',' }, StringSplitOptions.None);
+                    string[] splits = line.Split(new char[] { ',' });
                     if (characterStep == 0)
                     {
                         currentCharMap = new byte[splits.Length * 4];
@@ -165,12 +166,12 @@ namespace Iot.Device.CharacterLcd
                         byte b;
                         if (!byte.TryParse(splits[i], out b))
                         {
-                            throw new InvalidDataException($"Line {lineNo}: Expected byte, found {splits[i]}");
+                            throw new Exception($"Line {lineNo}: Expected byte, found {splits[i]}");
                         }
 
                         if (currentCharMapPos >= currentCharMap.Length)
                         {
-                            throw new InvalidDataException($"Line {lineNo}: Character is expected to have {currentCharMap.Length} bytes, but found more");
+                            throw new Exception($"Line {lineNo}: Character is expected to have {currentCharMap.Length} bytes, but found more");
                         }
 
                         currentCharMap[currentCharMapPos] = b;

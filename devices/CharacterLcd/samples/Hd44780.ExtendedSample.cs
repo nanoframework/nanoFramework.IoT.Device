@@ -9,6 +9,7 @@ using System.Threading;
 using System.Globalization;
 using SixLabors.ImageSharp;
 using System.Drawing;
+using Iot.Device.Graphics;
 
 namespace Iot.Device.CharacterLcd.Samples
 {
