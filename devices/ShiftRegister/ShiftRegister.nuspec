@@ -22,7 +22,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.18" />
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.0.277-preview.99" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.8" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.11" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.16" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.0.4-preview.7" />
       <dependency id="nanoFramework.System.Threading" version="1.0.4-preview.20" />
