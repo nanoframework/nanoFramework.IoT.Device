@@ -110,7 +110,7 @@ namespace Iot.Device.CharacterLcd.Samples
             lcd.AutoShift = false;
         }
 
-        private static void ShiftTest(Hd44780 lcd, Action<Hd44780> action)
+        private static void ShiftTest(Hd44780 lcd, HdFunction action)
         {
             Size size = lcd.Size;
             for (int i = 0; i <= size.Width; i++)
@@ -120,14 +120,14 @@ namespace Iot.Device.CharacterLcd.Samples
             }
         }
 
-        private static void ShiftDisplayTest(Hd44780 lcd, Action<Hd44780> action)
+        private static void ShiftDisplayTest(Hd44780 lcd, HdFunction action)
         {
             Size size = lcd.Size;
             lcd.Write(Eighty.Substring(0, size.Height * size.Width));
             ShiftTest(lcd, action);
         }
 
-        private static void ShiftCursorTest(Hd44780 lcd, Action<Hd44780> action)
+        private static void ShiftCursorTest(Hd44780 lcd, HdFunction action)
         {
             lcd.BlinkingCursorVisible = true;
             ShiftTest(lcd, action);
