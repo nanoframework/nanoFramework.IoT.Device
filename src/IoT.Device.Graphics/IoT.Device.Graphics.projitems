@@ -17,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Font5x8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LcdCharacterEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LcdCharacterEncodingFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SpanChar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SpanInt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SpanUshort.cs" />
   </ItemGroup>
