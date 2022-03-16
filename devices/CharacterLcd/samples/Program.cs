@@ -11,14 +11,18 @@ using CharacterLcd.Samples;
 using Iot.Device.CharacterLcd;
 using Iot.Device.CharacterLcd.Samples;
 using Iot.Device.Multiplexing;
+using nanoFramework.Hardware.Esp32;
 using SixLabors.ImageSharp;
+
+// For ESP32
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 // Choose the right setup for your display:
 // UsingGpioPins();
-// UsingGroveRgbDisplay();
+UsingGroveRgbDisplay();
 // UsingHd44780OverI2C();
-
-UsingShiftRegister();
+//UsingShiftRegister();
 
 void UsingGpioPins()
 {

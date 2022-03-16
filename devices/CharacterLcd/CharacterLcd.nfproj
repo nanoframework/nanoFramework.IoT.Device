@@ -30,18 +30,33 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="CharacterLcdExtensions.cs" />
     <Compile Include="custom\*.cs" />
-    <Compile Include="*.cs">
+    <Compile Include="Flags.cs" />
+    <Compile Include="Hd44780.cs" />
+    <Compile Include="ICharacterLcd.cs" />
+    <Compile Include="Lcd1602.cs" />
+    <Compile Include="Lcd2004.cs" />
+    <Compile Include="LcdConsole.cs" />
+    <Compile Include="LcdInterface.cs" />
+    <Compile Include="LcdInterface.Gpio.cs" />
+    <Compile Include="LcdInterface.I2c.cs" />
+    <Compile Include="LcdInterface.I2c4Bit.cs" />
+    <Compile Include="LcdInterface.ShiftRegister.cs" />
+    <Compile Include="LcdRgb.cs" />
+    <Compile Include="LcdValueUnitDisplay.cs" />
+    <Compile Include="LineWrapMode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registers.cs" />
+    <Compile Include="Resource.Designer.cs" >
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="*.md" />
     <None Include="*.nuspec" />
-    <None Include="*.jpg" />
     <None Include="packages.config" />
     <None Include="version.json" />
   </ItemGroup>
