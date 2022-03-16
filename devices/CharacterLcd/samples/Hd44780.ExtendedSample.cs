@@ -252,8 +252,9 @@ namespace Iot.Device.CharacterLcd.Samples
             }
         }
 
-        private static void TestPrompt<T>(string test, T lcd, Action<T> action)
-            where T : Hd44780
+        private delegate void HdFunction(Hd44780 lcd);
+
+        private static void TestPrompt(string test, Hd44780 lcd, HdFunction action)
         {
             string prompt = $"Test {test}:";
             lcd.Clear();
