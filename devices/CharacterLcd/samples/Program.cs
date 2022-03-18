@@ -1,6 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+// !!!----------- SAMPLE - ENSURE YOU CHOOSE THE CORRECT TARGET HERE --------------!!!
+#define ESP32 //Comment this out for any other target and remove Hardware.ESP32 only nuget!
+// !!!-----------------------------------------------------------------------------!!!
+
 using System;
 using System.Device.Gpio;
 using System.Device.I2c;
@@ -11,12 +15,16 @@ using CharacterLcd.Samples;
 using Iot.Device.CharacterLcd;
 using Iot.Device.CharacterLcd.Samples;
 using Iot.Device.Multiplexing;
+#if ESP32
 using nanoFramework.Hardware.Esp32;
+#endif
 using SixLabors.ImageSharp;
 
+#if ESP32
 // For ESP32
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+#endif
 
 // Choose the right setup for your display:
 // UsingGpioPins();
