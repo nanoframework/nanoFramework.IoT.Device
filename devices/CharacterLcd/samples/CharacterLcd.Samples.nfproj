@@ -23,6 +23,9 @@
     <Reference Include="Iot.Device.Multiplexing">
       <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.1.0.277-preview.99\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
+    <Reference Include="Iot.Device.Pcx857x">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.0.277-preview.1\lib\Iot.Device.Pca95x4.dll</HintPath>
+    </Reference>
     <Reference Include="Iot.Device.ShiftRegister">
       <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.0.277-preview.102\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>

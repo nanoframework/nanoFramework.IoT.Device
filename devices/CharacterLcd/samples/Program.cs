@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // !!!----------- SAMPLE - ENSURE YOU CHOOSE THE CORRECT TARGET HERE --------------!!!
-#define ESP32 //Comment this out for any other target and remove Hardware.ESP32 only nuget!
+#define ESP32 //Comment this out for any other non ESP32 based target and remove Hardware.ESP32 only nuget!
 // !!!-----------------------------------------------------------------------------!!!
 
 using System;
@@ -18,10 +18,11 @@ using Iot.Device.Multiplexing;
 #if ESP32
 using nanoFramework.Hardware.Esp32;
 #endif
+using Iot.Device.Pcx857x;
 using SixLabors.ImageSharp;
 
 #if ESP32
-// For ESP32
+// For ESP32, set the pin functions.
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 #endif
@@ -30,7 +31,8 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 // UsingGpioPins();
 UsingGroveRgbDisplay();
 // UsingHd44780OverI2C();
-//UsingShiftRegister();
+// UsingShiftRegister();
+// UsingHd44780OverPcf8574();
 
 void UsingGpioPins()
 {
@@ -48,9 +50,27 @@ void UsingHd44780OverI2C()
     hd44780.BacklightOn = true;
     hd44780.DisplayOn = true;
     hd44780.Clear();
-    Debug.WriteLine("Display initialized. Press Enter to start tests.");
+    Debug.WriteLine("Display initialized.");
     LcdConsoleSamples.WriteTest(hd44780);
     ExtendedSample.Test(hd44780);
+}
+
+void UsingHd44780OverPcf8574()
+{
+    using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(1, 0x27));
+    using Pcf8574 controller = new Pcf8574(i2cDevice); //TODO: how would this be used to create LcdInterface?!
+    using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false);
+    using Hd44780 lcd = new Lcd1602(lcdInterface);
+    {
+        lcd.UnderlineCursorVisible = false;
+        lcd.BacklightOn = true;
+        lcd.DisplayOn = true;
+        lcd.Clear();
+        Debug.WriteLine("Display initialized.");
+        lcd.Write("Hello World!");
+        //LcdConsoleSamples.WriteTest(lcd);
+        //ExtendedSample.Test(lcd);
+    }
 }
 
 void UsingGroveRgbDisplay()
