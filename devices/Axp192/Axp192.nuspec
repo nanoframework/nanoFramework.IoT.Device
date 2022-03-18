@@ -20,10 +20,10 @@
     <summary>Iot.Device.Axp192 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Axp192</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.9" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.19" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.6" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.14" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.8" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.18" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.13" />
       <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="4.125.0" />
       <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="4.125.0" />
       <dependency id="UnitsNet.nanoFramework.Power" version="4.125.0" />
