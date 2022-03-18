@@ -19,15 +19,15 @@
     <description>This package includes the .NET IoT Core binding Iot.Device.Dhtxx.Esp32 for .NET nanoFramework C# projects. Only working with ESP32.</description>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Dhtxx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.18" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="1.2.2-preview.9" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.19" />
+      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="1.2.2-preview.10" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.6" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.5.4-preview.8" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.16" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.11" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.5.4-preview.10" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.18" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.13" />
       <dependency id="nanoFramework.System.Math" version="1.4.4-preview.19" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.92" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.289-preview.53" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.0.288-preview.97" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.0.289-preview.58" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.125.0" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.125.0" />
     </dependencies>
