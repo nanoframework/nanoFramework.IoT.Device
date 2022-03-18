@@ -48,7 +48,7 @@
     <Compile Include="LineWrapMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registers.cs" />
-    <Compile Include="Resource.Designer.cs" >
+    <Compile Include="Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -68,49 +68,49 @@
       <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.0.277-preview.102\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.12.0-preview.9\lib\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.1.12.0-preview.19\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager">
-      <HintPath>packages\nanoFramework.ResourceManager.1.1.4-preview.8\lib\nanoFramework.ResourceManager.dll</HintPath>
+      <HintPath>packages\nanoFramework.ResourceManager.1.1.4-preview.13\lib\nanoFramework.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>packages\nanoFramework.Runtime.Events.1.10.0-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Events.1.10.0-preview.13\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native">
-      <HintPath>packages\nanoFramework.Runtime.Native.1.5.4-preview.5\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Native.1.5.4-preview.10\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections">
-      <HintPath>packages\nanoFramework.System.Collections.1.4.0-preview.21\lib\nanoFramework.System.Collections.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Collections.1.4.0-preview.27\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Text">
-      <HintPath>packages\nanoFramework.System.Text.1.1.3-preview.15\lib\nanoFramework.System.Text.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Text.1.1.3-preview.24\lib\nanoFramework.System.Text.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.3-preview.14\lib\System.Device.Gpio.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.3-preview.18\lib\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.3-preview.8\lib\System.Device.I2c.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.3-preview.13\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Spi">
-      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.4-preview.3\lib\System.Device.Spi.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>packages\nanoFramework.System.Drawing.1.0.288-preview.64\lib\System.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.FileSystem">
-      <HintPath>packages\nanoFramework.System.IO.FileSystem.1.0.3-preview.12\lib\System.IO.FileSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Streams">
-      <HintPath>packages\nanoFramework.System.IO.Streams.1.0.0-preview.12\lib\System.IO.Streams.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Math">
-      <HintPath>packages\nanoFramework.System.Math.1.4.4-preview.15\lib\System.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading">
-      <HintPath>packages\nanoFramework.System.Threading.1.0.4-preview.16\lib\System.Threading.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.0.4-preview.11\lib\System.Device.Spi.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289-preview.25\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289-preview.58\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>packages\nanoFramework.System.Drawing.1.0.288-preview.97\lib\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>packages\nanoFramework.System.IO.FileSystem.1.0.3-preview.18\lib\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Streams">
+      <HintPath>packages\nanoFramework.System.IO.Streams.1.0.0-preview.19\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.4.4-preview.22\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>packages\nanoFramework.System.Threading.1.0.4-preview.23\lib\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
