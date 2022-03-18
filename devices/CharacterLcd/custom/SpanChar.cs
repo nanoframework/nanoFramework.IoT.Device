@@ -53,7 +53,7 @@ namespace System
                 if (start < 0 ||
                     length < 0 ||
                     start + length > array.Length ||
-                    start >= array.Length)
+                    start > array.Length)
                 {
 #pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                     throw new ArgumentOutOfRangeException();
@@ -74,9 +74,9 @@ namespace System
             }
             else
             {
-#pragma warning disable S3928 
-                throw new NullReferenceException();
-#pragma warning restore S3928  
+                _start = 0;
+                _length = 0;
+                _array = null; 
             }
         }
 
