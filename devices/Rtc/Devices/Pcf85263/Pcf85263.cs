@@ -13,22 +13,22 @@ namespace Iot.Device.Rtc
     /// Driver for RTC PCF85263 with key functions implemented for time
     /// </summary>
     /// <remarks>
-    /// Partial work on support for alarm and some other system functions (untested).
+    /// Partial work on support for alarm and some other system functions (commented out).
     /// See datasheet for details: https://www.nxp.com/docs/en/data-sheet/PCF85263A.pdf
     /// </remarks>
-    public class PCF85263 : RtcBase
+    public class Pcf85263 : RtcBase
     {
         /// <summary>
-        /// PCF85263 Default I2C Address
+        /// Pcf8563 Default I2C Address
         /// </summary>
         public const byte DefaultI2cAddress = 0x51;
         private I2cDevice _i2cDevice;
 
         /// <summary>
-        /// Creates a new instance of the PCF85263
+        /// Creates a new instance of the Pcf85263
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        public PCF85263(I2cDevice i2cDevice) // TODO: ensure default parameters!
+        public Pcf85263(I2cDevice i2cDevice) // TODO: ensure default parameters!
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
@@ -52,7 +52,7 @@ namespace Iot.Device.Rtc
 
 
         /// <summary>
-        /// Set PCF8563 Time
+        /// Set Pcf8563 Time
         /// </summary>
         /// <param name="time">Time</param>
         protected override void SetTime(DateTime time)
@@ -103,65 +103,69 @@ namespace Iot.Device.Rtc
         //}
 
 
-        ///// <summary>
-        ///// Set alarm for seconds/min/hour/day/month, a full calandar like alarm
-        ///// </summary>
-        ///// <param name="alarmDateTime">Date and time to set the alarm, must be in teh future from present RTC time.</param>
-        ///// <returns>True if alarm set, False if the alarm date is in the past from the RTC time.</returns>
-        //public bool SetAlarm(DateTime alarmDateTime)
-        //{
-        //    if (alarmDateTime < ReadTime())
-        //        return false;
+        /// <summary>
+        /// Set alarm for seconds/min/hour/day/month, a full calandar like alarm
+        /// </summary>
+        /// <param name="alarmDateTime">Date and time to set the alarm, must be in teh future from present RTC time.</param>
+        /// <param name="alarm">The alarm to set.</param>
+        /// <returns>True if alarm set, False if the alarm date is in the past from the RTC time.</returns>
+        public bool SetAlarm(DateTime alarmDateTime, int alarm)
+        {
+            //    if (alarmDateTime < ReadTime())
+            //        return false;
 
-        //    ClearAlarmInterrupt();
+            //    ClearAlarmInterrupt();
 
-        //    Debug.WriteLine("Alarm set: " + alarmDateTime.ToString());
+            //    Debug.WriteLine("Alarm set: " + alarmDateTime.ToString());
 
-        //    byte[] sb = new byte[6] { (byte)Rtc.PCF85263RtcRegisters.RTC_ALARM1_SECOND_ADDR,  // start at location 1 for alarm seconds
-        //                           NumberHelper.Dec2Bcd(alarmDateTime.Second),
-        //                           NumberHelper.Dec2Bcd(alarmDateTime.Minute),
-        //                           NumberHelper.Dec2Bcd(alarmDateTime.Hour),
-        //                           NumberHelper.Dec2Bcd(alarmDateTime.Day),
-        //                           NumberHelper.Dec2Bcd(alarmDateTime.Month)
-        //                           };
+            //    byte[] sb = new byte[6] { (byte)Rtc.PCF85263RtcRegisters.RTC_ALARM1_SECOND_ADDR,  // start at location 1 for alarm seconds
+            //                           NumberHelper.Dec2Bcd(alarmDateTime.Second),
+            //                           NumberHelper.Dec2Bcd(alarmDateTime.Minute),
+            //                           NumberHelper.Dec2Bcd(alarmDateTime.Hour),
+            //                           NumberHelper.Dec2Bcd(alarmDateTime.Day),
+            //                           NumberHelper.Dec2Bcd(alarmDateTime.Month)
+            //                           };
 
-        //    _i2cDevice.Write(sb);
+            //    _i2cDevice.Write(sb);
 
-        //    EnableAlarm();
+            //    EnableAlarm();
 
-        //    return true;
-        //}
+            //    return true;
+            throw new NotImplementedException();
+        }
 
-        ///// <summary>
-        ///// Returns the alarm if any, for month, day, hour, min seconds. The year part is just picked to be current year but
-        ///// alarm will fire every time for that month and the date/time.
-        ///// </summary>
-        ///// <returns>Date and time of alarm if set, or DateTime.MinValue if alarm is not set.</returns>
-        //public DateTime GetAlarm()
-        //{
-        //    _i2cDevice.WriteByte((byte)Rtc.PCF85263RtcRegisters.RTC_ALARM1_SECOND_ADDR);
+        /// <summary>
+        /// Returns the alarm if any, for month, day, hour, min seconds. The year part is just picked to be current year but
+        /// alarm will fire every time for that month and the date/time.
+        /// </summary>
+        /// <param name="alarm">The alarm to set.</param>
+        /// <returns>Date and time of alarm if set, or DateTime.MinValue if alarm is not set.</returns>
+        public DateTime GetAlarm(int alarm)
+        {
+            //    _i2cDevice.WriteByte((byte)Rtc.PCF85263RtcRegisters.RTC_ALARM1_SECOND_ADDR);
 
-        //    byte[] dtNow = new byte[6];
-        //    _i2cDevice.Read(dtNow);
-        //    byte ss = NumberHelper.Bcd2Bin(dtNow[0]);
-        //    byte mm = NumberHelper.Bcd2Bin(dtNow[1]);
-        //    byte hh = NumberHelper.Bcd2Bin(dtNow[2]);
-        //    byte d = NumberHelper.Bcd2Bin(dtNow[3]);
-        //    byte m = NumberHelper.Bcd2Bin(dtNow[4]);
-        //    int y = NumberHelper.Bcd2Bin(dtNow[5]) + 2000;
+            //    byte[] dtNow = new byte[6];
+            //    _i2cDevice.Read(dtNow);
+            //    byte ss = NumberHelper.Bcd2Bin(dtNow[0]);
+            //    byte mm = NumberHelper.Bcd2Bin(dtNow[1]);
+            //    byte hh = NumberHelper.Bcd2Bin(dtNow[2]);
+            //    byte d = NumberHelper.Bcd2Bin(dtNow[3]);
+            //    byte m = NumberHelper.Bcd2Bin(dtNow[4]);
+            //    int y = NumberHelper.Bcd2Bin(dtNow[5]) + 2000;
 
-        //    try
-        //    {
-        //        if (m == 0 || d == 0)
-        //            return DateTime.MinValue;
-        //        else
-        //            return new DateTime(DateTime.UtcNow.Year, m, d, hh, mm, ss);
-        //    }
-        //    catch
-        //    {
-        //        return DateTime.MinValue;
-        //    }
-        //}
+            //    try
+            //    {
+            //        if (m == 0 || d == 0)
+            //            return DateTime.MinValue;
+            //        else
+            //            return new DateTime(DateTime.UtcNow.Year, m, d, hh, mm, ss);
+            //    }
+            //    catch
+            //    {
+            //        return DateTime.MinValue;
+            //    }
+            throw new NotImplementedException();
+        }
 
         ///// <summary>
         ///// Enables the alarm, and the interrupts for the Alarm 1, for month/day/hour/min/sec always.
