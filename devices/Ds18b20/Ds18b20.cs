@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Device.Model;
 using System.Threading;
+using Iot.Device.Ds18b201;
 using nanoFramework.Device.OneWire;
 using UnitsNet;
 
@@ -16,172 +17,52 @@ namespace Iot.Device.Ds18b20
     [Interface("DS18B20 - Temperature sensor")]
     public class Ds18b20
     {
-        #region Implementation
-        /// <summary>
-        /// The underlying One Wire device
-        /// </summary>
+        private const float _errorTemperature = -999.99F;
+
+        private const byte _parasitePoweringModeValue = 0x00;
+
         private OneWireHost _oneWireHost = null;
 
-        /// <summary>
-        /// Is this sensor tracking changes
-        /// </summary>
-        protected bool _isTrackingChanges = false;
-        /// <summary>
-        /// The thread that keeps a track of sensor value change
-        /// </summary>
-        protected Thread _changeTracker = null;
-        #endregion
+        private bool _isTrackingChanges = false;
 
-        #region Events/Delegates
-        /// <summary>
-        /// Delegate that defines method signature that will be called
-        /// when sensor value change event happens
-        /// </summary>
-        public delegate void OnSensorChanged();
-        /// <summary>
-        /// Event that is called when the sensor value changes
-        /// </summary>
-        public event OnSensorChanged SensorValueChanged;
-        #endregion
+        private double _tempLowAlarm;
 
-        #region Constants
-        /// <summary>
-        /// Command to soft reset the HTU21D sensor
-        /// </summary>
-        public static readonly byte FAMILY_CODE = 0x28;
-        /// <summary>
-        /// Command to address specific device on network
-        /// </summary>
-        public static readonly byte MATCH_ROM = 0x55;
-        /// <summary>
-        /// Command to address all devices on the bus simultaneously
-        /// </summary>
-        public static readonly byte SKIP_ROM = 0xCC;
-        /// <summary>
-        /// Set search mode to normal
-        /// </summary>
-        public const bool NORMAL = false;
-        /// <summary>
-        /// Set search mode to search alarm
-        /// </summary>
-        public const bool SEARCH_ALARM = true;
-        /// <summary>
-        /// Command to trigger a temperature conversion
-        /// </summary>
-        private readonly byte CONVERT_TEMPERATURE = 0x44;
-        /// <summary>
-        /// Command copy scratchpad registers to EEPROM
-        /// </summary>
-        private readonly byte COPY_SCRATCHPAD = 0x48;
-        /// <summary>
-        /// Recalls the alarm trigger values and configuration
-        /// from EEPROM to scratchpad registers
-        /// </summary>
-        private readonly byte RECALL_E2 = 0xB8;
-        /// <summary>
-        /// Command to write to scratchpad registers
-        /// </summary>
-        private readonly byte WRITE_SCRATCHPAD = 0x4E;
-        /// <summary>
-        /// Command to read scratchpad registers
-        /// </summary>
-        private readonly byte READ_SCRATCHPAD = 0xBE;
-        /// <summary>
-        /// Check if any DS18B20s on the bus are using parasite power
-        /// Return false for parasite power, true for external power
-        /// </summary>
-        private readonly byte READ_POWER_SUPPLY = 0xB8;
-        /// <summary>
-        /// Error value of temperature
-        /// </summary>
-        private const float ERROR_TEMPERATURE = -999.99F;
-        #endregion
+        private double _tempHighAlarm;
 
-        #region Properties
-        /// <summary>
-        /// The 8-byte address of selected device 
-        /// (since there could be more than one such devices on the bus)
-        /// </summary>
-        public byte[] Address { get; set; }
-        /// <summary>
-        /// Contains an array of address of all 18B20 devices on network or only
-        /// devices in alarm if mode is set to SEARCH_ALARM 
-        /// </summary>
-        public byte[][] AddressNet { get; private set; }
-        /// <summary>
-        /// Set to true if more than one device connected ie network.
-        /// </summary>
-        public bool Multidrop { get; set; }
-        /// <summary>
-        /// Total number of 18B20 devices on network.
-        /// </summary>
-        public int Found;
+        private Thread _changeTracker = null;
 
-        private float TemperatureInCelcius { get; set; }
-        
-        /// <summary>
-        /// Accessor/Mutator for Alarm Hi register in celcius
-        /// Min -55, Max 125
-        /// </summary>
-        private sbyte tempHiAlarm;
-        public sbyte TempHiAlarm
-        {
-            get { return tempHiAlarm; }
-            set
-            {
-                tempHiAlarm = value;
-                if (value < -55) { tempHiAlarm = -55; }
-                if (value > 125) { tempHiAlarm = 125; }
-            }
-        }
-        /// <summary>
-        /// Accessor/Mutator for Alarm Lo register in celcius
-        /// Min -55, Max 125
-        /// </summary>
-        private sbyte tempLoAlarm;
-        public sbyte TempLoAlarm
-        {
-            get { return tempLoAlarm; }
-            set
-            {
-                tempLoAlarm = value;
-                if (value < -55) { tempLoAlarm = -55; }
-                if (value > 125) { tempLoAlarm = 125; }
-            }
-        }
-        /// <summary>
-        /// Set search mode to normal
-        /// or only devices in alarm
-        /// </summary>
-        private bool searchMode;
-        public bool SetSearchMode
-        {
-            set { searchMode = value; }
-        }
-        #endregion
+        private float _temperatureInCelsius { get; set; }
+
+        private bool _manyDevicesConnected = false;
 
         /// <summary>
         /// Constructs Ds18b20 instance
         /// </summary>
         /// <param name="oneWireHost">One wire host (logical bus) to use</param>
-        /// <param name="deviceAddr">The device address (if null, then this device will search for one on the bus and latch on to the first one found)</param>
-        /// <param name="multidrop"> True for more than one sensor</param>
+        /// <param name="deviceAddress">The device address (if null, then this device will search for one on the bus and latch on to the first one found)</param>
+        /// <param name="manyDevicesConnected">True for more than one sensor connected to bus</param>
         /// <param name="temperatureResolution">Sensor resolution</param>
-        public Ds18b20(OneWireHost oneWireHost, byte[] deviceAddr = null, bool multidrop = false, TemperatureResolution temperatureResolution = TemperatureResolution.VeryHigh)
+        public Ds18b20(OneWireHost oneWireHost, byte[] deviceAddress = null, bool manyDevicesConnected = false,
+            TemperatureResolution temperatureResolution = TemperatureResolution.VeryHigh)
         {
             _oneWireHost = oneWireHost;
             TemperatureResolution = temperatureResolution;
-            Multidrop = multidrop;
+            _manyDevicesConnected = manyDevicesConnected;
 
-            if (deviceAddr != null)
+            if (deviceAddress != null)
             {
-                if (deviceAddr.Length != 8) throw new ArgumentException();//must be 8 bytes
-                if (deviceAddr[0] != FAMILY_CODE) throw new ArgumentException();//invalid family code
-                Address = deviceAddr;
+                if (deviceAddress.Length != 8) throw new ArgumentException(); //must be 8 bytes
+                if (deviceAddress[0] != (byte)RomCommands.FamilyCode)
+                {
+                    throw new ArgumentException("Device address does not belong to Ds18b20 sensors family.");
+                }
+
+                Address = deviceAddress;
             }
-            TemperatureInCelcius = ERROR_TEMPERATURE;
-            TempHiAlarm = 30; // Set default alarm values
-            TempLoAlarm = 20;
+
+            _temperatureInCelsius = _errorTemperature;
+            TemperatureHighAlarm = Temperature.FromDegreesCelsius(30);
+            TemperatureLowAlarm = Temperature.FromDegreesCelsius(20);
         }
 
         /// <summary>
@@ -195,37 +76,117 @@ namespace Iot.Device.Ds18b20
         }
 
         /// <summary>
+        /// Sets or gets value indicating if alarm search mode is enabled.
+        /// </summary>
+        [Property("IsAlarmSearchCommandEnabled")]
+        public bool IsAlarmSearchCommandEnabled
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Sets or gets high temperature alarm. Min -55C, Max 125C
+        /// </summary>
+        [Property("TemperatureHighAlarm")]
+        public Temperature TemperatureHighAlarm
+        {
+            get
+            {
+                return Temperature.FromDegreesCelsius(_tempHighAlarm);
+            }
+            set
+            {
+                if (value.DegreesCelsius is < -55 or > 125)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(TemperatureHighAlarm),
+                        "High alarm temperature has to be between -55 and 125 degrees");
+                }
+
+                _tempHighAlarm = value.DegreesCelsius;
+            }
+        }
+
+        /// <summary>
+        /// Sets or gets low temperature alarm. Min -55C, Max 125C
+        /// </summary>
+        [Property("TemperatureLowAlarm")]
+        public Temperature TemperatureLowAlarm
+        {
+            get { return Temperature.FromDegreesCelsius(_tempLowAlarm); }
+            set
+            {
+                if (value.DegreesCelsius is < -55 or > 125)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(TemperatureLowAlarm),
+                        "Low alarm temperature has to be between -55 and 125 degrees");
+                }
+
+                _tempLowAlarm = value.DegreesCelsius;
+            }
+        }
+
+        /// <summary>
+        /// Returns information if it's powered as parasite of the board.
+        /// </summary>
+        /// <returns>bool</returns>
+        [Property("IsParasitePowered")]
+        public bool IsParasitePowered
+        {
+            get
+            {
+                SelectDevice();
+
+                // Now read power supply external | parasite
+                var verify = _oneWireHost.WriteByte((byte)FunctionCommands.ReadPowerSupply);
+
+                return _oneWireHost.ReadByte() == _parasitePoweringModeValue;
+            }
+        }
+
+        /// <summary>
         /// Reads temperature, check data sheet, page 14, 8.6.1 section
         /// </summary>
         /// <returns>
         /// Temperature
         /// </returns>
         [Telemetry("Temperature")]
-        public Temperature Temperature => Temperature.FromDegreesCelsius(TemperatureInCelcius);
-
-        #region IDisposable Support
+        public Temperature Temperature => Temperature.FromDegreesCelsius(_temperatureInCelsius);
 
         /// <summary>
-        /// Dispose this object
+        /// Delegate that defines method signature that will be called
+        /// when sensor value change event happens
         /// </summary>
-        void DisposeSensor()
-        {
-            Address = null;
-        }
-        #endregion
+        public delegate void OnSensorChanged();
 
-        #region Core Methods
         /// <summary>
-        /// Initialize the sensor. This step will perform a reset of the 1-wire bus.
+        /// Event that is called when the sensor value changes
+        /// </summary>
+        public event OnSensorChanged SensorValueChanged;
+
+        /// <summary>
+        /// The 8-byte address of selected device 
+        /// (since there could be more than one such devices on the bus)
+        /// </summary>
+        public byte[] Address { get; set; }
+
+        /// <summary>
+        /// Contains an array of address of all 18B20 devices on network or only
+        /// devices in alarm if mode is set to SEARCH_ALARM 
+        /// </summary>
+        public byte[][] AddressNet { get; private set; }
+
+        /// <summary>
+        /// Initializes the sensor. This step will perform a reset of the 1-wire bus.
         /// It will check for existence of a 1-wire device. If no address was provided, then the
         /// 1-wire bus will be searched and the first device that matches the family code will be latched on to.
         /// Developer should check for successful initialization by checking the value returned. 
         /// It must be bigger than 0.
-        /// If in Multidrop mode will keep seaching until find last device, saving all in AddressNet array.
+        /// If ManyDevicesConnected is set it will keep searching until find last device, saving all in AddressNet array.
         /// </summary>
         public bool Initialize()
         {
-            Found = 0;
+            int foundDevices = 0;
             //ArrayList allDevices;
             ArrayList allDevices = new ArrayList();
 
@@ -234,27 +195,28 @@ namespace Iot.Device.Ds18b20
             if (Address == null) //search for a device with the required family code
             {
                 //found the device
-                if (Multidrop)
+                if (_manyDevicesConnected)
                 {
-                    if (_oneWireHost.FindFirstDevice(false, searchMode))
+                    if (_oneWireHost.FindFirstDevice(false, IsAlarmSearchCommandEnabled))
                     {
                         do
                         {
-                            if (_oneWireHost.SerialNumber[0] == FAMILY_CODE)
+                            if (_oneWireHost.SerialNumber[0] == (byte)RomCommands.FamilyCode)
                             {
                                 _oneWireHost.TouchReset();
                                 Address = new byte[_oneWireHost.SerialNumber.Length];
                                 Array.Copy(_oneWireHost.SerialNumber, Address, _oneWireHost.SerialNumber.Length);
-                                Found++;
+                                foundDevices++;
                                 allDevices.Add(Address);
-                                //if (Found == 6) { break; } //Temp fix during test endless loop
                             }
-                        } while (_oneWireHost.FindNextDevice(false, searchMode));//keep searching until we get one
+                        }
+                        while (_oneWireHost.FindNextDevice(false,
+                                     IsAlarmSearchCommandEnabled)); //keep searching until we get one
                     }
 
-                    if (Found > 0)
+                    if (foundDevices > 0)
                     {
-                        AddressNet = new byte[Found][];
+                        AddressNet = new byte[foundDevices][];
                         int i = 0;
                         foreach (byte[] device in allDevices)
                         {
@@ -262,71 +224,48 @@ namespace Iot.Device.Ds18b20
                             Array.Copy(device, AddressNet[i], device.Length);
                             i++;
                         }
-                        allDevices = null;
                     }
                 }
                 else
                 {
-                    if (_oneWireHost.FindFirstDevice(true, searchMode))
+                    if (_oneWireHost.FindFirstDevice(true, IsAlarmSearchCommandEnabled))
                     {
                         do
                         {
-                            if (_oneWireHost.SerialNumber[0] == FAMILY_CODE)
+                            if (_oneWireHost.SerialNumber[0] == (byte)RomCommands.FamilyCode)
                             {
                                 Address = new byte[_oneWireHost.SerialNumber.Length];
                                 Array.Copy(_oneWireHost.SerialNumber, Address, _oneWireHost.SerialNumber.Length);
-                                Found = 1;
+                                foundDevices = 1;
                                 break;
                             }
-                        } while (_oneWireHost.FindNextDevice(true, searchMode));//keep searching until we get one
+                        }
+                        while (_oneWireHost.FindNextDevice(true,
+                                     IsAlarmSearchCommandEnabled)); //keep searching until we get one
                     }
                 }
             }
-            if (Found > 0) { return true; };
-            return false;
+
+            return foundDevices > 0;
         }
 
         private void SelectDevice()
         {
-            if (Address != null && Address.Length == 8 && Address[0] == FAMILY_CODE)
+            if (Address != null && Address.Length == 8 && Address[0] == (byte)RomCommands.FamilyCode)
             {
                 //now write command and ROM at once
-                byte[] cmdAndData = new byte[9] {
-                   MATCH_ROM, //Address specific device command
-                   Address[0],Address[1],Address[2],Address[3],Address[4],Address[5],Address[6],Address[7] //do not convert to a for..loop
-               };
+                byte[] cmdAndData = new byte[9]
+                {
+                    (byte)RomCommands.Match, //Address specific device command
+                    Address[0], Address[1], Address[2], Address[3], Address[4], Address[5], Address[6],
+                    Address[7] //do not convert to a for..loop
+                };
 
                 _oneWireHost.TouchReset();
-                foreach (var b in cmdAndData) _oneWireHost.WriteByte(b);
-            }
-        }
-
-        private void Convert_T()
-        {
-            _oneWireHost.TouchReset();
-            //first address all devices
-            _oneWireHost.WriteByte(SKIP_ROM);//Skip ROM command
-            _oneWireHost.WriteByte(CONVERT_TEMPERATURE);//convert temperature
-                                                        // According datasheet. Less resolution needs less time to complete.
-            int waitConversion = TemperatureResolution switch
-            {
-                TemperatureResolution.VeryLow => 125,
-                TemperatureResolution.Low => 250,
-                TemperatureResolution.High => 500,
-                TemperatureResolution.VeryHigh => 1000,
-                _ => 1000
-            };
-            Thread.Sleep(waitConversion);
-        }
-
-        /// <summary>
-        /// Prepare sensor to read the data
-        /// </summary>
-        public void PrepareToRead()
-        {
-            if ((Address != null || Found != 0) && Address.Length == 8 && Address[0] == FAMILY_CODE)
-            {
-                Convert_T();
+                foreach (var b in cmdAndData)
+                {
+                    _oneWireHost.WriteByte(b);
+                }
             }
         }
 
@@ -336,10 +275,12 @@ namespace Iot.Device.Ds18b20
         /// <returns>true on success, else false</returns>
         public bool Read()
         {
+            PrepareToRead();
+
             SelectDevice();
 
             //now read the scratchpad
-            var verify = _oneWireHost.WriteByte(READ_SCRATCHPAD);
+            var verify = _oneWireHost.WriteByte((byte)FunctionCommands.ReadScratchpad);
 
             //Now read the temperature
             var tempLo = _oneWireHost.ReadByte();
@@ -355,12 +296,12 @@ namespace Iot.Device.Ds18b20
                     temp = (temp | unchecked((int)0xffff0000));
                 }
 
-                TemperatureInCelcius = ((float)temp) / 16;
+                _temperatureInCelsius = ((float)temp) / 16;
                 return true;
             }
             else
             {
-                TemperatureInCelcius = ERROR_TEMPERATURE;
+                _temperatureInCelsius = _errorTemperature;
                 return false;
             }
         }
@@ -372,9 +313,8 @@ namespace Iot.Device.Ds18b20
         public void Reset()
         {
             _oneWireHost.TouchReset();
-            TemperatureInCelcius = ERROR_TEMPERATURE;
+            _temperatureInCelsius = _errorTemperature;
         }
-        #endregion
 
         /// <summary>
         /// Search for alarm condition.
@@ -386,12 +326,15 @@ namespace Iot.Device.Ds18b20
         {
             Address = null;
 
-            Convert_T();
-            if (Initialize()) { return true; }
+            ConvertTemperature();
+            if (Initialize())
+            {
+                return true;
+            }
+
             return false;
         }
 
-        #region Configuration Methods
         /// <summary>
         /// Read sensor Configuration and
         /// Write on Resolution, TempHiAlarm and TempLoAlarm properties.
@@ -407,31 +350,36 @@ namespace Iot.Device.Ds18b20
             if (recall == true)
             {
                 SelectDevice();
-                verify = _oneWireHost.WriteByte(RECALL_E2);
-                while (_oneWireHost.ReadByte() == 0) { Thread.Sleep(10); }
+                verify = _oneWireHost.WriteByte((byte)FunctionCommands.RecallAlarmTriggerValues);
+                while (_oneWireHost.ReadByte() == 0)
+                {
+                    Thread.Sleep(10);
+                }
             }
 
             // Now read the scratchpad
             SelectDevice();
-            verify = _oneWireHost.WriteByte(READ_SCRATCHPAD);
+            verify = _oneWireHost.WriteByte((byte)FunctionCommands.ReadScratchpad);
 
             // Discard temperature bytes
             _oneWireHost.ReadByte();
             _oneWireHost.ReadByte();
 
-            TempHiAlarm = (sbyte)_oneWireHost.ReadByte();
-            TempLoAlarm = (sbyte)_oneWireHost.ReadByte();
+            _tempHighAlarm = (sbyte)_oneWireHost.ReadByte();
+            TemperatureHighAlarm = Temperature.FromDegreesCelsius(_tempHighAlarm);
+            _tempLowAlarm = (sbyte)_oneWireHost.ReadByte();
+            TemperatureLowAlarm = Temperature.FromDegreesCelsius(_tempLowAlarm);
             int configReg = _oneWireHost.ReadByte();
 
             if (_oneWireHost.TouchReset())
             {
-                TemperatureResolution = (TemperatureResolution) (configReg >> 5);
+                TemperatureResolution = (TemperatureResolution)(configReg >> 5);
             }
             else
             {
                 TemperatureResolution = TemperatureResolution.VeryHigh;
                 return false;
-            };
+            }
 
             return true;
         }
@@ -444,88 +392,57 @@ namespace Iot.Device.Ds18b20
         /// </summary>
         public bool ConfigurationWrite(bool save = false)
         {
-
             SelectDevice();
 
             //now write the scratchpad
-            var verify = _oneWireHost.WriteByte(WRITE_SCRATCHPAD);
+            var verify = _oneWireHost.WriteByte((byte)FunctionCommands.WriteScratchpad);
 
-            _oneWireHost.WriteByte((byte)tempHiAlarm);
-            _oneWireHost.WriteByte((byte)tempLoAlarm);
+            _oneWireHost.WriteByte((byte)_tempHighAlarm);
+            _oneWireHost.WriteByte((byte)_tempLowAlarm);
             _oneWireHost.WriteByte((byte)((byte)TemperatureResolution << 5));
 
             // Save confuguration on device's EEPROM
             if (save)
             {
                 SelectDevice();
-                verify = _oneWireHost.WriteByte(COPY_SCRATCHPAD);
+                verify = _oneWireHost.WriteByte((byte)FunctionCommands.CopyScratchpad);
                 Thread.Sleep(10);
-            };
+            }
+
+            ;
             return true;
-        }
-
-        /// <summary>
-        /// Returns information if it's powered as parasite of the board
-        /// </summary>
-        /// <returns>bool</returns>
-        public bool IsParasitePowered()
-        {
-            SelectDevice();
-
-            // Now read power supply external | parasite
-            var verify = _oneWireHost.WriteByte(READ_POWER_SUPPLY);
-
-            return _oneWireHost.ReadByte() == 0x00;
-        }
-        #endregion
-
-        #region Change tracking
-        /// <summary>
-        /// This sensor suports change tracking
-        /// </summary>
-        /// <returns>bool</returns>
-        public bool CanTrackChanges()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Let the world know whether the sensor value has changed or not
-        /// </summary>
-        /// <returns>bool</returns>
-        bool HasSensorValueChanged()
-        {
-            float previousTemperature = TemperatureInCelcius;
-
-            PrepareToRead();
-            Read();
-
-            float currentTemperature = TemperatureInCelcius;
-
-            bool valuesChanged = (previousTemperature != currentTemperature);
-
-            return valuesChanged;
         }
 
         /// <summary>
         /// Start to track the changes
         /// </summary>
-        /// <param name="ms">Interval in milliseconds to track the changes to sensor values</param>
-        public virtual void BeginTrackChanges(int ms)
+        /// <param name="trackingInterval">Interval to track the changes to sensor values</param>
+        public void BeginTrackChanges(TimeSpan trackingInterval)
         {
-            if (_isTrackingChanges) throw new InvalidOperationException("Already tracking changes");
-            if (ms < 50) throw new ArgumentOutOfRangeException("ms", "Minimum interval to track sensor changes is 50 milliseconds");
-            if (SensorValueChanged == null) throw new NotSupportedException("Tracking not supported if SensorValueChanged event is not defined");
+            if (_isTrackingChanges)
+            {
+                throw new InvalidOperationException("Already tracking changes");
+            }
+
+            if (trackingInterval.Milliseconds < 50)
+            {
+                throw new ArgumentOutOfRangeException(nameof(trackingInterval), "Minimum interval to track sensor changes is 50 milliseconds");
+            }
+
+            if (SensorValueChanged == null)
+            {
+                throw new NotSupportedException("Tracking not supported if SensorValueChanged event is not defined");
+            }
 
             _changeTracker = new Thread(() =>
             {
-                int divs = (int)(ms / 1000);
+                int divs = (int)(trackingInterval.Milliseconds / 1000);
 
                 while (_isTrackingChanges)
                 {
-                    if (ms > 1000)
+                    if (trackingInterval.Milliseconds > 1000)
                     {
-                        divs = (int)(ms / 1000);
+                        divs = (int)(trackingInterval.Milliseconds / 1000);
                         while (_isTrackingChanges && divs > 0)
                         {
                             Thread.Sleep(1000);
@@ -533,11 +450,20 @@ namespace Iot.Device.Ds18b20
                         }
                     }
                     else
-                        Thread.Sleep(ms);
+                    {
+                        Thread.Sleep(trackingInterval);
+                    }
                     //now check for change
                     if (HasSensorValueChanged() && SensorValueChanged != null)
                     {
-                        try { SensorValueChanged(); } catch {; ; /*do nothing..upto event handler to decide what to do*/ }
+                        try
+                        {
+                            SensorValueChanged();
+                        }
+                        catch
+                        {
+                            /*do nothing..upto event handler to decide what to do*/
+                        }
                     }
                 }
 
@@ -549,43 +475,61 @@ namespace Iot.Device.Ds18b20
         /// <summary>
         /// Stop tracking changes
         /// </summary>
-        public virtual void EndTrackChanges()
+        public void EndTrackChanges()
         {
             _isTrackingChanges = false;
             Thread.Sleep(3000);//see BeginChangeTracker to know why 3000 is chosen...3x of lowest wait time
             if (_changeTracker.IsAlive)
             {
                 //force kill
-                try { _changeTracker.Abort(); } finally { _changeTracker = null; }
+                try
+                {
+                    _changeTracker.Abort();
+                }
+                finally
+                {
+                    _changeTracker = null;
+                }
             }
         }
 
-        #endregion
-    }
+        private void ConvertTemperature()
+        {
+            _oneWireHost.TouchReset();
+            //first address all devices
+            _oneWireHost.WriteByte((byte)RomCommands.Skip); //Skip ROM command
+            _oneWireHost.WriteByte((byte)FunctionCommands.ConvertTemperature); //convert temperature
+            // According data sheet. Less resolution needs less time to complete.
+            int waitConversion = TemperatureResolution switch
+            {
+                TemperatureResolution.VeryLow => 125,
+                TemperatureResolution.Low => 250,
+                TemperatureResolution.High => 500,
+                TemperatureResolution.VeryHigh => 1000,
+                _ => 1000
+            };
+            Thread.Sleep(waitConversion);
+        }
 
-    /// <summary>
-    /// Temperature sampling resolution, check data sheet, page 11, 8.5.1.3 section
-    /// </summary>
-    public enum TemperatureResolution : byte
-    {
-        /// <summary>
-        /// 9 bit
-        /// </summary>
-        VeryLow = 0x00,
+        private void PrepareToRead()
+        {
+            if (Address != null && Address.Length == 8 && Address[0] == (byte)RomCommands.FamilyCode)
+            {
+                ConvertTemperature();
+            }
+        }
 
-        /// <summary>
-        /// 10 bit
-        /// </summary>
-        Low = 0x01,
+        private bool HasSensorValueChanged()
+        {
+            float previousTemperature = _temperatureInCelsius;
 
-        /// <summary>
-        ///11 bit
-        /// </summary>
-        High = 0x02,
+            Read();
 
-        /// <summary>
-        /// 12 bit
-        /// </summary>
-        VeryHigh = 0x03,
+            float currentTemperature = _temperatureInCelsius;
+
+            bool valuesChanged = previousTemperature != currentTemperature;
+
+            return valuesChanged;
+        }
     }
 }

@@ -18,8 +18,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="FunctionCommands.cs" />
     <Compile Include="Ds18b20.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RomCommands.cs" />
+    <Compile Include="TemperatureResolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
