@@ -74,7 +74,7 @@ namespace Iot.Device.CharacterLcd
         /// <summary>
         /// Sends byte to LCD device
         /// </summary>
-        /// <param name="value">Byte value to be sed</param>
+        /// <param name="value">Byte value to be sent to the device</param>
         public abstract void SendData(byte value);
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Iot.Device.CharacterLcd
         /// <summary>
         /// Sends data to the LCD device
         /// </summary>
-        /// <param name="values">Char to be send to the device</param>
+        /// <param name="values">Char value to be send to the device</param>
         public abstract void SendData(SpanChar values);
 
         /// <summary>

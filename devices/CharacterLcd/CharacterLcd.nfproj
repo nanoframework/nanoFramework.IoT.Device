@@ -62,10 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Multiplexing">
-      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.0.277-preview.99\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.0.277-preview.111\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister">
-      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.0.277-preview.102\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.0.277-preview.112\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0-preview.19\lib\mscorlib.dll</HintPath>

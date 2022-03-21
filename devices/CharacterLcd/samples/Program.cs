@@ -11,6 +11,7 @@ using System.Device.I2c;
 using System.Device.Spi;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using CharacterLcd.Samples;
 using Iot.Device.CharacterLcd;
 using Iot.Device.CharacterLcd.Samples;
@@ -57,9 +58,9 @@ void UsingHd44780OverI2C()
 
 void UsingHd44780OverPcf8574()
 {
-    using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(1, 0x27));
+    using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(3, 0x27)); //Orpal3 uses BusId 3...
     using Pcf8574 controller = new Pcf8574(i2cDevice); //TODO: how would this be used to create LcdInterface?!
-    using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false);
+    using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false); 
     using Hd44780 lcd = new Lcd1602(lcdInterface);
     {
         lcd.UnderlineCursorVisible = false;
@@ -71,6 +72,7 @@ void UsingHd44780OverPcf8574()
         //LcdConsoleSamples.WriteTest(lcd);
         //ExtendedSample.Test(lcd);
     }
+    Thread.Sleep(Timeout.Infinite);
 }
 
 void UsingGroveRgbDisplay()
