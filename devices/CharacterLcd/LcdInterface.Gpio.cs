@@ -43,7 +43,7 @@ namespace Iot.Device.CharacterLcd
             private byte _lastByte;
             private bool _useLastByte;
 
-            private GpioController _controller;
+            private GpioController? _controller;
             private bool _shouldDispose;
             private PinValuePair[] _pinBuffer = new PinValuePair[8];
 

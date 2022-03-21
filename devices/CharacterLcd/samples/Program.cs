@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // !!!----------- SAMPLE - ENSURE YOU CHOOSE THE CORRECT TARGET HERE --------------!!!
-#define BUIID_FOR_ESP32 //Comment this out for any non ESP32 based target.
+//#define BUIID_FOR_ESP32 //Comment this out for any non ESP32 based target.
 // !!!-----------------------------------------------------------------------------!!!
 
 using System;
@@ -79,7 +79,29 @@ void UsingHd44780OverPcf8574()
                     lcd.DisplayOn = true;
                     lcd.Clear();
                     Debug.WriteLine("Display initialized.");
+                    Debug.WriteLine("Writing: 'Hello World!'.");
                     lcd.Write("Hello World!");
+                    Thread.Sleep(1000);
+                    //lcd.BacklightOn = false;
+                    Thread.Sleep(1000);
+                    //lcd.BacklightOn = true;
+                    lcd.Home();
+                    Debug.WriteLine("Writing: 'Hello World2!!!'.");
+                    lcd.Write("Hello World 2!!!"); // This (seems to) append!
+                    //lcd.BacklightOn = false;
+                    Thread.Sleep(1000);
+                    //lcd.BacklightOn = true;
+                    //lcd.Clear();
+                    lcd.SetCursorPosition(0, 0);
+                    Debug.WriteLine("Writing: 'Hello World3!'.");
+                    lcd.Write("Hello World 3!");
+                    //lcd.BacklightOn = false;
+                    Thread.Sleep(1000);
+                    //lcd.BacklightOn = true;
+                    //lcd.Clear();
+                    lcd.Home();
+                    Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
+                    lcd.Write("Hello World 4!\r\nFrom nanoFramework!");
                     //LcdConsoleSamples.WriteTest(lcd);
                     //ExtendedSample.Test(lcd);
                 }
