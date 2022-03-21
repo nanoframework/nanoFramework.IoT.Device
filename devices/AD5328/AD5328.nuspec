@@ -26,7 +26,7 @@
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.99" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.0.4-preview.11" />
       <dependency id="nanoFramework.System.Math" version="1.4.4-preview.22" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="4.125.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="4.126.0" />
     </dependencies>
   </metadata>
   <files>
