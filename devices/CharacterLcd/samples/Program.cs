@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // !!!----------- SAMPLE - ENSURE YOU CHOOSE THE CORRECT TARGET HERE --------------!!!
-#define ESP32 //Comment this out for any other non ESP32 based target and remove Hardware.ESP32 only nuget!
+#define BUIID_FOR_ESP32 //Comment this out for any non ESP32 based target.
 // !!!-----------------------------------------------------------------------------!!!
 
 using System;
@@ -16,24 +16,27 @@ using CharacterLcd.Samples;
 using Iot.Device.CharacterLcd;
 using Iot.Device.CharacterLcd.Samples;
 using Iot.Device.Multiplexing;
-#if ESP32
+#if BUIID_FOR_ESP32
 using nanoFramework.Hardware.Esp32;
 #endif
 using Iot.Device.Pcx857x;
 using SixLabors.ImageSharp;
 
-#if ESP32
+#if BUIID_FOR_ESP32
 // For ESP32, set the pin functions.
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 #endif
 
 // Choose the right setup for your display:
+#if BUIID_FOR_ESP32  //For ease whilst testing against different targets...
 // UsingGpioPins();
 UsingGroveRgbDisplay();
 // UsingHd44780OverI2C();
 // UsingShiftRegister();
-// UsingHd44780OverPcf8574();
+#else
+UsingHd44780OverPcf8574();
+#endif
 
 void UsingGpioPins()
 {
@@ -58,19 +61,30 @@ void UsingHd44780OverI2C()
 
 void UsingHd44780OverPcf8574()
 {
-    using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(3, 0x27)); //Orpal3 uses BusId 3...
-    using Pcf8574 controller = new Pcf8574(i2cDevice); //TODO: how would this be used to create LcdInterface?!
-    using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false); 
-    using Hd44780 lcd = new Lcd1602(lcdInterface);
+    // The orgPal3 requires powering on...
+    using var lcdPowerOnOff = new GpioController().OpenPin(PortPin('K', 3), PinMode.Output); //TODO: this should actually be set via `lcd.DisplayOn` using an (non default) `enablePin`?!
     {
-        lcd.UnderlineCursorVisible = false;
-        lcd.BacklightOn = true;
-        lcd.DisplayOn = true;
-        lcd.Clear();
-        Debug.WriteLine("Display initialized.");
-        lcd.Write("Hello World!");
-        //LcdConsoleSamples.WriteTest(lcd);
-        //ExtendedSample.Test(lcd);
+        lcdPowerOnOff.Write(PinValue.High);
+
+        using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(3, 0x3F, I2cBusSpeed.FastMode)); //Orpal3 uses BusId 3...
+        {
+            //using Pcf8574 controller = new Pcf8574(i2cDevice); //TODO: how would this be used to create LcdInterface as nF does not support `GpioDriver` in the `GpioController` constructor!  
+            // Using an I2C interface in 4bit mode
+            using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false); //LcdInterface.CreateGpio(registerSelectPin: 0, enablePin: 2, dataPins: new int[] { 4, 5, 6, 7 }, backlightPin: 3, readWritePin: 1, controller: new GpioController(PinNumberingScheme.Logical));
+            {
+                using Hd44780 lcd = new Lcd1602(lcdInterface);
+                {
+                    lcd.UnderlineCursorVisible = false;
+                    lcd.BacklightOn = true;
+                    lcd.DisplayOn = true;
+                    lcd.Clear();
+                    Debug.WriteLine("Display initialized.");
+                    lcd.Write("Hello World!");
+                    //LcdConsoleSamples.WriteTest(lcd);
+                    //ExtendedSample.Test(lcd);
+                }
+            }
+        }
     }
     Thread.Sleep(Timeout.Infinite);
 }
@@ -103,4 +117,16 @@ void UsingShiftRegister()
     using Lcd1602 lcd = new(lcdInterface);
     lcd.Clear();
     lcd.Write("Hello World");
+}
+
+/// <summary>
+/// Used for STM32 devices...
+/// </summary>
+static int PortPin(char port, byte pin)
+{
+    if (port < 'A' || port > 'K')
+        throw new ArgumentException("Invalid Port definition");
+
+    return ((port - 'A') * 16) + pin;
+
 }
