@@ -119,7 +119,9 @@ static void UsingHd44780OverPcf8574()
                         lcd.Clear();
                         lcd.Home();
                         Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
-                        lcd.Write("Hello World 4!\r\nFrom nanoFramework!"); //TODO: Currently the `\r\n` fails!
+                        lcd.Write("Hello World 4!");
+                        lcd.SetCursorPosition(0, 1);
+                        lcd.Write("From nanoFramework!"); //TODO: Currently using `\r\n` fails!
                         Thread.Sleep(3000);
                         //LcdConsoleSamples.WriteTest(lcd);
                         //ExtendedSample.Test(lcd);
