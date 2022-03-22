@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // !!!----------- SAMPLE - ENSURE YOU CHOOSE THE CORRECT TARGET HERE --------------!!!
-//#define BUIID_FOR_ESP32 //Comment this out for any non ESP32 based target.
+//#define BUIID_FOR_ESP32 //Comment this out for any non ESP32 based MCU's.
 // !!!-----------------------------------------------------------------------------!!!
 
 using System;
@@ -35,17 +35,24 @@ UsingGroveRgbDisplay();
 // UsingHd44780OverI2C();
 // UsingShiftRegister();
 #else
+Thread.Sleep(2000); // Only for debug (deploy break in) reliability...
 UsingHd44780OverPcf8574();
 #endif
 
-void UsingGpioPins()
+/// <summary>
+/// Use an "Lcd1602[Hd44780O]" via a "GPIO" interface.
+/// </summary>
+static void UsingGpioPins()
 {
     using Lcd1602 lcd = new Lcd1602(registerSelectPin: 22, enablePin: 17, dataPins: new int[] { 25, 24, 23, 18 });
     lcd.Clear();
     lcd.Write("Hello World");
 }
 
-void UsingHd44780OverI2C()
+/// <summary>
+/// Use an "Lcd2604[Hd44780O]" via an "I2C" interface.
+/// </summary>
+static void UsingHd44780OverI2C()
 {
     using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(1, 0x27));
     using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false);
@@ -59,51 +66,66 @@ void UsingHd44780OverI2C()
     ExtendedSample.Test(hd44780);
 }
 
-void UsingHd44780OverPcf8574()
+/// <summary>
+/// Use an "Lcd1602[Hd44780O]" via a "Pcf8574" interface.
+/// </summary>
+/// <remarks>
+/// This function is currently using the target "OrgPalThree".
+/// It will need adjusting for other target boards!
+/// </remarks>
+static void UsingHd44780OverPcf8574()
 {
-    // The orgPal3 requires powering on...
-    using var lcdPowerOnOff = new GpioController().OpenPin(PortPin('K', 3), PinMode.Output); //TODO: this should actually be set via `lcd.DisplayOn` using an (non default) `enablePin`?!
+    // The "OrgPalThree" requires powering on...
+    using var lcdGpioController = new GpioController();
     {
-        lcdPowerOnOff.Write(PinValue.High);
+        var enablePin = lcdGpioController.OpenPin(PortPin('K', 3), PinMode.Output); //TODO: this should actually be set via `lcd.DisplayOn` using an (non default) `enablePin`?!
+        enablePin.Write(PinValue.High); // and this "should be part" of the `Pcf8574` driver!
 
-        using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(3, 0x3F, I2cBusSpeed.FastMode)); //Orpal3 uses BusId 3...
+        using I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(3, 0x3F, I2cBusSpeed.FastMode)); //OrgPalThree uses BusId 3... with a display of device address of `0x3F`
         {
-            //using Pcf8574 controller = new Pcf8574(i2cDevice); //TODO: how would this be used to create LcdInterface as nF does not support `GpioDriver` in the `GpioController` constructor!  
+            //using Pcf8574 controller = new Pcf8574(device: i2cDevice, gpioController: lcdGpioController); //TODO: how would this be used to create LcdInterface as nF does not support `GpioDriver` in the `GpioController` constructor!  
             // Using an I2C interface in 4bit mode
-            using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false); //LcdInterface.CreateGpio(registerSelectPin: 0, enablePin: 2, dataPins: new int[] { 4, 5, 6, 7 }, backlightPin: 3, readWritePin: 1, controller: new GpioController(PinNumberingScheme.Logical));
+            using LcdInterface lcdInterface = LcdInterface.CreateI2c(i2cDevice, false); //LcdInterface.CreateGpio(registerSelectPin: 0, enablePin: PortPin('K', 3), dataPins: new int[] { 4, 5, 6, 7 }, backlightPin: 3, readWritePin: 1, controller: new GpioController());
             {
                 using Hd44780 lcd = new Lcd1602(lcdInterface);
                 {
+                    //lcd.DisplayOn = true; // commented out as would possibily cause issues until `Pcf8574` works!
                     lcd.UnderlineCursorVisible = false;
                     lcd.BacklightOn = true;
-                    lcd.DisplayOn = true;
-                    lcd.Clear();
                     Debug.WriteLine("Display initialized.");
-                    Debug.WriteLine("Writing: 'Hello World!'.");
-                    lcd.Write("Hello World!");
-                    Thread.Sleep(1000);
-                    //lcd.BacklightOn = false;
-                    Thread.Sleep(1000);
-                    //lcd.BacklightOn = true;
-                    lcd.Home();
-                    Debug.WriteLine("Writing: 'Hello World2!!!'.");
-                    lcd.Write("Hello World 2!!!"); // This (seems to) append!
-                    //lcd.BacklightOn = false;
-                    Thread.Sleep(1000);
-                    //lcd.BacklightOn = true;
-                    //lcd.Clear();
-                    lcd.SetCursorPosition(0, 0);
-                    Debug.WriteLine("Writing: 'Hello World3!'.");
-                    lcd.Write("Hello World 3!");
-                    //lcd.BacklightOn = false;
-                    Thread.Sleep(1000);
-                    //lcd.BacklightOn = true;
-                    //lcd.Clear();
-                    lcd.Home();
-                    Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
-                    lcd.Write("Hello World 4!\r\nFrom nanoFramework!");
-                    //LcdConsoleSamples.WriteTest(lcd);
-                    //ExtendedSample.Test(lcd);
+                    // For debug, lets run some simple commands until they work sucessfully!
+                    for ( ; ; )
+                    {
+                        //lcd.Clear(); // TODO: this delays by 15-20 seconds...
+                        lcd.SetCursorPosition(0, 0);
+                        Debug.WriteLine("Writing: 'Hello World!'.");
+                        lcd.Write("Hello World!");
+                        Thread.Sleep(3000);
+                        lcd.BacklightOn = false;
+                        Thread.Sleep(3000);
+                        //lcd.Home(); // TODO: this seems to not work and delays by 15-20 seconds...
+                        lcd.SetCursorPosition(0, 0);
+                        lcd.BacklightOn = true;
+                        //lcd.Clear(); // TODO: this seems to not work and delays by 15-20 seconds...
+                        Debug.WriteLine("Writing: 'Hello World 2!!!'.");
+                        lcd.Write("Hello World 2!!!"); // This (seems to) append!
+                        //lcd.BacklightOn = false;
+                        Thread.Sleep(3000);
+                        //lcd.BacklightOn = true;
+                        //lcd.Clear(); // TODO: this seems to not work and delays by 15-20 seconds...
+                        lcd.SetCursorPosition(0, 0);
+                        Debug.WriteLine("Writing: 'Hello World 3!'.");
+                        lcd.Write("Hello World 3!");
+                        //lcd.BacklightOn = false;
+                        //Thread.Sleep(3000);
+                        //lcd.BacklightOn = true;
+                        //lcd.Clear(); // TODO: this seems to not work and delays by 15-20 seconds...
+                        //lcd.Home(); // TODO: this seems to not work and delays by 15-20 seconds...
+                        //Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
+                        //lcd.Write("Hello World 4!\r\nFrom nanoFramework!"); //TODO: Currently the `\r\n` fails!
+                        //LcdConsoleSamples.WriteTest(lcd);
+                        //ExtendedSample.Test(lcd);
+                    }
                 }
             }
         }
@@ -111,7 +133,10 @@ void UsingHd44780OverPcf8574()
     Thread.Sleep(Timeout.Infinite);
 }
 
-void UsingGroveRgbDisplay()
+/// <summary>
+/// Use an "LcdRgb" display via an "I2C" interface.
+/// </summary>
+static void UsingGroveRgbDisplay()
 {
     var i2cLcdDevice = I2cDevice.Create(new I2cConnectionSettings(busId: 1, deviceAddress: 0x3E));
     var i2cRgbDevice = I2cDevice.Create(new I2cConnectionSettings(busId: 1, deviceAddress: 0x62));
@@ -122,7 +147,10 @@ void UsingGroveRgbDisplay()
     }
 }
 
-void UsingShiftRegister()
+/// <summary>
+/// Use an "Lcd1602[Hd44780O]" via an "SPI" "ShiftRegister" interface.
+/// </summary>
+static void UsingShiftRegister()
 {
     int registerSelectPin = 1;
     int enablePin = 2;
