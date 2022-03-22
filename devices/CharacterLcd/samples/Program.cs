@@ -96,33 +96,31 @@ static void UsingHd44780OverPcf8574()
                     // For debug, lets run some simple commands until they work sucessfully!
                     for ( ; ; )
                     {
-                        //lcd.Clear(); // TODO: this delays by 15-20 seconds...
+                        lcd.Clear();
                         lcd.SetCursorPosition(0, 0);
                         Debug.WriteLine("Writing: 'Hello World!'.");
                         lcd.Write("Hello World!");
                         Thread.Sleep(3000);
                         lcd.BacklightOn = false;
                         Thread.Sleep(3000);
-                        //lcd.Home(); // TODO: this seems to not work and delays by 15-20 seconds...
-                        lcd.SetCursorPosition(0, 0);
+                        lcd.Home();
                         lcd.BacklightOn = true;
-                        //lcd.Clear(); // TODO: this seems to not work and delays by 15-20 seconds...
+                        lcd.Clear();
                         Debug.WriteLine("Writing: 'Hello World 2!!!'.");
-                        lcd.Write("Hello World 2!!!"); // This (seems to) append!
-                        //lcd.BacklightOn = false;
+                        lcd.Write("Hello World 2!!!");
                         Thread.Sleep(3000);
-                        //lcd.BacklightOn = true;
-                        //lcd.Clear(); // TODO: this seems to not work and delays by 15-20 seconds...
-                        lcd.SetCursorPosition(0, 0);
+                        lcd.Clear();
                         Debug.WriteLine("Writing: 'Hello World 3!'.");
                         lcd.Write("Hello World 3!");
-                        //lcd.BacklightOn = false;
-                        //Thread.Sleep(3000);
-                        //lcd.BacklightOn = true;
-                        //lcd.Clear(); // TODO: this seems to not work and delays by 15-20 seconds...
-                        //lcd.Home(); // TODO: this seems to not work and delays by 15-20 seconds...
-                        //Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
-                        //lcd.Write("Hello World 4!\r\nFrom nanoFramework!"); //TODO: Currently the `\r\n` fails!
+                        Thread.Sleep(3000);
+                        lcd.BacklightOn = false;
+                        Thread.Sleep(3000);
+                        lcd.BacklightOn = true;
+                        lcd.Clear();
+                        lcd.Home();
+                        Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
+                        lcd.Write("Hello World 4!\r\nFrom nanoFramework!"); //TODO: Currently the `\r\n` fails!
+                        Thread.Sleep(3000);
                         //LcdConsoleSamples.WriteTest(lcd);
                         //ExtendedSample.Test(lcd);
                     }
