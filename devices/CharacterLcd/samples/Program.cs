@@ -94,37 +94,36 @@ static void UsingHd44780OverPcf8574()
                     lcd.BacklightOn = true;
                     Debug.WriteLine("Display initialized.");
                     // For debug, lets run some simple commands until they work sucessfully!
-                    for ( ; ; )
+                    using LcdConsole display = new LcdConsole(lcd, "A00");
                     {
-                        lcd.Clear();
-                        lcd.SetCursorPosition(0, 0);
-                        Debug.WriteLine("Writing: 'Hello World!'.");
-                        lcd.Write("Hello World!");
-                        Thread.Sleep(3000);
-                        lcd.BacklightOn = false;
-                        Thread.Sleep(3000);
-                        lcd.Home();
-                        lcd.BacklightOn = true;
-                        lcd.Clear();
-                        Debug.WriteLine("Writing: 'Hello World 2!!!'.");
-                        lcd.Write("Hello World 2!!!");
-                        Thread.Sleep(3000);
-                        lcd.Clear();
-                        Debug.WriteLine("Writing: 'Hello World 3!'.");
-                        lcd.Write("Hello World 3!");
-                        Thread.Sleep(3000);
-                        lcd.BacklightOn = false;
-                        Thread.Sleep(3000);
-                        lcd.BacklightOn = true;
-                        lcd.Clear();
-                        lcd.Home();
-                        Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'.");
-                        lcd.Write("Hello World 4!");
-                        lcd.SetCursorPosition(0, 1);
-                        lcd.Write("From nanoFramework!"); //TODO: Currently using `\r\n` fails!
-                        Thread.Sleep(3000);
-                        //LcdConsoleSamples.WriteTest(lcd);
-                        //ExtendedSample.Test(lcd);
+                        for (; ; )
+                        {
+                            display.Clear();
+                            Debug.WriteLine("Writing: 'Hello World!'.");
+                            display.WriteLine("Hello World!");
+                            Thread.Sleep(3000);
+                            display.BacklightOn = false;
+                            Thread.Sleep(3000);
+                            display.BacklightOn = true;
+                            display.Clear();
+                            Debug.WriteLine("Writing: 'Hello World 2!!!'.");
+                            display.WriteLine("Hello World 2!!!");
+                            Thread.Sleep(3000);
+                            display.Clear();
+                            Debug.WriteLine("Writing: 'Hello World 3!'.");
+                            display.WriteLine("Hello World 3!");
+                            Thread.Sleep(3000);
+                            display.BacklightOn = false;
+                            Thread.Sleep(3000);
+                            display.BacklightOn = true;
+                            display.Clear();
+                            Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'."); //TODO: Currently using `\r\n` fails!
+                            display.WriteLine("Hello World 4!");
+                            display.WriteLine("From nanoFramework!");
+                            Thread.Sleep(3000);
+                            //LcdConsoleSamples.WriteTest(lcd);
+                            //ExtendedSample.Test(lcd);
+                        }
                     }
                 }
             }
