@@ -96,30 +96,31 @@ static void UsingHd44780OverPcf8574()
                     // For debug, lets run some simple commands until they work sucessfully!
                     using LcdConsole display = new LcdConsole(lcd, "A00");
                     {
-                        for (; ; )
+                        for ( ; ; )
                         {
                             display.Clear();
-                            Debug.WriteLine("Writing: 'Hello World!'.");
-                            display.WriteLine("Hello World!");
+                            Debug.WriteLine("Writing: 'Hello World !!!'.");
+                            display.WriteLine("Hello World !!!");
                             Thread.Sleep(3000);
                             display.BacklightOn = false;
                             Thread.Sleep(3000);
                             display.BacklightOn = true;
                             display.Clear();
-                            Debug.WriteLine("Writing: 'Hello World 2!!!'.");
-                            display.WriteLine("Hello World 2!!!");
+                            Debug.WriteLine("Writing: 'From .Net nF :-)'.");
+                            display.WriteLine("From .Net nF :-)");
                             Thread.Sleep(3000);
                             display.Clear();
-                            Debug.WriteLine("Writing: 'Hello World 3!'.");
-                            display.WriteLine("Hello World 3!");
+                            Debug.WriteLine("Writing: 'ON YOUR DISPLAY!'.");
+                            display.WriteLine("ON YOUR DISPLAY!");
                             Thread.Sleep(3000);
                             display.BacklightOn = false;
                             Thread.Sleep(3000);
                             display.BacklightOn = true;
                             display.Clear();
-                            Debug.WriteLine("Writing: 'Hello World 4!\r\nFrom nanoFramework!'."); //TODO: Currently using `\r\n` fails!
-                            display.WriteLine("Hello World 4!");
-                            display.WriteLine("From nanoFramework!");
+                            Debug.WriteLine("Writing: 'LCD Hello World!\r\nnanoFramework!'.");
+                            //display.WriteLine($"LCD Hello World 4!\r\nnanoFramework!");  //TODO: Currently using `\r\n` produces unwanted chars...
+                            display.WriteLine("LCD Hello World!");
+                            display.WriteLine("nanoFramework!");
                             Thread.Sleep(3000);
                             //LcdConsoleSamples.WriteTest(lcd);
                             //ExtendedSample.Test(lcd);
