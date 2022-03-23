@@ -141,7 +141,7 @@ namespace Iot.Device.CharacterLcd
         /// <param name="microseconds">Time to wait if checking busy state isn't possible/practical.</param>
         public virtual void WaitForNotBusy(int microseconds)
         {
-            Thread.Sleep(microseconds / 10); //TODO: we should use SpinWait under a certain value...
+            Thread.Sleep(microseconds / 1000); //Converts to milliseconds //TODO: Is there a better way... Or actually, why does the original implementation not work correctly!
             //DelayHelper.DelayMicroseconds((int)(microseconds * WaitMultiplier), allowThreadYield: true); // Commented out as this caused more delays!
 
             // While we could check for the busy state it isn't currently practical. Most
