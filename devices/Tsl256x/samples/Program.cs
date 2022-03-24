@@ -5,7 +5,7 @@ using System.Device.Gpio;
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
-using IoT.Device.Tsl256x;
+using Iot.Device.Tsl256x;
 using nanoFramework.Hardware.Esp32;
 
 // Must specify pin functions on ESP32, not needed for most other boards
