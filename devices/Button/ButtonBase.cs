@@ -93,7 +93,7 @@ namespace Iot.Device.Button
         /// </summary>
         /// <param name="doublePress"></param>
         /// <param name="holding"></param>
-        /// /// <param name="debounceTime">The amount of time during which the transitions are ignored, or zero</param>
+        /// <param name="debounceTime">The amount of time during which the transitions are ignored, or zero</param>
         public ButtonBase(TimeSpan doublePress, TimeSpan holding, TimeSpan debounceTime = default(TimeSpan))
         {
             if (debounceTime.TotalMilliseconds * 3 > doublePress.TotalMilliseconds)
