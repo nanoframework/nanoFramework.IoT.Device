@@ -12,18 +12,12 @@ namespace Iot.Device.Ws28xx.Esp32
     /// </summary>
     internal class BitmapImageNeo3 : BitmapImage
     {
-        protected const int BytesPerComponentInternal = 3;
-        protected const int BytesPerPixel = BytesPerComponentInternal * 3;
-
-        // The Neo Pixels require a 50us delay (all zeros) after. Since Spi freq is not exactly
-        // as requested 100us is used here with good practical results. 100us @ 2.4Mbps and 8bit
-        // data means we have to add 30 bytes of zero padding.
-        private const int ResetDelayInBytes = 30;
+        protected const int BytesPerComponent = 3;
+        protected const int BytesPerPixel = BytesPerComponent * 3;
 
         public BitmapImageNeo3(int width, int height)
             : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
-            BytesPerComponent = 3;
         }
 
         public override void SetPixel(int x, int y, Color c)
@@ -65,7 +59,7 @@ namespace Iot.Device.Ws28xx.Esp32
             Data[offset++] = _lookup[b * BytesPerComponent + 2];
         }
 
-        protected static readonly byte[] _lookup = new byte[256 * BytesPerComponentInternal];
+        protected static readonly byte[] _lookup = new byte[256 * BytesPerComponent];
 
         static BitmapImageNeo3()
         {
@@ -77,9 +71,9 @@ namespace Iot.Device.Ws28xx.Esp32
                     data = (data << 3) | 0b100 | ((i >> j) << 1) & 2;
                 }
 
-                _lookup[i * BytesPerComponentInternal + 0] = unchecked((byte)(data >> 16));
-                _lookup[i * BytesPerComponentInternal + 1] = unchecked((byte)(data >> 8));
-                _lookup[i * BytesPerComponentInternal + 2] = unchecked((byte)(data >> 0));
+                _lookup[i * BytesPerComponent + 0] = unchecked((byte)(data >> 16));
+                _lookup[i * BytesPerComponent + 1] = unchecked((byte)(data >> 8));
+                _lookup[i * BytesPerComponent + 2] = unchecked((byte)(data >> 0));
             }
         }
     }

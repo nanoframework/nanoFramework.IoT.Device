@@ -7,18 +7,13 @@ namespace Iot.Device.Ws28xx.Esp32
 {
     internal class BitmapImageNeo4 : BitmapImage
     {
-        private const int BytesPerComponentInternal = 3;
-        private const int BytesPerPixel = BytesPerComponentInternal * 4;
-
-        // The Neo Pixels require a 50us delay (all zeros) after. Since Spi freq is not exactly
-        // as requested 100us is used here with good practical results. 100us @ 2.4Mbps and 8bit
-        // data means we have to add 30 bytes of zero padding.
-        private const int ResetDelayInBytes = 30;
+        private const int BytesPerComponent = 3;
+        private const int BytesPerPixel = BytesPerComponent * 4;
 
         // This field defines the count within the lookup table. The length correlates to the possible values of a single byte.
         private const int LookupCount = 256;
 
-        private static readonly byte[] _lookup = new byte[LookupCount * BytesPerComponentInternal];
+        private static readonly byte[] _lookup = new byte[LookupCount * BytesPerComponent];
 
         static BitmapImageNeo4()
         {
@@ -28,7 +23,6 @@ namespace Iot.Device.Ws28xx.Esp32
         public BitmapImageNeo4(int width, int height)
                             : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
-            BytesPerComponent = BytesPerComponentInternal;
         }
 
         public override void Clear() => ClearInternal();
@@ -43,9 +37,9 @@ namespace Iot.Device.Ws28xx.Esp32
                     data = (data << 3) | 0b100 | ((i >> j) << 1) & 2;
                 }
 
-                _lookup[i * BytesPerComponentInternal + 0] = unchecked((byte)(data >> 16));
-                _lookup[i * BytesPerComponentInternal + 1] = unchecked((byte)(data >> 8));
-                _lookup[i * BytesPerComponentInternal + 2] = unchecked((byte)(data >> 0));
+                _lookup[i * BytesPerComponent + 0] = unchecked((byte)(data >> 16));
+                _lookup[i * BytesPerComponent + 1] = unchecked((byte)(data >> 8));
+                _lookup[i * BytesPerComponent + 2] = unchecked((byte)(data >> 0));
             }
         }
 

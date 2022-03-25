@@ -6,11 +6,11 @@ using System.Drawing;
 
 namespace Iot.Device.Ws28xx.Esp32
 {
-    internal class BitmapImageWs2808 : BitmapImage
+    internal class BitmapImageWs2808GRB : BitmapImage
     {
         private const int BytesPerPixel = 3;
 
-        public BitmapImageWs2808(int width, int height)
+        public BitmapImageWs2808GRB(int width, int height)
             : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
         }
@@ -18,16 +18,16 @@ namespace Iot.Device.Ws28xx.Esp32
         public override void SetPixel(int x, int y, Color c)
         {
             var offset = y * Stride + x * BytesPerPixel;
-            Data[offset++] = c.R;
             Data[offset++] = c.G;
+            Data[offset++] = c.R;
             Data[offset++] = c.B;
         }
 
         public override void SetPixel(int x, int y, byte r, byte g, byte b)
         {
             var offset = y * Stride + x * BytesPerPixel;
-            Data[offset++] = r;
             Data[offset++] = g;
+            Data[offset++] = r;
             Data[offset++] = b;
         }
 

@@ -22,7 +22,7 @@ Ws28xx neo = new Sk6812(15, Count);
 
 while (true)
 {
-    ColorFade(neo, Count);
+    //ColorFade(neo, Count);
     ColorWipe(neo, Color.White, Count);
     ColorWipe(neo, Color.Red, Count);
     ColorWipe(neo, Color.Green, Count);
@@ -106,14 +106,20 @@ void TheatreChase(Ws28xx neo, Color color, int count, int iterations = 10)
         {
             for (var k = 0; k < count; k += 3)
             {
-                img.SetPixel(j + k, 0, color);
+                if (j + k < count)
+                {
+                    img.SetPixel(j + k, 0, color);
+                }
             }
 
             neo.Update();
             System.Threading.Thread.Sleep(100);
             for (var k = 0; k < count; k += 3)
             {
-                img.SetPixel(j + k, 0, Color.Black);
+                if (j + k < count)
+                {
+                    img.SetPixel(j + k, 0, Color.Black);
+                }
             }
         }
     }
@@ -174,7 +180,10 @@ void TheaterChaseRainbow(Ws28xx neo, int count)
         {
             for (var k = 0; k < count; k += 3)
             {
-                img.SetPixel(k + j, 0, Wheel((k + i) % 255));
+                if (k + j < count)
+                {
+                    img.SetPixel(k + j, 0, Wheel((k + i) % 255));
+                }
             }
 
             neo.Update();
@@ -182,7 +191,10 @@ void TheaterChaseRainbow(Ws28xx neo, int count)
 
             for (var k = 0; k < count; k += 3)
             {
-                img.SetPixel(k + j, 0, Color.Black);
+                if (k + j < count)
+                {
+                    img.SetPixel(k + j, 0, Color.Black);
+                }
             }
         }
     }

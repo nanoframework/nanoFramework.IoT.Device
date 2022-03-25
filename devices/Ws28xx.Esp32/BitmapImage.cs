@@ -49,11 +49,6 @@ namespace Iot.Device.Ws28xx.Esp32
         public int Stride { get; }
 
         /// <summary>
-        /// Gets the number pf bytes per component
-        /// </summary>
-        public int BytesPerComponent { get; internal set; }
-
-        /// <summary>
         /// Sets pixel at specific position
         /// </summary>
         /// <param name="x">X coordinate of the pixel</param>

@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
+    <Compile Include="BitmapImageWs2808GRB.cs" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
