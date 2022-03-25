@@ -53,9 +53,6 @@
   <ItemGroup>
     <Compile Include="*.cs" />
     <None Include="packages.config" />
-    <None Include="*.md" />
-    <None Include="*.nuspec" />
-    <None Include="version.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
