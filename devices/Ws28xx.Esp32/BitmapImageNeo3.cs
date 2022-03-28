@@ -4,7 +4,7 @@
 using System;
 using System.Drawing;
 
-namespace Iot.Device.Ws28xx
+namespace Iot.Device.Ws28xx.Esp32
 {
     /// <summary>
     /// Special 24bit RGB format for Neo pixel LEDs where each bit is converted to 3 bits.
@@ -15,13 +15,8 @@ namespace Iot.Device.Ws28xx
         protected const int BytesPerComponent = 3;
         protected const int BytesPerPixel = BytesPerComponent * 3;
 
-        // The Neo Pixels require a 50us delay (all zeros) after. Since Spi freq is not exactly
-        // as requested 100us is used here with good practical results. 100us @ 2.4Mbps and 8bit
-        // data means we have to add 30 bytes of zero padding.
-        private const int ResetDelayInBytes = 30;
-
         public BitmapImageNeo3(int width, int height)
-            : base(new byte[width * height * BytesPerPixel + ResetDelayInBytes], width, height, width * BytesPerPixel)
+            : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
         }
 
