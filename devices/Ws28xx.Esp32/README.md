@@ -52,6 +52,12 @@ void Rainbow(Ws28xx neo, int count, int iterations = 1)
 }
 ```
 
+## Using BitmapImage
+
+The `BitmapImage` gives you the opportunity to work on rectangular matrix. For example is you are using a M5Stack Atom Matrix, you'll be able to use a 5 x 5 matrix. In this case, you'll be able to set a specific pixel with coordinates using the `SetPixel` function.
+
+Also nothing is display before the `Update` function is called.
+
 ## Advance usage
 
 The Ws28xx class provide a generic driver. In case your strip is not supported or colors are inverted or coded in a different number of colors, you can use specific definitions and create your own class. Here is the example for the SK6812 used in the M5Stack Fire for example:
