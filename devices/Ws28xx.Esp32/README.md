@@ -4,6 +4,8 @@ This binding allows you to update the RGB LEDs on Ws28xx, SK6812 and based strip
 
 To see how to use the binding in code, see the [sample](samples/Program.cs).
 
+> Important: This implementation is for ESP32 boards only. Do not use with other boards. USe the [SPI implementation](../Ws28xx/README.md) instead.
+
 ## Documentation
 
 * WS2812B: [Datasheet](https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf)
