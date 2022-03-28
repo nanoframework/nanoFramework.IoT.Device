@@ -1,6 +1,6 @@
-﻿# Ws28xx LED drivers
+﻿# Ws28xx, SK6812 LED drivers
 
-This binding allows you to update the RGB LEDs on Ws28xx and based strips and matrices.
+This binding allows you to update the RGB LEDs on Ws28xx, SK6812 and based strips and matrices.
 
 To see how to use the binding in code, see the [sample](samples/Program.cs).
 
@@ -19,45 +19,21 @@ To see how to use the binding in code, see the [sample](samples/Program.cs).
 
 ![image](./WS2812B.png)
 
-
-
 ## Usage
 
 ```csharp
-using System;
-using System.Collections.Generic;
-using System.Device.Spi;
+using Iot.Device.Ws28xx.Esp32;
+using System.Diagnostics;
 using System.Drawing;
-using Iot.Device.Graphics;
-using Iot.Device.Ws28xx;
 
 // Configure the count of pixels
-const int Count = 8;
-Console.Clear();
+const int Count = 10;
+// Adjust the pin number
+const int Pin = 15;
 
-// Must specify pin functions on ESP32
-Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
-Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
-Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
-Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
-
-// Using VSPI on bus 2 for ESP32 and pin 22 for chipselect
-SpiConnectionSettings settings = new(2, 22)
-{
-    ClockFrequency = 2_400_000,
-    Mode = SpiMode.Mode0,
-    DataBitLength = 8
-};
-using SpiDevice spi = SpiDevice.Create(settings);
-
-Ws28xx neo = new Ws2808(spi, count);
-//Ws28xx neo = new Ws2812b(spi, Count);
-
-while (true)
-{
-    Rainbow(neo, Count);
-    System.Threading.Thread.Sleep(100);
-}
+// Use Ws2812 or SK6812 instead if needed
+Ws28xx neo = new Ws2808(Pin, Count);
+Rainbow(neo, Count);
 
 void Rainbow(Ws28xx neo, int count, int iterations = 1)
 {
@@ -65,7 +41,7 @@ void Rainbow(Ws28xx neo, int count, int iterations = 1)
     for (var i = 0; i < 255 * iterations; i++)
     {
         for (var j = 0; j < count; j++)
-        {
+        {            
             img.SetPixel(j, 0, Wheel((i + j) & 255));
         }
 
@@ -73,3 +49,28 @@ void Rainbow(Ws28xx neo, int count, int iterations = 1)
     }
 }
 ```
+
+## Advance usage
+
+The Ws28xx class provide a generic driver. In case your strip is not supported or colors are inverted or coded in a different number of colors, you can use specific definitions and create your own class. Here is the example for the SK6812 used in the M5Stack Fire for example:
+
+```csharp
+public Sk6812(int gpioPin, int width, int height = 1)
+    : base(gpioPin, new BitmapImageWs2808Grb(width, height))
+{
+    ClockDivider = 4;
+    OnePulse = new(14, true, 12, false);
+    ZeroPulse = new(7, true, 16, false);
+    ResetCommand = new(500, false, 520, false);
+}
+```
+
+The various `BitmapImage***` classes already take into account the color schemes, the bit per color coding. Use one of them to accommodate your needs.
+
+The pulses are calculated based on the datasheet of each driver. A `OnePulse` is a pulse coding for a bit high = 1. A `ZeroPulse` is coding for a bit low = 0. And a `ResetCommand` is the command used in some drivers at the end of the pulse chain.
+
+Each pulse is 80MHz based and then divided by the `ClockDivider`. You have to take this into account to make the proper math for the pulses.
+
+## Limitations
+
+If you are using a very very long chain, depending on your board and the memory available on it, you can be out of memory while preparing the pulse chain to send.

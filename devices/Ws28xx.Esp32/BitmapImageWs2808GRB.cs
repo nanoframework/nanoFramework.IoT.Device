@@ -6,11 +6,11 @@ using System.Drawing;
 
 namespace Iot.Device.Ws28xx.Esp32
 {
-    internal class BitmapImageWs2808GRB : BitmapImage
+    internal class BitmapImageWs2808Grb : BitmapImage
     {
         private const int BytesPerPixel = 3;
 
-        public BitmapImageWs2808GRB(int width, int height)
+        public BitmapImageWs2808Grb(int width, int height)
             : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
         }

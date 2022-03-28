@@ -9,20 +9,24 @@ using System.Drawing;
 
 // Configure the count of pixels
 const int Count = 10;
+// Adjust the pin number
+const int Pin = 15;
 
-#if WS2808
-Ws28xx neo = new Ws2808(15, count);
-#elif WS2812B
-Ws28xx neo = new Ws2812b(15, Count);
-#else
-Ws28xx neo = new Sk6812(15, Count);
-#endif
+// Uncomment for WS2008
+// Ws28xx neo = new Ws2808(Pin, Count);
+// Uncomment for WS2812B
+// Ws28xx neo = new Ws2812b(Pin, Count);
+// Uncomment for WS2812C
+// Ws28xx neo = new Ws2812c(Pin, Count);
+// Comment if you are using one of the previous one
+Ws28xx neo = new Sk6812(Pin, Count);
 
 // BenchmarkClearPixel(); uncomment to benchmark
 
 while (true)
 {
-    //ColorFade(neo, Count);
+    // Uncomment to run this test as well:
+    // ColorFade(neo, Count);
     ColorWipe(neo, Color.White, Count);
     ColorWipe(neo, Color.Red, Count);
     ColorWipe(neo, Color.Green, Count);

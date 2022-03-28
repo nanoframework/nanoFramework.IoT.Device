@@ -16,7 +16,7 @@ namespace Iot.Device.Ws28xx.Esp32
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         public Sk6812(int gpioPin, int width, int height = 1)
-            : base(gpioPin, new BitmapImageWs2808GRB(width, height))
+            : base(gpioPin, new BitmapImageWs2808Grb(width, height))
         {
             ClockDivider = 4;
             OnePulse = new(14, true, 12, false);
