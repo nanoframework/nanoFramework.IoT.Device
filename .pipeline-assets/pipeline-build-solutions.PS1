@@ -8,7 +8,7 @@ $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.e
 $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
 if ($msbuild)
 {
-    $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
+    $msbuild = join-path $msbuild 'MSBuild\Current\Bin\amd64\MSBuild.exe'
 }
 
 $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
@@ -200,10 +200,6 @@ foreach ($folder in $deviceFolders)
         
                 $alphaPrString = "-alpha." + $alphaNumber.ToString()
                 $MyNuGetVersion = $MyNuGetVersion+$alphaPrString
-            }
-            if ($env:System_PullRequest_SourceBranch -like 'release*')
-            {
-                $MyNuGetVersion = $MyNuGetVersion + "-rc." + $versionData.VersionHeight
             }
         
             Write-Host "NuGet build is: $MyNuGetVersion"

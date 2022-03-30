@@ -36,3 +36,4 @@ jobs:
         with:
           solutionsToCheck: 'Ft6xx6x'
           workingDirectory: '${{ github.workspace }}/devices'
+          branchToPr: 'develop'

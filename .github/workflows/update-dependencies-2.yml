@@ -36,3 +36,4 @@ jobs:
           solutionsToCheck: '*.sln'
           workingDirectory: '${{ github.workspace }}/devices'
           exclusionList: 'Ft6xx6x,NumberHelper,System.Buffers.Binary.BinaryPrimitives,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper'
+          branchToPr: 'develop'
