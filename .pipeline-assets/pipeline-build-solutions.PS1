@@ -176,7 +176,15 @@ foreach ($folder in $deviceFolders)
         ########################
         # perform versions check
 
-        nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+        if($null -ne $env:System_PullRequest_PullRequestId)
+        {
+            # this is a PR build, perform analysis on nuspec dependencies
+            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile --analyse-nuspec
+        }
+        else
+        {
+            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+        }
 
         if($LASTEXITCODE -eq 0)
         {
