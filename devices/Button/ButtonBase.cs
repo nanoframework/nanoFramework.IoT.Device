@@ -17,9 +17,9 @@ namespace Iot.Device.Button
 
         private bool _disposed = false;
 
-        private long _doublePressTicks;
-        private long _holdingMs;
-        private TimeSpan _debounceTime;
+        private readonly long _doublePressTicks;
+        private readonly long _holdingMs;
+        private readonly TimeSpan _debounceTime;
         private long _debounceStartTicks;
 
         private ButtonHoldingState _holdingState = ButtonHoldingState.Completed;
@@ -111,18 +111,19 @@ namespace Iot.Device.Button
         /// </summary>
         protected void HandleButtonPressed()
         {
-            if (DateTime.UtcNow.Ticks - _debounceStartTicks < _debounceTime.Ticks)
+            if (IsPressed || ShouldDebounce())
             {
                 return;
             }
 
             IsPressed = true;
+            UpdateDebounce();
 
             ButtonDown?.Invoke(this, new EventArgs());
 
             if (IsHoldingEnabled)
             {
-                _holdingTimer = new Timer(StartHoldingHandler, null, (int)_holdingMs, Timeout.Infinite);
+                StartHoldingTimer();
             }
         }
 
@@ -131,24 +132,22 @@ namespace Iot.Device.Button
         /// </summary>
         protected void HandleButtonReleased()
         {
-            if (_debounceTime.Ticks > 0 && !IsPressed)
+            ClearHoldingTimer();
+
+            if (!IsPressed)
             {
                 return;
             }
 
-            _debounceStartTicks = DateTime.UtcNow.Ticks;
-            _holdingTimer?.Dispose();
-            _holdingTimer = null;
-
             IsPressed = false;
+            UpdateDebounce();
 
             ButtonUp?.Invoke(this, new EventArgs());
             Press?.Invoke(this, new EventArgs());
 
             if (IsHoldingEnabled && _holdingState == ButtonHoldingState.Started)
             {
-                _holdingState = ButtonHoldingState.Completed;
-                Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = ButtonHoldingState.Completed });
+                SetHoldingState(ButtonHoldingState.Completed);
             }
 
             if (IsDoublePressEnabled)
@@ -174,11 +173,35 @@ namespace Iot.Device.Button
         /// </summary>
         private void StartHoldingHandler(object state)
         {
+            ClearHoldingTimer();
+            SetHoldingState(ButtonHoldingState.Started);
+        }
+
+        private bool ShouldDebounce()
+        {
+            return DateTime.UtcNow.Ticks - _debounceStartTicks < _debounceTime.Ticks;
+        }
+
+        private void UpdateDebounce()
+        {
+            _debounceStartTicks = DateTime.UtcNow.Ticks;
+        }
+
+        private void StartHoldingTimer()
+        {
+            _holdingTimer = new Timer(StartHoldingHandler, null, (int)_holdingMs, Timeout.Infinite);
+        }
+
+        private void ClearHoldingTimer()
+        {
             _holdingTimer?.Dispose();
             _holdingTimer = null;
-            _holdingState = ButtonHoldingState.Started;
+        }
 
-            Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = ButtonHoldingState.Started });
+        private void SetHoldingState(ButtonHoldingState state)
+        {
+            _holdingState = state;
+            Holding?.Invoke(this, new ButtonHoldingEventArgs { HoldingState = state });
         }
 
         /// <summary>
@@ -194,8 +217,7 @@ namespace Iot.Device.Button
 
             if (disposing)
             {
-                _holdingTimer?.Dispose();
-                _holdingTimer = null;
+                ClearHoldingTimer();
             }
 
             _disposed = true;
