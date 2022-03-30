@@ -41,3 +41,4 @@ jobs:
             System.Numerics.sln
             WeatherHelper.sln
           workingDirectory: '${{ github.workspace }}/devices'
+          branchToPr: 'develop'
