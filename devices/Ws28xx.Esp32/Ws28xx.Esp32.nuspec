@@ -18,10 +18,10 @@
     <description>This package includes the .NET nanoFramework binding Iot.Device.Ws28xx.Esp32 for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ws28xx.Esp32</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.19" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="1.2.2-preview.10" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
+      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="1.2.2" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.13" />
-      <dependency id="nanoFramework.System.Drawing" version="1.0.289-preview.5" />
+      <dependency id="nanoFramework.System.Drawing" version="1.0.289" />
     </dependencies>
   </metadata>
   <files>
