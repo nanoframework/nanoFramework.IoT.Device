@@ -20,13 +20,13 @@
     <summary>Iot.Device.Amg88xx assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Amg88xx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.19" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288-preview.113" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.10.0-preview.6" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.3-preview.18" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3-preview.13" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4-preview.22" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.126.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.0.288" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.4" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.127.0" />
     </dependencies>
   </metadata>
   <files>
