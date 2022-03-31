@@ -34,6 +34,6 @@ jobs:
       - name: Update dependencies
         uses: nanoframework/nanodu@v1
         with:
-          solutionsToCheck: 'Ft6xx6x'
+          solutionsToCheck: 'Ft6xx6x.sln'
           workingDirectory: '${{ github.workspace }}/devices'
           branchToPr: 'develop'
