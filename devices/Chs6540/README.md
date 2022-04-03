@@ -1,10 +1,10 @@
 # Chs6540 - Touch screen controller
 
-The Chs6540 is the touch screens controllers of the M5Stack [Tough](https://docs.m5stack.com/en/core/tough).
+The Chs6540 is the touch screen controllers of the M5Stack [Tough](https://docs.m5stack.com/en/core/tough).
 
 ## Documentation
 
-- [More information](https://github.com/m5stack/M5Tough/blob/master/src/M5Touch.cpp) on the touch controller, unfortunately, there is datasheet available.
+- [More information](https://github.com/m5stack/M5Tough/blob/master/src/M5Touch.cpp) on the touch controller, unfortunately, the datasheet isn't available.
 
 ## Usage
 
@@ -20,7 +20,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
-> Note: this sample requires a M5Core2.
+> Note: this sample requires a M5Stack Tough.
 > If you want to use another device, just remove all the related nugets.
 
 ```csharp
@@ -60,7 +60,7 @@ void TouchInterrupCallback(object sender, PinValueChangedEventArgs pinValueChang
     if (points == 1)
     {
         var point = sensor.GetPoint(true);
-                // Some controllers supports as well events, you can get access to them as well thru point.Event
+        // Some controllers supports as well events, you can get access to them as well thru point.Event
         Debug.WriteLine($"ID: {point.TouchId}, X: {point.X}, Y: {point.Y}, Weight: {point.Weigth}, Misc: {point.Miscelaneous}");
     }
     else if (points == 2)

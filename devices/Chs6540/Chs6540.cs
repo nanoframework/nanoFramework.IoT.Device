@@ -8,7 +8,7 @@ using System.IO;
 namespace Iot.Device.Chs6540
 {
     /// <summary>
-    /// Chs6540 touch screen
+    /// Chs6540 touch screen.
     /// </summary>
     public class Chs6540 : IDisposable
     {
@@ -17,12 +17,12 @@ namespace Iot.Device.Chs6540
         private byte[] _toReadPoint = new byte[6];
 
         /// <summary>
-        /// Chs6540 I2C Address
+        /// Chs6540 I2C Address.
         /// </summary>
         public const byte DefaultI2cAddress = 0x2E;
 
         /// <summary>
-        /// Creates a new instance of the Chs6540
+        /// Creates a new instance of the Chs6540.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         public Chs6540(I2cDevice i2cDevice)
@@ -79,7 +79,7 @@ namespace Iot.Device.Chs6540
         }
 
         /// <summary>
-        /// Cleanup
+        /// Cleanup.
         /// </summary>
         public void Dispose()
         {
