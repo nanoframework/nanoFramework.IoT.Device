@@ -215,7 +215,7 @@ foreach ($folder in $deviceFolders)
 
             ################
             # build solution
-            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
+            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release /p:Platform="Any CPU" /p:PublicRelease=true
             if (-not $?) { throw "Error building '$solutionFile'" }
 
             ###############
