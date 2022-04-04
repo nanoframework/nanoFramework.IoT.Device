@@ -142,7 +142,7 @@ steps:
   displayName: Push NuGet packages to NuGet
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
-- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate
+- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   condition: >-
     and(
