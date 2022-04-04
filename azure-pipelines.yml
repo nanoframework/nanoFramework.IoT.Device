@@ -127,23 +127,12 @@ steps:
     ArtifactType: Container
 
 # push NuGet class lib package to Azure Artifacts (always happens except on PR builds)
-- task: NuGetCommand@2
-  condition: >-
-    and(
-      succeeded(),
-      eq(variables['System.PullRequest.PullRequestId'], '')
-    )
-  continueOnError: true
-  displayName: Push NuGet packages to Azure Artifacts
+- task: NuGetAuthenticate@0
   inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    publishFeedCredentials: 'AzureArtifacts-$(System.TeamProject)'
+    nuGetServiceConnections: 'AzureArtifacts-$(System.TeamProject)'
 
-# push NuGet class lib package to NuGet (always happens except on PR builds)
-- task: NuGetCommand@2
+- script: nuget push -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json *.nupkg -NonInteractive -SkipDuplicate
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
   condition: >-
     and(
       succeeded(),
@@ -151,12 +140,17 @@ steps:
     )
   continueOnError: true
   displayName: Push NuGet packages to NuGet
-  inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+
+# push NuGet class lib package to NuGet (always happens except on PR builds)
+- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  condition: >-
+    and(
+      succeeded(),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
+  continueOnError: true
+  displayName: Push NuGet packages to NuGet
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs
