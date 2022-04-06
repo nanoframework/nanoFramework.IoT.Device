@@ -27,6 +27,8 @@ namespace Iot.Device.Button
         private long _lastPress = DateTime.MinValue.Ticks;
         private Timer _holdingTimer;
 
+        private bool ShouldDebounce => DateTime.UtcNow.Ticks - _debounceStartTicks < _debounceTime.Ticks;
+
         /// <summary>
         /// Delegate for button pressed.
         /// </summary>
@@ -111,7 +113,7 @@ namespace Iot.Device.Button
         /// </summary>
         protected void HandleButtonPressed()
         {
-            if (IsPressed || ShouldDebounce())
+            if (IsPressed || ShouldDebounce)
             {
                 return;
             }
@@ -177,20 +179,9 @@ namespace Iot.Device.Button
             SetHoldingState(ButtonHoldingState.Started);
         }
 
-        private bool ShouldDebounce()
-        {
-            return DateTime.UtcNow.Ticks - _debounceStartTicks < _debounceTime.Ticks;
-        }
+        private void UpdateDebounce() => _debounceStartTicks = DateTime.UtcNow.Ticks;
 
-        private void UpdateDebounce()
-        {
-            _debounceStartTicks = DateTime.UtcNow.Ticks;
-        }
-
-        private void StartHoldingTimer()
-        {
-            _holdingTimer = new Timer(StartHoldingHandler, null, (int)_holdingMs, Timeout.Infinite);
-        }
+        private void StartHoldingTimer() => _holdingTimer = new Timer(StartHoldingHandler, null, (int)_holdingMs, Timeout.Infinite);
 
         private void ClearHoldingTimer()
         {
