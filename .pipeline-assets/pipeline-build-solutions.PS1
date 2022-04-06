@@ -8,7 +8,7 @@ $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.e
 $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
 if ($msbuild)
 {
-    $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
+    $msbuild = join-path $msbuild 'MSBuild\Current\Bin\amd64\MSBuild.exe'
 }
 
 $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
@@ -176,7 +176,15 @@ foreach ($folder in $deviceFolders)
         ########################
         # perform versions check
 
-        nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+        if($null -ne $env:System_PullRequest_PullRequestId)
+        {
+            # this is a PR build, perform analysis on nuspec dependencies
+            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile --analyse-nuspec
+        }
+        else
+        {
+            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+        }
 
         if($LASTEXITCODE -eq 0)
         {
@@ -201,17 +209,13 @@ foreach ($folder in $deviceFolders)
                 $alphaPrString = "-alpha." + $alphaNumber.ToString()
                 $MyNuGetVersion = $MyNuGetVersion+$alphaPrString
             }
-            if ($env:System_PullRequest_SourceBranch -like 'release*')
-            {
-                $MyNuGetVersion = $MyNuGetVersion + "-rc." + $versionData.VersionHeight
-            }
         
             Write-Host "NuGet build is: $MyNuGetVersion"
             Write-Host "Assembly version is: "+$versionData.AssemblyVersion
 
             ################
             # build solution
-            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
+            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release /p:Platform="Any CPU" /p:PublicRelease=true
             if (-not $?) { throw "Error building '$solutionFile'" }
 
             ###############

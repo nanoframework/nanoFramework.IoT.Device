@@ -9,8 +9,8 @@ namespace System.Diagnostics
     /// </summary>
     public class Stopwatch
     {
-        private long _initialTicks;
-        private long _finalTicks;
+        private long _initialMilliseconds;
+        private long _finalMilliseconds;
 
         /// <summary>
         /// Gets the frequency of the timer as the number of ticks per second. This field is read-only.
@@ -42,7 +42,7 @@ namespace System.Diagnostics
         /// <summary>
         /// Gets the total elapsed time measured by the current instance, in timer ticks.
         /// </summary>
-        public long ElapsedTicks => IsRunning ? Environment.TickCount64 - _initialTicks : _finalTicks - _initialTicks;
+        public long ElapsedTicks => (IsRunning ? Environment.TickCount64 - _initialMilliseconds : _finalMilliseconds - _initialMilliseconds) * TimeSpan.TicksPerMillisecond;
 
         /// <summary>
         /// Gets a value indicating whether the System.Diagnostics.Stopwatch timer is running.
@@ -53,7 +53,7 @@ namespace System.Diagnostics
         /// Gets the current number of ticks in the timer mechanism.
         /// </summary>
         /// <returns></returns>
-        public static long GetTimestamp() => Environment.TickCount64;
+        public static long GetTimestamp() => Environment.TickCount64 * TimeSpan.TicksPerMillisecond;
 
         /// <summary>
         /// Initializes a new System.Diagnostics.Stopwatch instance, sets the elapsed time
@@ -73,8 +73,8 @@ namespace System.Diagnostics
         public void Reset()
         {
             IsRunning = false;
-            _initialTicks = Environment.TickCount64;
-            _finalTicks = _initialTicks;
+            _initialMilliseconds = Environment.TickCount64;
+            _finalMilliseconds = _initialMilliseconds;
         }
 
         /// <summary>
@@ -91,16 +91,16 @@ namespace System.Diagnostics
         /// </summary>
         public void Start()
         {
-            _initialTicks = Environment.TickCount64;
+            _initialMilliseconds = Environment.TickCount64;
             IsRunning = true;
         }
-    
+
         /// <summary>
         /// Stops measuring elapsed time for an interval.
         /// </summary>
         public void Stop()
         {
-            _finalTicks = Environment.TickCount64;
+            _finalMilliseconds = Environment.TickCount64;
             IsRunning = false;
         }
     }
