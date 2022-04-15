@@ -29,12 +29,12 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="Iot.Device.Multiplexing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.0.300\lib\Iot.Device.Multiplexing.dll</HintPath>
+    <Reference Include="Iot.Device.Multiplexing, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.1.1\lib\Iot.Device.Multiplexing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Iot.Device.ShiftRegister, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.0.300\lib\Iot.Device.ShiftRegister.dll</HintPath>
+    <Reference Include="Iot.Device.ShiftRegister, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.1.2\lib\Iot.Device.ShiftRegister.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
