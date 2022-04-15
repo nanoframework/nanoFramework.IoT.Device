@@ -20,8 +20,8 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="Iot.Device.Common.NumberHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.1.0.289\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
+    <Reference Include="Iot.Device.Common.NumberHelper, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.1.1.1\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">

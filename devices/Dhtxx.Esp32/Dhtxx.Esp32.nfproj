@@ -62,12 +62,12 @@
       <HintPath>packages\nanoFramework.System.Device.I2c.1.0.3\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Model.1.0.300\lib\System.Device.Model.dll</HintPath>
+    <Reference Include="System.Device.Model, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.Model.1.1.1\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Diagnostics.Stopwatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+    <Reference Include="System.Diagnostics.Stopwatch, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.1.1\lib\System.Diagnostics.Stopwatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.4.4.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
