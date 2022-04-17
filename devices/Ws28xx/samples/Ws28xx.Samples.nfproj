@@ -44,12 +44,12 @@
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.5\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Diagnostics.Stopwatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.0.289\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+    <Reference Include="System.Diagnostics.Stopwatch, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.1.1\lib\System.Diagnostics.Stopwatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Drawing.1.0.289\lib\System.Drawing.dll</HintPath>
+    <Reference Include="System.Drawing, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Drawing.1.1.1\lib\System.Drawing.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
