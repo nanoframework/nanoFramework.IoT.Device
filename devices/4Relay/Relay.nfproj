@@ -16,7 +16,6 @@
     <AssemblyName>Iot.Device.Relay</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Relay.xml</DocumentationFile>
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
