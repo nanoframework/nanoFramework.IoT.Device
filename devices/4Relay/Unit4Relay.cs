@@ -39,7 +39,7 @@ namespace Iot.Device.Relay
         /// Sets all the Led in the same state. This preserved the relay state.
         /// </summary>
         /// <param name="state">The state On or Off.</param>
-        public void SetAllLed(State state)
+        public void SetAllLeds(State state)
         {
             byte relays = (byte)(Read(Register.UnitRelay) & 0x0F);
             relays |= (byte)(state == State.On ? 0xF0 : 0x00);

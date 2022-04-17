@@ -56,7 +56,7 @@ namespace Iot.Device.Relay
         /// Sets all relays in the desired state.
         /// </summary>
         /// <param name="state">The state On or Off.</param>
-        public void SetAllRelay(State state)
+        public void SetAllRelays(State state)
         {
             Register reg = _relayType == RelayType.Unit ? Register.UnitRelay : Register.ModuleRelay;
             byte relays = (byte)(Read(reg) & 0xF0);
