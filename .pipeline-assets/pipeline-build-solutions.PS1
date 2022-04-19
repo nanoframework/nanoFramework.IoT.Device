@@ -28,7 +28,7 @@ if($env:DEVICE_TO_BUILD -eq "")
 
         do
         {
-            "INFO: iteration $pageCounter" | Write-Host -ForegroundColor
+            "INFO: iteration $pageCounter" | Write-Host
 
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -61,7 +61,7 @@ if($env:DEVICE_TO_BUILD -eq "")
 
         do
         {
-            "INFO: iteration $pageCounter" | Write-Host -ForegroundColor
+            "INFO: iteration $pageCounter" | Write-Host
 
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
