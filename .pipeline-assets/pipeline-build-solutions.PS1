@@ -52,7 +52,7 @@ if($env:DEVICE_TO_BUILD -eq "")
     {
         "" | Write-Host -ForegroundColor Yellow
         "*****************************************************************" | Write-Host -ForegroundColor Yellow
-        "* Building from commit $env:Build_SourceVersion *" | Write-host -ForegroundColor Yellow
+        "* Building from commit $Build_SourceVersion *" | Write-host -ForegroundColor Yellow
         "*****************************************************************" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
 
@@ -63,7 +63,7 @@ if($env:DEVICE_TO_BUILD -eq "")
         {
             "INFO: iteration $pageCounter" | Write-Host
 
-            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$Build_SourceVersion`?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
             if($null -eq $commit)
             {
@@ -241,7 +241,7 @@ foreach ($folder in $deviceFolders)
 
             ###############
             # package NuGet
-            nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$env:Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
+            nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
             if (-not $?) { throw "Error packaging '$nuspecFile'" }
         }
         else
