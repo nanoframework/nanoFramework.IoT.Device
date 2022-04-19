@@ -23,11 +23,13 @@ if($env:DEVICE_TO_BUILD -eq "")
         "**********************" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
 
-        # get files changed in PR, if this is a PR
+        # get files changed in PR
         $pageCounter = 1
 
         do
         {
+            "INFO: iteration $pageCounter" | Write-Host -ForegroundColor
+
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
             if($null -eq $commit)
@@ -49,16 +51,35 @@ if($env:DEVICE_TO_BUILD -eq "")
     else
     {
         "" | Write-Host -ForegroundColor Yellow
-        "**************************" | Write-Host -ForegroundColor Yellow
-        "* Building from a commit *" | Write-host -ForegroundColor Yellow
-        "**************************" | Write-Host -ForegroundColor Yellow
+        "*****************************************************************" | Write-Host -ForegroundColor Yellow
+        "* Building from commit $env:Build_SourceVersion *" | Write-host -ForegroundColor Yellow
+        "*****************************************************************" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
 
-        # get files changed in the commit, if this is NOT a PR
-        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+        # get files changed in the commit
+        $pageCounter = 1
+
+        do
+        {
+            "INFO: iteration $pageCounter" | Write-Host -ForegroundColor
+
+            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+
+            if($null -eq $commit)
+            {
+                $commit = $batch.files
+            }
+            else
+            {
+                $commit += $batch.files
+            }
+            
+            $pageCounter++
+
+        } until ($batch.files.Count -eq 0)
 
         # filter removed files              
-        $files = $commit.files.where{$_.status -ne 'removed'}
+        $files = $commit.where{$_.status -ne 'removed'}
     }
 
     # get file names only
