@@ -79,11 +79,11 @@ if($env:DEVICE_TO_BUILD -eq "")
         } until ($batch.files.Count -eq 0)
 
         # filter removed files              
-        $files = $commit.where{$_.status -ne 'removed'}
+        $files = $commit.where{$_.status -ne 'removed' -and $_.filename -match '(devices)'}
     }
 
-    # get file names only
-    $files1 = $files | ForEach-Object {$_.filename} | Where-Object {$_ -match 'devices/*'} 
+    # get file names only (filter out samples folders)
+    $files1 = $files | ForEach-Object {$_.filename} | Where-Object {$_ -match '^((?!samples).)*$'} 
 
     if($null -eq $files1)
     {
