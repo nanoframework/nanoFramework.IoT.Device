@@ -22,10 +22,10 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.1.1" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.1.19" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.1.26" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.4" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.1.1" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.2.1" />
       <dependency id="nanoFramework.System.Threading" version="1.0.4" />
     </dependencies>
   </metadata>
