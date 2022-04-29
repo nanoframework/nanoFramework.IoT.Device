@@ -15,8 +15,7 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding form M5Stack Atom QR Code for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.AtomQrCode assembly for .NET nanoFramework C# projects</summary>
+    <description>This package includes the .NET IoT Core binding form M5Stack ATOM QR Code for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf m5stack qrcode</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />

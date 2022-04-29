@@ -6,7 +6,6 @@ using nanoFramework.Hardware.Esp32;
 using System.Diagnostics;
 using System.Threading;
 
-
 ///////////////////////////////////////////////////////////////////////
 // when connecting to an ESP32 device, need to configure the UART GPIOs
 // the GPIOs below are the ones from the ATOM device that's part of the
