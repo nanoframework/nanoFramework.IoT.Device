@@ -115,6 +115,7 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "helper", "Iot.Device helpers and common" },
     { "system", ".NET System libraries" },
     { "lidar", "Lidar" },
+    { "reader", "Readers" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()
