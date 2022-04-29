@@ -20,6 +20,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="BuzzerVolume.cs" />
+    <Compile Include="ScanTimeout.cs" />
     <Compile Include="PositioningLight.cs" />
     <Compile Include="QrCodeReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

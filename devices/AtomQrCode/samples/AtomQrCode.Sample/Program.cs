@@ -20,15 +20,9 @@ QrCodeReader reader = new QrCodeReader("COM2");
 reader.TriggerMode = TriggerMode.Host;
 
 // try reading barcode
-var code = reader.TryReadBarcode();
+string code;
 
-if (string.IsNullOrEmpty(code))
-{
-    Debug.WriteLine("");
-    Debug.WriteLine("*** failed to read barcode ***");
-    Debug.WriteLine("");
-}
-else
+if (reader.TryReadBarcode(out code))
 {
     Debug.WriteLine("");
     Debug.WriteLine("*** barcode data available ***");
@@ -36,6 +30,12 @@ else
     Debug.WriteLine(code);
     Debug.WriteLine("");
     Debug.WriteLine("******************************");
+    Debug.WriteLine("");
+}
+else
+{
+    Debug.WriteLine("");
+    Debug.WriteLine("*** failed to read barcode ***");
     Debug.WriteLine("");
 }
 

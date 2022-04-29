@@ -13,38 +13,41 @@ namespace Iot.Device.AtomQrCode
     /// </summary>
     public class QrCodeReader : IDisposable
     {
+        // NOTE: the command sequences in the document are coming from the device datasheet:
+        // https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/atombase/AtomicQR/ATOM_QRCODE_CMD_EN.pdf
+
+        /// <summary>
+        /// Sequence common to most commands.
+        /// </summary>
+        private static readonly byte[] _commandCommon = new byte[] { 0xC6, 0x04, 0x08, 0x00, 0xF2 };
+
+        private static readonly byte[] _decodingCommandBase = new byte[] { 0x04, 0xE4, 0x04, 0x00, 0xFF, 0x14 };
+
         /// <summary>
         /// Prefix for commands starting with 0x07.
         /// </summary>
-        private static byte _commandPrefix07 = 0x07;
+        private const byte CommandPrefix07 = 0x07;
 
         /// <summary>
         /// Prefix for commands starting with 0x08.
         /// </summary>
-        private static byte _commandPrefix08 = 0x08;
+        private const byte CommandPrefix08 = 0x08;
 
         /// <summary>
         /// Index of 1st parameter in suffix buffers.
         /// </summary>
-        private static byte _param1Index = 1;
+        private const byte Param1Index = 1;
 
         /// <summary>
         /// Index of 2nd parameter in suffix buffers.
         /// </summary>
-        private static byte _param2Index = 3;
+        private const byte Param2Index = 3;
 
         /// <summary>
         /// Length of ACK message when decoding in host mode.
         /// Actual data will start after this position.
         /// </summary>
-        private static int _hostModeAckLenght = 6;
-
-        /// <summary>
-        /// Sequence common to most commands.
-        /// </summary>
-        private static byte[] _commandCommon = new byte[] { 0xC6, 0x04, 0x08, 0x00, 0xF2 };
-
-        private static byte[] _decodingCommandBase = new byte[] { 0x04, 0xE4, 0x04, 0x00, 0xFF, 0x14 };
+        private const int HostModeAckLenght = 6;
 
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private BarcodeDataAvailableEventHandler _callbacksBarcodeDataAvailableEvent = null;
@@ -53,8 +56,8 @@ namespace Iot.Device.AtomQrCode
 
         // temp buffer to hold command data
         // created here to speed up transmission
-        private byte[] _commandBuffer;
-        private int _commandBufferLastPos = 10;
+        private readonly byte[] _commandBuffer;
+        private const int CommandBufferLastPos = 10;
 
         // temp buffer to hold received data
         // created here to speed up receiving
@@ -63,16 +66,17 @@ namespace Iot.Device.AtomQrCode
 
         private bool _disposed;
 
-        private TimeSpan _lastTimeout;
+        private ScanTimeout _lastTimeout;
 
         // backing fields for properties
         private readonly string _portName;
         private readonly SerialPort _readerSerialPort;
+        private bool _isReallyStopped;
         private bool _waitingForData = false;
         private TriggerMode _triggerMode = TriggerMode.None;
 
         /// <summary>
-        /// Get and set the trigger mode for scanning.
+        /// Gets or sets the trigger mode for scanning.
         /// </summary>
         public TriggerMode TriggerMode
         {
@@ -88,23 +92,23 @@ namespace Iot.Device.AtomQrCode
                         break;
 
                     case TriggerMode.KeyHold:
-                        suffix[_param1Index] = 0x00;
-                        suffix[_param2Index] = 0x9D;
+                        suffix[Param1Index] = 0x00;
+                        suffix[Param2Index] = 0x9D;
                         break;
 
                     case TriggerMode.KeyPress:
-                        suffix[_param1Index] = 0x02;
-                        suffix[_param2Index] = 0x9B;
+                        suffix[Param1Index] = 0x02;
+                        suffix[Param2Index] = 0x9B;
                         break;
 
                     case TriggerMode.Continuous:
-                        suffix[_param1Index] = 0x04;
-                        suffix[_param2Index] = 0x99;
+                        suffix[Param1Index] = 0x04;
+                        suffix[Param2Index] = 0x99;
                         break;
 
                     case TriggerMode.Autosensing:
-                        suffix[_param1Index] = 0x09;
-                        suffix[_param2Index] = 0x94;
+                        suffix[Param1Index] = 0x09;
+                        suffix[Param2Index] = 0x94;
                         break;
                 }
 
@@ -118,7 +122,7 @@ namespace Iot.Device.AtomQrCode
         }
 
         /// <summary>
-        /// Set the buzzer volume intensity.
+        /// Sets the buzzer volume intensity.
         /// </summary>
         public BuzzerVolume BuzzerVolume
         {
@@ -133,13 +137,13 @@ namespace Iot.Device.AtomQrCode
                         break;
 
                     case BuzzerVolume.Medium:
-                        suffix[_param1Index] = 0x01;
-                        suffix[_param2Index] = 0x9A;
+                        suffix[Param1Index] = 0x01;
+                        suffix[Param2Index] = 0x9A;
                         break;
 
                     case BuzzerVolume.Low:
-                        suffix[_param1Index] = 0x02;
-                        suffix[_param2Index] = 0x99;
+                        suffix[Param1Index] = 0x02;
+                        suffix[Param2Index] = 0x99;
                         break;
                 }
 
@@ -148,7 +152,7 @@ namespace Iot.Device.AtomQrCode
         }
 
         /// <summary>
-        /// <see langword="true"/> to enable all beeps. <see langword="false"/> to disable all beeps.
+        /// Sets to <see langword="true"/> to enable all beeps. Sets to <see langword="false"/> to disable all beeps.
         /// </summary>
         public bool EnableBeep
         {
@@ -159,8 +163,8 @@ namespace Iot.Device.AtomQrCode
 
                 if (value)
                 {
-                    suffix[_param1Index] = 0x01;
-                    suffix[_param2Index] = 0x28;
+                    suffix[Param1Index] = 0x01;
+                    suffix[Param2Index] = 0x28;
                 }
 
                 SendCommandType08(suffix);
@@ -168,7 +172,7 @@ namespace Iot.Device.AtomQrCode
         }
 
         /// <summary>
-        /// Set the positioning light mode.
+        /// Sets the positioning light mode.
         /// </summary>
         public Positioninglight Positioninglight
         {
@@ -183,13 +187,13 @@ namespace Iot.Device.AtomQrCode
                         break;
 
                     case Positioninglight.AlwaysOn:
-                        suffix[_param1Index] = 0x01;
-                        suffix[_param2Index] = 0x30;
+                        suffix[Param1Index] = 0x01;
+                        suffix[Param2Index] = 0x30;
                         break;
 
                     case Positioninglight.AlwaysOff:
-                        suffix[_param1Index] = 0x02;
-                        suffix[_param2Index] = 0x2F;
+                        suffix[Param1Index] = 0x02;
+                        suffix[Param2Index] = 0x2F;
                         break;
                 }
 
@@ -198,7 +202,7 @@ namespace Iot.Device.AtomQrCode
         }
 
         /// <summary>
-        /// Set the flood light mode.
+        /// Sets the flood light mode.
         /// </summary>
         public FloodLight FloodLight
         {
@@ -213,13 +217,13 @@ namespace Iot.Device.AtomQrCode
                         break;
 
                     case FloodLight.AlwaysOn:
-                        suffix[_param1Index] = 0x01;
-                        suffix[_param2Index] = 0x31;
+                        suffix[Param1Index] = 0x01;
+                        suffix[Param2Index] = 0x31;
                         break;
 
                     case FloodLight.AlwaysOff:
-                        suffix[_param1Index] = 0x02;
-                        suffix[_param2Index] = 0x30;
+                        suffix[Param1Index] = 0x02;
+                        suffix[Param2Index] = 0x30;
                         break;
                 }
 
@@ -228,7 +232,7 @@ namespace Iot.Device.AtomQrCode
         }
 
         /// <summary>
-        /// Set the terminator to be appended to the code data.
+        /// Sets the terminator to be appended to the code data.
         /// </summary>
         public Terminator Terminator { set; private get; } = Terminator.None;
 
@@ -263,7 +267,7 @@ namespace Iot.Device.AtomQrCode
         }
 
         /// <summary>
-        /// Start scanning for barcodes in automatic mode.
+        /// Starts scanning for barcodes in automatic mode.
         /// Requires to set the scan mode to <see cref="TriggerMode.Autosensing"/>.
         /// </summary>
         /// <exception cref="InvalidOperationException">If <see cref="TriggerMode"/> hasn't been set to <see cref="TriggerMode.Continuous"/> previously.</exception>
@@ -277,17 +281,30 @@ namespace Iot.Device.AtomQrCode
             // setup thread to process barcode reading
             new Thread(() =>
             {
+                // sanity check for previous execution exited
+                if(!_isReallyStopped)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                // update flag
+                _isReallyStopped = true;
+
                 // hang in here to let the command flow to make sure the thread doesn't exit immediately
                 Thread.Sleep(100);
 
                 do
                 {
-                    if (_newDataAvailable.WaitOne((int)_lastTimeout.TotalMilliseconds, true))
+                    // need to convert from enum value to milliseconds
+                    if (_newDataAvailable.WaitOne((int)_lastTimeout * 1000, true))
                     {
                         OnBarcodeDataAvailableInternal(ProcessNewData());
                     }
                 }
                 while (_waitingForData);
+
+                // update flag
+                _isReallyStopped = true;
 
             }).Start();
 
@@ -322,7 +339,7 @@ namespace Iot.Device.AtomQrCode
                 _commandBuffer,
                 _decodingCommandBase.Length);
 
-            _commandBuffer[_param1Index] = 0xE5;
+            _commandBuffer[Param1Index] = 0xE5;
             _commandBuffer[5] = 0x13;
 
             SendCommand(
@@ -338,18 +355,11 @@ namespace Iot.Device.AtomQrCode
         /// Tries to read a barcode within the provided timeout.
         /// Requires previously setting the scan mode to <see cref="TriggerMode.Host"/>.
         /// </summary>
-        /// <param name="timeout">Timeout waiting for a barcode to be read. See below for valid timeout values.</param>
-        /// <returns>A string with the data read from the barcode. An <see cref="string.Empty"/> will be returned if no data was read.</returns>
+        /// <param name="timeout">Timeout waiting for a barcode to be read.</param>
+        /// <param name="data">A string with the data read from the barcode.</param>
+        /// <returns><see langword="true"/> if a barcode was was read; otherwise, <see langword="false"/>.</returns>
         /// <remarks>
-        /// <para>
         /// This call will block until a code is read by the scanner or a timeout occurs waiting to scan a barcode.
-        /// </para>
-        /// <para>
-        /// The timeout will be rounded to a valid timeout value.
-        /// </para>
-        /// <para>
-        /// Valid timeout values are: 1-3-5-10-15-20 seconds. 
-        /// </para>
         /// </remarks>
         /// <exception cref="ArgumentException">If <paramref name="timeout"/> can't be rounded to a valid timeout value.</exception>
         /// <exception cref="InvalidOperationException">
@@ -367,29 +377,25 @@ namespace Iot.Device.AtomQrCode
         /// </para>
         /// If <see cref="TriggerMode"/> has been set to any mode other than <see cref="TriggerMode.Host"/>.
         /// </exception>
-        public string TryReadBarcode(TimeSpan timeout)
+        public bool TryReadBarcode(ScanTimeout timeout, out string data)
         {
-            if (timeout.Ticks != _lastTimeout.Ticks)
+            if (timeout != _lastTimeout)
             {
                 // configure new timeout
                 SetScanTimeout(timeout);
             }
 
-            return TryReadBarcode();
+            return TryReadBarcode(out data);
         }
 
         /// <summary>
         /// Tries to read a bar code.
         /// Requires previously setting the scan mode to <see cref="TriggerMode.Host"/>.
         /// </summary>
-        /// <returns>A string with the data read from the barcode. An <see cref="string.Empty"/> will be returned if no data was read.</returns>
+        /// <param name="data">A string with the data read from the barcode.</param>
+        /// <returns><see langword="true"/> if a barcode was was read; otherwise, <see langword="false"/>.</returns>
         /// <remarks>
-        /// <para>
         /// This call will block until a code is read by the scanner or a timeout occurs waiting to scan a barcode.
-        /// </para>
-        /// <para>
-        /// The timeout to scan a barcode is the default one of the reader (3 seconds) or can be set by calling <see cref="TryReadBarcode(TimeSpan)"/>.
-        /// </para>
         /// </remarks>
         /// <exception cref="InvalidOperationException">
         /// <para>
@@ -406,7 +412,7 @@ namespace Iot.Device.AtomQrCode
         /// </para>
         /// If <see cref="TriggerMode"/> has been set to any mode other than <see cref="TriggerMode.Host"/>.
         /// </exception>
-        public string TryReadBarcode()
+        public bool TryReadBarcode(out string data)
         {
             if (TriggerMode != TriggerMode.Host || _waitingForData)
             {
@@ -422,13 +428,17 @@ namespace Iot.Device.AtomQrCode
             // send command to start reading
             ExcuteStartScanning();
 
-            if (_newDataAvailable.WaitOne((int)_lastTimeout.TotalMilliseconds, true))
+            if (_newDataAvailable.WaitOne((int)_lastTimeout * 1000, true))
             {
-                return ProcessNewData();
+                data = ProcessNewData();
+
+                return true;
             }
             else
             {
-                return string.Empty;
+                data = string.Empty;
+
+                return false;
             }
         }
 
@@ -439,10 +449,10 @@ namespace Iot.Device.AtomQrCode
 
 
             // look for TAB, if anything was read
-            if (_readBufferIndex > _hostModeAckLenght)
+            if (_readBufferIndex > HostModeAckLenght)
             {
                 // start searching after ACK segment
-                tabIndex = _hostModeAckLenght;
+                tabIndex = HostModeAckLenght;
 
                 do
                 {
@@ -462,8 +472,8 @@ namespace Iot.Device.AtomQrCode
                 // start after host ACK segment
                 codeData = Encoding.UTF8.GetString(
                     _readBuffer,
-                    _hostModeAckLenght,
-                    tabIndex - _hostModeAckLenght);
+                    HostModeAckLenght,
+                    tabIndex - HostModeAckLenght);
 
                 codeData = AddTerminator(codeData);
             }
@@ -588,42 +598,23 @@ namespace Iot.Device.AtomQrCode
             callbacks?.Invoke(this, new BarcodeDataAvailableEventArgs(barcodeData));
         }
 
-#region Dispose implementation
+        #region Dispose implementation
 
-        protected virtual void Dispose(bool disposing)
+        /// <inheritdoc/>
+        public void Dispose()
         {
             if (!_disposed)
             {
-                if (disposing)
-                {
-                    if (_readerSerialPort != null)
-                    {
-                        _readerSerialPort.Close();
-                        _readerSerialPort.Dispose();
-                    }
-                }
+                _readerSerialPort?.Close();
 
                 _readBuffer = null;
                 _disposed = true;
             }
         }
 
-        /// <inheritdoc/>
-        ~QrCodeReader()
-        {
-            Dispose(disposing: false);
-        }
+        #endregion
 
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-#endregion
-
-#region Helper methods
+        #region Helper methods
 
         private void PerformInitialConfig()
         {
@@ -638,7 +629,7 @@ namespace Iot.Device.AtomQrCode
             SendCommandType08(new byte[] { 0x05, 0x03, 0xFE, 0x2C });
 
             // set scan timeout to reader default: 3 seconds
-            SetScanTimeout(TimeSpan.FromSeconds(3));
+            SetScanTimeout(ScanTimeout.Timeout_3sec);
         }
 
         private void ExcuteStartScanning()
@@ -653,45 +644,43 @@ namespace Iot.Device.AtomQrCode
                 true);
         }
 
-        private void SetScanTimeout(TimeSpan timeout)
+        private void SetScanTimeout(ScanTimeout timeout)
         {
             // valid timeout values are: 1 - 3 - 5 - 10 - 15 - 20 seconds.
 
             // value for 1000ms
             byte[] suffix = new byte[] { 0x88, 0x0A, 0xFE, 0x95 };
 
-            if (timeout.TotalMilliseconds <= 1000)
+            switch (timeout)
             {
-                // this is the default on the suffix
-            }
-            else if (timeout.TotalMilliseconds <= 3000)
-            {
-                suffix[_param1Index] = 0x1E;
-                suffix[_param2Index] = 0x81;
-            }
-            else if (timeout.TotalMilliseconds <= 5000)
-            {
-                suffix[_param1Index] = 0x32;
-                suffix[_param2Index] = 0x6D;
-            }
-            else if (timeout.TotalMilliseconds <= 10000)
-            {
-                suffix[_param1Index] = 0x64;
-                suffix[_param2Index] = 0x3B;
-            }
-            else if (timeout.TotalMilliseconds <= 15000)
-            {
-                suffix[_param1Index] = 0x96;
-                suffix[_param2Index] = 0x09;
-            }
-            else if (timeout.TotalMilliseconds <= 20000)
-            {
-                suffix[_param1Index] = 0xC8;
-                suffix[_param2Index] = 0xD7;
-            }
-            else
-            {
-                throw new ArgumentException();
+                case ScanTimeout.Timeout_1sec:
+                    // this is the default on the suffix
+                    break;
+
+                case ScanTimeout.Timeout_3sec:
+                    suffix[Param1Index] = 0x1E;
+                    suffix[Param2Index] = 0x81;
+                    break;
+
+                case ScanTimeout.Timeout_5sec:
+                    suffix[Param1Index] = 0x32;
+                    suffix[Param2Index] = 0x6D;
+                    break;
+
+                case ScanTimeout.Timeout_10sec:
+                    suffix[Param1Index] = 0x64;
+                    suffix[Param2Index] = 0x3B;
+                    break;
+
+                case ScanTimeout.Timeout_15sec:
+                    suffix[Param1Index] = 0x96;
+                    suffix[Param2Index] = 0x09;
+                    break;
+
+                case ScanTimeout.Timeout_20sec:
+                    suffix[Param1Index] = 0xC8;
+                    suffix[Param2Index] = 0xD7;
+                    break;
             }
 
             SendCommandType07(suffix);
@@ -708,7 +697,7 @@ namespace Iot.Device.AtomQrCode
             int commandLength = 1;
 
             // set command prefix
-            _commandBuffer[0] = _commandPrefix07;
+            _commandBuffer[0] = CommandPrefix07;
 
             // set command common sequence
             // this type has different ending, so removing the last one 
@@ -748,7 +737,7 @@ namespace Iot.Device.AtomQrCode
             int commandLength = 1;
 
             // set command prefix
-            _commandBuffer[0] = _commandPrefix08;
+            _commandBuffer[0] = CommandPrefix08;
 
             // set command common sequence 
             Array.Copy(
@@ -793,11 +782,11 @@ namespace Iot.Device.AtomQrCode
             if (sendWakeUp)
             {
                 // send wake-up 
-                _commandBuffer[_commandBufferLastPos] = 0x00;
+                _commandBuffer[CommandBufferLastPos] = 0x00;
 
                 _readerSerialPort.Write(
                     _commandBuffer,
-                    _commandBufferLastPos,
+                    CommandBufferLastPos,
                     1);
 
                 // need to wait
@@ -838,6 +827,6 @@ namespace Iot.Device.AtomQrCode
             }
         }
 
-#endregion
+        #endregion
     }
 }

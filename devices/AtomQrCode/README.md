@@ -42,11 +42,11 @@ To perform readings "on-demand" the trigger mode has to be set to `Host` and the
 reader.TriggerMode = TriggerMode.Host;
 
 // try reading barcode
-var code = reader.TryReadBarcode();
+string code;
+reader.TryReadBarcode(out code);
 ```
 
 Upon successful decoding a barcode, it will return the barcode data. On failure an empty string is returned.
-
 
 ### Continuous scanning
 
