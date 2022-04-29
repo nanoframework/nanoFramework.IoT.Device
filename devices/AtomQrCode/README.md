@@ -83,4 +83,4 @@ The library exposes several configurations and working options for the reader th
 
 The development of this library was kindly sponsored by [greenyYg](https://greenyng.com/)!
 
-![greenying-logo.jpg](./greenying-logo.jpg)
+![greenying-logo.png](./greenying-logo.png)
