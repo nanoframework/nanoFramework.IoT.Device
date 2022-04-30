@@ -288,7 +288,7 @@ namespace Iot.Device.AtomQrCode
                 }
 
                 // update flag
-                _isReallyStopped = true;
+                _isReallyStopped = false;
 
                 // hang in here to let the command flow to make sure the thread doesn't exit immediately
                 Thread.Sleep(100);
@@ -446,7 +446,6 @@ namespace Iot.Device.AtomQrCode
         {
             int tabIndex = 0;
             var codeData = string.Empty;
-
 
             // look for TAB, if anything was read
             if (_readBufferIndex > HostModeAckLenght)

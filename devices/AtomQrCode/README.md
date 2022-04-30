@@ -43,7 +43,15 @@ reader.TriggerMode = TriggerMode.Host;
 
 // try reading barcode
 string code;
-reader.TryReadBarcode(out code);
+
+if (reader.TryReadBarcode(out code))
+{
+    Debug.WriteLine(code);
+}
+else
+{
+    Debug.WriteLine("*** failed to read barcode ***");
+}
 ```
 
 Upon successful decoding a barcode, it will return the barcode data. On failure an empty string is returned.
