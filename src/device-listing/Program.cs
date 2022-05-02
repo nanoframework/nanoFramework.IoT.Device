@@ -52,7 +52,8 @@ string[] categoriesToDisplay = new string[]
     "eeprom",
     "helper",
     "system",
-    "lidar"
+    "lidar",
+    "reader"
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
