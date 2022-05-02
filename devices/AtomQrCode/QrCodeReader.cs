@@ -61,7 +61,7 @@ namespace Iot.Device.AtomQrCode
 
         // temp buffer to hold received data
         // created here to speed up receiving
-        private byte[] _readBuffer;
+        private readonly byte[] _readBuffer;
         private int _readBufferIndex;
 
         private bool _disposed;
@@ -606,7 +606,6 @@ namespace Iot.Device.AtomQrCode
             {
                 _readerSerialPort?.Close();
 
-                _readBuffer = null;
                 _disposed = true;
             }
         }
@@ -628,7 +627,7 @@ namespace Iot.Device.AtomQrCode
             SendCommandType08(new byte[] { 0x05, 0x03, 0xFE, 0x2C });
 
             // set scan timeout to reader default: 3 seconds
-            SetScanTimeout(ScanTimeout.Timeout_3sec);
+            SetScanTimeout(ScanTimeout.Timeout3sec);
         }
 
         private void ExcuteStartScanning()
@@ -652,31 +651,31 @@ namespace Iot.Device.AtomQrCode
 
             switch (timeout)
             {
-                case ScanTimeout.Timeout_1sec:
+                case ScanTimeout.Timeout1sec:
                     // this is the default on the suffix
                     break;
 
-                case ScanTimeout.Timeout_3sec:
+                case ScanTimeout.Timeout3sec:
                     suffix[Param1Index] = 0x1E;
                     suffix[Param2Index] = 0x81;
                     break;
 
-                case ScanTimeout.Timeout_5sec:
+                case ScanTimeout.Timeout5sec:
                     suffix[Param1Index] = 0x32;
                     suffix[Param2Index] = 0x6D;
                     break;
 
-                case ScanTimeout.Timeout_10sec:
+                case ScanTimeout.Timeout10sec:
                     suffix[Param1Index] = 0x64;
                     suffix[Param2Index] = 0x3B;
                     break;
 
-                case ScanTimeout.Timeout_15sec:
+                case ScanTimeout.Timeout15sec:
                     suffix[Param1Index] = 0x96;
                     suffix[Param2Index] = 0x09;
                     break;
 
-                case ScanTimeout.Timeout_20sec:
+                case ScanTimeout.Timeout20sec:
                     suffix[Param1Index] = 0xC8;
                     suffix[Param2Index] = 0xD7;
                     break;
