@@ -71,7 +71,7 @@ namespace Iot.Device.AtomQrCode
         // backing fields for properties
         private readonly string _portName;
         private readonly SerialPort _readerSerialPort;
-        private bool _isReallyStopped;
+        private bool _isReallyStopped = true;
         private bool _waitingForData = false;
         private TriggerMode _triggerMode = TriggerMode.None;
 
@@ -282,7 +282,7 @@ namespace Iot.Device.AtomQrCode
             new Thread(() =>
             {
                 // sanity check for previous execution exited
-                if(!_isReallyStopped)
+                if (!_isReallyStopped)
                 {
                     throw new InvalidOperationException();
                 }
@@ -430,12 +430,18 @@ namespace Iot.Device.AtomQrCode
 
             if (_newDataAvailable.WaitOne((int)_lastTimeout * 1000, true))
             {
+                // reset flag
+                _waitingForData = false;
+
                 data = ProcessNewData();
 
                 return true;
             }
             else
             {
+                // reset flag
+                _waitingForData = false;
+
                 data = string.Empty;
 
                 return false;
