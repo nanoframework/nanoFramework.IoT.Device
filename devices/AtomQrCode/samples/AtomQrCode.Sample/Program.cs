@@ -22,21 +22,25 @@ reader.TriggerMode = TriggerMode.Host;
 // try reading barcode
 string code;
 
-if (reader.TryReadBarcode(out code))
+do
 {
-    Debug.WriteLine("");
-    Debug.WriteLine("*** barcode data available ***");
-    Debug.WriteLine("");
-    Debug.WriteLine(code);
-    Debug.WriteLine("");
-    Debug.WriteLine("******************************");
-    Debug.WriteLine("");
+    if (reader.TryReadBarcode(out code))
+    {
+        Debug.WriteLine("");
+        Debug.WriteLine("*** barcode data available ***");
+        Debug.WriteLine("");
+        Debug.WriteLine(code);
+        Debug.WriteLine("");
+        Debug.WriteLine("******************************");
+        Debug.WriteLine("");
+    }
+    else
+    {
+        Debug.WriteLine("");
+        Debug.WriteLine("*** failed to read barcode ***");
+        Debug.WriteLine("");
+    }
 }
-else
-{
-    Debug.WriteLine("");
-    Debug.WriteLine("*** failed to read barcode ***");
-    Debug.WriteLine("");
-}
+while (true);
 
 Thread.Sleep(Timeout.Infinite);
