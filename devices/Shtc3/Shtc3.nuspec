@@ -25,8 +25,8 @@
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.1.1" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
       <dependency id="nanoFramework.System.Math" version="1.4.4" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.128.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.128.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.129.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.129.0" />
     </dependencies>
   </metadata>
   <files>
