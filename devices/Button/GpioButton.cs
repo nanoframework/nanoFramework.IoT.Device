@@ -27,8 +27,10 @@ namespace Iot.Device.Button
         /// <param name="pinMode">Pin mode of the system.</param>
         /// <param name="gpio">Gpio Controller.</param>
         /// <param name="shouldDispose">True to dispose the GpioController.</param>
-        public GpioButton(int buttonPin, GpioController gpio = null, bool shouldDispose = true, PinMode pinMode = PinMode.InputPullUp) 
-            : this(buttonPin, TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds), gpio, shouldDispose, pinMode)
+        /// <param name="debounceTime">The amount of time during which the transitions are ignored, or zero</param>
+        public GpioButton(int buttonPin, GpioController gpio = null, bool shouldDispose = true, PinMode pinMode = PinMode.InputPullUp,
+            TimeSpan debounceTime = default(TimeSpan))
+            : this(buttonPin, TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds), gpio, shouldDispose, pinMode, debounceTime)
         {
         }
 
@@ -41,8 +43,9 @@ namespace Iot.Device.Button
         /// <param name="holding">Min ms a button is pressed to count as holding.</param>
         /// <param name="gpio">Gpio Controller.</param>
         /// <param name="shouldDispose">True to dispose the GpioController.</param>
-        public GpioButton(int buttonPin, TimeSpan doublePress, TimeSpan holding, GpioController gpio = null, bool shouldDispose = true, PinMode pinMode = PinMode.InputPullUp)
-            : base(doublePress, holding)
+        /// <param name="debounceTime">The amount of time during which the transitions are ignored, or zero</param>
+        public GpioButton(int buttonPin, TimeSpan doublePress, TimeSpan holding, GpioController? gpio = null, bool shouldDispose = true, PinMode pinMode = PinMode.InputPullUp, TimeSpan debounceTime = default(TimeSpan))
+            : base(doublePress, holding, debounceTime)
         {
             _gpioController = gpio ?? new GpioController();
             _shouldDispose = shouldDispose;
@@ -118,8 +121,8 @@ namespace Iot.Device.Button
                     _gpioController.ClosePin(_buttonPin);
                 }
 
-            base.Dispose(disposing);
-            _disposed = true;
+                base.Dispose(disposing);
+                _disposed = true;
             }
         }
     }
