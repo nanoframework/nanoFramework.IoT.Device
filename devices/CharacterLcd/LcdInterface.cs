@@ -141,8 +141,7 @@ namespace Iot.Device.CharacterLcd
         /// <param name="microseconds">Time to wait if checking busy state isn't possible/practical.</param>
         public virtual void WaitForNotBusy(int microseconds)
         {
-            Thread.Sleep(microseconds / 1000); //Converts to milliseconds //TODO: Is there a better way... Or actually, why does the original implementation not work correctly!
-            //DelayHelper.DelayMicroseconds((int)(microseconds * WaitMultiplier), allowThreadYield: true); // Commented out as this caused more delays!
+            DelayHelper.DelayMicroseconds((int)(microseconds * WaitMultiplier), allowThreadYield: true); // Commented out as this caused more delays!
 
             // While we could check for the busy state it isn't currently practical. Most
             // commands need a maximum of 37μs to complete. Reading the busy flag alone takes
