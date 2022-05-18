@@ -7,9 +7,8 @@ name: Update dependencies (round 2)
 
 on:
   schedule:
-    # At 00:30 UTC every day.
-    # Set 30 min apart from round 1 to allow enough time for any changes to propagate.
-    - cron:  '30 00 * * *'
+    # At 15:00 UTC every day.
+    - cron:  '15 00 * * *'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
@@ -33,6 +32,7 @@ jobs:
       - name: Update dependencies
         uses: nanoframework/nanodu@v1
         with:
-          solutionsToCheck: '*.sln'
+          solutionsToCheck: |
+            ShiftRegister.sln
           workingDirectory: '${{ github.workspace }}/devices'
-          exclusionList: 'Ft6xx6x,NumberHelper,System.Buffers.Binary.BinaryPrimitives,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper'
+          branchToPr: 'develop'

@@ -11,7 +11,7 @@ using System;
 using System.Threading;
 using System.IO.Ports;
 
-namespace IoT.Device.Yx5300
+namespace Iot.Device.Yx5300
 {
     /// <summary>
     /// Yx5300 - MP3 Player

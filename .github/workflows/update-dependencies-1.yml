@@ -35,9 +35,11 @@ jobs:
           solutionsToCheck: |
             NumberHelper.sln
             System.Buffers.Binary.BinaryPrimitives.sln
+            Multiplexing.sln
             System.Device.Model.sln
             System.Diagnostics.Stopwatch.sln
             System.Drawing.sln
             System.Numerics.sln
             WeatherHelper.sln
           workingDirectory: '${{ github.workspace }}/devices'
+          branchToPr: 'develop'

@@ -52,7 +52,8 @@ string[] categoriesToDisplay = new string[]
     "eeprom",
     "helper",
     "system",
-    "lidar"
+    "lidar",
+    "reader"
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -115,6 +116,7 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "helper", "Iot.Device helpers and common" },
     { "system", ".NET System libraries" },
     { "lidar", "Lidar" },
+    { "reader", "Readers" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()

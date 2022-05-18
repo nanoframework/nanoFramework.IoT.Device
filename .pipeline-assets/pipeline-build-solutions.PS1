@@ -8,7 +8,7 @@ $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.e
 $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
 if ($msbuild)
 {
-    $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
+    $msbuild = join-path $msbuild 'MSBuild\Current\Bin\amd64\MSBuild.exe'
 }
 
 $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
@@ -23,11 +23,13 @@ if($env:DEVICE_TO_BUILD -eq "")
         "**********************" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
 
-        # get files changed in PR, if this is a PR
+        # get files changed in PR
         $pageCounter = 1
 
         do
         {
+            "INFO: iteration $pageCounter" | Write-Host
+
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
             if($null -eq $commit)
@@ -49,20 +51,39 @@ if($env:DEVICE_TO_BUILD -eq "")
     else
     {
         "" | Write-Host -ForegroundColor Yellow
-        "**************************" | Write-Host -ForegroundColor Yellow
-        "* Building from a commit *" | Write-host -ForegroundColor Yellow
-        "**************************" | Write-Host -ForegroundColor Yellow
+        "*****************************************************************" | Write-Host -ForegroundColor Yellow
+        "* Building from commit $env:Build_SourceVersion *" | Write-host -ForegroundColor Yellow
+        "*****************************************************************" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
 
-        # get files changed in the commit, if this is NOT a PR
-        $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+        # get files changed in the commit
+        $pageCounter = 1
+
+        do
+        {
+            "INFO: iteration $pageCounter" | Write-Host
+
+            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion`?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+
+            if($null -eq $commit)
+            {
+                $commit = $batch.files
+            }
+            else
+            {
+                $commit += $batch.files
+            }
+            
+            $pageCounter++
+
+        } until ($batch.files.Count -eq 0)
 
         # filter removed files              
-        $files = $commit.files.where{$_.status -ne 'removed'}
+        $files = $commit.where{$_.status -ne 'removed' -and $_.filename -match '(devices)'}
     }
 
-    # get file names only
-    $files1 = $files | ForEach-Object {$_.filename} | Where-Object {$_ -match 'devices/*'} 
+    # get file names only (filter out samples folders)
+    $files1 = $files | ForEach-Object {$_.filename} | Where-Object {$_ -match '^((?!samples).)*$'} 
 
     if($null -eq $files1)
     {
@@ -176,7 +197,15 @@ foreach ($folder in $deviceFolders)
         ########################
         # perform versions check
 
-        nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+        if($null -ne $env:System_PullRequest_PullRequestId)
+        {
+            # this is a PR build, perform analysis on nuspec dependencies
+            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile --analyse-nuspec
+        }
+        else
+        {
+            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+        }
 
         if($LASTEXITCODE -eq 0)
         {
@@ -201,22 +230,18 @@ foreach ($folder in $deviceFolders)
                 $alphaPrString = "-alpha." + $alphaNumber.ToString()
                 $MyNuGetVersion = $MyNuGetVersion+$alphaPrString
             }
-            if ($env:System_PullRequest_SourceBranch -like 'release*')
-            {
-                $MyNuGetVersion = $MyNuGetVersion + "-rc." + $versionData.VersionHeight
-            }
         
             Write-Host "NuGet build is: $MyNuGetVersion"
             Write-Host "Assembly version is: "+$versionData.AssemblyVersion
 
             ################
             # build solution
-            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
+            & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release /p:Platform="Any CPU" /p:PublicRelease=true
             if (-not $?) { throw "Error building '$solutionFile'" }
 
             ###############
             # package NuGet
-            nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$env:Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
+            nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
             if (-not $?) { throw "Error packaging '$nuspecFile'" }
         }
         else
