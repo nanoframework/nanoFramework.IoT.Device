@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Globalization;
-using SixLabors.ImageSharp;
 using System.Drawing;
 using Iot.Device.Graphics;
 

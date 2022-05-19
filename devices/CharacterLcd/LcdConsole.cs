@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Globalization;
-using SixLabors.ImageSharp;
 using Iot.Device.Graphics;
 
 namespace Iot.Device.CharacterLcd

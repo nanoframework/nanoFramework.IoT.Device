@@ -20,7 +20,6 @@ using Iot.Device.Multiplexing;
 using nanoFramework.Hardware.Esp32;
 #endif
 using Iot.Device.Pcx857x;
-using SixLabors.ImageSharp;
 
 #if BUIID_FOR_ESP32
 // For ESP32, set the pin functions.
