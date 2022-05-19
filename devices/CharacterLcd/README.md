@@ -2,11 +2,11 @@
 
 This device binding is meant to work with character LCD displays which use a HD44780 compatible controller. Almost all character LCDs fall into this category. Simple wrappers for 16x2 and 20x4 variants are included.
 
-Please make sure you are using the [latest Bindings nuget](https://github.com/dotnet/iot#how-to-install).
+Please make sure you are using the [latest nuget](https://www.nuget.org/packages/nanoFramework.Iot.Device.CharacterLcd).
 
 ## Documentation
 
-This binding has been tested with a variety of 16x2 and 20x4 displays both in 4bit and 8bit mode and via i2C adapters (such as on the CrowPi). It should work with any character LCD with a 5x8 size character. Common names are 1602LCD and 2004LCD. Also supports [Grove - LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/).
+This binding ~~should work and~~ is in **preview** ~~has been tested~~ with a variety of 16x2 and 20x4 displays both in 4bit and 8bit mode and via i2C adapters (such as on the CrowPi). It should work with any character LCD with a 5x8 size character. Common names are 1602LCD and 2004LCD. Also supports [Grove - LCD RGB Backlight](http://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/).
 
 - [Very complete tutorial](https://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/overview) on how to connect and work with one of these displays.
 - [Good guide](http://www.site2241.net/november2014.htm) explaining how the device works internally
@@ -20,12 +20,12 @@ These devices are controlled purely by GPIO (except Grove LCD RGB Backlight). Th
 Here is a Hello World example of how to consume this binding:
 
 ```csharp
-using (var lcd = new Lcd1602(18, 5, new int[]{6, 16, 20, 21})) //using 4 data pins
-{
-    lcd.Write("Hello World!");
-}
+            using LcdInterface lcdInterface = LcdInterface.CreateI2c(_i2cDevice, false);
+            using Hd44780 lcd = new Lcd1602(lcdInterface);
+            lcd.UnderlineCursorVisible = false;
+            lcd.Write("Hello World!");
 ```
-
+~~~
 Grove LCD RGB Backlight uses two i2c devices:
 
 - the device to control LCD (address 0x3E)
@@ -82,3 +82,4 @@ The sample code works with Adafruit's [I2C / SPI character LCD backpack](https:/
 ### Sample wiring
 
 ![wiring](lcmWiringExample.jpg)
+~~~
