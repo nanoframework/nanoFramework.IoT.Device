@@ -17,7 +17,7 @@ namespace System
         private readonly int _length; // accessible length after offset in the internal array
 
         /// <summary>
-        /// Creates a new Span object over the entirety of a specified array.
+        /// Creates a new SpanPinValuePair object over the entirety of a specified array.
         /// </summary>
         /// <param name="array">The array from which to create the System.Span object.</param>
         public SpanPinValuePair(PinValuePair[] array)
@@ -28,15 +28,24 @@ namespace System
         }
 
         /// <summary>
-        /// Creates a new Span object that includes a specified number of elements
+        /// Creates a new SpanPinValuePair object that includes a specified number of elements
         /// of an array starting at a specified index.
         /// </summary>
         /// <param name="array">The source array.</param>
         /// <param name="start">The index of the first element to include in the new System.Span</param>
         /// <param name="length">The number of elements to include in the new System.Span</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
-        /// array is null, but start or length is non-zero. -or- start is outside the bounds
-        /// of the array. -or- start and length exceeds the number of elements in the array.
+        /// <para>
+        /// array is null, but start or length is non-zero
+        /// </para>
+        /// <para>-or-</para>
+        /// <para>
+        /// start is outside the bounds of the array.
+        /// </para>
+        /// <para>-or-</para>
+        /// <para>
+        /// <paramref name="start"/> + <paramref name="length"/> exceed the number of elements in the array.
+        /// </para>
         /// </exception>
         public SpanPinValuePair(PinValuePair[] array, int start, int length)
         {
@@ -45,9 +54,11 @@ namespace System
                 if (start < 0 ||
                     length < 0 ||
                     start + length > array.Length ||
-                    (start == array.Length && start > 0))
+                    start > array.Length)
                 {
-                    throw new ArgumentOutOfRangeException($"Array length too small");
+#pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
+                    throw new ArgumentOutOfRangeException();
+#pragma warning restore S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                 }
                 else
                 {
@@ -58,11 +69,15 @@ namespace System
             }
             else if ((start != 0) || (length != 0))
             {
-                throw new ArgumentOutOfRangeException($"Array is null but start and length are not 0");
+#pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
+                throw new ArgumentOutOfRangeException();
+#pragma warning restore S3928 // Parameter names used into ArgumentException constructors should match an existing one 
             }
             else
             {
-                throw new Exception("Could not generate SpanPinValuePair");
+                _start = 0;
+                _length = 0;
+                _array = null;
             }
         }
 
@@ -71,14 +86,18 @@ namespace System
         /// </summary>
         /// <param name="index">The zero-based index of the element.</param>
         /// <returns>The element at the specified index.</returns>
-        // public ref PinValuePair this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="index"/> is out of range.
+        /// </exception>
         public PinValuePair this[int index]
         {
             get
             {
                 if (index >= _length)
                 {
+#pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                     throw new ArgumentOutOfRangeException();
+#pragma warning restore S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                 }
 
                 return _array[_start + index];
@@ -88,7 +107,9 @@ namespace System
             {
                 if (index >= _length)
                 {
+#pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                     throw new ArgumentOutOfRangeException();
+#pragma warning restore S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                 }
 
                 _array[_start + index] = value;
@@ -116,13 +137,15 @@ namespace System
         /// </summary>
         /// <param name="destination"> The destination System.Span object.</param>
         /// <exception cref="System.ArgumentException">
-        /// destination is shorter than the source System.Span.
+        /// destination is shorter than the source <see cref="SpanPinValuePair"/>.
         /// </exception>
         public void CopyTo(SpanPinValuePair destination)
         {
             if (destination.Length < _length)
             {
+#pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                 throw new ArgumentException();
+#pragma warning restore S3928 // Parameter names used into ArgumentException constructors should match an existing one 
             }
 
             for (int i = 0; i < _length; i++)
@@ -132,36 +155,37 @@ namespace System
         }
 
         /// <summary>
-        /// Forms a slice out of the current span that begins at a specified index.
+        /// Forms a slice out of the current <see cref="SpanPinValuePair"/> that begins at a specified index.
         /// </summary>
         /// <param name="start">The index at which to begin the slice.</param>
         /// <returns>A span that consists of all elements of the current span from start to the end of the span.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">start is less than zero or greater than System.Span.Length.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="start"/> is &lt; zero or &gt; <see cref="Length"/>.</exception>
         public SpanPinValuePair Slice(int start)
         {
             return Slice(start, _length - start);
         }
 
         /// <summary>
-        /// Forms a slice out of the current span starting at a specified index for a specified length.
+        /// Forms a slice out of the current <see cref="SpanPinValuePair"/> starting at a specified index for a specified length.
         /// </summary>
         /// <param name="start">The index at which to begin this slice.</param>
         /// <param name="length">The desired length for the slice.</param>
-        /// <returns>A span that consists of length elements from the current span starting at start.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">start or start + length is less than zero or greater than System.Span.Length.</exception>
+        /// <returns>A <see cref="SpanPinValuePair"/> that consists of <paramref name="length"/> number of elements from the current <see cref="SpanPinValuePair"/> starting at <paramref name="start"/>.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="start"/> or <paramref name="start"/> + <paramref name="length"/> is &lt; zero or &gt; <see cref="Length"/>.</exception>
         public SpanPinValuePair Slice(int start, int length)
         {
             if ((start < 0) || (length < 0) || (start + length > _length))
             {
-                // start or start + length is less than zero or greater than length
+#pragma warning disable S3928 // Parameter names used into ArgumentException constructors should match an existing one 
                 throw new ArgumentOutOfRangeException();
+#pragma warning restore S3928 // Parameter names used into ArgumentException constructors should match an existing one 
             }
 
             return new SpanPinValuePair(_array, _start + start, length);
         }
 
         /// <summary>
-        /// Copies the contents of this span into a new array.
+        /// Copies the contents of this <see cref="SpanPinValuePair"/> into a new array.
         /// </summary>
         /// <returns> An array containing the data in the current span.</returns>
         public PinValuePair[] ToArray()
@@ -176,7 +200,7 @@ namespace System
         }
 
         /// <summary>
-        /// Implicit conversion of an array to a span of PinValuePair
+        /// Implicit conversion of an array to a <see cref="SpanPinValuePair"/>.
         /// </summary>
         /// <param name="array"></param>
         public static implicit operator SpanPinValuePair(PinValuePair[] array)

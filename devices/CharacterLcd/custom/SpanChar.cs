@@ -76,7 +76,7 @@ namespace System
             {
                 _start = 0;
                 _length = 0;
-                _array = null; 
+                _array = null;
             }
         }
 
