@@ -5,7 +5,6 @@ using System;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace Iot.Device.Pcx857x
 {
@@ -18,7 +17,7 @@ namespace Iot.Device.Pcx857x
         /// I2C device used for communication with the device
         /// </summary>
         protected I2cDevice Device { get; }
-        private readonly GpioController? _controller;
+        private readonly GpioController _controller;
         private readonly int _interrupt;
         private bool _shouldDispose;
 
@@ -38,7 +37,7 @@ namespace Iot.Device.Pcx857x
         /// If not specified, the default controller will be used.
         /// </param>
         /// <param name="shouldDispose">True to dispose the Gpio Controller</param>
-        public Pcx857x(I2cDevice device, int interrupt = -1, GpioController? gpioController = null, bool shouldDispose = true)
+        public Pcx857x(I2cDevice device, int interrupt = -1, GpioController gpioController = null, bool shouldDispose = true)
         {
             Device = device ?? throw new ArgumentNullException(nameof(device));
             _interrupt = interrupt;
