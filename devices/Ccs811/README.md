@@ -53,13 +53,13 @@ You'll find below how to use the sensor. A full example covering in details all 
 To create a device without any of the pins:
 
 ```csharp
-var ccs811 = new Css811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, Ccs811Sensor.I2cFirstAddress)));
+var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, Ccs811Sensor.I2cFirstAddress)));
 ```
 
 To create a device with a wake pin and interrupt pin:
 
 ```csharp
-var ccs811 = new Css811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, Ccs811Sensor.I2cFirstAddress)), pinWake: 3, pinInterruption: 2);
+var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, Ccs811Sensor.I2cFirstAddress)), pinWake: 3, pinInterruption: 2);
 ```
 
 *Note*:
@@ -67,7 +67,7 @@ var ccs811 = new Css811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, Ccs8
 - If you are using the software I2C device instead of the hardware I2C, adjust the bus number. If like in the previous section, you've setup the software I2C, the bus number is 3. So instancing the device will be then:
 
 ```csharp
-var ccs811 = new Css811Sensor(I2cDevice.Create(new I2cConnectionSettings(3, Ccs811Sensor.I2cFirstAddress)));
+var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(3, Ccs811Sensor.I2cFirstAddress)));
 ```
 
 To create a device using an external chipset like FT4222 to offer GPIO and I2C support including Wake and Interrupt pins:
@@ -167,7 +167,7 @@ Debug.WriteLine($"Baseline calculation value: {ccs811.BaselineAlgorithmCalculati
 
 ## CCS811 Samples
 
-This [sample application](https://github.com/dotnet/iot/tree/main/src/devices/Ccs811/samples) contains flow and menus allowing you to test easily all the feature of the CSS811 and also show how to implement properly all readings.
+This [sample application](https://github.com/dotnet/iot/tree/main/src/devices/Ccs811/samples) contains flow and menus allowing you to test easily all the feature of the CCS811 and also show how to implement properly all readings.
 
 You can test it thru:
 
