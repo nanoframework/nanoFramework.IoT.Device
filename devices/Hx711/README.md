@@ -33,7 +33,7 @@ For other devices, like STM32, please make sure you're using the pins for the UA
 // the clock value was adjusted in order to get the typical duration expected by the PD_SCK ~1us
 var spisettings = new SpiConnectionSettings(1, 19)
 {
-    ClockFrequency = 700_000
+    ClockFrequency = Scale.DefaultClockFrequency
 };
 
 // create SPI device

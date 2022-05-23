@@ -19,6 +19,11 @@ namespace Iot.Device.Hx711
         private readonly SpiDevice _spiDevice;
 
         /// <summary>
+        /// This is the default clock frequency to use in order to generate the expected signal for communicating with the Hx711.
+        /// </summary>
+        public const int DefaultClockFrequency = 700_000;
+
+        /// <summary>
         /// Gets or sets the value that's subtracted from the actual reading.
         /// </summary>
         public int Offset { get; set; }

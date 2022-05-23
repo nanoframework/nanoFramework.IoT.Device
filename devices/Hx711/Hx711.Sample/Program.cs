@@ -22,7 +22,7 @@ Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
 // the clock value was adjusted in order to get the typical duration expected by the PD_SCK ~1us
 var spisettings = new SpiConnectionSettings(2, 19)
 {
-    ClockFrequency = 700_000
+    ClockFrequency = Scale.DefaultClockFrequency
 };
 
 // create SPI device
