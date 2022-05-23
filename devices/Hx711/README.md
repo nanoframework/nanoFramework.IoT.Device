@@ -43,7 +43,7 @@ var spidev = SpiDevice.Create(spisettings);
 var scale = new Scale(spidev);
 ```
 
-The scale class it's very simple to use and offers some configurations. Let's explore the most common usage scenarios.
+The scale class is very simple to use and offers some configurations. Let's explore the most common usage scenarios.
 
 ### Taring a scale
 
