@@ -214,7 +214,7 @@ namespace Iot.Device.Hx711
 
         private int ComputeAverage(int[] values)
         {
-            long value = 0;
+            double value = 0;
 
             for (int i = 0; i < values.Length; i++)
             {
