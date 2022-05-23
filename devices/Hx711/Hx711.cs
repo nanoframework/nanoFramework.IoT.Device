@@ -64,6 +64,7 @@ namespace Iot.Device.Hx711
 
             // setup the pulse train required to read a sample AND setup gain factor for next reading
             // gain factor from property
+            // these will produce a train of signals at MOSI pin that will feed the PC_CLK pin of Hx711
             _readSamplePulseTrain = new byte[]
             {
                 0b1010_1010,
