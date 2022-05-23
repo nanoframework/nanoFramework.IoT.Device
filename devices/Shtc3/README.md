@@ -65,4 +65,4 @@ using (Shtc3 sensor = new Shtc3(device))
 
 ### Result
 
-![Sample result](RunningResult.JPG)
+![Sample result](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Shtc3/RunningResult.JPG)
