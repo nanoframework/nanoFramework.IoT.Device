@@ -39,7 +39,7 @@ namespace Iot.Device.Hx711
         /// The default value is 3 samples.
         /// </para>
         /// <para>
-        /// The number of samples to take has impact on the time it takes for a <see cref="Read"/> operation to complete. The Hx711, in the current configuration, as sample rate of 10 samples per second.
+        /// The number of samples to take has impact on the time it takes for a <see cref="Read"/> operation to complete. The Hx711, in the current configuration, as a capability of sampling 10 samples per second.
         /// </para>
         /// </remarks>
         public uint SampleAveraging { get; set; } = 3;
@@ -74,9 +74,15 @@ namespace Iot.Device.Hx711
         /// <summary>
         /// Read weight from the scale.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The weight reading from the load cell.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If <see cref="SampleAveraging"/> is set to 0.</exception>
         public double Read()
         {
+            if (SampleAveraging == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             return ReadValue() - Offset;
         }
 
