@@ -31,7 +31,7 @@ namespace Iot.Device.Hx711
         /// Gets or sets the gain factor that the Hx711 uses when sampling.
         /// </summary>
         /// <remarks>
-        /// The default value is <see cref="GainLevel.Gain_128"/>.
+        /// The default value is <see cref="GainLevel.Gain128"/>.
         /// </remarks>
         public GainLevel Gain { get; set; }
 
@@ -52,10 +52,10 @@ namespace Iot.Device.Hx711
         /// Initializes a new instance of the <see cref="Scale"/> class.
         /// </summary>
         /// <param name="spiDevice">The <see cref="SpiDevice"/> that is used as channel to communicate with the Hx711.</param>
-        /// <param name="gain"><see cref="GainLevel"/> that will be used for the scale. If not provided, the default is <see cref="GainLevel.Gain_128"/>.</param>
+        /// <param name="gain"><see cref="GainLevel"/> that will be used for the scale. If not provided, the default is <see cref="GainLevel.Gain128"/>.</param>
         public Scale(
             SpiDevice spiDevice,
-            GainLevel gain = GainLevel.Gain_128
+            GainLevel gain = GainLevel.Gain128
             )
         {
             _spiDevice = spiDevice;

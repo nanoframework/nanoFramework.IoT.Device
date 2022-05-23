@@ -20,16 +20,16 @@ namespace Iot.Device.Hx711
         /// <summary>
         /// Gain factor of 32. Channel B.
         /// </summary>
-        Gain_32 = 0b1010_0000,
+        Gain32 = 0b1010_0000,
 
         /// <summary>
         /// Gain factor of 64. Channel A.
         /// </summary>
-        Gain_64 = 0b1010_1000,
+        Gain64 = 0b1010_1000,
 
         /// <summary>
         /// Gain factor of 128. Channel A.
         /// </summary>
-        Gain_128 = 0b1000_0000
+        Gain128 = 0b1000_0000
     }
 }
