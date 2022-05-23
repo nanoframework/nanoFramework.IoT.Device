@@ -13,13 +13,9 @@ namespace Iot.Device.Hx711
     /// </summary>
     public class Scale
     {
-        // number of clock periods to clock out in order to read a sample
-        private const int ClockPeriodsForSampleReading = 24;
-
         // pulse train required to read a sample and setup gain factor for next reading
-        private byte[] readSamplePulseTrain;
+        private readonly byte[] _readSamplePulseTrain;
 
-        private readonly bool[] _rawSample = new bool[24];
         private readonly SpiDevice _spiDevice;
 
         /// <summary>
@@ -63,7 +59,7 @@ namespace Iot.Device.Hx711
 
             // setup the pulse train required to read a sample AND setup gain factor for next reading
             // gain factor from property
-            readSamplePulseTrain = new byte[]
+            _readSamplePulseTrain = new byte[]
             {
                 0b1010_1010,
                 0b1010_1010,
@@ -123,7 +119,7 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Reading sample.");
 
             // setup buffer to drive PD_SCK
-            SpanByte clkTrain = new(readSamplePulseTrain);
+            SpanByte clkTrain = new(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
             SpanByte readBuffer = new(new byte[7]);
