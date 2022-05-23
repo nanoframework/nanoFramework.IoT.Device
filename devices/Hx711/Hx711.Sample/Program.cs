@@ -4,12 +4,8 @@
 using Iot.Device.Hx711;
 using nanoFramework.Hardware.Esp32;
 using System;
-using System.Device.Gpio;
 using System.Device.Spi;
-using System.Diagnostics;
 using System.Threading;
-
-
 
 ///////////////////////////////////////////////////////////////////////
 // When connecting to an ESP32 device, need to configure the SPI GPIOs
