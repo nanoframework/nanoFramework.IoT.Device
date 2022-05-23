@@ -85,4 +85,4 @@ Holding Completed
 
 The unit test project can be found in the [tests](./Tests/ButtonTests.cs) directory. You can simply run them using the VS2019 built-in test capabilites:
 
-![unit tests](./unittests.png)
+![unit tests](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Button/unittests.png)
