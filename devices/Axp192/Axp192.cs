@@ -71,7 +71,7 @@ namespace Iot.Device.Axp192
         /// Gets or sets DC-DC2 voltage.
         /// </summary>
         /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc2Volvage
+        public ElectricPotential DcDc2Voltage
         {
             get
             {
