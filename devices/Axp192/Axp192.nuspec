@@ -4,7 +4,7 @@
     <id>nanoFramework.Iot.Device.Axp192</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Axp192</title>
-	<authors>nanoframework</authors>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
