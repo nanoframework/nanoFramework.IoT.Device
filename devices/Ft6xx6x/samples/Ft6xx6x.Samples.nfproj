@@ -57,8 +57,8 @@
     <Reference Include="nanoFramework.Hardware.Esp32">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.3.6\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.M5Core2, Version=1.0.64.6330, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.M5Core2.1.0.64.6330\lib\nanoFramework.M5Core2.dll</HintPath>
+    <Reference Include="nanoFramework.M5Core2, Version=1.0.66.24331, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\nanoFramework.M5Core2.1.0.66.24331\lib\nanoFramework.M5Core2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager">
