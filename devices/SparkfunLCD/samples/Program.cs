@@ -1,96 +1,44 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Device.Spi;
-using System.Diagnostics;
-using System.Threading;
-using Iot.Device.SparkfunLCD;
-
-string message = "Hello World from MAX7219!";
-
-Debug.WriteLine(message);
-
-//////////////////////////////////////////////////////////////////////
-// when connecting to an ESP32 device, need to configure the SPI GPIOs
-// used for the bus
-//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
-//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
-//Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
-// Make sure as well you are using the right chip select
-SpiConnectionSettings connectionSettings = new(1, 42)
+namespace Iot.Device.SparkfunLCD.sample
 {
-    ClockFrequency = Iot.Device.Max7219.Max7219.SpiClockFrequency,
-    Mode = Iot.Device.Max7219.Max7219.SpiMode
-};
-using SpiDevice spi = SpiDevice.Create(connectionSettings);
-using Max7219 devices = new(spi, cascadedDevices: 4);
-// initialize the devices
-devices.Init();
+    using System.Diagnostics;
+    using System.Threading;
+    using nanoFramework.Hardware.Esp32;
+    using Iot.Device.SparkfunLCD;
 
-// reinitialize the devices
-Debug.WriteLine("Init");
-devices.Init();
-
-// write a smiley to devices buffer
-var smiley = new byte[]
-{
-    0b00111100,
-    0b01000010,
-    0b10100101,
-    0b10000001,
-    0b10100101,
-    0b10011001,
-    0b01000010,
-    0b00111100
-};
-
-for (var i = 0; i < devices.CascadedDevices; i++)
-{
-    for (var digit = 0; digit < 8; digit++)
+    /// <summary>
+    /// Class containing main executable code
+    /// </summary>
+    public class Program
     {
-        devices[new DeviceIdDigit(i, digit)] = smiley[digit];
+        /// <summary>
+        /// code executed at device reset
+        /// </summary>
+        public static void Main()
+        {
+            Debug.WriteLine("Hello from SparkFun 20x4 SerLCD");
+
+            using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
+            {
+                lcd.CursorState(false);
+                lcd.SetBacklight(0, 255, 0);
+                lcd.SetContrast(4);
+                lcd.ClearScreen();
+                lcd.DisplayState(false);
+                lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
+                lcd.Write(0, 1, "P/N# LCD-16398");
+                lcd.Write(0, 3, "Hello!!!");
+                lcd.DisplayState(true);
+            }
+
+            ////Sleep.StartDeepSleep();
+            while (true) { Thread.Sleep(100); }
+
+            // Browse our samples repository: https://github.com/nanoframework/samples
+            // Check our documentation online: https://docs.nanoframework.net/
+            // Join our lively Discord community: https://discord.gg/gCyBu8T
+        }
     }
 }
-
-// flush the smiley to the devices using a different rotation each iteration.
-//foreach (RotationType rotation in Enum.GetValues(typeof(RotationType)))
-
-Debug.WriteLine($"Send Smiley using rotation {devices.Rotation}.");
-devices.Rotation = RotationType.None;
-devices.Flush();
-Thread.Sleep(1000);
-Debug.WriteLine($"Send Smiley using rotation {devices.Rotation}.");
-devices.Rotation = RotationType.Right;
-devices.Flush();
-Thread.Sleep(1000);
-Debug.WriteLine($"Send Smiley using rotation {devices.Rotation}.");
-devices.Rotation = RotationType.Half;
-devices.Flush();
-Thread.Sleep(1000);
-Debug.WriteLine($"Send Smiley using rotation {devices.Rotation}.");
-devices.Rotation = RotationType.Left;
-devices.Flush();
-Thread.Sleep(1000);
-
-// reinitialize device and show message using the matrix graphics
-devices.Init();
-devices.Rotation = RotationType.Right;
-MatrixGraphics graphics = new(devices, Fonts.Default);
-foreach (var font in new[]
-{
-    Fonts.CP437, Fonts.LCD, Fonts.Sinclair, Fonts.Tiny, Fonts.CyrillicUkrainian
-})
-{
-    graphics.Font = font;
-    graphics.ShowMessage(message, alwaysScroll: true);
-}
-
-RotationType ReadRotation(char c) => c switch
-{
-    'l' => RotationType.Left,
-    'r' => RotationType.Right,
-    'n' => RotationType.None,
-    'h' => RotationType.Half,
-    _ => RotationType.None,
-};

@@ -1,15 +1,15 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Device.I2c;
-using System.Threading;
-using nanoFramework.Hardware.Esp32;
-
 namespace Iot.Device.SparkfunLCD
 {
+    using System;
+    using System.Device.I2c;
+    using System.Threading;
+    using nanoFramework.Hardware.Esp32;
+
     /// <summary>
-    /// LCD library for SparkFun RGB 3.3v Serial Open LCD display with I2C interface
+    /// LCD library for SparkFun RGB Serial Open LCD display (sizes 20x4 or 16x2) with I2C connection
     /// for product information see https://www.sparkfun.com/products/16398
     /// code based on https://github.com/sparkfun/OpenLCD
     /// </summary>
@@ -19,16 +19,6 @@ namespace Iot.Device.SparkfunLCD
         /// Default I2C address
         /// </summary>
         public const byte DEFAULTDISPLAYADDRESS = 0x72;
-
-        /// <summary>
-        /// Maximum display rows
-        /// </summary>
-        public const byte MAXROWS = 4;
-
-        /// <summary>
-        /// Maximum display columns
-        /// </summary>
-        public const byte MAXCOLUMNS = 20;
 
         /// <summary>
         /// OpenLCD special command message, command follows
@@ -198,33 +188,25 @@ namespace Iot.Device.SparkfunLCD
         /// <summary>
         /// Initializes a new instance of the <see cref="SparkfunLCD" /> class
         /// </summary>
-        /// <param name="i2cDevice">existing I2C connection to display</param>
-        public SparkfunLCD(I2cDevice i2cDevice)
-        {
-            this.i2cDevice = i2cDevice;
-            this.Init(); // call init function since display may have been left in unknown state
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkfunLCD" /> class
-        /// </summary>
+        /// <param name="displaySize">display size</param>
         /// <param name="dataPin">ESP32 I2C data pin</param>
         /// <param name="clockPin">ESP32 I2C clock pin</param>
-        public SparkfunLCD(int dataPin = 18, int clockPin = 19)
-    : this(busId: 1, deviceAddress: SparkfunLCD.DEFAULTDISPLAYADDRESS, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin, clockPin)
+        public SparkfunLCD(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int dataPin = 18, int clockPin = 19)
+    : this(displaySize, busId: 1, deviceAddress: SparkfunLCD.DEFAULTDISPLAYADDRESS, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin, clockPin)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SparkfunLCD" /> class
         /// </summary>
+        /// <param name="displaySize">display size</param>
         /// <param name="busId">I2C bus ID</param>
         /// <param name="deviceAddress">I2C address of LCD display</param>
         /// <param name="i2cBusSpeed">I2C bus speed</param>
         /// <param name="dataPin">ESP32 I2C data pin</param>
         /// <param name="clockPin">ESP32 I2C clock pin</param>
-        public SparkfunLCD(int busId = 1, int deviceAddress = SparkfunLCD.DEFAULTDISPLAYADDRESS, I2cBusSpeed i2cBusSpeed = I2cBusSpeed.StandardMode, int dataPin = 18, int clockPin = 19)
-            : this(new I2cConnectionSettings(busId, deviceAddress, i2cBusSpeed), dataPin, clockPin)
+        public SparkfunLCD(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int busId = 1, int deviceAddress = SparkfunLCD.DEFAULTDISPLAYADDRESS, I2cBusSpeed i2cBusSpeed = I2cBusSpeed.StandardMode, int dataPin = 18, int clockPin = 19)
+            : this(new I2cConnectionSettings(busId, deviceAddress, i2cBusSpeed), displaySize, dataPin, clockPin)
         {
         }
 
@@ -232,15 +214,27 @@ namespace Iot.Device.SparkfunLCD
         /// Initializes a new instance of the <see cref="SparkfunLCD" /> class
         /// </summary>
         /// <param name="settings">I2C settings for connection</param>
+        /// <param name="displaySize">display size</param>
         /// <param name="dataPin">ESP32 I2C data pin</param>
         /// <param name="clockPin">ESP32 I2C clock pin</param>
-        public SparkfunLCD(I2cConnectionSettings settings, int dataPin = 18, int clockPin = 19)
+        public SparkfunLCD(I2cConnectionSettings settings, DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int dataPin = 18, int clockPin = 19)
         {
             Configuration.SetPinFunction(dataPin, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
 
             this.i2cDevice = I2cDevice.Create(settings);
-            this.Init(); // call init function since display may have been left in unknown state
+            this.Init(displaySize);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SparkfunLCD" /> class
+        /// </summary>
+        /// <param name="i2cDevice">existing I2C connection to display</param>
+        /// <param name="displaySize">display size</param>
+        public SparkfunLCD(I2cDevice i2cDevice, DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4)
+        {
+            this.i2cDevice = i2cDevice;
+            this.Init(displaySize);
         }
 
         /// <summary>
@@ -250,6 +244,32 @@ namespace Iot.Device.SparkfunLCD
         {
             this.Dispose();
         }
+
+        /// <summary>
+        /// Display size
+        /// </summary>
+        public enum DISPLAYSIZE
+        {
+            /// <summary>
+            /// Display size 20 x 4
+            /// </summary>
+            SIZE20X4,
+
+            /// <summary>
+            /// Display size 16 x 2
+            /// </summary>
+            SIZE16X2
+        }
+
+        /// <summary>
+        /// Gets display maximum rows
+        /// </summary>
+        public byte MAXROWS { get; private set; }
+
+        /// <summary>
+        /// Gets display maximum columns
+        /// </summary>
+        public byte MAXCOLUMNS { get; private set; }
 
         /// <summary>
         /// Disposes of an instance of the class, implements <see cref="IDisposable"/>
@@ -292,7 +312,7 @@ namespace Iot.Device.SparkfunLCD
             int[] row_offsets = { 0x00, 0x40, 0x14, 0x54 };
 
             // keep variables in bounds
-            row = (byte)Math.Min(row, MAXROWS - 1); // row cannot be greater than max rows
+            row = (byte)Math.Min(row, this.MAXROWS - 1); // row cannot be greater than max rows
 
             // send the command
             this.SpecialCommand((byte)(LCDSETDDRAMADDR | (col + row_offsets[row])));
@@ -651,8 +671,22 @@ namespace Iot.Device.SparkfunLCD
         /// <summary>
         /// Initialize the display
         /// </summary>
-        private void Init()
+        /// <param name="displaySize">display size</param>
+        private void Init(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4)
         {
+            switch (displaySize)
+            {
+                default:
+                case DISPLAYSIZE.SIZE20X4:
+                    this.MAXROWS = 20;
+                    this.MAXCOLUMNS = 4;
+                    break;
+                case DISPLAYSIZE.SIZE16X2:
+                    this.MAXROWS = 16;
+                    this.MAXCOLUMNS = 2;
+                    break;
+            }
+
             this.Transmit(SPECIALCOMMAND); // Send special command character
             this.Transmit((byte)(LCDDISPLAYCONTROL | this.displayControl)); // Send the display command
             this.Transmit(SPECIALCOMMAND); // Send special command character
