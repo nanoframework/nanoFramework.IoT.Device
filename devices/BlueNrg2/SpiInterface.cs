@@ -21,9 +21,8 @@ namespace BlueNrg2
 			GpioController gpioController,
 			int resetPin,
 			int extIPin,
-			int csPin
+			int csPin,
 #if DEBUG
-			,
 			ILogger logger,
 #endif
 			bool shouldDispose = false
