@@ -12,24 +12,22 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.SPS30</RootNamespace>
-    <AssemblyName>Iot.Device.SPS30</AssemblyName>
+    <RootNamespace>Iot.Device.Sps30</RootNamespace>
+    <AssemblyName>Iot.Device.Sps30</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.SPS30.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Sps30.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Entities\Measurement.cs" />
-    <Compile Include="Entities\MeasurementFloat.cs" />
     <Compile Include="Entities\MeasurementOutputFormat.cs" />
-    <Compile Include="Entities\MeasurementUInt16.cs" />
     <Compile Include="Entities\Status.cs" />
     <Compile Include="Entities\VersionInformation.cs" />
     <Compile Include="Extensions\MemoryStreamExtensions.cs" />
     <Compile Include="Extensions\SerialPortExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SHDLC\SHDLCProtocol.cs" />
-    <Compile Include="SPS30Sensor.cs" />
+    <Compile Include="Shdlc\ShdlcProtocol.cs" />
+    <Compile Include="Sps30Sensor.cs" />
     <Compile Include="Utils\BigEndianBitConverter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,7 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SPS30.nuspec" />
+    <None Include="Sps30.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Iot.Device.SPS30.Entities
+namespace Iot.Device.Sps30.Entities
 {
     /// <summary>
     /// Parsed response after requesting version information.
@@ -20,25 +20,21 @@ namespace Iot.Device.SPS30.Entities
         public VersionInformation(byte[] data)
         {
             if (data.Length < 7)
+            {
                 throw new ArgumentOutOfRangeException(nameof(data), "Unexpected array size. Expecting at least 7 bytes.");
-            FirmwareMajorVersion = data[0];
-            FirmwareMinorVersion = data[1];
+            }
+
+            FirmwareVersion = new Version(data[0], data[1]);
             // data[2] is reserved
             HardwareRevision = data[3];
             // data[4] is reserved
-            SHDLCProtocolMajorVersion = data[5];
-            SHDLCProtocolMinorVersion = data[6];
+            ShdlcProtocolVersion = new Version(data[5], data[6]);
         }
 
         /// <summary>
-        /// Firmware major version
+        /// Firmware version
         /// </summary>
-        public int FirmwareMajorVersion { get; private set; }
-
-        /// <summary>
-        /// Firmware minor version
-        /// </summary>
-        public int FirmwareMinorVersion { get; private set; }
+        public Version FirmwareVersion { get; private set; }
 
         /// <summary>
         /// Hardware rivision
@@ -46,14 +42,9 @@ namespace Iot.Device.SPS30.Entities
         public int HardwareRevision { get; private set; }
 
         /// <summary>
-        /// SHDLC protocol major version
+        /// SHDLC protocol version
         /// </summary>
-        public int SHDLCProtocolMajorVersion { get; private set; }
-
-        /// <summary>
-        /// SHDCL protocol minor version
-        /// </summary>
-        public int SHDLCProtocolMinorVersion { get; private set; }
+        public Version ShdlcProtocolVersion { get; private set; }
 
         /// <summary>
         /// Conveniently show the version information in a single string.
@@ -61,7 +52,7 @@ namespace Iot.Device.SPS30.Entities
         /// <returns>The version information as a convenient string</returns>
         public override string ToString()
         {
-            return $"Firmware V{FirmwareMajorVersion}.{FirmwareMinorVersion}, Hardware V{HardwareRevision}, SHDLC V{SHDLCProtocolMajorVersion}.{SHDLCProtocolMinorVersion}";
+            return $"Firmware V{FirmwareVersion}, Hardware V{HardwareRevision}, SHDLC V{ShdlcProtocolVersion}";
         }
 
     }

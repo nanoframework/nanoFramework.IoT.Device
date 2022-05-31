@@ -4,11 +4,11 @@
 //
 
 using System.Text;
-using Iot.Device.SPS30.Entities;
-using Iot.Device.SPS30.SHDLC;
-using Iot.Device.SPS30.Utils;
+using Iot.Device.Sps30.Entities;
+using Iot.Device.Sps30.Shdlc;
+using Iot.Device.Sps30.Utils;
 
-namespace nanoFramework.Sensirion.SPS30
+namespace Iot.Device.Sps30
 {
     /// <summary>
     /// Allows for interaction with the SPS30 particulate matter sensor. Uses the SHDLC protocol as specified by Sensirion.
@@ -16,15 +16,15 @@ namespace nanoFramework.Sensirion.SPS30
     /// <remarks>
     /// Datasheet can be found at https://sensirion.com/media/documents/8600FF88/616542B5/Sensirion_PM_Sensors_Datasheet_SPS30.pdf
     /// </remarks>
-    public class SPS30Sensor
+    public class Sps30Sensor
     {
-        private readonly SHDLCProtocol _shdlc;
+        private readonly ShdlcProtocol _shdlc;
 
         /// <summary>
         /// Initialize the SPS30 sensor using the UART interface.
         /// </summary>
-        /// <param name="shdlc">An initialized <see cref="SHDLCProtocol"/> instance</param>
-        public SPS30Sensor(SHDLCProtocol shdlc)
+        /// <param name="shdlc">An initialized <see cref="ShdlcProtocol"/> instance</param>
+        public Sps30Sensor(ShdlcProtocol shdlc)
         {
             _shdlc = shdlc;
         }
@@ -49,14 +49,16 @@ namespace nanoFramework.Sensirion.SPS30
         /// <summary>
         /// Reads the measured values from the module. This command can be used to poll for new measurement values. The measurement interval is 1 second.
         /// </summary>
+        /// <returns>The parsed measurement, either Float or UInt16, depending on <see cref="StartMeasurement(MeasurementOutputFormat)"/></returns>
         public Measurement ReadMeasuredValues()
         {
             var data = _shdlc.Execute(0, 0x03, new byte[0]);
             if (data.Length == 0)
+            {
                 return null;
-            if (data.Length > 20)
-                return new MeasurementFloat(data);
-            return new MeasurementUInt16(data);
+            }
+
+            return new Measurement(data);
         }
 
         /// <summary>
@@ -85,8 +87,9 @@ namespace nanoFramework.Sensirion.SPS30
         }
 
         /// <summary>
-        /// Reads the interval [s] of the periodic fan-cleaning
+        /// Reads the interval [s] of the periodic fan-cleaning.
         /// </summary>
+        /// <returns>The auto cleaning interval in seconds</returns>
         public uint GetAutoCleaningInterval()
         {
             var data = _shdlc.Execute(0, 0x80, new byte[] { 0x00 });
@@ -94,7 +97,7 @@ namespace nanoFramework.Sensirion.SPS30
         }
 
         /// <summary>
-        /// Writes the interval [s] of the periodic fan-cleaning
+        /// Writes the interval [s] of the periodic fan-cleaning.
         /// </summary>
         /// <param name="intervalInSeconds">The new interval in seconds.</param>
         public void SetAutoCleaningInterval(uint intervalInSeconds)
@@ -106,6 +109,7 @@ namespace nanoFramework.Sensirion.SPS30
         /// <summary>
         /// This command returns product type with a maximum of 32 characters.
         /// </summary>
+        /// <returns>The device product type as a string</returns>
         public string GetDeviceInfoProductType()
         {
             var data = _shdlc.Execute(0, 0xD0, new byte[] { 0x00 });
@@ -115,6 +119,7 @@ namespace nanoFramework.Sensirion.SPS30
         /// <summary>
         /// This command returns serial number with a maximum of 32 characters.
         /// </summary>
+        /// <returns>The device serial number as a string</returns>
         public string GetDeviceInfoSerialNumber()
         {
             var data = _shdlc.Execute(0, 0xD0, new byte[] { 0x03 });
@@ -124,6 +129,7 @@ namespace nanoFramework.Sensirion.SPS30
         /// <summary>
         /// Gets version information about the firmware, hardware, and SHDLC protocol.
         /// </summary>
+        /// <returns>The parsed version information</returns>
         public VersionInformation ReadVersion()
         {
             var data = _shdlc.Execute(0, 0xD1, new byte[0]);
@@ -134,6 +140,7 @@ namespace nanoFramework.Sensirion.SPS30
         /// Use this command to read the Device Status Register.
         /// </summary>
         /// <param name="clearBitsAfterRead">True to clear any persistent error bits after reading the status.</param>
+        /// <returns>The parsed device status</returns>
         public DeviceStatus ReadDeviceStatusRegister(bool clearBitsAfterRead = false)
         {
             var data = _shdlc.Execute(0, 0xD2, new byte[] { (byte)(clearBitsAfterRead ? 0x01 : 0x0) });

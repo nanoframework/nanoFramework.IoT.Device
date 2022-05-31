@@ -3,13 +3,65 @@
 // See LICENSE file in the project root for full license information.
 //
 
-namespace Iot.Device.SPS30.Entities
+using System;
+using Iot.Device.Sps30.Utils;
+
+namespace Iot.Device.Sps30.Entities
 {
     /// <summary>
-    /// Abstract Measurement class that can house both response types (Float vs UInt16) by using doubles.
+    /// Measurement class that can house both response types (Float vs UInt16) by using doubles. Depending on the
+    /// amount of bytes passed, we can deduct the type.
     /// </summary>
-    public abstract class Measurement
+    public class Measurement
     {
+        /// <summary>
+        /// Parse the passed data into usable measurements. Depending on the amount of bytes passed, the originally
+        /// requested type is deducted and parsed accordingly.
+        /// </summary>
+        /// <param name="data">The response data on the requested measurement</param>
+        public Measurement(byte[] data)
+        {
+            if (data.Length >= 40)
+            {
+                // When we have 40 bytes of data, we assume Float was requested and will be parsed as such
+                Format = MeasurementOutputFormat.Float;
+                MassConcentrationPM10 = BigEndianBitConverter.ToSingle(data, 0);
+                MassConcentrationPM25 = BigEndianBitConverter.ToSingle(data, 4);
+                MassConcentrationPM40 = BigEndianBitConverter.ToSingle(data, 8);
+                MassConcentrationPM100 = BigEndianBitConverter.ToSingle(data, 12);
+                NumberConcentrationPM05 = BigEndianBitConverter.ToSingle(data, 16);
+                NumberConcentrationPM10 = BigEndianBitConverter.ToSingle(data, 20);
+                NumberConcentrationPM25 = BigEndianBitConverter.ToSingle(data, 24);
+                NumberConcentrationPM40 = BigEndianBitConverter.ToSingle(data, 28);
+                NumberConcentrationPM40 = BigEndianBitConverter.ToSingle(data, 32);
+                TypicalParticleSize = BigEndianBitConverter.ToSingle(data, 36);
+            }
+            else if (data.Length >= 20)
+            {
+                // When we have 20 bytes of data, we assume UInt16 was requested and will be parsed as such
+                Format = MeasurementOutputFormat.UInt16;
+                MassConcentrationPM10 = BigEndianBitConverter.ToUInt16(data, 0);
+                MassConcentrationPM25 = BigEndianBitConverter.ToUInt16(data, 2);
+                MassConcentrationPM40 = BigEndianBitConverter.ToUInt16(data, 4);
+                MassConcentrationPM100 = BigEndianBitConverter.ToUInt16(data, 6);
+                NumberConcentrationPM05 = BigEndianBitConverter.ToUInt16(data, 8);
+                NumberConcentrationPM10 = BigEndianBitConverter.ToUInt16(data, 10);
+                NumberConcentrationPM25 = BigEndianBitConverter.ToUInt16(data, 12);
+                NumberConcentrationPM40 = BigEndianBitConverter.ToUInt16(data, 14);
+                NumberConcentrationPM40 = BigEndianBitConverter.ToUInt16(data, 16);
+                TypicalParticleSize = BigEndianBitConverter.ToUInt16(data, 18);
+            }
+            else
+            {
+                throw new ApplicationException($"Not enough bytes received to parse a measurement");
+            }
+        }
+
+        /// <summary>
+        /// The format assumed when parsing the data for this measurement instance.
+        /// </summary>
+        public MeasurementOutputFormat Format { get; protected set; }
+
         /// <summary>
         /// Mass Concentration PM1.0 [µg/m³]
         /// </summary>

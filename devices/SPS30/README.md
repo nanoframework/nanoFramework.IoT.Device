@@ -17,15 +17,37 @@ Configuration.SetPinFunction(4, DeviceFunction.COM2_TX);
 Configuration.SetPinFunction(15, DeviceFunction.COM2_RX);
 ```
 
-Initialize the `SerialPort`, wrap it in the `SHDLCProtocol`, then pass to the `SPS30Sensor`:
+Initialize the `SerialPort`, wrap it in the `ShdlcProtocol`, then pass to the `Sps30Sensor`:
+
 ```csharp
 var serial = new SerialPort("COM2", 115200, Parity.None, 8, StopBits.One);
-var shdlc = new SHDLCProtocol(serial, timeoutInMillis: 10000);
-var sps30 = new SPS30Sensor(shdlc);
+var shdlc = new ShdlcProtocol(serial, timeoutInMillis: 10000);
+var sps30 = new Sps30Sensor(shdlc);
 ```
 
-Check out the sample for more information. Example output:
+Use the `sps30` to interact with the sensor, e.g.:
+
+```csharp
+var version = sps30.ReadVersion();
+Debug.WriteLine($"SPS30 detected: {version}");
 ```
-SPS30 detected: ID=00080000, serial=4E1AD1BB796C64C5, version=Firmware V2.1, Hardware V7, SHDLC V2.0, status=RawRegister: 0, FanSpeedOutOfRange: False, LaserFailure: False, FanFailureBlockedOrBroken: False, cleaninginterval=604800
+
+Collect a measurement reliably:
+
+```csharp
+try { sps30.StopMeasurement(); } catch { } // In case already measuring from a previous run
+sps30.StartMeasurement(MeasurementOutputFormat.Float);
+Thread.Sleep(5000); // SPS30 requires some time before it can sample data
+var measurement = sps30.ReadMeasuredValues();
+Debug.WriteLine($"Measurement: {measurement}");
+```
+
+The above would output the following:
+
+```text
+SPS30 detected: Firmware V2.1, Hardware V7, SHDLC V2.0
 Measurement: MassConcentration PM1.0=0.71818184, PM2.5=0.75944983, PM4.0=0.75944983, PM10.0=0.75944983, NumberConcentration PM0.5=4.89496469, PM1.0=5.69449424, PM2.5=5.73169803, PM4.0=5.73438549, PM10.0=0, TypicalParticleSize=0.38276255
 ```
+
+Check out the sample for more information.
+

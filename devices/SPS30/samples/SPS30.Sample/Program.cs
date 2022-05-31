@@ -6,10 +6,10 @@
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
-using Iot.Device.SPS30.Entities;
-using Iot.Device.SPS30.SHDLC;
+using Iot.Device.Sps30;
+using Iot.Device.Sps30.Entities;
+using Iot.Device.Sps30.Shdlc;
 using nanoFramework.Hardware.Esp32;
-using nanoFramework.Sensirion.SPS30;
 
 namespace SPS30.Sample
 {
@@ -23,8 +23,8 @@ namespace SPS30.Sample
 
             // Setup the SPS30 communication
             var serial = new SerialPort("COM2", 115200, Parity.None, 8, StopBits.One);
-            var shdlc = new SHDLCProtocol(serial, timeoutInMillis: 10000);
-            var sps30 = new SPS30Sensor(shdlc);
+            var shdlc = new ShdlcProtocol(serial, timeoutInMillis: 10000);
+            var sps30 = new Sps30Sensor(shdlc);
 
             // Query the SPS30
             var identifier = sps30.GetDeviceInfoProductType();

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
-        <id>nanoFramework.Iot.Device.SPS30</id>
+        <id>nanoFramework.Iot.Device.Sps30</id>
         <version>$version$</version>
-        <title>nanoFramework.Iot.Device.SPS30</title>
+        <title>nanoFramework.Iot.Device.Sps30</title>
         <authors>nanoframework</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="file">LICENSE.md</license>
@@ -28,11 +28,11 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\Iot.Device.SPS30.dll" target="lib\Iot.Device.SPS30.dll" />
-        <file src="bin\Release\Iot.Device.SPS30.pdb" target="lib\Iot.Device.SPS30.pdb" />
-        <file src="bin\Release\Iot.Device.SPS30.pdbx" target="lib\Iot.Device.SPS30.pdbx" />
-        <file src="bin\Release\Iot.Device.SPS30.pe" target="lib\Iot.Device.SPS30.pe" />
-        <file src="bin\Release\Iot.Device.SPS30.xml" target="lib\Iot.Device.SPS30.xml" />
+        <file src="bin\Release\Iot.Device.Sps30.dll" target="lib\Iot.Device.Sps30.dll" />
+        <file src="bin\Release\Iot.Device.Sps30.pdb" target="lib\Iot.Device.Sps30.pdb" />
+        <file src="bin\Release\Iot.Device.Sps30.pdbx" target="lib\Iot.Device.Sps30.pdbx" />
+        <file src="bin\Release\Iot.Device.Sps30.pe" target="lib\Iot.Device.Sps30.pe" />
+        <file src="bin\Release\Iot.Device.Sps30.xml" target="lib\Iot.Device.Sps30.xml" />
         <file src="README.md" target="docs\" />
         <file src="..\..\assets\nf-logo.png" target="images" />
         <file src="..\..\LICENSE.md" target="" />

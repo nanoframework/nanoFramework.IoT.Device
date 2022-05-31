@@ -4,9 +4,9 @@
 //
 
 using System;
-using Iot.Device.SPS30.Utils;
+using Iot.Device.Sps30.Utils;
 
-namespace Iot.Device.SPS30.Entities
+namespace Iot.Device.Sps30.Entities
 {
     /// <summary>
     /// Parsed response after requesting the DeviceStatus.
@@ -21,7 +21,9 @@ namespace Iot.Device.SPS30.Entities
         public DeviceStatus(byte[] data)
         {
             if (data.Length < 4)
+            {
                 throw new ArgumentOutOfRangeException(nameof(data), "Unexpected array size. Expecting at least 4 bytes."); // 5th byte is reserved
+            }
 
             RawRegister = BigEndianBitConverter.ToUInt32(data, 0);
             FanFailureBlockedOrBroken = (RawRegister & (1 << 4)) > 0;
@@ -30,7 +32,7 @@ namespace Iot.Device.SPS30.Entities
         }
 
         /// <summary>
-        /// The raw value returned by the device
+        /// The raw value returned by the device.
         /// </summary>
         public uint RawRegister { get; private set; }
 
