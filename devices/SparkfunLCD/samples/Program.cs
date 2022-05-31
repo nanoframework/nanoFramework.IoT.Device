@@ -3,6 +3,7 @@
 
 namespace Iot.Device.SparkfunLCD.sample
 {
+    using System.Device.I2c;
     using System.Diagnostics;
     using System.Threading;
     using nanoFramework.Hardware.Esp32;
@@ -20,7 +21,8 @@ namespace Iot.Device.SparkfunLCD.sample
         {
             Debug.WriteLine("Hello from SparkFun 20x4 SerLCD");
 
-            using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
+            //// using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
+            using (var lcd = new SparkfunLCD(displaySize: SparkfunLCD.DISPLAYSIZE.SIZE20X4, busId: 1, deviceAddress: SparkfunLCD.DEFAULTDISPLAYADDRESS, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin: Gpio.IO23, clockPin: Gpio.IO22))
             {
                 lcd.CursorState(false);
                 lcd.SetBacklight(0, 255, 0);
