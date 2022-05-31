@@ -2,11 +2,12 @@
 using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
-using BlueNrg2.Aci;
+using BlueNrg2;
+using Iot.Device.BlueNrg2.Aci;
 using Microsoft.Extensions.Logging;
 using nanoFramework.Logging;
 
-namespace BlueNrg2
+namespace Iot.Device.BlueNrg2
 {
     public class BlueNrg2 : IDisposable
     {
@@ -15,7 +16,6 @@ namespace BlueNrg2
 		private readonly ILogger _logger;
 #endif
 		private readonly bool _shouldDispose;
-		private readonly TransportLayer _transportLayer;
 		public readonly Gap Gap;
 		public readonly Gatt Gatt;
 		public readonly Hal Hal;
@@ -58,12 +58,12 @@ namespace BlueNrg2
 #endif
 
 			);
-			_transportLayer = new TransportLayer(callback, _hardwareInterface);
-			Hci = new Hci(_transportLayer);
-			Gap = new Gap(_transportLayer);
-			Gatt = new Gatt(_transportLayer);
-			Hal = new Hal(_transportLayer);
-			L2Cap = new L2Cap(_transportLayer);
+			var transportLayer = new TransportLayer(callback, _hardwareInterface);
+			Hci = new Hci(transportLayer);
+			Gap = new Gap(transportLayer);
+			Gatt = new Gatt(transportLayer);
+			Hal = new Hal(transportLayer);
+			L2Cap = new L2Cap(transportLayer);
 
 #if DEBUG
 			_logger.LogInformation("BlueNRG-2 Application");

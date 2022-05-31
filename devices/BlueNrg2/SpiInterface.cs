@@ -2,11 +2,12 @@
 using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
+using BlueNrg2;
 using Microsoft.Extensions.Logging;
 
-namespace BlueNrg2
+namespace Iot.Device.BlueNrg2
 {
-	public class SpiInterface : IHardwareInterface
+	internal class SpiInterface : IHardwareInterface
 	{
 		private readonly ILogger _logger;
 		private readonly int _pinChipSelect;

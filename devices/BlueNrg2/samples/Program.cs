@@ -18,7 +18,7 @@ namespace BlueNrg2.Samples
 
 			controller.OpenPin(ledPin, PinMode.Output);
 
-			var blueNrg2 = new BlueNrg2(
+			var blueNrg2 = new Iot.Device.BlueNrg2.BlueNrg2(
 				new SpiConnectionSettings(4, chipSelect),
 				Utilities.GetPinNumber('C', 13),
 				Utilities.GetPinNumber('E', 3),

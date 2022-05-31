@@ -1,6 +1,7 @@
 ﻿using System;
+using BlueNrg2;
 
-namespace BlueNrg2
+namespace Iot.Device.BlueNrg2
 {
 	public delegate BleStatus EventProcess(byte[] bufferIn);
 

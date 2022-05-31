@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNrg2
+namespace Iot.Device.BlueNrg2
 {
 	public enum BleStatus : byte
 	{
@@ -12,7 +12,7 @@ namespace BlueNrg2
 	{
 		private readonly TransportLayer _transportLayer;
 
-		public Hci(TransportLayer transportLayer)
+		internal Hci(TransportLayer transportLayer)
 		{
 			_transportLayer = transportLayer;
 		}

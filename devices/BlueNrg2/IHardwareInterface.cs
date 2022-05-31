@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace BlueNrg2
+namespace Iot.Device.BlueNrg2
 {
-	public delegate bool NotifyAsync();
+	internal delegate bool NotifyAsync();
 
-	public interface IHardwareInterface : IDisposable
+	internal interface IHardwareInterface : IDisposable
 	{
 		public event NotifyAsync NotifyAsyncEvent;
 		public int Reset();

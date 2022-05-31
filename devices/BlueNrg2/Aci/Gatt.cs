@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNrg2.Aci
+namespace Iot.Device.BlueNrg2.Aci
 {
 	public class Gatt
 	{
@@ -38,7 +38,7 @@ namespace BlueNrg2.Aci
 
 		private readonly TransportLayer _transportLayer;
 
-		public Gatt(TransportLayer transportLayer)
+		internal Gatt(TransportLayer transportLayer)
 		{
 			_transportLayer = transportLayer;
 		}

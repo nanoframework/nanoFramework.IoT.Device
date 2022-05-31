@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNrg2.Aci
+namespace Iot.Device.BlueNrg2.Aci
 {
 	public class Gap
 	{
@@ -23,7 +23,7 @@ namespace BlueNrg2.Aci
 
 		private readonly TransportLayer _transportLayer;
 
-		public Gap(TransportLayer transportLayer)
+		internal Gap(TransportLayer transportLayer)
 		{
 			_transportLayer = transportLayer;
 		}

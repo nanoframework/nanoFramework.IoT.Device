@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace BlueNrg2.Aci
+namespace Iot.Device.BlueNrg2.Aci
 {
 	public class L2Cap
 	{
 		private readonly TransportLayer _transportLayer;
 
-		public L2Cap(TransportLayer transportLayer)
+		internal L2Cap(TransportLayer transportLayer)
 		{
 			_transportLayer = transportLayer;
 		}

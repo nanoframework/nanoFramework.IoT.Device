@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using BlueNrg2;
 using BlueNrg2.Utils;
 
-namespace BlueNrg2
+namespace Iot.Device.BlueNrg2
 {
 	public delegate void UserEventCallback(byte[] data);
 
-	public struct Request
+	internal struct Request
 	{
 		public ushort OpCodeGroup;
 		public ushort OpCodeCommand;
@@ -17,14 +18,14 @@ namespace BlueNrg2
 		public uint ResponseLength;
 	}
 
-	public sealed class TransportLayer
+	internal sealed class TransportLayer
 	{
 		private readonly IHardwareInterface _hardwareInterface;
 		private readonly List _readPacketCallbackQueue;
 
 		private readonly List _readPacketPool;
 
-		public TransportLayer(UserEventCallback userEventCallback, IHardwareInterface hardwareInterface)
+		internal TransportLayer(UserEventCallback userEventCallback, IHardwareInterface hardwareInterface)
 		{
 			if (userEventCallback is not null)
 				UserEventCallback = userEventCallback;
