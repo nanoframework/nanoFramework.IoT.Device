@@ -29,7 +29,7 @@ namespace BlueNrg2.Aci
 		}
 
 		/// <summary>
-		///     Put the device in non-discoverable mode. This command disables the LL advertising.
+		/// Put the device in non-discoverable mode. This command disables the LL advertising.
 		/// </summary>
 		/// <returns>Value indicating success or error code.</returns>
 		public BleStatus SetNonDiscoverable()
@@ -48,50 +48,50 @@ namespace BlueNrg2.Aci
 		}
 
 		/// <summary>
-		///     Put the device in limited discoverable mode (as defined in Bluetooth
-		///     Specification v.4.1, Vol. 3, Part C, section 9.2.3). The device will
-		///     be discoverable for maximum period of TGAP (lim_adv_timeout) = 180
-		///     seconds (from errata). The advertising can be disabled at any time by
-		///     issuing <see cref="SetNonDiscoverable" /> command. The
-		///     Adv_Interval_Min and Adv_Interval_Max parameters are optional. If both
-		///     are set to 0, the GAP will use default values for adv intervals for
-		///     limited discoverable mode (250 ms and 500 ms respectively). To allow a
-		///     fast connection, the host can set Local_Name, Service_Uuid_List,
-		///     Slave_Conn_Interval_Min and Slave_Conn_Interval_Max. If provided,
-		///     these data will be  inserted into the advertising packet payload as AD
-		///     data. These parameters are optional in this command. These values can
-		///     be set in advertised data using GAP_Update_Adv_Data command
-		///     separately. The total size of data in advertising packet cannot exceed
-		///     31 bytes. With this command, the BLE Stack will also add automatically
-		///     the following standard AD types: - AD Flags - Power Level When
-		///     advertising timeout happens (i.e. limited discovery period has
-		///     elapsed), controller generates <see cref="E:BlueNrg2.Events.GapLimitedDiscoverableEvent" /> event
+		/// Put the device in limited discoverable mode (as defined in Bluetooth
+		/// Specification v.4.1, Vol. 3, Part C, section 9.2.3). The device will
+		/// be discoverable for maximum period of TGAP (lim_adv_timeout) = 180
+		/// seconds (from errata). The advertising can be disabled at any time by
+		/// issuing <see cref="SetNonDiscoverable" /> command. The
+		/// Adv_Interval_Min and Adv_Interval_Max parameters are optional. If both
+		/// are set to 0, the GAP will use default values for adv intervals for
+		/// limited discoverable mode (250 ms and 500 ms respectively). To allow a
+		/// fast connection, the host can set Local_Name, Service_Uuid_List,
+		/// Slave_Conn_Interval_Min and Slave_Conn_Interval_Max. If provided,
+		/// these data will be  inserted into the advertising packet payload as AD
+		/// data. These parameters are optional in this command. These values can
+		/// be set in advertised data using GAP_Update_Adv_Data command
+		/// separately. The total size of data in advertising packet cannot exceed
+		/// 31 bytes. With this command, the BLE Stack will also add automatically
+		/// the following standard AD types: - AD Flags - Power Level When
+		/// advertising timeout happens (i.e. limited discovery period has
+		/// elapsed), controller generates <see cref="E:BlueNrg2.Events.GapLimitedDiscoverableEvent" /> event
 		/// </summary>
 		/// <param name="advertisingType">Advertising type.</param>
 		/// <param name="minimumAdvertisingInterval"></param>
 		/// <param name="maximumAdvertisingInterval"></param>
 		/// <param name="ownAddressType"></param>
 		/// <param name="advertisingFilterPolicy">
-		///     Advertising filter policy: not applicable
-		///     (the value of the <paramref name="advertisingFilterPolicy" /> parameter is not used inside the Stack)
+		/// Advertising filter policy: not applicable
+		/// (the value of the <paramref name="advertisingFilterPolicy" /> parameter is not used inside the Stack)
 		/// </param>
 		/// <param name="localNameLength">
-		///     Length of the local_name field in octets. If length
-		///     is set to 0x00, the <paramref name="localName" /> parameter is not used.
+		/// Length of the local_name field in octets. If length
+		/// is set to 0x00, the <paramref name="localName" /> parameter is not used.
 		/// </param>
 		/// <param name="localName">
-		///     Local name of the device. First byte must be 0x08 for
-		///     Shortened Local Name  or 0x09 for Complete Local Name. No null
-		///     character at the end.
+		/// Local name of the device. First byte must be 0x08 for
+		/// Shortened Local Name  or 0x09 for Complete Local Name. No null
+		/// character at the end.
 		/// </param>
 		/// <param name="serviceUuidLength">
-		///     Length of the Service Uuid List in octets. If
-		///     there is no service to be advertised, set this field to 0x00.
+		/// Length of the Service Uuid List in octets. If
+		/// there is no service to be advertised, set this field to 0x00.
 		/// </param>
 		/// <param name="serviceUuidList">
-		///     This is the list of the UUIDs as defined in Volume
-		///     3, Section 11 of GAP Specification. First byte is the AD Type. See
-		///     also Supplement to the Bluetooth Core specification.
+		/// This is the list of the UUIDs as defined in Volume
+		/// 3, Section 11 of GAP Specification. First byte is the AD Type. See
+		/// also Supplement to the Bluetooth Core specification.
 		/// </param>
 		/// <param name="minimumSlaveConnectionInterval"></param>
 		/// <param name="maximumSlaveConnectionInterval"></param>
@@ -113,49 +113,49 @@ namespace BlueNrg2.Aci
 		}
 
 		/// <summary>
-		///     Put the device in general discoverable mode (as defined in Bluetooth
-		///     Specification v.4.1, Vol. 3, Part C, section 9.2.4). The device will
-		///     be discoverable until the host issues  the <see cref="SetNonDiscoverable" /> command. The Adv_Interval_Min and
-		///     Adv_Interval_Max parameters are optional. If both are set to 0, the
-		///     GAP uses the default values for adv intervals for general discoverable
-		///     mode. When using connectable undirected advertising events: -
-		///     Adv_Interval_Min = 30 ms  - Adv_Interval_Max = 60 ms When using non-
-		///     connectable advertising events or scannable undirected advertising
-		///     events: - Adv_Interval_Min = 100 ms  - Adv_Interval_Max = 150 ms  Host
-		///     can set the Local Name, a Service UUID list and the Slave Connection
-		///     Interval Range. If provided, these data will be inserted into the
-		///     advertising packet payload as AD data. These parameters are optional
-		///     in this command. These values can be also set using
-		///     aci_gap_update_adv_data() separately. The total size of data in
-		///     advertising packet cannot exceed 31 bytes. With this command, the BLE
-		///     Stack will also add automatically the following standard AD types: -
-		///     AD Flags - TX Power Level
+		/// Put the device in general discoverable mode (as defined in Bluetooth
+		/// Specification v.4.1, Vol. 3, Part C, section 9.2.4). The device will
+		/// be discoverable until the host issues  the <see cref="SetNonDiscoverable" /> command. The Adv_Interval_Min and
+		/// Adv_Interval_Max parameters are optional. If both are set to 0, the
+		/// GAP uses the default values for adv intervals for general discoverable
+		/// mode. When using connectable undirected advertising events: -
+		/// Adv_Interval_Min = 30 ms  - Adv_Interval_Max = 60 ms When using non-
+		/// connectable advertising events or scannable undirected advertising
+		/// events: - Adv_Interval_Min = 100 ms  - Adv_Interval_Max = 150 ms  Host
+		/// can set the Local Name, a Service UUID list and the Slave Connection
+		/// Interval Range. If provided, these data will be inserted into the
+		/// advertising packet payload as AD data. These parameters are optional
+		/// in this command. These values can be also set using
+		/// aci_gap_update_adv_data() separately. The total size of data in
+		/// advertising packet cannot exceed 31 bytes. With this command, the BLE
+		/// Stack will also add automatically the following standard AD types: -
+		/// AD Flags - TX Power Level
 		/// </summary>
 		/// <param name="advertisingType">Advertising type.</param>
 		/// <param name="minimumAdvertisingInterval"></param>
 		/// <param name="maximumAdvertisingInterval"></param>
 		/// <param name="ownAddressType"></param>
 		/// <param name="advertisingFilterPolicy">
-		///     Advertising filter policy: not applicable
-		///     (the value of the <paramref name="advertisingFilterPolicy" /> parameter is not used inside the Stack)
+		/// Advertising filter policy: not applicable
+		/// (the value of the <paramref name="advertisingFilterPolicy" /> parameter is not used inside the Stack)
 		/// </param>
 		/// <param name="localNameLength">
-		///     Length of the local_name field in octets. If length
-		///     is set to 0x00, the <paramref name="localName" /> parameter is not used.
+		/// Length of the local_name field in octets. If length
+		/// is set to 0x00, the <paramref name="localName" /> parameter is not used.
 		/// </param>
 		/// <param name="localName">
-		///     Local name of the device. First byte must be 0x08 for
-		///     Shortened Local Name  or 0x09 for Complete Local Name. No null
-		///     character at the end.
+		/// Local name of the device. First byte must be 0x08 for
+		/// Shortened Local Name  or 0x09 for Complete Local Name. No null
+		/// character at the end.
 		/// </param>
 		/// <param name="serviceUuidLength">
-		///     Length of the Service Uuid List in octets. If
-		///     there is no service to be advertised, set this field to 0x00.
+		/// Length of the Service Uuid List in octets. If
+		/// there is no service to be advertised, set this field to 0x00.
 		/// </param>
 		/// <param name="serviceUuidList">
-		///     This is the list of the UUIDs as defined in Volume
-		///     3, Section 11 of GAP Specification. First byte is the AD Type. See
-		///     also Supplement to the Bluetooth Core specification.
+		/// This is the list of the UUIDs as defined in Volume
+		/// 3, Section 11 of GAP Specification. First byte is the AD Type. See
+		/// also Supplement to the Bluetooth Core specification.
 		/// </param>
 		/// <param name="minimumSlaveConnectionInterval"></param>
 		/// <param name="maximumSlaveConnectionInterval"></param>
