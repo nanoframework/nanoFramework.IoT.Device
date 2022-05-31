@@ -191,7 +191,7 @@ namespace BlueNrg2
 		}
 
 		/// <summary>
-		///     Dispose
+		/// Dispose
 		/// </summary>
 		public void Dispose()
 		{
