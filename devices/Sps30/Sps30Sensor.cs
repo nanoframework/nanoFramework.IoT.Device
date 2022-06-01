@@ -3,10 +3,10 @@
 // See LICENSE file in the project root for full license information.
 //
 
+using System.Buffers.Binary;
 using System.Text;
 using Iot.Device.Sps30.Entities;
 using Iot.Device.Sps30.Shdlc;
-using Iot.Device.Sps30.Utils;
 
 namespace Iot.Device.Sps30
 {
@@ -93,7 +93,7 @@ namespace Iot.Device.Sps30
         public uint GetAutoCleaningInterval()
         {
             var data = _shdlc.Execute(0, 0x80, new byte[] { 0x00 });
-            return BigEndianBitConverter.ToUInt32(data, 0);
+            return BinaryPrimitives.ReadUInt32BigEndian(data);
         }
 
         /// <summary>
@@ -102,7 +102,8 @@ namespace Iot.Device.Sps30
         /// <param name="intervalInSeconds">The new interval in seconds.</param>
         public void SetAutoCleaningInterval(uint intervalInSeconds)
         {
-            var newvalue = BigEndianBitConverter.GetBytes(intervalInSeconds);
+            var newvalue = new byte[4];
+            BinaryPrimitives.WriteUInt32BigEndian(newvalue, intervalInSeconds);
             _shdlc.Execute(0, 0x80, new byte[] { 0x00, newvalue[0], newvalue[1], newvalue[2], newvalue[3] });
         }
 

@@ -4,7 +4,7 @@
 //
 
 using System;
-using Iot.Device.Sps30.Utils;
+using System.Buffers.Binary;
 
 namespace Iot.Device.Sps30.Entities
 {
@@ -25,7 +25,7 @@ namespace Iot.Device.Sps30.Entities
                 throw new ArgumentOutOfRangeException(nameof(data), "Unexpected array size. Expecting at least 4 bytes."); // 5th byte is reserved
             }
 
-            RawRegister = BigEndianBitConverter.ToUInt32(data, 0);
+            RawRegister = BinaryPrimitives.ReadUInt32BigEndian(data);
             FanFailureBlockedOrBroken = (RawRegister & (1 << 4)) > 0;
             LaserFailure = (RawRegister & (1 << 5)) > 0;
             FanSpeedOutOfRange = (RawRegister & (1 << 21)) > 0;

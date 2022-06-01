@@ -4,7 +4,7 @@
 //
 
 using System;
-using Iot.Device.Sps30.Utils;
+using System.Buffers.Binary;
 
 namespace Iot.Device.Sps30.Entities
 {
@@ -25,36 +25,48 @@ namespace Iot.Device.Sps30.Entities
             {
                 // When we have 40 bytes of data, we assume Float was requested and will be parsed as such
                 Format = MeasurementOutputFormat.Float;
-                MassConcentrationPM10 = BigEndianBitConverter.ToSingle(data, 0);
-                MassConcentrationPM25 = BigEndianBitConverter.ToSingle(data, 4);
-                MassConcentrationPM40 = BigEndianBitConverter.ToSingle(data, 8);
-                MassConcentrationPM100 = BigEndianBitConverter.ToSingle(data, 12);
-                NumberConcentrationPM05 = BigEndianBitConverter.ToSingle(data, 16);
-                NumberConcentrationPM10 = BigEndianBitConverter.ToSingle(data, 20);
-                NumberConcentrationPM25 = BigEndianBitConverter.ToSingle(data, 24);
-                NumberConcentrationPM40 = BigEndianBitConverter.ToSingle(data, 28);
-                NumberConcentrationPM40 = BigEndianBitConverter.ToSingle(data, 32);
-                TypicalParticleSize = BigEndianBitConverter.ToSingle(data, 36);
+                MassConcentrationPm10 = ReadSingleBigEndian(data, 0);
+                MassConcentrationPm25 = ReadSingleBigEndian(data, 4);
+                MassConcentrationPm40 = ReadSingleBigEndian(data, 8);
+                MassConcentrationPm100 = ReadSingleBigEndian(data, 12);
+                NumberConcentrationPm05 = ReadSingleBigEndian(data, 16);
+                NumberConcentrationPm10 = ReadSingleBigEndian(data, 20);
+                NumberConcentrationPm25 = ReadSingleBigEndian(data, 24);
+                NumberConcentrationPm40 = ReadSingleBigEndian(data, 28);
+                NumberConcentrationPm100 = ReadSingleBigEndian(data, 32);
+                TypicalParticleSize = ReadSingleBigEndian(data, 36);
             }
             else if (data.Length >= 20)
             {
                 // When we have 20 bytes of data, we assume UInt16 was requested and will be parsed as such
                 Format = MeasurementOutputFormat.UInt16;
-                MassConcentrationPM10 = BigEndianBitConverter.ToUInt16(data, 0);
-                MassConcentrationPM25 = BigEndianBitConverter.ToUInt16(data, 2);
-                MassConcentrationPM40 = BigEndianBitConverter.ToUInt16(data, 4);
-                MassConcentrationPM100 = BigEndianBitConverter.ToUInt16(data, 6);
-                NumberConcentrationPM05 = BigEndianBitConverter.ToUInt16(data, 8);
-                NumberConcentrationPM10 = BigEndianBitConverter.ToUInt16(data, 10);
-                NumberConcentrationPM25 = BigEndianBitConverter.ToUInt16(data, 12);
-                NumberConcentrationPM40 = BigEndianBitConverter.ToUInt16(data, 14);
-                NumberConcentrationPM40 = BigEndianBitConverter.ToUInt16(data, 16);
-                TypicalParticleSize = BigEndianBitConverter.ToUInt16(data, 18);
+                MassConcentrationPm10 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 0, 2));
+                MassConcentrationPm25 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 2, 2));
+                MassConcentrationPm40 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 4, 2));
+                MassConcentrationPm100 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 6, 2));
+                NumberConcentrationPm05 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 8, 2));
+                NumberConcentrationPm10 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 10, 2));
+                NumberConcentrationPm25 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 12, 2));
+                NumberConcentrationPm40 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 14, 2));
+                NumberConcentrationPm100 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 16, 2));
+                TypicalParticleSize = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 18, 2));
             }
             else
             {
                 throw new ApplicationException($"Not enough bytes received to parse a measurement");
             }
+        }
+
+        /// <summary>
+        /// Reads a single (32-bit) float value using big endian byte ordering
+        /// </summary>
+        /// <param name="value">Buffer to read from</param>
+        /// <param name="startIndex">Start index where the float value is located</param>
+        /// <returns>The read float value</returns>
+        /// <remarks>This method is needed for now since <see cref="BinaryPrimitives"/> does not support Single yet</remarks>
+        private float ReadSingleBigEndian(byte[] value, int startIndex)
+        {
+            return BitConverter.IsLittleEndian? BitConverter.ToSingle(new byte[] { value[startIndex + 3], value[startIndex + 2], value[startIndex + 1], value[startIndex] }, 0) : BitConverter.ToSingle(value, startIndex);
         }
 
         /// <summary>
@@ -65,47 +77,47 @@ namespace Iot.Device.Sps30.Entities
         /// <summary>
         /// Mass Concentration PM1.0 [µg/m³]
         /// </summary>
-        public double MassConcentrationPM10 { get; protected set; }
+        public double MassConcentrationPm10 { get; protected set; }
 
         /// <summary>
         /// Mass Concentration PM2.5 [µg/m³]
         /// </summary>
-        public double MassConcentrationPM25 { get; protected set; }
+        public double MassConcentrationPm25 { get; protected set; }
 
         /// <summary>
         /// Mass Concentration PM4.0 [µg/m³]
         /// </summary>
-        public double MassConcentrationPM40 { get; protected set; }
+        public double MassConcentrationPm40 { get; protected set; }
 
         /// <summary>
         /// Mass Concentration PM10.0 [µg/m³]
         /// </summary>
-        public double MassConcentrationPM100 { get; protected set; }
+        public double MassConcentrationPm100 { get; protected set; }
 
         /// <summary>
         /// Number Concentration PM0.5 [#/cm³]
         /// </summary>
-        public double NumberConcentrationPM05 { get; protected set; }
+        public double NumberConcentrationPm05 { get; protected set; }
 
         /// <summary>
         /// Number Concentration PM1.0 [#/cm³]
         /// </summary>
-        public double NumberConcentrationPM10 { get; protected set; }
+        public double NumberConcentrationPm10 { get; protected set; }
 
         /// <summary>
         /// Number Concentration PM2.5 [#/cm³]
         /// </summary>
-        public double NumberConcentrationPM25 { get; protected set; }
+        public double NumberConcentrationPm25 { get; protected set; }
 
         /// <summary>
         /// Number Concentration PM4.0 [#/cm³]
         /// </summary>
-        public double NumberConcentrationPM40 { get; protected set; }
+        public double NumberConcentrationPm40 { get; protected set; }
 
         /// <summary>
         /// Number Concentration PM10.0 [#/cm³]
         /// </summary>
-        public double NumberConcentrationPM100 { get; protected set; }
+        public double NumberConcentrationPm100 { get; protected set; }
 
         /// <summary>
         /// Typical Particle Size depending on format (in µm for Float and nm for ushort, see <see cref="MeasurementOutputFormat"/>)
@@ -118,7 +130,7 @@ namespace Iot.Device.Sps30.Entities
         /// <returns>The measurement as a convenient string</returns>
         public override string ToString()
         {
-            return $"MassConcentration PM1.0={MassConcentrationPM10}, PM2.5={MassConcentrationPM25}, PM4.0={MassConcentrationPM40}, PM10.0={MassConcentrationPM100}, NumberConcentration PM0.5={NumberConcentrationPM05}, PM1.0={NumberConcentrationPM10}, PM2.5={NumberConcentrationPM25}, PM4.0={NumberConcentrationPM40}, PM10.0={NumberConcentrationPM100}, TypicalParticleSize={TypicalParticleSize}";
+            return $"MassConcentration PM1.0={MassConcentrationPm10}, PM2.5={MassConcentrationPm25}, PM4.0={MassConcentrationPm40}, PM10.0={MassConcentrationPm100}, NumberConcentration PM0.5={NumberConcentrationPm05}, PM1.0={NumberConcentrationPm10}, PM2.5={NumberConcentrationPm25}, PM4.0={NumberConcentrationPm40}, PM10.0={NumberConcentrationPm100}, TypicalParticleSize={TypicalParticleSize}";
         }
     }
 }
