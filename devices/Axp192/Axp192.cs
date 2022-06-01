@@ -11,6 +11,10 @@ namespace Iot.Device.Axp192
 {
     public class Axp192
     {
+        private const byte _dcD3SetBit = (1 << 1);
+        private const byte _Ldo2SetBit = (1 << 2);
+        private const byte _Ldo3SetBit = (1 << 3);
+
         public const int I2cDefaultAddress = 0x34;
 
         private I2cDevice _i2c;
@@ -67,7 +71,7 @@ namespace Iot.Device.Axp192
         /// Gets or sets DC-DC2 voltage.
         /// </summary>
         /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc2Volvate
+        public ElectricPotential DcDc2Voltage
         {
             get
             {
@@ -87,7 +91,7 @@ namespace Iot.Device.Axp192
         /// Gets or sets DC-DC1 voltage.
         /// </summary>
         /// <remarks>Range is from 0.7 to 3.5V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc1Volvate
+        public ElectricPotential DcDc1Voltage
         {
             get
             {
@@ -106,7 +110,7 @@ namespace Iot.Device.Axp192
         /// Gets or sets DC-DC3 voltage.
         /// </summary>
         /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc3Volvate
+        public ElectricPotential DcDc3Voltage
         {
             get
             {
@@ -389,11 +393,15 @@ namespace Iot.Device.Axp192
         /// <returns></returns>
         public ButtonPressed GetButtonStatus()
         {
-            byte state = I2cRead(Register.IrqStatus3);  // IRQ 3 status.  
+            // IRQ 3 status.  
+            byte state = I2cRead(Register.IrqStatus3);
+
             if (state != 0)
             {
-                I2cWrite(Register.IrqStatus3, 0x03);   // Write 1 back to clear IRQ
+                // Write 1 back to clear IRQ
+                I2cWrite(Register.IrqStatus3, 0x03);
             }
+
             return (ButtonPressed)(state & 0x03);
         }
 
@@ -416,54 +424,60 @@ namespace Iot.Device.Axp192
         /// Sets the state of LDO2.
         /// </summary>
         /// <remarks>On M5Stack, can turn LCD Backlight OFF for power saving</remarks>
-        /// <param name="State">True for on/high/1, false for off/low/O</param>
-        public void EnableLDO2(bool State)
+        /// <param name="state">True for on/high/1, false for off/low/O</param>
+        public void EnableLDO2(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
-                buf = (byte)((1 << 2) | buf);
+                buf = (byte)((_Ldo2SetBit) | buf);
             }
             else
             {
-                buf = (byte)(~(1 << 2) & buf);
+                buf = (byte)(~(_Ldo2SetBit) & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
         /// <summary>
         /// Sets the state of LDO3.
         /// </summary>
-        /// <param name="State">True to enable LDO3.</param>
-        public void EnableLDO3(bool State)
+        /// <param name="state">True to enable LDO3.</param>
+        public void EnableLDO3(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
-                buf = (byte)((1 << 3) | buf);
+                buf = (byte)((_Ldo3SetBit) | buf);
             }
             else
             {
-                buf = (byte)(~(1 << 3) & buf);
+                buf = (byte)(~(_Ldo3SetBit) & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
         /// <summary>
         /// Sets the state of DC-DC3.
         /// </summary>
-        /// <param name="State">True to enable DC-DC3.</param>
-        public void EnableDCDC3(bool State)
+        /// <param name="state">True to enable DC-DC3.</param>
+        public void EnableDCDC3(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
-                buf = (byte)((1 << 1) | buf);
+                buf = (byte)((_dcD3SetBit) | buf);
             }
             else
             {
-                buf = (byte)(~(1 << 1) & buf);
+                buf = (byte)(~(_dcD3SetBit) & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
@@ -471,11 +485,12 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Sets the state of DC-DC1.
         /// </summary>
-        /// <param name="State">True to enable DC-DC1.</param>
-        public void EnableDCDC1(bool State)
+        /// <param name="state">True to enable DC-DC1.</param>
+        public void EnableDCDC1(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
                 buf = (byte)(1 | buf);
             }
@@ -483,6 +498,7 @@ namespace Iot.Device.Axp192
             {
                 buf = (byte)(~1 & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
@@ -869,6 +885,54 @@ namespace Iot.Device.Axp192
                 byte buf = I2cRead(Register.AdcFrequency);
                 buf = (byte)((buf & ~(0b0000_0011)) | ((byte)value & 0b0000_0011));
                 I2cWrite(Register.AdcFrequency, buf);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 output frequency.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x00;
+        /// </remarks>
+        public byte Pwm1OutputFrequencySetting
+        {
+            get => I2cRead(Register.Pwm1OutputFrequencySetting);
+
+            set
+            {
+                I2cWrite(Register.Pwm1OutputFrequencySetting, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 duty cycle setting 1.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x16;
+        /// </remarks>
+        public byte Pwm1DutyCycleSetting1
+        {
+            get => I2cRead(Register.Pwm1DutyCycleSetting1);
+
+            set
+            {
+                I2cWrite(Register.Pwm1DutyCycleSetting1, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 duty cycle setting 2.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x0B;
+        /// </remarks>
+        public byte Pwm1DutyCycleSetting2
+        {
+            get => I2cRead(Register.Pwm1DutyCycleSetting2);
+
+            set
+            {
+                I2cWrite(Register.Pwm1DutyCycleSetting2, value);
             }
         }
 

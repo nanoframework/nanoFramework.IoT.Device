@@ -17,7 +17,7 @@ The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for
 
 ## Board
 
-![Connection schematics](Ssd1306_I2c_PiOled.png)
+![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_I2c_PiOled.png)
 
 ## Binding Notes
 
