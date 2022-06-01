@@ -23,6 +23,9 @@ using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gp
     lcd.DisplayState(true);
 }
 ```
+
+(code validated against Adafruit Huzzah32 Feather)
+
 ![Example usage](SparkfunLCD.jpg)
 
 **Important**: make sure you properly setup the I2C pins, this is done automatically for ESP32 when using these constructors by setting `dataPin` and `clockPin` arguments,
