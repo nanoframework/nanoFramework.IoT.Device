@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
+using System.Threading;
 
 namespace Iot.Device.Lp3943
 {
@@ -16,7 +18,10 @@ namespace Iot.Device.Lp3943
 		/// </summary>
 		public const byte DefaultI2cAddress = 0x60;
 
-		private I2cDevice _i2CDevice;
+		private readonly int _pinReset;
+		private GpioController _controller;
+		private I2cDevice _i2cDevice;
+		private readonly bool _shouldDispose;
 
 		private readonly LedState[] _ledStates;
 
@@ -24,10 +29,19 @@ namespace Iot.Device.Lp3943
 		/// Creates a new instance of the Lp3943
 		/// </summary>
 		/// <param name="i2CDevice">The I2C device used for communication</param>
-		public Lp3943(I2cDevice i2CDevice)
+		/// <param name="pinReset">the reset pin for the hardware reset</param>
+		/// <param name="gpioController">A GpioController for the hardware reset</param>
+		/// <param name="shouldDispose">True to dispose the GpioController</param>
+		public Lp3943(I2cDevice i2CDevice, int pinReset, GpioController gpioController = null, bool shouldDispose = true)
 		{
-			_i2CDevice = i2CDevice ?? throw new ArgumentException(nameof(i2CDevice));
+			_pinReset = pinReset >= 0 ? pinReset : throw new ArgumentOutOfRangeException(nameof(pinReset));
+			_shouldDispose = shouldDispose || gpioController == null;
+			_controller = gpioController ?? new GpioController();
+			_i2cDevice = i2CDevice ?? throw new ArgumentException(nameof(i2CDevice));
 			_ledStates = new LedState[16];
+
+			_controller.OpenPin(_pinReset, PinMode.Output);
+			Reset();
 		}
 
 		/// <summary>
@@ -35,8 +49,22 @@ namespace Iot.Device.Lp3943
 		/// </summary>
 		public void Dispose()
 		{
-			_i2CDevice?.Dispose();
-			_i2CDevice = null;
+			if (_i2cDevice is not null)
+			{
+				_i2cDevice?.Dispose();
+				_i2cDevice = null;
+			}
+
+			if (_pinReset >= 0)
+			{
+				_controller?.ClosePin(_pinReset);
+			}
+
+			if (_shouldDispose)
+			{
+				_controller?.Dispose();
+				_controller = null;
+			}
 		}
 
 		private void SetFrequency(DimRegister dimRegister, int frequency)
@@ -66,7 +94,7 @@ namespace Iot.Device.Lp3943
 			var message = new byte[2];
 			message[0] = (byte)register;
 			message[1] = data;
-			_i2CDevice.Write(message);
+			_i2cDevice.Write(message);
 		}
 
 		private byte FillSelectorRegister(LedState led0, LedState led1, LedState led2, LedState led3)
@@ -110,6 +138,13 @@ namespace Iot.Device.Lp3943
 			WriteToRegister(Register.Ls3, ls3);
 		}
 
+		public void Reset()
+		{
+			_controller.Write(_pinReset, PinValue.Low);
+			Thread.Sleep(5);
+			_controller.Write(_pinReset, PinValue.High);
+		}
+
 		/// <summary>
 		/// Sets led to assigned mode
 		/// </summary>
@@ -123,25 +158,25 @@ namespace Iot.Device.Lp3943
 			Update();
 		}
 
-        /// <summary>
-        /// Sets the LEDs in the array to the assigned mode
-        /// </summary>
-        /// <param name="leds">LEDs to assign</param>
-        /// <param name="ledState">state to give the LEDs</param>
-        public void SetLed(int[] leds, LedState ledState)
-        {
-            if (leds is null)
-                throw new ArgumentNullException(nameof(leds));
+		/// <summary>
+		/// Sets the LEDs in the array to the assigned mode
+		/// </summary>
+		/// <param name="leds">LEDs to assign</param>
+		/// <param name="ledState">state to give the LEDs</param>
+		public void SetLed(int[] leds, LedState ledState)
+		{
+			if (leds is null)
+				throw new ArgumentNullException(nameof(leds));
 
-            foreach (var led in leds)
-            {
-                if (led is <= 15 and >= 0)
-                {
-                    _ledStates[led] = ledState;
-                }
-            }
+			foreach (var led in leds)
+			{
+				if (led is <= 15 and >= 0)
+				{
+					_ledStates[led] = ledState;
+				}
+			}
 
 			Update();
-        }
+		}
 	}
 }
