@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Chs6540.Samples</RootNamespace>
-    <AssemblyName>Iot.Device.Chs6540.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.Chsc6540.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.Chsc6540.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -54,7 +54,7 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chs6540.nfproj" />
+    <ProjectReference Include="..\Chsc6540.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
