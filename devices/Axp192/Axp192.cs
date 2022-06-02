@@ -394,12 +394,12 @@ namespace Iot.Device.Axp192
         public ButtonPressed GetButtonStatus()
         {
             // IRQ 3 status.  
-            byte state = I2cRead(Register.IrqStatus3);  
+            byte state = I2cRead(Register.IrqStatus3);
 
             if (state != 0)
             {
                 // Write 1 back to clear IRQ
-                I2cWrite(Register.IrqStatus3, 0x03); 
+                I2cWrite(Register.IrqStatus3, 0x03);
             }
 
             return (ButtonPressed)(state & 0x03);
@@ -885,6 +885,54 @@ namespace Iot.Device.Axp192
                 byte buf = I2cRead(Register.AdcFrequency);
                 buf = (byte)((buf & ~(0b0000_0011)) | ((byte)value & 0b0000_0011));
                 I2cWrite(Register.AdcFrequency, buf);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 output frequency.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x00;
+        /// </remarks>
+        public byte Pwm1OutputFrequencySetting
+        {
+            get => I2cRead(Register.Pwm1OutputFrequencySetting);
+
+            set
+            {
+                I2cWrite(Register.Pwm1OutputFrequencySetting, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 duty cycle setting 1.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x16;
+        /// </remarks>
+        public byte Pwm1DutyCycleSetting1
+        {
+            get => I2cRead(Register.Pwm1DutyCycleSetting1);
+
+            set
+            {
+                I2cWrite(Register.Pwm1DutyCycleSetting1, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 duty cycle setting 2.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x0B;
+        /// </remarks>
+        public byte Pwm1DutyCycleSetting2
+        {
+            get => I2cRead(Register.Pwm1DutyCycleSetting2);
+
+            set
+            {
+                I2cWrite(Register.Pwm1DutyCycleSetting2, value);
             }
         }
 
