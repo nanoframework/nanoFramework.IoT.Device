@@ -22,7 +22,7 @@ namespace Iot.Device.SparkfunLCD.sample
             Debug.WriteLine("Hello from SparkFun 20x4 SerLCD");
 
             //// using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
-            using (var lcd = new SparkfunLCD(displaySize: SparkfunLCD.DISPLAYSIZE.SIZE20X4, busId: 1, deviceAddress: SparkfunLCD.DEFAULTDISPLAYADDRESS, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin: Gpio.IO23, clockPin: Gpio.IO22))
+            using (var lcd = new SparkfunLCD(displaySize: SparkfunLCD.DISPLAYSIZE.SIZE20X4, busId: 1, deviceAddress: SparkfunLCD.DefaultI2cAddress, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin: Gpio.IO23, clockPin: Gpio.IO22))
             {
                 lcd.CursorState(false);
                 lcd.SetBacklight(0, 255, 0);
@@ -34,13 +34,6 @@ namespace Iot.Device.SparkfunLCD.sample
                 lcd.Write(0, 3, "Hello!!!");
                 lcd.DisplayState(true);
             }
-
-            ////Sleep.StartDeepSleep();
-            while (true) { Thread.Sleep(100); }
-
-            // Browse our samples repository: https://github.com/nanoframework/samples
-            // Check our documentation online: https://docs.nanoframework.net/
-            // Join our lively Discord community: https://discord.gg/gCyBu8T
         }
     }
 }
