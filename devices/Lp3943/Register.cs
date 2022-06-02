@@ -12,8 +12,8 @@ namespace Iot.Device.Lp3943
 		Psc1 = 0x04, // Frequency Prescaler 1
 		Pwm1 = 0x05, // PWM register 1
 		Ls0 = 0x06, // LED 0-3 Selector
-		Ls1 = 0x07, // LED 0-3 Selector
-		Ls2 = 0x08, // LED 0-3 Selector
-		Ls3 = 0x09 // LED 0-3 Selector
+		Ls1 = 0x07, // LED 4-7 Selector
+		Ls2 = 0x08, // LED 8-11 Selector
+		Ls3 = 0x09 // LED 12-15 Selector
 	}
 }
