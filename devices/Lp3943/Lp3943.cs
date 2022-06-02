@@ -122,5 +122,26 @@ namespace Iot.Device.Lp3943
 			_ledStates[led] = ledState;
 			Update();
 		}
+
+        /// <summary>
+        /// Sets the LEDs in the array to the assigned mode
+        /// </summary>
+        /// <param name="leds">LEDs to assign</param>
+        /// <param name="ledState">state to give the LEDs</param>
+        public void SetLed(int[] leds, LedState ledState)
+        {
+            if (leds is null)
+                throw new ArgumentNullException(nameof(leds));
+
+            foreach (var led in leds)
+            {
+                if (led is <= 15 and >= 0)
+                {
+                    _ledStates[led] = ledState;
+                }
+            }
+
+			Update();
+        }
 	}
 }
