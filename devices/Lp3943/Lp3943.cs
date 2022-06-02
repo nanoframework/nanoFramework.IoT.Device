@@ -20,7 +20,7 @@ namespace Iot.Device.Lp3943
 
 		private readonly int _pinReset;
 		private GpioController _controller;
-		private I2cDevice _i2cDevice;
+		private readonly I2cDevice _i2cDevice;
 		private readonly bool _shouldDispose;
 
 		private readonly LedState[] _ledStates;
@@ -32,15 +32,19 @@ namespace Iot.Device.Lp3943
 		/// <param name="pinReset">the reset pin for the hardware reset</param>
 		/// <param name="gpioController">A GpioController for the hardware reset</param>
 		/// <param name="shouldDispose">True to dispose the GpioController</param>
-		public Lp3943(I2cDevice i2CDevice, int pinReset, GpioController gpioController = null, bool shouldDispose = true)
+		public Lp3943(I2cDevice i2CDevice, int pinReset = -1, GpioController gpioController = null, bool shouldDispose = true)
 		{
-			_pinReset = pinReset >= 0 ? pinReset : throw new ArgumentOutOfRangeException(nameof(pinReset));
+			_pinReset = pinReset;
 			_shouldDispose = shouldDispose || gpioController == null;
 			_controller = gpioController ?? new GpioController();
 			_i2cDevice = i2CDevice ?? throw new ArgumentException(nameof(i2CDevice));
 			_ledStates = new LedState[16];
 
-			_controller.OpenPin(_pinReset, PinMode.Output);
+			if (pinReset >= 0)
+			{
+				_controller.OpenPin(_pinReset, PinMode.Output);
+			}
+
 			Reset();
 		}
 
@@ -49,12 +53,6 @@ namespace Iot.Device.Lp3943
 		/// </summary>
 		public void Dispose()
 		{
-			if (_i2cDevice is not null)
-			{
-				_i2cDevice?.Dispose();
-				_i2cDevice = null;
-			}
-
 			if (_pinReset >= 0)
 			{
 				_controller?.ClosePin(_pinReset);
@@ -69,10 +67,14 @@ namespace Iot.Device.Lp3943
 
 		private void SetFrequency(DimRegister dimRegister, int frequency)
 		{
+			// the frequency gets calculated with the following formula:
+			// frequency = (PSCx + 1) / 160
+			// in reverse this results in:
 			var toWrite = (byte)(frequency * 160 - 1);
 			var register = dimRegister switch
 			{
-				Device.Lp3943.DimRegister.Dim0 => Register.Psc0, Device.Lp3943.DimRegister.Dim1 => Register.Psc1,
+				Device.Lp3943.DimRegister.Dim0 => Register.Psc0,
+				Device.Lp3943.DimRegister.Dim1 => Register.Psc1,
 			};
 
 			WriteToRegister(register, toWrite);
@@ -80,10 +82,12 @@ namespace Iot.Device.Lp3943
 
 		private void SetDimPercentage(DimRegister dimRegister, int percentage)
 		{
+			// converts the percentage into a 8 bit number
 			var toWrite = (byte)((float)percentage / 100 * 256);
 			var register = dimRegister switch
 			{
-				Device.Lp3943.DimRegister.Dim0 => Register.Pwm0, Device.Lp3943.DimRegister.Dim1 => Register.Pwm1,
+				Device.Lp3943.DimRegister.Dim0 => Register.Pwm0,
+				Device.Lp3943.DimRegister.Dim1 => Register.Pwm1,
 			};
 
 			WriteToRegister(register, toWrite);
@@ -116,10 +120,14 @@ namespace Iot.Device.Lp3943
 		public void DimRegister(DimRegister register, int frequency, int dimPercentage)
 		{
 			if (frequency is > 160 or < 1)
+			{
 				throw new ArgumentOutOfRangeException(nameof(frequency), "The frequency has to be between 1 and 160 Hz.");
+			}
 
 			if (dimPercentage is > 100 or < 0)
+			{
 				throw new ArgumentOutOfRangeException(nameof(dimPercentage));
+			}
 
 			SetFrequency(register, frequency);
 			SetDimPercentage(register, dimPercentage);
@@ -143,9 +151,12 @@ namespace Iot.Device.Lp3943
 		/// </summary>
 		public void Reset()
 		{
-			_controller.Write(_pinReset, PinValue.Low);
-			Thread.Sleep(5);
-			_controller.Write(_pinReset, PinValue.High);
+			if (_pinReset >= 0)
+			{
+				_controller.Write(_pinReset, PinValue.Low);
+				Thread.Sleep(5);
+				_controller.Write(_pinReset, PinValue.High);
+			}
 		}
 
 		/// <summary>
@@ -153,10 +164,14 @@ namespace Iot.Device.Lp3943
 		/// </summary>
 		/// <param name="led">led to assign</param>
 		/// <param name="ledState">state to give the led</param>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when the value for led is not between 0 and 16</exception>
 		public void SetLed(int led, LedState ledState)
 		{
 			if (led is > 16 or < 0)
-				throw new ArgumentOutOfRangeException(nameof(led), "Led can only be a value between 0 and 16");
+			{
+				throw new ArgumentOutOfRangeException(nameof(led));
+			}
+
 			_ledStates[led] = ledState;
 			Update();
 		}
@@ -166,16 +181,24 @@ namespace Iot.Device.Lp3943
 		/// </summary>
 		/// <param name="leds">LEDs to assign</param>
 		/// <param name="ledState">state to give the LEDs</param>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when one of the values in the array is not between 0 and 16</exception>
+		/// <exception cref="ArgumentNullException">Thrown when leds is not initialized</exception>
 		public void SetLed(int[] leds, LedState ledState)
 		{
 			if (leds is null)
+			{
 				throw new ArgumentNullException(nameof(leds));
+			}
 
 			foreach (var led in leds)
 			{
 				if (led is <= 15 and >= 0)
 				{
 					_ledStates[led] = ledState;
+				}
+				else
+				{
+					throw new ArgumentOutOfRangeException(nameof(leds), $"{led} is out of range");
 				}
 			}
 
