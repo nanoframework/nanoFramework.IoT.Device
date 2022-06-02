@@ -5,12 +5,20 @@ using System;
 
 namespace Iot.Device.Lp3943.Samples
 {
-	internal static class Utilities
+	/// <summary>
+	/// Class with utility functions
+	/// </summary>
+	public static class Utilities
 	{
+		/// <summary>
+		/// Calculates the pin number for STM devices based on the port and pad provided
+		/// </summary>
 		public static int GetPinNumber(char port, byte pin)
 		{
 			if (port is < 'A' or > 'J')
+			{
 				throw new ArgumentException();
+			}
 
 			return (port - 'A') * 16 + pin;
 		}
