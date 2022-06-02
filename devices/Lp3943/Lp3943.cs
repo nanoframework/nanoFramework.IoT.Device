@@ -138,6 +138,9 @@ namespace Iot.Device.Lp3943
 			WriteToRegister(Register.Ls3, ls3);
 		}
 
+		/// <summary>
+		/// Resets the Lp3943 chip
+		/// </summary>
 		public void Reset()
 		{
 			_controller.Write(_pinReset, PinValue.Low);
