@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.SparkfunLCD</RootNamespace>
-    <AssemblyName>Iot.Device.SparkfunLCD</AssemblyName>
+    <RootNamespace>Iot.Device.SparkfunLcd</RootNamespace>
+    <AssemblyName>Iot.Device.SparkfunLcd</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.SparkfunLCD.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
@@ -30,12 +30,15 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="..\CharacterLcd\custom\Size.cs">
+		<ExcludeFromStyleCop>true</ExcludeFromStyleCop>
       <Link>Size.cs</Link>
     </Compile>
     <Compile Include="..\CharacterLcd\custom\SpanChar.cs">
+		<ExcludeFromStyleCop>true</ExcludeFromStyleCop>
       <Link>SpanChar.cs</Link>
     </Compile>
     <Compile Include="..\CharacterLcd\ICharacterLcd.cs">
+		<ExcludeFromStyleCop>true</ExcludeFromStyleCop>
       <Link>ICharacterLcd.cs</Link>
     </Compile>
     <Compile Include="SparkfunLcd.cs" />
@@ -49,10 +52,6 @@
   <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.Hardware.Esp32, Version=1.3.6.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Hardware.Esp32.1.3.6\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=1.5.4.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Native.1.5.4\lib\nanoFramework.Runtime.Native.dll</HintPath>

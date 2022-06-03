@@ -7,7 +7,6 @@ namespace Iot.Device.SparkfunLCD
     using System.Device.I2c;
     using System.Threading;
     using Iot.Device.CharacterLcd;
-    using nanoFramework.Hardware.Esp32;
 
     /// <summary>
     /// LCD library for SparkFun RGB Serial Open LCD display (sizes 20x4 or 16x2) with I2C connection
@@ -24,7 +23,7 @@ namespace Iot.Device.SparkfunLCD
         /// <summary>
         /// I2C connection to display
         /// </summary>
-        private I2cDevice i2cDevice; // I2C connection
+        private readonly I2cDevice _i2cDevice; // I2C connection
 
         /// <summary>
         /// display status
@@ -54,53 +53,12 @@ namespace Iot.Device.SparkfunLCD
         /// <summary>
         /// Initializes a new instance of the <see cref="SparkfunLcd" /> class
         /// </summary>
-        /// <param name="displaySize">display size</param>
-        /// <param name="dataPin">ESP32 I2C data pin</param>
-        /// <param name="clockPin">ESP32 I2C clock pin</param>
-        public SparkfunLcd(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int dataPin = 18, int clockPin = 19)
-    : this(displaySize, busId: 1, deviceAddress: SparkfunLcd.DefaultI2cAddress, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin, clockPin)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkfunLcd" /> class
-        /// </summary>
-        /// <param name="displaySize">display size</param>
-        /// <param name="busId">I2C bus ID</param>
-        /// <param name="deviceAddress">I2C address of LCD display</param>
-        /// <param name="i2cBusSpeed">I2C bus speed</param>
-        /// <param name="dataPin">ESP32 I2C data pin</param>
-        /// <param name="clockPin">ESP32 I2C clock pin</param>
-        public SparkfunLcd(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int busId = 1, int deviceAddress = SparkfunLcd.DefaultI2cAddress, I2cBusSpeed i2cBusSpeed = I2cBusSpeed.StandardMode, int dataPin = 18, int clockPin = 19)
-            : this(new I2cConnectionSettings(busId, deviceAddress, i2cBusSpeed), displaySize, dataPin, clockPin)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkfunLcd" /> class
-        /// </summary>
-        /// <param name="settings">I2C settings for connection</param>
-        /// <param name="displaySize">display size</param>
-        /// <param name="dataPin">ESP32 I2C data pin</param>
-        /// <param name="clockPin">ESP32 I2C clock pin</param>
-        public SparkfunLcd(I2cConnectionSettings settings, DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int dataPin = 18, int clockPin = 19)
-        {
-            Configuration.SetPinFunction(dataPin, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
-
-            this.i2cDevice = I2cDevice.Create(settings);
-            this.Init(displaySize);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkfunLcd" /> class
-        /// </summary>
         /// <param name="i2cDevice">existing I2C connection to display</param>
         /// <param name="displaySize">display size</param>
-        public SparkfunLcd(I2cDevice i2cDevice, DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4)
+        public SparkfunLcd(I2cDevice i2cDevice, DisplaySizeEnum displaySize = DisplaySizeEnum.Size20x4)
         {
-            this.i2cDevice = i2cDevice;
-            this.Init(displaySize);
+            _i2cDevice = i2cDevice;
+            Init(displaySize);
         }
 
         /// <summary>
@@ -108,23 +66,23 @@ namespace Iot.Device.SparkfunLCD
         /// </summary>
         ~SparkfunLcd()
         {
-            this.Dispose();
+            Dispose();
         }
 
         /// <summary>
         /// Display size
         /// </summary>
-        public enum DISPLAYSIZE
+        public enum DisplaySizeEnum
         {
             /// <summary>
             /// Display size 20 x 4
             /// </summary>
-            SIZE20X4,
+            Size20x4,
 
             /// <summary>
             /// Display size 16 x 2
             /// </summary>
-            SIZE16X2
+            Size16x2
         }
 
         /// <summary>
@@ -293,8 +251,8 @@ namespace Iot.Device.SparkfunLCD
         /// </summary>
         public bool DisplayOn
         {
-            get { return this._displayOn; }
-            set { this.SetDisplayState(value); }
+            get { return _displayOn; }
+            set { SetDisplayState(value); }
         }
 
         /// <summary>
@@ -302,8 +260,8 @@ namespace Iot.Device.SparkfunLCD
         /// </summary>
         public bool UnderlineCursorVisible
         {
-            get { return this._underlineCursorVisible; }
-            set { this.SetCursorUnderlineState(value); }
+            get { return _underlineCursorVisible; }
+            set { SetCursorUnderlineState(value); }
         }
 
         /// <summary>
@@ -311,8 +269,8 @@ namespace Iot.Device.SparkfunLCD
         /// </summary>
         public bool BlinkingCursorVisible
         {
-            get { return this._blinkingCursorVisible; }
-            set { this.SetCursorBlinkState(value); }
+            get { return _blinkingCursorVisible; }
+            set { SetCursorBlinkState(value); }
         }
 
         /// <summary>
@@ -341,7 +299,7 @@ namespace Iot.Device.SparkfunLCD
         /// <seealso cref="Home"/>
         public void Clear()
         {
-            this.Command(OpenLcdCommandEnum.ClearCommand);
+            Command(OpenLcdCommandEnum.ClearCommand);
             Thread.Sleep(10);
         }
 
@@ -351,7 +309,7 @@ namespace Iot.Device.SparkfunLCD
         /// <seealso cref="Clear"/>
         public void Home()
         {
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.ReturnHome);
+            TransmitSpecialCommand(OpenLcdCommandEnum.ReturnHome);
         }
 
         /// <summary>
@@ -361,7 +319,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="row">row 0 to 3</param>
         public void SetCursorPosition(int col, int row)
         {
-            this.SetCursorPosition((byte)col, (byte)row);
+            SetCursorPosition((byte)col, (byte)row);
         }
 
         /// <summary>
@@ -374,10 +332,10 @@ namespace Iot.Device.SparkfunLCD
             int[] row_offsets = { 0x00, 0x40, 0x14, 0x54 };
 
             // keep variables in bounds
-            row = (byte)Math.Min(row, this.Size.Width - 1); // row cannot be greater than max rows
+            row = (byte)Math.Min(row, Size.Width - 1); // row cannot be greater than max rows
 
             // send the command
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.SetDdramAddress | (OpenLcdCommandEnum)(col + row_offsets[row]));
+            TransmitSpecialCommand(OpenLcdCommandEnum.SetDdramAddress | (OpenLcdCommandEnum)(col + row_offsets[row]));
         }
 
         /// <summary>
@@ -388,11 +346,11 @@ namespace Iot.Device.SparkfunLCD
         public void CreateChar(byte location, byte[] charmap)
         {
             location &= 0x7; // we only have 8 locations 0-7
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit((byte)(27 + location));
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit((byte)(27 + location));
             for (int i = 0; i < 8; i++)
             {
-                this.Transmit(charmap[i]);
+                Transmit(charmap[i]);
             }
 
             Thread.Sleep(50);
@@ -405,7 +363,7 @@ namespace Iot.Device.SparkfunLCD
         public void WriteChar(byte location)
         {
             location &= 0x7; // we only have 8 locations 0-7
-            this.Command((OpenLcdCommandEnum)(35 + location));
+            Command((OpenLcdCommandEnum)(35 + location));
         }
 
         /// <summary>
@@ -414,7 +372,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="b">byte to write</param>
         public void Write(byte b)
         {
-            this.Transmit(b);
+            Transmit(b);
             Thread.Sleep(10);
         }
 
@@ -427,7 +385,7 @@ namespace Iot.Device.SparkfunLCD
         /// <seealso cref="Write(SpanChar)"/>
         public void Write(SpanChar buffer)
         {
-            this.Write(buffer.ToArray());
+            Write(buffer.ToArray());
         }
 
         /// <summary>
@@ -439,7 +397,7 @@ namespace Iot.Device.SparkfunLCD
         /// <seealso cref="Write(SpanChar)"/>
         public void Write(char[] buffer)
         {
-            this.Write(buffer, buffer.Length);
+            Write(buffer, buffer.Length);
         }
 
         /// <summary>
@@ -455,7 +413,7 @@ namespace Iot.Device.SparkfunLCD
             int writeSize = Math.Min(bufferSize, buffer.Length);
             for (int i = 0; i < writeSize; i++)
             {
-                this.Transmit((byte)buffer[i]);
+                Transmit((byte)buffer[i]);
             }
 
             Thread.Sleep(10);
@@ -469,8 +427,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="str">string to write</param>
         public void Write(byte col, byte row, string str)
         {
-            this.SetCursorPosition(col, row);
-            this.Write(str);
+            SetCursorPosition(col, row);
+            Write(str);
         }
 
         /// <summary>
@@ -482,7 +440,7 @@ namespace Iot.Device.SparkfunLCD
             if (string.IsNullOrEmpty(str) == false)
             {
                 char[] buffer = str.ToCharArray();
-                this.Write(buffer, buffer.Length);
+                Write(buffer, buffer.Length);
             }
         }
 
@@ -494,17 +452,17 @@ namespace Iot.Device.SparkfunLCD
         {
             if (enable)
             {
-                this._displayControl |= OpenLcdCommandEnum.DisplayOn;
+                _displayControl |= OpenLcdCommandEnum.DisplayOn;
             }
             else
             {
                 OpenLcdCommandEnum tmp = OpenLcdCommandEnum.DisplayOn;
-                this._displayControl &= ~tmp;
+                _displayControl &= ~tmp;
             }
 
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.DisplayControl | this._displayControl);
+            TransmitSpecialCommand(OpenLcdCommandEnum.DisplayControl | _displayControl);
 
-            this._displayOn = enable;
+            _displayOn = enable;
         }
 
         /// <summary>
@@ -515,17 +473,17 @@ namespace Iot.Device.SparkfunLCD
         {
             if (enable)
             {
-                this._displayControl |= OpenLcdCommandEnum.CursorOn;
+                _displayControl |= OpenLcdCommandEnum.CursorOn;
             }
             else
             {
                 OpenLcdCommandEnum tmp = OpenLcdCommandEnum.CursorOn;
-                this._displayControl &= ~tmp;
+                _displayControl &= ~tmp;
             }
 
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.DisplayControl | this._displayControl);
+            TransmitSpecialCommand(OpenLcdCommandEnum.DisplayControl | _displayControl);
 
-            this._underlineCursorVisible = enable;
+            _underlineCursorVisible = enable;
         }
 
         /// <summary>
@@ -536,17 +494,17 @@ namespace Iot.Device.SparkfunLCD
         {
             if (enable)
             {
-                this._displayControl |= OpenLcdCommandEnum.BlinkOn;
+                _displayControl |= OpenLcdCommandEnum.BlinkOn;
             }
             else
             {
                 OpenLcdCommandEnum tmp = OpenLcdCommandEnum.BlinkOn;
-                this._displayControl &= ~tmp;
+                _displayControl &= ~tmp;
             }
 
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.DisplayControl | this._displayControl);
+            TransmitSpecialCommand(OpenLcdCommandEnum.DisplayControl | _displayControl);
 
-            this._blinkingCursorVisible = enable;
+            _blinkingCursorVisible = enable;
         }
 
         /// <summary>
@@ -555,7 +513,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="count">number of characters to scroll</param>
         public void ScrollDisplayLeft(byte count = 1)
         {
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.DisplayMove | OpenLcdCommandEnum.MoveLeft, count);
+            TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.DisplayMove | OpenLcdCommandEnum.MoveLeft, count);
         }
 
         /// <summary>
@@ -564,7 +522,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="count">number of characters to scroll</param>
         public void ScrollDisplayRight(byte count = 1)
         {
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.DisplayMove | OpenLcdCommandEnum.MoveRight, count);
+            TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.DisplayMove | OpenLcdCommandEnum.MoveRight, count);
         }
 
         /// <summary>
@@ -573,7 +531,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="count">number of characters to move</param>
         public void MoveCursorLeft(byte count = 1)
         {
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.CursorMove | OpenLcdCommandEnum.MoveLeft, count);
+            TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.CursorMove | OpenLcdCommandEnum.MoveLeft, count);
         }
 
         /// <summary>
@@ -582,7 +540,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="count">number of characters to move</param>
         public void MoveCursorRight(byte count = 1)
         {
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.CursorMove | OpenLcdCommandEnum.MoveRight, count);
+            TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.CursorMove | OpenLcdCommandEnum.MoveRight, count);
         }
 
         /*
@@ -602,7 +560,7 @@ namespace Iot.Device.SparkfunLCD
             tmp = rgb & 0x0000FF;
             byte b = (byte)tmp;
 
-            this.SetBacklight(r, g, b);
+            SetBacklight(r, g, b);
         }
 
         /// <summary>
@@ -614,23 +572,23 @@ namespace Iot.Device.SparkfunLCD
         public void SetBacklight(byte r, byte g, byte b)
         {
             // map the byte value range to backlight command range
-            byte red = (byte)(128 + this.Map(r, 0, 255, 0, 29));
-            byte green = (byte)(158 + this.Map(g, 0, 255, 0, 29));
-            byte blue = (byte)(188 + this.Map(b, 0, 255, 0, 29));
+            byte red = (byte)(128 + Map(r, 0, 255, 0, 29));
+            byte green = (byte)(158 + Map(g, 0, 255, 0, 29));
+            byte blue = (byte)(188 + Map(b, 0, 255, 0, 29));
 
             // Turn display off to hide confirmation messages
-            this.DisplayState(false);
+            DisplayState(false);
 
             // Set the red, green and blue values
-            this.Transmit(SETTINGCOMMAND);
-            this.Transmit(red);
-            this.Transmit(SETTINGCOMMAND);
-            this.Transmit(green);
-            this.Transmit(SETTINGCOMMAND);
-            this.Transmit(blue);
+            Transmit(SETTINGCOMMAND);
+            Transmit(red);
+            Transmit(SETTINGCOMMAND);
+            Transmit(green);
+            Transmit(SETTINGCOMMAND);
+            Transmit(blue);
 
             // Turn display back on
-            this.DisplayState(true);
+            DisplayState(true);
             Thread.Sleep(50);
         }
         */
@@ -651,7 +609,7 @@ namespace Iot.Device.SparkfunLCD
             tmp = rgb & 0x0000FF;
             byte b = (byte)tmp;
 
-            this.SetBacklight(r, g, b);
+            SetBacklight(r, g, b);
         }
 
         /// <summary>
@@ -662,11 +620,11 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="b">Blue intensity</param>
         public void SetBacklight(byte r, byte g, byte b)
         {
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit(OpenLcdCommandEnum.SetRgbCommand);
-            this.Transmit(r);
-            this.Transmit(g);
-            this.Transmit(b);
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(OpenLcdCommandEnum.SetRgbCommand);
+            Transmit(r);
+            Transmit(g);
+            Transmit(b);
             Thread.Sleep(10);
         }
 
@@ -676,8 +634,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="state"><c>true</c> to enable system messages, else <c>false</c> to disable</param>
         public void SystemMessagesState(bool state)
         {
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit(state ? OpenLcdCommandEnum.EnableSystemMessageDisplay : OpenLcdCommandEnum.DisableSystemMessageDisplay);
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(state ? OpenLcdCommandEnum.EnableSystemMessageDisplay : OpenLcdCommandEnum.DisableSystemMessageDisplay);
             Thread.Sleep(10);
         }
 
@@ -687,8 +645,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="state"><c>true</c> to enable splash screen at power on, else <c>false</c> to disable</param>
         public void SplashScreenState(bool state)
         {
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit(state ? OpenLcdCommandEnum.EnableSplashDisplay : OpenLcdCommandEnum.DisableSpashDisplay);
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(state ? OpenLcdCommandEnum.EnableSplashDisplay : OpenLcdCommandEnum.DisableSpashDisplay);
             Thread.Sleep(10);
         }
 
@@ -698,8 +656,8 @@ namespace Iot.Device.SparkfunLCD
         /// <seealso cref="SplashScreenState"/>
         public void SplashScreenSave()
         {
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit(OpenLcdCommandEnum.SaveCurrentDisplayAsSplash);
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(OpenLcdCommandEnum.SaveCurrentDisplayAsSplash);
             Thread.Sleep(10);
         }
 
@@ -711,15 +669,15 @@ namespace Iot.Device.SparkfunLCD
         {
             if (state)
             {
-                this._displayMode |= OpenLcdCommandEnum.EntryLeft;
+                _displayMode |= OpenLcdCommandEnum.EntryLeft;
             }
             else
             {
                 OpenLcdCommandEnum tmp = OpenLcdCommandEnum.EntryLeft;
-                this._displayMode &= ~tmp;
+                _displayMode &= ~tmp;
             }
 
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.EntryModeSet | this._displayMode);
+            TransmitSpecialCommand(OpenLcdCommandEnum.EntryModeSet | _displayMode);
         }
 
         /// <summary>
@@ -730,15 +688,15 @@ namespace Iot.Device.SparkfunLCD
         {
             if (state)
             {
-                this._displayMode |= OpenLcdCommandEnum.EntryShiftIncrement;
+                _displayMode |= OpenLcdCommandEnum.EntryShiftIncrement;
             }
             else
             {
                 OpenLcdCommandEnum tmp = OpenLcdCommandEnum.EntryShiftIncrement;
-                this._displayMode &= ~tmp;
+                _displayMode &= ~tmp;
             }
 
-            this.TransmitSpecialCommand(OpenLcdCommandEnum.EntryModeSet | this._displayMode);
+            TransmitSpecialCommand(OpenLcdCommandEnum.EntryModeSet | _displayMode);
         }
 
         /// <summary>
@@ -747,9 +705,9 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="contrastValue">new contrast value</param>
         public void SetContrast(byte contrastValue)
         {
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit(OpenLcdCommandEnum.ContrastCommand);
-            this.Transmit(contrastValue);
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(OpenLcdCommandEnum.ContrastCommand);
+            Transmit(contrastValue);
 
             Thread.Sleep(10);
         }
@@ -776,25 +734,25 @@ namespace Iot.Device.SparkfunLCD
         /// Initialize the display
         /// </summary>
         /// <param name="displaySize">display size</param>
-        private void Init(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4)
+        private void Init(DisplaySizeEnum displaySize = DisplaySizeEnum.Size20x4)
         {
             switch (displaySize)
             {
                 default:
-                case DISPLAYSIZE.SIZE20X4:
-                    this.Size = new Size() { Width = 20, Height = 4 };
+                case DisplaySizeEnum.Size20x4:
+                    Size = new Size() { Width = 20, Height = 4 };
                     break;
-                case DISPLAYSIZE.SIZE16X2:
-                    this.Size = new Size() { Width = 16, Height = 2 };
+                case DisplaySizeEnum.Size16x2:
+                    Size = new Size() { Width = 16, Height = 2 };
                     break;
             }
 
-            this.Transmit(OpenLcdCommandEnum.SpecialCommand);
-            this.Transmit((byte)(OpenLcdCommandEnum.DisplayControl | this._displayControl));
-            this.Transmit(OpenLcdCommandEnum.SpecialCommand);
-            this.Transmit((byte)(OpenLcdCommandEnum.EntryModeSet | this._displayMode));
-            this.Transmit(OpenLcdCommandEnum.SettingCommand);
-            this.Transmit(OpenLcdCommandEnum.ClearCommand);
+            Transmit(OpenLcdCommandEnum.SpecialCommand);
+            Transmit((byte)(OpenLcdCommandEnum.DisplayControl | _displayControl));
+            Transmit(OpenLcdCommandEnum.SpecialCommand);
+            Transmit((byte)(OpenLcdCommandEnum.EntryModeSet | _displayMode));
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(OpenLcdCommandEnum.ClearCommand);
             Thread.Sleep(50);
         }
 
@@ -804,9 +762,9 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="data">data to send</param>
         private void Transmit(byte data)
         {
-            if (this.i2cDevice != null)
+            if (_i2cDevice != null)
             {
-                this.i2cDevice.WriteByte(data);
+                _i2cDevice.WriteByte(data);
             }
         }
 
@@ -816,7 +774,7 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="data">data to send</param>
         private void Transmit(OpenLcdCommandEnum data)
         {
-            this.Transmit((byte)data);
+            Transmit((byte)data);
         }
 
         /// <summary>
@@ -825,8 +783,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="command">command to send</param>
         private void Command(OpenLcdCommandEnum command)
         {
-            this.Transmit(OpenLcdCommandEnum.SettingCommand); // Put LCD into setting mode
-            this.Transmit(command); // Send the command code
+            Transmit(OpenLcdCommandEnum.SettingCommand); // Put LCD into setting mode
+            Transmit(command); // Send the command code
             Thread.Sleep(10);
         }
 
@@ -836,8 +794,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="command">command to send</param>
         private void TransmitSpecialCommand(OpenLcdCommandEnum command)
         {
-            this.Transmit(OpenLcdCommandEnum.SpecialCommand); // Send special command character
-            this.Transmit(command); // Send the command code
+            Transmit(OpenLcdCommandEnum.SpecialCommand); // Send special command character
+            Transmit(command); // Send the command code
             Thread.Sleep(50);
         }
 
@@ -850,8 +808,8 @@ namespace Iot.Device.SparkfunLCD
         {
             for (int i = 0; i < count; i++)
             {
-                this.Transmit(OpenLcdCommandEnum.SpecialCommand); // Send special command character
-                this.Transmit(command); // Send command code
+                Transmit(OpenLcdCommandEnum.SpecialCommand); // Send special command character
+                Transmit(command); // Send command code
             }
 
             Thread.Sleep(50);

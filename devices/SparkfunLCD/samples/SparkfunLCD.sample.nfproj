@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.SparkfunLCD.sample</RootNamespace>
-    <AssemblyName>Iot.Device.SparkfunLCD.sample</AssemblyName>
+    <RootNamespace>Iot.Device.SparkfunLcd.sample</RootNamespace>
+    <AssemblyName>Iot.Device.SparkfunLcd.sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.SparkfunLCD.sample.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>

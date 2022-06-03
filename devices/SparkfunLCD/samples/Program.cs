@@ -22,17 +22,29 @@ namespace Iot.Device.SparkfunLCD.sample
         {
             Debug.WriteLine("Hello from SparkFun 20x4 SerLCD");
 
-            //// using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
-            using (var lcd = new SparkfunLcd(displaySize: SparkfunLcd.DISPLAYSIZE.SIZE20X4, busId: 1, deviceAddress: SparkfunLcd.DefaultI2cAddress, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin: Gpio.IO23, clockPin: Gpio.IO22))
+            // configure ESP32 device I2C bus
             {
-                lcd.SetBacklight(0, 255, 0);
-                lcd.SetContrast(4);
-                lcd.Clear();
-                lcd.SetDisplayState(false);
-                lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
-                lcd.Write(0, 1, "P/N# LCD-16398");
-                lcd.Write(0, 3, "Hello!!!");
-                lcd.SetDisplayState(true);
+                // note: actual pin-out is specific to Adafruit Huzzah32 Feather on which code was tested
+                int dataPin = Gpio.IO23;
+                int clockPin = Gpio.IO22;
+                Configuration.SetPinFunction(dataPin, DeviceFunction.I2C1_DATA);
+                Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
+            }
+
+            var settings = new I2cConnectionSettings(busId: 1, deviceAddress: SparkfunLcd.DefaultI2cAddress, busSpeed: I2cBusSpeed.StandardMode);
+            using (var i2cDevice = I2cDevice.Create(settings))
+            {
+                using (var lcd = new SparkfunLcd(i2cDevice, SparkfunLcd.DisplaySizeEnum.Size20x4))
+                {
+                    lcd.SetBacklight(0, 255, 0);
+                    lcd.SetContrast(4);
+                    lcd.Clear();
+                    lcd.SetDisplayState(false);
+                    lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
+                    lcd.Write(0, 1, "P/N# LCD-16398");
+                    lcd.Write(0, 3, "Hello!!!");
+                    lcd.SetDisplayState(true);
+                }
             }
         }
     }
