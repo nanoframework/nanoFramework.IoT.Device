@@ -35,7 +35,9 @@
     <Compile Include="..\CharacterLcd\custom\SpanChar.cs">
       <Link>SpanChar.cs</Link>
     </Compile>
-    <Compile Include="ICharacterLcd.cs" />
+    <Compile Include="..\CharacterLcd\ICharacterLcd.cs">
+      <Link>ICharacterLcd.cs</Link>
+    </Compile>
     <Compile Include="SparkfunLcd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
