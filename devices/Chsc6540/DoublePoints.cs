@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.Chs6540
+namespace Iot.Device.Chsc6540
 {
     /// <summary>
     /// A double point
@@ -17,5 +17,14 @@ namespace Iot.Device.Chs6540
         /// Gets or sets the second point.
         /// </summary>
         public Point Point2 { get; set; }
+
+        /// <summary>
+        /// Constructor for <see cref="DoublePoints"/> class.
+        /// </summary>
+        public DoublePoints()
+        {
+            Point1 = new Point();
+            Point2 = new Point();
+        }
     }
 }

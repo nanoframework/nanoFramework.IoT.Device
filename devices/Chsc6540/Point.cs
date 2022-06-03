@@ -1,12 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.Chs6540
+namespace Iot.Device.Chsc6540
 {
     /// <summary>
     /// A touch point
     /// </summary>
-    public struct Point
+    public class Point
     {
         /// <summary>
         /// Gets or sets X
@@ -19,22 +19,7 @@ namespace Iot.Device.Chs6540
         public int Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the touche type.
-        /// </summary>
-        public byte TouchId { get; set; }
-
-        /// <summary>
-        /// Gets of sets the weight.
-        /// </summary>
-        public byte Weigth { get; set; }
-
-        /// <summary>
-        /// Gets or sets miscelaneous.
-        /// </summary>
-        public byte Miscelaneous { get; set; }
-
-        /// <summary>
-        /// Gets or sets the event type.
+        /// Gets or sets the <see cref="Event"/> type.
         /// </summary>
         public Event Event { get; set; }
     }
