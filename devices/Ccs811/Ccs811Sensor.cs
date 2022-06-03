@@ -58,14 +58,15 @@ namespace Iot.Device.Ccs811
         public event MeasurementReadyHandler? MeasurementReady;
 
         /// <summary>
-        /// The CCS811 sensor constructor
+        /// The CCS811 sensor constructor.
         /// </summary>
-        /// <param name="i2cDevice">A valid I2C device</param>
-        /// <param name="pinWake">An awake pin, it is optional, this pin can be set to the ground if the sensor is always on</param>
-        /// <param name="pinInterruption">An interruption pin when a measurement is ready, best use when you specify a threshold</param>
-        /// <param name="pinReset">An optional hard reset pin</param>
-        /// <param name="shouldDispose">Should the GPIO controller be disposed at the end</param>
-        public Ccs811Sensor(I2cDevice i2cDevice, int pinWake = -1, int pinInterruption = -1, int pinReset = -1, bool shouldDispose = true)
+        /// <param name="i2cDevice">A valid I2C device.</param>
+        /// <param name="pinWake">An awake pin, it is optional, this pin can be set to the ground if the sensor is always on.</param>
+        /// <param name="pinInterruption">An interruption pin when a measurement is ready, best use when you specify a threshold.</param>
+        /// <param name="pinReset">An optional hard reset pin.</param>
+        /// <param name="shouldDispose">Should the GPIO controller be disposed at the end.</param>
+        /// <param name="appMode">Switch the sensor to application mode.</param>
+        public Ccs811Sensor(I2cDevice i2cDevice, int pinWake = -1, int pinInterruption = -1, int pinReset = -1, bool shouldDispose = true, bool appMode = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _pinWake = pinWake;
@@ -79,15 +80,87 @@ namespace Iot.Device.Ccs811
                 _controller = new GpioController();
             }
 
-            if (_controller is object)
+            if (_controller is object && _pinWake >= 0)
             {
                 _controller.OpenPin(_pinWake, PinMode.Output);
-                _controller.Write(_pinWake, PinValue.High);
+                _controller.Write(_pinWake, PinValue.High);                
             }
 
+            HardReset();
+
+            if (HardwareIdentification != 0x81)
+            {
+                throw new IOException($"CCS811 does not have a valid ID: {HardwareIdentification}. ID must be 0x81.");
+            }
+
+            if ((HardwareVersion & 0xF0) != 0x10)
+            {
+                throw new IOException($"CCS811 does not have a valid version: {HardwareVersion}, should be 0x1X where any X is valid.");
+            }
+
+            if (appMode)
+            {
+                // Read status
+                if (!Status.HasFlag(Status.APP_VALID))
+                {
+                    throw new IOException($"CCS811 has no application firmware loaded.");
+                }
+
+                // Switch to app mode and wait 1 millisecond according to doc
+                WriteRegister(Register.APP_START);
+                Thread.Sleep(1);
+
+                if (!Status.HasFlag(Status.FW_MODE))
+                {
+                    throw new IOException($"CCS811 is not in application mode.");
+                }
+
+                // Set interrupt if the interruption pin is valid
+                if (_controller is object && _pinInterruption >= 0)
+                {
+                    var interruptPin = _controller.OpenPin(_pinInterruption, PinMode.Input);
+
+                    byte mode = 0b0000_1000;
+                    WriteRegister(Register.MEAS_MODE, mode);
+
+                    _running = true;
+
+                    // Start a new thread to monitor the events
+                    new Thread(() =>
+                    {
+                        _isRunning = true;
+                        while (_running)
+                        {
+                            var currentState = interruptPin.Read();
+
+                            if (currentState == PinValue.High)
+                            {
+                                // We know we won't get any new measurement in next 250 milliseconds at least
+                                // Waiting to make sure the sensor will have time to remove the interrupt pin
+                                Thread.Sleep(50);
+                            }
+                            else
+                            {
+                                // new measurement available
+                                InterruptReady();
+                            }
+                        }
+
+                        _isRunning = false;
+                    }).Start();
+                }
+            }
+        }
+
+        private void HardReset()
+        {
             if (_controller is object && _pinReset >= 0)
             {
-                _controller.OpenPin(_pinReset, PinMode.Output);
+                if (!_controller.IsPinOpen(_pinReset))
+                {
+                    _controller.OpenPin(_pinReset, PinMode.Output);
+                }
+
                 _controller.Write(_pinReset, PinValue.Low);
                 // Delays from documentation CCS811-Datasheet.pdf page 8
                 // 15 micro second
@@ -111,65 +184,46 @@ namespace Iot.Device.Ccs811
             WriteRegister(Register.SW_RESET, toReset);
             // Wait 2 milliseconds as per documentation
             Thread.Sleep(2);
-            if (HardwareIdentification != 0x81)
+        }
+
+        public bool Flash(SpanByte firmware)
+        {
+            const int DataLength = 8;
+            if (firmware.Length % DataLength != 0)
             {
-                throw new IOException($"CCS811 does not have a valid ID: {HardwareIdentification}. ID must be 0x81.");
+                throw new ArgumentException();
             }
 
-            if ((HardwareVersion & 0xF0) != 0x10)
+            HardReset();
+
+            // Erase the flash see CCS811-Application-Note-CCS811-Downloading-New-Application-Firmware.pdf
+            SpanByte toErase = new byte[4]
             {
-                throw new IOException($"CCS811 does not have a valid version: {HardwareVersion}, should be 0x1X where any X is valid.");
+                0xE7,
+                0xA7,
+                0xE6,
+                0x09
+            };
+            WriteRegister(Register.APP_ERASE, toErase);
+            // Wait 300 milliseconds minimum
+            Thread.Sleep(500);
+
+            if (Status.HasFlag(Status.APP_VALID))
+            {
+                throw new IOException("Not erased");
             }
 
-            // Read status
-            if (!Status.HasFlag(Status.APP_VALID))
+            for (int i = 0; i < firmware.Length / DataLength; i++)
             {
-                throw new IOException($"CCS811 has no application firmware loaded.");
+                WriteRegister(Register.APP_DATA, firmware.Slice(i * DataLength, DataLength));
+                Thread.Sleep(50);
             }
 
-            // Switch to app mode and wait 1 millisecond according to doc
-            WriteRegister(Register.APP_START);
-            Thread.Sleep(1);
-
-            if (!Status.HasFlag(Status.FW_MODE))
-            {
-                throw new IOException($"CCS811 is not in application mode.");
-            }
-
-            // Set interrupt if the interruption pin is valid
-            if (_controller is object && _pinInterruption >= 0)
-            {
-                var interruptPin = _controller.OpenPin(_pinInterruption, PinMode.Input);
-
-                byte mode = 0b0000_1000;
-                WriteRegister(Register.MEAS_MODE, mode);
-
-                _running = true;
-
-                // Start a new thread to monitor the events
-                new Thread(() =>
-                {
-                    _isRunning = true;
-                    while (_running)
-                    {
-                        var currentState = interruptPin.Read();
-
-                        if(currentState == PinValue.High)
-                        {
-                            // We know we won't get any new measurement in next 250 milliseconds at least
-                            // Waiting to make sure the sensor will have time to remove the interrupt pin
-                            Thread.Sleep(50);
-                        }
-                        else
-                        { 
-                            // new measurement available
-                            InterruptReady();
-                        }
-                    }
-
-                    _isRunning = false;
-                }).Start();
-            }
+            // Verify
+            WriteRegister(Register.APP_VERIFY);
+            Thread.Sleep(500);
+            var status = Status;
+            return status.HasFlag(Status.APP_VALID) && status.HasFlag(Status.APP_VERIFY);
         }
 
         private void InterruptReady()

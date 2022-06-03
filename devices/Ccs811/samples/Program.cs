@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ccs811;
+using Iot.Device.Ccs811.Sample;
 using Microsoft.Extensions.Logging;
 using nanoFramework.Logging.Stream;
 using System;
@@ -18,7 +19,7 @@ using UnitsNet;
 int wakeupPin = -1;
 
 // set here the pin number for the RESET pin, leave -1 to not use it
-int pinReset = -1;
+int pinReset = 32;
 
 // set here the pin number for the INTERRUPT pin, leave -1 to not use it
 int pinInterrupt = -1;
@@ -51,7 +52,10 @@ Debug.WriteLine("Creating an instance of a CCS811 using the platform drivers.");
 //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-using (var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(3, addressChoice)), pinWake: wakeupPin, pinInterruption: pinInterrupt, pinReset: pinReset))
+// Uncomment to flash to the latest version
+// Flash();
+
+using (var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, addressChoice)), pinWake: wakeupPin, pinInterruption: pinInterrupt, pinReset: pinReset))
 {
     Sample(ccs811);
 }
@@ -160,7 +164,7 @@ void TestTemperatureHumidityAdjustment(Ccs811Sensor ccs811)
     Debug.WriteLine($"Changing temperature and humidity reference to {temp.DegreesCelsius:0.00} C, {hum.Percent:0.0} %, baseline for calculation: {ccs811.BaselineAlgorithmCalculation}");
     ccs811.SetEnvironmentData(temp, hum);
     ReadAndDisplayDetails(ccs811, 100);
-    
+
     // Changing with very different temperature
     temp = Temperature.FromDegreesCelsius(70);
     hum = RelativeHumidity.FromPercent(53.8);
@@ -170,19 +174,19 @@ void TestTemperatureHumidityAdjustment(Ccs811Sensor ccs811)
 
     temp = Temperature.FromDegreesCelsius(-25);
     hum = RelativeHumidity.FromPercent(0.5);
-    
+
     Debug.WriteLine($"Changing temperature and humidity reference to {temp.DegreesCelsius:0.00} C, {hum.Percent:0.0} %, baseline for calculation: {ccs811.BaselineAlgorithmCalculation}");
-    
+
     ccs811.SetEnvironmentData(temp, hum);
     ReadAndDisplayDetails(ccs811, 100);
-    
+
     // Back to normal which still can lead to different results than initially
     // This is due to the baseline
     temp = Temperature.FromDegreesCelsius(25);
     hum = RelativeHumidity.FromPercent(50);
-    
+
     Debug.WriteLine($"Changing temperature and humidity reference to {temp.DegreesCelsius:0.00} C, {hum.Percent:0.0} %, baseline for calculation: {ccs811.BaselineAlgorithmCalculation}");
-    
+
     ccs811.SetEnvironmentData(temp, hum);
     ReadAndDisplayDetails(ccs811, 100);
 }
@@ -196,7 +200,7 @@ void TestThresholdAndInterrupt(Ccs811Sensor ccs811)
     }
 
     ccs811.MeasurementReady += Ccs811MeasurementReady;
-    
+
     // Setting up a range where we will see something in a normal environment
     VolumeConcentration low = VolumeConcentration.FromPartsPerMillion(400);
     VolumeConcentration high = VolumeConcentration.FromPartsPerMillion(600);
@@ -213,11 +217,11 @@ void TestThresholdAndInterrupt(Ccs811Sensor ccs811)
 
     low = VolumeConcentration.FromPartsPerMillion(15000);
     high = VolumeConcentration.FromPartsPerMillion(20000);
-    
+
     Debug.WriteLine($"Changing threshold for {low.PartsPerMillion}-{high.PartsPerMillion}, a non reachable range in clear environment. No measurement should appear in next 3 minutes");
-    
+
     dt = DateTime.UtcNow.AddMinutes(3);
-    
+
     ccs811.SetThreshold(low, high);
     while (dt > DateTime.UtcNow)
     {
@@ -257,7 +261,7 @@ void ReadAnDisplay(Ccs811Sensor ccs811, int count = 10)
         }
 
         var error = ccs811.TryReadGasData(out VolumeConcentration eCO2, out VolumeConcentration eTVOC);
-        
+
         Debug.WriteLine($"Success: {error}, eCO2: {eCO2.PartsPerMillion} ppm, eTVOC: {eTVOC.PartsPerBillion} ppb");
     }
 }
@@ -272,9 +276,18 @@ void ReadAndDisplayDetails(Ccs811Sensor ccs811, int count = 10)
         }
 
         var error = ccs811.TryReadGasData(out VolumeConcentration eCO2, out VolumeConcentration eTVOC, out ElectricCurrent curr, out int adc);
-        
+
         Debug.WriteLine($"Success: {error}, eCO2: {eCO2.PartsPerMillion} ppm, eTVOC: {eTVOC.PartsPerBillion} ppb, Current: {curr.Microamperes} µA, ADC: {adc} = {adc * 1.65 / 1023} V.");
     }
+}
+
+void Flash()
+{
+    Debug.WriteLine("Start flashing");
+    var ccs811 = new Ccs811Sensor(I2cDevice.Create(new I2cConnectionSettings(1, addressChoice)), pinWake: wakeupPin, pinInterruption: pinInterrupt, pinReset: pinReset, appMode: false);
+    var res = ccs811.Flash(FirmwareUpdate.Firmware);
+    Debug.WriteLine($"Flash success: {res}");
+    ccs811.Dispose();
 }
 
 enum TestOption : byte
