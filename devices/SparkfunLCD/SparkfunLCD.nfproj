@@ -29,7 +29,14 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="SparkfunLCD.cs" />
+    <Compile Include="..\CharacterLcd\custom\Size.cs">
+      <Link>Size.cs</Link>
+    </Compile>
+    <Compile Include="..\CharacterLcd\custom\SpanChar.cs">
+      <Link>SpanChar.cs</Link>
+    </Compile>
+    <Compile Include="ICharacterLcd.cs" />
+    <Compile Include="SparkfunLcd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>

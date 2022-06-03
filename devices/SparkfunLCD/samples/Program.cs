@@ -3,6 +3,7 @@
 
 namespace Iot.Device.SparkfunLCD.sample
 {
+    using System;
     using System.Device.I2c;
     using System.Diagnostics;
     using System.Threading;
@@ -22,17 +23,16 @@ namespace Iot.Device.SparkfunLCD.sample
             Debug.WriteLine("Hello from SparkFun 20x4 SerLCD");
 
             //// using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
-            using (var lcd = new SparkfunLCD(displaySize: SparkfunLCD.DISPLAYSIZE.SIZE20X4, busId: 1, deviceAddress: SparkfunLCD.DefaultI2cAddress, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin: Gpio.IO23, clockPin: Gpio.IO22))
+            using (var lcd = new SparkfunLcd(displaySize: SparkfunLcd.DISPLAYSIZE.SIZE20X4, busId: 1, deviceAddress: SparkfunLcd.DefaultI2cAddress, i2cBusSpeed: I2cBusSpeed.StandardMode, dataPin: Gpio.IO23, clockPin: Gpio.IO22))
             {
-                lcd.CursorState(false);
                 lcd.SetBacklight(0, 255, 0);
                 lcd.SetContrast(4);
-                lcd.ClearScreen();
-                lcd.DisplayState(false);
+                lcd.Clear();
+                lcd.SetDisplayState(false);
                 lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
                 lcd.Write(0, 1, "P/N# LCD-16398");
                 lcd.Write(0, 3, "Hello!!!");
-                lcd.DisplayState(true);
+                lcd.SetDisplayState(true);
             }
         }
     }
