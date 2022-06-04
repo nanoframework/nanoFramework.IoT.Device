@@ -5,6 +5,7 @@ namespace Iot.Device.SparkfunLCD
 {
     using System;
     using System.Device.I2c;
+    using System.Drawing;
     using System.Threading;
     using Iot.Device.CharacterLcd;
 
@@ -57,8 +58,32 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="displaySize">display size</param>
         public SparkfunLcd(I2cDevice i2cDevice, DisplaySizeEnum displaySize = DisplaySizeEnum.Size20x4)
         {
+            if (i2cDevice == null)
+            {
+                throw new ArgumentNullException("i2cDevice", "argument 'i2cDevice' cannot be null");
+            }
+
             _i2cDevice = i2cDevice;
-            Init(displaySize);
+
+            switch (displaySize)
+            {
+                default:
+                case DisplaySizeEnum.Size20x4:
+                    Size = new Size() { Width = 20, Height = 4 };
+                    break;
+                case DisplaySizeEnum.Size16x2:
+                    Size = new Size() { Width = 16, Height = 2 };
+                    break;
+            }
+
+            // initialize display
+            Transmit(OpenLcdCommandEnum.SpecialCommand);
+            Transmit((byte)(OpenLcdCommandEnum.DisplayControl | _displayControl));
+            Transmit(OpenLcdCommandEnum.SpecialCommand);
+            Transmit((byte)(OpenLcdCommandEnum.EntryModeSet | _displayMode));
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(OpenLcdCommandEnum.ClearCommand);
+            Thread.Sleep(50);
         }
 
         /// <summary>
@@ -339,23 +364,39 @@ namespace Iot.Device.SparkfunLCD
         }
 
         /// <summary>
-        /// Send request to create a customer character
+        /// Create a custom character
         /// </summary>
-        /// <param name="location">character number 0 to 7</param>
-        /// <param name="charmap">byte array for character</param>
-        public void CreateChar(byte location, byte[] charmap)
+        /// <param name="location">character number 0 thru 7, 8 locations are available. Subsequent use of the custom character requires use of character number 8 thru 15</param>
+        /// <param name="characterMap">byte array for custom character refer to datasheet for specific information, or see https://www.quinapalus.com/hd44780udg.html </param>
+        /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
+        /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
+        public void CreateCustomCharacter(int location, byte[] characterMap)
         {
-            location &= 0x7; // we only have 8 locations 0-7
+            if (characterMap == null) { throw new ArgumentNullException("characterMap", "argument characterMap cannot be null"); }
+
             Transmit(OpenLcdCommandEnum.SettingCommand);
-            Transmit((byte)(27 + location));
-            for (int i = 0; i < 8; i++)
+            Transmit((byte)(27 + (location & 0x07)));
+            for (int i = 0; i < characterMap.Length; i++)
             {
-                Transmit(charmap[i]);
+                Transmit(characterMap[i]);
             }
 
             Thread.Sleep(50);
         }
 
+        /// <summary>
+        /// Create a custom character
+        /// </summary>
+        /// <param name="location">character number 0 thru 7, 8 locations are available</param>
+        /// <param name="characterMap">byte array for custom character refer to datasheet for specific information</param>
+        /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
+        /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
+        public void CreateCustomCharacter(int location, SpanByte characterMap)
+        {
+            CreateCustomCharacter(location, characterMap.ToArray());
+        }
+
+        /*
         /// <summary>
         /// Write a customer character to the display
         /// </summary>
@@ -364,7 +405,7 @@ namespace Iot.Device.SparkfunLCD
         {
             location &= 0x7; // we only have 8 locations 0-7
             Command((OpenLcdCommandEnum)(35 + location));
-        }
+        }*/
 
         /// <summary>
         /// Write a byte to the display
@@ -380,9 +421,6 @@ namespace Iot.Device.SparkfunLCD
         /// Write a character buffer to the display
         /// </summary>
         /// <param name="buffer">buffer to write</param>
-        /// <seealso cref="Write(char[])"/>
-        /// <seealso cref="Write(char[], int)"/>
-        /// <seealso cref="Write(SpanChar)"/>
         public void Write(SpanChar buffer)
         {
             Write(buffer.ToArray());
@@ -392,9 +430,6 @@ namespace Iot.Device.SparkfunLCD
         /// Write a character buffer to the display
         /// </summary>
         /// <param name="buffer">buffer to write</param>
-        /// <seealso cref="Write(char[])"/>
-        /// <seealso cref="Write(char[], int)"/>
-        /// <seealso cref="Write(SpanChar)"/>
         public void Write(char[] buffer)
         {
             Write(buffer, buffer.Length);
@@ -405,9 +440,6 @@ namespace Iot.Device.SparkfunLCD
         /// </summary>
         /// <param name="buffer">buffer to write</param>
         /// <param name="bufferSize">size of buffer to write</param>
-        /// <seealso cref="Write(char[])"/>
-        /// <seealso cref="Write(char[], int)"/>
-        /// <seealso cref="Write(SpanChar)"/>
         public void Write(char[] buffer, int bufferSize)
         {
             int writeSize = Math.Min(bufferSize, buffer.Length);
@@ -543,88 +575,17 @@ namespace Iot.Device.SparkfunLCD
             TransmitSpecialCommand(OpenLcdCommandEnum.CursorShift | OpenLcdCommandEnum.CursorMove | OpenLcdCommandEnum.MoveRight, count);
         }
 
-        /*
-        /// <summary>
-        /// Use a standard hex rgb value (0x00000000 to 0x00FFFFFF) to set the backlight color.
-        /// The encoded long value has form (0x00RRGGBB) where RR, GG and BB
-        /// are red, green, blue byte values in hex.The remaining two most
-        /// significant bytes of the long value are ignored.
-        /// </summary>
-        /// <param name="rgb">hex encoded rgb value</param>
-        public void SetBacklight(ulong rgb)
-        {
-            ulong tmp = (rgb >> 16) & 0x0000FF;
-            byte r = (byte)tmp;
-            tmp = (rgb >> 8) & 0x0000FF;
-            byte g = (byte)tmp;
-            tmp = rgb & 0x0000FF;
-            byte b = (byte)tmp;
-
-            SetBacklight(r, g, b);
-        }
-
         /// <summary>
         /// Set backlight color
         /// </summary>
-        /// <param name="r">Red intensity</param>
-        /// <param name="g">Green intensity</param>
-        /// <param name="b">Blue intensity</param>
-        public void SetBacklight(byte r, byte g, byte b)
-        {
-            // map the byte value range to backlight command range
-            byte red = (byte)(128 + Map(r, 0, 255, 0, 29));
-            byte green = (byte)(158 + Map(g, 0, 255, 0, 29));
-            byte blue = (byte)(188 + Map(b, 0, 255, 0, 29));
-
-            // Turn display off to hide confirmation messages
-            DisplayState(false);
-
-            // Set the red, green and blue values
-            Transmit(SETTINGCOMMAND);
-            Transmit(red);
-            Transmit(SETTINGCOMMAND);
-            Transmit(green);
-            Transmit(SETTINGCOMMAND);
-            Transmit(blue);
-
-            // Turn display back on
-            DisplayState(true);
-            Thread.Sleep(50);
-        }
-        */
-
-        /// <summary>
-        /// Set backlight color.
-        /// The encoded long value has form (0x00RRGGBB) where RR, GG and BB
-        /// are red, green, blue byte values in hex. The remaining two most
-        /// significant bytes of the long value are ignored.
-        /// </summary>
-        /// <param name="rgb">hex encoded rgb value</param>
-        public void SetBacklight(ulong rgb)
-        {
-            ulong tmp = (rgb >> 16) & 0x0000FF;
-            byte r = (byte)tmp;
-            tmp = (rgb >> 8) & 0x0000FF;
-            byte g = (byte)tmp;
-            tmp = rgb & 0x0000FF;
-            byte b = (byte)tmp;
-
-            SetBacklight(r, g, b);
-        }
-
-        /// <summary>
-        /// Set backlight color
-        /// </summary>
-        /// <param name="r">Red intensity</param>
-        /// <param name="g">Green intensity</param>
-        /// <param name="b">Blue intensity</param>
-        public void SetBacklight(byte r, byte g, byte b)
+        /// <param name="color">color to set</param>
+        public void SetBacklight(Color color)
         {
             Transmit(OpenLcdCommandEnum.SettingCommand);
             Transmit(OpenLcdCommandEnum.SetRgbCommand);
-            Transmit(r);
-            Transmit(g);
-            Transmit(b);
+            Transmit(color.R);
+            Transmit(color.G);
+            Transmit(color.B);
             Thread.Sleep(10);
         }
 
@@ -632,7 +593,7 @@ namespace Iot.Device.SparkfunLCD
         /// Change state of system messages
         /// </summary>
         /// <param name="state"><c>true</c> to enable system messages, else <c>false</c> to disable</param>
-        public void SystemMessagesState(bool state)
+        public void SetSystemMessagesState(bool state)
         {
             Transmit(OpenLcdCommandEnum.SettingCommand);
             Transmit(state ? OpenLcdCommandEnum.EnableSystemMessageDisplay : OpenLcdCommandEnum.DisableSystemMessageDisplay);
@@ -643,7 +604,7 @@ namespace Iot.Device.SparkfunLCD
         /// Change state of splash screen at power on, setting takes effect at next power on
         /// </summary>
         /// <param name="state"><c>true</c> to enable splash screen at power on, else <c>false</c> to disable</param>
-        public void SplashScreenState(bool state)
+        public void SetSplashScreenState(bool state)
         {
             Transmit(OpenLcdCommandEnum.SettingCommand);
             Transmit(state ? OpenLcdCommandEnum.EnableSplashDisplay : OpenLcdCommandEnum.DisableSpashDisplay);
@@ -653,8 +614,8 @@ namespace Iot.Device.SparkfunLCD
         /// <summary>
         /// Save the current display as the splash screen at power on, setting takes effect at next power on
         /// </summary>
-        /// <seealso cref="SplashScreenState"/>
-        public void SplashScreenSave()
+        /// <seealso cref="SetSplashScreenState"/>
+        public void SaveSplashScreen()
         {
             Transmit(OpenLcdCommandEnum.SettingCommand);
             Transmit(OpenLcdCommandEnum.SaveCurrentDisplayAsSplash);
@@ -665,7 +626,7 @@ namespace Iot.Device.SparkfunLCD
         /// Set state of text flow direction, note that left to right is the direction common to most Western languages.
         /// </summary>
         /// <param name="state"><c>true</c> to set flow from left to right, else <c>false</c> to set to right to left</param>
-        public void TextFlowDirectionState(bool state = true)
+        public void SetTextFlowDirectionState(bool state = true)
         {
             if (state)
             {
@@ -684,7 +645,7 @@ namespace Iot.Device.SparkfunLCD
         /// Change state of auto-scrolling, when enabled text will be right justified
         /// </summary>
         /// <param name="state"><c>true</c> to enable auto-scrolling, else <c>false</c> to disable</param>
-        public void AutoScrollingState(bool state)
+        public void SetAutoScrollingState(bool state)
         {
             if (state)
             {
@@ -713,59 +674,12 @@ namespace Iot.Device.SparkfunLCD
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="location"></param>
-        /// <param name="characterMap"></param>
-        public void CreateCustomCharacter(int location, byte[] characterMap)
-        {
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="location"></param>
-        /// <param name="characterMap"></param>
-        public void CreateCustomCharacter(int location, SpanByte characterMap)
-        {
-        }
-
-        /// <summary>
-        /// Initialize the display
-        /// </summary>
-        /// <param name="displaySize">display size</param>
-        private void Init(DisplaySizeEnum displaySize = DisplaySizeEnum.Size20x4)
-        {
-            switch (displaySize)
-            {
-                default:
-                case DisplaySizeEnum.Size20x4:
-                    Size = new Size() { Width = 20, Height = 4 };
-                    break;
-                case DisplaySizeEnum.Size16x2:
-                    Size = new Size() { Width = 16, Height = 2 };
-                    break;
-            }
-
-            Transmit(OpenLcdCommandEnum.SpecialCommand);
-            Transmit((byte)(OpenLcdCommandEnum.DisplayControl | _displayControl));
-            Transmit(OpenLcdCommandEnum.SpecialCommand);
-            Transmit((byte)(OpenLcdCommandEnum.EntryModeSet | _displayMode));
-            Transmit(OpenLcdCommandEnum.SettingCommand);
-            Transmit(OpenLcdCommandEnum.ClearCommand);
-            Thread.Sleep(50);
-        }
-
-        /// <summary>
         /// Send data to the device
         /// </summary>
         /// <param name="data">data to send</param>
         private void Transmit(byte data)
         {
-            if (_i2cDevice != null)
-            {
-                _i2cDevice.WriteByte(data);
-            }
+            _i2cDevice.WriteByte(data);
         }
 
         /// <summary>
@@ -783,8 +697,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="command">command to send</param>
         private void Command(OpenLcdCommandEnum command)
         {
-            Transmit(OpenLcdCommandEnum.SettingCommand); // Put LCD into setting mode
-            Transmit(command); // Send the command code
+            Transmit(OpenLcdCommandEnum.SettingCommand);
+            Transmit(command);
             Thread.Sleep(10);
         }
 
@@ -794,8 +708,8 @@ namespace Iot.Device.SparkfunLCD
         /// <param name="command">command to send</param>
         private void TransmitSpecialCommand(OpenLcdCommandEnum command)
         {
-            Transmit(OpenLcdCommandEnum.SpecialCommand); // Send special command character
-            Transmit(command); // Send the command code
+            Transmit(OpenLcdCommandEnum.SpecialCommand);
+            Transmit(command);
             Thread.Sleep(50);
         }
 
@@ -808,8 +722,8 @@ namespace Iot.Device.SparkfunLCD
         {
             for (int i = 0; i < count; i++)
             {
-                Transmit(OpenLcdCommandEnum.SpecialCommand); // Send special command character
-                Transmit(command); // Send command code
+                Transmit(OpenLcdCommandEnum.SpecialCommand);
+                Transmit(command);
             }
 
             Thread.Sleep(50);

@@ -6,6 +6,7 @@ namespace Iot.Device.SparkfunLCD.sample
     using System;
     using System.Device.I2c;
     using System.Diagnostics;
+    using System.Drawing;
     using System.Threading;
     using nanoFramework.Hardware.Esp32;
     using Iot.Device.SparkfunLCD;
@@ -36,13 +37,25 @@ namespace Iot.Device.SparkfunLCD.sample
             {
                 using (var lcd = new SparkfunLcd(i2cDevice, SparkfunLcd.DisplaySizeEnum.Size20x4))
                 {
-                    lcd.SetBacklight(0, 255, 0);
+                    lcd.SetBacklight(Color.FromArgb(0, 255, 0));
                     lcd.SetContrast(4);
-                    lcd.Clear();
+
                     lcd.SetDisplayState(false);
+                    lcd.Clear();
+
+                    // demonstrating custom characters
+                    {
+                        lcd.CreateCustomCharacter(0, new byte[] { 0x0, 0x1b, 0xe, 0x4, 0xe, 0x1b, 0x0, 0x0 }); // define custom character 0x0
+                        lcd.CreateCustomCharacter(1, new byte[] { 0x0, 0x1, 0x3, 0x16, 0x1c, 0x8, 0x0, 0x0 }); // define custom character 0x1
+
+                        lcd.SetCursorPosition(0, 3);
+                        lcd.Write("custom chars: ");
+                        lcd.Write(new char[] { '\x0', '\x1' }); // write custom character 0x0 followed by custom character 0x1
+                    }
+
                     lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
                     lcd.Write(0, 1, "P/N# LCD-16398");
-                    lcd.Write(0, 3, "Hello!!!");
+
                     lcd.SetDisplayState(true);
                 }
             }

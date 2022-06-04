@@ -26,20 +26,38 @@ using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gp
 
 (code validated against Adafruit Huzzah32 Feather)
 
-![Example usage](SparkfunLCD.jpg)
+![Example usage](SparkFunLCD.jpg)
 
-**Important**: make sure you properly setup the I2C pins, this is done automatically for ESP32 when using these constructors by setting `dataPin` and `clockPin` arguments,
+ ## Custom Characters
+ 
+ - As shown in the photo above custom characters can be defined
+ - Up to eight custom characters can be defined numbered 0x0 thru 0x7
+ - for information on generating the byte array character bit mask see [link](https://www.quinapalus.com/hd44780udg.html)
 
 ```csharp
-public SparkfunLCD(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int dataPin = 18, int clockPin = 19);
+// demonstrating custom characters
+{
+    lcd.CreateCustomCharacter(0, new byte[] { 0x0, 0x1b, 0xe, 0x4, 0xe, 0x1b, 0x0, 0x0 }); // define custom character 0x0
+    lcd.CreateCustomCharacter(1, new byte[] { 0x0, 0x1, 0x3, 0x16, 0x1c, 0x8, 0x0, 0x0 }); // define custom character 0x1
 
-public SparkfunLCD(DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int busId = 1, int deviceAddress = SparkfunLCD.DEFAULTDISPLAYADDRESS, I2cBusSpeed i2cBusSpeed = I2cBusSpeed.StandardMode, int dataPin = 18, int clockPin = 19);
-
-public SparkfunLCD(I2cConnectionSettings settings, DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4, int dataPin = 18, int clockPin = 19);
+    lcd.Clear();
+    lcd.SetCursorPosition(0, 0);
+    lcd.Write(new char[] { '\x0', '\x1' }); // write custom character 0x0 followed by custom character 0x1
+}
 ```
 
 
-For other chipsets e.g. STM32, it may be necessary to manually set the pin states before utilizing the following constructor,
+ ## Important note on use of I2C pins
+
+**Important**: make sure chip pins are properly configured as I2C pins, for instance for ESP32,
+
 ```csharp
-public SparkfunLCD(I2cDevice i2cDevice, DISPLAYSIZE displaySize = DISPLAYSIZE.SIZE20X4)
+// configure ESP32 device I2C bus
+{
+    // note: actual pin-out is specific to Adafruit Huzzah32 Feather on which code was tested
+    int dataPin = Gpio.IO23;
+    int clockPin = Gpio.IO22;
+    Configuration.SetPinFunction(dataPin, DeviceFunction.I2C1_DATA);
+    Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
+}
 ```
