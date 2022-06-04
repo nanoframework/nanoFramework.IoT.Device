@@ -18,7 +18,7 @@
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.SparkfunLcd for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.SparkfunLCD assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.SparkfunLCD</tags>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.SparkfunLcd</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />

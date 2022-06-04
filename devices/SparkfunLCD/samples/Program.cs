@@ -9,7 +9,7 @@ namespace Iot.Device.SparkfunLCD.sample
     using System.Drawing;
     using System.Threading;
     using nanoFramework.Hardware.Esp32;
-    using Iot.Device.SparkfunLCD;
+    using Iot.Device.SparkfunLcd;
 
     /// <summary>
     /// Class containing main executable code
