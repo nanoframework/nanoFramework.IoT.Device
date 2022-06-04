@@ -10,23 +10,25 @@
 
 For instance the following code writes a simple message to the display,
 ```csharp
-using (var lcd = new SparkfunLCD(SparkfunLCD.DISPLAYSIZE.SIZE20X4, Gpio.IO23, Gpio.IO22))
+var settings = new I2cConnectionSettings(busId: 1, deviceAddress: SparkfunLcd.DefaultI2cAddress, busSpeed: I2cBusSpeed.StandardMode);
+using (var i2cDevice = I2cDevice.Create(settings))
 {
-    lcd.CursorState(false);
-    lcd.SetBacklight(0, 255, 0);
-    lcd.SetContrast(4);
-    lcd.ClearScreen();
-    lcd.DisplayState(false);
-    lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
-    lcd.Write(0, 1, "P/N# LCD-16398");
-    lcd.Write(0, 3, "Hello!!!");
-    lcd.DisplayState(true);
+    using (var lcd = new SparkfunLcd(i2cDevice, SparkfunLcd.DisplaySizeEnum.Size20x4))
+    {
+        lcd.SetBacklight(Color.FromArgb(0, 255, 0));
+        lcd.SetContrast(4);
+        lcd.SetDisplayState(false);
+        lcd.Clear();
+        lcd.Write(0, 0, "SparkFun 20x4 SerLCD");
+        lcd.Write(0, 1, "P/N# LCD-16398");
+        lcd.SetDisplayState(true);
+    }
 }
 ```
 
 (code validated against Adafruit Huzzah32 Feather)
 
-![Example usage](SparkFunLCD.jpg)
+![Example usage](SparkFunLcd.jpg)
 
  ## Custom Characters
  
