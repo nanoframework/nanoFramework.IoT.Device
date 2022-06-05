@@ -55,7 +55,7 @@
     <ProjectReference Include="..\SparkFunLcd.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
-  <!--<Import Project=".\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />-->
+  <Import Project=".\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
