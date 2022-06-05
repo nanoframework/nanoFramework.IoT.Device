@@ -1,15 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.SparkfunLCD.sample
+namespace Iot.Device.SparkFunLcd.Sample
 {
     using System;
     using System.Device.I2c;
     using System.Diagnostics;
     using System.Drawing;
     using System.Threading;
+    using Iot.Device.SparkFunLcd;
     using nanoFramework.Hardware.Esp32;
-    using Iot.Device.SparkfunLcd;
 
     /// <summary>
     /// Class containing main executable code
@@ -32,10 +32,10 @@ namespace Iot.Device.SparkfunLCD.sample
                 Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
             }
 
-            var settings = new I2cConnectionSettings(busId: 1, deviceAddress: SparkfunLcd.DefaultI2cAddress, busSpeed: I2cBusSpeed.StandardMode);
+            var settings = new I2cConnectionSettings(busId: 1, deviceAddress: SparkFunLcd.DefaultI2cAddress, busSpeed: I2cBusSpeed.StandardMode);
             using (var i2cDevice = I2cDevice.Create(settings))
             {
-                using (var lcd = new SparkfunLcd(i2cDevice, SparkfunLcd.DisplaySizeEnum.Size20x4))
+                using (var lcd = new SparkFunLcd(i2cDevice, SparkFunLcd.DisplaySizeEnum.Size20x4))
                 {
                     lcd.SetBacklight(Color.FromArgb(0, 255, 0));
                     lcd.SetContrast(4);

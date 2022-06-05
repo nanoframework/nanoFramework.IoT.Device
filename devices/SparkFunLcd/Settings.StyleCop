@@ -7,6 +7,9 @@
       <Value>Ser</Value>
       <Value>Arduino</Value>
       <Value>src</Value>
+      <Value>quinapalus</Value>
+      <Value>hd</Value>
+      <Value>udg</Value>
     </CollectionProperty>
   </GlobalSettings>
   <Analyzers>

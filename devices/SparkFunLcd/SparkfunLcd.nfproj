@@ -12,10 +12,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.SparkfunLcd</RootNamespace>
-    <AssemblyName>Iot.Device.SparkfunLcd</AssemblyName>
+    <RootNamespace>Iot.Device.SparkFunLcd</RootNamespace>
+    <AssemblyName>Iot.Device.SparkFunLcd</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.SparkfunLcd.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.SparkFunLcd.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -41,9 +41,10 @@
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
       <Link>ICharacterLcd.cs</Link>
     </Compile>
+    <Compile Include="TextFlowDirectionEnum.cs" />
     <Compile Include="DisplaySizeEnum.cs" />
     <Compile Include="OpenLcdCommandEnum.cs" />
-    <Compile Include="SparkfunLcd.cs" />
+    <Compile Include="SparkFunLcd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>

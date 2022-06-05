@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.SparkfunLcd
+namespace Iot.Device.SparkFunLcd
 {
     using System;
     using System.Device.I2c;
@@ -14,7 +14,7 @@ namespace Iot.Device.SparkfunLcd
     /// for product information see https://www.sparkfun.com/products/16398
     /// code based on https://github.com/sparkfun/OpenLCD
     /// </summary>
-    public partial class SparkfunLcd : ICharacterLcd
+    public partial class SparkFunLcd : ICharacterLcd
     {
         /// <summary>
         /// Default I2C address
@@ -52,11 +52,11 @@ namespace Iot.Device.SparkfunLcd
         private bool _blinkingCursorVisible = false;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SparkfunLcd" /> class
+        /// Initializes a new instance of the <see cref="SparkFunLcd" /> class
         /// </summary>
         /// <param name="i2cDevice">existing I2C connection to display</param>
         /// <param name="displaySize">display size</param>
-        public SparkfunLcd(I2cDevice i2cDevice, DisplaySizeEnum displaySize = DisplaySizeEnum.Size20x4)
+        public SparkFunLcd(I2cDevice i2cDevice, DisplaySizeEnum displaySize = DisplaySizeEnum.Size20x4)
         {
             if (i2cDevice == null)
             {
@@ -87,9 +87,9 @@ namespace Iot.Device.SparkfunLcd
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="SparkfunLcd" /> class
+        /// Finalizes an instance of the <see cref="SparkFunLcd" /> class
         /// </summary>
-        ~SparkfunLcd()
+        ~SparkFunLcd()
         {
             Dispose();
         }
@@ -192,15 +192,24 @@ namespace Iot.Device.SparkfunLcd
         }
 
         /// <summary>
-        /// Create a custom character
+        /// Create a custom character, eight custom characters are available numbered 0 through 7.
+        /// After character is created in LCD memory it can be written to display by sending byte in the range 0x0 to 0x7 using <see cref="Write(byte)"/>.
         /// </summary>
-        /// <param name="location">character number 0 thru 7, 8 locations are available. Subsequent use of the custom character requires use of character number 8 thru 15</param>
+        /// <param name="location">character number 0 thru 7, 8 locations are available</param>
         /// <param name="characterMap">byte array for custom character refer to datasheet for specific information, or see https://www.quinapalus.com/hd44780udg.html </param>
         /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
         /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
-            if (characterMap == null) { throw new ArgumentNullException("characterMap", "argument characterMap cannot be null"); }
+            if (location < 0 || location > 7)
+            {
+                throw new ArgumentOutOfRangeException("location", "argument location must have range 0 thru 7, but input was '" + location + "'");
+            }
+
+            if (characterMap == null)
+            {
+                throw new ArgumentNullException("characterMap", "argument characterMap cannot be null");
+            }
 
             Transmit(OpenLcdCommandEnum.SettingCommand);
             Transmit((byte)(27 + (location & 0x07)));
@@ -451,19 +460,21 @@ namespace Iot.Device.SparkfunLcd
         }
 
         /// <summary>
-        /// Set state of text flow direction, note that left to right is the direction common to most Western languages.
+        /// Set state of text flow direction
         /// </summary>
-        /// <param name="state"><c>true</c> to set flow from left to right, else <c>false</c> to set to right to left</param>
-        public void SetTextFlowDirectionState(bool state = true)
+        /// <param name="textFlowDirection">text flow direction, note that left to right is the direction common to most Western languages</param>
+        public void SetTextFlowDirectionState(TextFlowDirectionEnum textFlowDirection)
         {
-            if (state)
+            switch (textFlowDirection)
             {
-                _displayMode |= OpenLcdCommandEnum.EntryLeft;
-            }
-            else
-            {
-                OpenLcdCommandEnum tmp = OpenLcdCommandEnum.EntryLeft;
-                _displayMode &= ~tmp;
+                default:
+                case TextFlowDirectionEnum.LeftToRight:
+                    _displayMode |= OpenLcdCommandEnum.EntryLeft;
+                    break;
+                case TextFlowDirectionEnum.RightToLeft:
+                    OpenLcdCommandEnum tmp = OpenLcdCommandEnum.EntryLeft;
+                    _displayMode &= ~tmp;
+                    break;
             }
 
             TransmitSpecialCommand(OpenLcdCommandEnum.EntryModeSet | _displayMode);

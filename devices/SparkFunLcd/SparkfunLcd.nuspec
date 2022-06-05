@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.SparkfunLcd</id>
+    <id>nanoFramework.Iot.Device.SparkFunLcd</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.SparkfunLcd</title>
+    <title>nanoFramework.Iot.Device.SparkFunLcd</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoFramework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,9 +16,9 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.SparkfunLcd for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.SparkfunLCD assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.SparkfunLcd</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.SparkFunLcd for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.SparkFunLcd assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.SparkFunLcd</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
@@ -29,11 +29,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.SparkfunLcd.dll" target="lib\Iot.Device.SparkfunLcd.dll" />
-    <file src="bin\Release\Iot.Device.SparkfunLcd.pdb" target="lib\Iot.Device.SparkfunLcd.pdb" />
-    <file src="bin\Release\Iot.Device.SparkfunLcd.pdbx" target="lib\Iot.Device.SparkfunLcd.pdbx" />
-    <file src="bin\Release\Iot.Device.SparkfunLcd.pe" target="lib\Iot.Device.SparkfunLcd.pe" />
-    <file src="bin\Release\Iot.Device.SparkfunLcd.xml" target="lib\Iot.Device.SparkfunLcd.xml" />
+    <file src="bin\Release\Iot.Device.SparkFunLcd.dll" target="lib\Iot.Device.SparkFunLcd.dll" />
+    <file src="bin\Release\Iot.Device.SparkFunLcd.pdb" target="lib\Iot.Device.SparkFunLcd.pdb" />
+    <file src="bin\Release\Iot.Device.SparkFunLcd.pdbx" target="lib\Iot.Device.SparkFunLcd.pdbx" />
+    <file src="bin\Release\Iot.Device.SparkFunLcd.pe" target="lib\Iot.Device.SparkFunLcd.pe" />
+    <file src="bin\Release\Iot.Device.SparkFunLcd.xml" target="lib\Iot.Device.SparkFunLcd.xml" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

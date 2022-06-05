@@ -17,19 +17,20 @@ namespace Iot.Device.SparkFunLcd
     public partial class SparkFunLcd
     {
         /// <summary>
-        /// Display size
+        /// Text flow direction
         /// </summary>
-        public enum DisplaySizeEnum
+        /// <see cref="SetTextFlowDirectionState"/>
+        public enum TextFlowDirectionEnum
         {
             /// <summary>
-            /// Display size 20 x 4
+            /// Left to right, the direction common to most Western languages
             /// </summary>
-            Size20x4,
+            LeftToRight,
 
             /// <summary>
-            /// Display size 16 x 2
+            /// Right to left
             /// </summary>
-            Size16x2
+            RightToLeft
         }
     }
 }

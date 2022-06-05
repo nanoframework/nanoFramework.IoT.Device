@@ -12,10 +12,10 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.SparkfunLcd.sample</RootNamespace>
-    <AssemblyName>Iot.Device.SparkfunLcd.sample</AssemblyName>
+    <RootNamespace>Iot.Device.SparkFunLcd.Sample</RootNamespace>
+    <AssemblyName>Iot.Device.SparkFunLcd.Sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.SparkfunLCD.sample.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.SparkFunLcd.sample.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -52,9 +52,10 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SparkfunLcd.nfproj" />
+    <ProjectReference Include="..\SparkFunLcd.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <!--<Import Project=".\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />-->
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
