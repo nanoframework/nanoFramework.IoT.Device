@@ -52,6 +52,16 @@ namespace Iot.Device.SparkFunLcd
         private bool _blinkingCursorVisible = false;
 
         /// <summary>
+        /// Backing store for <see cref="BacklightOn"/>
+        /// </summary>
+        private bool _backlightOn = false;
+
+        /// <summary>
+        /// Backlight color if backlight is on, see also <see cref="BacklightOn"/>
+        /// </summary>
+        private Color _backlightColor = Color.FromArgb(0, 255, 0);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SparkFunLcd" /> class
         /// </summary>
         /// <param name="i2cDevice">existing I2C connection to display</param>
@@ -127,20 +137,33 @@ namespace Iot.Device.SparkFunLcd
         }
 
         /// <summary>
-        /// Gets the number of custom character supported
+        /// Gets the number of custom characters supported
         /// </summary>
         public int NumberOfCustomCharactersSupported
         {
-            get { return 0; }
+            get { return 8; }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the backlight is turned on
+        /// Gets or sets a value indicating whether the backlight is turned on.
+        /// To set the backlight color use <see cref="SetBacklight"/>
         /// </summary>
-        public bool BacklightOn { get; set; }
+        public bool BacklightOn
+        {
+            get
+            {
+                return _backlightOn;
+            }
+
+            set
+            {
+                _backlightOn = value && (_backlightColor != Color.Black);
+                SetBacklight(_backlightOn ? _backlightColor : Color.Black);
+            }
+        }
 
         /// <summary>
-        /// Disposes of an instance of the class
+        /// Disposes of an instance of the class, implements <see cref="IDisposable"/>
         /// </summary>
         public void Dispose()
         {
@@ -232,17 +255,6 @@ namespace Iot.Device.SparkFunLcd
         {
             CreateCustomCharacter(location, characterMap.ToArray());
         }
-
-        /*
-        /// <summary>
-        /// Write a customer character to the display
-        /// </summary>
-        /// <param name="location">character number 0 to 7</param>
-        public void WriteChar(byte location)
-        {
-            location &= 0x7; // we only have 8 locations 0-7
-            Command((OpenLcdCommandEnum)(35 + location));
-        }*/
 
         /// <summary>
         /// Write a byte to the display
@@ -416,6 +428,7 @@ namespace Iot.Device.SparkFunLcd
         /// Set backlight color
         /// </summary>
         /// <param name="color">color to set</param>
+        /// see also <see cref="BacklightOn"/>
         public void SetBacklight(Color color)
         {
             Transmit(OpenLcdCommandEnum.SettingCommand);
@@ -423,6 +436,8 @@ namespace Iot.Device.SparkFunLcd
             Transmit(color.R);
             Transmit(color.G);
             Transmit(color.B);
+            _backlightOn = color != Color.Black; // record if backlight state for BacklightOn property
+
             Thread.Sleep(10);
         }
 
@@ -566,20 +581,6 @@ namespace Iot.Device.SparkFunLcd
             }
 
             Thread.Sleep(50);
-        }
-
-        /// <summary>
-        /// Scale output linearly according to input and output ranges
-        /// </summary>
-        /// <param name="input">input value</param>
-        /// <param name="in_min">minimum range of input value</param>
-        /// <param name="in_max">maximum range of input value</param>
-        /// <param name="out_min">minimum range of output value</param>
-        /// <param name="out_max">maximum range of output value</param>
-        /// <returns>returns scaled value</returns>
-        private long Map(byte input, int in_min, int in_max, int out_min, int out_max)
-        {
-            return (((input - in_min) * (out_max - out_min)) / (in_max - in_min)) + out_min;
         }
     }
 }
