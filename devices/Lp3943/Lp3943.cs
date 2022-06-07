@@ -19,7 +19,7 @@ namespace Iot.Device.Lp3943
 		public const byte DefaultI2cAddress = 0x60;
 
 		private readonly int _pinReset;
-		private GpioController _controller;
+		private readonly GpioController _controller;
 		private readonly I2cDevice _i2cDevice;
 		private readonly bool _shouldDispose;
 
@@ -61,7 +61,6 @@ namespace Iot.Device.Lp3943
 			if (_shouldDispose)
 			{
 				_controller?.Dispose();
-				_controller = null;
 			}
 		}
 
