@@ -117,6 +117,7 @@ namespace Iot.Device.Lp3943
 		/// <param name="register">register to dim</param>
 		/// <param name="frequency">frequency in Hz</param>
 		/// <param name="dimPercentage">percentage</param>
+		/// <exception cref="ArgumentOutOfRangeException">thrown when either frequency or dimPercentage is out of range</exception>
 		public void DimRegister(DimRegister register, int frequency, int dimPercentage)
 		{
 			if (frequency is > 160 or < 1)
@@ -147,7 +148,7 @@ namespace Iot.Device.Lp3943
 		}
 
 		/// <summary>
-		/// Resets the Lp3943 chip
+		/// Resets the Lp3943 chip. This only has effect if you set a proper Reset pin.
 		/// </summary>
 		public void Reset()
 		{

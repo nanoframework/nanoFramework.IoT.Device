@@ -13,7 +13,7 @@ The LP3943 is an integrated device capable of independently driving 16 LEDs. It 
 
 **Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
 
-```cs
+```csharp
 //////////////////////////////////////////////////////////////////////
 // when connecting to an ESP32 device, need to configure the I2C GPIOs
 // used for the bus
@@ -23,7 +23,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
-```cs
+```csharp
 I2cConnectionSettings settings = new I2cConnectionSettings(1, Lp3943.DefaultI2cAddress);
 I2cDevice device = I2cDevice.Create(settings);
 
