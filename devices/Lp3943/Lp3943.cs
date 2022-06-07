@@ -64,12 +64,12 @@ namespace Iot.Device.Lp3943
 			}
 		}
 
-		private void SetFrequency(DimRegister dimRegister, int frequency)
+		private void SetFrequency(DimRegister dimRegister, float period)
 		{
 			// the frequency gets calculated with the following formula:
-			// frequency = (PSCx + 1) / 160
+			// period = (PSCx + 1) / 160
 			// in reverse this results in:
-			var toWrite = (byte)(frequency * 160 - 1);
+			var toWrite = (byte)(period * 160 - 1);
 			var register = dimRegister switch
 			{
 				Device.Lp3943.DimRegister.Dim0 => Register.Psc0,
@@ -129,7 +129,7 @@ namespace Iot.Device.Lp3943
 				throw new ArgumentOutOfRangeException(nameof(dimPercentage));
 			}
 
-			SetFrequency(register, frequency);
+			SetFrequency(register, 1.0f / frequency);
 			SetDimPercentage(register, dimPercentage);
 		}
 
