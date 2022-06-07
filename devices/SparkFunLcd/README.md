@@ -31,7 +31,7 @@ using (var i2cDevice = I2cDevice.Create(settings))
 
 ![Example usage](SparkFunLcd.jpg)
 
- ## Custom Characters
+ ### Custom Characters
  
  - As shown in the photo above custom characters can be defined
  - Up to eight custom characters can be defined numbered 0x0 thru 0x7
