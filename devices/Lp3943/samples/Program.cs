@@ -24,7 +24,7 @@ using var ledDriver = new Lp3943(device, resetPin);
 // Dim LEDs 0 to 7 at 1 Hz at 25% duty cycle
 ledDriver.DimRegister(DimRegister.Dim0, 1, 25);
 
-// Dim LEDs 8 to 12 at 5 Hz at 50% duty cycle
+// Dim LEDs 8 to 15 at 5 Hz at 50% duty cycle
 ledDriver.DimRegister(DimRegister.Dim1, 5, 50);
 
 // Set LEDs 12, 13, 14, 15 off
