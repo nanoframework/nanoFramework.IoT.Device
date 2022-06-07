@@ -29,39 +29,39 @@ ledDriver.DimRegister(DimRegister.Dim1, 5, 50);
 
 // Set LEDs 12, 13, 14, 15 off
 ledDriver.SetLed(
-	new[]
-	{
-		12,
-		13,
-		14,
-		15
-	},
-	LedState.Off
+    new[]
+    {
+        12,
+        13,
+        14,
+        15
+    },
+    LedState.Off
 );
 
 // Set LEDs 0, 1, 2, 3, 4, 5 on
 ledDriver.SetLed(
-	new[]
-	{
-		0,
-		1,
-		2,
-		3,
-		4,
-		5
-	},
-	LedState.On
+    new[]
+    {
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    },
+    LedState.On
 );
 
 // Set LEDs 6, 7, 8 to be powered by Dim register 0
 ledDriver.SetLed(
-	new[]
-	{
-		6,
-		7,
-		8
-	},
-	LedState.Dim0
+    new[]
+    {
+        6,
+        7,
+        8
+    },
+    LedState.Dim0
 );
 
 // Set LEDs 9, 10, 11 to be powered by Dim register 1
