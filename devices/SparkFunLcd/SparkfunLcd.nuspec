@@ -4,7 +4,7 @@
     <id>nanoFramework.Iot.Device.SparkFunLcd</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.SparkFunLcd</title>
-    <authors>nanoFramework project contributors</authors>
+    <authors>nanoFramework</authors>
     <owners>nanoFramework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
