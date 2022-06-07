@@ -49,7 +49,6 @@ using (var i2cDevice = I2cDevice.Create(settings))
 }
 ```
 
-
  ## Important note on use of I2C pins
 
 **Important**: make sure chip pins are properly configured as I2C pins, for instance for ESP32,
