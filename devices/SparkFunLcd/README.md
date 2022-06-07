@@ -9,6 +9,7 @@
  ## Usage
 
 For instance the following code writes a simple message to the display,
+
 ```csharp
 var settings = new I2cConnectionSettings(busId: 1, deviceAddress: SparkFunLcd.DefaultI2cAddress, busSpeed: I2cBusSpeed.StandardMode);
 using (var i2cDevice = I2cDevice.Create(settings))
