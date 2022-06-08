@@ -25,16 +25,16 @@ namespace Iot.Device.Sps30.Entities
             {
                 // When we have 40 bytes of data, we assume Float was requested and will be parsed as such
                 Format = MeasurementOutputFormat.Float;
-                MassConcentrationPm10 = ReadSingleBigEndian(data, 0);
-                MassConcentrationPm25 = ReadSingleBigEndian(data, 4);
-                MassConcentrationPm40 = ReadSingleBigEndian(data, 8);
-                MassConcentrationPm100 = ReadSingleBigEndian(data, 12);
-                NumberConcentrationPm05 = ReadSingleBigEndian(data, 16);
-                NumberConcentrationPm10 = ReadSingleBigEndian(data, 20);
-                NumberConcentrationPm25 = ReadSingleBigEndian(data, 24);
-                NumberConcentrationPm40 = ReadSingleBigEndian(data, 28);
-                NumberConcentrationPm100 = ReadSingleBigEndian(data, 32);
-                TypicalParticleSize = ReadSingleBigEndian(data, 36);
+                MassConcentrationPm10 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 0, 4));
+                MassConcentrationPm25 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 4, 4));
+                MassConcentrationPm40 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 8, 4));
+                MassConcentrationPm100 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 12, 4));
+                NumberConcentrationPm05 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 16, 4));
+                NumberConcentrationPm10 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 20, 4));
+                NumberConcentrationPm25 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 24, 4));
+                NumberConcentrationPm40 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 28, 4));
+                NumberConcentrationPm100 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 32, 4));
+                TypicalParticleSize = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 36, 4));
             }
             else if (data.Length >= 20)
             {
@@ -55,18 +55,6 @@ namespace Iot.Device.Sps30.Entities
             {
                 throw new ApplicationException($"Not enough bytes received to parse a measurement");
             }
-        }
-
-        /// <summary>
-        /// Reads a single (32-bit) float value using big endian byte ordering
-        /// </summary>
-        /// <param name="value">Buffer to read from</param>
-        /// <param name="startIndex">Start index where the float value is located</param>
-        /// <returns>The read float value</returns>
-        /// <remarks>This method is needed for now since <see cref="BinaryPrimitives"/> does not support Single yet</remarks>
-        private float ReadSingleBigEndian(byte[] value, int startIndex)
-        {
-            return BitConverter.IsLittleEndian? BitConverter.ToSingle(new byte[] { value[startIndex + 3], value[startIndex + 2], value[startIndex + 1], value[startIndex] }, 0) : BitConverter.ToSingle(value, startIndex);
         }
 
         /// <summary>
