@@ -24,16 +24,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0-preview.9\lib\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Device.OneWire">
-      <HintPath>..\packages\nanoFramework.Device.OneWire.1.3.4-preview.13\lib\nanoFramework.Device.OneWire.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Device.OneWire.1.3.4\lib\nanoFramework.Device.OneWire.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32">
-      <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.3.5-preview.7\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.3.6\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.10.0-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
       <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.116.0\lib\UnitsNet.Temperature.dll</HintPath>

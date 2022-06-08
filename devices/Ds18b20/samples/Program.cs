@@ -20,14 +20,14 @@ namespace Iot.Device.Ds18b20.Samples
                 Thread.Sleep(Timeout.Infinite);
             }
             Console.WriteLine("Hello from Ds18b20!");
-            Configuration.SetPinFunction(16, DeviceFunction.COM2_RX);
-            Configuration.SetPinFunction(17, DeviceFunction.COM2_TX);
+            Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
+            Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
             Alarm();
         }
 
         private static void Alarm()
         {
-            OneWireHost oneWire = new OneWireHost();
+            using OneWireHost oneWire = new OneWireHost();
 
             Ds18b20 ds18b20 = new Ds18b20(oneWire, null, true, TemperatureResolution.VeryHigh);
 
@@ -57,7 +57,7 @@ namespace Iot.Device.Ds18b20.Samples
 
             void alarmSearch()
             {
-                int loopRead = 40;
+                int loopRead = 1000;
                 ds18b20.IsAlarmSearchCommandEnabled = true;
 
                 while (loopRead > 0)
@@ -109,6 +109,7 @@ namespace Iot.Device.Ds18b20.Samples
                 ds18b20.TemperatureLowAlarm = Temperature.FromDegreesCelsius(25);
                 ds18b20.ConfigurationWrite(false); //Write configuration on ScratchPad,
                 //If true, save it on EEPROM too.
+                ds18b20.ConfigurationWrite(true);
                 ds18b20.ConfigurationRead(true);
                 Console.WriteLine("Alarm Setpoints-RecallE2:");
                 Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius.ToString("F") + " C");
