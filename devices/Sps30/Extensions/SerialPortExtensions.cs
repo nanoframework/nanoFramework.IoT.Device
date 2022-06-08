@@ -23,7 +23,6 @@ namespace System.IO.Ports
         {
             var sw = Stopwatch.StartNew();
             using var frame = new MemoryStream();
-            using var rawdata = new MemoryStream();
 
             // Read until frame end byte
             while (true)
@@ -44,7 +43,6 @@ namespace System.IO.Ports
 
                 // Read the next byte
                 var b = (byte)serialPort.ReadByte();
-                rawdata.WriteByte(b);
 
                 // If we receive 0x7e while we're below minimum frame size, we'll assume it's a (new) start byte and clean the buffer
                 if (b == 0x7e && frame.Position < 5)

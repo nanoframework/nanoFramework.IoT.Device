@@ -4,9 +4,9 @@
 //
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 
 namespace Iot.Device.Sps30.Shdlc
 {
@@ -40,9 +40,13 @@ namespace Iot.Device.Sps30.Shdlc
         /// <summary>
         /// Execute a command on the SHDLC device. Its documentation should describe the address, commands and what data to send/receive.
         /// </summary>
+        /// <param name="devaddr">Address of the device</param>
+        /// <param name="command">Command to execute</param>
+        /// <param name="data">Data to pass to the command</param>
+        /// <param name="responseTime">Expected (maximum) response time, used to idle the CPU for a bit instead of polling the serial port</param>
         /// <returns>The reply of this command. This may be an empty array if this command has no reply.</returns>
         /// <exception cref="ApplicationException">When the frame could not be verified, a timeout occurred or the device indicates a fault status</exception>
-        public byte[] Execute(byte devaddr, byte command, byte[] data)
+        public byte[] Execute(byte devaddr, byte command, byte[] data, int responseTime = 100)
         {
             // Make sure the serial port is opened
             if (!Serial.IsOpen)
@@ -50,12 +54,22 @@ namespace Iot.Device.Sps30.Shdlc
                 Serial.Open();
             }
 
+            // Clear the receive buffer
+            while (Serial.BytesToRead > 0)
+            {
+                Serial.ReadByte();
+            }
+
             // Generate and send our frame
             var frameBuffer = GenerateMosiFrame(devaddr, command, data);
             Serial.Write(frameBuffer, 0, frameBuffer.Length);
 
+            // Wait the expected response time, also improves reliability for some reason
+            Thread.Sleep(responseTime);
+
             // Read reply and parse response
-            return ReadMosiFrameContent(devaddr, command);
+            var response = Serial.ReadUnstuffedFrameContent();
+            return ParseAndValidateMisoFrame(devaddr, command, response);
         }
 
         private byte[] GenerateMosiFrame(byte devaddr, byte command, byte[] data)
@@ -83,58 +97,6 @@ namespace Iot.Device.Sps30.Shdlc
             frame.WriteByte(0x7e);
 
             return frame.ToArray();
-        }
-
-        /// <summary>
-        /// To allow for garbage, corruption or old responses in the serial buffer, we'll keep reading until there's no more data. Then we return the last valid frame, or the most recent error.
-        /// </summary>
-        /// <param name="expectedDevAddr">The expected device address, used in validation of the reply</param>
-        /// <param name="expectedCommand">The expected command, used in validation of the reply</param>
-        /// <returns>The actual content of the reply. Does not include frame headers such as dev address or command byte.</returns>
-        /// <exception cref="ApplicationException">When the frame could not be verified, a timeout occurred or the device indicates a fault status</exception>
-        private byte[] ReadMosiFrameContent(byte expectedDevAddr, byte expectedCommand)
-        {
-            var sw = Stopwatch.StartNew();
-            Exception lastError = null;
-            while (true)
-            {
-                // This timeout check is meant to activate for situations where garbage keeps coming in at a steady pace within the ReadTimeout, possibly causing
-                // an infinite loop.
-                if (Serial.ReadTimeout > 0 && sw.ElapsedMilliseconds > Serial.ReadTimeout)
-                {
-                    break;
-                }
-
-                try
-                {
-                    // Read a frame's content, so without start/end byte (0x7e)
-                    var frame = Serial.ReadUnstuffedFrameContent();
-                    if (frame == null || frame.Length < 5)
-                    {
-                        throw new ApplicationException($"Received an invalid frame (less than minimal size)");
-                    }
-
-                    // Parse and validate the content and return the data within it
-                    var content = ParseAndValidateMisoFrame(expectedDevAddr, expectedCommand, frame);
-                    return content;
-                }
-                catch (Exception ex)
-                {
-                    lastError = ex;
-                }
-            }
-
-            // We get here when the timeout occurs.
-            // - If we did have an error, we return the most recent one since that (presumably) relates to the most recently sent request.
-            // - When we did not get an error, we ran into a timeout.
-            if (lastError != null)
-            {
-                throw lastError;
-            }
-            else
-            {
-                throw new ApplicationException("Timeout waiting for a valid frame");
-            }
         }
 
         /// <summary>

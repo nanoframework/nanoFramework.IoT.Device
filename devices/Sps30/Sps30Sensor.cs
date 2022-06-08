@@ -35,7 +35,7 @@ namespace Iot.Device.Sps30
         /// <param name="format">The format for the measurement, see <see cref="MeasurementOutputFormat"/>.</param>
         public void StartMeasurement(MeasurementOutputFormat format)
         {
-            _shdlc.Execute(0, 0x00, new byte[] { 0x01, (byte)format });
+            _shdlc.Execute(0, 0x00, new byte[] { 0x01, (byte)format }, 20);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Iot.Device.Sps30
         /// </summary>
         public void StopMeasurement()
         {
-            _shdlc.Execute(0, 0x01, new byte[0]);
+            _shdlc.Execute(0, 0x01, new byte[0], 20);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Iot.Device.Sps30
         /// <returns>The parsed measurement, either Float or UInt16, depending on <see cref="StartMeasurement(MeasurementOutputFormat)"/></returns>
         public Measurement ReadMeasuredValues()
         {
-            var data = _shdlc.Execute(0, 0x03, new byte[0]);
+            var data = _shdlc.Execute(0, 0x03, new byte[0], 20);
             if (data.Length == 0)
             {
                 return null;
@@ -66,7 +66,7 @@ namespace Iot.Device.Sps30
         /// </summary>
         public void Sleep()
         {
-            _shdlc.Execute(0, 0x10, new byte[0]);
+            _shdlc.Execute(0, 0x10, new byte[0], 5);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Iot.Device.Sps30
         public void WakeUp()
         {
             _shdlc.Serial.Write(new byte[] { 0xFF }, 0, 1); // Generate a low pulse to wake-up the interface
-            _shdlc.Execute(0, 0x11, new byte[0]); // Send the wake-up command within 100ms to fully wake the device
+            _shdlc.Execute(0, 0x11, new byte[0], 5); // Send the wake-up command within 100ms to fully wake the device
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Iot.Device.Sps30
         /// </summary>
         public void StartFanCleaning()
         {
-            _shdlc.Execute(0, 0x56, new byte[0]);
+            _shdlc.Execute(0, 0x56, new byte[0], 20);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Iot.Device.Sps30
         /// <returns>The auto cleaning interval in seconds</returns>
         public uint GetAutoCleaningInterval()
         {
-            var data = _shdlc.Execute(0, 0x80, new byte[] { 0x00 });
+            var data = _shdlc.Execute(0, 0x80, new byte[] { 0x00 }, 20);
             return BinaryPrimitives.ReadUInt32BigEndian(data);
         }
 
@@ -104,7 +104,7 @@ namespace Iot.Device.Sps30
         {
             var newvalue = new byte[4];
             BinaryPrimitives.WriteUInt32BigEndian(newvalue, intervalInSeconds);
-            _shdlc.Execute(0, 0x80, new byte[] { 0x00, newvalue[0], newvalue[1], newvalue[2], newvalue[3] });
+            _shdlc.Execute(0, 0x80, new byte[] { 0x00, newvalue[0], newvalue[1], newvalue[2], newvalue[3] }, 20);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Iot.Device.Sps30
         /// <returns>The device product type as a string</returns>
         public string GetDeviceInfoProductType()
         {
-            var data = _shdlc.Execute(0, 0xD0, new byte[] { 0x00 });
+            var data = _shdlc.Execute(0, 0xD0, new byte[] { 0x00 }, 20);
             return Encoding.UTF8.GetString(data, 0, data.Length);
         }
 
@@ -123,7 +123,7 @@ namespace Iot.Device.Sps30
         /// <returns>The device serial number as a string</returns>
         public string GetDeviceInfoSerialNumber()
         {
-            var data = _shdlc.Execute(0, 0xD0, new byte[] { 0x03 });
+            var data = _shdlc.Execute(0, 0xD0, new byte[] { 0x03 }, 20);
             return Encoding.UTF8.GetString(data, 0, data.Length);
         }
 
@@ -133,7 +133,7 @@ namespace Iot.Device.Sps30
         /// <returns>The parsed version information</returns>
         public VersionInformation ReadVersion()
         {
-            var data = _shdlc.Execute(0, 0xD1, new byte[0]);
+            var data = _shdlc.Execute(0, 0xD1, new byte[0], 20);
             return new VersionInformation(data);
         }
 
@@ -144,7 +144,7 @@ namespace Iot.Device.Sps30
         /// <returns>The parsed device status</returns>
         public DeviceStatus ReadDeviceStatusRegister(bool clearBitsAfterRead = false)
         {
-            var data = _shdlc.Execute(0, 0xD2, new byte[] { (byte)(clearBitsAfterRead ? 0x01 : 0x0) });
+            var data = _shdlc.Execute(0, 0xD2, new byte[] { (byte)(clearBitsAfterRead ? 0x01 : 0x0) }, 20);
             return new DeviceStatus(data);
         }
 
@@ -153,7 +153,7 @@ namespace Iot.Device.Sps30
         /// </summary>
         public void DeviceReset()
         {
-            _shdlc.Execute(0, 0xD3, new byte[0]);
+            _shdlc.Execute(0, 0xD3, new byte[0], 20);
         }
     }
 }
