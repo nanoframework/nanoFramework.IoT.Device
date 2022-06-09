@@ -226,7 +226,9 @@ namespace System.Buffers.Binary
                 *(IntPtr*)&flt = *(IntPtr*)&ieee754_bits; // https://stackoverflow.com/a/57532166/281337
             }
 
-            return flt;
+            // This assignment is required. Without it, the CLR will continue to use the ieee754_bits value (but only in Release builds).
+            float converted = flt;
+            return converted;
         }
 
         /// <summary>
@@ -249,7 +251,9 @@ namespace System.Buffers.Binary
                 *(IntPtr*)&flt = *(IntPtr*)&ieee754_bits; // https://stackoverflow.com/a/57532166/281337
             }
 
-            return flt;
+            // This assignment is required. Without it, the CLR will continue to use the ieee754_bits value (but only in Release builds).
+            float converted = flt;
+            return converted;
         }
 
         /// <summary>
