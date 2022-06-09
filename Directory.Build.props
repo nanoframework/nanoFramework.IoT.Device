@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Import Project="$(SolutionDir)\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />
+  <ItemGroup>
+    <None Include="$(SolutionDir)\..\StyleCop\**">
+      <Link>%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
+  </ItemGroup>
+</Project>
