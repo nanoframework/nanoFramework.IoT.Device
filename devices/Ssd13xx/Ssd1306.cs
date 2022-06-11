@@ -19,6 +19,11 @@ namespace Iot.Device.Ssd13xx
         public const byte DefaultI2cAddress = 0x3C;
 
         /// <summary>
+        /// Secondary I2C bus address.
+        /// </summary>
+        public const byte SecondaryI2cAddress = 0x3D;
+
+        /// <summary>
         /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
         /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
         /// light emitting diode dot-matrix graphic display system.
@@ -34,9 +39,34 @@ namespace Iot.Device.Ssd13xx
         /// light emitting diode dot-matrix graphic display system.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
+        /// <param name="rstPinNumber">Reset pin (some displays might be wired to share the microcontroller's
+        /// reset pin).</param>
+        public Ssd1306(I2cDevice i2cDevice, int rstPinNumber) : base(i2cDevice, rstPinNumber)
+        {            
+        }
+
+        /// <summary>
+        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
+        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
+        /// light emitting diode dot-matrix graphic display system.
+        /// </summary>
+        /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="res">Display resolution</param>
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res) : base(i2cDevice, res)
+        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res) : base(i2cDevice, -1, res)
         {
+        }
+
+        /// <summary>
+        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
+        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
+        /// light emitting diode dot-matrix graphic display system.
+        /// </summary>
+        /// <param name="i2cDevice">The I2C device used for communication.</param>
+        /// <param name="rstPinNumber">Reset pin (some displays might be wired to share the microcontroller's
+        /// reset pin).</param>
+        /// <param name="res">Display resolution</param>
+        public Ssd1306(I2cDevice i2cDevice, int rstPinNumber, DisplayResolution res) : base(i2cDevice, rstPinNumber,res)
+        {            
         }
 
         /// <summary>

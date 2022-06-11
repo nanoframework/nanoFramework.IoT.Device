@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
+using System.Threading;
 using Iot.Device.Ssd13xx.Commands;
 using Iot.Device.Ssd13xx.Commands.Ssd1306Commands;
 
@@ -46,9 +48,13 @@ namespace Iot.Device.Ssd13xx
         /// Constructs instance of Ssd13xx
         /// </summary>
         /// <param name="i2cDevice">I2C device used to communicate with the device</param>
+        /// <param name="rstPinNumber">Reset pin (some displays might be wired to share the microcontroller's
+        /// reset pin).</param>
         /// <param name="resolution">Screen resolution to use for device init.</param>
-        public Ssd13xx(I2cDevice i2cDevice, DisplayResolution resolution = DisplayResolution.OLED128x64)
+        public Ssd13xx(I2cDevice i2cDevice, int rstPinNumber=-1, DisplayResolution resolution = DisplayResolution.OLED128x64)
         {
+            if (rstPinNumber >= 0) this.Reset(rstPinNumber);
+
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
             switch (resolution)
@@ -527,5 +533,23 @@ namespace Iot.Device.Ssd13xx
             0x00, // lower columns address =0
             0x10, // upper columns address =0
         };
+
+        /// <summary>
+        /// Reset display controller.
+        /// </summary>
+        /// <param name="rstPinNumber">Reset pin (some displays might be wired to share the microcontroller's
+        /// reset pin).</param>
+        private void Reset(int rstPinNumber)
+        {
+            var s_GpioController = new GpioController();            
+            GpioPin rstPin = s_GpioController.OpenPin(rstPinNumber, PinMode.Output);
+            rstPin.Write(PinValue.High);
+            Thread.Sleep(1);                // VDD goes high at start, pause for 1 ms
+            //Thread.Sleep(10);
+            rstPin.Write(PinValue.Low);     // Bring reset low
+            Thread.Sleep(10);               // Wait 10 ms
+            rstPin.Write(PinValue.High);    // Bring out of reset
+            //Thread.Sleep(10);
+        }
     }
 }
