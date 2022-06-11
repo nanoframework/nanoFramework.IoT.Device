@@ -154,6 +154,7 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Apa102.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Apa102/) [APA102 - Double line transmission integrated control LED](Apa102/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.CharacterLcd.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.CharacterLcd/) [Character LCD (Liquid Crystal Display)](CharacterLcd/README.md)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.SparkFunLcd.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.SparkFunLcd/) [LCD library for SparkFun RGB Serial Open LCD display (sizes 20x4 or 16x2) with I2C connection](SparkFunLcd/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Max7219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Max7219/) [Max7219 (LED Matrix driver)](Max7219/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ssd13xx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ssd13xx/) [SSD13xx & SSH1106 OLED display family](Ssd13xx/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Tm1637.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Tm1637/) [TM1637 - Segment Display](Tm1637/README.md)
@@ -195,6 +196,7 @@
 ## LED drivers
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Apa102.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Apa102/) [APA102 - Double line transmission integrated control LED](Apa102/README.md)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Lp3943.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Lp3943/) [Lp3943 LED driver](Lp3943/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.4Relay.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.4Relay/) [Module and Unit 4 Relay - I2C relay](4Relay/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ws28xx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ws28xx/) [Ws28xx LED drivers](Ws28xx/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ws28xx.Esp32.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ws28xx.Esp32/) [Ws28xx, SK6812 LED drivers](Ws28xx.Esp32/README.md)

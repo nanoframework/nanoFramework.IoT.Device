@@ -16,6 +16,7 @@
     <AssemblyName>System.Buffers.Binary.BinaryPrimitives</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\System.Buffers.Binary.BinaryPrimitives.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
