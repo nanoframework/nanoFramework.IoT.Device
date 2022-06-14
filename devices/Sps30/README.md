@@ -1,4 +1,4 @@
-# Sensirion SPS30 Particulate Matter Sensor
+﻿# Sensirion SPS30 Particulate Matter Sensor
 
 This is a library to interact with the Sensirion SPS30 Particulate Matter Sensor. Currently, only the UART interface using the SHDLC protocol is implemented. The SPS30 also supports I2C.
 
@@ -45,8 +45,8 @@ Debug.WriteLine($"Measurement: {measurement}");
 The above would output the following:
 
 ```text
-SPS30 detected: Firmware V2.1, Hardware V7, SHDLC V2.0
-Measurement: MassConcentration PM1.0=0.71818184, PM2.5=0.75944983, PM4.0=0.75944983, PM10.0=0.75944983, NumberConcentration PM0.5=4.89496469, PM1.0=5.69449424, PM2.5=5.73169803, PM4.0=5.73438549, PM10.0=0, TypicalParticleSize=0.38276255
+SPS30 detected: ID=00080000, serial=4E1AD1BB796C64C5, version=Firmware V2.1, Hardware V7, SHDLC V2.0, status=RawRegister: 0, FanSpeedOutOfRange: False, LaserFailure: False, FanFailureBlockedOrBroken: False, cleaninginterval=604800
+Measurement: MassConcentration [µg/m³] PM1.0=2.00064229965, PM2.5=5.78215932, PM4.0=8.74958038, PM10.0=9.3430643, NumberConcentration [#/cm³] PM0.5=5.54537582, PM1.0=12.034433364, PM2.5=15.72880268, PM4.0=16.44550895, PM10.0=16.58645629, TypicalParticleSize[nm]=675.40591955
 ```
 
 Check out the sample for more information.

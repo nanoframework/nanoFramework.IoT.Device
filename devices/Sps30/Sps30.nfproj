@@ -54,6 +54,12 @@
     <Reference Include="System.IO.Streams">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.0.0\lib\System.IO.Streams.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Length">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.133.0\lib\UnitsNet.Length.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.MassConcentration">
+      <HintPath>packages\UnitsNet.nanoFramework.MassConcentration.4.133.0\lib\UnitsNet.MassConcentration.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Sps30.nuspec" />
