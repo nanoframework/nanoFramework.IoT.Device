@@ -14,7 +14,6 @@ namespace Iot.Device.Hx711
 
         /// <summary>
         /// Gain factor not set.
-        /// If use for class initialize gives ArgumentOutOfRangeException exception.
         /// </summary>
         None = 0,
 

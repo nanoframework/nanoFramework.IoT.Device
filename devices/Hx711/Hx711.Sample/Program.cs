@@ -14,17 +14,13 @@ using System.Threading;
 // MOSI: connects to Grove pin 1 (PD_SCK)
 // MISO: connects to Grove pin 2 (DOUT)
 // CLOCK: connect to any free port as it's not used at all
-int spiBus = 1;
-if (spiBus == 1)
-{
-    Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
-    Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
-    Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
-}
+Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
 
 // setup SPI connection settings
 // the clock value was adjusted in order to get the typical duration expected by the PD_SCK ~1us
-var spisettings = new SpiConnectionSettings(spiBus, 19)
+var spisettings = new SpiConnectionSettings(1, 19)
 {
     ClockFrequency = Scale.DefaultClockFrequency
 };
