@@ -191,7 +191,6 @@ namespace Iot.Device.Hx711
             while (currentDout != 0)
             {
                 Thread.Sleep(10);
-                //currentDout = _spiDevice.ReadByte();
                 _spiDevice.TransferFullDuplex(clkWaitDoutBuffer, doutWaitBuffer);
                 currentDout = doutWaitBuffer[0];
             }
