@@ -38,12 +38,12 @@ scale.PowerUp(GainLevel.GainA64);
 //scale.PowerUp(GainLevel.GainA64);
 
 // set avaraging to 10 samples for tare
-scale.SampleAveraging = 100;
+scale.SampleAveraging = 10;
 // set scale tare to get accurate readings
 scale.Tare();
 
 // set avaraging to 3 samples for loop sampling
-scale.SampleAveraging = 1;
+scale.SampleAveraging = 3;
 
 // loop forever outputting the current reading
 while (true)
