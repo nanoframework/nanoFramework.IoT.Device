@@ -45,12 +45,14 @@ scale.Tare();
 // set avaraging to 3 samples for loop sampling
 scale.SampleAveraging = 3;
 
+//example gramm value to convert measurments to actual weight
+double gramm_unit = 220.23;
 // loop forever outputting the current reading
 while (true)
 {
     var reading = scale.Read();
 
-    Console.WriteLine($"Weight: {reading}");
+    Console.WriteLine($"Read value: {reading} Weight: {reading / gramm_unit} gramm");
 
     Thread.Sleep(2_000);
 }

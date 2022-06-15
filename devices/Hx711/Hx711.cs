@@ -14,14 +14,14 @@ namespace Iot.Device.Hx711
     public class Scale
     {
         // pulse train required to read a sample and setup gain factor for next reading
-        private byte[] _readSamplePulseTrain;
+        private readonly byte[] _readSamplePulseTrain;
 
         // sample buffer to hold data read from DOUT
-        private byte[] _readSampleBuffer;
+        private readonly byte[] _readSampleBuffer;
 
         //setup Dout wait buffers
         private readonly byte[] _clkWaitDoutBuffer;
-        private byte[] _doutWaitBuffer;
+        private readonly byte[] _doutWaitBuffer;
 
         private readonly SpiDevice _spiDevice;
 
@@ -137,7 +137,6 @@ namespace Iot.Device.Hx711
         public void PowerUp(GainLevel gain = GainLevel.None)
         {
             // PowerDown then PowerUP to activate on-chip power on rest circuitry
-            // TODO: make sure that PowerDown() holds PD_CLK >60uS high to let device go to sleep mode.
             PowerDown();
             //set PD_CLK low to awake and reset to default mode GainA128
             //Wait for DOUT low means HX711 ready to accept new commands
