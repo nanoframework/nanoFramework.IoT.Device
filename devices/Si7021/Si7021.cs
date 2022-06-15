@@ -17,6 +17,8 @@ namespace Iot.Device.Si7021
     public class Si7021 : IDisposable
     {
         private const byte SerialNumberLenght = 8;
+        private const byte FwRevisionV2_0 = 0x20;
+        private const byte FwRevisionV1_0 = 0xFF;
 
         private I2cDevice _i2cDevice;
 
@@ -41,7 +43,7 @@ namespace Iot.Device.Si7021
         /// Si7021 Firmware Revision.
         /// </summary>
         [Property]
-        public FirmwareRevision Revision => GetRevision();
+        public Version Revision => GetRevision();
 
         /// <summary>
         /// Si7021 Measurement Resolution.
@@ -164,7 +166,7 @@ namespace Iot.Device.Si7021
         /// Get Si7021 firmware revision.
         /// </summary>
         /// <returns>The FirmwareRevision.</returns>
-        private FirmwareRevision GetRevision()
+        private Version GetRevision()
         {
             SpanByte writeBuff = new byte[2]
             {
@@ -173,7 +175,18 @@ namespace Iot.Device.Si7021
 
             _i2cDevice.Write(writeBuff);
 
-            return (FirmwareRevision)_i2cDevice.ReadByte();
+            var fwRevision = _i2cDevice.ReadByte();
+
+            if (fwRevision == FwRevisionV2_0)
+            {
+                return new Version(2, 0);
+            }
+            else if (fwRevision == FwRevisionV1_0)
+            {
+                return new Version(1, 0);
+            }
+
+            return new Version(0,0);
         }
 
         /// <summary>

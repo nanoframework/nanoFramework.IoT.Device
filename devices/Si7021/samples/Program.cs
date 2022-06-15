@@ -21,7 +21,7 @@ using I2cDevice device = I2cDevice.Create(settings);
 using Si7021 sensor = new(device, Resolution.Resolution1);
 
 Debug.WriteLine("");
-Debug.WriteLine($"Si702 SN {sensor.SerialNumber.AsText()} fw v{sensor.Revision.AsText()}");
+Debug.WriteLine($"Si702 SN {sensor.SerialNumber.AsText()} fw v{sensor.Revision}");
 Debug.WriteLine("");
 
 while (true)

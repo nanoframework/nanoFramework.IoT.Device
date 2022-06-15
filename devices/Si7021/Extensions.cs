@@ -9,26 +9,6 @@ namespace Iot.Device.Si7021
     static public class Extensions
     {
         /// <summary>
-        /// Returns a string representation of <see cref="FirmwareRevision"/>.
-        /// </summary>
-        /// <param name="value">The <see cref="FirmwareRevision"/> to convert to a <see cref="string"/>.</param>
-        /// <returns>A <see cref="string"/> with the representation of <paramref name="value"/>.</returns>
-        public static string AsText(this FirmwareRevision value)
-        {
-            switch (value)
-            {
-                case FirmwareRevision.V2_0:
-                    return "2.0";
-
-                case FirmwareRevision.V1_0:
-                    return "2.0";
-
-                default:
-                    return "?.?";
-            }
-        }
-
-        /// <summary>
         /// Returns a string representation of a byte array. Hexadecimal formated.
         /// </summary>
         /// <param name="array">The <see cref="byte"/>[] to convert to a <see cref="string"/>.</param>
