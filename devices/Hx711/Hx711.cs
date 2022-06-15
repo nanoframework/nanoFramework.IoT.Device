@@ -14,10 +14,14 @@ namespace Iot.Device.Hx711
     public class Scale
     {
         // pulse train required to read a sample and setup gain factor for next reading
-        private readonly byte[] _readSamplePulseTrain;
+        private byte[] _readSamplePulseTrain;
 
         // sample buffer to hold data read from DOUT
         private byte[] _readSampleBuffer;
+
+        //setup Dout wait buffers
+        private readonly byte[] _clkWaitDoutBuffer;
+        private byte[] _doutWaitBuffer;
 
         private readonly SpiDevice _spiDevice;
 
@@ -29,7 +33,7 @@ namespace Iot.Device.Hx711
         /// <summary>
         /// Gets or sets the value that's subtracted from the actual reading.
         /// </summary>
-        public int Offset { get; set; } = 0;
+        public double Offset { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the gain factor that the Hx711 uses when sampling.
@@ -87,6 +91,10 @@ namespace Iot.Device.Hx711
 
             // setup buffer to hold data read from DOUT
             _readSampleBuffer = new byte[7];
+
+            // setup wait DOUT buffers
+            _clkWaitDoutBuffer = new byte[] { 0x00 };
+            _doutWaitBuffer = new byte[1];
         }
 
         /// <summary>
@@ -143,7 +151,7 @@ namespace Iot.Device.Hx711
             }
         }
 
-        private int ReadValue()
+        private double ReadValue()
         {
             Debug.WriteLine("INFO: Reading sample.");
 
@@ -176,8 +184,8 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Setup sampling to detect that a sample is ready");
 
             //send it in full duplex mode to be platform independent to not let spi send FF's by default
-            SpanByte clkWaitDoutBuffer = new(new byte[] { 0x00 });
-            SpanByte doutWaitBuffer = new(new byte[1]);
+            SpanByte clkWaitDoutBuffer = new(_clkWaitDoutBuffer);
+            SpanByte doutWaitBuffer = new(_doutWaitBuffer);
             _spiDevice.TransferFullDuplex(clkWaitDoutBuffer, doutWaitBuffer);
             var currentDout = doutWaitBuffer[0];
 
@@ -259,7 +267,7 @@ namespace Iot.Device.Hx711
             int NormalValue = ((twosComp & 0x800000) != 0) ? (0 - (int)((twosComp ^ 0xffffff) + 1)) : (int)twosComp;
             return NormalValue;
         }
-        private int ComputeAverage(int[] values)
+        private double ComputeAverage(int[] values)
         {
             double value = 0;
 
@@ -268,7 +276,7 @@ namespace Iot.Device.Hx711
                 value += values[i];
             }
 
-            return (int)(value / values.Length);
+            return (value / values.Length);
         }
     }
 }
