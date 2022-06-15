@@ -235,11 +235,13 @@ namespace BinaryPrimitivesUnitTests
             float floatValue = 3.141593f;
             byte[] floatValueInBe = new byte[] { 0x40, 0x49, 0x0F, 0xDC };
             float floatFromBytes;
+            double doubleFromBytes;
             float floatValueFromBitConverter;
             SpanByte floatToBytes = new byte[4];
 
             // Act
             floatFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
+            doubleFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
             BinaryPrimitives.WriteSingleBigEndian(floatToBytes, floatValue);
             floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(new byte[] { floatValueInBe[3], floatValueInBe[2], floatValueInBe[1], floatValueInBe[0] }, 0) : BitConverter.ToSingle(floatValueInBe, 0);
 
@@ -250,6 +252,7 @@ namespace BinaryPrimitivesUnitTests
             Assert.Equal(floatValueInBe[3], floatToBytes[3]);
             Assert.Equal(floatValue, floatFromBytes);
             Assert.Equal(floatValue, floatValueFromBitConverter);
+            Assert.Equal(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
         }
 
         [TestMethod]
@@ -259,11 +262,13 @@ namespace BinaryPrimitivesUnitTests
             float floatValue = 3.141593f;
             byte[] floatValueInLe = new byte[] { 0xDC, 0x0F, 0x49, 0x40 };
             float floatFromBytes;
+            double doubleFromBytes;
             float floatValueFromBitConverter;
             SpanByte floatToBytes = new byte[4];
 
             // Act
             floatFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
+            doubleFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
             BinaryPrimitives.WriteSingleLittleEndian(floatToBytes, floatValue);
             floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(floatValueInLe, 0) : BitConverter.ToSingle(new byte[] { floatValueInLe[3], floatValueInLe[2], floatValueInLe[1], floatValueInLe[0] }, 0);
 
@@ -274,6 +279,7 @@ namespace BinaryPrimitivesUnitTests
             Assert.Equal(floatValueInLe[3], floatToBytes[3]);
             Assert.Equal(floatValue, floatFromBytes);
             Assert.Equal(floatValue, floatValueFromBitConverter);
+            Assert.Equal(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
         }
     }
 }
