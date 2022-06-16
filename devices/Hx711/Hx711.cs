@@ -16,6 +16,13 @@ namespace Iot.Device.Hx711
         // pulse train required to read a sample and setup gain factor for next reading
         private readonly byte[] _readSamplePulseTrain;
 
+        // sample buffer to hold data read from DOUT
+        private readonly byte[] _readSampleBuffer;
+
+        //setup Dout wait buffers
+        private readonly byte[] _clkWaitDoutBuffer;
+        private readonly byte[] _doutWaitBuffer;
+
         private readonly SpiDevice _spiDevice;
 
         /// <summary>
@@ -26,13 +33,13 @@ namespace Iot.Device.Hx711
         /// <summary>
         /// Gets or sets the value that's subtracted from the actual reading.
         /// </summary>
-        public int Offset { get; set; }
+        public double Offset { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the gain factor that the Hx711 uses when sampling.
         /// </summary>
         /// <remarks>
-        /// The default value is <see cref="GainLevel.Gain128"/>.
+        /// The default value is <see cref="GainLevel.GainA128"/>.
         /// </remarks>
         public GainLevel Gain { get; set; }
 
@@ -53,12 +60,18 @@ namespace Iot.Device.Hx711
         /// Initializes a new instance of the <see cref="Scale"/> class.
         /// </summary>
         /// <param name="spiDevice">The <see cref="SpiDevice"/> that is used as channel to communicate with the Hx711.</param>
-        /// <param name="gain"><see cref="GainLevel"/> that will be used for the scale. If not provided, the default is <see cref="GainLevel.Gain128"/>.</param>
+        /// <param name="gain"><see cref="GainLevel"/> that will be used for the scale. If not provided, the default is <see cref="GainLevel.GainA128"/>.</param>
+        /// <exception cref="ArgumentOutOfRangeException"> <see cref="GainLevel.None"/>.</exception>
         public Scale(
             SpiDevice spiDevice,
-            GainLevel gain = GainLevel.Gain128
+            GainLevel gain = GainLevel.GainA128
             )
         {
+            if (gain == GainLevel.None)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             _spiDevice = spiDevice;
             Gain = gain;
 
@@ -75,6 +88,13 @@ namespace Iot.Device.Hx711
                 0b1010_1010,
                 (byte)Gain
             };
+
+            // setup buffer to hold data read from DOUT
+            _readSampleBuffer = new byte[7];
+
+            // setup wait DOUT buffers
+            _clkWaitDoutBuffer = new byte[] { 0x00 };
+            _doutWaitBuffer = new byte[1];
         }
 
         /// <summary>
@@ -105,28 +125,32 @@ namespace Iot.Device.Hx711
         /// </summary>
         public void PowerDown()
         {
-            // transition of CLK signal low > high with 60us 
-            _spiDevice.Write(new ushort[] { 0xFFFF, 0xFFFF, 0xFFFF });
+            // transition of CLK signal low > high with 60us
+            // 1 bit ~= 1.5uS, 16*4 *1.5uS = 96uS
+            _spiDevice.Write(new ushort[] { 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF });
         }
 
         /// <summary>
-        /// Wakes up the device from power down mode.
+        /// Wakes up and resets the device. Optional set gain level and channel.
         /// </summary>
-        public void PowerUp()
+        /// <param name="gain"><see cref="GainLevel"/> that will be used for the scale. If not provided, the default is <see cref="GainLevel.GainA128"/>.</param>
+        public void PowerUp(GainLevel gain = GainLevel.None)
         {
-            // only required if the device is in power down mode
-            var currentDout = _spiDevice.ReadByte();
-
-            if (currentDout != 0)
+            // PowerDown then PowerUP to activate on-chip power on rest circuitry
+            PowerDown();
+            //set PD_CLK low to awake and reset to default mode GainA128
+            //Wait for DOUT low means HX711 ready to accept new commands
+            WaitForConversion();
+            //switch to another channel mode if it is specified
+            if (gain != GainLevel.None)
             {
-                // transition of CLK signal high > low to wake-up device
-
-                // set gain factor
+                Gain = gain;
+                _readSamplePulseTrain[_readSamplePulseTrain.Length - 1] = (byte)Gain;
                 SetChannelAndGainFactor();
             }
         }
 
-        private int ReadValue()
+        private double ReadValue()
         {
             Debug.WriteLine("INFO: Reading sample.");
 
@@ -134,7 +158,7 @@ namespace Iot.Device.Hx711
             SpanByte clkTrain = new(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
-            SpanByte readBuffer = new(new byte[7]);
+            SpanByte readBuffer = new(_readSampleBuffer);
 
             // setup array to hold readings for averaging
             int[] values = new int[SampleAveraging];
@@ -158,12 +182,17 @@ namespace Iot.Device.Hx711
         {
             Debug.WriteLine("INFO: Setup sampling to detect that a sample is ready");
 
-            var currentDout = _spiDevice.ReadByte();
+            //send it in full duplex mode to be platform independent to not let spi send FF's by default
+            SpanByte clkWaitDoutBuffer = new(_clkWaitDoutBuffer);
+            SpanByte doutWaitBuffer = new(_doutWaitBuffer);
+            _spiDevice.TransferFullDuplex(clkWaitDoutBuffer, doutWaitBuffer);
+            var currentDout = doutWaitBuffer[0];
 
             while (currentDout != 0)
             {
                 Thread.Sleep(10);
-                currentDout = _spiDevice.ReadByte();
+                _spiDevice.TransferFullDuplex(clkWaitDoutBuffer, doutWaitBuffer);
+                currentDout = doutWaitBuffer[0];
             }
 
             return true;
@@ -173,12 +202,24 @@ namespace Iot.Device.Hx711
         {
             // send N clock pulses according to the set gain factor
             // 1 clock pulse per gain factor
-            _spiDevice.WriteByte((byte)Gain);
+            Debug.WriteLine("INFO: Setting channel and gain.");
+
+            // setup buffer to drive PD_SCK
+            SpanByte clkTrain = new(_readSamplePulseTrain);
+
+            // setup buffer to hold data read from DOUT
+            SpanByte readBuffer = new(_readSampleBuffer);
+
+            if (WaitForConversion())
+            {
+                // perform SPI transaction
+                _spiDevice.TransferFullDuplex(clkTrain, readBuffer);
+            }
         }
 
         private int ParseRawData(SpanByte readBuffer)
         {
-            int value = 0;
+            uint value24bit = 0;
             int rotationFactor = 20;
 
             // raw data is received in as 24 bits in 2’s complement format. MSB first.
@@ -188,37 +229,43 @@ namespace Iot.Device.Hx711
             // don't care about the last position (it's the setting of gain factor)
             for (int i = 0; i < readBuffer.Length - 1; i++, rotationFactor -= 4)
             {
-                value |= ParseNibble(readBuffer[i]) << rotationFactor;
+                value24bit |= (uint)ParseNibble(readBuffer[i]) << rotationFactor;
             }
 
-            return value;
+            return ConvertFrom24BitTwosComplement(value24bit);
         }
 
         private byte ParseNibble(byte value)
         {
             // take the even bits
             // because we can be sure that on the second half of the clock cycle the value in the bit it's the one output from the device
-            value = (byte)(value & 0b01010101);
 
             int finalValue = 0;
-            int mask = 0b1100_0000;
+            int mask = 0b0100_0000;
 
             for (int i = 3; i >= 0; i--)
             {
                 // capture bit value at mask position
                 // add bit to nibble
-                if ((value & mask) > 0)
+                finalValue <<= 1;
+                if ((value & mask) != 0)
                 {
-                    finalValue |= 1 << i;
+                    finalValue++;
                 }
 
-                mask = mask >> 2;
+                mask >>= 2;
             }
 
             return (byte)finalValue;
         }
 
-        private int ComputeAverage(int[] values)
+        private int ConvertFrom24BitTwosComplement(uint twosComp)
+        {
+            //convert from 2's cpmplement 24 bit to int (32 bit)
+            int NormalValue = ((twosComp & 0x800000) != 0) ? (0 - (int)((twosComp ^ 0xffffff) + 1)) : (int)twosComp;
+            return NormalValue;
+        }
+        private double ComputeAverage(int[] values)
         {
             double value = 0;
 
@@ -227,7 +274,7 @@ namespace Iot.Device.Hx711
                 value += values[i];
             }
 
-            return (int)(value / values.Length);
+            return (value / values.Length);
         }
     }
 }
