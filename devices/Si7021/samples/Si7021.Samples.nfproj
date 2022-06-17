@@ -20,8 +20,9 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="Iot.Device.Common.WeatherHelper">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.1.101.58168\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
+    <Reference Include="Iot.Device.Common.WeatherHelper, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.1.106.54970\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
