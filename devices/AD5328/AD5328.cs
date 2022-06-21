@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.Buffers.Binary;
 using System.Device.Spi;
@@ -19,9 +16,9 @@ namespace Iot.Device.DAC
         private bool _disposedValue = false;
 
         /// <summary>
-        /// Initializes a new instance of the AD5328 device.
+        /// Initializes a new instance of the AD5328 device
         /// </summary>
-        /// <param name="spiDevice">The SPI device used for communication.</param>
+        /// <param name="spiDevice">The SPI device used for communication</param>
         /// <param name="referenceVoltageA">The reference voltage for the first 4 channels</param>
         /// <param name="referenceVoltageB">The reference voltage for the last 4 channels</param>
         public AD5328(SpiDevice spiDevice, ElectricPotential referenceVoltageA, ElectricPotential referenceVoltageB)
