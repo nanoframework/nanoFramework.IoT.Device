@@ -2,8 +2,9 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Diagnostics;
 using System.Threading;
+using BlueNrg2.Samples;
 
-namespace BlueNrg2.Samples
+namespace Iot.Device.BlueNrg2.Samples
 {
     public static class Program
     {
@@ -18,7 +19,7 @@ namespace BlueNrg2.Samples
 
             controller.OpenPin(ledPin, PinMode.Output);
 
-            var blueNrg2 = new Iot.Device.BlueNrg2.BlueNrg2(
+            var blueNrg2 = new BlueNrg2(
                 new SpiConnectionSettings(4, chipSelect),
                 Utilities.GetPinNumber('C', 13),
                 Utilities.GetPinNumber('E', 3),
@@ -26,6 +27,8 @@ namespace BlueNrg2.Samples
             );
 
             blueNrg2.StartBluetoothThread();
+
+            blueNrg2.Gatt.Init();
 
             while (true)
             {
