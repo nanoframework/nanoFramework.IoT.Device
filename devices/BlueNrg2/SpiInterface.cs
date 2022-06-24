@@ -12,7 +12,9 @@ namespace Iot.Device.BlueNrg2
 {
 	internal class SpiInterface : IHardwareInterface
 	{
+#if DEBUG
 		private readonly ILogger _logger;
+#endif
 		private readonly int _pinChipSelect;
 		private readonly int _pinExternalInterrupt;
 		private readonly int _pinReset;
