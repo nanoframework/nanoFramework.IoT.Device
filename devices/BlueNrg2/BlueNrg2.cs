@@ -28,6 +28,15 @@ namespace Iot.Device.BlueNrg2
         private bool _isRunning;
         private bool _running;
 
+        /// <summary>
+        /// Creates Instance of BlueNrg2 class
+        /// </summary>
+        /// <param name="spiConnectionSettings">information about the SPI connection</param>
+        /// <param name="extIPin">the pin to use for BLE interrupts</param>
+        /// <param name="resetPin">the pin to use for resetting</param>
+        /// <param name="controller">optional GpioController if one has been instantiated before</param>
+        /// <param name="shouldDispose">If the instance should be disposed of</param>
+        /// <exception cref="ArgumentException">thrown when invalid values are used for the pins</exception>
         public BlueNrg2(
             SpiConnectionSettings spiConnectionSettings,
             int extIPin,
@@ -115,6 +124,7 @@ namespace Iot.Device.BlueNrg2
 #endif
 
             Hal.SetTransmitterPowerLevel(true, 4);
+
 #if DEBUG
             if (ret != BleStatus.Success)
             {
@@ -178,6 +188,7 @@ namespace Iot.Device.BlueNrg2
 #endif
 
             ret = Gap.ClearSecurityDatabase();
+            
 #if DEBUG
             if (ret != BleStatus.Success)
             {
