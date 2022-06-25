@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace A4988
+namespace Iot.Device.A4988
 {
     public enum Microsteps : byte
     {

@@ -1,35 +1,57 @@
 ﻿using System;
 using System.Device.Gpio;
 
-namespace A4988
+namespace Iot.Device.A4988
 {
-    public class A4988
+    public class A4988 : IDisposable
     {
-        public Microsteps Microsteps { get; }
-        public ushort FullStepsPerRotation { get; }
-
+        private readonly Microsteps microsteps;
+        private readonly ushort fullStepsPerRotation;
         private readonly TimeSpan sleepBetweenSteps;
         private readonly GpioPin stepPin;
         private readonly GpioPin dirPin;
+        private readonly bool shouldDispose;
+
+        private GpioController gpioController;
+
 
         /// <summary>
-        /// 
+        /// Initialize a A4988 class.
         /// </summary>
-        /// <param name="stepPin"></param>
-        /// <param name="dirPin"></param>
-        /// <param name="microsteps"></param>
-        /// <param name="fullStepsPerRotation"></param>
+        /// <param name="stepPin">Pin connected to STEP driver pin</param>
+        /// <param name="dirPin">Pin connected to DIR driver pin</param>
+        /// <param name="microsteps">Microsteps mode</param>
+        /// <param name="fullStepsPerRotation">Full steps per rotation</param>
         /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and controll the rotation speed (less time equals faster rotation)</param>
-        /// <param name="gpioController"></param>
-        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps, GpioController gpioController)
+        /// <param name="gpioController">GPIO controller</param>
+        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps, 
+            GpioController gpioController)
         {
-            Microsteps = microsteps;
-            FullStepsPerRotation = fullStepsPerRotation;
+            this.microsteps = microsteps;
+            this.fullStepsPerRotation = fullStepsPerRotation;
             this.sleepBetweenSteps = sleepBetweenSteps;
-            this.stepPin = gpioController.OpenPin(stepPin, PinMode.Output);
-            this.dirPin = gpioController.OpenPin(dirPin, PinMode.Output);
+            this.gpioController = gpioController;
+            this.stepPin = this.gpioController.OpenPin(stepPin, PinMode.Output);
+            this.dirPin = this.gpioController.OpenPin(dirPin, PinMode.Output);
         }
 
+        /// <summary>
+        /// Initialize a A4988 class.
+        /// </summary>
+        /// <param name="stepPin">Pin connected to STEP driver pin</param>
+        /// <param name="dirPin">Pin connected to DIR driver pin</param>
+        /// <param name="microsteps">Microsteps mode</param>
+        /// <param name="fullStepsPerRotation">Full steps per rotation</param>
+        /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and controll the rotation speed (less time equals faster rotation)</param>
+        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps) 
+            : this(stepPin, dirPin, microsteps, fullStepsPerRotation, sleepBetweenSteps, new GpioController())
+        {
+            shouldDispose = true;
+        }
+
+        /// <summary>
+        /// Controls the speed of rotation.
+        /// </summary>
         protected virtual void SleepBetweenSteps()
         {
             if (sleepBetweenSteps == TimeSpan.Zero)
@@ -41,12 +63,12 @@ namespace A4988
         /// <summary>
         /// Rotates a stepper motor.
         /// </summary>
-        /// <param name="degree"></param>
-        /// <param name="rotation"></param>
+        /// <param name="degree">Rotation degree</param>
+        /// <param name="rotation">Direction of rotation</param>
         public virtual void Rotate(ushort degree, bool rotation)
         {
             dirPin.Write(rotation ? PinValue.High : PinValue.Low);
-            var steps = (double)degree / 360 * FullStepsPerRotation * ConvertMicrostepsToValue();
+            var steps = (double)degree / 360 * fullStepsPerRotation * ConvertMicrostepsToValue();
             for (int x = 0; x < steps; x++)
             {
                 stepPin.Write(PinValue.High);
@@ -58,7 +80,16 @@ namespace A4988
 
         private byte ConvertMicrostepsToValue()
         {
-            return (byte)Microsteps;
+            return (byte)microsteps;
+        }
+
+        public void Dispose()
+        {
+            if (shouldDispose)
+            {
+                gpioController?.Dispose();
+                gpioController = null!;
+            }
         }
     }
 }
