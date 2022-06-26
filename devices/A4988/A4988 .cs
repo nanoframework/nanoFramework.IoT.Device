@@ -3,6 +3,9 @@ using System.Device.Gpio;
 
 namespace Iot.Device.A4988
 {
+    /// <summary>
+    /// Class for controlling A4988 stepper motor driver
+    /// </summary>
     public class A4988 : IDisposable
     {
         private readonly Microsteps microsteps;
@@ -83,6 +86,9 @@ namespace Iot.Device.A4988
             return (byte)microsteps;
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public void Dispose()
         {
             if (shouldDispose)
