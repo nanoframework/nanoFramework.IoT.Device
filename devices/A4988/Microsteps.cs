@@ -2,6 +2,9 @@
 
 namespace Iot.Device.A4988
 {
+    /// <summary>
+    /// Enum for microsteps settings
+    /// </summary>
     public enum Microsteps : byte
     {
         /// <summary>
