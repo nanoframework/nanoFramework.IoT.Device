@@ -15,31 +15,41 @@
     <RootNamespace>Iot.Device.A4988</RootNamespace>
     <AssemblyName>Iot.Device.A4988</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.A4988.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="A4988 .cs" />
-    <Compile Include="Microsteps.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib">
+    <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events">
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.10.0.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Gpio">
+    <Reference Include="System.Device.Gpio, Version=1.0.4.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.4\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="*.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="A4988.nuspec" />
-    <Content Include="version.json" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
