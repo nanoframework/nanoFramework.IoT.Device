@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Device.Gpio;
 
 namespace Iot.Device.A4988
@@ -8,14 +11,14 @@ namespace Iot.Device.A4988
     /// </summary>
     public class A4988 : IDisposable
     {
-        private readonly Microsteps microsteps;
-        private readonly ushort fullStepsPerRotation;
-        private readonly TimeSpan sleepBetweenSteps;
-        private readonly GpioPin stepPin;
-        private readonly GpioPin dirPin;
-        private readonly bool shouldDispose;
+        private readonly Microsteps _microsteps;
+        private readonly ushort _fullStepsPerRotation;
+        private readonly TimeSpan _sleepBetweenSteps;
+        private readonly GpioPin _stepPin;
+        private readonly GpioPin _dirPin;
+        private readonly bool _shouldDispose;
 
-        private GpioController gpioController;
+        private GpioController _gpioController;
 
         /// <summary>
         /// Initialize a A4988 class.
@@ -26,29 +29,17 @@ namespace Iot.Device.A4988
         /// <param name="fullStepsPerRotation">Full steps per rotation</param>
         /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and controll the rotation speed (less time equals faster rotation)</param>
         /// <param name="gpioController">GPIO controller</param>
-        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps, 
-            GpioController gpioController)
+        /// <param name="shouldDispose">True to dispose the Gpio Controller</param>
+        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps,
+            GpioController? gpioController = null, bool shouldDispose = true)
         {
-            this.microsteps = microsteps;
-            this.fullStepsPerRotation = fullStepsPerRotation;
-            this.sleepBetweenSteps = sleepBetweenSteps;
-            this.gpioController = gpioController;
-            this.stepPin = this.gpioController.OpenPin(stepPin, PinMode.Output);
-            this.dirPin = this.gpioController.OpenPin(dirPin, PinMode.Output);
-        }
-
-        /// <summary>
-        /// Initialize a A4988 class.
-        /// </summary>
-        /// <param name="stepPin">Pin connected to STEP driver pin</param>
-        /// <param name="dirPin">Pin connected to DIR driver pin</param>
-        /// <param name="microsteps">Microsteps mode</param>
-        /// <param name="fullStepsPerRotation">Full steps per rotation</param>
-        /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and controll the rotation speed (less time equals faster rotation)</param>
-        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps) 
-            : this(stepPin, dirPin, microsteps, fullStepsPerRotation, sleepBetweenSteps, new GpioController())
-        {
-            shouldDispose = true;
+            _microsteps = microsteps;
+            _fullStepsPerRotation = fullStepsPerRotation;
+            _sleepBetweenSteps = sleepBetweenSteps;
+            _gpioController = gpioController ?? new GpioController();
+            _shouldDispose = shouldDispose || gpioController is null;
+            _stepPin = _gpioController.OpenPin(stepPin, PinMode.Output);
+            _dirPin = _gpioController.OpenPin(dirPin, PinMode.Output);
         }
 
         /// <summary>
@@ -56,10 +47,12 @@ namespace Iot.Device.A4988
         /// </summary>
         protected virtual void SleepBetweenSteps()
         {
-            if (sleepBetweenSteps == TimeSpan.Zero)
+            if (_sleepBetweenSteps == TimeSpan.Zero)
+            {
                 return;
+            }
 
-            System.Threading.Thread.Sleep(sleepBetweenSteps);
+            System.Threading.Thread.Sleep(_sleepBetweenSteps);
         }
 
         /// <summary>
@@ -69,20 +62,15 @@ namespace Iot.Device.A4988
         /// <param name="rotation">Direction of rotation</param>
         public virtual void Rotate(ushort degree, bool rotation)
         {
-            dirPin.Write(rotation ? PinValue.High : PinValue.Low);
-            var steps = (double)degree / 360 * fullStepsPerRotation * ConvertMicrostepsToValue();
+            _dirPin.Write(rotation ? PinValue.High : PinValue.Low);
+            var steps = (double)degree / 360 * _fullStepsPerRotation * (byte)_microsteps;
             for (int x = 0; x < steps; x++)
             {
-                stepPin.Write(PinValue.High);
+                _stepPin.Write(PinValue.High);
                 SleepBetweenSteps();
-                stepPin.Write(PinValue.Low);
+                _stepPin.Write(PinValue.Low);
                 SleepBetweenSteps();
             }
-        }
-
-        private byte ConvertMicrostepsToValue()
-        {
-            return (byte)microsteps;
         }
 
         /// <summary>
@@ -90,10 +78,10 @@ namespace Iot.Device.A4988
         /// </summary>
         public void Dispose()
         {
-            if (shouldDispose)
+            if (_shouldDispose)
             {
-                gpioController?.Dispose();
-                gpioController = null!;
+                _gpioController?.Dispose();
+                _gpioController = null!;
             }
         }
     }
