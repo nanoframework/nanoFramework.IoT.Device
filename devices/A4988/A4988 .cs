@@ -17,7 +17,6 @@ namespace Iot.Device.A4988
 
         private GpioController gpioController;
 
-
         /// <summary>
         /// Initialize a A4988 class.
         /// </summary>
