@@ -21,6 +21,7 @@ namespace Iot.Device.A4988
         /// 1/4
         /// </summary>
         QuaterStep = 4,
+
         /// <summary>
         /// 1/8
         /// </summary>
