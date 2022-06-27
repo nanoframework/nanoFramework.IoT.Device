@@ -16,6 +16,7 @@ namespace Iot.Device.A4988
         /// 1/2
         /// </summary>
         HalfStep = 2,
+
         /// <summary>
         /// 1/4
         /// </summary>
