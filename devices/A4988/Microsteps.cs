@@ -11,6 +11,7 @@ namespace Iot.Device.A4988
         /// No microsteps (full step)
         /// </summary>
         FullStep = 1,
+
         /// <summary>
         /// 1/2
         /// </summary>
