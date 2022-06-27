@@ -4,7 +4,7 @@ A stepper motor is an electromechanical device which converts electrical pulses 
 
 ## Documentation
 
-**[A4988]** : https://www.pololu.com/file/0J450/a4988_DMOS_microstepping_driver_with_translator.pdf
+You can find the [A4988 documentation here](https://www.pololu.com/file/0J450/a4988_DMOS_microstepping_driver_with_translator.pdf).
 
 ## Connections
 
