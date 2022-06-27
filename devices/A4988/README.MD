@@ -21,6 +21,7 @@ STEP - connect to microcontroller pin
 
 
 ## Usage
+
 ```csharp
 // Pinout for MCU please adapt depending on your MCU
 // Any regular GPIO will work
