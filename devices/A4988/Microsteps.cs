@@ -26,6 +26,7 @@ namespace Iot.Device.A4988
         /// 1/8
         /// </summary>
         EightStep = 8,
+
         /// <summary>
         /// 1/16
         /// </summary>
