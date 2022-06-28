@@ -14,6 +14,7 @@ namespace Iot.Device.Axp192
         private const byte _dcD3SetBit = (1 << 1);
         private const byte _Ldo2SetBit = (1 << 2);
         private const byte _Ldo3SetBit = (1 << 3);
+        private const byte _ExtEnSetBit = (1 << 6);
 
         public const int I2cDefaultAddress = 0x34;
 
@@ -500,6 +501,33 @@ namespace Iot.Device.Axp192
             }
 
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
+        }
+
+        /// <summary>
+        /// Gets or Sets the state of EXTEN switch control.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if EXTEN switch is enabled, <see langword="false"/> otherwise.
+        /// </value>
+        public bool EXTENEnable
+        {
+            get => (I2cRead(Register.SwitchControleDcDC1_3LDO2_3) & _ExtEnSetBit) == _ExtEnSetBit;
+
+            set
+            {
+                byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
+
+                if (value)
+                {
+                    buf |= _ExtEnSetBit;
+                }
+                else
+                {
+                    buf &= unchecked((byte)~_ExtEnSetBit);
+                }
+
+                I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
+            }
         }
 
         /// <summary>
