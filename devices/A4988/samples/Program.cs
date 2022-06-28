@@ -14,7 +14,9 @@ using (var motor = new A4988(stepPin, dirPin, microsteps, fullStepsPerRotation, 
     var direction = true;
     while (true)
     {
-        motor.Rotate(360, direction);
+        var rotationDegree = (direction ? 1 : -1) * 360;
+        motor.Rotate(rotationDegree);
         direction = !direction;
+        System.Threading.Thread.Sleep(1000);
     }
 }

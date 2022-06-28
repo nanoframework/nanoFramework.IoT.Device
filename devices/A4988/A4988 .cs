@@ -59,12 +59,17 @@ namespace Iot.Device.A4988
         /// Rotates a stepper motor.
         /// </summary>
         /// <param name="degree">Rotation in degrees.</param>
-        /// <param name="rotation">Direction of rotation</param>
-        public virtual void Rotate(ushort degree, bool rotation)
+        public virtual void Rotate(double degree)
         {
-            _dirPin.Write(rotation ? PinValue.High : PinValue.Low);
-            var steps = (double)degree / 360 * _fullStepsPerRotation * (byte)_microsteps;
-            for (int x = 0; x < steps; x++)
+            if (degree == 0)
+            {
+                return;
+            }
+
+            _dirPin.Write(degree > 0 ? PinValue.High : PinValue.Low);
+            var degreeForStepsCalculation = degree < 0 ? -degree : degree;
+            var steps = degreeForStepsCalculation / 360 * _fullStepsPerRotation * (byte)_microsteps;
+            for (int x = 0; x <= steps; x++)
             {
                 _stepPin.Write(PinValue.High);
                 SleepBetweenSteps();
