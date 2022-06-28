@@ -7,7 +7,7 @@ using System.Device.Gpio;
 namespace Iot.Device.A4988
 {
     /// <summary>
-    /// Class for controlling A4988 stepper motor driver
+    /// Class for controlling A4988 stepper motor driver.
     /// </summary>
     public class A4988 : IDisposable
     {
@@ -23,13 +23,13 @@ namespace Iot.Device.A4988
         /// <summary>
         /// Initialize a A4988 class.
         /// </summary>
-        /// <param name="stepPin">Pin connected to STEP driver pin</param>
-        /// <param name="dirPin">Pin connected to DIR driver pin</param>
+        /// <param name="stepPin">Pin connected to STEP driver pin.</param>
+        /// <param name="dirPin">Pin connected to DIR driver pin.</param>
         /// <param name="microsteps">Microsteps mode</param>
-        /// <param name="fullStepsPerRotation">Full steps per rotation</param>
-        /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and controll the rotation speed (less time equals faster rotation)</param>
-        /// <param name="gpioController">GPIO controller</param>
-        /// <param name="shouldDispose">True to dispose the Gpio Controller</param>
+        /// <param name="fullStepsPerRotation">Full steps per rotation.</param>
+        /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and control the rotation speed (less time equals faster rotation).</param>
+        /// <param name="gpioController">GPIO controller.</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps,
             GpioController? gpioController = null, bool shouldDispose = true)
         {
@@ -58,7 +58,7 @@ namespace Iot.Device.A4988
         /// <summary>
         /// Rotates a stepper motor.
         /// </summary>
-        /// <param name="degree">Rotation degree</param>
+        /// <param name="degree">Rotation in degrees.</param>
         /// <param name="rotation">Direction of rotation</param>
         public virtual void Rotate(ushort degree, bool rotation)
         {

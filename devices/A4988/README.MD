@@ -20,7 +20,6 @@ DIR - connect to microcontroller pin
 
 STEP - connect to microcontroller pin
 
-
 ## Usage
 
 ```csharp

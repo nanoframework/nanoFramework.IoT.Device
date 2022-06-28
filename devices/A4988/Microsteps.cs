@@ -6,32 +6,32 @@ using System;
 namespace Iot.Device.A4988
 {
     /// <summary>
-    /// Enum for microsteps settings
+    /// Enum for microsteps settings.
     /// </summary>
     public enum Microsteps : byte
     {
         /// <summary>
-        /// No microsteps (full step)
+        /// No microsteps (full step).
         /// </summary>
         FullStep = 1,
 
         /// <summary>
-        /// 1/2
+        /// 1/2 step.
         /// </summary>
         HalfStep = 2,
 
         /// <summary>
-        /// 1/4
+        /// 1/4 step.
         /// </summary>
         QuaterStep = 4,
 
         /// <summary>
-        /// 1/8
+        /// 1/8 step.
         /// </summary>
         EightStep = 8,
 
         /// <summary>
-        /// 1/16
+        /// 1/16 step.
         /// </summary>
         SisteenthStep = 16
     }
