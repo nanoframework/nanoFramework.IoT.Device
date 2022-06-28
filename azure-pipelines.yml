@@ -138,7 +138,7 @@ steps:
       succeeded(),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
-  continueOnError: true
+  continueOnError: false
   displayName: Push NuGet packages to NuGet
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
@@ -149,7 +149,7 @@ steps:
       succeeded(),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
-  continueOnError: true
+  continueOnError: false
   displayName: Push NuGet packages to NuGet
 
 - task: DotNetCoreCLI@2
