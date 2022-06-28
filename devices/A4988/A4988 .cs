@@ -69,7 +69,7 @@ namespace Iot.Device.A4988
             _dirPin.Write(degree > 0 ? PinValue.High : PinValue.Low);
             var degreeForStepsCalculation = degree < 0 ? -degree : degree;
             var steps = degreeForStepsCalculation / 360 * _fullStepsPerRotation * (byte)_microsteps;
-            for (int x = 0; x <= steps; x++)
+            for (int x = 0; x < steps; x++)
             {
                 _stepPin.Write(PinValue.High);
                 SleepBetweenSteps();
