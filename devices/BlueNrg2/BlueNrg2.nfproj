@@ -19,13 +19,13 @@
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-      <SignAssembly>true</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-      <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-      <DelaySign>false</DelaySign>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -53,6 +53,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="BlueNrg2.cs" />
+    <Compile Include="Characteristic.cs" />
+    <Compile Include="Descriptor.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Aci\Gap.cs" />
     <Compile Include="Aci\Gatt.cs" />
@@ -60,6 +62,8 @@
     <Compile Include="Hci.cs" />
     <Compile Include="IHardwareInterface.cs" />
     <Compile Include="Aci\L2Cap.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="ServiceContext.cs" />
     <Compile Include="Utils\List.cs" />
     <Compile Include="Utils\Math.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,9 +78,9 @@
   </ProjectExtensions>
   <Import Project="packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-      <PropertyGroup>
-          <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-      </PropertyGroup>
-      <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets'))" />
+    <PropertyGroup>
+      <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
 </Project>
