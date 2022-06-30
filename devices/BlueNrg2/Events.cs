@@ -6,9 +6,9 @@ using BlueNrg2;
 
 namespace Iot.Device.BlueNrg2
 {
-    public delegate BleStatus EventProcess(byte[] bufferIn);
+    internal delegate BleStatus EventProcess(byte[] bufferIn);
 
-    public class Events
+    internal class Events
     {
         public delegate void AdvertisingReport(byte reportCount, AdvertisingReport_t[] reports);
 
@@ -1166,7 +1166,7 @@ namespace Iot.Device.BlueNrg2
         }
     }
 
-    public enum KeyPressNotificationType
+    internal enum KeyPressNotificationType
     {
         EntryStarted = 0x00,
         DigitEntered = 0x01,
@@ -1175,7 +1175,7 @@ namespace Iot.Device.BlueNrg2
         EntryCompleted = 0x04
     }
 
-    public enum GapPairingCompleteReason
+    internal enum GapPairingCompleteReason
     {
         PasskeyEntryFailed = 0x01,
         OobNotAvailable = 0x02,
@@ -1191,7 +1191,7 @@ namespace Iot.Device.BlueNrg2
         SmpScNumComparisonFailed = 0x0C
     }
 
-    public enum GapPairingCompleteStatus
+    internal enum GapPairingCompleteStatus
     {
         Success = 0x00,
         Timeout = 0x01,
@@ -1201,7 +1201,7 @@ namespace Iot.Device.BlueNrg2
         EncryptionNotSupportedByRemoteDevice = 0x05
     }
 
-    public struct DirectAdvertisingReport_t
+    internal struct DirectAdvertisingReport_t
     {
         public AdvertisingType EventType;
         public AddressType AddressType;
@@ -1211,7 +1211,7 @@ namespace Iot.Device.BlueNrg2
         public sbyte RSSI;
     }
 
-    public enum NotificationErrorCode : byte
+    internal enum NotificationErrorCode : byte
     {
         Success = 0x00,
         UnknownHciCommand = 0x01,
@@ -1306,7 +1306,7 @@ namespace Iot.Device.BlueNrg2
         FlashEraseFailed = 0xFC
     }
 
-    public enum ErrorResponseErrorCode : byte
+    internal enum ErrorResponseErrorCode : byte
     {
         InvalidHandle = 0x01,
         ReadNotPermitted = 0x02,
@@ -1328,7 +1328,7 @@ namespace Iot.Device.BlueNrg2
     }
 
     [Flags]
-    public enum ProcedureCode : byte
+    internal enum ProcedureCode : byte
     {
         LimitedDiscovery = 0x01,
         GeneralDiscovery = 0x02,
@@ -1340,7 +1340,7 @@ namespace Iot.Device.BlueNrg2
         Observation = 0x80
     }
 
-    public enum RadioState : byte
+    internal enum RadioState : byte
     {
         Idle = 0x00,
         Advertising = 0x01,
@@ -1352,12 +1352,12 @@ namespace Iot.Device.BlueNrg2
         RxTestMode = 0x07
     }
 
-    public enum FirmwareErrorType : byte
+    internal enum FirmwareErrorType : byte
     {
         L2CapRecombinationError = 0x01
     }
 
-    public enum ReasonCode : byte
+    internal enum ReasonCode : byte
     {
         FirmwareStartedProperly = 0x01,
         UpdaterModeWithAciCommand = 0x02,
@@ -1370,20 +1370,20 @@ namespace Iot.Device.BlueNrg2
         SystemResetEccError = 0x09
     }
 
-    public enum CrashType : byte
+    internal enum CrashType : byte
     {
         AssertFailed = 0x00,
         NmiFault = 0x01,
         HardFault = 0x02
     }
 
-    public struct AttributeGroupHandlePair
+    internal struct AttributeGroupHandlePair
     {
         public ushort FoundAttributeHandle;
         public ushort GroupEndHandle;
     }
 
-    public struct AdvertisingReport_t
+    internal struct AdvertisingReport_t
     {
         public AdvertisingType EventType;
         public AddressType AddressType;
@@ -1393,7 +1393,7 @@ namespace Iot.Device.BlueNrg2
         public sbyte Rssi;
     }
 
-    public enum ClockAccuracy : byte
+    internal enum ClockAccuracy : byte
     {
         Ppm500 = 0x00,
         Ppm250 = 0x01,
@@ -1405,13 +1405,13 @@ namespace Iot.Device.BlueNrg2
         Ppm20 = 0x07
     }
 
-    public enum DeviceRole : byte
+    internal enum DeviceRole : byte
     {
         Master = 0x00,
         Slave = 0x01
     }
 
-    public enum AddressType : byte
+    internal enum AddressType : byte
     {
         PublicDevice = 0x00,
         RandomDevice = 0x01,
@@ -1419,7 +1419,7 @@ namespace Iot.Device.BlueNrg2
         RandomIdentity = 0x03
     }
 
-    public enum AdvertisingType : byte
+    internal enum AdvertisingType : byte
     {
         ConnectableUndirected = 0x00,
         ConnectableDirected = 0x01,

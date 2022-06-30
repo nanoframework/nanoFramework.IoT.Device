@@ -2,31 +2,41 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Collections;
 using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
 using BlueNrg2;
 using Iot.Device.BlueNrg2.Aci;
 using Microsoft.Extensions.Logging;
+using nanoFramework.Device.Bluetooth;
+using nanoFramework.Device.Bluetooth.GenericAttributeProfile;
 using nanoFramework.Logging;
 
 namespace Iot.Device.BlueNrg2
 {
-    public class BlueNrg2 : IDisposable
+    public class BlueNrg2 : INativeDevice
     {
         private readonly IHardwareInterface _hardwareInterface;
 #if DEBUG
         private readonly ILogger _logger;
 #endif
         private readonly bool _shouldDispose;
-        public readonly Gap Gap;
-        public readonly Gatt Gatt;
-        public readonly Hal Hal;
-        public readonly Hci Hci;
-        public readonly L2Cap L2Cap;
-        public Events Events;
+
+        internal readonly Gap Gap;
+        internal readonly Gatt Gatt;
+        internal readonly Hal Hal;
+        internal readonly Hci Hci;
+        internal readonly L2Cap L2Cap;
+        internal Events Events;
+
         private bool _isRunning;
         private bool _running;
+        private bool _isDiscoverable;
+        private bool _isConnectable;
+        private string _deviceName;
+        private Service[] _gattServices;
+        private ServiceContext[] _services;
 
         /// <summary>
         /// Creates Instance of BlueNrg2 class
@@ -85,6 +95,8 @@ namespace Iot.Device.BlueNrg2
             Hci.Reset();
 
             Thread.Sleep(2000);
+
+            StartBluetoothThread();
 
 #if DEBUG
             byte hardwareVersion = 0;
@@ -220,7 +232,7 @@ namespace Iot.Device.BlueNrg2
                 _hardwareInterface.Dispose();
         }
 
-        public void StartBluetoothThread()
+        internal void StartBluetoothThread()
         {
             _running = true;
             new Thread(
@@ -256,6 +268,50 @@ namespace Iot.Device.BlueNrg2
             firmwareVersion = (ushort)((hciVersion & 0xFF) << 8);
             firmwareVersion |= (ushort)((lmpPalSubversion >> 4 & 0xF) << 4);
             firmwareVersion |= (ushort)(lmpPalSubversion & 0xF);
+        }
+
+        public void InitService()
+        {
+        }
+
+        public bool StartAdvertising(bool isDiscoverable, bool isConnectable, byte[] deviceName, ArrayList services)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopAdvertising()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int NotifyClient(ushort connection, ushort characteristicId, byte[] notifyBuffer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadRespondWithValue(ushort eventId, byte[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadRespondWithProtocolError(ushort eventId, byte otherError)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] WriteGetData(ushort eventId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteRespond(ushort eventId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteRespondWithProtocolError(ushort eventId, byte protocolError)
+        {
+            throw new NotImplementedException();
         }
     }
 }

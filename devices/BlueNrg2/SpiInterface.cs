@@ -22,7 +22,7 @@ namespace Iot.Device.BlueNrg2
 		private GpioController _gpioController;
 		private SpiDevice _spiDevice;
 
-		public SpiInterface(
+		internal SpiInterface(
 			SpiDevice spiDevice,
 			GpioController gpioController,
 			int resetPin,

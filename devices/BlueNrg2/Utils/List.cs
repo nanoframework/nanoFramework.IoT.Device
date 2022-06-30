@@ -3,7 +3,7 @@
 
 namespace BlueNrg2.Utils
 {
-    public class List
+    internal class List
     {
         private Node _head;
 

@@ -5,13 +5,13 @@ using System;
 
 namespace Iot.Device.BlueNrg2
 {
-	public enum BleStatus : byte
+	internal enum BleStatus : byte
 	{
 		Success = 0x00,
 		Timeout = 0xFF
 	}
 
-	public class Hci
+	internal class Hci
 	{
 		private readonly TransportLayer _transportLayer;
 
@@ -673,13 +673,13 @@ namespace Iot.Device.BlueNrg2
 		}
 	}
 
-	public enum ScanType : byte
+	internal enum ScanType : byte
 	{
 		Passive = 0x00,
 		Active = 0x01
 	}
 
-	public enum FilterPolicy
+	internal enum FilterPolicy
 	{
 		ScanAnyRequestAny = 0x00,
 		ScanWhitelistRequestAny = 0x01,
@@ -688,14 +688,14 @@ namespace Iot.Device.BlueNrg2
 	}
 
 	[Flags]
-	public enum ChannelMap : byte
+	internal enum ChannelMap : byte
 	{
 		C37 = 0x01,
 		C38 = 0x02,
 		C39 = 0x04
 	}
 
-	public enum TransmitPowerLevelType
+	internal enum TransmitPowerLevelType
 	{
 		Current = 0x00,
 		Maximum = 0x01

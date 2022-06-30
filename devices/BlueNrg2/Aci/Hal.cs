@@ -5,7 +5,7 @@ using System;
 
 namespace Iot.Device.BlueNrg2.Aci
 {
-	public class Hal
+	internal class Hal
 	{
 		[Flags]
 		public enum EventMask : uint
@@ -240,7 +240,7 @@ namespace Iot.Device.BlueNrg2.Aci
 		}
 	}
 
-	public enum PacketPayloadType : byte
+	internal enum PacketPayloadType : byte
 	{
 		PseudoRandomBitSequence9 = 0x00,
 		AlternatingBits11110000 = 0x01,
@@ -253,7 +253,7 @@ namespace Iot.Device.BlueNrg2.Aci
 	}
 
 	[Flags]
-	public enum RadioStateMask : ushort
+	internal enum RadioStateMask : ushort
 	{
 		Idle = 0x0001,
 		Advertising = 0x0002,
@@ -265,14 +265,14 @@ namespace Iot.Device.BlueNrg2.Aci
 		RxTestMode = 0x0080
 	}
 
-	public enum FrequencyOffset : byte
+	internal enum FrequencyOffset : byte
 	{
 		NoOffset = 0x00,
 		Plus250Khz = 0x01,
 		Minus250Khz = 0x02
 	}
 
-	public enum Offset : byte
+	internal enum Offset : byte
 	{
 		BluetoothPublicAddress = 0x00,
 		CsrkDerivingDivider = 0x06,
@@ -286,7 +286,7 @@ namespace Iot.Device.BlueNrg2.Aci
 	}
 
 	[Flags]
-	public enum BleStackConfiguration : ushort
+	internal enum BleStackConfiguration : ushort
 	{
 		ControllerPrivacyEnabled = 0x0001,
 		SecureConnectionsEnabled = 0x0002,
@@ -296,7 +296,7 @@ namespace Iot.Device.BlueNrg2.Aci
 	}
 
 	[Flags]
-	public enum TransportLayerMode : byte
+	internal enum TransportLayerMode : byte
 	{
 		Uart = 0x01,
 		Spi = 0x02

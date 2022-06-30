@@ -5,7 +5,7 @@ using System;
 
 namespace Iot.Device.BlueNrg2.Aci
 {
-	public class Gap
+	internal class Gap
 	{
 		[Flags]
 		public enum EventMask : ushort
@@ -726,20 +726,20 @@ namespace Iot.Device.BlueNrg2.Aci
 		}
 	}
 
-	public enum OobDataType : byte
+	internal enum OobDataType : byte
 	{
 		TemporaryKey = 0x00,
 		RandomValue = 0x01,
 		ConfirmValue = 0x02
 	}
 
-	public struct DeviceAddressEntry
+	internal struct DeviceAddressEntry
 	{
 		public AddressType AddressType;
 		public byte[] Address;
 	}
 
-	public enum Reason : byte
+	internal enum Reason : byte
 	{
 		AuthenticationFailure = 0x05,
 		RemoteUserTerminatedConnection = 0x13,
@@ -750,7 +750,7 @@ namespace Iot.Device.BlueNrg2.Aci
 	}
 
 	[Flags]
-	public enum Role : byte
+	internal enum Role : byte
 	{
 		Peripheral = 0x01,
 		BroadCaster = 0x02,
@@ -758,14 +758,14 @@ namespace Iot.Device.BlueNrg2.Aci
 		Observer = 0x08
 	}
 
-	public enum SecureConnectionSupport : byte
+	internal enum SecureConnectionSupport : byte
 	{
 		NotSupported = 0x00,
 		Supported = 0x01,
 		Mandatory = 0x02
 	}
 
-	public enum IoCapability : byte
+	internal enum IoCapability : byte
 	{
 		DisplayOnly = 0x00,
 		DisplayYesNo = 0x01,

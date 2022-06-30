@@ -9,7 +9,7 @@ using Iot.Device.BlueNrg2.Aci;
 
 namespace Iot.Device.BlueNrg2
 {
-    public delegate void UserEventCallback(byte[] data);
+    internal delegate void UserEventCallback(byte[] data);
 
     internal struct Request
     {
