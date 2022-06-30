@@ -22,21 +22,4 @@ STEP - connect to microcontroller pin
 
 ## Usage
 
-```csharp
-// Pinout for MCU please adapt depending on your MCU
-// Any regular GPIO will work
-const byte stepPin = 10;
-const byte dirPin = 11;
-const Microsteps microsteps = Microsteps.FullStep;
-const ushort fullStepsPerRotation = 200;
-TimeSpan sleepTime = TimeSpan.Zero;
-using (var motor = new A4988(stepPin, dirPin, microsteps, fullStepsPerRotation, sleepTime))
-{
-    var direction = true;
-    while (true)
-    {
-        motor.Rotate(360, direction);
-        direction = !direction;
-    }
-}
-```
+Please check sample project.
