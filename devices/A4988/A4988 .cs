@@ -62,13 +62,13 @@ namespace Iot.Device.A4988
         /// <param name="angle">Angle to rotate.</param>
         public virtual void Rotate(UnitsNet.Angle angle)
         {
-            if (angle.Value == 0)
+            if (angle.Degrees == 0)
             {
                 return;
             }
 
-            _dirPin.Write(angle.Value > 0 ? PinValue.High : PinValue.Low);
-            var degreeForStepsCalculation = angle.Value < 0 ? -angle.Degrees : angle.Degrees;
+            _dirPin.Write(angle.Degrees > 0 ? PinValue.High : PinValue.Low);
+            var degreeForStepsCalculation = angle.Degrees < 0 ? -angle.Degrees : angle.Degrees;
             var steps = degreeForStepsCalculation / 360 * _fullStepsPerRotation * (byte)_microsteps;
             for (int x = 0; x < steps; x++)
             {
