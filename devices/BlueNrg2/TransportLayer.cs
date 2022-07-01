@@ -429,5 +429,10 @@ namespace Iot.Device.BlueNrg2
             Event = 0x04,
             Vendor = 0xff
         }
+
+        public void Reset()
+        {
+            _hardwareInterface.Reset();
+        }
     }
 }

@@ -20,7 +20,12 @@ namespace Iot.Device.BlueNrg2
 			_transportLayer = transportLayer;
 		}
 
-		public BleStatus Disconnect(ushort connectionHandle, byte reason)
+        public void Init()
+        {
+            _transportLayer.Reset();
+        }
+
+        public BleStatus Disconnect(ushort connectionHandle, byte reason)
 		{
 			var command = new byte[3];
 			BitConverter.GetBytes(connectionHandle).CopyTo(command, 0);
