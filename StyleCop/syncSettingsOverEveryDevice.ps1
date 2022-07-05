@@ -1,7 +1,13 @@
 $ErrorActionPreference = 'Stop'
 
-#Consts
+#Consts nfProj
 $nfProjXmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
+$styleCopTreatErrorsAsWarningsNodeName = "StyleCopTreatErrorsAsWarnings"
+$styleCopTreatErrorsAsWarningsNodeValue = "false"
+$styleCopImportPackageTargetPath = ".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets"
+
+#Const packages.config
+$styleCopPackageId = "StyleCop.MSBuild"
 $styleCopPackageVersion = "6.2.0"
 $styleCopPackageTargetFramework = "netnano1.0"
 $styleCopPackageDevelopmentDependency = "true"
@@ -46,8 +52,25 @@ function SyncStyleCopSettings {
   Set-Content $pathToSettingInCurrentFolder $styleCopSettingsSourceFileContent
 }
 
-function UpdatePackagesConfig
-{
+function EnsureXmlAttributeExists {
+  param (
+    [Parameter(Mandatory = $true)]
+    [String] $attributeName,
+
+    [Parameter(Mandatory = $true)]
+    [String] $expectedValue,
+
+    [Parameter(Mandatory = $true)]
+    [System.Xml.XmlElement] $attributeParentNode
+  )
+
+  $attribute = $attributeParentNode.GetAttribute($attributeName)
+  if (($null -eq $attribute) -or ($attribute -ne $expectedValue)) {
+    $attributeParentNode.SetAttribute($attributeName, $expectedValue)
+  }
+}
+
+function UpdatePackagesConfig {
   param (
     [Parameter(Mandatory = $true)]
     [String] $nfProjFile
@@ -56,48 +79,53 @@ function UpdatePackagesConfig
   $dirPath = Split-Path -Path $nfProjFile;
   $packagesPath = "$dirPath\packages.config"
 
-  if (!(Test-Path $packagesPath -PathType Leaf)){
+  if (!(Test-Path $packagesPath -PathType Leaf)) {
     throw "$packagesPath does not exists"
   }
 
   [xml]$packagesContent = Get-Content $packagesPath
   #check if stylecop ms build exists
   #if not, insert
-  $styleCopPackage = $packagesContent.packages | Where-Object { $_.id -eq "StyleCop.MSBuild" }
+  $styleCopPackage = $packagesContent.SelectNodes("packages/package") | Where-Object { $_.id -eq $styleCopPackageId }
   if ($null -eq $styleCopPackage) {
     $styleCopPackage = $packagesContent.CreateElement("package")
-    $styleCopPackage.SetAttribute("id", "StyleCop.MSBuild")
-    $packagesContent.packages.AppendChild($styleCopPackage)
+    EnsureXmlAttributeExists "id" $styleCopPackageId  $styleCopPackage
+    $notUsed = $packagesContent.packages.AppendChild($styleCopPackage)
   }
 
-  $version = $styleCopPackage.GetAttribute("version")
-  if (($null -eq $version) -or ($version -ne $styleCopPackageVersion)) {
-    $styleCopPackage.SetAttribute("version", $styleCopPackageVersion)
-  }
-
-  $targetFramework = $styleCopPackage.GetAttribute("targetFramework")
-  if (($null -eq $targetFramework) -or ($targetFramework -ne $styleCopPackageTargetFramework)) {
-    $styleCopPackage.SetAttribute("targetFramework", $styleCopPackageTargetFramework)
-  }
-
-  $developmentDependency = $styleCopPackage.GetAttribute("developmentDependency")
-  if (($null -eq $targetFramework) -or ($targetFramework -ne $styleCopPackageDevelopmentDependency)) {
-    $styleCopPackage.SetAttribute("developmentDependency", $styleCopPackageDevelopmentDependency)
-  }
+  EnsureXmlAttributeExists "version" $styleCopPackageVersion $styleCopPackage
+  EnsureXmlAttributeExists "targetFramework" $styleCopPackageTargetFramework $styleCopPackage
+  EnsureXmlAttributeExists "developmentDependency" $styleCopPackageDevelopmentDependency $styleCopPackage
 
   $packagesContent.Save($packagesPath);
 }
 
-function EnsureNfProjHasStyleCopSettings 
-{
+function Cleanup {
+  param (
+    [Parameter(Mandatory = $true)]
+    [String] $nfprojPath
+  )
+
+  #Clean file from &quot;
+  #Event if we use " in SetAttribute PS is inserting &quot; instead of "
+  #Same for &amp;
+  $fileContent = Get-Content $nfprojPath
+  $fileContent = $fileContent.Replace("&quot;", "`"")
+  $fileContent = $fileContent.Replace("quot;", "`"")
+  $fileContent = $fileContent.Replace("&amp;", "")
+  $fileContent = $fileContent.Replace("amp;", "")
+  #TODO:Remove last line
+  Set-Content -Path $nfprojPath -Value $fileContent
+}
+
+function EnsureNfProjHasStyleCopSettings {
   param (
     [Parameter(Mandatory = $true)]
     [String] $deviceFolder
   )
   
   $allNfProjFiles = Get-ChildItem -Path $deviceFolder -Recurse -Include *.nfproj;
-  foreach ($nfProj in $allNfProjFiles) 
-  {
+  foreach ($nfProj in $allNfProjFiles) {
     #Skip sample projects
     if ($nfProj -like '*sample*') {
       continue
@@ -107,27 +135,32 @@ function EnsureNfProjHasStyleCopSettings
     [xml]$nfProjContent = Get-Content $nfProj
     $propertyGroupWithProjectGuid = $nfProjContent.SelectNodes("/").Project.PropertyGroup[1];
 
-    $styleCopErrorsSettingNode = $propertyGroupWithProjectGuid.StyleCopTreatErrorsAsWarnings #BUG:
-    if ($null -eq $styleCopErrorsSettingNode){
-      $styleCopErrorsSettingNode = $nfProjContent.CreateElement("StyleCopTreatErrorsAsWarnings", $nfProjXmlNamespace)
-      $notUsed = $propertyGroupWithProjectGuid.AppendChild($styleCopErrorsSettingNode)
-    }
-    #$styleCopErrorsSettingNode.InnerText = "false" #BUG: throws error when node exists
-    #We don't want unnecessery output in console, without assigment node is displayed
+    $styleCopErrorsSettingNode = $propertyGroupWithProjectGuid.$styleCopTreatErrorsAsWarningsNodeName
 
+    if ($null -eq $styleCopErrorsSettingNode) {
+      $styleCopErrorsSettingNode = $nfProjContent.CreateElement($styleCopTreatErrorsAsWarningsNodeName, $nfProjXmlNamespace)
+      #We don't want unnecessery output in console, without assigment node content is displayed in console
+      $notUsed = $propertyGroupWithProjectGuid.AppendChild($styleCopErrorsSettingNode)
+      $styleCopErrorsSettingNode.InnerText = $styleCopTreatErrorsAsWarningsNodeValue
+    }
+    else {
+      $propertyGroupWithProjectGuid.$styleCopTreatErrorsAsWarningsNodeName = $styleCopTreatErrorsAsWarningsNodeValue
+    }
+    
 
     #Import & Target
+    #TODO: Sync settings 
     $projectNode = $nfProjContent.SelectNodes("/").Project;
-    $importStyleCopProject = $projectNode.Import | Where-Object { $_.Project -eq ".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" }
-    if ($null -eq $importStyleCopProject){
+    $importStyleCopProject = $projectNode.Import | Where-Object { $_.Project -eq $styleCopImportPackageTargetPath }
+    if ($null -eq $importStyleCopProject) {
       $importStyleCopProject = $nfProjContent.CreateElement("Import", $nfProjXmlNamespace)
-      $importStyleCopProject.SetAttribute("Project", ".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets")
-      $importStyleCopProject.SetAttribute("Condition", "Exists('.\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')")
+      EnsureXmlAttributeExists "Project" $styleCopImportPackageTargetPath $importStyleCopProject
+      $notUsed = $projectNode.AppendChild($importStyleCopProject)
 
       #I assume if there is no import node, there is no target also Target
       $targetStyleCop = $nfProjContent.CreateElement("Target", $nfProjXmlNamespace)
-      $targetStyleCop.SetAttribute("Name", "EnsureNuGetPackageBuildImports")
-      $targetStyleCop.SetAttribute("BeforeTargets", "PrepareForBuild")
+      EnsureXmlAttributeExists "Name" "EnsureNuGetPackageBuildImports" $targetStyleCop
+      EnsureXmlAttributeExists "BeforeTargets" "PrepareForBuild" $targetStyleCop
 
       $targetStyleCopPropertyGroup = $nfProjContent.CreateElement("PropertyGroup", $nfProjXmlNamespace)
       $notUsed = $targetStyleCop.AppendChild($targetStyleCopPropertyGroup)
@@ -137,32 +170,22 @@ function EnsureNfProjHasStyleCopSettings
       $notUsed = $targetStyleCopPropertyGroup.AppendChild($targetStyleCopPropertyGroupErrorText)
 
       $targetErrorCondition = $nfProjContent.CreateElement("Error", $nfProjXmlNamespace)
-      $targetErrorCondition.SetAttribute("Condition", "!Exists('.\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')&quot; Text=&quot;`$([System.String]::Format('`$(ErrorText)', '.\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))")
+      EnsureXmlAttributeExists "Condition" "!Exists('$styleCopImportPackageTargetPath')&quot; Text=&quot;`$([System.String]::Format('`$(ErrorText)', '$styleCopImportPackageTargetPath'))" $targetErrorCondition
       $notUsed = $targetStyleCop.AppendChild($targetErrorCondition)
-
-      $notUsed = $projectNode.AppendChild($importStyleCopProject)
       $notUsed = $projectNode.AppendChild($targetStyleCop)
     }
 
+    EnsureXmlAttributeExists "Condition" "Exists('$styleCopImportPackageTargetPath')" $importStyleCopProject  
+
     $nfProjContent.Save($nfProj);
-
-    #Clean file from &quot;
-    #Event if we use " in SetAttribute PS is inserting &quot; instead of "
-    #Same for &amp;
-    $fileContent = Get-Content $nfProj
-    $fileContent = $fileContent.Replace("&quot;", "`"")
-    $fileContent = $fileContent.Replace("quot;", "`"")
-    $fileContent = $fileContent.Replace("&amp;", "")
-    $fileContent = $fileContent.Replace("amp;", "")
-    Set-Content -Path $nfProj -Value $fileContent
-
     UpdatePackagesConfig $nfProj
+    Cleanup $nfProj
   }
 }
 
 #TODO: Remove in final version
-function isProjectWhitelisted($deviceFullName){
-  if ($deviceFullName -like '*AD5328*'){
+function isProjectWhitelisted($deviceFullName) {
+  if ($deviceFullName -like '*AD5328*') {
     return $true
   }
 
@@ -170,7 +193,6 @@ function isProjectWhitelisted($deviceFullName){
 }
 
 foreach ($deviceFolder in $allDevicesFolders) {
-  #TODO: Remove in final version
   if (isProjectWhitelisted $deviceFolder.FullName -eq $true) {
     Write-Host "Checking " $deviceFolder.FullName -ForegroundColor Green
     SyncStyleCopSettings $deviceFolder.FullName
