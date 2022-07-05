@@ -3,6 +3,7 @@
 
 using System;
 using System.Device.Gpio;
+using UnitsNet.Units;
 
 namespace Iot.Device.A4988
 {
@@ -58,16 +59,16 @@ namespace Iot.Device.A4988
         /// <summary>
         /// Rotates a stepper motor.
         /// </summary>
-        /// <param name="degree">Rotation in degrees.</param>
-        public virtual void Rotate(double degree)
+        /// <param name="angle">Angle to rotate.</param>
+        public virtual void Rotate(UnitsNet.Angle angle)
         {
-            if (degree == 0)
+            if (angle.Degrees == 0)
             {
                 return;
             }
 
-            _dirPin.Write(degree > 0 ? PinValue.High : PinValue.Low);
-            var degreeForStepsCalculation = degree < 0 ? -degree : degree;
+            _dirPin.Write(angle.Degrees > 0 ? PinValue.High : PinValue.Low);
+            var degreeForStepsCalculation = angle.Degrees < 0 ? -angle.Degrees : angle.Degrees;
             var steps = degreeForStepsCalculation / 360 * _fullStepsPerRotation * (byte)_microsteps;
             for (int x = 0; x < steps; x++)
             {

@@ -23,6 +23,9 @@ STEP - connect to microcontroller pin
 ## Usage
 
 ```csharp
+using Iot.Device.A4988;
+using System;
+
 // Pinout for MCU please adapt depending on your MCU
 // Any regular GPIO will work
 const byte stepPin = 10;
@@ -35,8 +38,10 @@ using (var motor = new A4988(stepPin, dirPin, microsteps, fullStepsPerRotation, 
     var direction = true;
     while (true)
     {
-        motor.Rotate(360, direction);
+        var rotationDegree = (direction ? 1 : -1) * 360;
+        motor.Rotate(UnitsNet.Angle.FromDegrees(rotationDegree));
         direction = !direction;
+        System.Threading.Thread.Sleep(1000);
     }
 }
 ```
