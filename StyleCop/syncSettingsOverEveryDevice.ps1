@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 $nfProjXmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
 $styleCopTreatErrorsAsWarningsNodeName = "StyleCopTreatErrorsAsWarnings"
 $styleCopTreatErrorsAsWarningsNodeValue = "false"
-$styleCopImportPackageTargetPath = ".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets"
+$styleCopImportPackageTargetPath = "packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets"
 
 #Const packages.config
 $styleCopPackageId = "StyleCop.MSBuild"
