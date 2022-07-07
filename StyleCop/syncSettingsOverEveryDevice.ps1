@@ -3,17 +3,17 @@ $ErrorActionPreference = 'Stop'
 #Whitelisted projects
 $projectWhiteList = ("AD5328", "4Relay")
 
-#Consts nfProj
-$nfProjXmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
-$styleCopTreatErrorsAsWarningsNodeName = "StyleCopTreatErrorsAsWarnings"
-$styleCopTreatErrorsAsWarningsNodeValue = "false"
-$styleCopImportPackageTargetPath = "packages\StyleCop.MSBuild.$styleCopPackageVersion\build\StyleCop.MSBuild.targets"
-
 #Const packages.config
 $styleCopPackageId = "StyleCop.MSBuild"
 $styleCopPackageVersion = "6.2.0"
 $styleCopPackageTargetFramework = "netnano1.0"
 $styleCopPackageDevelopmentDependency = "true"
+
+#Consts nfProj
+$nfProjXmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
+$styleCopTreatErrorsAsWarningsNodeName = "StyleCopTreatErrorsAsWarnings"
+$styleCopTreatErrorsAsWarningsNodeValue = "false"
+$styleCopImportPackageTargetPath = "packages\StyleCop.MSBuild.$styleCopPackageVersion\build\StyleCop.MSBuild.targets"
 
 #Paths
 $styleCopSettingsFileName = "Settings.StyleCop";
