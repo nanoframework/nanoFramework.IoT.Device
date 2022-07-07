@@ -1,10 +1,13 @@
 $ErrorActionPreference = 'Stop'
 
+#Whitelisted projects
+$projectWhiteList = ("AD5328", "4Relay")
+
 #Consts nfProj
 $nfProjXmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
 $styleCopTreatErrorsAsWarningsNodeName = "StyleCopTreatErrorsAsWarnings"
 $styleCopTreatErrorsAsWarningsNodeValue = "false"
-$styleCopImportPackageTargetPath = "packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets"
+$styleCopImportPackageTargetPath = "packages\StyleCop.MSBuild.$styleCopPackageVersion\build\StyleCop.MSBuild.targets"
 
 #Const packages.config
 $styleCopPackageId = "StyleCop.MSBuild"
@@ -114,7 +117,6 @@ function Cleanup {
   $fileContent = $fileContent.Replace("quot;", "`"")
   $fileContent = $fileContent.Replace("&amp;", "")
   $fileContent = $fileContent.Replace("amp;", "")
-  #TODO:Remove last line
   Set-Content -Path $nfprojPath -Value $fileContent
 }
 
@@ -183,9 +185,13 @@ function EnsureNfProjHasStyleCopSettings {
   }
 }
 
-#TODO: Remove in final version
-function isProjectWhitelisted($deviceFullName) {
-  if ($deviceFullName -like '*AD5328*') {
+function isProjectWhitelisted($deviceName) {
+  #If no project in array, then accept all
+  if ($projectWhiteList.Length -eq 0){
+    return $true
+  }
+
+  if ($deviceName -in $projectWhiteList) {
     return $true
   }
 
@@ -193,7 +199,7 @@ function isProjectWhitelisted($deviceFullName) {
 }
 
 foreach ($deviceFolder in $allDevicesFolders) {
-  if (isProjectWhitelisted $deviceFolder.FullName -eq $true) {
+  if (isProjectWhitelisted $deviceFolder.Name -eq $true) {
     Write-Host "Checking " $deviceFolder.FullName -ForegroundColor Green
     SyncStyleCopSettings $deviceFolder.FullName
     EnsureNfProjHasStyleCopSettings $deviceFolder.FullName
