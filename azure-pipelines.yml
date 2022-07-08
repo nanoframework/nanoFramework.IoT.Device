@@ -99,7 +99,7 @@ steps:
     targetType: inline
     script: |
       $count = (Get-ChildItem -Path '.' -Filter '*.nupkg' -Recurse).Count
-      Write-Host $count + ' NuGet packages found'
+      Write-Host $count ' NuGet packages found'
 
       # set variable to forward 
       echo "##vso[task.setvariable variable=NUGET_COUNT;isOutput=true]$count"
@@ -109,7 +109,7 @@ steps:
   condition: >-
     and(
       succeeded(),
-      gt(variables.NUGET_COUNT, 0),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
   inputs:
@@ -133,7 +133,7 @@ steps:
   condition: >-
     and(
       succeeded(),
-      gt(variables.NUGET_COUNT, 0),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
   
@@ -156,7 +156,7 @@ steps:
   condition: >-
     and(
       succeeded(),
-      gt(variables.NUGET_COUNT, 0),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
   continueOnError: false
@@ -168,7 +168,7 @@ steps:
   condition: >-
     and(
       succeeded(),
-      gt(variables.NUGET_COUNT, 0),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
   continueOnError: false
@@ -179,7 +179,7 @@ steps:
   condition: >-
     and(
       succeeded(),
-      gt(variables.NUGET_COUNT, 0),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
   inputs:
@@ -193,7 +193,7 @@ steps:
   condition: >-
     and(
       succeeded(),
-      gt(variables.NUGET_COUNT, 0),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
   continueOnError: true
