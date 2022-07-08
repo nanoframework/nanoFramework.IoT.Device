@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ssd13xx;
@@ -28,8 +28,8 @@ device.Display();
 Thread.Sleep(2000);
 device.ClearScreen();
 device.Font = new DoubleByteFont();
-device.DrawString(2, 2, "¹¦·ò¡ç", 2, false);
-device.DrawString(2, 34, "£¸£¹£Á£Â¹¦·ò¡ç", 1, true);
+device.DrawString(2, 2, "åŠŸå¤«ï¼„", 2, false);
+device.DrawString(2, 34, "ï¼˜ï¼™ï¼¡ï¼¢åŠŸå¤«ï¼„", 1, true);
 device.Display();
 
 Thread.Sleep(-1);
