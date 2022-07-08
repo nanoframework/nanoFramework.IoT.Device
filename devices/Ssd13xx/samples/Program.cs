@@ -25,4 +25,11 @@ device.DrawString(2, 2, "nF IOT!", 2);//large size 2 font
 device.DrawString(2, 32, "nanoFramework", 1, true);//centered text
 device.Display();
 
+Thread.Sleep(2000);
+device.ClearScreen();
+device.Font = new DoubleByteFont();
+device.DrawString(2, 2, "¹¦·ò¡ç", 2, false);
+device.DrawString(2, 34, "£¸£¹£Á£Â¹¦·ò¡ç", 1, true);
+device.Display();
+
 Thread.Sleep(-1);
