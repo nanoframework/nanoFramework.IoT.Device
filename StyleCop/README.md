@@ -1,4 +1,5 @@
 # Description
+
 This script was created to sync Stylecop settings across all projects in pointed path. It's iterating through all folders looking for .nfproj files.
 If any found, then update it configuration to use Stylecop with settings from this folder. 
 
