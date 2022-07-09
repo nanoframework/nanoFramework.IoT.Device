@@ -414,11 +414,15 @@ namespace Iot.Device.Ssd13xx
                 {
                     var even = (i == 0 || i % 2 == 0);
                     if (even)
+                    {
                         characterMap = Font[text[i / 2]];
+                    }
 
                     var list = new System.Collections.ArrayList();
                     for (int idx = (even ? 0 : 1); idx < characterMap.Length; idx += 2)
+                    {
                         list.Add(characterMap[idx]);
+                    }
 
                     for (int segment = 0; segment < Font.Height; segment++)
                     {
