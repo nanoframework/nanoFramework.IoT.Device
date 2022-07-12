@@ -14,6 +14,9 @@ using nanoFramework.Logging;
 
 namespace Iot.Device.BlueNrg2
 {
+    /// <summary>
+    /// The BlueNrg2 device.
+    /// </summary>
     public class BlueNrg2 : INativeDevice
     {
         private readonly IHardwareInterface _hardwareInterface;
@@ -36,6 +39,8 @@ namespace Iot.Device.BlueNrg2
         private byte[] _deviceName;
         private GattLocalService[] _gattServices;
         private ServiceContext[] _services;
+        private ushort[] _serviceHandles;
+        private ushort[][] _characteristicHandles;
 
         /// <summary>
         /// Creates Instance of BlueNrg2 class
@@ -143,6 +148,9 @@ namespace Iot.Device.BlueNrg2
         /// <inheritdoc />
         public bool StartAdvertising(bool isDiscoverable, bool isConnectable, byte[] deviceName, ArrayList services)
         {
+            if (deviceName is null)
+                throw new ArgumentNullException(nameof(deviceName));
+
             _isDiscoverable = isDiscoverable;
             _isConnectable = isConnectable;
             _deviceName = deviceName;
@@ -162,39 +170,83 @@ namespace Iot.Device.BlueNrg2
             Gatt.UpdateCharacteristicValue(serviceHandle, deviceNameCharacteristicHandle, 0, BitConverter.GetBytes(_deviceName.Length)[3],
                 _deviceName);
 
+            Gap.SetIoCapability(IoCapability.DisplayOnly);
+
+            Gap.SetAuthenticationRequirement(true, true, SecureConnectionSupport.Supported, false, 7, 16, false, 123456,
+                AddressType.PublicIdentity);
+
+            _serviceHandles = new ushort[services.Count];
+            _characteristicHandles = new ushort[services.Count][];
+
+            for (var i = 0; i < services.Count; i++)
+            {
+                var service = (GattLocalService)services[i];
+                var uuid = service.Uuid.ToByteArray();
+
+                // num of characteristics of the service
+                var charCount = (byte)service.Characteristics.Length;
+                // number of attribute records that can be added to the service
+                var maxAttributeRecords = (byte)(1 + 3 * charCount);
+
+                Gatt.AddService(UuidType.Uuid128, uuid, ServiceType.Primary, maxAttributeRecords, ref _serviceHandles[i]);
+
+                _characteristicHandles[i] = new ushort[service.Characteristics.Length];
+
+                for (var j = 0; j < service.Characteristics.Length; j++)
+                {
+                    var characteristic = service.Characteristics[j];
+                    uuid = characteristic.Uuid.ToByteArray();
+                    var characteristicValueLength = (ushort)characteristic.StaticValue.Length;
+                    CharacteristicProperties characteristicProperties =
+                        (CharacteristicProperties)((uint)characteristic.CharacteristicProperties & 0x11111111);
+
+                    Gatt.AddCharacteristic(_serviceHandles[i], UuidType.Uuid128, uuid, characteristicValueLength,
+                        characteristicProperties, SecurityPermissions.None,
+                        Gatt.EventMask.NotifyReadRequestAndWaitForApprovalResponse, 16, false,
+                        ref _characteristicHandles[i][j]);
+                }
+            }
+
             return true;
         }
 
+        /// <inheritdoc />
         public void StopAdvertising()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public int NotifyClient(ushort connection, ushort characteristicId, byte[] notifyBuffer)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void ReadRespondWithValue(ushort eventId, byte[] data)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void ReadRespondWithProtocolError(ushort eventId, byte otherError)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public byte[] WriteGetData(ushort eventId)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void WriteRespond(ushort eventId)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void WriteRespondWithProtocolError(ushort eventId, byte protocolError)
         {
             throw new NotImplementedException();
