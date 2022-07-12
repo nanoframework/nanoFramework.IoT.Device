@@ -11,27 +11,48 @@ This is a library to interact with the Hx711 ADC. This is conveniently assembled
 
 ## Usage
 
-**Important**: make sure you setup the SPI pins for ESP32 before creating the `Scale`. For this, make sure you install the `nanoFramework.Hardware.ESP32` NuGet:
+### Signals and connections
+
+Check the connections for the WEIGTH module at the [product page](https://docs.m5stack.com/en/unit/weight).
+From the schematic one can see these signals:
+
+* DOUT: Grove connector pin 1
+* PDSCK: Grove connector pin 2
+
+Our code is using SPI to generate the clock signals and read back data from the HX711, so the connections need to match the SPI signals like this:
+
+* MOSI -> PDSCK
+* MISO -> DOUT
+
+SPI clock is not used so feel free to route to an unused GPIO.
+There is also no need for the CS signal so no need to define a pin for it.
+
+**Important**: make sure you setup the SPI pins for ESP32 before creating the `Scale`. For this, make sure you install the `nanoFramework.Hardware.ESP32` NuGet.
 
 ```csharp
 ///////////////////////////////////////////////////////////////////////
 // When connecting to an ESP32 device, need to configure the SPI GPIOs
 // The following mapping is used in order to connect the WEIGTH module
 // to a M5Core device using the Grove port A
-// MOSI: connects to Grove pin 1
-// MISO: connects to Grove pin 2
+// MOSI: connects to WEIGHT Grove pin 2
+// MISO: connects to WEIGHT Grove pin 1
 // CLOCK: connect to any free port as it's not used at all
 Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
 Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
 Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
 ```
 
+> **Warning**
+> Make sure to follow the instructions above. At first glance they can look contrary to the naming of the signals and schematics in M5Stack documentation. That's because the GROVE connectors are meant to use I2C and their implementation of the driver is different from ours.
+
 For other devices, like STM32, please make sure you're using the pins for the UART you want to use.
+
+### Configuring SPI
 
 ```csharp
 // setup SPI connection settings
 // the clock value was adjusted in order to get the typical duration expected by the PD_SCK ~1us
-var spisettings = new SpiConnectionSettings(1, 19)
+var spisettings = new SpiConnectionSettings(1)
 {
     ClockFrequency = Scale.DefaultClockFrequency
 };

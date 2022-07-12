@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.A4988</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.A4988</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoFramework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -23,6 +22,8 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.0.4" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="UnitsNet.nanoFramework.Angle" version="4.137.0" />
     </dependencies>
   </metadata>
   <files>
