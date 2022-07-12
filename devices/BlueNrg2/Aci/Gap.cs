@@ -168,7 +168,7 @@ namespace Iot.Device.BlueNrg2.Aci
 			ushort minimumAdvertisingInterval,
 			ushort maximumAdvertisingInterval,
 			AddressType ownAddressType,
-			byte advertisingFilterPolicy,
+			FilterPolicy advertisingFilterPolicy,
 			byte localNameLength,
 			byte[] localName,
 			byte serviceUuidLength,

@@ -346,11 +346,12 @@ namespace Iot.Device.BlueNrg2
 
 		public BleStatus LeSetScanResponseData(byte scanResponseDataLength, byte[] scanResponseData)
 		{
-			if (scanResponseData is null || scanResponseData.Length != 31)
-				throw new ArgumentException($"{nameof(scanResponseData)} has to be an array of length 31");
-			var command = new byte[32];
+			if (scanResponseDataLength > 31)
+				throw new ArgumentException($"{nameof(scanResponseData)} has to be an array of length 31 or less");
+            var command = new byte[32];
 			command[0] = scanResponseDataLength;
-			scanResponseData.CopyTo(command, 1);
+			if (scanResponseData is not null)
+			    scanResponseData.CopyTo(command, 1);
 			var status = new byte[1];
 			var rq = new Request
 			{
