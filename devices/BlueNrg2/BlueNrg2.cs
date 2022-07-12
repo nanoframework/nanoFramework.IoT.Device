@@ -108,6 +108,14 @@ namespace Iot.Device.BlueNrg2
         }
 
         /// <summary>
+        /// Resets BlueNrg2
+        /// </summary>
+        public void Reset()
+        {
+            Hci.Reset();
+        }
+
+        /// <summary>
         /// Dispose
         /// </summary>
         public void Dispose()
@@ -213,13 +221,40 @@ namespace Iot.Device.BlueNrg2
         /// <inheritdoc />
         public void StopAdvertising()
         {
-            throw new NotImplementedException();
+            Reset();
         }
 
         /// <inheritdoc />
         public int NotifyClient(ushort connection, ushort characteristicId, byte[] notifyBuffer)
         {
-            throw new NotImplementedException();
+            if (notifyBuffer is null)
+            {
+                throw new ArgumentNullException(nameof(notifyBuffer));
+            }
+
+            ushort value = 0;
+
+            for (var i = 0; i < _serviceHandles.Length; i++)
+            {
+                var serviceHandle = _serviceHandles[i];
+                var characteristicHandles = _characteristicHandles[i];
+
+                for (var j = 0; j < characteristicHandles.Length; j++)
+                {
+                    var characteristicHandle = characteristicHandles[j];
+
+                    //FIXME: Change this to be the actual characteristicId check
+                    if (characteristicId == value)
+                    {
+                        return (int)Gatt.UpdateCharacteristicValue(serviceHandle, characteristicHandle, 0,
+                            (byte)notifyBuffer.Length, notifyBuffer);
+                    }
+
+                    value++;
+                }
+            }
+
+            return 1;
         }
 
         /// <inheritdoc />
