@@ -36,7 +36,7 @@ On the code snippet bellow that's what's happening along with a event being awai
 var swarmTile = new SwarmTile("COM1");
 
 // wait 5 seconds for the Tile to become operational
-if(!swarmTile.DeviceReady.WaitOne(5_000, false))
+if (!swarmTile.DeviceReady.WaitOne(5_000, false))
 {
     /////////////////////////
     // Tile is not responsive
