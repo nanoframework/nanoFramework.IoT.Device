@@ -4,7 +4,6 @@
     <id>nanoFramework.Iot.Device.Swarm</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Swarm</title>
-    <authors>Eclo Solutions,nanoFramework project contributors</authors>
     <owners>nanoFramework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
@@ -20,10 +19,8 @@
     <summary>Iot.Device.Swarm assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Swarm</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.9.2-preview.8" />
-      <dependency id="nanoFramework.System.Collections" version="1.2.0" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.0.1-preview.21" />
+      <dependency id="nanoFramework.System.Collections" version="1.4.0" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.0.7.10" />
     </dependencies>
   </metadata>
   <files>
