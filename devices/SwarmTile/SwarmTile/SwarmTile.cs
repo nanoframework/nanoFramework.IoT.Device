@@ -936,17 +936,17 @@ namespace Iot.Device.Swarm
 
 #if DEBUG
 
-            //Debug.WriteLine($"chars ava1>>{_tileSerialPort.BytesToRead}");
+            //Debug.WriteLine($"chars ava1>>{TileSerialPort.BytesToRead}");
 
             var receivedMessage = TileSerialPort.ReadLine();
             Debug.WriteLine($">>{receivedMessage}");
 
-            //Debug.WriteLine($"chars ava2>>{_tileSerialPort.BytesToRead}");
+            //Debug.WriteLine($"chars ava2>>{TileSerialPort.BytesToRead}");
 
 #else
 
             // read line
-            var receivedMessage = _tileSerialPort.ReadLine();
+            var receivedMessage = TileSerialPort.ReadLine();
 
 #endif
             // skip empty messages
