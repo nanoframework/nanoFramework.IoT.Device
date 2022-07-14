@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 namespace Iot.Device.Swarm
 {
@@ -15,10 +13,10 @@ namespace Iot.Device.Swarm
         /// Information about the spoof state.
         /// </summary>
         /// <remarks>
-        /// 0: Spoofing unknown or deactivated
-        /// 1: No spoofing indicated
-        /// 2: Spoofing indicated
-        /// 3: Multiple spoofing indications
+        /// 0: Spoofing unknown or deactivated.
+        /// 1: No spoofing indicated.
+        /// 2: Spoofing indicated.
+        /// 3: Multiple spoofing indications.
         /// </remarks>
         public byte SpoofState { get; internal set; } = 0;
 

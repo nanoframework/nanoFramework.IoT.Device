@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
-// See LICENSE file in the project root for full license information.
-//
+// See LICENSE file in the project root for full license information.//
 
 using System;
 using System.Collections;
@@ -31,7 +29,7 @@ namespace Iot.Device.Swarm
         // event to signal that a new command has been added to the queue for processing
         internal readonly AutoResetEvent CommandProcessed = new AutoResetEvent(false);
 
-        private readonly Queue _incommingMessagesQueue = new();
+        private readonly Queue _incommingMessagesQueue = new ();
 
         // flag to signal that the very 1st message from the Tile was received
         private bool _isFirstMessage = true;
@@ -194,7 +192,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -234,7 +232,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -282,7 +280,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -322,7 +320,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -368,7 +366,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -408,7 +406,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -454,7 +452,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -494,7 +492,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -540,7 +538,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -580,7 +578,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -626,7 +624,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -666,7 +664,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -712,7 +710,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -761,7 +759,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -810,7 +808,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -859,7 +857,7 @@ namespace Iot.Device.Swarm
                     var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                     // clear command
-                    CommandInExecution = "";
+                    CommandInExecution = string.Empty;
 
                     if (eventSignaled)
                     {
@@ -882,7 +880,7 @@ namespace Iot.Device.Swarm
         }
 
         /// <summary>
-        /// Constructor for <see cref="SwarmTile"/>.
+        /// Initializes a new instance of the <see cref="SwarmTile"/> class.
         /// </summary>
         /// <param name="portName">The port where the Swarm Tile is connected to (for example, COM1).</param>
         public SwarmTile(string portName)
@@ -890,7 +888,7 @@ namespace Iot.Device.Swarm
             // configure SerialPort and...
             TileSerialPort = new SerialPort(portName, 115200);
 
-            //... try opening it
+            ////... try opening it
             // failure to open the SerialPort will throw an exception
             TileSerialPort.Open();
 
@@ -936,12 +934,12 @@ namespace Iot.Device.Swarm
 
 #if DEBUG
 
-            //Debug.WriteLine($"chars ava1>>{TileSerialPort.BytesToRead}");
+            // Debug.WriteLine($"chars ava1>>{TileSerialPort.BytesToRead}");
 
             var receivedMessage = TileSerialPort.ReadLine();
             Debug.WriteLine($">>{receivedMessage}");
 
-            //Debug.WriteLine($"chars ava2>>{TileSerialPort.BytesToRead}");
+            // Debug.WriteLine($"chars ava2>>{TileSerialPort.BytesToRead}");
 
 #else
 
@@ -1224,10 +1222,9 @@ namespace Iot.Device.Swarm
                         // we're good
                         signalCommandEvent = true;
                     }
-                    // ... ERROR messages
                     else if (nmeaSentence.Data.Contains(CommandBase.PromptErrorReply))
                     {
-                        // error 
+                        //// ... ERROR messages
                         // set error flag 
                         ErrorOccurredWhenProcessingCommand = true;
 
@@ -1401,7 +1398,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                 // clear command
-                CommandInExecution = "";
+                CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -1445,7 +1442,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                 // clear command
-                CommandInExecution = "";
+                CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -1493,7 +1490,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                 // clear command
-                CommandInExecution = "";
+                CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -1541,7 +1538,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                 // clear command
-                CommandInExecution = "";
+                CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -1595,7 +1592,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = CommandProcessed.WaitOne(TimeoutForCommandExecution, false);
 
                 // clear command
-                CommandInExecution = "";
+                CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -1605,7 +1602,7 @@ namespace Iot.Device.Swarm
                         // update the error message
                         LastErrorMessage = ((TileCommands.TransmitData.Reply)CommandProcessedReply).ErrorMessage;
 
-                        messageId = "";
+                        messageId = string.Empty;
 
                         return false;
                     }
@@ -1631,7 +1628,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Represents the delegate used for the <see cref="PowerStateChanged"/> event.
         /// </summary>
-        /// <param name="powerState"> new power status of the device</param>
+        /// <param name="powerState">New power status of the device</param>
         public delegate void PowerStateChangedHandler(PowerState powerState);
 
         /// <summary>
@@ -1642,7 +1639,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Raises the <see cref="PowerStateChanged"/> event.
         /// </summary>
-        /// <param name="powerStatus"> new power status of the device</param>
+        /// <param name="powerStatus">New power status of the device</param>
         protected void OnPowerStateChanged(PowerState powerStatus)
         {
             PowerStateChanged?.Invoke(powerStatus);
@@ -1681,7 +1678,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Represents the delegate used for the <see cref="DateTimeStatusAvailable"/> event.
         /// </summary>
-        /// <param name="dateTimeInfo"> data available</param>
+        /// <param name="dateTimeInfo">Data available.</param>
         public delegate void DateTimeStatusHandler(DateTimeInfo dateTimeInfo);
 
         /// <summary>
@@ -1695,7 +1692,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Raises the <see cref="DateTimeStatusAvailable"/> event.
         /// </summary>
-        /// Updated <param name="dateTimeInfo"> data.</param>
+        /// <param name="dateTimeInfo">Updated data.</param>
         protected void OnDateTimeStatusAvailable(DateTimeInfo dateTimeInfo)
         {
             DateTimeStatusAvailable?.Invoke(dateTimeInfo);
@@ -1708,7 +1705,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Represents the delegate used for the <see cref="BackgroundNoiseInfoAvailable"/> event.
         /// </summary>
-        /// <param name="rssi">Value for background noise RSSI</param>
+        /// <param name="rssi">Value for background noise RSSI.</param>
         public delegate void BackgroundNoiseInfoHandler(int rssi);
 
         /// <summary>
@@ -1722,7 +1719,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Raises the <see cref="DateTimeStatusAvailable"/> event.
         /// </summary>
-        /// <param name="rssi">Value for background noise RSSI</param>
+        /// <param name="rssi">Value for background noise RSSI.</param>
         protected void OnBackgroundNoiseInfoAvailable(int rssi)
         {
             BackgroundNoiseInfoAvailable?.Invoke(rssi);
@@ -1735,7 +1732,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Represents the delegate used for the <see cref="GeospatialInfoAvailable"/> event.
         /// </summary>
-        /// <param name="geoSpatialInfo"> data available</param>
+        /// <param name="geoSpatialInfo">Data available</param>
         public delegate void GeospatialInfoHandler(GeospatialInformation geoSpatialInfo);
 
         /// <summary>
@@ -1749,7 +1746,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Raises the <see cref="GeospatialInfoAvailable"/> event.
         /// </summary>
-        /// Updated <param name="geoSpatialInfo"> data.</param>
+        /// <param name="geoSpatialInfo">Updated data.</param>.
         protected void OnGeospatialInfoAvailable(GeospatialInformation geoSpatialInfo)
         {
             GeospatialInfoAvailable?.Invoke(geoSpatialInfo);
@@ -1762,7 +1759,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Represents the delegate used for the <see cref="TileStatusEvent"/> event.
         /// </summary>
-        /// <param name="status">Tile status</param>
+        /// <param name="status">Tile status.</param>
         public delegate void TileStatusEventHandler(TileStatus status);
 
         /// <summary>
@@ -1773,7 +1770,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Raises the <see cref="TileStatusEvent"/> event.
         /// </summary>
-        /// <param name="status">Event occurred about a message</param>
+        /// <param name="status">Event occurred about a message.</param>
         protected void OnTileStatusEvent(TileStatus status)
         {
             TileStatusEvent?.Invoke(status);

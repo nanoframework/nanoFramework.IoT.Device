@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 
@@ -82,19 +80,21 @@ namespace Iot.Device.Swarm
         public DateTime TimeStamp { get; internal set; }
 
         /// <summary>
-        /// Create a Message to be sent to the Swarm network. 
+        /// Initializes a new instance of the <see cref="MessageToTransmit"/> class.
         /// </summary>
         /// <param name="data">Data to be sent.</param>
         /// <param name="applicationId">The application ID tag for the message.</param>
+        /// <remarks>Creates a Message to be sent to the Swarm network.</remarks>
         public MessageToTransmit(string data, uint applicationId = 0) : base(data, applicationId)
         {
         }
 
         /// <summary>
-        /// Create a Message to be sent to the Swarm network. 
+        /// Initializes a new instance of the <see cref="MessageToTransmit"/> class.
         /// </summary>
         /// <param name="data">Data to be sent.</param>
         /// <param name="applicationId">The application ID tag for the message.</param>
+        /// <remarks>Creates a Message to be sent to the Swarm network.</remarks>
         public MessageToTransmit(byte[] data, uint applicationId = 0) : base(data, applicationId)
         {
         }

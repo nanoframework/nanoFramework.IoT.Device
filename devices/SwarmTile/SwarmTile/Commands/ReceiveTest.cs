@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 namespace Iot.Device.Swarm
 {
@@ -25,7 +23,7 @@ namespace Iot.Device.Swarm
                 public int BackgroundRssi { get; } = int.MinValue;
 
                 /// <summary>
-                /// Current rate (in seconds) between each message.
+                /// Gets or sets rate (in seconds) between each message.
                 /// </summary>
                 public uint Rate { get; set; } = uint.MinValue;
 

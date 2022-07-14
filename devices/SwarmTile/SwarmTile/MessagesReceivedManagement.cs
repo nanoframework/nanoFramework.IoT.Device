@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 
@@ -43,7 +41,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Deletes all the received messages from the device database.
         /// </summary>
-        /// <returns><see langword="true"/> on successful deletion of the messages</returns>
+        /// <returns><see langword="true"/> on successful deletion of the messages.</returns>
         public bool DeleteAllMessages()
         {
             return DeleteMessages(null, false);
@@ -52,7 +50,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Deletes all the received messages marked as read from the device database.
         /// </summary>
-        /// <returns><see langword="true"/> on successful deletion of the messages</returns>
+        /// <returns><see langword="true"/> on successful deletion of the messages.</returns>
         public bool DeleteAllReadMessages()
         {
             return DeleteMessages(null, true);
@@ -62,7 +60,7 @@ namespace Iot.Device.Swarm
         /// Marks the specified message as read.
         /// </summary>
         /// <param name="id">ID of message</param>
-        /// <returns><see langword="true"/> on successful marking of the message</returns>
+        /// <returns><see langword="true"/> on successful marking of the message.</returns>
         public bool MarkMessageRead(string id)
         {
             return MarkMessagesRead(id);
@@ -71,7 +69,7 @@ namespace Iot.Device.Swarm
         /// <summary>
         /// Marks all the received messages as read.
         /// </summary>
-        /// <returns><see langword="true"/> on successful marking of the messages</returns>
+        /// <returns><see langword="true"/> on successful marking of the messages.</returns>
         public bool MarkAllMessagesRead()
         {
             return MarkMessagesRead(null);
@@ -168,7 +166,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -185,7 +183,7 @@ namespace Iot.Device.Swarm
                 else
                 {
                     // clear command
-                    _device.CommandInExecution = "";
+                    _device.CommandInExecution = string.Empty;
 
                     throw new TimeoutException();
                 }
@@ -218,7 +216,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -235,7 +233,7 @@ namespace Iot.Device.Swarm
                 else
                 {
                     // clear command
-                    _device.CommandInExecution = "";
+                    _device.CommandInExecution = string.Empty;
 
                     throw new TimeoutException();
                 }
@@ -261,7 +259,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -278,7 +276,7 @@ namespace Iot.Device.Swarm
                 else
                 {
                     // clear command
-                    _device.CommandInExecution = "";
+                    _device.CommandInExecution = string.Empty;
 
                     throw new TimeoutException();
                 }
@@ -311,7 +309,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -328,7 +326,7 @@ namespace Iot.Device.Swarm
                 else
                 {
                     // clear command
-                    _device.CommandInExecution = "";
+                    _device.CommandInExecution = string.Empty;
 
                     throw new TimeoutException();
                 }

@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 
@@ -94,8 +92,8 @@ namespace Iot.Device.Swarm
             internal override NmeaSentence ComposeToSend()
             {
                 // set optional parameters
-                string hdParam = "";
-                string etParam = "";
+                string hdParam = string.Empty;
+                string etParam = string.Empty;
 
                 if (_message.HoldDuration > 0)
                 {

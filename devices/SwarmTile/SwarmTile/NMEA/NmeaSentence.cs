@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 namespace Iot.Device.Swarm
 {
@@ -35,7 +33,7 @@ namespace Iot.Device.Swarm
         /// The sentence format and the checksum are validated.
         /// </summary>
         /// <param name="sentence">The NMEA sentence to parse.</param>
-        /// <returns>A <see cref="NmeaSentence"/> object with the parsed sentence data.- or- <see langword="null"/> if the parse failed because of formating or wrong checksum.</returns>
+        /// <returns>A <see cref="NmeaSentence"/> object with the parsed sentence data.- or- <see langword="null"/> if the parse failed because of formatting or wrong checksum.</returns>
         public static NmeaSentence FromRawSentence(string sentence)
         {
             // sanity checks

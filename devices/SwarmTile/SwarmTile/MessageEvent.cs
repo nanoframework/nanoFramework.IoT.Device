@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 namespace Iot.Device.Swarm
 {
@@ -17,17 +15,17 @@ namespace Iot.Device.Swarm
         None = 0,
 
         /// <summary>
-        /// Message received
+        /// Message received.
         /// </summary>
         Received,
 
         /// <summary>
-        /// Message help time expired
+        /// Message help time expired.
         /// </summary>
         Expired,
 
         /// <summary>
-        /// Device is in sleep mode
+        /// Device is in sleep mode.
         /// </summary>
         Sent,
     }

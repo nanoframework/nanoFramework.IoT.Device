@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Eclo Solutions
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 using System.Collections;
@@ -80,7 +78,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -141,7 +139,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -236,7 +234,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
@@ -276,7 +274,7 @@ namespace Iot.Device.Swarm
                 var eventSignaled = _device.CommandProcessed.WaitOne(_device.TimeoutForCommandExecution, false);
 
                 // clear command
-                _device.CommandInExecution = "";
+                _device.CommandInExecution = string.Empty;
 
                 if (eventSignaled)
                 {
