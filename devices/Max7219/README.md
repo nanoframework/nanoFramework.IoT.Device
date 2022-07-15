@@ -71,6 +71,7 @@ for (var i = 0; i < devices.CascadedDevices; i++)
     {
         devices[new DeviceIdDigit( deviceId: i, digit: digit )] = smiley[digit];
     }
+
     devices.Flush();
 }
 
