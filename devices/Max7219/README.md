@@ -63,12 +63,16 @@ var smiley = new byte[] {
     0b01000010, 
     0b00111100 
     };
+devices.Init();
+devices.Rotation = RotationType.Half;
 for (var i = 0; i < devices.CascadedDevices; i++)
 {
     for (var digit = 0; digit < 8; digit++)
     {
-        devices[i, digit] = smiley[digit];
+        devices[new DeviceIdDigit( deviceId: i, digit: digit )] = smiley[digit];
     }
+
+    devices.Flush();
 }
 
 ```
