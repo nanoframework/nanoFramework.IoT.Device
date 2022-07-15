@@ -17,7 +17,35 @@ The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for
 
 ## Board
 
+Address on the I2C bus: Ssd1306.DefaultI2cAddress 0x3C
+
 ![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_I2c_PiOled.png)
+
+Version with 7-pin I2C/SPI
+
+Address on the I2C bus: Ssd1306.SecondaryI2cAddress 0x3D
+
+Connecting resistors:
+- I2C — R1, R4, R8;
+- SPI — R3, R4.
+
+For only I2C
+
+![Ssd1306 I2C/SPI back](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_I2C_SPI_back.jpg)
+
+![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_OLED_128x64_I2C_SPI.png)
+
+### Connection table:
+
+| Pin No: | Pin Name: | Description: |
+| ------------ | ------------ | ------------ |
+| 1 | Ground (Gnd) | Connected to the ground of the circuit |
+| 2 | Supply (Vdd,Vcc,5V) | Can be powered by either 3.3V or 5V |
+| 3 | SCK (D0,SCL,CLK) | The display supports both IIC and SPI, for which clock is supplied through this pin |
+| 4 | SDA (D1,MOSI) | This is the data pin of the both, it can either be used for IIC or for SPI |
+| 5 | RES(RST,RESET) | When held to ground momentarily this pin resets the module (operational work, High value) |
+| 6 | DC (A0) | I2C — must be connected to power (3.3V or 5V). SPI — this is command pin |
+| 7 | Chip Select (CS) | Normally held low, used only when more than one SPI device is connected to MCU |
 
 ## Binding Notes
 

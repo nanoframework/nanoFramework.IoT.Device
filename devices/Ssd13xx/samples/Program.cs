@@ -19,6 +19,8 @@ Debug.WriteLine("Hello Ssd1306 Sample!");
 
 //Tested with 128x64 and 128x32 OLEDs
 using Ssd1306 device = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(2, Ssd1306.DefaultI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64);
+//with reset pin
+//using Ssd1306 device = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(1, Ssd1306.SecondaryI2cAddress)),18, Ssd13xx.DisplayResolution.OLED128x64);
 device.ClearScreen();
 device.Font = new BasicFont();
 device.DrawString(2, 2, "nF IOT!", 2);//large size 2 font
