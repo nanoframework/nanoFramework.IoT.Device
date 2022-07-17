@@ -9,17 +9,17 @@ namespace Iot.Device.Adxl357
     public enum AccelerometerRange
     {
         /// <summary>
-        /// Range ±10g
+        /// Range ±10g.
         /// </summary>
         Range10G = 1,
 
         /// <summary>
-        /// Range ±20g
+        /// Range ±20g.
         /// </summary>
         Range20G = 2,
 
         /// <summary>
-        /// Range ±40g
+        /// Range ±40g.
         /// </summary>
         Range40G = 3
     }
