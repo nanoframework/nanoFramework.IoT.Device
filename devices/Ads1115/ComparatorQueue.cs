@@ -8,16 +8,16 @@ namespace Iot.Device.Ads1115
     /// </summary>
     public enum ComparatorQueue
     {
-        /// <summary>Assert after one</summary>
+        /// <summary>Assert after one.</summary>
         AssertAfterOne = 0x00,
 
-        /// <summary>Assert after two</summary>
+        /// <summary>Assert after two.</summary>
         AssertAfterTwo = 0x01,
 
-        /// <summary>Assert after four</summary>
+        /// <summary>Assert after four.</summary>
         AssertAfterFour = 0x02,
 
-        /// <summary>Disable</summary>
+        /// <summary>Queue disabled.</summary>
         Disable = 0x03
     }
 }
