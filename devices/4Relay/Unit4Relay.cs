@@ -12,7 +12,7 @@ namespace Iot.Device.Relay
     public class Unit4Relay : Base4Relay
     {
         /// <summary>
-        /// Gets or sets the switch mode. True to synchronize the Led with the Relay.
+        /// Gets or sets a value indicating whether synchronize the Led with the Relay.
         /// </summary>
         public bool SynchronizedMode
         {
@@ -28,7 +28,7 @@ namespace Iot.Device.Relay
         }
 
         /// <summary>
-        /// Creates a Unit 4 Relay.
+        /// Initializes a new instance of the <see cref="Unit4Relay" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device.</param>
         public Unit4Relay(I2cDevice i2cDevice) : base(i2cDevice, RelayType.Unit)

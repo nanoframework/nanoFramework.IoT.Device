@@ -3,45 +3,45 @@
 
 using System;
 using System.Buffers.Binary;
-using System.Threading;
 using System.Device.I2c;
 using System.Device.Model;
+using System.Threading;
 using UnitsNet;
 
 namespace Iot.Device.Ags01db
 {
     /// <summary>
-    /// MEMS VOC Gas Sensor ASG01DB
+    /// MEMS VOC Gas Sensor ASG01DB.
     /// </summary>
     [Interface("MEMS VOC Gas Sensor ASG01DB")]
     public class Ags01db : IDisposable
     {
         /// <summary>
-        /// ASG01DB Default I2C Address
+        /// ASG01DB Default I2C Address.
         /// </summary>
         public const byte DefaultI2cAddress = 0x11;
 
         // CRC const
-        private const byte CRC_POLYNOMIAL = 0x31;
-        private const byte CRC_INIT = 0xFF;
+        private const byte CrcPolynomial = 0x31;
+        private const byte CrcInit = 0xFF;
         private I2cDevice _i2cDevice;
 
         private int _lastMeasurement = 0;
 
         /// <summary>
-        /// ASG01DB VOC (Volatile Organic Compounds) Gas Concentration (ppm)
+        /// ASG01DB VOC (Volatile Organic Compounds) Gas Concentration (ppm).
         /// </summary>
         [Telemetry]
         public Ratio Concentration => Ratio.FromPartsPerMillion(GetConcentration());
 
         /// <summary>
-        /// ASG01DB Version
+        /// ASG01DB Version.
         /// </summary>
         [Property]
         public byte Version => GetVersion();
 
         /// <summary>
-        /// Creates a new instance of the ASG01DB
+        /// Initializes a new instance of the <see cref="Ags01db" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         public Ags01db(I2cDevice i2cDevice)
@@ -50,9 +50,9 @@ namespace Iot.Device.Ags01db
         }
 
         /// <summary>
-        /// Get ASG01DB VOC Gas Concentration
+        /// Get ASG01DB VOC Gas Concentration.
         /// </summary>
-        /// <returns>Concentration (ppm)</returns>
+        /// <returns>Concentration (ppm).</returns>
         private double GetConcentration()
         {
             // The time of two measurements should be more than 2s.
@@ -67,6 +67,7 @@ namespace Iot.Device.Ags01db
             {
                 (byte)Register.ASG_DATA_MSB, (byte)Register.ASG_DATA_LSB
             };
+
             // Return data MSB, LSB, CRC checksum
             SpanByte readBuff = new byte[3];
 
@@ -87,9 +88,9 @@ namespace Iot.Device.Ags01db
         }
 
         /// <summary>
-        /// Get ASG01DB Version
+        /// Get ASG01DB Version.
         /// </summary>
-        /// <returns>Version</returns>
+        /// <returns>ASG01DB Version.</returns>
         private byte GetVersion()
         {
             // Details in the Datasheet P5
@@ -98,6 +99,7 @@ namespace Iot.Device.Ags01db
             {
                 (byte)Register.ASG_VERSION_MSB, (byte)Register.ASG_VERSION_LSB
             };
+
             // Return version, CRC checksum
             SpanByte readBuff = new byte[2];
 
@@ -114,16 +116,16 @@ namespace Iot.Device.Ags01db
         }
 
         /// <summary>
-        /// 8-bit CRC Checksum Calculation
+        /// 8-bit CRC Checksum Calculation.
         /// </summary>
-        /// <param name="data">Raw Data</param>
-        /// <param name="length">Data Length</param>
-        /// <param name="crc8">Raw CRC8</param>
-        /// <returns>Checksum is true or false</returns>
+        /// <param name="data">Raw Data.</param>
+        /// <param name="length">Data Length.</param>
+        /// <param name="crc8">Raw CRC8.</param>
+        /// <returns>Checksum is true or false.</returns>
         private bool CheckCrc8(SpanByte data, int length, byte crc8)
         {
             // Details in the Datasheet P6
-            byte crc = CRC_INIT;
+            byte crc = CrcInit;
             for (int i = 0; i < length; i++)
             {
                 crc ^= data[i];
@@ -132,7 +134,7 @@ namespace Iot.Device.Ags01db
                 {
                     if ((crc & 0x80) != 0)
                     {
-                        crc = (byte)((crc << 1) ^ CRC_POLYNOMIAL);
+                        crc = (byte)((crc << 1) ^ CrcPolynomial);
                     }
                     else
                     {
@@ -152,12 +154,15 @@ namespace Iot.Device.Ags01db
         }
 
         /// <summary>
-        /// Cleanup
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {
-            _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            if (_i2cDevice != null)
+            {
+                _i2cDevice?.Dispose();
+                _i2cDevice = null;
+            }
         }
     }
 }

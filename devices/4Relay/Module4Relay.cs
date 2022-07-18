@@ -11,7 +11,7 @@ namespace Iot.Device.Relay
     public class Module4Relay : Base4Relay
     {
         /// <summary>
-        /// Creates a Module 4 Relay.
+        /// Initializes a new instance of the <see cref="Module4Relay" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device.</param>
         public Module4Relay(I2cDevice i2cDevice) : base(i2cDevice, RelayType.Module)
