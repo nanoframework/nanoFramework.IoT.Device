@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="BleStatus.cs" />
     <Compile Include="BlueNrg2.cs" />
     <Compile Include="Characteristic.cs" />
     <Compile Include="Descriptor.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="Hci.cs" />
     <Compile Include="IHardwareInterface.cs" />
     <Compile Include="Aci\L2Cap.cs" />
-    <Compile Include="Service.cs" />
     <Compile Include="ServiceContext.cs" />
     <Compile Include="Utils\List.cs" />
     <Compile Include="Utils\Math.cs" />

@@ -156,6 +156,10 @@ namespace Iot.Device.BlueNrg2
 
         public delegate void GattReadMultiPermitRequest(ushort connectionHandle, byte numberOfHandles, ushort[] handles);
 
+        /// <summary> This event is given to the application when a read request or read blob request is received by the server from the client. This event will be given to the application only if the event bit for this event generation is set when the characteristic was added. On receiving this event, the application can update the value of the handle if it desires and when done, it has to send the @ref aci_gatt_allow_read command to indicate to the stack that it can send the response to the client.</summary>
+        /// <param name="connectionHandle">Connection handle related to the response</param>
+        /// <param name="attributeHandle">The handle of the attribute</param>
+        /// <param name="offset">Contains the offset from which the read has been requested</param> 
         public delegate void GattReadPermitRequest(ushort connectionHandle, ushort attributeHandle, ushort offset);
 
         public delegate void GattServerConfirmation(ushort connectionHandle);
@@ -398,6 +402,12 @@ namespace Iot.Device.BlueNrg2
 
         public event GattReadMultiPermitRequest GattReadMultiPermitRequestEvent;
 
+        /// <summary>
+        /// This event is given to the application when a read request or read blob request is received by the server from the client.
+        /// This event will be given to the application only if the event bit for this event generation is set when the characteristic was added.
+        /// On receiving this event, the application can update the value of the handle if it desires and when done,
+        /// it has to send the <see cref="Iot.Device.BlueNrg2.Aci.Gatt.AllowRead"/> command to indicate to the stack that it can send the response to the client.
+        /// </summary>
         public event GattReadPermitRequest GattReadPermitRequestEvent;
 
         public event GattServerConfirmation GattServerConfirmationEvent;

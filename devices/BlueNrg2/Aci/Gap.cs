@@ -186,7 +186,7 @@ namespace Iot.Device.BlueNrg2.Aci
 			ptr += 2;
 			command[ptr] = (byte)ownAddressType;
 			ptr += 1;
-			command[ptr] = advertisingFilterPolicy;
+			command[ptr] = (byte)advertisingFilterPolicy;
 			ptr += 1;
 			command[ptr] = localNameLength;
 			ptr += 1;

@@ -10,6 +10,7 @@ using Iot.Device.BlueNrg2.Aci;
 using Microsoft.Extensions.Logging;
 using nanoFramework.Device.Bluetooth;
 using nanoFramework.Device.Bluetooth.GenericAttributeProfile;
+using nanoFramework.Device.Bluetooth.NativeDevice;
 using nanoFramework.Logging;
 
 namespace Iot.Device.BlueNrg2
@@ -105,9 +106,20 @@ namespace Iot.Device.BlueNrg2
             StartBluetoothThread();
 
             byte bluetoothDeviceAddressDataLength = 6;
-            var bluetoothDeviceAddress = new byte[] { 0xc0, 0x00, 0x00, 0x00, 0x00, 0x01 };
-            Hal.WriteConfigData(Offset.BluetoothPublicAddress, bluetoothDeviceAddressDataLength,
-                bluetoothDeviceAddress);
+            var bluetoothDeviceAddress = new byte[]
+            {
+                0xc0,
+                0x00,
+                0x00,
+                0x00,
+                0x00,
+                0x01
+            };
+            Hal.WriteConfigData(
+                Offset.BluetoothPublicAddress,
+                bluetoothDeviceAddressDataLength,
+                bluetoothDeviceAddress
+            );
         }
 
         /// <summary>
@@ -116,23 +128,24 @@ namespace Iot.Device.BlueNrg2
         public void Dispose()
         {
             _running = false;
-            while (_isRunning) Thread.Sleep(1);
+            while (_isRunning)
+                Thread.Sleep(1);
 
             if (_shouldDispose)
                 _hardwareInterface.Dispose();
         }
 
         /// <inheritdoc />
-        public event EventHandler<GattReadRequestedEventArgs> OnReadRequested;
+        public event EventHandler<NativeReadRequestedEventArgs> OnReadRequested;
 
         /// <inheritdoc />
-        public event EventHandler<GattWriteRequestedEventArgs> OnWriteRequested;
+        public event EventHandler<NativeWriteRequestedEventArgs> OnWriteRequested;
 
         /// <inheritdoc />
-        public event EventHandler<GattSubscribedCliensChangedEventArgs> OnClientSubscribed;
+        public event EventHandler<NativeSubscribedClientsChangedEventArgs> OnClientSubscribed;
 
         /// <inheritdoc />
-        public event EventHandler<GattSubscribedCliensChangedEventArgs> OnClientUnsubscribed;
+        public event EventHandler<NativeSubscribedClientsChangedEventArgs> OnClientUnsubscribed;
 
         /// <inheritdoc />
         public void InitService()
@@ -141,34 +154,35 @@ namespace Iot.Device.BlueNrg2
 
             _eventIds = new ArrayList();
 
-            Events.GattReadPermitRequestEvent += (handle, attributeHandle, offset) =>
-            {
-                var eventId = new EventId
-                {
-                    Id = GenerateEventId(),
-                    EventType = BluetoothEventType.Read,
-                    Args = new ReadRequestArgs { Handle = handle, AttributeHandle = attributeHandle, Offset = offset }
-                };
-                _eventIds.Add(eventId);
-                OnReadRequested?.Invoke(this, new GattReadRequestedEventArgs(eventId.Id, null, this));
-            };
+            Events.GattReadPermitRequestEvent += OnReadPermitRequest;
+        }
 
-            Events.GattWritePermitRequestEvent += (handle, attributeHandle, length, data) =>
+        private void OnReadPermitRequest(ushort connectionHandle, ushort attributeHandle, ushort offset)
+        {
+            var eventId = new EventId
             {
-                var eventId = new EventId
-                {
-                    Id = GenerateEventId(),
-                    EventType = BluetoothEventType.Write,
-                    Args = new WriteRequestArgs
-                        { Handle = handle, AttributeHandle = attributeHandle, Lenght = length, Data = data }
-                };
-                _eventIds.Add(eventId);
-                OnWriteRequested?.Invoke(this, new GattWriteRequestedEventArgs(eventId.Id, null, this));
+                Id = _nextEventId++,
+                Args = new ArrayList(),
             };
+            eventId.Args.Add(connectionHandle);
+            eventId.Args.Add(attributeHandle);
+            eventId.Args.Add(offset);
         }
 
         /// <inheritdoc />
-        public bool StartAdvertising(bool isDiscoverable, bool isConnectable, byte[] deviceName, ArrayList services)
+        public void AddCharacteristic(GattLocalCharacteristic characteristic)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public void RemoveCharacteristic(GattLocalCharacteristic characteristic)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public bool StartAdvertising(bool isConnectable, bool isDiscoverable, Buffer serviceData, byte[] deviceName, ArrayList services)
         {
             if (deviceName is null)
                 throw new ArgumentNullException(nameof(deviceName));
@@ -178,20 +192,40 @@ namespace Iot.Device.BlueNrg2
             _deviceName = deviceName;
             ushort serviceHandle = 0, deviceNameCharacteristicHandle = 0, appearanceCharacteristicHandle = 0;
 
-            Gap.Init(Role.Peripheral, false, 0x07, ref serviceHandle, ref deviceNameCharacteristicHandle,
-                ref appearanceCharacteristicHandle);
+            Gap.Init(
+                Role.Peripheral,
+                false,
+                0x07,
+                ref serviceHandle,
+                ref deviceNameCharacteristicHandle,
+                ref appearanceCharacteristicHandle
+            );
 
-            Gatt.UpdateCharacteristicValue(serviceHandle, deviceNameCharacteristicHandle, 0,
+            Gatt.UpdateCharacteristicValue(
+                serviceHandle,
+                deviceNameCharacteristicHandle,
+                0,
                 BitConverter.GetBytes(_deviceName.Length)[3],
-                _deviceName);
+                _deviceName
+            );
 
             Gap.SetIoCapability(IoCapability.DisplayOnly);
 
-            Gap.SetAuthenticationRequirement(true, true, SecureConnectionSupport.Supported, false, 7, 16, false, 123456,
-                AddressType.PublicDevice);
+            Gap.SetAuthenticationRequirement(
+                true,
+                true,
+                SecureConnectionSupport.Supported,
+                false,
+                7,
+                16,
+                false,
+                123456,
+                AddressType.PublicDevice
+            );
             _gattServices = new GattLocalService[services.Count];
 
-            for (var i = 0; i < services.Count; i++) _gattServices[i] = (GattLocalService)services[i];
+            for (var i = 0; i < services.Count; i++)
+                _gattServices[i] = (GattLocalService)services[i];
 
             _serviceHandles = new ushort[services.Count];
             _characteristicHandles = new ushort[services.Count][];
@@ -206,8 +240,13 @@ namespace Iot.Device.BlueNrg2
                 // number of attribute records that can be added to the service
                 var maxAttributeRecords = (byte)(1 + 3 * charCount);
 
-                Gatt.AddService(UuidType.Uuid128, uuid, ServiceType.Primary, maxAttributeRecords,
-                    ref _serviceHandles[i]);
+                Gatt.AddService(
+                    UuidType.Uuid128,
+                    uuid,
+                    ServiceType.Primary,
+                    maxAttributeRecords,
+                    ref _serviceHandles[i]
+                );
 
                 _characteristicHandles[i] = new ushort[service.Characteristics.Length];
 
@@ -219,20 +258,37 @@ namespace Iot.Device.BlueNrg2
                     var characteristicProperties =
                         (CharacteristicProperties)((uint)characteristic.CharacteristicProperties & 0x11111111);
 
-                    Gatt.AddCharacteristic(_serviceHandles[i], UuidType.Uuid128, uuid, characteristicValueLength,
-                        characteristicProperties, SecurityPermissions.None,
+                    Gatt.AddCharacteristic(
+                        _serviceHandles[i],
+                        UuidType.Uuid128,
+                        uuid,
+                        characteristicValueLength,
+                        characteristicProperties,
+                        SecurityPermissions.None,
                         Gatt.EventMask.NotifyReadRequestAndWaitForApprovalResponse |
-                        Gatt.EventMask.NotifyWriteRequestAndWaitForApprovalResponse, 16, false,
-                        ref _characteristicHandles[i][j]);
+                        Gatt.EventMask.NotifyWriteRequestAndWaitForApprovalResponse,
+                        16,
+                        false,
+                        ref _characteristicHandles[i][j]
+                    );
                 }
             }
 
             Hci.LeSetScanResponseData(0, null);
 
-            Gap.SetDiscoverable(AdvertisingType.ConnectableUndirected, 100, 100, AddressType.PublicDevice,
-                FilterPolicy.ScanAnyRequestAny, (byte)_deviceName.Length, _deviceName, 0, null, 0, 0);
-
-
+            Gap.SetDiscoverable(
+                AdvertisingType.ConnectableUndirected,
+                100,
+                100,
+                AddressType.PublicDevice,
+                FilterPolicy.ScanAnyRequestAny,
+                (byte)_deviceName.Length,
+                _deviceName,
+                0,
+                null,
+                0,
+                0
+            );
 
             return true;
         }
@@ -246,7 +302,8 @@ namespace Iot.Device.BlueNrg2
         /// <inheritdoc />
         public int NotifyClient(ushort connection, ushort characteristicId, byte[] notifyBuffer)
         {
-            if (notifyBuffer is null) throw new ArgumentNullException(nameof(notifyBuffer));
+            if (notifyBuffer is null)
+                throw new ArgumentNullException(nameof(notifyBuffer));
 
             ushort value = 0;
 
@@ -261,8 +318,13 @@ namespace Iot.Device.BlueNrg2
 
                     //FIXME: Change this to be the actual characteristicId check
                     if (characteristicId == value)
-                        return (int)Gatt.UpdateCharacteristicValue(serviceHandle, characteristicHandle, 0,
-                            (byte)notifyBuffer.Length, notifyBuffer);
+                        return (int)Gatt.UpdateCharacteristicValue(
+                            serviceHandle,
+                            characteristicHandle,
+                            0,
+                            (byte)notifyBuffer.Length,
+                            notifyBuffer
+                        );
 
                     value++;
                 }
@@ -322,7 +384,8 @@ namespace Iot.Device.BlueNrg2
                 () =>
                 {
                     _isRunning = true;
-                    while (_running) Hci.UserEventProcess();
+                    while (_running)
+                        Hci.UserEventProcess();
 
                     _isRunning = false;
                 }
@@ -332,8 +395,7 @@ namespace Iot.Device.BlueNrg2
         private struct EventId
         {
             public ushort Id;
-            public BluetoothEventType EventType;
-            public object Args;
+            public ArrayList Args;
         }
 
         private struct ReadRequestArgs
