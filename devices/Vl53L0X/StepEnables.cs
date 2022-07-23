@@ -6,9 +6,13 @@ namespace Iot.Device.Vl53L0X
     internal class StepEnables
     {
         public bool Tcc { get; set; }
+
         public bool Dss { get; set; }
+        
         public bool Msrc { get; set; }
+        
         public bool PreRange { get; set; }
+        
         public bool FinalRange { get; set; }
     }
 }

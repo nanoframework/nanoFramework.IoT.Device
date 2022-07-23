@@ -4,18 +4,18 @@
 namespace Iot.Device.Amg88xx
 {
     /// <summary>
-    /// Defines the interrupt modes of the interrupt control register (addr: 0x03)
+    /// Defines the interrupt modes of the interrupt control register (addr: 0x03).
     /// </summary>
     public enum InterruptMode : byte
     {
         /// <summary>
-        /// The specification does not give any details on this mode
+        /// The specification does not give any details on this mode.
         /// </summary>
         Difference,
 
         /// <summary>
-        /// An interrupt occures if any pixel exceed the upper or lower limit as given in the
-        /// interrupt level register
+        /// An interrupt occures if any pixel exceed the upper or lower limit as given in the.
+        /// Interrupt level register.
         /// </summary>
         Absolute
     }

@@ -6,6 +6,7 @@ namespace Iot.Device.Vl53L0X
     internal class SpadInfo
     {
         public byte Count { get; set; }
+
         public bool TypeIsAperture { get; set; }
     }
 }

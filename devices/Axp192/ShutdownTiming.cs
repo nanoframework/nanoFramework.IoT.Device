@@ -4,20 +4,20 @@
 namespace Iot.Device.Axp192
 {
     /// <summary>
-    /// Shutdown timing
+    /// Shutdown timing.
     /// </summary>
-    public enum  ShutdownTiming
+    public enum ShutdownTiming
     {
-        /// <summary>4 seconds</summary>
+        /// <summary>4 seconds.</summary>
         S4 = 0b0000_0000,
 
-        /// <summary>6 seconds</summary>
+        /// <summary>6 seconds.</summary>
         S6 = 0b0000_0001,
 
-        /// <summary>8 seconds</summary>
+        /// <summary>8 seconds.</summary>
         S8 = 0b0000_0010,
 
-        /// <summary>10 seconds</summary>
+        /// <summary>10 seconds.</summary>
         S10 = 0b0000_0011,
     }
 }

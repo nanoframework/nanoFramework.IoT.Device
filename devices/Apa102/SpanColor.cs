@@ -7,17 +7,17 @@ using System.Drawing;
 namespace Iot.Device.Apa102
 {
     /// <summary>
-    /// Provides a type- and memory-safe representation of a contiguous region of arbitrary
+    /// Provides a type- and memory-safe representation of a contiguous region of arbitrary.
     /// </summary>
     [Serializable, CLSCompliant(false)]
-    public readonly ref struct SpanColor
+    public struct SpanColor
     {
         private readonly Color[] _array;
         private readonly int _start;
         private readonly int _length;
 
         /// <summary>
-        /// Creates a new System.Span`1 object over the entirety of a specified array.
+        /// Initializes a new instance of the <see cref="SpanColor" /> struct.
         /// </summary>
         /// <param name="array">The array from which to create the System.Span object.</param>
         public SpanColor(Color[] array)
@@ -28,14 +28,13 @@ namespace Iot.Device.Apa102
         }
 
         /// <summary>
-        /// Creates a new System.Span`1 object that includes a specified number of elements
-        /// of an array starting at a specified index.
+        /// Initializes a new instance of the <see cref="SpanColor" /> struct.
         /// </summary>
         /// <param name="array">The source array.</param>
-        /// <param name="start">The index of the first element to include in the new System.Span</param>
-        /// <param name="length">The number of elements to include in the new System.Span</param>
+        /// <param name="start">The index of the first element to include in the new System.Span.</param>
+        /// <param name="length">The number of elements to include in the new System.Span.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
-        /// array is null, but start or length is non-zero. -or- start is outside the bounds
+        /// Array is null, but start or length is non-zero. -or- start is outside the bounds
         /// of the array. -or- start and length exceeds the number of elements in the array.
         /// </exception>
         public SpanColor(Color[] array, int start, int length)
@@ -65,9 +64,9 @@ namespace Iot.Device.Apa102
         /// </summary>
         /// <param name="index">The zero-based index of the element.</param>
         /// <returns>The element at the specified index.</returns>
-        // public ref Color this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
         public Color this[int index]
         {
+            // public ref Color this[int index] => ref _array[_start + index]; // <= this is not working and raises exception after few access
             get
             {
                 if (index > _length)
@@ -106,11 +105,20 @@ namespace Iot.Device.Apa102
         public bool IsEmpty => _length == 0;
 
         /// <summary>
+        /// Converts to SpanColor from array.
+        /// </summary>
+        /// <param name="array">Color array.</param>
+        public static implicit operator SpanColor(Color[] array)
+        {
+            return new SpanColor(array);
+        }
+
+        /// <summary>
         /// Copies the contents of this System.Span into a destination System.Span.
         /// </summary>
         /// <param name="destination"> The destination System.Span object.</param>
         /// <exception cref="System.ArgumentException">
-        /// destination is shorter than the source System.Span.
+        /// Destination is shorter than the source System.Span.
         /// </exception>
         public void CopyTo(SpanColor destination)
         {
@@ -130,7 +138,7 @@ namespace Iot.Device.Apa102
         /// </summary>
         /// <param name="start">The index at which to begin the slice.</param>
         /// <returns>A span that consists of all elements of the current span from start to the end of the span.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">start is less than zero or greater than System.Span.Length.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Start is less than zero or greater than System.Span.Length.</exception>
         public SpanColor Slice(int start)
         {
             if ((start > _length) || (start < 0))
@@ -147,7 +155,7 @@ namespace Iot.Device.Apa102
         /// <param name="start">The index at which to begin this slice.</param>
         /// <param name="length">The desired length for the slice.</param>
         /// <returns>A span that consists of length elements from the current span starting at start.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">start or start + length is less than zero or greater than System.Span.Length.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Start or start + length is less than zero or greater than System.Span.Length.</exception>
         public SpanColor Slice(int start, int length)
         {
             if ((start < 0) || (length < 0) || (start + length > _length))
@@ -171,11 +179,6 @@ namespace Iot.Device.Apa102
             }
 
             return array;
-        }
-
-        public static implicit operator SpanColor(Color[] array)
-        {
-            return new SpanColor(array);
         }
     }
 }

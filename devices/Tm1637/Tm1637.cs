@@ -6,16 +6,16 @@ using System.Device;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-// using System.Runtime.InteropServices.WindowsRuntime;
+
 namespace Iot.Device.Tm1637
 {
     /// <summary>
-    /// Represents Tm1637 segment display
+    /// Represents Tm1637 segment display.
     /// </summary>
     public sealed class Tm1637 : IDisposable
     {
         /// <summary>
-        /// The number of characters that the TM1637 can handle
+        /// The number of characters that the TM1637 can handle.
         /// </summary>
         public static byte MaxCharacters => 6;
 
@@ -39,15 +39,19 @@ namespace Iot.Device.Tm1637
         private bool _screenOn;
 
         /// <summary>
-        /// Initialize a TM1637
+        /// Initializes a new instance of the<see cref="Tm1637" /> class.
         /// </summary>
-        /// <param name="pinClk">The clock pin</param>
-        /// <param name="pinDio">The data pin</param>
-        /// <param name="pinNumberingScheme">Use the logical or physical pin layout</param>
-        /// <param name="gpioController">A Gpio Controller if you want to use a specific one</param>
-        /// <param name="shouldDispose">True to dispose the Gpio Controller</param>
-        public Tm1637(int pinClk, int pinDio, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical,
-            GpioController? gpioController = null, bool shouldDispose = true)
+        /// <param name="pinClk">The clock pin.</param>
+        /// <param name="pinDio">The data pin.</param>
+        /// <param name="pinNumberingScheme">Use the logical or physical pin layout.</param>
+        /// <param name="gpioController">A Gpio Controller if you want to use a specific one.</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
+        public Tm1637(
+            int pinClk, 
+            int pinDio, 
+            PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical,
+            GpioController? gpioController = null, 
+            bool shouldDispose = true)
         {
             _pinClk = pinClk;
             _pinDio = pinDio;
@@ -59,10 +63,10 @@ namespace Iot.Device.Tm1637
         }
 
         /// <summary>
-        /// Order of characters, expect a 6 length byte array
+        /// Gets or sets order of characters, expect a 6 length byte array
         /// 0 to 5, any order. Most of the time 4 segments do
         /// not need to be changed but the 6 ones may be in different order
-        /// like 0 1 2 5 4 3. In this case, this byte array has be be in this order
+        /// like 0 1 2 5 4 3. In this case, this byte array has be be in this order.
         /// </summary>
         public byte[] CharacterOrder
         {
@@ -92,7 +96,7 @@ namespace Iot.Device.Tm1637
         }
 
         /// <summary>
-        /// Set the screen on or off
+        /// Gets or sets a value indicating whether the screen on or off.
         /// </summary>
         public bool ScreenOn
         {
@@ -105,7 +109,7 @@ namespace Iot.Device.Tm1637
         }
 
         /// <summary>
-        /// Adjust the screen brightness from 0 to 7
+        /// Gets or sets a value indicating whether the screen brightness from 0 to 7.
         /// </summary>
         public byte Brightness
         {
@@ -129,6 +133,7 @@ namespace Iot.Device.Tm1637
             {
                 _controller.Write(_pinClk, PinValue.Low);
                 DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+
                 // LSB first
                 if ((data & 0x01) == 0x01)
                 {
@@ -191,10 +196,10 @@ namespace Iot.Device.Tm1637
         }
 
         /// <summary>
-        /// Displays segments starting at first segment with byte array containing raw data for each segment including the dot
+        /// Displays segments starting at first segment with byte array containing raw data for each segment including the dot.
         /// <remarks>
         /// Segment representation:
-        ///
+        /// <para/>
         /// bit 0 = a       _a_
         /// bit 1 = b      |   |
         /// bit 2 = c      f   b
@@ -203,11 +208,11 @@ namespace Iot.Device.Tm1637
         /// bit 5 = f      e   c
         /// bit 6 = g      |_d_|  .dp
         /// bit 7 = dp
-        ///
+        /// <para/>
         /// Representation of the number 0 so lighting segments a, b, c, d, e and F is then 0x3f
         /// </remarks>
         /// </summary>
-        /// <param name="rawData">The raw data array to display, size of the array has to be 6 maximum</param>
+        /// <param name="rawData">The raw data array to display, size of the array has to be 6 maximum.</param>
         private void Display(SpanByte rawData)
         {
             if (rawData.Length > MaxCharacters)
@@ -231,12 +236,15 @@ namespace Iot.Device.Tm1637
             _lastDisplay = toTransfer;
 
             StartTransmission();
+
             // First command is set data
             WriteByte((byte)DataCommand.DataCommandSetting);
             StopTransmission();
             StartTransmission();
+
             // Second command is set address to automatic
             WriteByte((byte)DataCommand.DataCommandSetting);
+
             // Transfer the data
             for (int i = 0; i < MaxCharacters; i++)
             {
@@ -245,6 +253,7 @@ namespace Iot.Device.Tm1637
 
             StopTransmission();
             StartTransmission();
+
             // Set the display on/off and the brightness
             WriteByte((byte)((ScreenOn ? DisplayCommand.DisplayOn : DisplayCommand.DisplayOff) + _brightness));
             StopTransmission();
@@ -252,12 +261,12 @@ namespace Iot.Device.Tm1637
 
         /// <summary>
         /// Displays a series of prebuild characters including the dot or not
-        /// You can build your own characters with the primitives like Bottom, Top, Dot
+        /// You can build your own characters with the primitives like Bottom, Top, Dot.
         /// </summary>
-        /// <param name="rawData">The Character to display</param>
+        /// <param name="rawData">The Character to display.</param>
         public void Display(SpanCharacter rawData)
         {
-            var byteArray = new byte[rawData.Length] ;
+            var byteArray = new byte[rawData.Length];
             for (var j = 0; j < rawData.Length; j++)
             {
                 byteArray[j] = (byte)rawData[j];
@@ -267,11 +276,11 @@ namespace Iot.Device.Tm1637
         }
 
         /// <summary>
-        /// Displays a raw data at a specific segment position from 0 to 5
+        /// Displays a raw data at a specific segment position from 0 to 5.
         /// </summary>
         /// <remarks>
         /// Segment representation:
-        ///
+        /// <para/>
         /// bit 0 = a       _a_
         /// bit 1 = b      |   |
         /// bit 2 = c      f   b
@@ -280,11 +289,11 @@ namespace Iot.Device.Tm1637
         /// bit 5 = f      e   c
         /// bit 6 = g      |_d_|  .dp
         /// bit 7 = dp
-        ///
-        /// Representation of the number 0 so lighting segments a, b, c, d, e and F is then 0x3f
+        /// <para/>
+        /// Representation of the number 0 so lighting segments a, b, c, d, e and F is then 0x3f.
         /// </remarks>
-        /// <param name="characterPosition">The character position from 0 to 5</param>
-        /// <param name="rawData">The segment characters to display</param>
+        /// <param name="characterPosition">The character position from 0 to 5.</param>
+        /// <param name="rawData">The segment characters to display.</param>
         public void Display(byte characterPosition, Character rawData)
         {
             if (characterPosition > MaxCharacters)
@@ -300,23 +309,27 @@ namespace Iot.Device.Tm1637
         private void DisplayRaw(byte characterAddress, byte rawData)
         {
             StartTransmission();
+
             // First command for fix address
             WriteByte((byte)DataCommand.FixAddress);
             StopTransmission();
             StartTransmission();
+
             // Set the address to transfer
             WriteByte((byte)(DataCommand.AddressCommandSetting + characterAddress));
+
             // Transfer the byte
             WriteByte(rawData);
             StopTransmission();
             StartTransmission();
+
             // Set the display on/off and the brightness
             WriteByte((byte)((ScreenOn ? DisplayCommand.DisplayOn : DisplayCommand.DisplayOff) + _brightness));
             StopTransmission();
         }
 
         /// <summary>
-        /// Clear the display
+        /// Clear the display.
         /// </summary>
         public void ClearDisplay()
         {
@@ -333,15 +346,13 @@ namespace Iot.Device.Tm1637
             Display(clearDisplay);
         }
 
-        /// <summary>
-        /// Cleanup
-        /// </summary>
+        /// <inheritdoc/>
         public void Dispose()
         {
             if (_shouldDispose)
             {
                 _controller?.Dispose();
-                _controller = null!;
+                _controller = null;
             }
         }
     }

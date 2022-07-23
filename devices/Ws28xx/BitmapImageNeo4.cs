@@ -18,7 +18,7 @@ namespace Iot.Device.Ws28xx
         // This field defines the count within the lookup table. The length correlates to the possible values of a single byte.
         private const int LookupCount = 256;
 
-        private static readonly byte[] _lookup = new byte[LookupCount * BytesPerComponent];
+        private static readonly byte[] Lookup = new byte[LookupCount * BytesPerComponent];
 
         static BitmapImageNeo4()
         {
@@ -26,7 +26,7 @@ namespace Iot.Device.Ws28xx
         }
 
         public BitmapImageNeo4(int width, int height)
-                            : base(new byte[width * height * BytesPerPixel + ResetDelayInBytes], width, height, width * BytesPerPixel)
+                            : base(new byte[(width * height * BytesPerPixel) + ResetDelayInBytes], width, height, width * BytesPerPixel)
         {
         }
 
@@ -42,9 +42,9 @@ namespace Iot.Device.Ws28xx
                     data = (data << 3) | 0b100 | ((i >> j) << 1) & 2;
                 }
 
-                _lookup[i * BytesPerComponent + 0] = unchecked((byte)(data >> 16));
-                _lookup[i * BytesPerComponent + 1] = unchecked((byte)(data >> 8));
-                _lookup[i * BytesPerComponent + 2] = unchecked((byte)(data >> 0));
+                Lookup[(i * BytesPerComponent) + 0] = unchecked((byte)(data >> 16));
+                Lookup[(i * BytesPerComponent) + 1] = unchecked((byte)(data >> 8));
+                Lookup[(i * BytesPerComponent) + 2] = unchecked((byte)(data >> 0));
             }
         }
 
@@ -53,19 +53,19 @@ namespace Iot.Device.Ws28xx
         public override void SetPixel(int x, int y, Color c)
         {
             // Alpha is used as white.
-            var offset = y * Stride + x * BytesPerPixel;
-            Data[offset++] = _lookup[c.G * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.G * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.G * BytesPerComponent + 2];
-            Data[offset++] = _lookup[c.R * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.R * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.R * BytesPerComponent + 2];
-            Data[offset++] = _lookup[c.B * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.B * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.B * BytesPerComponent + 2];
-            Data[offset++] = _lookup[c.A * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.A * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.A * BytesPerComponent + 2];
+            var offset = (y * Stride) + (x * BytesPerPixel);
+            Data[offset++] = Lookup[(c.G * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.G * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.G * BytesPerComponent) + 2];
+            Data[offset++] = Lookup[(c.R * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.R * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.R * BytesPerComponent) + 2];
+            Data[offset++] = Lookup[(c.B * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.B * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.B * BytesPerComponent) + 2];
+            Data[offset++] = Lookup[(c.A * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.A * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.A * BytesPerComponent) + 2];
         }
 
         public override void SetPixel(int x, int y, byte r, byte g, byte b) => SetPixel(x, y, Color.FromArgb(r, g, b));

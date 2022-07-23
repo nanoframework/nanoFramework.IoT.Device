@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
 using System.Device.Gpio;
 using System.Diagnostics;
@@ -57,14 +60,14 @@ namespace Iot.Device.Uln2003
         private long _stepMicrosecondsDelay;
 
         /// <summary>
-        /// Initialize a Uln2003 class.
+        /// Initializes a new instance of the <see cref="Uln2003" /> class.
         /// </summary>
         /// <param name="pin1">The GPIO pin number which corresponds pin A on ULN2003 driver board.</param>
         /// <param name="pin2">The GPIO pin number which corresponds pin B on ULN2003 driver board.</param>
         /// <param name="pin3">The GPIO pin number which corresponds pin C on ULN2003 driver board.</param>
         /// <param name="pin4">The GPIO pin number which corresponds pin D on ULN2003 driver board.</param>
         /// <param name="controller">The controller.</param>
-        /// <param name="shouldDispose">True to dispose the Gpio Controller</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <param name="stepsToRotate">Amount of steps needed to rotate motor once in HalfStepMode.</param>
         public Uln2003(int pin1, int pin2, int pin3, int pin4, GpioController? controller = null, bool shouldDispose = true, int stepsToRotate = 4096)
         {
@@ -84,13 +87,13 @@ namespace Iot.Device.Uln2003
         }
 
         /// <summary>
-        /// Sets the motor speed to revolutions per minute.
+        /// Gets or sets the motor speed to revolutions per minute.
         /// </summary>
         /// <remarks>Default revolutions per minute for 28BYJ-48 is approximately 15.</remarks>
         public short RPM { get; set; }
 
         /// <summary>
-        /// Sets the stepper's mode.
+        /// Gets or sets the stepper's mode.
         /// </summary>
         public StepperMode Mode
         {
@@ -187,10 +190,10 @@ namespace Iot.Device.Uln2003
         public void Dispose()
         {
             Stop();
-            if (_shouldDispose)
+            if (_shouldDispose && _controller != null)
             {
                 _controller?.Dispose();
-                _controller = null!;
+                _controller = null;
             }
         }
     }

@@ -12,7 +12,7 @@ using System.Threading;
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// AK8963 class implementing a magnetometer
+    /// AK8963 class implementing a magnetometer.
     /// </summary>
     [Interface("AK8963 class implementing a magnetometer")]
     public sealed class Ak8963 : IDisposable
@@ -25,36 +25,37 @@ namespace Iot.Device.Magnetometer
         private bool _shouldDispose = true;
 
         /// <summary>
-        /// Default I2C address for the AK8963
+        /// Default I2C address for the AK8963.
         /// </summary>
         public const byte DefaultI2cAddress = 0x0C;
 
         /// <summary>
-        /// Default timeout to use when timeout is not provided in the reading methods
+        /// Gets or sets default timeout to use when timeout is not provided in the reading methods.
         /// </summary>
         [Property]
         public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        /// Default constructor for an independent AK8963
+        /// Initializes a new instance of the <see cref="Ak8963" /> class.
         /// </summary>
-        /// <param name="i2CDevice">The I2C device</param>
+        /// <param name="i2CDevice">The I2C device.</param>
         public Ak8963(I2cDevice i2CDevice)
             : this(i2CDevice, new Ak8963I2c())
         {
         }
 
         /// <summary>
-        /// Constructor to use if AK8963 is behind another element and need a special I2C protocol like
-        /// when used with the MPU9250
+        /// Initializes a new instance of the <see cref="Ak8963" /> class to use if AK8963 is behind another element and need a special I2C protocol like
+        /// when used with the MPU9250.
         /// </summary>
-        /// <param name="i2cDevice">The I2C device</param>
-        /// <param name="ak8963Interface">The specific interface to communicate with the AK8963</param>
-        /// <param name="shouldDispose">True to dispose the I2C device when class is disposed</param>
+        /// <param name="i2cDevice">The I2C device.</param>
+        /// <param name="ak8963Interface">The specific interface to communicate with the AK8963.</param>
+        /// <param name="shouldDispose">True to dispose the I2C device when class is disposed.</param>
         public Ak8963(I2cDevice i2cDevice, Ak8963I2cBase ak8963Interface, bool shouldDispose = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _ak8963Interface = ak8963Interface;
+
             // Initialize the default modes
             _measurementMode = MeasurementMode.PowerDown;
             _outputBitMode = OutputBitMode.Output14bit;
@@ -69,7 +70,7 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Reset the device
+        /// Reset the device.
         /// </summary>
         [Command]
         public void Reset()
@@ -78,24 +79,25 @@ namespace Iot.Device.Magnetometer
             _measurementMode = MeasurementMode.PowerDown;
             _outputBitMode = OutputBitMode.Output14bit;
             _selfTest = false;
+
             // When powering the AK893, doc says 50 ms needed
             Thread.Sleep(50);
         }
 
         /// <summary>
-        /// Get the device information
+        /// Get the device information.
         /// </summary>
-        /// <returns>The device information</returns>
+        /// <returns>The device information.</returns>
         public byte GetDeviceInfo() => ReadByte(Register.INFO);
 
         /// <summary>
-        /// Get the magnetometer bias
+        /// Gets or sets the magnetometer bias.
         /// </summary>
         [Property]
         public Vector3 MagnetometerBias { get; set; } = Vector3.Zero;
 
         /// <summary>
-        /// Get the magnetometer hardware adjustment bias
+        /// Gets or sets the magnetometer hardware adjustment bias.
         /// </summary>
         [Property]
         public Vector3 MagnetometerAdjustment { get; set; } = Vector3.One;
@@ -103,10 +105,10 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Calibrate the magnetometer. Make sure your sensor is as far as possible of magnet
         /// Calculate as well the magnetometer bias. Please make sure you are moving the magnetometer all over space, rotating it.
-        /// Please make sure you are not close to any magnetic field like magnet or phone
+        /// Please make sure you are not close to any magnetic field like magnet or phone.
         /// </summary>
-        /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 1000</param>
-        /// <returns>Returns the factory calibration data</returns>
+        /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 1000.</param>
+        /// <returns>Returns the factory calibration data.</returns>
         public Vector3 CalibrateMagnetometer(int numberOfMeasurements = 1000)
         {
             Vector3 calib = new Vector3();
@@ -116,16 +118,18 @@ namespace Iot.Device.Magnetometer
 
             // Stop the magnetometer
             MeasurementMode = MeasurementMode.PowerDown;
+
             // Enter the magnetometer Fuse mode to read the calibration data
             // Page 13 of documentation
             MeasurementMode = MeasurementMode.FuseRomAccess;
+
             // Read the data
             // See http://www.invensense.com/wp-content/uploads/2017/11/RM-MPU-9250A-00-v1.6.pdf
             // Page 53
             ReadBytes(Register.ASAX, rawData);
-            calib.X = (float)(((rawData[0] - 128) / 256.0 + 1.0));
-            calib.Y = (float)(((rawData[1] - 128) / 256.0 + 1.0));
-            calib.Z = (float)(((rawData[2] - 128) / 256.0 + 1.0));
+            calib.X = (float)(((rawData[0] - 128) / 256.0) + 1.0);
+            calib.Y = (float)(((rawData[1] - 128) / 256.0) + 1.0);
+            calib.Z = (float)(((rawData[2] - 128) / 256.0) + 1.0);
             MeasurementMode = MeasurementMode.PowerDown;
             MeasurementMode = oldPower;
 
@@ -150,6 +154,7 @@ namespace Iot.Device.Magnetometer
                     maxbias.X = (float)Math.Max(bias.X, maxbias.X);
                     maxbias.Y = (float)Math.Max(bias.Y, maxbias.Y);
                     maxbias.Z = (float)Math.Max(bias.Z, maxbias.Z);
+
                     // 10 ms = 100Hz, so waiting to make sure we have new data
                     Thread.Sleep(10);
                 }
@@ -157,7 +162,6 @@ namespace Iot.Device.Magnetometer
                 {
                     // We skip the reading
                 }
-
             }
 
             // Store the bias
@@ -170,23 +174,23 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// True if there is a data to read
+        /// True if there is a data to read.
         /// </summary>
         public bool HasDataToRead => (ReadByte(Register.ST1) & 0x01) == 0x01;
 
         /// <summary>
         /// Check if the version is the correct one (0x48). This is fixed for this device
         /// Page 28 from the documentation :
-        /// Device ID of AKM. It is described in one byte and fixed value.  48H: fixed
+        /// Device ID of AKM. It is described in one byte and fixed value.  48H: fixed.
         /// </summary>
-        /// <returns>Returns true if the version match</returns>
+        /// <returns>Returns true if the version match.</returns>
         public bool IsVersionCorrect()
         {
             return ReadByte(Register.WIA) == 0x48;
         }
 
         /// <summary>
-        /// Read the magnetometer without Bias correction and can wait for new data to be present
+        /// Read the magnetometer without Bias correction and can wait for new data to be present.
         /// </summary>
         /// <remarks>
         /// Vector axes are the following:
@@ -197,14 +201,14 @@ namespace Iot.Device.Magnetometer
         ///    /|\
         ///   / | \
         ///  /  |  \
-        ///    +Z   +Y
+        ///    +Z   +Y.
         /// </remarks>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData">True to wait for new data.</param>
+        /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData = true) => ReadMagnetometerWithoutCorrection(waitForData, DefaultTimeout);
 
         /// <summary>
-        /// Read the magnetometer without Bias correction and can wait for new data to be present
+        /// Read the magnetometer without Bias correction and can wait for new data to be present.
         /// </summary>
         /// <remarks>
         /// Vector axes are the following:
@@ -215,14 +219,15 @@ namespace Iot.Device.Magnetometer
         ///    /|\
         ///   / | \
         ///  /  |  \
-        ///    +Z   +Y
+        ///    +Z   +Y.
         /// </remarks>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData">True to wait for new data.</param>
+        /// <param name="timeout">Timeout for waiting the data, ignored if waitForData is false.</param>
+        /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
             SpanByte rawData = new byte[6];
+
             // Wait for a data to be present
             if (waitForData)
             {
@@ -237,6 +242,7 @@ namespace Iot.Device.Magnetometer
             }
 
             ReadBytes(Register.HXL, rawData);
+
             // In continuous mode, make sure to read the ST2 data to clear up
             if ((_measurementMode == MeasurementMode.ContinuousMeasurement100Hz) ||
                 (_measurementMode == MeasurementMode.ContinuousMeasurement8Hz))
@@ -262,11 +268,10 @@ namespace Iot.Device.Magnetometer
             }
 
             return magneto;
-
         }
 
         /// <summary>
-        /// Read the magnetometer with bias correction and can wait for new data to be present
+        /// Read the magnetometer with bias correction and can wait for new data to be present.
         /// </summary>
         /// <remarks>
         /// Vector axes are the following:
@@ -277,16 +282,15 @@ namespace Iot.Device.Magnetometer
         ///    /|\
         ///   / | \
         ///  /  |  \
-        ///    +Z   +Y
+        ///    +Z   +Y.
         /// </remarks>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData">True to wait for new data.</param>
+        /// <returns>The data from the magnetometer.</returns>
         [Telemetry("Magnetometer")]
         public Vector3 ReadMagnetometer(bool waitForData = true) => ReadMagnetometer(waitForData, DefaultTimeout);
 
         /// <summary>
-        /// Read the magnetometer with bias correction and can wait for new data to be present
+        /// Read the magnetometer with bias correction and can wait for new data to be present.
         /// </summary>
         /// <remarks>
         /// Vector axes are the following:
@@ -297,11 +301,11 @@ namespace Iot.Device.Magnetometer
         ///    /|\
         ///   / | \
         ///  /  |  \
-        ///    +Z   +Y
+        ///    +Z   +Y.
         /// </remarks>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData">True to wait for new data.</param>
+        /// <param name="timeout">Timeout for waiting the data, ignored if waitForData is false.</param>
+        /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometer(bool waitForData, TimeSpan timeout)
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
@@ -312,7 +316,7 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// <![CDATA[
-        /// Get or set the device self test mode.
+        /// Gets or sets a value indicating whether the device is in self test mode.
         /// If set to true, this creates a magnetic field
         /// Once you read it, you will have the results of the self test
         /// 14-bit output(BIT=“0”)
@@ -336,7 +340,7 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Select the measurement mode
+        /// Gets or sets the measurement mode.
         /// </summary>
         [Property]
         public MeasurementMode MeasurementMode
@@ -347,6 +351,7 @@ namespace Iot.Device.Magnetometer
                 byte mode = (byte)((byte)value | ((byte)_outputBitMode << 4));
                 WriteRegister(Register.CNTL, mode);
                 _measurementMode = value;
+
                 // according to documentation:
                 // After power-down mode is set, at least 100µs is needed before setting another mode
                 Thread.Sleep(1);
@@ -354,7 +359,7 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Select the output bit rate
+        /// Gets or sets the output bit rate.
         /// </summary>
         [Property]
         public OutputBitMode OutputBitMode
@@ -375,14 +380,14 @@ namespace Iot.Device.Magnetometer
         private void ReadBytes(Register reg, SpanByte readBytes) => _ak8963Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
 
         /// <summary>
-        /// Cleanup everything
+        /// Cleanup everything.
         /// </summary>
         public void Dispose()
         {
             if (_shouldDispose)
             {
                 _i2cDevice?.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
             }
         }
     }

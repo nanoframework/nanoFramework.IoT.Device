@@ -9,7 +9,7 @@ namespace Iot.Device.Amg88xx
     public class Point
     {
         /// <summary>
-        /// Constructor for Point.
+        /// Initializes a new instance of the <see cref="Point" /> class.
         /// </summary>
         /// <param name="x">The x-coordinate.</param>
         /// <param name="y">The y-coordinate.</param>
@@ -20,12 +20,12 @@ namespace Iot.Device.Amg88xx
         }
 
         /// <summary>
-        /// X coordinate
+        /// Gets or sets x coordinate.
         /// </summary>
         public int X { get; set; }
 
         /// <summary>
-        /// Y coordinate
+        /// Gets or sets y coordinate.
         /// </summary>
         public int Y { get; set; }
     }

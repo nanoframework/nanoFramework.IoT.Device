@@ -24,7 +24,7 @@ namespace Iot.Device.AtomQrCode
         Cr,
 
         /// <summary>
-        /// Tab.
+        /// Tab key.
         /// </summary>
         Tab,
 

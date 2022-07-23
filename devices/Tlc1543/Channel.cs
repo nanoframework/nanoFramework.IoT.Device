@@ -12,57 +12,57 @@ namespace Iot.Device.Tlc1543
     public enum Channel
     {
         /// <summary>
-        /// Channel A0
+        /// Channel A0.
         /// </summary>
         A0 = 0,
 
         /// <summary>
-        /// Channel A1
+        /// Channel A1.
         /// </summary>
         A1 = 1,
 
         /// <summary>
-        /// Channel A2
+        /// Channel A2.
         /// </summary>
         A2 = 2,
 
         /// <summary>
-        /// Channel A3
+        /// Channel A3.
         /// </summary>
         A3 = 3,
 
         /// <summary>
-        /// Channel A4
+        /// Channel A4.
         /// </summary>
         A4 = 4,
 
         /// <summary>
-        /// Channel A5
+        /// Channel A5.
         /// </summary>
         A5 = 5,
 
         /// <summary>
-        /// Channel A6
+        /// Channel A6.
         /// </summary>
         A6 = 6,
 
         /// <summary>
-        /// Channel A7
+        /// Channel A7.
         /// </summary>
         A7 = 7,
 
         /// <summary>
-        /// Channel A8
+        /// Channel A8.
         /// </summary>
         A8 = 8,
 
         /// <summary>
-        /// Channel A9
+        /// Channel A9.
         /// </summary>
         A9 = 9,
 
         /// <summary>
-        /// Channel A10
+        /// Channel A10.
         /// </summary>
         A10 = 10,
 

@@ -6,17 +6,17 @@ using System;
 namespace Iot.Device.Amg88xx
 {
     /// <summary>
-    /// Defines the status bits of the status register (addr: 0x04)
+    /// Defines the status bits of the status register (addr: 0x04).
     /// </summary>
     internal enum StatusFlagBit : byte
     {
         /// <summary>
-        /// Interrupt occured
+        /// Interrupt occured.
         /// </summary>
         INTF = 1,
 
         /// <summary>
-        /// Temperature output overflow occured for one or more pixel
+        /// Temperature output overflow occured for one or more pixel.
         /// </summary>
         OVF_IRS = 2,
 
