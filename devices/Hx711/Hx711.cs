@@ -56,8 +56,7 @@ namespace Iot.Device.Hx711
         /// <param name="gain"><see cref="GainLevel"/> that will be used for the scale. If not provided, the default is <see cref="GainLevel.Gain128"/>.</param>
         public Scale(
             SpiDevice spiDevice,
-            GainLevel gain = GainLevel.Gain128
-            )
+            GainLevel gain = GainLevel.Gain128)
         {
             _spiDevice = spiDevice;
             Gain = gain;
@@ -131,10 +130,10 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Reading sample.");
 
             // setup buffer to drive PD_SCK
-            SpanByte clkTrain = new(_readSamplePulseTrain);
+            SpanByte clkTrain = new SpanByte(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
-            SpanByte readBuffer = new(new byte[7]);
+            SpanByte readBuffer = new SpanByte(new byte[7]);
 
             // setup array to hold readings for averaging
             int[] values = new int[SampleAveraging];

@@ -4,14 +4,14 @@
 namespace Iot.Device.Axp192
 {
     /// <summary>
-    /// VBUS current limit control
+    /// VBUS current limit control.
     /// </summary>
     public enum VbusCurrentLimit
     {
-        /// <summary>500 mA</summary>
+        /// <summary>500 mA.</summary>
         MilliAmper500 = 0,
 
-        /// <summary>100 mA</summary>
+        /// <summary>100 mA.</summary>
         MilliAmper100 = 1,
     }
 }
