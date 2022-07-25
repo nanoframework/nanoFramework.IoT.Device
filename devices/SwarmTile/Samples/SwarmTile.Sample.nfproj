@@ -23,9 +23,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SwarmTile\SwarmTile.nfproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Iot.Device.Ws28xx">
       <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.5\lib\Iot.Device.Ws28xx.dll</HintPath>
     </Reference>
@@ -68,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SwarmTile.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
