@@ -24,11 +24,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="SwarmTile\bin\Release\Iot.Device.Swarm.dll" target="lib\Iot.Device.Swarm.dll" />
-    <file src="SwarmTile\bin\Release\Iot.Device.Swarm.pdb" target="lib\Iot.Device.Swarm.pdb" />
-    <file src="SwarmTile\bin\Release\Iot.Device.Swarm.pdbx" target="lib\Iot.Device.Swarm.pdbx" />
-    <file src="SwarmTile\bin\Release\Iot.Device.Swarm.pe" target="lib\Iot.Device.Swarm.pe" />
-    <file src="SwarmTile\bin\Release\Iot.Device.Swarm.xml" target="lib\Iot.Device.Swarm.xml" />
+    <file src="bin\Release\Iot.Device.Swarm.dll" target="lib\Iot.Device.Swarm.dll" />
+    <file src="bin\Release\Iot.Device.Swarm.pdb" target="lib\Iot.Device.Swarm.pdb" />
+    <file src="bin\Release\Iot.Device.Swarm.pdbx" target="lib\Iot.Device.Swarm.pdbx" />
+    <file src="bin\Release\Iot.Device.Swarm.pe" target="lib\Iot.Device.Swarm.pe" />
+    <file src="bin\Release\Iot.Device.Swarm.xml" target="lib\Iot.Device.Swarm.xml" />
     <file src="readme.md" target="" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
