@@ -3,6 +3,7 @@
 
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Iot.Device.WeatherHelper")]
 [assembly: AssemblyCompany("nanoFramework Contributors")]
