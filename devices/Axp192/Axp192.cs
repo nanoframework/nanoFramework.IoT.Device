@@ -518,7 +518,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or Sets the state of EXTEN switch control.
+        /// Gets or sets the state of EXTEN switch control.
         /// </summary>
         /// <value>
         /// <see langword="true"/> if EXTEN switch is enabled, <see langword="false"/> otherwise.
@@ -545,7 +545,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Enable the various LDO and DC pins.
+        /// Gets or sets LDO and DC pins.
         /// </summary>
         public LdoDcPinsEnabled LdoDcPinsEnabled
         {
