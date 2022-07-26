@@ -16,6 +16,9 @@ namespace Iot.Device.At24Cxx
         /// </summary>
         public const byte DefaultI2cAddress = 0x50; // 01010000
 
+        /// <summary>
+        /// Underlying I2C device.
+        /// </summary>
         private readonly I2cDevice _i2cDevice;
 
         /// <summary>
@@ -177,7 +180,10 @@ namespace Iot.Device.At24Cxx
         /// <inheritdoc cref="IDisposable" />
         public void Dispose()
         {
-            _i2cDevice.Dispose(); 
+            if (_i2cDevice != null)
+            {
+                _i2cDevice.Dispose();
+            }
         }
     }
 }
