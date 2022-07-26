@@ -343,7 +343,7 @@ namespace Iot.Device.Yx5300
             int cachedTimeout = _timeoutDurationInMs;
             _timeoutDurationInMs = 2000;  // initialization timeout needs to be a long one
 
-            var response = SendRequest(CommandSet.CMD_RESET, PKT_DATA_NUL, PKT_DATA_NUL);  // long timeout on this message
+            var response = SendRequest(CommandSet.CMD_RESET, PktDataNull, PktDataNull);  // long timeout on this message
 
             _timeoutDurationInMs = cachedTimeout;  // put back saved value
 
