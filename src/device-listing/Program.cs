@@ -53,7 +53,7 @@ string[] categoriesToDisplay = new string[]
     "helper",
     "system",
     "lidar",
-    "reader"
+    "reader",
     "satellite"
 };
 
