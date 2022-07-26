@@ -337,7 +337,7 @@ namespace Iot.Device.Yx5300
         /// <summary>
         /// Reset player settings.
         /// </summary>
-        /// <returns>True if success</returns>
+        /// <returns>True if success.</returns>
         public bool Reset()
         {
             int cachedTimeout = _timeoutDurationInMs;
