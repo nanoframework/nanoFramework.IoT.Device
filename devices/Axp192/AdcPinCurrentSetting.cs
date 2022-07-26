@@ -4,11 +4,11 @@
 namespace Iot.Device.Axp192
 {
     /// <summary>
-    /// ADC Pin Current Setting
+    /// ADC Pin Current Setting.
     /// </summary>
     public enum AdcPinCurrentSetting
     {
-        /// <summary>Off.</summary>
+        /// <summary>State off.</summary>
         Off = 0b0000_0000,
 
         /// <summary>When on charge.</summary>

@@ -4,17 +4,17 @@
 namespace Iot.Device.Amg88xx
 {
     /// <summary>
-    /// Defines the frame rate per second
+    /// Defines the frame rate per second.
     /// </summary>
     public enum FrameRate
     {
         /// <summary>
-        /// 10 frames per second
+        /// 10 frames per second.
         /// </summary>
         Rate10FramesPerSecond = 10,
 
         /// <summary>
-        /// 1 frame per second
+        /// 1 frame per second.
         /// </summary>
         Rate1FramePerSecond = 1,
     }
