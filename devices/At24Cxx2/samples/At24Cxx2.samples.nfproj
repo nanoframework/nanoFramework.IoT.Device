@@ -12,10 +12,10 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.At24CXX.Samples</RootNamespace>
-    <AssemblyName>Iot.Device.At24CXX.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.At24Cxx.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.At24Cxx.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.At24CXX.Samples.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.At24Cxx.Samples.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -26,7 +26,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\At24CXX.nfproj" />
+    <ProjectReference Include="..\At24Cxx.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">

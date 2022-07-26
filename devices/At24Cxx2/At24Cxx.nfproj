@@ -12,22 +12,22 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>At24CXX</RootNamespace>
-    <AssemblyName>At24CXX</AssemblyName>
+    <RootNamespace>At24Cxx</RootNamespace>
+    <AssemblyName>At24Cxx</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="AT24Base.cs" />
-    <Compile Include="AT24C01C.cs" />
-    <Compile Include="AT24C02C.cs" />
-    <Compile Include="AT24C04C.cs" />
-    <Compile Include="AT24C08C.cs" />
-    <Compile Include="AT24C128C.cs" />
-    <Compile Include="AT24C16C.cs" />
-    <Compile Include="AT24C256C.cs" />
-    <Compile Include="AT24C32C.cs" />
-    <Compile Include="AT24C64C.cs" />
+    <Compile Include="At24Base.cs" />
+    <Compile Include="At24C01C.cs" />
+    <Compile Include="At24C02C.cs" />
+    <Compile Include="At24C04C.cs" />
+    <Compile Include="At24C08C.cs" />
+    <Compile Include="At24C128C.cs" />
+    <Compile Include="At24C16C.cs" />
+    <Compile Include="At24C256C.cs" />
+    <Compile Include="At24C32C.cs" />
+    <Compile Include="At24C64C.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project=".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />

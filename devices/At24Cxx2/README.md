@@ -1,7 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+# At24Cxx - I2C EEPROM read/write
 
-using Iot.Device.At24CXX;
+This binding is used used to read and write data via I2C from the external EEPROM memory.
+
+## Documentation
+
+[Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/doc0336.pdf)
+
+Original code was written for ESP32
+
+## Usage
+
+```csharp
+using Iot.Device.At24Cxx;
 using nanoFramework.Hardware.Esp32;
 using System.Device.I2c;
 using System.Diagnostics;
@@ -12,11 +22,11 @@ using System.Threading;
 Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
 
-// Setup AT24C32C device
+// Setup At24C32C device
 int deviceAddress = 0x57;
 I2cConnectionSettings settings = new I2cConnectionSettings(1, deviceAddress);
 I2cDevice i2cDevice = new I2cDevice(settings);
-AT24C32C eeprom = new AT24C32C(i2cDevice);
+At24C32C eeprom = new At24C32C(i2cDevice);
 
 // Write string to device
 string message = "Hello from nanoFramework!";
@@ -58,3 +68,4 @@ for (int i = 0; i < message.Length; i++)
 
     Debug.WriteLine($"'{character[0]}' read from EEPROM");
 }
+```

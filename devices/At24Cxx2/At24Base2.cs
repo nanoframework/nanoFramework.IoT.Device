@@ -4,45 +4,34 @@
 using System;
 using System.Device.I2c;
 
-namespace Iot.Device.At24CXX
+namespace Iot.Device.At24Cxx
 {
     /// <summary>
-    /// Base class for common functionality of the AT24C serices of devices.
+    /// Base class for common functionality of the At24C serices of devices.
     /// </summary>
-    public abstract class AT24Base : IDisposable
+    public abstract class At24Base : IDisposable
     {
         /// <summary>
-        /// Default I2C address for AT24Cx familly
+        /// Default I2C address for At24Cx familly.
         /// </summary>
         public const byte DefaultI2cAddress = 0x50; // 01010000
 
-        private bool _isDisposed;
         private readonly I2cDevice _i2cDevice;
 
         /// <summary>
-        /// Number of pages available on the device.
+        /// Gets number of pages available on the device.
         /// </summary>
-        public int PageCount
-        {
-            get;
-            private set;
-        }
+        public int PageCount { get; private set; }
 
         /// <summary>
-        /// Device page size (in bytes).
+        /// Gets device page size (in bytes).
         /// </summary>
-        public int PageSize
-        {
-            get; private set;
-        }
+        public int PageSize { get; private set; }
 
         /// <summary>
-        /// Available memory on the device (in bytes).
+        /// Gets available memory on the device (in bytes).
         /// </summary>
-        public int Size
-        {
-            get; private set;
-        }
+        public int Size { get; private set; }
 
         /// <summary>
         /// Helper function to create a buffer with the first two bytes already populated by the device address.
@@ -63,7 +52,7 @@ namespace Iot.Device.At24CXX
         }
 
         /// <summary>
-        /// Helper function to verify a memory address falls inside the accessible memory range for a AT24C device.
+        /// Helper function to verify a memory address falls inside the accessible memory range for a At24C device.
         /// </summary>
         /// <param name="address">The memory address.</param>
         /// <param name="availableMemory">The amount of memory available on the device.</param>
@@ -76,10 +65,12 @@ namespace Iot.Device.At24CXX
         }
 
         /// <summary>
-        /// Initializes an instance of an AT24C series device.
+        /// Initializes a new instance of the <see cref="At24Base" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device to use for communication.</param>
-        public AT24Base(I2cDevice i2cDevice, ushort pageSize, ushort pageCount)
+        /// <param name="pageSize">The device page size in bytes.</param>
+        /// <param name="pageCount">The number of pages on the device.</param>
+        public At24Base(I2cDevice i2cDevice, ushort pageSize, ushort pageCount)
         {
             if (i2cDevice == null)
             {
@@ -87,7 +78,6 @@ namespace Iot.Device.At24CXX
             }
 
             _i2cDevice = i2cDevice;
-
             PageSize = pageSize;
             PageCount = pageCount;
             Size = pageSize * pageCount;
@@ -112,8 +102,8 @@ namespace Iot.Device.At24CXX
         {
             VerifyMemoryAddress(address, Size);
 
-            byte[] writeBuffer = CreateWriteBuffer(address, 0);
             byte[] readBuffer = new byte[1];
+            byte[] writeBuffer = CreateWriteBuffer(address, 0);
 
             _i2cDevice.WriteRead(writeBuffer, readBuffer);
 
@@ -179,29 +169,15 @@ namespace Iot.Device.At24CXX
             data.CopyTo(writeBuffer, 2);
 
             I2cTransferResult result = _i2cDevice.Write(writeBuffer);
- 
+
             // Account for memory address that was sent to device along with the data to be written
             return result.BytesTransferred - 2;
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    _i2cDevice.Dispose();
-                }
-
-                _isDisposed = true;
-            }
         }
 
         /// <inheritdoc cref="IDisposable" />
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            _i2cDevice.Dispose(); 
         }
     }
 }

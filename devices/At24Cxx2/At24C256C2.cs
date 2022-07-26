@@ -3,21 +3,20 @@
 
 using System.Device.I2c;
 
-namespace Iot.Device.At24CXX
+namespace Iot.Device.At24Cxx
 {
     /// <summary>
-    /// I2C EEPROM with 16Kbit (2048 bytes) of memory internally organized as 128 pages containing 16 bytes each.
+    /// I2C EEPROM with 256Kbit (32768 bytes) of memory internally organized as 512 pages containing 64 bytes each.
     /// </summary>
-    public sealed class AT24C16C : AT24Base
+    public sealed class At24C256C : At24Base
     {
         /// <summary>
-        /// Initializes a new instance of an AT24C16C device.
+        /// Initializes a new instance of the <see cref="At24C256C" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device to use for communication.</param>
-        public AT24C16C(I2cDevice i2cDevice)
-            : base(i2cDevice, 16, 128)
+        public At24C256C(I2cDevice i2cDevice)
+            : base(i2cDevice, 64, 512)
         {
-
         }
     }
 }
