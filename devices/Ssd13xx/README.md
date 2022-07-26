@@ -1,4 +1,4 @@
-﻿# SSD13xx & SSH1106 OLED display family
+# SSD13xx & SSH1106 OLED display family
 
 The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for organic/polymer light emitting diode dot-matrix graphic display system. It consists of 128 segments and 64 commons. This IC is designed for Common Cathode type OLED panel.
 
@@ -85,3 +85,16 @@ ssd1306.DrawDirectAligned(x, y, width, height, buffer);
 ssd1306.ClearDirectAligned(x, y, width, height);
 
 ````
+
+To display double byte fonts (for example fonts of Asian languages) you have to set the font to `DoubleByteFont()`, like this:
+
+```csharp
+device.Font = new DoubleByteFont();
+device.DrawString(2, 2, "功夫＄", 2, false);
+device.DrawString(2, 34, "８９ＡＢ功夫＄", 1, true);
+device.Display();
+```
+
+Follows the output on the display:
+
+![double-byte.fonts](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/display-with-double-byte-chars.jpg)

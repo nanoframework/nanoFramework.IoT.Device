@@ -41,8 +41,8 @@
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.4\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Spi, Version=1.2.1.12878, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Spi.1.2.1\lib\System.Device.Spi.dll</HintPath>
+    <Reference Include="System.Device.Spi, Version=1.3.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.3.4\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.4.4.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -74,11 +74,11 @@
       <ProjectConfigurationsDeclaredAsItems />
     </ProjectCapabilities>
   </ProjectExtensions>
-  <Import Project="packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
 </Project>

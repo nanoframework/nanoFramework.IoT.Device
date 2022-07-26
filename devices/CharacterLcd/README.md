@@ -25,7 +25,7 @@ Here is a Hello World example of how to consume this binding:
             lcd.UnderlineCursorVisible = false;
             lcd.Write("Hello World!");
 ```
-~~~
+
 Grove LCD RGB Backlight uses two i2c devices:
 
 - the device to control LCD (address 0x3E)
@@ -77,9 +77,3 @@ The sample code works with Adafruit's [I2C / SPI character LCD backpack](https:/
 ## Character LCD display Samples
 
 [Different samples](https://github.com/nanoframework/tree/main/src/devices/CharacterLcd/samples) are provided. The main method will use the Board's Gpio pins to drive the LCD display. The second example will instead use an MCP Gpio extender backpack to drive the LCD display. Also the second example can use Grove RGB LCD Backlight via i2c bus. This second example has been tested on a CrowPi device and Grove LCD RGB Backlight device.
-
-
-### Sample wiring
-
-![wiring](lcmWiringExample.jpg)
-~~~

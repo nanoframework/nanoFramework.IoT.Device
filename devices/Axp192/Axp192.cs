@@ -17,6 +17,7 @@ namespace Iot.Device.Axp192
         private const byte DcD3SetBit = 1 << 1;
         private const byte Ldo2SetBit = 1 << 2;
         private const byte Ldo3SetBit = 1 << 3;
+        private const byte ExtEnSetBit = 1 << 6;
 
         /// <summary>
         /// Default address of I2C Axp192 device.
@@ -517,7 +518,34 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the various LDO and DC pins.
+        /// Gets or Sets the state of EXTEN switch control.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if EXTEN switch is enabled, <see langword="false"/> otherwise.
+        /// </value>
+        public bool EXTENEnable
+        {
+            get => (I2cRead(Register.SwitchControleDcDC1_3LDO2_3) & ExtEnSetBit) == ExtEnSetBit;
+
+            set
+            {
+                byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
+
+                if (value)
+                {
+                    buf |= ExtEnSetBit;
+                }
+                else
+                {
+                    buf &= unchecked((byte)~ExtEnSetBit);
+                }
+
+                I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
+            }
+        }
+
+        /// <summary>
+        /// Enable the various LDO and DC pins.
         /// </summary>
         public LdoDcPinsEnabled LdoDcPinsEnabled
         {

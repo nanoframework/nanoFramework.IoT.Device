@@ -188,17 +188,12 @@ namespace Iot.Device.Yx5300
             _serialPort.DataBits = 8;
             _serialPort.WriteTimeout = TimeoutMiliseconds;
             _serialPort.ReadTimeout = TimeoutMiliseconds;
+            _serialPort.Open();
             Begin();
         }
 
         private void Begin()
         {
-            int cachedTimeout = _timeoutDurationInMs;
-
-            _timeoutDurationInMs = 2000;  // initialization timeout needs to be a long one
-            Reset();          // long timeout on this message
-            _timeoutDurationInMs = cachedTimeout;  // put back saved value
-
             // set the TF card system.
             // The synchronous call will return when the command is accepted
             // then it will be followed by an initialization message saying TF card is inserted.
@@ -339,9 +334,20 @@ namespace Iot.Device.Yx5300
             return SendRequest(CommandSet.CMD_SHUFFLE_PLAY, PktDataNull, isShuffled ? CmdOptOn : CmdOptOff);
         }
 
-        private bool Reset()
+        /// <summary>
+        /// Reset player settings.
+        /// </summary>
+        /// <returns>True if success</returns>
+        public bool Reset()
         {
-            return SendRequest(CommandSet.CMD_RESET, PktDataNull, PktDataNull);
+            int cachedTimeout = _timeoutDurationInMs;
+            _timeoutDurationInMs = 2000;  // initialization timeout needs to be a long one
+
+            var response = SendRequest(CommandSet.CMD_RESET, PKT_DATA_NUL, PKT_DATA_NUL);  // long timeout on this message
+
+            _timeoutDurationInMs = cachedTimeout;  // put back saved value
+
+            return response;
         }
 
         /// <summary>
