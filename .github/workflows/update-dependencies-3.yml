@@ -8,7 +8,7 @@ name: Update dependencies (round 3)
 on:
   schedule:
     # At 00:30 UTC every day.
-    # Set 30 min apart from round 1 to allow enough time for any changes to propagate.
+    # Set 30 min apart from round 2 to allow enough time for any changes to propagate.
     - cron:  '30 00 * * *'
   repository_dispatch:
     types: update-dependencies

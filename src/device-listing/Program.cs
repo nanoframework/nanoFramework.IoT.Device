@@ -53,7 +53,8 @@ string[] categoriesToDisplay = new string[]
     "helper",
     "system",
     "lidar",
-    "reader"
+    "reader",
+    "satellite"
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -117,6 +118,7 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "system", ".NET System libraries" },
     { "lidar", "Lidar" },
     { "reader", "Readers" },
+    { "satellite", " modules" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()

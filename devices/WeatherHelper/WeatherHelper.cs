@@ -7,12 +7,12 @@ using UnitsNet;
 namespace Iot.Device.Common
 {
     /// <summary>
-    /// Helpers for weather
+    /// Helpers for weather.
     /// </summary>
     public static class WeatherHelper
     {
         /// <summary>
-        /// The mean sea-level pressure (MSLP) is the average atmospheric pressure at mean sea level
+        /// The mean sea-level pressure (MSLP) is the average atmospheric pressure at mean sea level.
         /// </summary>
         public static readonly Pressure MeanSeaLevel = Pressure.FromPascals(101325);
 
@@ -25,9 +25,9 @@ namespace Iot.Device.Common
         /// during the summer months when heat and humidity often combine to make it feel hotter
         /// than it actually is. The heat index is usually used for afternoon high temperatures.
         /// </summary>
-        /// <param name="airTemperature">The dry air temperature</param>
-        /// <param name="relativeHumidity">The relative humidity (RH)</param>
-        /// <returns>The heat index, also known as the apparent temperature</returns>
+        /// <param name="airTemperature">The dry air temperature.</param>
+        /// <param name="relativeHumidity">The relative humidity (RH).</param>
+        /// <returns>The heat index, also known as the apparent temperature.</returns>
         public static Temperature CalculateHeatIndex(Temperature airTemperature, RelativeHumidity relativeHumidity)
         {
             double tf = airTemperature.DegreesFahrenheit;
@@ -37,7 +37,8 @@ namespace Iot.Device.Common
 
             double steadman = 0.5 * (tf + 61 + ((tf - 68) * 1.2) + (rh * 0.094));
 
-            if (steadman + tf < 160) // if the average is lower than 80F, use Steadman, otherwise use Rothfusz.
+            // if the average is lower than 80F, use Steadman, otherwise use Rothfusz.
+            if (steadman + tf < 160) 
             {
                 return Temperature.FromDegreesFahrenheit(steadman);
             }
@@ -68,10 +69,10 @@ namespace Iot.Device.Common
         /// Calculates the saturated vapor pressure for a given air temperature over water.
         /// The formula used is valid for temperatures between -100°C and +100°C.
         /// </summary>
-        /// <param name="airTemperature">The dry air temperature</param>
-        /// <returns>The saturated vapor pressure</returns>
+        /// <param name="airTemperature">The dry air temperature.</param>
+        /// <returns>The saturated vapor pressure.</returns>
         /// <remarks>
-        /// From https://de.wikibooks.org/wiki/Tabellensammlung_Chemie/_Stoffdaten_Wasser, after D. Sonntag (1982)
+        /// From https://de.wikibooks.org/wiki/Tabellensammlung_Chemie/_Stoffdaten_Wasser, after D. Sonntag (1982).
         /// </remarks>
         public static Pressure CalculateSaturatedVaporPressureOverWater(Temperature airTemperature)
         {
@@ -85,10 +86,10 @@ namespace Iot.Device.Common
         /// Calculates the saturated vapor pressure for a given air temperature over ice.
         /// The formula used is valid for temperatures between -100°C and +0°C.
         /// </summary>
-        /// <param name="airTemperature">The dry air temperature</param>
-        /// <returns>The saturated vapor pressure</returns>
+        /// <param name="airTemperature">The dry air temperature.</param>
+        /// <returns>The saturated vapor pressure.</returns>
         /// <remarks>
-        /// From https://de.wikibooks.org/wiki/Tabellensammlung_Chemie/_Stoffdaten_Wasser, after D. Sonntag (1982)
+        /// From https://de.wikibooks.org/wiki/Tabellensammlung_Chemie/_Stoffdaten_Wasser, after D. Sonntag (1982).
         /// </remarks>
         public static Pressure CalculateSaturatedVaporPressureOverIce(Temperature airTemperature)
         {
@@ -101,20 +102,20 @@ namespace Iot.Device.Common
         /// <summary>
         /// Calculates the actual vapor pressure.
         /// </summary>
-        /// <param name="airTemperature">The dry air temperature</param>
-        /// <param name="relativeHumidity">The relative humidity (RH)</param>
-        /// <returns>The actual vapor pressure</returns>
+        /// <param name="airTemperature">The dry air temperature.</param>
+        /// <param name="relativeHumidity">The relative humidity (RH).</param>
+        /// <returns>The actual vapor pressure.</returns>
         public static Pressure CalculateActualVaporPressure(Temperature airTemperature, RelativeHumidity relativeHumidity) =>
-            Pressure.FromHectopascals((relativeHumidity.Percent / 100.0 * CalculateSaturatedVaporPressureOverWater(airTemperature).Hectopascals));
+            Pressure.FromHectopascals(relativeHumidity.Percent / 100.0 * CalculateSaturatedVaporPressureOverWater(airTemperature).Hectopascals);
 
         /// <summary>
         /// Calculates the dew point.
         /// </summary>
-        /// <param name="airTemperature">The dry air temperature</param>
-        /// <param name="relativeHumidity">The relative humidity (RH)</param>
-        /// <returns>The dew point</returns>
+        /// <param name="airTemperature">The dry air temperature.</param>
+        /// <param name="relativeHumidity">The relative humidity (RH).</param>
+        /// <returns>The dew point.</returns>
         /// <remarks>
-        /// Source https://en.wikipedia.org/wiki/Dew_point
+        /// Source https://en.wikipedia.org/wiki/Dew_point.
         /// </remarks>
         public static Temperature CalculateDewPoint(Temperature airTemperature, RelativeHumidity relativeHumidity)
         {
@@ -178,12 +179,12 @@ namespace Iot.Device.Common
         // for different parameters
 
         /// <summary>
-        /// Calculates the altitude in meters from the given pressure, sea-level pressure and air temperature
+        /// Calculates the altitude in meters from the given pressure, sea-level pressure and air temperature.
         /// </summary>
-        /// <param name="pressure">The pressure at the point for which altitude is being calculated</param>
-        /// <param name="seaLevelPressure">The sea-level pressure</param>
-        /// <param name="airTemperature">The dry air temperature at the point for which altitude is being calculated</param>
-        /// <returns>The altitude</returns>
+        /// <param name="pressure">The pressure at the point for which altitude is being calculated.</param>
+        /// <param name="seaLevelPressure">The sea-level pressure.</param>
+        /// <param name="airTemperature">The dry air temperature at the point for which altitude is being calculated.</param>
+        /// <returns>The altitude.</returns>
         public static Length CalculateAltitude(Pressure pressure, Pressure seaLevelPressure, Temperature airTemperature)
         {
             double meters = ((Math.Pow(seaLevelPressure.Pascals / pressure.Pascals, 1 / 5.255) - 1) * airTemperature.Kelvins) / 0.0065;
@@ -193,58 +194,58 @@ namespace Iot.Device.Common
         /// <summary>
         /// Calculates the altitude in meters from the given pressure and air temperature. Assumes mean sea-level pressure.
         /// </summary>
-        /// <param name="pressure">The pressure at the point for which altitude is being calculated</param>
-        /// <param name="airTemperature">The dry air temperature at the point for which altitude is being calculated</param>
-        /// <returns>The altitude</returns>
+        /// <param name="pressure">The pressure at the point for which altitude is being calculated.</param>
+        /// <param name="airTemperature">The dry air temperature at the point for which altitude is being calculated.</param>
+        /// <returns>The altitude.</returns>
         public static Length CalculateAltitude(Pressure pressure, Temperature airTemperature) =>
              CalculateAltitude(pressure, MeanSeaLevel, airTemperature);
 
         /// <summary>
         /// Calculates the altitude in meters from the given pressure and sea-level pressure. Assumes temperature of 15C.
         /// </summary>
-        /// <param name="pressure">The pressure at the point for which altitude is being calculated</param>
-        /// <param name="seaLevelPressure">The sea-level pressure</param>
-        /// <returns>The altitude</returns>
+        /// <param name="pressure">The pressure at the point for which altitude is being calculated.</param>
+        /// <param name="seaLevelPressure">The sea-level pressure.</param>
+        /// <returns>The altitude.</returns>
         public static Length CalculateAltitude(Pressure pressure, Pressure seaLevelPressure) =>
             CalculateAltitude(pressure, seaLevelPressure, Temperature.FromDegreesCelsius(15));
 
         /// <summary>
         /// Calculates the altitude in meters from the given pressure. Assumes mean sea-level pressure and temperature of 15C.
         /// </summary>
-        /// <param name="pressure">The pressure at the point for which altitude is being calculated</param>
-        /// <returns>The altitude</returns>
+        /// <param name="pressure">The pressure at the point for which altitude is being calculated.</param>
+        /// <returns>The altitude.</returns>
         public static Length CalculateAltitude(Pressure pressure) =>
             CalculateAltitude(pressure, MeanSeaLevel, Temperature.FromDegreesCelsius(15));
 
         /// <summary>
         /// Calculates the approximate sea-level pressure from given absolute pressure, altitude and air temperature.
         /// </summary>
-        /// <param name="pressure">The air pressure at the point of measurement</param>
-        /// <param name="altitude">The altitude at the point of the measurement</param>
-        /// <param name="airTemperature">The air temperature</param>
-        /// <returns>The estimated absolute sea-level pressure</returns>
-        /// <remarks><see cref="CalculatePressure"/> solved for sea level pressure</remarks>
+        /// <param name="pressure">The air pressure at the point of measurement.</param>
+        /// <param name="altitude">The altitude at the point of the measurement.</param>
+        /// <param name="airTemperature">The air temperature.</param>
+        /// <returns>The estimated absolute sea-level pressure.</returns>
+        /// <remarks><see cref="CalculatePressure"/> solved for sea level pressure.</remarks>
         public static Pressure CalculateSeaLevelPressure(Pressure pressure, Length altitude, Temperature airTemperature) =>
-            Pressure.FromPascals(Math.Pow((((0.0065 * altitude.Meters) / airTemperature.Kelvins) + 1), 5.255) * pressure.Pascals);
+            Pressure.FromPascals(Math.Pow(((0.0065 * altitude.Meters) / airTemperature.Kelvins) + 1, 5.255) * pressure.Pascals);
 
         /// <summary>
         /// Calculates the approximate absolute pressure from given sea-level pressure, altitude and air temperature.
         /// </summary>
-        /// <param name="seaLevelPressure">The sea-level pressure</param>
-        /// <param name="altitude">The altitude in meters at the point for which pressure is being calculated</param>
-        /// <param name="airTemperature">The air temperature at the point for which pressure is being calculated</param>
-        /// <returns>The estimated absolute pressure at the given altitude</returns>
+        /// <param name="seaLevelPressure">The sea-level pressure.</param>
+        /// <param name="altitude">The altitude in meters at the point for which pressure is being calculated.</param>
+        /// <param name="airTemperature">The air temperature at the point for which pressure is being calculated.</param>
+        /// <returns>The estimated absolute pressure at the given altitude.</returns>
         public static Pressure CalculatePressure(Pressure seaLevelPressure, Length altitude, Temperature airTemperature) =>
-            Pressure.FromPascals(seaLevelPressure.Pascals / Math.Pow((((0.0065 * altitude.Meters) / airTemperature.Kelvins) + 1), 5.255));
+            Pressure.FromPascals(seaLevelPressure.Pascals / Math.Pow(((0.0065 * altitude.Meters) / airTemperature.Kelvins) + 1, 5.255));
 
         /// <summary>
-        /// Calculates the temperature gradient for the given pressure difference
+        /// Calculates the temperature gradient for the given pressure difference.
         /// </summary>
-        /// <param name="pressure">The air pressure at the point for which temperature is being calculated</param>
-        /// <param name="seaLevelPressure">The sea-level pressure</param>
-        /// <param name="altitude">The altitude in meters at the point for which temperature is being calculated</param>
-        /// <returns>The standard temperature at the given altitude, when the given pressure difference is known</returns>
-        /// <remarks><see cref="CalculatePressure"/> solved for temperature</remarks>
+        /// <param name="pressure">The air pressure at the point for which temperature is being calculated.</param>
+        /// <param name="seaLevelPressure">The sea-level pressure.</param>
+        /// <param name="altitude">The altitude in meters at the point for which temperature is being calculated.</param>
+        /// <returns>The standard temperature at the given altitude, when the given pressure difference is known.</returns>
+        /// <remarks><see cref="CalculatePressure"/> solved for temperature.</remarks>
         public static Temperature CalculateTemperature(Pressure pressure, Pressure seaLevelPressure, Length altitude) =>
             Temperature.FromKelvins((0.0065 * altitude.Meters) / (Math.Pow(seaLevelPressure.Pascals / pressure.Pascals, 1 / 5.255) - 1));
 
@@ -257,16 +258,18 @@ namespace Iot.Device.Common
         /// you are within a high-pressure area of around 1020 hPa.
         /// </example>
         /// </summary>
-        /// <param name="measuredPressure">Measured pressure at the observation point</param>
-        /// <param name="measuredTemperature">Measured temperature at the observation point</param>
+        /// <param name="measuredPressure">Measured pressure at the observation point.</param>
+        /// <param name="measuredTemperature">Measured temperature at the observation point.</param>
         /// <param name="measurementAltitude">Height over sea level of the observation point (to be really precise, geopotential heights have
         /// to be used above ~750m). Do not use the height obtained by calling <see cref="CalculateAltitude(UnitsNet.Pressure)"/>
         /// or any of its overloads, since what would use redundant data.</param>
-        /// <returns>The barometric pressure at the point of observation</returns>
+        /// <returns>The barometric pressure at the point of observation.</returns>
         /// <remarks>
-        /// From https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Anwendungen
+        /// From https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Anwendungen.
         /// </remarks>
-        public static Pressure CalculateBarometricPressure(Pressure measuredPressure, Temperature measuredTemperature,
+        public static Pressure CalculateBarometricPressure(
+            Pressure measuredPressure, 
+            Temperature measuredTemperature,
             Length measurementAltitude)
         {
             double vaporPressure;
@@ -279,8 +282,7 @@ namespace Iot.Device.Common
                 vaporPressure = 5.6402 * (-0.0916 + Math.Exp((-0.06) * measuredTemperature.DegreesCelsius));
             }
 
-            return CalculateBarometricPressure(measuredPressure, measuredTemperature, Pressure.FromHectopascals(vaporPressure),
-                measurementAltitude);
+            return CalculateBarometricPressure(measuredPressure, measuredTemperature, Pressure.FromHectopascals(vaporPressure), measurementAltitude);
         }
 
         /// <summary>
@@ -292,20 +294,24 @@ namespace Iot.Device.Common
         /// you are within a high-pressure area of around 1020 hPa.
         /// </example>
         /// </summary>
-        /// <param name="measuredPressure">Measured pressure at the observation point</param>
-        /// <param name="measuredTemperature">Measured temperature at the observation point</param>
-        /// <param name="vaporPressure">Vapor pressure, meteorologic definition</param>
+        /// <param name="measuredPressure">Measured pressure at the observation point.</param>
+        /// <param name="measuredTemperature">Measured temperature at the observation point.</param>
+        /// <param name="vaporPressure">Vapor pressure, meteorologic definition.</param>
         /// <param name="measurementAltitude">Height over sea level of the observation point (to be really precise, geopotential heights have
-        /// to be used above ~750m)</param>
-        /// <returns>The barometric pressure at the point of observation</returns>
+        /// to be used above ~750m).</param>
+        /// <returns>The barometric pressure at the point of observation.</returns>
         /// <remarks>
-        /// From https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Anwendungen
+        /// From https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Anwendungen.
         /// </remarks>
-        public static Pressure CalculateBarometricPressure(Pressure measuredPressure, Temperature measuredTemperature, Pressure vaporPressure,
+        public static Pressure CalculateBarometricPressure(
+            Pressure measuredPressure,
+            Temperature measuredTemperature,
+            Pressure vaporPressure,
             Length measurementAltitude)
         {
-            double x = (9.80665 / (287.05 * ((measuredTemperature.Kelvins) + 0.12 * vaporPressure.Hectopascals +
-                                             (0.0065 * measurementAltitude.Meters) / 2))) * measurementAltitude.Meters;
+            double x = 9.80665 / (287.05 * ((measuredTemperature.Kelvins)+(0.12 * vaporPressure.Hectopascals) +
+                                            ((0.0065 * measurementAltitude.Meters) / 2))) 
+                                            * measurementAltitude.Meters;
             double barometricPressure = measuredPressure.Hectopascals * Math.Exp(x);
             return Pressure.FromHectopascals(barometricPressure);
         }
@@ -316,21 +322,23 @@ namespace Iot.Device.Common
         /// for a particular area and is also used in meteorological charts.
         /// Use this method if you also have the relative humidity.
         /// </summary>
-        /// <param name="measuredPressure">Measured pressure at the observation point</param>
-        /// <param name="measuredTemperature">Measured temperature at the observation point</param>
+        /// <param name="measuredPressure">Measured pressure at the observation point.</param>
+        /// <param name="measuredTemperature">Measured temperature at the observation point.</param>
         /// <param name="measurementAltitude">Height over sea level of the observation point (to be really precise, geopotential heights have
-        /// to be used above ~750m)</param>
-        /// <param name="relativeHumidity">Relative humidity at point of measurement</param>
-        /// <returns>The barometric pressure at the point of observation</returns>
+        /// to be used above ~750m).</param>
+        /// <param name="relativeHumidity">Relative humidity at point of measurement.</param>
+        /// <returns>The barometric pressure at the point of observation.</returns>
         /// <remarks>
-        /// From https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Anwendungen
+        /// From https://de.wikipedia.org/wiki/Barometrische_Höhenformel#Anwendungen.
         /// </remarks>
-        public static Pressure CalculateBarometricPressure(Pressure measuredPressure, Temperature measuredTemperature,
-            Length measurementAltitude, RelativeHumidity relativeHumidity)
+        public static Pressure CalculateBarometricPressure(
+            Pressure measuredPressure, 
+            Temperature measuredTemperature,
+            Length measurementAltitude, 
+            RelativeHumidity relativeHumidity)
         {
             Pressure vaporPressure = CalculateActualVaporPressure(measuredTemperature, relativeHumidity);
-            return CalculateBarometricPressure(measuredPressure, measuredTemperature, vaporPressure,
-                measurementAltitude);
+            return CalculateBarometricPressure(measuredPressure, measuredTemperature, vaporPressure, measurementAltitude);
         }
 
         #endregion
