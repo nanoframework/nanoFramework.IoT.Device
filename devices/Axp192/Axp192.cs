@@ -518,7 +518,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets a value indication wether the state of EXTEN switch control.
+        /// Gets or sets a value indicating whether the state of EXTEN switch control.
         /// </summary>
         /// <value>
         /// <see langword="true"/> if EXTEN switch is enabled, <see langword="false"/> otherwise.
