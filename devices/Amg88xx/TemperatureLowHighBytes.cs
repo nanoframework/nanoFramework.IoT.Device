@@ -12,6 +12,7 @@ namespace Iot.Device.Amg88xx
         }
 
         public byte LowByte { get; set; }
+
         public byte HighByte { get; set; }
     }
 }

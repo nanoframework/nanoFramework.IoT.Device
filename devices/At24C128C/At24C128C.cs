@@ -6,7 +6,7 @@ using System.Device.I2c;
 namespace Iot.Device.At24C128C
 {
     /// <summary>
-    /// At24C128C - I2C EEPROM read/write
+    /// At24C128C - I2C EEPROM read/write.
     /// </summary>
     public class At24C128C
     {
@@ -14,7 +14,7 @@ namespace Iot.Device.At24C128C
         private I2cDevice _memoryController;
 
         /// <summary>
-        /// Creates a driver for the AT24C128C.
+        /// Initializes a new instance of the <see cref="At24C128C" /> class.
         /// </summary>
         /// <param name="address">The I2C address of the device.</param>
         /// <param name="i2cBus">The I2C bus where the device is connected to.</param>
@@ -52,6 +52,7 @@ namespace Iot.Device.At24C128C
         public byte[] Read(ushort memoryAddress, int numOfBytes)
         {
             byte[] rxBuffer = new byte[numOfBytes];
+
             // Device address is followed by the memory address (two words)
             // and must be sent over the I2C bus before data reception
             byte[] txBuffer = new byte[2];
@@ -60,8 +61,6 @@ namespace Iot.Device.At24C128C
             _memoryController.WriteRead(txBuffer, rxBuffer);
 
             return rxBuffer;
-        }
-        
-            
+        }            
     }
 }

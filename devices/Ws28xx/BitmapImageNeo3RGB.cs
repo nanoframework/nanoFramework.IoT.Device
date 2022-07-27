@@ -19,16 +19,16 @@ namespace Iot.Device.Ws28xx
 
         public override void SetPixel(int x, int y, Color c)
         {
-            var offset = y * Stride + x * BytesPerPixel;
-            Data[offset++] = _lookup[c.R * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.R * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.R * BytesPerComponent + 2];
-            Data[offset++] = _lookup[c.G * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.G * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.G * BytesPerComponent + 2];
-            Data[offset++] = _lookup[c.B * BytesPerComponent + 0];
-            Data[offset++] = _lookup[c.B * BytesPerComponent + 1];
-            Data[offset++] = _lookup[c.B * BytesPerComponent + 2];
+            var offset = (y * Stride) + (x * BytesPerPixel);
+            Data[offset++] = Lookup[(c.R * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.R * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.R * BytesPerComponent) + 2];
+            Data[offset++] = Lookup[(c.G * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.G * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.G * BytesPerComponent) + 2];
+            Data[offset++] = Lookup[(c.B * BytesPerComponent) + 0];
+            Data[offset++] = Lookup[(c.B * BytesPerComponent) + 1];
+            Data[offset++] = Lookup[(c.B * BytesPerComponent) + 2];
         }
     }
 }

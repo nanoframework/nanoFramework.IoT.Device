@@ -1,50 +1,50 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using nanoFramework.Hardware.Esp32.Rmt;
 using System;
+using nanoFramework.Hardware.Esp32.Rmt;
 
 namespace Iot.Device.Ws28xx.Esp32
 {
     /// <summary>
-    /// Represents base class for WS28XX LED drivers (i.e. WS2812B or WS2808)
+    /// Represents base class for WS28XX LED drivers (i.e. WS2812B or WS2808).
     /// </summary>
     public class Ws28xx
     {
         /// <summary>
-        /// SPI device used for communication with the LED driver
+        /// SPI device used for communication with the LED driver.
         /// </summary>
-        protected readonly int _gpioPin;
+        protected readonly int GpioPin;
 
         /// <summary>
-        /// The One pulse command
+        /// Gets or sets the One pulse command.
         /// </summary>
         internal RmtCommand OnePulse { get; set; }
 
         /// <summary>
-        /// The zero pulse command
+        /// Gets or sets the zero pulse command.
         /// </summary>
         internal RmtCommand ZeroPulse { get; set; }
 
         /// <summary>
-        /// The reset command
+        /// Gets or sets the reset command.
         /// </summary>
         internal RmtCommand ResetCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the clock divider
+        /// Gets or sets the clock divider.
         /// </summary>
         internal byte ClockDivider { get; set; } = 2;
 
         /// <summary>
-        /// Backing image to be updated on the driver
+        /// Gets backing image to be updated on the driver.
         /// </summary>
         public BitmapImage Image { get; }
 
         /// <summary>
-        /// Constructs Ws28xx instance
+        /// Initializes a new instance of the <see cref="Ws28xx" /> class.
         /// </summary>
-        /// <param name="gpioPin">The GPIO pin used for communication with the LED driver</param>
+        /// <param name="gpioPin">The GPIO pin used for communication with the LED driver.</param>
         /// <param name="image">The bitmap that represents the screen or led strip.</param>
         public Ws28xx(int gpioPin, BitmapImage image)
         {
@@ -53,21 +53,22 @@ namespace Iot.Device.Ws28xx.Esp32
                 throw new ArgumentException();
             }
 
-            _gpioPin = gpioPin;
+            GpioPin = gpioPin;
             Image = image;
         }
 
         /// <summary>
-        /// Sends backing image to the LED driver
+        /// Sends backing image to the LED driver.
         /// </summary>
         public void Update()
         {
-            var transmitter = new TransmitterChannel(_gpioPin);
+            var transmitter = new TransmitterChannel(GpioPin);
             transmitter.CarrierEnabled = false;
+
             // this value for the clock divider considers a clock source of 80MHz which is what we have fixed in native
             transmitter.ClockDivider = ClockDivider;
             transmitter.IdleLevel = false;
-            for(int i=0; i<Image.Data.Length; i++)
+            for (int i = 0; i < Image.Data.Length; i++)
             {
                 SerializeColor(Image.Data[i], transmitter);
             }

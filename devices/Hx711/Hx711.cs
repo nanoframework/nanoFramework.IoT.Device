@@ -19,7 +19,7 @@ namespace Iot.Device.Hx711
         // sample buffer to hold data read from DOUT
         private readonly byte[] _readSampleBuffer;
 
-        //setup Dout wait buffers
+        // setup Dout wait buffers
         private readonly byte[] _clkWaitDoutBuffer;
         private readonly byte[] _doutWaitBuffer;
 
@@ -64,8 +64,7 @@ namespace Iot.Device.Hx711
         /// <exception cref="ArgumentOutOfRangeException"> <see cref="GainLevel.None"/>.</exception>
         public Scale(
             SpiDevice spiDevice,
-            GainLevel gain = GainLevel.GainA128
-            )
+            GainLevel gain = GainLevel.GainA128)
         {
             if (gain == GainLevel.None)
             {
@@ -138,10 +137,12 @@ namespace Iot.Device.Hx711
         {
             // PowerDown then PowerUP to activate on-chip power on rest circuitry
             PowerDown();
-            //set PD_CLK low to awake and reset to default mode GainA128
-            //Wait for DOUT low means HX711 ready to accept new commands
+
+            // set PD_CLK low to awake and reset to default mode GainA128
+            // Wait for DOUT low means HX711 ready to accept new commands
             WaitForConversion();
-            //switch to another channel mode if it is specified
+            
+            // switch to another channel mode if it is specified
             if (gain != GainLevel.None)
             {
                 Gain = gain;
@@ -155,10 +156,10 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Reading sample.");
 
             // setup buffer to drive PD_SCK
-            SpanByte clkTrain = new(_readSamplePulseTrain);
+            SpanByte clkTrain = new SpanByte(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
-            SpanByte readBuffer = new(_readSampleBuffer);
+            SpanByte readBuffer = new SpanByte(_readSampleBuffer);
 
             // setup array to hold readings for averaging
             int[] values = new int[SampleAveraging];
@@ -182,9 +183,9 @@ namespace Iot.Device.Hx711
         {
             Debug.WriteLine("INFO: Setup sampling to detect that a sample is ready");
 
-            //send it in full duplex mode to be platform independent to not let spi send FF's by default
-            SpanByte clkWaitDoutBuffer = new(_clkWaitDoutBuffer);
-            SpanByte doutWaitBuffer = new(_doutWaitBuffer);
+            // send it in full duplex mode to be platform independent to not let spi send FF's by default
+            SpanByte clkWaitDoutBuffer = new SpanByte(_clkWaitDoutBuffer);
+            SpanByte doutWaitBuffer = new SpanByte(_doutWaitBuffer);
             _spiDevice.TransferFullDuplex(clkWaitDoutBuffer, doutWaitBuffer);
             var currentDout = doutWaitBuffer[0];
 
@@ -205,10 +206,10 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Setting channel and gain.");
 
             // setup buffer to drive PD_SCK
-            SpanByte clkTrain = new(_readSamplePulseTrain);
+            SpanByte clkTrain = new SpanByte(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
-            SpanByte readBuffer = new(_readSampleBuffer);
+            SpanByte readBuffer = new SpanByte(_readSampleBuffer);
 
             if (WaitForConversion())
             {
@@ -239,7 +240,6 @@ namespace Iot.Device.Hx711
         {
             // take the even bits
             // because we can be sure that on the second half of the clock cycle the value in the bit it's the one output from the device
-
             int finalValue = 0;
             int mask = 0b0100_0000;
 
@@ -261,10 +261,11 @@ namespace Iot.Device.Hx711
 
         private int ConvertFrom24BitTwosComplement(uint twosComp)
         {
-            //convert from 2's cpmplement 24 bit to int (32 bit)
-            int NormalValue = ((twosComp & 0x800000) != 0) ? (0 - (int)((twosComp ^ 0xffffff) + 1)) : (int)twosComp;
-            return NormalValue;
+            // convert from 2's cpmplement 24 bit to int (32 bit)
+            int normalValue = ((twosComp & 0x800000) != 0) ? (0 - (int)((twosComp ^ 0xffffff) + 1)) : (int)twosComp;
+            return normalValue;
         }
+
         private double ComputeAverage(int[] values)
         {
             double value = 0;
@@ -274,7 +275,7 @@ namespace Iot.Device.Hx711
                 value += values[i];
             }
 
-            return (value / values.Length);
+            return value / values.Length;
         }
     }
 }

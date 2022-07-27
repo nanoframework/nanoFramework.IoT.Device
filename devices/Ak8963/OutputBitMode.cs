@@ -4,17 +4,17 @@
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// Sampling mode
+    /// Sampling mode.
     /// </summary>
     public enum OutputBitMode
     {
         /// <summary>
-        /// Output 14 bit
+        /// Output 14 bit.
         /// </summary>
         Output14bit = 0,
 
         /// <summary>
-        /// Output 16 bit
+        /// Output 16 bit.
         /// </summary>
         Output16bit = 1
     }
