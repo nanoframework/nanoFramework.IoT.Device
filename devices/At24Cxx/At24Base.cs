@@ -9,7 +9,7 @@ namespace Iot.Device.At24Cxx
     /// <summary>
     /// Base class for common functionality of the At24C serices of devices.
     /// </summary>
-    public abstract class At24Base : IDisposable
+    public abstract class At24Base
     {
         /// <summary>
         /// Default I2C address for At24Cx familly.
@@ -175,15 +175,6 @@ namespace Iot.Device.At24Cxx
 
             // Account for memory address that was sent to device along with the data to be written
             return result.BytesTransferred - 2;
-        }
-
-        /// <inheritdoc cref="IDisposable" />
-        public void Dispose()
-        {
-            if (_i2cDevice != null)
-            {
-                _i2cDevice.Dispose();
-            }
         }
     }
 }
