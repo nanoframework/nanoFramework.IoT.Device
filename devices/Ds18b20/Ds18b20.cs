@@ -25,13 +25,13 @@ namespace Iot.Device.Ds18b20
 
         private bool _isTrackingChanges = false;
 
-        private double _tempLowAlarm;
+        private double _tempLowAlarm = 0;
 
-        private double _tempHighAlarm;
+        private double _tempHighAlarm = 0;
 
         private Thread _changeTracker = null;
 
-        private float _temperatureInCelsius { get; set; }
+        private float _temperatureInCelsius = 0;
 
         private bool _manyDevicesConnected = false;
 
@@ -76,7 +76,7 @@ namespace Iot.Device.Ds18b20
         }
 
         /// <summary>
-        /// Sets or gets value indicating if alarm search mode is enabled.
+        /// Sets or gets value indicating if alarm search mode is enabled. Temperature
         /// </summary>
         [Property("IsAlarmSearchCommandEnabled")]
         public bool IsAlarmSearchCommandEnabled
@@ -129,7 +129,6 @@ namespace Iot.Device.Ds18b20
         /// <summary>
         /// Returns information if it's powered as parasite of the board.
         /// </summary>
-        /// <returns>bool</returns>
         [Property("IsParasitePowered")]
         public bool IsParasitePowered
         {
@@ -181,9 +180,9 @@ namespace Iot.Device.Ds18b20
         /// It will check for existence of a 1-wire device. If no address was provided, then the
         /// 1-wire bus will be searched and the first device that matches the family code will be latched on to.
         /// Developer should check for successful initialization by checking the value returned. 
-        /// It must be bigger than 0.
         /// If ManyDevicesConnected is set it will keep searching until find last device, saving all in AddressNet array.
         /// </summary>
+        /// <returns><b>true</b> on success, else <b>false</b></returns>
         public bool Initialize()
         {
             int foundDevices = 0;
@@ -249,30 +248,12 @@ namespace Iot.Device.Ds18b20
             return foundDevices > 0;
         }
 
-        private void SelectDevice()
-        {
-            if (Address != null && Address.Length == 8 && Address[0] == (byte)RomCommands.FamilyCode)
-            {
-                //now write command and ROM at once
-                byte[] cmdAndData = new byte[9]
-                {
-                    (byte)RomCommands.Match, //Address specific device command
-                    Address[0], Address[1], Address[2], Address[3], Address[4], Address[5], Address[6],
-                    Address[7] //do not convert to a for..loop
-                };
 
-                _oneWireHost.TouchReset();
-                foreach (var b in cmdAndData)
-                {
-                    _oneWireHost.WriteByte(b);
-                }
-            }
-        }
 
         /// <summary>
         /// Read sensor data
         /// </summary>
-        /// <returns>true on success, else false</returns>
+        /// <returns><b>true</b> on success, else <b>false</b></returns>
         public bool Read()
         {
             PrepareToRead();
@@ -281,6 +262,10 @@ namespace Iot.Device.Ds18b20
 
             //now read the scratchpad
             var verify = _oneWireHost.WriteByte((byte)FunctionCommands.ReadScratchpad);
+            if (verify == 0)
+            {
+                return false;
+            }
 
             //Now read the temperature
             var tempLo = _oneWireHost.ReadByte();
@@ -318,8 +303,6 @@ namespace Iot.Device.Ds18b20
 
         /// <summary>
         /// Search for alarm condition.
-        /// Save in AddressNet the list of devices
-        /// under alarm condition.
         /// </summary>
         /// <returns>bool</returns>
         public bool SearchForAlarmCondition()
@@ -327,12 +310,7 @@ namespace Iot.Device.Ds18b20
             Address = null;
 
             ConvertTemperature();
-            if (Initialize())
-            {
-                return true;
-            }
-
-            return false;
+            return Initialize();
         }
 
         /// <summary>
@@ -342,15 +320,20 @@ namespace Iot.Device.Ds18b20
         /// Write 0xEE (238) to a property if
         /// error during property handle.
         /// </summary>
-        public bool ConfigurationRead(bool recall = false)
+        public bool ConfigurationRead(bool restoreRegisterFromEEPROM = false)
         {
-            var verify = 0;
+            var verificationValue = 0;
 
-            // Restore Register from EEPROM
-            if (recall == true)
+            if (restoreRegisterFromEEPROM)
             {
                 SelectDevice();
-                verify = _oneWireHost.WriteByte((byte)FunctionCommands.RecallAlarmTriggerValues);
+                verificationValue = _oneWireHost.WriteByte((byte)FunctionCommands.RecallAlarmTriggerValues);
+
+                if (verificationValue == 0)
+                {
+                    return false;
+                }
+
                 while (_oneWireHost.ReadByte() == 0)
                 {
                     Thread.Sleep(10);
@@ -359,7 +342,12 @@ namespace Iot.Device.Ds18b20
 
             // Now read the scratchpad
             SelectDevice();
-            verify = _oneWireHost.WriteByte((byte)FunctionCommands.ReadScratchpad);
+            verificationValue = _oneWireHost.WriteByte((byte)FunctionCommands.ReadScratchpad);
+
+            if (verificationValue == 0)
+            {
+                return false;
+            }
 
             // Discard temperature bytes
             _oneWireHost.ReadByte();
@@ -390,27 +378,23 @@ namespace Iot.Device.Ds18b20
         /// resolution.
         /// The unchanged registers will be overwritten.
         /// </summary>
-        public bool ConfigurationWrite(bool save = false)
+        /// <param name="writeToEEPROM">Flag indicating if configuration should be written also to EEPROM</param>
+        public void ConfigurationWrite(bool writeToEEPROM = false)
         {
             SelectDevice();
 
-            //now write the scratchpad
-            var verify = _oneWireHost.WriteByte((byte)FunctionCommands.WriteScratchpad);
+            _oneWireHost.WriteByte((byte)FunctionCommands.WriteScratchpad);
 
             _oneWireHost.WriteByte((byte)_tempHighAlarm);
             _oneWireHost.WriteByte((byte)_tempLowAlarm);
             _oneWireHost.WriteByte((byte)((byte)TemperatureResolution << 5));
 
-            // Save confuguration on device's EEPROM
-            if (save)
+            if (writeToEEPROM)
             {
                 SelectDevice();
-                verify = _oneWireHost.WriteByte((byte)FunctionCommands.CopyScratchpad);
+                _oneWireHost.WriteByte((byte)FunctionCommands.CopyScratchpad);
                 Thread.Sleep(10);
             }
-
-            ;
-            return true;
         }
 
         /// <summary>
@@ -453,17 +437,10 @@ namespace Iot.Device.Ds18b20
                     {
                         Thread.Sleep(trackingInterval);
                     }
-                    //now check for change
+
                     if (HasSensorValueChanged() && SensorValueChanged != null)
                     {
-                        try
-                        {
-                            SensorValueChanged();
-                        }
-                        catch
-                        {
-                            /*do nothing..upto event handler to decide what to do*/
-                        }
+                        SensorValueChanged();
                     }
                 }
 
@@ -493,11 +470,31 @@ namespace Iot.Device.Ds18b20
             }
         }
 
+        private void SelectDevice()
+        {
+            if (Address != null && Address.Length == 8 && Address[0] == (byte)RomCommands.FamilyCode)
+            {
+                //now write command and ROM at once
+                byte[] cmdAndData = new byte[9]
+                {
+                    (byte)RomCommands.Match, //Address specific device command
+                    Address[0], Address[1], Address[2], Address[3], Address[4], Address[5], Address[6],
+                    Address[7] //do not convert to a for..loop
+                };
+
+                _oneWireHost.TouchReset();
+                foreach (var b in cmdAndData)
+                {
+                    _oneWireHost.WriteByte(b);
+                }
+            }
+        }
+
         private void ConvertTemperature()
         {
             _oneWireHost.TouchReset();
             //first address all devices
-            _oneWireHost.WriteByte((byte)RomCommands.Skip); //Skip ROM command
+            _oneWireHost.WriteByte((byte)RomCommands.Skip);
             _oneWireHost.WriteByte((byte)FunctionCommands.ConvertTemperature); //convert temperature
             // According data sheet. Less resolution needs less time to complete.
             int waitConversion = TemperatureResolution switch

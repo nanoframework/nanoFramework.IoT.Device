@@ -22,14 +22,14 @@ namespace Iot.Device.Ds18b20.Samples
             Console.WriteLine("Hello from Ds18b20!");
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
             Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
-            Alarm();
+            UsingAlarms();
         }
 
-        private static void Alarm()
+        private static void UsingAlarms()
         {
             using OneWireHost oneWire = new OneWireHost();
 
-            Ds18b20 ds18b20 = new Ds18b20(oneWire, null, true, TemperatureResolution.VeryHigh);
+            Ds18b20 ds18b20 = new Ds18b20(oneWire, null, false, TemperatureResolution.VeryHigh);
 
             if (ds18b20.Initialize())
             {
@@ -43,7 +43,11 @@ namespace Iot.Device.Ds18b20.Samples
                         devAddrStr += addrByte.ToString("X2");
                     }
                     Console.WriteLine("18b20-" + i.ToString("X2") + " " + devAddrStr);
-                    ReadAlarmSettings();
+                    
+                    ds18b20.ConfigurationRead(false);
+                    Console.WriteLine("Alarm set-points before changes:");
+                    Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius + " C");
+                    Console.WriteLine("Lo alarm = " + ds18b20.TemperatureLowAlarm.DegreesCelsius + " C");
                     SetAlarmSetting();
                 }
                 alarmSearch();
@@ -77,11 +81,10 @@ namespace Iot.Device.Ds18b20.Samples
                             foreach (var addrByte in ds18b20.AddressNet[index]) devAddrStr += addrByte.ToString("X2");
                             Console.WriteLine("DS18B20[" + devAddrStr + "] Sensor reading in One-Shot-mode; T = " + ds18b20.Temperature.DegreesCelsius.ToString("f2") + " C");
 
-                            ds18b20.ConfigurationRead(false); //Read alarm setpoint.
-                            Console.WriteLine("Alarm Setpoints:");
+                            ds18b20.ConfigurationRead(false); //Read alarm set-point.
+                            Console.WriteLine("Alarm set-points:");
                             Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius + " C");
                             Console.WriteLine("Lo alarm = " + ds18b20.TemperatureLowAlarm.DegreesCelsius + " C");
-                            Console.WriteLine("");
                         }
                     }
                     else
@@ -93,28 +96,20 @@ namespace Iot.Device.Ds18b20.Samples
                 }
                 Console.WriteLine("");
             }
-            // Set alarm setpoint for selected device
-            void ReadAlarmSettings()
-            {
-                ds18b20.ConfigurationRead(false);
-                Console.WriteLine("Alarm Setpoints before:");
-                Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius + " C");
-                Console.WriteLine("Lo alarm = " + ds18b20.TemperatureLowAlarm.DegreesCelsius + " C");
-                Console.WriteLine("");
-            }
 
             void SetAlarmSetting()
             {
                 ds18b20.TemperatureHighAlarm = Temperature.FromDegreesCelsius(30);
                 ds18b20.TemperatureLowAlarm = Temperature.FromDegreesCelsius(25);
-                ds18b20.ConfigurationWrite(false); //Write configuration on ScratchPad,
-                //If true, save it on EEPROM too.
+                // Write configuration on ScratchPad.
+                ds18b20.ConfigurationWrite(false); 
+                // Write configuration on EEPROM too.
                 ds18b20.ConfigurationWrite(true);
+                // Read configuration to check if changes were applied
                 ds18b20.ConfigurationRead(true);
-                Console.WriteLine("Alarm Setpoints-RecallE2:");
+                Console.WriteLine("Alarm set-points after changes:");
                 Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius.ToString("F") + " C");
                 Console.WriteLine("Lo alarm = " + ds18b20.TemperatureLowAlarm.DegreesCelsius.ToString("F") + " C");
-                Console.WriteLine("");
             }
         }
 
