@@ -18,17 +18,17 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
-// Setup ESP32 I2C port
+// Setup ESP32 I2C port.
 Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
 
-// Setup At24C32C device
+// Setup At24C32C device.
 int deviceAddress = 0x57;
 I2cConnectionSettings settings = new I2cConnectionSettings(1, deviceAddress);
 I2cDevice i2cDevice = new I2cDevice(settings);
 At24C32C eeprom = new At24C32C(i2cDevice);
 
-// Write string to device
+// Write string to device.
 string message = "Hello from nanoFramework!";
 byte[] encodedMessage = Encoding.UTF8.GetBytes(message);
 int messageAddress = 0x0;
@@ -37,22 +37,22 @@ uint writeResult = eeprom.Write(messageAddress, encodedMessage);
 Debug.WriteLine($"\"{message}\" written to EEPROM at 0x{messageAddress:X} ({writeResult} bytes)");
 Thread.Sleep(100);
 
-// Read back message from device
+// Read back message from device.
 byte[] receivedData = eeprom.Read(messageAddress, message.Length);
 string decodedMessage = Encoding.UTF8.GetString(receivedData, 0, receivedData.Length);
 
 Debug.WriteLine($"\"{decodedMessage}\" read from EEPROM at 0x{messageAddress:X}");
 Thread.Sleep(100);
 
-// Write byte to end of available device memory
+// Write byte to end of available device memory.
 byte value = 0xA9;
 int byteAddress = eeprom.Size - 1;
-uint writeByteResult = eeprom.WriteByte(byteAddress, 0xA9);
+uint writeByteResult = eeprom.WriteByte(byteAddress, value);
 
 Debug.WriteLine($"0x{value:X} written to EEPROM at 0x{byteAddress:X} ({writeByteResult} byte)");
 Thread.Sleep(100);
 
-// Read back byte from end of available device memory
+// Read back byte from end of available device memory.
 byte receivedByte = eeprom.ReadByte(byteAddress);
 
 Debug.WriteLine($"0x{receivedByte:X} read from EEPROM at 0x{byteAddress:X}");
