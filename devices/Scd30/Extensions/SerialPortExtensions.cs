@@ -18,11 +18,12 @@ namespace System.IO.Ports
         /// <param name="numberOfBytes">The number of bytes to wait for.</param>
         /// <param name="sleepTimeInMs">The time to sleep if we don't have enough bytes yet.</param>
         /// <exception cref="TimeoutException">When the timeout configured in the SerialPort has been reached.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">When the <see cref="SerialPort.ReadBufferSize"/> is too small to facilitate waiting for the amount of requested bytes.</exception>
         internal static void WaitForData(this SerialPort serialPort, int numberOfBytes, int sleepTimeInMs = 5)
         {
             if (serialPort.ReadBufferSize < numberOfBytes)
             {
-                throw new ArgumentOutOfRangeException(nameof(numberOfBytes), $"The SerialPort.ReadBufferSize is too small ({serialPort.ReadBufferSize}) to facilitate waiting for {numberOfBytes} bytes");
+                throw new ArgumentOutOfRangeException();
             }
 
             var sw = Stopwatch.StartNew();

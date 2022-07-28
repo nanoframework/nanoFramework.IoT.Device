@@ -90,10 +90,10 @@ namespace Iot.Device.Scd30
         {
             if (ambientPressureCompentation.Millibars != 0 && (ambientPressureCompentation.Millibars < 700 || ambientPressureCompentation.Millibars > 1400))
             {
-                throw new ArgumentOutOfRangeException(nameof(ambientPressureCompentation), $"{nameof(ambientPressureCompentation)} is {ambientPressureCompentation.Millibars} mBar, but must be within 700-1400 mBar");
+                throw new ArgumentOutOfRangeException();
             }
 
-            ModbusWriteSingleHoldingRegister(0x36, (ushort)ambientPressureCompentation.Millibars);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.START_MEASUREMENT_ADDR, (ushort)ambientPressureCompentation.Millibars);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Iot.Device.Scd30
         /// </summary>
         public void StopContinuousMeasurement()
         {
-            ModbusWriteSingleHoldingRegister(0x37, 1);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.STOP_MEASUREMENT_ADDR, 1);
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Iot.Device.Scd30
         {
             if (measurementInterval.TotalSeconds < 2 || measurementInterval.TotalSeconds > 1800)
             {
-                throw new ArgumentOutOfRangeException(nameof(measurementInterval), $"{nameof(measurementInterval)} is {measurementInterval.TotalSeconds} seconds, but must be within 2-1800 seconds");
+                throw new ArgumentOutOfRangeException();
             }
 
             ushort seconds = (ushort)measurementInterval.TotalSeconds;
-            ModbusWriteSingleHoldingRegister(0x25, seconds);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.MEASUREMENT_INTERVAL_ADDR, seconds);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Iot.Device.Scd30
         /// <returns><see cref="TimeSpan"/> containing the currently set measurement interval.</returns>
         public TimeSpan GetMeasurementInterval()
         {
-            var data = ModbusReadHoldingRegisters(0x25, 1);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.MEASUREMENT_INTERVAL_ADDR, 1);
             return TimeSpan.FromSeconds(BinaryPrimitives.ReadUInt16BigEndian(data));
         }
 
@@ -144,7 +144,7 @@ namespace Iot.Device.Scd30
         /// <returns>True when there's a measurement available to be read out, otherwise false.</returns>
         public bool GetDataReadyStatus()
         {
-            var data = ModbusReadHoldingRegisters(0x27, 1);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.DATA_READY_STATUS_ADDR, 1);
             return BinaryPrimitives.ReadUInt16BigEndian(data) == 1;
         }
 
@@ -161,7 +161,7 @@ namespace Iot.Device.Scd30
         /// <returns>The measured values.</returns>
         public Measurement ReadMeasurement()
         {
-            var data = ModbusReadHoldingRegisters(0x28, 6);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.READ_MEASUREMENT_ADDR, 6);
             return new Measurement(data);
         }
 
@@ -188,7 +188,7 @@ namespace Iot.Device.Scd30
         /// <param name="activate">True to activate automatic self-calibration, false to deactivate.</param>
         public void SetAutomaticSelfCalibration(bool activate)
         {
-            ModbusWriteSingleHoldingRegister(0x3a, (ushort)(activate ? 1 : 0));
+            ModbusWriteSingleHoldingRegister(ModbusRegister.AUTOMATIC_SELF_CALIBRATION_ADDR, (ushort)(activate ? 1 : 0));
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Iot.Device.Scd30
         /// <returns>True when Automatic Self Calibration is enabled, false otherwise.</returns>
         public bool GetAutomaticSelfCalibration()
         {
-            var data = ModbusReadHoldingRegisters(0x3a, 1);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.AUTOMATIC_SELF_CALIBRATION_ADDR, 1);
             return BinaryPrimitives.ReadUInt16BigEndian(data) == 1;
         }
 
@@ -217,25 +217,25 @@ namespace Iot.Device.Scd30
         ///     After repowering the sensor, the command will return the standard reference value of 400 ppm.
         /// </para>
         /// </summary>
-        /// <param name="referenceCo2ConcentrationInPpm">The reference CO2 concentration in the range 400-2000 ppm.</param>
-        public void SetForcedRecalibrationValue(ushort referenceCo2ConcentrationInPpm)
+        /// <param name="referenceCo2Concentration">The reference CO2 concentration in the range 400-2000 ppm.</param>
+        public void SetForcedRecalibrationValue(VolumeConcentration referenceCo2Concentration)
         {
-            if (referenceCo2ConcentrationInPpm < 400 || referenceCo2ConcentrationInPpm > 2000)
+            if (referenceCo2Concentration.PartsPerMillion < 400 || referenceCo2Concentration.PartsPerMillion > 2000)
             {
-                throw new ArgumentOutOfRangeException(nameof(referenceCo2ConcentrationInPpm), $"{nameof(referenceCo2ConcentrationInPpm)} is {referenceCo2ConcentrationInPpm} ppm, but must be within 400-2000 ppm");
+                throw new ArgumentOutOfRangeException();
             }
 
-            ModbusWriteSingleHoldingRegister(0x39, referenceCo2ConcentrationInPpm);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.FORCED_RECALIBRATION_ADDR, (ushort)referenceCo2Concentration.PartsPerMillion);
         }
 
         /// <summary>
-        /// Get the current value for the Forced Recalibration (FRC) setting. See <see cref="SetForcedRecalibrationValue(ushort)"/> for more information.
+        /// Get the current value for the Forced Recalibration (FRC) setting. See <see cref="SetForcedRecalibrationValue(VolumeConcentration)"/> for more information.
         /// </summary>
-        /// <returns>The current Forced Recalibration (FRC) value in ppm.</returns>
-        public ushort GetForcedRecalibrationValue()
+        /// <returns>The current Forced Recalibration (FRC) value.</returns>
+        public VolumeConcentration GetForcedRecalibrationValue()
         {
-            var data = ModbusReadHoldingRegisters(0x39, 1);
-            return BinaryPrimitives.ReadUInt16BigEndian(data);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.FORCED_RECALIBRATION_ADDR, 1);
+            return VolumeConcentration.FromPartsPerMillion(BinaryPrimitives.ReadUInt16BigEndian(data));
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Iot.Device.Scd30
         public void SetTemperatureOffset(Temperature temperatureOffset)
         {
             ushort offset = (ushort)(temperatureOffset.DegreesCelsius * 100);
-            ModbusWriteSingleHoldingRegister(0x3b, offset);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.TEMPERATURE_OFFSET_ADDR, offset);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Iot.Device.Scd30
         /// <returns>The currently configured temperature offset.</returns>
         public Temperature GetTemperatureOffset()
         {
-            var data = ModbusReadHoldingRegisters(0x3b, 1);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.TEMPERATURE_OFFSET_ADDR, 1);
             return Temperature.FromDegreesCelsius(BinaryPrimitives.ReadUInt16BigEndian(data) / 100d);
         }
 
@@ -280,7 +280,7 @@ namespace Iot.Device.Scd30
         /// <param name="altitudeAboveSeaLevel">Height over sea level above 0.</param>
         public void SetAltitudeCompensation(Length altitudeAboveSeaLevel)
         {
-            ModbusWriteSingleHoldingRegister(0x38, (ushort)altitudeAboveSeaLevel.Meters);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.ALTITUDE_COMPENSATION_ADDR, (ushort)altitudeAboveSeaLevel.Meters);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Iot.Device.Scd30
         /// <returns>The currently configured altitude compensation.</returns>
         public Length GetAltitudeCompensation()
         {
-            var data = ModbusReadHoldingRegisters(0x38, 1);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.ALTITUDE_COMPENSATION_ADDR, 1);
             return Length.FromMeters(BinaryPrimitives.ReadUInt16BigEndian(data));
         }
 
@@ -299,7 +299,7 @@ namespace Iot.Device.Scd30
         /// <returns>The firmware version of the SCD30 sensor.</returns>
         public Version ReadFirmwareVersion()
         {
-            var data = ModbusReadHoldingRegisters(0x20, 1);
+            var data = ModbusReadHoldingRegisters(ModbusRegister.FIRMWARE_VERSION_ADDR, 1);
             return new Version(data[0], data[1]);
         }
 
@@ -316,18 +316,19 @@ namespace Iot.Device.Scd30
         /// </summary>
         public void SoftReset()
         {
-            ModbusWriteSingleHoldingRegister(0x34, 1);
+            ModbusWriteSingleHoldingRegister(ModbusRegister.SOFT_RESET_ADDR, 1);
         }
 
-        private void ModbusWriteSingleHoldingRegister(ushort register, ushort value)
+        private void ModbusWriteSingleHoldingRegister(ModbusRegister register, ushort value)
         {
             // Function 0x6 request is always 8 bytes
             var request = new byte[8];
+            var requestSpan = new SpanByte(request);
             request[0] = Scd30ModbusAddress;
             request[1] = 0x6;
-            BinaryPrimitives.WriteUInt16BigEndian(new SpanByte(request, 2, 2), register);
-            BinaryPrimitives.WriteUInt16BigEndian(new SpanByte(request, 4, 2), value);
-            BinaryPrimitives.WriteUInt16BigEndian(new SpanByte(request, 6, 2), CalculateModbusRtuCrc16(request, 0, 6));
+            BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(2, 2), (ushort)register);
+            BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(4, 2), value);
+            BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(6, 2), CalculateModbusRtuCrc16(requestSpan.Slice(0, 6)));
 
             // Function 0x6 response is always 8 bytes
             var response = new byte[8];
@@ -336,15 +337,16 @@ namespace Iot.Device.Scd30
             ModbusWriteAndRead(request, response);
         }
 
-        private SpanByte ModbusReadHoldingRegisters(ushort register, byte number)
+        private SpanByte ModbusReadHoldingRegisters(ModbusRegister register, byte number)
         {
             // Function 0x3 request is always 8 bytes
             var request = new byte[8];
+            var requestSpan = new SpanByte(request);
             request[0] = Scd30ModbusAddress;
             request[1] = 0x3;
-            BinaryPrimitives.WriteUInt16BigEndian(new SpanByte(request, 2, 2), register);
-            BinaryPrimitives.WriteUInt16BigEndian(new SpanByte(request, 4, 2), number);
-            BinaryPrimitives.WriteUInt16BigEndian(new SpanByte(request, 6, 2), CalculateModbusRtuCrc16(request, 0, 6));
+            BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(2, 2), (ushort)register);
+            BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(4, 2), number);
+            BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(6, 2), CalculateModbusRtuCrc16(requestSpan.Slice(0, 6)));
 
             // Response size depends on the number of registers requested
             var response = new byte[5 + (2 * number)];
@@ -372,8 +374,9 @@ namespace Iot.Device.Scd30
             _serial.Read(response, 0, response.Length);
 
             // Verify the received message
-            var calculatedCrc = CalculateModbusRtuCrc16(response, 0, response.Length - 2);
-            var receivedCrc = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(response, response.Length - 2, 2));
+            var responseSpan = new SpanByte(response);
+            var calculatedCrc = CalculateModbusRtuCrc16(responseSpan.Slice(0, response.Length - 2));
+            var receivedCrc = BinaryPrimitives.ReadUInt16BigEndian(responseSpan.Slice(response.Length - 2));
             if (calculatedCrc != receivedCrc)
             {
                 throw new ApplicationException($"Invalid checksum (calculated {calculatedCrc}, got {receivedCrc})");
@@ -386,7 +389,7 @@ namespace Iot.Device.Scd30
             }
         }
 
-        private ushort CalculateModbusRtuCrc16(byte[] buf, int offset, int length)
+        private ushort CalculateModbusRtuCrc16(SpanByte data)
         {
             // Described in:
             //   https://sensirion.com/media/documents/D7CEEF4A/6165372F/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
@@ -394,9 +397,9 @@ namespace Iot.Device.Scd30
             //   https://ctlsys.com/support/how_to_compute_the_modbus_rtu_message_crc/
             ushort crc = 0xFFFF;
 
-            for (int pos = offset; pos < length; pos++)
+            for (int pos = 0; pos < data.Length; pos++)
             {
-                crc ^= buf[pos];
+                crc ^= data[pos];
 
                 for (int i = 8; i != 0; i--)
                 {

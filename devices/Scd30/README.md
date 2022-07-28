@@ -47,7 +47,7 @@ The above would output the following:
 
 ```text
 SCD30 detected: Firmware version=3.66
-Measurement: Co2ConcentrationInPpm=400.8741 ppm, Temperature=27.10421752 °C, RelativeHumidity=32.75756835 %RH
+Measurement: Co2Concentration=400.8741 ppm, Temperature=27.10421752 °C, RelativeHumidity=32.75756835 %RH
 ```
 
 Check out the sample for more information.

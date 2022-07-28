@@ -31,6 +31,7 @@
       <dependency id="UnitsNet.nanoFramework.Pressure" version="4.140.0" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.140.0" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="4.140.0" />
+      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.140.0" />
     </dependencies>
   </metadata>
   <files>
