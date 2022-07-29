@@ -17,7 +17,7 @@ Configuration.SetPinFunction(5, DeviceFunction.COM3_TX);
 Configuration.SetPinFunction(27, DeviceFunction.COM3_RX);
 ```
 
-Initialize the `SerialPort` and pass it to the `Scd30Sensor`. The constructor of the `Scd30Sensor` will configure the `SerialPort` to the expected `BaudRate` and other settings:
+Initialize the `SerialPort` and pass it to the `Scd30Sensor`. You'll stay in control of the `SerialPort` for any exotic situations (i.e. `InvertSignalLevels` or multiplexing scenarios). The constructor of the `Scd30Sensor` will configure the `SerialPort` to the expected `BaudRate` and other settings:
 
 ```csharp
 var scd30 = new Scd30Sensor(new SerialPort("COM3"));
