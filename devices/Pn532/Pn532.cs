@@ -15,7 +15,7 @@ using Iot.Device.Pn532.AsTarget;
 using Iot.Device.Pn532.ListPassive;
 using Iot.Device.Pn532.RfConfiguration;
 using Iot.Device.Rfid;
-using IoT.Device.Pn532;
+using Iot.Device.Pn532;
 #if DEBUG
 using Microsoft.Extensions.Logging;
 using nanoFramework.Logging;

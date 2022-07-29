@@ -11,7 +11,7 @@ See [this article](https://wiki.keyestudio.com/KS0387_keyestudio_YX5200-24SS_MP3
 ## Usage
 
 ```csharp
-using IoT.Device.Yx5300;
+using Iot.Device.Yx5300;
 using nanoFramework.Hardware.Esp32;
 using System.Threading;
 

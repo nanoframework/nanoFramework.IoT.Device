@@ -1,23 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027", "Mbi5027.nfproj", "{005EB10A-24CA-4827-AA45-12B00CD69408}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027-driver", "samples\Mbi5027-driver.nfproj", "{6F55AC20-2A48-447B-9891-2E8762A08283}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{7F803178-D551-4C8C-B0A6-A5D7401753E9}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Iot.Device.Multiplexing", "..\..\src\Iot.Device.Multiplexing\Iot.Device.Multiplexing.shproj", "{5A827316-0B28-435D-A021-43ED47CABD78}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ShiftRegister.Shared", "..\ShiftRegister\ShiftRegister.Shared\ShiftRegister.Shared.shproj", "{518E3787-17B4-4E4E-9240-5535C2698617}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\ShiftRegister\ShiftRegister.Shared\ShiftRegister.Shared.projitems*{518e3787-17b4-4e4e-9240-5535c2698617}*SharedItemsImports = 13
-		..\..\src\Iot.Device.Multiplexing\Iot.Device.Multiplexing.projitems*{5a827316-0b28-435d-a021-43ed47cabd78}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -38,10 +27,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5A827316-0B28-435D-A021-43ED47CABD78} = {7F803178-D551-4C8C-B0A6-A5D7401753E9}
-		{518E3787-17B4-4E4E-9240-5535C2698617} = {7F803178-D551-4C8C-B0A6-A5D7401753E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88AC0A2C-E624-4AD1-B94E-2E9F4345B326}

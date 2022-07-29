@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -344,7 +344,7 @@ namespace Iot.Device.Ssd13xx
                     str = str.PadLeft(str.Length + padSize);
             }
 
-            byte[] bitMap = this.GetTextBytes(str);
+            byte[] bitMap = (Font.Width > 8 ? this.GetDoubleTextBytes(str) : this.GetTextBytes(str));
 
             this.DrawBitmap(x, y, bitMap.Length / Font.Height, Font.Height, bitMap, size);
         }
@@ -382,13 +382,57 @@ namespace Iot.Device.Ssd13xx
 
                     for (int segment = 0; segment < Font.Height; segment++)
                     {
-                        bitMap[i + (segment * text.Length)] = characterMap[segment];
+                        bitMap[i + (segment * text.Length)] = (segment < characterMap.Length ? characterMap[segment] : byte.MinValue);
                     }
                 }
             }
             else
             {
                 throw new Exception("Font width must be 8");
+            }
+
+            return bitMap;
+        }
+
+        /// <summary>
+        /// Get the bytes to be drawn on the screen for double-byte text, from the font
+        /// e.g. 功夫, カンフー, 쿵후
+        /// </summary>
+        /// <param name="text">Strint to be shown on the screen.</param>
+        /// <returns>The bytes to be drawn using current font.</returns>
+        byte[] GetDoubleTextBytes(string text)
+        {
+            byte[] bitMap;
+
+            if (Font.Width == 16)
+            {
+                var charCount = (text.Length * 2);
+                bitMap = new byte[charCount * Font.Height * Font.Width / 16];
+
+                byte[] characterMap = null;
+                for (int i = 0; i < charCount; i++)
+                {
+                    var even = (i == 0 || i % 2 == 0);
+                    if (even)
+                    {
+                        characterMap = Font[text[i / 2]];
+                    }
+
+                    var list = new System.Collections.ArrayList();
+                    for (int idx = (even ? 0 : 1); idx < characterMap.Length; idx += 2)
+                    {
+                        list.Add(characterMap[idx]);
+                    }
+
+                    for (int segment = 0; segment < Font.Height; segment++)
+                    {
+                        bitMap[i + (segment * charCount)] = (segment < list.Count ? (byte)list[segment] : byte.MinValue);
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Double-byte characters font width must be 16");
             }
 
             return bitMap;

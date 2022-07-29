@@ -1,8 +1,23 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
 trigger:
   branches:
-    include: ["main", "develop*", "release-*", "refs/tags/*" ]
+    include:
+      - main
+      - develop
+      - release-*
+      - refs/tags/*
   paths:
-    exclude: [ "doc", "*.md", ".gitignore", "README.md", "devices/README.md", "tips-trick.md", "src/devices_generated_status.md", "LICENSE.md" ]
+    exclude:
+      - src/*
+      - tests/*
+      - devices/README.md
+      - devices/key.snk
+      - .gitignore
+      - LICENSE.md
+      - README.md
+      - tips-trick.md
 
 # PR always trigger build
 pr:
@@ -17,7 +32,7 @@ resources:
       endpoint: nanoframework
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: 'windows-latest'
 
 variables:
   DOTNET_NOLOGO: true
@@ -41,14 +56,6 @@ steps:
 - template: azure-pipelines-templates/install-nuget.yml@templates
 
 - task: DotNetCoreCLI@2  
-  displayName: Install NBGV tool
-  condition: succeeded()
-  inputs:
-    command: custom
-    custom: tool
-    arguments: install -g nbgv
-
-- task: DotNetCoreCLI@2  
   displayName: Install nanovc tool
   condition: succeeded()
   inputs:
@@ -59,6 +66,8 @@ steps:
 - task: InstallnFBuildComponents@1
   condition: succeeded()
   displayName: Install nanoFramework MSBuild components
+  env:
+    GITHUB_TOKEN: $(GitHubToken)
 
 # build solutions that need to be build
 - task: PowerShell@2
@@ -81,9 +90,28 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 
+# find if there are NuGet artifacts
+- task: PowerShell@2
+  displayName: Count artifacts
+  name: Count_Artifacts
+  inputs:
+    workingDirectory: '$(Build.ArtifactStagingDirectory)'
+    targetType: inline
+    script: |
+      $count = (Get-ChildItem -Path '.' -Filter '*.nupkg' -Recurse).Count
+      Write-Host $count ' NuGet packages found'
+
+      # set variable to forward 
+      echo "##vso[task.setvariable variable=NUGET_COUNT;isOutput=true]$count"
+
 - task: DotNetCoreCLI@2
   displayName: Install SignTool tool
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   inputs:
     command: custom
     custom: tool
@@ -102,9 +130,14 @@ steps:
     --descriptionUrl "https://github.com/$env:Build_Repository_Name"
   displayName: Sign packages
   continueOnError: true
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   
-# publish artifacts (only possible if this is not a PR originated on a fork)
+# publish artifacts
 - task: PublishBuildArtifacts@1
   condition: succeeded()
   displayName: Publish deployables artifacts
@@ -113,32 +146,59 @@ steps:
     ArtifactName: deployables
     ArtifactType: Container
 
-# push NuGet class lib package to NuGet (always happens except on PR builds)
-- task: NuGetCommand@2
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
-  continueOnError: true
-  displayName: Push NuGet packages to NuGet
+# push NuGet class lib package to Azure Artifacts (always happens except on PR builds)
+- task: NuGetAuthenticate@0
   inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+    nuGetServiceConnections: 'AzureArtifacts-$(System.TeamProject)'
+
+- script: nuget push -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json *.nupkg -NonInteractive -SkipDuplicate
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
+  continueOnError: false
+  displayName: Push NuGet packages to NuGet
+
+# push NuGet class lib package to NuGet (always happens except on PR builds)
+- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
+  continueOnError: false
+  displayName: Push NuGet packages to NuGet
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   inputs:
     command: custom
     custom: run
     projects: '**/device-listing.csproj'
+    workingDirectory: 'nanoFramework.IoT.Device'
 
 - task: PowerShell@2
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
   displayName: Push READMEs to GitHub
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   continueOnError: true
   inputs:
-    workingDirectory: nanoFramework.IoT.Device
+    workingDirectory: 'nanoFramework.IoT.Device'
     targetType: 'inline'
     script: |
       git config user.email 'nanoframework@outlook.com'

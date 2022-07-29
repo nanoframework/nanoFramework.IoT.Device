@@ -9,13 +9,29 @@ using UnitsNet.Units;
 
 namespace Iot.Device.Axp192
 {
+    /// <summary>
+    /// Class for handling Axp192 device.
+    /// </summary>
     public class Axp192
     {
+        private const byte DcD3SetBit = 1 << 1;
+        private const byte Ldo2SetBit = 1 << 2;
+        private const byte Ldo3SetBit = 1 << 3;
+        private const byte ExtEnSetBit = 1 << 6;
+
+        /// <summary>
+        /// Default address of I2C Axp192 device.
+        /// </summary>
         public const int I2cDefaultAddress = 0x34;
 
         private I2cDevice _i2c;
         private byte[] _writeBuffer = new byte[2];
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Axp192" /> class.
+        /// </summary>
+        /// <param name="i2c">I2C device.</param>
+        /// <exception cref="ArgumentNullException">When i2c device is null.</exception>
         public Axp192(I2cDevice i2c)
         {
             _i2c = i2c ?? throw new ArgumentNullException();
@@ -24,13 +40,13 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets or sets LDO2 output voltage.
         /// </summary>
-        /// <remarks>Range is from 1.8 to 3.3V, steps of 100 mV</remarks>
+        /// <remarks>Range is from 1.8 to 3.3V, steps of 100 mV.</remarks>
         public ElectricPotential LDO2OutputVoltage
         {
             get
             {
                 byte buf = I2cRead(Register.VoltageSettingLdo2_3);
-                return ElectricPotential.FromVolts((buf >> 4) / 10.0 + 1.8);
+                return ElectricPotential.FromVolts(((buf >> 4) / 10.0) + 1.8);
             }
 
             set
@@ -45,13 +61,13 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets or sets LDO3 output voltage.
         /// </summary>
-        /// <remarks>Range is from 1.8 to 3.3V, steps of 100 mV</remarks>
+        /// <remarks>Range is from 1.8 to 3.3V, steps of 100 mV.</remarks>
         public ElectricPotential LDO3OutputVoltage
         {
             get
             {
                 byte buf = I2cRead(Register.VoltageSettingLdo2_3);
-                return ElectricPotential.FromVolts((buf & 0x0f) / 10.0 + 1.8);
+                return ElectricPotential.FromVolts(((buf & 0x0f) / 10.0) + 1.8);
             }
 
             set
@@ -66,13 +82,13 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets or sets DC-DC2 voltage.
         /// </summary>
-        /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc2Volvate
+        /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV.</remarks>
+        public ElectricPotential DcDc2Voltage
         {
             get
             {
                 byte buf = I2cRead(Register.VoltageSettingDcDc2);
-                return ElectricPotential.FromVolts(buf * 0.025 + 0.7);
+                return ElectricPotential.FromVolts((buf * 0.025) + 0.7);
             }
 
             set
@@ -86,13 +102,13 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets or sets DC-DC1 voltage.
         /// </summary>
-        /// <remarks>Range is from 0.7 to 3.5V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc1Volvate
+        /// <remarks>Range is from 0.7 to 3.5V, steps of 25 mV.</remarks>
+        public ElectricPotential DcDc1Voltage
         {
             get
             {
                 byte buf = I2cRead(Register.VoltageSettingDcDc1);
-                return ElectricPotential.FromVolts(buf * 0.025 + 0.7);
+                return ElectricPotential.FromVolts((buf * 0.025) + 0.7);
             }
 
             set
@@ -102,16 +118,17 @@ namespace Iot.Device.Axp192
                 I2cWrite(Register.VoltageSettingDcDc1, output);
             }
         }
+
         /// <summary>
         /// Gets or sets DC-DC3 voltage.
         /// </summary>
-        /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV</remarks>
-        public ElectricPotential DcDc3Volvate
+        /// <remarks>Range is from 0.7 to 2.275V, steps of 25 mV.</remarks>
+        public ElectricPotential DcDc3Voltage
         {
             get
             {
                 byte buf = I2cRead(Register.VoltageSettingDcDc3);
-                return ElectricPotential.FromVolts(buf * 0.025 + 0.7);
+                return ElectricPotential.FromVolts((buf * 0.025) + 0.7);
             }
 
             set
@@ -147,22 +164,22 @@ namespace Iot.Device.Axp192
          */
 
         /// <summary>
-        /// Enable Coulomb counter
+        /// Enable Coulomb counter.
         /// </summary>
         public void EnableCoulombCounter() => I2cWrite(Register.CoulombCounter, 0x80);
 
         /// <summary>
-        /// Disable Coulomb counter
+        /// Disable Coulomb counter.
         /// </summary>
         public void DisableCoulombCounter() => I2cWrite(Register.CoulombCounter, 0x00);
 
         /// <summary>
-        /// Stops Coulomb counter
+        /// Stops Coulomb counter.
         /// </summary>            
         public void StopCoulombCounter() => I2cWrite(Register.CoulombCounter, 0xC0);
 
         /// <summary>
-        /// Clear Coulomb counter
+        /// Clear Coulomb counter.
         /// </summary>
         public void ClearCoulombCounter() => I2cWrite(Register.CoulombCounter, 0xA0);
 
@@ -181,7 +198,7 @@ namespace Iot.Device.Axp192
         /// <summary>
         ///  Gets battery charging status.
         /// </summary>
-        /// <returns>The battery status</returns>
+        /// <returns>The battery status.</returns>
         public BatteryStatus GetBatteryChargingStatus() => (BatteryStatus)I2cRead(Register.PowerModeChargingStatus);
 
         private uint GetCoulombCharge() => I2cRead32(Register.CoulombCounterChargingData1);
@@ -189,9 +206,9 @@ namespace Iot.Device.Axp192
         private uint GetCoulombDischarge() => I2cRead32(Register.CoulombCounterDischargingData1);
 
         /// <summary>
-        /// Gets Coulomb
+        /// Gets Coulomb.
         /// </summary>
-        /// <returns>the mA per hour</returns>
+        /// <returns>The mA per hour.</returns>
         public double GetCoulomb()
         {
             uint coin = GetCoulombCharge();
@@ -200,17 +217,20 @@ namespace Iot.Device.Axp192
             bool bIsNegative = false;
 
             if (coin > coout)
-            {    // Expected, in always more then out
+            {   
+                // Expected, in always more then out
                 valueDifferent = coin - coout;
             }
             else
-            {    // Warning: Out is more than In, the battery is not started at 0% 
-                 // just Flip the output sign later
+            {    
+                // Warning: Out is more than In, the battery is not started at 0% 
+                // just Flip the output sign later
                 bIsNegative = true;
                 valueDifferent = coout - coin;
             }
-            //c = 65536 * current_LSB * (coin - coout) / 3600 / ADC rate
-            //Adc rate can be read from 84H, change this variable if you change the ADC reate
+
+            // c = 65536 * current_LSB * (coin - coout) / 3600 / ADC rate
+            // Adc rate can be read from 84H, change this variable if you change the ADC reate
             double ccc = (65536 * 0.5 * valueDifferent) / 3600.0 / 200.0;  // Note the ADC has defaulted to be 200 Hz
 
             if (bIsNegative)
@@ -244,7 +264,7 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets the battery voltage.
         /// </summary>
-        /// <returns>The battery voltage</returns>
+        /// <returns>The battery voltage.</returns>
         public ElectricPotential GetBatteryVoltage()
         {
             byte[] buf = new byte[2];
@@ -256,7 +276,7 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets the input voltage.
         /// </summary>
-        /// <returns>The input voltage</returns>
+        /// <returns>The input voltage.</returns>
         public ElectricPotential GetInputVoltage()
         {
             byte[] buf = new byte[2];
@@ -294,7 +314,7 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets the USB current.
         /// </summary>
-        /// <returns>The USB current</returns>
+        /// <returns>The USB current.</returns>
         public ElectricCurrent GetUsbCurrentInput()
         {
             byte[] buf = new byte[2];
@@ -332,19 +352,19 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Gets internal temperature.
         /// </summary>
-        /// <returns>The temperature</returns>
+        /// <returns>The temperature.</returns>
         public Temperature GetInternalTemperature()
         {
             byte[] buf = new byte[2];
             I2cRead(Register.Axp192InternalTemperatureAdc8bitsHigh, buf);
             ushort temp = (ushort)((buf[0] << 4) + buf[1]);
-            return new Temperature(temp * 0.1 - 144.7, TemperatureUnit.DegreeCelsius);
+            return new Temperature((temp * 0.1) - 144.7, TemperatureUnit.DegreeCelsius);
         }
 
         /// <summary>
         /// Gets the battery instantaneous consumption.
         /// </summary>
-        /// <returns>The power consumption</returns>
+        /// <returns>The power consumption.</returns>
         public Power GetBatteryInstantaneousPower()
         {
             uint power = 0;
@@ -384,16 +404,20 @@ namespace Iot.Device.Axp192
         public bool IsTemperatureWarning() => (I2cRead(Register.IrqStatus4) & 0x01) == 0x01;
 
         /// <summary>
-        /// Get button status
+        /// Get button status.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The state of a button.</returns>
         public ButtonPressed GetButtonStatus()
         {
-            byte state = I2cRead(Register.IrqStatus3);  // IRQ 3 status.  
+            // IRQ 3 status.  
+            byte state = I2cRead(Register.IrqStatus3);
+
             if (state != 0)
             {
-                I2cWrite(Register.IrqStatus3, 0x03);   // Write 1 back to clear IRQ
+                // Write 1 back to clear IRQ
+                I2cWrite(Register.IrqStatus3, 0x03);
             }
+
             return (ButtonPressed)(state & 0x03);
         }
 
@@ -415,67 +439,73 @@ namespace Iot.Device.Axp192
         /// <summary>
         /// Sets the state of LDO2.
         /// </summary>
-        /// <remarks>On M5Stack, can turn LCD Backlight OFF for power saving</remarks>
-        /// <param name="State">True for on/high/1, false for off/low/O</param>
-        public void EnableLDO2(bool State)
+        /// <remarks>On M5Stack, can turn LCD Backlight OFF for power saving.</remarks>
+        /// <param name="state">True for on/high/1, false for off/low/O.</param>
+        public void EnableLDO2(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
-                buf = (byte)((1 << 2) | buf);
+                buf = (byte)(Ldo2SetBit | buf);
             }
             else
             {
-                buf = (byte)(~(1 << 2) & buf);
+                buf = (byte)(~Ldo2SetBit & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
         /// <summary>
         /// Sets the state of LDO3.
         /// </summary>
-        /// <param name="State">True to enable LDO3.</param>
-        public void EnableLDO3(bool State)
+        /// <param name="state">True to enable LDO3.</param>
+        public void EnableLDO3(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
-                buf = (byte)((1 << 3) | buf);
+                buf = (byte)(Ldo3SetBit | buf);
             }
             else
             {
-                buf = (byte)(~(1 << 3) & buf);
+                buf = (byte)(~Ldo3SetBit & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
         /// <summary>
         /// Sets the state of DC-DC3.
         /// </summary>
-        /// <param name="State">True to enable DC-DC3.</param>
-        public void EnableDCDC3(bool State)
+        /// <param name="state">True to enable DC-DC3.</param>
+        public void EnableDCDC3(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
-                buf = (byte)((1 << 1) | buf);
+                buf = (byte)(DcD3SetBit | buf);
             }
             else
             {
-                buf = (byte)(~(1 << 1) & buf);
+                buf = (byte)(~DcD3SetBit & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
-
 
         /// <summary>
         /// Sets the state of DC-DC1.
         /// </summary>
-        /// <param name="State">True to enable DC-DC1.</param>
-        public void EnableDCDC1(bool State)
+        /// <param name="state">True to enable DC-DC1.</param>
+        public void EnableDCDC1(bool state)
         {
             byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
-            if (State == true)
+
+            if (state == true)
             {
                 buf = (byte)(1 | buf);
             }
@@ -483,11 +513,39 @@ namespace Iot.Device.Axp192
             {
                 buf = (byte)(~1 & buf);
             }
+
             I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
         }
 
         /// <summary>
-        /// Enable the various LDO and DC pins.
+        /// Gets or sets a value indicating whether the state of EXTEN switch control.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if EXTEN switch is enabled, <see langword="false"/> otherwise.
+        /// </value>
+        public bool EXTENEnable
+        {
+            get => (I2cRead(Register.SwitchControleDcDC1_3LDO2_3) & ExtEnSetBit) == ExtEnSetBit;
+
+            set
+            {
+                byte buf = I2cRead(Register.SwitchControleDcDC1_3LDO2_3);
+
+                if (value)
+                {
+                    buf |= ExtEnSetBit;
+                }
+                else
+                {
+                    buf &= unchecked((byte)~ExtEnSetBit);
+                }
+
+                I2cWrite(Register.SwitchControleDcDC1_3LDO2_3, buf);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets LDO and DC pins.
         /// </summary>
         public LdoDcPinsEnabled LdoDcPinsEnabled
         {
@@ -503,7 +561,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the GPIO0 behavior
+        /// Gets or sets the GPIO0 behavior.
         /// </summary>
         public Gpio0Behavior Gpio0Behavior
         {
@@ -512,7 +570,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the GPIO1 behavior
+        /// Gets or sets the GPIO1 behavior.
         /// </summary>
         public Gpio12Behavior Gpio1Behavior
         {
@@ -521,7 +579,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the GPIO2 behavior
+        /// Gets or sets the GPIO2 behavior.
         /// </summary>
         public Gpio12Behavior Gpio2Behavior
         {
@@ -530,7 +588,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the GPIO3 behavior
+        /// Gets or sets the GPIO3 behavior.
         /// </summary>
         public Gpio3Behavior Gpio3Behavior
         {
@@ -539,7 +597,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the GPIO4 behavior
+        /// Gets or sets the GPIO4 behavior.
         /// </summary>
         public Gpio4Behavior Gpio4Behavior
         {
@@ -548,7 +606,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the pin value for GPIO0
+        /// Gets or sets the pin value for GPIO0.
         /// </summary>
         public PinValue Gpio0Value
         {
@@ -557,7 +615,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the pin value for GPIO1
+        /// Gets or sets the pin value for GPIO1.
         /// </summary>
         public PinValue Gpio1Value
         {
@@ -566,7 +624,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the pin value for GPIO2
+        /// Gets or sets the pin value for GPIO2.
         /// </summary>
         public PinValue Gpio2Value
         {
@@ -575,7 +633,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the pin value for GPIO3
+        /// Gets or sets the pin value for GPIO3.
         /// </summary>
         public PinValue Gpio3Value
         {
@@ -584,7 +642,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the pin value for GPIO4
+        /// Gets or sets the pin value for GPIO4.
         /// </summary>
         public PinValue Gpio4Value
         {
@@ -593,7 +651,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets the high temperature threshold for the battery
+        /// Sets the high temperature threshold for the battery.
         /// </summary>
         /// <param name="potential">From 0 to 3.264V. Anything higher will be caped to the maximum.</param>
         public void SetBatteryHighTemperatureThreshold(ElectricPotential potential)
@@ -608,11 +666,11 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets the backup battery charging control
+        /// Sets the backup battery charging control.
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <param name="voltage"></param>
-        /// <param name="current"></param>
+        /// <param name="enabled">Is enabled.</param>
+        /// <param name="voltage">Battery charging voltage.</param>
+        /// <param name="current">Battery charging current.</param>
         public void SetBackupBatteryChargingControl(bool enabled, BackupBatteryCharingVoltage voltage, BackupBatteryChargingCurrent current)
         {
             byte buf = (byte)(enabled ? 0b1000_0000 : 0);
@@ -640,7 +698,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Gets or sets the charging voltage
+        /// Gets or sets the charging voltage.
         /// </summary>
         public ChargingVoltage ChargingVoltage
         {
@@ -649,13 +707,13 @@ namespace Iot.Device.Axp192
             set
             {
                 byte buf = I2cRead(Register.ChargeControl1);
-                buf = (byte)((buf & ~(0x60)) | ((byte)value & 0x60));
+                buf = (byte)((buf & ~0x60) | ((byte)value & 0x60));
                 I2cWrite(Register.ChargeControl1, buf);
             }
         }
 
         /// <summary>
-        /// Gets or sets the charging current
+        /// Gets or sets the charging current.
         /// </summary>
         /// <remarks>Not recommend to set charge current > 100mA, since Battery is only 80mAh.
         /// more then 1C charge-rate may shorten battery life-span.</remarks>
@@ -672,7 +730,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Charging threshold when battery should stop charging
+        /// Gets or sets charging threshold when battery should stop charging.
         /// </summary>
         public ChargingStopThreshold ChargingStopThreshold
         {
@@ -687,7 +745,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Set the charging functions
+        /// Set the charging functions.
         /// </summary>
         /// <param name="includeExternal">True to include the external.</param>
         /// <param name="chargingVoltage">Charging voltage.</param>
@@ -703,7 +761,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets or gets the global pin output voltage
+        /// Gets or sets the global pin output voltage.
         /// </summary>
         public PinOutputVoltage PinOutputVoltage
         {
@@ -718,7 +776,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets the VBUS settings
+        /// Sets the VBUS settings.
         /// </summary>
         /// <param name="vbusIpsOut">The VBUS-IPSOUT path selects the control signal when VBUS is available.</param>
         /// <param name="vbusLimit">True to limit VBUS VHOLD control.</param>
@@ -749,7 +807,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Sets or gets power off voltage.
+        /// Gets or sets power off voltage.
         /// </summary>
         public VoffVoltage VoffVoltage
         {
@@ -759,7 +817,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Cut all power, except for LDO1 (RTC) 
+        /// Cut all power, except for LDO1 (RTC).
         /// </summary>
         public void PowerOff()
         {
@@ -776,7 +834,7 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Disable all Irq
+        /// Disable all Irq.
         /// </summary>
         public void DisableAllIRQ()
         {
@@ -788,14 +846,14 @@ namespace Iot.Device.Axp192
         }
 
         /// <summary>
-        /// Enable the button to be pressed and raise IRQ events
+        /// Enable the button to be pressed and raise IRQ events.
         /// </summary>
-        /// <param name="button"></param>
+        /// <param name="button">Type of button press event.</param>
         public void EnableButtonPressed(ButtonPressed button)
         {
             byte value = I2cRead(Register.IrqEnable2);
             value &= 0xfc;
-            value |= (byte)(button);
+            value |= (byte)button;
             I2cWrite(Register.IrqEnable2, value);
         }
 
@@ -809,11 +867,10 @@ namespace Iot.Device.Axp192
             I2cWrite(Register.IrqStatus3, 0xff);
             I2cWrite(Register.IrqStatus4, 0xff);
             I2cWrite(Register.IrqStatus5, 0xff);
-
         }
 
         /// <summary>
-        /// Sets or gets the ADC frequency
+        /// Gets or sets the ADC frequency.
         /// </summary>
         public AdcFrequency AdcFrequency
         {
@@ -822,13 +879,13 @@ namespace Iot.Device.Axp192
             set
             {
                 byte buf = I2cRead(Register.AdcFrequency);
-                buf = (byte)((buf & ~(0xc0)) | ((byte)value & 0xc0));
+                buf = (byte)((buf & ~0xc0) | ((byte)value & 0xc0));
                 I2cWrite(Register.AdcFrequency, buf);
             }
         }
 
         /// <summary>
-        /// Sets or gets the ADC Pin output Current
+        /// Gets or sets the ADC Pin output Current.
         /// </summary>
         public AdcPinCurrent AdcPinCurrent
         {
@@ -837,13 +894,13 @@ namespace Iot.Device.Axp192
             set
             {
                 byte buf = I2cRead(Register.AdcFrequency);
-                buf = (byte)((buf & ~(0b0011_0000)) | ((byte)value & 0b0011_0000));
+                buf = (byte)((buf & ~0b0011_0000) | ((byte)value & 0b0011_0000));
                 I2cWrite(Register.AdcFrequency, buf);
             }
         }
 
         /// <summary>
-        /// Sets or gets ADC battery temperature monitoring function.
+        /// Gets or sets a value indicating whether ADC battery temperature monitoring function is enabled.
         /// </summary>
         public bool BatteryTemperatureMonitoring
         {
@@ -852,13 +909,13 @@ namespace Iot.Device.Axp192
             set
             {
                 byte buf = I2cRead(Register.AdcFrequency);
-                buf = (byte)((buf & ~(0b0000_0100)) | (value ? 0 : 0b0000_0100));
+                buf = (byte)((buf & ~0b0000_0100) | (value ? 0 : 0b0000_0100));
                 I2cWrite(Register.AdcFrequency, buf);
             }
         }
 
         /// <summary>
-        /// Sets or gets ADC pin current settings.
+        /// Gets or sets ADC pin current settings.
         /// </summary>
         public AdcPinCurrentSetting AdcPinCurrentSetting
         {
@@ -867,8 +924,56 @@ namespace Iot.Device.Axp192
             set
             {
                 byte buf = I2cRead(Register.AdcFrequency);
-                buf = (byte)((buf & ~(0b0000_0011)) | ((byte)value & 0b0000_0011));
+                buf = (byte)((buf & ~0b0000_0011) | ((byte)value & 0b0000_0011));
                 I2cWrite(Register.AdcFrequency, buf);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 output frequency.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x00.
+        /// </remarks>
+        public byte Pwm1OutputFrequencySetting
+        {
+            get => I2cRead(Register.Pwm1OutputFrequencySetting);
+
+            set
+            {
+                I2cWrite(Register.Pwm1OutputFrequencySetting, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 duty cycle setting 1.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x16.
+        /// </remarks>
+        public byte Pwm1DutyCycleSetting1
+        {
+            get => I2cRead(Register.Pwm1DutyCycleSetting1);
+
+            set
+            {
+                I2cWrite(Register.Pwm1DutyCycleSetting1, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PWM1 duty cycle setting 2.
+        /// </summary>
+        /// <remarks>
+        /// Default is 0x0B.
+        /// </remarks>
+        public byte Pwm1DutyCycleSetting2
+        {
+            get => I2cRead(Register.Pwm1DutyCycleSetting2);
+
+            set
+            {
+                I2cWrite(Register.Pwm1DutyCycleSetting2, value);
             }
         }
 
@@ -892,7 +997,7 @@ namespace Iot.Device.Axp192
         /// Stores data in the storage. 6 bytes are available.
         /// AXP192 have a 6 byte storage, when the power is still valid, the data will not be lost.
         /// </summary>
-        /// <param name="buffer">A 6 bytes buffer</param>
+        /// <param name="buffer">A 6 bytes buffer.</param>
         public void Write6BytesStorage(SpanByte buffer)
         {
             if (buffer.Length != 6)

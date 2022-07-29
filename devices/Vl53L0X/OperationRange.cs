@@ -4,17 +4,17 @@
 namespace Iot.Device.Vl53L0X
 {
     /// <summary>
-    /// Operating range
+    /// Operating range.
     /// </summary>
     public enum OperationRange
     {
-        /// <summary>Minimum range: 5 millimeters</summary>
+        /// <summary>Minimum range: 5 millimeters.</summary>
         Minimum = 5,
 
-        /// <summary>Maximum range: 8 millimeters</summary>
+        /// <summary>Maximum range: 8 millimeters.</summary>
         Maximum = 8000,
 
-        /// <summary>Out of range</summary>
+        /// <summary>Out of range.</summary>
         OutOfRange = 8190
     }
 }

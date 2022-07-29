@@ -4,14 +4,14 @@
 namespace Iot.Device.Ads1115
 {
     /// <summary>
-    /// Set Comparator Latching
+    /// Comparator Latching.
     /// </summary>
     public enum ComparatorLatching
     {
-        /// <summary>Non-latching</summary>
+        /// <summary>Non-latching comparator.</summary>
         NonLatching = 0x00,
 
-        /// <summary>Latching</summary>
+        /// <summary>Latching comparator.</summary>
         Latching = 0x01
     }
 }

@@ -16,33 +16,37 @@ namespace Iot.Device.Si7021
     [Interface("Temperature and Humidity Sensor Si7021")]
     public class Si7021 : IDisposable
     {
+        private const byte SerialNumberLenght = 8;
+        private const byte FwRevisionV2_0 = 0x20;
+        private const byte FwRevisionV1_0 = 0xFF;
+
         private I2cDevice _i2cDevice;
 
         /// <summary>
-        /// Si7021 Default I2C Address
+        /// Si7021 Default I2C Address.
         /// </summary>
         public const byte DefaultI2cAddress = 0x40;
 
         /// <summary>
-        /// Si7021 Temperature
+        /// Si7021 Temperature [°C].
         /// </summary>
         [Telemetry]
         public Temperature Temperature => Temperature.FromDegreesCelsius(GetTemperature());
 
         /// <summary>
-        /// Relative Humidity
+        /// Relative Humidity.
         /// </summary>
         [Telemetry]
         public RelativeHumidity Humidity => GetHumidity();
 
         /// <summary>
-        /// Si7021 Firmware Revision
+        /// Si7021 Firmware Revision.
         /// </summary>
         [Property]
-        public byte Revision => GetRevision();
+        public Version Revision => GetRevision();
 
         /// <summary>
-        /// Si7021 Measurement Resolution
+        /// Si7021 Measurement Resolution.
         /// </summary>
         [Property]
         public Resolution Resolution { get => GetResolution(); set => SetResolution(value); }
@@ -50,7 +54,7 @@ namespace Iot.Device.Si7021
         private bool _heater;
 
         /// <summary>
-        /// Si7021 Heater
+        /// Si7021 Heater.
         /// </summary>
         [Property]
         public bool Heater
@@ -64,30 +68,69 @@ namespace Iot.Device.Si7021
         }
 
         /// <summary>
-        /// Creates a new instance of the Si7021
+        /// Individualized serial number of the Si7021.
         /// </summary>
-        /// <param name="i2cDevice">I2C Device, like UnixI2cDevice or Windows10I2cDevice</param>
+        public byte[] SerialNumber { get; private set; }
+
+        /// <summary>
+        /// Creates a new instance of the Si7021.
+        /// </summary>
+        /// <param name="i2cDevice"><see cref="I2cDevice"/> to communicate with Si7021 device.</param>
         /// <param name="resolution">Si7021 Read Resolution</param>
         public Si7021(I2cDevice i2cDevice, Resolution resolution = Resolution.Resolution1)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
+            // read electronic serial number
+            ReadElectronicSerialNumber();
+
             SetResolution(resolution);
         }
 
         /// <summary>
-        /// Get Si7021 Temperature (℃)
+        /// Read electronic serial number.
         /// </summary>
-        /// <returns>Temperature (℃)</returns>
+        private void ReadElectronicSerialNumber()
+        {
+            SerialNumber = new byte[SerialNumberLenght];
+
+            // setup reading of 1st byte
+            SpanByte writeBuff = new byte[2]
+            {
+                (byte)Command.SI_READ_Electronic_ID_1_1, (byte)Command.SI_READ_Electronic_ID_1_2
+            };
+
+            _i2cDevice.Write(writeBuff);
+
+            // read 1st half and store in the initial half of the array
+            _ = _i2cDevice.Read(new SpanByte(SerialNumber, 0, 4));
+
+            writeBuff = new byte[2]
+            {
+                (byte)Command.SI_READ_Electronic_ID_2_1, (byte)Command.SI_READ_Electronic_ID_2_2
+            };
+
+            _i2cDevice.Write(writeBuff);
+
+            // read 2nd half and store in the respective half of the array
+            _ = _i2cDevice.Read(new SpanByte(SerialNumber, 3, 4));
+        }
+
+        /// <summary>
+        /// Get Si7021 Temperature [°C].
+        /// </summary>
+        /// <returns>Temperature [°C].</returns>
         private double GetTemperature()
         {
             SpanByte readbuff = new byte[2];
 
             // Send temperature command, read back two bytes
-            _i2cDevice.WriteByte((byte)Register.SI_TEMP);
-            // wait SCL free
-            Thread.Sleep(20);
-            _i2cDevice.Read(readbuff);
+            _ = _i2cDevice.WriteByte((byte)Command.SI_TEMP);
+
+            // wait for conversion to complete: tCONV(T) max 11ms)
+            Thread.Sleep(10);
+
+            _ = _i2cDevice.Read(readbuff);
 
             // Calculate temperature
             ushort raw = BinaryPrimitives.ReadUInt16BigEndian(readbuff);
@@ -97,18 +140,20 @@ namespace Iot.Device.Si7021
         }
 
         /// <summary>
-        /// Get Si7021 Relative Humidity (%)
+        /// Get Si7021 Relative Humidity (%).
         /// </summary>
-        /// <returns>Relative Humidity (%)</returns>
+        /// <returns>Relative Humidity (%).</returns>
         private RelativeHumidity GetHumidity()
         {
             SpanByte readbuff = new byte[2];
 
             // Send humidity read command, read back two bytes
-            _i2cDevice.WriteByte((byte)Register.SI_HUMI);
-            // wait SCL free
+            _ = _i2cDevice.WriteByte((byte)Command.SI_HUMI);
+
+            // wait for conversion to complete: tCONV(RH) + tCONV(T) max 20ms
             Thread.Sleep(20);
-            _i2cDevice.Read(readbuff);
+
+            _ = _i2cDevice.Read(readbuff);
 
             // Calculate humidity
             ushort raw = BinaryPrimitives.ReadUInt16BigEndian(readbuff);
@@ -118,21 +163,30 @@ namespace Iot.Device.Si7021
         }
 
         /// <summary>
-        /// Get Si7021 Firmware Revision
+        /// Get Si7021 firmware revision.
         /// </summary>
-        /// <returns>Firmware Revision</returns>
-        private byte GetRevision()
+        /// <returns>The FirmwareRevision.</returns>
+        private Version GetRevision()
         {
             SpanByte writeBuff = new byte[2]
             {
-                (byte)Register.SI_REVISION_MSB, (byte)Register.SI_REVISION_LSB
+                (byte)Command.SI_REVISION_MSB, (byte)Command.SI_REVISION_LSB
             };
 
             _i2cDevice.Write(writeBuff);
-            // wait SCL free
-            Thread.Sleep(20);
 
-            return _i2cDevice.ReadByte();
+            var fwRevision = _i2cDevice.ReadByte();
+
+            if (fwRevision == FwRevisionV2_0)
+            {
+                return new Version(2, 0);
+            }
+            else if (fwRevision == FwRevisionV1_0)
+            {
+                return new Version(1, 0);
+            }
+
+            return new Version(0,0);
         }
 
         /// <summary>
@@ -150,8 +204,9 @@ namespace Iot.Device.Si7021
 
             SpanByte writeBuff = new byte[2]
             {
-                (byte)Register.SI_USER_REG1_WRITE, reg1
+                (byte)Command.SI_USER_REG1_WRITE, reg1
             };
+
             _i2cDevice.Write(writeBuff);
         }
 
@@ -188,21 +243,19 @@ namespace Iot.Device.Si7021
 
             SpanByte writeBuff = new byte[2]
             {
-                (byte)Register.SI_USER_REG1_WRITE, reg1
+                (byte)Command.SI_USER_REG1_WRITE, reg1
             };
 
             _i2cDevice.Write(writeBuff);
         }
 
         /// <summary>
-        /// Get User Register1
+        /// Get User Register 1.
         /// </summary>
-        /// <returns>User Register1 Byte</returns>
+        /// <returns>Content of User Register 1.</returns>
         private byte GetUserRegister1()
         {
-            _i2cDevice.WriteByte((byte)Register.SI_USER_REG1_READ);
-            // wait SCL free
-            Thread.Sleep(20);
+            _i2cDevice.WriteByte((byte)Command.SI_USER_REG1_READ);
 
             return _i2cDevice.ReadByte();
         }

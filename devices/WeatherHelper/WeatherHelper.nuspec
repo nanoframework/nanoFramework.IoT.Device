@@ -1,11 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.Iot.Device.Common.WeatherHelper</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Common.WeatherHelper</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -18,15 +17,15 @@
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.Common.WeatherHelper for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.Common.WeatherHelper assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Common.WeatherHelper</tags>
+    <tags>nanoFramework C# csharp netmf netnf Weather Helper</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
-      <dependency id="nanoFramework.System.Math" version="1.4.3" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.112.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.112.0" />
+      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.140.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.140.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.140.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.140.0" />
     </dependencies>
   </metadata>
   <files>

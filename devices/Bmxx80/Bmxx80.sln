@@ -1,7 +1,6 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80", "Bmxx80.nfproj", "{D681AB42-CF88-4538-BA68-0458DF65B0CB}"
 EndProject
@@ -13,20 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A0CB0C00
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bmxx80.sample", "samples\Bmxx80.sample.nfproj", "{CA623F90-1278-40D1-B9CB-759DDFFC4E83}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{E217D732-E3C9-494F-B184-DEC379F41463}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Iot.Device.Common", "..\..\src\Iot.Device.Common\Iot.Device.Common.shproj", "{B439A23D-A742-4D1E-B182-7EC4C84DE211}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
-		..\..\src\Iot.Device.Common\Iot.Device.Common.projitems*{b439a23d-a742-4d1e-b182-7ec4c84de211}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -57,9 +43,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D41BA9E1-91E6-4044-8877-9EDA88ED84FC} = {A0CB0C00-272F-4976-9DC2-B305E2DF5221}
 		{CA623F90-1278-40D1-B9CB-759DDFFC4E83} = {D05D9D47-AF98-4986-85E6-0330F4EFF1EA}
-		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {E217D732-E3C9-494F-B184-DEC379F41463}
-		{B439A23D-A742-4D1E-B182-7EC4C84DE211} = {E217D732-E3C9-494F-B184-DEC379F41463}
-		{23325B14-3651-4879-9697-9846FF123FEB} = {E217D732-E3C9-494F-B184-DEC379F41463}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C973664-69FA-40E0-8C32-79048146272C}

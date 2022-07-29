@@ -207,6 +207,56 @@ namespace System.Buffers.Binary
         }
 
         /// <summary>
+        /// Reads a <see cref="float"/> from the beginning of a read-only span of bytes, as big endian.
+        /// </summary>
+        /// <param name="source">The read-only span to read.</param>
+        /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain a <see cref="float"/>.</exception>
+        public static float ReadSingleBigEndian(SpanByte source)
+        {
+            if (source.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            uint ieee754_bits = ReadUInt32BigEndian(source);
+            float flt;
+            unsafe
+            {
+                *(IntPtr*)&flt = *(IntPtr*)&ieee754_bits; // https://stackoverflow.com/a/57532166/281337
+            }
+
+            // This assignment is required. Without it, the CLR will continue to use the ieee754_bits value (but only in Release builds).
+            float converted = flt;
+            return converted;
+        }
+
+        /// <summary>
+        /// Reads a <see cref="float"/> from the beginning of a read-only span of bytes, as little endian.
+        /// </summary>
+        /// <param name="source">The read-only span to read.</param>
+        /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">source is too small to contain a <see cref="float"/>.</exception>
+        public static float ReadSingleLittleEndian(SpanByte source)
+        {
+            if (source.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            uint ieee754_bits = ReadUInt32LittleEndian(source);
+            float flt;
+            unsafe
+            {
+                *(IntPtr*)&flt = *(IntPtr*)&ieee754_bits; // https://stackoverflow.com/a/57532166/281337
+            }
+
+            // This assignment is required. Without it, the CLR will continue to use the ieee754_bits value (but only in Release builds).
+            float converted = flt;
+            return converted;
+        }
+
+        /// <summary>
         /// Writes an System.Int16 into a span of bytes, as big endian.
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
@@ -440,6 +490,54 @@ namespace System.Buffers.Binary
             destination[2] = (byte)(value >> 16);
             destination[1] = (byte)(value >> 8);
             destination[0] = (byte)value;
+        }
+
+        /// <summary>
+        /// Writes a <see cref="float"/> into a span of bytes, as big endian.
+        /// </summary>
+        /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+        /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">destination is too small to contain a <see cref="float"/>.</exception>
+        public static void WriteSingleBigEndian(SpanByte destination, float value)
+        {
+            if (destination.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            uint ieee754_bits;
+            unsafe
+            {
+                *(IntPtr*)&ieee754_bits = *(IntPtr*)&value; // https://stackoverflow.com/a/57532166/281337
+            }
+
+            // This assignment is needed to prevent the CLR from throwing CLR_E_WRONG_TYPE when the next method performs the bitshifting.
+            uint converted = ieee754_bits;
+            WriteUInt32BigEndian(destination, converted);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="float"/> into a span of bytes, as little endian.
+        /// </summary>
+        /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+        /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">destination is too small to contain a <see cref="float"/>.</exception>
+        public static void WriteSingleLittleEndian(SpanByte destination, float value)
+        {
+            if (destination.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            uint ieee754_bits;
+            unsafe
+            {
+                *(IntPtr*)&ieee754_bits = *(IntPtr*)&value; // https://stackoverflow.com/a/57532166/281337
+            }
+
+            // This assignment is needed to prevent the CLR from throwing CLR_E_WRONG_TYPE when the next method performs the bitshifting.
+            uint converted = ieee754_bits;
+            WriteUInt32LittleEndian(destination, converted);
         }
     }
 }

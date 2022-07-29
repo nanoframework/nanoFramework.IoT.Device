@@ -2,16 +2,17 @@
 # See LICENSE file in the project root for full license information.
 
 # This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
-# Second round, because of dependencies from other IoT bindings.
 
 name: Update dependencies (round 2)
 
 on:
   schedule:
-  # Update At 00:00 UTC on Wednesday and Saturday
-  - cron:  '0 0 * * 3,6'
+    # At 00:15 UTC every day.
+    # Set 15 min apart from round 1 to allow enough time for any changes to propagate.
+    - cron:  '15 00 * * *'
   repository_dispatch:
     types: update-dependencies
+  workflow_dispatch:
 
 defaults:
   run:
@@ -32,5 +33,7 @@ jobs:
       - name: Update dependencies
         uses: nanoframework/nanodu@v1
         with:
-          solutionsToCheck: 'Ft6xx6x'
+          solutionsToCheck: |
+            ShiftRegister.sln
           workingDirectory: '${{ github.workspace }}/devices'
+          branchToPr: 'develop'
