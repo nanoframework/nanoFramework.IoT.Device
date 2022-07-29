@@ -14,32 +14,32 @@ namespace Iot.Device.Ads1115
         // Details in Datasheet P19
 
         /// <summary>
-        /// ±6.144V.
+        /// Range ±6.144V.
         /// </summary>
         FS6144 = 0x00,
 
         /// <summary>
-        /// ±4.096V
+        /// Range ±4.096V.
         /// </summary>
         FS4096 = 0x01,
 
         /// <summary>
-        /// ±2.048V
+        /// Range ±2.048V.
         /// </summary>
         FS2048 = 0x02,
 
         /// <summary>
-        /// ±1.024V
+        /// Range ±1.024V.
         /// </summary>
         FS1024 = 0x03,
 
         /// <summary>
-        /// ±0.512V
+        /// Range ±0.512V.
         /// </summary>
         FS0512 = 0x04,
 
         /// <summary>
-        /// ±0.256V
+        /// Range ±0.256V.
         /// </summary>
         FS0256 = 0x05
     }

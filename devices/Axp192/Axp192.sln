@@ -7,7 +7,7 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Axp192", "Axp192.nfproj", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8F604D83-94DE-4729-84B0-62363CEE5A3D}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Axp192.samples", "samples\Axp192.samples\Axp192.samples.nfproj", "{61B9FBC5-6CC0-44D6-903E-BC8EE1F5A2D9}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Axp192.samples", "samples\Axp192.samples.nfproj", "{61B9FBC5-6CC0-44D6-903E-BC8EE1F5A2D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21B02238-085A-4CCE-8C58-9F6A19D2C541}"
 	ProjectSection(SolutionItems) = preProject

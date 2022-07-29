@@ -17,7 +17,7 @@ namespace Iot.Device.Ws28xx.Esp32
 
         public override void SetPixel(int x, int y, Color c)
         {
-            var offset = y * Stride + x * BytesPerPixel;
+            var offset = (y * Stride) + (x * BytesPerPixel);
             Data[offset++] = c.R;
             Data[offset++] = c.G;
             Data[offset++] = c.B;
@@ -25,7 +25,7 @@ namespace Iot.Device.Ws28xx.Esp32
 
         public override void SetPixel(int x, int y, byte r, byte g, byte b)
         {
-            var offset = y * Stride + x * BytesPerPixel;
+            var offset = (y * Stride) + (x * BytesPerPixel);
             Data[offset++] = r;
             Data[offset++] = g;
             Data[offset++] = b;
@@ -39,7 +39,7 @@ namespace Iot.Device.Ws28xx.Esp32
 
         public override void Clear(int x, int y)
         {
-            var offset = y * Stride + x * BytesPerPixel;
+            var offset = (y * Stride) + (x * BytesPerPixel);
             Array.Clear(Data, offset, 3);
         }
     }

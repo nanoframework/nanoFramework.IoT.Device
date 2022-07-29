@@ -9,17 +9,17 @@ namespace Iot.Device.Am2320
     public class DeviceInformation
     {
         /// <summary>
-        /// The model.
+        /// Gets or sets the model.
         /// </summary>
         public ushort Model { get; set; }
 
         /// <summary>
-        /// The version.
+        /// Gets or sets the version.
         /// </summary>
         public byte Version { get; set; }
 
         /// <summary>
-        /// The device ID
+        /// Gets or sets the device ID.
         /// </summary>
         public uint DeviceId { get; set; }
     }

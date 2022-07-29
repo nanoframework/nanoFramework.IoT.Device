@@ -10,7 +10,7 @@ using UnitsNet;
 namespace Iot.Device.Hts221
 {
     /// <summary>
-    /// HTS221 - Capacitive digital sensor for relative humidity and temperature
+    /// HTS221 - Capacitive digital sensor for relative humidity and temperature.
     /// </summary>
     [Interface("HTS221 - Capacitive digital sensor for relative humidity and temperature")]
     public class Hts221 : IDisposable
@@ -19,8 +19,9 @@ namespace Iot.Device.Hts221
         private I2cDevice _i2c;
 
         /// <summary>
-        /// Hts221 - Temperature and humidity sensor
+        /// Initializes a new instance of the <see cref="Hts221" /> class. Temperature and humidity sensor.
         /// </summary>
+        /// <param name="i2cDevice">I2C device.</param>
         public Hts221(I2cDevice i2cDevice)
         {
             _i2c = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
@@ -31,6 +32,7 @@ namespace Iot.Device.Hts221
             WriteByte(Register.ResolutionMode, resolution);
 
             byte control1orig = Read(Register.Control1);
+
             // 7 - PD - power down control - 1 means active
             // 6-3 - reserved - keep original
             // 2 - BDU - block data update - 1 is recommended by datasheet and means that output registers
@@ -41,13 +43,13 @@ namespace Iot.Device.Hts221
         }
 
         /// <summary>
-        /// Temperature
+        /// Temperature reading.
         /// </summary>
         [Telemetry]
         public Temperature Temperature => Temperature.FromDegreesCelsius(GetActualTemperature(ReadInt16(Register.Temperature)));
 
         /// <summary>
-        /// Relative humidity
+        /// Relative humidity.
         /// </summary>
         [Telemetry]
         public RelativeHumidity Humidity => GetActualHumidity(ReadInt16(Register.Humidity));
@@ -56,7 +58,7 @@ namespace Iot.Device.Hts221
         {
             float xrange = x1 - x0;
             float yrange = y1 - y0;
-            return y0 + (x - x0) * yrange / xrange;
+            return y0 + ((x - x0) * yrange / xrange);
         }
 
         private void WriteByte(Register register, byte data)
@@ -157,8 +159,11 @@ namespace Iot.Device.Hts221
         /// <inheritdoc/>
         public void Dispose()
         {
-            _i2c?.Dispose();
-            _i2c = null!;
+            if (_i2c != null)
+            {
+                _i2c?.Dispose();
+                _i2c = null;
+            }
         }
     }
 }

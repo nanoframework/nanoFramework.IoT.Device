@@ -5,7 +5,7 @@ namespace Iot.Device.Vl53L0X
 {
     /// <summary>
     /// Those registers are the one declared in the official API
-    /// plus some named after reverse engineering
+    /// plus some named after reverse engineering.
     /// </summary>
     internal enum Registers
     {
