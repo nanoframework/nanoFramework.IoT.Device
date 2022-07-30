@@ -26,6 +26,10 @@ Also note that the server will smartly manage the IP addresses and will give the
 
 While you can use this simple and efficient server in a real network, it remains for simple usage and is **not** recommended in production.
 
+## Information on the sample
+
+The sample is a complete example on how to use this DHCP server to provide IP addresses to a phone or a PC you'll connect to the .NET nanoFramework device to setup the Wireless configuration it has to connect to.
+
 ## Limitations
 
 * This server does only support the basic flow. It does not support advanced flow with Renew and Release.
