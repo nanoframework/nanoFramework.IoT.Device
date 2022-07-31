@@ -16,7 +16,7 @@
     <AssemblyName>Device.Iot.DhcpServer</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.DCMotor.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.DhcpServer.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
