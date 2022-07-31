@@ -8,7 +8,7 @@ Product datasheet can be found [here](https://datasheets.maximintegrated.com/en/
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](sensor.png)
 
 ## Circuit
 
