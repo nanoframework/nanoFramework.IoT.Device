@@ -4,22 +4,22 @@
 namespace Iot.Device.Ds18b201
 {
     /// <summary>
-    /// ROM commands, see data sheet, page 11, section DS18B20 Function Commands
+    /// ROM commands, see data sheet, page 10, section DS18B20 ROM Commands.
     /// </summary>
     public enum RomCommands : byte
     {
         /// <summary>
-        /// Reference family code
+        /// Reference family code.
         /// </summary>
         FamilyCode = 0x28,
 
         /// <summary>
-        /// Command to address specific device on network
+        /// Command to address specific device on network.
         /// </summary>
         Match = 0x55,
 
         /// <summary>
-        /// Command to address all devices on the bus simultaneously
+        /// Command to address all devices on the bus simultaneously.
         /// </summary>
         Skip = 0xcc,
     }

@@ -4,27 +4,27 @@
 namespace Iot.Device.Ds18b20
 {
     /// <summary>
-    /// Temperature sampling resolution, check data sheet, page 11, 8.5.1.3 section
+    /// Temperature sampling resolution, check data sheet, page 9, table 2.
     /// </summary>
     public enum TemperatureResolution : byte
     {
         /// <summary>
-        /// 9 bit
+        /// 9 bit.
         /// </summary>
         VeryLow = 0x00,
 
         /// <summary>
-        /// 10 bit
+        /// 10 bit.
         /// </summary>
         Low = 0x01,
 
         /// <summary>
-        ///11 bit
+        /// 11 bit.
         /// </summary>
         High = 0x02,
 
         /// <summary>
-        /// 12 bit
+        /// 12 bit.
         /// </summary>
         VeryHigh = 0x03,
     }

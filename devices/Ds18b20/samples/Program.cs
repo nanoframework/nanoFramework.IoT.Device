@@ -22,7 +22,7 @@ namespace Iot.Device.Ds18b20.Samples
             Console.WriteLine("Hello from Ds18b20!");
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
             Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
-            UsingAlarms();
+            ReadingFromOneSensor();
         }
 
         private static void UsingAlarms()
@@ -72,16 +72,17 @@ namespace Iot.Device.Ds18b20.Samples
                     {
                         for (int index = 0; index < ds18b20.AddressNet.Length; index++)
                         {
-                            //Select the device
                             ds18b20.Address = ds18b20.AddressNet[index];
-                            //Read Temperature on selected device
-                            ds18b20.Read();
+                            if (ds18b20.Read())
+                            {
+                                break;
+                            }
 
                             string devAddrStr = "";
                             foreach (var addrByte in ds18b20.AddressNet[index]) devAddrStr += addrByte.ToString("X2");
                             Console.WriteLine("DS18B20[" + devAddrStr + "] Sensor reading in One-Shot-mode; T = " + ds18b20.Temperature.DegreesCelsius.ToString("f2") + " C");
 
-                            ds18b20.ConfigurationRead(false); //Read alarm set-point.
+                            ds18b20.ConfigurationRead(false);
                             Console.WriteLine("Alarm set-points:");
                             Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius + " C");
                             Console.WriteLine("Lo alarm = " + ds18b20.TemperatureLowAlarm.DegreesCelsius + " C");
@@ -154,7 +155,10 @@ namespace Iot.Device.Ds18b20.Samples
 
                 while (true)
                 {
-                    ds18b20.Read();
+                    if (ds18b20.Read())
+                    {
+                        break;
+                    }
 
                     Console.WriteLine($"Temperature: {ds18b20.Temperature.DegreesCelsius.ToString("F")}\u00B0C");
                     Thread.Sleep(5000);
