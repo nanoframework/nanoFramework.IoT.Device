@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Device.Iot.DhcpServer</RootNamespace>
-    <AssemblyName>Device.Iot.DhcpServer</AssemblyName>
+    <RootNamespace>Iot.Device.DhcpServer</RootNamespace>
+    <AssemblyName>Iot.Device.DhcpServer</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.DhcpServer.xml</DocumentationFile>
