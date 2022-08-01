@@ -6,6 +6,7 @@ using System.Diagnostics;
 using BlueNrg2;
 using BlueNrg2.Utils;
 using Iot.Device.BlueNrg2.Aci;
+using Iot.Device.BlueNrg2.Aci.Events;
 
 namespace Iot.Device.BlueNrg2
 {
@@ -26,16 +27,16 @@ namespace Iot.Device.BlueNrg2
     {
         private readonly IHardwareInterface _hardwareInterface;
         private readonly List _readPacketCallbackQueue;
-        private readonly Events _events;
+        private readonly EventProcessor _eventProcessor;
 
         private readonly List _readPacketPool;
 
-        internal TransportLayer(Events events, IHardwareInterface hardwareInterface)
+        internal TransportLayer(EventProcessor eventProcessor, IHardwareInterface hardwareInterface)
         {
             _readPacketPool = new List();
             _readPacketCallbackQueue = new List();
 
-            _events = events;
+            _eventProcessor = eventProcessor;
 
             _hardwareInterface = hardwareInterface;
             _hardwareInterface.NotifyAsyncEvent += NotifyAsyncEvent;
@@ -267,11 +268,11 @@ namespace Iot.Device.BlueNrg2
                     var subEvent = data[3];
                     var eventData = new byte[data.Length - 4];
                     Array.Copy(data, 4, eventData, 0, data.Length - 4);
-                    for (var i = 0; i < _events.LeMetaEventsTable.Length; i++)
+                    for (var i = 0; i < _eventProcessor.LeMetaEventsTable.Length; i++)
                     {
-                        if (subEvent == _events.LeMetaEventsTable[i].EventCode)
+                        if (subEvent == _eventProcessor.LeMetaEventsTable[i].EventCode)
                         {
-                            _events.LeMetaEventsTable[i].Process(eventData);
+                            _eventProcessor.LeMetaEventsTable[i].Process(eventData);
                         }
                     }
                 }
@@ -280,11 +281,11 @@ namespace Iot.Device.BlueNrg2
                     var eCode = BitConverter.ToUInt16(data, 3);
                     var eventData = new byte[data.Length - 5];
                     Array.Copy(data, 5, eventData, 0, data.Length - 5);
-                    for (int i = 0; i < _events.VendorSpecificEventsTable.Length; i++)
+                    for (int i = 0; i < _eventProcessor.VendorSpecificEventsTable.Length; i++)
                     {
-                        if (eCode == _events.VendorSpecificEventsTable[i].EventCode)
+                        if (eCode == _eventProcessor.VendorSpecificEventsTable[i].EventCode)
                         {
-                            _events.VendorSpecificEventsTable[i].Process(eventData);
+                            _eventProcessor.VendorSpecificEventsTable[i].Process(eventData);
                         }
                     }
                 }
@@ -292,11 +293,11 @@ namespace Iot.Device.BlueNrg2
                 {
                     var eventData = new byte[data.Length - 2];
                     Array.Copy(data, 2, eventData, 0, data.Length - 2);
-                    for (int i = 0; i < _events.EventsTable.Length; i++)
+                    for (int i = 0; i < _eventProcessor.EventsTable.Length; i++)
                     {
-                        if (evt == _events.EventsTable[i].EventCode)
+                        if (evt == _eventProcessor.EventsTable[i].EventCode)
                         {
-                            _events.EventsTable[i].Process(eventData);
+                            _eventProcessor.EventsTable[i].Process(eventData);
                         }
                     }
                 }

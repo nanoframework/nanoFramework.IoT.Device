@@ -149,7 +149,7 @@ namespace Iot.Device.BlueNrg2.Aci
 			throw new NotImplementedException();
 		}
 
-		public BleStatus set_radio_activity_mask(RadioStateMask radioActivityMask)
+		public BleStatus SetRadioActivityMask(RadioStateMask radioActivityMask)
 		{
 			throw new NotImplementedException();
 		}

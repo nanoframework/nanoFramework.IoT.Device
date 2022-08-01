@@ -7,6 +7,7 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
 using Iot.Device.BlueNrg2.Aci;
+using Iot.Device.BlueNrg2.Aci.Events;
 using Microsoft.Extensions.Logging;
 using nanoFramework.Device.Bluetooth;
 using nanoFramework.Device.Bluetooth.GenericAttributeProfile;
@@ -43,7 +44,7 @@ namespace Iot.Device.BlueNrg2
         private bool _running;
         private ushort[] _serviceHandles;
         private ServiceContext[] _services;
-        internal Events Events;
+        internal EventProcessor _eventProcessor;
 
         /// <summary>
         ///     Creates Instance of BlueNrg2 class
@@ -87,8 +88,8 @@ namespace Iot.Device.BlueNrg2
 #endif
 
             );
-            Events = new Events();
-            var transportLayer = new TransportLayer(Events, _hardwareInterface);
+            _eventProcessor = new EventProcessor();
+            var transportLayer = new TransportLayer(_eventProcessor, _hardwareInterface);
             Hci = new Hci(transportLayer);
             Gap = new Gap(transportLayer);
             Gatt = new Gatt(transportLayer);
@@ -123,7 +124,7 @@ namespace Iot.Device.BlueNrg2
         }
 
         /// <summary>
-        ///     Dispose
+        /// Dispose
         /// </summary>
         public void Dispose()
         {
@@ -154,19 +155,16 @@ namespace Iot.Device.BlueNrg2
 
             _eventIds = new ArrayList();
 
-            Events.GattReadPermitRequestEvent += OnReadPermitRequest;
+            _eventProcessor.GattReadPermitRequestEvent += GattReadPermitRequestEvent;
         }
 
-        private void OnReadPermitRequest(ushort connectionHandle, ushort attributeHandle, ushort offset)
+        private void GattReadPermitRequestEvent(object sender, GattReadPermitRequestEventArgs e)
         {
             var eventId = new EventId
             {
                 Id = _nextEventId++,
-                Args = new ArrayList(),
+                Args = e,
             };
-            eventId.Args.Add(connectionHandle);
-            eventId.Args.Add(attributeHandle);
-            eventId.Args.Add(offset);
         }
 
         /// <inheritdoc />
@@ -178,7 +176,6 @@ namespace Iot.Device.BlueNrg2
         /// <inheritdoc />
         public void RemoveCharacteristic(GattLocalCharacteristic characteristic)
         {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
@@ -220,7 +217,7 @@ namespace Iot.Device.BlueNrg2
                 16,
                 false,
                 123456,
-                AddressType.PublicDevice
+                AddressType.PublicDeviceAddress
             );
             _gattServices = new GattLocalService[services.Count];
 
@@ -280,7 +277,7 @@ namespace Iot.Device.BlueNrg2
                 AdvertisingType.ConnectableUndirected,
                 100,
                 100,
-                AddressType.PublicDevice,
+                AddressType.PublicDeviceAddress,
                 FilterPolicy.ScanAnyRequestAny,
                 (byte)_deviceName.Length,
                 _deviceName,
@@ -363,6 +360,19 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
+        public void AddService(Guid serviceUuid)
+        {
+            ushort serviceHandle = 0;
+            Gatt.AddService(UuidType.Uuid128, serviceUuid.ToByteArray(), ServiceType.Primary, byte.MaxValue, ref serviceHandle);
+        }
+
+        /// <inheritdoc />
+        public void RemoveService(Guid serviceUuid)
+        {
+            throw new NotImplementedException();
+        }
+
         private ushort GenerateEventId()
         {
             var id = _nextEventId++;
@@ -392,10 +402,16 @@ namespace Iot.Device.BlueNrg2
             ).Start();
         }
 
+        private struct ServiceId
+        {
+            public Guid ServiceUuid;
+            public ushort Handle;
+        }
+
         private struct EventId
         {
             public ushort Id;
-            public ArrayList Args;
+            public EventArgs Args;
         }
 
         private struct ReadRequestArgs

@@ -309,51 +309,6 @@ namespace Iot.Device.BlueNrg2.Aci
             throw new NotImplementedException();
         }
 
-        public BleStatus FindInformationRequest(ushort connectionHandle, ushort startHandle, ushort endHandle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BleStatus FindByTypeValueRequest(
-            ushort connectionHandle,
-            ushort startHandle,
-            ushort endHandle,
-            ushort uuid,
-            byte attributeValueLength,
-            byte[] attributeValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BleStatus ReadByTypeRequest(ushort connectionHandle, ushort startHandle, ushort endHandle, UuidType uuidType, ref byte[] uuid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BleStatus ReadByGroupTypeRequest(ushort connectionHandle, ushort startHandle, ushort endHandle, UuidType uuidType, ref byte[] uuid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BleStatus PrepareWriteRequest(
-            ushort connectionHandle,
-            ushort attributeHandle,
-            ushort valueOffset,
-            byte attributeValueLength,
-            byte[] attributeValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <param name="connectionHandle">identifies the connection written to</param>
-        /// <param name="executeAllWrites">
-        ///     If set to true, all pending prepared values are written immediately, if set to false all
-        ///     prepared writes will be cancelled.
-        /// </param>
-        public BleStatus ExecuteWriteRequest(ushort connectionHandle, bool executeAllWrites)
-        {
-            throw new NotImplementedException();
-        }
 
         public BleStatus DiscoverAllPrimaryServices(ushort connectionHandle)
         {
@@ -599,7 +554,7 @@ namespace Iot.Device.BlueNrg2.Aci
     }
 
     [Flags]
-    internal enum CharacteristicProperties : byte
+    public enum CharacteristicProperties : byte
     {
         None = 0x00,
         Broadcast = 0x01,
@@ -612,13 +567,13 @@ namespace Iot.Device.BlueNrg2.Aci
         Extended = 0x80
     }
 
-    internal enum ServiceType
+    public enum ServiceType
     {
         Primary = 0x01,
         Secondary = 0x02
     }
 
-    internal enum UuidType : byte
+    public enum UuidType : byte
     {
         Uuid16 = 0x01,
         Uuid128 = 0x02
