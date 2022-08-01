@@ -49,12 +49,12 @@
       <HintPath>packages\nanoFramework.System.Math.1.4.4\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity, Version=4.140.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.140.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="UnitsNet.RelativeHumidity, Version=4.141.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.4.141.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=4.140.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.140.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=4.141.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.141.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
