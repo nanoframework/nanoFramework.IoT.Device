@@ -155,15 +155,19 @@ namespace Iot.Device.Ds18b20.Samples
 
                 while (true)
                 {
-                    if (ds18b20.Read())
+                    if (!ds18b20.Read())
                     {
-                        break;
+                        Console.WriteLine("Can't read!");
                     }
-
-                    Console.WriteLine($"Temperature: {ds18b20.Temperature.DegreesCelsius.ToString("F")}\u00B0C");
+                    else
+                    {
+                        Console.WriteLine($"Temperature: {ds18b20.Temperature.DegreesCelsius.ToString("F")}\u00B0C");
+                    }
+                    
                     Thread.Sleep(5000);
                 }
             }
+           
 
             oneWire.Dispose();
         }
