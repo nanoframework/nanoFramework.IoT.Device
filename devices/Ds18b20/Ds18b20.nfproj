@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Ds18b201</RootNamespace>
-    <AssemblyName>Iot.Device.Ds18b201</AssemblyName>
+    <RootNamespace>Iot.Device.Ds18b20</RootNamespace>
+    <AssemblyName>Iot.Device.Ds18b20</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
