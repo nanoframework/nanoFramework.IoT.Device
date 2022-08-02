@@ -9,12 +9,12 @@ namespace Iot.Device.Relay
     public enum State
     {
         /// <summary>
-        /// On.
+        /// State On.
         /// </summary>
         On = 0x01,
 
         /// <summary>
-        /// Off.
+        /// State Off.
         /// </summary>
         Off = 0x00,
     }
