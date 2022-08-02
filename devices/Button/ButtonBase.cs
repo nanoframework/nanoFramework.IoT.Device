@@ -15,15 +15,13 @@ namespace Iot.Device.Button
         internal const long DefaultDoublePressTicks = 15000000;
         internal const long DefaultHoldingMilliseconds = 2000;
 
-        private bool _disposed = false;
-
         private readonly long _doublePressTicks;
         private readonly long _holdingMs;
         private readonly TimeSpan _debounceTime;
+
+        private bool _disposed = false;
         private long _debounceStartTicks;
-
         private ButtonHoldingState _holdingState = ButtonHoldingState.Completed;
-
         private long _lastPress = DateTime.MinValue.Ticks;
         private Timer _holdingTimer;
 
@@ -32,15 +30,15 @@ namespace Iot.Device.Button
         /// <summary>
         /// Delegate for button pressed.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Caller object.</param>
+        /// <param name="e">Arguments for invoked delegate.</param>
         public delegate void ButtonPressedDelegate(object sender, EventArgs e);
 
         /// <summary>
         /// Delegate for button holding.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Caller object.</param>
+        /// <param name="e">Arguments for invoked delegate.</param>
         public delegate void ButtonHoldingDelegate(object sender, ButtonHoldingEventArgs e);
 
         /// <summary>
@@ -69,33 +67,33 @@ namespace Iot.Device.Button
         public event ButtonHoldingDelegate Holding;
 
         /// <summary>
-        /// Define if holding event is enabled or disabled on the button.
+        /// Gets or sets a value indicating whether holding event is enabled or disabled on the button.
         /// </summary>
         public bool IsHoldingEnabled { get; set; } = false;
 
         /// <summary>
-        /// Define if double press event is enabled or disabled on the button.
+        /// Gets or sets a value indicating whether double press event is enabled or disabled on the button.
         /// </summary>
         public bool IsDoublePressEnabled { get; set; } = false;
 
         /// <summary>
-        /// Define if single press event is enabled or disabled on the button.
+        /// Gets or sets a value indicating whether single press event is enabled or disabled on the button.
         /// </summary>
         public bool IsPressed { get; set; } = false;
 
         /// <summary>
-        /// Initialization of the button.
+        /// Initializes a new instance of the <see cref="ButtonBase" /> class.
         /// </summary>
         public ButtonBase() : this(TimeSpan.FromTicks(DefaultDoublePressTicks), TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds))
         {
         }
 
         /// <summary>
-        /// Initialization of the button.
+        /// Initializes a new instance of the <see cref="ButtonBase" /> class.
         /// </summary>
-        /// <param name="doublePress"></param>
-        /// <param name="holding"></param>
-        /// <param name="debounceTime">The amount of time during which the transitions are ignored, or zero</param>
+        /// <param name="doublePress">Max ticks between button presses to count as doublepress.</param>
+        /// <param name="holding">Min ms a button is pressed to count as holding.</param>
+        /// <param name="debounceTime">The amount of time during which the transitions are ignored, or zero.</param>
         public ButtonBase(TimeSpan doublePress, TimeSpan holding, TimeSpan debounceTime = default(TimeSpan))
         {
             if (debounceTime.TotalMilliseconds * 3 > doublePress.TotalMilliseconds)
@@ -173,6 +171,7 @@ namespace Iot.Device.Button
         /// <summary>
         /// Handler for holding the button.
         /// </summary>
+        /// <param name="state">What's that.</param>
         private void StartHoldingHandler(object state)
         {
             ClearHoldingTimer();
@@ -198,7 +197,7 @@ namespace Iot.Device.Button
         /// <summary>
         /// Cleanup resources.
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">Should dispose managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
@@ -215,7 +214,7 @@ namespace Iot.Device.Button
         }
 
         /// <summary>
-        /// Public dispose method for IDisposable interface.
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {
