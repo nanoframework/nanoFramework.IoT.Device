@@ -206,7 +206,7 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Read the magnetometer without Bias correction and can wait for new data to be present.
         /// </summary>
-        /// <param name="waitForData">True to wait for new data.</param>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
         /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData = true) => ReadMagnetometerWithoutCorrection(waitForData, DefaultTimeout);
 
@@ -214,8 +214,8 @@ namespace Iot.Device.Magnetometer
         /// Read the magnetometer without Bias correction and can wait for new data to be present
         /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921.
         /// </summary>
-        /// <param name="waitForData">True to wait for new data.</param>
-        /// <param name="timeout">Timeout for waiting the data, ignored if waitForData is false.</param>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
+        /// <param name="timeout">Timeout for waiting the data, ignored if <paramref name="waitForData"/> is <see langword="false"/>.</param>
         /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
@@ -270,7 +270,7 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Read the magnetometer with bias correction and can wait for new data to be present.
         /// </summary>
-        /// <param name="waitForData">True to wait for new data.</param>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
         /// <returns>The data from the magnetometer.</returns>
         [Telemetry("Magnetometer")]
         public Vector3 ReadMagnetometer(bool waitForData = true) => ReadMagnetometer(waitForData, DefaultTimeout);
@@ -278,8 +278,8 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Read the magnetometer with compensation calculation and can wait for new data to be present.
         /// </summary>
-        /// <param name="waitForData">True to wait for new data.</param>
-        /// <param name="timeout">Timeout for waiting the data, ignored if waitForData is false.</param>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
+        /// <param name="timeout">Timeout for waiting the data, ignored if <paramref name="waitForData"/> is <see langword="false"/>.</param>
         /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometer(bool waitForData, TimeSpan timeout)
         {
