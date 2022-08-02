@@ -191,7 +191,7 @@ namespace Iot.Device.Bno055
         /// Set internal or external crystal usage.
         /// Note: if you don't have an external crystal, don't use this function.
         /// </summary>
-        /// <param name="external">True to set to external.</param>
+        /// <param name="external"><see langword="true"/> to set to external.</param>
         public void SetExternalCrystal(bool external)
         {
             SetConfigMode(true);
