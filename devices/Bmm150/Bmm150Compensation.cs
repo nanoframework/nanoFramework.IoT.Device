@@ -29,10 +29,10 @@ namespace Iot.Device.Magnetometer
             float processCompX2;
             float processCompX3;
             float processCompX4;
-            int bmm150Overflow_adcval_xyaxes_flip = -4096;
+            int bmm150OverflowAdcvalXyaxesFlip = -4096;
 
             // Overflow condition check
-            if ((x != bmm150Overflow_adcval_xyaxes_flip) && (rhall != 0) && (trimData.DigXyz1 != 0))
+            if ((x != bmm150OverflowAdcvalXyaxesFlip) && (rhall != 0) && (trimData.DigXyz1 != 0))
             {
                 // Processing compensation equations
                 processCompX0 = trimData.DigXyz1 * 16384.0f / rhall;
@@ -68,10 +68,10 @@ namespace Iot.Device.Magnetometer
             float processCompY2;
             float processCompY3;
             float processCompY4;
-            int bmm150Overflow_adcval_xyaxes_flip = -4096;
+            int Bmm150OverflowAdcvalXyaxesFlip = -4096;
 
             // Overflow condition check
-            if ((y != bmm150Overflow_adcval_xyaxes_flip) && (rhall != 0) && (trimData.DigXyz1 != 0))
+            if ((y != Bmm150OverflowAdcvalXyaxesFlip) && (rhall != 0) && (trimData.DigXyz1 != 0))
             {
                 // Processing compensation equations
                 processCompY0 = trimData.DigXyz1 * 16384.0f / rhall;
@@ -108,10 +108,10 @@ namespace Iot.Device.Magnetometer
             float processCompZ3;
             float processCompZ4;
             float processCompZ5;
-            int bmm150Overflow_adcval_zaxis_flip = -16384;
+            int Bmm150OverflowAdcvalZaxisFlip = -16384;
 
             // Overflow condition check
-            if ((z != bmm150Overflow_adcval_zaxis_flip) && (trimData.DigZ2 != 0) &&
+            if ((z != Bmm150OverflowAdcvalZaxisFlip) && (trimData.DigZ2 != 0) &&
                 (trimData.DigZ1 != 0) && (trimData.DigXyz1 != 0) && (rhall != 0))
             {
                 // Processing compensation equations

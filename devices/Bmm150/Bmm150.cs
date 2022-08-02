@@ -26,7 +26,7 @@ namespace Iot.Device.Magnetometer
         /// <summary>
         /// Bmm150 device interface.
         /// </summary>
-        private Bmm150I2cBase bmm150Interface;
+        private Bmm150I2cBase _bmm150Interface;
 
         /// <summary>
         /// Bmm150 Trim extended register data.
@@ -50,7 +50,8 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// Primary I2C address for the Bmm150
-        /// In the official sheet (P36) states that address is 0x13: https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L16.3.
+        /// In the official sheet (P36) states that address is 0x13.
+        /// Visit https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L16.3 for more information.
         /// </summary>
         public const byte PrimaryI2cAddress = 0x13;
 
@@ -84,7 +85,7 @@ namespace Iot.Device.Magnetometer
         public Bmm150(I2cDevice i2cDevice, Bmm150I2cBase bmm150Interface, bool shouldDispose = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
-            this.bmm150Interface = bmm150Interface;
+            _bmm150Interface = bmm150Interface;
             _shouldDispose = shouldDispose;
 
             Initialize();
@@ -95,7 +96,7 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// Reads the trim registers of the sensor, used in compensation (x,y,z) calculation
-        /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L1199.
+        /// Visit https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L1199 for more information.
         /// </summary>
         /// <returns>Trim registers value.</returns>
         private Bmm150TrimRegisterData ReadTrimRegisters()
@@ -141,7 +142,7 @@ namespace Iot.Device.Magnetometer
         /// Calibrate the magnetometer. 
         /// Please make sure you are not close to any magnetic field like magnet or phone
         /// Please make sure you are moving the magnetometer all over space, rotating it.
-        /// https://platformio.org/lib/show/12697/M5_BMM150.
+        /// Visit https://platformio.org/lib/show/12697/M5_BMM150 for more information.
         /// </summary>
         /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 100.</param>
         public void CalibrateMagnetometer(int numberOfMeasurements = 100)
@@ -212,7 +213,7 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// Read the magnetometer without Bias correction and can wait for new data to be present
-        /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921.
+        /// Visit https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921 for more information.
         /// </summary>
         /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
         /// <param name="timeout">Timeout for waiting the data, ignored if <paramref name="waitForData"/> is <see langword="false"/>.</param>
@@ -292,11 +293,11 @@ namespace Iot.Device.Magnetometer
             return magn;
         }
 
-        private void WriteRegister(Register reg, byte data) => bmm150Interface.WriteRegister(_i2cDevice, (byte)reg, data);
+        private void WriteRegister(Register reg, byte data) => _bmm150Interface.WriteRegister(_i2cDevice, (byte)reg, data);
 
-        private byte ReadByte(Register reg) => bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
+        private byte ReadByte(Register reg) => _bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
 
-        private void ReadBytes(Register reg, SpanByte readBytes) => bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
+        private void ReadBytes(Register reg, SpanByte readBytes) => _bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
 
         private void Wait(int milisecondsTimeout)
         {
