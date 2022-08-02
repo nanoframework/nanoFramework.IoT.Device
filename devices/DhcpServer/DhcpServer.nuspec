@@ -4,7 +4,7 @@
     <id>nanoFramework.Iot.Device.DhcpServer</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.DhcpServer</title>
-    <authors>nanoFramework/authors>
+    <authors>nanoFramework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
