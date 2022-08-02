@@ -140,7 +140,7 @@ namespace Iot.Device.Bno055
         /// </summary>
         /// <param name="i2cDevice">The I2C Device.</param>
         /// <param name="operationMode">The operation mode to setup.</param>
-        /// <param name="shouldDispose">True to dispose the I2C device at dispose.</param>
+        /// <param name="shouldDispose"><see langword="true"/> to dispose the I2C device at dispose.</param>
         public Bno055Sensor(
             I2cDevice i2cDevice,
             OperationMode operationMode = OperationMode.AccelerometerMagnetometerGyroscopeRelativeOrientation,
