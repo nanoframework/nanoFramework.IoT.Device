@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Iot.Device.Ds18b201
+namespace Iot.Device.Ds18b20
 {
     /// <summary>
     /// Functions commands, see data sheet, page 11, section DS18B20 Function Commands.

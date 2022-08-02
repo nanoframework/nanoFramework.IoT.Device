@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Device.Model;
 using System.Threading;
-using Iot.Device.Ds18b201;
 using nanoFramework.Device.OneWire;
 using UnitsNet;
 
