@@ -19,6 +19,7 @@ namespace Iot.Device.Ds18b20.Samples
                 Console.WriteLine("App stopped because not connected to debugger. Remove this code when running outside VS");
                 Thread.Sleep(Timeout.Infinite);
             }
+
             Console.WriteLine("Hello from Ds18b20!");
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
             Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
@@ -42,6 +43,7 @@ namespace Iot.Device.Ds18b20.Samples
                     {
                         devAddrStr += addrByte.ToString("X2");
                     }
+
                     Console.WriteLine("18b20-" + i.ToString("X2") + " " + devAddrStr);
                     
                     ds18b20.ConfigurationRead(false);
@@ -95,6 +97,7 @@ namespace Iot.Device.Ds18b20.Samples
 
                     loopRead--;
                 }
+
                 Console.WriteLine("");
             }
 
@@ -151,6 +154,7 @@ namespace Iot.Device.Ds18b20.Samples
                 {
                     devAddrStr += addrByte.ToString("X2");
                 }
+
                 Console.WriteLine($"Sensor address:{devAddrStr}");
 
                 while (true)
