@@ -5,13 +5,12 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Diagnostics;
 using System.Threading;
-using BlueNrg2.Samples;
 
 namespace Iot.Device.BlueNrg2.Samples
 {
-    public static class Program
+    internal static class Program
     {
-        public static void Main(string[] args)
+        internal static void Main(string[] args)
         {
             Debug.WriteLine("Program Start");
 

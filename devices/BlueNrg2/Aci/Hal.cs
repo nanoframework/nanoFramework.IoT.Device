@@ -5,7 +5,7 @@ using System;
 
 namespace Iot.Device.BlueNrg2.Aci
 {
-	internal class Hal
+	public class Hal
 	{
 		[Flags]
 		public enum EventMask : uint
@@ -238,67 +238,5 @@ namespace Iot.Device.BlueNrg2.Aci
 		{
 			throw new NotImplementedException();
 		}
-	}
-
-	internal enum PacketPayloadType : byte
-	{
-		PseudoRandomBitSequence9 = 0x00,
-		AlternatingBits11110000 = 0x01,
-		AlternatingBits10101010 = 0x02,
-		PseudoRandomBitSequence15 = 0x03,
-		All1 = 0x04,
-		All0 = 0x05,
-		AlternatingBits00001111 = 0x06,
-		AlternatingBits01010101 = 0x07
-	}
-
-	[Flags]
-	internal enum RadioStateMask : ushort
-	{
-		Idle = 0x0001,
-		Advertising = 0x0002,
-		ConnectionEventSlave = 0x0004,
-		Scanning = 0x0008,
-		ConnectionRequest = 0x0010,
-		ConnectionEventMaster = 0x0020,
-		TxTestMode = 0x0040,
-		RxTestMode = 0x0080
-	}
-
-	internal enum FrequencyOffset : byte
-	{
-		NoOffset = 0x00,
-		Plus250Khz = 0x01,
-		Minus250Khz = 0x02
-	}
-
-	internal enum Offset : byte
-	{
-		BluetoothPublicAddress = 0x00,
-		CsrkDerivingDivider = 0x06,
-		EncryptionRootKey = 0x08,
-		IdentityRootKey = 0x18,
-		LinkLayerWithoutHost = 0x2c,
-		StaticRandomAddress = 0x2e,
-		DisableWatchdog = 0x2f,
-		UseDebugKey = 0xd0,
-		MaximumAllowedValuesForDataLengthExtension = 0xd1
-	}
-
-	[Flags]
-	internal enum BleStackConfiguration : ushort
-	{
-		ControllerPrivacyEnabled = 0x0001,
-		SecureConnectionsEnabled = 0x0002,
-		ControllerMasterEnabled = 0x0004,
-		ControllerDataLengthExtensionEnabled = 0x0008,
-		LinkLayerOnly = 0x0010
-	}
-
-	[Flags]
-	internal enum TransportLayerMode : byte
-	{
-		Uart = 0x01,
-		Spi = 0x02
 	}
 }

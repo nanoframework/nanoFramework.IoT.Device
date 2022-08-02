@@ -5,7 +5,7 @@ using System;
 
 namespace Iot.Device.BlueNrg2.Aci
 {
-    internal class Gatt
+    public class Gatt
     {
         [Flags]
         public enum Event : uint
@@ -520,62 +520,5 @@ namespace Iot.Device.BlueNrg2.Aci
         {
             throw new NotImplementedException();
         }
-    }
-
-    [Flags]
-    internal enum UpdateType : byte
-    {
-        LocalUpdate = 0x00,
-        Notification = 0x01,
-        Indication = 0x02,
-        DisableRetransmission = 0x04
-    }
-
-    [Flags]
-    internal enum AccessPermissions : byte
-    {
-        None = 0x00,
-        Read = 0x01,
-        Write = 0x02,
-        WriteWithoutResponse = 0x04,
-        SignedWrite = 0x08
-    }
-
-    [Flags]
-    internal enum SecurityPermissions : byte
-    {
-        None = 0x00,
-        AuthenticatedRead = 0x01,
-        AuthorizedRead = 0x02,
-        EncryptedRead = 0x04,
-        AuthenticatedWrite = 0x08,
-        AuthorizedWrite = 0x10,
-        EncryptedWrite = 0x20
-    }
-
-    [Flags]
-    public enum CharacteristicProperties : byte
-    {
-        None = 0x00,
-        Broadcast = 0x01,
-        Read = 0x02,
-        WriteWithoutResponse = 0x04,
-        Write = 0x08,
-        Notify = 0x10,
-        Indicate = 0x20,
-        SignedWrite = 0x40,
-        Extended = 0x80
-    }
-
-    public enum ServiceType
-    {
-        Primary = 0x01,
-        Secondary = 0x02
-    }
-
-    public enum UuidType : byte
-    {
-        Uuid16 = 0x01,
-        Uuid128 = 0x02
     }
 }

@@ -2,11 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using Iot.Device.BlueNrg2.Aci.Events;
 
 namespace Iot.Device.BlueNrg2.Aci
 {
-    internal class Gap
+    public class Gap
     {
         [Flags]
         public enum EventMask : ushort
@@ -725,53 +724,5 @@ namespace Iot.Device.BlueNrg2.Aci
         {
             throw new NotImplementedException();
         }
-    }
-
-    internal enum OobDataType : byte
-    {
-        TemporaryKey = 0x00,
-        RandomValue = 0x01,
-        ConfirmValue = 0x02
-    }
-
-    internal struct DeviceAddressEntry
-    {
-        public AddressType AddressType;
-        public byte[] Address;
-    }
-
-    internal enum Reason : byte
-    {
-        AuthenticationFailure = 0x05,
-        RemoteUserTerminatedConnection = 0x13,
-        RemoteDeviceTerminatedConnectionDueToLowResources = 0x14,
-        RemoteDeviceTerminatedConnectionDueToPowerOff = 0x15,
-        UnsupportedRemoteFeature = 0x1A,
-        UnacceptableConnectionParameters = 0x3B
-    }
-
-    [Flags]
-    internal enum Role : byte
-    {
-        Peripheral = 0x01,
-        BroadCaster = 0x02,
-        Central = 0x04,
-        Observer = 0x08
-    }
-
-    internal enum SecureConnectionSupport : byte
-    {
-        NotSupported = 0x00,
-        Supported = 0x01,
-        Mandatory = 0x02
-    }
-
-    internal enum IoCapability : byte
-    {
-        DisplayOnly = 0x00,
-        DisplayYesNo = 0x01,
-        KeyboardOnly = 0x02,
-        NoInputNoOutput = 0x03,
-        KeyboardDisplay = 0x04
     }
 }

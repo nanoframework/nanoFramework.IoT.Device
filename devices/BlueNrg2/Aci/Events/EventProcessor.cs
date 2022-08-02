@@ -709,6 +709,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// be the SubVersNr parameter.
         /// (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.7.12)
         /// </summary>
+        /// <seealso cref="Hci.ReadRemoteVersionInformation"/>
         public EventHandler<ReadRemoteVersionInformationCompleteEventArgs> ReadRemoteVersionInformationCompleteEvent;
 
         private BleStatus hci_encryption_key_refresh_complete_event_process(byte[] bufferIn)
