@@ -1,11 +1,17 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Max7219", "Max7219.nfproj", "{3A37D355-4CF4-4F27-9121-13B3BAE131ED}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Max7219.sample", "samples\Max7219.sample.nfproj", "{F7E86749-2A57-4BED-B6B9-3DE80BB7C1CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23D8401E-CFC8-47AE-9CE0-5D0B682D9B4D}"
+	ProjectSection(SolutionItems) = preProject
+		Max7219.nuspec = Max7219.nuspec
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
