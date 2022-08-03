@@ -41,6 +41,8 @@ namespace Iot.Device.Ds18b20
         /// <param name="deviceAddress">The device address (if null, then this device will search for one on the bus and latch on to the first one found).</param>
         /// <param name="manyDevicesConnected">True for more than one sensor connected to bus.</param>
         /// <param name="temperatureResolution">Sensor resolution.</param>
+        /// <exception cref="ArgumentException">When device address length is not equal to 8 characters.</exception>
+        /// <exception cref="ArgumentException">When device address is not Ds18b20 sensors family address.</exception>
         public Ds18b20(OneWireHost oneWireHost, byte[] deviceAddress = null, bool manyDevicesConnected = false, TemperatureResolution temperatureResolution = TemperatureResolution.VeryHigh)
         {
             _oneWireHost = oneWireHost;
@@ -51,12 +53,12 @@ namespace Iot.Device.Ds18b20
             {
                 if (deviceAddress.Length != 8)
                 {
-                    throw new ArgumentException("Device address length must be 8 bytes.");
+                    throw new ArgumentException();
                 }
 
                 if (deviceAddress[0] != (byte)RomCommands.FamilyCode)
                 {
-                    throw new ArgumentException("Device address does not belong to Ds18b20 sensors family.");
+                    throw new ArgumentException();
                 }
 
                 Address = deviceAddress;
@@ -90,6 +92,7 @@ namespace Iot.Device.Ds18b20
         /// <summary>
         /// Gets or sets high temperature alarm. Min -55C, Max 125C.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">When high alarm temperature is not between -55 and 125 degrees.</exception>
         [Property("TemperatureHighAlarm")]
         public Temperature TemperatureHighAlarm
         {
@@ -102,7 +105,7 @@ namespace Iot.Device.Ds18b20
             {
                 if (value.DegreesCelsius < -55 || value.DegreesCelsius > 125)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(TemperatureHighAlarm), "High alarm temperature has to be between -55 and 125 degrees");
+                    throw new ArgumentOutOfRangeException();
                 }
 
                 _tempHighAlarm = value.DegreesCelsius;
@@ -112,6 +115,7 @@ namespace Iot.Device.Ds18b20
         /// <summary>
         /// Gets or sets low temperature alarm. Min -55C, Max 125C.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">When low alarm temperature is not between -55 and 125 degrees.</exception>
         [Property("TemperatureLowAlarm")]
         public Temperature TemperatureLowAlarm
         {
@@ -124,7 +128,7 @@ namespace Iot.Device.Ds18b20
             {
                 if (value.DegreesCelsius < -55 || value.DegreesCelsius > 125)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(TemperatureLowAlarm), "Low alarm temperature has to be between -55 and 125 degrees");
+                    throw new ArgumentOutOfRangeException();
                 }
 
                 _tempLowAlarm = value.DegreesCelsius;
@@ -397,17 +401,17 @@ namespace Iot.Device.Ds18b20
         {
             if (_isTrackingChanges)
             {
-                throw new InvalidOperationException("Already tracking changes");
+                throw new InvalidOperationException();
             }
 
             if (trackingInterval.Milliseconds < 50)
             {
-                throw new ArgumentOutOfRangeException(nameof(trackingInterval), "Minimum interval to track sensor changes is 50 milliseconds");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (SensorValueChanged == null)
             {
-                throw new NotSupportedException("Tracking not supported if SensorValueChanged event is not defined");
+                throw new NotSupportedException();
             }
 
             _changeTracker = new Thread(() =>
