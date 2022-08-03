@@ -133,6 +133,11 @@ function EnsureNfProjHasStyleCopSettings {
       continue
     }
 
+    #Skip tests project
+    if ($nfProj -like '*test*') {
+      continue
+    }
+
     Write-Host "Found nfProj: " $nfProj
     [xml]$nfProjContent = Get-Content $nfProj
     $propertyGroupWithProjectGuid = $nfProjContent.SelectNodes("/").Project.PropertyGroup[1];

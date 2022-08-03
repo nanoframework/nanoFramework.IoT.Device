@@ -6,21 +6,21 @@ using System;
 namespace Iot.Device.Bno055
 {
     /// <summary>
-    /// Test result
+    /// Test result.
     /// </summary>
     [Flags]
     public enum TestResult
     {
-        /// <summary>Accelerometer success</summary>
+        /// <summary>Accelerometer success.</summary>
         AcceleratorSuccess = 0b0000_0001,
 
-        /// <summary>Magnetometer success</summary>
+        /// <summary>Magnetometer success.</summary>
         MagentometerSuccess = 0b0000_0010,
 
-        /// <summary>Gyroscope success</summary>
+        /// <summary>Gyroscope success.</summary>
         GyroscopeSuccess = 0b0000_0100,
 
-        /// <summary>MCU success</summary>
+        /// <summary>MCU success.</summary>
         McuSuccess = 0b0000_1000,
     }
 }
