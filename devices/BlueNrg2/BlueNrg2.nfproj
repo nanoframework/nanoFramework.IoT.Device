@@ -132,6 +132,7 @@
     <Compile Include="Aci\GapEventMask.cs" />
     <Compile Include="Aci\GapPairingCompleteReason.cs" />
     <Compile Include="Aci\GapPairingCompleteStatus.cs" />
+    <Compile Include="Aci\HalEventMask.cs" />
     <Compile Include="Aci\HandlePacketPair.cs" />
     <Compile Include="Aci\IoCapability.cs" />
     <Compile Include="Aci\KeyPressNotificationType.cs" />
