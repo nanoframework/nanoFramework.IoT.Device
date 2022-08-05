@@ -129,6 +129,7 @@
     <Compile Include="Aci\Events\ReadRemoteVersionInformationCompleteEventArgs.cs" />
     <Compile Include="Aci\FirmwareErrorType.cs" />
     <Compile Include="Aci\FrequencyOffset.cs" />
+    <Compile Include="Aci\GapEventMask.cs" />
     <Compile Include="Aci\GapPairingCompleteReason.cs" />
     <Compile Include="Aci\GapPairingCompleteStatus.cs" />
     <Compile Include="Aci\HandlePacketPair.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="HciEventMask.cs" />
     <Compile Include="IHardwareInterface.cs" />
     <Compile Include="Aci\L2Cap.cs" />
+    <Compile Include="LeEventMask.cs" />
     <Compile Include="ScanType.cs" />
     <Compile Include="ServiceContext.cs" />
     <Compile Include="TransmitPowerLevelType.cs" />

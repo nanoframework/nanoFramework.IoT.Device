@@ -7,23 +7,6 @@ namespace Iot.Device.BlueNrg2.Aci
 {
     public class Gap
     {
-        [Flags]
-        public enum EventMask : ushort
-        {
-            NoEvents = 0x0000,
-            LimitedDiscoverableEvent = 0x0001,
-            PairingCompleteEvent = 0x0002,
-            PassKeyReqEvent = 0x0004,
-            AuthorizationReqEvent = 0x0008,
-            SlaveSecurityInitiatedEvent = 0x0010,
-            BondLostEvent = 0x0020,
-            ProcCompleteEvent = 0x0080,
-            L2CapConnectionUpdateRequestEvent = 0x0100,
-            L2CapConnectionUpdateResponseEvent = 0x0200,
-            L2CapProcessTimeoutEvent = 0x0400,
-            AddressNotResolvedEvent = 0x0800
-        }
-
         private readonly TransportLayer _transportLayer;
 
         internal Gap(TransportLayer transportLayer)
@@ -395,11 +378,29 @@ namespace Iot.Device.BlueNrg2.Aci
         }
 
         public BleStatus SetNonConnectable(
-            byte advertisingEventType,
+            AdvertisingType advertisingEventType,
             AddressType ownAddressType
         )
         {
-            throw new NotImplementedException();
+            var command = new byte[2];
+            command[0] = (byte)advertisingEventType;
+            command[1] = (byte)ownAddressType;
+
+            var response = new byte[7];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x08b,
+                CommandParameter = command,
+                CommandLength = 2,
+                ResponseParameter = response,
+                ResponseLength = 1
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus SetUndirectedConnectable(
@@ -409,7 +410,32 @@ namespace Iot.Device.BlueNrg2.Aci
             FilterPolicy advertisingFilterPolicy
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[6];
+            BitConverter.GetBytes(minimumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = (byte)advertisingFilterPolicy;
+            ptr += 1;
+
+            var response = new byte[7];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x08c,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = 1
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus SlaveSecurityRequest(ushort connectionHandle)
@@ -464,7 +490,22 @@ namespace Iot.Device.BlueNrg2.Aci
             AdvertisingType advertisingType
         )
         {
-            throw new NotImplementedException();
+            var command = new byte[1];
+            command[0] = (byte)advertisingType;
+
+            var status = new byte[1];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x08f,
+                CommandParameter = command,
+                CommandLength = 1,
+                ResponseParameter = status,
+                ResponseLength = 1
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
         public BleStatus GetSecurityLevel(
@@ -473,24 +514,100 @@ namespace Iot.Device.BlueNrg2.Aci
             ref byte securityLevel
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[2];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            var response = new byte[3];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x090,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = 3
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            securityMode = response[1];
+            securityLevel = response[2];
+            return BleStatus.Success;
         }
 
         public BleStatus SetEventMask(
-            EventMask eventMask
+            GapEventMask eventMask
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[2];
+            BitConverter.GetBytes((ushort)eventMask).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x091,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus ConfigureWhitelist()
         {
-            throw new NotImplementedException();
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x092,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus Terminate(ushort connectionHandle, Reason reason)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[3];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)reason;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x093,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus ClearSecurityDatabase()
@@ -510,7 +627,27 @@ namespace Iot.Device.BlueNrg2.Aci
 
         public BleStatus AllowRebond(ushort connectionHandle)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[2];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x095,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartLimitedDiscoveryProcedure(
@@ -520,7 +657,34 @@ namespace Iot.Device.BlueNrg2.Aci
             bool filterDuplicates
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[6];
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = (byte)(filterDuplicates ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x096,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartGeneralDiscoveryProcedure(
@@ -530,7 +694,34 @@ namespace Iot.Device.BlueNrg2.Aci
             bool filterDuplicates
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[6];
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = (byte)(filterDuplicates ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x097,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartNameDiscoveryProcedure(
@@ -543,11 +734,55 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort maximumConnectionInterval,
             ushort connectionLatency,
             ushort supervisionTimeout,
-            ushort minimumConnectionLength,
-            ushort maximumConnectionLength
+            ushort minimumConnectionEventLength,
+            ushort maximumConnectionEventLength
         )
         {
-            throw new NotImplementedException();
+            if (peerAddress is null || peerAddress.Length != 6)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[24];
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)peerAddressType;
+            ptr += 1;
+            peerAddress.CopyTo(command, ptr);
+            ptr += 6;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            BitConverter.GetBytes(minimumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(connectionLatency).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(supervisionTimeout).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x098,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartAutomaticConnectionEstablishProcedure(
@@ -558,13 +793,62 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort maximumConnectionInterval,
             ushort connectionLatency,
             ushort supervisionTimeout,
-            ushort minimumConnectionLength,
-            ushort maximumConnectionLength,
+            ushort minimumConnectionEventLength,
+            ushort maximumConnectionEventLength,
             byte whitelistEntryCount,
             DeviceAddressEntry[] whitelistEntries
         )
         {
-            throw new NotImplementedException();
+            if (whitelistEntries is null || whitelistEntries.Length != whitelistEntryCount)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            BitConverter.GetBytes(minimumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(connectionLatency).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(supervisionTimeout).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = whitelistEntryCount;
+            ptr += 1;
+            for (int i = 0; i < whitelistEntryCount; i++)
+            {
+                command[ptr] = (byte)whitelistEntries[i].AddressType;
+                ptr += 1;
+                whitelistEntries[i].Address.CopyTo(command, ptr);
+                ptr += 6;
+            }
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x099,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartGeneralConnectionEstablishProcedure(
@@ -576,7 +860,38 @@ namespace Iot.Device.BlueNrg2.Aci
             bool filterDuplicates
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)scanType;
+            ptr += 1;
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = (byte)scanningFilterPolicy;
+            ptr += 1;
+            command[ptr] = (byte)(filterDuplicates ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x09a,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartSelectiveConnectionEstablishProcedure(
@@ -590,7 +905,50 @@ namespace Iot.Device.BlueNrg2.Aci
             DeviceAddressEntry[] whitelistEntries
         )
         {
-            throw new NotImplementedException();
+            if (whitelistEntries is null || whitelistEntries.Length != whitelistEntryCount)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)scanType;
+            ptr += 1;
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = (byte)scanningFilterPolicy;
+            ptr += 1;
+            command[ptr] = (byte)(filterDuplicates ? 0x01 : 0x00);
+            ptr += 1;
+            command[ptr] = whitelistEntryCount;
+            ptr += 1;
+            for (int i = 0; i < whitelistEntryCount; i++)
+            {
+                command[ptr] = (byte)whitelistEntries[i].AddressType;
+                ptr += 1;
+                whitelistEntries[i].Address.CopyTo(command, ptr);
+                ptr += 6;
+            }
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x09b,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus CreateConnection(
@@ -603,16 +961,80 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort maximumConnectionInterval,
             ushort connectionLatency,
             ushort supervisionTimeout,
-            ushort minimumConnectionLength,
-            ushort maximumConnectionLength
+            ushort minimumConnectionEventLength,
+            ushort maximumConnectionEventLength
         )
         {
-            throw new NotImplementedException();
+            if (peerAddress is null || peerAddress.Length != 6)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)peerAddressType;
+            ptr += 1;
+            peerAddress.CopyTo(command, ptr);
+            ptr += 6;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            BitConverter.GetBytes(minimumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(connectionLatency).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(supervisionTimeout).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x09c,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus TerminateGapProcedure(ProcedureCode procedureCode)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)procedureCode;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x09d,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartConnectionUpdate(
@@ -621,21 +1043,104 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort maximumConnectionInterval,
             ushort connectionLatency,
             ushort supervisionTimeout,
-            ushort minimumConnectionLength,
-            ushort maximumConnectionLength
+            ushort minimumConnectionEventLength,
+            ushort maximumConnectionEventLength
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(connectionLatency).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(supervisionTimeout).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionEventLength).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x09e,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus SendPairingRequest(ushort connectionHandle, bool forceRebond)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)(forceRebond ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x09f,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus ResolvePrivateAddress(byte[] address, ref byte[] actualAddress)
         {
-            throw new NotImplementedException();
+            if (address is null || address.Length != 6)
+                throw new ArgumentException();
+
+            if (actualAddress is null)
+                throw new ArgumentNullException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            address.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 7;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a0,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            Array.Copy(response, 1, actualAddress, 0, 6);
+            return BleStatus.Success;
         }
 
         public BleStatus SetBroadcastMode(
@@ -649,7 +1154,52 @@ namespace Iot.Device.BlueNrg2.Aci
             DeviceAddressEntry[] whitelistEntries
         )
         {
-            throw new NotImplementedException();
+            if (advertisingData is null || advertisingData.Length != advertisingDataLength)
+                throw new ArgumentException(nameof(advertisingData));
+
+            if (whitelistEntries is null || whitelistEntries.Length != whitelistEntryCount)
+                throw new ArgumentException(nameof(whitelistEntries));
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(minimumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)advertisingType;
+            ptr += 1;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = advertisingDataLength;
+            ptr += 1;
+            advertisingData.CopyTo(command, ptr);
+            ptr += advertisingDataLength;
+            command[ptr] = whitelistEntryCount;
+            ptr += 1;
+            for (int i = 0; i < whitelistEntryCount; i++)
+            {
+                command[ptr] = (byte)whitelistEntries[i].AddressType;
+                ptr += 1;
+                whitelistEntries[i].Address.CopyTo(command, ptr);
+                ptr += 6;
+            }
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a1,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus StartObservationProcedure(
@@ -657,11 +1207,42 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort scanWindow,
             ScanType scanType,
             AddressType ownAddressType,
-            bool filterDuplicates,
+            byte filterDuplicates,
             FilterPolicy scanningFilterPolicy
         )
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(scanInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(scanWindow).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)scanType;
+            ptr += 1;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = filterDuplicates;
+            ptr += 1;
+            command[ptr] = (byte)scanningFilterPolicy;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a2,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus GetBondedDevices(
@@ -669,22 +1250,118 @@ namespace Iot.Device.BlueNrg2.Aci
             ref DeviceAddressEntry[] bondedDeviceAddresses
         )
         {
-            throw new NotImplementedException();
+            if (bondedDeviceAddresses is null)
+                throw new ArgumentNullException();
+
+            const uint responseLength = 128;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a3,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            addressCount = response[1];
+            var ptr = 1;
+            for (int i = 0; i < addressCount; i++)
+            {
+                bondedDeviceAddresses[i].AddressType = (AddressType)response[ptr];
+                ptr += 1;
+                Array.Copy(response, ptr, bondedDeviceAddresses[i].Address, 0, 6);
+                ptr += 6;
+            }
+
+            return BleStatus.Success;
         }
 
         public BleStatus IsDeviceBonded(AddressType peerAddressType, byte[] peerAddress)
         {
-            throw new NotImplementedException();
+            if (peerAddress is null || peerAddress.Length != 6)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)peerAddressType;
+            ptr += 1;
+            peerAddress.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a4,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus NumericComparisonValueConfirmYesNo(ushort connectionHandle, bool confirmYesNo)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)(confirmYesNo ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a5,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus PasskeyInput(ushort connectionHandle, KeyPressNotificationType inputType)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)inputType;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a6,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus GetOobData(
@@ -694,7 +1371,43 @@ namespace Iot.Device.BlueNrg2.Aci
             ref byte oobDataLength,
             ref byte[] oobData)
         {
-            throw new NotImplementedException();
+            if (address is null)
+                throw new ArgumentNullException(nameof(address));
+
+            if (oobData is null)
+                throw new ArgumentNullException(nameof(oobData));
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)oobDataType;
+            ptr += 1;
+
+            const uint responseLength = 25;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a7,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            ptr = 1;
+            addressType = (AddressType)response[ptr];
+            ptr += 1;
+            Array.Copy(response, ptr, address, 0, 6);
+            ptr += 6;
+            oobDataLength = response[ptr];
+            ptr += 1;
+            Array.Copy(response, ptr, oobData, 0, 16);
+
+            return BleStatus.Success;
         }
 
         public BleStatus SetOobData(
@@ -705,7 +1418,43 @@ namespace Iot.Device.BlueNrg2.Aci
             byte oobDataLength,
             byte[] oobData)
         {
-            throw new NotImplementedException();
+            if (address is null || address.Length != 6)
+                throw new ArgumentException(nameof(address));
+
+            if (oobData is null || oobData.Length != oobDataLength)
+                throw new ArgumentException(nameof(oobData));
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = deviceType;
+            ptr += 1;
+            command[ptr] = (byte)addressType;
+            ptr += 1;
+            address.CopyTo(command, ptr);
+            ptr += 6;
+            command[ptr] = (byte)oobDataType;
+            ptr += 1;
+            command[ptr] = oobDataLength;
+            ptr += 1;
+            oobData.CopyTo(command, ptr);
+            ptr += oobDataLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a8,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus AddDeviceToResolvingList(
@@ -714,7 +1463,41 @@ namespace Iot.Device.BlueNrg2.Aci
             bool clearResolvingList
         )
         {
-            throw new NotImplementedException();
+            if (whiteListIdentityEntry is null || whiteListIdentityEntry.Length != resolvingListEntriesCount)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = resolvingListEntriesCount;
+            ptr += 1;
+
+            for (int i = 0; i < resolvingListEntriesCount; i++)
+            {
+                command[ptr] = (byte)whiteListIdentityEntry[i].AddressType;
+                ptr += 1;
+                whiteListIdentityEntry[i].Address.CopyTo(command, ptr);
+                ptr += 6;
+            }
+
+            command[ptr] = (byte)(clearResolvingList ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0a9,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus RemoveBondedDevice(
@@ -722,7 +1505,32 @@ namespace Iot.Device.BlueNrg2.Aci
             byte[] peerIdentityAddress
         )
         {
-            throw new NotImplementedException();
+            if (peerIdentityAddress is null || peerIdentityAddress.Length != 6)
+                throw new ArgumentException(nameof(peerIdentityAddress));
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)peerIdentityAddressType;
+            ptr += 1;
+            peerIdentityAddress.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x0aa,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
     }
 }

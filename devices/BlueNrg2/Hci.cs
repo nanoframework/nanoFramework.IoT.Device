@@ -603,10 +603,20 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// This command is used to set the data used in advertising packets that have a data
+        /// field. Only the significant part of the <see cref="advertisingData"/> is
+        /// transmitted in the advertising packets, as defined in [Vol 3] Part C,
+        /// Section 11. (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.7)
+        /// </summary>
+        /// <param name="advertisingDataLength">The number of significant octets in the following data field.</param>
+        /// <param name="advertisingData">31 octets of data formatted as defined in [Vol 3] Part C, Section 11.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="advertisingData"/> has to be an array of length 31.</exception>
         public BleStatus LeSetAdvertisingData(byte advertisingDataLength, byte[] advertisingData)
         {
             if (advertisingData is null || advertisingData.Length != 31)
-                throw new ArgumentException($"{nameof(advertisingData)} has to be an array of length 31");
+                throw new ArgumentException();
             var command = new byte[32];
             command[0] = advertisingDataLength;
             advertisingData.CopyTo(command, 1);
@@ -625,10 +635,22 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to provide data used in Scanning Packets that
+        /// have a data field. Only the significant part of the <see cref="scanResponseData"/>
+        /// is transmitted in the Scanning Packets, as defined in [Vol 3] Part C,
+        /// Section 11. (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.8)
+        /// </summary>
+        /// <param name="scanResponseDataLength">The number of significant octets in the
+        /// following data field.</param>
+        /// <param name="scanResponseData">31 octets of data formatted as defined in [Vol 3]
+        /// Part C, Section 11.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="scanResponseData"/> has to be an array of length 31 or less</exception>
         public BleStatus LeSetScanResponseData(byte scanResponseDataLength, byte[] scanResponseData)
         {
             if (scanResponseDataLength > 31)
-                throw new ArgumentException($"{nameof(scanResponseData)} has to be an array of length 31 or less");
+                throw new ArgumentException();
             var command = new byte[32];
             command[0] = scanResponseDataLength;
             if (scanResponseData is not null)
@@ -648,6 +670,19 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to request the Controller
+        /// to start or stop advertising. The Controller manages the timing of
+        /// advertisements as per the advertising parameters given in the
+        /// <see cref="LeSetAdvertisingParameters"/> command. The Controller shall continue
+        /// advertising until the Host issues an <see cref="LeSetAdvertiseEnable"/> command
+        /// with <see cref="enableAdvertising"/> set to false (Advertising is disabled) or until
+        /// a connection is created or until the Advertising is timed out due to
+        /// high duty cycle Directed Advertising. In these cases, advertising is
+        /// then disabled. (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.9)
+        /// </summary>
+        /// <param name="enableAdvertising">Enable/disable advertise. Default is false (disabled).</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeSetAdvertiseEnable(bool enableAdvertising)
         {
             var command = new byte[1];
@@ -667,6 +702,64 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to set the scan parameters.
+        /// The <see cref="ScanType"/> parameter controls the type of scan to perform. The
+        /// <see cref="scanInterval"/> and <see cref="scanWindow"/> parameters are recommendations
+        /// from the Host on how long (<see cref="scanWindow"/>) and how frequently
+        /// (<see cref="scanInterval"/>) the Controller should scan (See [Vol 6] Part B,
+        /// Section 4.5.3). The <see cref="scanWindow"/> parameter shall always be set to a
+        /// value smaller or equal to the value set for the <see cref="scanInterval"/>
+        /// parameter. If they are set to the same value scanning should be run
+        /// continuously. The <see cref="ownAddressType"/> parameter determines the address
+        /// used (Public or Random Device Address) when performing active scan.
+        /// The Host shall not issue this command when scanning is enabled in the
+        /// Controller; if it is the Command Disallowed error code shall be used.
+        /// (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.10)
+        /// </summary>
+        /// <param name="scanType">Passive or active scanning. With active scanning SCAN_REQ packets are sent.</param>
+        /// <param name="scanInterval">
+        /// This is defined as the time interval from when the Controller started
+        /// its last LE scan until it begins the subsequent LE scan. Time = N * 0.625 ms.
+        /// </param>
+        /// <param name="scanWindow">
+        /// The duration of the LE scan. LE_Scan_Window shall be
+        /// less than or equal to LE_Scan_Interval. Time = N * 0.625 ms.
+        /// </param>
+        /// <param name="ownAddressType">Own address type.
+        /// <list type="bullet">
+        /// <item>0x00: Public Device Address</item>
+        /// <item>0x01 Random Device Address</item>
+        /// <item>
+        ///     0x02: Controller generates Resolvable Private Address based on the local IRK from resolving list.
+        ///     If resolving list contains no matching entry, use public address.</item>
+        /// <item>
+        ///     0x03: Controller generates Resolvable Private Address based on the local IRK from resolving list.
+        ///     If resolving list contains no matching entry, use random address from LE_Set_Random_Address.</item>
+        /// </list>
+        /// </param>
+        /// <param name="scanningFilterPolicy">
+        /// <list type="bullet">
+        /// <item>
+        ///     0x00 Accept all advertisement packets. Directed advertising packets which
+        ///     are not addressed for this device shall be ignored.
+        /// </item>
+        /// <item>
+        ///     0x01 Ignore advertisement packets from devices not in the White List Only.
+        ///     Directed advertising packets which are not addressed for this device shall be ignored.
+        /// </item>
+        /// <item>
+        ///     0x02 Accept all undirected advertisement packets. Directed advertisement packets where
+        ///     initiator address is a RPA and  Directed advertisement packets addressed to this device shall be accepted.
+        /// </item>
+        /// <item>
+        ///     0x03 Accept all undirected advertisement packets from devices that are in the White List.
+        ///     Directed advertisement packets where initiator address is RPA and Directed advertisement
+        ///     packets addressed to this device shall be accepted.
+        /// </item>
+        /// </list>
+        /// </param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeSetScanParameters(
             ScanType scanType,
             ushort scanInterval,
@@ -695,6 +788,17 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to start scanning. Scanning is
+        /// used to discover advertising devices nearby. The <see cref="filterDuplicates"/>
+        /// parameter controls whether the Link Layer shall filter duplicate
+        /// advertising reports to the Host, or if the Link Layer should generate
+        /// advertising reports for each packet received. (See Bluetooth
+        /// Specification v.4.1, Vol. 2, Part E, 7.8.11)
+        /// </summary>
+        /// <param name="enableAdvertising">Enable/disable scan. Default is 0 (disabled).</param>
+        /// <param name="filterDuplicates">Enable/disable duplicate filtering.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeSetScanEnable(bool enableAdvertising, bool filterDuplicates)
         {
             var command = new byte[2];
@@ -715,6 +819,91 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to create a Link Layer
+        /// connection to a connectable advertiser. The <see cref="scanWindow"/> and
+        /// <see cref="scanWindow"/> parameters are recommendations from the Host on how
+        /// long (<see cref="scanWindow"/>) and how frequently (<see cref="scanInterval"/>) the
+        /// Controller should scan. The <see cref="scanWindow"/> parameter shall be set to a
+        /// value smaller or equal to the value set for the <see cref="scanInterval"/>
+        /// parameter. If both are set to the same value, scanning should run
+        /// continuously. The <see cref="useWhiteList"/> is used to determine whether
+        /// the White List is used. If the White List is not used, the
+        /// <see cref="peerAddressType"/> and the <see cref="peerAddress"/> parameters specify the address
+        /// type and address of the advertising device to connect to. The Link
+        /// Layer shall set the address in the CONNECT_REQ packets to either the
+        /// Public Device Address or the Random Device Addressed based on the
+        /// <see cref="ownAddressType"/> parameter. The <see cref="minimumConnectionInterval"/> and
+        /// <see cref="maximumConnectionInterval"/> parameters define the minimum and maximum allowed
+        /// connection interval. The <see cref="minimumConnectionInterval"/> parameter shall not be
+        /// greater than the <see cref="maximumConnectionInterval"/> parameter. The <see cref="connectionLatency"/>
+        /// parameter defines the maximum allowed connection latency (see [Vol 6]
+        /// Part B, Section 4.5.1). The <see cref="supervisionTimeout"/> parameter defines the
+        /// link supervision timeout for the connection. The <see cref="supervisionTimeout"/>
+        /// in milliseconds shall be larger than (1 + <see cref="connectionLatency"/>) *
+        /// <see cref="maximumConnectionInterval"/> * 2, where <see cref="maximumConnectionInterval"/> is given in
+        /// milliseconds. (See [Vol 6] Part B, Section 4.5.2). The
+        /// <see cref="minimumConnectionEventLength"/> and <see cref="maximumConnectionEventLength"/> parameters are informative
+        /// parameters providing the Controller with the expected minimum and
+        /// maximum length of the connection events. The <see cref="minimumConnectionEventLength"/>
+        /// parameter shall be less than or equal to the <see cref="maximumConnectionEventLength"/>
+        /// parameter. The Host shall not issue this command when another
+        /// <see cref="LeCreateConnection"/> is pending in the Controller; if this does occur
+        /// the Controller shall return the Command Disallowed error code shall be
+        /// used. (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.12)
+        /// </summary>
+        /// <param name="scanInterval">
+        /// This is defined as the time interval from when the
+        /// Controller started its last LE scan until it begins the subsequent LE
+        /// scan. Time = N * 0.625 ms.
+        /// </param>
+        /// <param name="scanWindow">
+        /// The duration of the LE scan. <see cref="scanWindow"/> shall be
+        /// less than or equal to <see cref="scanInterval"/>. Time = N * 0.625 ms.</param>
+        /// <param name="useWhiteList">
+        /// <list type="bullet">
+        /// <item>false: White list is not used to determine which advertiser to connect to. Peer_Address_Type and Peer_Address shall be used.</item>
+        /// <item>true: White list is used to determine which advertiser to connect to. Peer_Address_Type and Peer_Address shall be ignored.</item>
+        /// </list>
+        /// </param>
+        /// <param name="peerAddressType">
+        /// <list type="bullet">
+        /// <item>0x00 Public Device Address</item>
+        /// <item>0x01 Random Device Address</item>
+        /// <item>0x02 Public Identity Address (Corresponds to Resolved Private Address)</item>
+        /// <item>0x03 Random (Static) Identity Address (Corresponds to Resolved Private Address)</item>
+        /// </list>
+        /// </param>
+        /// <param name="peerAddress">Public Device Address, Random Device Address, Public
+        /// Identity Address or Random (static) Identity Address of the
+        /// advertising device.</param>
+        /// <param name="ownAddressType">Own address type.
+        /// <list type="bullet">
+        /// <item>0x00: Public Device Address</item>
+        /// <item>0x01 Random Device Address</item>
+        /// <item>
+        ///     0x02: Controller generates Resolvable Private Address based on the local IRK from resolving list.
+        ///     If resolving list contains no matching entry, use public address.
+        /// </item>
+        /// <item>
+        ///     0x03: Controller generates Resolvable Private Address based on the local IRK from resolving list.
+        ///     If resolving list contains no matching entry, use random address from <see cref="LeSetRandomAddress"/>.
+        /// </item>
+        /// </list>
+        /// </param>
+        /// <param name="minimumConnectionInterval">Minimum value for the connection event interval.
+        /// This shall be less than or equal to Conn_Interval_Max. Time = N * 1.25 ms.</param>
+        /// <param name="maximumConnectionInterval">Maximum value for the connection event interval.
+        /// This shall be greater than or equal to Conn_Interval_Min. Time = N * 1.25 ms.</param>
+        /// <param name="connectionLatency">Slave latency for the connection in number of connection events.</param>
+        /// <param name="supervisionTimeout">Supervision timeout for the LE Link. It shall be a
+        /// multiple of 10 ms and larger than (1 + connSlaveLatency) * connInterval * 2. Time = N * 10 ms.</param>
+        /// <param name="minimumConnectionEventLength">Information parameter about the minimum length of
+        /// connection needed for this LE connection. Time = N * 0.625 ms.</param>
+        /// <param name="maximumConnectionEventLength">Information parameter about the maximum length of
+        /// connection needed for this LE connection. Time = N * 0.625 ms.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="peerAddress"/> needs to be an array of length 6.</exception>
         public BleStatus LeCreateConnection(
             ushort scanInterval,
             ushort scanWindow,
@@ -726,11 +915,11 @@ namespace Iot.Device.BlueNrg2
             ushort maximumConnectionInterval,
             ushort connectionLatency,
             ushort supervisionTimeout,
-            ushort minimumConnectionLength,
-            ushort maximumConnectionLength)
+            ushort minimumConnectionEventLength,
+            ushort maximumConnectionEventLength)
         {
             if (peerAddress is null || peerAddress.Length != 6)
-                throw new ArgumentException($"{nameof(peerAddress)} needs to be an array of length 6");
+                throw new ArgumentException();
             var command = new byte[24];
             BitConverter.GetBytes(scanInterval).CopyTo(command, 0);
             BitConverter.GetBytes(scanWindow).CopyTo(command, 2);
@@ -742,8 +931,8 @@ namespace Iot.Device.BlueNrg2
             BitConverter.GetBytes(maximumConnectionInterval).CopyTo(command, 15);
             BitConverter.GetBytes(connectionLatency).CopyTo(command, 17);
             BitConverter.GetBytes(supervisionTimeout).CopyTo(command, 19);
-            BitConverter.GetBytes(minimumConnectionLength).CopyTo(command, 21);
-            BitConverter.GetBytes(maximumConnectionLength).CopyTo(command, 23);
+            BitConverter.GetBytes(minimumConnectionEventLength).CopyTo(command, 21);
+            BitConverter.GetBytes(maximumConnectionEventLength).CopyTo(command, 23);
             var status = new byte[1];
             var rq = new Request
             {
@@ -760,6 +949,14 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to cancel the <see cref="LeCreateConnection"/> command.
+        /// This command shall only be issued after the <see cref="LeCreateConnection"/>
+        /// command has been issued, a Command Status event has been received for the LE
+        /// Create Connection command and before the LE Connection Complete event.
+        /// (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.13)
+        /// </summary>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeCreateConnectionCancel()
         {
             var status = new byte[1];
@@ -958,71 +1155,5 @@ namespace Iot.Device.BlueNrg2
         {
             _transportLayer.UserEventProcess();
         }
-    }
-
-    /// <summary>
-    /// Event mask for bluetooth LE events.
-    /// </summary>
-    public enum LeEventMask : ulong
-    {
-        /// <summary>
-        /// No LE events specified.
-        /// </summary>
-        None = 0x0000000000000000,
-
-        /// <summary>
-        /// Connection complete event bit.
-        /// </summary>
-        ConnectionCompleteEvent = 0x0000000000000001,
-
-        /// <summary>
-        /// Advertising report event bit.
-        /// </summary>
-        AdvertisingReportEvent = 0x0000000000000002,
-
-        /// <summary>
-        /// Connection update complete event bit.
-        /// </summary>
-        ConnectionUpdateCompleteEvent = 0x0000000000000004,
-
-        /// <summary>
-        /// Read remote used features complete event bit.
-        /// </summary>
-        ReadRemoteUsedFeaturesCompleteEvent = 0x0000000000000008,
-
-        /// <summary>
-        /// Long term key request event bit.
-        /// </summary>
-        LongTermKeyRequestEvent = 0x0000000000000010,
-
-        /// <summary>
-        /// Remote connection parameter request event bit.
-        /// </summary>
-        RemoteConnectionParameterRequestEvent = 0x0000000000000020,
-
-        /// <summary>
-        /// Data length change event bit.
-        /// </summary>
-        DataLengthChangeEvent = 0x0000000000000040,
-
-        /// <summary>
-        /// Read local P-256 public key complete event bit.
-        /// </summary>
-        ReadPublicKeyCompleteEvent = 0x0000000000000080,
-
-        /// <summary>
-        /// Generate DHKey complete event bit.
-        /// </summary>
-        GenerateDhKeyCompleteEvent = 0x0000000000000100,
-
-        /// <summary>
-        /// Enhanced connection complete event bit.
-        /// </summary>
-        EnhancedConnectionCompleteEvent = 0x0000000000000200,
-
-        /// <summary>
-        /// Direct advertising report event bit.
-        /// </summary>
-        DirectAdvertisingReportEvent = 0x0000000000000400,
     }
 }

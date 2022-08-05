@@ -6,7 +6,7 @@ namespace Iot.Device.BlueNrg2.Aci
     /// <summary>
     /// Type of keypress the notification reports.
     /// </summary>
-    public enum KeyPressNotificationType
+    public enum KeyPressNotificationType : byte
     {
         /// <summary>
         /// Entry started.
