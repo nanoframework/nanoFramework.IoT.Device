@@ -26,8 +26,8 @@
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.9" />
       <dependency id="nanoFramework.System.Text" version="1.2.3" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.1.113.2032" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.142.0" />
-      <dependency id="UnitsNet.nanoFramework.MassConcentration" version="4.142.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.143.0" />
+      <dependency id="UnitsNet.nanoFramework.MassConcentration" version="4.143.0" />
     </dependencies>
   </metadata>
   <files>

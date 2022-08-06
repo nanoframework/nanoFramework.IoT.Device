@@ -25,7 +25,7 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.3.4" />
       <dependency id="nanoFramework.System.Drawing" version="1.1.113.2032" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.142.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.143.0" />
     </dependencies>
   </metadata>
   <files>
