@@ -45,7 +45,7 @@ namespace Iot.Device.Ds18b20.Samples
                     }
 
                     Console.WriteLine("18b20-" + i.ToString("X2") + " " + devAddrStr);
-                    
+
                     ds18b20.ConfigurationRead(false);
                     Console.WriteLine("Alarm set-points before changes:");
                     Console.WriteLine("Hi alarm = " + ds18b20.TemperatureHighAlarm.DegreesCelsius + " C");
@@ -75,14 +75,14 @@ namespace Iot.Device.Ds18b20.Samples
                         for (int index = 0; index < ds18b20.AddressNet.Length; index++)
                         {
                             ds18b20.Address = ds18b20.AddressNet[index];
-                            if (ds18b20.Read())
+                            if (ds18b20.TryReadTemperature(out var currentTemperature))
                             {
                                 break;
                             }
 
                             string devAddrStr = "";
                             foreach (var addrByte in ds18b20.AddressNet[index]) devAddrStr += addrByte.ToString("X2");
-                            Console.WriteLine("DS18B20[" + devAddrStr + "] Sensor reading in One-Shot-mode; T = " + ds18b20.Temperature.DegreesCelsius.ToString("f2") + " C");
+                            Console.WriteLine("DS18B20[" + devAddrStr + "] Sensor reading in One-Shot-mode; T = " + currentTemperature.DegreesCelsius.ToString("f2") + " C");
 
                             ds18b20.ConfigurationRead(false);
                             Console.WriteLine("Alarm set-points:");
@@ -106,7 +106,7 @@ namespace Iot.Device.Ds18b20.Samples
                 ds18b20.TemperatureHighAlarm = Temperature.FromDegreesCelsius(30);
                 ds18b20.TemperatureLowAlarm = Temperature.FromDegreesCelsius(25);
                 // Write configuration on ScratchPad.
-                ds18b20.ConfigurationWrite(false); 
+                ds18b20.ConfigurationWrite(false);
                 // Write configuration on EEPROM too.
                 ds18b20.ConfigurationWrite(true);
                 // Read configuration to check if changes were applied
@@ -125,9 +125,9 @@ namespace Iot.Device.Ds18b20.Samples
 
             if (ds18b20.Initialize())
             {
-                ds18b20.SensorValueChanged += () =>
+                ds18b20.SensorValueChanged += (currentTemperature) =>
                 {
-                    Console.WriteLine($"Temperature: {ds18b20.Temperature.DegreesCelsius.ToString("F")}\u00B0C");
+                    Console.WriteLine($"Temperature: {currentTemperature.DegreesCelsius.ToString("F")}\u00B0C");
                 };
                 ds18b20.BeginTrackChanges(TimeSpan.FromMilliseconds(2000));
                 // do whatever you want or sleep
@@ -159,19 +159,19 @@ namespace Iot.Device.Ds18b20.Samples
 
                 while (true)
                 {
-                    if (!ds18b20.Read())
+                    if (!ds18b20.TryReadTemperature(out var currentTemperature))
                     {
                         Console.WriteLine("Can't read!");
                     }
                     else
                     {
-                        Console.WriteLine($"Temperature: {ds18b20.Temperature.DegreesCelsius.ToString("F")}\u00B0C");
+                        Console.WriteLine($"Temperature: {currentTemperature.DegreesCelsius.ToString("F")}\u00B0C");
                     }
-                    
+
                     Thread.Sleep(5000);
                 }
             }
-           
+
 
             oneWire.Dispose();
         }

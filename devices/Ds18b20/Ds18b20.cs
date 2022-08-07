@@ -152,19 +152,14 @@ namespace Iot.Device.Ds18b20
         }
 
         /// <summary>
-        /// Reads temperature.
-        /// </summary>
-        /// <returns>
-        /// Temperature
-        /// </returns>
-        [Telemetry("Temperature")]
-        public Temperature Temperature => Temperature.FromDegreesCelsius(_temperatureInCelsius);
-
-        /// <summary>
         /// Delegate that defines method signature that will be called
         /// when sensor value change event happens.
         /// </summary>
-        public delegate void OnSensorChanged();
+        /// <param name="temperature">
+        /// Contains the measured temperature if the sensor reacted on request.
+        /// Contains -999.99 otherwise.
+        /// </param>
+        public delegate void OnSensorChanged(Temperature temperature);
 
         /// <summary>
         /// Event that is called when the sensor value changes.
@@ -253,10 +248,17 @@ namespace Iot.Device.Ds18b20
         }
 
         /// <summary>
-        /// Read sensor data.
+        /// Reads the temperature. A return value indicates whether the reading succeeded.
         /// </summary>
-        /// <returns><b>true</b> on success, else <b>false</b></returns>
-        public bool Read()
+        /// <param name="temperature">
+        /// Contains the measured temperature if the sensor reacted on request.
+        /// Contains -999.99 otherwise.
+        /// </param>
+        /// <returns><code>true</code> if measurement was not skipped, otherwise <code>false</code>.</returns>
+        [Telemetry("Temperature")]
+        public bool TryReadTemperature(out Temperature temperature) => Read(out temperature);
+
+        private bool Read(out Temperature temperature)
         {
             PrepareToRead();
 
@@ -265,6 +267,7 @@ namespace Iot.Device.Ds18b20
             var verify = _oneWireHost.WriteByte((byte)FunctionCommands.ReadScratchpad);
             if (verify == 0)
             {
+                temperature = Temperature.FromDegreesCelsius(ErrorTemperature);
                 return false;
             }
 
@@ -282,11 +285,13 @@ namespace Iot.Device.Ds18b20
                 }
 
                 _temperatureInCelsius = ((float)temp) / 16;
+                temperature = Temperature.FromDegreesCelsius(_temperatureInCelsius);
                 return true;
             }
             else
             {
                 _temperatureInCelsius = ErrorTemperature;
+                temperature = Temperature.FromDegreesCelsius(_temperatureInCelsius);
                 return false;
             }
         }
@@ -404,7 +409,7 @@ namespace Iot.Device.Ds18b20
                 throw new InvalidOperationException();
             }
 
-            if (trackingInterval.Milliseconds < 50)
+            if (trackingInterval.TotalMilliseconds < 50)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -416,13 +421,13 @@ namespace Iot.Device.Ds18b20
 
             _changeTracker = new Thread(() =>
             {
-                int divs = (int)(trackingInterval.Milliseconds / 1000);
+                int divs = (int)(trackingInterval.TotalMilliseconds / 1000);
 
                 while (_isTrackingChanges)
                 {
-                    if (trackingInterval.Milliseconds > 1000)
+                    if (trackingInterval.TotalMilliseconds > 1000)
                     {
-                        divs = (int)(trackingInterval.Milliseconds / 1000);
+                        divs = (int)(trackingInterval.TotalMilliseconds / 1000);
                         while (_isTrackingChanges && divs > 0)
                         {
                             Thread.Sleep(1000);
@@ -436,7 +441,7 @@ namespace Iot.Device.Ds18b20
 
                     if (HasSensorValueChanged() && SensorValueChanged != null)
                     {
-                        SensorValueChanged();
+                        SensorValueChanged(Temperature.FromDegreesCelsius(_temperatureInCelsius));
                     }
                 }
             });
@@ -524,7 +529,7 @@ namespace Iot.Device.Ds18b20
         {
             float previousTemperature = _temperatureInCelsius;
 
-            var readStatus = Read();
+            var readStatus = Read(out _);
             if (!readStatus)
             {
                 return false;
