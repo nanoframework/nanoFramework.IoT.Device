@@ -2,12 +2,30 @@
 
 namespace Iot.Device.BlueNrg2.Aci
 {
+    /// <summary>
+    /// Bitmask specifying the type of update generated.
+    /// </summary>
     [Flags]
     public enum UpdateType : byte
     {
+        /// <summary>
+        /// Local update.
+        /// </summary>
         LocalUpdate = 0x00,
+
+        /// <summary>
+        /// Notification bit.
+        /// </summary>
         Notification = 0x01,
+
+        /// <summary>
+        /// Indication bit.
+        /// </summary>
         Indication = 0x02,
+
+        /// <summary>
+        /// Disable retransmission bit.
+        /// </summary>
         DisableRetransmission = 0x04
     }
 }

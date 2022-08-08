@@ -60,6 +60,7 @@
     <Compile Include="Aci\AttErrorCode.cs" />
     <Compile Include="Aci\AttributeGroupHandlePair.cs" />
     <Compile Include="Aci\BleStackConfiguration.cs" />
+    <Compile Include="Aci\CharacteristicEventMask.cs" />
     <Compile Include="Aci\CharacteristicProperties.cs" />
     <Compile Include="Aci\ClockAccuracy.cs" />
     <Compile Include="Aci\CrashType.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Aci\GapEventMask.cs" />
     <Compile Include="Aci\GapPairingCompleteReason.cs" />
     <Compile Include="Aci\GapPairingCompleteStatus.cs" />
+    <Compile Include="Aci\GattEventMask.cs" />
     <Compile Include="Aci\HalEventMask.cs" />
     <Compile Include="Aci\HandlePacketPair.cs" />
     <Compile Include="Aci\IoCapability.cs" />

@@ -50,7 +50,7 @@ namespace Iot.Device.BlueNrg2
 
             FreeEventList();
 
-            SendCommand(r.OpCodeGroup, r.OpCodeCommand, (byte)r.CommandLength, r.CommandParameter);
+            SendCommand(r.OpCodeGroup, r.OpCodeCommand, (byte) r.CommandLength, r.CommandParameter);
 
             if (async)
                 return 0;
@@ -75,18 +75,18 @@ namespace Iot.Device.BlueNrg2
                     Debug.WriteLine($"loop #{i++}");
                 }
 
-                readPacket = (DataPacket)_readPacketCallbackQueue.RemoveHead();
-                if (((DataPacket)readPacket).DataBuffer is null)
+                readPacket = (DataPacket) _readPacketCallbackQueue.RemoveHead();
+                if (((DataPacket) readPacket).DataBuffer is null)
                     goto failed;
-                var hciHdr = ToSpiPacket(((DataPacket)readPacket).DataBuffer);
+                var hciHdr = ToSpiPacket(((DataPacket) readPacket).DataBuffer);
 
                 if (hciHdr.Type == PacketType.Event)
                 {
                     var eventPacket = ToEventPacket(hciHdr.Data);
 
-                    var length = ((DataPacket)readPacket).DataLength - 3;
+                    var length = ((DataPacket) readPacket).DataLength - 3;
                     var ptr = new byte[length];
-                    Array.Copy(((DataPacket)readPacket).DataBuffer, 3, ptr, 0, length);
+                    Array.Copy(((DataPacket) readPacket).DataBuffer, 3, ptr, 0, length);
 
                     switch (eventPacket.Event)
                     {
@@ -96,7 +96,7 @@ namespace Iot.Device.BlueNrg2
                             if (cs.Opcode != opCode)
                                 goto failed;
 
-                            if (r.Event != (byte)EventType.CommandStatus)
+                            if (r.Event != (byte) EventType.CommandStatus)
                             {
                                 if (cs.Status != 0)
                                     goto failed;
@@ -104,9 +104,9 @@ namespace Iot.Device.BlueNrg2
                                 break;
                             }
 
-                            r.ResponseLength = Math.Min((uint)length, r.ResponseLength);
+                            r.ResponseLength = Math.Min((uint) length, r.ResponseLength);
                             r.ResponseParameter = new byte[r.ResponseLength];
-                            Array.Copy(ptr, r.ResponseParameter, (int)r.ResponseLength);
+                            Array.Copy(ptr, r.ResponseParameter, (int) r.ResponseLength);
                             goto done;
                         }
                         case EventType.CommandComplete:
@@ -121,9 +121,9 @@ namespace Iot.Device.BlueNrg2
                             Array.Copy(ptr, 3, tmp, 0, length);
                             ptr = tmp;
 
-                            r.ResponseLength = Math.Min((uint)length, r.ResponseLength);
+                            r.ResponseLength = Math.Min((uint) length, r.ResponseLength);
                             r.ResponseParameter = new byte[r.ResponseLength];
-                            Array.Copy(ptr, r.ResponseParameter, (int)r.ResponseLength);
+                            Array.Copy(ptr, r.ResponseParameter, (int) r.ResponseLength);
                             goto done;
                         }
 
@@ -135,9 +135,9 @@ namespace Iot.Device.BlueNrg2
                                 break;
 
                             length -= 1;
-                            r.ResponseLength = Math.Min((uint)length, r.ResponseLength);
+                            r.ResponseLength = Math.Min((uint) length, r.ResponseLength);
                             r.ResponseParameter = new byte[r.ResponseLength];
-                            Array.Copy(me!.Data, r.ResponseParameter, (int)r.ResponseLength);
+                            Array.Copy(me!.Data, r.ResponseParameter, (int) r.ResponseLength);
 
                             goto done;
                         }
@@ -208,7 +208,7 @@ namespace Iot.Device.BlueNrg2
         {
             while (_readPacketPool.Length() < 5 && !_readPacketCallbackQueue.Empty())
             {
-                var readPacket = (DataPacket)_readPacketCallbackQueue.RemoveHead();
+                var readPacket = (DataPacket) _readPacketCallbackQueue.RemoveHead();
                 _readPacketPool.InsertTail(readPacket);
             }
         }
@@ -223,7 +223,7 @@ namespace Iot.Device.BlueNrg2
 
         private static ushort PackCommandOpcode(ushort opcodeGroup, ushort opcodeCommand)
         {
-            return (ushort)((ushort)(opcodeCommand & 0x03f) | (ushort)(opcodeGroup << 10));
+            return (ushort) ((ushort) (opcodeCommand & 0x03f) | (ushort) (opcodeGroup << 10));
         }
 
         private void SendCommand(ushort opcodeGroup, ushort opcodeCommand, byte parameterLength, byte[] parameter)
@@ -242,14 +242,14 @@ namespace Iot.Device.BlueNrg2
             ToByteArray(hc).CopyTo(payload, 1);
             parameter.CopyTo(payload, 4);
 
-            _hardwareInterface.Send(payload, (ushort)(4 + parameterLength));
+            _hardwareInterface.Send(payload, (ushort) (4 + parameterLength));
         }
 
         public void UserEventProcess()
         {
             while (!_readPacketCallbackQueue.Empty())
             {
-                var readPacket = (DataPacket)_readPacketCallbackQueue.RemoveHead();
+                var readPacket = (DataPacket) _readPacketCallbackQueue.RemoveHead();
                 HandleReceivedEvent(readPacket.DataBuffer);
 
                 _readPacketPool.InsertTail(readPacket);
@@ -308,11 +308,11 @@ namespace Iot.Device.BlueNrg2
         {
             if (!_readPacketPool.Empty())
             {
-                var readPacket = (DataPacket)_readPacketPool.RemoveHead();
+                var readPacket = (DataPacket) _readPacketPool.RemoveHead();
                 var dataLength = _hardwareInterface.Receive(ref readPacket.DataBuffer, 128);
                 if (dataLength > 0)
                 {
-                    readPacket.DataLength = (byte)dataLength;
+                    readPacket.DataLength = (byte) dataLength;
                     if (VerifyPacket(readPacket))
                         _readPacketCallbackQueue.InsertTail(readPacket);
                     else
@@ -335,7 +335,7 @@ namespace Iot.Device.BlueNrg2
         {
             if (readPacket.DataBuffer is null)
                 return false;
-            if (readPacket.DataBuffer[0] != (byte)PacketType.Event)
+            if (readPacket.DataBuffer[0] != (byte) PacketType.Event)
                 return false;
             if (readPacket.DataBuffer[2] != readPacket.DataLength - 3)
                 return false;
@@ -347,7 +347,7 @@ namespace Iot.Device.BlueNrg2
         {
             SpiPacket result = new()
             {
-                Type = (PacketType)data![0],
+                Type = (PacketType) data![0],
                 Data = new byte[data.Length - 1]
             };
             Array.Copy(data, 1, result.Data!, 0, data.Length - 1);
@@ -358,7 +358,7 @@ namespace Iot.Device.BlueNrg2
         {
             EventPacket result = new()
             {
-                Event = (EventType)data![0],
+                Event = (EventType) data![0],
                 ParameterLength = data[1],
                 Data = new byte[data.Length - 2]
             };
