@@ -38,7 +38,7 @@ namespace Iot.Device.BlueNrg2.Aci
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
-            return status[0] != 0 ? (BleStatus) status[0] : BleStatus.Success;
+            return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace Iot.Device.BlueNrg2.Aci
             if (serviceUuid is null || serviceUuid.Length != uuidSize)
                 throw new ArgumentException();
             var command = new byte[3 + uuidSize];
-            command[ptr] = (byte) serviceUuidType;
+            command[ptr] = (byte)serviceUuidType;
             ptr += 1;
             serviceUuid.CopyTo(command, ptr);
             ptr += uuidSize;
-            command[ptr] = (byte) serviceType;
+            command[ptr] = (byte)serviceType;
             ptr += 1;
             command[ptr] = maximumAttributeRecords;
             ptr += 1;
@@ -91,14 +91,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x102,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 3
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             serviceHandle = BitConverter.ToUInt16(response, 1);
             return BleStatus.Success;
         }
@@ -136,7 +136,7 @@ namespace Iot.Device.BlueNrg2.Aci
             BitConverter.GetBytes(serviceHandle).CopyTo(command, 0);
             BitConverter.GetBytes(includeStartHandle).CopyTo(command, 2);
             BitConverter.GetBytes(includeEndHandle).CopyTo(command, 4);
-            command[6] = (byte) includeUuidType;
+            command[6] = (byte)includeUuidType;
             includeUuid.CopyTo(command, 7);
 
             var response = new byte[3];
@@ -145,14 +145,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x103,
                 CommandParameter = command,
-                CommandLength = (uint) (7 + uuidSize),
+                CommandLength = (uint)(7 + uuidSize),
                 ResponseParameter = response,
                 ResponseLength = 3
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             includeHandle = BitConverter.ToUInt16(response, 1);
             return BleStatus.Success;
         }
@@ -202,20 +202,20 @@ namespace Iot.Device.BlueNrg2.Aci
             var command = new byte[10 + uuidSize];
             BitConverter.GetBytes(serviceHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) characteristicUuidType;
+            command[ptr] = (byte)characteristicUuidType;
             characteristicUuid.CopyTo(command, ptr);
             ptr += uuidSize;
             BitConverter.GetBytes(characteristicValueLength).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) characteristicProperties;
+            command[ptr] = (byte)characteristicProperties;
             ptr += 1;
-            command[ptr] = (byte) securityPermissions;
+            command[ptr] = (byte)securityPermissions;
             ptr += 1;
-            command[ptr] = (byte) characteristicEventMask;
+            command[ptr] = (byte)characteristicEventMask;
             ptr += 1;
             command[ptr] = encryptionKeySize;
             ptr += 1;
-            command[ptr] = (byte) (hasVariableLength ? 0x01 : 0x00);
+            command[ptr] = (byte)(hasVariableLength ? 0x01 : 0x00);
             ptr += 1;
 
             var response = new byte[3];
@@ -224,14 +224,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x104,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 3
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             characteristicHandle = BitConverter.ToUInt16(response, 1);
             return BleStatus.Success;
         }
@@ -285,7 +285,7 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr += 2;
             BitConverter.GetBytes(characteristicHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) characteristicDescriptorUuidType;
+            command[ptr] = (byte)characteristicDescriptorUuidType;
             ptr += 1;
             characteristicDescriptorUuid.CopyTo(command, ptr);
             ptr += uuidSize;
@@ -295,15 +295,15 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr += 1;
             characteristicDescriptorValue.CopyTo(command, ptr);
             ptr += characteristicDescriptorValueLength;
-            command[ptr] = (byte) securityPermissions;
+            command[ptr] = (byte)securityPermissions;
             ptr += 1;
-            command[ptr] = (byte) accessPermissions;
+            command[ptr] = (byte)accessPermissions;
             ptr += 1;
-            command[ptr] = (byte) characteristicEventMask;
+            command[ptr] = (byte)characteristicEventMask;
             ptr += 1;
             command[ptr] = encryptionKeySize;
             ptr += 1;
-            command[ptr] = (byte) (hasVariableLength ? 0x01 : 0x00);
+            command[ptr] = (byte)(hasVariableLength ? 0x01 : 0x00);
             ptr += 1;
 
             var response = new byte[3];
@@ -312,14 +312,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x105,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 3
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             characteristicDescriptorHandle = BitConverter.ToUInt16(response, 1);
             return BleStatus.Success;
         }
@@ -384,14 +384,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x106,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -417,14 +417,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x107,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -446,14 +446,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x108,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -478,14 +478,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x109,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -496,7 +496,7 @@ namespace Iot.Device.BlueNrg2.Aci
         /// <returns>Value indicating success or error code.</returns>
         public BleStatus SetEventMask(GattEventMask eventMask)
         {
-            var command = BitConverter.GetBytes((uint) eventMask);
+            var command = BitConverter.GetBytes((uint)eventMask);
 
             var response = new byte[1];
             var rq = new Request
@@ -512,7 +512,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -543,7 +543,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -573,7 +573,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -599,7 +599,7 @@ namespace Iot.Device.BlueNrg2.Aci
             var command = new byte[3 + uuidSize];
             BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) uuidType;
+            command[ptr] = (byte)uuidType;
             ptr += 1;
             uuid.CopyTo(command, ptr);
             ptr += uuidSize;
@@ -611,7 +611,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x113,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -619,7 +619,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -650,7 +650,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x114,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -658,7 +658,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -672,7 +672,9 @@ namespace Iot.Device.BlueNrg2.Aci
         /// <param name="startHandle">Start attribute handle of the service.</param>
         /// <param name="endHandle">End attribute handle of the service.</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus DiscoverAllCharacteristicsOfService(ushort connectionHandle, ushort startHandle,
+        public BleStatus DiscoverAllCharacteristicsOfService(
+            ushort connectionHandle,
+            ushort startHandle,
             ushort endHandle)
         {
             var ptr = 0;
@@ -691,7 +693,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x114,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -699,7 +701,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -736,7 +738,7 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr += 2;
             BitConverter.GetBytes(endHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) uuidType;
+            command[ptr] = (byte)uuidType;
             ptr += 1;
             uuid.CopyTo(command, ptr);
             ptr += uuidSize;
@@ -748,7 +750,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x116,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -756,7 +758,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -770,7 +772,9 @@ namespace Iot.Device.BlueNrg2.Aci
         /// <param name="startHandle">Handle of the characteristic value.</param>
         /// <param name="endHandle">End handle of the characteristic.</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus DiscoverAllCharacteristicDescriptors(ushort connectionHandle, ushort startHandle,
+        public BleStatus DiscoverAllCharacteristicDescriptors(
+            ushort connectionHandle,
+            ushort startHandle,
             ushort endHandle)
         {
             var ptr = 0;
@@ -789,7 +793,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x117,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -797,7 +801,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -825,7 +829,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x118,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -833,7 +837,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -850,8 +854,12 @@ namespace Iot.Device.BlueNrg2.Aci
         /// <param name="uuid">The UUID to read.</param>
         /// <returns>Value indicating success or error code.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public BleStatus ReadUsingCharacteristicUuid(ushort connectionHandle, ushort startHandle, ushort endHandle,
-            UuidType uuidType, byte[] uuid)
+        public BleStatus ReadUsingCharacteristicUuid(
+            ushort connectionHandle,
+            ushort startHandle,
+            ushort endHandle,
+            UuidType uuidType,
+            byte[] uuid)
         {
             var uuidSize = uuidType == UuidType.Uuid16 ? 2 : 16;
 
@@ -866,7 +874,7 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr += 2;
             BitConverter.GetBytes(endHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) uuidType;
+            command[ptr] = (byte)uuidType;
             ptr += 1;
             uuid.CopyTo(command, ptr);
             ptr += uuidSize;
@@ -878,7 +886,7 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeCommand = 0x119,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -886,7 +894,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -899,7 +907,9 @@ namespace Iot.Device.BlueNrg2.Aci
         /// <param name="attributeHandle">Handle of the attribute to be read.</param>
         /// <param name="valueOffset">Offset from which the value needs to be read.</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus ReadLongCharacteristicValue(ushort connectionHandle, ushort attributeHandle,
+        public BleStatus ReadLongCharacteristicValue(
+            ushort connectionHandle,
+            ushort attributeHandle,
             ushort valueOffset)
         {
             var ptr = 0;
@@ -915,10 +925,10 @@ namespace Iot.Device.BlueNrg2.Aci
             var rq = new Request
             {
                 OpCodeGroup = 0x3f,
-                OpCodeCommand = 0x118,
+                OpCodeCommand = 0x11a,
                 Event = 0x0F,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
@@ -926,21 +936,125 @@ namespace Iot.Device.BlueNrg2.Aci
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start a procedure to read multiple characteristic values from a server.
+        /// This sub-procedure is used to read multiple Characteristic Values from a
+        /// server when the client knows the Characteristic Value Handles. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/>
+        /// event is generated. Before procedure completion the response packets are given
+        /// through <see cref="EventProcessor.AttReadMultipleResponseEvent"/> event.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="handleCount">The number of handles for which the value has to be read. From 2 to (ATT_MTU-1)/2</param>
+        /// <param name="handles">List of handles of the characteristics that should be read.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="handles"/> should have the length indicated by <see cref="handleCount"/></exception>
         public BleStatus ReadMultipleCharacteristicValues(ushort connectionHandle, byte handleCount, ushort[] handles)
         {
-            throw new NotImplementedException();
+            if (handles is null || handleCount != handles.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = handleCount;
+            ptr += 1;
+            for (int i = 0; i < handleCount; i++)
+            {
+                BitConverter.GetBytes(handles[i]).CopyTo(command, ptr);
+                ptr += 2;
+            }
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x11b,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
-        public BleStatus WriteCharacteristicValue(ushort connectionHandle, ushort attributeHandle,
-            byte attributeValueLength, byte[] attributeValue)
+        /// <summary>
+        /// Start the procedure to write a characteristic value. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is
+        /// generated. During the procedure, <see cref="EventProcessor.AttPrepareWriteResponseEvent"/>
+        /// and <see cref="EventProcessor.AttExecuteWriteResponseEvent"/> events are raised.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written.</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
+        public BleStatus WriteCharacteristicValue(
+            ushort connectionHandle,
+            ushort attributeHandle,
+            byte attributeValueLength,
+            byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x11c,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to write a long characteristic value. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is
+        /// generated. During the procedure, <see cref="EventProcessor.AttPrepareWriteResponseEvent"/>
+        /// and <see cref="EventProcessor.AttExecuteWriteResponseEvent"/> events are raised.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="valueOffset">Offset at which the attribute has to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written.</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus WriteLongCharacteristicValue(
             ushort connectionHandle,
             ushort attributeHandle,
@@ -948,9 +1062,55 @@ namespace Iot.Device.BlueNrg2.Aci
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueOffset).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x11d,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to write a characteristic value reliably. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is
+        /// generated. During the procedure, <see cref="EventProcessor.AttPrepareWriteResponseEvent"/>
+        /// and <see cref="EventProcessor.AttExecuteWriteResponseEvent"/> events are raised.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="valueOffset">Offset at which the attribute has to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written.</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus WriteCharacteristicReliably(
             ushort connectionHandle,
             ushort attributeHandle,
@@ -958,9 +1118,55 @@ namespace Iot.Device.BlueNrg2.Aci
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueOffset).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x11e,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to write a characteristic descriptor. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is
+        /// generated. During the procedure, <see cref="EventProcessor.AttPrepareWriteResponseEvent"/>
+        /// and <see cref="EventProcessor.AttExecuteWriteResponseEvent"/> events are raised.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="valueOffset">Offset at which the attribute has to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written.</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus WriteLongCharacteristicDescriptor(
             ushort connectionHandle,
             ushort attributeHandle,
@@ -968,80 +1174,464 @@ namespace Iot.Device.BlueNrg2.Aci
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueOffset).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x11f,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to read a long characteristic value. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is
+        /// generated. Before procedure completion the response packets are given
+        /// through <see cref="EventProcessor.AttReadBlobResponseEvent"/> event.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the characteristic descriptor.</param>
+        /// <param name="valueOffset">Offset from which the value needs to be read.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus ReadLongCharacteristicDescriptor(
             ushort connectionHandle,
             ushort attributeHandle,
             ushort valueOffset)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueOffset).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x120,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to write a characteristic descriptor. When the procedure is completed,
+        /// a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is generated.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written.</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus WriteCharacteristicDescriptor(
             ushort connectionHandle,
             ushort attributeHandle,
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x121,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to read a the descriptor specified. When the
+        /// procedure is completed, a <see cref="EventProcessor.GattProcessCompleteEvent"/> event is
+        /// generated. Before procedure completion the response packets are given
+        /// through <see cref="EventProcessor.AttReadResponseEvent"/> event.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the descriptor to be read.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus ReadCharacteristicDescriptor(
             ushort connectionHandle,
             ushort attributeHandle)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x122,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start the procedure to write a characteristic value without waiting
+        /// for any response from the server. No events are generated after this
+        /// command is executed.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written (maximum value is ATT_MTU - 3).</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus WriteWithoutResponse(
             ushort connectionHandle,
             ushort attributeHandle,
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x123,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Start a signed write without response from the server. The procedure
+        /// is used to write a characteristic value with an authentication
+        /// signature without waiting for any response from the server. It cannot
+        /// be used when the link is encrypted.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute to be written.</param>
+        /// <param name="attributeValueLength">Length of the value to be written (maximum value is ATT_MTU - 13).</param>
+        /// <param name="attributeValue">Value to be written.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus SignedWriteWithoutResponse(
             ushort connectionHandle,
             ushort attributeHandle,
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x124,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Allow application to confirm indication. This command has to be sent
+        /// when the application receives the event <see cref="EventProcessor.GattIndicationEvent"/>.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus ConfirmIndication(ushort connectionHandle)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x125,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Allow or reject a write request from a client. This command has to be
+        /// sent by the application when it receives the <see cref="EventProcessor.GattWritePermitRequestEvent"/> event.
+        /// If the write can be allowed, then the
+        /// status and error code has to be set to 0. If the write cannot be
+        /// allowed, then the status has to be set to 1 and the error code has to
+        /// be set to the error code that has to be passed to the client.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="attributeHandle">Handle of the attribute that was passed in the event <see cref="EventProcessor.GattWritePermitRequestEvent"/></param>
+        /// <param name="canWrite">If the value can be written or not.</param>
+        /// <param name="errorCode">The error code that has to be passed to the client in case the write has to be rejected.</param>
+        /// <param name="attributeValueLength">Length of the value to be written as passed in the event <see cref="EventProcessor.GattWritePermitRequestEvent"/></param>
+        /// <param name="attributeValue">Value as passed in the event <see cref="EventProcessor.GattWritePermitRequestEvent"/></param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="attributeValue"/> should have the length indicated by <see cref="attributeValueLength"/></exception>
         public BleStatus WriteResponse(
             ushort connectionHandle,
             ushort attributeHandle,
-            byte writeStatus,
+            bool canWrite,
             byte errorCode,
             byte attributeValueLength,
             byte[] attributeValue)
         {
-            throw new NotImplementedException();
+            if (attributeValue is null || attributeValueLength != attributeValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)(canWrite ? 0x01 : 0x00);
+            ptr += 1;
+            command[ptr] = errorCode;
+            ptr += 1;
+            command[ptr] = attributeValueLength;
+            ptr += 1;
+            attributeValue.CopyTo(command, ptr);
+            ptr += attributeValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x126,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Allow the GATT server to send a response to a read request from a
+        /// client. The application has to send this command when it receives the
+        /// <see cref="EventProcessor.GattReadPermitRequestEvent"/> event or
+        /// <see cref="EventProcessor.GattReadMultiPermitRequestEvent"/> event.
+        /// This command indicates to the stack that the response can be sent to
+        /// the client. So if the application wishes to update any of the attributes
+        /// before they are read by the client, it has to update the characteristic
+        /// values using the <see cref="UpdateCharacteristicValue"/> and then give
+        /// this command. The application should perform the required operations
+        /// within 30 seconds. Otherwise the GATT procedure will be timeout.
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus AllowRead(ushort connectionHandle)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x127,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command sets the security permission for the attribute handle
+        /// specified. Currently the setting of security permission is allowed
+        /// only for client configuration descriptor.
+        /// </summary>
+        /// <param name="serviceHandle">Handle of the service which contains the attribute whose
+        /// security permission has to be modified</param>
+        /// <param name="attributeHandle">Handle of the attribute whose security permission has to be modified</param>
+        /// <param name="securityPermissions">Security permission flags.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus SetSecurityPermission(
             ushort serviceHandle,
             ushort attributeHandle,
-            byte securityPermissions)
+            SecurityPermissions securityPermissions)
         {
-            throw new NotImplementedException();
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(serviceHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)securityPermissions;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x128,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command sets the value of the descriptor specified by <see cref="characteristicDescriptorHandle"/>.
+        /// </summary>
+        /// <param name="serviceHandle">Handle of the service which contains the characteristic descriptor.</param>
+        /// <param name="characteristicHandle">Handle of the characteristic which contains the descriptor.</param>
+        /// <param name="characteristicDescriptorHandle">Handle of the descriptor whose value has to be set.</param>
+        /// <param name="valueOffset">Offset from which the descriptor value has to be updated.</param>
+        /// <param name="characteristicDescriptorValueLength">Length of the descriptor value.</param>
+        /// <param name="characteristicDescriptorValue">Descriptor value.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="characteristicDescriptorValue"/> should have the length indicated by <see cref="characteristicDescriptorValueLength"/></exception>
         public BleStatus SetDescriptorValue(
             ushort serviceHandle,
             ushort characteristicHandle,
@@ -1050,9 +1640,55 @@ namespace Iot.Device.BlueNrg2.Aci
             byte characteristicDescriptorValueLength,
             byte[] characteristicDescriptorValue)
         {
-            throw new NotImplementedException();
+            if (characteristicDescriptorValue is null || characteristicDescriptorValueLength != characteristicDescriptorValue.Length)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(serviceHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(characteristicHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(characteristicDescriptorHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueOffset).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = characteristicDescriptorValueLength;
+            ptr += 1;
+            characteristicDescriptorValue.CopyTo(command, ptr);
+            ptr += characteristicDescriptorValueLength;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x129,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// Reads the value of the attribute handle specified from the local GATT database.
+        /// </summary>
+        /// <param name="attributeHandle">Handle of the attribute to read.</param>
+        /// <param name="offset">Offset from which the value needs to be read.</param>
+        /// <param name="valueLengthRequested">Maximum number of octets to be returned as
+        /// attribute value</param>
+        /// <param name="length">Length of the attribute value.</param>
+        /// <param name="valueLength">Length in octets of the Value parameter.</param>
+        /// <param name="value">Attribute value.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentNullException"><see cref="value"/> has to be instantiated.</exception>
         public BleStatus ReadHandleValue(
             ushort attributeHandle,
             ushort offset,
@@ -1061,9 +1697,69 @@ namespace Iot.Device.BlueNrg2.Aci
             ref ushort valueLength,
             ref byte[] value)
         {
-            throw new NotImplementedException();
+            if (value is null)
+                throw new ArgumentNullException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(offset).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueLengthRequested).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 128;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x12a,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            ptr = 1;
+            length = BitConverter.ToUInt16(response, ptr);
+            ptr += 2;
+            valueLength = BitConverter.ToUInt16(response, ptr);
+            ptr += 2;
+            Array.Copy(response, ptr, value, 0, valueLength);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is a more flexible version of <see cref="UpdateCharacteristicValue"/> to support update of
+        /// long attribute up to 512 bytes and indicate selectively the generation
+        /// of Indication/Notification.
+        /// </summary>
+        /// <param name="connectionHandleToNotify">Connection handle to notify. Notify all
+        /// subscribed clients if equal to 0x0000: DEPRECATED feature (still
+        /// supported but not recommended).</param>
+        /// <param name="serviceHandle">Handle of service to which the characteristic belongs.</param>
+        /// <param name="characteristicHandle">Handle of the characteristic.</param>
+        /// <param name="updateType">Allow Notification or Indication generation, if enabled in
+        /// the client characteristic configuration descriptor. If bit 3 is set,
+        /// standard BLE Link Layer retransmission mechanism for notifications
+        /// PDUs si disabled: PDUs will be transmitted only once, even if they
+        /// have not been acknowledged.</param>
+        /// <param name="charLength">Total length of the characteristic value. In case of a
+        /// variable size characteristic, this field specifies the new length of
+        /// the characteristic value after the update; in case of fixed length
+        /// characteristic this field is ignored.</param>
+        /// <param name="valueOffset">The offset from which the attribute value has to be updated.</param>
+        /// <param name="valueLength">Length of the Value parameter in octets.</param>
+        /// <param name="value">Updated characteristic value.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="value"/> should have the length indicated by <see cref="valueLength"/></exception>
         public BleStatus UpdateCharacteristicValueExtended(
             ushort connectionHandleToNotify,
             ushort serviceHandle,
@@ -1074,7 +1770,45 @@ namespace Iot.Device.BlueNrg2.Aci
             byte valueLength,
             byte[] value)
         {
-            throw new NotImplementedException();
+            if (value is null || value.Length != valueLength)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            BitConverter.GetBytes(connectionHandleToNotify).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(serviceHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(characteristicHandle).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)updateType;
+            ptr += 1;
+            BitConverter.GetBytes(charLength).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(valueOffset).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = valueLength;
+            ptr += 1;
+            value.CopyTo(command, ptr);
+            ptr += valueLength;
+
+            const uint responseLength = 128;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x12c,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         /// <summary>
@@ -1103,7 +1837,7 @@ namespace Iot.Device.BlueNrg2.Aci
 
             BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) errorCode;
+            command[ptr] = (byte)errorCode;
             ptr += 1;
 
             var response = new byte[1];
@@ -1112,14 +1846,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x12d,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
 
@@ -1143,7 +1877,7 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr += 2;
             BitConverter.GetBytes(attributeHandle).CopyTo(command, ptr);
             ptr += 2;
-            command[ptr] = (byte) accessPermissions;
+            command[ptr] = (byte)accessPermissions;
             ptr += 1;
 
             var response = new byte[1];
@@ -1152,14 +1886,14 @@ namespace Iot.Device.BlueNrg2.Aci
                 OpCodeGroup = 0x3f,
                 OpCodeCommand = 0x12d,
                 CommandParameter = command,
-                CommandLength = (uint) ptr,
+                CommandLength = (uint)ptr,
                 ResponseParameter = response,
                 ResponseLength = 1
             };
             if (_transportLayer.SendRequest(ref rq, false) < 0)
                 return BleStatus.Timeout;
             if (response[0] != 0)
-                return (BleStatus) response[0];
+                return (BleStatus)response[0];
             return BleStatus.Success;
         }
     }
