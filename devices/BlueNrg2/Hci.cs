@@ -163,8 +163,10 @@ namespace Iot.Device.BlueNrg2
         /// <param name="type">Current or maximum transmit power level.</param>
         /// <param name="transmitPowerLevel">Size: 1 Octet (signed integer) Units: dBm</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus ReadTransmitPowerLevel(ushort connectionHandle, TransmitPowerLevelType type, ref int transmitPowerLevel)
+        public BleStatus ReadTransmitPowerLevel(ushort connectionHandle, TransmitPowerLevelType type, out sbyte transmitPowerLevel)
         {
+            transmitPowerLevel = 0;
+
             var command = new byte[3];
             BitConverter.GetBytes(connectionHandle).CopyTo(command, 0);
             command[2] = (byte)type;
@@ -183,7 +185,7 @@ namespace Iot.Device.BlueNrg2
                 return BleStatus.Timeout;
             if (response[0] != 0)
                 return (BleStatus)response[0];
-            transmitPowerLevel = response[3];
+            transmitPowerLevel = (sbyte)response[3];
             return BleStatus.Success;
         }
 
@@ -203,12 +205,18 @@ namespace Iot.Device.BlueNrg2
         /// <param name="palSubVersion">Subversion of the Current LMP or PAL in the Controller. This value is implementation dependent.</param>
         /// <returns>Value indicating success or error code.</returns>
         public BleStatus ReadLocalVersionInformation(
-            ref byte version,
-            ref ushort revision,
-            ref byte palVersion,
-            ref ushort manufacturerName,
-            ref ushort palSubVersion)
+            out byte version,
+            out ushort revision,
+            out byte palVersion,
+            out ushort manufacturerName,
+            out ushort palSubVersion)
         {
+            version = 0;
+            revision = 0;
+            palVersion = 0;
+            manufacturerName = 0;
+            palSubVersion = 0;
+
             var response = new byte[9];
             var rq = new Request
             {
@@ -243,10 +251,10 @@ namespace Iot.Device.BlueNrg2
         /// commands shall be set to 0.</param>
         /// <returns>Value indicating success or error code.</returns>
         /// <exception cref="ArgumentException"><see cref="supportedCommands"/> has to have a length of 64.</exception>
-        public BleStatus ReadLocalSupportedCommands(ref byte[] supportedCommands)
+        public BleStatus ReadLocalSupportedCommands(out byte[] supportedCommands)
         {
-            if (supportedCommands is null || supportedCommands.Length != 64)
-                throw new ArgumentException();
+            supportedCommands = null;
+
             var response = new byte[65];
             var rq = new Request
             {
@@ -260,6 +268,9 @@ namespace Iot.Device.BlueNrg2
                 return BleStatus.Timeout;
             if (response[0] != 0)
                 return (BleStatus)response[0];
+
+            supportedCommands = new byte[64];
+
             Array.Copy(response, 1, supportedCommands, 0, 64);
             return BleStatus.Success;
         }
@@ -272,8 +283,10 @@ namespace Iot.Device.BlueNrg2
         /// </summary>
         /// <param name="features">Bit Mask List of LMP features.</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus ReadLocalSupportedFeatures(ref ulong features)
+        public BleStatus ReadLocalSupportedFeatures(out ulong features)
         {
+            features = 0;
+
             var response = new byte[9];
             var rq = new Request
             {
@@ -302,10 +315,10 @@ namespace Iot.Device.BlueNrg2
         /// <param name="address">Bluetooth device address of the device.</param>
         /// <returns>Value indicating success or error code.</returns>
         /// <exception cref="ArgumentException"><see cref="address"/> has to have a length of 6.</exception>
-        public BleStatus ReadBluetoothDeviceAddress(ref byte[] address)
+        public BleStatus ReadBluetoothDeviceAddress(out byte[] address)
         {
-            if (address is null || address.Length != 6)
-                throw new ArgumentException();
+            address = null;
+
             var response = new byte[7];
             var rq = new Request
             {
@@ -319,7 +332,10 @@ namespace Iot.Device.BlueNrg2
                 return BleStatus.Timeout;
             if (response[0] != 0)
                 return (BleStatus)response[0];
+
+            address = new byte[6];
             Array.Copy(response, 1, address, 0, 6);
+
             return BleStatus.Success;
         }
 
@@ -335,8 +351,10 @@ namespace Iot.Device.BlueNrg2
         /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
         /// <param name="rssi">N Size: 1 Octet (signed integer) Units: dBm</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus ReadRssi(ushort connectionHandle, ref sbyte rssi)
+        public BleStatus ReadRssi(ushort connectionHandle, out sbyte rssi)
         {
+            rssi = 0;
+
             var response = new byte[4];
             var rq = new Request
             {
@@ -422,8 +440,11 @@ namespace Iot.Device.BlueNrg2
         /// 0x01 - 0xFF Total number of HCI ACL Data Packets that can be stored in the data buffers of the Controller.
         /// </param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus LeReadBufferSize(ref ushort packetLength, ref byte packetCount)
+        public BleStatus LeReadBufferSize(out ushort packetLength, out byte packetCount)
         {
+            packetLength = 0;
+            packetCount = 0;
+
             var response = new byte[4];
             var rq = new Request
             {
@@ -448,8 +469,10 @@ namespace Iot.Device.BlueNrg2
         /// <param name="features">Bit Mask List of LE features. See Core v4.1, Vol. 6,
         /// Part B, Section 4.6.</param>
         /// <returns>Value indicating success or error code.</returns>
-        public BleStatus LeReadLocalSupportedFeatures(ref ulong features)
+        public BleStatus LeReadLocalSupportedFeatures(out ulong features)
         {
+            features = 0;
+
             var response = new byte[9];
             var rq = new Request
             {
@@ -598,7 +621,7 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
-        public BleStatus LeReadAdvertisingChannelTxPower(ref sbyte transmitPowerLevel)
+        public BleStatus LeReadAdvertisingChannelTxPower(out sbyte transmitPowerLevel)
         {
             throw new NotImplementedException();
         }
@@ -972,7 +995,7 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
-        public BleStatus LeReadWhitelistSize(ref byte whiteListSize)
+        public BleStatus LeReadWhitelistSize(out byte whiteListSize)
         {
             throw new NotImplementedException();
         }
@@ -1029,12 +1052,12 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
-        public BleStatus LeEncrypt(byte[] key, byte[] plaintextData, ref byte[] encryptedData)
+        public BleStatus LeEncrypt(byte[] key, byte[] plaintextData, out byte[] encryptedData)
         {
             throw new NotImplementedException();
         }
 
-        public BleStatus LeRandom(ref byte[] randomNumber)
+        public BleStatus LeRandom(out byte[] randomNumber)
         {
             throw new NotImplementedException();
         }
@@ -1054,7 +1077,7 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
-        public BleStatus LeReadSupportedStates(ref byte[] states)
+        public BleStatus LeReadSupportedStates(out byte[] states)
         {
             throw new NotImplementedException();
         }
@@ -1069,7 +1092,7 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
-        public BleStatus LeTestEnd(ref ushort numberOfPackets)
+        public BleStatus LeTestEnd(out ushort numberOfPackets)
         {
             throw new NotImplementedException();
         }
@@ -1079,7 +1102,7 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
-        public BleStatus LeReadSuggestedDefaultDataLength(ref ushort suggestedMaximumTransmissionOctets, ref ushort suggestedMaxTransmissionTime)
+        public BleStatus LeReadSuggestedDefaultDataLength(out ushort suggestedMaximumTransmissionOctets, out ushort suggestedMaxTransmissionTime)
         {
             throw new NotImplementedException();
         }
@@ -1114,12 +1137,12 @@ namespace Iot.Device.BlueNrg2
             throw new NotImplementedException();
         }
 
-        public BleStatus LeReadResolvingListSize(ref byte resolvingListSize)
+        public BleStatus LeReadResolvingListSize(out byte resolvingListSize)
         {
             throw new NotImplementedException();
         }
 
-        public BleStatus LeReadPeerResolvableAddress(AddressType peerIdentityAddressType, byte[] peerIdentityAddress, ref byte[] peerResolvableAddress)
+        public BleStatus LeReadPeerResolvableAddress(AddressType peerIdentityAddressType, byte[] peerIdentityAddress, out byte[] peerResolvableAddress)
         {
             throw new NotImplementedException();
         }
@@ -1127,7 +1150,7 @@ namespace Iot.Device.BlueNrg2
         public BleStatus LeReadLocalResolvableAddress(
             AddressType peerIdentityAddressType,
             byte[] peerIdentityAddress,
-            ref byte[] localResolvableAddress)
+            out byte[] localResolvableAddress)
         {
             throw new NotImplementedException();
         }
@@ -1143,10 +1166,10 @@ namespace Iot.Device.BlueNrg2
         }
 
         public BleStatus LeReadMaximumDataLength(
-            ref ushort supportedMaximumOctets,
-            ref ushort supportedMaximumTransmissionTime,
-            ref ushort supportedMaximumReceivingOctets,
-            ref ushort supportedMaxReceivingTime)
+            out ushort supportedMaximumOctets,
+            out ushort supportedMaximumTransmissionTime,
+            out ushort supportedMaximumReceivingOctets,
+            out ushort supportedMaxReceivingTime)
         {
             throw new NotImplementedException();
         }

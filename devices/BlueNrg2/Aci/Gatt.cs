@@ -65,9 +65,11 @@ namespace Iot.Device.BlueNrg2.Aci
             byte[] serviceUuid,
             ServiceType serviceType,
             byte maximumAttributeRecords,
-            ref ushort serviceHandle
+            out ushort serviceHandle
         )
         {
+            serviceHandle = 0;
+
             var ptr = 0;
             var uuidSize = serviceUuidType switch
             {
@@ -124,9 +126,11 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort includeEndHandle,
             UuidType includeUuidType,
             byte[] includeUuid,
-            ref ushort includeHandle
+            out ushort includeHandle
         )
         {
+            includeHandle = 0;
+
             var uuidSize = includeUuidType == UuidType.Uuid16 ? 2 : 16;
 
             if (includeUuid is null || includeUuid.Length != uuidSize)
@@ -190,9 +194,11 @@ namespace Iot.Device.BlueNrg2.Aci
             CharacteristicEventMask characteristicEventMask,
             byte encryptionKeySize,
             bool hasVariableLength,
-            ref ushort characteristicHandle
+            out ushort characteristicHandle
         )
         {
+            characteristicHandle = 0;
+
             var uuidSize = characteristicUuidType == UuidType.Uuid16 ? 2 : 16;
 
             if (characteristicUuid is null || characteristicUuid.Length != uuidSize)
@@ -268,8 +274,10 @@ namespace Iot.Device.BlueNrg2.Aci
             CharacteristicEventMask characteristicEventMask,
             byte encryptionKeySize,
             bool hasVariableLength,
-            ref ushort characteristicDescriptorHandle)
+            out ushort characteristicDescriptorHandle)
         {
+            characteristicDescriptorHandle = 0;
+
             var uuidSize = characteristicDescriptorUuidType == UuidType.Uuid16 ? 2 : 16;
 
             if (characteristicDescriptorUuid is null || characteristicDescriptorUuid.Length != uuidSize)
@@ -1692,12 +1700,13 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort attributeHandle,
             ushort offset,
             ushort valueLengthRequested,
-            ref ushort length,
-            ref ushort valueLength,
-            ref byte[] value)
+            out ushort length,
+            out ushort valueLength,
+            out byte[] value)
         {
-            if (value is null)
-                throw new ArgumentNullException();
+            length = 0;
+            valueLength = 0;
+            value = null;
 
             var ptr = 0;
             var command = new byte[258];
@@ -1730,6 +1739,8 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr += 2;
             valueLength = BitConverter.ToUInt16(response, ptr);
             ptr += 2;
+
+            value = new byte[valueLength];
             Array.Copy(response, ptr, value, 0, valueLength);
 
             return BleStatus.Success;

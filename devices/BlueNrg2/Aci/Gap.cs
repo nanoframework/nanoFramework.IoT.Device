@@ -450,10 +450,14 @@ namespace Iot.Device.BlueNrg2.Aci
             Role role,
             bool enablePrivacy,
             byte deviceNameCharacteristicLength,
-            ref ushort serviceHandle,
-            ref ushort deviceNameCharacteristicHandle,
-            ref ushort appearanceCharacteristicHandle)
+            out ushort serviceHandle,
+            out ushort deviceNameCharacteristicHandle,
+            out ushort appearanceCharacteristicHandle)
         {
+            serviceHandle = 0;
+            deviceNameCharacteristicHandle = 0;
+            appearanceCharacteristicHandle = 0;
+
             var command = new byte[3];
             command[0] = (byte)role;
             command[1] = (byte)(enablePrivacy ? 0x01 : 0x00);
@@ -614,10 +618,13 @@ namespace Iot.Device.BlueNrg2.Aci
 
         public BleStatus GetSecurityLevel(
             ushort connectionHandle,
-            ref byte securityMode,
-            ref byte securityLevel
+            out byte securityMode,
+            out byte securityLevel
         )
         {
+            securityMode = 0;
+            securityLevel = 0;
+
             var ptr = 0;
             var command = new byte[2];
             BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
@@ -1215,13 +1222,12 @@ namespace Iot.Device.BlueNrg2.Aci
             return BleStatus.Success;
         }
 
-        public BleStatus ResolvePrivateAddress(byte[] address, ref byte[] actualAddress)
+        public BleStatus ResolvePrivateAddress(byte[] address, out byte[] actualAddress)
         {
             if (address is null || address.Length != 6)
                 throw new ArgumentException();
 
-            if (actualAddress is null)
-                throw new ArgumentNullException();
+            actualAddress = null;
 
             var ptr = 0;
             var command = new byte[258];
@@ -1243,7 +1249,11 @@ namespace Iot.Device.BlueNrg2.Aci
                 return BleStatus.Timeout;
             if (response[0] != 0)
                 return (BleStatus)response[0];
+
+            actualAddress = new byte[6];
+
             Array.Copy(response, 1, actualAddress, 0, 6);
+
             return BleStatus.Success;
         }
 
@@ -1350,12 +1360,12 @@ namespace Iot.Device.BlueNrg2.Aci
         }
 
         public BleStatus GetBondedDevices(
-            ref byte addressCount,
-            ref DeviceAddressEntry[] bondedDeviceAddresses
+            out byte addressCount,
+            out DeviceAddressEntry[] bondedDeviceAddresses
         )
         {
-            if (bondedDeviceAddresses is null)
-                throw new ArgumentNullException();
+            addressCount = 0;
+            bondedDeviceAddresses = null;
 
             const uint responseLength = 128;
             var response = new byte[responseLength];
@@ -1371,12 +1381,17 @@ namespace Iot.Device.BlueNrg2.Aci
             if (response[0] != 0)
                 return (BleStatus)response[0];
 
-            addressCount = response[1];
             var ptr = 1;
+            addressCount = response[ptr];
+            ptr += 1;
+
+            bondedDeviceAddresses = new DeviceAddressEntry[addressCount];
+
             for (int i = 0; i < addressCount; i++)
             {
                 bondedDeviceAddresses[i].AddressType = (AddressType)response[ptr];
                 ptr += 1;
+                bondedDeviceAddresses[i].Address = new byte[6];
                 Array.Copy(response, ptr, bondedDeviceAddresses[i].Address, 0, 6);
                 ptr += 6;
             }
@@ -1470,16 +1485,15 @@ namespace Iot.Device.BlueNrg2.Aci
 
         public BleStatus GetOobData(
             OobDataType oobDataType,
-            ref AddressType addressType,
-            ref byte[] address,
-            ref byte oobDataLength,
-            ref byte[] oobData)
+            out AddressType addressType,
+            out byte[] address,
+            out byte oobDataLength,
+            out byte[] oobData)
         {
-            if (address is null)
-                throw new ArgumentNullException(nameof(address));
-
-            if (oobData is null)
-                throw new ArgumentNullException(nameof(oobData));
+            addressType = 0;
+            address = null;
+            oobDataLength = 0;
+            oobData = null;
 
             var ptr = 0;
             var command = new byte[258];
@@ -1505,10 +1519,15 @@ namespace Iot.Device.BlueNrg2.Aci
             ptr = 1;
             addressType = (AddressType)response[ptr];
             ptr += 1;
+
+            address = new byte[6];
+
             Array.Copy(response, ptr, address, 0, 6);
             ptr += 6;
             oobDataLength = response[ptr];
             ptr += 1;
+
+            oobData = new byte[6];
             Array.Copy(response, ptr, oobData, 0, 16);
 
             return BleStatus.Success;

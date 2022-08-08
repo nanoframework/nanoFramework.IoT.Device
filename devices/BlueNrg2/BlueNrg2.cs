@@ -24,6 +24,11 @@ namespace Iot.Device.BlueNrg2
         private readonly bool _shouldDispose;
 
         /// <summary>
+        /// Contains all ATT commands.
+        /// </summary>
+        public readonly Att Att;
+
+        /// <summary>
         /// Contains all GAP commands.
         /// </summary>
         public readonly Gap Gap;
@@ -100,6 +105,7 @@ namespace Iot.Device.BlueNrg2
             );
             EventProcessor = new EventProcessor();
             var transportLayer = new TransportLayer(EventProcessor, _hardwareInterface);
+            Att = new Att(transportLayer);
             Hci = new Hci(transportLayer);
             Gap = new Gap(transportLayer);
             Gatt = new Gatt(transportLayer);

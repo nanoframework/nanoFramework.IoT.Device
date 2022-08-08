@@ -14,8 +14,10 @@ namespace Iot.Device.BlueNrg2.Aci
             _transportLayer = transportLayer;
         }
 
-        public BleStatus get_firmware_build_number(ref ushort buildNumber)
+        public BleStatus get_firmware_build_number(out ushort buildNumber)
         {
+            buildNumber = 0;
+
             const uint responseLength = 3;
             var response = new byte[responseLength];
             var rq = new Request
@@ -36,18 +38,30 @@ namespace Iot.Device.BlueNrg2.Aci
         }
 
         public BleStatus get_firmware_details(
-            ref byte versionMajor,
-            ref byte versionMinor,
-            ref byte versionPatch,
-            ref TransportLayerMode variant,
-            ref ushort buildNumber,
-            ref byte stackVersionMajor,
-            ref byte stackVersionMinor,
-            ref byte stackVersionPatch,
-            ref bool isDevelopment,
-            ref BleStackConfiguration stackVariant,
-            ref ushort stackBuildNumber)
+            out byte versionMajor,
+            out byte versionMinor,
+            out byte versionPatch,
+            out TransportLayerMode variant,
+            out ushort buildNumber,
+            out byte stackVersionMajor,
+            out byte stackVersionMinor,
+            out byte stackVersionPatch,
+            out bool isDevelopment,
+            out BleStackConfiguration stackVariant,
+            out ushort stackBuildNumber)
         {
+            versionMajor = 0;
+            versionMinor = 0;
+            versionPatch = 0;
+            variant = 0;
+            buildNumber = 0;
+            stackVersionMajor = 0;
+            stackVersionMinor = 0;
+            stackVersionPatch = 0;
+            isDevelopment = false;
+            stackVariant = 0;
+            stackBuildNumber = 0;
+
             const uint responseLength = 15;
             var response = new byte[responseLength];
             var rq = new Request
@@ -121,11 +135,12 @@ namespace Iot.Device.BlueNrg2.Aci
 
         public BleStatus ReadConfigData(
             Offset offset,
-            ref byte dataLength,
-            ref byte[] data)
+            out byte dataLength,
+            out byte[] data)
         {
-            if (data is null)
-                throw new ArgumentNullException($"{nameof(data)} cannot be null");
+            dataLength = 0;
+            data = null;
+
             var command = new byte[1];
             command[0] = (byte)offset;
 
@@ -144,6 +159,7 @@ namespace Iot.Device.BlueNrg2.Aci
             if ((BleStatus)response[0] != BleStatus.Success)
                 return (BleStatus)response[0];
             dataLength = response[1];
+            data = new byte[dataLength];
             Array.Copy(response, 2, data, 0, dataLength);
             return BleStatus.Success;
         }
@@ -171,8 +187,10 @@ namespace Iot.Device.BlueNrg2.Aci
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
-        public BleStatus LeTransmitterTestPacketNumber(ref uint numberOfPackets)
+        public BleStatus LeTransmitterTestPacketNumber(out uint numberOfPackets)
         {
+            numberOfPackets = 0;
+
             const uint responseLength = 5;
             var response = new byte[responseLength];
             var rq = new Request
@@ -241,14 +259,11 @@ namespace Iot.Device.BlueNrg2.Aci
         }
 
         public BleStatus GetLinkStatus(
-            ref byte[] linkStatus,
-            ref ushort[] linkConnectionHandle)
+            out byte[] linkStatus,
+            out ushort[] linkConnectionHandle)
         {
-            if (linkStatus is null)
-                throw new ArgumentNullException(nameof(linkStatus));
-
-            if (linkConnectionHandle is null)
-                throw new ArgumentNullException(nameof(linkConnectionHandle));
+            linkStatus = null;
+            linkConnectionHandle = null;
 
             const uint responseLength = 25;
             var response = new byte[responseLength];
@@ -263,6 +278,9 @@ namespace Iot.Device.BlueNrg2.Aci
                 return BleStatus.Timeout;
             if (response[0] != 0)
                 return (BleStatus)response[0];
+
+            linkStatus = new byte[8];
+            linkConnectionHandle = new ushort[8];
 
             var ptr = 1;
             Array.Copy(response, ptr, linkStatus, 0, 8);
@@ -302,9 +320,12 @@ namespace Iot.Device.BlueNrg2.Aci
         }
 
         public BleStatus GetAnchorPeriod(
-            ref uint anchorPeriod,
-            ref uint maximumFreeSlot)
+            out uint anchorPeriod,
+            out uint maximumFreeSlot)
         {
+            anchorPeriod = 0;
+            maximumFreeSlot = 0;
+
             const uint responseLength = 9;
             var response = new byte[responseLength];
             var rq = new Request
@@ -389,8 +410,10 @@ namespace Iot.Device.BlueNrg2.Aci
             return BleStatus.Success;
         }
 
-        public BleStatus GetUpdaterVersion(ref byte version)
+        public BleStatus GetUpdaterVersion(out byte version)
         {
+            version = 0;
+
             const uint responseLength = 2;
             var response = new byte[responseLength];
             var rq = new Request
@@ -411,8 +434,10 @@ namespace Iot.Device.BlueNrg2.Aci
             return BleStatus.Success;
         }
 
-        public BleStatus GetUpdaterBufferSize(ref byte bufferSize)
+        public BleStatus GetUpdaterBufferSize(out byte bufferSize)
         {
+            bufferSize = 0;
+
             const uint responseLength = 2;
             var response = new byte[responseLength];
             var rq = new Request
@@ -534,10 +559,9 @@ namespace Iot.Device.BlueNrg2.Aci
         public BleStatus updater_read_Data_Block(
             uint address,
             ushort dataLength,
-            ref byte[] data)
+            out byte[] data)
         {
-            if (data is null || data.Length != dataLength)
-                throw new ArgumentException();
+            data = null;
 
             var ptr = 0;
             var command = new byte[258];
@@ -563,6 +587,8 @@ namespace Iot.Device.BlueNrg2.Aci
             if (response[0] != 0)
                 return (BleStatus)response[0];
 
+            data = new byte[dataLength];
+
             Array.Copy(response, 1, data, 0, dataLength);
 
             return BleStatus.Success;
@@ -571,8 +597,10 @@ namespace Iot.Device.BlueNrg2.Aci
         public BleStatus updater_CalculateCrc(
             uint address,
             byte numberOfSectors,
-            ref uint crc)
+            out uint crc)
         {
+            crc = 0;
+
             var ptr = 0;
             var command = new byte[258];
 
@@ -602,8 +630,10 @@ namespace Iot.Device.BlueNrg2.Aci
             return BleStatus.Success;
         }
 
-        public BleStatus updater_hw_version(ref byte hwVersion)
+        public BleStatus updater_hw_version(out byte hwVersion)
         {
+            hwVersion = 0;
+
             const uint responseLength = 2;
             var response = new byte[responseLength];
             var rq = new Request
