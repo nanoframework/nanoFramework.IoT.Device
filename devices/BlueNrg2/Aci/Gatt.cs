@@ -401,7 +401,6 @@ namespace Iot.Device.BlueNrg2.Aci
         /// <param name="serviceHandle">Handle of service to which the characteristic belongs.</param>
         /// <param name="characteristicHandle">Handle of the characteristic which has to be deleted.</param>
         /// <returns>Value indicating success or error code.</returns>
-        /// <exception cref="NotImplementedException"></exception>
         public BleStatus DeleteCharacteristic(ushort serviceHandle, ushort characteristicHandle)
         {
             var ptr = 0;

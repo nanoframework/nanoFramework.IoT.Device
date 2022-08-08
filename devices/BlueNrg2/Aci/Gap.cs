@@ -51,12 +51,20 @@ namespace Iot.Device.BlueNrg2.Aci
         /// 31 bytes. With this command, the BLE Stack will also add automatically
         /// the following standard AD types: - AD Flags - Power Level When
         /// advertising timeout happens (i.e. limited discovery period has
-        /// elapsed), controller generates <see cref="E:BlueNrg2.Events.GapLimitedDiscoverableEvent" /> event
+        /// elapsed), controller generates <see cref="E:BlueNrg2.Events.GapLimitedDiscoverableEvent"/> event
         /// </summary>
         /// <param name="advertisingType">Advertising type.</param>
-        /// <param name="minimumAdvertisingInterval"></param>
-        /// <param name="maximumAdvertisingInterval"></param>
-        /// <param name="ownAddressType"></param>
+        /// <param name="minimumAdvertisingInterval">Minimum advertising interval for undirected
+        /// and low duty cycle directed advertising. Time = N * 0.625 ms.</param>
+        /// <param name="maximumAdvertisingInterval">Maximum advertising interval. Time = N * 0.625 ms.</param>
+        /// <param name="ownAddressType">Own address type:
+        /// <list type="bullet">
+        /// <item>0x00: Public Device Address (it is allowed only if privacy is disabled)</item>
+        /// <item>0x01: Random Device Address (it is allowed only if privacy is disabled)</item>
+        /// <item>0x02: Resolvable Private Address (it is allowed only if privacy is enabled)</item>
+        /// <item>0x03: Non Resolvable Private Address (it is allowed only if privacy is enabled)</item>
+        /// </list>
+        /// </param>
         /// <param name="advertisingFilterPolicy">
         /// Advertising filter policy: not applicable
         /// (the value of the <paramref name="advertisingFilterPolicy" /> parameter is not used inside the Stack)
@@ -79,9 +87,22 @@ namespace Iot.Device.BlueNrg2.Aci
         /// 3, Section 11 of GAP Specification. First byte is the AD Type. See
         /// also Supplement to the Bluetooth Core specification.
         /// </param>
-        /// <param name="minimumSlaveConnectionInterval"></param>
-        /// <param name="maximumSlaveConnectionInterval"></param>
+        /// <param name="minimumSlaveConnectionInterval">Minimum value for slave connection interval
+        /// suggested by the Peripheral. If <see cref="minimumSlaveConnectionInterval"/> and
+        /// <see cref="maximumSlaveConnectionInterval"/> are not 0x0000, Slave Connection Interval
+        /// Range AD structure will be added in advertising data. Connection
+        /// interval is defined in the following manner:
+        /// <code>minimum connection interval = <see cref="minimumSlaveConnectionInterval"/> x 1.25ms.</code>
+        /// </param>
+        /// <param name="maximumSlaveConnectionInterval">Slave connection interval maximum value
+        /// suggested by Peripheral. If <see cref="minimumSlaveConnectionInterval"/> and
+        /// <see cref="maximumSlaveConnectionInterval"/> are not 0x0000, Slave Connection Interval
+        /// Range AD structure will be added in advertising data. Connection
+        /// interval is defined in the following manner:
+        /// <code>maximum connection interval = <see cref="maximumSlaveConnectionInterval"/> x 1.25ms</code>
+        /// </param>
         /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"><see cref="localName"/> or <see cref="serviceUuidList"/> is of incorrect length.</exception>
         public BleStatus SetLimitedDiscoverable(
             AdvertisingType advertisingType,
             ushort minimumAdvertisingInterval,
@@ -95,7 +116,55 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort minimumSlaveConnectionInterval,
             ushort maximumSlaveConnectionInterval)
         {
-            throw new NotImplementedException();
+            if (localName is null || localName.Length != localNameLength)
+                throw new ArgumentException(nameof(localName));
+
+            if (serviceUuidList is null || serviceUuidList.Length != serviceUuidLength)
+                throw new ArgumentException(nameof(serviceUuidList));
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)advertisingType;
+            ptr += 1;
+            BitConverter.GetBytes(minimumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            command[ptr] = (byte)ownAddressType;
+            ptr += 1;
+            command[ptr] = advertisingFilterPolicy;
+            ptr += 1;
+            command[ptr] = localNameLength;
+            ptr += 1;
+            localName.CopyTo(command, ptr);
+            ptr += localNameLength;
+            command[ptr] = serviceUuidLength;
+            ptr += 1;
+            serviceUuidList.CopyTo(command, ptr);
+            ptr += serviceUuidLength;
+            BitConverter.GetBytes(minimumSlaveConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumSlaveConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x082,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         /// <summary>
@@ -219,7 +288,42 @@ namespace Iot.Device.BlueNrg2.Aci
             ushort maximumAdvertisingInterval
         )
         {
-            throw new NotImplementedException();
+            if (directAddress is null || directAddress.Length != 6)
+                throw new ArgumentException();
+
+            var ptr = 0;
+            var command = new byte[258];
+            command[ptr] = (byte)addressType;
+            ptr += 1;
+            command[ptr] = (byte)directedAdvertisingType;
+            ptr += 1;
+            command[ptr] = (byte)directAddressType;
+            ptr += 1;
+            directAddress.CopyTo(command, ptr);
+            ptr += 6;
+            BitConverter.GetBytes(minimumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumAdvertisingInterval).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x3f,
+                OpCodeCommand = 0x082,
+                Event = 0x0F,
+                CommandParameter = command,
+                CommandLength = (uint)ptr,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
         public BleStatus SetIoCapability(IoCapability ioCapability)
