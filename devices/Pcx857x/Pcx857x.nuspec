@@ -17,7 +17,7 @@
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.Pcx857x for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Pca95x4 assembly for .NET nanoFramework C# projects</summary>
+    <summary>Iot.Device.Pcx857x assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Pcx857x</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
@@ -28,11 +28,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Pcx857x.dll" target="lib\Iot.Device.Pca95x4.dll" />
-    <file src="bin\Release\Iot.Device.Pcx857x.pdb" target="lib\Iot.Device.Pca95x4.pdb" />
-    <file src="bin\Release\Iot.Device.Pcx857x.pdbx" target="lib\Iot.Device.Pca95x4.pdbx" />
-    <file src="bin\Release\Iot.Device.Pcx857x.pe" target="lib\Iot.Device.Pca95x4.pe" />
-    <file src="bin\Release\Iot.Device.Pcx857x.xml" target="lib\Iot.Device.Pca95x4.xml" />
+    <file src="bin\Release\Iot.Device.Pcx857x.dll" target="lib\Iot.Device.Pcx857x.dll" />
+    <file src="bin\Release\Iot.Device.Pcx857x.pdb" target="lib\Iot.Device.Pcx857x.pdb" />
+    <file src="bin\Release\Iot.Device.Pcx857x.pdbx" target="lib\Iot.Device.Pcx857x.pdbx" />
+    <file src="bin\Release\Iot.Device.Pcx857x.pe" target="lib\Iot.Device.Pcx857x.pe" />
+    <file src="bin\Release\Iot.Device.Pcx857x.xml" target="lib\Iot.Device.Pcx857x.xml" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
