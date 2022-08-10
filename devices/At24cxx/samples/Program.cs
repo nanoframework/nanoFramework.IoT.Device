@@ -13,10 +13,10 @@ Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
 
 // Setup At24c32c device.
-int deviceAddress = 0x57;
+int deviceAddress = At24c32.DefaultI2cAddress;
 I2cConnectionSettings settings = new I2cConnectionSettings(1, deviceAddress);
 I2cDevice i2cDevice = new I2cDevice(settings);
-At24c32c eeprom = new At24c32c(i2cDevice);
+At24c32 eeprom = new At24c32(i2cDevice);
 
 // Write string to device.
 string message = "Hello from nanoFramework!";

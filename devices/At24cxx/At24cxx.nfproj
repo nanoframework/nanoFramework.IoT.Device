@@ -15,7 +15,7 @@
     <RootNamespace>Iot.Device.At24cxx</RootNamespace>
     <AssemblyName>Iot.Device.At24cxx</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-	<DocumentationFile>bin\$(Configuration)\Iot.Device.At24cxx.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.At24cxx.xml</DocumentationFile>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup>
@@ -30,10 +30,12 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
     <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="At24Base.cs" />
+    <Compile Include="At24c128.cs" />
+    <Compile Include="At24c256.cs" />
+    <Compile Include="At24c32.cs" />
+    <Compile Include="At24c64.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
   </ItemGroup>

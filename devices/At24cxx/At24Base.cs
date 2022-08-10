@@ -14,7 +14,7 @@ namespace Iot.Device.At24cxx
         /// <summary>
         /// Default I2C address for At24cxx familly.
         /// </summary>
-        public const byte DefaultI2cAddress = 0x50; // 01010000
+        public const byte DefaultI2cAddress = 0x50;
 
         /// <summary>
         /// Underlying I2C device.
@@ -37,43 +37,13 @@ namespace Iot.Device.At24cxx
         public int Size { get; private set; }
 
         /// <summary>
-        /// Helper function to create a buffer with the first two bytes already populated by the device address.
-        /// </summary>
-        /// <param name="address">The device address.</param>
-        /// <param name="length">The length of data the buffer is required to hold.</param>
-        /// <returns>A buffer with the first two bytes populated with the device address.</returns>
-        private static byte[] CreateWriteBuffer(int address, int length)
-        {
-            // Create buffer with an additional two bytes to hold the address.
-            byte[] buffer = new byte[length + 2];
-
-            // Store the address in the first two bytes.
-            buffer[0] = (byte)((address >> 8) & 0xFF);
-            buffer[1] = (byte)(address & 0xFF);
-
-            return buffer;
-        }
-
-        /// <summary>
-        /// Helper function to verify a memory address falls inside the accessible memory range for a At24c device.
-        /// </summary>
-        /// <param name="address">The memory address.</param>
-        /// <param name="availableMemory">The amount of memory available on the device.</param>
-        private static void VerifyMemoryAddress(int address, int availableMemory)
-        {
-            if (address < 0 || address > (availableMemory - 1))
-            {
-                throw new ArgumentOutOfRangeException(nameof(address), "Address must be within addressable memory range.");
-            }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="At24Base" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device to use for communication.</param>
         /// <param name="pageSize">The device page size in bytes.</param>
         /// <param name="pageCount">The number of pages on the device.</param>
-        public At24Base(I2cDevice i2cDevice, ushort pageSize, ushort pageCount)
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is null.</exception>
+        internal At24Base(I2cDevice i2cDevice, ushort pageSize, ushort pageCount)
         {
             if (i2cDevice == null)
             {
@@ -84,6 +54,36 @@ namespace Iot.Device.At24cxx
             PageSize = pageSize;
             PageCount = pageCount;
             Size = pageSize * pageCount;
+        }
+
+        /// <summary>
+        /// Helper function to create a buffer populated with the device address.
+        /// </summary>
+        /// <param name="address">The device address.</param>
+        /// <param name="dataLength">The length of data the buffer is required to hold.</param>
+        /// <returns>A buffer populated with the device address.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the addressable range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when length of data to be written exceeds the page size for this device.</exception>
+        protected byte[] CreateWriteBuffer(int address, int dataLength)
+        {
+            if (address < 0 || address > (Size - 1))
+            {
+                throw new ArgumentOutOfRangeException(nameof(address));
+            }
+
+            if (dataLength > PageSize)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dataLength));
+            }
+
+            // Create buffer with an additional two bytes to hold the address.
+            byte[] buffer = new byte[dataLength + 2];
+
+            // At24cxx requires the memory address in the first two bytes preceding data.
+            buffer[0] = (byte)((address >> 8) & 0xFF);
+            buffer[1] = (byte)(address & 0xFF);
+
+            return buffer;
         }
 
         /// <summary>
@@ -100,13 +100,11 @@ namespace Iot.Device.At24cxx
         /// </summary>
         /// <param name="address">The address to read from.</param>
         /// <returns>The byte read from the device.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the accessible range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the addressable range for this device.</exception>
         public byte ReadByte(int address)
         {
-            VerifyMemoryAddress(address, Size);
-
-            byte[] readBuffer = new byte[1];
             byte[] writeBuffer = CreateWriteBuffer(address, 0);
+            byte[] readBuffer = new byte[1];
 
             _i2cDevice.WriteRead(writeBuffer, readBuffer);
 
@@ -119,13 +117,11 @@ namespace Iot.Device.At24cxx
         /// <param name="address">The address to read from.</param>
         /// <param name="length">The number of bytes to read.</param>
         /// <returns>The bytes read from the device.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the accessible range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the addressable range for this device.</exception>
         public byte[] Read(int address, int length)
         {
-            VerifyMemoryAddress(address, Size);
-
-            byte[] readBuffer = new byte[length];
             byte[] writeBuffer = CreateWriteBuffer(address, 0);
+            byte[] readBuffer = new byte[length];
 
             _i2cDevice.WriteRead(writeBuffer, readBuffer);
 
@@ -138,11 +134,9 @@ namespace Iot.Device.At24cxx
         /// <param name="address">The address to write to.</param>
         /// <param name="value">The byte to be written into the device.</param>
         /// <returns>The number of bytes successfully written to the device.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the accessible range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the addressable range for this device.</exception>
         public uint WriteByte(int address, byte value)
         {
-            VerifyMemoryAddress(address, Size);
-
             byte[] writeBuffer = CreateWriteBuffer(address, 1);
             writeBuffer[2] = value;
 
@@ -158,16 +152,10 @@ namespace Iot.Device.At24cxx
         /// <param name="address">The address to write to.</param>
         /// <param name="data">The bytes to be written to the device.</param>
         /// <returns>The number of bytes successfully written to the device.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the accessible range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the addressable range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when length of data to be written exceeds the page size for this device.</exception>
         public uint Write(int address, byte[] data)
         {
-            VerifyMemoryAddress(address, Size);
-
-            if (data.Length > PageSize)
-            {
-                throw new ArgumentOutOfRangeException(nameof(data), "Length of data to be written cannot exceed device page size.");
-            }
-
             byte[] writeBuffer = CreateWriteBuffer(address, data.Length);
             data.CopyTo(writeBuffer, 2);
 
