@@ -1,6 +1,6 @@
 # At24cxx - I2C EEPROM read/write
 
-This binding is used used to read and write data via I2C from the external EEPROM memory.
+This binding is used to read and write data via I2C from the external EEPROM memory.
 
 ## Documentation
 
