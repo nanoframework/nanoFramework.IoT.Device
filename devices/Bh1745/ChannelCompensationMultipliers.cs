@@ -9,12 +9,12 @@ namespace Iot.Device.Bh1745
     public class ChannelCompensationMultipliers
     {
         /// <summary>
-        /// Constructor for ChannelCompensationMultipliers
+        /// Initializes a new instance of the <see cref="ChannelCompensationMultipliers" /> class.
         /// </summary>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
-        /// <param name="clear"></param>
+        /// <param name="red">Red value.</param>
+        /// <param name="green">Green value.</param>
+        /// <param name="blue">Blue value.</param>
+        /// <param name="clear">Clear value.</param>
         public ChannelCompensationMultipliers(double red, double green, double blue, double clear)
         {
             Red = red;
@@ -24,22 +24,22 @@ namespace Iot.Device.Bh1745
         }
 
         /// <summary>
-        /// Red
+        /// Gets red color value.
         /// </summary>
         public double Red { get; }
 
         /// <summary>
-        /// Green
+        /// Gets green color value.
         /// </summary>
         public double Green { get; }
 
         /// <summary>
-        /// Blue
+        /// Gets blue color value.
         /// </summary>
         public double Blue { get; }
 
         /// <summary>
-        /// Clear
+        /// Gets clear value.
         /// </summary>
         public double Clear { get; }
     }

@@ -14,44 +14,44 @@ namespace Iot.Device.Bno055
     ///   Y axis     / *   | /    /|
     ///   _________ /______|/    //
     ///            /___________ //
-    ///            |____________|/
+    ///            |____________|/.
     /// </summary>
     public enum AxisMap
     {
-        /// <summary>X coordinate</summary>
+        /// <summary>X coordinate.</summary>
         X = 0x00,
 
-        /// <summary>Y coordinate</summary>
+        /// <summary>Y coordinate.</summary>
         Y = 0x01,
 
-        /// <summary>Z coordinate</summary>
+        /// <summary>Z coordinate.</summary>
         Z = 0x02,
     }
 
     /// <summary>
-    /// Axis signs
+    /// Axis signs.
     /// </summary>
     public enum AxisSign
     {
-        /// <summary>Positive axis sign</summary>
+        /// <summary>Positive axis sign.</summary>
         Positive = 0x00,
 
-        /// <summary>Negative axis sign</summary>
+        /// <summary>Negative axis sign.</summary>
         Negative = 0x01,
     }
 
     /// <summary>
-    /// Axis setting for a specific axis
+    /// Axis setting for a specific axis.
     /// </summary>
     public class AxisSetting
     {
         /// <summary>
-        /// Axis map
+        /// Gets or sets axis map.
         /// </summary>
         public AxisMap Axis { get; set; }
 
         /// <summary>
-        /// Axis sign
+        /// Gets or sets axis sign.
         /// </summary>
         public AxisSign Sign { get; set; }
     }
