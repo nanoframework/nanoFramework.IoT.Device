@@ -44,16 +44,16 @@
       <HintPath>..\packages\nanoFramework.System.Device.Model.1.1.113.2032\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricCurrent, Version=4.143.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.4.143.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricCurrent, Version=4.144.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.4.144.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential, Version=4.143.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.143.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotential, Version=4.144.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.144.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Power, Version=4.143.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Power.4.143.0\lib\UnitsNet.Power.dll</HintPath>
+    <Reference Include="UnitsNet.Power, Version=4.144.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Power.4.144.0\lib\UnitsNet.Power.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <!-- INSERT NEW REFERENCES HERE -->

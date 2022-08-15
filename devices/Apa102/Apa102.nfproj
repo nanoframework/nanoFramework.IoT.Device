@@ -49,8 +49,8 @@
       <HintPath>packages\nanoFramework.System.Drawing.1.1.113.2032\lib\System.Drawing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=4.143.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.143.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=4.144.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.4.144.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
