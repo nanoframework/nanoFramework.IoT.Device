@@ -22,10 +22,10 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.1" />
       <dependency id="nanoFramework.System.Math" version="1.4.4" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.143.0" />
-      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.143.0" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.143.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.143.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.144.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.144.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.144.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.144.0" />
     </dependencies>
   </metadata>
   <files>
