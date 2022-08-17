@@ -1,71 +1,75 @@
-# Mcp7940xx - 1-Wire Digital Thermometer with Programmable Resolution
+# Mcp7940xx - I2C Real-Time Clock/Calendar with SRAM
 
-The Mcp7940xx digital thermometer provides 9-bit to 12-bit temperature measurements in Celsius and has an alarm function with nonvolatile user-programmable upper and lower trigger points.
+The MCP7940M Real-Time Clock/Calendar (RTCC) tracks time using internal counters for hours, minutes, seconds, days, months, years, and day of week. Alarms can be configured on all counters up to and including months.
 
 ## Documentation
 
-[Datasheet](https://datasheets.maximintegrated.com/en/ds/Mcp7940xx.pdf)
+[Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/MCP7940M-Low-Cost%20I2C-RTCC-with-SRAM-20002292C.pdf)
 
 Original code was written for ESP32
 
 ## Usage
 
 ```csharp
-using Iot.Device.At24Cxx;
-using nanoFramework.Hardware.Esp32;
+using System;
 using System.Device.I2c;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
+using Iot.Device.Mcp7940xx;
+using nanoFramework.Hardware.Esp32;
 
-// Setup ESP32 I2C port
+// Setup ESP32 I2C port.
 Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
 
-// Setup At24C32C device
-int deviceAddress = 0x57;
-I2cConnectionSettings settings = new I2cConnectionSettings(1, deviceAddress);
-I2cDevice i2cDevice = new I2cDevice(settings);
-At24C32C eeprom = new At24C32C(i2cDevice);
+// Setup Mcp7940m device. 
+I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
+I2cDevice i2cDevice = new I2cDevice(i2cSettings);
 
-// Write string to device
-string message = "Hello from nanoFramework!";
-byte[] encodedMessage = Encoding.UTF8.GetBytes(message);
-int messageAddress = 0x0;
-uint writeResult = eeprom.Write(messageAddress, encodedMessage);
+Mcp7940m clock = new Mcp7940m(i2cDevice, ClockSource.ExternalCrystal);
+clock.SetTime(DateTime.UtcNow);
+clock.StartClock(true);
 
-Debug.WriteLine($"\"{message}\" written to EEPROM at 0x{messageAddress:X} ({writeResult} bytes)");
-Thread.Sleep(100);
+// Set Alarm 1 to trigger on the 4th minute of every hour.
+Mcp7940m.Alarm alarm1 = new Mcp7940m.Alarm(AlarmMatchMode.Minute, minute: 4);
+clock.SetAlarm1(alarm1);
+clock.EnableAlarm1();
+Debug.WriteLine($"Alarm 1 : {clock.GetAlarm1()}");
 
-// Read back message from device
-byte[] receivedData = eeprom.Read(messageAddress, message.Length);
-string decodedMessage = Encoding.UTF8.GetString(receivedData, 0, receivedData.Length);
+// Set Alarm 2 to trigger every Wednesday.
+Mcp7940m.Alarm alarm2 = new Mcp7940m.Alarm(AlarmMatchMode.DayOfWeek, dayOfWeek: DayOfWeek.Wednesday);
+clock.SetAlarm2(alarm2);
+clock.EnableAlarm2();
+Debug.WriteLine($"Alarm 2 : {clock.GetAlarm2()}");
 
-Debug.WriteLine($"\"{decodedMessage}\" read from EEPROM at 0x{messageAddress:X}");
-Thread.Sleep(100);
-
-// Write byte to end of available device memory
-byte value = 0xA9;
-int byteAddress = eeprom.Size - 1;
-uint writeByteResult = eeprom.WriteByte(byteAddress, 0xA9);
-
-Debug.WriteLine($"0x{value:X} written to EEPROM at 0x{byteAddress:X} ({writeByteResult} byte)");
-Thread.Sleep(100);
-
-// Read back byte from end of available device memory
-byte receivedByte = eeprom.ReadByte(byteAddress);
-
-Debug.WriteLine($"0x{receivedByte:X} read from EEPROM at 0x{byteAddress:X}");
-Thread.Sleep(100);
-
-// Sequentially read back message from device byte-by-byte using the devices internal address counter.
-// Since our last read from the device was at its last available byte, the internal address counter has now rolled over to point at the first byte.
-byte[] receivedCharacter = new byte[1];
-for (int i = 0; i < message.Length; i++)
+while (true)
 {
-    receivedCharacter[0] = eeprom.ReadByte();
-    char[] character = Encoding.UTF8.GetChars(receivedCharacter, 0, 1);
+    // Get current time.
+    DateTime currentTime = clock.GetTime();
+    Debug.WriteLine($"Time: {currentTime.ToString("yyyy/MM/dd HH:mm:ss")}");
 
-    Debug.WriteLine($"'{character[0]}' read from EEPROM");
+    // Check if alarm 1 has triggered.
+    if (clock.Alarm1IsTriggered())
+    {
+        Debug.WriteLine("[ALARM 1]");
+
+        // Clear alarm 1 flag.
+        clock.ResetAlarm1();
+    }
+
+    // Check if alarm 2 has triggered.
+    if (clock.Alarm2IsTriggered())
+    {
+        Debug.WriteLine("[ALARM 2]");
+
+        // Clear alarm 2 flag.
+        clock.ResetAlarm2();
+
+        // Turn off alarm 2.
+        clock.DisableAlarm2();
+    }
+
+    // Wait for one second.
+    Thread.Sleep(1000);
 }
 ```
