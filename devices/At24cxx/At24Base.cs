@@ -118,8 +118,14 @@ namespace Iot.Device.At24cxx
         /// <param name="length">The number of bytes to read.</param>
         /// <returns>The bytes read from the device.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when address falls outside of the addressable range for this device.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of data to be read falls outside of the addressable range for this device.</exception>
         public byte[] Read(int address, int length)
         {
+            if (length < 0 || (address + length) > (Size - 1))
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
             byte[] writeBuffer = CreateWriteBuffer(address, 0);
             byte[] readBuffer = new byte[length];
 
