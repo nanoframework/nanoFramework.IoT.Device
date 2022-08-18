@@ -20,7 +20,7 @@ namespace Iot.Device.Mcp7940xx
         /// <item>0 = MFP is a logic low when alarm is asserted.</item>
         /// </list>
         /// </remarks>
-        AlarmInterruptPolarity = 0b10000000,
+        AlarmInterruptPolarity = 0b1000_0000,
 
         /// <summary>
         /// Mask to seperate the bits pertaining to the alarm match mode.
@@ -28,7 +28,7 @@ namespace Iot.Device.Mcp7940xx
         /// <remarks>
         /// Must contain a value defined in <see cref="AlarmMatchMode" />.
         /// </remarks>
-        AlarmMatchModeMask = 0b01110000,
+        AlarmMatchModeMask = 0b0111_0000,
 
         /// <summary>
         /// Indicates if the alarm interrupt has been triggered.
@@ -39,7 +39,7 @@ namespace Iot.Device.Mcp7940xx
         /// <item>0 = Alarm has not been triggered.</item>
         /// </list>
         /// </remarks>
-        AlarmInterrupt = 0b00001000,
+        AlarmInterrupt = 0b0000_1000,
 
         /// <summary>
         /// Mask to seperate the bits pertaining to the alarm day-of-the-week.
@@ -47,6 +47,6 @@ namespace Iot.Device.Mcp7940xx
         /// <remarks>
         /// Contains a value from 1 to 7. The representation is user-defined.
         /// </remarks>
-        DayOfWeekMask = 0b00000111
+        DayOfWeekMask = 0b0000_0111
     }
 }

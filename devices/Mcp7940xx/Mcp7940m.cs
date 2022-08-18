@@ -51,7 +51,15 @@ namespace Iot.Device.Mcp7940xx
             // Set the clock to 24 hour mode.
             RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.TimekeepingHour, (byte)TimekeepingHourRegister.TimeFormat);
 
-            SetClockSource(clockSource);
+            // Set clock source.
+            if (clockSource == ClockSource.ExternalClockInput)
+            {
+                RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput);
+            }
+            else
+            {
+                RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput);
+            }
         }
 
         #region Time
@@ -84,12 +92,12 @@ namespace Iot.Device.Mcp7940xx
         /// <param name="time">The new time.</param>
         public void SetTime(DateTime time)
         {
-            bool clockIsRunning = !ClockIsHalted();
+            bool clockIsRunning = !IsHalted();
 
             if (clockIsRunning)
             {
                 // To avoid rollover issues when loading new time and date values, the clocks oscillator must be disabled if it is currently running.
-                StopClock(true);
+                Halt(true);
             }
 
             SpanByte writeBuffer = new byte[8];
@@ -191,7 +199,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if Alarm 1 is enabled.
         /// </summary>
         /// <returns>Returns <c>true</c> if Alarm 1 is enabled, <c>false</c> if not.</returns>
-        public bool Alarm1IsEnabled()
+        public bool IsEnabledAlarm1()
         {
             return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
         }
@@ -200,7 +208,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if Alarm 1 is triggered.
         /// </summary>
         /// <returns>Returns <c>true</c> if Alarm 1 is triggered, <c>false</c> if not.</returns>
-        public bool Alarm1IsTriggered()
+        public bool IsTriggeredAlarm1()
         {
             return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
         }
@@ -258,7 +266,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if Alarm 2 is enabled.
         /// </summary>
         /// <returns>Returns <c>true</c> if Alarm 2 is enabled, <c>false</c> if not.</returns>
-        public bool Alarm2IsEnabled()
+        public bool IsEnabledAlarm2()
         {
             return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
         }
@@ -267,7 +275,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if Alarm 2 is triggered.
         /// </summary>
         /// <returns>Returns <c>true</c> if Alarm 2 is triggered, <c>false</c> if not.</returns>
-        public bool Alarm2IsTriggered()
+        public bool IsTriggeredAlarm2()
         {
             return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
         }
@@ -310,9 +318,9 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if general purpose output is enabled.
         /// </summary>
         /// <returns>Returns <c>true</c> if general purpose output is enabled, <c>false</c> if not.</returns>
-        public bool GeneralPurposeOutputIsEnabled()
+        public bool IsEnabledGeneralPurposeOutput()
         {
-            if (Alarm1IsEnabled() || Alarm2IsEnabled() || SquareWaveOutputIsEnabled())
+            if (IsEnabledAlarm1() || IsEnabledAlarm2() || IsEnabledSquareWaveOutput())
             {
                 return false;
             }
@@ -353,7 +361,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if square wave output is enabled.
         /// </summary>
         /// <returns>Returns <c>true</c> if square wave is enabled, <c>false</c> if not.</returns>
-        public bool SquareWaveOutputIsEnabled()
+        public bool IsEnabledSquareWaveOutput()
         {
             return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput);
         }
@@ -383,38 +391,6 @@ namespace Iot.Device.Mcp7940xx
         #region Clock
 
         /// <summary>
-        /// Helper function to set the type of clock source being used.
-        /// </summary>
-        /// <param name="clockSource">The clocks oscillator configuration.</param>
-        internal void SetClockSource(ClockSource clockSource)
-        {
-            if (clockSource == ClockSource.ExternalClockInput)
-            {
-                RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput);
-            }
-            else
-            {
-                RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput);
-            }
-        }
-
-        /// <summary>
-        /// Gets the clocks oscillator configuration.
-        /// </summary>
-        /// <returns>A <see cref = "ClockSource" /> object whose value is the current oscillator configuration of the device.</returns>
-        public ClockSource GetClockSource()
-        {
-            if (RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput))
-            {
-                return ClockSource.ExternalClockInput;
-            }
-            else
-            {
-                return ClockSource.ExternalCrystal;
-            }
-        }
-
-        /// <summary>
         /// Starts the clocks oscillator.
         /// </summary>
         /// <param name="blockUntilOscillatorActive">Determins if the function should block execution until the clocks oscillator is fully active.</param>
@@ -425,7 +401,7 @@ namespace Iot.Device.Mcp7940xx
             if (blockUntilOscillatorActive)
             {
                 // Wait for the clock to signal that the oscillator has successfully started.
-                while (ClockIsHalted())
+                while (IsHalted())
                 {
                     Thread.Sleep(10);
                 }
@@ -436,14 +412,14 @@ namespace Iot.Device.Mcp7940xx
         /// Stops the clocks oscillator.
         /// </summary>
         /// <param name="blockUntilOscillatorInactive">Determins if the function should block execution until the clocks oscillator is fully stopped.</param>
-        public void StopClock(bool blockUntilOscillatorInactive = false)
+        public void Halt(bool blockUntilOscillatorInactive = false)
         {
             RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled);
 
             if (blockUntilOscillatorInactive)
             {
                 // Wait for the clock to signal that the oscillator has successfully been stopped.
-                while (!ClockIsHalted())
+                while (!IsHalted())
                 {
                     Thread.Sleep(10);
                 }
@@ -454,7 +430,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if the clocks oscillator has been halted.
         /// </summary>
         /// <returns>Returns <c>false</c> if oscillator is currently halted, <c>true</c> if not.</returns>
-        public bool ClockIsHalted()
+        public bool IsHalted()
         {
             return !RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.OscillatorRunning);
         }
@@ -487,10 +463,6 @@ namespace Iot.Device.Mcp7940xx
                     break;
 
                 case SquareWaveFrequency.Frequency1Hz:
-
-                    idealFrequencyTicks = 1;
-                    break;
-
                 default:
 
                     idealFrequencyTicks = 1;
@@ -502,7 +474,7 @@ namespace Iot.Device.Mcp7940xx
 
             if (adjustment < 0)
             {
-                registerValue = (byte)(0b1000_0000 | (-adjustment & 0b0111_1111));
+                registerValue = (byte)(0b1000_0000 | (adjustment & 0b0111_1111));
             }
             else
             {

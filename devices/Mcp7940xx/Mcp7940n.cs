@@ -45,7 +45,7 @@ namespace Iot.Device.Mcp7940xx
         /// Checks if external battery backup enabled.
         /// </summary>
         /// <returns>Returns <c>true</c> if external battery backup is enabled, <c>false</c> if not.</returns>
-        public bool ExternalBatteryBackupIsEnabled()
+        public bool IsEnabledExternalBatteryBackup()
         {
             return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
         }

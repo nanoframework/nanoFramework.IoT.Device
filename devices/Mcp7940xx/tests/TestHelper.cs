@@ -1,4 +1,5 @@
-﻿using Iot.Device.Mcp7940xx;
+﻿using Iot.Device.Common;
+using Iot.Device.Mcp7940xx;
 using nanoFramework.TestFramework;
 using System;
 using System.Device.I2c;

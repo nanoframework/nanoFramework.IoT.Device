@@ -155,6 +155,9 @@ namespace Iot.Device.Mcp7940xx
             /// <param name="minute">The minute that the alarm will be triggerd on.</param>
             /// <param name="second">The second that the alarm will be triggerd on.</param>
             /// <param name="dayOfWeek">The day-of-the-week that the alarm will be triggerd on.</param>
+            /// <remarks>
+            /// Month, day, hour, minute, and second will be clamped to their respective valid ranges.
+            /// </remarks>
             public Alarm(AlarmMatchMode matchMode, byte month = 1, byte day = 1, byte hour = 0, byte minute = 0, byte second = 0, DayOfWeek dayOfWeek = DayOfWeek.Sunday)
             {
                 MatchMode = matchMode;

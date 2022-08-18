@@ -13,8 +13,8 @@ namespace Iot.Device.NFUnitTest
     [TestClass]
     public class Mcp7940nTests
     {
-        internal static I2cDevice _i2cDevice;
-        internal static Mcp7940n _clock;
+        static I2cDevice _i2cDevice;
+        static Mcp7940n _clock;
 
         private SpanByte ReadAllBuffers()
         {
@@ -30,26 +30,35 @@ namespace Iot.Device.NFUnitTest
         [Setup]
         public void SetupMcp7940nTests()
         {
-            // Setup ESP32 I2C port.
-            Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
-            Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
+            try
+            {
+                Debug.WriteLine("Please adjust for your own usage. If you need another hardware, please add the proper nuget and adjust as well");
 
-            // Setup Mcp7940m device. 
-            I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
-            _i2cDevice = new I2cDevice(i2cSettings);
-            _clock = new Mcp7940n(_i2cDevice, ClockSource.ExternalCrystal);
+                // Setup ESP32 I2C port.
+                Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
+                Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 
-            // Stop clock updating itself during testing.
-            _clock.StopClock();
+                // Setup Mcp7940m device. 
+                I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
+                _i2cDevice = new I2cDevice(i2cSettings);
+                _clock = new Mcp7940n(_i2cDevice, ClockSource.ExternalCrystal);
 
-            // Set clock to default state.
-            _clock.SetTime(new DateTime(2000, 1, 1, 1, 1, 1));
+                // Stop clock updating itself during testing.
+                _clock.Halt();
 
-            Mcp7940m.Alarm alarm1 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
-            _clock.SetAlarm1(alarm1);
+                // Set clock to default state.
+                _clock.SetTime(new DateTime(2000, 1, 1, 1, 1, 1));
 
-            Mcp7940m.Alarm alarm2 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
-            _clock.SetAlarm2(alarm2);
+                Mcp7940m.Alarm alarm1 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
+                _clock.SetAlarm1(alarm1);
+
+                Mcp7940m.Alarm alarm2 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
+                _clock.SetAlarm2(alarm2);
+            }
+            catch
+            {
+                Assert.SkipTest("I2C port not supported in this platform or not properly configured");
+            }
         }
 
         [TestMethod]
@@ -113,13 +122,13 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableExternalBatteryBackup();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.ExternalBatteryBackupIsEnabled();
+            bool isEnabled = _clock.IsEnabledExternalBatteryBackup();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
 
             _clock.DisableExternalBatteryBackup();
 
             // Verify flag matches function returned state.
-            isEnabled = _clock.ExternalBatteryBackupIsEnabled();
+            isEnabled = _clock.IsEnabledExternalBatteryBackup();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
         }
     }

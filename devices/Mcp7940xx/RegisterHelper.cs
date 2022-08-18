@@ -22,19 +22,11 @@ namespace Iot.Device.Common
         {
             if (i2cDevice == null)
             {
-                throw new ArgumentNullException(nameof(i2cDevice));
+                throw new ArgumentNullException();
             }
 
             i2cDevice.WriteByte(register);
             return i2cDevice.ReadByte();
-            /*
-            SpanByte writeBuffer = new byte[] { register };
-            SpanByte readBuffer = new byte[1];
-
-            I2cTransferResult readResult = i2cDevice.WriteRead(writeBuffer, readBuffer);
-
-            return readBuffer[0];
-            */
         }
 
         /// <summary>
@@ -49,7 +41,7 @@ namespace Iot.Device.Common
         {
             if (i2cDevice == null)
             {
-                throw new ArgumentNullException(nameof(i2cDevice));
+                throw new ArgumentNullException();
             }
 
             SpanByte writeBuffer = new byte[] { register, value };
@@ -70,7 +62,7 @@ namespace Iot.Device.Common
         {
             if (i2cDevice == null)
             {
-                throw new ArgumentNullException(nameof(i2cDevice));
+                throw new ArgumentNullException();
             }
 
             byte registerContents = ReadRegister(i2cDevice, register);
@@ -93,7 +85,7 @@ namespace Iot.Device.Common
         {
             if (i2cDevice == null)
             {
-                throw new ArgumentNullException(nameof(i2cDevice));
+                throw new ArgumentNullException();
             }
 
             byte registerContents = ReadRegister(i2cDevice, register);
@@ -115,7 +107,7 @@ namespace Iot.Device.Common
         {
             if (i2cDevice == null)
             {
-                throw new ArgumentNullException(nameof(i2cDevice));
+                throw new ArgumentNullException();
             }
 
             byte registerContents = ReadRegister(i2cDevice, register);
@@ -138,7 +130,7 @@ namespace Iot.Device.Common
         {
             if (i2cDevice == null)
             {
-                throw new ArgumentNullException(nameof(i2cDevice));
+                throw new ArgumentNullException();
             }
 
             byte registerContents = ReadRegister(i2cDevice, register);

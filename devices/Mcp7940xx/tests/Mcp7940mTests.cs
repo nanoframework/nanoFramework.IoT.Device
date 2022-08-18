@@ -13,8 +13,8 @@ namespace Iot.Device.NFUnitTest
     [TestClass]
     public class Mcp7940mTests
     {
-        private static I2cDevice _i2cDevice;
-        private static Mcp7940m _clock;
+        static I2cDevice _i2cDevice;
+        static Mcp7940m _clock;
 
         private SpanByte ReadAllBuffers()
         {
@@ -30,26 +30,35 @@ namespace Iot.Device.NFUnitTest
         [Setup]
         public void SetupMcp7940mTests()
         {
-            // Setup ESP32 I2C port.
-            Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
-            Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
+            try
+            {
+                Debug.WriteLine("Please adjust for your own usage. If you need another hardware, please add the proper nuget and adjust as well");
 
-            // Setup Mcp7940m device. 
-            I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
-            _i2cDevice = new I2cDevice(i2cSettings);
-            _clock = new Mcp7940m(_i2cDevice, ClockSource.ExternalCrystal);
+                // Setup ESP32 I2C port.
+                Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
+                Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 
-            // Stop clock updating itself during testing.
-            _clock.StopClock();
+                // Setup Mcp7940m device. 
+                I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
+                _i2cDevice = new I2cDevice(i2cSettings);
+                _clock = new Mcp7940m(_i2cDevice, ClockSource.ExternalCrystal);
 
-            // Set clock to default state.
-            _clock.SetTime(new DateTime(2000, 1, 1, 1, 1, 1));
+                // Stop clock updating itself during testing.
+                _clock.Halt();
 
-            Mcp7940m.Alarm alarm1 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
-            _clock.SetAlarm1(alarm1);
+                // Set clock to default state.
+                _clock.SetTime(new DateTime(2000, 1, 1, 1, 1, 1));
 
-            Mcp7940m.Alarm alarm2 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
-            _clock.SetAlarm2(alarm2);
+                Mcp7940m.Alarm alarm1 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
+                _clock.SetAlarm1(alarm1);
+
+                Mcp7940m.Alarm alarm2 = new Mcp7940m.Alarm(AlarmMatchMode.Full);
+                _clock.SetAlarm2(alarm2);
+            }
+            catch
+            {
+                Assert.SkipTest("I2C port not supported in this platform or not properly configured");
+            }
 
         }
 
@@ -58,6 +67,24 @@ namespace Iot.Device.NFUnitTest
         public void Cannot_Create_With_Null_I2C_Device()
         {
             Assert.Throws(typeof(ArgumentNullException), () => new Mcp7940m(null, ClockSource.ExternalCrystal));
+        }
+
+
+        [TestMethod]
+        public void ClockSource_Correctly_Gets_Flag()
+        {
+            I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
+            I2cDevice i2cDevice = new I2cDevice(i2cSettings);
+
+            Mcp7940m clock = new Mcp7940m(i2cDevice, ClockSource.ExternalClockInput);
+
+            // Verify flag matches function returned state.
+            Assert.True(RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput));
+
+            clock = new Mcp7940m(i2cDevice, ClockSource.ExternalCrystal);
+
+            // Verify flag matches function returned state.
+            Assert.False(RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput));
         }
 
         [TestMethod]
@@ -538,13 +565,13 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableAlarm1();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.Alarm1IsEnabled();
+            bool isEnabled = _clock.IsEnabledAlarm1();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
 
             _clock.DisableAlarm1();
 
             // Verify flag matches function returned state.
-            isEnabled = _clock.Alarm1IsEnabled();
+            isEnabled = _clock.IsEnabledAlarm1();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
         }
 
@@ -557,7 +584,7 @@ namespace Iot.Device.NFUnitTest
 
             // Clear Alarm1.
             _clock.ResetAlarm1();
-            Assert.False(_clock.Alarm1IsTriggered());
+            Assert.False(_clock.IsTriggeredAlarm1());
 
             // Set time to trigger alarm.
             _clock.SetTime(new DateTime(2022, 8, 15, 23, 33, 59));
@@ -568,9 +595,9 @@ namespace Iot.Device.NFUnitTest
             // Wait for one second for clock to update its second register.
             Thread.Sleep(1000);
 
-            Assert.True(_clock.Alarm1IsTriggered());
+            Assert.True(_clock.IsTriggeredAlarm1());
 
-            _clock.StopClock();
+            _clock.Halt();
         }
 
         #endregion
@@ -921,13 +948,13 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableAlarm2();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.Alarm2IsEnabled();
+            bool isEnabled = _clock.IsEnabledAlarm2();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
 
             _clock.DisableAlarm2();
 
             // Verify flag matches function returned state for both Alarm2 and Alarm2.
-            isEnabled = _clock.Alarm2IsEnabled();
+            isEnabled = _clock.IsEnabledAlarm2();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
         }
 
@@ -940,7 +967,7 @@ namespace Iot.Device.NFUnitTest
 
             // Clear Alarm2.
             _clock.ResetAlarm2();
-            Assert.False(_clock.Alarm2IsTriggered());
+            Assert.False(_clock.IsTriggeredAlarm2());
 
             // Set time to trigger alarm.
             _clock.SetTime(new DateTime(2022, 8, 15, 23, 33, 59));
@@ -951,9 +978,9 @@ namespace Iot.Device.NFUnitTest
             // Wait for one second for clock to update its second register.
             Thread.Sleep(1000);
 
-            Assert.True(_clock.Alarm2IsTriggered());
+            Assert.True(_clock.IsTriggeredAlarm2());
 
-            _clock.StopClock();
+            _clock.Halt();
         }
 
         #endregion
@@ -1096,13 +1123,13 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableSquareWaveOutput();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.SquareWaveOutputIsEnabled();
+            bool isEnabled = _clock.IsEnabledSquareWaveOutput();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
 
             _clock.DisableSquareWaveOutput();
 
             // Verify flag matches function returned state.
-            isEnabled = _clock.SquareWaveOutputIsEnabled();
+            isEnabled = _clock.IsEnabledSquareWaveOutput();
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
         }
 
@@ -1183,79 +1210,12 @@ namespace Iot.Device.NFUnitTest
 
         #region Clock
 
-        [TestMethod]
-        public void SetClockSource_Only_Changes_Relevant_Flag()
-        {
-            _clock.SetClockSource(ClockSource.ExternalCrystal);
-            SpanByte before = ReadAllBuffers();
-
-            _clock.SetClockSource(ClockSource.ExternalClockInput);
-            SpanByte after = ReadAllBuffers();
-
-            // Verify time keeping registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMinute);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingHour);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingWeekday);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingDay);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMonth);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingYear);
-
-            // Verify control registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
-
-            // Verify only Alarm1 Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.ExternalClockInput);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)ControlRegister.ExternalClockInput);
-
-            // Verify Alarm1 registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Minute);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Hour);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Day);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Month);
-
-            // Verify Alarm2 registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Second);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Minute);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Hour);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Day);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Month);
-        }
-
-        [TestMethod]
-        public void SetClockSource_Correctly_Sets_Flag()
-        {
-            _clock.SetClockSource(ClockSource.ExternalClockInput);
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput));
-
-            _clock.SetClockSource(ClockSource.ExternalCrystal);
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput));
-        }
-
-        [TestMethod]
-        public void GetClockSource_Correctly_Gets_Flag()
-        {
-            _clock.SetClockSource(ClockSource.ExternalClockInput);
-
-            // Verify flag matches function returned state.
-            ClockSource clockSource = _clock.GetClockSource();
-            Assert.True(clockSource == ClockSource.ExternalClockInput);
-
-            _clock.SetClockSource(ClockSource.ExternalCrystal);
-
-            // Verify flag matches function returned state.
-            clockSource = _clock.GetClockSource();
-            Assert.True(clockSource == ClockSource.ExternalCrystal);
-        }
-
         public void Start_And_Stop_Clock_Correctly_Sets_Flag()
         {
             _clock.StartClock();
             Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled));
 
-            _clock.StopClock();
+            _clock.Halt();
             Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled));
         }
 
@@ -1265,7 +1225,7 @@ namespace Iot.Device.NFUnitTest
             _clock.StartClock();
             SpanByte before = ReadAllBuffers();
 
-            _clock.StopClock();
+            _clock.Halt();
             SpanByte after = ReadAllBuffers();
 
             // Verify time keeping registers.
@@ -1306,12 +1266,12 @@ namespace Iot.Device.NFUnitTest
             _clock.StartClock();
 
             // Verify flag matches function returned state.
-            Assert.False(_clock.ClockIsHalted());
+            Assert.False(_clock.IsHalted());
 
-            _clock.StopClock();
+            _clock.Halt();
 
             // Verify flag matches function returned state.
-            Assert.True(_clock.ClockIsHalted());
+            Assert.True(_clock.IsHalted());
         }
 
         #endregion
@@ -1341,7 +1301,7 @@ namespace Iot.Device.NFUnitTest
 
             for (byte address = 0; address < 63; address++)
             {
-                value = (byte)random.Next(byte.MaxValue);    
+                value = (byte)random.Next(byte.MaxValue);
 
                 _clock.WriteByteToSRAM(address, value);
 
