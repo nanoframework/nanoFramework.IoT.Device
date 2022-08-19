@@ -24,22 +24,6 @@ namespace Iot.Device.Mcp7940xx
             private byte _day;
             private byte _month;
 
-            private byte Clamp(byte value, byte low, byte high)
-            {
-                if (value < low)
-                {
-                    return low;
-                }
-                else if (value > high)
-                {
-                    return high;
-                }
-                else
-                {
-                    return value;
-                }
-            }
-
             /// <summary>
             /// Gets or sets the second that the alarm will be triggerd on.
             /// </summary>
@@ -55,7 +39,7 @@ namespace Iot.Device.Mcp7940xx
 
                 set
                 {
-                    _second = Clamp(value, 0, 59);
+                    _second = (byte)Math.Clamp(value, 0, 59);
                 }
             }
 
@@ -74,7 +58,7 @@ namespace Iot.Device.Mcp7940xx
 
                 set
                 {
-                    _minute = Clamp(value, 0, 59);
+                    _minute = (byte)Math.Clamp(value, 0, 59);
                 }
             }
 
@@ -93,7 +77,7 @@ namespace Iot.Device.Mcp7940xx
 
                 set
                 {
-                    _hour = Clamp(value, 0, 59);
+                    _hour = (byte)Math.Clamp(value, 0, 59);
                 }
             }
 
@@ -117,7 +101,7 @@ namespace Iot.Device.Mcp7940xx
 
                 set
                 {
-                    _day = Clamp(value, 1, 31);
+                    _day = (byte)Math.Clamp(value, 1, 31);
                 }
             }
 
@@ -136,7 +120,7 @@ namespace Iot.Device.Mcp7940xx
 
                 set
                 {
-                    _month = Clamp(value, 1, 12);
+                    _month = (byte)Math.Clamp(value, 1, 12);
                 }
             }
 

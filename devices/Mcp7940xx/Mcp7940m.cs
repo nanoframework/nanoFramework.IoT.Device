@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
 using System.Threading;
 using Iot.Device.Common;
@@ -92,7 +93,7 @@ namespace Iot.Device.Mcp7940xx
         /// <param name="time">The new time.</param>
         public void SetTime(DateTime time)
         {
-            bool clockIsRunning = !IsHalted();
+            bool clockIsRunning = !IsHalted;
 
             if (clockIsRunning)
             {
@@ -125,32 +126,25 @@ namespace Iot.Device.Mcp7940xx
         #region Alarm Interrupt
 
         /// <summary>
-        /// Returns the output polarity of the MFP pin when an alarm interrupt is asserted.
+        /// Gets or sets the output polarity of the MFP pin when an alarm interrupt is asserted.
         /// </summary>
-        /// <returns>Returns <c>true</c> if the output state of the MFP pin is logic high when an alarm is asserted, <c>false</c> if it is logic low.</returns>
-        public bool GetAlarmInterruptPolarity()
+        public PinValue AlarmInterruptPolarity
         {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
-        }
-
-        /// <summary>
-        /// Sets the output polarity of the MFP pin when an alarm interrupt is asserted.
-        /// </summary>
-        /// <param name="polarity">
-        /// <list type="table">
-        /// <item><c>true</c> = the output state of the MFP pin is logic high when an alarm is asserted.</item>
-        /// <item><c>false</c> = the output state of the MFP pin is logic low when an alarm is asserted.</item>
-        /// </list>
-        /// </param>
-        public void SetAlarmInterruptPolarity(bool polarity)
-        {
-            if (polarity)
+            get
             {
-                RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
             }
-            else
+
+            set
             {
-                RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                if (value == PinValue.High)
+                {
+                    RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                }
+                else
+                {
+                    RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                }
             }
         }
 
@@ -196,29 +190,33 @@ namespace Iot.Device.Mcp7940xx
         }
 
         /// <summary>
-        /// Checks if Alarm 1 is enabled.
-        /// </summary>
-        /// <returns>Returns <c>true</c> if Alarm 1 is enabled, <c>false</c> if not.</returns>
-        public bool IsEnabledAlarm1()
-        {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
-        }
-
-        /// <summary>
-        /// Checks if Alarm 1 is triggered.
-        /// </summary>
-        /// <returns>Returns <c>true</c> if Alarm 1 is triggered, <c>false</c> if not.</returns>
-        public bool IsTriggeredAlarm1()
-        {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
-        }
-
-        /// <summary>
         /// Clears the triggered state of Alarm 1.
         /// </summary>
         public void ResetAlarm1()
         {
             RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether Alarm 1 is enabled.
+        /// </summary>
+        public bool IsEnabledAlarm1
+        {
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether Alarm 1 is triggered.
+        /// </summary>
+        public bool IsTriggeredAlarm1
+        {
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+            }
         }
 
         #endregion
@@ -263,24 +261,6 @@ namespace Iot.Device.Mcp7940xx
         }
 
         /// <summary>
-        /// Checks if Alarm 2 is enabled.
-        /// </summary>
-        /// <returns>Returns <c>true</c> if Alarm 2 is enabled, <c>false</c> if not.</returns>
-        public bool IsEnabledAlarm2()
-        {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
-        }
-
-        /// <summary>
-        /// Checks if Alarm 2 is triggered.
-        /// </summary>
-        /// <returns>Returns <c>true</c> if Alarm 2 is triggered, <c>false</c> if not.</returns>
-        public bool IsTriggeredAlarm2()
-        {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
-        }
-
-        /// <summary>
         /// Clears the triggered state of Alarm 2.
         /// </summary>
         public void ResetAlarm2()
@@ -288,53 +268,79 @@ namespace Iot.Device.Mcp7940xx
             RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether Alarm 2 is enabled.
+        /// </summary>
+        public bool IsEnabledAlarm2
+        {
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether Alarm 2 is triggered.
+        /// </summary>
+        public bool IsTriggeredAlarm2
+        {
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+            }
+        }
+
         #endregion
 
         #region  General Purpose Output
 
         /// <summary>
-        /// Sets the MFP pin level to logic high.
+        /// Gets or sets the MFP pin level when in general purpose output mode.
         /// </summary>
         /// <remarks>
         /// General purpose output can only be used when Alarm1, Alarm2 and square wave output are all disabled.
         /// </remarks>
-        public void SetGeneralPurposeOutputHigh()
+        public PinValue GeneralPurposeOutput
         {
-            RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
-        }
-
-        /// <summary>
-        /// Sets the MFP pin level to logic low.
-        /// </summary>
-        /// <remarks>
-        /// General purpose output can only be used when Alarm1, Alarm2 and square wave output are all disabled.
-        /// </remarks>
-        public void SetGeneralPurposeOutputLow()
-        {
-            RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
-        }
-
-        /// <summary>
-        /// Checks if general purpose output is enabled.
-        /// </summary>
-        /// <returns>Returns <c>true</c> if general purpose output is enabled, <c>false</c> if not.</returns>
-        public bool IsEnabledGeneralPurposeOutput()
-        {
-            if (IsEnabledAlarm1() || IsEnabledAlarm2() || IsEnabledSquareWaveOutput())
+            get
             {
-                return false;
+                if (RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput))
+                {
+                    return PinValue.High;
+                }
+                else
+                {
+                    return PinValue.Low;
+                }
             }
 
-            return true;
+            set
+            {
+                if (value == PinValue.High)
+                {
+                    RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
+                }
+                else
+                {
+                    RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
+                }
+            }
         }
 
         /// <summary>
-        /// Checks if general purpose output is setting the state of the MFP pin to high.
+        /// Gets a value indicating whether the general purpose output is enabled.
         /// </summary>
-        /// <returns>Returns <c>true</c> if MFP pin is high, <c>false</c> if not.</returns>
-        public bool GeneralPurposeOutputIsHigh()
+        public bool IsEnabledGeneralPurposeOutput
         {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
+            get
+            {
+                if (IsEnabledAlarm1 || IsEnabledAlarm2 || IsEnabledSquareWaveOutput)
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         #endregion
@@ -358,32 +364,32 @@ namespace Iot.Device.Mcp7940xx
         }
 
         /// <summary>
-        /// Checks if square wave output is enabled.
+        /// Gets a value indicating whether the square wave output is enabled.
         /// </summary>
-        /// <returns>Returns <c>true</c> if square wave is enabled, <c>false</c> if not.</returns>
-        public bool IsEnabledSquareWaveOutput()
+        public bool IsEnabledSquareWaveOutput
         {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput);
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput);
+            }
         }
 
         /// <summary>
-        /// Gets the frequency of the square wave output on the MFP pin.
+        /// Gets or sets the frequency of the square wave output on the MFP pin.
         /// </summary>
-        /// <returns>A <see cref = "SquareWaveFrequency" /> object whose value is the current frequency of the square wave.</returns>
-        public SquareWaveFrequency GetSquareWaveFrequency()
+        public SquareWaveFrequency SquareWaveOutputFrequency
         {
-            byte control = RegisterHelper.ReadRegister(_I2cDevice, (byte)Register.Control);
+            get
+            {
+                byte control = RegisterHelper.ReadRegister(_I2cDevice, (byte)Register.Control);
 
-            return (SquareWaveFrequency)(control & (byte)ControlRegister.SquareWaveFrequencyMask);
-        }
+                return (SquareWaveFrequency)(control & (byte)ControlRegister.SquareWaveFrequencyMask);
+            }
 
-        /// <summary>
-        /// Sets the frequency of the square wave output on the MFP pin.
-        /// </summary>
-        /// <param name="frequency">The frequency of the square wave.</param>
-        public void SetSquareWaveFrequency(SquareWaveFrequency frequency)
-        {
-            RegisterHelper.MaskedSetRegisterBits(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveFrequencyMask, (byte)frequency);
+            set
+            {
+                RegisterHelper.MaskedSetRegisterBits(_I2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveFrequencyMask, (byte)value);
+            }
         }
 
         #endregion
@@ -401,7 +407,7 @@ namespace Iot.Device.Mcp7940xx
             if (blockUntilOscillatorActive)
             {
                 // Wait for the clock to signal that the oscillator has successfully started.
-                while (IsHalted())
+                while (IsHalted)
                 {
                     Thread.Sleep(10);
                 }
@@ -419,7 +425,7 @@ namespace Iot.Device.Mcp7940xx
             if (blockUntilOscillatorInactive)
             {
                 // Wait for the clock to signal that the oscillator has successfully been stopped.
-                while (!IsHalted())
+                while (!IsHalted)
                 {
                     Thread.Sleep(10);
                 }
@@ -427,12 +433,14 @@ namespace Iot.Device.Mcp7940xx
         }
 
         /// <summary>
-        /// Checks if the clocks oscillator has been halted.
+        /// Gets a value indicating whether the clocks oscillator has been halted.
         /// </summary>
-        /// <returns>Returns <c>false</c> if oscillator is currently halted, <c>true</c> if not.</returns>
-        public bool IsHalted()
+        public bool IsHalted
         {
-            return !RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.OscillatorRunning);
+            get
+            {
+                return !RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.OscillatorRunning);
+            }
         }
 
         /// <summary>

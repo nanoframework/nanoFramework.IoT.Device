@@ -3,9 +3,9 @@ using Iot.Device.Mcp7940xx;
 using nanoFramework.Hardware.Esp32;
 using nanoFramework.TestFramework;
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
 
 namespace Iot.Device.NFUnitTest
@@ -64,14 +64,14 @@ namespace Iot.Device.NFUnitTest
 
         // https://stackoverflow.com/questions/42006662/testing-private-static-generic-methods-in-c-sharp
         [TestMethod]
-        public void Cannot_Create_With_Null_I2C_Device()
+        public void Constructor_Cannot_Create_With_Null_I2C_Device()
         {
             Assert.Throws(typeof(ArgumentNullException), () => new Mcp7940m(null, ClockSource.ExternalCrystal));
         }
 
 
         [TestMethod]
-        public void ClockSource_Correctly_Gets_Flag()
+        public void Constructor_ClockSource_Correctly_Sets_Flag()
         {
             I2cConnectionSettings i2cSettings = new I2cConnectionSettings(1, Mcp7940m.DefaultI2cAddress);
             I2cDevice i2cDevice = new I2cDevice(i2cSettings);
@@ -88,7 +88,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Clock_Is_In_24_Hour_Mode()
+        public void Constructor_Clock_Is_In_24_Hour_Mode()
         {
             Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingHour, (byte)TimekeepingHourRegister.TimeFormat));
         }
@@ -139,90 +139,10 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Month);
         }
 
-        [TestMethod]
-        public void SetAlarmInterruptPolarity_Only_Changes_Relevant_Flag()
-        {
-            _clock.SetAlarmInterruptPolarity(true);
-            SpanByte before = ReadAllBuffers();
-
-            _clock.SetAlarmInterruptPolarity(false);
-            SpanByte after = ReadAllBuffers();
-
-            // Verify time keeping registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMinute);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingHour);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingWeekday);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingDay);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMonth);
-            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingYear);
-
-            // Verify control registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.Control);
-            TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
-
-            // Verify Alarm1 registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Minute);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Hour);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Day);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Month);
-
-            // Verify only AlarmInterruptPolarity flag has been altered on Alarm1.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm1Weekday, (byte)~AlarmWeekdayRegister.AlarmInterruptPolarity);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
-
-            // Verify Alarm2 registers.
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Second);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Minute);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Hour);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Day);
-            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Month);
-
-            // Verify only non-AlarmInterruptPolarity flags have not been altered on Alarm2.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm2Weekday, (byte)(AlarmWeekdayRegister.AlarmMatchModeMask | AlarmWeekdayRegister.AlarmInterrupt | AlarmWeekdayRegister.DayOfWeekMask));
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
-        }
-
-        [TestMethod]
-        public void SetAlarmInterruptPolarity_Correctly_Sets_Flag()
-        {
-            _clock.SetAlarmInterruptPolarity(true);
-
-            // Verify flag has been set.
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-
-            _clock.SetAlarmInterruptPolarity(false);
-
-            // Verify flag has been cleared.
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-        }
-
-        [TestMethod]
-        public void GetAlarmInterruptPolarity_Correctly_Gets_Flag()
-        {
-            _clock.SetAlarmInterruptPolarity(true);
-
-            // Verify flag matches function return.
-            bool interruptPolarity = _clock.GetAlarmInterruptPolarity();
-            Assert.Equal(interruptPolarity, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-            Assert.Equal(interruptPolarity, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-
-            _clock.SetAlarmInterruptPolarity(false);
-
-            // Verify flag matches function return.
-            interruptPolarity = _clock.GetAlarmInterruptPolarity();
-            Assert.Equal(interruptPolarity, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-            Assert.Equal(interruptPolarity, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
-        }
-
         #region Alarm1
 
         [TestMethod]
-        public void SetAlarm1_Correctly_Sets_Registers()
+        public void Alarm1_SetAlarm1_Correctly_Sets_Registers()
         {
             Mcp7940m.Alarm alarm;
 
@@ -460,7 +380,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void SetAlarm1_Only_Changes_Relevant_Registers()
+        public void Alarm1_SetAlarm1_Only_Changes_Relevant_Registers()
         {
             // Set alarm to known state.
             Mcp7940m.Alarm alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full);
@@ -505,7 +425,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_Alarm1_Only_Changes_Relevant_Flag()
+        public void Alarm1_EnableAlarm1_And_DisableAlarm1_Only_Changes_Relevant_Flag()
         {
             _clock.EnableAlarm1();
             SpanByte before = ReadAllBuffers();
@@ -546,7 +466,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_Alarm1_Correctly_Sets_Flag()
+        public void Alarm1_EnableAlarm1_And_DisableAlarm1_Correctly_Sets_Flag()
         {
             _clock.EnableAlarm1();
 
@@ -560,23 +480,23 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Alarm1IsEnabled_Correctly_Gets_Flag()
+        public void Alarm1_IsEnabledAlarm1_Property_Correctly_Gets_Flag()
         {
             _clock.EnableAlarm1();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.IsEnabledAlarm1();
+            bool isEnabled = _clock.IsEnabledAlarm1;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
 
             _clock.DisableAlarm1();
 
             // Verify flag matches function returned state.
-            isEnabled = _clock.IsEnabledAlarm1();
+            isEnabled = _clock.IsEnabledAlarm1;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
         }
 
         [TestMethod]
-        public void Alarm1IsTriggered_Test()
+        public void Alarm1_IsTriggeredAlarm1_Property_Test()
         {
             Mcp7940m.Alarm alarm = new Mcp7940m.Alarm(AlarmMatchMode.Minute, minute: 34);
             _clock.SetAlarm1(alarm);
@@ -584,7 +504,7 @@ namespace Iot.Device.NFUnitTest
 
             // Clear Alarm1.
             _clock.ResetAlarm1();
-            Assert.False(_clock.IsTriggeredAlarm1());
+            Assert.False(_clock.IsTriggeredAlarm1);
 
             // Set time to trigger alarm.
             _clock.SetTime(new DateTime(2022, 8, 15, 23, 33, 59));
@@ -595,7 +515,7 @@ namespace Iot.Device.NFUnitTest
             // Wait for one second for clock to update its second register.
             Thread.Sleep(1000);
 
-            Assert.True(_clock.IsTriggeredAlarm1());
+            Assert.True(_clock.IsTriggeredAlarm1);
 
             _clock.Halt();
         }
@@ -605,7 +525,7 @@ namespace Iot.Device.NFUnitTest
         #region Alarm2
 
         [TestMethod]
-        public void SetAlarm2_Correctly_Sets_Registers()
+        public void Alarm2_SetAlarm2_Correctly_Sets_Registers()
         {
             Mcp7940m.Alarm alarm;
 
@@ -843,7 +763,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void SetAlarm2_Only_Changes_Relevant_Registers()
+        public void Alarm2_SetAlarm2_Only_Changes_Relevant_Registers()
         {
             // Set alarm to known state.
             Mcp7940m.Alarm alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full);
@@ -888,7 +808,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_Alarm2_Only_Changes_Relevant_Flag()
+        public void Alarm2_EnableAlarm2_And_DisableAlarm2_Only_Changes_Relevant_Flag()
         {
             _clock.EnableAlarm2();
             SpanByte before = ReadAllBuffers();
@@ -929,7 +849,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_Alarm2_Correctly_Sets_Flag()
+        public void Alarm2_EnableAlarm2_And_DisableAlarm2_Correctly_Sets_Flag()
         {
             _clock.EnableAlarm2();
 
@@ -943,23 +863,23 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Alarm2IsEnabled_Correctly_Gets_Flag()
+        public void Alarm2_IsEnabledAlarm2_Property_Correctly_Gets_Flag()
         {
             _clock.EnableAlarm2();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.IsEnabledAlarm2();
+            bool isEnabled = _clock.IsEnabledAlarm2;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
 
             _clock.DisableAlarm2();
 
             // Verify flag matches function returned state for both Alarm2 and Alarm2.
-            isEnabled = _clock.IsEnabledAlarm2();
+            isEnabled = _clock.IsEnabledAlarm2;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
         }
 
         [TestMethod]
-        public void Alarm2IsTriggered_Test()
+        public void Alarm2_IsTriggeredAlarm2_Property_Test()
         {
             Mcp7940m.Alarm alarm = new Mcp7940m.Alarm(AlarmMatchMode.Minute, minute: 34);
             _clock.SetAlarm2(alarm);
@@ -967,7 +887,7 @@ namespace Iot.Device.NFUnitTest
 
             // Clear Alarm2.
             _clock.ResetAlarm2();
-            Assert.False(_clock.IsTriggeredAlarm2());
+            Assert.False(_clock.IsTriggeredAlarm2);
 
             // Set time to trigger alarm.
             _clock.SetTime(new DateTime(2022, 8, 15, 23, 33, 59));
@@ -978,9 +898,77 @@ namespace Iot.Device.NFUnitTest
             // Wait for one second for clock to update its second register.
             Thread.Sleep(1000);
 
-            Assert.True(_clock.IsTriggeredAlarm2());
+            Assert.True(_clock.IsTriggeredAlarm2);
 
             _clock.Halt();
+        }
+
+        #endregion
+
+        #region AlarmInterruptPolarity
+
+        [TestMethod]
+        public void AlarmInterruptPolarity_Property_Only_Changes_Relevant_Flag()
+        {
+            _clock.AlarmInterruptPolarity = PinValue.High;
+            SpanByte before = ReadAllBuffers();
+
+            _clock.AlarmInterruptPolarity = PinValue.Low;
+            SpanByte after = ReadAllBuffers();
+
+            // Verify time keeping registers.
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMinute);
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingHour);
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingWeekday);
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingDay);
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMonth);
+            TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingYear);
+
+            // Verify control registers.
+            TestHelper.AssertRegistersEqual(before, after, Register.Control);
+            TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
+            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+
+            // Verify Alarm1 registers.
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Minute);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Hour);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Day);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Month);
+
+            // Verify only AlarmInterruptPolarity flag has been altered on Alarm1.
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm1Weekday, (byte)~AlarmWeekdayRegister.AlarmInterruptPolarity);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+
+            // Verify Alarm2 registers.
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Second);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Minute);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Hour);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Day);
+            TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Month);
+
+            // Verify only non-AlarmInterruptPolarity flags have not been altered on Alarm2.
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm2Weekday, (byte)(AlarmWeekdayRegister.AlarmMatchModeMask | AlarmWeekdayRegister.AlarmInterrupt | AlarmWeekdayRegister.DayOfWeekMask));
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+        }
+
+        [TestMethod]
+        public void AlarmInterruptPolarity_Property_Correctly_Gets_And_Sets_Flag()
+        {
+            _clock.AlarmInterruptPolarity = PinValue.High;
+
+            // Verify flag matches function return.
+            PinValue pinValue = _clock.AlarmInterruptPolarity;
+            Assert.True(pinValue == PinValue.High);
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
+
+            _clock.AlarmInterruptPolarity = PinValue.Low;
+
+            // Verify flag matches function return.
+            pinValue = _clock.AlarmInterruptPolarity;
+            Assert.True(pinValue == PinValue.Low);
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
         }
 
         #endregion
@@ -988,12 +976,12 @@ namespace Iot.Device.NFUnitTest
         #region  General Purpose Output
 
         [TestMethod]
-        public void Enable_And_Disable_GeneralPurposeOutput_Only_Changes_Relevant_Flag()
+        public void GeneralPurposeOutput_Property_Only_Changes_Relevant_Flag()
         {
-            _clock.SetGeneralPurposeOutputHigh();
+            _clock.GeneralPurposeOutput = PinValue.High;
             SpanByte before = ReadAllBuffers();
 
-            _clock.SetGeneralPurposeOutputLow();
+            _clock.GeneralPurposeOutput = PinValue.Low;
             SpanByte after = ReadAllBuffers();
 
             // Verify time keeping registers.
@@ -1029,41 +1017,29 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_GeneralPurposeOutput_Correctly_Sets_Flag()
+        public void GeneralPurposeOutput_Property_Correctly_Gets_And_Sets_Flag()
         {
-            _clock.SetGeneralPurposeOutputHigh();
+            _clock.GeneralPurposeOutput = PinValue.High;
 
-            // Verify flag has been set for GeneralPurposeOutput.
+            // Verify flag matches function returned state.
+            PinValue pinValue = _clock.GeneralPurposeOutput;
+            Assert.True(pinValue == PinValue.High);
             Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput));
 
-            _clock.SetGeneralPurposeOutputLow();
+            _clock.GeneralPurposeOutput = PinValue.Low;
 
-            // Verify flag has been cleared for GeneralPurposeOutput.
+            // Verify flag matches function returned state.
+            pinValue = _clock.GeneralPurposeOutput;
+            Assert.True(pinValue == PinValue.Low);
             Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput));
-        }
-
-        [TestMethod]
-        public void GeneralPurposeOutputIsEnabled_Correctly_Gets_Flag()
-        {
-            _clock.SetGeneralPurposeOutputHigh();
-
-            // Verify flag matches function returned state.
-            bool isEnabled = _clock.GeneralPurposeOutputIsHigh();
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput));
-
-            _clock.SetGeneralPurposeOutputLow();
-
-            // Verify flag matches function returned state.
-            isEnabled = _clock.GeneralPurposeOutputIsHigh();
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput));
         }
 
         #endregion
 
-        #region Square Wave
+        #region Square Wave Output
 
         [TestMethod]
-        public void Enable_And_Disable_SquareWaveOutput_Only_Changes_Relevant_Flag()
+        public void SquareWaveOutput_EnableSquareWaveOutput_And_DisableSquareWaveOutput_Only_Changes_Relevant_Flag()
         {
             _clock.EnableSquareWaveOutput();
             SpanByte before = ReadAllBuffers();
@@ -1104,7 +1080,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_SquareWaveOutput_Correctly_Sets_Flag()
+        public void SquareWaveOutput_EnableSquareWaveOutput_And_DisableSquareWaveOutput_Correctly_Sets_Flag()
         {
             _clock.EnableSquareWaveOutput();
 
@@ -1118,27 +1094,27 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void SquareWaveOutputIsEnabled_Correctly_Gets_Flag()
+        public void SquareWaveOutput_IsEnabledSquareWaveOutput_Property_Correctly_Gets_Flag()
         {
             _clock.EnableSquareWaveOutput();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.IsEnabledSquareWaveOutput();
+            bool isEnabled = _clock.IsEnabledSquareWaveOutput;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
 
             _clock.DisableSquareWaveOutput();
 
             // Verify flag matches function returned state.
-            isEnabled = _clock.IsEnabledSquareWaveOutput();
+            isEnabled = _clock.IsEnabledSquareWaveOutput;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
         }
 
-        public void SetSquareWaveFrequency_Only_Changes_Relevant_Flag()
+        public void SquareWaveOutput_SquareWaveOutputFrequency_Property_Only_Changes_Relevant_Flag()
         {
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency1Hz);
+            _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency1Hz;
             SpanByte before = ReadAllBuffers();
 
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency32kHz);
+            _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency32kHz;
             SpanByte after = ReadAllBuffers();
 
             // Verify time keeping registers.
@@ -1174,43 +1150,30 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void SetSquareWaveFrequency_Correctly_Sets_Flag()
+        public void SquareWaveOutput_SquareWaveOutputFrequency_Property_Correctly_Gets_And_Sets_Flag()
         {
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency1Hz);
+            _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency1Hz;
+            Assert.Equals(SquareWaveFrequency.Frequency1Hz, _clock.SquareWaveOutputFrequency);
             TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency1Hz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
 
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency4kHz);
+            _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency4kHz;
+            Assert.Equals(SquareWaveFrequency.Frequency4kHz, _clock.SquareWaveOutputFrequency);
             TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency4kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
 
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency8kHz);
+            _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency8kHz;
+            Assert.Equals(SquareWaveFrequency.Frequency8kHz, _clock.SquareWaveOutputFrequency);
             TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency8kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
 
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency32kHz);
+            _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency32kHz;
+            Assert.Equals(SquareWaveFrequency.Frequency32kHz, _clock.SquareWaveOutputFrequency);
             TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency32kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
-        }
-
-
-        [TestMethod]
-        public void GetSquareWaveFrequency_Correctly_Gets_Flag()
-        {
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency1Hz);
-            Assert.Equal((byte)SquareWaveFrequency.Frequency1Hz, (byte)_clock.GetSquareWaveFrequency());
-
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency4kHz);
-            Assert.Equal((byte)SquareWaveFrequency.Frequency4kHz, (byte)_clock.GetSquareWaveFrequency());
-
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency8kHz);
-            Assert.Equal((byte)SquareWaveFrequency.Frequency8kHz, (byte)_clock.GetSquareWaveFrequency());
-
-            _clock.SetSquareWaveFrequency(SquareWaveFrequency.Frequency32kHz);
-            Assert.Equal((byte)SquareWaveFrequency.Frequency32kHz, (byte)_clock.GetSquareWaveFrequency());
         }
 
         #endregion
 
         #region Clock
 
-        public void Start_And_Stop_Clock_Correctly_Sets_Flag()
+        public void Clock_StartClock_And_Halt_Correctly_Sets_Flag()
         {
             _clock.StartClock();
             Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled));
@@ -1220,7 +1183,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Start_And_Stop_Clock_Only_Changes_Relevant_Flag()
+        public void Clock_StartClock_And_Halt_Only_Changes_Relevant_Flag()
         {
             _clock.StartClock();
             SpanByte before = ReadAllBuffers();
@@ -1261,17 +1224,17 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void ClockIsHalted_Correctly_Gets_Flag()
+        public void Clock_IsHalted_Property_Correctly_Gets_Flag()
         {
             _clock.StartClock();
 
             // Verify flag matches function returned state.
-            Assert.False(_clock.IsHalted());
+            Assert.False(_clock.IsHalted);
 
             _clock.Halt();
 
             // Verify flag matches function returned state.
-            Assert.True(_clock.IsHalted());
+            Assert.True(_clock.IsHalted);
         }
 
         #endregion
@@ -1279,7 +1242,7 @@ namespace Iot.Device.NFUnitTest
         #region SRAM
 
         [TestMethod]
-        public void ConvertAddressToSRAM_Works_Correctly()
+        public void SRAM_ConvertAddressToSRAM_Works_Correctly()
         {
             for (byte address = 0; address < 63; address++)
             {
@@ -1288,13 +1251,13 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void ConvertAddressToSRAM_Throws_Exception_When_Address_Out_Of_Range()
+        public void SRAM_ConvertAddressToSRAM_Throws_Exception_When_Address_Out_Of_Range()
         {
             Assert.Throws(typeof(ArgumentOutOfRangeException), () => _clock.ConvertAddressToSRAM(64));
         }
 
         [TestMethod]
-        public void Read_And_Write_Byte_From_SRAM_Works_Correctly()
+        public void SRAM_ReadByteFromSRAM_And_WriteByteToSRAM_Work_Correctly()
         {
             Random random = new Random();
             byte value;

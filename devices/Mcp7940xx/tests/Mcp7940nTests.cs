@@ -5,8 +5,6 @@ using nanoFramework.TestFramework;
 using System;
 using System.Device.I2c;
 using System.Diagnostics;
-using System.Reflection;
-using System.Threading;
 
 namespace Iot.Device.NFUnitTest
 {
@@ -61,8 +59,10 @@ namespace Iot.Device.NFUnitTest
             }
         }
 
+        #region External Battery Backup
+
         [TestMethod]
-        public void Enable_And_Disable_ExternalBatteryBackup_Only_Changes_Relevant_Flag()
+        public void ExternalBatteryBackup_EnableExternalBatteryBackup_And_DisableExternalBatteryBackup_Only_Changes_Relevant_Flag()
         {
             _clock.EnableExternalBatteryBackup();
             SpanByte before = ReadAllBuffers();
@@ -103,7 +103,7 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void Enable_And_Disable_ExternalBatteryBackup_Correctly_Sets_Flag()
+        public void ExternalBatteryBackup_EnableExternalBatteryBackup_And_DisableExternalBatteryBackup_Correctly_Sets_Flag()
         {
             _clock.EnableExternalBatteryBackup();
 
@@ -117,19 +117,21 @@ namespace Iot.Device.NFUnitTest
         }
 
         [TestMethod]
-        public void ExternalBatteryBackupIsEnabled_Correctly_Gets_Flag()
+        public void ExternalBatteryBackup_IsEnabledExternalBatteryBackup_Property_Correctly_Gets_Flag()
         {
             _clock.EnableExternalBatteryBackup();
 
             // Verify flag matches function returned state.
-            bool isEnabled = _clock.IsEnabledExternalBatteryBackup();
+            bool isEnabled = _clock.IsEnabledExternalBatteryBackup;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
 
             _clock.DisableExternalBatteryBackup();
 
             // Verify flag matches function returned state.
-            isEnabled = _clock.IsEnabledExternalBatteryBackup();
+            isEnabled = _clock.IsEnabledExternalBatteryBackup;
             Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
         }
+
+        #endregion
     }
 }

@@ -42,21 +42,25 @@ namespace Iot.Device.Mcp7940xx
         }
 
         /// <summary>
-        /// Checks if external battery backup enabled.
+        /// Gets a value indicating whether the external battery backup is enabled.
         /// </summary>
-        /// <returns>Returns <c>true</c> if external battery backup is enabled, <c>false</c> if not.</returns>
-        public bool IsEnabledExternalBatteryBackup()
+        public bool IsEnabledExternalBatteryBackup
         {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            }
         }
 
         /// <summary>
-        /// Checks if the device has experienced a power failure.
+        /// Gets a value indicating whether the device has experienced a power failure.
         /// </summary>
-        /// <returns>Returns <c>true</c> if a power failure has occurred, <c>false</c> if not.</returns>
-        public bool HasPowerFailureAlert()
+        public bool HasPowerFailureAlert
         {
-            return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
+            }
         }
 
         /// <summary>

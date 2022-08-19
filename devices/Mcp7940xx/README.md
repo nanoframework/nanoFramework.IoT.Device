@@ -49,7 +49,7 @@ while (true)
     Debug.WriteLine($"Time: {currentTime.ToString("yyyy/MM/dd HH:mm:ss")}");
 
     // Check if alarm 1 has triggered.
-    if (clock.Alarm1IsTriggered())
+    if (clock.IsTriggeredAlarm1)
     {
         Debug.WriteLine("[ALARM 1]");
 
@@ -58,7 +58,7 @@ while (true)
     }
 
     // Check if alarm 2 has triggered.
-    if (clock.Alarm2IsTriggered())
+    if (clock.IsTriggeredAlarm2)
     {
         Debug.WriteLine("[ALARM 2]");
 
