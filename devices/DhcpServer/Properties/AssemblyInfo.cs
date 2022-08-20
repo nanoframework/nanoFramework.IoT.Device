@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Iot.Device.Apa102")]
+[assembly: AssemblyTitle("Iot.Device.DhcpServer")]
 [assembly: AssemblyCompany("nanoFramework Contributors")]
 [assembly: AssemblyCopyright("Copyright(c).NET Foundation and Contributors")]
 

@@ -22,17 +22,23 @@ namespace Iot.Device.A4988
         private GpioController _gpioController;
 
         /// <summary>
-        /// Initialize a A4988 class.
+        /// Initializes a new instance of the <see cref="A4988" /> class.
         /// </summary>
         /// <param name="stepPin">Pin connected to STEP driver pin.</param>
         /// <param name="dirPin">Pin connected to DIR driver pin.</param>
-        /// <param name="microsteps">Microsteps mode</param>
+        /// <param name="microsteps">Microsteps mode.</param>
         /// <param name="fullStepsPerRotation">Full steps per rotation.</param>
         /// <param name="sleepBetweenSteps">By changing this parameter you can set delay between steps and control the rotation speed (less time equals faster rotation).</param>
         /// <param name="gpioController">GPIO controller.</param>
         /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
-        public A4988(byte stepPin, byte dirPin, Microsteps microsteps, ushort fullStepsPerRotation, TimeSpan sleepBetweenSteps,
-            GpioController? gpioController = null, bool shouldDispose = true)
+        public A4988(
+            byte stepPin, 
+            byte dirPin, 
+            Microsteps microsteps, 
+            ushort fullStepsPerRotation, 
+            TimeSpan sleepBetweenSteps,
+            GpioController? gpioController = null, 
+            bool shouldDispose = true)
         {
             _microsteps = microsteps;
             _fullStepsPerRotation = fullStepsPerRotation;
@@ -87,7 +93,7 @@ namespace Iot.Device.A4988
             if (_shouldDispose)
             {
                 _gpioController?.Dispose();
-                _gpioController = null!;
+                _gpioController = null;
             }
         }
     }
