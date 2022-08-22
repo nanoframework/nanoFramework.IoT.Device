@@ -56,12 +56,12 @@ namespace Iot.Device.Mcp7940xx
             {
                 if (i2cDevice == null)
                 {
-                    throw new ArgumentNullException(nameof(i2cDevice));
+                    throw new ArgumentNullException();
                 }
 
                 if (eventRegister != Register.PowerUpMinute && eventRegister != Register.PowerDownMinute)
                 {
-                    throw new ArgumentException(nameof(eventRegister));
+                    throw new ArgumentException();
                 }
 
                 // Read minute, hour, day, and month registers for the power down event.

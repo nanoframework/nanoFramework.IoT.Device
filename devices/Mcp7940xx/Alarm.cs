@@ -14,7 +14,7 @@ namespace Iot.Device.Mcp7940xx
     public partial class Mcp7940m
     {
         /// <summary>
-        /// Represents an alarm  on a Mcp7940xx series device.
+        /// Represents an alarm on a Mcp7940xx series device.
         /// </summary>
         public class Alarm
         {
@@ -167,12 +167,12 @@ namespace Iot.Device.Mcp7940xx
             {
                 if (i2cDevice == null)
                 {
-                    throw new ArgumentNullException(nameof(i2cDevice));
+                    throw new ArgumentNullException();
                 }
 
                 if (alarmRegister != Register.Alarm1Second && alarmRegister != Register.Alarm2Second)
                 {
-                    throw new ArgumentException(nameof(alarmRegister));
+                    throw new ArgumentException();
                 }
 
                 // Read the second, minute, hour, day-of-week, day, and month registers for the desired alarm.
@@ -204,12 +204,12 @@ namespace Iot.Device.Mcp7940xx
             {
                 if (i2cDevice == null)
                 {
-                    throw new ArgumentNullException(nameof(i2cDevice));
+                    throw new ArgumentNullException();
                 }
 
                 if (alarmRegister != Register.Alarm1Second && alarmRegister != Register.Alarm2Second)
                 {
-                    throw new ArgumentException(nameof(alarmRegister));
+                    throw new ArgumentException();
                 }
 
                 byte weekdayRegister = (byte)((byte)MatchMode | (byte)DayOfWeek);

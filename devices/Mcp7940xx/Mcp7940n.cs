@@ -30,7 +30,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void EnableExternalBatteryBackup()
         {
-            RegisterHelper.SetRegisterBit(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void DisableExternalBatteryBackup()
         {
-            RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void ClearPowerFailureAlert()
         {
-            RegisterHelper.ClearRegisterBit(_I2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Iot.Device.Mcp7940xx
         /// <returns>An object whose value is the date and time of the last power down event.</returns>
         public PowerEvent GetLastPowerDown()
         {
-            return new PowerEvent(_I2cDevice, Register.PowerDownMinute);
+            return new PowerEvent(_i2cDevice, Register.PowerDownMinute);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Iot.Device.Mcp7940xx
         /// <returns>An object whose value is the date and time of the last power up event.</returns>
         public PowerEvent GetLastPowerUp()
         {
-            return new PowerEvent(_I2cDevice, Register.PowerUpMinute);
+            return new PowerEvent(_i2cDevice, Register.PowerUpMinute);
         }
 
         #endregion

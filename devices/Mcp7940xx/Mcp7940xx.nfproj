@@ -39,6 +39,9 @@
     <Compile Include="AlarmMatchMode.cs" />
     <Compile Include="AlarmHourRegister.cs" />
     <Compile Include="ClockSource.cs" />
+    <Compile Include="Mcp79400.cs" />
+    <Compile Include="Mcp79401.cs" />
+    <Compile Include="Mcp79402.cs" />
     <Compile Include="Mcp7940m.cs" />
     <Compile Include="Mcp7940n.cs" />
     <Compile Include="PowerEvent.cs" />

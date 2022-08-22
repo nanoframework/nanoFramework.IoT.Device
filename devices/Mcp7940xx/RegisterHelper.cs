@@ -9,7 +9,7 @@ namespace Iot.Device.Common
     /// <summary>
     /// Helper class for common register manipulation tasks.
     /// </summary>
-    public static class RegisterHelper
+    internal static class RegisterHelper
     {
         /// <summary>
         /// Helper function to read from a device register.
@@ -35,9 +35,8 @@ namespace Iot.Device.Common
         /// <param name="i2cDevice">The I2C device to use for communication.</param>
         /// <param name="register">The address of the register.</param>
         /// <param name="value">The value to write to the register.</param>
-        /// <returns>Returns the number of bytes written to the device.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is <c>null</c>.</exception>
-        public static uint WriteRegister(I2cDevice i2cDevice, byte register, byte value)
+        public static void WriteRegister(I2cDevice i2cDevice, byte register, byte value)
         {
             if (i2cDevice == null)
             {
@@ -46,9 +45,7 @@ namespace Iot.Device.Common
 
             SpanByte writeBuffer = new byte[] { register, value };
 
-            I2cTransferResult writeResult = i2cDevice.Write(writeBuffer);
-
-            return writeResult.BytesTransferred;
+            i2cDevice.Write(writeBuffer);
         }
 
         /// <summary>
