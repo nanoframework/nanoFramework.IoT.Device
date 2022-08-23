@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Bu9873.samples</RootNamespace>
-    <AssemblyName>Iot.Device.Bu9873.samples</AssemblyName>
+    <RootNamespace>Iot.Device.Ds1621.samples</RootNamespace>
+    <AssemblyName>Iot.Device.Ds1621.samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
