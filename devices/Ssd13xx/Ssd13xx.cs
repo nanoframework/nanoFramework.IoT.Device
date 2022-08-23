@@ -632,7 +632,10 @@ namespace Iot.Device.Ssd13xx
                 {                                   
                     _gpioController?.Dispose();
                     _gpioController = null;
-                }                
+                }
+				
+				_i2cDevice?.Dispose();
+				_i2cDevice = null!;
                 
                 _disposed = true;
             }
