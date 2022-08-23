@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using Iot.Device.Common;
 using Iot.Device.Mcp7940xx;
 using nanoFramework.Hardware.Esp32;
@@ -120,7 +123,7 @@ namespace Iot.Device.NFUnitTest
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify Alarm1 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -405,7 +408,7 @@ namespace Iot.Device.NFUnitTest
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify Alarm1 registers have been altered.
             TestHelper.AssertRegistersNotEqual(before, after, Register.Alarm1Second);
@@ -444,7 +447,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only Alarm1 Enable flag has been altered.
             TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.Alarm1InterruptEnabled);
@@ -788,7 +791,7 @@ namespace Iot.Device.NFUnitTest
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify Alarm1 registers have been altered.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -827,7 +830,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only Alarm2 Enable flag has been altered.
             TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.Alarm2InterruptEnabled);
@@ -928,7 +931,7 @@ namespace Iot.Device.NFUnitTest
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify Alarm1 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -995,7 +998,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only GeneralPurposeOutput Enable flag has been altered.
             TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.GeneralPurposeOutput);
@@ -1058,7 +1061,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only SquareWaveOutput Enable flag has been altered.
             TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.SquareWaveOutput);
@@ -1128,7 +1131,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only SquareWaveOutput Enable flag has been altered.
             TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.SquareWaveFrequencyMask);
@@ -1205,7 +1208,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
 
             // Verify Alarm1 registers.

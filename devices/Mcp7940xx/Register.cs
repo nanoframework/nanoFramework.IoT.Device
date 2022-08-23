@@ -56,7 +56,7 @@ namespace Iot.Device.Mcp7940xx
         /// <summary>
         /// Protected EEPROM Unlock Register.
         /// </summary>
-        EEPROMUnlock = 0x09,
+        EepromUnlock = 0x09,
 
         /// <summary>
         /// Holds the second component of Alarm 1.

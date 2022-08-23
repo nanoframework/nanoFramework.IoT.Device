@@ -1,4 +1,7 @@
-﻿using Iot.Device.Common;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Common;
 using Iot.Device.Mcp7940xx;
 using nanoFramework.TestFramework;
 using System;
@@ -39,7 +42,7 @@ namespace Iot.Device.NFUnitTest
                 case Register.OscillatorTrimming:
                     return "OscillatorTrimming";
 
-                case Register.EEPROMUnlock:
+                case Register.EepromUnlock:
                     return "EEPROMUnlock";
 
                 case Register.Alarm1Second:

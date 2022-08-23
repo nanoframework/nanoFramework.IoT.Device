@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using Iot.Device.Common;
 using Iot.Device.Mcp7940xx;
 using nanoFramework.Hardware.Esp32;
@@ -84,7 +87,7 @@ namespace Iot.Device.NFUnitTest
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
-            TestHelper.AssertRegistersEqual(before, after, Register.EEPROMUnlock);
+            TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
 
             // Verify Alarm1 registers.
