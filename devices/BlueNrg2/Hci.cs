@@ -558,8 +558,8 @@ namespace Iot.Device.BlueNrg2
         /// Unsupported Feature or Parameter Value (0x11) error code.
         /// </summary>
         /// <param name="minAdvertisingInterval">Minimum advertising interval for undirected
-        /// and low duty cycle directed advertising. Time = N * 0.625 msec.</param>
-        /// <param name="maxAdvertisingInterval">Maximum advertising interval. Time = N * 0.625 msec.</param>
+        /// and low duty cycle directed advertising. Time = N * 0.625 ms.</param>
+        /// <param name="maxAdvertisingInterval">Maximum advertising interval. Time = N * 0.625 ms.</param>
         /// <param name="advertisingType">Advertising type.</param>
         /// <param name="ownAddressType">Own address type.
         /// <list type="bullet">
@@ -621,9 +621,35 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used by the Host
+        /// to read the transmit power level used for LE advertising channel
+        /// packets. (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.6)
+        /// </summary>
+        /// <param name="transmitPowerLevel">Size: 1 Octet (signed integer) Units: dBm
+        /// Accuracy: +/- 4 dBm</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadAdvertisingChannelTxPower(out sbyte transmitPowerLevel)
         {
-            throw new NotImplementedException();
+            transmitPowerLevel = 0;
+
+            const uint responseLength = 2;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x007,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            transmitPowerLevel = (sbyte)response[1];
+
+            return BleStatus.Success;
         }
 
         /// <summary>
@@ -995,11 +1021,47 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to read the total number
+        /// of white list entries that can be stored in the Controller. (See
+        /// Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.14)
+        /// </summary>
+        /// <param name="whiteListSize">Total number of white list entries that can be
+        /// stored in the Controller.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadWhitelistSize(out byte whiteListSize)
         {
-            throw new NotImplementedException();
+            whiteListSize = 0;
+
+            const uint responseLength = 2;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x00f,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            whiteListSize = response[1];
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to clear the white list stored
+        /// in the Controller. This command can be used at any time except when: -
+        /// the advertising filter policy uses the white list and advertising is
+        /// enabled. - the scanning filter policy uses the white list and scanning
+        /// is enabled. - the initiator filter policy uses the white list and an
+        /// LE_Create_Connection command is outstanding. (See Bluetooth
+        /// Specification v.4.1, Vol. 2, Part E, 7.8.15)
+        /// </summary>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeClearWhiteList()
         {
             var status = new byte[1];
@@ -1015,16 +1077,139 @@ namespace Iot.Device.BlueNrg2
             return status[0] != 0 ? (BleStatus)status[0] : BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to add a single device
+        /// to the white list stored in the Controller. This command can be used
+        /// at any time except when: - the advertising filter policy uses the
+        /// white list and advertising is enabled. - the scanning filter policy
+        /// uses the white list and scanning is enabled. - the initiator filter
+        /// policy uses the white list and a create connection command is
+        /// outstanding. (See Bluetooth Specification v.4.1, Vol. 2, Part E,
+        /// 7.8.16)
+        /// </summary>
+        /// <param name="addressType">Address type.</param>
+        /// <param name="address">Public Device Address or Random Device Address of the device
+        /// to be added to the white list.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown when address is null or not of length 6.</exception>
         public BleStatus LeAddDeviceToWhitelist(AddressType addressType, byte[] address)
         {
-            throw new NotImplementedException();
+            if (address is null || address.Length != 6)
+            {
+                throw new ArgumentException();
+            }
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)addressType;
+            ptr += 1;
+            address.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x011,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to remove a
+        /// single device from the white list stored in the Controller. This
+        /// command can be used at any time except when: - the advertising filter
+        /// policy uses the white list and advertising is enabled. - the scanning
+        /// filter policy uses the white list and scanning is enabled. - the
+        /// initiator filter policy uses the white list and a create connection
+        /// command is outstanding. (See Bluetooth Specification v.4.1, Vol. 2,
+        /// Part E, 7.8.17)
+        /// </summary>
+        /// <param name="addressType">Address type.</param>
+        /// <param name="address">Public Device Address or Random Device Address of the device
+        /// to be removed from the white list.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException"></exception>
         public BleStatus LeRemoveDeviceFromWhitelist(AddressType addressType, byte[] address)
         {
-            throw new NotImplementedException();
+            if (address is null || address.Length != 6)
+            {
+                throw new ArgumentException();
+            }
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)addressType;
+            ptr += 1;
+            address.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x012,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to change the Link Layer
+        /// connection parameters of a connection. This command is supported only
+        /// on master side. The Conn_Interval_Min and Conn_Interval_Max parameters
+        /// are used to define the minimum and maximum allowed connection
+        /// interval. The Conn_Interval_Min parameter shall not be greater than
+        /// the Conn_Interval_Max parameter. The Conn_Latency parameter shall
+        /// define the maximum allowed connection latency. The Supervision_Timeout
+        /// parameter shall define the link supervision timeout for the LE link.
+        /// The Supervision_Timeout in milliseconds shall be larger than (1 +
+        /// Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is
+        /// given in milliseconds. The Minimum_CE_Length and Maximum_CE_Length are
+        /// information parameters providing the Controller with a hint about the
+        /// expected minimum and maximum length of the connection events. The
+        /// Minimum_CE_Length shall be less than or equal to the
+        /// Maximum_CE_Length. The actual parameter values selected by the Link
+        /// Layer may be different from the parameter values provided by the Host
+        /// through this command. (See Bluetooth Specification v.4.1, Vol. 2, Part
+        /// E, 7.8.18)
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="minimumConnectionInterval">Minimum value for the connection event interval.
+        /// This shall be less than or equal to Conn_Interval_Max. Time = N * 1.25
+        /// ms.</param>
+        /// <param name="maximumConnectionInterval">Maximum value for the connection event interval.
+        /// This shall be greater than or equal to Conn_Interval_Min. Time = N *
+        /// 1.25 ms.</param>
+        /// <param name="connectionLatency">Slave latency for the connection in number of connection
+        /// events.</param>
+        /// <param name="supervisionTimeout">Supervision timeout for the LE Link. It shall be a
+        /// multiple of 10 ms and larger than (1 + connSlaveLatency) *
+        /// connInterval * 2. Time = N * 10 ms.</param>
+        /// <param name="minimumConnectionLength">Information parameter about the minimum length of
+        /// connection needed for this LE connection. Time = N * 0.625 ms.</param>
+        /// <param name="maximumConnectionLength">Information parameter about the maximum length of
+        /// connection needed for this LE connection. Time = N * 0.625 ms.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeConnectionUpdate(
             ushort connectionHandle,
             ushort minimumConnectionInterval,
@@ -1034,144 +1219,1161 @@ namespace Iot.Device.BlueNrg2
             ushort minimumConnectionLength,
             ushort maximumConnectionLength)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionInterval).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(connectionLatency).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(supervisionTimeout).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(minimumConnectionLength).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(maximumConnectionLength).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x013,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command allows the Host to
+        /// specify a channel classification for data channels based on its "local
+        /// information". This classification persists until overwritten with a
+        /// subsequent LE_Set_Host_Channel_Classification command or until the
+        /// Controller is reset using the Reset command (see [Vol 6] Part B,
+        /// Section 4.5.8.1). If this command is used, the Host should send it
+        /// within 10 seconds of knowing that the channel classification has
+        /// changed. The interval between two successive commands sent shall be at
+        /// least one second. This command shall only be used when the local
+        /// device supports the Master role. (See Bluetooth Specification v.4.1,
+        /// Vol. 2, Part E, 7.8.19)
+        /// </summary>
+        /// <param name="channelMap">This parameter contains 37 1-bit fields. The nth such
+        /// field (in the range 0 to 36) contains the value for the link layer
+        /// channel index n. Channel n is bad = 0. Channel n is unknown = 1. The
+        /// most significant bits are reserved and shall be set to 0. At least one
+        /// channel shall be marked as unknown.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown when <see cref="channelMap"/> is null or not of length 5.</exception>
         public BleStatus LeSetHostChannelClassification(byte[] channelMap)
         {
-            throw new NotImplementedException();
+            if (channelMap is null || channelMap.Length != 5)
+                throw new ArgumentException();
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            channelMap.CopyTo(command, ptr);
+            ptr += 5;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x014,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
-        public BleStatus LeReadChannelMap(ushort connectionHandle, byte[] channelMap)
+        /// <summary>
+        /// The LE_Read_Channel_Map command returns the current Channel_Map for
+        /// the specified Connection_Handle. The returned value indicates the
+        /// state of the Channel_Map specified by the last transmitted or received
+        /// Channel_Map (in a CONNECT_REQ or LL_CHANNEL_MAP_REQ message) for the
+        /// specified Connection_Handle, regardless of whether the Master has
+        /// received an acknowledgement. (See Bluetooth Specification v.4.1, Vol.
+        /// 2, Part E, 7.8.20)
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="channelMap">This parameter contains 37 1-bit fields. The nth
+        /// such field (in the range 0 to 36) contains the value for the link
+        /// layer channel index n. Channel n is unused = 0. Channel n is used
+        /// = 1. The most significant bits are reserved and shall be set to 0.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public BleStatus LeReadChannelMap(ushort connectionHandle, out byte[] channelMap)
         {
-            throw new NotImplementedException();
+            channelMap = null;
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x015,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            channelMap = new byte[5];
+            Array.Copy(response, 1, channelMap, 0, 5);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command requests a list of the used LE features from the remote
+        /// device. This command shall return a list of the used LE features. For
+        /// details see [Vol 6] Part B, Section 4.6. This command may be issued on
+        /// both the master and slave. (See Bluetooth Specification v.4.1, Vol. 2,
+        /// Part E, 7.8.21)
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadRemoteUsedFeatures(ushort connectionHandle)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x016,
+                Event = 0x0F,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to request the Controller to encrypt
+        /// the Plaintext_Data in the command using the Key given in the command
+        /// and returns the Encrypted_Data to the Host. The AES-128 bit block
+        /// cypher is defined in NIST Publication FIPS-197
+        /// (http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf). (See
+        /// Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.22)
+        /// </summary>
+        /// <param name="key">128 bit key for the encryption of the data given in the command.</param>
+        /// <param name="plaintextData">128 bit data block that is requested to be encrypted.</param>
+        /// <param name="encryptedData">128 bit encrypted data block.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown if <see cref="key"/> or <see cref="plaintextData"/> are null or not of length 16.</exception>
         public BleStatus LeEncrypt(byte[] key, byte[] plaintextData, out byte[] encryptedData)
         {
-            throw new NotImplementedException();
+            encryptedData = null;
+
+            if (key is null || key.Length != 16)
+                throw new ArgumentException(nameof(key));
+            if (plaintextData is null || plaintextData.Length != 16)
+                throw new ArgumentException(nameof(plaintextData));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            key.CopyTo(command, ptr);
+            ptr += 16;
+            plaintextData.CopyTo(command, ptr);
+            ptr += 16;
+
+            const uint responseLength = 17;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x017,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            encryptedData = new byte[16];
+            Array.Copy(response, 1, encryptedData, 0, 16);
+
+            return BleStatus.Success;
         }
 
-        public BleStatus LeRandom(out byte[] randomNumber)
+        /// <summary>
+        /// This command is used to request the Controller to generate 8
+        /// octets of random data to be sent to the Host. The Random_Number shall
+        /// be generated according to [Vol 2] Part H, Section 2 if the LE Feature
+        /// (LL Encryption) is supported. (See Bluetooth Specification v.4.1, Vol.
+        /// 2, Part E, 7.8.23)
+        /// </summary>
+        /// <param name="randomNumber">Random number</param>
+        /// <returns>Value indicating success or error code.</returns>
+        public BleStatus LeRandom(out ulong randomNumber)
         {
-            throw new NotImplementedException();
+            randomNumber = 0;
+
+            const uint responseLength = 9;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x018,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            randomNumber = BitConverter.ToUInt64(response, 1);
+
+            return BleStatus.Success;
         }
 
-        public BleStatus LeStartEncryption(ushort connectionHandle, byte[] randomNumber, ushort encryptedDiversifier, byte[] longTermKey)
+        /// <summary>
+        /// This command is used to authenticate the given
+        /// encryption key associated with the remote device specified by the
+        /// connection handle, and once authenticated will encrypt the connection.
+        /// The parameters are as defined in [Vol 3] Part H, Section 2.4.4. If the
+        /// connection is already encrypted then the Controller shall pause
+        /// connection encryption before attempting to authenticate the given
+        /// encryption key, and then re-encrypt the connection. While encryption
+        /// is paused no user data shall be transmitted. On an authentication
+        /// failure, the connection shall be automatically disconnected by the
+        /// Link Layer. If this command succeeds, then the connection shall be
+        /// encrypted. This command shall only be used when the local device's
+        /// role is Master. (See Bluetooth Specification v.4.1, Vol. 2, Part E,
+        /// 7.8.24)
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="randomNumber">64 bit random number.</param>
+        /// <param name="encryptedDiversifier">16 bit encrypted diversifier.</param>
+        /// <param name="longTermKey">128 bit long term key.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown when <see cref="longTermKey"/> is null or not of length 16.</exception>
+        public BleStatus LeStartEncryption(ushort connectionHandle, ulong randomNumber, ushort encryptedDiversifier, byte[] longTermKey)
         {
-            throw new NotImplementedException();
+            if (longTermKey is null || longTermKey.Length != 16)
+                throw new ArgumentException(nameof(longTermKey));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(randomNumber).CopyTo(command, ptr);
+            ptr += 8;
+            BitConverter.GetBytes(encryptedDiversifier).CopyTo(command, ptr);
+            ptr += 2;
+            longTermKey.CopyTo(command, ptr);
+            ptr += 16;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x019,
+                Event = 0x0F,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to reply to an LE
+        /// Long Term Key Request event from the Controller, and specifies the
+        /// Long_Term_Key parameter that shall be used for this Connection_Handle.
+        /// The Long_Term_Key is used as defined in [Vol 6] Part B, Section 5.1.3.
+        /// (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.25)
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <param name="longTermKey">128 bit long term key.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown when <see cref="longTermKey"/> is null or is not of length 16.</exception>
         public BleStatus LeLongTermKeyRequestReply(ushort connectionHandle, byte[] longTermKey)
         {
-            throw new NotImplementedException();
+            if (longTermKey is null || longTermKey.Length != 16)
+                throw new ArgumentException(nameof(longTermKey));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            longTermKey.CopyTo(command, ptr);
+            ptr += 16;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x01a,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to reply
+        /// to an LE Long Term Key Request event from the Controller if the Host
+        /// cannot provide a Long Term Key for this Connection_Handle. (See
+        /// Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.26)
+        /// </summary>
+        /// <param name="connectionHandle">Connection handle that identifies the connection.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeLongTermKeyRequestedNegativeReply(ushort connectionHandle)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x01b,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
-        public BleStatus LeReadSupportedStates(out byte[] states)
+        /// <summary>
+        /// The LE_Read_Supported_States command reads the states and state
+        /// combinations that the link layer supports. See [Vol 6] Part B, Section
+        /// 1.1.1. LE_States is an 8-octet bit field. If a bit is set to 1 then
+        /// this state or state combination is supported by the Controller.
+        /// Multiple bits in LE_States may be set to 1 to indicate support for
+        /// multiple state and state combinations. All the Advertising type with
+        /// the Initiate State combinations shall be set only if the corresponding
+        /// Advertising types and Master Role combination are set. All the
+        /// Scanning types and the Initiate State combinations shall be set only
+        /// if the corresponding Scanning types and Master Role combination are
+        /// set. (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.8.27)
+        /// </summary>
+        /// <param name="states">State or state combination is supported by the
+        /// Controller. See Core v4.1, Vol.2, part E, Ch. 7.8.27.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        public BleStatus LeReadSupportedStates(out ulong states)
         {
-            throw new NotImplementedException();
+            states = 0;
+
+            const uint responseLength = 9;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x01c,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            states = BitConverter.ToUInt64(response, 1);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to start a test where the DUT receives test
+        /// reference packets at a fixed interval. The tester generates the test
+        /// reference packets. (See Bluetooth Specification v.4.1, Vol. 2, Part E,
+        /// 7.8.28)
+        /// </summary>
+        /// <param name="rxFrequency">N = (F - 2402) / 2.
+        /// Frequency Range : 2402 MHz to 2480 MHz</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReceiverTest(byte rxFrequency)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = rxFrequency;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x01d,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
-        public BleStatus LeTransmitterTest(byte txFrequency, byte testDataLength, byte packetPayload)
+        /// <summary>
+        /// This command is used to start a test where the DUT generates test
+        /// reference packets at a fixed interval. The Controller shall transmit
+        /// at maximum power. An LE Controller supporting the LE_Transmitter_Test
+        /// command shall support Packet_Payload values 0x00, 0x01 and 0x02. An LE
+        /// Controller may support other values of Packet_Payload. (See Bluetooth
+        /// Specification v.4.1, Vol. 2, Part E, 7.8.29)
+        /// </summary>
+        /// <param name="txFrequency"> N = (F - 2402) / 2
+        /// Frequency Range : 2402 MHz to 2480 MHz</param>
+        /// <param name="testDataLength">Length in bytes of payload data in each packet.
+        /// Supported ranges:
+        /// <list type="bullet">
+        /// <item>(0x00,0x25): BlueNRG-1 and BlueNRG-2 with BLE stack version before 2.1;</item>
+        /// <item>(0x00,0xFF): BlueNRG-2 with BLE stack version 2.1 or later, and extended packet length.</item>
+        /// </list>
+        /// </param>
+        /// <param name="packetPayload">Type of packet payload.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        public BleStatus LeTransmitterTest(byte txFrequency, byte testDataLength, PacketPayloadType packetPayload)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = txFrequency;
+            ptr += 1;
+            command[ptr] = testDataLength;
+            ptr += 1;
+            command[ptr] = (byte)packetPayload;
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x01e,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to stop any test which is in progress. The
+        /// <see cref="numberOfPackets"/> for a transmitter test shall be reported as 0x0000.
+        /// The <see cref="numberOfPackets"/> is an unsigned number and contains the number of
+        /// received packets. (See Bluetooth Specification v.4.1, Vol. 2, Part E,
+        /// 7.8.30)
+        /// </summary>
+        /// <param name="numberOfPackets">Number of packets received.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeTestEnd(out ushort numberOfPackets)
         {
-            throw new NotImplementedException();
+            numberOfPackets = 0;
+
+            const uint responseLength = 9;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x01f,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            numberOfPackets = BitConverter.ToUInt16(response, 1);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command allows the Host to suggest maximum
+        /// transmission packet size and maximum packet transmission time
+        /// (connMaxTxOctets and connMaxTxTime - see [Vol 6] Part B, Section
+        /// 4.5.10) to be used for a given connection. The Controller may use
+        /// smaller or larger values based on local information.
+        /// </summary>
+        /// <param name="connectionHandle"><see cref="connectionHandle"/> to be used to identify a
+        /// connection.</param>
+        /// <param name="transmissionOctets">Preferred maximum number of payload octets that the local
+        /// Controller should include in a single Link Layer Data Channel PDU.
+        /// Range 0x001B-0x00FB (0x0000 - 0x001A and 0x00FC - 0xFFFF) Reserved for
+        /// future use). Default: 27 bytes.</param>
+        /// <param name="transmissionTime">Preferred maximum number of microseconds that the local
+        /// Controller should use to transmit a single Link Layer Data Channel
+        /// PDU. Range 0x0148-0x0848 (0x0000 - 0x0147 and 0x0849 - 0xFFFF Reserved
+        /// for future use). Default: 328 bytes.</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeSetDataLength(ushort connectionHandle, ushort transmissionOctets, ushort transmissionTime)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(connectionHandle).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(transmissionOctets).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(transmissionTime).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x022,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command allows the Host to
+        /// read the Host preferred values for the Controller maximum transmitted
+        /// number of payload octets and maximum packet transmission time to be
+        /// used for new connections (connInitialMaxTxOctets and
+        /// connInitialMaxTxTime - see ([Vol 6] Part B, Section 4.5.10).
+        /// </summary>
+        /// <param name="suggestedMaximumTransmissionOctets">The Host suggested value for the Controller
+        /// maximum transmitted number of payload octets to be used for new
+        /// connections - connInitialMaxTxOctets. Range 0x001B-0x00FB (0x0000
+        /// - 0x001A and 0x00FC - 0xFFFF Reserved for future use) Default:
+        /// 0x001B</param>
+        /// <param name="suggestedMaxTransmissionTime">The Host suggested value for the Controller
+        /// maximum packet transmission time to be used for new connections -
+        /// connInitialMaxTx-Time. Range 0x0148-0x0848 (0x0000 - 0x0147 and
+        /// 0x0849 - 0xFFFF Reserved for future use) Default: 0x0148</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadSuggestedDefaultDataLength(out ushort suggestedMaximumTransmissionOctets, out ushort suggestedMaxTransmissionTime)
         {
-            throw new NotImplementedException();
+            suggestedMaximumTransmissionOctets = 0;
+            suggestedMaxTransmissionTime = 0;
+
+            const uint responseLength = 5;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x023,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            suggestedMaximumTransmissionOctets = BitConverter.ToUInt16(response, 1);
+            suggestedMaxTransmissionTime = BitConverter.ToUInt16(response, 3);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command allows the Host to
+        /// specify its preferred values for the Controller maximum transmission
+        /// number of payload octets and maximum packet transmission time to be
+        /// used for new connections (connInitialMaxTxOctets and
+        /// connInitialMaxTxTime - see [Vol 6] Part B, Section 4.5.10). The
+        /// Controller may use smaller or larger values based on local
+        /// information.
+        /// </summary>
+        /// <param name="suggestedMaximumTransmissionOctets">The Host suggested value for the Controller
+        /// maximum transmitted number of payload octets to be used for new
+        /// connections - connInitialMaxTxOctets. Range 0x001B-0x00FB (0x0000 -
+        /// 0x001A and 0x00FC - 0xFFFF Reserved for future use)</param>
+        /// <param name="suggestedMaxTransmissionTime">The Host suggested value for the Controller maximum
+        /// packet transmission time to be used for new connections -
+        /// connInitialMaxTx-Time. Range 0x0148-0x0848 (0x0000 - 0x0147 and 0x0849
+        /// - 0xFFFF Reserved for future use)</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeWriteSuggestedDefaultDataLength(ushort suggestedMaximumTransmissionOctets, ushort suggestedMaxTransmissionTime)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(suggestedMaximumTransmissionOctets).CopyTo(command, ptr);
+            ptr += 2;
+            BitConverter.GetBytes(suggestedMaxTransmissionTime).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x024,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to return the local
+        /// P-256 public key from the Controller. The Controller shall generate a
+        /// new P-256 public/private key pair upon receipt of this command. (See
+        /// Bluetooth Specification v.4.2, Vol. 2, Part E, 7.8.36)
+        /// </summary>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadLocalP256PublicKey()
         {
-            throw new NotImplementedException();
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x025,
+                Event = 0x0F,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to initiate generation of a
+        /// Diffie- Hellman key in the Controller for use over the LE transport.
+        /// This command takes the remote P-256 public key as input. The Diffie-
+        /// Hellman key generation uses the private key generated by
+        /// LE_Read_Local_P256_Public_Key command. (See Bluetooth Specification
+        /// v.4.2, Vol. 2, Part E, 7.8.37)
+        /// </summary>
+        /// <param name="remoteP256PublicKey">The remote P-256 public key: X, Y format Octets
+        /// 31-0: X co-ordinate Octets 63-32: Y co-ordinate Little Endian Format</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown when <see cref="remoteP256PublicKey"/> is null or not of length 64.</exception>
         public BleStatus LeGenerateDhKey(byte[] remoteP256PublicKey)
         {
-            throw new NotImplementedException();
+            if (remoteP256PublicKey is null || remoteP256PublicKey.Length != 64)
+                throw new ArgumentException();
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            remoteP256PublicKey.CopyTo(command, ptr);
+            ptr += 64;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x026,
+                Event = 0x0F,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to add one device
+        /// to the list of address translations used to resolve Resolvable Private
+        /// Addresses in the Controller. This command cannot be used when address
+        /// translation is enabled in the Controller and: - Advertising is enabled
+        /// - Scanning is enabled - Create connection command is outstanding This
+        /// command can be used at any time when address translation is disabled
+        /// in the Controller. When a Controller cannot add a device to the
+        /// resolving list because the list is full, it shall respond with error
+        /// code 0x07 (Memory Capacity Exceeded). (See Bluetooth Specification
+        /// v.4.2, Vol. 2, Part E, 7.8.38)
+        /// </summary>
+        /// <param name="peerIdentityAddressType">Identity address type.</param>
+        /// <param name="peerIdentityAddress">Public or Random (static) Identity address of
+        /// the peer device.</param>
+        /// <param name="peerIrk">IRK of the peer device.</param>
+        /// <param name="localIrk">IRK of the local device.</param>
+        /// <returns>Value indicating success or error code.</returns>
+        /// <exception cref="ArgumentException">Thrown when arrays are null or of incorrect lengths.</exception>
         public BleStatus LeAddDeviceToResolvingList(AddressType peerIdentityAddressType, byte[] peerIdentityAddress, byte[] peerIrk, byte[] localIrk)
         {
-            throw new NotImplementedException();
+            if (peerIdentityAddress is null || peerIdentityAddress.Length != 6)
+                throw new ArgumentException(nameof(peerIdentityAddress));
+            if (peerIrk is null || peerIrk.Length != 16)
+                throw new ArgumentException(nameof(peerIrk));
+            if (localIrk is null || localIrk.Length != 16)
+                throw new ArgumentException(nameof(localIrk));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)peerIdentityAddressType;
+            ptr += 1;
+            peerIdentityAddress.CopyTo(command, ptr);
+            ptr += 6;
+            peerIrk.CopyTo(command, ptr);
+            ptr += 16;
+            localIrk.CopyTo(command, ptr);
+            ptr += 16;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x027,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to remove one
+        /// device from the list of address translations used to resolve
+        /// Resolvable Private Addresses in the controller. This command cannot be
+        /// used when address translation is enabled in the Controller and: -
+        /// Advertising is enabled - Scanning is enabled - Create connection
+        /// command is outstanding This command can be used at any time when
+        /// address translation is disabled in the Controller. When a Controller
+        /// cannot remove a device from the resolving list because it is not
+        /// found, it shall respond with error code 0x02 (Unknown Connection
+        /// Identifier). (See Bluetooth Specification v.4.2, Vol. 2, Part E,
+        /// 7.8.39)
+        /// </summary>
+        /// <param name="peerIdentityAddressType">Identity address type.</param>
+        /// <param name="peerIdentityAddress">Public or Random (static) Identity address of
+        /// the peer device</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeRemoveDeviceFromResolvingList(AddressType peerIdentityAddressType, byte[] peerIdentityAddress)
         {
-            throw new NotImplementedException();
+            if (peerIdentityAddress is null || peerIdentityAddress.Length != 6)
+                throw new ArgumentException(nameof(peerIdentityAddress));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)peerIdentityAddressType;
+            ptr += 1;
+            peerIdentityAddress.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x028,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to remove all devices from
+        /// the list of address translations used to resolve Resolvable Private
+        /// Addresses in the Controller. This command cannot be used when address
+        /// translation is enabled in the Controller and: - Advertising is enabled
+        /// - Scanning is enabled - Create connection command is outstanding This
+        /// command can be used at any time when address translation is disabled
+        /// in the Controller. (See Bluetooth Specification v.4.2, Vol. 2, Part E,
+        /// 7.8.40)
+        /// </summary>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeClearResolvingList()
         {
-            throw new NotImplementedException();
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x029,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// The LE_Read_Resolving_List_Size command is used to read the total
+        /// number of address translation entries in the resolving list that can
+        /// be stored in the Controller. (See Bluetooth Specification v.4.2, Vol.
+        /// 2, Part E, 7.8.41)
+        /// </summary>
+        /// <param name="resolvingListSize">Number of address translation entries in the resolving list</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadResolvingListSize(out byte resolvingListSize)
         {
-            throw new NotImplementedException();
+            resolvingListSize = 0;
+
+            const uint responseLength = 2;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x02a,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            resolvingListSize = response[1];
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// This command is used to get the current
+        /// peer Resolvable Private Address being used for the corresponding peer
+        /// Public and Random (static) Identity Address. The peer's resolvable
+        /// address being used may change after the command is called. This
+        /// command can be used at any time. When a Controller cannot find a
+        /// Resolvable Private Address associated with the Peer Identity Address,
+        /// it shall respond with error code 0x02 (Unknown Connection Identifier).
+        /// (See Bluetooth Specification v.4.2, Vol. 2, Part E, 7.8.42)
+        /// </summary>
+        /// <param name="peerIdentityAddressType">Identity address type.</param>
+        /// <param name="peerIdentityAddress">Public or Random (static) Identity address of
+        /// the peer device</param>
+        /// <param name="peerResolvableAddress">Resolvable Private Address being used by
+        /// the peer device</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadPeerResolvableAddress(AddressType peerIdentityAddressType, byte[] peerIdentityAddress, out byte[] peerResolvableAddress)
         {
-            throw new NotImplementedException();
+            peerResolvableAddress = null;
+
+            if (peerIdentityAddress is null || peerIdentityAddress.Length != 6)
+                throw new ArgumentException(nameof(peerIdentityAddress));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)peerIdentityAddressType;
+            ptr += 1;
+            peerIdentityAddress.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 7;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x02b,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            peerResolvableAddress = new byte[6];
+            Array.Copy(response, 1, peerResolvableAddress, 0, 6);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// The LE_Read_Local_Resolvable_Address command is used to get the
+        /// current local Resolvable Private Address being used for the
+        /// corresponding peer Identity Address. The local's resolvable address
+        /// being used may change after the command is called. This command can be
+        /// used at any time. When a Controller cannot find a Resolvable Private
+        /// Address associated with the Peer Identity Address, it shall respond
+        /// with error code 0x02 (Unknown Connection Identifier). (See Bluetooth
+        /// Specification v.4.2, Vol. 2, Part E, 7.8.43)
+        /// </summary>
+        /// <param name="peerIdentityAddressType">Identity address type.</param>
+        /// <param name="peerIdentityAddress">Public or Random (static) Identity address of
+        /// the peer device</param>
+        /// <param name="localResolvableAddress">Resolvable Private Address being used by
+        /// the local device</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadLocalResolvableAddress(
             AddressType peerIdentityAddressType,
             byte[] peerIdentityAddress,
             out byte[] localResolvableAddress)
         {
-            throw new NotImplementedException();
+            localResolvableAddress = null;
+
+            if (peerIdentityAddress is null || peerIdentityAddress.Length != 6)
+                throw new ArgumentException(nameof(peerIdentityAddress));
+
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)peerIdentityAddressType;
+            ptr += 1;
+            peerIdentityAddress.CopyTo(command, ptr);
+            ptr += 6;
+
+            const uint responseLength = 7;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x02c,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            localResolvableAddress = new byte[6];
+            Array.Copy(response, 1, localResolvableAddress, 0, 6);
+
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// The LE_Set_Address_Resolution_Enable command is used to enable
+        /// resolution of Resolvable Private Addresses in the Controller. This
+        /// causes the Controller to use the resolving list whenever the
+        /// Controller receives a local or peer Resolvable Private Address. This
+        /// command can be used at any time except when: - Advertising is enabled
+        /// - Scanning is enabled - Create connection command is outstanding (See
+        /// Bluetooth Specification v.4.2, Vol. 2, Part E, 7.8.44)
+        /// </summary>
+        /// <param name="enableAddressResolution">Enable/disable address resolution in the
+        /// controller. 0x00: Address Resolution in controller disabled (default),
+        /// 0x01: Address Resolution in controller enabled</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeSetAddressResolutionEnable(bool enableAddressResolution)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            command[ptr] = (byte)(enableAddressResolution ? 0x01 : 0x00);
+            ptr += 1;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x02d,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// The LE_Set_Resolvable_Private_Address_Timeout command set the length
+        /// of time the controller uses a Resolvable Private Address before a new
+        /// resolvable private address is generated and starts being used. This
+        /// timeout applies to all addresses generated by the controller. (See
+        /// Bluetooth Specification v.4.2, Vol. 2, Part E, 7.8.45)
+        /// </summary>
+        /// <param name="rpaTimeout">RPA_Timeout measured in seconds. Range for N: 0x0001 -
+        /// 0xA1B8 (1 sec - approximately 11.5 hours) Default: N= 0x0384 (900 secs
+        /// or 15 minutes)</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeSetResolvablePrivateAddressTimeout(ushort rpaTimeout)
         {
-            throw new NotImplementedException();
+            int ptr = 0;
+            var command = new byte[258];
+
+            BitConverter.GetBytes(rpaTimeout).CopyTo(command, ptr);
+            ptr += 2;
+
+            const uint responseLength = 1;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x02e,
+                CommandLength = (uint)ptr,
+                CommandParameter = command,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+            return BleStatus.Success;
         }
 
+        /// <summary>
+        /// The LE_Read_Maximum_Data_Length command allows the Host to read the
+        /// Controller  maximum supported payload octets and packet duration times
+        /// for transmission and reception (supportedMaxTxOctets and
+        /// supportedMaxTxTime, supportedMaxRxOctets, and supportedMaxRxTime, see
+        /// [Vol 6] Part B, Section 4.5.10).
+        /// </summary>
+        /// <param name="supportedMaximumOctets">Maximum number of payload octets that the
+        /// local Controller supports for transmission of a single Link Layer
+        /// Data Channel PDU. Range 0x001B-0x00FB (0x0000 - 0x001A and 0x00FC
+        /// - 0xFFFF Reserved for future use)</param>
+        /// <param name="supportedMaximumTransmissionTime">Maximum time, in microseconds, that the local
+        /// Controller supports for transmission of a single Link Layer Data
+        /// Channel PDU. Range 0x0148-0x0848 (0x0000 - 0x0147 and 0x0849 -
+        /// 0xFFFF Reserved for future use)</param>
+        /// <param name="supportedMaximumReceivingOctets">Maximum number of payload octets that the
+        /// local Controller supports for reception of a single Link Layer
+        /// Data Channel PDU. Range 0x001B-0x00FB (0x0000 - 0x001A and 0x00FC
+        /// - 0xFFFF Reserved for future use)</param>
+        /// <param name="supportedMaxReceivingTime">Maximum time, in microseconds, that the local
+        /// Controller supports for reception of a single Link Layer Data
+        /// Channel PDU. Range 0x0148-0x0848 (0x0000 - 0x0147 and 0x0849 -
+        /// 0xFFFF Reserved for future use)</param>
+        /// <returns>Value indicating success or error code.</returns>
         public BleStatus LeReadMaximumDataLength(
             out ushort supportedMaximumOctets,
             out ushort supportedMaximumTransmissionTime,
             out ushort supportedMaximumReceivingOctets,
             out ushort supportedMaxReceivingTime)
         {
-            throw new NotImplementedException();
+            supportedMaximumOctets = 0;
+            supportedMaximumTransmissionTime = 0;
+            supportedMaximumReceivingOctets = 0;
+            supportedMaxReceivingTime = 0;
+
+            const uint responseLength = 9;
+            var response = new byte[responseLength];
+            var rq = new Request
+            {
+                OpCodeGroup = 0x08,
+                OpCodeCommand = 0x02f,
+                ResponseParameter = response,
+                ResponseLength = responseLength
+            };
+            if (_transportLayer.SendRequest(ref rq, false) < 0)
+                return BleStatus.Timeout;
+            if (response[0] != 0)
+                return (BleStatus)response[0];
+
+            var ptr = 1;
+            supportedMaximumOctets = BitConverter.ToUInt16(response, ptr);
+            ptr += 2;
+            supportedMaximumTransmissionTime = BitConverter.ToUInt16(response, ptr);
+            ptr += 2;
+            supportedMaximumReceivingOctets = BitConverter.ToUInt16(response, ptr);
+            ptr += 2;
+            supportedMaxReceivingTime = BitConverter.ToUInt16(response, ptr);
+
+            return BleStatus.Success;
         }
 
         internal void UserEventProcess()

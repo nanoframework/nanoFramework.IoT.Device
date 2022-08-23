@@ -3,15 +3,49 @@
 
 namespace Iot.Device.BlueNrg2.Aci
 {
+    /// <summary>
+    /// Type of packet payload.
+    /// </summary>
     public enum PacketPayloadType : byte
     {
-        PseudoRandomBitSequence9 = 0x00,
-        AlternatingBits11110000 = 0x01,
-        AlternatingBits10101010 = 0x02,
-        PseudoRandomBitSequence15 = 0x03,
+        /// <summary>
+        /// Pseudo-Random bit sequence 9.
+        /// </summary>
+        BitSequence9 = 0x00,
+
+        /// <summary>
+        /// Pattern of alternating bits '11110000'.
+        /// </summary>
+        AlternatingBits1 = 0x01,
+
+        /// <summary>
+        /// Pattern of alternating bits '10101010'.
+        /// </summary>
+        AlternatingBits2 = 0x02,
+
+        /// <summary>
+        /// Pseudo-Random bit sequence 15.
+        /// </summary>
+        BitSequence15 = 0x03,
+
+        /// <summary>
+        /// Pattern of All '1' bits.
+        /// </summary>
         All1 = 0x04,
+
+        /// <summary>
+        /// Pattern of All '0' bits.
+        /// </summary>
         All0 = 0x05,
-        AlternatingBits00001111 = 0x06,
-        AlternatingBits01010101 = 0x07
+
+        /// <summary>
+        /// Pattern of alternating bits '00001111'.
+        /// </summary>
+        AlternatingBits3 = 0x06,
+
+        /// <summary>
+        /// Pattern of alternating bits '0101'.
+        /// </summary>
+        AlternatingBits4 = 0x07
     }
 }
