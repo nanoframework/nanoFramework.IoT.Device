@@ -1,0 +1,183 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
+using System.Device;
+using System.Device.Gpio;
+using System.Device.Model;
+using Iot.Device.Common;
+
+namespace Iot.Device.Rtc
+{
+    /// <summary>
+    /// Realtime Clock Ds1302.
+    /// </summary>
+    [Interface("Realtime Clock Ds1302")]
+    public class Ds1302 : RtcBase, IDisposable
+    {
+        private readonly GpioController _controller;
+        private readonly GpioPin _clockPin;
+        private readonly GpioPin _resetPin;
+        private readonly GpioPin _dataPin;
+        private PinMode _currentDataPinDirection;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ds1302"/> class.
+        /// </summary>
+        /// <param name="controller">Gpio controller.</param>
+        /// <param name="clockPin">Clock pin number.</param>
+        /// <param name="dataPin">Data pin number.</param>
+        /// <param name="resetPin">Reset pin number.</param>
+        /// <exception cref="ArgumentNullException">When controller was not provided.</exception>
+        public Ds1302(GpioController controller, int clockPin, int dataPin, int resetPin)
+        {
+            _controller = controller ?? throw new ArgumentNullException();
+            _clockPin = _controller.OpenPin(clockPin, PinMode.Output);
+            _resetPin = _controller.OpenPin(resetPin, PinMode.Output);
+            _dataPin = _controller.OpenPin(dataPin, PinMode.Input);
+
+            _resetPin.Write(PinValue.Low);
+            _clockPin.Write(PinValue.Low);
+        }
+
+        /// <summary>
+        /// Checks if the clock is halted.
+        /// </summary>
+        /// <returns><b>true</b> when clock is halted, else <b>false</b></returns>
+        public bool IsHalted()
+        {
+            PrepareRead(Ds1302Registers.REG_SECONDS);
+            byte seconds = ReadByte();
+            EndTransmission();
+            return (byte)(seconds & 0b10000000) > 0;
+        }
+
+        /// <summary>
+        /// Halts the clock.
+        /// </summary>
+        public void Halt()
+        {
+            PrepareWrite(Ds1302Registers.REG_SECONDS);
+            WriteByte(0b10000000);
+            EndTransmission();
+        }
+
+        /// <summary>
+        /// Read time from the device.
+        /// </summary>
+        /// <returns>Time from the device.</returns>
+        protected override DateTime ReadTime()
+        {
+            PrepareRead(Ds1302Registers.REG_BURST);
+            var seconds = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b01111111));
+            var minutes = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b01111111));
+            var hours = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00111111));
+            var days = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00111111));
+            var months = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00011111));
+            var dayOfWeek = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00000111));
+            var years = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b01111111));
+
+            EndTransmission();
+
+            return new DateTime(2000 + years, months, days, hours, minutes, seconds, 0);
+        }
+
+        /// <summary>
+        /// Sets date and time.
+        /// </summary>
+        /// <param name="time">Date and time.</param>
+        protected override void SetTime(DateTime time)
+        {
+            PrepareWrite(Ds1302Registers.REG_WP);
+            WriteByte(0b00000000);
+            EndTransmission();
+
+            PrepareWrite(Ds1302Registers.REG_BURST);
+            WriteByte(NumberHelper.Dec2Bcd(time.Second));
+            WriteByte(NumberHelper.Dec2Bcd(time.Minute));
+            WriteByte(NumberHelper.Dec2Bcd(time.Hour));
+            WriteByte(NumberHelper.Dec2Bcd(time.Day));
+            WriteByte(NumberHelper.Dec2Bcd(time.Month));
+            WriteByte(NumberHelper.Dec2Bcd((int)time.DayOfWeek));
+            WriteByte(NumberHelper.Dec2Bcd(time.Year - 2000));
+
+            WriteByte(0b1000000);
+            EndTransmission();
+        }
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the RtcBase and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
+        {
+            _dataPin?.Dispose();
+            _clockPin?.Dispose();
+            _resetPin?.Dispose();
+            _controller?.Dispose();
+        }
+
+        private byte ReadByte()
+        {
+            byte readValue = 0;
+            for (byte i = 0; i < 8; i++)
+            {
+                if (_dataPin.Read() == PinValue.High)
+                {
+                    readValue |= (byte)(0x01 << i);
+                }
+
+                MoveToNextBit();
+            }
+
+            return readValue;
+        }
+
+        private void PrepareRead(Ds1302Registers ds1302Register)
+        {
+            SetDirectionOfDataPin(PinMode.Output);
+            _resetPin.Write(PinValue.High);
+            WriteByte((byte)(0b10000001 | (byte)ds1302Register));
+            SetDirectionOfDataPin(PinMode.Input);
+        }
+
+        private void PrepareWrite(Ds1302Registers ds1302Register)
+        {
+            SetDirectionOfDataPin(PinMode.Output);
+            _resetPin.Write(PinValue.High);
+            WriteByte((byte)(0b10000000 | (byte)ds1302Register));
+        }
+
+        private void EndTransmission()
+        {
+            _resetPin.Write(PinValue.Low);
+        }
+
+        private void SetDirectionOfDataPin(PinMode direction)
+        {
+            if (_currentDataPinDirection != direction)
+            {
+                _currentDataPinDirection = direction;
+                _dataPin.SetPinMode(_currentDataPinDirection);
+            }
+        }
+
+        private void WriteByte(byte register)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                _dataPin.Write((register & 0x01) > 0 ? PinValue.High : PinValue.Low);
+                MoveToNextBit();
+                register >>= 1;
+            }
+        }
+
+        private void MoveToNextBit()
+        {
+            _clockPin.Write(PinValue.High);
+            DelayHelper.DelayMicroseconds(1, true);
+            _clockPin.Write(PinValue.Low);
+            DelayHelper.DelayMicroseconds(1, true);
+        }
+    }
+}
