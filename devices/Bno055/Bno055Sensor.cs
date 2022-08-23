@@ -12,131 +12,25 @@ using Temperature = UnitsNet.Temperature;
 namespace Iot.Device.Bno055
 {
     /// <summary>
-    /// BNO055 - inertial measurement unit (IMU)
+    /// BNO055 - inertial measurement unit (IMU).
     /// </summary>
     [Interface("BNO055 - inertial measurement unit (IMU)")]
     public class Bno055Sensor : IDisposable
     {
         /// <summary>
         /// The default I2C Address, page 91 of the main documentation
-        /// https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BNO055-DS000.pdf
+        /// https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BNO055-DS000.pdf.
         /// </summary>
         public const byte DefaultI2cAddress = 0x28;
 
         /// <summary>
-        /// This is the second I2C Address. It needs to be activated to be valid
+        /// This is the second I2C Address. It needs to be activated to be valid.
         /// </summary>
         public const byte SecondI2cAddress = 0x29;
 
         private const byte DeviceId = 0xA0;
-        private readonly bool _shouldDispose;
-        private I2cDevice _i2cDevice;
-        private OperationMode _operationMode;
-        private Units _units;
 
-        /// <summary>
-        /// Get/Set the operation mode
-        /// </summary>
-        [Property]
-        public OperationMode OperationMode
-        {
-            get => _operationMode;
-            set
-            {
-                _operationMode = value;
-                SetConfigMode(true);
-                SetOperationMode(_operationMode);
-                SetConfigMode(false);
-            }
-        }
-
-        /// <summary>
-        /// Set/Get the power mode
-        /// </summary>
-        [Property]
-        public PowerMode PowerMode
-        {
-            get => (PowerMode)ReadByte(Registers.PWR_MODE);
-            set
-            {
-                SetConfigMode(true);
-                WriteReg(Registers.PWR_MODE, (byte)value);
-                SetConfigMode(false);
-            }
-        }
-
-        /// <summary>
-        /// Set/Get the temperature source
-        /// </summary>
-        [Property]
-        public TemperatureSource TemperatureSource
-        {
-            get => (TemperatureSource)ReadByte(Registers.TEMP_SOURCE);
-            set
-            {
-                SetConfigMode(true);
-                WriteReg(Registers.TEMP_SOURCE, (byte)value);
-                SetConfigMode(false);
-            }
-        }
-
-        /// <summary>
-        /// Set/Get the units used. By default, international system is used
-        /// </summary>
-        [Property]
-        public Units Units
-        {
-            get => (Units)ReadByte(Registers.UNIT_SEL);
-            set
-            {
-                SetConfigMode(true);
-                _units = value;
-                WriteReg(Registers.UNIT_SEL, (byte)_units);
-                SetConfigMode(false);
-            }
-        }
-
-        /// <summary>
-        /// Get the information about various sensor system versions and ID
-        /// </summary>
-        public Info Info { get; private set; }
-
-        /// <summary>
-        /// Create an BNO055 sensor
-        /// </summary>
-        /// <param name="i2cDevice">The I2C Device</param>
-        /// <param name="operationMode">The operation mode to setup</param>
-        /// <param name="shouldDispose">true to dispose the I2C device at dispose</param>
-        public Bno055Sensor(I2cDevice i2cDevice,
-            OperationMode operationMode = OperationMode.AccelerometerMagnetometerGyroscopeRelativeOrientation,
-            bool shouldDispose = true)
-        {
-            _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
-            _shouldDispose = shouldDispose;
-
-            // A first write to initate the device
-            WriteReg(Registers.PAGE_ID, 0);
-            SetConfigMode(true);
-            // A second write
-            WriteReg(Registers.PAGE_ID, 0);
-            byte chipId = ReadByte(Registers.CHIP_ID);
-            if (chipId != DeviceId)
-            {
-                throw new Exception($"{nameof(Bno055Sensor)} is not a valid sensor");
-            }
-
-            Info = new Info(
-                chipId,                                     // Chip Id
-                ReadByte(Registers.ACCEL_REV_ID),           // AcceleratorId
-                ReadByte(Registers.MAG_REV_ID),             // MagnetometerId
-                ReadByte(Registers.GYRO_REV_ID),            // GyroscopeId
-                new Version(ReadByte(Registers.SW_REV_ID_MSB), ReadByte(Registers.SW_REV_ID_LSB)),  // FirmwareVersion
-                new Version(ReadByte(Registers.BL_REV_ID), 0)); // BootloaderVersion
-            _operationMode = operationMode;
-            InitializeRegisters();
-        }
-
-        private static readonly byte[][] s_registerDefaults =
+        private static readonly byte[][] RegisterDefaults =
         {
             new byte[]
             {
@@ -169,6 +63,115 @@ namespace Iot.Device.Bno055
             }
         };
 
+        private readonly bool _shouldDispose;
+        private I2cDevice _i2cDevice;
+        private OperationMode _operationMode;
+        private Units _units;
+
+        /// <summary>
+        /// Gets or sets the operation mode.
+        /// </summary>
+        [Property]
+        public OperationMode OperationMode
+        {
+            get => _operationMode;
+            set
+            {
+                _operationMode = value;
+                SetConfigMode(true);
+                SetOperationMode(_operationMode);
+                SetConfigMode(false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the power mode.
+        /// </summary>
+        [Property]
+        public PowerMode PowerMode
+        {
+            get => (PowerMode)ReadByte(Registers.PWR_MODE);
+            set
+            {
+                SetConfigMode(true);
+                WriteReg(Registers.PWR_MODE, (byte)value);
+                SetConfigMode(false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the temperature source.
+        /// </summary>
+        [Property]
+        public TemperatureSource TemperatureSource
+        {
+            get => (TemperatureSource)ReadByte(Registers.TEMP_SOURCE);
+            set
+            {
+                SetConfigMode(true);
+                WriteReg(Registers.TEMP_SOURCE, (byte)value);
+                SetConfigMode(false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the units used. By default, international system is used.
+        /// </summary>
+        [Property]
+        public Units Units
+        {
+            get => (Units)ReadByte(Registers.UNIT_SEL);
+            set
+            {
+                SetConfigMode(true);
+                _units = value;
+                WriteReg(Registers.UNIT_SEL, (byte)_units);
+                SetConfigMode(false);
+            }
+        }
+
+        /// <summary>
+        /// Gets the information about various sensor system versions and ID.
+        /// </summary>
+        public Info Info { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bno055Sensor" /> class.
+        /// </summary>
+        /// <param name="i2cDevice">The I2C Device.</param>
+        /// <param name="operationMode">The operation mode to setup.</param>
+        /// <param name="shouldDispose"><see langword="true"/> to dispose the I2C device at dispose.</param>
+        public Bno055Sensor(
+            I2cDevice i2cDevice,
+            OperationMode operationMode = OperationMode.AccelerometerMagnetometerGyroscopeRelativeOrientation,
+            bool shouldDispose = true)
+        {
+            _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+            _shouldDispose = shouldDispose;
+
+            // A first write to initate the device
+            WriteReg(Registers.PAGE_ID, 0);
+            SetConfigMode(true);
+
+            // A second write
+            WriteReg(Registers.PAGE_ID, 0);
+            byte chipId = ReadByte(Registers.CHIP_ID);
+            if (chipId != DeviceId)
+            {
+                throw new Exception($"{nameof(Bno055Sensor)} is not a valid sensor");
+            }
+
+            Info = new Info(
+                chipId,                                     // Chip Id
+                ReadByte(Registers.ACCEL_REV_ID),           // AcceleratorId
+                ReadByte(Registers.MAG_REV_ID),             // MagnetometerId
+                ReadByte(Registers.GYRO_REV_ID),            // GyroscopeId
+                new Version(ReadByte(Registers.SW_REV_ID_MSB), ReadByte(Registers.SW_REV_ID_LSB)),  // FirmwareVersion
+                new Version(ReadByte(Registers.BL_REV_ID), 0)); // BootloaderVersion
+            _operationMode = operationMode;
+            InitializeRegisters();
+        }
+
         private void InitializeRegisters()
         {
             // WriteReg(Registers.SYS_TRIGGER, 0x20);
@@ -176,7 +179,7 @@ namespace Iot.Device.Bno055
             // https://community.bosch-sensortec.com/t5/MEMS-sensors-forum/BNO055-power-on-reset-issues/m-p/8457/highlight/true#M948
             SetConfigMode(true);
 
-            foreach (var registerDefault in s_registerDefaults)
+            foreach (var registerDefault in RegisterDefaults)
             {
                 _i2cDevice.Write(registerDefault);
             }
@@ -186,9 +189,9 @@ namespace Iot.Device.Bno055
 
         /// <summary>
         /// Set internal or external crystal usage.
-        /// Note: if you don't have an external crystal, don't use this function
+        /// Note: if you don't have an external crystal, don't use this function.
         /// </summary>
-        /// <param name="external">true to set to external</param>
+        /// <param name="external"><see langword="true"/> to set to external.</param>
         public void SetExternalCrystal(bool external)
         {
             SetConfigMode(true);
@@ -205,30 +208,32 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the status. If there is an error, GetError() will give more details
+        /// Get the status. If there is an error, GetError() will give more details.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Status of the sensor.</returns>
         [Telemetry("Status")]
         public Status GetStatus() => (Status)ReadByte(Registers.SYS_STAT);
 
         /// <summary>
-        /// Get the latest error
+        /// Get the latest error.
         /// </summary>
-        /// <returns>Returns the latest error</returns>
+        /// <returns>Returns the latest error.</returns>
         [Telemetry("Status")]
         public Error GetError() => (Error)ReadByte(Registers.SYS_ERR);
 
         /// <summary>
-        /// Run a self test. In case of error, use GetStatus() and GetError() to get the last error
+        /// Run a self test. In case of error, use GetStatus() and GetError() to get the last error.
         /// </summary>
-        /// <returns>Status fo the test</returns>
+        /// <returns>Status fo the test.</returns>
         [Command]
         public TestResult RunSelfTest()
         {
             SetConfigMode(true);
             var oldTrigger = ReadByte(Registers.SYS_TRIGGER);
+
             // Set test mode
             WriteReg(Registers.SYS_TRIGGER, (byte)(oldTrigger | 0x01));
+
             // Wait for the test to go
             Thread.Sleep(1000);
             var testRes = ReadByte(Registers.SELFTEST_RESULT);
@@ -237,16 +242,16 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Returns the calibration status for the system and sensors
+        /// Returns the calibration status for the system and sensors.
         /// </summary>
-        /// <returns>Calibration status</returns>
+        /// <returns>Calibration status.</returns>
         [Command]
         public CalibrationStatus GetCalibrationStatus() => (CalibrationStatus)ReadByte(Registers.CALIB_STAT);
 
         /// <summary>
-        /// Get the accelerometer calibration data
+        /// Get the accelerometer calibration data.
         /// </summary>
-        /// <returns>Returns the accelerometers calibration data</returns>
+        /// <returns>Returns the accelerometers calibration data.</returns>
         [Command]
         public Vector4 GetAccelerometerCalibrationData()
         {
@@ -258,9 +263,9 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Set the accelerometer calibration data
+        /// Set the accelerometer calibration data.
         /// </summary>
-        /// <param name="calibrationData">Calibration data</param>
+        /// <param name="calibrationData">Calibration data.</param>
         [Command]
         public void SetAccelerometerCalibrationData(Vector4 calibrationData)
         {
@@ -278,9 +283,9 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the magnetometer calibration data
+        /// Get the magnetometer calibration data.
         /// </summary>
-        /// <returns>Returns the magnetometer calibration data</returns>
+        /// <returns>Returns the magnetometer calibration data.</returns>
         [Command]
         public Vector4 GetMagnetometerCalibrationData()
         {
@@ -292,9 +297,9 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Set the magnetometer calibration data
+        /// Set the magnetometer calibration data.
         /// </summary>
-        /// <param name="calibrationData">Calibration data</param>
+        /// <param name="calibrationData">Calibration data.</param>
         [Command]
         public void SetMagnetometerCalibrationData(Vector4 calibrationData)
         {
@@ -312,9 +317,9 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the gyroscope calibration data
+        /// Get the gyroscope calibration data.
         /// </summary>
-        /// <returns>X, Y and Z data</returns>
+        /// <returns>X, Y and Z data.</returns>
         [Command]
         public Vector3 GetGyroscopeCalibrationData()
         {
@@ -325,9 +330,9 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Set the gyroscope calibration data
+        /// Set the gyroscope calibration data.
         /// </summary>
-        /// <param name="calibrationData">X, Y and Z data</param>
+        /// <param name="calibrationData">X, Y and Z data.</param>
         [Command]
         public void SetGyroscopeCalibrationData(Vector3 calibrationData)
         {
@@ -342,11 +347,11 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Set the Axis map
+        /// Set the Axis map.
         /// </summary>
-        /// <param name="x">X axis setting</param>
-        /// <param name="y">Y axis setting</param>
-        /// <param name="z">Z axis setting</param>
+        /// <param name="x">X axis setting.</param>
+        /// <param name="y">Y axis setting.</param>
+        /// <param name="z">Z axis setting.</param>
         public void SetAxisMap(AxisSetting x, AxisSetting y, AxisSetting z)
         {
             SetConfigMode(true);
@@ -356,9 +361,9 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the Axis map
+        /// Get the Axis map.
         /// </summary>
-        /// <returns>Returns an array where first element is axis X, then Y then Z</returns>
+        /// <returns>Returns an array where first element is axis X, then Y then Z.</returns>
         public AxisSetting[] GetAxisMap()
         {
             SetConfigMode(true);
@@ -376,7 +381,7 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the orientation (Euler Angles) X = Heading, Y = Roll, Z = Pitch
+        /// Gets the orientation (Euler Angles) X = Heading, Y = Roll, Z = Pitch.
         /// </summary>
         [Telemetry(null, "Orientation (Euler Angles)")]
         public Vector3 Orientation
@@ -384,26 +389,25 @@ namespace Iot.Device.Bno055
             get
             {
                 Vector3 retVect = GetVectorData(Registers.EULER_H_LSB);
+
                 // If unit is MeterG, then divide by 900, otherwise divide by 16
                 if (_units.HasFlag(Units.EulerAnglesRadians))
                 {
                     return retVect / 900;
                 }
-                else
-                {
-                    return retVect / 16;
-                }
+
+                return retVect / 16;
             }
         }
 
         /// <summary>
-        /// Get the Magnetometer
+        /// Get the Magnetometer.
         /// </summary>
         [Telemetry]
         public Vector3 Magnetometer => GetVectorData(Registers.MAG_DATA_X_LSB) / 16;
 
         /// <summary>
-        /// Get the gyroscope
+        /// Gets the gyroscope.
         /// </summary>
         [Telemetry]
         public Vector3 Gyroscope
@@ -423,10 +427,10 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the accelerometer
+        /// Gets the accelerometer
         /// Acceleration Vector (100Hz)
         /// Three axis of acceleration (gravity + linear motion)
-        /// Default unit in m/s^2, can be changed for mg
+        /// Default unit in m/s^2, can be changed for mg.
         /// </summary>
         [Telemetry]
         public Vector3 Accelerometer
@@ -434,6 +438,7 @@ namespace Iot.Device.Bno055
             get
             {
                 Vector3 retVect = GetVectorData(Registers.ACCEL_DATA_X_LSB);
+
                 // If unit is MeterG, then no convertion, otherwise divide by 100
                 if ((_units & Units.AccelerationMeterG) == Units.AccelerationMeterG)
                 {
@@ -447,10 +452,10 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the linear acceleration
+        /// Gets the linear acceleration
         /// Linear Acceleration Vector (100Hz)
         /// Three axis of linear acceleration data (acceleration minus gravity)
-        /// Default unit in m/s^2, can be changed for mg
+        /// Default unit in m/s^2, can be changed for mg.
         /// </summary>
         [Telemetry]
         public Vector3 LinearAcceleration
@@ -458,6 +463,7 @@ namespace Iot.Device.Bno055
             get
             {
                 Vector3 retVect = GetVectorData(Registers.LINEAR_ACCEL_DATA_X_LSB);
+
                 // If unit is MeterG, then no convertion, otherwise divide by 100
                 if ((_units & Units.AccelerationMeterG) == Units.AccelerationMeterG)
                 {
@@ -471,10 +477,10 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the gravity
+        /// Gets the gravity
         /// Gravity Vector (100Hz)
         /// Three axis of gravitational acceleration (minus any movement)
-        /// Default unit in m/s^2, can be changed for mg
+        /// Default unit in m/s^2, can be changed for mg.
         /// </summary>
         [Telemetry]
         public Vector3 Gravity
@@ -482,6 +488,7 @@ namespace Iot.Device.Bno055
             get
             {
                 Vector3 retVect = GetVectorData(Registers.GRAVITY_DATA_X_LSB);
+
                 // If unit is MeterG, then no convertion, otherwise divide by 100
                 if ((_units & Units.AccelerationMeterG) == Units.AccelerationMeterG)
                 {
@@ -495,14 +502,13 @@ namespace Iot.Device.Bno055
         }
 
         /// <summary>
-        /// Get the quaternion, unit is 1 Quaternion (unit less) = 2^14 returned result
+        /// Gets the quaternion, unit is 1 Quaternion (unit less) = 2^14 returned result.
         /// </summary>
         [Telemetry]
-        public Vector4 Quaternion => new Vector4(GetVectorData(Registers.QUATERNION_DATA_X_LSB),
-            ReadInt16(Registers.QUATERNION_DATA_W_LSB));
+        public Vector4 Quaternion => new Vector4(GetVectorData(Registers.QUATERNION_DATA_X_LSB), ReadInt16(Registers.QUATERNION_DATA_W_LSB));
 
         /// <summary>
-        /// Get the temperature
+        /// Gets the temperature.
         /// </summary>
         [Telemetry]
         public Temperature Temperature
@@ -514,22 +520,21 @@ namespace Iot.Device.Bno055
                 {
                     return Temperature.FromDegreesFahrenheit(ReadByte(Registers.TEMP) / 2.0);
                 }
-                else
-                {
-                    return Temperature.FromDegreesCelsius(ReadByte(Registers.TEMP));
-                }
+
+                return Temperature.FromDegreesCelsius(ReadByte(Registers.TEMP));
             }
         }
 
         /// <summary>
-        /// Get the interupt status
+        /// Gets the interupt status.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>InteruptStatus of the sensor.</returns>
         public InteruptStatus GetInteruptStatus() => (InteruptStatus)ReadByte(Registers.INTR_STAT);
 
         private void SetOperationMode(OperationMode operation)
         {
             WriteReg(Registers.OPR_MODE, (byte)operation);
+
             // It is necessary to wait 30 milliseconds
             Thread.Sleep(30);
         }
@@ -563,11 +568,14 @@ namespace Iot.Device.Bno055
             if (_shouldDispose)
             {
                 _i2cDevice?.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
             }
         }
 
-        private void WriteReg(Registers reg, byte param) => _i2cDevice.Write(new byte[] { (byte)reg, param });
+        private void WriteReg(Registers reg, byte param)
+        {
+            _i2cDevice.Write(new byte[] { (byte)reg, param });
+        }
 
         private byte ReadByte(Registers reg)
         {
@@ -575,13 +583,12 @@ namespace Iot.Device.Bno055
             return _i2cDevice.ReadByte();
         }
 
-        private Int16 ReadInt16(Registers reg)
+        private short ReadInt16(Registers reg)
         {
             SpanByte retArray = new byte[2];
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(retArray);
             return BinaryPrimitives.ReadInt16LittleEndian(retArray);
         }
-
     }
 }
