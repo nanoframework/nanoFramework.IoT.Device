@@ -17,18 +17,12 @@ namespace Iot.Device.BlueNrg2.Samples
         {
             Debug.WriteLine("Program Start");
 
-            var chipSelect = Utilities.GetPinNumber('E', 4);
-            var ledPin = Utilities.GetPinNumber('G', 13);
-
-            var controller = new GpioController();
-
-            controller.OpenPin(ledPin, PinMode.Output);
+            var chipSelect = Utilities.GetPinNumber('E', 13);
 
             var blueNrg2 = new BlueNrg2(
-                new SpiConnectionSettings(4, chipSelect),
-                Utilities.GetPinNumber('C', 13),
-                Utilities.GetPinNumber('E', 3),
-                controller
+                new SpiConnectionSettings(2, chipSelect),
+                Utilities.GetPinNumber('B', 11),
+                Utilities.GetPinNumber('C', 6)
             );
 
             blueNrg2.StartBluetoothThread();

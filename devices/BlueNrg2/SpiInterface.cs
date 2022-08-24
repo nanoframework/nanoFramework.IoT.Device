@@ -62,7 +62,14 @@ namespace Iot.Device.BlueNrg2
 				PinEventTypes.Rising,
 				ExternalInterruptTriggered
 			);
-		}
+
+			// Setup ChipSelect
+            if (_gpioController.IsPinOpen(_pinChipSelect))
+                _gpioController.SetPinMode(_pinChipSelect, PinMode.Output);
+            else
+                _gpioController.OpenPin(_pinChipSelect, PinMode.Output);
+			_gpioController.Write(_pinChipSelect, PinValue.Low);
+        }
 
 		public event NotifyAsync NotifyAsyncEvent;
 
