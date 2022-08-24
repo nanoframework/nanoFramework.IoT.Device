@@ -52,7 +52,7 @@
     <None Include="packages.config" />
     <Compile Include="Aci\AccessPermissions.cs" />
     <Compile Include="Aci\AddressType.cs" />
-    <Compile Include="Aci\AdvertisingReport.cs" />
+    <Compile Include="Aci\AdvertisingReportContainer.cs" />
     <Compile Include="Aci\AdvertisingType.cs" />
     <Compile Include="Aci\Att.cs" />
     <Compile Include="Aci\AttErrorCode.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="Aci\CrashType.cs" />
     <Compile Include="Aci\DeviceAddressEntry.cs" />
     <Compile Include="Aci\DeviceRole.cs" />
-    <Compile Include="Aci\DirectAdvertisingReport.cs" />
+    <Compile Include="Aci\DirectAdvertisingReportContainer.cs" />
     <Compile Include="Aci\Events\AdvertisingReportEventArgs.cs" />
     <Compile Include="Aci\Events\AttExchangeMtuResponseEventArgs.cs" />
     <Compile Include="Aci\Events\AttExecuteWriteResponseEventArgs.cs" />

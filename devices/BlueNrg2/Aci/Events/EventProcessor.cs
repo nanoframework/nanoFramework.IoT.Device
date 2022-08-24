@@ -158,64 +158,89 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// queue these advertising reports and send information from multiple
         /// devices in one LE Advertising Report event. 
         /// </summary>
-        public EventHandler<AdvertisingReportEventArgs> AdvertisingReportEvent;
+        public AdvertisingReport AdvertisingReportEvent;
+
+        /// <summary>
+        /// Function prototype for an advertising report.
+        /// </summary>
+        public delegate void AdvertisingReport(AdvertisingReportEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to an Exchange MTU request (local
         /// or from the peer). See <see cref="Aci.Gatt.ExchangeConfiguration"/>.
         /// </summary>
-        public EventHandler<AttExchangeMtuResponseEventArgs> AttExchangeMtuResponseEvent;
+        public AttExchangeMtuResponse AttExchangeMtuResponseEvent;
+
+        public delegate void AttExchangeMtuResponse(AttExchangeMtuResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to an Execute Write Request.
         /// </summary>
-        public EventHandler<AttExecuteWriteResponseEventArgs> AttExecuteWriteResponseEvent;
+        public AttExecuteWriteResponse AttExecuteWriteResponseEvent;
+
+        public delegate void AttExecuteWriteResponse(AttExecuteWriteResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a <see cref="Aci.Att.FindByTypeValueRequest"/>
         /// </summary>
-        public EventHandler<AttFindByTypeValueResponseEventArgs> AttFindByTypeValueResponseEvent;
+        public AttFindByTypeValueResponse AttFindByTypeValueResponseEvent;
+
+        public delegate void AttFindByTypeValueResponse(AttFindByTypeValueResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a Find Information Request. See
         /// <see cref="Aci.Att.FindInformationRequest"/> and Find Information Response in Bluetooth
         /// Core v4.1 spec.
         /// </summary>
-        public EventHandler<AttFindInfoResponseEventArgs> AttFindInfoResponseEvent;
+        public AttFindInfoResponse AttFindInfoResponseEvent;
+
+        public delegate void AttFindInfoResponse(AttFindInfoResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a <see cref="Aci.Att.PrepareWriteRequest"/>.
         /// </summary>
-        public EventHandler<AttPrepareWriteResponseEventArgs> AttPrepareWriteResponseEvent;
+        public AttPrepareWriteResponse AttPrepareWriteResponseEvent;
+
+        public delegate void AttPrepareWriteResponse(AttPrepareWriteResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event can be generated during a read long characteristic value
         /// procedure. See <see cref="Aci.Gatt.ReadLongCharacteristicValue"/>.
         /// </summary>
-        public EventHandler<AttReadBlobResponseEventArgs> AttReadBlobResponseEvent;
+        public AttReadBlobResponse AttReadBlobResponseEvent;
+
+        public delegate void AttReadBlobResponse(AttReadBlobResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a Read By Group Type Request.
         /// See <see cref="Aci.Gatt.DiscoverAllPrimaryServices"/>.
         /// </summary>
-        public EventHandler<AttReadByGroupTypeResponseEventArgs> AttReadByGroupTypeResponseEvent;
+        public AttReadByGroupTypeResponse AttReadByGroupTypeResponseEvent;
+
+        public delegate void AttReadByGroupTypeResponse(AttReadByGroupTypeResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a @ref
         /// aci_att_read_by_type_req. See <see cref="Aci.Gatt.FindIncludedServices"/> and
         /// <see cref="Aci.Gatt.DiscoverAllCharacteristicDescriptors"/>.
         /// </summary>
-        public EventHandler<AttReadByTypeResponseEventArgs> AttReadByTypeResponseEvent;
+        public AttReadByTypeResponse AttReadByTypeResponseEvent;
+
+        public delegate void AttReadByTypeResponse(AttReadByTypeResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a Read Multiple Request. 
         /// </summary>
-        public EventHandler<AttReadMultipleResponseEventArgs> AttReadMultipleResponseEvent;
+        public AttReadMultipleResponse AttReadMultipleResponseEvent;
+
+        public delegate void AttReadMultipleResponse(AttReadMultipleResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated in response to a Read Request. See <see cref="Aci.Gatt.ReadCharacteristicValue"/>.
         /// </summary>
-        public EventHandler<AttReadResponseEventArgs> AttReadResponseEvent;
+        public AttReadResponse AttReadResponseEvent;
+
+        public delegate void AttReadResponse(AttReadResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is given to the application after the
@@ -223,7 +248,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// This events returns system crash information for debugging purposes.
         /// Information reported are useful to understand the root cause of the crash.
         /// </summary>
-        public EventHandler<BlueCrashInfoEventArgs> BlueCrashInfoEvent;
+        public BlueCrashInfo BlueCrashInfoEvent;
+
+        public delegate void BlueCrashInfo(BlueCrashInfoEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when an overflow occurs in the event queue
@@ -239,7 +266,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// the external microcontroller or to allow application to recover
         /// situations where critical events are lost.
         /// </summary>
-        public EventHandler<BlueEventsLostEventArgs> BlueEventsLostEvent;
+        public BlueEventsLost BlueEventsLostEvent;
+
+        public delegate void BlueEventsLost(BlueEventsLostEventArgs eventArgs);
 
         /// <summary>
         /// This event inform the application that the network coprocessor has
@@ -247,7 +276,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// <see cref="BlueCrashInfoEvent"/> will provide more information regarding
         /// the system crash details.
         /// </summary>
-        public EventHandler<BlueInitializedEventArgs> BlueInitializedEvent;
+        public BlueInitialized BlueInitializedEvent;
+
+        public delegate void BlueInitialized(BlueInitializedEventArgs eventArgs);
 
         /// <summary>
         /// The LE Connection Complete event indicates to both of the Hosts
@@ -261,7 +292,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// or was successful. The Master_Clock_Accuracy parameter is only valid
         /// for a slave. On a master, this parameter shall be set to 0x00.
         /// </summary>
-        public EventHandler<ConnectionCompleteEventArgs> ConnectionCompleteEvent;
+        public ConnectionComplete ConnectionCompleteEvent;
+
+        public delegate void ConnectionComplete(ConnectionCompleteEventArgs eventArgs);
 
         /// <summary>
         /// The LE Connection Update Complete event is used to indicate that the
@@ -270,7 +303,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// issued. On a master, this event shall be issued if the
         /// Connection_Update command was sent.
         /// </summary>
-        public EventHandler<ConnectionUpdateCompleteEventArgs> ConnectionUpdateCompleteEvent;
+        public ConnectionUpdateComplete ConnectionUpdateCompleteEvent;
+
+        public delegate void ConnectionUpdateComplete(ConnectionUpdateCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event is used to indicate that the Controller's data buffers
@@ -278,7 +313,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// than allowed. The Link_Type parameter is used to indicate that the
         /// overflow was caused by ACL data.
         /// </summary>
-        public EventHandler<DataBufferOverflowEventArgs> DataBufferOverflowEvent;
+        public DataBufferOverflow DataBufferOverflowEvent;
+
+        public delegate void DataBufferOverflow(DataBufferOverflowEventArgs eventArgs);
 
         /// <summary>
         /// The LE Data Length Change event notifies the Host of a change to
@@ -287,7 +324,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// maximum that will actually be used on the connection following the
         /// change.
         /// </summary>
-        public EventHandler<DataLengthChangeEventArgs> DataLengthChangeEvent;
+        public DataLengthChange DataLengthChangeEvent;
+
+        public delegate void DataLengthChange(DataLengthChangeEventArgs eventArgs);
 
         /// <summary>
         /// The LE Direct Advertising Report event indicates that directed
@@ -299,7 +338,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// Address_Type and Address is the address of the advertiser sending the
         /// directed advertisements.
         /// </summary>
-        public EventHandler<DirectAdvertisingReportEventArgs> DirectAdvertisingReportEvent;
+        public DirectAdvertisingReport DirectAdvertisingReportEvent;
+
+        public delegate void DirectAdvertisingReport(DirectAdvertisingReportEventArgs eventArgs);
 
         /// <summary>
         /// The Disconnection Complete event occurs when a connection is
@@ -312,7 +353,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// error, or the command was not presently allowed, or a
         /// Connection_Handle that didn't correspond to a connection was given.
         /// </summary>
-        public EventHandler<DisconnectionCompleteEventArgs> DisconnectionCompleteEvent;
+        public DisconnectionComplete DisconnectionCompleteEvent;
+
+        public delegate void DisconnectionComplete(DisconnectionCompleteEventArgs eventArgs);
 
         /// <summary>
         /// The Encryption Change event is used to indicate that the change of the
@@ -332,7 +375,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// values 0x00 (OFF) and 0x01 (ON). (See Bluetooth Specification v.4.1,
         /// Vol. 2, Part E, 7.7.8)
         /// </summary>
-        public EventHandler<EncryptionChangeEventArgs> EncryptionChangeEvent;
+        public EncryptionChange EncryptionChangeEvent;
+
+        public delegate void EncryptionChange(EncryptionChangeEventArgs eventArgs);
 
         /// <summary>
         /// This event is used to indicate to the
@@ -347,7 +392,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// switch procedure, the Encryption Key Refresh Complete event shall be
         /// sent prior to the Role Change event.
         /// </summary>
-        public EventHandler<EncryptionKeyRefreshCompleteEventArgs> EncryptionKeyRefreshCompleteEvent;
+        public EncryptionKeyRefreshComplete EncryptionKeyRefreshCompleteEvent;
+
+        public delegate void EncryptionKeyRefreshComplete(EncryptionKeyRefreshCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event indicates to both of the Hosts forming the connection that a new connection has been created.
@@ -363,7 +410,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// <see cref="EnhancedConnectionCompleteEventArgs.MasterClockAccuracy"/> parameter is only valid for a slave. On a
         /// master, this parameter shall be set to 0x00.
         /// </summary>
-        public EventHandler<EnhancedConnectionCompleteEventArgs> EnhancedConnectionCompleteEvent;
+        public EnhancedConnectionComplete EnhancedConnectionCompleteEvent;
+
+        public delegate void EnhancedConnectionComplete(EnhancedConnectionCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event is sent only by a privacy enabled Peripheral. The event is
@@ -371,7 +420,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// resolving the resolvable address of the peer device after connecting
         /// to it.
         /// </summary>
-        public EventHandler<GapAddressNotResolvedEventArgs> GapAddressNotResolvedEvent;
+        public GapAddressNotResolved GapAddressNotResolvedEvent;
+
+        public delegate void GapAddressNotResolved(GapAddressNotResolvedEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated by the Security manager to the application
@@ -381,7 +432,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// aci_gap_authorization_resp command should be used to respond by the
         /// application.
         /// </summary>
-        public EventHandler<GapAuthorizationRequestEventArgs> GapAuthorizationRequestEvent;
+        public GapAuthorizationRequest GapAuthorizationRequestEvent;
+
+        public delegate void GapAuthorizationRequest(GapAuthorizationRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated on the slave when a
@@ -395,7 +448,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// the master has to launch <see cref="Aci.Gap.SendPairingRequest"/> with
         /// forceRebond set to true.
         /// </summary>
-        public EventHandler<GapBondLostEventArgs> GapBondLostEvent;
+        public GapBondLost GapBondLostEvent;
+
+        public delegate void GapBondLost(GapBondLostEventArgs eventArgs);
 
         /// <summary>
         /// This event is sent only during SC v.4.2 Pairing, when Keypress
@@ -403,13 +458,17 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// by the peer device, having Keyboard only I/O capabilities. When this
         /// event is received, no action is required to the User.
         /// </summary>
-        public EventHandler<GapKeypressNotificationEventArgs> GapKeypressNotificationEvent;
+        public GapKeypressNotification GapKeypressNotificationEvent;
+
+        public delegate void GapKeypressNotification(GapKeypressNotificationEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated by the controller when the limited
         /// discoverable mode ends due to timeout. The timeout is 180 seconds.
         /// </summary>
-        public EventHandler<GapLimitedDiscoverableEventArgs> GapLimitedDiscoverableEvent;
+        public GapLimitedDiscoverable GapLimitedDiscoverableEvent;
+
+        public delegate void GapLimitedDiscoverable(GapLimitedDiscoverableEventArgs eventArgs);
 
         /// <summary>
         /// This event is sent only during SC v.4.2 Pairing, when Numeric
@@ -417,7 +476,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// Value generated, and to ask for Confirmation to the User. When this
         /// event is received, the application has to respond with the <see cref="Aci.Gap.NumericComparisonValueConfirmYesNo"/> command.
         /// </summary>
-        public EventHandler<GapNumericComparisonValueEventArgs> GapNumericComparisonValueEvent;
+        public GapNumericComparisonValue GapNumericComparisonValueEvent;
+
+        public delegate void GapNumericComparisonValue(GapNumericComparisonValueEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the pairing process has completed
@@ -427,27 +488,35 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// notify that a timeout has occurred so that the upper layer can decide
         /// to disconnect the link.
         /// </summary>
-        public EventHandler<GapPairingCompleteEventArgs> GapPairingCompleteEvent;
+        public GapPairingComplete GapPairingCompleteEvent;
+
+        public delegate void GapPairingComplete(GapPairingCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated by the Security manager to the application
         /// when a passkey is required for pairing. When this event is received,
         /// the application has to respond with the <see cref="Aci.Gap.PassKeyResponse"/> command.
         /// </summary>
-        public EventHandler<GapPassKeyRequestEventArgs> GapPassKeyRequestEvent;
+        public GapPassKeyRequest GapPassKeyRequestEvent;
+
+        public delegate void GapPassKeyRequest(GapPassKeyRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event is sent by the GAP to the upper layers when a procedure
         /// previously started has been terminated by the upper layer or has
         /// completed for any other reason.
         /// </summary>
-        public EventHandler<GapProcessCompleteEventArgs> GapProcessCompleteEvent;
+        public GapProcessComplete GapProcessCompleteEvent;
+
+        public delegate void GapProcessComplete(GapProcessCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the slave security request is
         /// successfully sent to the master.
         /// </summary>
-        public EventHandler<GapSlaveSecurityInitiatedEventArgs> GapSlaveSecurityInitiatedEvent;
+        public GapSlaveSecurityInitiated GapSlaveSecurityInitiatedEvent;
+
+        public delegate void GapSlaveSecurityInitiated(GapSlaveSecurityInitiatedEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated to the application by the GATT server when a
@@ -461,7 +530,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// <item>reliable write</item>
         /// </list>
         /// </summary>
-        public EventHandler<GattAttributeModifiedEventArgs> GattAttributeModifiedEvent;
+        public GattAttributeModified GattAttributeModifiedEvent;
+
+        public delegate void GattAttributeModified(GattAttributeModifiedEventArgs eventArgs);
 
         /// <summary>
         /// This event can be generated during a "Discover Characteristics By
@@ -471,7 +542,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// Characteristics By UUID" has been started. It will be the value of the
         /// Characteristic if a* "Read using Characteristic UUID" has been performed.
         /// </summary>
-        public EventHandler<GattDiscoverReadCharacteristicByUuidResponseEventArgs> GattDiscoverReadCharacteristicByUuidResponseEvent;
+        public GattDiscoverReadCharacteristicByUuidResponse GattDiscoverReadCharacteristicByUuidResponseEvent;
+
+        public delegate void GattDiscoverReadCharacteristicByUuidResponse(GattDiscoverReadCharacteristicByUuidResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when an Error Response is received from the
@@ -480,17 +553,23 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// procedure ended with an error, but this error event is part of the
         /// procedure itself.
         /// </summary>
-        public EventHandler<GattErrorResponseEventArgs> GattErrorResponseEvent;
+        public GattErrorResponse GattErrorResponseEvent;
+
+        public delegate void GattErrorResponse(GattErrorResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when an indication is received from the server.
         /// </summary>
-        public EventHandler<GattIndicationEventArgs> GattIndicationEvent;
+        public GattIndication GattIndicationEvent;
+
+        public delegate void GattIndication(GattIndicationEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when a notification is received from the server.
         /// </summary>
-        public EventHandler<GattNotificationEventArgs> GattNotificationEvent;
+        public GattNotification GattNotificationEvent;
+
+        public delegate void GattNotification(GattNotificationEventArgs eventArgs);
 
         /// <summary>
         /// This event is given to the application when a prepare write request is
@@ -505,13 +584,17 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// be modified and an error response will be sent to the client, with the
         /// error code as specified by the application.
         /// </summary>
-        public EventHandler<GattPrepareWritePermitRequestEventArgs> GattPrepareWritePermitRequestEvent;
+        public GattPrepareWritePermitRequest GattPrepareWritePermitRequestEvent;
+
+        public delegate void GattPrepareWritePermitRequest(GattPrepareWritePermitRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when a GATT client procedure completes either
         /// with error or successfully.
         /// </summary>
-        public EventHandler<GattProcessCompleteEventArgs> GattProcessCompleteEvent;
+        public GattProcessComplete GattProcessCompleteEvent;
+
+        public delegate void GattProcessComplete(GattProcessCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated by the client/server to the application on a
@@ -526,7 +609,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// <see cref="Aci.Gap.Terminate"/>, since immediately after this event, system could
         /// save important information in non volatile memory.
         /// </summary>
-        public EventHandler<GattProcessTimeoutEventArgs> GattProcessTimeoutEvent;
+        public GattProcessTimeout GattProcessTimeoutEvent;
+
+        public delegate void GattProcessTimeout(GattProcessTimeoutEventArgs eventArgs);
 
         /// <summary>
         /// This event is given to the application when a read multiple request or
@@ -538,7 +623,9 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// <see cref="Aci.Gatt.AllowRead"/> command to indicate to the stack that it can send
         /// the response to the client.
         /// </summary>
-        public EventHandler<GattReadMultiPermitRequestEventArgs> GattReadMultiPermitRequestEvent;
+        public GattReadMultiPermitRequest GattReadMultiPermitRequestEvent;
+
+        public delegate void GattReadMultiPermitRequest(GattReadMultiPermitRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event is given to the application when a read request or read
@@ -549,20 +636,26 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// desires and when done, it has to send the <see cref="Aci.Gatt.AllowRead"/>
         /// command to indicate to the stack that it can send the response to the client.
         /// </summary>
-        public EventHandler<GattReadPermitRequestEventArgs> GattReadPermitRequestEvent;
+        public GattReadPermitRequest GattReadPermitRequestEvent;
+
+        public delegate void GattReadPermitRequest(GattReadPermitRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the client has sent the confirmation to a
         /// previously sent indication.
         /// </summary>
-        public EventHandler<GattServerConfirmationEventArgs> GattServerConfirmationEvent;
+        public GattServerConfirmation GattServerConfirmationEvent;
+
+        public delegate void GattServerConfirmation(GattServerConfirmationEventArgs eventArgs);
 
         /// <summary>
         /// Each time BLE FW stack raises the error code <see cref="BleStatus.InsufficientResources"/>,
         /// this event is generated as soon as the available buffer size  is greater than maximum ATT MTU
         /// (on stack versions below v2.1 this event is generated when at least 2 packets with MTU of 23 bytes are available).
         /// </summary>
-        public EventHandler<GattTxPoolAvailableEventArgs> GattTxPoolAvailableEvent;
+        public GattTxPoolAvailable GattTxPoolAvailableEvent;
+
+        public delegate void GattTxPoolAvailable(GattTxPoolAvailableEventArgs eventArgs);
 
         /// <summary>
         /// This event is given to the application when a write request, write
@@ -580,13 +673,17 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// specified by the application. In case of write/signed write commands,
         /// no response is sent to the client but the attribute is not modified.
         /// </summary>
-        public EventHandler<GattWritePermitRequestEventArgs> GattWritePermitRequestEvent;
+        public GattWritePermitRequest GattWritePermitRequestEvent;
+
+        public delegate void GattWritePermitRequest(GattWritePermitRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event indicates that LE Diffie Hellman key generation has been
         /// completed by the Controller.
         /// </summary>
-        public EventHandler<GenerateDhKeyCompleteEventArgs> GenerateDhKeyCompleteEvent;
+        public GenerateDhKeyComplete GenerateDhKeyCompleteEvent;
+
+        public delegate void GenerateDhKeyComplete(GenerateDhKeyCompleteEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the device completes a radio activity and
@@ -603,20 +700,26 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// with connection interval, switching  antenna at the end of advertising
         /// or performing flash erase operation while radio is idle.
         /// </summary>
-        public EventHandler<HalEndOfRadioActivityEventArgs> HalEndOfRadioActivityEvent;
+        public HalEndOfRadioActivity HalEndOfRadioActivityEvent;
+
+        public delegate void HalEndOfRadioActivity(HalEndOfRadioActivityEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated to report firmware error informations. After
         /// this event with error type equal to either 0x01, 0x02 or 0x3, it is
         /// recommended to disconnect the link (handle is reported in Data field).
         /// </summary>
-        public EventHandler<HalFirmwareErrorEventArgs> HalFirmwareErrorEvent;
+        public HalFirmwareError HalFirmwareErrorEvent;
+
+        public delegate void HalFirmwareError(HalFirmwareErrorEventArgs eventArgs);
 
         /// <summary>
         /// This event is reported to the application after a scan request is
         /// received and a scan response is scheduled to be transmitted.
         /// </summary>
-        public EventHandler<HalScanRequestReportEventArgs> HalScanRequestReportEvent;
+        public HalScanRequestReport HalScanRequestReportEvent;
+
+        public delegate void HalScanRequestReport(HalScanRequestReportEventArgs eventArgs);
 
         /// <summary>
         /// The Hardware Error event is used to indicate some implementation
@@ -624,40 +727,52 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// used to notify the Host that a hardware failure has occurred in the
         /// Controller.
         /// </summary>
-        public EventHandler<HardwareErrorEventArgs> HardwareErrorEvent;
+        public HardwareError HardwareErrorEvent;
+
+        public delegate void HardwareError(HardwareErrorEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the master responds to the connection
         /// update request packet with a command reject packet.
         /// </summary>
-        public EventHandler<L2CapCommandRejectEventArgs> L2CapCommandRejectEvent;
+        public L2CapCommandReject L2CapCommandRejectEvent;
+
+        public delegate void L2CapCommandReject(L2CapCommandRejectEventArgs eventArgs);
 
         /// <summary>
         /// The event is given by the L2CAP layer when a connection update request
         /// is received from the slave. The upper layer which receives this event
         /// has to respond by sending a <see cref="Aci.L2Cap.ConnectionParameterUpdateResponse"/> command.
         /// </summary>
-        public EventHandler<L2CapConnectionUpdateRequestEventArgs> L2CapConnectionUpdateRequestEvent;
+        public L2CapConnectionUpdateRequest L2CapConnectionUpdateRequestEvent;
+
+        public delegate void L2CapConnectionUpdateRequest(L2CapConnectionUpdateRequestEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the master responds to the connection
         /// update request packet with a connection update response packet.
         /// </summary>
-        public EventHandler<L2CapConnectionUpdateResponseEventArgs> L2CapConnectionUpdateResponseEvent;
+        public L2CapConnectionUpdateResponse L2CapConnectionUpdateResponseEvent;
+
+        public delegate void L2CapConnectionUpdateResponse(L2CapConnectionUpdateResponseEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when the master does not respond to the
         /// connection update request packet with a connection update response
         /// packet or a command reject packet within 30 seconds.
         /// </summary>
-        public EventHandler<L2CapProcessTimeoutEventArgs> L2CapProcessTimeoutEvent;
+        public L2CapProcessTimeout L2CapProcessTimeoutEvent;
+
+        public delegate void L2CapProcessTimeout(L2CapProcessTimeoutEventArgs eventArgs);
 
         /// <summary>
         /// The LE Long Term Key Request event indicates that the master device is
         /// attempting to encrypt or re-encrypt the link and is requesting the
         /// Long Term Key from the Host. (See [Vol 6] Part B, Section 5.1.3).
         /// </summary>
-        public EventHandler<LongTermKeyRequestEventArgs> LongTermKeyRequestEvent;
+        public LongTermKeyRequest LongTermKeyRequestEvent;
+
+        public delegate void LongTermKeyRequest(LongTermKeyRequestEventArgs eventArgs);
 
         /// <summary>
         /// The Number Of Completed Packets event is used by the Controller to
@@ -676,19 +791,29 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// periodically, until it finally reports that all the pending ACL Data
         /// Packets have been transmitted or flushed.
         /// </summary>
-        public EventHandler<NumberOfCompletePacketsEventArgs> NumberOfCompletePacketsEvent;
+        public NumberOfCompletePackets NumberOfCompletePacketsEvent;
+
+        public delegate void NumberOfCompletePackets(NumberOfCompletePacketsEventArgs eventArgs);
 
         /// <summary>
         /// This event is generated when local P-256 key generation is complete.
         /// </summary>
-        public EventHandler<ReadLocalP256PublicKeyCompleteEventArgs> ReadLocalP256PublicKeyCompleteEvent;
+        public ReadLocalP256PublicKeyComplete ReadLocalP256PublicKeyCompleteEvent;
+
+        public delegate void ReadLocalP256PublicKeyComplete(ReadLocalP256PublicKeyCompleteEventArgs eventArgs);
 
         /// <summary>
         /// The LE Read Remote Used Features Complete event is used to indicate the completion
         /// of the process of the Controller obtaining the used features of the remote
         /// Bluetooth device specified by the <see cref="ReadRemoteUsedFeaturesCompleteEventArgs.ConnectionHandle"/> event parameter.
         /// </summary>
-        public EventHandler<ReadRemoteUsedFeaturesCompleteEventArgs> ReadRemoteUsedFeaturesCompleteEvent;
+        public ReadRemoteUsedFeaturesComplete ReadRemoteUsedFeaturesCompleteEvent;
+
+        public delegate void ReadRemoteUsedFeaturesComplete(ReadRemoteUsedFeaturesCompleteEventArgs eventArgs);
+
+        public ReadRemoteVersionInformationComplete ReadRemoteVersionInformationCompleteEvent;
+
+        public delegate void ReadRemoteVersionInformationComplete(ReadRemoteVersionInformationCompleteEventArgs eventArgs);
 
         /// <summary>
         /// The Read Remote Version Information Complete event is used to indicate
@@ -710,15 +835,11 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         /// (See Bluetooth Specification v.4.1, Vol. 2, Part E, 7.7.12)
         /// </summary>
         /// <seealso cref="Hci.ReadRemoteVersionInformation"/>
-        public EventHandler<ReadRemoteVersionInformationCompleteEventArgs> ReadRemoteVersionInformationCompleteEvent;
-
+        //public EventHandler<ReadRemoteVersionInformationCompleteEventArgs> ReadRemoteVersionInformationCompleteEvent;
         private BleStatus hci_encryption_key_refresh_complete_event_process(byte[] bufferIn)
         {
             if (EncryptionKeyRefreshCompleteEvent is not null)
-                EncryptionKeyRefreshCompleteEvent.Invoke(
-                    this,
-                    new EncryptionKeyRefreshCompleteEventArgs(bufferIn![0], BitConverter.ToUInt16(bufferIn, 1))
-                );
+                EncryptionKeyRefreshCompleteEvent.Invoke(new EncryptionKeyRefreshCompleteEventArgs(bufferIn![0], BitConverter.ToUInt16(bufferIn, 1)));
 
             return BleStatus.Success;
         }
@@ -726,7 +847,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus hci_data_buffer_overflow_event_process(byte[] bufferIn)
         {
             if (DataBufferOverflowEvent is not null)
-                DataBufferOverflowEvent.Invoke(this, new DataBufferOverflowEventArgs((LinkType)bufferIn![0]));
+                DataBufferOverflowEvent.Invoke(new DataBufferOverflowEventArgs((LinkType)bufferIn![0]));
             return BleStatus.Success;
         }
 
@@ -744,7 +865,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             }
 
             if (NumberOfCompletePacketsEvent is not null)
-                NumberOfCompletePacketsEvent.Invoke(this, new NumberOfCompletePacketsEventArgs(numberOfHandles, handlePacketPairs));
+                NumberOfCompletePacketsEvent.Invoke(new NumberOfCompletePacketsEventArgs(numberOfHandles, handlePacketPairs));
 
             return BleStatus.Success;
         }
@@ -752,7 +873,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus hci_hardware_error_event_process(byte[] bufferIn)
         {
             if (HardwareErrorEvent is not null)
-                HardwareErrorEvent.Invoke(this, new HardwareErrorEventArgs((HardwareErrorCode)bufferIn![0]));
+                HardwareErrorEvent.Invoke(new HardwareErrorEventArgs((HardwareErrorCode)bufferIn![0]));
             return BleStatus.Success;
         }
 
@@ -760,7 +881,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (ReadRemoteVersionInformationCompleteEvent is not null)
                 ReadRemoteVersionInformationCompleteEvent.Invoke(
-                    this,
                     new ReadRemoteVersionInformationCompleteEventArgs(
                         bufferIn![0],
                         BitConverter.ToUInt16(bufferIn, 1),
@@ -775,7 +895,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus hci_encryption_change_event_process(byte[] bufferIn)
         {
             if (EncryptionChangeEvent is not null)
-                EncryptionChangeEvent.Invoke(this, new EncryptionChangeEventArgs(bufferIn![0], BitConverter.ToUInt16(bufferIn, 1), bufferIn[3]));
+                EncryptionChangeEvent.Invoke(new EncryptionChangeEventArgs(bufferIn![0], BitConverter.ToUInt16(bufferIn, 1), bufferIn[3]));
             return BleStatus.Success;
         }
 
@@ -783,7 +903,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             var reportCount = bufferIn![0];
             byte ptr = 1;
-            var directAdvertisingReports = new DirectAdvertisingReport[8];
+            var directAdvertisingReports = new DirectAdvertisingReportContainer[8];
             for (var i = 0; i < reportCount; i++)
             {
                 directAdvertisingReports[i].EventType = (AdvertisingType)bufferIn[ptr];
@@ -801,7 +921,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             }
 
             if (DirectAdvertisingReportEvent is not null)
-                DirectAdvertisingReportEvent.Invoke(this, new DirectAdvertisingReportEventArgs(reportCount, directAdvertisingReports));
+                DirectAdvertisingReportEvent.Invoke(new DirectAdvertisingReportEventArgs(reportCount, directAdvertisingReports));
 
             return BleStatus.Success;
         }
@@ -815,7 +935,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
 
             if (EnhancedConnectionCompleteEvent is not null)
                 EnhancedConnectionCompleteEvent.Invoke(
-                    this,
                     new EnhancedConnectionCompleteEventArgs(
                         bufferIn[0],
                         BitConverter.ToUInt16(bufferIn, 1),
@@ -838,7 +957,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var dhKey = new byte[32];
             Array.Copy(bufferIn!, 1, dhKey, 0, 32);
             if (GenerateDhKeyCompleteEvent is not null)
-                GenerateDhKeyCompleteEvent.Invoke(this, new GenerateDhKeyCompleteEventArgs(bufferIn[0], dhKey));
+                GenerateDhKeyCompleteEvent.Invoke(new GenerateDhKeyCompleteEventArgs(bufferIn[0], dhKey));
             return BleStatus.Success;
         }
 
@@ -847,7 +966,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var localP256PublicKey = new byte[64];
             Array.Copy(bufferIn!, 1, localP256PublicKey, 0, 64);
             if (ReadLocalP256PublicKeyCompleteEvent is not null)
-                ReadLocalP256PublicKeyCompleteEvent.Invoke(this, new ReadLocalP256PublicKeyCompleteEventArgs(bufferIn[0], localP256PublicKey));
+                ReadLocalP256PublicKeyCompleteEvent.Invoke(new ReadLocalP256PublicKeyCompleteEventArgs(bufferIn[0], localP256PublicKey));
             return BleStatus.Success;
         }
 
@@ -855,7 +974,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (DataLengthChangeEvent is not null)
                 DataLengthChangeEvent.Invoke(
-                    this,
                     new DataLengthChangeEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -871,7 +989,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (LongTermKeyRequestEvent is not null)
                 LongTermKeyRequestEvent.Invoke(
-                    this,
                     new LongTermKeyRequestEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt64(bufferIn, 2),
@@ -885,7 +1002,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (ConnectionUpdateCompleteEvent is not null)
                 ConnectionUpdateCompleteEvent.Invoke(
-                    this,
                     new ConnectionUpdateCompleteEventArgs(
                         bufferIn![0],
                         BitConverter.ToUInt16(bufferIn, 1),
@@ -903,7 +1019,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn!, 3, features, 0, 8);
             if (ReadRemoteUsedFeaturesCompleteEvent is not null)
                 ReadRemoteUsedFeaturesCompleteEvent.Invoke(
-                    this,
                     new ReadRemoteUsedFeaturesCompleteEventArgs(bufferIn[0], BitConverter.ToUInt16(bufferIn, 1), features)
                 );
             return BleStatus.Success;
@@ -912,7 +1027,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus hci_le_advertising_report_event_process(byte[] bufferIn)
         {
             var reportCount = bufferIn![0];
-            var reports = new AdvertisingReport[9];
+            var reports = new AdvertisingReportContainer[9];
             var ptr = 1;
             for (var i = 0; i < reportCount; i++)
             {
@@ -931,7 +1046,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             }
 
             if (AdvertisingReportEvent is not null)
-                AdvertisingReportEvent.Invoke(this, new AdvertisingReportEventArgs(reportCount, reports));
+                AdvertisingReportEvent.Invoke(new AdvertisingReportEventArgs(reportCount, reports));
 
             return BleStatus.Success;
         }
@@ -943,7 +1058,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
 
             if (ConnectionCompleteEvent is not null)
                 ConnectionCompleteEvent.Invoke(
-                    this,
                     new ConnectionCompleteEventArgs(
                         bufferIn[0],
                         BitConverter.ToUInt16(bufferIn, 1),
@@ -963,35 +1077,35 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus aci_gap_bond_lost_event_process(byte[] bufferIn)
         {
             if (GapBondLostEvent is not null)
-                GapBondLostEvent.Invoke(this, new GapBondLostEventArgs());
+                GapBondLostEvent.Invoke(new GapBondLostEventArgs());
             return BleStatus.Success;
         }
 
         private BleStatus aci_gap_slave_security_initiated_event_process(byte[] bufferIn)
         {
             if (GapSlaveSecurityInitiatedEvent is not null)
-                GapSlaveSecurityInitiatedEvent.Invoke(this, new GapSlaveSecurityInitiatedEventArgs());
+                GapSlaveSecurityInitiatedEvent.Invoke(new GapSlaveSecurityInitiatedEventArgs());
             return BleStatus.Success;
         }
 
         private BleStatus aci_gap_authorization_req_event_process(byte[] bufferIn)
         {
             if (GapAuthorizationRequestEvent is not null)
-                GapAuthorizationRequestEvent.Invoke(this, new GapAuthorizationRequestEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
+                GapAuthorizationRequestEvent.Invoke(new GapAuthorizationRequestEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
         private BleStatus aci_gap_pass_key_req_event_process(byte[] bufferIn)
         {
             if (GapPassKeyRequestEvent is not null)
-                GapPassKeyRequestEvent.Invoke(this, new GapPassKeyRequestEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
+                GapPassKeyRequestEvent.Invoke(new GapPassKeyRequestEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
         private BleStatus aci_gap_limited_discoverable_event_process(byte[] bufferIn)
         {
             if (GapLimitedDiscoverableEvent is not null)
-                GapLimitedDiscoverableEvent.Invoke(this, new GapLimitedDiscoverableEventArgs());
+                GapLimitedDiscoverableEvent.Invoke(new GapLimitedDiscoverableEventArgs());
             return BleStatus.Success;
         }
 
@@ -1001,7 +1115,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var data = new byte[dataLength];
             Array.Copy(bufferIn, 2, data, 0, dataLength);
             if (HalFirmwareErrorEvent is not null)
-                HalFirmwareErrorEvent.Invoke(this, new HalFirmwareErrorEventArgs((FirmwareErrorType)bufferIn[0], dataLength, data));
+                HalFirmwareErrorEvent.Invoke(new HalFirmwareErrorEventArgs((FirmwareErrorType)bufferIn[0], dataLength, data));
             return BleStatus.Success;
         }
 
@@ -1010,7 +1124,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var peerAddress = new byte[6];
             Array.Copy(bufferIn!, 2, peerAddress, 0, 6);
             if (HalScanRequestReportEvent is not null)
-                HalScanRequestReportEvent.Invoke(this, new HalScanRequestReportEventArgs((sbyte)bufferIn[0], (AddressType)bufferIn[1], peerAddress));
+                HalScanRequestReportEvent.Invoke(new HalScanRequestReportEventArgs((sbyte)bufferIn[0], (AddressType)bufferIn[1], peerAddress));
             return BleStatus.Success;
         }
 
@@ -1018,7 +1132,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (HalEndOfRadioActivityEvent is not null)
                 HalEndOfRadioActivityEvent.Invoke(
-                    this,
                     new HalEndOfRadioActivityEventArgs((RadioState)bufferIn![0], (RadioState)bufferIn[1], BitConverter.ToUInt32(bufferIn, 2))
                 );
             return BleStatus.Success;
@@ -1031,7 +1144,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 19, data, 0, dataLength);
             if (BlueCrashInfoEvent is not null)
                 BlueCrashInfoEvent.Invoke(
-                    this,
                     new BlueCrashInfoEventArgs(
                         (CrashType)bufferIn![0],
                         BitConverter.ToUInt16(bufferIn, 1),
@@ -1054,7 +1166,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GapPairingCompleteEvent is not null)
                 GapPairingCompleteEvent.Invoke(
-                    this,
                     new GapPairingCompleteEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         (GapPairingCompleteStatus)bufferIn[2],
@@ -1068,7 +1179,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GapKeypressNotificationEvent is not null)
                 GapKeypressNotificationEvent.Invoke(
-                    this,
                     new GapKeypressNotificationEventArgs(BitConverter.ToUInt16(bufferIn!, 0), (KeyPressNotificationType)bufferIn[2])
                 );
             return BleStatus.Success;
@@ -1078,7 +1188,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GapNumericComparisonValueEvent is not null)
                 GapNumericComparisonValueEvent.Invoke(
-                    this,
                     new GapNumericComparisonValueEventArgs(BitConverter.ToUInt16(bufferIn!, 0), BitConverter.ToUInt32(bufferIn, 2))
                 );
             return BleStatus.Success;
@@ -1090,7 +1199,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var data = new byte[dataLength];
             Array.Copy(bufferIn, 3, data, 0, dataLength);
             if (L2CapProcessTimeoutEvent is not null)
-                L2CapProcessTimeoutEvent.Invoke(this, new L2CapProcessTimeoutEventArgs(BitConverter.ToUInt16(bufferIn!, 0), dataLength, data));
+                L2CapProcessTimeoutEvent.Invoke(new L2CapProcessTimeoutEventArgs(BitConverter.ToUInt16(bufferIn!, 0), dataLength, data));
             return BleStatus.Success;
         }
 
@@ -1098,7 +1207,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (L2CapConnectionUpdateRequestEvent is not null)
                 L2CapConnectionUpdateRequestEvent.Invoke(
-                    this,
                     new L2CapConnectionUpdateRequestEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         bufferIn[2],
@@ -1116,7 +1224,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (L2CapConnectionUpdateResponseEvent is not null)
                 L2CapConnectionUpdateResponseEvent.Invoke(
-                    this,
                     new L2CapConnectionUpdateResponseEventArgs(BitConverter.ToUInt16(bufferIn!, 0), BitConverter.ToUInt16(bufferIn, 2))
                 );
             return BleStatus.Success;
@@ -1125,7 +1232,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus aci_gap_addr_not_resolved_event_process(byte[] bufferIn)
         {
             if (GapAddressNotResolvedEvent is not null)
-                GapAddressNotResolvedEvent.Invoke(this, new GapAddressNotResolvedEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
+                GapAddressNotResolvedEvent.Invoke(new GapAddressNotResolvedEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
@@ -1136,7 +1243,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 7, attributeData, 0, attributeLength);
             if (GattAttributeModifiedEvent is not null)
                 GattAttributeModifiedEvent.Invoke(
-                    this,
                     new GattAttributeModifiedEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1155,7 +1261,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 6, data, 0, dataLength);
             if (L2CapCommandRejectEvent is not null)
                 L2CapCommandRejectEvent.Invoke(
-                    this,
                     new L2CapCommandRejectEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         bufferIn[2],
@@ -1170,7 +1275,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus aci_gatt_proc_timeout_event_process(byte[] bufferIn)
         {
             if (GattProcessTimeoutEvent is not null)
-                GattProcessTimeoutEvent.Invoke(this, new GattProcessTimeoutEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
+                GattProcessTimeoutEvent.Invoke(new GattProcessTimeoutEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
@@ -1178,7 +1283,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (AttExchangeMtuResponseEvent is not null)
                 AttExchangeMtuResponseEvent.Invoke(
-                    this,
                     new AttExchangeMtuResponseEventArgs(BitConverter.ToUInt16(bufferIn!, 0), BitConverter.ToUInt16(bufferIn, 2))
                 );
             return BleStatus.Success;
@@ -1190,7 +1294,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var data = new byte[dataLength];
             Array.Copy(bufferIn, 3, data, 0, dataLength);
             if (GapProcessCompleteEvent is not null)
-                GapProcessCompleteEvent.Invoke(this, new GapProcessCompleteEventArgs((ProcedureCode)bufferIn[0], bufferIn[1], dataLength, data));
+                GapProcessCompleteEvent.Invoke(new GapProcessCompleteEventArgs((ProcedureCode)bufferIn[0], bufferIn[1], dataLength, data));
             return BleStatus.Success;
         }
 
@@ -1201,7 +1305,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 4, data, 0, dataLength);
             if (AttReadByTypeResponseEvent is not null)
                 AttReadByTypeResponseEvent.Invoke(
-                    this,
                     new AttReadByTypeResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         bufferIn[2],
@@ -1227,7 +1330,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
 
             if (AttFindByTypeValueResponseEvent is not null)
                 AttFindByTypeValueResponseEvent.Invoke(
-                    this,
                     new AttFindByTypeValueResponseEventArgs(BitConverter.ToUInt16(bufferIn, 0), handlePairCount, handlePairs)
                 );
             return BleStatus.Success;
@@ -1240,7 +1342,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 4, data, 0, dataLength);
             if (AttFindInfoResponseEvent is not null)
                 AttFindInfoResponseEvent.Invoke(
-                    this,
                     new AttFindInfoResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         bufferIn[2],
@@ -1258,7 +1359,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 3, data, 0, dataLength);
             if (AttReadResponseEvent is not null)
                 AttReadResponseEvent.Invoke(
-                    this,
                     new AttReadResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         dataLength,
@@ -1275,7 +1375,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 3, data, 0, dataLength);
             if (AttReadBlobResponseEvent is not null)
                 AttReadBlobResponseEvent.Invoke(
-                    this,
                     new AttReadBlobResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         dataLength,
@@ -1292,7 +1391,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 3, data, 0, dataLength);
             if (AttReadMultipleResponseEvent is not null)
                 AttReadMultipleResponseEvent.Invoke(
-                    this,
                     new AttReadMultipleResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         dataLength,
@@ -1309,7 +1407,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 4, data, 0, dataLength);
             if (AttReadByGroupTypeResponseEvent is not null)
                 AttReadByGroupTypeResponseEvent.Invoke(
-                    this,
                     new AttReadByGroupTypeResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         bufferIn[2],
@@ -1327,7 +1424,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 7, data, 0, dataLength);
             if (AttPrepareWriteResponseEvent is not null)
                 AttPrepareWriteResponseEvent.Invoke(
-                    this,
                     new AttPrepareWriteResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1342,17 +1438,14 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus aci_att_exec_write_resp_event_process(byte[] bufferIn)
         {
             if (AttExecuteWriteResponseEvent is not null)
-                AttExecuteWriteResponseEvent.Invoke(this, new AttExecuteWriteResponseEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
+                AttExecuteWriteResponseEvent.Invoke(new AttExecuteWriteResponseEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
         private BleStatus aci_blue_events_lost_event_process(byte[] bufferIn)
         {
             if (BlueEventsLostEvent is not null)
-                BlueEventsLostEvent.Invoke(
-                    this,
-                    new BlueEventsLostEventArgs((LostEventBitmap)BitConverter.ToUInt64(bufferIn!, 0))
-                );
+                BlueEventsLostEvent.Invoke(new BlueEventsLostEventArgs((LostEventBitmap)BitConverter.ToUInt64(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
@@ -1363,7 +1456,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 5, data, 0, dataLength);
             if (GattIndicationEvent is not null)
                 GattIndicationEvent.Invoke(
-                    this,
                     new GattIndicationEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1381,7 +1473,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 5, data, 0, dataLength);
             if (GattNotificationEvent is not null)
                 GattNotificationEvent.Invoke(
-                    this,
                     new GattNotificationEventArgs(
                         BitConverter.ToUInt16(bufferIn, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1396,7 +1487,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GattProcessCompleteEvent is not null)
                 GattProcessCompleteEvent.Invoke(
-                    this,
                     new GattProcessCompleteEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         (BleStatus)bufferIn[2]
@@ -1409,7 +1499,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GattErrorResponseEvent is not null)
                 GattErrorResponseEvent.Invoke(
-                    this,
                     new GattErrorResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         bufferIn[2],
@@ -1427,7 +1516,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 5, data, 0, dataLength);
             if (GattDiscoverReadCharacteristicByUuidResponseEvent is not null)
                 GattDiscoverReadCharacteristicByUuidResponseEvent.Invoke(
-                    this,
                     new GattDiscoverReadCharacteristicByUuidResponseEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1445,7 +1533,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 5, data, 0, dataLength);
             if (GattWritePermitRequestEvent is not null)
                 GattWritePermitRequestEvent.Invoke(
-                    this,
                     new GattWritePermitRequestEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1460,7 +1547,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GattReadPermitRequestEvent is not null)
                 GattReadPermitRequestEvent.Invoke(
-                    this,
                     new GattReadPermitRequestEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1483,7 +1569,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
 
             if (GattReadMultiPermitRequestEvent is not null)
                 GattReadMultiPermitRequestEvent.Invoke(
-                    this,
                     new GattReadMultiPermitRequestEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         handleCount,
@@ -1497,7 +1582,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         {
             if (GattTxPoolAvailableEvent is not null)
                 GattTxPoolAvailableEvent.Invoke(
-                    this,
                     new GattTxPoolAvailableEventArgs(BitConverter.ToUInt16(bufferIn!, 0), BitConverter.ToUInt16(bufferIn, 2))
                 );
             return BleStatus.Success;
@@ -1506,7 +1590,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus aci_gatt_server_confirmation_event_process(byte[] bufferIn)
         {
             if (GattServerConfirmationEvent is not null)
-                GattServerConfirmationEvent.Invoke(this, new GattServerConfirmationEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
+                GattServerConfirmationEvent.Invoke(new GattServerConfirmationEventArgs(BitConverter.ToUInt16(bufferIn!, 0)));
             return BleStatus.Success;
         }
 
@@ -1517,7 +1601,6 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             Array.Copy(bufferIn, 6, data, 0, dataLength);
             if (GattPrepareWritePermitRequestEvent is not null)
                 GattPrepareWritePermitRequestEvent.Invoke(
-                    this,
                     new GattPrepareWritePermitRequestEventArgs(
                         BitConverter.ToUInt16(bufferIn!, 0),
                         BitConverter.ToUInt16(bufferIn, 2),
@@ -1532,7 +1615,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         private BleStatus aci_blue_initialized_event_process(byte[] bufferIn)
         {
             if (BlueInitializedEvent is not null)
-                BlueInitializedEvent.Invoke(this, new BlueInitializedEventArgs((ReasonCode)bufferIn![0]));
+                BlueInitializedEvent.Invoke(new BlueInitializedEventArgs((ReasonCode)bufferIn![0]));
             return BleStatus.Success;
         }
 
@@ -1542,7 +1625,7 @@ namespace Iot.Device.BlueNrg2.Aci.Events
             var connectionHandle = BitConverter.ToUInt16(bufferIn, 1);
             var reason = bufferIn[3];
             if (DisconnectionCompleteEvent is not null)
-                DisconnectionCompleteEvent.Invoke(this, new DisconnectionCompleteEventArgs(status, connectionHandle, reason));
+                DisconnectionCompleteEvent.Invoke(new DisconnectionCompleteEventArgs(status, connectionHandle, reason));
 
             return BleStatus.Success;
         }

@@ -16,11 +16,11 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         public readonly byte ReportCount;
 
         /// <summary>
-        /// <see cref="DirectAdvertisingReport"/>
+        /// <see cref="DirectAdvertisingReportContainer"/>
         /// </summary>
-        public readonly DirectAdvertisingReport[] DirectAdvertisingReports;
+        public readonly DirectAdvertisingReportContainer[] DirectAdvertisingReports;
 
-        internal DirectAdvertisingReportEventArgs(byte reportCount, DirectAdvertisingReport[] directAdvertisingReports)
+        internal DirectAdvertisingReportEventArgs(byte reportCount, DirectAdvertisingReportContainer[] directAdvertisingReports)
         {
             ReportCount = reportCount;
             DirectAdvertisingReports = directAdvertisingReports;

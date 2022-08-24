@@ -6,7 +6,7 @@ namespace Iot.Device.BlueNrg2.Aci
     /// <summary>
     /// AdvertisingReport struct.
     /// </summary>
-    public struct AdvertisingReport
+    public struct AdvertisingReportContainer
     {
         /// <summary>
         /// Type of advertising report event.

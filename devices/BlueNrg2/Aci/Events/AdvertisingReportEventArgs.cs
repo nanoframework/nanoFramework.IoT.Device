@@ -16,11 +16,11 @@ namespace Iot.Device.BlueNrg2.Aci.Events
         public readonly byte ReportCount;
 
         /// <summary>
-        /// See <see cref="AdvertisingReport"/>
+        /// See <see cref="AdvertisingReportContainer"/>
         /// </summary>
-        public readonly AdvertisingReport[] Reports;
+        public readonly AdvertisingReportContainer[] Reports;
 
-        internal AdvertisingReportEventArgs(byte reportCount, AdvertisingReport[] reports)
+        internal AdvertisingReportEventArgs(byte reportCount, AdvertisingReportContainer[] reports)
         {
             ReportCount = reportCount;
             Reports = reports;

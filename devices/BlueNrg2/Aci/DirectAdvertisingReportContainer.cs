@@ -6,7 +6,7 @@ namespace Iot.Device.BlueNrg2.Aci
     /// <summary>
     /// Data in a direct advertising report.
     /// </summary>
-    public struct DirectAdvertisingReport
+    public struct DirectAdvertisingReportContainer
     {
         /// <summary>
         /// <see cref="AdvertisingType"/>>.
