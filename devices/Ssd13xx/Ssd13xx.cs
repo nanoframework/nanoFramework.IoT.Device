@@ -78,7 +78,7 @@ namespace Iot.Device.Ssd13xx
                 this.Reset();
                 }
 
-            _shouldDispose = shouldDispose;
+            _shouldDispose = shouldDispose || (gpio == null);
 
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
