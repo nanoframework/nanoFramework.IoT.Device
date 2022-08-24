@@ -80,12 +80,12 @@ namespace Iot.Device.NFUnitTest
             Mcp7940m clock = new Mcp7940m(i2cDevice, ClockSource.ExternalClockInput);
 
             // Verify flag matches function returned state.
-            Assert.True(RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput));
+            Assert.True(RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)Register.Control, (byte)RegisterMask.ExternalClockInputMask));
 
             clock = new Mcp7940m(i2cDevice, ClockSource.ExternalCrystal);
 
             // Verify flag matches function returned state.
-            Assert.False(RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput));
+            Assert.False(RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)Register.Control, (byte)RegisterMask.ExternalClockInputMask));
         }
 
         [TestMethod]
@@ -448,8 +448,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only Alarm1 Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.Alarm1InterruptEnabled);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~RegisterMask.Alarm1InterruptEnabledMask);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask);
 
             // Verify Alarm1 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -472,12 +472,12 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableAlarm1();
 
             // Verify flag has been set for Alarm1.
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask));
 
             _clock.DisableAlarm1();
 
             // Verify flag has been cleared for Alarm1.
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask));
         }
 
         [TestMethod]
@@ -487,13 +487,13 @@ namespace Iot.Device.NFUnitTest
 
             // Verify flag matches function returned state.
             bool isEnabled = _clock.IsEnabledAlarm1;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask));
 
             _clock.DisableAlarm1();
 
             // Verify flag matches function returned state.
             isEnabled = _clock.IsEnabledAlarm1;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask));
         }
 
         [TestMethod]
@@ -831,8 +831,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only Alarm2 Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.Alarm2InterruptEnabled);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~RegisterMask.Alarm2InterruptEnabledMask);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask);
 
             // Verify Alarm2 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Second);
@@ -855,12 +855,12 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableAlarm2();
 
             // Verify flag has been set for Alarm2.
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask));
 
             _clock.DisableAlarm2();
 
             // Verify flag has been cleared for Alarm2.
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask));
         }
 
         [TestMethod]
@@ -870,13 +870,13 @@ namespace Iot.Device.NFUnitTest
 
             // Verify flag matches function returned state.
             bool isEnabled = _clock.IsEnabledAlarm2;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask));
 
             _clock.DisableAlarm2();
 
             // Verify flag matches function returned state for both Alarm2 and Alarm2.
             isEnabled = _clock.IsEnabledAlarm2;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask));
         }
 
         [TestMethod]
@@ -999,8 +999,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only GeneralPurposeOutput Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.GeneralPurposeOutput);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~RegisterMask.GeneralPurposeOutputMask);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)RegisterMask.GeneralPurposeOutputMask);
 
             // Verify Alarm1 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -1025,14 +1025,14 @@ namespace Iot.Device.NFUnitTest
             // Verify flag matches function returned state.
             PinValue pinValue = _clock.GeneralPurposeOutput;
             Assert.True(pinValue == PinValue.High);
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.GeneralPurposeOutputMask));
 
             _clock.GeneralPurposeOutput = PinValue.Low;
 
             // Verify flag matches function returned state.
             pinValue = _clock.GeneralPurposeOutput;
             Assert.True(pinValue == PinValue.Low);
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.GeneralPurposeOutputMask));
         }
 
         #endregion
@@ -1062,8 +1062,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only SquareWaveOutput Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.SquareWaveOutput);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)ControlRegister.SquareWaveOutput);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~RegisterMask.SquareWaveOutputMask);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)RegisterMask.SquareWaveOutputMask);
 
             // Verify Alarm1 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -1086,12 +1086,12 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableSquareWaveOutput();
 
             // Verify flag has been set for SquareWaveOutput.
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask));
 
             _clock.DisableSquareWaveOutput();
 
             // Verify flag has been cleared for SquareWaveOutput.
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask));
         }
 
         [TestMethod]
@@ -1101,13 +1101,13 @@ namespace Iot.Device.NFUnitTest
 
             // Verify flag matches function returned state.
             bool isEnabled = _clock.IsEnabledSquareWaveOutput;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask));
 
             _clock.DisableSquareWaveOutput();
 
             // Verify flag matches function returned state.
             isEnabled = _clock.IsEnabledSquareWaveOutput;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask));
         }
 
         public void SquareWaveOutput_SquareWaveOutputFrequency_Property_Only_Changes_Relevant_Flag()
@@ -1132,8 +1132,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.EepromUnlock);
 
             // Verify only SquareWaveOutput Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~ControlRegister.SquareWaveFrequencyMask);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)ControlRegister.SquareWaveFrequencyMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Control, (byte)~RegisterMask.SquareWaveFrequencyMask);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Control, (byte)RegisterMask.SquareWaveFrequencyMask);
 
             // Verify Alarm1 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Second);
@@ -1155,19 +1155,19 @@ namespace Iot.Device.NFUnitTest
         {
             _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency1Hz;
             Assert.Equals(SquareWaveFrequency.Frequency1Hz, _clock.SquareWaveOutputFrequency);
-            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency1Hz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
+            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency1Hz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)RegisterMask.SquareWaveFrequencyMask);
 
             _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency4kHz;
             Assert.Equals(SquareWaveFrequency.Frequency4kHz, _clock.SquareWaveOutputFrequency);
-            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency4kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
+            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency4kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)RegisterMask.SquareWaveFrequencyMask);
 
             _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency8kHz;
             Assert.Equals(SquareWaveFrequency.Frequency8kHz, _clock.SquareWaveOutputFrequency);
-            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency8kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
+            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency8kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)RegisterMask.SquareWaveFrequencyMask);
 
             _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency32kHz;
             Assert.Equals(SquareWaveFrequency.Frequency32kHz, _clock.SquareWaveOutputFrequency);
-            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency32kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)ControlRegister.SquareWaveFrequencyMask);
+            TestHelper.AssertMaskedRegistersEqual((byte)SquareWaveFrequency.Frequency32kHz, RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control), (byte)RegisterMask.SquareWaveFrequencyMask);
         }
 
         #endregion

@@ -55,11 +55,11 @@ namespace Iot.Device.Mcp7940xx
             // Set clock source.
             if (clockSource == ClockSource.ExternalClockInput)
             {
-                RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput);
+                RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.ExternalClockInputMask);
             }
             else
             {
-                RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.ExternalClockInput);
+                RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.ExternalClockInputMask);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Iot.Device.Mcp7940xx
         /// </remarks>
         public void EnableAlarm1()
         {
-            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
+            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void DisableAlarm1()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm1InterruptEnabled);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm1InterruptEnabledMask);
             }
         }
 
@@ -249,7 +249,7 @@ namespace Iot.Device.Mcp7940xx
         /// </remarks>
         public void EnableAlarm2()
         {
-            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
+            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void DisableAlarm2()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.Alarm2InterruptEnabled);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.Alarm2InterruptEnabledMask);
             }
         }
 
@@ -304,7 +304,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                if (RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput))
+                if (RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.GeneralPurposeOutputMask))
                 {
                     return PinValue.High;
                 }
@@ -318,11 +318,11 @@ namespace Iot.Device.Mcp7940xx
             {
                 if (value == PinValue.High)
                 {
-                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
+                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.GeneralPurposeOutputMask);
                 }
                 else
                 {
-                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.GeneralPurposeOutput);
+                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.GeneralPurposeOutputMask);
                 }
             }
         }
@@ -352,7 +352,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void EnableSquareWaveOutput()
         {
-            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput);
+            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void DisableSquareWaveOutput()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask);
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveOutput);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveOutputMask);
             }
         }
 
@@ -383,12 +383,12 @@ namespace Iot.Device.Mcp7940xx
             {
                 byte control = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Control);
 
-                return (SquareWaveFrequency)(control & (byte)ControlRegister.SquareWaveFrequencyMask);
+                return (SquareWaveFrequency)(control & (byte)RegisterMask.SquareWaveFrequencyMask);
             }
 
             set
             {
-                RegisterHelper.MaskedSetRegisterBits(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.SquareWaveFrequencyMask, (byte)value);
+                RegisterHelper.MaskedSetRegisterBits(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.SquareWaveFrequencyMask, (byte)value);
             }
         }
 
@@ -494,11 +494,11 @@ namespace Iot.Device.Mcp7940xx
             // Set trimming mode.
             if (mode == TrimmingMode.NormalTrimMode)
             {
-                RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.CoarseTrimMode);
+                RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.CoarseTrimModeMask);
             }
             else
             {
-                RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)ControlRegister.CoarseTrimMode);
+                RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Control, (byte)RegisterMask.CoarseTrimModeMask);
             }
         }
 

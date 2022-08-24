@@ -44,7 +44,6 @@
     <Compile Include="Register.cs" />
     <Compile Include="RegisterHelper.cs" />
     <Compile Include="TrimmingMode.cs" />
-    <Compile Include="ControlRegister.cs" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
