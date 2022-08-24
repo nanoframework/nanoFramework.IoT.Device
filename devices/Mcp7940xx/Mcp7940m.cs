@@ -50,7 +50,7 @@ namespace Iot.Device.Mcp7940xx
             _i2cDevice = i2cDevice;
 
             // Set the clock to 24 hour mode.
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingHour, (byte)TimekeepingHourRegister.TimeFormat);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingHour, (byte)RegisterMask.ClockTimeFormatMask);
 
             // Set clock source.
             if (clockSource == ClockSource.ExternalClockInput)
@@ -77,11 +77,11 @@ namespace Iot.Device.Mcp7940xx
             _i2cDevice.WriteByte((byte)Register.TimekeepingSecond);
             _i2cDevice.Read(readBuffer);
 
-            int second = NumberHelper.Bcd2Dec((byte)(readBuffer[0] & (byte)TimekeepingSecondRegister.SecondMask));
-            int minute = NumberHelper.Bcd2Dec((byte)(readBuffer[1] & (byte)TimekeepingMinuteRegister.MinuteMask));
-            int hour = NumberHelper.Bcd2Dec((byte)(readBuffer[2] & (byte)TimekeepingHourRegister.HourMask));
-            int day = NumberHelper.Bcd2Dec((byte)(readBuffer[4] & (byte)TimekeepingDayRegister.DayMask));
-            int month = NumberHelper.Bcd2Dec((byte)(readBuffer[5] & (byte)TimekeepingMonthRegister.MonthMask));
+            int second = NumberHelper.Bcd2Dec((byte)(readBuffer[0] & (byte)RegisterMask.ClockSecondMask));
+            int minute = NumberHelper.Bcd2Dec((byte)(readBuffer[1] & (byte)RegisterMask.ClockMinuteMask));
+            int hour = NumberHelper.Bcd2Dec((byte)(readBuffer[2] & (byte)RegisterMask.ClockHourMask));
+            int day = NumberHelper.Bcd2Dec((byte)(readBuffer[4] & (byte)RegisterMask.ClockDayMask));
+            int month = NumberHelper.Bcd2Dec((byte)(readBuffer[5] & (byte)RegisterMask.ClockMonthMask));
             int year = NumberHelper.Bcd2Dec(readBuffer[6]) + 2000;
 
             return new DateTime(year, month, day, hour, minute, second);
@@ -132,18 +132,18 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask);
             }
 
             set
             {
                 if (value == PinValue.High)
                 {
-                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask);
                 }
                 else
                 {
-                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask);
                 }
             }
         }
@@ -194,7 +194,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void ResetAlarm1()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptMask);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptMask);
             }
         }
 
@@ -265,7 +265,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void ResetAlarm2()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Alarm2Weekday, (byte)RegisterMask.AlarmInterruptMask);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterrupt);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm2Weekday, (byte)RegisterMask.AlarmInterruptMask);
             }
         }
 
@@ -402,7 +402,7 @@ namespace Iot.Device.Mcp7940xx
         /// <param name="blockUntilOscillatorActive">Determins if the function should block execution until the clocks oscillator is fully active.</param>
         public void StartClock(bool blockUntilOscillatorActive = false)
         {
-            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled);
+            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)RegisterMask.OscillatorInputEnabledMask);
 
             if (blockUntilOscillatorActive)
             {
@@ -420,7 +420,7 @@ namespace Iot.Device.Mcp7940xx
         /// <param name="blockUntilOscillatorInactive">Determins if the function should block execution until the clocks oscillator is fully stopped.</param>
         public void Halt(bool blockUntilOscillatorInactive = false)
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)RegisterMask.OscillatorInputEnabledMask);
 
             if (blockUntilOscillatorInactive)
             {
@@ -439,7 +439,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return !RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.OscillatorRunning);
+                return !RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.OscillatorRunningMask);
             }
         }
 

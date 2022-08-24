@@ -30,14 +30,8 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="AlarmDayRegister.cs" />
-    <Compile Include="AlarmMinuteRegister.cs" />
-    <Compile Include="AlarmMonthRegister.cs" />
-    <Compile Include="AlarmSecondRegister.cs" />
-    <Compile Include="AlarmWeekdayRegister.cs" />
     <Compile Include="Alarm.cs" />
     <Compile Include="AlarmMatchMode.cs" />
-    <Compile Include="AlarmHourRegister.cs" />
     <Compile Include="ClockSource.cs" />
     <Compile Include="Mcp79400.cs" />
     <Compile Include="Mcp79401.cs" />
@@ -45,19 +39,10 @@
     <Compile Include="Mcp7940m.cs" />
     <Compile Include="Mcp7940n.cs" />
     <Compile Include="PowerEvent.cs" />
-    <Compile Include="PowerEventDayRegister.cs" />
-    <Compile Include="PowerEventHourRegister.cs" />
-    <Compile Include="PowerEventMinuteRegister.cs" />
-    <Compile Include="PowerEventMonthRegister.cs" />
+    <Compile Include="RegisterMask.cs" />
     <Compile Include="SquareWaveFrequency.cs" />
-    <Compile Include="TimekeepingMonthRegister.cs" />
-    <Compile Include="TimekeepingDayRegister.cs" />
-    <Compile Include="TimekeepingMinuteRegister.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="RegisterHelper.cs" />
-    <Compile Include="TimekeepingHourRegister.cs" />
-    <Compile Include="TimekeepingSecondRegister.cs" />
-    <Compile Include="TimekeepingWeekdayRegister.cs" />
     <Compile Include="TrimmingMode.cs" />
     <Compile Include="ControlRegister.cs" />
     <None Include="packages.config" />

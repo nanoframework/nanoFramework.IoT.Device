@@ -82,8 +82,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingYear);
 
             // Verify only Alarm1 Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingWeekday, unchecked((byte)~TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingWeekday, unchecked((byte)~RegisterMask.ExternalBatteryBackupEnabledMask));
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask);
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);
@@ -111,12 +111,12 @@ namespace Iot.Device.NFUnitTest
             _clock.EnableExternalBatteryBackup();
 
             // Verify flag has been set.
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask));
 
             _clock.DisableExternalBatteryBackup();
 
             // Verify flag has been cleared.
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask));
         }
 
         [TestMethod]
@@ -126,13 +126,13 @@ namespace Iot.Device.NFUnitTest
 
             // Verify flag matches function returned state.
             bool isEnabled = _clock.IsEnabledExternalBatteryBackup;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask));
 
             _clock.DisableExternalBatteryBackup();
 
             // Verify flag matches function returned state.
             isEnabled = _clock.IsEnabledExternalBatteryBackup;
-            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled));
+            Assert.Equal(isEnabled, RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask));
         }
 
         #endregion

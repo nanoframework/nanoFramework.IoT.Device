@@ -30,7 +30,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void EnableExternalBatteryBackup()
         {
-            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void DisableExternalBatteryBackup()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.ExternalBatteryBackupEnabled);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.ExternalBatteryBackupEnabledMask);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Iot.Device.Mcp7940xx
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.PowerFailureStatusMask);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Iot.Device.Mcp7940xx
         /// </summary>
         public void ClearPowerFailureAlert()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.PowerFailureStatus);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.TimekeepingWeekday, (byte)RegisterMask.PowerFailureStatusMask);
         }
 
         /// <summary>

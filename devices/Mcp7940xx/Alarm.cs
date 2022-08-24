@@ -181,12 +181,12 @@ namespace Iot.Device.Mcp7940xx
                 i2cDevice.WriteByte((byte)alarmRegister);
                 i2cDevice.Read(readBuffer);
 
-                MatchMode = (AlarmMatchMode)(readBuffer[3] & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
-                Second = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[0] & (byte)AlarmSecondRegister.SecondMask));
-                Minute = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[1] & (byte)AlarmMinuteRegister.MinuteMask));
-                Hour = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[2] & (byte)AlarmHourRegister.HourMask));
-                DayOfWeek = (DayOfWeek)(readBuffer[3] & (byte)AlarmWeekdayRegister.DayOfWeekMask);
-                Day = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[4] & (byte)AlarmDayRegister.DayMask));
+                MatchMode = (AlarmMatchMode)(readBuffer[3] & (byte)RegisterMask.AlarmMatchModeMask);
+                Second = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[0] & (byte)RegisterMask.AlarmSecondMask));
+                Minute = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[1] & (byte)RegisterMask.AlarmMinuteMask));
+                Hour = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[2] & (byte)RegisterMask.AlarmHourMask));
+                DayOfWeek = (DayOfWeek)(readBuffer[3] & (byte)RegisterMask.AlarmDayOfWeekMask);
+                Day = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[4] & (byte)RegisterMask.AlarmDayMask));
                 Month = (byte)NumberHelper.Bcd2Dec(readBuffer[5]);
             }
 
@@ -216,9 +216,9 @@ namespace Iot.Device.Mcp7940xx
 
                 // The weekday register for the alarm also contains the alarm interrupt polarity.
                 // This setting must be maintained while the rest of the register is updated.
-                if (RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)(alarmRegister + 3), (byte)AlarmWeekdayRegister.AlarmInterruptPolarity))
+                if (RegisterHelper.RegisterBitIsSet(i2cDevice, (byte)(alarmRegister + 3), (byte)RegisterMask.AlarmInterruptPolarityMask))
                 {
-                    weekdayRegister |= (byte)AlarmWeekdayRegister.AlarmInterruptPolarity;
+                    weekdayRegister |= (byte)RegisterMask.AlarmInterruptPolarityMask;
                 }
 
                 SpanByte writeBuffer = new byte[7];

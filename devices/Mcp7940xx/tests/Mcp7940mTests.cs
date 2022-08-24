@@ -65,13 +65,11 @@ namespace Iot.Device.NFUnitTest
 
         }
 
-        // https://stackoverflow.com/questions/42006662/testing-private-static-generic-methods-in-c-sharp
         [TestMethod]
         public void Constructor_Cannot_Create_With_Null_I2C_Device()
         {
             Assert.Throws(typeof(ArgumentNullException), () => new Mcp7940m(null, ClockSource.ExternalCrystal));
         }
-
 
         [TestMethod]
         public void Constructor_ClockSource_Correctly_Sets_Flag()
@@ -93,7 +91,7 @@ namespace Iot.Device.NFUnitTest
         [TestMethod]
         public void Constructor_Clock_Is_In_24_Hour_Mode()
         {
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingHour, (byte)TimekeepingHourRegister.TimeFormat));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingHour, (byte)RegisterMask.ClockTimeFormatMask));
         }
 
         [TestMethod]
@@ -115,10 +113,10 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersNotEqual(before, after, Register.TimekeepingYear);
 
             // Verify oscillator input flag has not been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingSecond, (byte)RegisterMask.OscillatorInputEnabledMask);
 
             // Verify oscillator running flag has not been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingWeekday, (byte)TimekeepingWeekdayRegister.OscillatorRunning);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingWeekday, (byte)RegisterMask.OscillatorRunningMask);
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Control);
@@ -156,7 +154,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for second.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Second, second: 0);
             _clock.SetAlarm1(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Second, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Second, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify second register is correctly set.
             alarm.Second = 0;
@@ -186,7 +184,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for minutes.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Minute, minute: 0);
             _clock.SetAlarm1(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Minute, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Minute, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify minute register is correctly set.
             alarm.Minute = 0;
@@ -216,7 +214,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for hours.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Hour, hour: 0);
             _clock.SetAlarm1(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Hour, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Hour, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify hour register is correctly set.
             alarm.Hour = 0;
@@ -246,7 +244,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for days.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Day, day: 0);
             _clock.SetAlarm1(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Day, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Day, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify day register is correctly set.
             alarm.Day = 1;
@@ -276,7 +274,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for day-of-week.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.DayOfWeek, day: 0);
             _clock.SetAlarm1(alarm);
-            Assert.Equal((byte)AlarmMatchMode.DayOfWeek, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.DayOfWeek, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             byte before = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
 
@@ -284,44 +282,44 @@ namespace Iot.Device.NFUnitTest
             alarm.DayOfWeek = DayOfWeek.Sunday;
             _clock.SetAlarm1(alarm);
             byte after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Sunday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Sunday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Monday;
             _clock.SetAlarm1(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Monday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Monday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Tuesday;
             _clock.SetAlarm1(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Tuesday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Tuesday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Wednesday;
             _clock.SetAlarm1(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Wednesday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Wednesday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Thursday;
             _clock.SetAlarm1(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Thursday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Thursday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Friday;
             _clock.SetAlarm1(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Friday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Friday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Saturday;
             _clock.SetAlarm1(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Saturday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Saturday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             // ---------------------
             // Month
@@ -330,7 +328,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for full match.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full, day: 0);
             _clock.SetAlarm1(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Full, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Full, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm1Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify month register is correctly set.
             alarm.Month = 1;
@@ -539,7 +537,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for second.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Second, second: 0);
             _clock.SetAlarm2(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Second, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Second, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify second register is correctly set.
             alarm.Second = 0;
@@ -569,7 +567,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for minutes.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Minute, minute: 0);
             _clock.SetAlarm2(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Minute, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Minute, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify minute register is correctly set.
             alarm.Minute = 0;
@@ -599,7 +597,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for hours.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Hour, hour: 0);
             _clock.SetAlarm2(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Hour, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Hour, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify hour register is correctly set.
             alarm.Hour = 0;
@@ -629,7 +627,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for days.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Day, day: 0);
             _clock.SetAlarm2(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Day, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Day, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify day register is correctly set.
             alarm.Day = 1;
@@ -659,7 +657,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for day-of-week.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.DayOfWeek, day: 0);
             _clock.SetAlarm2(alarm);
-            Assert.Equal((byte)AlarmMatchMode.DayOfWeek, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.DayOfWeek, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             byte before = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
 
@@ -667,44 +665,44 @@ namespace Iot.Device.NFUnitTest
             alarm.DayOfWeek = DayOfWeek.Sunday;
             _clock.SetAlarm2(alarm);
             byte after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Sunday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Sunday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Monday;
             _clock.SetAlarm2(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Monday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Monday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Tuesday;
             _clock.SetAlarm2(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Tuesday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Tuesday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Wednesday;
             _clock.SetAlarm2(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Wednesday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Wednesday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Thursday;
             _clock.SetAlarm2(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Thursday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Thursday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Friday;
             _clock.SetAlarm2(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Friday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Friday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             alarm.DayOfWeek = DayOfWeek.Saturday;
             _clock.SetAlarm2(alarm);
             after = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday);
-            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Saturday, (byte)AlarmWeekdayRegister.DayOfWeekMask);
-            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~AlarmWeekdayRegister.DayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(after, (byte)DayOfWeek.Saturday, (byte)RegisterMask.AlarmDayOfWeekMask);
+            TestHelper.AssertMaskedRegistersEqual(before, after, (byte)~RegisterMask.AlarmDayOfWeekMask);
 
             // ---------------------
             // Month
@@ -713,7 +711,7 @@ namespace Iot.Device.NFUnitTest
             // Verify match mode is correctly set for full match.
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full, day: 0);
             _clock.SetAlarm2(alarm);
-            Assert.Equal((byte)AlarmMatchMode.Full, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)AlarmWeekdayRegister.AlarmMatchModeMask);
+            Assert.Equal((byte)AlarmMatchMode.Full, (byte)RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.Alarm2Weekday) & (byte)RegisterMask.AlarmMatchModeMask);
 
             // Verify month register is correctly set.
             alarm.Month = 1;
@@ -941,8 +939,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm1Month);
 
             // Verify only AlarmInterruptPolarity flag has been altered on Alarm1.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm1Weekday, (byte)~AlarmWeekdayRegister.AlarmInterruptPolarity);
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm1Weekday, (byte)~RegisterMask.AlarmInterruptPolarityMask);
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask);
 
             // Verify Alarm2 registers.
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Second);
@@ -952,8 +950,8 @@ namespace Iot.Device.NFUnitTest
             TestHelper.AssertRegistersEqual(before, after, Register.Alarm2Month);
 
             // Verify only non-AlarmInterruptPolarity flags have not been altered on Alarm2.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm2Weekday, (byte)(AlarmWeekdayRegister.AlarmMatchModeMask | AlarmWeekdayRegister.AlarmInterrupt | AlarmWeekdayRegister.DayOfWeekMask));
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm2Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.Alarm2Weekday, (byte)(RegisterMask.AlarmMatchModeMask | RegisterMask.AlarmInterruptMask | RegisterMask.AlarmDayOfWeekMask));
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.Alarm2Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask);
         }
 
         [TestMethod]
@@ -964,14 +962,14 @@ namespace Iot.Device.NFUnitTest
             // Verify flag matches function return.
             PinValue pinValue = _clock.AlarmInterruptPolarity;
             Assert.True(pinValue == PinValue.High);
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask));
 
             _clock.AlarmInterruptPolarity = PinValue.Low;
 
             // Verify flag matches function return.
             pinValue = _clock.AlarmInterruptPolarity;
             Assert.True(pinValue == PinValue.Low);
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)AlarmWeekdayRegister.AlarmInterruptPolarity));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Alarm1Weekday, (byte)RegisterMask.AlarmInterruptPolarityMask));
         }
 
         #endregion
@@ -1179,10 +1177,10 @@ namespace Iot.Device.NFUnitTest
         public void Clock_StartClock_And_Halt_Correctly_Sets_Flag()
         {
             _clock.StartClock();
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled));
+            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)RegisterMask.OscillatorInputEnabledMask));
 
             _clock.Halt();
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled));
+            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.TimekeepingSecond, (byte)RegisterMask.OscillatorInputEnabledMask));
         }
 
         [TestMethod]
@@ -1197,14 +1195,14 @@ namespace Iot.Device.NFUnitTest
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMinute);
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingHour);
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingWeekday, unchecked((byte)~TimekeepingWeekdayRegister.OscillatorRunning));
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingWeekday, unchecked((byte)~RegisterMask.OscillatorRunningMask));
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingDay);
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMonth);
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingYear);
 
             // Verify only Alarm1 Enable flag has been altered.
-            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingSecond, unchecked((byte)~TimekeepingSecondRegister.OscillatorInputEnabled));
-            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.TimekeepingSecond, (byte)TimekeepingSecondRegister.OscillatorInputEnabled);
+            TestHelper.AssertMaskedRegistersEqual(before, after, Register.TimekeepingSecond, unchecked((byte)~RegisterMask.OscillatorInputEnabledMask));
+            TestHelper.AssertMaskedRegistersNotEqual(before, after, Register.TimekeepingSecond, (byte)RegisterMask.OscillatorInputEnabledMask);
 
             // Verify control registers.
             TestHelper.AssertRegistersEqual(before, after, Register.OscillatorTrimming);

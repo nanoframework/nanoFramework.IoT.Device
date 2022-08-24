@@ -70,11 +70,11 @@ namespace Iot.Device.Mcp7940xx
                 i2cDevice.WriteByte((byte)eventRegister);
                 i2cDevice.Read(readBuffer);
 
-                Minute = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[0] & (byte)PowerEventMinuteRegister.MinuteMask));
-                Hour = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[1] & (byte)PowerEventHourRegister.HourMask));
-                Day = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[2] & (byte)PowerEventDayRegister.DayMask));
-                DayOfWeek = (DayOfWeek)((readBuffer[3] & (byte)PowerEventMonthRegister.WeekdayMask) >> 5);
-                Month = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[3] & (byte)PowerEventMonthRegister.MonthMask));
+                Minute = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[0] & (byte)RegisterMask.PowerEventMinuteMask));
+                Hour = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[1] & (byte)RegisterMask.PowerEventHourMask));
+                Day = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[2] & (byte)RegisterMask.PowerEventDayMask));
+                DayOfWeek = (DayOfWeek)((readBuffer[3] & (byte)RegisterMask.PowerEventWeekdayMask) >> 5);
+                Month = (byte)NumberHelper.Bcd2Dec((byte)(readBuffer[3] & (byte)RegisterMask.PowerEventMonthMask));
             }
         }
     }
