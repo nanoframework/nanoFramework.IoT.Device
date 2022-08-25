@@ -31,7 +31,7 @@
   <ItemGroup>
     <Compile Include="Register.cs" />
     <Compile Include="RegisterHelper.cs" />
-    <Compile Include="ConfigurationFlags.cs" />
+    <Compile Include="RegisterMask.cs" />
     <Compile Include="MeasurementMode.cs" />
     <Compile Include="Ds1621.cs" />
     <Compile Include="Command.cs" />
@@ -59,7 +59,7 @@
       <HintPath>packages\nanoFramework.System.Math.1.4.4\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.140.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.144.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

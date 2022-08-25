@@ -44,7 +44,7 @@
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.3\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.140.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.144.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

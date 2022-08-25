@@ -6,6 +6,7 @@ using System.Device.Gpio;
 using System.Device.I2c;
 using Iot.Device.Common;
 using UnitsNet;
+using UnitsNet.Units;
 
 namespace Iot.Device.Ds1621
 {
@@ -17,7 +18,7 @@ namespace Iot.Device.Ds1621
         /// <summary>
         /// Default I2C address for Ds1621.
         /// </summary>
-        public const byte DefaultI2cAddress = 0b0101_0000;
+        public const byte DefaultI2cAddress = 0x48;
 
         /// <summary>
         /// The underlying I2C device used for communication.
@@ -65,8 +66,7 @@ namespace Iot.Device.Ds1621
 
             if (clampedTemperature >= 0)
             {
-                // Check if fraction is greater than 0.66666666.
-                if (fractionalPortion > (2.0 / 3.0))
+                if (fractionalPortion >= 0.75)
                 {
                     // Round temperature up and store in two's complement.
                     packedTemperature[0] = (byte)(sbyte)((int)clampedTemperature + 1);
@@ -79,8 +79,7 @@ namespace Iot.Device.Ds1621
                     // Truncate temperature and store in two's complement.
                     packedTemperature[0] = (byte)(sbyte)clampedTemperature;
 
-                    // Check if fraction is less than 0.33333333.
-                    if (fractionalPortion < (1.0 / 3.0))
+                    if (fractionalPortion <= 0.25)
                     {
                         // No half degree flag.
                         packedTemperature[1] = 0;
@@ -94,8 +93,7 @@ namespace Iot.Device.Ds1621
             }
             else
             {
-                // Check if fraction is greater than -0.33333333.
-                if (fractionalPortion > (-1.0 / 3.0))
+                if (fractionalPortion >= -0.25)
                 {
                     // Round temperature down and store in two's complement.
                     packedTemperature[0] = (byte)~(-(sbyte)clampedTemperature - 1);
@@ -108,8 +106,7 @@ namespace Iot.Device.Ds1621
                     // Truncate temperature and store in two's complement.
                     packedTemperature[0] = (byte)~(-(sbyte)clampedTemperature);
 
-                    // Check if fraction is less than -0.66666666.
-                    if (fractionalPortion < (-2.0 / 3.0))
+                    if (fractionalPortion <= -0.75)
                     {
                         // No half degree flag.
                         packedTemperature[1] = 0;
@@ -129,8 +126,9 @@ namespace Iot.Device.Ds1621
         /// Initializes a new instance of the <see cref="Ds1621" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device to use for communication.</param>
+        /// <param name="mode">The measurement mode to use when the device receives a temperature measurement command.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is <c>null</c>.</exception>
-        public Ds1621(I2cDevice i2cDevice)
+        public Ds1621(I2cDevice i2cDevice, MeasurementMode mode = MeasurementMode.Single)
         {
             if (i2cDevice == null)
             {
@@ -138,33 +136,7 @@ namespace Iot.Device.Ds1621
             }
 
             _i2cDevice = i2cDevice;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Ds1621" /> class.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device to use for communication.</param>
-        /// <param name="mode">The measurement mode to use when the device receives a temperature measurement command.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is <c>null</c>.</exception>
-        public Ds1621(I2cDevice i2cDevice, MeasurementMode mode)
-       : this(i2cDevice)
-        {
             MeasurementMode = mode;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Ds1621" /> class.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device to use for communication.</param>
-        /// <param name="mode">The measurement mode to use when the device receives a temperature measurement command.</param>
-        /// <param name="lowTemperature">The temperature threshold that will trigger the low temperature alarm.</param>
-        /// <param name="highTemperature">The temperature threshold that will trigger the high temperature alarm.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is <c>null</c>.</exception>
-        public Ds1621(I2cDevice i2cDevice, MeasurementMode mode, Temperature lowTemperature, Temperature highTemperature)
-        : this(i2cDevice, mode)
-        {
-            LowTemperatureAlarm = lowTemperature;
-            HighTemperatureAlarm = highTemperature;
         }
 
         #region Temperature
@@ -189,26 +161,44 @@ namespace Iot.Device.Ds1621
         }
 
         /// <summary>
-        /// Checks if the device is currently performing a temperature measurement.
+        /// Gets a value indicating whether the device is currently performing a temperature measurement.
         /// </summary>
-        /// <returns>
-        /// Returns <c>true</c> if the device is performing a temperature measurement, <c>false</c> if not.
-        /// </returns>
-        public bool IsMeasuringTemperature()
+        public bool IsMeasuringTemperature
         {
-            return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.TemperatureConversionDone);
+            get
+            {
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.TemperatureConversionDoneMask);
+            }
         }
 
         /// <summary>
-        /// Returns the last temperature measurement taken by the device with 0.5°C resolution.
+        /// Returns the last temperature measurement taken by the device in the range -55°C through 125°C and rounded to the nearest 0.5°C.
         /// </summary>
         /// <returns>
-        /// A <see cref = "Temperature" /> object whose value is the last temperature measurement taken by the device.
+        /// A <see cref = "Temperature" /> object whose value is a 9-bit representation of the last temperature measurement taken by the device.
         /// </returns>
         public Temperature GetTemperature()
         {
-            byte[] temperatureRegister = RegisterHelper.ReadRegisterBlock(_i2cDevice, (byte)Register.Temperature, 2);
-            return UnpackTemperature(temperatureRegister[0], temperatureRegister[1]);
+            byte[] temperature = RegisterHelper.ReadRegisterBlock(_i2cDevice, (byte)Register.Temperature, 2);
+            return UnpackTemperature(temperature[0], temperature[1]);
+        }
+
+        /// <summary>
+        /// Returns the last temperature measurement taken by the device in the range -55°C through 125°C.
+        /// </summary>
+        /// <returns>
+        /// A <see cref = "Temperature" /> object whose value is a 12-bit representation of the last temperature measurement taken by the device.
+        /// </returns>
+        public Temperature GetHighResolutionTemperature()
+        {
+            // Register reads must be done in the following order.
+            byte[] temperature = RegisterHelper.ReadRegisterBlock(_i2cDevice, (byte)Register.Temperature, 2);
+            byte countsRemaining = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.CountsRemaining);
+            byte countsPerDegree = RegisterHelper.ReadRegister(_i2cDevice, (byte)Register.CountsPerDegree);
+
+            double highResolutionTemperature = temperature[0] - 0.25d + ((countsPerDegree - countsRemaining) / (double)countsPerDegree);
+
+            return Temperature.FromDegreesCelsius(highResolutionTemperature);
         }
 
         #endregion
@@ -243,7 +233,7 @@ namespace Iot.Device.Ds1621
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.HighTemperatureAlarm);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.HighTemperatureAlarmMask);
             }
         }
 
@@ -252,7 +242,7 @@ namespace Iot.Device.Ds1621
         /// </summary>
         public void ResetHighTemperatureAlarm()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.HighTemperatureAlarm);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.HighTemperatureAlarmMask);
         }
 
         #endregion
@@ -287,7 +277,7 @@ namespace Iot.Device.Ds1621
         {
             get
             {
-                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.LowTemperatureAlarm);
+                return RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.LowTemperatureAlarmMask);
             }
         }
 
@@ -296,19 +286,19 @@ namespace Iot.Device.Ds1621
         /// </summary>
         public void ResetLowTemperatureAlarm()
         {
-            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.LowTemperatureAlarm);
+            RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.LowTemperatureAlarmMask);
         }
 
         #endregion
 
         /// <summary>
-        /// Gets or sets the polarity of the thermostat output pin when a temperature alarm is active.
+        /// Gets or sets the polarity of the thermostat output pin when a temperature alarm is asserted.
         /// </summary>
         public PinValue OutputPolarity
         {
             get
             {
-                if (RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.OutputPolarity))
+                if (RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask))
                 {
                     return PinValue.High;
                 }
@@ -320,11 +310,11 @@ namespace Iot.Device.Ds1621
             {
                 if (value == PinValue.High)
                 {
-                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.OutputPolarity);
+                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask);
                 }
                 else
                 {
-                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.OutputPolarity);
+                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask);
                 }
             }
         }
@@ -336,7 +326,7 @@ namespace Iot.Device.Ds1621
         {
             get
             {
-                if (RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.OneShotConversionMode))
+                if (RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask))
                 {
                     return MeasurementMode.Single;
                 }
@@ -348,11 +338,11 @@ namespace Iot.Device.Ds1621
             {
                 if (value == MeasurementMode.Single)
                 {
-                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.OneShotConversionMode);
+                    RegisterHelper.SetRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask);
                 }
                 else
                 {
-                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)ConfigurationFlags.OneShotConversionMode);
+                    RegisterHelper.ClearRegisterBit(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask);
                 }
             }
         }

@@ -1,4 +1,7 @@
-﻿using Iot.Device.Common;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Common;
 using Iot.Device.Ds1621;
 using nanoFramework.TestFramework;
 using System;
@@ -53,6 +56,11 @@ namespace Iot.Device.NFUnitTest
         static internal void AssertMaskedRegistersEqual(SpanByte registerA, SpanByte registerB, Register register, byte bitMask)
         {
             Assert.Equal(registerA[(byte)register] & bitMask, registerB[(byte)register] & bitMask, message: GetRegisterName(register));
+        }
+
+        static internal void AssertMaskedRegistersNotEqual(byte registerA, byte registerB, byte bitMask)
+        {
+            Assert.NotEqual(registerA & bitMask, registerB & bitMask);
         }
 
         static internal void AssertMaskedRegistersNotEqual(SpanByte registerA, SpanByte registerB, Register register, byte bitMask)

@@ -99,29 +99,6 @@ namespace Iot.Device.Common
         }
 
         /// <summary>
-        /// Helper function to set only the bits in a device register that are specified by a mask.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device to use for communication.</param>
-        /// <param name="register">The address of the register.</param>
-        /// <param name="bitMask">The mask that specifies the bits to be set.</param>
-        /// <param name="value">The value to set the bits to.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is <c>null</c>.</exception>
-        public static void MaskedSetRegisterBits(I2cDevice i2cDevice, byte register, byte bitMask, byte value)
-        {
-            if (i2cDevice == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            byte registerContents = ReadRegister(i2cDevice, register);
-
-            // Update only the masked bits in the register.
-            registerContents = (byte)((registerContents & ~bitMask) | (value & bitMask));
-
-            WriteRegister(i2cDevice, register, registerContents);
-        }
-
-        /// <summary>
         /// Helper function to clear bit in a device register.
         /// </summary>
         /// <param name="i2cDevice">The I2C device to use for communication.</param>

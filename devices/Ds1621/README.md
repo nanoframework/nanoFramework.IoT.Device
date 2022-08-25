@@ -13,8 +13,7 @@ Original code was written for ESP32
 **Important**: Make sure you properly setup the I2C pins for ESP32 before creating the `I2cDevice`. For this, make sure you install the `nanoFramework.Hardware.Esp32` NuGet and use the `Configuration` class to configure the pins:
 
 ```csharp
-//////////////////////////////////////////////////////////////////////
-// when connecting to an ESP32 device, need to configure the I2C GPIOs used for the bus.
+// When connecting to an ESP32 device you will need to configure the I2C GPIOs used for the bus.
 Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
 ```
@@ -54,7 +53,7 @@ while (true)
     thermometer.MeasureTemperature();
 
     // Wait for temperature conversion to complete.
-    while (thermometer.IsMeasuringTemperature())
+    while (thermometer.IsMeasuringTemperature)
     {
         Thread.Sleep(10);
     }

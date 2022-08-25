@@ -31,7 +31,7 @@ while (true)
     thermometer.MeasureTemperature();
 
     // Wait for temperature conversion to complete.
-    while (thermometer.IsMeasuringTemperature())
+    while (thermometer.IsMeasuringTemperature)
     {
         Thread.Sleep(10);
     }
