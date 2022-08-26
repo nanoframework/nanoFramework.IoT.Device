@@ -13,7 +13,7 @@ namespace Iot.Device.Rtc
     /// Realtime Clock Ds1302.
     /// </summary>
     [Interface("Realtime Clock Ds1302")]
-    public class Ds1302 : RtcBase, IDisposable
+    public class Ds1302 : RtcBase
     {
         private readonly GpioPin _clockPin;
         private readonly GpioPin _resetPin;
@@ -123,11 +123,14 @@ namespace Iot.Device.Rtc
         /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
-            _dataPin?.Dispose();
-            _clockPin?.Dispose();
-            _resetPin?.Dispose();
-            _controller?.Dispose();
-            _controller = null;
+            if (_shouldDispose)
+            {
+                _dataPin?.Dispose();
+                _clockPin?.Dispose();
+                _resetPin?.Dispose();
+                _controller?.Dispose();
+                _controller = null;
+            }
         }
 
         private byte ReadByte()
