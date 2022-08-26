@@ -20,6 +20,9 @@ namespace Iot.Device.Rtc
         private readonly GpioPin _resetPin;
         private readonly GpioPin _dataPin;
         private PinMode _currentDataPinDirection;
+        private readonly byte enableWrite = 0b1000_0000;
+        private readonly byte disableWrite = 0b0000_0000;
+        private readonly byte enableWriteOrRead = 0b1000_0001;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ds1302"/> class.
@@ -49,7 +52,7 @@ namespace Iot.Device.Rtc
             PrepareRead(Ds1302Registers.REG_SECONDS);
             byte seconds = ReadByte();
             EndTransmission();
-            return (byte)(seconds & 0b10000000) > 0;
+            return (byte)(seconds & enableWrite) > 0;
         }
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace Iot.Device.Rtc
         public void Halt()
         {
             PrepareWrite(Ds1302Registers.REG_SECONDS);
-            WriteByte(0b10000000);
+            WriteByte(enableWrite);
             EndTransmission();
         }
 
@@ -69,13 +72,13 @@ namespace Iot.Device.Rtc
         protected override DateTime ReadTime()
         {
             PrepareRead(Ds1302Registers.REG_BURST);
-            var seconds = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b01111111));
-            var minutes = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b01111111));
-            var hours = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00111111));
-            var days = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00111111));
-            var months = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00011111));
-            var dayOfWeek = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b00000111));
-            var years = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b01111111));
+            var seconds = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0111_1111));
+            var minutes = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0111_1111));
+            var hours = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0011_1111));
+            var days = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0011_1111));
+            var months = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0001_1111));
+            var dayOfWeek = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0000_0111));
+            var years = NumberHelper.Bcd2Dec((byte)(ReadByte() & 0b0111_1111));
 
             EndTransmission();
 
@@ -89,7 +92,7 @@ namespace Iot.Device.Rtc
         protected override void SetTime(DateTime time)
         {
             PrepareWrite(Ds1302Registers.REG_WP);
-            WriteByte(0b00000000);
+            WriteByte(disableWrite);
             EndTransmission();
 
             PrepareWrite(Ds1302Registers.REG_BURST);
@@ -101,7 +104,7 @@ namespace Iot.Device.Rtc
             WriteByte(NumberHelper.Dec2Bcd((int)time.DayOfWeek));
             WriteByte(NumberHelper.Dec2Bcd(time.Year - 2000));
 
-            WriteByte(0b1000000);
+            WriteByte(enableWrite);
             EndTransmission();
         }
 
@@ -137,7 +140,7 @@ namespace Iot.Device.Rtc
         {
             SetDirectionOfDataPin(PinMode.Output);
             _resetPin.Write(PinValue.High);
-            WriteByte((byte)(0b10000001 | (byte)ds1302Register));
+            WriteByte((byte)(enableWriteOrRead | (byte)ds1302Register));
             SetDirectionOfDataPin(PinMode.Input);
         }
 
@@ -145,7 +148,7 @@ namespace Iot.Device.Rtc
         {
             SetDirectionOfDataPin(PinMode.Output);
             _resetPin.Write(PinValue.High);
-            WriteByte((byte)(0b10000000 | (byte)ds1302Register));
+            WriteByte((byte)(enableWrite | (byte)ds1302Register));
         }
 
         private void EndTransmission()
