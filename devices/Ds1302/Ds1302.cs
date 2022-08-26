@@ -19,10 +19,10 @@ namespace Iot.Device.Rtc
         private readonly GpioPin _clockPin;
         private readonly GpioPin _resetPin;
         private readonly GpioPin _dataPin;
-        private PinMode _currentDataPinDirection;
         private readonly byte enableWrite = 0b1000_0000;
         private readonly byte disableWrite = 0b0000_0000;
         private readonly byte enableWriteOrRead = 0b1000_0001;
+        private PinMode _currentDataPinDirection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ds1302"/> class.
