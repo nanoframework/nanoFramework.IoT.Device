@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETnanoFramework,Version=v1.0": {
+      "nanoFramework.CoreLibrary": {
+        "type": "Direct",
+        "requested": "[1.12.0, 1.12.0]",
+        "resolved": "1.12.0",
+        "contentHash": "qQrFNXmJiStMC4VXk5cVMOJp23/qlT9FW5i9i+igwQVwraQTtvpkam8yK1hj992jqrbjoCIFZP4Hw9E8H0pB7w=="
+      },
+      "nanoFramework.Runtime.Events": {
+        "type": "Direct",
+        "requested": "[1.10.0, 1.10.0]",
+        "resolved": "1.10.0",
+        "contentHash": "ZRDjzVoTdc6+3sUNk9vORz4HHonYYGM4ED2V8VcfkYC8xQ8VFoaP8U6mXLd70ocmyhGaP9GK86sxHUQykSK7vA=="
+      },
+      "nanoFramework.System.Device.Gpio": {
+        "type": "Direct",
+        "requested": "[1.0.4, 1.0.4]",
+        "resolved": "1.0.4",
+        "contentHash": "rE0TzEg+ksNyuXYA4M3uuIIctCl5yIWLSpVsdbkOUjY6P4zpYOIz43H3N+IKz2MXJ8cdElkHugPpxhWrfhgiPw=="
+      },
+      "nanoFramework.System.Device.I2c": {
+        "type": "Direct",
+        "requested": "[1.0.3, 1.0.3]",
+        "resolved": "1.0.3",
+        "contentHash": "hRrolSxrzymKBM6ha7KI5VOpIpvxlFbUEw2dHMq0llPC7wkKe+kYai8QMFRRro4DbvIiE67UOMNefjqGK4cxkg=="
+      },
+      "nanoFramework.System.Math": {
+        "type": "Direct",
+        "requested": "[1.4.4, 1.4.4]",
+        "resolved": "1.4.4",
+        "contentHash": "JN4sbt2OBWq6DzlUqaT31zZEtXobUNCXG+ZlztDRVqxqtLs09CH80HIE6bIz5wk/7HsKlB546K69HHGDaVP9Ow=="
+      },
+      "Nerdbank.GitVersioning": {
+        "type": "Direct",
+        "requested": "[3.5.108, 3.5.108]",
+        "resolved": "3.5.108",
+        "contentHash": "+1Zn/jrrbBS1MVK20W8d8g4nEREPuZ6IHDTmtqlJiNeGXN45Iou0IPe5hykbLAVyWfnoN3bPCDBIVjeAfoMsWQ=="
+      },
+      "StyleCop.MSBuild": {
+        "type": "Direct",
+        "requested": "[6.2.0, 6.2.0]",
+        "resolved": "6.2.0",
+        "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
+      },
+      "UnitsNet.nanoFramework.Temperature": {
+        "type": "Direct",
+        "requested": "[4.144.0, 4.144.0]",
+        "resolved": "4.144.0",
+        "contentHash": "j0+EbX/PsI3BTfZQauPol2N6eBmiY/DfWH0HHRYp/W1IX+Q8G/6/AqhwDzMDOXI5NBNenOKouOKAwFIUS/pWRQ=="
+      }
+    }
+  }
+}
