@@ -17,7 +17,7 @@ Connect sensor to the microcontroller.
 static void GetTimeFromDs1302()
 {
     GpioController controller = new GpioController(PinNumberingScheme.Logical);
-    using Ds1302 rtc = new(controller, 13, 12, 14);
+    using Ds1302 rtc = new(13, 12, 14, controller);
 
     if (rtc.IsHalted())
     {

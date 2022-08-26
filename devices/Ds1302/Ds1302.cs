@@ -15,26 +15,35 @@ namespace Iot.Device.Rtc
     [Interface("Realtime Clock Ds1302")]
     public class Ds1302 : RtcBase, IDisposable
     {
-        private readonly GpioController _controller;
         private readonly GpioPin _clockPin;
         private readonly GpioPin _resetPin;
         private readonly GpioPin _dataPin;
         private readonly byte enableWrite = 0b1000_0000;
         private readonly byte disableWrite = 0b0000_0000;
         private readonly byte enableWriteOrRead = 0b1000_0001;
+        private readonly bool _shouldDispose;
         private PinMode _currentDataPinDirection;
+        private GpioController _controller;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ds1302"/> class.
         /// </summary>
-        /// <param name="controller">Gpio controller.</param>
         /// <param name="clockPin">Clock pin number.</param>
         /// <param name="dataPin">Data pin number.</param>
         /// <param name="resetPin">Reset pin number.</param>
+        /// <param name="controller">Gpio controller.</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException">When controller was not provided.</exception>
-        public Ds1302(GpioController controller, int clockPin, int dataPin, int resetPin)
+        public Ds1302(int clockPin, int dataPin, int resetPin, GpioController? controller = null, bool shouldDispose = true)
         {
-            _controller = controller ?? throw new ArgumentNullException();
+            _controller = controller ?? new GpioController();
+            _shouldDispose = shouldDispose || controller is null;
+
+            if (clockPin < 0 || dataPin < 0 || resetPin < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             _clockPin = _controller.OpenPin(clockPin, PinMode.Output);
             _resetPin = _controller.OpenPin(resetPin, PinMode.Output);
             _dataPin = _controller.OpenPin(dataPin, PinMode.Input);
@@ -109,7 +118,7 @@ namespace Iot.Device.Rtc
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the RtcBase and optionally releases the managed resources.
+        /// <inheritdoc/>
         /// </summary>
         /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
@@ -118,6 +127,7 @@ namespace Iot.Device.Rtc
             _clockPin?.Dispose();
             _resetPin?.Dispose();
             _controller?.Dispose();
+            _controller = null;
         }
 
         private byte ReadByte()
