@@ -1,14 +1,27 @@
-# At24cxx - I2C EEPROM read/write
+# At24cxx family of I2C EEPROM
 
-This binding is used to read and write data via I2C from the external EEPROM memory.
+The At24cxx is a family of Serial EEPROM utilizing an I2C (2-wire) serial interface.
 
 ## Documentation
 
-[Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/doc0336.pdf)
+This implementation supports the following devices:
 
-Original code was written for ESP32
+- AT24C32  : ([Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/doc5298.pdf))
+- AT24C64  : ([Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/doc5298.pdf))
+- AT24C128 : ([Datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/AT24C128C-AT24C256C-Data-Sheet-DS20006270B.pdf))
+- AT24C256 : ([Datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/At24c256C-AT24C256C-Data-Sheet-DS20006270B.pdf))
 
 ## Usage
+
+**Important**: I2C pins for the ESP32 must be properly setup the before creating the `I2cDevice`. For this, make sure you install the `nanoFramework.Hardware.Esp32` NuGet and use the `Configuration` class to configure the pins:
+
+```csharp
+// When connecting with an ESP32 device you will need to configure the I2C GPIOs used for the bus.
+Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
+```
+
+For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
 ```csharp
 using Iot.Device.At24cxx;
@@ -23,8 +36,7 @@ Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
 
 // Setup At24c32c device.
-int deviceAddress = At24c32.DefaultI2cAddress;
-I2cConnectionSettings settings = new I2cConnectionSettings(1, deviceAddress);
+I2cConnectionSettings settings = new I2cConnectionSettings(1, At24c32.DefaultI2cAddress);
 I2cDevice i2cDevice = new I2cDevice(settings);
 At24c32 eeprom = new At24c32(i2cDevice);
 

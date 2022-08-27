@@ -15,7 +15,7 @@ namespace Iot.Device.At24cxx
         /// </summary>
         /// <param name="i2cDevice">The I2C device to use for communication.</param>
         public At24c32(I2cDevice i2cDevice)
-            : base(i2cDevice, 32, 128)
+            : base(i2cDevice, pageSize: 32, pageCount: 128)
         {
         }
     }
