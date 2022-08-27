@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    ".NETnanoFramework,Version=v1.0": {
+    "Unsupported,Version=v0.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
         "requested": "[1.12.0, 1.12.0]",
@@ -10,9 +10,9 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.3.6.7, 1.3.6.7]",
-        "resolved": "1.3.6.7",
-        "contentHash": "g3S0N/ZTMEJ3eGeUD/sC3p0KJ9PdJtl4anqM5/+jsuyJoCuRhc3q4K32TWB8JcrAOS+PGFv9rpOouNgM5zu3dw=="
+        "requested": "[1.4.1, 1.4.1]",
+        "resolved": "1.4.1",
+        "contentHash": "BXN0cwb0s3MIUmtrstHZxFJTuux+V6p7pq22dpwTeFlzJ4gGIS5t0LURHTNner0u8Twag0bhGuCknK7N9U5keQ=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
