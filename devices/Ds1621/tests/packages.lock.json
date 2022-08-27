@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    ".NETnanoFramework,Version=v1.0": {
+    "Unsupported,Version=v0.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
         "requested": "[1.12.0, 1.12.0]",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.TestFramework": {
         "type": "Direct",
-        "requested": "[1.0.209, 1.0.209]",
-        "resolved": "1.0.209",
-        "contentHash": "T4ra6IzlX2rnu7cPdP4zJqHdIcbe17W5Ts1xHlvoIqBFwzjVb44OHfD9Q1/K8XyehdPe2fgUhLlMdli2HI2QQg=="
+        "requested": "[2.0.41, 2.0.41]",
+        "resolved": "2.0.41",
+        "contentHash": "sVfGK+C4S621g0roofxt8LAquXXDJBdQleft7pRooNhjf/AOofk884bBtDX7zIw3TiIEmAsjd6bVNS7aO31EVg=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
