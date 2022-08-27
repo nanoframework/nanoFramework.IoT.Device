@@ -18,13 +18,13 @@ namespace Iot.Device.Ssd13xx
         /// Default I2C bus address.
         /// </summary>
         public const byte DefaultI2cAddress = 0x3C;
-		
-		/// <summary>
-		/// Secondary I2C bus address.
+
+        /// <summary>
+        /// Secondary I2C bus address.
         /// </summary>
         public const byte SecondaryI2cAddress = 0x3D;
 
-        private bool _disposed = false;        
+        private bool _disposed = false;
 
         /// <summary>
         /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
@@ -44,45 +44,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
-        public Ssd1306(I2cDevice i2cDevice, int resetPin) : base(i2cDevice,DisplayResolution.None, resetPin)
-        {            
-        }
-
-        /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
-        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
-        /// light emitting diode dot-matrix graphic display system.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
-        /// reset pin).</param>
-        /// <param name="gpio">Gpio Controller.</param>        
-        public Ssd1306(I2cDevice i2cDevice, int resetPin, GpioController gpio) : base(i2cDevice, DisplayResolution.None, resetPin,gpio)
-        {
-        }
-
-        /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
-        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
-        /// light emitting diode dot-matrix graphic display system.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
-        /// reset pin).</param>
-        /// <param name="gpio">Gpio Controller.</param>  
-        /// <param name="shouldDispose">True to dispose the GpioController.</param>        
-        public Ssd1306(I2cDevice i2cDevice, int resetPin, GpioController gpio, bool shouldDispose) : base(i2cDevice, DisplayResolution.None, resetPin, gpio, shouldDispose)
-        {
-        }
-       
-        /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
-        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
-        /// light emitting diode dot-matrix graphic display system.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="res">Display resolution</param>
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res) : base(i2cDevice,res)
+        public Ssd1306(I2cDevice i2cDevice, int resetPin) : base(i2cDevice, DisplayResolution.OLED128x64, resetPin)
         {
         }
 
@@ -93,23 +55,7 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="res">Display resolution</param>
-        /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
-        /// reset pin).</param>
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin) : base(i2cDevice, res,resetPin)
-        {            
-        }
-
-        /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
-        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
-        /// light emitting diode dot-matrix graphic display system.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="res">Display resolution</param>
-        /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
-        /// reset pin).</param>
-        /// <param name="gpio">Gpio Controller.</param>          
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin, GpioController gpio) : base(i2cDevice,res, resetPin,gpio)
+        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res) : base(i2cDevice, res)
         {
         }
 
@@ -124,7 +70,7 @@ namespace Iot.Device.Ssd13xx
         /// reset pin).</param>
         /// <param name="gpio">Gpio Controller.</param> 
         /// <param name="shouldDispose">True to dispose the GpioController.</param>        
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin, GpioController gpio, bool shouldDispose) : base(i2cDevice, res, resetPin, gpio, shouldDispose)
+        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin, GpioController gpio = null, bool shouldDispose = true) : base(i2cDevice, res, resetPin, gpio, shouldDispose)
         {
         }
 

@@ -401,7 +401,7 @@ namespace System.Collections.Generic
         /// <param name="item">The object to locate in the System.Collections.Generic.List. The value can be null for reference types.</param>
         /// <returns>The zero-based index of the last occurrence of item within the entire the System.Collections.Generic.List, if found; otherwise, -1.</returns>
         public int LastIndexOf(byte item) => LastIndexOf(item, _list.Count - 1, _list.Count);
- 
+
         /// <summary>
         /// Searches for the specified object and returns the zero-based index of the last
         /// occurrence within the range of elements in the System.Collections.Generic.List

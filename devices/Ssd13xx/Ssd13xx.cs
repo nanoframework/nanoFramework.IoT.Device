@@ -44,7 +44,7 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         public IFont Font { get; set; }
 
-        private GpioController _gpioController;        
+        private GpioController _gpioController;
         private int _resetPin;
         private bool _shouldDispose;
         private bool _disposed = false;
@@ -61,22 +61,18 @@ namespace Iot.Device.Ssd13xx
 
         public Ssd13xx(
             I2cDevice i2cDevice,
-            DisplayResolution resolution = DisplayResolution.None,
-            int resetPin = -1,            
+            DisplayResolution resolution = DisplayResolution.OLED128x64,
+            int resetPin = -1,
             GpioController gpio = null,
             bool shouldDispose = true)
         {
 
-            if (resolution == DisplayResolution.None) resolution = DisplayResolution.OLED128x64;            
-
-            _resetPin = resetPin;            
+            _resetPin = resetPin;
             if (resetPin >= 0)
-                {
+            {
                 _gpioController = gpio ?? new GpioController();
-                if (!_gpioController.IsPinModeSupported(_resetPin, PinMode.Output))
-                        throw new ArgumentException($"GPIO pin {_resetPin} must support output mode.");                
                 this.Reset();
-                }
+            }
 
             _shouldDispose = shouldDispose || (gpio == null);
 
@@ -141,7 +137,7 @@ namespace Iot.Device.Ssd13xx
             data.CopyTo(writeBuffer.Slice(1));
             _i2cDevice.Write(writeBuffer);
         }
-        
+
         /// <summary>
         /// Acquires span of specific length pointing to the command buffer.
         /// If length of the command buffer is too small it will be reallocated.
@@ -572,10 +568,6 @@ namespace Iot.Device.Ssd13xx
         public enum DisplayResolution
         {
             /// <summary>
-            /// None
-            /// </summary>
-            None,
-            /// <summary>
             /// Option for 128x64 OLED
             /// </summary>
             OLED128x64,
@@ -599,19 +591,19 @@ namespace Iot.Device.Ssd13xx
             0x00, // lower columns address =0
             0x10, // upper columns address =0
         };
-		
-		/// <summary>
+
+        /// <summary>
         /// Reset display controller.
         /// </summary>        
         private void Reset()
-        {            
+        {
             GpioPin rstPin = _gpioController.OpenPin(_resetPin, PinMode.Output);
             rstPin.Write(PinValue.High);
             Thread.Sleep(1);                // VDD goes high at start, pause for 1 ms            
             rstPin.Write(PinValue.Low);     // Bring reset low
             Thread.Sleep(10);               // Wait 10 ms
             rstPin.Write(PinValue.High);    // Bring out of reset
-            Thread.Sleep(1);           
+            Thread.Sleep(1);
         }
 
         /// <summary>
@@ -629,14 +621,14 @@ namespace Iot.Device.Ssd13xx
             {
                 _gpioController?.ClosePin(_resetPin);
                 if (_shouldDispose)
-                {                                   
+                {
                     _gpioController?.Dispose();
                     _gpioController = null;
                 }
-				
-				_i2cDevice?.Dispose();
-				_i2cDevice = null!;
-                
+
+                _i2cDevice?.Dispose();
+                _i2cDevice = null!;
+
                 _disposed = true;
             }
         }
