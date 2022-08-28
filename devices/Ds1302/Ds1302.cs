@@ -33,7 +33,7 @@ namespace Iot.Device.Rtc
         /// <param name="resetPin">Reset pin number.</param>
         /// <param name="controller">Gpio controller.</param>
         /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
-        /// <exception cref="ArgumentNullException">When controller was not provided.</exception>
+        /// <exception cref="ArgumentNullException">When pin numbers are not valid.</exception>
         public Ds1302(int clockPin, int dataPin, int resetPin, GpioController? controller = null, bool shouldDispose = true)
         {
             _controller = controller ?? new GpioController();
@@ -123,11 +123,11 @@ namespace Iot.Device.Rtc
         /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
+            _dataPin?.Dispose();
+            _clockPin?.Dispose();
+            _resetPin?.Dispose();
             if (_shouldDispose)
             {
-                _dataPin?.Dispose();
-                _clockPin?.Dispose();
-                _resetPin?.Dispose();
                 _controller?.Dispose();
                 _controller = null;
             }
