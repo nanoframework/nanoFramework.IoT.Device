@@ -32,30 +32,9 @@ namespace Iot.Device.Ssd13xx
         /// light emitting diode dot-matrix graphic display system.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        public Ssd1306(I2cDevice i2cDevice) : base(i2cDevice)
-        {
-        }
-
-        /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
-        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
-        /// light emitting diode dot-matrix graphic display system.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
-        public Ssd1306(I2cDevice i2cDevice, int resetPin) : base(i2cDevice, DisplayResolution.OLED128x64, resetPin)
-        {
-        }
-
-        /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
-        /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
-        /// light emitting diode dot-matrix graphic display system.
-        /// </summary>
-        /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="res">Display resolution</param>
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res) : base(i2cDevice, res)
+        public Ssd1306(I2cDevice i2cDevice, int resetPin = -1) : base(i2cDevice, DisplayResolution.OLED128x64, resetPin)
         {
         }
 
@@ -70,7 +49,7 @@ namespace Iot.Device.Ssd13xx
         /// reset pin).</param>
         /// <param name="gpio">Gpio Controller.</param> 
         /// <param name="shouldDispose">True to dispose the GpioController.</param>        
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin, GpioController gpio = null, bool shouldDispose = true) : base(i2cDevice, res, resetPin, gpio, shouldDispose)
+        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin = -1, GpioController gpio = null, bool shouldDispose = true) : base(i2cDevice, res, resetPin, gpio, shouldDispose)
         {
         }
 

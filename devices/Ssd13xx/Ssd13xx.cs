@@ -619,11 +619,14 @@ namespace Iot.Device.Ssd13xx
 
             if (disposing)
             {
-                _gpioController?.ClosePin(_resetPin);
-                if (_shouldDispose)
+                if (_resetPin >= 0)
                 {
-                    _gpioController?.Dispose();
-                    _gpioController = null;
+                    _gpioController.ClosePin(_resetPin);
+                    if (_shouldDispose)
+                    {
+                        _gpioController.Dispose();
+                        _gpioController = null;
+                    }
                 }
 
                 _i2cDevice?.Dispose();
@@ -639,6 +642,7 @@ namespace Iot.Device.Ssd13xx
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
