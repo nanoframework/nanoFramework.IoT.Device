@@ -16,7 +16,7 @@ namespace Iot.Device.Rtc
     public class Ds1302 : RtcBase
     {
         private readonly GpioPin _clockPin;
-        private readonly GpioPin _resetPin;
+        private readonly GpioPin _communicationEnabledPin;
         private readonly GpioPin _dataPin;
         private readonly byte enableWrite = 0b1000_0000;
         private readonly byte disableWrite = 0b0000_0000;
@@ -30,25 +30,25 @@ namespace Iot.Device.Rtc
         /// </summary>
         /// <param name="clockPin">Clock pin number.</param>
         /// <param name="dataPin">Data pin number.</param>
-        /// <param name="resetPin">Reset pin number.</param>
+        /// <param name="communicationEnabledPin">Communication enabled pin number.</param>
         /// <param name="controller">Gpio controller.</param>
         /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException">When pin numbers are not valid.</exception>
-        public Ds1302(int clockPin, int dataPin, int resetPin, GpioController? controller = null, bool shouldDispose = true)
+        public Ds1302(int clockPin, int dataPin, int communicationEnabledPin, GpioController? controller = null, bool shouldDispose = true)
         {
             _controller = controller ?? new GpioController();
             _shouldDispose = shouldDispose || controller is null;
 
-            if (clockPin < 0 || dataPin < 0 || resetPin < 0)
+            if (clockPin < 0 || dataPin < 0 || communicationEnabledPin < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             _clockPin = _controller.OpenPin(clockPin, PinMode.Output);
-            _resetPin = _controller.OpenPin(resetPin, PinMode.Output);
+            _communicationEnabledPin = _controller.OpenPin(communicationEnabledPin, PinMode.Output);
             _dataPin = _controller.OpenPin(dataPin, PinMode.Input);
 
-            _resetPin.Write(PinValue.Low);
+            _communicationEnabledPin.Write(PinValue.Low);
             _clockPin.Write(PinValue.Low);
         }
 
@@ -125,7 +125,7 @@ namespace Iot.Device.Rtc
         {
             _dataPin?.Dispose();
             _clockPin?.Dispose();
-            _resetPin?.Dispose();
+            _communicationEnabledPin?.Dispose();
             if (_shouldDispose)
             {
                 _controller?.Dispose();
@@ -152,7 +152,7 @@ namespace Iot.Device.Rtc
         private void PrepareRead(Ds1302Registers ds1302Register)
         {
             SetDirectionOfDataPin(PinMode.Output);
-            _resetPin.Write(PinValue.High);
+            _communicationEnabledPin.Write(PinValue.High);
             WriteByte((byte)(enableWriteOrRead | (byte)ds1302Register));
             SetDirectionOfDataPin(PinMode.Input);
         }
@@ -160,13 +160,13 @@ namespace Iot.Device.Rtc
         private void PrepareWrite(Ds1302Registers ds1302Register)
         {
             SetDirectionOfDataPin(PinMode.Output);
-            _resetPin.Write(PinValue.High);
+            _communicationEnabledPin.Write(PinValue.High);
             WriteByte((byte)(enableWrite | (byte)ds1302Register));
         }
 
         private void EndTransmission()
         {
-            _resetPin.Write(PinValue.Low);
+            _communicationEnabledPin.Write(PinValue.Low);
         }
 
         private void SetDirectionOfDataPin(PinMode direction)
