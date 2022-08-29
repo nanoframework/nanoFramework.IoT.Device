@@ -18,6 +18,10 @@ trigger:
       - LICENSE.md
       - README.md
       - tips-trick.md
+      - assets/*
+      - config/*
+      - .github/*
+      - StyleCop/*
 
 # PR always trigger build
 pr:
@@ -54,6 +58,7 @@ steps:
   displayName: Setup git identity
 
 - template: azure-pipelines-templates/install-nuget.yml@templates
+- template: azure-pipelines-templates/cache-nano-nugets.yml@templates
 
 - task: DotNetCoreCLI@2  
   displayName: Install nanovc tool
