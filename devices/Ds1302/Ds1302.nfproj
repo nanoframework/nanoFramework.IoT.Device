@@ -30,9 +30,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="..\Rtc\RtcBase.cs">
+      <Link>RtcBase.cs</Link>
+    </Compile>
     <Compile Include="Ds1302.cs" />
     <Compile Include="Ds1302Registers.cs" />
-    <Compile Include="RtcBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Common.NumberHelper">
