@@ -97,5 +97,26 @@ namespace Iot.Device.Graphics
 
             return false;
         }
+
+        ///// <summary>
+        ///// Removes the first item with a key equal to <paramref name="cr"/> if found.
+        ///// </summary>
+        ///// <param name="cr">The character (key) to look for.</param>
+        //public void Remove(char cr)
+        //{
+        //    var index = -1;
+        //    for (var i = 0; i < _array.Count; i++)
+        //    {
+        //        var cb = (CharByte)_array[i];
+        //        if (cb.Cr == cr)
+        //        {
+        //            index = i;
+        //            break;
+        //        }
+        //    }
+
+        //    if (index > -1)
+        //        _array.RemoveAt(index);
+        //}
     }
 }
