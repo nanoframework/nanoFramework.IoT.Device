@@ -1,4 +1,9 @@
-﻿namespace Iot.Device.CharacterLcd
+﻿//
+// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+//
+
+namespace Iot.Device.CharacterLcd
 {
     /// <summary>
     /// Represents a rectangle with all the required attributes.

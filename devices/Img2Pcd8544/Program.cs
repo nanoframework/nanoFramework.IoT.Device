@@ -1,4 +1,9 @@
-﻿using SixLabors.ImageSharp;
+﻿//
+// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+//
+
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 

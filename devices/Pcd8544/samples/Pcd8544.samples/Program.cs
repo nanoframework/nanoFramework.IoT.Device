@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+//
+
 using System;
 using System.Device.Gpio;
 using System.Device.Pwm;
