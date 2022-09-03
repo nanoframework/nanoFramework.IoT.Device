@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Iot.Device.Display.Pcd8544Enums
+namespace Iot.Device.Pcd8544Enums
 {
     [Flags]
     internal enum FunctionSet

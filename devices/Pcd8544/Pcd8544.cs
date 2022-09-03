@@ -6,12 +6,12 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Device.Pwm;
 using System.Threading;
-using Iot.Device.Display.Pcd8544Enums;
+using Iot.Device.Pcd8544Enums;
 using Iot.Device.CharacterLcd;
 using Iot.Device.Graphics;
 using System.Collections;
 
-namespace Iot.Device.Display
+namespace Iot.Device
 {
     /// <summary>
     /// PCD8544 - 48 × 84 pixels matrix LCD, famous Nokia 5110 screen
