@@ -25,19 +25,33 @@ Supply voltage can vary, 3.3 or 5V, up to 7V is acceptable. Make sure that there
 The following example shows how to setup the screen with a PWM to control the brightness:
 
 ```csharp
-SpiConnectionSettings spiConnection = new(0, 1) { ClockFrequency = 5_000_000, Mode = SpiMode.Mode0, DataFlow = DataFlow.MsbFirst, ChipSelectLineActiveState = PinValue.Low };
-PwmChannel pwmChannel = PwmChannel.Create(0, 0);
-SpiDevice spi = SpiDevice.Create(spiConnection);
-Pcd8544 lcd = new(27, 22, spi, pwmChannel);
+            var resetPin = 32;
+            var dataCommandPin = 33;
+            var backlightPin = 21;
+
+            var gpioController = new GpioController();
+            var spiConnectionSettings = new SpiConnectionSettings(1, 5)
+            {
+                ClockFrequency = 5_000_000,
+                Mode = SpiMode.Mode0,
+                DataFlow = DataFlow.MsbFirst,
+                ChipSelectLineActiveState = PinValue.Low
+            };
+            var spiDevice = new SpiDevice(spiConnectionSettings);
+            var pwmChannel = PwmChannel.CreateFromPin(backlightPin);
+
+            var lcd = new Iot.Device.Pcd8544(dataCommandPin, spiDevice, resetPin, pwmChannel, gpioController, false);
 ```
 
 If you don't want neither a PWM neither a reset pin, you can then pass a negative pin number for reset and null for the PWM:
 
 ```csharp
 lcd = new(27, spi, -1, null);
+
+var lcd = new Iot.Device.Pcd8544(dataCommandPin, spiDevice, -1, null);
 ```
 
-Not that there is as well the possibility to pass a normal pin number for the backlight. In this case, the light will be on once the `BacklightBrightness` property if more then 0.5, otherwise off.
+Note that there is as well the possibility to pass a normal pin number for the backlight. In this case, the light will be on once the `BacklightBrightness` property if more then 0.5, otherwise off.
 
 ### Displaying text
 
