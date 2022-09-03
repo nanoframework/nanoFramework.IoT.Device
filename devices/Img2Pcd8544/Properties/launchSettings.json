@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Img2Pcd8544": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Downloads\\23728180.png\""
+    }
+  }
+}
