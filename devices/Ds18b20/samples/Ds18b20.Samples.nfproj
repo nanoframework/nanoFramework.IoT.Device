@@ -36,8 +36,8 @@
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=4.144.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.144.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=4.145.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.145.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
