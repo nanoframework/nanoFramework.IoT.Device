@@ -33,26 +33,26 @@ namespace Pcd8544.samples
             lcd.Bias = 6;
             lcd.Contrast = 40;
 
-            //BrightnessContrastTemperatureBias(lcd);
+            BrightnessContrastTemperatureBias(lcd);
 
             lcd.Bias = 6;
             lcd.Contrast = 40;
 
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
 
-            //DisplayTextChangePositionBlink(lcd);
+            DisplayTextChangePositionBlink(lcd);
 
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
 
             LcdConsole(lcd);
 
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
 
-            //DisplayLinesPointsRectabngles(lcd);
+            DisplayLinesPointsRectabngles(lcd);
 
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
 
-            //DisplayBitmap(lcd);
+            DisplayBitmap(lcd);
 
             while (true)
             {

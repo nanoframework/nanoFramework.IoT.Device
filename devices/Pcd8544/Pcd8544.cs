@@ -456,7 +456,10 @@ namespace Iot.Device.Display
                 }
 
                 letter[5] = 0x00;
-                letter.CopyTo(new SpanByte(_byteMap, _position, (_byteMap.Length - _position)));
+                if (_position < _byteMap.Length)
+                {
+                    letter.CopyTo(new SpanByte(_byteMap, _position, (_byteMap.Length - _position)));
+                }
                 SpiWrite(true, letter);
                 _position += CharacterWidth;
             }
@@ -472,7 +475,10 @@ namespace Iot.Device.Display
                 _position = _position < 0 ? 0 : _position;
                 SetPosition(_position);
                 SpiWrite(true, letter);
-                letter.CopyTo(new SpanByte(_byteMap, _position, (_byteMap.Length - _position)));
+                if (_position < _byteMap.Length)
+                {
+                    letter.CopyTo(new SpanByte(_byteMap, _position, (_byteMap.Length - _position)));
+                }
                 SetPosition(_position);
             }
         }
