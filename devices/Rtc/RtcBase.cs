@@ -6,12 +6,12 @@ using System;
 namespace Iot.Device.Rtc
 {
     /// <summary>
-    /// Real time clock (RTC)
+    /// Real time clock (RTC).
     /// </summary>
     public abstract class RtcBase : IDisposable
     {
         /// <summary>
-        /// The Device's <see cref="System.DateTime"/>
+        /// Gets or sets the device's <see cref="System.DateTime"/>
         /// </summary>
         public virtual DateTime DateTime
         {
@@ -20,15 +20,15 @@ namespace Iot.Device.Rtc
         }
 
         /// <summary>
-        /// Set the device time
+        /// Set the device time.
         /// </summary>
-        /// <param name="time">Time</param>
+        /// <param name="time">Time.</param>
         protected abstract void SetTime(DateTime time);
 
         /// <summary>
-        /// Read time from the device
+        /// Read time from the device.
         /// </summary>
-        /// <returns>Time from the device</returns>
+        /// <returns>Time from the device.</returns>
         protected abstract DateTime ReadTime();
 
         /// <inheritdoc/>
