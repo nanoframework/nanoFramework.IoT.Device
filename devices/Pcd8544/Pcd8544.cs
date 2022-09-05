@@ -14,29 +14,29 @@ using System.Collections;
 namespace Iot.Device
 {
     /// <summary>
-    /// PCD8544 - 48 × 84 pixels matrix LCD, famous Nokia 5110 screen
+    /// PCD8544 - 48 × 84 pixels matrix LCD, famous Nokia 5110 screen.
     /// </summary>
     public class Pcd8544 : ICharacterLcd, IDisposable
     {
         private const int CharacterWidth = 6;
 
         /// <summary>
-        /// The size of the screen in terms of pixels
+        /// The size of the screen in terms of pixels.
         /// </summary>
         public static Size PixelScreenSize => new Size(84, 48);
 
         /// <summary>
-        /// Size of the screen 48 x 84 / 8 in bytes
+        /// Size of the screen 48 x 84 / 8 in bytes.
         /// </summary>
         public const int ScreenBufferByteSize = 504;
 
         /// <summary>
-        /// The size of the screen in terms of characters
+        /// The size of the screen in terms of characters.
         /// </summary>
         public Size Size => new Size(14, 6);
 
         /// <summary>
-        /// Number of bit per pixel for the color
+        /// Number of bit per pixel for the color.
         /// </summary>
         public const int ColorBitPerPixel = 1;
 
@@ -59,19 +59,21 @@ namespace Iot.Device
         private Hashtable _font = new Hashtable();
 
         /// <summary>
-        /// Create Pcd8544
+        /// Create Pcd8544.
         /// </summary>
         /// <param name="dataCommandPin">The data command pin.</param>
         /// <param name="spiDevice">The SPI device.</param>
-        /// <param name="resetPin">The reset pin. Use a negative number if you don't want to use it</param>
-        /// <param name="pwmBacklight">The PWM channel for the back light</param>
+        /// <param name="resetPin">The reset pin. Use a negative number if you don't want to use it.</param>
+        /// <param name="pwmBacklight">The PWM channel for the back light.</param>
         /// <param name="gpioController">The GPIO Controller.</param>
-        /// <param name="shouldDispose">True to dispose the GPIO controller</param>
+        /// <param name="shouldDispose">True to dispose the GPIO controller.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Invalid 'Data Command' pin number. Pin number can not be less than zero.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         public Pcd8544(int dataCommandPin, SpiDevice spiDevice, int resetPin = -1, PwmChannel? pwmBacklight = null, GpioController? gpioController = null, bool shouldDispose = true)
         {
             if (dataCommandPin < 0)
             {
-                throw new ArgumentException($"{nameof(dataCommandPin)} must be a valid pin number");
+                throw new ArgumentOutOfRangeException();
             }
 
             _dataCommandPin = dataCommandPin;
@@ -96,19 +98,21 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Create Pcd8544
+        /// Create Pcd8544.
         /// </summary>
         /// <param name="dataCommandPin">The data command pin.</param>
         /// <param name="spiDevice">The SPI device.</param>
-        /// <param name="resetPin">The reset pin. Use a negative number if you don't want to use it</param>
-        /// <param name="backlightPin">The pin back light</param>
+        /// <param name="resetPin">The reset pin. Use a negative number if you don't want to use it.</param>
+        /// <param name="backlightPin">The pin back light.</param>
         /// <param name="gpioController">The GPIO Controller.</param>
-        /// <param name="shouldDispose">True to dispose the GPIO controller</param>
+        /// <param name="shouldDispose">True to dispose the GPIO controller.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Invalid 'Data Command' pin number. Pin number can not be less than zero.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         public Pcd8544(int dataCommandPin, SpiDevice spiDevice, int resetPin = -1, int backlightPin = -1, GpioController? gpioController = null, bool shouldDispose = true)
         {
             if (dataCommandPin < 0)
             {
-                throw new ArgumentException($"{nameof(dataCommandPin)} must be a valid pin number");
+                throw new ArgumentOutOfRangeException();
             }
 
             _dataCommandPin = dataCommandPin;
@@ -167,7 +171,7 @@ namespace Iot.Device
         #region properties
 
         /// <summary>
-        /// Enable the screen
+        /// Enable the screen.
         /// </summary>
         public bool Enabled
         {
@@ -207,19 +211,20 @@ namespace Iot.Device
         /// <summary>
         /// The bias for 0 to 7. Bias represent the voltage applied to the LCD. The highest, the darker the screen will be.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Bias value can not be more than 7.</exception>
         public byte Bias
         {
             get => _bias;
             set
             {
-                _bias = value < 8 ? value : throw new ArgumentException($"Bias can't be more than 7");
+                _bias = value < 8 ? value : throw new ArgumentOutOfRangeException();
                 SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)(0x10 | _bias) };
                 SpiWrite(false, toSend);
             }
         }
 
         /// <summary>
-        /// True to inverse the screen color
+        /// True to inverse the screen color.
         /// </summary>
         public bool InvertedColors
         {
@@ -233,21 +238,22 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Get or set the contrast from 0 to 127
+        /// Get or set the contrast from 0 to 127.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Contrast value must be between 0 and 127.</exception>
         public byte Contrast
         {
             get => _contrast;
             set
             {
-                _contrast = value <= 127 ? value : throw new ArgumentException($"Contrast can only be between 0 and 127");
+                _contrast = value >= 0 && value <= 127 ? value : throw new ArgumentOutOfRangeException();
                 SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)(0x80 | _contrast) };
                 SpiWrite(false, toSend);
             }
         }
 
         /// <summary>
-        /// Get or set the temperature coefficient
+        /// Get or set the temperature coefficient.
         /// </summary>
         public ScreenTemperature Temperature
         {
@@ -286,7 +292,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// This is not supported on this screen, this function will have no effect
+        /// This is not supported on this screen, this function will have no effect.
         /// </summary>
         public bool BlinkingCursorVisible { get; set; }
 
@@ -301,17 +307,19 @@ namespace Iot.Device
         /// font encoding is then on the lower 5 bits of each bytes.
         /// </remarks>
         /// <param name="location">Should be between 0 and <see cref="NumberOfCustomCharactersSupported"/>.</param>
-        /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
+        /// <param name="characterMap">Provide an array of 8 bytes containing the pattern.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="location"/> must be smaller than <see cref="NumberOfCustomCharactersSupported"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="characterMap"/> must be either a 5-byte or an 8-byte array.</exception>
         public void CreateCustomCharacter(int location, SpanByte characterMap)
         {
             if (location >= NumberOfCustomCharactersSupported)
             {
-                throw new ArgumentException($"{location} can only be smaller than {NumberOfCustomCharactersSupported}");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (characterMap.Length is not 8 or 5)
             {
-                throw new ArgumentException($"Character can only be 8 or 5 bytes array");
+                throw new ArgumentOutOfRangeException();
             }
 
             byte[] character = characterMap.Length == 8 ?
@@ -334,7 +342,7 @@ namespace Iot.Device
         /// font encoding is then on the lower 5 bits of each bytes.
         /// </remarks>
         /// <param name="location">Should be between 0 and <see cref="NumberOfCustomCharactersSupported"/>.</param>
-        /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
+        /// <param name="characterMap">Provide an array of 8 bytes containing the pattern.</param>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
             CreateCustomCharacter(location, new SpanByte(characterMap));
@@ -345,12 +353,12 @@ namespace Iot.Device
         #region Primitive methods
 
         /// <summary>
-        /// Draw what's in memory to the the screen
+        /// Draw what's in memory to the the screen.
         /// </summary>
         public void Draw() => SpiWrite(true, _byteMap);
 
         /// <summary>
-        /// Clear the screen
+        /// Clear the screen.
         /// </summary>
         public void Clear()
         {
@@ -364,14 +372,15 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Set the byte map
+        /// Set the byte map.
         /// </summary>
-        /// <param name="byteMap">A 504 sized byte representing the full image</param>
+        /// <param name="byteMap">A 504 sized byte representing the full image.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="byteMap"/> length must be equal to <see cref="ScreenBufferByteSize"/></exception>
         public void SetByteMap(SpanByte byteMap)
         {
             if (byteMap.Length != ScreenBufferByteSize)
             {
-                throw new ArgumentException($"{nameof(byteMap)} length have to be {ScreenBufferByteSize} bytes");
+                throw new ArgumentOutOfRangeException();
             }
 
             SetCursorPosition(0, 0);
@@ -383,9 +392,9 @@ namespace Iot.Device
         #region Text
 
         /// <summary>
-        /// Write text
+        /// Write text.
         /// </summary>
-        /// <param name="text">The text to write</param>
+        /// <param name="text">The text to write.</param>
         public void Write(string text)
         {
             foreach (char c in text)
@@ -408,7 +417,7 @@ namespace Iot.Device
         /// Write a raw byte stream to the display.
         /// Used if character translation already took place.
         /// </summary>
-        /// <param name="text">Text to print</param>
+        /// <param name="text">Text to print.</param>
         public void Write(SpanChar text)
         {
             for (var i = 0; i < text.Length; i++)
@@ -426,7 +435,7 @@ namespace Iot.Device
         /// Write a raw byte stream to the display.
         /// Used if character translation already took place.
         /// </summary>
-        /// <param name="text">Text to print</param>
+        /// <param name="text">Text to print.</param>
         public void Write(char[] text)
         {
             foreach (var c in text)
@@ -484,9 +493,9 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Write text and set cursor position to next line
+        /// Write text and set cursor position to next line.
         /// </summary>
-        /// <param name="text">The text to write</param>
+        /// <param name="text">The text to write.</param>
         public void WriteLine(string text)
         {
             Write(text);
@@ -525,7 +534,7 @@ namespace Iot.Device
         {
             if ((left < 0 || left > Size.Width) || (top < 0 || top > Size.Height))
             {
-                throw new ArgumentOutOfRangeException(nameof(left), $"The given position is not inside the display. it's 6 raws and 84 columns");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (_cursorVisible)
@@ -559,12 +568,12 @@ namespace Iot.Device
         #region Drawing points, lines and rectangles
 
         /// <summary>
-        /// Draw a point
+        /// Draw a point.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <param name="isOn">True if the point has pixels on, false for off.</param>
-        /// <returns>True if success</returns>
+        /// <returns>True if success.</returns>
         public bool DrawPoint(int x, int y, bool isOn)
         {
             if (x < 0 || x >= 84 || y < 0 || y >= 48)
@@ -589,15 +598,15 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Draw a point
+        /// Draw a point.
         /// </summary>
         /// <param name="point">The point to draw.</param>
         /// <param name="isOn">True if the point has pixels on, false for off.</param>
-        /// <returns></returns>
+        /// <returns>True if success.</returns>
         public bool DrawPoint(Point point, bool isOn) => DrawPoint(point.X, point.Y, isOn);
 
         /// <summary>
-        /// Draw a line
+        /// Draw a line.
         /// </summary>
         /// <param name="x1">The first point X coordinate.</param>
         /// <param name="y1">The first point Y coordinate.</param>
@@ -636,7 +645,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Draw a line
+        /// Draw a line.
         /// </summary>
         /// <param name="p1">First point coordinate.</param>
         /// <param name="p2">Second point coordinate.</param>
@@ -644,7 +653,7 @@ namespace Iot.Device
         public void DrawLine(Point p1, Point p2, bool isOn) => DrawLine(p1.X, p1.Y, p2.X, p2.Y, isOn);
 
         /// <summary>
-        /// Draw a rectangle
+        /// Draw a rectangle.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
@@ -696,7 +705,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Draw a rectangle
+        /// Draw a rectangle.
         /// </summary>
         /// <param name="p">The coordinate of the point.</param>
         /// <param name="size">The size of the rectangle.</param>
@@ -705,7 +714,7 @@ namespace Iot.Device
         public void DrawRectangle(Point p, Size size, bool isOn, bool isFilled) => DrawRectangle(p.X, p.Y, size.Width, size.Height, isOn, isFilled);
 
         /// <summary>
-        /// Draw a rectangle
+        /// Draw a rectangle.
         /// </summary>
         /// <param name="rectangle">The rectangle.</param>
         /// <param name="isOn">True if the rectangle has pixels on, false for off.</param>

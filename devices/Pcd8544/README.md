@@ -6,11 +6,9 @@ This is the famous screen that Nokia 5110 used. It's a SPI based device. This No
 
 - Nokia5110 [datasheet](https://www.sparkfun.com/datasheets/LCD/Monochrome/Nokia5110.pdf)
 
-## Usage
+## Circuit
 
-The screen is most of the time presented like this:
-
-![Nokia 5110 screen](./Nokia-5110-LCD-Pinout.png)
+![Connecting ESP32 & Pcd8544](./ESP32-PCD8544_bb.png)
 
 It uses SPI and you can add PWM to control the 4 leds brightness which are around the screen. The pin have various names like  BL or LED.
 
@@ -25,22 +23,22 @@ Supply voltage can vary, 3.3 or 5V, up to 7V is acceptable. Make sure that there
 The following example shows how to setup the screen with a PWM to control the brightness:
 
 ```csharp
-            var resetPin = 32;
-            var dataCommandPin = 33;
-            var backlightPin = 21;
+var resetPin = 32;
+var dataCommandPin = 33;
+var backlightPin = 21;
 
-            var gpioController = new GpioController();
-            var spiConnectionSettings = new SpiConnectionSettings(1, 5)
-            {
-                ClockFrequency = 5_000_000,
-                Mode = SpiMode.Mode0,
-                DataFlow = DataFlow.MsbFirst,
-                ChipSelectLineActiveState = PinValue.Low
-            };
-            var spiDevice = new SpiDevice(spiConnectionSettings);
-            var pwmChannel = PwmChannel.CreateFromPin(backlightPin);
+var gpioController = new GpioController();
+var spiConnectionSettings = new SpiConnectionSettings(1, 5)
+{
+    ClockFrequency = 5_000_000,
+    Mode = SpiMode.Mode0,
+    DataFlow = DataFlow.MsbFirst,
+    ChipSelectLineActiveState = PinValue.Low
+};
+var spiDevice = new SpiDevice(spiConnectionSettings);
+var pwmChannel = PwmChannel.CreateFromPin(backlightPin);
 
-            var lcd = new Iot.Device.Pcd8544(dataCommandPin, spiDevice, resetPin, pwmChannel, gpioController, false);
+var lcd = new Iot.Device.Pcd8544(dataCommandPin, spiDevice, resetPin, pwmChannel, gpioController, false);
 ```
 
 If you don't want neither a PWM neither a reset pin, you can then pass a negative pin number for reset and null for the PWM:
@@ -92,55 +90,54 @@ Also you should `Refresh` the screen once you'll finish your drawing. All drawin
 
 The function SetByteMap allows you to draw anything, you'll just need to provide the raw buffer. Size is 504 bytes representing from the top left part columns of 8 pixels up to the right up to the next raw. A total of 6 raws are available with 84 columns each.
 
-Here is an example on how you can convert an existing image to extract the raw data:
+Here is an example on how you can convert an existing image to extract the raw data then convert it into a C# array you can copy into your code:
 
 ```csharp
-using Image<Rgba32> bitmapNokia = Image.Load<Rgba32>(Path.Combine("nokia_bw.bmp"));
-var bitmap2 = BitmapToByteArray(bitmapNokia);
-lcd.SetByteMap(bitmap2);
-lcd.Draw();
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
-byte[] BitmapToByteArray(Image<Rgba32> bitmap)
+var imageFilePath = args[0];
+using var image = Image.Load<Rgba32>(imageFilePath);
+image.Mutate(x => x.Resize(new Size(84, 48)));
+image.Mutate(x => x.BlackWhite());
+
+var colWhite = new Rgba32(255, 255, 255);
+var width = 84;
+var result = new byte[504];
+for (var pos = 0; pos < result.Length; pos++)
 {
-    if (bitmap is not object)
+    byte toStore = 0;
+    for (int bit = 0; bit < 8; bit++)
     {
-        throw new ArgumentNullException(nameof(bitmap));
+        var x = pos % width;
+        var y = pos / width * 8 + bit;
+        toStore = (byte)(toStore | ((image[x, y] == colWhite ? 0 : 1) << bit));
     }
 
-    if ((bitmap.Width != Pcd8544.PixelScreenSize.Width) || (bitmap.Height != Pcd8544.PixelScreenSize.Height))
-    {
-        throw new ArgumentException($"{nameof(bitmap)} should be same size as the screen {Pcd8544.PixelScreenSize.Width}x{Pcd8544.PixelScreenSize.Height}");
-    }
-
-    byte[] toReturn = new byte[Pcd8544.ScreenBufferByteSize];
-    int width = Pcd8544.PixelScreenSize.Width;
-    Rgba32 colWhite = new(255, 255, 255);
-    for (int position = 0; position < Pcd8544.ScreenBufferByteSize; position++)
-    {
-        byte toStore = 0;
-        for (int bit = 0; bit < 8; bit++)
-        {
-            toStore = (byte)(toStore | ((bitmap[position % width, position / width * 8 + bit] == colWhite ? 0 : 1) << bit));
-        }
-
-        toReturn[position] = toStore;
-    }
-
-    return toReturn;
+    result[pos] = toStore;
 }
+
+var resultString = $"var bitmap = new byte[] {{{String.Join(",", result.Select(b => $"0x{b.ToString("X2")}"))}}}";
+Console.WriteLine(resultString);
+Console.ReadKey();
 ```
 
 In case you want to convert existing images which have a different size than the 84x48 screen size, you have to resize the picture like this using ImageSharp and convert it to Black and White:
 
 ```csharp
-// Open a non bitmap and resize it
-using Image<Rgba32> bitmapLarge = Image.Load<Rgba32>(Path.Combine("nonbmp.jpg"));
-bitmapLarge.Mutate(x => x.Resize(Pcd8544.PixelScreenSize));
+// Open an image and resize it
+using var image = Image.Load<Rgba32>(imageFilePath);
+bitmapLarge.Mutate(x => x.Resize(new Size(84, 48)));
 bitmapLarge.Mutate(x => x.BlackWhite());
-var bitmap3 = BitmapToByteArray(bitmapLarge);
+...
 ```
 
 Note: you may want to reverse the colors first depending on what you want.
+
+This code is also available as a simple C# Console Application in Img2Pcd8544 and you can execute it using this command:
+
+```Img2Pcd8544 <PATH_TO_IMAGE_FILE>```
 
 ### Advanced functions
 
