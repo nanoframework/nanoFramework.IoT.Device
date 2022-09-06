@@ -2,14 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Collections;
 using System.Device.Gpio;
-using System.Device.Spi;
 using System.Device.Pwm;
+using System.Device.Spi;
 using System.Threading;
-using Iot.Device.Pcd8544Enums;
+
 using Iot.Device.CharacterLcd;
 using Iot.Device.Graphics;
-using System.Collections;
+using Iot.Device.Pcd8544Enums;
 
 namespace Iot.Device
 {
@@ -45,8 +46,8 @@ namespace Iot.Device
         private int _resetPin;
         private int _backlightPin = -1;
         private PwmChannel? _pwmBacklight;
-        private SpiDevice _spiDevice;
-        private GpioController _controller;
+        private SpiDevice? _spiDevice;
+        private GpioController? _controller;
         private bool _shouldDispose;
         private float _backlightVal = 0;
         private bool _invd = false;
@@ -59,7 +60,7 @@ namespace Iot.Device
         private Hashtable _font = new Hashtable();
 
         /// <summary>
-        /// Create Pcd8544.
+        /// Initializes a new instance of the <see cref="Pcd8544" /> class.
         /// </summary>
         /// <param name="dataCommandPin">The data command pin.</param>
         /// <param name="spiDevice">The SPI device.</param>
@@ -87,6 +88,7 @@ namespace Iot.Device
             {
                 _controller.OpenPin(resetPin, PinMode.Output);
                 _controller.Write(resetPin, PinValue.Low);
+
                 // Doc says at least 100 ns
                 Thread.Sleep(1);
                 _controller.Write(resetPin, PinValue.High);
@@ -98,7 +100,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Create Pcd8544.
+        /// Initializes a new instance of the <see cref="Pcd8544" /> class.
         /// </summary>
         /// <param name="dataCommandPin">The data command pin.</param>
         /// <param name="spiDevice">The SPI device.</param>
@@ -124,6 +126,7 @@ namespace Iot.Device
             {
                 _controller.OpenPin(resetPin, PinMode.Output);
                 _controller.Write(resetPin, PinValue.Low);
+
                 // Doc says at least 100 ns
                 Thread.Sleep(1);
                 _controller.Write(resetPin, PinValue.High);
@@ -161,6 +164,7 @@ namespace Iot.Device
             _temperature = ScreenTemperature.Coefficient0;
             _contrast = 0x30;
             _enabled = true;
+
             // Extended function, contrast to 0x30, temperature to coef 0, bias to 4, Screen to normal display power on, display to normal mode
             SpanByte toSend = new byte[] { (byte)(FunctionSet.PowerOn | FunctionSet.ExtendedMode), (byte)(0x80 | _contrast), (byte)ScreenTemperature.Coefficient0, (byte)(0x10 | _bias), (byte)FunctionSet.PowerOn, (byte)PcdDisplayControl.NormalMode };
             SpiWrite(false, toSend);
@@ -171,7 +175,7 @@ namespace Iot.Device
         #region properties
 
         /// <summary>
-        /// Enable the screen.
+        /// Gets or sets a value indicating whether the screen is enabled.
         /// </summary>
         public bool Enabled
         {
@@ -186,7 +190,8 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Change the back light from 0.0 to 1.0.
+        /// Gets or sets the brightness level of the LCD backlight.
+        /// Supported values are ftrom 0.0 to 1.0.
         /// If a pin is used, the threshold for full light is more then 0.5.
         /// </summary>
         public float BacklightBrightness
@@ -209,7 +214,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// The bias for 0 to 7. Bias represent the voltage applied to the LCD. The highest, the darker the screen will be.
+        /// Gets or sets the bias. Supported values are from 0 to 7. Bias represent the voltage applied to the LCD. The highest, the darker the screen will be.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Bias value can not be more than 7.</exception>
         public byte Bias
@@ -224,7 +229,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// True to inverse the screen color.
+        /// Gets or sets a value indicating whether the screen colors are inverted.
         /// </summary>
         public bool InvertedColors
         {
@@ -238,7 +243,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Get or set the contrast from 0 to 127.
+        /// Gets or sets the contrast. Accepted values are from 0 to 127.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Contrast value must be between 0 and 127.</exception>
         public byte Contrast
@@ -253,7 +258,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Get or set the temperature coefficient.
+        /// Gets or sets the temperature coefficient.
         /// </summary>
         public ScreenTemperature Temperature
         {
@@ -292,7 +297,7 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// This is not supported on this screen, this function will have no effect.
+        /// Gets or sets a value indicating whether the blinking cursor is visible. This is not supported on this screen, this function will have no effect.
         /// </summary>
         public bool BlinkingCursorVisible { get; set; }
 
@@ -317,7 +322,7 @@ namespace Iot.Device
                 throw new ArgumentOutOfRangeException();
             }
 
-            if (characterMap.Length is not 8 or 5)
+            if (characterMap.Length != 5 && characterMap.Length != 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -465,10 +470,12 @@ namespace Iot.Device
                 }
 
                 letter[5] = 0x00;
+
                 if (_position < _byteMap.Length)
                 {
-                    letter.CopyTo(new SpanByte(_byteMap, _position, (_byteMap.Length - _position)));
+                    letter.CopyTo(new SpanByte(_byteMap, _position, _byteMap.Length - _position));
                 }
+
                 SpiWrite(true, letter);
                 _position += CharacterWidth;
             }
@@ -484,10 +491,12 @@ namespace Iot.Device
                 _position = _position < 0 ? 0 : _position;
                 SetPosition(_position);
                 SpiWrite(true, letter);
+
                 if (_position < _byteMap.Length)
                 {
-                    letter.CopyTo(new SpanByte(_byteMap, _position, (_byteMap.Length - _position)));
+                    letter.CopyTo(new SpanByte(_byteMap, _position, _byteMap.Length - _position));
                 }
+
                 SetPosition(_position);
             }
         }
@@ -499,9 +508,11 @@ namespace Iot.Device
         public void WriteLine(string text)
         {
             Write(text);
+
             // calculate the position
-            int y = _position / (Size.Width * CharacterWidth) + 1;
+            int y = (_position / (Size.Width * CharacterWidth)) + 1;
             y = y > Size.Height ? Size.Height : y;
+
             SetCursorPosition(0, y);
         }
 
@@ -527,7 +538,7 @@ namespace Iot.Device
         /// <summary>
         /// Moves the cursor to an explicit column and row position.
         /// </summary>
-        /// <param name="left">The column position from left to right starting with 0 to 83.</param>
+        /// <param name="left">The column position from left to right starting with 0 to 14.</param>
         /// <param name="top">The row position from the top starting with 0 to 5.</param>
         /// <exception cref="ArgumentOutOfRangeException">The given position is not inside the display.</exception>
         public void SetCursorPosition(int left, int top)
@@ -543,7 +554,7 @@ namespace Iot.Device
             }
 
             SetPosition(left * CharacterWidth, top);
-            _position = left * CharacterWidth + top * Size.Width * CharacterWidth;
+            _position = ((left * CharacterWidth) + top) * Size.Width * CharacterWidth;
             if (_cursorVisible)
             {
                 DrawCursor();
@@ -552,14 +563,14 @@ namespace Iot.Device
 
         private void SetPosition(int left, int top)
         {
-            SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff), (byte)((byte)(SetAddress.XAddress) | left), (byte)((byte)(SetAddress.YAddress) | top) };
+            SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff), (byte)((byte)SetAddress.XAddress | left), (byte)((byte)SetAddress.YAddress | top) };
             SpiWrite(false, toSend);
         }
 
         private void SetPosition(int position)
         {
             int top = position / (Size.Width * CharacterWidth);
-            int left = position - top * Size.Width * CharacterWidth;
+            int left = (position - top) * Size.Width * CharacterWidth;
             SetPosition(left, top);
         }
 
@@ -581,7 +592,7 @@ namespace Iot.Device
                 return false;
             }
 
-            int index = ((x % 84) + (y / 8) * 84);
+            int index = (x % 84) + (y / 8 * 84);
 
             byte bitMask = (byte)(1 << (y % 8));
 
@@ -735,7 +746,7 @@ namespace Iot.Device
             if (_shouldDispose)
             {
                 _controller?.Dispose();
-                _controller = null!;
+                _controller = null;
             }
             else
             {
@@ -759,9 +770,9 @@ namespace Iot.Device
             }
 
             _spiDevice?.Dispose();
-            _spiDevice = null!;
+            _spiDevice = null;
             _pwmBacklight?.Dispose();
-            _pwmBacklight = null!;
+            _pwmBacklight = null;
         }
     }
 }
