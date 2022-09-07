@@ -135,7 +135,7 @@ bitmapLarge.Mutate(x => x.BlackWhite());
 
 Note: you may want to reverse the colors first depending on what you want.
 
-This code is also available as a simple C# Console Application in Img2Pcd8544 and you can execute it using this command:
+This code is also available as a simple C# Console Application in [Img2Pcd8544](./Img2Pcd8544) and you can execute it using this command:
 
 `Img2Pcd8544 <PATH_TO_IMAGE_FILE>`
 
