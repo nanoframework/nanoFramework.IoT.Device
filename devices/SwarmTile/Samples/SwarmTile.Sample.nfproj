@@ -23,8 +23,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Iot.Device.Ws28xx">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.5\lib\Iot.Device.Ws28xx.dll</HintPath>
+    <Reference Include="Iot.Device.Ws28xx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.73\lib\Iot.Device.Ws28xx.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
