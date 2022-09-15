@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.5, 1.1.5]",
-        "resolved": "1.1.5",
-        "contentHash": "NOhVZXIfotaFDQeoR37TyeHTHQKsrjTbOoMm1ZWmZrzRTpqxd5HUc+RBOEMflMD8qEwPKkxHBtfbR09kO4Iq8A=="
+        "requested": "[1.1.11, 1.1.11]",
+        "resolved": "1.1.11",
+        "contentHash": "UhEJuox9ZejyfVCJToohE+DcYf/zV2q00/7xlk1PFldDZSus/47HKWCGoXkkRaU72Le14CFRf+xQL2JozuELLw=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
