@@ -193,12 +193,6 @@ foreach ($folder in $deviceFolders)
         nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Ak8963\Ak8963.sln
     }
 
-    # Pcd8544 solution requires CharecterLcd
-    if ($solutionFile.Name -eq "Pcd8544.sln")
-    {
-        nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\CharacterLcd\CharacterLcd.sln
-    }
-
     ### done handling references to other bindings or helper libs ###
     #################################################################
 
