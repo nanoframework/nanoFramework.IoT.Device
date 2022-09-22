@@ -21,7 +21,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.84\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.93\lib\Iot.Device.Multiplexing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Pcx857x, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -29,7 +29,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.86\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.94\lib\Iot.Device.ShiftRegister.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -59,8 +59,8 @@
       <HintPath>..\packages\nanoFramework.System.Text.1.2.7\lib\nanoFramework.System.Text.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Device.Gpio, Version=1.1.11.18191, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.1.11\lib\System.Device.Gpio.dll</HintPath>
+    <Reference Include="System.Device.Gpio, Version=1.1.18.20780, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.1.18\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.I2c, Version=1.0.3.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -91,8 +91,8 @@
       <HintPath>..\packages\nanoFramework.System.Math.1.4.4\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Threading, Version=1.0.4.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Threading.1.0.4\lib\System.Threading.dll</HintPath>
+    <Reference Include="System.Threading, Version=1.1.8.6695, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Threading.1.1.8\lib\System.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
