@@ -28,18 +28,38 @@
     <Compile Include="SetAddress.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Iot.Device.CharacterLcd">
+      <HintPath>packages\nanoFramework.Iot.Device.CharacterLcd.1.1.14\lib\Iot.Device.CharacterLcd.dll</HintPath>
+    </Reference>
+    <Reference Include="Iot.Device.Multiplexing">
+      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.2.93\lib\Iot.Device.Multiplexing.dll</HintPath>
+    </Reference>
+    <Reference Include="Iot.Device.ShiftRegister">
+      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.2.94\lib\Iot.Device.ShiftRegister.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.ResourceManager">
+      <HintPath>packages\nanoFramework.ResourceManager.1.1.4\lib\nanoFramework.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>packages\nanoFramework.Runtime.Native.1.5.4\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.System.Collections">
       <HintPath>packages\nanoFramework.System.Collections.1.4.0\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.Gpio, Version=1.1.11.18191, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.11\lib\System.Device.Gpio.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>packages\nanoFramework.System.Text.1.2.7\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.18\lib\System.Device.Gpio.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.I2c">
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.0.3\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Pwm">
       <HintPath>packages\nanoFramework.System.Device.Pwm.1.0.1\lib\System.Device.Pwm.dll</HintPath>
@@ -48,12 +68,27 @@
       <HintPath>packages\nanoFramework.System.Device.Spi.1.3.15\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Diagnostics.Stopwatch">
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.82\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>packages\nanoFramework.System.Drawing.1.2.82\lib\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>packages\nanoFramework.System.IO.FileSystem.1.1.5\lib\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Streams">
+      <HintPath>packages\nanoFramework.System.IO.Streams.1.1.15\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.4.4\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>packages\nanoFramework.System.Threading.1.1.8\lib\System.Threading.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CharacterLcd\CharacterLcd.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="category.txt" />
