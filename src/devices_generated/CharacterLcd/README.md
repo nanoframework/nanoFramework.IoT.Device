@@ -1,3 +1,5 @@
+document language: [English](README.md) | [简体中文](README.zh-cn.md)
+
 # Character LCD (Liquid Crystal Display)
 
 This device binding is meant to work with character LCD displays which use a HD44780 compatible controller. Almost all character LCDs fall into this category. Simple wrappers for 16x2 and 20x4 variants are included.
