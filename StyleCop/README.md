@@ -1,3 +1,5 @@
+document language: [English](README.md) | [简体中文](README.zh-cn.md)
+
 # Description
 
 This script was created to sync Stylecop settings across all projects in pointed path. It's iterating through all folders looking for .nfproj files.
