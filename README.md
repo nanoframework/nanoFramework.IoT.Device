@@ -3,6 +3,7 @@
 ![nanoFramework logo](https://github.com/nanoframework/Home/blob/main/resources/logo/nanoFramework-repo-logo.png)
 
 -----
+document language: [English](README.md) | [简体中文](README.zh-cn.md)
 
 # Welcome to the **nanoFramework** IoT.Device Library repository!
 
