@@ -22,8 +22,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Iot.Device.CharacterLcd">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.14\lib\Iot.Device.CharacterLcd.dll</HintPath>
+    <Reference Include="Iot.Device.CharacterLcd, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.23\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing">
       <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.93\lib\Iot.Device.Multiplexing.dll</HintPath>
