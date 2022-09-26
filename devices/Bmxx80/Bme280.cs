@@ -116,11 +116,11 @@ namespace Iot.Device.Bmxx80
                 Thread.Sleep(GetMeasurementDuration());
             }
 
-            TryReadTemperatureCore(out Temperature temperature);
-            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
-            TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
+            var temperatureIsValid = TryReadTemperatureCore(out Temperature temperature);
+            var presureIsValid = TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            var humidityIsValid = TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
 
-            return new Bme280ReadResult(temperature, pressure, humidity);
+            return new Bme280ReadResult(temperature, temperatureIsValid, pressure, presureIsValid, humidity, humidityIsValid);
         }
 
         /// <summary>
