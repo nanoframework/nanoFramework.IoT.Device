@@ -16,16 +16,28 @@ namespace Iot.Device.Bmxx80.ReadResult
         public ElectricResistance GasResistance { get; }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bme680ReadResult"/> class.
+        /// BHL...
         /// </summary>
-        /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
-        /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
-        /// <param name="humidity">The humidity measurement.</param>
-        /// <param name="gasResistance">The gas resistance measurement.</param>
-        public Bme680ReadResult(Temperature temperature, Pressure pressure, RelativeHumidity humidity, ElectricResistance gasResistance)
-            : base(temperature, pressure, humidity)
+        public bool GasResistanceIsValid { get; set; }
+
+      /// <summary>
+      /// Initialize a new instance of the <see cref="Bme680ReadResult"/> class.
+      /// </summary>
+      /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
+      /// <param name="temperatureIsValid">BHL...</param>
+      /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
+      /// <param name="pressureIsValid">BHL...</param>
+      /// <param name="humidity">The humidity measurement.</param>
+      /// <param name="humidityIsValid">BHL..</param>
+      /// <param name="gasResistance">The gas resistance measurement.</param>
+      /// <param name="gasResistanceIsValid">BHL..</param>
+      public Bme680ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid,
+         RelativeHumidity humidity, bool humidityIsValid, ElectricResistance gasResistance, bool gasResistanceIsValid)
+            : base(temperature, temperatureIsValid, pressure, pressureIsValid, humidity, humidityIsValid)
         {
-            GasResistance = gasResistance;
-        }
-    }
+         GasResistance = gasResistance;
+
+         GasResistanceIsValid = gasResistanceIsValid;
+      }
+   }
 }
