@@ -7,7 +7,6 @@ using System.Threading;
 using Iot.Device.Bmxx80;
 using Iot.Device.Bmxx80.FilteringMode;
 using Iot.Device.Common;
-using nanoFramework.Hardware.Esp32;
 using UnitsNet;
 
 namespace Iot.Device.Bmxx80.sample
@@ -23,10 +22,6 @@ namespace Iot.Device.Bmxx80.sample
          // used for the bus
          //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
          //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
-
-         // Temporary for RAK11200
-         Configuration.SetPinFunction(Gpio.IO04, DeviceFunction.I2C1_DATA);
-         Configuration.SetPinFunction(Gpio.IO05, DeviceFunction.I2C1_CLOCK);
 
          // bus id on the MCU
          const int busId = 1;
