@@ -15,21 +15,21 @@ namespace Iot.Device.Bmxx80.ReadResult
         /// </summary>
         public RelativeHumidity Humidity { get; }
 
-      /// <summary>
-      /// BHL...
-      /// </summary>
-      public bool HumidityIsValid { get; set; }
+        /// <summary>
+        /// Last humidity value read was sccessful.
+        /// </summary>
+        public bool HumidityIsValid { get; set; }
 
-      /// <summary>
-      /// Initialize a new instance of the <see cref="Bme280ReadResult"/> class.
-      /// </summary>
-      /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
-      /// <param name="temperatureIsValid">BHL...measurement.</param>
-      /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
-      /// <param name="pressureIsValid">BHL...</param>
-      /// <param name="humidity">The humidity measurement.</param>
-      /// <param name="humidityIsValid">BHL...</param>
-      public Bme280ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid, 
+        /// <summary>
+        /// Initialize a new instance of the <see cref="Bme280ReadResult"/> class.
+        /// </summary>
+        /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
+        /// <param name="temperatureIsValid">Last temperature value read was sccessful.</param>
+        /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
+        /// <param name="pressureIsValid">Last pressure value read was sccessful.</param>
+        /// <param name="humidity">The humidity measurement.</param>
+        /// <param name="humidityIsValid">Last humidity value read was sccessful.</param>
+        public Bme280ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid,
          RelativeHumidity humidity, bool humidityIsValid)
             : base(temperature, temperatureIsValid, pressure, pressureIsValid)
         {
