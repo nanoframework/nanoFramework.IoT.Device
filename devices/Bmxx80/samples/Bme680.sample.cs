@@ -45,13 +45,21 @@ namespace Iot.Device.Bmxx80.sample
 
                     // Print out the measured data
                     if (readResult.GasResistanceIsValid)
-                       Debug.WriteLine($"Gas resistance: {readResult.GasResistance.Ohms}Ohm");
-                    if(readResult.TemperatureIsValid)
-                       Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                    if(readResult.PressureIsValid)
-                       Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
-                    if(readResult.HumidityIsValid)
-                       Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                    {
+                        Debug.WriteLine($"Gas resistance: {readResult.GasResistance.Ohms}Ohm");
+                    }
+                    if (readResult.TemperatureIsValid)
+                    {
+                        Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                    }
+                    if (readResult.PressureIsValid)
+                    {
+                        Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                    }
+                    if (readResult.HumidityIsValid)
+                    {
+                        Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                    }
 
                     if (readResult.TemperatureIsValid && readResult.PressureIsValid)
                     {
@@ -62,7 +70,7 @@ namespace Iot.Device.Bmxx80.sample
                     if (readResult.TemperatureIsValid && readResult.HumidityIsValid)
                     {
                         // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-                        Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult. Humidity).DegreesCelsius}\u00B0C");
+                        Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
                         Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
                     }
 
@@ -87,14 +95,22 @@ namespace Iot.Device.Bmxx80.sample
                     var readResult = bme680.Read();
 
                     // Print out the measured data
-                    if ( readResult.GasResistanceIsValid)
-                       Debug.WriteLine($"Gas resistance: {readResult.GasResistance.Ohms}Ohm");
-                    if ( readResult.TemperatureIsValid)
-                       Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                    if ( readResult.PressureIsValid)
-                       Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
-                    if ( readResult.HumidityIsValid)
-                       Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                    if (readResult.GasResistanceIsValid)
+                    {
+                        Debug.WriteLine($"Gas resistance: {readResult.GasResistance.Ohms}Ohm");
+                    }
+                    if (readResult.TemperatureIsValid)
+                    {
+                        Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                    }
+                    if (readResult.PressureIsValid)
+                    {
+                        Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                    }
+                    if (readResult.HumidityIsValid)
+                    {
+                        Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                    }
 
                     if (readResult.TemperatureIsValid && readResult.PressureIsValid)
                     {
@@ -112,7 +128,6 @@ namespace Iot.Device.Bmxx80.sample
                     Thread.Sleep(1000);
                 }
             }
-
         }
     }
 }

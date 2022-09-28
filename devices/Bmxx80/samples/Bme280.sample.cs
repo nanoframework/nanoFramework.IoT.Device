@@ -17,14 +17,14 @@ namespace Iot.Device.Bmxx80.sample
         {
             Debug.WriteLine("Hello Bme280!");
 
-         //////////////////////////////////////////////////////////////////////
-         // when connecting to an ESP32 device, need to configure the I2C GPIOs
-         // used for the bus
-         //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
-         //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+            //////////////////////////////////////////////////////////////////////
+            // when connecting to an ESP32 device, need to configure the I2C GPIOs
+            // used for the bus
+            //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+            //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-         // bus id on the MCU
-         const int busId = 1;
+            // bus id on the MCU
+            const int busId = 1;
             // set this to the current sea level pressure in the area for correct altitude readings
             Pressure defaultSeaLevelPressure = WeatherHelper.MeanSeaLevel;
 
@@ -47,15 +47,24 @@ namespace Iot.Device.Bmxx80.sample
                 // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
                 bme80.TryReadAltitude(defaultSeaLevelPressure, out var altValue);
 
-                if ( readResult.TemperatureIsValid)               
-                   Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                if( readResult.PressureIsValid)
-                   Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                if (readResult.TemperatureIsValid)
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
+                if (readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
 
-                Debug.WriteLine($"Altitude: {altValue.Meters}m");
+                if (readResult.TemperatureIsValid && readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Altitude: {altValue.Meters}m");
+                }
 
                 if (readResult.HumidityIsValid)
-                   Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                {
+                    Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                }
 
                 // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
                 if (readResult.TemperatureIsValid && readResult.HumidityIsValid)
@@ -80,14 +89,20 @@ namespace Iot.Device.Bmxx80.sample
                 bme80.TryReadAltitude(defaultSeaLevelPressure, out altValue);
 
                 if (readResult.TemperatureIsValid)
-                   Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
                 if (readResult.PressureIsValid)
-                   Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
 
                 Debug.WriteLine($"Altitude: {altValue.Meters}m");
 
                 if (readResult.HumidityIsValid)
-                   Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                {
+                    Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                }
 
                 // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
                 if (readResult.TemperatureIsValid && readResult.HumidityIsValid)

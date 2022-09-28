@@ -49,9 +49,13 @@ namespace Iot.Device.Bmxx80.sample
 
                 // Print out the measured data
                 if (readResult.TemperatureIsValid)
-                   Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
                 if (readResult.PressureIsValid)
-                   Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
 
                 // Note that if you already have the pressure value and the temperature, you could also calculate altitude by using
                 // double altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
@@ -69,10 +73,14 @@ namespace Iot.Device.Bmxx80.sample
                 readResult = i2CBmp280.Read();
 
                 // Print out the measured data
-                if(readResult.TemperatureIsValid)
-                   Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                if(readResult.PressureIsValid)
-                   Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                if (readResult.TemperatureIsValid)
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
+                if (readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
 
                 // This time use altitude calculation
                 if (readResult.TemperatureIsValid && readResult.PressureIsValid)
