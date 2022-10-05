@@ -11,13 +11,13 @@ using System.Threading;
 namespace Iot.Device.Tcs3472x
 {
     /// <summary>
-    /// Tcs3472x - color sensor
+    /// Tcs3472x - color sensor.
     /// </summary>
     [Interface("Tcs3472x - color sensor")]
     public class Tcs3472x : IDisposable
     {
         /// <summary>
-        /// Default I2C address for TCS3472x familly
+        /// Default I2C address for TCS3472x familly.
         /// </summary>
         public const byte DefaultI2cAddress = 0x29;
 
@@ -29,10 +29,10 @@ namespace Iot.Device.Tcs3472x
         private Gain _gain;
 
         /// <summary>
-        /// Set/Get the time to wait for the sensor to read the data
+        /// Gets or sets the time to wait for the sensor to read the data
         /// Minimum time is 0.0024 s
         /// Maximum time is 7.4 s
-        /// Be aware that it is not a linear function
+        /// Be aware that it is not a linear function.
         /// </summary>
         [Property]
         public double IntegrationTime
@@ -46,7 +46,7 @@ namespace Iot.Device.Tcs3472x
         }
 
         /// <summary>
-        /// Set/Get the gain
+        /// Gets or sets the gain.
         /// </summary>
         [Property]
         public Gain Gain
@@ -60,22 +60,22 @@ namespace Iot.Device.Tcs3472x
         }
 
         /// <summary>
-        /// Get the type of sensor
+        /// Gets the type of sensor.
         /// </summary>
         [Property]
         public TCS3472Type ChipId { get; internal set; }
 
         /// <summary>
-        /// Create a TCS4272x sensor
+        /// Initializes a new instance of the <see cref="Tcs3472x" /> class.
         /// </summary>
-        /// <param name="i2cDevice">The I2C Device class</param>
-        /// <param name="integrationTime">The time to wait for sensor to read the data, minimum is 0.024 seconds, maximum in the constructor is 0.7 seconds</param>
-        /// <param name="gain">The gain when integrating the color measurement</param>
-        /// <param name="shouldDispose">true to dispose the I2C Device class at dispose</param>
-        public Tcs3472x(I2cDevice i2cDevice, double integrationTime = 0.0024, Gain gain = Gain.Gain16X,
-            bool shouldDispose = true)
+        /// <param name="i2cDevice">The I2C Device class.</param>
+        /// <param name="integrationTime">The time to wait for sensor to read the data, minimum is 0.024 seconds, maximum in the constructor is 0.7 seconds.</param>
+        /// <param name="gain">The gain when integrating the color measurement.</param>
+        /// <param name="shouldDispose">True to dispose the I2C Device class at dispose.</param>
+        public Tcs3472x(I2cDevice i2cDevice, double integrationTime = 0.0024, Gain gain = Gain.Gain16X, bool shouldDispose = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+
             // Maximum is 700 ms for the initialization. Value can be changed for a long one but not during this initialization phase
             _shouldDispose = shouldDispose;
             _i2cDevice.WriteByte((byte)(Registers.COMMAND_BIT | Registers.ID));
@@ -88,7 +88,7 @@ namespace Iot.Device.Tcs3472x
         }
 
         /// <summary>
-        /// Get true is there are valid data
+        /// Gets a value indicating whether data is valid.
         /// </summary>
         public bool IsValidData
         {
@@ -96,12 +96,12 @@ namespace Iot.Device.Tcs3472x
             {
                 _i2cDevice.WriteByte((byte)(Registers.COMMAND_BIT | Registers.STATUS));
                 var stat = _i2cDevice.ReadByte();
-                return ((Registers)(stat & (byte)Registers.STATUS_AVALID) == Registers.STATUS_AVALID);
+                return (Registers)(stat & (byte)Registers.STATUS_AVALID) == Registers.STATUS_AVALID;
             }
         }
 
         /// <summary>
-        /// Get true if RGBC is clear channel interrupt
+        /// Gets a value indicating whether RGBC is clear channel interrupt.
         /// </summary>
         public bool IsClearInterrupt
         {
@@ -109,12 +109,12 @@ namespace Iot.Device.Tcs3472x
             {
                 _i2cDevice.WriteByte((byte)(Registers.COMMAND_BIT | Registers.STATUS));
                 var stat = _i2cDevice.ReadByte();
-                return ((Registers)(stat & (byte)Registers.STATUS_AINT) == Registers.STATUS_AINT);
+                return (Registers)(stat & (byte)Registers.STATUS_AINT) == Registers.STATUS_AINT;
             }
         }
 
         /// <summary>
-        /// Set the integration (sampling) time for the sensor
+        /// Set the integration (sampling) time for the sensor.
         /// </summary>
         /// <param name="timeSeconds">Time in seconds for each sample. 0.0024 second(2.4ms) increments.Clipped to the range of 0.0024 to 0.6144 seconds.</param>
         private void SetIntegrationTime(double timeSeconds)
@@ -148,7 +148,7 @@ namespace Iot.Device.Tcs3472x
 
         private void SetConfigLongTime(bool setLong)
         {
-            WriteRegister(Registers.CONFIG, setLong ? (byte)(Registers.CONFIG_WLONG) : (byte)0x00);
+            WriteRegister(Registers.CONFIG, setLong ? (byte)Registers.CONFIG_WLONG : (byte)0x00);
         }
 
         private void PowerOn()
@@ -166,19 +166,21 @@ namespace Iot.Device.Tcs3472x
         }
 
         /// <summary>
-        /// Set/Clear the colors and clear interrupts
+        /// Set/Clear the colors and clear interrupts.
         /// </summary>
-        /// <param name="state">true to set all interrupts, false to clear</param>
-        public void SetInterrupt(bool state) =>
+        /// <param name="state">True to set all interrupts, false to clear.</param>
+        public void SetInterrupt(bool state)
+        {
             SetInterrupt(InterruptState.All, state);
+        }
 
         /// <summary>
         /// Set/clear a specific interrupt persistence
         /// This is used to have more than 1 cycle before generating an
         /// interruption.
         /// </summary>
-        /// <param name="interupt">The percistence cycles</param>
-        /// <param name="state">True to set the interrupt, false to clear</param>
+        /// <param name="interupt">The percistence cycles.</param>
+        /// <param name="state">True to set the interrupt, false to clear.</param>
         public void SetInterrupt(InterruptState interupt, bool state)
         {
             WriteRegister(Registers.PERS, (byte)interupt);
@@ -190,10 +192,10 @@ namespace Iot.Device.Tcs3472x
         }
 
         /// <summary>
-        /// Get the color
+        /// Get the color.
         /// </summary>
-        /// <param name="delay">Wait to read the data that the integration time is passed</param>
-        /// <returns></returns>
+        /// <param name="delay">Wait to read the data that the integration time is passed.</param>
+        /// <returns>Current color reading.</returns>
         public Color GetColor(bool delay = true)
         {
             // To have a new reading, you need to wait for integration time to happen
@@ -203,7 +205,8 @@ namespace Iot.Device.Tcs3472x
                 Thread.Sleep((int)(IntegrationTime * 1000));
             }
 
-            var divide = ((256 - _integrationTimeByte) * 1024 * 12);
+            var divide = (256 - _integrationTimeByte) * 1024 * 12;
+
             // If we are in long wait, we'll need to divide even more
             if (_isLongTime)
             {
@@ -226,7 +229,7 @@ namespace Iot.Device.Tcs3472x
         }
 
         /// <summary>
-        /// Get the color
+        /// Get the color.
         /// </summary>
         [Telemetry]
         public Color Color => GetColor();
@@ -248,8 +251,10 @@ namespace Iot.Device.Tcs3472x
             return _i2cDevice.ReadByte();
         }
 
-        private void WriteRegister(Registers reg, byte data) =>
+        private void WriteRegister(Registers reg, byte data)
+        {
             _i2cDevice.Write(new byte[] { (byte)(Registers.COMMAND_BIT | reg), data });
+        }
 
         /// <inheritdoc/>
         public void Dispose()
@@ -258,7 +263,7 @@ namespace Iot.Device.Tcs3472x
             if (_shouldDispose)
             {
                 _i2cDevice?.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
             }
         }
     }
