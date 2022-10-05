@@ -11,17 +11,17 @@ namespace Iot.Device.Bmxx80.ReadResult
     public class Bmp280ReadResult
     {
         /// <summary>
-        /// Collected temperature measurement.
+        /// Gets the collected temperature measurement.
         /// </summary>
         public Temperature Temperature { get; }
 
         /// <summary>
-        /// Collected pressure measurement.
+        /// Gets the collected pressure measurement.
         /// </summary>
         public Pressure Pressure { get; }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bmp280ReadResult"/> class.
+        /// Initializes a new instance of the <see cref="Bmp280ReadResult" /> class.
         /// </summary>
         /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
         /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>

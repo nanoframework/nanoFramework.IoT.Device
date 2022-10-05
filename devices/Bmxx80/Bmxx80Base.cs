@@ -19,22 +19,22 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Calibration data for the sensor.
         /// </summary>
-        internal Bmxx80CalibrationData _calibrationData;
+        private Bmxx80CalibrationData calibrationData;
 
         /// <summary>
         /// I2C device used to communicate with the device.
         /// </summary>
-        protected I2cDevice _i2cDevice;
+        private I2cDevice i2cDevice;
 
         /// <summary>
         /// Chosen communication protocol.
         /// </summary>
-        protected CommunicationProtocol _communicationProtocol;
+        private CommunicationProtocol communicationProtocol1;
 
         /// <summary>
         /// The control register of the sensor.
         /// </summary>
-        protected byte _controlRegister;
+        private byte controlRegister;
 
         /// <summary>
         /// Bmxx80 communication protocol.
@@ -48,7 +48,7 @@ namespace Iot.Device.Bmxx80
         }
 
         /// <summary>
-        /// The variable TemperatureFine carries a fine resolution temperature value over to the
+        /// Gets or sets TemperatureFine carries a fine resolution temperature value over to the
         /// pressure compensation formula and could be implemented as a global variable.
         /// </summary>
         protected double TemperatureFine { get; set; }
@@ -65,15 +65,15 @@ namespace Iot.Device.Bmxx80
         /// Initializes a new instance of the <see cref="Bmxx80Base"/> class.
         /// </summary>
         /// <param name="deviceId">The ID of the device.</param>
-        /// <param name="i2cDevice">The <see cref="I2cDevice"/> to create with.</param>
-        /// <exception cref="ArgumentNullException">Thrown when the given <see cref="I2cDevice"/> is null.</exception>
+        /// <param name="i2cDevice">The <see cref="System.Device.I2c.I2cDevice"/> to create with.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the given <see cref="System.Device.I2c.I2cDevice"/> is null.</exception>
         /// <exception cref="IOException">Thrown when the device cannot be found on the bus.</exception>
         protected Bmxx80Base(byte deviceId, I2cDevice i2cDevice)
         {
-            _i2cDevice = i2cDevice ?? throw new ArgumentNullException();
-            _i2cDevice.WriteByte((byte)Bmxx80Register.CHIPID);
+            I2cDevice = i2cDevice ?? throw new ArgumentNullException();
+            I2cDevice.WriteByte((byte)Bmxx80Register.CHIPID);
 
-            byte readSignature = _i2cDevice.ReadByte();
+            byte readSignature = I2cDevice.ReadByte();
 
             if (readSignature != deviceId)
             {
@@ -93,15 +93,15 @@ namespace Iot.Device.Bmxx80
             get => _pressureSampling;
             set
             {
-                byte status = Read8BitsFromRegister(_controlRegister);
+                byte status = Read8BitsFromRegister(ControlRegister);
                 status = (byte)(status & 0b1110_0011);
                 status = (byte)(status | (byte)value << 2);
 
                 SpanByte command = new[]
                 {
-                    _controlRegister, status
+                    ControlRegister, status
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _pressureSampling = value;
             }
         }
@@ -115,18 +115,38 @@ namespace Iot.Device.Bmxx80
             get => _temperatureSampling;
             set
             {
-                byte status = Read8BitsFromRegister(_controlRegister);
+                byte status = Read8BitsFromRegister(ControlRegister);
                 status = (byte)(status & 0b0001_1111);
                 status = (byte)(status | (byte)value << 5);
 
                 SpanByte command = new[]
                 {
-                    _controlRegister, status
+                    ControlRegister, status
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _temperatureSampling = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets control register of the sensor.
+        /// </summary>
+        protected byte ControlRegister { get => controlRegister; set => controlRegister = value; }
+
+        /// <summary>
+        /// Gets or sets chosen communication protocol.
+        /// </summary>
+        protected CommunicationProtocol CommunicationProtocol1 { get => communicationProtocol1; set => communicationProtocol1 = value; }
+
+        /// <summary>
+        /// Gets or sets I2C device used to communicate with the device.
+        /// </summary>
+        protected I2cDevice I2cDevice { get => i2cDevice; set => i2cDevice = value; }
+
+        /// <summary>
+        /// Gets or sets calibration data for the sensor.
+        /// </summary>
+        internal Bmxx80CalibrationData CalibrationData { get => calibrationData; set => calibrationData = value; }
 
         /// <summary>
         /// When called, the device is reset using the complete power-on-reset procedure.
@@ -134,12 +154,12 @@ namespace Iot.Device.Bmxx80
         /// </summary>
         public void Reset()
         {
-            const byte resetCommand = 0xB6;
+            const byte ResetCommand = 0xB6;
             SpanByte command = new[]
             {
-                (byte)Bmxx80Register.RESET, resetCommand
+                (byte)Bmxx80Register.RESET, ResetCommand
             };
-            _i2cDevice.Write(command);
+            I2cDevice.Write(command);
 
             SetDefaultConfiguration();
         }
@@ -173,9 +193,9 @@ namespace Iot.Device.Bmxx80
         {
             // The temperature is calculated using the compensation formula in the BMP280 datasheet.
             // See: https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
-            double var1 = ((adcTemperature / 16384.0) - (_calibrationData.DigT1 / 1024.0)) * _calibrationData.DigT2;
-            double var2 = (adcTemperature / 131072.0) - (_calibrationData.DigT1 / 8192.0);
-            var2 *= var2 * _calibrationData.DigT3 * TempCalibrationFactor;
+            double var1 = ((adcTemperature / 16384.0) - (CalibrationData.DigT1 / 1024.0)) * CalibrationData.DigT2;
+            double var2 = (adcTemperature / 131072.0) - (CalibrationData.DigT1 / 8192.0);
+            var2 *= var2 * CalibrationData.DigT3 * TempCalibrationFactor;
 
             TemperatureFine = var1 + var2;
 
@@ -190,10 +210,10 @@ namespace Iot.Device.Bmxx80
         /// <returns>Value from register.</returns>
         protected internal byte Read8BitsFromRegister(byte register)
         {
-            if (_communicationProtocol == CommunicationProtocol.I2c)
+            if (CommunicationProtocol1 == CommunicationProtocol.I2c)
             {
-                _i2cDevice.WriteByte(register);
-                byte value = _i2cDevice.ReadByte();
+                I2cDevice.WriteByte(register);
+                byte value = I2cDevice.ReadByte();
                 return value;
             }
             else
@@ -211,22 +231,25 @@ namespace Iot.Device.Bmxx80
         protected internal ushort Read16BitsFromRegister(byte register, Endianness endianness = Endianness.LittleEndian)
         {
             SpanByte bytes = new byte[2];
-            switch (_communicationProtocol)
+            switch (CommunicationProtocol1)
             {
                 case CommunicationProtocol.I2c:
-                    _i2cDevice.WriteByte(register);
-                    _i2cDevice.Read(bytes);
+                    I2cDevice.WriteByte(register);
+                    I2cDevice.Read(bytes);
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            return endianness switch
+            switch (endianness)
             {
-                Endianness.LittleEndian => BinaryPrimitives.ReadUInt16LittleEndian(bytes),
-                Endianness.BigEndian => BinaryPrimitives.ReadUInt16BigEndian(bytes),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                case Endianness.LittleEndian:
+                    return BinaryPrimitives.ReadUInt16LittleEndian(bytes);
+                case Endianness.BigEndian:
+                    return BinaryPrimitives.ReadUInt16BigEndian(bytes);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -238,22 +261,25 @@ namespace Iot.Device.Bmxx80
         protected internal uint Read24BitsFromRegister(byte register, Endianness endianness = Endianness.LittleEndian)
         {
             SpanByte bytes = new byte[4];
-            switch (_communicationProtocol)
+            switch (CommunicationProtocol1)
             {
                 case CommunicationProtocol.I2c:
-                    _i2cDevice.WriteByte(register);
-                    _i2cDevice.Read(bytes.Slice(1));
+                    I2cDevice.WriteByte(register);
+                    I2cDevice.Read(bytes.Slice(1));
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            return endianness switch
+            switch (endianness)
             {
-                Endianness.LittleEndian => BinaryPrimitives.ReadUInt32LittleEndian(bytes),
-                Endianness.BigEndian => BinaryPrimitives.ReadUInt32BigEndian(bytes),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                case Endianness.LittleEndian:
+                    return BinaryPrimitives.ReadUInt32LittleEndian(bytes);
+                case Endianness.BigEndian:
+                    return BinaryPrimitives.ReadUInt32BigEndian(bytes);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -302,22 +328,22 @@ namespace Iot.Device.Bmxx80
             switch (this)
             {
                 case Bme280 _:
-                    _calibrationData = new Bme280CalibrationData();
-                    _controlRegister = (byte)Bmx280Register.CTRL_MEAS;
+                    CalibrationData = new Bme280CalibrationData();
+                    ControlRegister = (byte)Bmx280Register.CTRL_MEAS;
                     break;
                 case Bmp280 _:
-                    _calibrationData = new Bmp280CalibrationData();
-                    _controlRegister = (byte)Bmx280Register.CTRL_MEAS;
+                    CalibrationData = new Bmp280CalibrationData();
+                    ControlRegister = (byte)Bmx280Register.CTRL_MEAS;
                     break;
                 case Bme680 _:
-                    _calibrationData = new Bme680CalibrationData();
-                    _controlRegister = (byte)Bme680Register.CTRL_MEAS;
+                    CalibrationData = new Bme680CalibrationData();
+                    ControlRegister = (byte)Bme680Register.CTRL_MEAS;
                     break;
                 default:
                     throw new Exception();
             }
 
-            _calibrationData.ReadFromDevice(this);
+            CalibrationData.ReadFromDevice(this);
         }
 
         /// <summary>
@@ -335,8 +361,8 @@ namespace Iot.Device.Bmxx80
         /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            I2cDevice?.Dispose();
+            I2cDevice = null;
         }
     }
 }

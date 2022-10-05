@@ -13,19 +13,29 @@ namespace Iot.Device.Bmxx80.CalibrationData
         public byte DigP10 { get; set; }
 
         public ushort DigH1 { get; set; }
+
         public ushort DigH2 { get; set; }
+
         public sbyte DigH3 { get; set; }
+
         public sbyte DigH4 { get; set; }
+
         public sbyte DigH5 { get; set; }
+
         public byte DigH6 { get; set; }
+
         public sbyte DigH7 { get; set; }
 
         public sbyte DigGh1 { get; set; }
+
         public short DigGh2 { get; set; }
+
         public sbyte DigGh3 { get; set; }
 
         public byte ResHeatRange { get; set; }
+
         public sbyte ResHeatVal { get; set; }
+
         public sbyte RangeSwErr { get; set; }
 
         /// <summary>
@@ -46,7 +56,7 @@ namespace Iot.Device.Bmxx80.CalibrationData
             DigH4 = (sbyte)bmxx80Base.Read8BitsFromRegister((byte)Bme680Register.DIG_H4);
             DigH5 = (sbyte)bmxx80Base.Read8BitsFromRegister((byte)Bme680Register.DIG_H5);
             DigH6 = bmxx80Base.Read8BitsFromRegister((byte)Bme680Register.DIG_H6);
-            DigH7 = (sbyte)(bmxx80Base.Read8BitsFromRegister((byte)Bme680Register.DIG_H7));
+            DigH7 = (sbyte)bmxx80Base.Read8BitsFromRegister((byte)Bme680Register.DIG_H7);
 
             // Read pressure calibration data.
             DigP1 = bmxx80Base.Read16BitsFromRegister((byte)Bme680Register.DIG_P1_LSB);

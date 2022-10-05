@@ -11,12 +11,12 @@ namespace Iot.Device.Bmxx80.ReadResult
     public class Bme280ReadResult : Bmp280ReadResult
     {
         /// <summary>
-        /// Collected humidity measurement.
+        /// Gets the collected humidity measurement.
         /// </summary>
         public RelativeHumidity Humidity { get; }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bme280ReadResult"/> class.
+        /// Initializes a new instance of the <see cref="Bme280ReadResult" /> class.
         /// </summary>
         /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
         /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
