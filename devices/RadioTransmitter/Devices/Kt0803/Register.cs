@@ -4,7 +4,7 @@
 namespace Iot.Device.RadioTransmitter
 {
     /// <summary>
-    /// Kt0803 Register
+    /// Kt0803 Register.
     /// </summary>
     internal enum Register : byte
     {
