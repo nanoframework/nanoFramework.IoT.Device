@@ -6,31 +6,31 @@ using System;
 namespace Iot.Device.Rtc
 {
     /// <summary>
-    /// Represents alarm 1 on the DS3231
+    /// Represents alarm 1 on the DS3231.
     /// </summary>
     public class Ds3231AlarmOne
     {
         /// <summary>
-        /// Day of month or day of week of the alarm. Which one it is depends on the match mode
+        /// Gets or sets day of month or day of week of the alarm. Which one it is depends on the match mode.
         /// </summary>
         public int DayOfMonthOrWeek { get; set; }
 
         /// <summary>
-        /// Get or set the time the alarm, Hour, Minute and Second are used
+        /// Gets or sets the time the alarm, Hour, Minute and Second are used.
         /// </summary>
         public TimeSpan AlarmTime { get; set; }
 
         /// <summary>
-        /// Mode to use to determine when to trigger the alarm
+        /// Gets or sets mode to use to determine when to trigger the alarm.
         /// </summary>
         public Ds3231AlarmOneMatchMode MatchMode { get; set; }
 
         /// <summary>
-        /// Creates a new instance of alarm 1 on the DS3231
+        /// Initializes a new instance of the <see cref="Ds3231AlarmOne" /> class.
         /// </summary>
-        /// <param name="dayOfMonthOrWeek">Day of month or day of week of the alarm. Which one it is depends on the match mode</param>
-        /// <param name="alarmTime">Time of the alarm</param>
-        /// <param name="matchMode">Mode to use to determine when to trigger the alarm</param>
+        /// <param name="dayOfMonthOrWeek">Day of month or day of week of the alarm. Which one it is depends on the match mode.</param>
+        /// <param name="alarmTime">Time of the alarm.</param>
+        /// <param name="matchMode">Mode to use to determine when to trigger the alarm.</param>
         public Ds3231AlarmOne(int dayOfMonthOrWeek, TimeSpan alarmTime, Ds3231AlarmOneMatchMode matchMode)
         {
             DayOfMonthOrWeek = dayOfMonthOrWeek;

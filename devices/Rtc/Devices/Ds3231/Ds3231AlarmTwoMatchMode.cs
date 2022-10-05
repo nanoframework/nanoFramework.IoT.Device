@@ -4,32 +4,32 @@
 namespace Iot.Device.Rtc
 {
     /// <summary>
-    /// Available modes for determining when alarm 2 should trigger
+    /// Available modes for determining when alarm 2 should trigger.
     /// </summary>
     public enum Ds3231AlarmTwoMatchMode : byte
     {
         /// <summary>
-        /// Alarm 2 triggers at the start of every minute
+        /// Alarm 2 triggers at the start of every minute.
         /// </summary>
         OncePerMinute = 0x07,
 
         /// <summary>
-        /// Alarm 2 triggers when the minutes match
+        /// Alarm 2 triggers when the minutes match.
         /// </summary>
         Minutes = 0x06,
 
         /// <summary>
-        /// Alarm 2 triggers when the hours and minutes match
+        /// Alarm 2 triggers when the hours and minutes match.
         /// </summary>
         HoursMinutes = 0x04,
 
         /// <summary>
-        /// Alarm 2 triggers when the day of the month, hours and minutes match
+        /// Alarm 2 triggers when the day of the month, hours and minutes match.
         /// </summary>
         DayOfMonthHoursMinutes = 0x00,
 
         /// <summary>
-        /// Alarm 2 triggers when the day of the week, hours and minutes match. Sunday is day 1
+        /// Alarm 2 triggers when the day of the week, hours and minutes match. Sunday is day 1.
         /// </summary>
         DayOfWeekHoursMinutes = 0x08
     }

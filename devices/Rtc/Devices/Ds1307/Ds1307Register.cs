@@ -4,7 +4,7 @@
 namespace Iot.Device.Rtc
 {
     /// <summary>
-    /// Register of DS1307
+    /// Register of DS1307.
     /// </summary>
     internal enum Ds1307Register : byte
     {
