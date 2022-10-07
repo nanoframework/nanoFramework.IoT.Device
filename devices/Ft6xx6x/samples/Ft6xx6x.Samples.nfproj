@@ -51,20 +51,21 @@
     <Reference Include="mscorlib">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Graphics, Version=1.0.3.6, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Graphics.1.0.3.6\lib\nanoFramework.Graphics.dll</HintPath>
+    <Reference Include="nanoFramework.Graphics, Version=1.1.8.64255, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Graphics.1.1.8\lib\nanoFramework.Graphics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=1.4.1.63006, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.4.1\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.M5Core2, Version=1.1.58.41801, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.M5Core2.1.1.58\lib\nanoFramework.M5Core2.dll</HintPath>
+    <Reference Include="nanoFramework.M5Core2, Version=1.1.62.10838, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\nanoFramework.M5Core2.1.1.62\lib\nanoFramework.M5Core2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.ResourceManager">
-      <HintPath>..\packages\nanoFramework.ResourceManager.1.1.4\lib\nanoFramework.ResourceManager.dll</HintPath>
+    <Reference Include="nanoFramework.ResourceManager, Version=1.2.7.23963, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.ResourceManager.1.2.7\lib\nanoFramework.ResourceManager.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
