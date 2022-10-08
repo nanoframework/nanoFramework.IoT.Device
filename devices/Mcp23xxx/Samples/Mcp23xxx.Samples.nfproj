@@ -33,12 +33,12 @@
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Hardware.Esp32, Version=1.4.1.63006, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.4.1\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+    <Reference Include="nanoFramework.Hardware.Esp32, Version=1.4.4.37891, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.4.4\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.10.0.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.1.42088, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.1.18.20780, Culture=neutral, PublicKeyToken=c07d481e9758c731">
