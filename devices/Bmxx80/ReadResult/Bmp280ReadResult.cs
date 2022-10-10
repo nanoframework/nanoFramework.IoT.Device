@@ -16,7 +16,7 @@ namespace Iot.Device.Bmxx80.ReadResult
         public Temperature Temperature { get; }
 
         /// <summary>
-        /// Last temperature value read was sccessful.
+        /// Last temperature value read was successful.
         /// </summary>
         public bool TemperatureIsValid { get; }
 
@@ -26,7 +26,7 @@ namespace Iot.Device.Bmxx80.ReadResult
         public Pressure Pressure { get; }
 
         /// <summary>
-        /// Last pressure value read was sccessful.
+        /// Last pressure value read was successful.
         /// </summary>
         public bool PressureIsValid { get; }
 
@@ -34,9 +34,9 @@ namespace Iot.Device.Bmxx80.ReadResult
         /// Initialize a new instance of the <see cref="Bmp280ReadResult"/> class.
         /// </summary>
         /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
-        /// <param name="temperatureIsValid">Last temperature value read was sccessful.</param>
+        /// <param name="temperatureIsValid">Last temperature value read was successful.</param>
         /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
-        /// <param name="pressureIsValid">Last pressure value read was sccessful.</param>
+        /// <param name="pressureIsValid">Last pressure value read was successful.</param>
         public Bmp280ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid)
         {
           Temperature = temperature;
