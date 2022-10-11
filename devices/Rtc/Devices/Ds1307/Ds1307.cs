@@ -48,7 +48,7 @@ namespace Iot.Device.Rtc
                 NumberHelper.Bcd2Dec(readBuffer[4]),
                 NumberHelper.Bcd2Dec(readBuffer[2]),
                 NumberHelper.Bcd2Dec(readBuffer[1]),
-                NumberHelper.Bcd2Dec((byte)(readBuffer[0] & 0b01111111)));
+                NumberHelper.Bcd2Dec((byte)(readBuffer[0] & 0b0111_1111)));
         }
 
         /// <summary>
@@ -63,11 +63,11 @@ namespace Iot.Device.Rtc
 
             // Details in the Datasheet P8
             // | bit 7: CH | bit 6-0: sec |
-            writeBuffer[1] = (byte)(NumberHelper.Dec2Bcd(time.Second) & 0b01111111);
+            writeBuffer[1] = (byte)(NumberHelper.Dec2Bcd(time.Second) & 0b0111_1111);
             writeBuffer[2] = NumberHelper.Dec2Bcd(time.Minute);
 
             // | bit 7: 0 | bit 6: 12/24 hour | bit 5-0: hour |
-            writeBuffer[3] = (byte)(NumberHelper.Dec2Bcd(time.Hour) & 0b00111111);
+            writeBuffer[3] = (byte)(NumberHelper.Dec2Bcd(time.Hour) & 0b0011_1111);
             writeBuffer[4] = NumberHelper.Dec2Bcd((int)time.DayOfWeek + 1);
             writeBuffer[5] = NumberHelper.Dec2Bcd(time.Day);
             writeBuffer[6] = NumberHelper.Dec2Bcd(time.Month);

@@ -63,7 +63,7 @@ namespace Iot.Device.Bmxx80
                 }
 
                 byte status = Read8BitsFromRegister((byte)Bme280Register.CTRL_HUM);
-                status = (byte)(status & 0b11111000);
+                status = (byte)(status & 0b1111_1000);
                 status = (byte)(status | (byte)value);
 
                 SpanByte command = new[]

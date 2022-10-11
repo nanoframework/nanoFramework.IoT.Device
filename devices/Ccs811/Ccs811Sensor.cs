@@ -206,7 +206,7 @@ namespace Iot.Device.Ccs811
                 var mode = ReadRegister(Register.MEAS_MODE);
 
                 // Clear previous mode
-                mode = (byte)(mode & 0b10001111);
+                mode = (byte)(mode & 0b1000_1111);
                 mode = (byte)(mode | (((byte)value) << 4));
                 WriteRegister(Register.MEAS_MODE, mode);
             }

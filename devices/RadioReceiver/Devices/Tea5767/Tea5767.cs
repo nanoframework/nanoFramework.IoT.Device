@@ -21,7 +21,7 @@ namespace Iot.Device.RadioReceiver
 
         // TEA5767 has no register. Setting TEA5767 requires sending 5 bytes of commands to it.
         // Default values: disable mute, XTAL is 13MHz, disable standby, enable SNC
-        private byte[] _registers = new byte[5] { 0, 0, 0b00010000, 0b00010010, 0 };
+        private byte[] _registers = new byte[5] { 0, 0, 0b0001_0000, 0b0001_0010, 0 };
 
         /// <summary>
         /// Gets or sets a value indicating whether TEA5767 is muted.
@@ -67,11 +67,11 @@ namespace Iot.Device.RadioReceiver
         {
             if (isMute)
             {
-                _registers[0] |= 0b10000000;
+                _registers[0] |= 0b1000_0000;
             }
             else
             {
-                _registers[0] &= 0b01111111;
+                _registers[0] &= 0b0111_1111;
             }
 
             SaveRegisters();
@@ -95,10 +95,10 @@ namespace Iot.Device.RadioReceiver
             switch (bandRange)
             {
                 case FrequencyRange.Japan:
-                    _registers[3] |= 0b00100000;
+                    _registers[3] |= 0b0010_0000;
                     break;
                 case FrequencyRange.Other:
-                    _registers[3] &= 0b11011111;
+                    _registers[3] &= 0b1101_1111;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(bandRange));
@@ -113,7 +113,7 @@ namespace Iot.Device.RadioReceiver
         /// <returns>FM frequency range.</returns>
         private FrequencyRange GetFrequencyRange()
         {
-            return (FrequencyRange)((_registers[3] & 0b11011111) >> 5);
+            return (FrequencyRange)((_registers[3] & 0b1101_1111) >> 5);
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Iot.Device.RadioReceiver
 
             int f = (int)(((frequencyMhz * 1000000) + 225000) / 8192);
 
-            byte high = (byte)((f & 0b0011111100000000) >> 8);
-            byte low = (byte)(f & 0b11111111);
+            byte high = (byte)((f & 0b0011_1111_00000000) >> 8);
+            byte low = (byte)(f & 0b1111_1111);
 
-            _registers[0] &= 0b11000000;
+            _registers[0] &= 0b1100_0000;
             _registers[0] |= high;
             _registers[1] = low;
 
@@ -163,7 +163,7 @@ namespace Iot.Device.RadioReceiver
         {
             byte[] readBuffer = ReadRegisters();
 
-            int f = ((readBuffer[0] & 0b00111111) << 8) | readBuffer[1];
+            int f = ((readBuffer[0] & 0b0011_1111) << 8) | readBuffer[1];
 
             return Frequency.FromMegahertz(Math.Round(((f * 8192) - 225000) * 10 / 10000000.0));
         }
@@ -176,11 +176,11 @@ namespace Iot.Device.RadioReceiver
         {
             if (isStandby)
             {
-                _registers[3] |= 0b01000000;
+                _registers[3] |= 0b0100_0000;
             }
             else
             {
-                _registers[3] &= 0b10111111;
+                _registers[3] &= 0b1011_1111;
             }
 
             SaveRegisters();
@@ -192,7 +192,7 @@ namespace Iot.Device.RadioReceiver
         /// <returns>Standby if the value is true.</returns>
         private bool GetStandby()
         {
-            return (_registers[3] & 0b01000000) > 0 ? true : false;
+            return (_registers[3] & 0b0100_0000) > 0 ? true : false;
         }
 
         /// <summary>
@@ -208,10 +208,10 @@ namespace Iot.Device.RadioReceiver
             }
 
             // enable search mode
-            _registers[0] |= 0b01000000;
+            _registers[0] |= 0b0100_0000;
 
             // clear search standard bit
-            _registers[2] &= 0b00011111;
+            _registers[2] &= 0b0001_1111;
 
             // set search stop level
             _registers[2] |= (byte)(stopLevel << 6);
@@ -219,10 +219,10 @@ namespace Iot.Device.RadioReceiver
             switch (searchDirection)
             {
                 case SearchDirection.Up:
-                    _registers[2] |= 0b10000000;
+                    _registers[2] |= 0b1000_0000;
                     break;
                 case SearchDirection.Down:
-                    _registers[2] &= 0b011111111;
+                    _registers[2] &= 0b01111_1111;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(searchDirection));
@@ -239,7 +239,7 @@ namespace Iot.Device.RadioReceiver
             while (readBuffer[0] >> 7 != 1);
 
             // disable search mode
-            _registers[0] &= 0b10111111;
+            _registers[0] &= 0b1011_1111;
         }
 
         /// <inheritdoc/>

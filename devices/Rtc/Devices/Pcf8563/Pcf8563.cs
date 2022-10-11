@@ -50,11 +50,11 @@ namespace Iot.Device.Rtc
             return new DateTime(
                 1900 + 
                 (((readBuffer[5] >> 7) * 100) + NumberHelper.Bcd2Dec(readBuffer[6])),
-                NumberHelper.Bcd2Dec((byte)(readBuffer[5] & 0b00011111)),
-                NumberHelper.Bcd2Dec((byte)(readBuffer[3] & 0b00111111)),
-                NumberHelper.Bcd2Dec((byte)(readBuffer[2] & 0b00111111)),
-                NumberHelper.Bcd2Dec((byte)(readBuffer[1] & 0b01111111)),
-                NumberHelper.Bcd2Dec((byte)(readBuffer[0] & 0b01111111)));
+                NumberHelper.Bcd2Dec((byte)(readBuffer[5] & 0b0001_1111)),
+                NumberHelper.Bcd2Dec((byte)(readBuffer[3] & 0b0011_1111)),
+                NumberHelper.Bcd2Dec((byte)(readBuffer[2] & 0b0011_1111)),
+                NumberHelper.Bcd2Dec((byte)(readBuffer[1] & 0b0111_1111)),
+                NumberHelper.Bcd2Dec((byte)(readBuffer[0] & 0b0111_1111)));
         }
 
         /// <summary>
@@ -68,14 +68,14 @@ namespace Iot.Device.Rtc
             writeBuffer[0] = (byte)Pcf8563Register.PCF_SEC_ADDR;
 
             // Set bit8 as 0 to guarantee clock integrity
-            writeBuffer[1] = (byte)(NumberHelper.Dec2Bcd(time.Second) & 0b01111111);
+            writeBuffer[1] = (byte)(NumberHelper.Dec2Bcd(time.Second) & 0b0111_1111);
             writeBuffer[2] = NumberHelper.Dec2Bcd(time.Minute);
             writeBuffer[3] = NumberHelper.Dec2Bcd(time.Hour);
             writeBuffer[4] = NumberHelper.Dec2Bcd(time.Day);
             writeBuffer[5] = NumberHelper.Dec2Bcd((int)time.DayOfWeek);
             if (time.Year >= 2000)
             {
-                writeBuffer[6] = (byte)(NumberHelper.Dec2Bcd(time.Month) | 0b10000000);
+                writeBuffer[6] = (byte)(NumberHelper.Dec2Bcd(time.Month) | 0b1000_0000);
                 writeBuffer[7] = NumberHelper.Dec2Bcd(time.Year - 2000);
             }
             else

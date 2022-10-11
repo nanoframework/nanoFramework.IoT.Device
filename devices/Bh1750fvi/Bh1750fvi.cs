@@ -15,7 +15,7 @@ namespace Iot.Device.Bh1750fvi
     [Interface("Ambient Light Sensor BH1750FVI")]
     public class Bh1750fvi : IDisposable
     {
-        private const byte DefaultLightTransmittance = 0b01000101;
+        private const byte DefaultLightTransmittance = 0b0100_0101;
 
         private I2cDevice _i2cDevice;
 
@@ -78,7 +78,7 @@ namespace Iot.Device.Bh1750fvi
             byte val = (byte)(DefaultLightTransmittance / transmittance);
 
             _i2cDevice.WriteByte((byte)((byte)Command.MeasurementTimeHigh | (val >> 5)));
-            _i2cDevice.WriteByte((byte)((byte)Command.MeasurementTimeLow | (val & 0b00011111)));
+            _i2cDevice.WriteByte((byte)((byte)Command.MeasurementTimeLow | (val & 0b0001_1111)));
         }
 
         /// <summary>

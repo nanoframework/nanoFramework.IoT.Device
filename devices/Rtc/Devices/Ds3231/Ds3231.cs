@@ -54,7 +54,7 @@ namespace Iot.Device.Rtc
             return new DateTime(
                 1900 + 
                 (((rawData[5] >> 7) * 100) + NumberHelper.Bcd2Dec(rawData[6])),
-                NumberHelper.Bcd2Dec((byte)(rawData[5] & 0b00011111)),
+                NumberHelper.Bcd2Dec((byte)(rawData[5] & 0b0001_1111)),
                 NumberHelper.Bcd2Dec(rawData[4]),
                 NumberHelper.Bcd2Dec(rawData[2]),
                 NumberHelper.Bcd2Dec(rawData[1]),
@@ -78,7 +78,7 @@ namespace Iot.Device.Rtc
             setData[5] = NumberHelper.Dec2Bcd(time.Day);
             if (time.Year >= 2000)
             {
-                setData[6] = (byte)(NumberHelper.Dec2Bcd(time.Month) | 0b10000000);
+                setData[6] = (byte)(NumberHelper.Dec2Bcd(time.Month) | 0b1000_0000);
                 setData[7] = NumberHelper.Dec2Bcd(time.Year - 2000);
             }
             else
@@ -124,7 +124,7 @@ namespace Iot.Device.Rtc
 
             return new Ds3231AlarmOne(
                 NumberHelper.Bcd2Dec((byte)(rawData[3] & 0b00111111)),
-                new TimeSpan(NumberHelper.Bcd2Dec((byte)(rawData[2] & 0b01111111)), NumberHelper.Bcd2Dec((byte)(rawData[1] & 0b01111111)), NumberHelper.Bcd2Dec((byte)(rawData[0] & 0b01111111))),
+                new TimeSpan(NumberHelper.Bcd2Dec((byte)(rawData[2] & 0b0111_1111)), NumberHelper.Bcd2Dec((byte)(rawData[1] & 0b0111_1111)), NumberHelper.Bcd2Dec((byte)(rawData[0] & 0b0111_1111))),
                 (Ds3231AlarmOneMatchMode)matchMode);
         }
 
@@ -188,8 +188,8 @@ namespace Iot.Device.Rtc
             matchMode |= (byte)((rawData[2] >> 3) & (1 << 3)); // Get DY/DT bit
 
             return new Ds3231AlarmTwo(
-                NumberHelper.Bcd2Dec((byte)(rawData[2] & 0b00111111)),
-                new TimeSpan(NumberHelper.Bcd2Dec((byte)(rawData[1] & 0b01111111)), NumberHelper.Bcd2Dec((byte)(rawData[0] & 0b01111111)), 0),
+                NumberHelper.Bcd2Dec((byte)(rawData[2] & 0b0011_1111)),
+                new TimeSpan(NumberHelper.Bcd2Dec((byte)(rawData[1] & 0b0111_1111)), NumberHelper.Bcd2Dec((byte)(rawData[0] & 0b0111_1111)), 0),
                 (Ds3231AlarmTwoMatchMode)matchMode);
         }
 

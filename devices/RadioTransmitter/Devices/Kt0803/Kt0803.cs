@@ -119,19 +119,19 @@ namespace Iot.Device.RadioTransmitter
 
             // 3 bytes
             freq = (int)(frequency * 20);
-            freq &= 0b111111111111;
+            freq &= 0b1111_1111_1111;
 
             if ((freq & 0b0001) > 0)
             {
-                reg2 |= 0b10000000;
+                reg2 |= 0b1000_0000;
             }
             else
             {
-                reg2 &= ~0b10000000;
+                reg2 &= ~0b1000_0000;
             }
 
             reg0 = freq >> 1;
-            reg1 = (reg1 & 0b11111000) | (freq >> 9);
+            reg1 = (reg1 & 0b1111_1000) | (freq >> 9);
 
             WriteByte(Register.KT_CONFIG02, (byte)reg2);
             WriteByte(Register.KT_CHSEL, (byte)reg0);
@@ -148,7 +148,7 @@ namespace Iot.Device.RadioTransmitter
             int reg1 = ReadByte(Register.KT_CONFIG01);
             int reg2 = ReadByte(Register.KT_CONFIG02);
 
-            int freq = ((reg1 & 0b0111) << 9) | (reg0 << 1) | (reg2 & 0b10000000 >> 7);
+            int freq = ((reg1 & 0b0111) << 9) | (reg0 << 1) | (reg2 & 0b1000_0000 >> 7);
 
             return Math.Round(freq * 10 / 200.0);
         }
@@ -165,7 +165,7 @@ namespace Iot.Device.RadioTransmitter
 
             int pgaVal = (byte)pgaGain << 3;
 
-            reg1 = (reg1 & 0b11000111) | pgaVal;
+            reg1 = (reg1 & 0b1100_0111) | pgaVal;
 
             switch (pgaGain)
             {
@@ -173,12 +173,12 @@ namespace Iot.Device.RadioTransmitter
                 case PgaGain.Pga04dB:
                 case PgaGain.Pga08dB:
                 case PgaGain.Pga12dB:
-                    reg3 = (reg3 & 0b11001111) | (3 << 4);
+                    reg3 = (reg3 & 0b1100_1111) | (3 << 4);
                     break;
                 case PgaGain.PgaN04dB:
                 case PgaGain.PgaN08dB:
                 case PgaGain.PgaN12dB:
-                    reg3 = (reg3 & 0b11001111) | (0 << 4);
+                    reg3 = (reg3 & 0b1100_1111) | (0 << 4);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(pgaGain));
@@ -196,7 +196,7 @@ namespace Iot.Device.RadioTransmitter
         {
             int reg1 = ReadByte(Register.KT_CONFIG01);
 
-            return (PgaGain)((reg1 & 0b00111000) >> 3);
+            return (PgaGain)((reg1 & 0b0011_1000) >> 3);
         }
 
         /// <summary>
@@ -212,24 +212,24 @@ namespace Iot.Device.RadioTransmitter
 
             int powerVal = (byte)power;
 
-            reg1 = (reg1 & 0b00111111) | (powerVal << 6);
+            reg1 = (reg1 & 0b0011_1111) | (powerVal << 6);
 
             if ((powerVal & 0b0100) > 0)
             {
-                reg10 |= 0b10000000;
+                reg10 |= 0b1000_0000;
             }
             else
             {
-                reg10 &= ~0b10000000;
+                reg10 &= ~0b1000_0000;
             }
 
             if ((powerVal & 0b1000) > 0)
             {
-                reg2 |= 0b01000000;
+                reg2 |= 0b0100_0000;
             }
             else
             {
-                reg2 &= ~0b01000000;
+                reg2 &= ~0b0100_0000;
             }
 
             if (powerVal >= 8)
@@ -256,7 +256,7 @@ namespace Iot.Device.RadioTransmitter
             int reg2 = ReadByte(Register.KT_CONFIG02);
             int reg10 = ReadByte(Register.KT_CONFIG13);
 
-            return (TransmissionPower)(((reg2 & 0b01000000) >> 3) | (reg10 >> 5) | ((reg1 & 0b11000000) >> 6));
+            return (TransmissionPower)(((reg2 & 0b0100_0000) >> 3) | (reg10 >> 5) | ((reg1 & 0b1100_0000) >> 6));
         }
 
         /// <summary>
@@ -330,11 +330,11 @@ namespace Iot.Device.RadioTransmitter
 
             if (isStandby)
             {
-                reg4 |= 0b10000000;
+                reg4 |= 0b1000_0000;
             }
             else
             {
-                reg4 &= ~0b10000000;
+                reg4 &= ~0b1000_0000;
             }
 
             WriteByte(Register.KT_CONFIG0B, (byte)reg4);
@@ -360,7 +360,7 @@ namespace Iot.Device.RadioTransmitter
             // Details in Datasheet P9
             int reg3 = ReadByte(Register.KT_CONFIG04);
 
-            reg3 &= 0b11111100;
+            reg3 &= 0b1111_1100;
             reg3 |= (byte)bassBoost;
 
             WriteByte(Register.KT_CONFIG04, (byte)reg3);
