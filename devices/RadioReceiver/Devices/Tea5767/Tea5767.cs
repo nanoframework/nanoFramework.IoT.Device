@@ -24,7 +24,7 @@ namespace Iot.Device.RadioReceiver
         private byte[] _registers = new byte[5] { 0, 0, 0b00010000, 0b00010010, 0 };
 
         /// <summary>
-        /// Gets or sets a value indicating whether TEA5767 is muteed.
+        /// Gets or sets a value indicating whether TEA5767 is muted.
         /// </summary>
         public bool Mute { get => GetMute(); set => SetMute(value); }
 
