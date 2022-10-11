@@ -240,6 +240,16 @@ namespace Iot.Device.Adc
         }
 
         /// <summary>
+        /// Get overflow result of last conversion
+        /// </summary>
+        /// <remarks>
+        /// The Math Overflow Flag (OVF) is set when the Power or Current calculations are out of range.
+        /// It indicates that current and power data may be meaningless.
+        /// </remarks>
+        [Telemetry]
+        public bool MathOverflowFlag { get => _mathOverflowFlag; }
+
+        /// <summary>
         /// Read the measured shunt voltage.
         /// </summary>
         /// <returns>The shunt potential difference</returns>
