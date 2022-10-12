@@ -21,11 +21,11 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Sn74hc595</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.112" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.103" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.120" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.121" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.18" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.3.18" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.3.22" />
       <dependency id="nanoFramework.System.Threading" version="1.1.8" />
     </dependencies>
   </metadata>
