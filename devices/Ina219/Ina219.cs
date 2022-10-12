@@ -27,7 +27,7 @@ namespace Iot.Device.Adc
         // along with any conversions.
         private static int s_readDelays(Ina219AdcResolutionOrSamples adc)
         {
-            switch(adc)
+            switch (adc)
             {
                 case Ina219AdcResolutionOrSamples.Adc9Bit: return 84;
                 case Ina219AdcResolutionOrSamples.Adc10Bit: return 148;
@@ -50,6 +50,7 @@ namespace Iot.Device.Adc
         private Ina219AdcResolutionOrSamples _busAdcResSamp;
         private Ina219AdcResolutionOrSamples _shuntAdcResSamp;
         private float _currentLsb;
+        private bool _mathOverflowFlag = false;
 
         /// <summary>
         /// Construct an Ina219 device using an I2cDevice
@@ -239,20 +240,39 @@ namespace Iot.Device.Adc
         }
 
         /// <summary>
+        /// Get overflow result of last conversion
+        /// </summary>
+        /// <remarks>
+        /// The Math Overflow Flag (OVF) is set when the Power or Current calculations are out of range.
+        /// It indicates that current and power data may be meaningless.
+        /// </remarks>
+        [Telemetry]
+        public bool MathOverflowFlag { get => _mathOverflowFlag; }
+
+        /// <summary>
         /// Read the measured shunt voltage.
         /// </summary>
         /// <returns>The shunt potential difference</returns>
         // read the shunt voltage. LSB = 10uV then convert to Volts
         [Telemetry("ShuntVoltage")]
-        public ElectricPotential ReadShuntVoltage() => ElectricPotential.FromVolts(ReadRegister(Ina219Register.ShuntVoltage, s_readDelays(_shuntAdcResSamp)) * 10.0 / 1000000.0);
+        public ElectricPotential ReadShuntVoltage() => ElectricPotential.FromVolts(ConvertFrom16BitTwosComplement(ReadRegister(Ina219Register.ShuntVoltage, s_readDelays(_shuntAdcResSamp))) / (1000000.0 / 10.0));
 
         /// <summary>
         /// Read the measured Bus voltage.
         /// </summary>
+        /// <remarks>
+        /// Will set _mathOverflowFlag according to result
+        /// _mathOverflowFlag can use to check if values in Power/Current registers are valid
+        /// </remarks>
         /// <returns>The Bus potential (voltage)</returns>
         // read the bus voltage. LSB = 4mV then convert to Volts
         [Telemetry("BusVoltage")]
-        public ElectricPotential ReadBusVoltage() => ElectricPotential.FromVolts(((short)ReadRegister(Ina219Register.BusVoltage, s_readDelays(_busAdcResSamp)) >> 3) * 4 / 1000.0);
+        public ElectricPotential ReadBusVoltage()
+        {
+            ushort busvoltage = ReadRegister(Ina219Register.BusVoltage, s_readDelays(_busAdcResSamp));
+            _mathOverflowFlag = (busvoltage & 1) != 0 ? true : false;
+            return ElectricPotential.FromVolts(((short)busvoltage >> 3) * 4 / 1000.0);
+        }
 
         /// <summary>
         /// Read the calculated current through the INA219.
@@ -270,7 +290,7 @@ namespace Iot.Device.Adc
             // whenever needed.
             SetCalibration(_calibrationValue, _currentLsb);
 
-            return ElectricCurrent.FromAmperes(ReadRegister(Ina219Register.Current, s_readDelays(_shuntAdcResSamp)) * _currentLsb);
+            return ElectricCurrent.FromAmperes(ConvertFrom16BitTwosComplement(ReadRegister(Ina219Register.Current, s_readDelays(_shuntAdcResSamp))) * _currentLsb);
         }
 
         /// <summary>
@@ -336,6 +356,18 @@ namespace Iot.Device.Adc
 
             // write the value to the register via the I2c Bus.
             _i2cDevice.Write(buffer);
+        }
+
+        /// <summary>
+        /// Convert from 2's complement format
+        /// </summary>
+        /// <param name="twosComp">The value to be writtent to the register.</param>
+        /// <returns>Siged short integer representing decoded value.</returns>
+        private short ConvertFrom16BitTwosComplement(ushort twosComp)
+        {
+            // convert from 2's cpmplement 24 bit to int (32 bit)
+            short normalValue = ((twosComp & 0x8000) != 0) ? (short)(0 - ((twosComp ^ 0xffff) + 1)) : (short)twosComp;
+            return normalValue;
         }
     }
 }
