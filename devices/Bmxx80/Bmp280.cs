@@ -26,7 +26,7 @@ namespace Iot.Device.Bmxx80
         public Bmp280(I2cDevice i2cDevice)
             : base(DeviceId, i2cDevice)
         {
-            _communicationProtocol = CommunicationProtocol.I2c;
+            CommunicationProtocol1 = CommunicationProtocol.I2c;
         }
 
         /// <summary>

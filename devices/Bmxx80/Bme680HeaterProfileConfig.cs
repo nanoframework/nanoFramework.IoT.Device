@@ -12,27 +12,27 @@ namespace Iot.Device.Bmxx80
     public class Bme680HeaterProfileConfig
     {
         /// <summary>
-        /// The chosen heater profile slot, ranging from 0-9.
+        /// Gets or sets chosen heater profile slot, ranging from 0-9.
         /// </summary>
         public Bme680HeaterProfile HeaterProfile { get; set; }
 
         /// <summary>
-        /// The heater resistance.
+        /// Gets or sets heater resistance.
         /// </summary>
         public ushort HeaterResistance { get; set; }
 
         /// <summary>
-        /// The heater duration
+        /// Gets or sets heater duration.
         /// </summary>
         public Duration HeaterDuration { get; set; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="Bme680HeaterProfileConfig"/>.
+        /// Initializes a new instance of the <see cref="Bme680HeaterProfileConfig" /> class.
         /// </summary>
         /// <param name="profile">The used heater profile.</param>
         /// <param name="heaterResistance">The heater resistance in Ohm.</param>
         /// <param name="heaterDuration">The heating duration.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Unknown profile setting used</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Unknown profile setting used.</exception>
         public Bme680HeaterProfileConfig(Bme680HeaterProfile profile, ushort heaterResistance, Duration heaterDuration)
         {
             if ((profile != Bme680HeaterProfile.Profile1) &&
