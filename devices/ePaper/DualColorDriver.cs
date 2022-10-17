@@ -1,6 +1,7 @@
 ﻿namespace Iot.Device.ePaper
 {
-    public abstract class DualColorDriver
+    public abstract class DualColorDriver : Driver
     {
+        
     }
 }

@@ -21,6 +21,7 @@
     <Compile Include="Driver.cs" />
     <Compile Include="Drivers\Ssd1681.cs" />
     <Compile Include="DualColorDriver.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TripleColorDriver.cs" />
   </ItemGroup>
