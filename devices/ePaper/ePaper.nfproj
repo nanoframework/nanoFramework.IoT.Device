@@ -20,14 +20,21 @@
   <ItemGroup>
     <Compile Include="Driver.cs" />
     <Compile Include="Drivers\Ssd1681.cs" />
-    <Compile Include="DualColorDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TripleColorDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.11.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.22\lib\System.Device.Gpio.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Spi">
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.3.22\lib\System.Device.Spi.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

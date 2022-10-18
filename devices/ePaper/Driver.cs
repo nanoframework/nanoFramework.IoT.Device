@@ -1,31 +1,28 @@
-﻿namespace Iot.Device.ePaper
+﻿using System;
+
+namespace Iot.Device.ePaper
 {
-    public abstract class Driver
+    public interface IePaperDisplay : IDisposable
     {
-        public int Width { get; }
+        int Width { get; }
 
-        public int Height { get; }
+        int Height { get; }
 
-        public PowerState PowerState { get; }
-
-        public abstract void PowerOn();
-
-        public abstract void PowerDown();
-
-        public abstract void Initialize();
-
-        public abstract void PerformFullRefresh();
-
-        public abstract void PerformPartialRefresh();
+        PowerState PowerState { get; }
 
 
-        public abstract void SetPosition(int x, int y);
+        void PerformFullRefresh();
 
-        public abstract void Clear();
+        void PerformPartialRefresh();
 
 
-        public abstract void SendCommand(params byte[] command);
+        void SetPosition(int x, int y);
 
-        public abstract void SendData(params byte[] data);
+
+        void SendCommand(params byte[] command);
+
+        void SendData(params byte[] data);
+
+        void WaitReady();
     }
 }
