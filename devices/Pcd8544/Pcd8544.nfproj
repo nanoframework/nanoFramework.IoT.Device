@@ -88,8 +88,9 @@
     <Reference Include="System.IO.Streams">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.15\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="System.Math">
-      <HintPath>packages\nanoFramework.System.Math.1.4.4\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.8.3329, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.5.8\lib\System.Math.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.8\lib\System.Threading.dll</HintPath>

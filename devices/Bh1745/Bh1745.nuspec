@@ -25,7 +25,7 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
       <dependency id="UnitsNet.nanoFramework.Length" version="4.145.0" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="nanoFramework.System.Math" version="1.5.8" />
       <dependency id="nanoFramework.System.Drawing" version="1.2.82" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.82" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.82" />
