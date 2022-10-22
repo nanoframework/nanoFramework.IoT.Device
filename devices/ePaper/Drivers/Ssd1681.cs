@@ -3,15 +3,19 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
 
+using Iot.Device.ePaperGraphics;
+
 namespace Iot.Device.ePaper.Drivers
 {
-    public sealed class Ssd1681 : IePaperDisplay
+    public sealed class Ssd1681 : IColoredEPaperDisplay
     {
         private readonly GpioPin resetPin;
         private readonly GpioPin busyPin;
         private readonly GpioPin dataCommandPin;
         private readonly SpiDevice spiDevice;
 
+        private byte[] frameBuffer;
+        private int currentFrameBufferPage;
         private bool disposed;
 
         /// <summary>
@@ -38,7 +42,8 @@ namespace Iot.Device.ePaper.Drivers
         /// <param name="spiDevice">The SPI Device used to communicate with the display.</param>
         /// <param name="width">The width of the display.</param>
         /// <param name="height">The height of the display.</param>
-        public Ssd1681(GpioPin resetPin, GpioPin busyPin, GpioPin dataCommandPin, SpiDevice spiDevice, int width, int height)
+        /// <param name="paged">Page the frame buffer and all operations to use less memory.</param>
+        public Ssd1681(GpioPin resetPin, GpioPin busyPin, GpioPin dataCommandPin, SpiDevice spiDevice, int width, int height, bool paged = true)
         {
             if (width <= 0 || width > 200)
                 throw new ArgumentOutOfRangeException(nameof(width), "Display width can't be less than 0 or greater than 200");
@@ -50,6 +55,8 @@ namespace Iot.Device.ePaper.Drivers
             this.busyPin = busyPin;
             this.dataCommandPin = dataCommandPin;
             this.spiDevice = spiDevice;
+
+            this.frameBuffer = paged ? new byte[1000] : new byte[(width * height) / 8];
 
             this.Width = width;
             this.Height = height;
@@ -147,6 +154,8 @@ namespace Iot.Device.ePaper.Drivers
             this.WaitReady();
         }
 
+
+
         /// <summary>
         /// Sets the 'cursor' position within the display's RAM.
         /// </summary>
@@ -162,6 +171,32 @@ namespace Iot.Device.ePaper.Drivers
             this.SendCommand((byte)(byte)Command.SetRAMAddressCounterY);
             this.SendData((byte)y);
         }
+
+        public void Clear(Color color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DrawPixel(int x, int y, Color color)
+        {
+            if (x < 0 || x >= this.Width || y < 0 || y >= this.Height)
+            {
+                return;
+            }
+
+            var frameByteIndex = this.GetFrameBufferIndex(x, y);
+
+            var pageLowerBound = this.currentFrameBufferPage * this.frameBuffer.Length;
+            var pageUpperBound = (this.currentFrameBufferPage + 1) * this.frameBuffer.Length;
+            var pageByteIndex = frameByteIndex - pageLowerBound;
+
+            // if the specified point falls in the current page, update the buffer
+            if (pageLowerBound < frameByteIndex && frameByteIndex < pageUpperBound)
+            {
+                
+            }
+        }
+
 
         /// <summary>
         /// Sends a command to the <see cref="SpiDevice"/>.
@@ -239,6 +274,12 @@ namespace Iot.Device.ePaper.Drivers
         {
             x = x < 0 || x > this.Width - 1 ? 0 : x;
             y = y < 0 || y > this.Height - 1 ? 0 : y;
+        }
+
+        private int GetFrameBufferIndex(int x, int y)
+        {
+            // x specifies the column
+            return (x + (y * this.Width)) / 8;
         }
 
 

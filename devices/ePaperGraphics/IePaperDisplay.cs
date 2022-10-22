@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Iot.Device.ePaperGraphics;
+
 namespace Iot.Device.ePaper
 {
     public interface IePaperDisplay : IDisposable
@@ -7,8 +9,6 @@ namespace Iot.Device.ePaper
         int Width { get; }
 
         int Height { get; }
-
-        PowerState PowerState { get; }
 
 
         void PerformFullRefresh();
