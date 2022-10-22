@@ -9,12 +9,17 @@ namespace Iot.Device.ePaper.Drivers
 {
     public sealed class Ssd1681 : IColoredEPaperDisplay
     {
+        private const byte Black = 0x00;
+        private const byte White = 0xff;
+        private const int PagesPerFrame = 5;
+
         private readonly GpioPin resetPin;
         private readonly GpioPin busyPin;
         private readonly GpioPin dataCommandPin;
         private readonly SpiDevice spiDevice;
 
-        private byte[] frameBuffer;
+        private byte[] blackAndWhiteFraweBuffer;
+        private byte[] redFrameBuffer;
         private int currentFrameBufferPage;
         private bool disposed;
 
@@ -42,8 +47,9 @@ namespace Iot.Device.ePaper.Drivers
         /// <param name="spiDevice">The SPI Device used to communicate with the display.</param>
         /// <param name="width">The width of the display.</param>
         /// <param name="height">The height of the display.</param>
-        /// <param name="paged">Page the frame buffer and all operations to use less memory.</param>
-        public Ssd1681(GpioPin resetPin, GpioPin busyPin, GpioPin dataCommandPin, SpiDevice spiDevice, int width, int height, bool paged = true)
+        /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
+        public Ssd1681(GpioPin resetPin, GpioPin busyPin, GpioPin dataCommandPin, 
+            SpiDevice spiDevice, int width, int height, bool enableFramePaging = true)
         {
             if (width <= 0 || width > 200)
                 throw new ArgumentOutOfRangeException(nameof(width), "Display width can't be less than 0 or greater than 200");
@@ -56,7 +62,12 @@ namespace Iot.Device.ePaper.Drivers
             this.dataCommandPin = dataCommandPin;
             this.spiDevice = spiDevice;
 
-            this.frameBuffer = paged ? new byte[1000] : new byte[(width * height) / 8];
+            var bufferSize = (width * height) / 8;
+            var pageSize = bufferSize / PagesPerFrame;
+
+            this.blackAndWhiteFraweBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
+            this.redFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
+            this.currentFrameBufferPage = 0;
 
             this.Width = width;
             this.Height = height;
@@ -186,14 +197,14 @@ namespace Iot.Device.ePaper.Drivers
 
             var frameByteIndex = this.GetFrameBufferIndex(x, y);
 
-            var pageLowerBound = this.currentFrameBufferPage * this.frameBuffer.Length;
-            var pageUpperBound = (this.currentFrameBufferPage + 1) * this.frameBuffer.Length;
+            var pageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFraweBuffer.Length;
+            var pageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFraweBuffer.Length;
             var pageByteIndex = frameByteIndex - pageLowerBound;
 
             // if the specified point falls in the current page, update the buffer
             if (pageLowerBound < frameByteIndex && frameByteIndex < pageUpperBound)
             {
-                
+                this.blackAndWhiteFraweBuffer[pageByteIndex] &= 
             }
         }
 
@@ -280,6 +291,24 @@ namespace Iot.Device.ePaper.Drivers
         {
             // x specifies the column
             return (x + (y * this.Width)) / 8;
+        }
+
+        private byte[] CreateBuffer(int size, byte defaultValue)
+        {
+            if (size < 0)
+                throw new ArgumentOutOfRangeException();
+
+            var buffer = new byte[size];
+
+            if (defaultValue != default)
+            {
+                for (var i = 0; i < size; i++)
+                {
+                    buffer[i] = defaultValue;
+                }
+            }
+
+            return buffer;
         }
 
 
