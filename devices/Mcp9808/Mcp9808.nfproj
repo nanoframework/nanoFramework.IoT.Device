@@ -42,8 +42,8 @@
       <HintPath>packages\nanoFramework.System.Device.Model.1.2.82\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Math, Version=1.5.8.3329, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.1.5.8\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.10.3518, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.5.10\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=4.145.0.0, Culture=neutral, PublicKeyToken=null">

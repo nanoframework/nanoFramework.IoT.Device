@@ -28,9 +28,9 @@
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.8, 1.5.8]",
-        "resolved": "1.5.8",
-        "contentHash": "zEoZZgg3TAxGu5WH+7ZHtTNLaWf/tJ1fa0223ofkv+4CB+7nDU8hFctlXJsjJNKE1QkFK1rE/bagBM7CIe5yOA=="
+        "requested": "[1.5.10, 1.5.10]",
+        "resolved": "1.5.10",
+        "contentHash": "lG7Tz20TmIaWLRdSK++PJ7wgXXSjBfFsFkAZwb3Vyb2EslfLG7LDn45loWqsspgkutnSMTO5T3cCZS2XLl3Erg=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

@@ -69,12 +69,12 @@
     <Reference Include="nanoFramework.System.Collections">
       <HintPath>packages\nanoFramework.System.Collections.1.4.0\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.System.Text, Version=1.2.7.60109, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Text.1.2.7\lib\nanoFramework.System.Text.dll</HintPath>
+    <Reference Include="nanoFramework.System.Text, Version=1.2.15.53169, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Text.1.2.15\lib\nanoFramework.System.Text.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.Ports, Version=1.1.34.17214, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Ports.1.1.34\lib\System.IO.Ports.dll</HintPath>
+    <Reference Include="System.IO.Ports, Version=1.1.36.53879, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.IO.Ports.1.1.36\lib\System.IO.Ports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.15.36091, Culture=neutral, PublicKeyToken=c07d481e9758c731">
