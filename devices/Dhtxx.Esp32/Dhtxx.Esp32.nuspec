@@ -25,7 +25,7 @@
       <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Math" version="1.5.8" />
+      <dependency id="nanoFramework.System.Math" version="1.5.12" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.82" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.82" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.145.0" />
