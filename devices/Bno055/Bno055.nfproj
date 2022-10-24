@@ -20,6 +20,8 @@
     <Nullable>enable</Nullable>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Bno055.xml</DocumentationFile>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

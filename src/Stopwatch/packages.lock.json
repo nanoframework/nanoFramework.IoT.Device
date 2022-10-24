@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "dependencies": {
+    "Any,Version=v0.0": {
+      "nanoFramework.CoreLibrary": {
+        "type": "Direct",
+        "requested": "[1.10.4-preview.11, 1.10.4-preview.11]",
+        "resolved": "1.10.4-preview.11",
+        "contentHash": "J/RCYy2+vT5vgrnoVa9XzoR+1IwPFJ4U4r1lyeHd3IhtrKUslT+S0HBdAkkVIQYtO1Xkaum5QsQho93EMUeZYA=="
+      }
+    }
+  }
+}
