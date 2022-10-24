@@ -18,7 +18,7 @@ namespace Iot.Device.ePaper.Drivers
         private readonly GpioPin dataCommandPin;
         private readonly SpiDevice spiDevice;
 
-        private byte[] blackAndWhiteFraweBuffer;
+        private byte[] blackAndWhiteFrameBuffer;
         private byte[] redFrameBuffer;
         private int currentFrameBufferPage;
         private bool disposed;
@@ -65,8 +65,8 @@ namespace Iot.Device.ePaper.Drivers
             var bufferSize = (width * height) / 8;
             var pageSize = bufferSize / PagesPerFrame;
 
-            this.blackAndWhiteFraweBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
-            this.redFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
+            this.blackAndWhiteFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
+            this.redFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, Black); // defaulting red buffer to 0x00
             this.currentFrameBufferPage = 0;
 
             this.Width = width;
@@ -197,14 +197,51 @@ namespace Iot.Device.ePaper.Drivers
 
             var frameByteIndex = this.GetFrameBufferIndex(x, y);
 
-            var pageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFraweBuffer.Length;
-            var pageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFraweBuffer.Length;
+            var pageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFrameBuffer.Length;
+            var pageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFrameBuffer.Length;
             var pageByteIndex = frameByteIndex - pageLowerBound;
 
             // if the specified point falls in the current page, update the buffer
             if (pageLowerBound < frameByteIndex && frameByteIndex < pageUpperBound)
             {
-                this.blackAndWhiteFraweBuffer[pageByteIndex] &= 
+                /*
+                 * Lookup Table for colors on SSD1681
+                 * 
+                 *  LUT for Red, Black, and White ePaper display
+                 * 
+                 * |                |               |                    |
+                 * | Data Red RAM   | Data B/W RAM  | Result Pixel Color |
+                 * |----------------|---------------|--------------------|
+                 * |        0       |       0       |       Black        |
+                 * |        0       |       1       |       White        |
+                 * |        1       |       0       |       Red          |
+                 * |        1       |       1       |       Red          |
+                 * 
+                 * 
+                 *  LUT for Black and White ePaper display with SSD1681
+                 * |                |               |                    |
+                 * | Data Red RAM   | Data B/W RAM  | Result Pixel Color |
+                 * |----------------|---------------|--------------------|
+                 * |        0       |       0       |       Black        |
+                 * |        0       |       1       |       White        |
+                 * |        1       |       0       |       Black        |
+                 * |        1       |       1       |       White        |
+                 */
+
+                if (color.R >= 128 && color.G == 0 && color.B == 0) // is a colored pixel
+                {
+                    // according to LUT, no need to change the pixel value in B/W buffer.
+                    // red frame buffer starts with 0x00. ORing it to set red pixel to 1.
+                    this.redFrameBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                }
+                else if (color.R == 0 && color.G == 0 && color.B == 0) // black pixel
+                {
+                    this.blackAndWhiteFrameBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
+                }
+                else // assume white if R, G, and B > 0
+                {
+                    this.blackAndWhiteFrameBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                }
             }
         }
 
