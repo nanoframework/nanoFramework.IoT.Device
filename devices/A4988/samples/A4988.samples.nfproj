@@ -29,8 +29,9 @@
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.1.22\lib\System.Device.Gpio.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Math">
-      <HintPath>..\packages\nanoFramework.System.Math.1.4.4\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.12.8604, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Math.1.5.12\lib\System.Math.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Angle, Version=4.145.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\UnitsNet.nanoFramework.Angle.4.145.0\lib\UnitsNet.Angle.dll</HintPath>
