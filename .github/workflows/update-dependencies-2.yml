@@ -12,34 +12,16 @@ on:
     - cron:  '15 00 * * *'
   repository_dispatch:
     types: update-dependencies
-  workflow_dispatch:
-
-defaults:
-  run:
-    shell: pwsh
 
 jobs:
   update-nuget-dependencies:
-    name: Update .NET nanoFramework dependencies
-    timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
-    runs-on: windows-latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      - name: Update dependencies
-        uses: nanoframework/nanodu@v1
-        with:
-          solutionsToCheck: |
-            ShiftRegister.sln
-          workingDirectory: '${{ github.workspace }}/devices'
-          branchToPr: 'develop'
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    with:
+      timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+      workingDirectory: '${{ github.workspace }}/devices'
+      branchToPr: 'develop'      
+      solutionsToCheck: |
+        ShiftRegister.sln
+    secrets:
+      githubAuth: ${{ secrets.NFBOT_GITHUB_ACTIONS }}
