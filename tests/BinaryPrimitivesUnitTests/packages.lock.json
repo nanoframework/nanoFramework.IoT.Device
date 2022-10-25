@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    ".NETnanoFramework,Version=v1.0": {
+    "Any,Version=v0.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
         "requested": "[1.10.5, 1.10.5]",
