@@ -18,6 +18,7 @@ namespace Iot.Device.ePaper
 
         void SetPosition(int x, int y);
 
+        void DrawBuffer(byte[] bitmap, int startXPos, int startYPos);
 
         void SendCommand(params byte[] command);
 

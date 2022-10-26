@@ -176,20 +176,21 @@ namespace Iot.Device.ePaper.Drivers
         {
             this.EnforceBounds(ref x, ref y);
 
-            this.SendCommand((byte)(byte)Command.SetRAMAddressCounterX);
+            this.SendCommand((byte)Command.SetRAMAddressCounterX);
             this.SendData((byte)(x / 8)); // each row can have up to 200 points each represented by a single bit.
 
-            this.SendCommand((byte)(byte)Command.SetRAMAddressCounterY);
+            this.SendCommand((byte)Command.SetRAMAddressCounterY);
             this.SendData((byte)y);
         }
 
-        public void Clear(Color color)
+        public void Clear()
         {
             throw new NotImplementedException();
         }
 
         public void DrawPixel(int x, int y, Color color)
         {
+            // ignore out of bounds draw attempts
             if (x < 0 || x >= this.Width || y < 0 || y >= this.Height)
             {
                 return;
@@ -243,6 +244,44 @@ namespace Iot.Device.ePaper.Drivers
                     this.blackAndWhiteFrameBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
             }
+            else
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Draws the specified buffer directly to the Black/White RAM on the display.
+        /// Call <see cref="PerformFullRefresh"/> after to update the display.
+        /// </summary>
+        /// <param name="buffer">The buffer array to draw.</param>
+        /// <param name="startXPos">X start position.</param>
+        /// <param name="startYPos">Y start position.</param>
+        public void DrawBuffer(byte[] buffer, int startXPos, int startYPos)
+        {
+            this.SetPosition(startXPos, startYPos);
+
+            this.SendCommand((byte)Command.WriteBackWhiteRAM);
+            this.SendData(buffer);
+
+            this.ClearInternalBuffersAndResetBufferPage();
+        }
+
+        /// <summary>
+        /// Draws the specified buffer directly to the Red RAM on the display.
+        /// Call <see cref="PerformFullRefresh"/> after to update the display.
+        /// </summary>
+        /// <param name="buffer">The buffer array to draw.</param>
+        /// <param name="startXPos">X start position.</param>
+        /// <param name="startYPos">Y start position.</param>
+        public void DrawColorBuffer(byte[] buffer, int startXPos, int startYPos)
+        {
+            this.SetPosition(startXPos, startYPos);
+
+            this.SendCommand((byte)Command.WriteRedRAM);
+            this.SendData(buffer);
+
+            this.ClearInternalBuffersAndResetBufferPage();
         }
 
 
@@ -339,13 +378,26 @@ namespace Iot.Device.ePaper.Drivers
 
             if (defaultValue != default)
             {
-                for (var i = 0; i < size; i++)
-                {
-                    buffer[i] = defaultValue;
-                }
+                this.ClearBuffer(ref buffer, defaultValue);
             }
 
             return buffer;
+        }
+
+        private void ClearInternalBuffersAndResetBufferPage()
+        {
+            this.currentFrameBufferPage = 0;
+
+            this.ClearBuffer(ref this.blackAndWhiteFrameBuffer, White);
+            this.ClearBuffer(ref this.redFrameBuffer, Black);
+        }
+
+        private void ClearBuffer(ref byte[] buffer, byte defaultValue)
+        {
+            for(var i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = defaultValue;
+            }
         }
 
 
