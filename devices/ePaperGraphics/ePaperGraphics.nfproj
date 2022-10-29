@@ -19,9 +19,11 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Color.cs" />
+    <Compile Include="Fonts\Font8x12.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="IColoredEPaperDisplay.cs" />
     <Compile Include="IePaperDisplay.cs" />
+    <Compile Include="IFont.cs" />
     <Compile Include="IFrameBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,6 +6,8 @@ namespace Iot.Device.ePaperGraphics
     {
         void DrawPixel(int x, int y, Color color);
 
-        void DrawColorBuffer(byte[] bitmap, int startXPos, int startYPos);
+        void DrawColorBuffer(int startXPos, int startYPos, params byte[] bitmap);
+
+        void DirectDrawColorBuffer(int startXPos, int startYPos, params byte[] bitmap);
     }
 }

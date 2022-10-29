@@ -297,14 +297,60 @@ namespace Iot.Device.ePaper.Drivers
             }
         }
 
+        public void DrawColorBuffer(int startXPos, int startYPos, params byte[] bitmap)
+        {
+            // ignore out of bounds draw attempts
+            if (startXPos < 0 || startXPos >= this.Width || startYPos < 0 || startYPos >= this.Height)
+            {
+                return;
+            }
+
+            var bitmapIndex = 0;
+            var frameByteIndex = this.GetFrameBufferIndex(startXPos, startYPos);
+            var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
+
+            while (this.currentFrameBufferPageLowerBound <= frameByteIndex 
+                && frameByteIndex < this.currentFrameBufferPageUpperBound
+                && bitmapIndex < bitmap.Length)
+            {
+                this.redFrameBuffer[pageByteIndex] = (byte)bitmap[bitmapIndex];
+
+                bitmapIndex++;
+                frameByteIndex++;
+            }
+        }
+
+        public void DrawBuffer(int startXPos, int startYPos, params byte[] bitmap)
+        {
+            // ignore out of bounds draw attempts
+            if (startXPos < 0 || startXPos >= this.Width || startYPos < 0 || startYPos >= this.Height)
+            {
+                return;
+            }
+
+            var bitmapIndex = 0;
+            var frameByteIndex = this.GetFrameBufferIndex(startXPos, startYPos);
+            var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
+
+            while (this.currentFrameBufferPageLowerBound <= frameByteIndex
+                && frameByteIndex < this.currentFrameBufferPageUpperBound
+                && bitmapIndex < bitmap.Length)
+            {
+                this.blackAndWhiteFrameBuffer[pageByteIndex] = (byte)bitmap[bitmapIndex];
+
+                bitmapIndex++;
+                frameByteIndex++;
+            }
+        }
+
         /// <summary>
         /// Draws the specified buffer directly to the Black/White RAM on the display.
         /// Call <see cref="PerformFullRefresh"/> after to update the display.
         /// </summary>
-        /// <param name="buffer">The buffer array to draw.</param>
         /// <param name="startXPos">X start position.</param>
         /// <param name="startYPos">Y start position.</param>
-        public void DrawBuffer(byte[] buffer, int startXPos, int startYPos)
+        /// <param name="buffer">The buffer array to draw.</param>
+        public void DirectDrawBuffer(int startXPos, int startYPos, params byte[] buffer)
         {
             this.SetPosition(startXPos, startYPos);
 
@@ -316,10 +362,10 @@ namespace Iot.Device.ePaper.Drivers
         /// Draws the specified buffer directly to the Red RAM on the display.
         /// Call <see cref="PerformFullRefresh"/> after to update the display.
         /// </summary>
-        /// <param name="buffer">The buffer array to draw.</param>
         /// <param name="startXPos">X start position.</param>
         /// <param name="startYPos">Y start position.</param>
-        public void DrawColorBuffer(byte[] buffer, int startXPos, int startYPos)
+        /// <param name="buffer">The buffer array to draw.</param>
+        public void DirectDrawColorBuffer(int startXPos, int startYPos, params byte[] buffer)
         {
             this.SetPosition(startXPos, startYPos);
 
@@ -522,13 +568,13 @@ namespace Iot.Device.ePaper.Drivers
 
         private void WriteInternalBuffersToDevice()
         {
-            this.DrawBuffer(this.blackAndWhiteFrameBuffer,
-                this.currentFrameBufferStartXPosition,
-                this.currentFrameBufferStartYPosition);
+            this.DirectDrawBuffer(this.currentFrameBufferStartXPosition,
+                this.currentFrameBufferStartYPosition,
+                this.blackAndWhiteFrameBuffer);
 
-            this.DrawColorBuffer(this.redFrameBuffer,
-                this.currentFrameBufferStartXPosition,
-                this.currentFrameBufferStartYPosition);
+            this.DirectDrawColorBuffer(this.currentFrameBufferStartXPosition,
+                this.currentFrameBufferStartYPosition,
+                this.redFrameBuffer);
         }
 
 

@@ -23,7 +23,9 @@ namespace Iot.Device.ePaper
 
         void DrawPixel(int x, int y, bool inverted);
 
-        void DrawBuffer(byte[] bitmap, int startXPos, int startYPos);
+        void DrawBuffer(int startXPos, int startYPos, params byte[] bitmap);
+
+        void DirectDrawBuffer(int startXPos, int startYPos, params byte[] bitmap);
 
 
         void BeginFrameDraw();
