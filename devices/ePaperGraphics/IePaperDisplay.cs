@@ -20,6 +20,14 @@ namespace Iot.Device.ePaper
 
         void DrawBuffer(byte[] bitmap, int startXPos, int startYPos);
 
+
+        void BeginFrameDraw();
+
+        bool NextFramePage();
+
+        void EndFrameDraw();
+
+
         void SendCommand(params byte[] command);
 
         void SendData(params byte[] data);

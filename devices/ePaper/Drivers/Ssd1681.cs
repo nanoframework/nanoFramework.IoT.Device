@@ -21,6 +21,10 @@ namespace Iot.Device.ePaper.Drivers
         private byte[] blackAndWhiteFrameBuffer;
         private byte[] redFrameBuffer;
         private int currentFrameBufferPage;
+        private int currentFrameBufferPageLowerBound;
+        private int currentFrameBufferPageUpperBound;
+        private int currentXPosition;
+        private int currentYPosition;
         private bool disposed;
 
         /// <summary>
@@ -48,6 +52,11 @@ namespace Iot.Device.ePaper.Drivers
         /// <param name="width">The width of the display.</param>
         /// <param name="height">The height of the display.</param>
         /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
+        /// <remarks>
+        /// For a 200x200 SSD1681 display, a full Frame requires about 5KB of RAM ((200 * 200) / 8). SSD1681 has 2 RAMs for B/W and Red pixel.
+        /// This means to have a full frame in memory, you need about 10KB of RAM. If you can't guarantee 10KB to be available to the driver
+        /// then enable paging by setting <paramref name="enableFramePaging"/> to true. A page uses about 2KB (1KB for B/W and 1KB for Red).
+        /// </remarks>
         public Ssd1681(GpioPin resetPin, GpioPin busyPin, GpioPin dataCommandPin, 
             SpiDevice spiDevice, int width, int height, bool enableFramePaging = true)
         {
@@ -67,10 +76,15 @@ namespace Iot.Device.ePaper.Drivers
 
             this.blackAndWhiteFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
             this.redFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, Black); // defaulting red buffer to 0x00
+
             this.currentFrameBufferPage = 0;
+            this.CalculateFrameBufferPageBounds();
 
             this.Width = width;
             this.Height = height;
+
+            this.currentXPosition = 0;
+            this.currentYPosition = 0;
 
             this.PowerState = PowerState.Unknown;
         }
@@ -135,6 +149,7 @@ namespace Iot.Device.ePaper.Drivers
             this.PerformFullRefresh();
         }
 
+
         /// <summary>
         /// Perform full panel refresh sequence.
         /// </summary>
@@ -183,11 +198,40 @@ namespace Iot.Device.ePaper.Drivers
             this.SendData((byte)y);
         }
 
+        /// <summary>
+        /// Clears the display.
+        /// </summary>
         public void Clear()
         {
-            throw new NotImplementedException();
+            //this.SetFrameBufferPage(page: 0);
+
+            //if (!refreshDisplay)
+            //    return;
+
+            //var currentPositionY = 0;
+            //for (var i = 0; i < PagesPerFrame; i++)
+            //{
+            //    this.DrawBuffer(this.blackAndWhiteFrameBuffer, startXPos: 0, startYPos: currentPositionY);
+            //}
+
+            //this.SetPosition(x: 0, y: 0);
         }
 
+        /// <summary>
+        /// Draws a single pixel to the appropriate frame buffer based on the specified color.
+        /// </summary>
+        /// <param name="x">The X Position</param>
+        /// <param name="y">The Y Position</param>
+        /// <param name="color">Pixel color. See the remarks for how a buffer is selected based on the color value.</param>
+        /// <remarks>
+        /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
+        /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// is by performing a simple binary check: 
+        /// if R >= 128 && G == 0 && B == 0 then write a red pixel to the Red Buffer/RAM
+        /// if R == 0 && G == 0 && B == 0 then write a black pixel to B/W Buffer/RAM
+        /// else, assume white pixel and write to B/W Buffer/RAM.
+        /// </remarks>
         public void DrawPixel(int x, int y, Color color)
         {
             // ignore out of bounds draw attempts
@@ -197,13 +241,11 @@ namespace Iot.Device.ePaper.Drivers
             }
 
             var frameByteIndex = this.GetFrameBufferIndex(x, y);
-
-            var pageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFrameBuffer.Length;
-            var pageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFrameBuffer.Length;
-            var pageByteIndex = frameByteIndex - pageLowerBound;
+            var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
 
             // if the specified point falls in the current page, update the buffer
-            if (pageLowerBound < frameByteIndex && frameByteIndex < pageUpperBound)
+            if (this.currentFrameBufferPageLowerBound < frameByteIndex 
+                && frameByteIndex < this.currentFrameBufferPageUpperBound)
             {
                 /*
                  * Lookup Table for colors on SSD1681
@@ -244,10 +286,6 @@ namespace Iot.Device.ePaper.Drivers
                     this.blackAndWhiteFrameBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
             }
-            else
-            {
-
-            }
         }
 
         /// <summary>
@@ -264,7 +302,7 @@ namespace Iot.Device.ePaper.Drivers
             this.SendCommand((byte)Command.WriteBackWhiteRAM);
             this.SendData(buffer);
 
-            this.ClearInternalBuffersAndResetBufferPage();
+            this.SetFrameBufferPage(page: 0);
         }
 
         /// <summary>
@@ -281,7 +319,46 @@ namespace Iot.Device.ePaper.Drivers
             this.SendCommand((byte)Command.WriteRedRAM);
             this.SendData(buffer);
 
-            this.ClearInternalBuffersAndResetBufferPage();
+            this.SetFrameBufferPage(page: 0);
+        }
+
+        /// <summary>
+        /// Begins a frame draw operation with frame paging support.
+        /// <code>
+        /// SSD1681.BeginFrameDraw();
+        /// do {
+        ///     // Drawing calls
+        /// } while (SSD1681.NextFramePage());
+        /// SSD1681.EndFrameDraw();
+        /// </code>
+        /// </summary>
+        public void BeginFrameDraw()
+        {
+            // make sure we start from the first page with clear buffers
+            this.SetFrameBufferPage(page: 0);
+        }
+
+        public bool NextFramePage()
+        {
+            if (this.currentFrameBufferPage < PagesPerFrame - 1)
+            {
+                //TODO: draw the current buffers to the display RAM
+
+                this.currentFrameBufferPage++;
+                this.SetFrameBufferPage(this.currentFrameBufferPage);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void EndFrameDraw()
+        {
+            //TODO: draw the last buffer to display RAM
+
+            this.PerformFullRefresh();
+            this.SetFrameBufferPage(page: 0);
         }
 
 
@@ -384,10 +461,8 @@ namespace Iot.Device.ePaper.Drivers
             return buffer;
         }
 
-        private void ClearInternalBuffersAndResetBufferPage()
+        private void ClearFrameBuffers()
         {
-            this.currentFrameBufferPage = 0;
-
             this.ClearBuffer(ref this.blackAndWhiteFrameBuffer, White);
             this.ClearBuffer(ref this.redFrameBuffer, Black);
         }
@@ -398,6 +473,23 @@ namespace Iot.Device.ePaper.Drivers
             {
                 buffer[i] = defaultValue;
             }
+        }
+
+        private void SetFrameBufferPage(int page)
+        {
+            if (page < 0 || page >= PagesPerFrame)
+                page = 0;
+
+            this.ClearFrameBuffers();
+
+            this.currentFrameBufferPage = page;
+            this.CalculateFrameBufferPageBounds();
+        }
+
+        private void CalculateFrameBufferPageBounds()
+        {
+            this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFrameBuffer.Length;
+            this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFrameBuffer.Length;
         }
 
 
