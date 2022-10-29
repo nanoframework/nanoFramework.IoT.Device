@@ -25,6 +25,7 @@ namespace Iot.Device.ePaper.Drivers
         private int currentFrameBufferPageUpperBound;
         private int currentFrameBufferStartXPosition;
         private int currentFrameBufferStartYPosition;
+
         private bool disposed;
 
         /// <summary>
@@ -661,6 +662,9 @@ namespace Iot.Device.ePaper.Drivers
                     this.busyPin.Dispose();
                     this.dataCommandPin.Dispose();
                     this.spiDevice.Dispose();
+
+                    this.blackAndWhiteFrameBuffer = null;
+                    this.redFrameBuffer = null;
                 }
 
                 disposed = true;
