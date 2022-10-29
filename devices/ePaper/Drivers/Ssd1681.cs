@@ -23,8 +23,8 @@ namespace Iot.Device.ePaper.Drivers
         private int currentFrameBufferPage;
         private int currentFrameBufferPageLowerBound;
         private int currentFrameBufferPageUpperBound;
-        private int currentXPosition;
-        private int currentYPosition;
+        private int currentFrameBufferStartXPosition;
+        private int currentFrameBufferStartYPosition;
         private bool disposed;
 
         /// <summary>
@@ -82,9 +82,6 @@ namespace Iot.Device.ePaper.Drivers
 
             this.Width = width;
             this.Height = height;
-
-            this.currentXPosition = 0;
-            this.currentYPosition = 0;
 
             this.PowerState = PowerState.Unknown;
         }
@@ -338,11 +335,15 @@ namespace Iot.Device.ePaper.Drivers
             this.SetFrameBufferPage(page: 0);
         }
 
+        /// <summary>
+        /// Moves the current buffers to the next frame page and returns true if successful.
+        /// </summary>
+        /// <returns>True if the next frame page is available and the internal buffers have moved to it, otherwise; false.</returns>
         public bool NextFramePage()
         {
             if (this.currentFrameBufferPage < PagesPerFrame - 1)
             {
-                //TODO: draw the current buffers to the display RAM
+                this.WriteInternalBuffersToDevice();
 
                 this.currentFrameBufferPage++;
                 this.SetFrameBufferPage(this.currentFrameBufferPage);
@@ -353,9 +354,12 @@ namespace Iot.Device.ePaper.Drivers
             return false;
         }
 
+        /// <summary>
+        /// Ends the frame draw and flushes the current page to the device.
+        /// </summary>
         public void EndFrameDraw()
         {
-            //TODO: draw the last buffer to display RAM
+            this.WriteInternalBuffersToDevice();
 
             this.PerformFullRefresh();
             this.SetFrameBufferPage(page: 0);
@@ -446,6 +450,16 @@ namespace Iot.Device.ePaper.Drivers
             return (x + (y * this.Width)) / 8;
         }
 
+        private int GetXPositionFromFrameBufferIndex(int index)
+        {
+            return ((index * 8) - 8) % this.Width;
+        }
+
+        private int GetYPositionFromFrameBufferIndex(int index)
+        {
+            return ((index * 8) - 8) / this.Height;
+        }
+
         private byte[] CreateBuffer(int size, byte defaultValue)
         {
             if (size < 0)
@@ -490,6 +504,21 @@ namespace Iot.Device.ePaper.Drivers
         {
             this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFrameBuffer.Length;
             this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFrameBuffer.Length;
+            this.currentFrameBufferStartXPosition = this.GetXPositionFromFrameBufferIndex(this.currentFrameBufferPageLowerBound);
+            this.currentFrameBufferStartYPosition = this.GetYPositionFromFrameBufferIndex(this.currentFrameBufferPageLowerBound);
+        }
+
+        private void WriteInternalBuffersToDevice()
+        {
+            this.DrawBuffer(this.blackAndWhiteFrameBuffer,
+                                this.currentFrameBufferStartXPosition,
+                                this.currentFrameBufferStartYPosition);
+
+            this.DrawBuffer(this.redFrameBuffer,
+                this.currentFrameBufferStartXPosition,
+                this.currentFrameBufferStartYPosition);
+
+            this.PerformFullRefresh();
         }
 
 
