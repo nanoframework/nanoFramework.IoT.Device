@@ -34,7 +34,7 @@ namespace Iot.Device.ServoMotor
         }
 
         /// <summary>
-        /// Sets calibration parameters
+        /// Sets calibration parameters.
         /// </summary>
         /// <param name="maximumAngle">The maximum angle the servo motor can move represented as a value between 0 and 360.</param>
         /// <param name="minimumPulseWidthMicroseconds">The minimum pulse width, in microseconds, that represent an angle for 0 degrees.</param>
@@ -82,7 +82,7 @@ namespace Iot.Device.ServoMotor
                 throw new ArgumentOutOfRangeException(nameof(angle));
             }
 
-            WritePulseWidth((int)(_angleToMicroseconds * angle + _minimumPulseWidthMicroseconds));
+            WritePulseWidth((int)((_angleToMicroseconds * angle) + _minimumPulseWidthMicroseconds));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Iot.Device.ServoMotor
         public void Dispose()
         {
             _pwmChannel?.Dispose();
-            _pwmChannel = null!;
+            _pwmChannel = null;
         }
     }
 }
