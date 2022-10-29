@@ -14,5 +14,8 @@
             G = g;
             B = b;
         }
+
+        public static Color Black = new(r: 0, g: 0, b: 0);
+        public static Color White = new(r: 255, g: 255, b: 255);
     }
 }

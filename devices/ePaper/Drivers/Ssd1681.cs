@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Threading;
 
 using Iot.Device.ePaperGraphics;
@@ -12,6 +13,8 @@ namespace Iot.Device.ePaper.Drivers
         private const byte Black = 0x00;
         private const byte White = 0xff;
         private const int PagesPerFrame = 5;
+        private const int FirstPageIndex = 0;
+        private const int LastPageIndex = PagesPerFrame - 1;
 
         private readonly GpioPin resetPin;
         private readonly GpioPin busyPin;
@@ -199,20 +202,28 @@ namespace Iot.Device.ePaper.Drivers
         /// <summary>
         /// Clears the display.
         /// </summary>
-        public void Clear()
+        public void Clear(bool triggerPageRefresh = false)
         {
-            //this.SetFrameBufferPage(page: 0);
+            this.BeginFrameDraw();
+            do
+            {
+                // do nothing. internal frame buffers already cleared by BeginFrameDraw()
+            } while (this.NextFramePage());
+            this.EndFrameDraw();
 
-            //if (!refreshDisplay)
-            //    return;
+            if (triggerPageRefresh)
+                this.PerformFullRefresh();
+        }
 
-            //var currentPositionY = 0;
-            //for (var i = 0; i < PagesPerFrame; i++)
-            //{
-            //    this.DrawBuffer(this.blackAndWhiteFrameBuffer, startXPos: 0, startYPos: currentPositionY);
-            //}
-
-            //this.SetPosition(x: 0, y: 0);
+        /// <summary>
+        /// Draws a single pixel to the appropriate frame buffer.
+        /// </summary>
+        /// <param name="x">The X Position</param>
+        /// <param name="y">The Y Position</param>
+        /// <param name="inverted">True to invert the pixel from white to black.</param>
+        public void DrawPixel(int x, int y, bool inverted)
+        {
+            this.DrawPixel(x, y, inverted ? Color.Black : Color.White);
         }
 
         /// <summary>
@@ -242,7 +253,7 @@ namespace Iot.Device.ePaper.Drivers
             var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
 
             // if the specified point falls in the current page, update the buffer
-            if (this.currentFrameBufferPageLowerBound < frameByteIndex 
+            if (this.currentFrameBufferPageLowerBound <= frameByteIndex 
                 && frameByteIndex < this.currentFrameBufferPageUpperBound)
             {
                 /*
@@ -299,8 +310,6 @@ namespace Iot.Device.ePaper.Drivers
 
             this.SendCommand((byte)Command.WriteBackWhiteRAM);
             this.SendData(buffer);
-
-            this.SetFrameBufferPage(page: 0);
         }
 
         /// <summary>
@@ -316,8 +325,6 @@ namespace Iot.Device.ePaper.Drivers
 
             this.SendCommand((byte)Command.WriteRedRAM);
             this.SendData(buffer);
-
-            this.SetFrameBufferPage(page: 0);
         }
 
         /// <summary>
@@ -333,7 +340,7 @@ namespace Iot.Device.ePaper.Drivers
         public void BeginFrameDraw()
         {
             // make sure we start from the first page with clear buffers
-            this.SetFrameBufferPage(page: 0);
+            this.SetFrameBufferPage(FirstPageIndex);
         }
 
         /// <summary>
@@ -361,9 +368,7 @@ namespace Iot.Device.ePaper.Drivers
         public void EndFrameDraw()
         {
             this.WriteInternalBuffersToDevice();
-
-            this.PerformFullRefresh();
-            this.SetFrameBufferPage(page: 0);
+            this.SetFrameBufferPage(FirstPageIndex);
         }
 
 
@@ -453,12 +458,18 @@ namespace Iot.Device.ePaper.Drivers
 
         private int GetXPositionFromFrameBufferIndex(int index)
         {
-            return ((index * 8) - 8) % this.Width;
+            if (index <= 0)
+                return 0;
+
+            return (index * 8) % this.Width;
         }
 
         private int GetYPositionFromFrameBufferIndex(int index)
         {
-            return ((index * 8) - 8) / this.Height;
+            if (index <= 0)
+                return 0;
+
+            return (index * 8) / this.Height;
         }
 
         private byte[] CreateBuffer(int size, byte defaultValue)
@@ -512,14 +523,12 @@ namespace Iot.Device.ePaper.Drivers
         private void WriteInternalBuffersToDevice()
         {
             this.DrawBuffer(this.blackAndWhiteFrameBuffer,
-                                this.currentFrameBufferStartXPosition,
-                                this.currentFrameBufferStartYPosition);
-
-            this.DrawBuffer(this.redFrameBuffer,
                 this.currentFrameBufferStartXPosition,
                 this.currentFrameBufferStartYPosition);
 
-            this.PerformFullRefresh();
+            this.DrawColorBuffer(this.redFrameBuffer,
+                this.currentFrameBufferStartXPosition,
+                this.currentFrameBufferStartYPosition);
         }
 
 

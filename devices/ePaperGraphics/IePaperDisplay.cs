@@ -16,7 +16,12 @@ namespace Iot.Device.ePaper
         void PerformPartialRefresh();
 
 
+        void Clear(bool triggerPageRefresh = false);
+
+
         void SetPosition(int x, int y);
+
+        void DrawPixel(int x, int y, bool inverted);
 
         void DrawBuffer(byte[] bitmap, int startXPos, int startYPos);
 
