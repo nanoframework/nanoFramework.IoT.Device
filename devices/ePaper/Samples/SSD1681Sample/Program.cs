@@ -48,28 +48,36 @@ namespace SSD1681Sample
             display.Clear(triggerPageRefresh: true);
 
             // draw a frame using paging
-            //display.BeginFrameDraw();
-            //do
-            //{
-            //    for (var y = 0; y < display.Height; y++)
-            //    {
-            //        display.DrawPixel(100, y, inverted: true);
-            //    }
+            display.BeginFrameDraw();
+            do
+            {
+                for (var y = 0; y < display.Height; y++)
+                {
+                    display.DrawPixel(100, y, inverted: true);
+                }
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 0, 0);
+                gfx.DrawLine(0, 0, 200, 200, Color.Black);
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 25, 24);
+                gfx.DrawCircle(25, 25, 100, Color.Black);
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 35, 50);
+                gfx.DrawCircle(150, 50, 10, Color.Black);
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 80, 140);
+                gfx.DrawText("Hello World", new Font8x12(), 0, 0);
 
-            //    gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180);
+                gfx.DrawText("Hello World", new Font8x12(), 25, 24);
 
-            //} while (display.NextFramePage());
-            //display.EndFrameDraw();
+                gfx.DrawText("Hello World", new Font8x12(), 35, 50);
 
-            display.DirectDrawBuffer(0, 0, qrCode);
+                gfx.DrawText("Hello World", new Font8x12(), 80, 140);
+
+                gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180);
+
+                gfx.DrawRectangle(25, 95, 100, 100, Color.Black, true);
+
+            } while (display.NextFramePage());
+            display.EndFrameDraw();
+
+            //display.DirectDrawBuffer(0, 0, qrCode);
             display.PerformFullRefresh();
 
             // Put the display to sleep to reduce power consumption
