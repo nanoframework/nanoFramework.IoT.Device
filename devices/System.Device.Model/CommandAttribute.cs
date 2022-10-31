@@ -4,23 +4,23 @@
 namespace System.Device.Model
 {
     /// <summary>
-    /// Command of the interface
+    /// Command of the interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class CommandAttribute : Attribute
     {
         /// <summary>
-        /// Name of the command in the interface
+        /// Gets name of the command in the interface.
         /// </summary>
         public string? Name { get; }
 
         /// <summary>
-        /// Display name of the command
+        /// Gets display name of the command.
         /// </summary>
         public string? DisplayName { get; }
 
         /// <summary>
-        /// Constructs CommandAttribute
+        /// Initializes a new instance of the <see cref="CommandAttribute" /> class.
         /// </summary>
         /// <param name="name">Optional name of the command in the interface. If not provided method name will be used.</param>
         /// <param name="displayName">Optional name of the command in the interface.</param>
@@ -31,7 +31,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs CommandAttribute
+        /// Initializes a new instance of the <see cref="CommandAttribute" /> class.
         /// </summary>
         /// <param name="name">Optional name of the command in the interface. If not provided method name will be used.</param>
         public CommandAttribute(string? name)
@@ -40,7 +40,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs CommandAttribute
+        /// Initializes a new instance of the <see cref="CommandAttribute" /> class.
         /// </summary>
         public CommandAttribute()
         {

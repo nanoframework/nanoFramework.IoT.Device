@@ -4,20 +4,20 @@
 namespace System.Device.Model
 {
     /// <summary>
-    /// Interface attribute
+    /// Interface attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public class InterfaceAttribute : Attribute
     {
         /// <summary>
-        /// Display name of the interface
+        /// Gets display name of the interface.
         /// </summary>
         public string DisplayName { get; }
 
         /// <summary>
-        /// Constructs InterfaceAttrbute
+        /// Initializes a new instance of the <see cref="InterfaceAttribute" /> class.
         /// </summary>
-        /// <param name="displayName">Display name of the interface</param>
+        /// <param name="displayName">Display name of the interface.</param>
         public InterfaceAttribute(string displayName)
         {
             DisplayName = displayName;
