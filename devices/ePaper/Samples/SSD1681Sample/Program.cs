@@ -58,11 +58,9 @@ namespace SSD1681Sample
 
                 gfx.DrawLine(0, 0, 200, 200, Color.Black);
 
-                gfx.DrawCircle(25, 25, 100, Color.Black);
+                gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
 
-                gfx.DrawCircle(150, 50, 10, Color.Black);
-
-                gfx.DrawText("Hello World", new Font8x12(), 0, 0);
+                gfx.DrawCircle(150, 50, 25, Color.Black, fill: true);
 
                 gfx.DrawText("Hello World", new Font8x12(), 25, 24);
 
@@ -72,7 +70,11 @@ namespace SSD1681Sample
 
                 gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180);
 
-                gfx.DrawRectangle(25, 95, 100, 100, Color.Black, true);
+                gfx.DrawRectangle(25, 95, 25, 25, Color.Black, true);
+
+                gfx.DrawLine(0, 150, 200, 150, Color.Black);
+
+                gfx.DrawLine(150, 0, 150, 200, Color.Black);
 
             } while (display.NextFramePage());
             display.EndFrameDraw();

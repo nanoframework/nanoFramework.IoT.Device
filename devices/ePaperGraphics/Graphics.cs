@@ -15,121 +15,60 @@ namespace Iot.Device.ePaperGraphics
             this.ePaperDisplay = ePaperDisplay;
         }
 
-        public void DrawLine(int x1, int y1, int x2, int y2, Color color)
+        public void DrawLine(int startX, int startY, 
+            int endX, int endY, Color color)
         {
             // This is a common line drawing algorithm. Read about it here:
             // http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
-            int sx = (x1 < x2) ? 1 : -1;
-            int sy = (y1 < y2) ? 1 : -1;
+            int sx = (startX < endX) ? 1 : -1;
+            int sy = (startY < endY) ? 1 : -1;
 
-            int dx = x2 > x1 ? x2 - x1 : x1 - x2;
-            int dy = y2 > x1 ? y2 - y1 : y1 - y2;
+            int dx = endX > startX ? endX - startX : startX - endX;
+            int dy = endY > startX ? endY - startY : startY - endY;
 
             float err = dx - dy, e2;
 
             // if there is an error with drawing a point or the line is finished get out of the loop!
-            while (!(x1 == x2 && y1 == y2))
+            while (!(startX == endX && startY == endY))
             {
-                this.ePaperDisplay.DrawPixel(x1, y1, color);
+                this.ePaperDisplay.DrawPixel(startX, startY, color);
 
                 e2 = 2 * err;
 
                 if (e2 > -dy)
                 {
                     err -= dy;
-                    x1 += sx;
+                    startX += sx;
                 }
 
                 if (e2 < dx)
                 {
                     err += dx;
-                    y1 += sy;
+                    startY += sy;
                 }
             }
         }
 
-        public void DrawCircle(int xc, int yc, int r, Color color)
+        public void DrawCircle(int centerX, int centerY, 
+            int radius, Color color, bool fill)
         {
-            void drawCircle(int xc, int yc, int x, int y, Color color)
-            {
-                this.ePaperDisplay.DrawPixel(xc + x, yc + y, color);
-                this.ePaperDisplay.DrawPixel(xc - x, yc + y, color);
-                this.ePaperDisplay.DrawPixel(xc + x, yc - y, color);
-                this.ePaperDisplay.DrawPixel(xc - x, yc - y, color);
-                this.ePaperDisplay.DrawPixel(xc + y, yc + x, color);
-                this.ePaperDisplay.DrawPixel(xc - y, yc + x, color);
-                this.ePaperDisplay.DrawPixel(xc + y, yc - x, color);
-                this.ePaperDisplay.DrawPixel(xc - y, yc - x, color);
-            }
-
-            int x = 0, y = r;
-            int d = 3 - 2 * r;
-            drawCircle(xc, yc, x, y, color);
-            while (y >= x)
-            {
-                // for each pixel we will
-                // draw all eight pixels
-
-                x++;
-
-                // check for decision parameter
-                // and correspondingly
-                // update d, x, y
-                if (d > 0)
-                {
-                    y--;
-                    d = d + 4 * (x - y) + 10;
-                }
-                else
-                {
-                    d = d + 4 * x + 6;
-                }
-
-                drawCircle(xc, yc, x, y, color);
-            }
+            if (fill)
+                this.DrawCircleFilled(centerX, centerY, radius, color);
+            else
+                this.DrawCircleOutline(centerX, centerY, radius, color);
         }
 
-        public void DrawRectangle(int x, int y, int width, int height, Color color, bool isFilled)
+        public void DrawRectangle(int x, int y, int width, 
+            int height, Color color, bool fill)
         {
             // This will draw points
-            int xe = x + width;
-            int ye = y + height;
+            int endX = x + width;
+            int endY = y + height;
 
-            if (isFilled)
-            {
-                for (int yy = y; yy != ye; yy++)
-                {
-                    for (int xx = x; xx != xe; xx++)
-                    {
-                        this.ePaperDisplay.DrawPixel(xx, yy, color);
-                    }
-                }
-            }
+            if (fill)
+                DrawRectangleFilled(x, y, endX, endY, color);
             else
-            {
-                xe -= 1;
-                ye -= 1;
-
-                for (int xx = x; xx != xe; xx++)
-                {
-                    this.ePaperDisplay.DrawPixel(xx, y, color);
-                }
-
-                for (int xx = x; xx <= xe; xx++)
-                {
-                    this.ePaperDisplay.DrawPixel(xx, ye, color);
-                }
-
-                for (int yy = y; yy != ye; yy++)
-                {
-                    this.ePaperDisplay.DrawPixel(x, yy, color);
-                }
-
-                for (int yy = y; yy <= ye; yy++)
-                {
-                    this.ePaperDisplay.DrawPixel(xe, yy, color);
-                }
-            }
+                DrawRectangleOutline(x, y, endX, endY, color);
         }
 
         public void DrawText(string text, IFont font, int x, int y)
@@ -164,6 +103,122 @@ namespace Iot.Device.ePaperGraphics
                 }
 
                 col += font.Width;
+            }
+        }
+
+
+
+
+        private void DrawRectangleOutline(int startX, int startY,
+            int endX, int endY, Color color)
+        {
+            endX -= 1;
+            endY -= 1;
+
+            for (int currentX = startX; currentX != endX; currentX++)
+            {
+                this.ePaperDisplay.DrawPixel(currentX, startY, color);
+            }
+
+            for (int currentX = startX; currentX <= endX; currentX++)
+            {
+                this.ePaperDisplay.DrawPixel(currentX, endY, color);
+            }
+
+            for (int currentY = startY; currentY != endY; currentY++)
+            {
+                this.ePaperDisplay.DrawPixel(startX, currentY, color);
+            }
+
+            for (int currentY = startY; currentY <= endY; currentY++)
+            {
+                this.ePaperDisplay.DrawPixel(endX, currentY, color);
+            }
+        }
+
+        private void DrawRectangleFilled(int startX, int startY,
+            int endX, int endY, Color color)
+        {
+            for (int currentY = startY; currentY != endY; currentY++)
+            {
+                for (int xx = startX; xx != endX; xx++)
+                {
+                    this.ePaperDisplay.DrawPixel(xx, currentY, color);
+                }
+            }
+        }
+
+        private void DrawCircleOutline(int centerX, int centerY, 
+            int radius, Color color)
+        {
+            // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+
+            void drawCircle(int xc, int yc, int x, int y, Color color)
+            {
+                this.ePaperDisplay.DrawPixel(xc + x, yc + y, color);
+                this.ePaperDisplay.DrawPixel(xc - x, yc + y, color);
+                this.ePaperDisplay.DrawPixel(xc + x, yc - y, color);
+                this.ePaperDisplay.DrawPixel(xc - x, yc - y, color);
+                this.ePaperDisplay.DrawPixel(xc + y, yc + x, color);
+                this.ePaperDisplay.DrawPixel(xc - y, yc + x, color);
+                this.ePaperDisplay.DrawPixel(xc + y, yc - x, color);
+                this.ePaperDisplay.DrawPixel(xc - y, yc - x, color);
+            }
+
+            int x = 0, y = radius;
+            int d = 3 - 2 * radius;
+            drawCircle(centerX, centerY, x, y, color);
+            while (y >= x)
+            {
+                // for each pixel we will
+                // draw all eight pixels
+
+                x++;
+
+                // check for decision parameter
+                // and correspondingly
+                // update d, x, y
+                if (d > 0)
+                {
+                    y--;
+                    d = d + 4 * (x - y) + 10;
+                }
+                else
+                {
+                    d = d + 4 * x + 6;
+                }
+
+                drawCircle(centerX, centerY, x, y, color);
+            }
+        }
+
+        private void DrawCircleFilled(int centerX, int centerY, 
+            int radius, Color color)
+        {
+            // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+            // C# Implementation: https://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm#C.23
+
+            var d = 3 - 2 * radius;
+            var x = 0;
+            var y = radius;
+
+            while (x <= y)
+            {
+                this.DrawLine(centerX + x, centerY + y, centerX - x, centerY + y, color);
+                this.DrawLine(centerX + x, centerY - y, centerX - x, centerY - y, color);
+                this.DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, color);
+                this.DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, color);
+
+                if (d < 0)
+                {
+                    d += (2 * x) + 1;
+                }
+                else
+                {
+                    d += (2 * (x - y)) + 1;
+                    y--;
+                }
+                x++;
             }
         }
 

@@ -24,8 +24,8 @@
     <Compile Include="IColoredEPaperDisplay.cs" />
     <Compile Include="IePaperDisplay.cs" />
     <Compile Include="IFont.cs" />
-    <Compile Include="IFrameBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rotation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
