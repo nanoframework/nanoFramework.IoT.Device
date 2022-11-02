@@ -39,7 +39,7 @@ namespace SSD1681Sample
 
             using var gfx = new Graphics(display)
             {
-                DisplayRotation = Rotation.Default
+                DisplayRotation = Rotation.NinetyDegreesClockwise
             };
 
 

@@ -166,8 +166,8 @@ namespace Iot.Device.ePaperGraphics
         public int GetRealXPosition(int x, int y)
             => this.DisplayRotation switch
             {
-                Rotation.NinetyDegreesClockwise => this.ePaperDisplay.Width - y,
-                Rotation.OneEightyDegreesClockwise => this.ePaperDisplay.Width - x,
+                Rotation.NinetyDegreesClockwise => this.ePaperDisplay.Width - y - 1,
+                Rotation.OneEightyDegreesClockwise => this.ePaperDisplay.Width - x - 1,
                 Rotation.TwoSeventyDegreesClockwise => y,
                 _ => x
             };
@@ -183,8 +183,8 @@ namespace Iot.Device.ePaperGraphics
             => this.DisplayRotation switch
             {
                 Rotation.NinetyDegreesClockwise => x,
-                Rotation.OneEightyDegreesClockwise => this.ePaperDisplay.Height - y,
-                Rotation.TwoSeventyDegreesClockwise => this.ePaperDisplay.Height - x,
+                Rotation.OneEightyDegreesClockwise => this.ePaperDisplay.Height - y - 1,
+                Rotation.TwoSeventyDegreesClockwise => this.ePaperDisplay.Height - x - 1,
                 _ => y
             };
 
