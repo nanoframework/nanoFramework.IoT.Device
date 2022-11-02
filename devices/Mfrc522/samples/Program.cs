@@ -31,7 +31,7 @@ int pinReset = 21;
 //Configuration.SetPinFunction(19, DeviceFunction.SPI1_CLOCK);
 // Make sure as well you are using the right chip select
 // Uncomment for SPI
-SpiConnectionSettings connection = new(1, 22);
+SpiConnectionSettings connection = new (1, 22);
 // Here you can use as well MfRc522.MaximumSpiClockFrequency which is 10_000_000
 // Anything lower will work as well
 connection.ClockFrequency = 5_000_000;

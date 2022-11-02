@@ -40,9 +40,9 @@ namespace Iot.Device.Mfrc522
 #if DEBUG
         private readonly ILogger _logger;
 #endif
-        private readonly SerialPort _serialPort;
-        private SpiDevice _spiDevice;
-        private I2cDevice _i2CDevice;
+        private readonly SerialPort? _serialPort;
+        private SpiDevice? _spiDevice;
+        private I2cDevice? _i2CDevice;
         private GpioController? _controller;
         private bool _shouldDispose;
 
