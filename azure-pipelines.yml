@@ -58,7 +58,13 @@ steps:
   displayName: Setup git identity
 
 - template: azure-pipelines-templates/install-nuget.yml@templates
-- template: azure-pipelines-templates/cache-nano-nugets.yml@templates
+- task: Cache@2
+  displayName: Cache NuGet packages
+  condition: succeeded()
+  continueOnError: true
+  inputs:
+    key: 'nuget | **/packages.lock.json'
+    path: $(UserProfile)/.nuget/packages
 
 - task: DotNetCoreCLI@2  
   displayName: Install nanovc tool
