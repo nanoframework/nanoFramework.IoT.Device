@@ -8,6 +8,9 @@ using Iot.Device.ePaperGraphics;
 
 namespace Iot.Device.ePaper.Drivers
 {
+    /// <summary>
+    /// A driver class for the SSD1681 display controller.
+    /// </summary>
     public sealed class Ssd1681 : IColoredEPaperDisplay
     {
         private const byte Black = 0x00;

@@ -8,13 +8,35 @@ namespace Iot.Device.ePaperGraphics
     {
         private bool disposedValue;
 
+        /// <summary>
+        /// Gets the E-Paper display being controlled by this <see cref="Graphics"/> class instance.
+        /// </summary>
         public IePaperDisplay ePaperDisplay { get; }
 
+        /// <summary>
+        /// Gets or sets the current display orientation.
+        /// </summary>
+        /// <see cref="Rotation"/>
+        public Rotation DisplayRotation { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Graphics"/> class.
+        /// </summary>
+        /// <param name="ePaperDisplay">The E-Paper display device to draw to.</param>
         public Graphics(IePaperDisplay ePaperDisplay)
         {
             this.ePaperDisplay = ePaperDisplay;
+            this.DisplayRotation = Rotation.Default;
         }
 
+        /// <summary>
+        /// Draws a line from the a starting point to an end point.
+        /// </summary>
+        /// <param name="startX">X position of the start point.</param>
+        /// <param name="startY">Y position of the start point.</param>
+        /// <param name="endX">X position of the end point.</param>
+        /// <param name="endY">Y position of the end point.</param>
+        /// <param name="color">The color of the line.</param>
         public void DrawLine(int startX, int startY, 
             int endX, int endY, Color color)
         {
@@ -31,7 +53,7 @@ namespace Iot.Device.ePaperGraphics
             // if there is an error with drawing a point or the line is finished get out of the loop!
             while (!(startX == endX && startY == endY))
             {
-                this.ePaperDisplay.DrawPixel(startX, startY, color);
+                this.DrawPixel(startX, startY, color);
 
                 e2 = 2 * err;
 
@@ -49,6 +71,14 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
+        /// <summary>
+        /// Draws a circle defined by the specified center point and radius.
+        /// </summary>
+        /// <param name="centerX">X position of the center point.</param>
+        /// <param name="centerY">Y position of the center point.</param>
+        /// <param name="radius">The circle's radius.</param>
+        /// <param name="color">The color to use when drawing the circle.</param>
+        /// <param name="fill">True to fill the circle, otherwise; draws only the outline.</param>
         public void DrawCircle(int centerX, int centerY, 
             int radius, Color color, bool fill)
         {
@@ -58,19 +88,35 @@ namespace Iot.Device.ePaperGraphics
                 this.DrawCircleOutline(centerX, centerY, radius, color);
         }
 
-        public void DrawRectangle(int x, int y, int width, 
+        /// <summary>
+        /// Draws a rectangle defined by a starting point, width, and height.
+        /// </summary>
+        /// <param name="startX">Top left point X position.</param>
+        /// <param name="startY">Top left point Y position.</param>
+        /// <param name="width">The width of the rectangle in pixels.</param>
+        /// <param name="height">The height of the rectangle in pixels.</param>
+        /// <param name="color">The color to use when drawing the rectangle.</param>
+        /// <param name="fill">True to fill the rectangle, otherwise; draws only the outline.</param>
+        public void DrawRectangle(int startX, int startY, int width, 
             int height, Color color, bool fill)
         {
             // This will draw points
-            int endX = x + width;
-            int endY = y + height;
+            int endX = startX + width;
+            int endY = startY + height;
 
             if (fill)
-                DrawRectangleFilled(x, y, endX, endY, color);
+                DrawRectangleFilled(startX, startY, endX, endY, color);
             else
-                DrawRectangleOutline(x, y, endX, endY, color);
+                DrawRectangleOutline(startX, startY, endX, endY, color);
         }
 
+        /// <summary>
+        /// Writes text to the display.
+        /// </summary>
+        /// <param name="text">The text to write.</param>
+        /// <param name="font">The font to use.</param>
+        /// <param name="x">Starting X point.</param>
+        /// <param name="y">Starting Y point.</param>
         public void DrawText(string text, IFont font, int x, int y)
         {
             //TODO: get rid of this method by updating the font byte array so it is not reversed.
@@ -99,14 +145,48 @@ namespace Iot.Device.ePaperGraphics
                 var cb = font[c];
                 for (var i = 0; i < font.Height; i++)
                 {
-                    this.ePaperDisplay.DrawBuffer(x + col, y + line + i, (byte)~Reverse(cb[i], font.Width));
+                    var xPos = x + col;
+                    var yPos = y + line + i;
+
+                    this.ePaperDisplay.DrawBuffer(xPos, yPos,
+                        (byte)~Reverse(cb[i], font.Width));
                 }
 
                 col += font.Width;
             }
         }
 
+        /// <summary>
+        /// Gets the real X Position of a given point after considering the current <see cref="Rotation"/> of the display.
+        /// </summary>
+        /// <param name="x">The X Position in the current rotation.</param>
+        /// <param name="y">The Y Position in the current rotation.</param>
+        /// <param name="displayWidth"></param>
+        /// <returns>The real X position on the display.</returns>
+        public int GetRealXPosition(int x, int y)
+            => this.DisplayRotation switch
+            {
+                Rotation.NinetyDegreesClockwise => this.ePaperDisplay.Width - y,
+                Rotation.OneEightyDegreesClockwise => this.ePaperDisplay.Width - x,
+                Rotation.TwoSeventyDegreesClockwise => y,
+                _ => x
+            };
 
+        /// <summary>
+        /// Gets the real Y Position of a given point after considering the current <see cref="Rotation"/> of the display.
+        /// </summary>
+        /// <param name="x">The X Position in the current rotation.</param>
+        /// <param name="y">The Y Position in the current rotation.</param>
+        /// <param name="displayWidth"></param>
+        /// <returns>The real Y position on the display.</returns>
+        public int GetRealYPosition(int x, int y)
+            => this.DisplayRotation switch
+            {
+                Rotation.NinetyDegreesClockwise => x,
+                Rotation.OneEightyDegreesClockwise => this.ePaperDisplay.Height - y,
+                Rotation.TwoSeventyDegreesClockwise => this.ePaperDisplay.Height - x,
+                _ => y
+            };
 
 
         private void DrawRectangleOutline(int startX, int startY,
@@ -117,22 +197,22 @@ namespace Iot.Device.ePaperGraphics
 
             for (int currentX = startX; currentX != endX; currentX++)
             {
-                this.ePaperDisplay.DrawPixel(currentX, startY, color);
+                this.DrawPixel(currentX, startY, color);
             }
 
             for (int currentX = startX; currentX <= endX; currentX++)
             {
-                this.ePaperDisplay.DrawPixel(currentX, endY, color);
+                this.DrawPixel(currentX, endY, color);
             }
 
             for (int currentY = startY; currentY != endY; currentY++)
             {
-                this.ePaperDisplay.DrawPixel(startX, currentY, color);
+                this.DrawPixel(startX, currentY, color);
             }
 
             for (int currentY = startY; currentY <= endY; currentY++)
             {
-                this.ePaperDisplay.DrawPixel(endX, currentY, color);
+                this.DrawPixel(endX, currentY, color);
             }
         }
 
@@ -143,7 +223,7 @@ namespace Iot.Device.ePaperGraphics
             {
                 for (int xx = startX; xx != endX; xx++)
                 {
-                    this.ePaperDisplay.DrawPixel(xx, currentY, color);
+                    this.DrawPixel(xx, currentY, color);
                 }
             }
         }
@@ -155,14 +235,14 @@ namespace Iot.Device.ePaperGraphics
 
             void drawCircle(int xc, int yc, int x, int y, Color color)
             {
-                this.ePaperDisplay.DrawPixel(xc + x, yc + y, color);
-                this.ePaperDisplay.DrawPixel(xc - x, yc + y, color);
-                this.ePaperDisplay.DrawPixel(xc + x, yc - y, color);
-                this.ePaperDisplay.DrawPixel(xc - x, yc - y, color);
-                this.ePaperDisplay.DrawPixel(xc + y, yc + x, color);
-                this.ePaperDisplay.DrawPixel(xc - y, yc + x, color);
-                this.ePaperDisplay.DrawPixel(xc + y, yc - x, color);
-                this.ePaperDisplay.DrawPixel(xc - y, yc - x, color);
+                this.DrawPixel(xc + x, yc + y, color);
+                this.DrawPixel(xc - x, yc + y, color);
+                this.DrawPixel(xc + x, yc - y, color);
+                this.DrawPixel(xc - x, yc - y, color);
+                this.DrawPixel(xc + y, yc + x, color);
+                this.DrawPixel(xc - y, yc + x, color);
+                this.DrawPixel(xc + y, yc - x, color);
+                this.DrawPixel(xc - y, yc - x, color);
             }
 
             int x = 0, y = radius;
@@ -220,6 +300,13 @@ namespace Iot.Device.ePaperGraphics
                 }
                 x++;
             }
+        }
+
+        private void DrawPixel(int x, int y, Color color)
+        {
+            this.ePaperDisplay.DrawPixel(this.GetRealXPosition(x, y),
+                this.GetRealYPosition(x, y),
+               color);
         }
 
         #region IDisposable

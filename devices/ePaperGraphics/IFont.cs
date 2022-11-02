@@ -5,6 +5,7 @@
         byte[] this[char character] { get; }
 
         int Height { get; }
+
         int Width { get; }
     }
 }

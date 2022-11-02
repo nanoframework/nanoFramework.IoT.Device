@@ -37,7 +37,10 @@ namespace SSD1681Sample
             using var display = new Ssd1681(resetPin, busyPin, dataCommandPin,
                 spiDevice, width: 200, height: 200, enableFramePaging: true);
 
-            using var gfx = new Graphics(display);
+            using var gfx = new Graphics(display)
+            {
+                DisplayRotation = Rotation.Default
+            };
 
 
             // Power on the display and initialize it
