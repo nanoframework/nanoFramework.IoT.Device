@@ -19,7 +19,7 @@ jobs:
     uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
     with:
       timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
-      workingDirectory: '${{ github.workspace }}/devices'
+      workingDirectory: devices
       branchToPr: 'develop'      
       solutionsToCheck: |
         ShiftRegister.sln
