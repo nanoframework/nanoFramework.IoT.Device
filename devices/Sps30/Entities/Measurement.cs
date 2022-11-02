@@ -1,7 +1,5 @@
-﻿//
-// Copyright (c) 2017 The nanoFramework project contributors
+﻿// Copyright (c) 2017 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 using System.Buffers.Binary;
@@ -16,10 +14,9 @@ namespace Iot.Device.Sps30.Entities
     public class Measurement
     {
         /// <summary>
-        /// Parse the passed data into usable measurements. Depending on the amount of bytes passed, the originally
-        /// requested type is deducted and parsed accordingly.
+        /// Initializes a new instance of the <see cref="Measurement" /> class.
         /// </summary>
-        /// <param name="data">The response data on the requested measurement</param>
+        /// <param name="data">The response data on the requested measurement.</param>
         public Measurement(byte[] data)
         {
             if (data.Length >= 40)
@@ -59,64 +56,64 @@ namespace Iot.Device.Sps30.Entities
         }
 
         /// <summary>
-        /// The format assumed when parsing the data for this measurement instance.
+        /// Gets or sets the format assumed when parsing the data for this measurement instance.
         /// </summary>
         public MeasurementOutputFormat Format { get; protected set; }
 
         /// <summary>
-        /// Mass Concentration PM1.0 [µg/m³]
+        /// Gets or sets Mass Concentration PM1.0 [µg/m³].
         /// </summary>
         public MassConcentration MassConcentrationPm10 { get; protected set; }
 
         /// <summary>
-        /// Mass Concentration PM2.5 [µg/m³]
+        /// Gets or sets Mass Concentration PM2.5 [µg/m³].
         /// </summary>
         public MassConcentration MassConcentrationPm25 { get; protected set; }
 
         /// <summary>
-        /// Mass Concentration PM4.0 [µg/m³]
+        /// Gets or sets Mass Concentration PM4.0 [µg/m³].
         /// </summary>
         public MassConcentration MassConcentrationPm40 { get; protected set; }
 
         /// <summary>
-        /// Mass Concentration PM10.0 [µg/m³]
+        /// Gets or sets Mass Concentration PM10.0 [µg/m³].
         /// </summary>
         public MassConcentration MassConcentrationPm100 { get; protected set; }
 
         /// <summary>
-        /// Number Concentration PM0.5 [#/cm³]
+        /// Gets or sets Number Concentration PM0.5 [#/cm³].
         /// </summary>
         public double NumberConcentrationPm05 { get; protected set; }
 
         /// <summary>
-        /// Number Concentration PM1.0 [#/cm³]
+        /// Gets or sets Number Concentration PM1.0 [#/cm³].
         /// </summary>
         public double NumberConcentrationPm10 { get; protected set; }
 
         /// <summary>
-        /// Number Concentration PM2.5 [#/cm³]
+        /// Gets or sets Number Concentration PM2.5 [#/cm³].
         /// </summary>
         public double NumberConcentrationPm25 { get; protected set; }
 
         /// <summary>
-        /// Number Concentration PM4.0 [#/cm³]
+        /// Gets or sets Number Concentration PM4.0 [#/cm³].
         /// </summary>
         public double NumberConcentrationPm40 { get; protected set; }
 
         /// <summary>
-        /// Number Concentration PM10.0 [#/cm³]
+        /// Gets or sets Number Concentration PM10.0 [#/cm³].
         /// </summary>
         public double NumberConcentrationPm100 { get; protected set; }
 
         /// <summary>
-        /// Typical Particle Size depending on format (in µm for Float and nm for ushort, see <see cref="MeasurementOutputFormat"/>)
+        /// Gets or sets Typical Particle Size depending on format (in µm for Float and nm for ushort, see <see cref="MeasurementOutputFormat"/>).
         /// </summary>
         public Length TypicalParticleSize { get; protected set; }
 
         /// <summary>
         /// Conveniently show the measurement in a single string.
         /// </summary>
-        /// <returns>The measurement as a convenient string</returns>
+        /// <returns>The measurement as a convenient string.</returns>
         public override string ToString()
         {
             return $"MassConcentration [µg/m³] PM1.0={MassConcentrationPm10.MicrogramsPerCubicMeter}, PM2.5={MassConcentrationPm25.MicrogramsPerCubicMeter}, PM4.0={MassConcentrationPm40.MicrogramsPerCubicMeter}, PM10.0={MassConcentrationPm100.MicrogramsPerCubicMeter}, NumberConcentration [#/cm³] PM0.5={NumberConcentrationPm05}, PM1.0={NumberConcentrationPm10}, PM2.5={NumberConcentrationPm25}, PM4.0={NumberConcentrationPm40}, PM10.0={NumberConcentrationPm100}, TypicalParticleSize[nm]={TypicalParticleSize.Nanometers}";
