@@ -120,7 +120,7 @@ namespace Iot.Device.ePaperGraphics
         public void DrawText(string text, IFont font, int x, int y)
         {
             //TODO: get rid of this method by updating the font byte array so it is not reversed.
-            uint Reverse(uint a, int length)
+            static uint Reverse(uint a, int length)
             {
                 uint b = 0b_0;
                 for (int i = 0; i < length; i++)
@@ -153,6 +153,24 @@ namespace Iot.Device.ePaperGraphics
                 }
 
                 col += font.Width;
+            }
+        }
+
+        public void DrawBitmap(byte[] bitmap, int startX, int startY, bool rotate = false)
+        {
+            var x = startX;
+            var y = startY;
+
+            if (!rotate)
+            {
+                this.ePaperDisplay.DrawBuffer(startX, startY, bitmap);
+            }
+            else
+            {
+                foreach (var b in bitmap)
+                {
+                    //this.ePaperDisplay.DrawBuffer()
+                }
             }
         }
 

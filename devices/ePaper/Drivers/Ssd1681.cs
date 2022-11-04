@@ -316,7 +316,7 @@ namespace Iot.Device.ePaper.Drivers
                 && frameByteIndex < this.currentFrameBufferPageUpperBound
                 && bitmapIndex < bitmap.Length)
             {
-                this.redFrameBuffer[pageByteIndex] = (byte)bitmap[bitmapIndex];
+                this.redFrameBuffer[pageByteIndex] = bitmap[bitmapIndex];
 
                 bitmapIndex++;
                 frameByteIndex++;
@@ -339,7 +339,7 @@ namespace Iot.Device.ePaper.Drivers
                 && frameByteIndex < this.currentFrameBufferPageUpperBound
                 && bitmapIndex < bitmap.Length)
             {
-                this.blackAndWhiteFrameBuffer[pageByteIndex] = (byte)bitmap[bitmapIndex];
+                this.blackAndWhiteFrameBuffer[pageByteIndex] = bitmap[bitmapIndex];
 
                 bitmapIndex++;
                 frameByteIndex++;

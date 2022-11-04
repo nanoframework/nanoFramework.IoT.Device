@@ -102,16 +102,13 @@
             new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, }, // U+007F
         };
 
-        /// <summary>
-        /// Width of a character in the font.
-        /// </summary>
+        ///<inheritdoc/>
         public int Width => 8;
 
-        /// <summary>
-        /// Height of a character in the font.
-        /// </summary>
+        ///<inheritdoc/>
         public int Height => 12;
 
+        ///<inheritdoc/>
         public byte[] this[char character]
         {
             get
