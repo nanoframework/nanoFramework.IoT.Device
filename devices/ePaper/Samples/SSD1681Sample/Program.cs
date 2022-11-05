@@ -1,6 +1,5 @@
 using System.Device.Gpio;
 using System.Device.Spi;
-using System.Diagnostics;
 
 using Iot.Device.ePaper.Drivers;
 using Iot.Device.ePaperGraphics;
@@ -22,7 +21,6 @@ namespace SSD1681Sample
             };
 
             using var spiDevice = new SpiDevice(spiConnectionSettings);
-
 
             // Setup required GPIO Pins
             using var gpioController = new GpioController();

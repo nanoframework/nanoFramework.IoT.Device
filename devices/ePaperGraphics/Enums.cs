@@ -7,4 +7,10 @@
         OneEightyDegreesClockwise,
         TwoSeventyDegreesClockwise
     }
+
+    public enum ColorFormat
+    {
+        Color1BitPerPixel,
+        Color2BitPerPixel
+    }
 }

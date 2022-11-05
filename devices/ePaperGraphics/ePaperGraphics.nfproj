@@ -25,6 +25,7 @@
     <Compile Include="IColoredEPaperDisplay.cs" />
     <Compile Include="IePaperDisplay.cs" />
     <Compile Include="IFont.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
