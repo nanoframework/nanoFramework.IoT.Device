@@ -21,11 +21,11 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hts221</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.82" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.82" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.141" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.141" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.145.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.145.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.148.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.148.0" />
     </dependencies>
   </metadata>
   <files>

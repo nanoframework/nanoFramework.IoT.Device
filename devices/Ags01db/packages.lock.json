@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.82, 1.2.82]",
-        "resolved": "1.2.82",
-        "contentHash": "bLU3RwTmG/fmpVQ5Q7/TpiY4w4+NoKwssRVluTiSynqc3IUDAJSCPK0y4gdiG21zzRhad59oSgUqtk1+bY9v1A=="
+        "requested": "[1.2.141, 1.2.141]",
+        "resolved": "1.2.141",
+        "contentHash": "Brdf+YWUiGxfV1U2ID0LFOwBFQdlGMJr1mil1ZtjMhGE0JEkRLsfPdZATqqmm1vmNywCvECjt0rti+IrM9GsHg=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.82, 1.2.82]",
-        "resolved": "1.2.82",
-        "contentHash": "5j1KvviZM99m1YPV+J4QuKy27/hGBA1rlxJlKEwV0nXElDthlA03PVW5TwucTEiHDDsETKggyUoWrC5GTwUD4A=="
+        "requested": "[1.2.141, 1.2.141]",
+        "resolved": "1.2.141",
+        "contentHash": "VFpnXRpyhPh/sTObTmLx40tgiFooHNPpSTyI6hreQo+ILzXX8z1fzHfjX/4nSHMYv7s4ThAyPvZefbYV6aP9XQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
@@ -52,15 +52,15 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[4.145.0, 4.145.0]",
-        "resolved": "4.145.0",
-        "contentHash": "PDh36VJk+W3B2hQ5UJPrYkLVnxuMsskEKNPhl/C6zD2pT/WwnjkGpY++EPR1qVXFpqZyG7e08aEcSYEVyzrhXw=="
+        "requested": "[4.148.0, 4.148.0]",
+        "resolved": "4.148.0",
+        "contentHash": "UcHkjhBQG6/x2uHjIZwmoePHqmmSEQnOc2BCKiuY+z6Q21onUHd52+C6zW5ZkG5w7wNKPX9R9rhb7+xSrqUkeg=="
       },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
-        "requested": "[4.145.0, 4.145.0]",
-        "resolved": "4.145.0",
-        "contentHash": "XaHp3v03wdZBakhHelfJvwI8ZHUDISsSgtMRrJdEywAnaCn4GRFxNS4TqdjlarI05pVzNo0ZLSDDVi7X8W1JSg=="
+        "requested": "[4.148.0, 4.148.0]",
+        "resolved": "4.148.0",
+        "contentHash": "oHwokgslXT8XpCFbDsCFddxoC9/cEH8FALnfzQlH2JIqitjO+CpNzwwzC7AJnP9EM0q3u8vz8LyNqHrBmavrFQ=="
       }
     }
   }
