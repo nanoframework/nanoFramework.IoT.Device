@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetColumnAddress command
+    /// Represents SetColumnAddress command.
     /// </summary>
     public class SetColumnAddress : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetColumnAddress" /> class.
         /// Set column address.
         /// Start from 8th column of driver IC. This is 0th column for OLED.
         /// End at  (8 + 47)th column. Each column has 2 pixels(or segments).
@@ -39,12 +40,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         public byte Id => 0x15;
 
         /// <summary>
-        /// Column start address.
+        /// Gets or sets column start address.
         /// </summary>
         public byte StartAddress { get; set; }
 
         /// <summary>
-        /// Column end address.
+        /// Gets or sets column end address.
         /// </summary>
         public byte EndAddress { get; set; }
 

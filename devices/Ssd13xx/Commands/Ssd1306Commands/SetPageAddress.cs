@@ -4,41 +4,42 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Page address
+    /// Page address.
     /// </summary>
     public enum PageAddress
     {
-        /// <summary>Page0</summary>
+        /// <summary>Page 0.</summary>
         Page0 = 0xB0,
 
-        /// <summary>Page1</summary>
+        /// <summary>Page 1.</summary>
         Page1 = 0xB1,
 
-        /// <summary>Page2</summary>
+        /// <summary>Page 2.</summary>
         Page2 = 0xB2,
 
-        /// <summary>Page3</summary>
+        /// <summary>Page 3.</summary>
         Page3 = 0xB3,
 
-        /// <summary>Page4</summary>
+        /// <summary>Page 4.</summary>
         Page4 = 0xB4,
 
-        /// <summary>Page5</summary>
+        /// <summary>Page 5.</summary>
         Page5 = 0xB5,
 
-        /// <summary>Page6</summary>
+        /// <summary>Page 6.</summary>
         Page6 = 0xB6,
 
-        /// <summary>Page6</summary>
+        /// <summary>Page 7.</summary>
         Page7 = 0xB7
     }
 
     /// <summary>
-    /// Represents SetPageAddress command
+    /// Represents SetPageAddress command.
     /// </summary>
     public class SetPageAddress : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetPageAddress" /> class.
         /// This triple byte command specifies page start address and end address of the display data RAM.
         /// This command also sets the page address pointer to page start address. This pointer is used to
         /// define the current read/write page address in graphic display data RAM. If vertical address
@@ -56,17 +57,17 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0x22;
 
         /// <summary>
-        /// Page start address with a range of 0-7.
+        /// Gets or sets page start address with a range of 0-7.
         /// </summary>
         public PageAddress StartAddress { get; set; }
 
         /// <summary>
-        /// Page end address with a range of 0-7.
+        /// Gets or sets page end address with a range of 0-7.
         /// </summary>
         public PageAddress EndAddress { get; set; }
 

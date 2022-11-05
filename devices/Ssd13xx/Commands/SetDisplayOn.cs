@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Represents SetDisplayOn command
+    /// Represents SetDisplayOn command.
     /// </summary>
     public class SetDisplayOn : ISharedCommand
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetDisplayOn" /> class.
         /// This command turns the OLED panel display on.
         /// </summary>
         public SetDisplayOn()
