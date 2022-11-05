@@ -24,9 +24,9 @@
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
       <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="4.145.0" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.82" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.82" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.148.0" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.141" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.141" />
     </dependencies>
   </metadata>
   <files>

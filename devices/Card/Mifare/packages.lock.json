@@ -10,15 +10,15 @@
       },
       "nanoFramework.Logging": {
         "type": "Direct",
-        "requested": "[1.1.41, 1.1.41]",
-        "resolved": "1.1.41",
-        "contentHash": "02n9N0KL0nxlk251F8vGIomLWknLrhRx8V65ajaR8HGQy38coGUus/a+/02lZ80GTSaptJM6TvEPBbB2gRh2fA=="
+        "requested": "[1.1.47, 1.1.47]",
+        "resolved": "1.1.47",
+        "contentHash": "klK4ak7u5uytdXWGsQyDpCvpQnmPrJqq6QDKqTZsJzQyOlBkXQ1Hhy2I9ttyT1vh0JaaPGbdZe/UEK4Y9GqRrA=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.82, 1.2.82]",
-        "resolved": "1.2.82",
-        "contentHash": "bLU3RwTmG/fmpVQ5Q7/TpiY4w4+NoKwssRVluTiSynqc3IUDAJSCPK0y4gdiG21zzRhad59oSgUqtk1+bY9v1A=="
+        "requested": "[1.2.141, 1.2.141]",
+        "resolved": "1.2.141",
+        "contentHash": "Brdf+YWUiGxfV1U2ID0LFOwBFQdlGMJr1mil1ZtjMhGE0JEkRLsfPdZATqqmm1vmNywCvECjt0rti+IrM9GsHg=="
       }
     }
   }
