@@ -3,17 +3,17 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Threading;
 
-using Iot.Device.ePaperGraphics;
+using Iot.Device.ePaper.Shared.Buffers;
+using Iot.Device.ePaper.Shared.Drivers;
+using Iot.Device.ePaper.Shared.Primitives;
 
 namespace Iot.Device.ePaper.Drivers
 {
     /// <summary>
     /// A driver class for the SSD1681 display controller.
     /// </summary>
-    public sealed class Ssd1681 : IColoredEPaperDisplay
+    public sealed class Ssd1681 : IePaperDisplay
     {
-        private const byte Black = 0x00;
-        private const byte White = 0xff;
         private const int PagesPerFrame = 5;
         private const int FirstPageIndex = 0;
         private const int LastPageIndex = PagesPerFrame - 1;
@@ -23,25 +23,27 @@ namespace Iot.Device.ePaper.Drivers
         private readonly GpioPin dataCommandPin;
         private readonly SpiDevice spiDevice;
 
-        private byte[] blackAndWhiteFrameBuffer;
-        private byte[] redFrameBuffer;
+        //private byte[] blackAndWhiteFrameBuffer;
+        //private byte[] redFrameBuffer;
         private int currentFrameBufferPage;
         private int currentFrameBufferPageLowerBound;
         private int currentFrameBufferPageUpperBound;
         private int currentFrameBufferStartXPosition;
         private int currentFrameBufferStartYPosition;
 
+        private FrameBuffer2BitPerPixel frameBuffer2bpp;
+
         private bool disposed;
 
-        /// <summary>
-        /// Gets the width of the display.
-        /// </summary>
+        /// <inheritdoc/>
         public int Width { get; }
 
-        /// <summary>
-        /// Gets the height of the display.
-        /// </summary>
+        /// <inheritdoc/>
         public int Height { get; }
+
+        /// <inheritdoc/>
+        public IFrameBuffer FrameBuffer
+            => this.frameBuffer2bpp;
 
         /// <summary>
         /// Gets the current power state of the display panel.
@@ -76,20 +78,12 @@ namespace Iot.Device.ePaper.Drivers
             this.busyPin = busyPin;
             this.dataCommandPin = dataCommandPin;
             this.spiDevice = spiDevice;
-
-            var bufferSize = (width * height) / 8;
-            var pageSize = bufferSize / PagesPerFrame;
-
-            this.blackAndWhiteFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, White);
-            this.redFrameBuffer = this.CreateBuffer(enableFramePaging ? pageSize : bufferSize, Black); // defaulting red buffer to 0x00
-
-            this.currentFrameBufferPage = 0;
-            this.CalculateFrameBufferPageBounds();
-
             this.Width = width;
             this.Height = height;
-
             this.PowerState = PowerState.Unknown;
+
+            this.InitializeFrameBuffer(width, height, enableFramePaging);
+            this.CalculateFrameBufferPageBounds();
         }
 
         /// <summary>
@@ -286,15 +280,15 @@ namespace Iot.Device.ePaper.Drivers
                 {
                     // according to LUT, no need to change the pixel value in B/W buffer.
                     // red frame buffer starts with 0x00. ORing it to set red pixel to 1.
-                    this.redFrameBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                    this.frameBuffer2bpp.ColorBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
                 else if (color.R == 0 && color.G == 0 && color.B == 0) // black pixel
                 {
-                    this.blackAndWhiteFrameBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
+                    this.frameBuffer2bpp.BlackBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
                 }
                 else // assume white if R, G, and B > 0
                 {
-                    this.blackAndWhiteFrameBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                    this.frameBuffer2bpp.BlackBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
             }
         }
@@ -315,7 +309,7 @@ namespace Iot.Device.ePaper.Drivers
                 && frameByteIndex < this.currentFrameBufferPageUpperBound
                 && bitmapIndex < bitmap.Length)
             {
-                this.redFrameBuffer[pageByteIndex] = bitmap[bitmapIndex];
+                this.frameBuffer2bpp.ColorBuffer[pageByteIndex] = bitmap[bitmapIndex];
 
                 bitmapIndex++;
                 frameByteIndex++;
@@ -338,7 +332,7 @@ namespace Iot.Device.ePaper.Drivers
                 && frameByteIndex < this.currentFrameBufferPageUpperBound
                 && bitmapIndex < bitmap.Length)
             {
-                this.blackAndWhiteFrameBuffer[pageByteIndex] = bitmap[bitmapIndex];
+                this.frameBuffer2bpp.BlackBuffer[pageByteIndex] = bitmap[bitmapIndex];
 
                 bitmapIndex++;
                 frameByteIndex++;
@@ -465,8 +459,9 @@ namespace Iot.Device.ePaper.Drivers
             }
         }
 
-
-
+        /// <summary>
+        /// Performs the hardware reset commands sequence on the display.
+        /// </summary>
         private void HardwareReset()
         {
             // specs say to wait 10ms after supplying voltage to the display
@@ -479,6 +474,9 @@ namespace Iot.Device.ePaper.Drivers
             this.WaitMs(200);
         }
 
+        /// <summary>
+        /// Performs the software reset commands sequence on the display.
+        /// </summary>
         private void SoftwareReset()
         {
             this.SendCommand((byte)(byte)Command.SoftwareReset);
@@ -487,23 +485,43 @@ namespace Iot.Device.ePaper.Drivers
             this.WaitMs(10);
         }
 
+        /// <summary>
+        /// A simple wait method that wraps <see cref="Thread.Sleep(int)"/>.
+        /// </summary>
+        /// <param name="milliseconds">Number of milliseconds to sleep.</param>
         private void WaitMs(int milliseconds)
         {
             Thread.Sleep(milliseconds);
         }
 
+        /// <summary>
+        /// "Snaps" the provided coordinates to the lower bounds of the display if out of allowed range.
+        /// </summary>
+        /// <param name="x">The X position.</param>
+        /// <param name="y">The Y position.</param>
         private void EnforceBounds(ref int x, ref int y)
         {
             x = x < 0 || x > this.Width - 1 ? 0 : x;
             y = y < 0 || y > this.Height - 1 ? 0 : y;
         }
 
+        /// <summary>
+        /// Gets the index of the byte containing the pixel specified by the <paramref name="x"/> and <paramref name="y"/> parameters.
+        /// </summary>
+        /// <param name="x">The X position of the pixel.</param>
+        /// <param name="y">The Y position of the pixel.</param>
+        /// <returns></returns>
         private int GetFrameBufferIndex(int x, int y)
         {
             // x specifies the column
             return (x + (y * this.Width)) / 8;
         }
 
+        /// <summary>
+        /// Gets the X position from a buffer index.
+        /// </summary>
+        /// <param name="index">The buffer index.</param>
+        /// <returns>The X position of a pixel.</returns>
         private int GetXPositionFromFrameBufferIndex(int index)
         {
             if (index <= 0)
@@ -512,6 +530,11 @@ namespace Iot.Device.ePaper.Drivers
             return (index * 8) % this.Width;
         }
 
+        /// <summary>
+        /// Gets the Y position from a buffer index.
+        /// </summary>
+        /// <param name="index">The buffer index.</param>
+        /// <returns>The Y position of a pixel.</returns>
         private int GetYPositionFromFrameBufferIndex(int index)
         {
             if (index <= 0)
@@ -520,63 +543,62 @@ namespace Iot.Device.ePaper.Drivers
             return (index * 8) / this.Height;
         }
 
-        private byte[] CreateBuffer(int size, byte defaultValue)
+        /// <summary>
+        /// Initializes a new instance of the intenral frame buffer. Supports paging.
+        /// </summary>
+        /// <param name="width">The width of the frame buffer in pixels.</param>
+        /// <param name="height">The height of the frame buffer in pixels.</param>
+        /// <param name="enableFramePaging">If <see langword="true"/>, enables paging the frame.</param>
+        private void InitializeFrameBuffer(int width, int height, bool enableFramePaging)
         {
-            if (size < 0)
-                throw new ArgumentOutOfRangeException();
-
-            var buffer = new byte[size];
-
-            if (defaultValue != default)
-            {
-                this.ClearBuffer(ref buffer, defaultValue);
-            }
-
-            return buffer;
+            var frameBufferHeight = enableFramePaging ? height / PagesPerFrame : height;
+            this.frameBuffer2bpp = new FrameBuffer2BitPerPixel(frameBufferHeight, width);
         }
 
-        private void ClearFrameBuffers()
-        {
-            this.ClearBuffer(ref this.blackAndWhiteFrameBuffer, White);
-            this.ClearBuffer(ref this.redFrameBuffer, Black);
-        }
-
-        private void ClearBuffer(ref byte[] buffer, byte defaultValue)
-        {
-            for(var i = 0; i < buffer.Length; i++)
-            {
-                buffer[i] = defaultValue;
-            }
-        }
-
+        /// <summary>
+        /// Sets the current active frame buffer page to the specified page index.
+        /// Existing frame buffer is reused by clearing it first and page bounds are recalculated.
+        /// Make sure to call <see cref="PerformFullRefresh"/> or <see cref="PerformPartialRefresh"/>
+        /// to persist the frame to the display's RAM before calling this method.
+        /// </summary>
+        /// <param name="page"></param>
         private void SetFrameBufferPage(int page)
         {
             if (page < 0 || page >= PagesPerFrame)
                 page = 0;
 
-            this.ClearFrameBuffers();
+            this.frameBuffer2bpp.Clear();
 
             this.currentFrameBufferPage = page;
             this.CalculateFrameBufferPageBounds();
         }
 
+        /// <summary>
+        /// Calculates the upper and lower bounds of the current frame buffer page.
+        /// </summary>
         private void CalculateFrameBufferPageBounds()
         {
-            this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.blackAndWhiteFrameBuffer.Length;
-            this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.blackAndWhiteFrameBuffer.Length;
+            this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.frameBuffer2bpp.BufferByteCount;
+            this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.frameBuffer2bpp.BufferByteCount;
+
             this.currentFrameBufferStartXPosition = this.GetXPositionFromFrameBufferIndex(this.currentFrameBufferPageLowerBound);
             this.currentFrameBufferStartYPosition = this.GetYPositionFromFrameBufferIndex(this.currentFrameBufferPageLowerBound);
         }
 
+        /// <summary>
+        /// A shortcut method to write the contents of the <see cref="FrameBuffer"/> to the display's RAM.
+        /// </summary>
         private void WriteInternalBuffersToDevice()
         {
+            // write B/W and Color (RED) frame to the display's RAM.
+
             this.DirectDrawBuffer(this.currentFrameBufferStartXPosition,
                 this.currentFrameBufferStartYPosition,
-                this.blackAndWhiteFrameBuffer);
+                this.frameBuffer2bpp.BlackBuffer.Buffer);
 
             this.DirectDrawColorBuffer(this.currentFrameBufferStartXPosition,
                 this.currentFrameBufferStartYPosition,
-                this.redFrameBuffer);
+                this.frameBuffer2bpp.ColorBuffer.Buffer);
         }
 
 
@@ -720,8 +742,7 @@ namespace Iot.Device.ePaper.Drivers
                     this.dataCommandPin.Dispose();
                     this.spiDevice.Dispose();
 
-                    this.blackAndWhiteFrameBuffer = null;
-                    this.redFrameBuffer = null;
+                    this.frameBuffer2bpp = null;
                 }
 
                 disposed = true;

@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Iot.Device.ePaperGraphics;
+using Iot.Device.ePaper.Shared.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.ePaper.Shared.Buffers
 {
     /// <summary>
     /// Base implementation for a frame buffer class.
@@ -78,12 +78,12 @@ namespace Iot.Device.ePaper.Buffers
         }
 
         /// <inheritdoc/>>
-        public void CopyFrom(IFrameBuffer buffer)
-            => this.CopyFrom(buffer, Point.Default);
+        public void WriteBuffer(IFrameBuffer buffer)
+            => this.WriteBuffer(buffer, Point.Default);
 
         /// <inheritdoc/>>
-        public virtual void CopyFrom(IFrameBuffer buffer, Point start)
-            => this.SlowCopyFrom(buffer, start);
+        public virtual void WriteBuffer(IFrameBuffer buffer, Point start)
+            => this.WriteBufferSlow(buffer, start);
 
         /// <inheritdoc/>>
         public void Fill(Color color)
@@ -140,7 +140,7 @@ namespace Iot.Device.ePaper.Buffers
         /// </summary>
         /// <param name="buffer">The buffer to copy from.</param>
         /// <param name="start">The starting point to copy from and write to.</param>
-        protected virtual void SlowCopyFrom(IFrameBuffer buffer, Point start)
+        protected virtual void WriteBufferSlow(IFrameBuffer buffer, Point start)
         {
             for (var x = start.X; x < buffer.Width; x++)
             {

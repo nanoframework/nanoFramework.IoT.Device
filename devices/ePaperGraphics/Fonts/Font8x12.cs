@@ -1,4 +1,6 @@
-﻿namespace Iot.Device.ePaperGraphics
+﻿using Iot.Device.ePaper.Shared.Fonts;
+
+namespace Iot.Device.ePaperGraphics
 {
     public class Font8x12 : IFont
     {

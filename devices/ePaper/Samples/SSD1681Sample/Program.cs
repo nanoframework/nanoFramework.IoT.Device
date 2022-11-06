@@ -2,6 +2,7 @@ using System.Device.Gpio;
 using System.Device.Spi;
 
 using Iot.Device.ePaper.Drivers;
+using Iot.Device.ePaper.Shared.Primitives;
 using Iot.Device.ePaperGraphics;
 
 namespace SSD1681Sample
@@ -49,38 +50,38 @@ namespace SSD1681Sample
             display.Clear(triggerPageRefresh: true);
 
             // draw a frame using paging
-            //display.BeginFrameDraw();
-            //do
-            //{
-            //    for (var y = 0; y < display.Height; y++)
-            //    {
-            //        display.DrawPixel(100, y, inverted: true);
-            //    }
+            display.BeginFrameDraw();
+            do
+            {
+                for (var y = 0; y < display.Height; y++)
+                {
+                    display.DrawPixel(100, y, inverted: true);
+                }
 
-            //    gfx.DrawLine(0, 0, 200, 200, Color.Black);
+                gfx.DrawLine(0, 0, 200, 200, Color.Black);
 
-            //    gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
+                gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
 
-            //    gfx.DrawCircle(150, 50, 25, Color.Black, fill: true);
+                gfx.DrawCircle(150, 50, 25, Color.Black, fill: true);
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 25, 24);
+                gfx.DrawText("Hello World", new Font8x12(), 25, 24);
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 35, 50);
+                gfx.DrawText("Hello World", new Font8x12(), 35, 50);
 
-            //    gfx.DrawText("Hello World", new Font8x12(), 80, 140);
+                gfx.DrawText("Hello World", new Font8x12(), 80, 140);
 
-            //    gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180);
+                gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180);
 
-            //    gfx.DrawRectangle(25, 95, 25, 25, Color.Black, true);
+                gfx.DrawRectangle(25, 95, 25, 25, Color.Black, true);
 
-            //    gfx.DrawLine(0, 150, 200, 150, Color.Black);
+                gfx.DrawLine(0, 150, 200, 150, Color.Black);
 
-            //    gfx.DrawLine(150, 0, 150, 200, Color.Black);
+                gfx.DrawLine(150, 0, 150, 200, Color.Black);
 
-            //} while (display.NextFramePage());
-            //display.EndFrameDraw();
+            } while (display.NextFramePage());
+            display.EndFrameDraw();
 
-            display.DirectDrawBuffer(0, 0, qrCode);
+            //display.DirectDrawBuffer(0, 0, qrCode);
             display.PerformFullRefresh();
 
             // Put the display to sleep to reduce power consumption

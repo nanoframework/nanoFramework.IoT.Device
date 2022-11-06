@@ -1,6 +1,8 @@
 ﻿using System;
 
-using Iot.Device.ePaper;
+using Iot.Device.ePaper.Shared.Drivers;
+using Iot.Device.ePaper.Shared.Fonts;
+using Iot.Device.ePaper.Shared.Primitives;
 
 namespace Iot.Device.ePaperGraphics
 {
@@ -105,9 +107,9 @@ namespace Iot.Device.ePaperGraphics
             int endY = startY + height;
 
             if (fill)
-                DrawRectangleFilled(startX, startY, endX, endY, color);
+                this.DrawRectangleFilled(startX, startY, endX, endY, color);
             else
-                DrawRectangleOutline(startX, startY, endX, endY, color);
+                this.DrawRectangleOutline(startX, startY, endX, endY, color);
         }
 
         /// <summary>
@@ -148,8 +150,8 @@ namespace Iot.Device.ePaperGraphics
                     var xPos = x + col;
                     var yPos = y + line + i;
 
-                    this.ePaperDisplay.DrawBuffer(xPos, yPos,
-                        (byte)~Reverse(cb[i], font.Width));
+                    //this.ePaperDisplay.FrameBuffer.DrawBuffer(xPos, yPos,
+                    //    (byte)~Reverse(cb[i], font.Width));
                 }
 
                 col += font.Width;
@@ -163,7 +165,7 @@ namespace Iot.Device.ePaperGraphics
 
             if (!rotate)
             {
-                this.ePaperDisplay.DrawBuffer(startX, startY, bitmap);
+                //this.ePaperDisplay.DrawBuffer(startX, startY, bitmap);
             }
             else
             {
@@ -195,7 +197,6 @@ namespace Iot.Device.ePaperGraphics
         /// </summary>
         /// <param name="x">The X Position in the current rotation.</param>
         /// <param name="y">The Y Position in the current rotation.</param>
-        /// <param name="displayWidth"></param>
         /// <returns>The real Y position on the display.</returns>
         public int GetRealYPosition(int x, int y)
             => this.DisplayRotation switch
@@ -206,6 +207,14 @@ namespace Iot.Device.ePaperGraphics
                 _ => y
             };
 
+        /// <summary>
+        /// Gets the real Position of a given point after considering the current <see cref="Rotation"/> of the display.
+        /// </summary>
+        /// <param name="x">The X Position in the current rotation.</param>
+        /// <param name="y">The Y Position in the current rotation.</param>
+        /// <returns>The real position on the display.</returns>
+        public Point GetRealPosition(int x, int y)
+            => new Point(this.GetRealXPosition(x, y), this.GetRealYPosition(x, y));
 
         private void DrawRectangleOutline(int startX, int startY,
             int endX, int endY, Color color)
@@ -322,9 +331,7 @@ namespace Iot.Device.ePaperGraphics
 
         private void DrawPixel(int x, int y, Color color)
         {
-            this.ePaperDisplay.DrawPixel(this.GetRealXPosition(x, y),
-                this.GetRealYPosition(x, y),
-               color);
+            this.ePaperDisplay.FrameBuffer.SetPixel(this.GetRealPosition(x, y), color);
         }
 
         #region IDisposable

@@ -1,4 +1,4 @@
-﻿namespace Iot.Device.ePaperGraphics
+﻿namespace Iot.Device.ePaper.Shared.Fonts
 {
     public interface IFont
     {

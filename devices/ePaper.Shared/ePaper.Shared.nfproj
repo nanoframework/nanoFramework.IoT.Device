@@ -8,19 +8,25 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>f6172ed9-e1cd-49d0-ae2b-0a4833547b80</ProjectGuid>
+    <ProjectGuid>131ebc24-53bf-4b62-ba49-e4c292e64833</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.ePaperGraphics</RootNamespace>
-    <AssemblyName>Iot.Device.ePaperGraphics</AssemblyName>
+    <RootNamespace>Iot.Device.ePaper.Shared</RootNamespace>
+    <AssemblyName>Iot.Device.ePaper.Shared</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Buffers\FrameBuffer1BitPerPixel.cs" />
+    <Compile Include="Buffers\FrameBuffer2BitPerPixel.cs" />
+    <Compile Include="Buffers\FrameBufferBase.cs" />
+    <Compile Include="Buffers\IFrameBuffer.cs" />
+    <Compile Include="Drivers\IePaperDisplay.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Fonts\Font8x12.cs" />
-    <Compile Include="Graphics.cs" />
+    <Compile Include="Fonts\IFont.cs" />
+    <Compile Include="Primitives\Color.cs" />
+    <Compile Include="Primitives\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -30,9 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ePaper.Shared\ePaper.Shared.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

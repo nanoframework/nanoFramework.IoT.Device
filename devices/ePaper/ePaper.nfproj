@@ -18,16 +18,9 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Buffers\FrameBuffer1BitPerPixel.cs" />
-    <Compile Include="Buffers\FrameBuffer2BitPerPixel.cs" />
-    <Compile Include="Buffers\FrameBufferBase.cs" />
-    <Compile Include="Buffers\IFrameBuffer.cs" />
     <Compile Include="Drivers\Ssd1681.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ePaperGraphics\ePaperGraphics.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
@@ -45,6 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ePaper.Shared\ePaper.Shared.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

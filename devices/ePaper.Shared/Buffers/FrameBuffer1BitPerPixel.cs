@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Iot.Device.ePaperGraphics;
+using Iot.Device.ePaper.Shared.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.ePaper.Shared.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for dual-color displays.
@@ -93,14 +93,14 @@ namespace Iot.Device.ePaper.Buffers
         }
 
         /// <inheritdoc/>
-        public override void CopyFrom(IFrameBuffer buffer, Point start)
+        public override void WriteBuffer(IFrameBuffer buffer, Point start)
         {
             // if the frame is not the same type (different bit depth), use the slow copy method
             // because it converts every pixel properly.
 
             if (buffer is not FrameBuffer1BitPerPixel compatibleBuffer)
             {
-                base.CopyFrom(buffer, start);
+                base.WriteBuffer(buffer, start);
                 return;
             }
 

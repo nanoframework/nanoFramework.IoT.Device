@@ -1,6 +1,6 @@
-﻿using Iot.Device.ePaperGraphics;
+﻿using Iot.Device.ePaper.Shared.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.ePaper.Shared.Buffers
 {
     /// <summary>
     /// Represents a display frame buffer.
@@ -77,14 +77,14 @@ namespace Iot.Device.ePaper.Buffers
         /// Copies the specified <see cref="IFrameBuffer"/> into the current frame buffer.
         /// </summary>
         /// <param name="buffer">The <see cref="IFrameBuffer" /> to copy from.</param>
-        void CopyFrom(IFrameBuffer buffer);
+        void WriteBuffer(IFrameBuffer buffer);
 
         /// <summary>
         /// Copies the specified <see cref="IFrameBuffer"/> into the current frame buffer.
         /// </summary>
         /// <param name="buffer">The <see cref="IFrameBuffer" /> to copy from.</param>
         /// <param name="start">The start position to copy from.</param>
-        void CopyFrom(IFrameBuffer buffer, Point start);
+        void WriteBuffer(IFrameBuffer buffer, Point start);
 
         /// <summary>
         /// Resets the current frame buffer to its default start (all pixels set to 0).

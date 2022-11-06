@@ -1,31 +1,44 @@
 ﻿using System;
 
-using Iot.Device.ePaperGraphics;
+using Iot.Device.ePaper.Shared.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.ePaper.Shared.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for tri-color displays with a separate buffer for the 3rd color.
     /// Wraps 2 <see cref="FrameBuffer1BitPerPixel"/>.
     /// </summary>
-    public class FrameBuffer2BitPerPixel : FrameBufferBase
+    public sealed class FrameBuffer2BitPerPixel : IFrameBuffer
     {
-        /// <inheritdoc/>
-        public override ColorFormat ColorFormat { get; } = ColorFormat.Color2BitPerPixel;
+        /// <inheritdoc/>>
+        public int Height { get; }
+
+        /// <inheritdoc/>>
+        public int Width { get; }
+
+        /// <inheritdoc/>>
+        public int BitDepth { get; } = 2;
 
         /// <inheritdoc/>
-        public override byte[] Buffer 
+        public ColorFormat ColorFormat { get; } = ColorFormat.Color2BitPerPixel;
+
+        /// <inheritdoc/>
+        public byte[] Buffer 
             => throw new InvalidOperationException("Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.");
+
+        /// <inheritdoc/>>
+        public int BufferByteCount
+            => (this.Width * this.Height) / 8;
 
         /// <summary>
         /// Gets a buffer representing the Black/White frame.
         /// </summary>
-        public virtual FrameBuffer1BitPerPixel BlackBuffer { get; }
+        public FrameBuffer1BitPerPixel BlackBuffer { get; }
 
         /// <summary>
         /// Gets a buffer representing the color frame.
         /// </summary>
-        public virtual FrameBuffer1BitPerPixel ColorBuffer { get; }
+        public FrameBuffer1BitPerPixel ColorBuffer { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="FrameBuffer2BitPerPixel"/> class.
@@ -33,13 +46,13 @@ namespace Iot.Device.ePaper.Buffers
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>
         public FrameBuffer2BitPerPixel(int height, int width)
-            : base(height, width, buffer: null)
         {
             this.BlackBuffer = new FrameBuffer1BitPerPixel(height, width);
             this.ColorBuffer = new FrameBuffer1BitPerPixel(height, width);
         }
 
-        public override void Fill(Point start, int width, int height, Color color)
+        /// <inheritdoc/>
+        public void Fill(Point start, int width, int height, Color color)
         {
             if (!this.IsPointWithinFrameBuffer(start))
                 return;
@@ -71,7 +84,7 @@ namespace Iot.Device.ePaper.Buffers
         /// into a <see cref="Color"/> struct. We don't know what color <see cref="ColorBuffer"/>
         /// represents in the actual display hardware.
         /// </remarks>
-        public override Color GetPixel(Point point)
+        public Color GetPixel(Point point)
         {
             throw new InvalidOperationException();
         }
@@ -104,7 +117,7 @@ namespace Iot.Device.ePaper.Buffers
             => this.IsBlackPixel(point) == false;
 
         /// <inheritdoc/>
-        public override void SetPixel(Point point, Color pixelColor)
+        public void SetPixel(Point point, Color pixelColor)
         {
             if (!this.IsPointWithinFrameBuffer(point))
                 return;
@@ -128,20 +141,32 @@ namespace Iot.Device.ePaper.Buffers
         }
 
         /// <inheritdoc/>
-        public override void CopyFrom(IFrameBuffer buffer, Point start)
+        public void WriteBuffer(IFrameBuffer buffer, Point start)
         {
             // if the frame is not the same type (different bit depth), use the slow copy method
             // because it converts every pixel properly.
 
             if (buffer is not FrameBuffer2BitPerPixel compatibleBuffer)
             {
-                base.CopyFrom(buffer, start);
+                base.WriteBuffer(buffer, start);
                 return;
             }
 
             // if the buffer is the same type (same bit depth), then we copy its contents directly into this instance
-            this.BlackBuffer.CopyFrom(compatibleBuffer.BlackBuffer, start);
-            this.ColorBuffer.CopyFrom(compatibleBuffer.ColorBuffer, start);
+            this.BlackBuffer.WriteBuffer(compatibleBuffer.BlackBuffer, start);
+            this.ColorBuffer.WriteBuffer(compatibleBuffer.ColorBuffer, start);
+        }
+
+
+        /// <summary>
+        /// Checks if the specified coordinates fall within this frame buffer's area.
+        /// </summary>
+        /// <param name="point">The point to check.</param>
+        /// <returns>True if the point is within this frame buffer's area, otherwise; false.</returns>
+        private bool IsPointWithinFrameBuffer(Point point)
+        {
+            return point.X >= 0 && point.X < this.Width
+                && point.Y >= 0 && point.Y < this.Height;
         }
     }
 }
