@@ -28,27 +28,27 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[4.147.0, 4.147.0]",
-        "resolved": "4.147.0",
-        "contentHash": "MByAueIZwfq4RY8IPrMdS9JVYMPL07xXRsFCy0SlnEf87JfVu4wz6R0II3r1J13GE6IsG7zuO5PHociq0xhd/Q=="
+        "requested": "[4.148.0, 4.148.0]",
+        "resolved": "4.148.0",
+        "contentHash": "UcHkjhBQG6/x2uHjIZwmoePHqmmSEQnOc2BCKiuY+z6Q21onUHd52+C6zW5ZkG5w7wNKPX9R9rhb7+xSrqUkeg=="
       },
       "UnitsNet.nanoFramework.Pressure": {
         "type": "Direct",
-        "requested": "[4.147.0, 4.147.0]",
-        "resolved": "4.147.0",
-        "contentHash": "9P0OewUEDXHrlcZMj89F1To0d6Hly8vcwXEEL4eNjAnWPG84/7Pg9lj0PMJ3el5XJ1x34AsE+M+qYVDh2opxUQ=="
+        "requested": "[4.148.0, 4.148.0]",
+        "resolved": "4.148.0",
+        "contentHash": "BJiHiyopncDAD7IaFeQUQYv4bpItME394d0ck8sAxemOw2Qx7Uz27HjQ+B3mOaMSRLTcw0XrOwdYQhBynt7GPw=="
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[4.147.0, 4.147.0]",
-        "resolved": "4.147.0",
-        "contentHash": "mu1b1bYkrgBfNa1ccdkOTA+kMh9VISQK/BYYaH5ym/AI6XRtB7QdprDinKpgruVvnpSZjRqWpMfrIBYrqRNhRg=="
+        "requested": "[4.148.0, 4.148.0]",
+        "resolved": "4.148.0",
+        "contentHash": "9wWMmbKCYhVEu4V/ISJLkeAv2uqrIqPc8X9Us64oUAUYbmPrYKxEFBgkWVhNj8MUJomYG7H2TFMrYZTy0fXhtg=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[4.147.0, 4.147.0]",
-        "resolved": "4.147.0",
-        "contentHash": "y7KgrrQz9Q+cGg1wY92YTgQIqUpdgzBM3rvIbHYqjooG0MDAj+07ERAKJ1sq+39P3nBmmzETHdfhIU1acocG8A=="
+        "requested": "[4.148.0, 4.148.0]",
+        "resolved": "4.148.0",
+        "contentHash": "Govk4JMC9t6ZgjPtEcE2lTQsK2COds8AK8I9Zm0wx1tpCk7XPglnPiq+ofDRrkLUCrMAfXxm9Cf3+/VqJXnW0Q=="
       }
     }
   }
