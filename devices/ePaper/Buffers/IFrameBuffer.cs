@@ -2,6 +2,9 @@
 
 namespace Iot.Device.ePaper.Buffers
 {
+    /// <summary>
+    /// Represents a display frame buffer.
+    /// </summary>
     public interface IFrameBuffer
     {
         /// <summary>
@@ -33,6 +36,13 @@ namespace Iot.Device.ePaper.Buffers
         /// Gets the total number of bytes that the current buffer is made of.
         /// </summary>
         int BufferByteCount { get; }
+
+        /// <summary>
+        /// Gets or sets a byte from the <see cref="Buffer"/> using the specified index value.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="byte"/> to get.</param>
+        /// <returns>A <see cref="byte"/> from <see cref="Buffer"/></returns>
+        byte this[int index] { get; set; }
 
         /// <summary>
         /// Gets the pixel at the specified position.

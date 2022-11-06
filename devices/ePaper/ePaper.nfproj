@@ -19,6 +19,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Buffers\FrameBuffer1BitPerPixel.cs" />
+    <Compile Include="Buffers\FrameBuffer2BitPerPixel.cs" />
     <Compile Include="Buffers\FrameBufferBase.cs" />
     <Compile Include="Buffers\IFrameBuffer.cs" />
     <Compile Include="Drivers\Ssd1681.cs" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Device.Spi;
-using System.Diagnostics;
 using System.Threading;
 
 using Iot.Device.ePaperGraphics;

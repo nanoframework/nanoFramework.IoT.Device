@@ -20,7 +20,7 @@
         /// <summary>
         /// Gets a value representing this color as On/Off.
         /// </summary>
-        public bool Color1bpp => !(R <= 0 && G <= 0 && B <= 0);
+        public byte Color1bpp => (byte)((R <= 0 && G <= 0 && B <= 0) ? 0x00 : 0xff);
 
         /// <summary>
         /// Gets the 4-bits per pixel grayscale value of this color.
