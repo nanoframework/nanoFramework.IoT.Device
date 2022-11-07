@@ -18,6 +18,16 @@ namespace Iot.Device.ePaper.Shared.Buffers
         int Width { get; }
 
         /// <summary>
+        /// Gets or sets the position from which this frame's area starts.
+        /// </summary>
+        Point StartPoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current frame page index which this frame instance is covering.
+        /// </summary>
+        int CurrentFramePage { get; set; }
+
+        /// <summary>
         /// Gets the bit depth of the frame.
         /// </summary>
         int BitDepth { get; }
@@ -87,8 +97,20 @@ namespace Iot.Device.ePaper.Shared.Buffers
         void WriteBuffer(IFrameBuffer buffer, Point start);
 
         /// <summary>
-        /// Resets the current frame buffer to its default start (all pixels set to 0).
+        /// Resets the current frame buffer to its default starting values (all pixels set to 0).
         /// </summary>
         void Clear();
+
+        /// <summary>
+        /// Resets the current frame buffer to with its default starting values set to the specified color.
+        /// </summary>
+        void Clear(Color color);
+
+        /// <summary>
+        /// Checks if the specified point falls within the area this buffer is covering.
+        /// </summary>
+        /// <param name="point">The point to check.</param>
+        /// <returns>True if the point is within this frame's area, otherwise; false.</returns>
+        bool IsPointWithinFrameBuffer(Point point);
     }
 }

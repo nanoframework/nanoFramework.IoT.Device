@@ -9,6 +9,10 @@ namespace Iot.Device.ePaper.Shared.Buffers
     /// </summary>
     public abstract class FrameBufferBase : IFrameBuffer
     {
+        private int currentFramePage;
+        private int currentFramePageLowerBufferBound;
+        private int currentFramePageUpperBufferBound;
+
         /// <inheritdoc/>>
         public int Height { get; }
 
@@ -29,11 +33,26 @@ namespace Iot.Device.ePaper.Shared.Buffers
         public virtual byte[] Buffer { get; }
 
         /// <inheritdoc/>>
-        public virtual int BufferByteCount 
-            => (this.Width * this.Height) / 8;
+        public virtual int BufferByteCount
+            => (this.Width * this.Height * this.BitDepth) / 8;
 
         /// <inheritdoc/>
         public abstract ColorFormat ColorFormat { get; }
+
+        /// <inheritdoc/>
+        public virtual Point StartPoint { get; set; }
+
+        /// <inheritdoc/>
+        public virtual int CurrentFramePage
+        {
+            get => this.currentFramePage;
+            set
+            {
+                this.currentFramePage = value;
+                this.currentFramePageLowerBufferBound = this.currentFramePage * this.BufferByteCount;
+                this.currentFramePageUpperBufferBound = (this.currentFramePage + 1) * this.BufferByteCount;
+            }
+        }
 
         /// <inheritdoc/>
         public byte this[int index]
@@ -78,6 +97,9 @@ namespace Iot.Device.ePaper.Shared.Buffers
         }
 
         /// <inheritdoc/>>
+        public abstract void Clear(Color color);
+
+        /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
             => this.WriteBuffer(buffer, Point.Default);
 
@@ -98,15 +120,11 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// <inheritdoc/>>
         public abstract void SetPixel(Point point, Color pixelColor);
 
-        /// <summary>
-        /// Checks if the specified coordinates fall within this frame buffer's area.
-        /// </summary>
-        /// <param name="point">The point to check.</param>
-        /// <returns>True if the point is within this frame buffer's area, otherwise; false.</returns>
-        protected virtual bool IsPointWithinFrameBuffer(Point point)
+        /// <inheritdoc/>>
+        public virtual bool IsPointWithinFrameBuffer(Point point)
         {
-            return point.X >= 0 && point.X < this.Width
-                && point.Y >= 0 && point.Y < this.Height;
+            return point.X >= this.StartPoint.X && point.X < (this.StartPoint.X + this.Width)
+                && point.Y >= this.StartPoint.Y && point.Y < (this.StartPoint.Y + this.Height);
         }
 
         /// <summary>
@@ -124,7 +142,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// <param name="y">The Y position.</param>
         /// <returns>The index within the <see cref="Buffer"/> for the byte that contains the specified pixe location.</returns>
         protected int GetFrameBufferIndexForPoint(int x, int y)
-            => (x + (y * this.Width)) / 8;
+            => ((x + (y * this.Width)) / 8) - this.currentFramePageLowerBufferBound;
 
         /// <summary>
         /// Gets a byte mask pattern for the specified point.

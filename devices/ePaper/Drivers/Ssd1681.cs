@@ -578,11 +578,17 @@ namespace Iot.Device.ePaper.Drivers
         /// </summary>
         private void CalculateFrameBufferPageBounds()
         {
-            this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.frameBuffer2bpp.BufferByteCount;
-            this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.frameBuffer2bpp.BufferByteCount;
+            // black and color buffers have the same size, so we will work with only the black buffer
+            // in these calculations.
+
+            this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.frameBuffer2bpp.BlackBuffer.BufferByteCount;
+            this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.frameBuffer2bpp.BlackBuffer.BufferByteCount;
 
             this.currentFrameBufferStartXPosition = this.GetXPositionFromFrameBufferIndex(this.currentFrameBufferPageLowerBound);
             this.currentFrameBufferStartYPosition = this.GetYPositionFromFrameBufferIndex(this.currentFrameBufferPageLowerBound);
+
+            this.FrameBuffer.StartPoint = new Point(this.currentFrameBufferStartXPosition, this.currentFrameBufferStartYPosition);
+            this.FrameBuffer.CurrentFramePage = this.currentFrameBufferPage;
         }
 
         /// <summary>

@@ -10,25 +10,48 @@ namespace Iot.Device.ePaper.Shared.Buffers
     /// </summary>
     public sealed class FrameBuffer2BitPerPixel : IFrameBuffer
     {
+        private Point startPoint;
+
         /// <inheritdoc/>>
         public int Height { get; }
 
         /// <inheritdoc/>>
         public int Width { get; }
 
+        /// <inheritdoc/>
+        public Point StartPoint
+        {
+            get => this.startPoint;
+            set
+            {
+                this.startPoint = this.BlackBuffer.StartPoint = this.ColorBuffer.StartPoint = value;
+            }
+        }
+
         /// <inheritdoc/>>
         public int BitDepth { get; } = 2;
+
+        /// <inheritdoc/>
+        public byte[] Buffer
+            => throw new InvalidOperationException("Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.");
+
+        /// <inheritdoc/>>
+        /// <remarks>
+        /// For this implementation of <see cref="IFrameBuffer"/>, this number represents the total number of bytes
+        /// making up <see cref="BlackBuffer"/> and <see cref="ColorBuffer"/>
+        /// </remarks>
+        public int BufferByteCount
+            => this.BlackBuffer.BufferByteCount + this.ColorBuffer.BufferByteCount;
 
         /// <inheritdoc/>
         public ColorFormat ColorFormat { get; } = ColorFormat.Color2BitPerPixel;
 
         /// <inheritdoc/>
-        public byte[] Buffer 
-            => throw new InvalidOperationException("Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.");
-
-        /// <inheritdoc/>>
-        public int BufferByteCount
-            => (this.Width * this.Height) / 8;
+        public byte this[int index]
+        {
+            get => throw new NotSupportedException();
+            set => throw new NotSupportedException();
+        }
 
         /// <summary>
         /// Gets a buffer representing the Black/White frame.
@@ -40,6 +63,13 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// </summary>
         public FrameBuffer1BitPerPixel ColorBuffer { get; }
 
+        /// <inheritdoc/>
+        public int CurrentFramePage
+        {
+            get => this.BlackBuffer.CurrentFramePage;
+            set => this.BlackBuffer.CurrentFramePage = this.ColorBuffer.CurrentFramePage = value;
+        }
+
         /// <summary>
         /// Initializes a new instance of <see cref="FrameBuffer2BitPerPixel"/> class.
         /// </summary>
@@ -47,9 +77,30 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// <param name="width">The width of the frame to manage.</param>
         public FrameBuffer2BitPerPixel(int height, int width)
         {
+            this.Height = height;
+            this.Width = width;
+
             this.BlackBuffer = new FrameBuffer1BitPerPixel(height, width);
             this.ColorBuffer = new FrameBuffer1BitPerPixel(height, width);
         }
+
+        /// <inheritdoc/>>
+        public void Clear()
+        {
+            this.BlackBuffer.Clear(Color.White);
+            this.ColorBuffer.Clear(Color.Black); // black sets it to 0s
+        }
+
+        /// <inheritdoc/>>
+        public void Clear(Color color)
+        {
+            this.BlackBuffer.Clear(color);
+            this.ColorBuffer.Clear(color);
+        }
+
+        /// <inheritdoc/>>
+        public void Fill(Color color)
+            => this.Fill(Point.Default, this.Width, this.Height, color);
 
         /// <inheritdoc/>
         public void Fill(Point start, int width, int height, Color color)
@@ -103,8 +154,8 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// </summary>
         /// <param name="point">The pixel position.</param>
         /// <returns>True if pixel is black color, otherwise; false.</returns>
-        public bool IsBlackPixel(Point point) 
-            => this.IsColoredPixel(point) == false 
+        public bool IsBlackPixel(Point point)
+            => this.IsColoredPixel(point) == false
             && this.BlackBuffer.GetPixel(point) == Color.Black;
 
         /// <summary>
@@ -140,6 +191,10 @@ namespace Iot.Device.ePaper.Shared.Buffers
             }
         }
 
+        /// <inheritdoc/>>
+        public void WriteBuffer(IFrameBuffer buffer)
+            => this.WriteBuffer(buffer, Point.Default);
+
         /// <inheritdoc/>
         public void WriteBuffer(IFrameBuffer buffer, Point start)
         {
@@ -148,8 +203,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
 
             if (buffer is not FrameBuffer2BitPerPixel compatibleBuffer)
             {
-                base.WriteBuffer(buffer, start);
-                return;
+                throw new NotSupportedException();
             }
 
             // if the buffer is the same type (same bit depth), then we copy its contents directly into this instance
@@ -157,16 +211,11 @@ namespace Iot.Device.ePaper.Shared.Buffers
             this.ColorBuffer.WriteBuffer(compatibleBuffer.ColorBuffer, start);
         }
 
-
-        /// <summary>
-        /// Checks if the specified coordinates fall within this frame buffer's area.
-        /// </summary>
-        /// <param name="point">The point to check.</param>
-        /// <returns>True if the point is within this frame buffer's area, otherwise; false.</returns>
-        private bool IsPointWithinFrameBuffer(Point point)
+        /// <inheritdoc/>
+        public bool IsPointWithinFrameBuffer(Point point)
         {
-            return point.X >= 0 && point.X < this.Width
-                && point.Y >= 0 && point.Y < this.Height;
+            return point.X >= this.StartPoint.X && point.X < (this.StartPoint.X + this.Width)
+                && point.Y >= this.StartPoint.Y && point.Y < (this.StartPoint.Y + this.Height);
         }
     }
 }

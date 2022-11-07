@@ -329,7 +329,7 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
-        private void DrawPixel(int x, int y, Color color)
+        public void DrawPixel(int x, int y, Color color)
         {
             this.ePaperDisplay.FrameBuffer.SetPixel(this.GetRealPosition(x, y), color);
         }

@@ -33,6 +33,14 @@ namespace Iot.Device.ePaper.Shared.Buffers
         {
         }
 
+        /// <inheritdoc/>>
+        public override void Clear(Color color)
+        {
+            var colorValue = color.Color1bpp;
+            for (var i = 0; i < this.Buffer.Length; i++)
+                this.Buffer[i] = colorValue;
+        }
+
         /// <inheritdoc/>
         public override void Fill(Point start, int width, int height, Color color)
         {
