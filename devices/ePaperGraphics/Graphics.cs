@@ -39,7 +39,7 @@ namespace Iot.Device.ePaperGraphics
         /// <param name="endX">X position of the end point.</param>
         /// <param name="endY">Y position of the end point.</param>
         /// <param name="color">The color of the line.</param>
-        public void DrawLine(int startX, int startY, 
+        public void DrawLine(int startX, int startY,
             int endX, int endY, Color color)
         {
             // This is a common line drawing algorithm. Read about it here:
@@ -81,7 +81,7 @@ namespace Iot.Device.ePaperGraphics
         /// <param name="radius">The circle's radius.</param>
         /// <param name="color">The color to use when drawing the circle.</param>
         /// <param name="fill">True to fill the circle, otherwise; draws only the outline.</param>
-        public void DrawCircle(int centerX, int centerY, 
+        public void DrawCircle(int centerX, int centerY,
             int radius, Color color, bool fill)
         {
             if (fill)
@@ -99,7 +99,7 @@ namespace Iot.Device.ePaperGraphics
         /// <param name="height">The height of the rectangle in pixels.</param>
         /// <param name="color">The color to use when drawing the rectangle.</param>
         /// <param name="fill">True to fill the rectangle, otherwise; draws only the outline.</param>
-        public void DrawRectangle(int startX, int startY, int width, 
+        public void DrawRectangle(int startX, int startY, int width,
             int height, Color color, bool fill)
         {
             // This will draw points
@@ -119,24 +119,13 @@ namespace Iot.Device.ePaperGraphics
         /// <param name="font">The font to use.</param>
         /// <param name="x">Starting X point.</param>
         /// <param name="y">Starting Y point.</param>
-        public void DrawText(string text, IFont font, int x, int y)
+        /// <param name="color">The font color.</param>
+        public void DrawText(string text, IFont font, int x, int y, Color color)
         {
-            //TODO: get rid of this method by updating the font byte array so it is not reversed.
-            static uint Reverse(uint a, int length)
-            {
-                uint b = 0b_0;
-                for (int i = 0; i < length; i++)
-                {
-                    b = (b << 1) | (a & 0b_1);
-                    a = a >> 1;
-                }
-                return b;
-            }
-
             var col = 0;
             var line = 0;
 
-            foreach (char c in text)
+            foreach (char character in text)
             {
                 if (col == this.ePaperDisplay.Width)
                 {
@@ -144,14 +133,23 @@ namespace Iot.Device.ePaperGraphics
                     line += font.Height + 1;
                 }
 
-                var cb = font[c];
+                var characterBitmap = font[character];
                 for (var i = 0; i < font.Height; i++)
                 {
                     var xPos = x + col;
                     var yPos = y + line + i;
+                    var bitMask = 0x01;
+                    var b = characterBitmap[i];
 
-                    //this.ePaperDisplay.FrameBuffer.DrawBuffer(xPos, yPos,
-                    //    (byte)~Reverse(cb[i], font.Width));
+                    for (var pixel = 0; pixel < 8; pixel++)
+                    {
+                        if ((b & bitMask) > 0)
+                        {
+                            this.DrawPixel(xPos + pixel, yPos, color);
+                        }
+
+                        bitMask <<= 1;
+                    }
                 }
 
                 col += font.Width;
@@ -255,7 +253,7 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
-        private void DrawCircleOutline(int centerX, int centerY, 
+        private void DrawCircleOutline(int centerX, int centerY,
             int radius, Color color)
         {
             // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
@@ -299,7 +297,7 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
-        private void DrawCircleFilled(int centerX, int centerY, 
+        private void DrawCircleFilled(int centerX, int centerY,
             int radius, Color color)
         {
             // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm

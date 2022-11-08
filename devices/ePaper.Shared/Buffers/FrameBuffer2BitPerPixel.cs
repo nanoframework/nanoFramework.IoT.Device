@@ -6,7 +6,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for tri-color displays with a separate buffer for the 3rd color.
-    /// Wraps 2 <see cref="FrameBuffer1BitPerPixel"/>.
+    /// Wraps 2 <see cref="FrameBuffer1BitPerPixel"/> internally.
     /// </summary>
     public sealed class FrameBuffer2BitPerPixel : IFrameBuffer
     {

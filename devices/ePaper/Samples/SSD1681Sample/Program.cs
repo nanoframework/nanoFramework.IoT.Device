@@ -38,7 +38,7 @@ namespace SSD1681Sample
 
             using var gfx = new Graphics(display)
             {
-                DisplayRotation = Rotation.NinetyDegreesClockwise
+                DisplayRotation = Rotation.Default
             };
 
 
@@ -56,28 +56,29 @@ namespace SSD1681Sample
                 for (var y = 0; y < display.Height; y++)
                 {
                     display.DrawPixel(100, y, inverted: true);
-                    gfx.DrawPixel(100, y, Color.Black);
                 }
 
-                //gfx.DrawLine(0, 0, 200, 200, Color.Black);
+                gfx.DrawLine(100, 0, 100, 200, Color.Red);
 
-                //gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
+                gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
 
-                //gfx.DrawCircle(150, 50, 25, Color.Black, fill: true);
+                gfx.DrawCircle(150, 50, 25, Color.Red, fill: true);
 
-                //gfx.DrawText("Hello World", new Font8x12(), 25, 24);
+                gfx.DrawText("Hello World", new Font8x12(), 25, 24, Color.Black);
 
-                //gfx.DrawText("Hello World", new Font8x12(), 35, 50);
+                gfx.DrawText("Hello World", new Font8x12(), 35, 50, Color.Black);
 
-                //gfx.DrawText("Hello World", new Font8x12(), 80, 140);
+                gfx.DrawText("Hello World", new Font8x12(), 80, 140, Color.Black);
 
-                //gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180);
+                gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180, Color.Red);
 
-                //gfx.DrawRectangle(25, 95, 25, 25, Color.Black, true);
+                gfx.DrawRectangle(25, 95, 25, 25, Color.Red, true);
 
-                //gfx.DrawLine(0, 150, 200, 150, Color.Black);
+                gfx.DrawRectangle(75, 95, 25, 25, Color.Black, false);
 
-                //gfx.DrawLine(150, 0, 150, 200, Color.Black);
+                gfx.DrawLine(0, 150, 200, 150, Color.Red);
+
+                gfx.DrawLine(150, 0, 150, 200, Color.Black);
 
             } while (display.NextFramePage());
             display.EndFrameDraw();
