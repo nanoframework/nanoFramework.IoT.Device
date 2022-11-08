@@ -9,12 +9,12 @@ namespace Iot.Device.RadioReceiver
     public enum SearchDirection
     {
         /// <summary>
-        /// Up
+        /// Up direction.
         /// </summary>
         Up,
 
         /// <summary>
-        /// Down
+        /// Down direction.
         /// </summary>
         Down,
     }

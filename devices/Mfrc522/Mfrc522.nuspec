@@ -21,17 +21,18 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mfrc522</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.82" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.82" />
-      <dependency id="nanoFramework.Logging" version="1.1.19" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.18" />
+      <dependency id="nanoFramework.Iot.Device.Card" version="1.2.153" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.141" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.141" />
+      <dependency id="nanoFramework.Logging" version="1.1.47" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.3.18" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.1.25" />
-      <dependency id="nanoFramework.System.Text" version="1.2.7" />
-      <dependency id="nanoFramework.System.Math" version="1.4.1" />
-      <dependency id="nanoFramework.System.IO.Streams" version="1.1.15" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.3.22" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.46" />
+      <dependency id="nanoFramework.System.Text" version="1.2.22" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.27" />
     </dependencies>
   </metadata>
   <files>
@@ -40,21 +41,6 @@
     <file src="bin\Release\Iot.Device.Mfrc522.pdbx" target="lib\Iot.Device.Mfrc522.pdbx" />
     <file src="bin\Release\Iot.Device.Mfrc522.pe" target="lib\Iot.Device.Mfrc522.pe" />
     <file src="bin\Release\Iot.Device.Mfrc522.xml" target="lib\Iot.Device.Mfrc522.xml" />
-    <file src="..\Card\bin\Release\Iot.Device.Card.dll" target="lib\Iot.Device.Card.dll" />
-    <file src="..\Card\bin\Release\Iot.Device.Card.pdb" target="lib\Iot.Device.Card.pdb" />
-    <file src="..\Card\bin\Release\Iot.Device.Card.pdbx" target="lib\Iot.Device.Card.pdbx" />
-    <file src="..\Card\bin\Release\Iot.Device.Card.pe" target="lib\Iot.Device.Card.pe" />
-    <file src="..\Card\bin\Release\Iot.Device.Card.xml" target="lib\Iot.Device.Card.xml" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.dll" target="lib\Iot.Device.Mifare.dll" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pdb" target="lib\Iot.Device.Mifare.pdb" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pdbx" target="lib\Iot.Device.Mifare.pdbx" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pe" target="lib\Iot.Device.Mifare.pe" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.xml" target="lib\Iot.Device.Mifare.xml" />
-    <file src="..\Card\Ultralight\bin\Release\Iot.Device.Ultralight.dll" target="lib\Iot.Device.Ultralight.dll" />
-    <file src="..\Card\Ultralight\bin\Release\Iot.Device.Ultralight.pdb" target="lib\Iot.Device.Ultralight.pdb" />
-    <file src="..\Card\Ultralight\bin\Release\Iot.Device.Ultralight.pdbx" target="lib\Iot.Device.Ultralight.pdbx" />
-    <file src="..\Card\Ultralight\bin\Release\Iot.Device.Ultralight.pe" target="lib\Iot.Device.Ultralight.pe" />
-    <file src="..\Card\Ultralight\bin\Release\Iot.Device.Ultralight.xml" target="lib\Iot.Device.Ultralight.xml" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

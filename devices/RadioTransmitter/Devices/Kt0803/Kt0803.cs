@@ -24,22 +24,22 @@ namespace Iot.Device.RadioTransmitter
         public override double Frequency { get => GetFrequency(); set => SetFrequency(value); }
 
         /// <summary>
-        /// Kt0803 standby.
+        /// Gets or sets a value indicating whether Kt0803 is in standby.
         /// </summary>
         public bool Standby { get => GetStandby(); set => SetStandby(value); }
 
         /// <summary>
-        /// Kt0803 mute.
+        /// Gets or sets a value indicating whether Kt0803 is muted.
         /// </summary>
         public bool Mute { get => GetMute(); set => SetMute(value); }
 
         /// <summary>
-        /// Kt0803 PGA (Programmable Gain Amplifier) gain.
+        /// Gets or sets Kt0803 PGA (Programmable Gain Amplifier) gain.
         /// </summary>
         public PgaGain PgaGain { get => GetPga(); set => SetPga(value); }
 
         /// <summary>
-        /// Kt0803 transmission power.
+        /// Gets or sets Kt0803 transmission power.
         /// </summary>
         public TransmissionPower TransmissionPower
         {
@@ -50,7 +50,7 @@ namespace Iot.Device.RadioTransmitter
         private Region _region;
 
         /// <summary>
-        /// Kt0803 region.
+        /// Gets or sets Kt0803 region.
         /// </summary>
         public Region Region
         {
@@ -63,20 +63,24 @@ namespace Iot.Device.RadioTransmitter
         }
 
         /// <summary>
-        /// Kt0803 bass boost.
+        /// Gets or sets Kt0803 bass boost.
         /// </summary>
         public BassBoost BassBoost { get => GetBassBoost(); set => SetBassBoost(value); }
 
         /// <summary>
-        /// Creates a new instance of the Kt0803.
+        /// Initializes a new instance of the <see cref="Kt0803" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="frequency">FM frequency (range from 70MHz to 108MHz).</param>
         /// <param name="region">Region.</param>
         /// <param name="power">Transmission power.</param>
         /// <param name="pga">PGA (Programmable Gain Amplifier) gain.</param>
-        public Kt0803(I2cDevice i2cDevice, double frequency, Region region,
-            TransmissionPower power = TransmissionPower.Power108dBuV, PgaGain pga = PgaGain.Pga00dB)
+        public Kt0803(
+            I2cDevice i2cDevice, 
+            double frequency, 
+            Region region, 
+            TransmissionPower power = TransmissionPower.Power108dBuV, 
+            PgaGain pga = PgaGain.Pga00dB)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             Frequency = frequency;
@@ -87,13 +91,11 @@ namespace Iot.Device.RadioTransmitter
             Standby = false;
         }
 
-        /// <summary>
-        /// Cleanup
-        /// </summary>
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            _i2cDevice = null;
 
             base.Dispose(disposing);
         }
@@ -117,19 +119,19 @@ namespace Iot.Device.RadioTransmitter
 
             // 3 bytes
             freq = (int)(frequency * 20);
-            freq &= 0b_1111_1111_1111;
+            freq &= 0b1111_1111_1111;
 
-            if ((freq & 0b_0001) > 0)
+            if ((freq & 0b0001) > 0)
             {
-                reg2 |= 0b_1000_0000;
+                reg2 |= 0b1000_0000;
             }
             else
             {
-                reg2 &= ~0b_1000_0000;
+                reg2 &= ~0b1000_0000;
             }
 
             reg0 = freq >> 1;
-            reg1 = (reg1 & 0b_1111_1000) | (freq >> 9);
+            reg1 = (reg1 & 0b1111_1000) | (freq >> 9);
 
             WriteByte(Register.KT_CONFIG02, (byte)reg2);
             WriteByte(Register.KT_CHSEL, (byte)reg0);
@@ -146,7 +148,7 @@ namespace Iot.Device.RadioTransmitter
             int reg1 = ReadByte(Register.KT_CONFIG01);
             int reg2 = ReadByte(Register.KT_CONFIG02);
 
-            int freq = ((reg1 & 0b_0111) << 9) | (reg0 << 1) | (reg2 & 0b_1000_0000 >> 7);
+            int freq = ((reg1 & 0b0111) << 9) | (reg0 << 1) | (reg2 & 0b1000_0000 >> 7);
 
             return Math.Round(freq * 10 / 200.0);
         }
@@ -163,7 +165,7 @@ namespace Iot.Device.RadioTransmitter
 
             int pgaVal = (byte)pgaGain << 3;
 
-            reg1 = (reg1 & 0b_1100_0111) | pgaVal;
+            reg1 = (reg1 & 0b1100_0111) | pgaVal;
 
             switch (pgaGain)
             {
@@ -171,12 +173,12 @@ namespace Iot.Device.RadioTransmitter
                 case PgaGain.Pga04dB:
                 case PgaGain.Pga08dB:
                 case PgaGain.Pga12dB:
-                    reg3 = (reg3 & 0b_1100_1111) | (3 << 4);
+                    reg3 = (reg3 & 0b1100_1111) | (3 << 4);
                     break;
                 case PgaGain.PgaN04dB:
                 case PgaGain.PgaN08dB:
                 case PgaGain.PgaN12dB:
-                    reg3 = (reg3 & 0b_1100_1111) | (0 << 4);
+                    reg3 = (reg3 & 0b1100_1111) | (0 << 4);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(pgaGain));
@@ -194,7 +196,7 @@ namespace Iot.Device.RadioTransmitter
         {
             int reg1 = ReadByte(Register.KT_CONFIG01);
 
-            return (PgaGain)((reg1 & 0b_0011_1000) >> 3);
+            return (PgaGain)((reg1 & 0b0011_1000) >> 3);
         }
 
         /// <summary>
@@ -210,33 +212,33 @@ namespace Iot.Device.RadioTransmitter
 
             int powerVal = (byte)power;
 
-            reg1 = (reg1 & 0b_0011_1111) | (powerVal << 6);
+            reg1 = (reg1 & 0b0011_1111) | (powerVal << 6);
 
-            if ((powerVal & 0b_0100) > 0)
+            if ((powerVal & 0b0100) > 0)
             {
-                reg10 |= 0b_1000_0000;
+                reg10 |= 0b1000_0000;
             }
             else
             {
-                reg10 &= ~0b_1000_0000;
+                reg10 &= ~0b1000_0000;
             }
 
-            if ((powerVal & 0b_1000) > 0)
+            if ((powerVal & 0b1000) > 0)
             {
-                reg2 |= 0b_0100_0000;
+                reg2 |= 0b0100_0000;
             }
             else
             {
-                reg2 &= ~0b_0100_0000;
+                reg2 &= ~0b0100_0000;
             }
 
             if (powerVal >= 8)
             {
-                WriteByte(Register.KT_CONFIG0E, 0b_0010);
+                WriteByte(Register.KT_CONFIG0E, 0b0010);
             }
             else
             {
-                WriteByte(Register.KT_CONFIG0E, 0b_0000);
+                WriteByte(Register.KT_CONFIG0E, 0b0000);
             }
 
             WriteByte(Register.KT_CONFIG01, (byte)reg1);
@@ -254,13 +256,13 @@ namespace Iot.Device.RadioTransmitter
             int reg2 = ReadByte(Register.KT_CONFIG02);
             int reg10 = ReadByte(Register.KT_CONFIG13);
 
-            return (TransmissionPower)(((reg2 & 0b_0100_0000) >> 3) | (reg10 >> 5) | ((reg1 & 0b_1100_0000) >> 6));
+            return (TransmissionPower)(((reg2 & 0b0100_0000) >> 3) | (reg10 >> 5) | ((reg1 & 0b1100_0000) >> 6));
         }
 
         /// <summary>
         /// Set Kt0803 region.
         /// </summary>
-        /// <param name="region">region.</param>
+        /// <param name="region">Region.</param>
         private void SetRegion(Region region)
         {
             // Details in Datasheet P8
@@ -270,13 +272,13 @@ namespace Iot.Device.RadioTransmitter
             {
                 case Region.America:
                 case Region.Japan:
-                    reg2 &= ~0b_0001;
+                    reg2 &= ~0b0001;
                     break;
                 case Region.Europe:
                 case Region.Australia:
                 case Region.China:
                 case Region.Other:
-                    reg2 |= 0b_0001;
+                    reg2 |= 0b0001;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(region));
@@ -296,11 +298,11 @@ namespace Iot.Device.RadioTransmitter
 
             if (isMute)
             {
-                reg2 |= 0b_1000;
+                reg2 |= 0b1000;
             }
             else
             {
-                reg2 &= ~0b_1000;
+                reg2 &= ~0b1000;
             }
 
             WriteByte(Register.KT_CONFIG02, (byte)reg2);
@@ -314,7 +316,7 @@ namespace Iot.Device.RadioTransmitter
         {
             int reg2 = ReadByte(Register.KT_CONFIG02);
 
-            return (reg2 & 0b_1000) >> 3 == 1 ? true : false;
+            return (reg2 & 0b1000) >> 3 == 1 ? true : false;
         }
 
         /// <summary>
@@ -328,11 +330,11 @@ namespace Iot.Device.RadioTransmitter
 
             if (isStandby)
             {
-                reg4 |= 0b_1000_0000;
+                reg4 |= 0b1000_0000;
             }
             else
             {
-                reg4 &= ~0b_1000_0000;
+                reg4 &= ~0b1000_0000;
             }
 
             WriteByte(Register.KT_CONFIG0B, (byte)reg4);
@@ -358,7 +360,7 @@ namespace Iot.Device.RadioTransmitter
             // Details in Datasheet P9
             int reg3 = ReadByte(Register.KT_CONFIG04);
 
-            reg3 &= 0b_1111_1100;
+            reg3 &= 0b1111_1100;
             reg3 |= (byte)bassBoost;
 
             WriteByte(Register.KT_CONFIG04, (byte)reg3);

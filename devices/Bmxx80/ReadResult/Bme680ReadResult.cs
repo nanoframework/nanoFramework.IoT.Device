@@ -11,7 +11,7 @@ namespace Iot.Device.Bmxx80.ReadResult
     public class Bme680ReadResult : Bme280ReadResult
     {
         /// <summary>
-        /// Collected gas resistance measurement. NaN if no measurement was performed.
+        /// Gets the collected gas resistance measurement. NaN if no measurement was performed.
         /// </summary>
         public ElectricResistance GasResistance { get; }
 
@@ -21,7 +21,7 @@ namespace Iot.Device.Bmxx80.ReadResult
         public bool GasResistanceIsValid { get; set; }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bme680ReadResult"/> class.
+        /// Initializes a new instance of the <see cref="Bme680ReadResult" /> class.
         /// </summary>
         /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
         /// <param name="temperatureIsValid">Last temperature value read was successful.</param>
