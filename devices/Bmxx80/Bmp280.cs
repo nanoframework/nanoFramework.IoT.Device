@@ -42,7 +42,7 @@ namespace Iot.Device.Bmxx80
             }
 
             var temperatureIsValid = TryReadTemperatureCore(out Temperature temperature);
-            var presureIsValid =TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            var presureIsValid = TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
 
             return new Bmp280ReadResult(temperature, temperatureIsValid, pressure, presureIsValid);
         }
