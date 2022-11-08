@@ -83,11 +83,10 @@ namespace Iot.Device.ePaper.Shared.Buffers
         {
             this.Height = height;
             this.Width = width;
+            this.Buffer = buffer;
 
             if (buffer.Length != this.BufferByteCount)
                 throw new ArgumentException("Length mismatch between the provided buffer and the specified width and height.");
-
-            this.Buffer = buffer;
         }
 
         /// <inheritdoc/>>

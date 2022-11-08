@@ -198,17 +198,20 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// <inheritdoc/>
         public void WriteBuffer(IFrameBuffer buffer, Point start)
         {
-            // if the frame is not the same type (different bit depth), use the slow copy method
-            // because it converts every pixel properly.
-
-            if (buffer is not FrameBuffer2BitPerPixel compatibleBuffer)
+            if (buffer is FrameBuffer1BitPerPixel buffer1bpp)
+            {
+                this.BlackBuffer.WriteBuffer(buffer1bpp, start);
+            }
+            else if (buffer is FrameBuffer2BitPerPixel buffer2bpp)
+            {
+                // if the buffer is the same type (same bit depth), then we copy its contents directly into this instance
+                this.BlackBuffer.WriteBuffer(buffer2bpp.BlackBuffer, start);
+                this.ColorBuffer.WriteBuffer(buffer2bpp.ColorBuffer, start);
+            }
+            else
             {
                 throw new NotSupportedException();
             }
-
-            // if the buffer is the same type (same bit depth), then we copy its contents directly into this instance
-            this.BlackBuffer.WriteBuffer(compatibleBuffer.BlackBuffer, start);
-            this.ColorBuffer.WriteBuffer(compatibleBuffer.ColorBuffer, start);
         }
 
         /// <inheritdoc/>

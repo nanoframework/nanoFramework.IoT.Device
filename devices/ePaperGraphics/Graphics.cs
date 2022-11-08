@@ -181,7 +181,7 @@ namespace Iot.Device.ePaperGraphics
         /// <param name="y">The Y Position in the current rotation.</param>
         /// <param name="displayWidth"></param>
         /// <returns>The real X position on the display.</returns>
-        public int GetRealXPosition(int x, int y)
+        private int GetRealXPosition(int x, int y)
             => this.DisplayRotation switch
             {
                 Rotation.NinetyDegreesClockwise => this.ePaperDisplay.Width - y - 1,
@@ -196,7 +196,7 @@ namespace Iot.Device.ePaperGraphics
         /// <param name="x">The X Position in the current rotation.</param>
         /// <param name="y">The Y Position in the current rotation.</param>
         /// <returns>The real Y position on the display.</returns>
-        public int GetRealYPosition(int x, int y)
+        private int GetRealYPosition(int x, int y)
             => this.DisplayRotation switch
             {
                 Rotation.NinetyDegreesClockwise => x,
@@ -327,6 +327,12 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
+        /// <summary>
+        /// Draws a pixel on the display with respect to the current <see cref="DisplayRotation"/>.
+        /// </summary>
+        /// <param name="x">The X position.</param>
+        /// <param name="y">The Y position.</param>
+        /// <param name="color">The color to use when drawing the pixel.</param>
         public void DrawPixel(int x, int y, Color color)
         {
             this.ePaperDisplay.FrameBuffer.SetPixel(this.GetRealPosition(x, y), color);
