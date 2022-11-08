@@ -16,9 +16,9 @@ namespace Iot.Device.Bmxx80.ReadResult
         public ElectricResistance GasResistance { get; }
 
         /// <summary>
-        /// Last gas resistance value read was successful.
+        /// Gets a value indicating whether last gas resistance value read was successful.
         /// </summary>
-        public bool GasResistanceIsValid { get; set; }
+        public bool GasResistanceIsValid { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bme680ReadResult" /> class.
@@ -31,8 +31,7 @@ namespace Iot.Device.Bmxx80.ReadResult
         /// <param name="humidityIsValid">Last humidity value read was successful.</param>
         /// <param name="gasResistance">The gas resistance measurement.</param>
         /// <param name="gasResistanceIsValid">Last gas resistance value read successful.</param>
-        public Bme680ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid,
-         RelativeHumidity humidity, bool humidityIsValid, ElectricResistance gasResistance, bool gasResistanceIsValid)
+        public Bme680ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid, RelativeHumidity humidity, bool humidityIsValid, ElectricResistance gasResistance, bool gasResistanceIsValid)
             : base(temperature, temperatureIsValid, pressure, pressureIsValid, humidity, humidityIsValid)
         {
             GasResistance = gasResistance;
