@@ -16,7 +16,7 @@ namespace Iot.Device.Bmxx80.ReadResult
         public Temperature Temperature { get; }
 
         /// <summary>
-        /// Last temperature value read was successful.
+        /// Gets a value indicating whether the last temperature value read was successful.
         /// </summary>
         public bool TemperatureIsValid { get; }
 
@@ -26,7 +26,7 @@ namespace Iot.Device.Bmxx80.ReadResult
         public Pressure Pressure { get; }
 
         /// <summary>
-        /// Last pressure value read was successful.
+        /// Gets a value indicating whether the Last pressure value read was successful.
         /// </summary>
         public bool PressureIsValid { get; }
 
