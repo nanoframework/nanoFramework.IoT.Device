@@ -28,7 +28,7 @@ namespace Iot.Device.Bmxx80.sample
             // set this to the current sea level pressure in the area for correct altitude readings
             Pressure defaultSeaLevelPressure = WeatherHelper.MeanSeaLevel;
 
-            I2cConnectionSettings i2cSettings = new(busId, Bme280.DefaultI2cAddress);
+            I2cConnectionSettings i2cSettings = new(busId, Bme280.SecondaryI2cAddress);
             using I2cDevice i2cDevice = I2cDevice.Create(i2cSettings);
             using Bme280 bme80 = new Bme280(i2cDevice)
             {
@@ -47,13 +47,27 @@ namespace Iot.Device.Bmxx80.sample
                 // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
                 bme80.TryReadAltitude(defaultSeaLevelPressure, out var altValue);
 
-                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
-                Debug.WriteLine($"Altitude: {altValue.Meters}m");
-                Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                if (readResult.TemperatureIsValid)
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
+                if (readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
+
+                if (readResult.TemperatureIsValid && readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Altitude: {altValue.Meters}m");
+                }
+
+                if (readResult.HumidityIsValid)
+                {
+                    Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                }
 
                 // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-                if (!readResult.Temperature.Equals(null) && !readResult.Humidity.Equals(null))
+                if (readResult.TemperatureIsValid && readResult.HumidityIsValid)
                 {
                     Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
                     Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
@@ -74,13 +88,24 @@ namespace Iot.Device.Bmxx80.sample
                 // var altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
                 bme80.TryReadAltitude(defaultSeaLevelPressure, out altValue);
 
-                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                if (readResult.TemperatureIsValid)
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
+                if (readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
+
                 Debug.WriteLine($"Altitude: {altValue.Meters}m");
-                Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+
+                if (readResult.HumidityIsValid)
+                {
+                    Debug.WriteLine($"Relative humidity: {readResult.Humidity.Percent}%");
+                }
 
                 // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-                if (!readResult.Temperature.Equals(null) && !readResult.Humidity.Equals(null))
+                if (readResult.TemperatureIsValid && readResult.HumidityIsValid)
                 {
                     Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
                     Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(readResult.Temperature, readResult.Humidity).DegreesCelsius}\u00B0C");
