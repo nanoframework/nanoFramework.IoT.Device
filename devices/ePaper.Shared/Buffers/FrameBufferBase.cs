@@ -55,10 +55,21 @@ namespace Iot.Device.ePaper.Shared.Buffers
         }
 
         /// <inheritdoc/>
-        public byte this[int index]
+        public virtual byte this[int index]
         {
             get => this.Buffer[index];
             set => this.Buffer[index] = value;
+        }
+
+        /// <inheritdoc/>
+        public virtual byte this[Point point]
+        {
+            get => this[this.GetFrameBufferIndexForPoint(point)];
+            set
+            {
+                if (this.IsPointWithinFrameBuffer(point))
+                    this[this.GetFrameBufferIndexForPoint(point)] = value;
+            }
         }
 
         /// <summary>
@@ -100,15 +111,19 @@ namespace Iot.Device.ePaper.Shared.Buffers
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
-            => this.WriteBuffer(buffer, Point.Default);
+            => this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), Point.Zero);
 
         /// <inheritdoc/>>
-        public virtual void WriteBuffer(IFrameBuffer buffer, Point start)
-            => this.WriteBufferSlow(buffer, start);
+        public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
+            => this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+
+        /// <inheritdoc/>>
+        public virtual void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
+            => this.WriteBufferSlow(buffer, start, end, destinationStart);
 
         /// <inheritdoc/>>
         public void Fill(Color color)
-            => this.Fill(Point.Default, this.Width, this.Height, color);
+            => this.Fill(Point.Zero, this.Width, this.Height, color);
 
         /// <inheritdoc/>>
         public abstract void Fill(Point start, int width, int height, Color color);
@@ -157,7 +172,9 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// </summary>
         /// <param name="buffer">The buffer to copy from.</param>
         /// <param name="start">The starting point to copy from and write to.</param>
-        protected virtual void WriteBufferSlow(IFrameBuffer buffer, Point start)
+        /// <param name="end">The point at which copying from the buffer will stop.</param>
+        /// <param name="destinationStart">The start point to begin writing to.</param>
+        protected virtual void WriteBufferSlow(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
         {
             for (var x = start.X; x < buffer.Width; x++)
             {

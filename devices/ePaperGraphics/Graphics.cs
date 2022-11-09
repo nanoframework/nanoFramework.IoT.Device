@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Iot.Device.ePaper.Shared.Buffers;
 using Iot.Device.ePaper.Shared.Drivers;
 using Iot.Device.ePaper.Shared.Fonts;
 using Iot.Device.ePaper.Shared.Primitives;
@@ -156,20 +157,30 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
-        public void DrawBitmap(byte[] bitmap, int startX, int startY, bool rotate = false)
+        public void DrawBitmap(IFrameBuffer bitmap, Point start, bool rotate = false)
         {
-            var x = startX;
-            var y = startY;
+            if (this.DisplayRotation == Rotation.Default)
+            {
+                this.ePaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
+                return;
+            }
 
             if (!rotate)
             {
-                //this.ePaperDisplay.DrawBuffer(startX, startY, bitmap);
+                this.ePaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
             }
-            else
+            else // caller opted in to rotate (slow)
             {
-                foreach (var b in bitmap)
+                for (var y = 0; y < bitmap.Height; y++)
                 {
-                    //this.ePaperDisplay.DrawBuffer()
+                    for (var x = 0; x < bitmap.Width; x++)
+                    {
+                        var currentPoint = new Point(x, y);
+
+                        this.ePaperDisplay
+                            .FrameBuffer
+                            .SetPixel(start + currentPoint, bitmap.GetPixel(currentPoint));
+                    }
                 }
             }
         }

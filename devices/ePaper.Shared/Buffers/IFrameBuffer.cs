@@ -55,6 +55,13 @@ namespace Iot.Device.ePaper.Shared.Buffers
         byte this[int index] { get; set; }
 
         /// <summary>
+        /// Gets or sets a byte from the <see cref="Buffer"/> using the specified point.
+        /// </summary>
+        /// <param name="point">The point to get the byte containing the pixel.</param>
+        /// <returns>A byte that contains the pixel specified by the point.</returns>
+        byte this[Point point] { get;set; }
+
+        /// <summary>
         /// Gets the pixel at the specified position.
         /// </summary>
         /// <param name="point">The position to get the pixel from.</param>
@@ -84,7 +91,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
         void Fill(Point start, int width, int height, Color color);
 
         /// <summary>
-        /// Copies the specified <see cref="IFrameBuffer"/> into the current frame buffer.
+        /// Copies the entire specified <see cref="IFrameBuffer"/> into the current frame buffer.
         /// </summary>
         /// <param name="buffer">The <see cref="IFrameBuffer" /> to copy from.</param>
         void WriteBuffer(IFrameBuffer buffer);
@@ -93,8 +100,17 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// Copies the specified <see cref="IFrameBuffer"/> into the current frame buffer.
         /// </summary>
         /// <param name="buffer">The <see cref="IFrameBuffer" /> to copy from.</param>
+        /// <param name="destinationStart">The start point to begin writing to.</param>
+        void WriteBuffer(IFrameBuffer buffer, Point destinationStart);
+
+        /// <summary>
+        /// Copies the specified <see cref="IFrameBuffer"/> into the current frame buffer.
+        /// </summary>
+        /// <param name="buffer">The <see cref="IFrameBuffer" /> to copy from.</param>
         /// <param name="start">The start position to copy from.</param>
-        void WriteBuffer(IFrameBuffer buffer, Point start);
+        /// <param name="end">The point at which copying from the buffer will stop.</param>
+        /// <param name="destinationStart">The start point to begin writing to.</param>
+        void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart);
 
         /// <summary>
         /// Resets the current frame buffer to its default starting values (all pixels set to 0).

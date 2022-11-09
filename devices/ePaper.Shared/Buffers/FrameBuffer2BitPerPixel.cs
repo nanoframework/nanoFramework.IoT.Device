@@ -53,6 +53,13 @@ namespace Iot.Device.ePaper.Shared.Buffers
             set => throw new NotSupportedException();
         }
 
+        /// <inheritdoc/>
+        public byte this[Point point]
+        {
+            get => throw new NotSupportedException();
+            set => throw new NotSupportedException();
+        }
+
         /// <summary>
         /// Gets a buffer representing the Black/White frame.
         /// </summary>
@@ -100,7 +107,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
 
         /// <inheritdoc/>>
         public void Fill(Color color)
-            => this.Fill(Point.Default, this.Width, this.Height, color);
+            => this.Fill(Point.Zero, this.Width, this.Height, color);
 
         /// <inheritdoc/>
         public void Fill(Point start, int width, int height, Color color)
@@ -193,20 +200,25 @@ namespace Iot.Device.ePaper.Shared.Buffers
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
-            => this.WriteBuffer(buffer, Point.Default);
+            => this.WriteBuffer(buffer, Point.Zero);
+
+        /// <inheritdoc/>>
+        public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
+            => this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
 
         /// <inheritdoc/>
-        public void WriteBuffer(IFrameBuffer buffer, Point start)
+        public void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
         {
             if (buffer is FrameBuffer1BitPerPixel buffer1bpp)
             {
-                this.BlackBuffer.WriteBuffer(buffer1bpp, start);
+                // I think it is reasonable that a 1-bit deep buffer is copied over to the B/W buffer
+                this.BlackBuffer.WriteBuffer(buffer1bpp, start, end, destinationStart);
             }
             else if (buffer is FrameBuffer2BitPerPixel buffer2bpp)
             {
                 // if the buffer is the same type (same bit depth), then we copy its contents directly into this instance
-                this.BlackBuffer.WriteBuffer(buffer2bpp.BlackBuffer, start);
-                this.ColorBuffer.WriteBuffer(buffer2bpp.ColorBuffer, start);
+                this.BlackBuffer.WriteBuffer(buffer2bpp.BlackBuffer, start, end, destinationStart);
+                this.ColorBuffer.WriteBuffer(buffer2bpp.ColorBuffer, start, end, destinationStart);
             }
             else
             {

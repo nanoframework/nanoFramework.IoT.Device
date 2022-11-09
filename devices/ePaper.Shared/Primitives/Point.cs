@@ -26,7 +26,7 @@
         /// <summary>
         /// The start point (X = 0, Y = 0).
         /// </summary>
-        public static Point Default = new(0, 0);
+        public static Point Zero = new(0, 0);
 
         /// <inheritdoc/>>
         public override bool Equals(object obj)
@@ -46,6 +46,12 @@
 
         public static bool operator !=(Point point, Point other)
             => !InternalEquals(point, other);
+
+        public static Point operator +(Point point, Point other)
+            => new Point(point.X + other.X, point.Y + other.Y);
+
+        public static Point operator -(Point point, Point other)
+            => new Point(point.X - other.X, point.Y - other.Y);
 
         public static bool InternalEquals(Point point, Point other)
             => point.X == other.X && point.Y == other.Y;

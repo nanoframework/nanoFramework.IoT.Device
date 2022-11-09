@@ -50,36 +50,63 @@ namespace SSD1681Sample
             // clear the display
             display.Clear(triggerPageRefresh: true);
 
+            var cloudBitmap = new FrameBuffer1BitPerPixel(32, 32, cloud);
+
             // draw a frame using paging
             display.BeginFrameDraw();
             do
             {
-                for (var y = 0; y < display.Height; y++)
-                {
-                    display.DrawPixel(100, y, inverted: true);
-                }
+                //for (var y = 0; y < display.Height; y++)
+                //{
+                //    display.DrawPixel(100, y, inverted: true);
+                //}
 
-                gfx.DrawLine(100, 0, 100, 200, Color.Red);
+                //gfx.DrawLine(100, 0, 100, 200, Color.Red);
 
-                gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
+                //gfx.DrawCircle(25, 25, 100, Color.Black, fill: false);
 
-                gfx.DrawCircle(150, 50, 25, Color.Red, fill: true);
+                //gfx.DrawCircle(150, 50, 25, Color.Red, fill: true);
 
-                gfx.DrawText("Hello World", new Font8x12(), 25, 24, Color.Black);
+                //gfx.DrawText("Hello World", new Font8x12(), 25, 24, Color.Black);
 
-                gfx.DrawText("Hello World", new Font8x12(), 35, 50, Color.Black);
+                //gfx.DrawText("Hello World", new Font8x12(), 35, 50, Color.Black);
 
-                gfx.DrawText("Hello World", new Font8x12(), 80, 140, Color.Black);
+                //gfx.DrawText("Hello World", new Font8x12(), 80, 140, Color.Black);
 
-                gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180, Color.Red);
+                //gfx.DrawText("@MrCSharp", new Font8x12(), 40, 180, Color.Red);
 
-                gfx.DrawRectangle(25, 95, 25, 25, Color.Red, true);
+                //gfx.DrawRectangle(25, 95, 25, 25, Color.Red, true);
 
-                gfx.DrawRectangle(75, 95, 25, 25, Color.Black, false);
+                //gfx.DrawRectangle(75, 95, 25, 25, Color.Black, false);
 
-                gfx.DrawLine(0, 150, 200, 150, Color.Red);
+                //gfx.DrawLine(0, 150, 200, 150, Color.Red);
 
-                gfx.DrawLine(150, 0, 150, 200, Color.Black);
+                //gfx.DrawLine(150, 0, 150, 200, Color.Black);
+
+
+                gfx.DrawBitmap(cloudBitmap, new Point(4, 4), rotate: false);
+                gfx.DrawText("32c", new Font8x12(), 8, 34, Color.Red);
+
+                gfx.DrawBitmap(cloudBitmap, new Point(40, 4), rotate: false);
+
+                gfx.DrawText("32c", new Font8x12(), 44, 34, Color.Red);
+
+                gfx.DrawBitmap(cloudBitmap, new Point(76, 4), rotate: false);
+
+                gfx.DrawText("32c", new Font8x12(), 80, 34, Color.Red);
+
+                gfx.DrawBitmap(cloudBitmap, new Point(112, 4), rotate: false);
+
+                gfx.DrawText("32c", new Font8x12(), 116, 34, Color.Red);
+
+                gfx.DrawBitmap(cloudBitmap, new Point(146, 4), rotate: false);
+
+                gfx.DrawText("32c", new Font8x12(), 150, 34, Color.Red);
+
+
+                gfx.DrawLine(0, 50, 200, 50, Color.Black);
+
+                gfx.DrawBitmap(cloudBitmap, new Point(100, 100), rotate: false);
 
             } while (display.NextFramePage());
             display.EndFrameDraw();

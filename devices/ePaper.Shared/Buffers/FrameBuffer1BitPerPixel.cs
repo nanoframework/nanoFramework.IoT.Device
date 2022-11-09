@@ -101,24 +101,43 @@ namespace Iot.Device.ePaper.Shared.Buffers
         }
 
         /// <inheritdoc/>
-        public override void WriteBuffer(IFrameBuffer buffer, Point start)
+        public override void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
         {
             // if the frame is not the same type (different bit depth), use the slow copy method
             // because it converts every pixel properly.
 
-            if (buffer is not FrameBuffer1BitPerPixel compatibleBuffer)
+            if (buffer is not FrameBuffer1BitPerPixel otherBuffer)
             {
-                base.WriteBuffer(buffer, start);
+                base.WriteBuffer(buffer, start, end, destinationStart);
                 return;
             }
 
-            // if the buffer is the same type (same bit depth), then we copy its contents as is
-            var startIndex = this.GetFrameBufferIndexForPoint(start);
-            Array.Copy(compatibleBuffer.Buffer,
-                startIndex, 
-                this.Buffer,
-                startIndex, 
-                compatibleBuffer.Buffer.Length);
+            // if the buffer is the same type (same bit depth) then we copy
+            // the content while paying attention to our (x,y) position
+            for (var y = 0; y < end.Y; y++)
+            {
+                for (var x = 0; x < end.X; x++)
+                {
+                    var currentRelativePoint = new Point(x, y);
+                    var sourceAbsolutePosition = start + currentRelativePoint;
+                    var destinationAbsolutePosition = destinationStart + currentRelativePoint;
+
+                    // improve performance by trying to copy an entire byte at once
+                    // if the current x position has 8 more columns ahead of it then set the whole byte
+                    //if ((x % 8) == 0 && (x + 8) <= otherBuffer.Width)
+                    //{
+                    //    this[destinationAbsolutePosition] = otherBuffer[sourceAbsolutePosition];
+
+                    //    // move the x location by 7 (loop adds 1) so we can land on the next byte start
+                    //    x += 7;
+                    //}
+                    //else
+                    //{
+                        this.SetPixel(destinationAbsolutePosition, 
+                            otherBuffer.GetPixel(sourceAbsolutePosition));
+                    //}
+                }
+            }
         }
     }
 }
