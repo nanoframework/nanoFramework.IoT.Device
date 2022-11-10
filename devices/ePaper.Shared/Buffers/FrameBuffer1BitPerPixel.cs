@@ -53,7 +53,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
             {
                 for (var x = start.X; x < start.X + width; x++)
                 {
-                    var frameBufferIndex = this.GetFrameBufferIndexForPoint(x ,y);
+                    var frameBufferIndex = this.GetFrameBufferIndexForPoint(x, y);
 
                     // improve performance by trying to set an entire byte at once
                     // if the current x position has 8 more columns ahead of it then set the whole byte
@@ -124,18 +124,20 @@ namespace Iot.Device.ePaper.Shared.Buffers
 
                     // improve performance by trying to copy an entire byte at once
                     // if the current x position has 8 more columns ahead of it then set the whole byte
-                    //if ((x % 8) == 0 && (x + 8) <= otherBuffer.Width)
-                    //{
-                    //    this[destinationAbsolutePosition] = otherBuffer[sourceAbsolutePosition];
+                    if ((destinationAbsolutePosition.X % 8 == 0)
+                        && (x % 8 == 0)
+                        && (x + 8) <= otherBuffer.Width)
+                    {
+                        this[destinationAbsolutePosition] = otherBuffer[sourceAbsolutePosition];
 
-                    //    // move the x location by 7 (loop adds 1) so we can land on the next byte start
-                    //    x += 7;
-                    //}
-                    //else
-                    //{
-                        this.SetPixel(destinationAbsolutePosition, 
+                        // move the x location by 7 (loop adds 1) so we can land on the next byte start
+                        x += 7;
+                    }
+                    else
+                    {
+                        this.SetPixel(destinationAbsolutePosition,
                             otherBuffer.GetPixel(sourceAbsolutePosition));
-                    //}
+                    }
                 }
             }
         }

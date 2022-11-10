@@ -141,6 +141,10 @@ namespace Iot.Device.ePaper.Shared.Buffers
                 && point.Y >= this.StartPoint.Y && point.Y < (this.StartPoint.Y + this.Height);
         }
 
+        /// <inheritdoc/>>
+        public virtual bool IsRangeWithinFrameBuffer(Point start, Point end)
+            => this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
+
         /// <summary>
         /// Gets the index of the byte within the <see cref="Buffer"/> array which contains the specified point.
         /// </summary>

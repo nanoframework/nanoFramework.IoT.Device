@@ -232,5 +232,9 @@ namespace Iot.Device.ePaper.Shared.Buffers
             return point.X >= this.StartPoint.X && point.X < (this.StartPoint.X + this.Width)
                 && point.Y >= this.StartPoint.Y && point.Y < (this.StartPoint.Y + this.Height);
         }
+
+        /// <inheritdoc/>>
+        public bool IsRangeWithinFrameBuffer(Point start, Point end)
+            => this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
     }
 }

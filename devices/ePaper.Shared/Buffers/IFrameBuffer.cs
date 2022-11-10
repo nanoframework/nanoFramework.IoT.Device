@@ -128,5 +128,13 @@ namespace Iot.Device.ePaper.Shared.Buffers
         /// <param name="point">The point to check.</param>
         /// <returns>True if the point is within this frame's area, otherwise; false.</returns>
         bool IsPointWithinFrameBuffer(Point point);
+
+        /// <summary>
+        /// Checks if the specified range of points is within the current frame buffer.
+        /// </summary>
+        /// <param name="start">The starting point of the range.</param>
+        /// <param name="end">The end point of the range.</param>
+        /// <returns>True if the range is within this frame's area, otherwise; false.</returns>
+        bool IsRangeWithinFrameBuffer(Point start, Point end);
     }
 }

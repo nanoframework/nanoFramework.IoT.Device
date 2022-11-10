@@ -413,7 +413,6 @@ namespace Iot.Device.ePaper.Drivers
             this.SetFrameBufferPage(FirstPageIndex);
         }
 
-
         /// <summary>
         /// Sends a command to the <see cref="SpiDevice"/>.
         /// </summary>
@@ -458,6 +457,8 @@ namespace Iot.Device.ePaper.Drivers
                 this.WaitMs(5);
             }
         }
+
+
 
         /// <summary>
         /// Performs the hardware reset commands sequence on the display.
