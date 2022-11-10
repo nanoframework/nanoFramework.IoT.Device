@@ -16,15 +16,12 @@ namespace Iot.Device.ePaper.Drivers
     {
         private const int PagesPerFrame = 5;
         private const int FirstPageIndex = 0;
-        private const int LastPageIndex = PagesPerFrame - 1;
 
         private readonly GpioPin resetPin;
         private readonly GpioPin busyPin;
         private readonly GpioPin dataCommandPin;
         private readonly SpiDevice spiDevice;
 
-        //private byte[] blackAndWhiteFrameBuffer;
-        //private byte[] redFrameBuffer;
         private int currentFrameBufferPage;
         private int currentFrameBufferPageLowerBound;
         private int currentFrameBufferPageUpperBound;
@@ -217,10 +214,8 @@ namespace Iot.Device.ePaper.Drivers
         /// <param name="x">The X Position</param>
         /// <param name="y">The Y Position</param>
         /// <param name="inverted">True to invert the pixel from white to black.</param>
-        public void DrawPixel(int x, int y, bool inverted)
-        {
-            this.DrawPixel(x, y, inverted ? Color.Black : Color.White);
-        }
+        public void DrawPixel(int x, int y, bool inverted) 
+            => this.DrawPixel(x, y, inverted ? Color.Black : Color.White);
 
         /// <summary>
         /// Draws a single pixel to the appropriate frame buffer based on the specified color.
@@ -290,52 +285,6 @@ namespace Iot.Device.ePaper.Drivers
                 {
                     this.frameBuffer2bpp.BlackBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
-            }
-        }
-
-        public void DrawColorBuffer(int startXPos, int startYPos, params byte[] bitmap)
-        {
-            // ignore out of bounds draw attempts
-            if (startXPos < 0 || startXPos >= this.Width || startYPos < 0 || startYPos >= this.Height)
-            {
-                return;
-            }
-
-            var bitmapIndex = 0;
-            var frameByteIndex = this.GetFrameBufferIndex(startXPos, startYPos);
-            var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
-
-            while (this.currentFrameBufferPageLowerBound <= frameByteIndex 
-                && frameByteIndex < this.currentFrameBufferPageUpperBound
-                && bitmapIndex < bitmap.Length)
-            {
-                this.frameBuffer2bpp.ColorBuffer[pageByteIndex] = bitmap[bitmapIndex];
-
-                bitmapIndex++;
-                frameByteIndex++;
-            }
-        }
-
-        public void DrawBuffer(int startXPos, int startYPos, params byte[] bitmap)
-        {
-            // ignore out of bounds draw attempts
-            if (startXPos < 0 || startXPos >= this.Width || startYPos < 0 || startYPos >= this.Height)
-            {
-                return;
-            }
-
-            var bitmapIndex = 0;
-            var frameByteIndex = this.GetFrameBufferIndex(startXPos, startYPos);
-            var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
-
-            while (this.currentFrameBufferPageLowerBound <= frameByteIndex
-                && frameByteIndex < this.currentFrameBufferPageUpperBound
-                && bitmapIndex < bitmap.Length)
-            {
-                this.frameBuffer2bpp.BlackBuffer[pageByteIndex] = bitmap[bitmapIndex];
-
-                bitmapIndex++;
-                frameByteIndex++;
             }
         }
 
