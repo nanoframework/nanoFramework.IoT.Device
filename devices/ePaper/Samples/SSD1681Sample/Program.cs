@@ -1,5 +1,7 @@
+// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+
 using System.Device.Gpio;
-using System.Device.Spi;
 
 using Iot.Device.ePaper.Drivers;
 using Iot.Device.ePaper.Shared.Buffers;
@@ -12,36 +14,21 @@ namespace SSD1681Sample
     {
         public static void Main()
         {
-            // Setup SPI connection with the display
-            var spiConnectionSettings = new SpiConnectionSettings(1, 22)
-            {
-                ClockFrequency = 20 * 1000 * 1000,
-                Mode = SpiMode.Mode0,
-                ChipSelectLineActiveState = false,
-                Configuration = SpiBusConfiguration.HalfDuplex,
-                DataFlow = DataFlow.MsbFirst
-            };
-
-            using var spiDevice = new SpiDevice(spiConnectionSettings);
-
-            // Setup required GPIO Pins
+            // Create an instance of the GPIO Controller.
+            // The display driver uses this to open pins to the display device.
             using var gpioController = new GpioController();
 
-            using var resetPin = gpioController.OpenPin(15, PinMode.Output);
-            using var dataCommandPin = gpioController.OpenPin(5, PinMode.Output);
-            using var busyPin = gpioController.OpenPin(4, PinMode.Input);
-            using var ledPin = gpioController.OpenPin(2, PinMode.Output);
-
-
             // Create an instance of the display driver
-            using var display = new Ssd1681(resetPin, busyPin, dataCommandPin,
-                spiDevice, width: 200, height: 200, enableFramePaging: true);
-
-            using var gfx = new Graphics(display)
-            {
-                DisplayRotation = Rotation.Default
-            };
-
+            using var display = new Ssd1681(
+                resetPin: 15,
+                busyPin: 4,
+                dataCommandPin: 5,
+                spiBusId: 1,
+                chipSelectLinePin: 22,
+                gpioController,
+                width: 200,
+                height: 200,
+                enableFramePaging: true);
 
             // Power on the display and initialize it
             display.PowerOn();
@@ -50,11 +37,23 @@ namespace SSD1681Sample
             // clear the display
             display.Clear(triggerPageRefresh: true);
 
+            // initialize the graphics library
+            using var gfx = new Graphics(display)
+            {
+                DisplayRotation = Rotation.Default
+            };
+
+            // initialize the bitmaps we will render later on
             var cloudBitmap = new FrameBuffer1BitPerPixel(32, 32, cloud);
             var musicBitmap = new FrameBuffer1BitPerPixel(32, 32, music);
+
+            // a simple font to use
+            // you can make use your own font by implementing IFont interface
             var font = new Font8x12();
 
-            // draw a frame using paging
+            // draw a frame to the display by using paging to save on memory usage
+            // paging can be slower than having the full frame in memory
+            // it is a compromise: speed vs memory space.
             display.BeginFrameDraw();
             do
             {
@@ -100,9 +99,12 @@ namespace SSD1681Sample
 
             } while (display.NextFramePage());
             display.EndFrameDraw();
+
+            // at this point, all frame pages have been pushed to the display
+            // this will execute the refresh sequence and display the frame data
             display.PerformFullRefresh();
 
-            // Put the display to sleep to reduce power consumption
+            // Done! now put the display to sleep to reduce power consumption
             display.PowerDown(Ssd1681.SleepMode.DeepSleepModeTwo);
         }
 
@@ -118,6 +120,7 @@ namespace SSD1681Sample
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
         };
 
+        // 32x32
         private static byte[] music =
         {
             0xfd, 0xff, 0xff, 0xff, 0xfc, 0xff, 0xff, 0xff, 0xfc, 0x7f, 0xff, 0xff, 0xfc, 0x3f, 0xff, 0xff,

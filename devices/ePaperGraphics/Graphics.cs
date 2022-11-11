@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+
+using System;
 
 using Iot.Device.ePaper.Shared.Buffers;
 using Iot.Device.ePaper.Shared.Drivers;
@@ -7,6 +10,9 @@ using Iot.Device.ePaper.Shared.Primitives;
 
 namespace Iot.Device.ePaperGraphics
 {
+    /// <summary>
+    /// A graphics class for ePaper displays with basic graphic APIs support.
+    /// </summary>
     public sealed class Graphics : IDisposable
     {
         private bool disposedValue;
@@ -157,6 +163,12 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
+        /// <summary>
+        /// Draws the specified bitmap buffer to the display using the specified starting point.
+        /// </summary>
+        /// <param name="bitmap">The bitmap buffer to draw.</param>
+        /// <param name="start">The start point on the display to start drawing from.</param>
+        /// <param name="rotate"><see langword="true"/> to rotate the bitmap with the current <see cref="Rotation"/> specified. It might be slow.</param>
         public void DrawBitmap(IFrameBuffer bitmap, Point start, bool rotate = false)
         {
             if (this.DisplayRotation == Rotation.Default)
@@ -190,7 +202,6 @@ namespace Iot.Device.ePaperGraphics
         /// </summary>
         /// <param name="x">The X Position in the current rotation.</param>
         /// <param name="y">The Y Position in the current rotation.</param>
-        /// <param name="displayWidth"></param>
         /// <returns>The real X position on the display.</returns>
         private int GetRealXPosition(int x, int y)
             => this.DisplayRotation switch
@@ -364,6 +375,7 @@ namespace Iot.Device.ePaperGraphics
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method

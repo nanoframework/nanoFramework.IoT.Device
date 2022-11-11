@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

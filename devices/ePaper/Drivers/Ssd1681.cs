@@ -1,14 +1,18 @@
-﻿using System;
-using System.Device.Gpio;
-using System.Device.Spi;
-using System.Threading;
-
-using Iot.Device.ePaper.Shared.Buffers;
-using Iot.Device.ePaper.Shared.Drivers;
-using Iot.Device.ePaper.Shared.Primitives;
+﻿// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
 
 namespace Iot.Device.ePaper.Drivers
 {
+    using System;
+    using System.Device.Gpio;
+    using System.Device.Spi;
+    using System.Threading;
+    using Iot.Device.ePaper;
+
+    using Iot.Device.ePaper.Shared.Buffers;
+    using Iot.Device.ePaper.Shared.Drivers;
+    using Iot.Device.ePaper.Shared.Primitives;
+
     /// <summary>
     /// A driver class for the SSD1681 display controller.
     /// </summary>
@@ -32,6 +36,66 @@ namespace Iot.Device.ePaper.Drivers
 
         private bool disposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ssd1681"/> class.
+        /// </summary>
+        /// <param name="resetPin">The reset GPIO pin.</param>
+        /// <param name="busyPin">The busy GPIO pin.</param>
+        /// <param name="dataCommandPin">The data/command GPIO pin.</param>
+        /// <param name="spiBusId">The SPI bus to use to communicate with the display.</param>
+        /// <param name="chipSelectLinePin">The chip select line pin.</param>
+        /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
+        /// <param name="width">The width of the display.</param>
+        /// <param name="height">The height of the display.</param>
+        /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
+        /// <remarks>
+        /// For a 200x200 SSD1681 display, a full Frame requires about 5KB of RAM ((200 * 200) / 8). SSD1681 has 2 RAMs for B/W and Red pixel.
+        /// This means to have a full frame in memory, you need about 10KB of RAM. If you can't guarantee 10KB to be available to the driver
+        /// then enable paging by setting <paramref name="enableFramePaging"/> to true. A page uses about 2KB (1KB for B/W and 1KB for Red).
+        /// </remarks>
+        public Ssd1681(
+            int resetPin,
+            int busyPin,
+            int dataCommandPin,
+            int spiBusId,
+            int chipSelectLinePin,
+            GpioController gpioController,
+            int width,
+            int height,
+            bool enableFramePaging = true)
+        {
+            if (width <= 0 || width > 200)
+                throw new ArgumentOutOfRangeException(nameof(width), "Display width can't be less than 0 or greater than 200");
+
+            if (height <= 0 || height > 200)
+                throw new ArgumentOutOfRangeException(nameof(height), "Display height can't be less than 0 or greater than 200");
+
+            // Setup SPI connection with the display
+            var spiConnectionSettings = new SpiConnectionSettings(spiBusId, chipSelectLinePin)
+            {
+                ClockFrequency = 20_000_000, // 20MHz
+                Mode = SpiMode.Mode0,
+                ChipSelectLineActiveState = false,
+                Configuration = SpiBusConfiguration.HalfDuplex,
+                DataFlow = DataFlow.MsbFirst
+            };
+
+            this.spiDevice = new SpiDevice(spiConnectionSettings);
+
+            // setup the gpio pins
+            this.resetPin = gpioController.OpenPin(resetPin, PinMode.Output);
+            this.dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
+            this.busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
+
+            this.Width = width;
+            this.Height = height;
+            PowerState = PowerState.Unknown;
+
+            this.InitializeFrameBuffer(width, height, enableFramePaging);
+            this.CalculateFrameBufferPageBounds();
+        }
+
+
         /// <inheritdoc/>
         public int Width { get; }
 
@@ -47,41 +111,7 @@ namespace Iot.Device.ePaper.Drivers
         /// </summary>
         public PowerState PowerState { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="Ssd1681"/> class.
-        /// </summary>
-        /// <param name="resetPin">The reset GPIO pin.</param>
-        /// <param name="busyPin">The busy GPIO pin.</param>
-        /// <param name="dataCommandPin">The data/command GPIO pin.</param>
-        /// <param name="spiDevice">The SPI Device used to communicate with the display.</param>
-        /// <param name="width">The width of the display.</param>
-        /// <param name="height">The height of the display.</param>
-        /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
-        /// <remarks>
-        /// For a 200x200 SSD1681 display, a full Frame requires about 5KB of RAM ((200 * 200) / 8). SSD1681 has 2 RAMs for B/W and Red pixel.
-        /// This means to have a full frame in memory, you need about 10KB of RAM. If you can't guarantee 10KB to be available to the driver
-        /// then enable paging by setting <paramref name="enableFramePaging"/> to true. A page uses about 2KB (1KB for B/W and 1KB for Red).
-        /// </remarks>
-        public Ssd1681(GpioPin resetPin, GpioPin busyPin, GpioPin dataCommandPin, 
-            SpiDevice spiDevice, int width, int height, bool enableFramePaging = true)
-        {
-            if (width <= 0 || width > 200)
-                throw new ArgumentOutOfRangeException(nameof(width), "Display width can't be less than 0 or greater than 200");
 
-            if (height <= 0 || height > 200)
-                throw new ArgumentOutOfRangeException(nameof(height), "Display height can't be less than 0 or greater than 200");
-
-            this.resetPin = resetPin;
-            this.busyPin = busyPin;
-            this.dataCommandPin = dataCommandPin;
-            this.spiDevice = spiDevice;
-            this.Width = width;
-            this.Height = height;
-            this.PowerState = PowerState.Unknown;
-
-            this.InitializeFrameBuffer(width, height, enableFramePaging);
-            this.CalculateFrameBufferPageBounds();
-        }
 
         /// <summary>
         /// Performs the required steps to "power on" the display.
@@ -91,7 +121,7 @@ namespace Iot.Device.ePaper.Drivers
             this.HardwareReset();
             this.SoftwareReset();
 
-            this.PowerState = PowerState.PoweredOn;
+            PowerState = PowerState.PoweredOn;
         }
 
         /// <summary>
@@ -103,7 +133,7 @@ namespace Iot.Device.ePaper.Drivers
             this.SendCommand((byte)Command.DeepSleepMode);
             this.SendData((byte)sleepMode);
 
-            this.PowerState = PowerState.PoweredOff;
+            PowerState = PowerState.PoweredOff;
         }
 
         /// <summary>
@@ -111,7 +141,7 @@ namespace Iot.Device.ePaper.Drivers
         /// </summary>
         public void Initialize()
         {
-            if (this.PowerState != PowerState.PoweredOn)
+            if (PowerState != PowerState.PoweredOn)
                 throw new InvalidOperationException("Unable to initialize the display until it has been powered on. Call PowerOn() first.");
 
             // set gate lines and scanning sequence
@@ -124,8 +154,9 @@ namespace Iot.Device.ePaper.Drivers
 
             // Set RAM X start / end position
             this.SendCommand((byte)Command.SetRAMAddressXStartEndPosition);
-            this.SendData(/* Start at 0*/ 0x00, 
-                          /* End */ (byte)(this.Width / 8 - 1)); // end at width bits converted to bytes (starts @ 0)
+            this.SendData(
+                /* Start at 0*/ 0x00,
+                /* End */ (byte)(this.Width / 8 - 1)); // end at width bits converted to bytes (starts @ 0)
 
             // Set RAM Y start / end positon
             this.SendCommand((byte)Command.SetRAMAddressYStartEndPosition);
@@ -175,6 +206,19 @@ namespace Iot.Device.ePaper.Drivers
         }
 
 
+        /// <inheritdoc/>
+        public void Clear(bool triggerPageRefresh = false)
+        {
+            this.BeginFrameDraw();
+            do
+            {
+                // do nothing. internal frame buffers already cleared by BeginFrameDraw()
+            } while (this.NextFramePage());
+            this.EndFrameDraw();
+
+            if (triggerPageRefresh)
+                this.PerformFullRefresh();
+        }
 
         /// <summary>
         /// Sets the 'cursor' position within the display's RAM.
@@ -193,43 +237,27 @@ namespace Iot.Device.ePaper.Drivers
         }
 
         /// <summary>
-        /// Clears the display.
-        /// </summary>
-        public void Clear(bool triggerPageRefresh = false)
-        {
-            this.BeginFrameDraw();
-            do
-            {
-                // do nothing. internal frame buffers already cleared by BeginFrameDraw()
-            } while (this.NextFramePage());
-            this.EndFrameDraw();
-
-            if (triggerPageRefresh)
-                this.PerformFullRefresh();
-        }
-
-        /// <summary>
         /// Draws a single pixel to the appropriate frame buffer.
         /// </summary>
-        /// <param name="x">The X Position</param>
-        /// <param name="y">The Y Position</param>
+        /// <param name="x">The X Position.</param>
+        /// <param name="y">The Y Position.</param>
         /// <param name="inverted">True to invert the pixel from white to black.</param>
-        public void DrawPixel(int x, int y, bool inverted) 
+        public void DrawPixel(int x, int y, bool inverted)
             => this.DrawPixel(x, y, inverted ? Color.Black : Color.White);
 
         /// <summary>
         /// Draws a single pixel to the appropriate frame buffer based on the specified color.
         /// </summary>
-        /// <param name="x">The X Position</param>
-        /// <param name="y">The Y Position</param>
+        /// <param name="x">The X Position.</param>
+        /// <param name="y">The Y Position.</param>
         /// <param name="color">Pixel color. See the remarks for how a buffer is selected based on the color value.</param>
         /// <remarks>
         /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
         /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
         /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
         /// is by performing a simple binary check: 
-        /// if R >= 128 && G == 0 && B == 0 then write a red pixel to the Red Buffer/RAM
-        /// if R == 0 && G == 0 && B == 0 then write a black pixel to B/W Buffer/RAM
+        /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
+        /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
         /// else, assume white pixel and write to B/W Buffer/RAM.
         /// </remarks>
         public void DrawPixel(int x, int y, Color color)
@@ -244,7 +272,7 @@ namespace Iot.Device.ePaper.Drivers
             var pageByteIndex = frameByteIndex - this.currentFrameBufferPageLowerBound;
 
             // if the specified point falls in the current page, update the buffer
-            if (this.currentFrameBufferPageLowerBound <= frameByteIndex 
+            if (this.currentFrameBufferPageLowerBound <= frameByteIndex
                 && frameByteIndex < this.currentFrameBufferPageUpperBound)
             {
                 /*
@@ -271,18 +299,21 @@ namespace Iot.Device.ePaper.Drivers
                  * |        1       |       1       |       White        |
                  */
 
-                if (color.R >= 128 && color.G == 0 && color.B == 0) // is a colored pixel
+                if (color.R >= 128 && color.G == 0 && color.B == 0)
                 {
+                    // this is a colored pixel
                     // according to LUT, no need to change the pixel value in B/W buffer.
                     // red frame buffer starts with 0x00. ORing it to set red pixel to 1.
                     this.frameBuffer2bpp.ColorBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
-                else if (color.R == 0 && color.G == 0 && color.B == 0) // black pixel
+                else if (color.R == 0 && color.G == 0 && color.B == 0)
                 {
+                    // black pixel
                     this.frameBuffer2bpp.BlackBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
                 }
-                else // assume white if R, G, and B > 0
+                else
                 {
+                    // assume white if R, G, and B > 0
                     this.frameBuffer2bpp.BlackBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
             }
@@ -317,6 +348,8 @@ namespace Iot.Device.ePaper.Drivers
             this.SendCommand((byte)Command.WriteRedRAM);
             this.SendData(buffer);
         }
+
+
 
         /// <summary>
         /// Begins a frame draw operation with frame paging support.
@@ -362,6 +395,8 @@ namespace Iot.Device.ePaper.Drivers
             this.SetFrameBufferPage(FirstPageIndex);
         }
 
+
+
         /// <summary>
         /// Sends a command to the <see cref="SpiDevice"/>.
         /// </summary>
@@ -374,7 +409,7 @@ namespace Iot.Device.ePaper.Drivers
             foreach (var b in command)
             {
                 // write the command byte
-                spiDevice.WriteByte(b);
+                this.spiDevice.WriteByte(b);
             }
         }
 
@@ -409,6 +444,7 @@ namespace Iot.Device.ePaper.Drivers
 
 
 
+
         /// <summary>
         /// Performs the hardware reset commands sequence on the display.
         /// </summary>
@@ -429,7 +465,7 @@ namespace Iot.Device.ePaper.Drivers
         /// </summary>
         private void SoftwareReset()
         {
-            this.SendCommand((byte)(byte)Command.SoftwareReset);
+            this.SendCommand((byte)Command.SoftwareReset);
 
             this.WaitReady();
             this.WaitMs(10);
@@ -460,11 +496,11 @@ namespace Iot.Device.ePaper.Drivers
         /// </summary>
         /// <param name="x">The X position of the pixel.</param>
         /// <param name="y">The Y position of the pixel.</param>
-        /// <returns></returns>
+        /// <returns>The index of the byte in the frame buffer which contains the specified pixel.</returns>
         private int GetFrameBufferIndex(int x, int y)
         {
             // x specifies the column
-            return (x + (y * this.Width)) / 8;
+            return (x + y * this.Width) / 8;
         }
 
         /// <summary>
@@ -477,7 +513,7 @@ namespace Iot.Device.ePaper.Drivers
             if (index <= 0)
                 return 0;
 
-            return (index * 8) % this.Width;
+            return index * 8 % this.Width;
         }
 
         /// <summary>
@@ -490,7 +526,7 @@ namespace Iot.Device.ePaper.Drivers
             if (index <= 0)
                 return 0;
 
-            return (index * 8) / this.Height;
+            return index * 8 / this.Height;
         }
 
         /// <summary>
@@ -511,7 +547,7 @@ namespace Iot.Device.ePaper.Drivers
         /// Make sure to call <see cref="PerformFullRefresh"/> or <see cref="PerformPartialRefresh"/>
         /// to persist the frame to the display's RAM before calling this method.
         /// </summary>
-        /// <param name="page"></param>
+        /// <param name="page">The frame buffer page index to move to.</param>
         private void SetFrameBufferPage(int page)
         {
             if (page < 0 || page >= PagesPerFrame)
@@ -530,7 +566,6 @@ namespace Iot.Device.ePaper.Drivers
         {
             // black and color buffers have the same size, so we will work with only the black buffer
             // in these calculations.
-
             this.currentFrameBufferPageLowerBound = this.currentFrameBufferPage * this.frameBuffer2bpp.BlackBuffer.BufferByteCount;
             this.currentFrameBufferPageUpperBound = (this.currentFrameBufferPage + 1) * this.frameBuffer2bpp.BlackBuffer.BufferByteCount;
 
@@ -547,22 +582,27 @@ namespace Iot.Device.ePaper.Drivers
         private void WriteInternalBuffersToDevice()
         {
             // write B/W and Color (RED) frame to the display's RAM.
-
-            this.DirectDrawBuffer(this.currentFrameBufferStartXPosition,
+            this.DirectDrawBuffer(
+                this.currentFrameBufferStartXPosition,
                 this.currentFrameBufferStartYPosition,
                 this.frameBuffer2bpp.BlackBuffer.Buffer);
 
-            this.DirectDrawColorBuffer(this.currentFrameBufferStartXPosition,
+            this.DirectDrawColorBuffer(
+                this.currentFrameBufferStartXPosition,
                 this.currentFrameBufferStartYPosition,
                 this.frameBuffer2bpp.ColorBuffer.Buffer);
         }
 
+
+        #region Enums
 
         /// <summary>
         /// Commands supported by SSD1681.
         /// </summary>
         public enum Command : byte
         {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable SA1602 // The enumeration sub-item must have a documentation header
             DriverOutputControl = 0x01,
             GateDrivingVoltage = 0x03,
             SourceDrivingVoltageControl = 0x04,
@@ -612,6 +652,8 @@ namespace Iot.Device.ePaper.Drivers
             SetRAMAddressCounterX = 0x4e,
             SetRAMAddressCounterY = 0x4f,
             NOP = 0x7f
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore SA1602 // The enumeration sub-item must have a documentation header
         }
 
         /// <summary>
@@ -626,7 +668,7 @@ namespace Iot.Device.ePaper.Drivers
             /// - No Clock 
             /// - No Output load 
             /// - MCU Interface Access: ON
-            /// - RAM Data Access: ON
+            /// - RAM Data Access: ON.
             /// </summary>
             Normal = 0x00,
 
@@ -637,7 +679,7 @@ namespace Iot.Device.ePaper.Drivers
             /// - No Clock 
             /// - No Output load 
             /// - MCU Interface Access: OFF
-            /// - RAM Data Access: ON (RAM contents retained)
+            /// - RAM Data Access: ON (RAM contents retained).
             /// </summary>
             DeepSleepModeOne = 0x01,
 
@@ -648,7 +690,7 @@ namespace Iot.Device.ePaper.Drivers
             /// - No Clock 
             /// - No Output load 
             /// - MCU Interface Access: OFF
-            /// - RAM Data Access: OFF (RAM contents NOT retained)
+            /// - RAM Data Access: OFF (RAM contents NOT retained).
             /// </summary>
             DeepSleepModeTwo = 0x11,
         }
@@ -675,7 +717,7 @@ namespace Iot.Device.ePaper.Drivers
         public enum Ram : byte
         {
             /// <summary>
-            /// Specifies the black & white RAM area.
+            /// Specifies the black and white RAM area.
             /// </summary>
             BlackWhite = 0x00,
 
@@ -685,11 +727,15 @@ namespace Iot.Device.ePaper.Drivers
             Color = 0x01,
         }
 
+#pragma warning restore SA1201 // Missing XML comment for publicly visible type or member
+
+        #endregion
+
         #region IDisposable
 
         private void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!this.disposed)
             {
                 if (disposing)
                 {
@@ -701,15 +747,16 @@ namespace Iot.Device.ePaper.Drivers
                     this.frameBuffer2bpp = null;
                 }
 
-                disposed = true;
+                this.disposed = true;
             }
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            System.GC.SuppressFinalize(this);
+            this.Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion

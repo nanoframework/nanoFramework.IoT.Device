@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+
+using System;
 
 using Iot.Device.ePaper.Shared.Buffers;
 
@@ -27,6 +30,12 @@ namespace Iot.Device.ePaper.Shared.Drivers
         /// as a measure to reduce memory footprint. See the ctor documentation for more info.
         /// </remarks>
         IFrameBuffer FrameBuffer { get; }
+
+        /// <summary>
+        /// Clears the display frame buffer by resetting it to its default state.
+        /// </summary>
+        /// <param name="triggerPageRefresh"><see langword="true"/> to also flush the buffer to the display and trigger the refresh sequence</param>
+        void Clear(bool triggerPageRefresh = false);
 
         /// <summary>
         /// Initiates the full refresh sequence on the display.

@@ -1,4 +1,7 @@
-﻿namespace Iot.Device.ePaper.Shared.Primitives
+﻿// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+
+namespace Iot.Device.ePaper.Shared.Primitives
 {
     public struct Color
     {

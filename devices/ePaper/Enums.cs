@@ -1,4 +1,7 @@
-﻿namespace Iot.Device.ePaper
+﻿// Copyright (c) 2022 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+
+namespace Iot.Device.ePaper
 {
     /// <summary>
     /// Defines the display current power state.
@@ -16,7 +19,7 @@
         PoweredOn,
 
         /// <summary>
-        /// The display is powered off (sleeping) and depending on <see cref="SleepMode"/> it may or may not allow some functions.
+        /// The display is powered off (sleeping) and depending on the sleep mode it may or may not allow some functions.
         /// </summary>
         PoweredOff,
     }
