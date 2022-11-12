@@ -1,21 +1,22 @@
-﻿# nanoFramework.Iot.Device.ePaper
+﻿# ePaper drivers for .NET nanoFramework
+
 This is a C# library to bring support for various ePaper displays to nanoFramework. It contains the drivers with a graphics library that provides APIs to draw text, lines, and shapes.
 
 ## Currently Supported ePaper Displays
+
 There are various EPD Display Controllers out there. The following are the Controllers we support. More Controllers will be supported in future releases.
 
-- SSD1681: 200 Source, 200 Gate Red/Black/White Active Matrix EPD Display Driver with Controller.
+- SSD1681: 200 Source, 200 Gate Red/Black/White Active Matrix EPD Display Driver with Controller. [Datasheet](https://www.buydisplay.com/download/ic/SSD1681.pdf)
 
-The datasheets for the supported controllers can be found in `Datasheets`.
+### Upcoming support:
 
-Upcoming support:
 - SSD1680: 176 Source x 296 Gate Red/Black/White Active Matrix EPD Display Driver with Controller.
 - UC8151D: All-in-one driver IC w/ Timing Controller for White/Black/Red Dot-Matrix Micro-Cup ESL.
 - And more...
 
 ## Circuit
 
-![](ESP32-ePaper-Sketch_bb.png)
+![ePaper sketch](ESP32-ePaper-Sketch_bb.png)
 
 An ePaper display uses 3-Wire (or 4-Wire) `SPI` to communicate with an `MCU`. Supply voltage varies depending on the display and controller. Refer to the datasheet for more information.
 
@@ -24,11 +25,12 @@ The circuit above shows an ePaper display based on the `SSD1681` controller wire
 *Refer to your development board's pinout and the display controller datasheet for more info. The above might not work with your specific board and/or display.*
 
 ## 'Hello World' Sample
+
 The following code snippet shows you how to write the famous `Hello World` message to the display using the included graphics libary.
 
 Start by creating a new nanoFramework project and reference this library. Replace the contents of `Main` with the following:
 
-```C#
+```csharp
 // Create an instance of the GPIO Controller.
 // The display driver uses this to open pins to the display device.
 using var gpioController = new GpioController();
@@ -74,7 +76,7 @@ display.PowerDown(Ssd1681.SleepMode.DeepSleepModeTwo);
 
 Refer to the `SSD1681` sample project for a more comprehensive example of using the driver and the graphics library. The result of that sample is drawing this on the display:
 
-![](Samples/SSD1681Sample/SSD1681-Sample-Output.jpg)
+![SSD1681 sample output](Samples/SSD1681Sample/SSD1681-Sample-Output.jpg)
 
 ## Graphics Library Features
 
