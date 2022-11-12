@@ -220,6 +220,21 @@ namespace Iot.Device.ePaper.Drivers
                 this.PerformFullRefresh();
         }
 
+        /// <inheritdoc/>
+        public void Flush()
+        {
+            // write B/W and Color (RED) frame to the display's RAM.
+            this.DirectDrawBuffer(
+                this.currentFrameBufferStartXPosition,
+                this.currentFrameBufferStartYPosition,
+                this.frameBuffer2bpp.BlackBuffer.Buffer);
+
+            this.DirectDrawColorBuffer(
+                this.currentFrameBufferStartXPosition,
+                this.currentFrameBufferStartYPosition,
+                this.frameBuffer2bpp.ColorBuffer.Buffer);
+        }
+
         /// <summary>
         /// Sets the 'cursor' position within the display's RAM.
         /// </summary>
@@ -375,7 +390,7 @@ namespace Iot.Device.ePaper.Drivers
         {
             if (this.currentFrameBufferPage < PagesPerFrame - 1)
             {
-                this.WriteInternalBuffersToDevice();
+                this.Flush();
 
                 this.currentFrameBufferPage++;
                 this.SetFrameBufferPage(this.currentFrameBufferPage);
@@ -391,7 +406,7 @@ namespace Iot.Device.ePaper.Drivers
         /// </summary>
         public void EndFrameDraw()
         {
-            this.WriteInternalBuffersToDevice();
+            this.Flush();
             this.SetFrameBufferPage(FirstPageIndex);
         }
 
@@ -574,23 +589,6 @@ namespace Iot.Device.ePaper.Drivers
 
             this.FrameBuffer.StartPoint = new Point(this.currentFrameBufferStartXPosition, this.currentFrameBufferStartYPosition);
             this.FrameBuffer.CurrentFramePage = this.currentFrameBufferPage;
-        }
-
-        /// <summary>
-        /// A shortcut method to write the contents of the <see cref="FrameBuffer"/> to the display's RAM.
-        /// </summary>
-        private void WriteInternalBuffersToDevice()
-        {
-            // write B/W and Color (RED) frame to the display's RAM.
-            this.DirectDrawBuffer(
-                this.currentFrameBufferStartXPosition,
-                this.currentFrameBufferStartYPosition,
-                this.frameBuffer2bpp.BlackBuffer.Buffer);
-
-            this.DirectDrawColorBuffer(
-                this.currentFrameBufferStartXPosition,
-                this.currentFrameBufferStartYPosition,
-                this.frameBuffer2bpp.ColorBuffer.Buffer);
         }
 
 

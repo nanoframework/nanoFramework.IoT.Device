@@ -38,6 +38,14 @@ namespace Iot.Device.ePaper.Drivers
         void Clear(bool triggerPageRefresh = false);
 
         /// <summary>
+        /// Flushes the content of the internal frame buffer to the display.
+        /// </summary>
+        /// <remarks>
+        /// You will only need to use this method if you have disabled frame paged draws.
+        /// </remarks>
+        void Flush();
+
+        /// <summary>
         /// Initiates the full refresh sequence on the display.
         /// </summary>
         void PerformFullRefresh();
