@@ -41,10 +41,10 @@ namespace Iot.Device.Bmxx80
                 Thread.Sleep(GetMeasurementDuration());
             }
 
-            TryReadTemperatureCore(out Temperature temperature);
-            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            var temperatureIsValid = TryReadTemperatureCore(out Temperature temperature);
+            var presureIsValid = TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
 
-            return new Bmp280ReadResult(temperature, pressure);
+            return new Bmp280ReadResult(temperature, temperatureIsValid, pressure, presureIsValid);
         }
     }
 }

@@ -289,8 +289,7 @@ namespace Iot.Device.Bmxx80
         [Property("PowerMode")]
         public void SetPowerMode(Bme680PowerMode powerMode)
         {
-            if (!powerMode.Equals(Bme680PowerMode.Forced) &&
-                !powerMode.Equals(Bme680PowerMode.Sleep))
+            if ((powerMode != Bme680PowerMode.Forced) && (powerMode != Bme680PowerMode.Sleep))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -421,12 +420,12 @@ namespace Iot.Device.Bmxx80
             SetPowerMode(Bme680PowerMode.Forced);
             Thread.Sleep((int)GetMeasurementDuration(HeaterProfile).Milliseconds);
 
-            TryReadTemperatureCore(out Temperature temperature);
-            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
-            TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
-            TryReadGasResistanceCore(out ElectricResistance gasResistance);
+            var temperatureIsValid = TryReadTemperatureCore(out Temperature temperature);
+            var pressureIsValid = TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            var humidityIsValid = TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
+            var gasResistanceIsValid = TryReadGasResistanceCore(out ElectricResistance gasResistance);
 
-            return new Bme680ReadResult(temperature, pressure, humidity, gasResistance);
+            return new Bme680ReadResult(temperature, temperatureIsValid, pressure, pressureIsValid, humidity, humidityIsValid, gasResistance, gasResistanceIsValid);
         }
 
         /// <summary>
