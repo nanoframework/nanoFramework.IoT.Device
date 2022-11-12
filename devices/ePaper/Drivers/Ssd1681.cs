@@ -173,9 +173,7 @@ namespace Iot.Device.ePaper.Drivers
         }
 
 
-        /// <summary>
-        /// Perform full panel refresh sequence.
-        /// </summary>
+        /// <inheritdoc/>
         public void PerformFullRefresh()
         {
             this.SendCommand((byte)Command.BoosterSoftStartControl);
@@ -188,9 +186,7 @@ namespace Iot.Device.ePaper.Drivers
             this.WaitReady();
         }
 
-        /// <summary>
-        /// Perform partial panel refresh sequence.
-        /// </summary>
+        /// <inheritdoc/>
         public void PerformPartialRefresh()
         {
             this.SendCommand((byte)Command.BoosterSoftStartControl);
@@ -235,11 +231,7 @@ namespace Iot.Device.ePaper.Drivers
                 this.frameBuffer2bpp.ColorBuffer.Buffer);
         }
 
-        /// <summary>
-        /// Sets the 'cursor' position within the display's RAM.
-        /// </summary>
-        /// <param name="x">X location within the display's RAM.</param>
-        /// <param name="y">Y location within the display's RAM.</param>
+        /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
             this.EnforceBounds(ref x, ref y);
@@ -260,21 +252,7 @@ namespace Iot.Device.ePaper.Drivers
         public void DrawPixel(int x, int y, bool inverted)
             => this.DrawPixel(x, y, inverted ? Color.Black : Color.White);
 
-        /// <summary>
-        /// Draws a single pixel to the appropriate frame buffer based on the specified color.
-        /// </summary>
-        /// <param name="x">The X Position.</param>
-        /// <param name="y">The Y Position.</param>
-        /// <param name="color">Pixel color. See the remarks for how a buffer is selected based on the color value.</param>
-        /// <remarks>
-        /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
-        /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
-        /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
-        /// is by performing a simple binary check: 
-        /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
-        /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
-        /// else, assume white pixel and write to B/W Buffer/RAM.
-        /// </remarks>
+        /// <inheritdoc/>
         public void DrawPixel(int x, int y, Color color)
         {
             // ignore out of bounds draw attempts
@@ -366,26 +344,14 @@ namespace Iot.Device.ePaper.Drivers
 
 
 
-        /// <summary>
-        /// Begins a frame draw operation with frame paging support.
-        /// <code>
-        /// SSD1681.BeginFrameDraw();
-        /// do {
-        ///     // Drawing calls
-        /// } while (SSD1681.NextFramePage());
-        /// SSD1681.EndFrameDraw();
-        /// </code>
-        /// </summary>
+        /// <inheritdoc/>
         public void BeginFrameDraw()
         {
             // make sure we start from the first page with clear buffers
             this.SetFrameBufferPage(FirstPageIndex);
         }
 
-        /// <summary>
-        /// Moves the current buffers to the next frame page and returns true if successful.
-        /// </summary>
-        /// <returns>True if the next frame page is available and the internal buffers have moved to it, otherwise; false.</returns>
+        /// <inheritdoc/>
         public bool NextFramePage()
         {
             if (this.currentFrameBufferPage < PagesPerFrame - 1)
@@ -401,9 +367,7 @@ namespace Iot.Device.ePaper.Drivers
             return false;
         }
 
-        /// <summary>
-        /// Ends the frame draw and flushes the current page to the device.
-        /// </summary>
+        /// <inheritdoc/>
         public void EndFrameDraw()
         {
             this.Flush();
@@ -412,10 +376,7 @@ namespace Iot.Device.ePaper.Drivers
 
 
 
-        /// <summary>
-        /// Sends a command to the <see cref="SpiDevice"/>.
-        /// </summary>
-        /// <param name="command">The command's byte(s) to send.</param>
+        /// <inheritdoc/>
         public void SendCommand(params byte[] command)
         {
             // make sure we are setting data/command pin to low (command mode)
@@ -428,10 +389,7 @@ namespace Iot.Device.ePaper.Drivers
             }
         }
 
-        /// <summary>
-        /// Sends data to the <see cref="SpiDevice"/>.
-        /// </summary>
-        /// <param name="data">The data byte(s) to send.</param>
+        /// <inheritdoc/>
         public void SendData(params byte[] data)
         {
             // set the data/command pin to high to indicate to the display we will be sending data
@@ -446,9 +404,7 @@ namespace Iot.Device.ePaper.Drivers
             this.dataCommandPin.Write(PinValue.Low);
         }
 
-        /// <summary>
-        /// Waits for the busy pin on the display to read <see cref="PinValue.Low"/> (which indicates the display is ready) before unblocking execution.
-        /// </summary>
+        /// <inheritdoc/>
         public void WaitReady()
         {
             while (this.busyPin.Read() == PinValue.High)

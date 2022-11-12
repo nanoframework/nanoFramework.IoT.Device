@@ -4,6 +4,7 @@
 using System;
 
 using Iot.Device.ePaper.Buffers;
+using Iot.Device.ePaper.Primitives;
 
 namespace Iot.Device.ePaper.Drivers
 {
@@ -63,6 +64,23 @@ namespace Iot.Device.ePaper.Drivers
         void SetPosition(int x, int y);
 
         /// <summary>
+        /// Draws a single pixel to the appropriate frame buffer based on the specified color.
+        /// </summary>
+        /// <param name="x">The X Position.</param>
+        /// <param name="y">The Y Position.</param>
+        /// <param name="color">Pixel color. See the remarks for how a buffer is selected based on the color value.</param>
+        /// <remarks>
+        /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
+        /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// is by performing a simple binary check: 
+        /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
+        /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
+        /// else, assume white pixel and write to B/W Buffer/RAM.
+        /// </remarks>
+        void DrawPixel(int x, int y, Color color);
+
+        /// <summary>
         /// Sends a command byte(s) to the display.
         /// </summary>
         /// <param name="command">The command bytes to send. See the command enum within the driver implementation and consult the datasheet.</param>
@@ -78,5 +96,28 @@ namespace Iot.Device.ePaper.Drivers
         /// Blocks the current thread until the display is in idle mode again.
         /// </summary>
         void WaitReady();
+
+        /// <summary>
+        /// Begins a frame draw operation with frame paging support.
+        /// <code>
+        /// BeginFrameDraw();
+        /// do {
+        ///     // Drawing calls
+        /// } while (NextFramePage());
+        /// EndFrameDraw();
+        /// </code>
+        /// </summary>
+        void BeginFrameDraw();
+
+        /// <summary>
+        /// Moves the current buffers to the next frame page and returns true if successful.
+        /// </summary>
+        /// <returns>True if the next frame page is available and the internal buffers have moved to it, otherwise; false.</returns>
+        bool NextFramePage();
+
+        /// <summary>
+        /// Ends the frame draw and flushes the current page to the device.
+        /// </summary>
+        void EndFrameDraw();
     }
 }
