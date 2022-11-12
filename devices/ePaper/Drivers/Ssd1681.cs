@@ -1,18 +1,16 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.Device.Gpio;
+using System.Device.Spi;
+using System.Threading;
+
+using Iot.Device.ePaper.Buffers;
+using Iot.Device.ePaper.Primitives;
+
 namespace Iot.Device.ePaper.Drivers
 {
-    using System;
-    using System.Device.Gpio;
-    using System.Device.Spi;
-    using System.Threading;
-    using Iot.Device.ePaper;
-
-    using Iot.Device.ePaper.Shared.Buffers;
-    using Iot.Device.ePaper.Shared.Drivers;
-    using Iot.Device.ePaper.Shared.Primitives;
-
     /// <summary>
     /// A driver class for the SSD1681 display controller.
     /// </summary>

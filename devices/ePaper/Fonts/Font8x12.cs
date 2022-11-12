@@ -1,10 +1,8 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ePaperGraphics
+namespace Iot.Device.ePaper.Fonts
 {
-    using Iot.Device.ePaper.Shared.Fonts;
-
     /// <summary>
     /// A font class with every character is 12-points wide and 8-points high.
     /// </summary>

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ePaper.Shared.Primitives
+namespace Iot.Device.ePaper.Primitives
 {
     /// <summary>
     /// A point data structure to represent a position on a plane.
@@ -47,15 +47,19 @@ namespace Iot.Device.ePaper.Shared.Primitives
             }
         }
 
+        /// <inheritdoc/>
         public static bool operator ==(Point point, Point other)
             => InternalEquals(point, other);
 
+        /// <inheritdoc/>
         public static bool operator !=(Point point, Point other)
             => !InternalEquals(point, other);
 
+        /// <inheritdoc/>
         public static Point operator +(Point point, Point other)
             => new Point(point.X + other.X, point.Y + other.Y);
 
+        /// <inheritdoc/>
         public static Point operator -(Point point, Point other)
             => new Point(point.X - other.X, point.Y - other.Y);
 

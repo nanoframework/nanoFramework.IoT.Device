@@ -3,9 +3,9 @@
 
 using System;
 
-using Iot.Device.ePaper.Shared.Buffers;
+using Iot.Device.ePaper.Buffers;
 
-namespace Iot.Device.ePaper.Shared.Drivers
+namespace Iot.Device.ePaper.Drivers
 {
     /// <summary>
     /// Represents an ePaper Display device.

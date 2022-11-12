@@ -20,12 +20,19 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Buffers\FrameBuffer1BitPerPixel.cs" />
+    <Compile Include="Buffers\FrameBuffer2BitPerPixel.cs" />
+    <Compile Include="Buffers\FrameBufferBase.cs" />
+    <Compile Include="Buffers\IFrameBuffer.cs" />
+    <Compile Include="Drivers\IePaperDisplay.cs" />
     <Compile Include="Drivers\Ssd1681.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Fonts\Font8x12.cs" />
+    <Compile Include="Fonts\IFont.cs" />
+    <Compile Include="Graphics.cs" />
+    <Compile Include="Primitives\Color.cs" />
+    <Compile Include="Primitives\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ePaper.Shared\ePaper.Shared.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">

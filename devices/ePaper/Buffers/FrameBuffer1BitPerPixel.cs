@@ -1,9 +1,9 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-using Iot.Device.ePaper.Shared.Primitives;
+using Iot.Device.ePaper.Primitives;
 
-namespace Iot.Device.ePaper.Shared.Buffers
+namespace Iot.Device.ePaper.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for dual-color displays.

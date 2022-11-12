@@ -3,12 +3,12 @@
 
 using System;
 
-using Iot.Device.ePaper.Shared.Buffers;
-using Iot.Device.ePaper.Shared.Drivers;
-using Iot.Device.ePaper.Shared.Fonts;
-using Iot.Device.ePaper.Shared.Primitives;
+using Iot.Device.ePaper.Buffers;
+using Iot.Device.ePaper.Drivers;
+using Iot.Device.ePaper.Fonts;
+using Iot.Device.ePaper.Primitives;
 
-namespace Iot.Device.ePaperGraphics
+namespace Iot.Device.ePaper
 {
     /// <summary>
     /// A graphics class for ePaper displays with basic graphic APIs support.

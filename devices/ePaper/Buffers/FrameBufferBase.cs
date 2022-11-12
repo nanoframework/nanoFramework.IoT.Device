@@ -3,9 +3,9 @@
 
 using System;
 
-using Iot.Device.ePaper.Shared.Primitives;
+using Iot.Device.ePaper.Primitives;
 
-namespace Iot.Device.ePaper.Shared.Buffers
+namespace Iot.Device.ePaper.Buffers
 {
     /// <summary>
     /// Base implementation for a frame buffer class.

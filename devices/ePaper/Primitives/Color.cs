@@ -1,8 +1,11 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ePaper.Shared.Primitives
+namespace Iot.Device.ePaper.Primitives
 {
+    /// <summary>
+    /// A color data structure for RGB colors.
+    /// </summary>
     public struct Color
     {
         /// <summary>
@@ -76,19 +79,41 @@ namespace Iot.Device.ePaper.Shared.Primitives
             }
         }
 
+        /// <inheritdoc/>
         public static bool operator ==(Color color, Color other)
             => InternalEquals(color, other);
 
+        /// <inheritdoc/>
         public static bool operator !=(Color color, Color other)
             => !InternalEquals(color, other);
 
+        /// <inheritdoc/>
         private static bool InternalEquals(Color color, Color other) 
             => color.R == other.R && color.G == other.G && color.B == other.B;
 
+        /// <summary>
+        /// Black Color.
+        /// </summary>
         public static Color Black = new(r: 0, g: 0, b: 0);
+
+        /// <summary>
+        /// White Color.
+        /// </summary>
         public static Color White = new(r: 255, g: 255, b: 255);
+
+        /// <summary>
+        /// Red Color.
+        /// </summary>
         public static Color Red = new Color(r: 255, g: 0, b: 0);
+
+        /// <summary>
+        /// Green Color.
+        /// </summary>
         public static Color Green = new Color(r: 0, g: 255, b: 0);
+
+        /// <summary>
+        /// Blue Color.
+        /// </summary>
         public static Color Blue = new Color(r: 0, g: 0, b: 255);
     }
 }

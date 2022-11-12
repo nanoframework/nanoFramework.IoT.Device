@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ePaper.Shared.Fonts
+namespace Iot.Device.ePaper.Fonts
 {
     /// <summary>
     /// Represents a font that can be used by the graphics library to render text. 

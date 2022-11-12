@@ -3,9 +3,9 @@
 
 using System;
 
-using Iot.Device.ePaper.Shared.Primitives;
+using Iot.Device.ePaper.Primitives;
 
-namespace Iot.Device.ePaper.Shared.Buffers
+namespace Iot.Device.ePaper.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for tri-color displays with a separate buffer for the 3rd color.
@@ -81,7 +81,7 @@ namespace Iot.Device.ePaper.Shared.Buffers
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="FrameBuffer2BitPerPixel"/> class.
+        /// Initializes a new instance of the <see cref="FrameBuffer2BitPerPixel"/> class.
         /// </summary>
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>

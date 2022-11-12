@@ -22,8 +22,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ePaper.Shared\ePaper.Shared.nfproj" />
-    <ProjectReference Include="..\..\..\ePaperGraphics\ePaperGraphics.nfproj" />
     <ProjectReference Include="..\..\ePaper.nfproj" />
   </ItemGroup>
   <ItemGroup>
