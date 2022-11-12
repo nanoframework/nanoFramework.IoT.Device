@@ -130,8 +130,9 @@ namespace Iot.Device.ePaper.Buffers
                 this.BlackBuffer.Fill(start, width, height, Color.Black);
                 this.ColorBuffer.Fill(start, width, height, Color.Black); // black will write 0 to the buffer
             }
-            else // white
+            else
             {
+                // white
                 this.BlackBuffer.Fill(start, width, height, Color.White);
                 this.ColorBuffer.Fill(start, width, height, Color.Black); // black will write 0 to the buffer
             }
@@ -194,8 +195,9 @@ namespace Iot.Device.ePaper.Buffers
                 this.BlackBuffer.SetPixel(point, pixelColor);
                 this.ColorBuffer.SetPixel(point, pixelColor); // black will write 0 to the buffer
             }
-            else // white
+            else
             {
+                // white
                 this.BlackBuffer.SetPixel(point, pixelColor);
                 this.ColorBuffer.SetPixel(point, Color.Black); // black will write 0 to the buffer
             }

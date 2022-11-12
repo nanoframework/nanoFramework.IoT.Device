@@ -211,7 +211,9 @@ namespace Iot.Device.ePaper.Drivers
             do
             {
                 // do nothing. internal frame buffers already cleared by BeginFrameDraw()
-            } while (this.NextFramePage());
+            }
+            while (this.NextFramePage());
+
             this.EndFrameDraw();
 
             if (triggerPageRefresh)
@@ -479,7 +481,7 @@ namespace Iot.Device.ePaper.Drivers
         }
 
         /// <summary>
-        /// "Snaps" the provided coordinates to the lower bounds of the display if out of allowed range.
+        /// Snaps the provided coordinates to the lower bounds of the display if out of allowed range.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
@@ -694,7 +696,7 @@ namespace Iot.Device.ePaper.Drivers
         }
 
         /// <summary>
-        /// SSD1861 Supported Refresh Modes
+        /// SSD1861 Supported Refresh Modes.
         /// </summary>
         public enum RefreshMode : byte
         {
@@ -710,7 +712,7 @@ namespace Iot.Device.ePaper.Drivers
         }
 
         /// <summary>
-        /// SSD1681 RAM
+        /// SSD1681 RAM.
         /// </summary>
         public enum Ram : byte
         {

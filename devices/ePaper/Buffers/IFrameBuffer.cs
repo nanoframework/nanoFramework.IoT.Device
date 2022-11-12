@@ -62,7 +62,7 @@ namespace Iot.Device.ePaper.Buffers
         /// </summary>
         /// <param name="point">The point to get the byte containing the pixel.</param>
         /// <returns>A byte that contains the pixel specified by the point.</returns>
-        byte this[Point point] { get;set; }
+        byte this[Point point] { get; set; }
 
         /// <summary>
         /// Gets the pixel at the specified position.
@@ -81,7 +81,7 @@ namespace Iot.Device.ePaper.Buffers
         /// <summary>
         /// Fill the entire frame buffer using the specified color.
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">The color to fill the frame with.</param>
         void Fill(Color color);
 
         /// <summary>

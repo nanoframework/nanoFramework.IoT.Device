@@ -34,7 +34,7 @@ namespace Iot.Device.ePaper.Drivers
         /// <summary>
         /// Clears the display frame buffer by resetting it to its default state.
         /// </summary>
-        /// <param name="triggerPageRefresh"><see langword="true"/> to also flush the buffer to the display and trigger the refresh sequence</param>
+        /// <param name="triggerPageRefresh"><see langword="true"/> to also flush the buffer to the display and trigger the refresh sequence.</param>
         void Clear(bool triggerPageRefresh = false);
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Iot.Device.ePaper.Drivers
         /// Sets the drawing position on the display.
         /// </summary>
         /// <param name="x">The X position.</param>
-        /// <param name="y">The X position.</param>
+        /// <param name="y">The Y position.</param>
         void SetPosition(int x, int y);
 
         /// <summary>
