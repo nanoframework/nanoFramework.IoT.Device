@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Threading;
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Threading;
 using Iot.Device.Multiplexing.Utility;
 
 namespace Iot.Device.Multiplexing
@@ -33,7 +33,7 @@ namespace Iot.Device.Multiplexing
         private VirtualOutputSegment _segment;
 
         /// <summary>
-        /// Initialize a new shift register connected through GPIO.
+        /// Initializes a new instance of the <see cref="ShiftRegister" /> class.
         /// </summary>
         /// <param name="pinMapping">The pin mapping to use by the binding.</param>
         /// <param name="bitLength">Bit length of register, including chained registers.</param>
@@ -53,8 +53,8 @@ namespace Iot.Device.Multiplexing
         }
 
         /// <summary>
-        /// Initialize a new shift register device connected through SPI.
-        /// Uses 3 pins (SDI -> SDI, SCLK -> SCLK, CE0 -> LE)
+        /// Initializes a new instance of the <see cref="ShiftRegister" /> class.
+        /// Uses 3 pins (SDI -> SDI, SCLK -> SCLK, CE0 -> LE).
         /// </summary>
         /// <param name="spiDevice">SpiDevice used for serial communication.</param>
         /// <param name="bitLength">Bit length of register, including chained registers.</param>
@@ -105,7 +105,7 @@ namespace Iot.Device.Multiplexing
 
             for (int i = 0; i < _bitLength / 8; i++)
             {
-                ShiftByte(0b_0000_0000);
+                ShiftByte(0b0000_0000);
             }
         }
 
@@ -115,6 +115,7 @@ namespace Iot.Device.Multiplexing
         /// Does not latch.
         /// Requires use of GPIO controller.
         /// </summary>
+        /// <param name="value">Value to write.</param>
         public void ShiftBit(PinValue value)
         {
             if (_controller is null || _pinMapping.SerialDataInput < 0)
@@ -124,8 +125,10 @@ namespace Iot.Device.Multiplexing
 
             // writes value to serial data pin
             _controller.Write(_serial, value);
+
             // data is written to the storage register on the rising edge of the storage register clock
             _controller.Write(_clock, 1);
+
             // values are reset to low
             _controller.Write(_serial, 0);
             _controller.Write(_clock, 0);
@@ -135,8 +138,9 @@ namespace Iot.Device.Multiplexing
         /// Shifts a byte -- 8 bits -- to the storage register.
         /// Assumes register bit length evenly divisible by 8.
         /// Pushes / overwrites any existing values.
-        /// Latches by default.
         /// </summary>
+        /// <param name="value">Value to write.</param>
+        /// <param name="latch">Should latch, default true.</param>
         public void ShiftByte(byte value, bool latch = true)
         {
             if (_spiDevice is object)
@@ -151,7 +155,8 @@ namespace Iot.Device.Multiplexing
                 // determines value of i bit in byte value
                 // logical equivalent of value[i] (which isn't supported for byte type in C#)
                 // starts left-most and ends up right-most
-                int data = (0b_1000_0000 >> i) & value;
+                int data = (0b1000_0000 >> i) & value;
+
                 // writes value to storage register
                 ShiftBit(data);
             }
@@ -175,12 +180,13 @@ namespace Iot.Device.Multiplexing
 
             // latches value on rising edge of register clock (LE)
             _controller.Write(_latch, 1);
+
             // value reset to low in preparation for next use.
             _controller.Write(_latch, 0);
         }
 
         /// <summary>
-        /// Switch output register to high or low-impedance state.
+        /// Sets a value indicating whether output register is high or low-impedance state.
         /// Enables or disables register outputs, but does not delete values.
         /// Requires use of GPIO controller.
         /// </summary>
@@ -226,6 +232,8 @@ namespace Iot.Device.Multiplexing
         /// <summary>
         /// Segment values.
         /// </summary>
+        /// <returns>PinValue of givven index.</returns>
+        /// <param name="index">Index of value.</param>
         PinValue IOutputSegment.this[int index]
         {
             get => _segment[index];
@@ -236,6 +244,8 @@ namespace Iot.Device.Multiplexing
         /// Writes a PinValue to a virtual segment.
         /// Does not display output.
         /// </summary>
+        /// <param name="output">Segment index.</param>
+        /// <param name="value">Value to write.</param>
         void IOutputSegment.Write(int output, PinValue value)
         {
             _segment.Write(output, value);
@@ -246,6 +256,7 @@ namespace Iot.Device.Multiplexing
         /// Writes each bit, left to right. Least significant bit will written to index 0.
         /// Does not display output.
         /// </summary>
+        /// <param name="value">Value to write.</param>
         public void Write(byte value)
         {
             _segment.Write(value);
@@ -256,6 +267,7 @@ namespace Iot.Device.Multiplexing
         /// Writes each byte, left to right. Least significant bit will written to index 0.
         /// Does not display output.
         /// </summary>
+        /// <param name="value">Value to write.</param>
         public void Write(SpanByte value)
         {
             _segment.Write(value);
@@ -275,6 +287,7 @@ namespace Iot.Device.Multiplexing
         /// Displays current state of segment.
         /// Segment is displayed at least until token receives a cancellation signal, possibly due to a specified duration expiring.
         /// </summary>
+        /// <param name="token">Token to cancel request.</param>
         void IOutputSegment.Display(CancellationToken token)
         {
             if (_segment is null)

@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetPreChargePeriod command
+    /// Represents SetPreChargePeriod command.
     /// </summary>
     public class SetPreChargePeriod : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetPreChargePeriod" /> class.
         /// This command is used to set the duration of the pre-charge period.
         /// The interval is counted in number of DCLK, where RESET equals 2 DCLKs.
         /// </summary>
@@ -33,17 +34,17 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0xD9;
 
         /// <summary>
-        /// Phase 1 period with a range of 1-15.
+        /// Gets phase 1 period with a range of 1-15.
         /// </summary>
         public byte Phase1Period { get; }
 
         /// <summary>
-        /// Phase 2 period with a range of 1-15.
+        /// Gets phase 2 period with a range of 1-15.
         /// </summary>
         public byte Phase2Period { get; }
 
