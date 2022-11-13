@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
+using System.Drawing;
+
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 

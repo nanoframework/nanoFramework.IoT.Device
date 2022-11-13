@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
+using System.Drawing;
+
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 
@@ -38,7 +40,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public override void Clear(Color color)
         {
-            var colorValue = color.Color1bpp;
+            var colorValue = color.GetAs1bpp();
             for (var i = 0; i < Buffer.Length; i++)
             {
                 Buffer[i] = colorValue;
@@ -53,7 +55,7 @@ namespace Iot.Device.EPaper.Buffers
                 return;
             }
 
-            var colorVal = color.Color1bpp;
+            var colorVal = color.GetAs1bpp();
 
             for (var y = start.Y; y < start.Y + height; y++)
             {

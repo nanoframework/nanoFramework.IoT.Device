@@ -3,6 +3,7 @@
 
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Drawing;
 
 using Iot.Device.EPaper;
 using Iot.Device.EPaper.Buffers;

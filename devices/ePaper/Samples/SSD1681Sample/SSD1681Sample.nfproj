@@ -37,6 +37,9 @@
     <Reference Include="System.Device.Spi">
       <HintPath>..\..\packages\nanoFramework.System.Device.Spi.1.3.22\lib\System.Device.Spi.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\packages\nanoFramework.System.Drawing.1.2.141\lib\System.Drawing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

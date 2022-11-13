@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
+using System.Drawing;
+
 namespace Iot.Device.EPaper.Primitives
 {
     /// <summary>
