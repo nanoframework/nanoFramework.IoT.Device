@@ -33,6 +33,11 @@ namespace Iot.Device.EPaper.Drivers
         IFrameBuffer FrameBuffer { get; }
 
         /// <summary>
+        /// Gets a value indicating whether drawing to a frame is paged to save on memory space.
+        /// </summary>
+        bool PagedFrameDrawEnabled { get; }
+
+        /// <summary>
         /// Clears the display frame buffer by resetting it to its default state.
         /// </summary>
         /// <param name="triggerPageRefresh"><see langword="true"/> to also flush the buffer to the display and trigger the refresh sequence.</param>

@@ -33,19 +33,32 @@ Start by creating a new nanoFramework project and reference this library. Replac
 ```csharp
 // Create an instance of the GPIO Controller.
 // The display driver uses this to open pins to the display device.
+// You could also pass null to Ssd1681 instead of a GpioController instance and it will make one for you.
 using var gpioController = new GpioController();
+
+// Setup SPI connection with the display
+var spiConnectionSettings = new SpiConnectionSettings(busId: 1, chipSelectLine: 22)
+{
+	ClockFrequency = Ssd1681.SpiClockFrequency,
+	Mode = Ssd1681.SpiMode,
+	ChipSelectLineActiveState = false,
+	Configuration = SpiBusConfiguration.HalfDuplex,
+	DataFlow = DataFlow.MsbFirst
+};
+
+using var spiDevice = new SpiDevice(spiConnectionSettings);
 
 // Create an instance of the display driver
 using var display = new Ssd1681(
+	spiDevice,
 	resetPin: 15,
 	busyPin: 4,
 	dataCommandPin: 5,
-	spiBusId: 1,
-	chipSelectLinePin: 22,
-	gpioController,
 	width: 200,
 	height: 200,
-	enableFramePaging: false);
+	gpioController,
+	enableFramePaging: true,
+	shouldDispose: false);
 
 // Power on the display and initialize it
 display.PowerOn();
@@ -68,6 +81,7 @@ var font = new Font8x12();
 gfx.DrawText("Hello World", font, x: 0, y: 0, Color.Black);
 
 // flush the buffer to the display and then initiate the refresh sequence
+display.Flush();
 display.PerformFullRefresh();
 
 // Done! now put the display to sleep to reduce its power consumption

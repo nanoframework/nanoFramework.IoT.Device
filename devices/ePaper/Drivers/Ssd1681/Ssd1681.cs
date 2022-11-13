@@ -17,13 +17,26 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
     /// </summary>
     public sealed class Ssd1681 : IEPaperDisplay
     {
+        /// <summary>
+        /// The max supported clock frequency for the SSD1681 controller. 20MHz.
+        /// </summary>
+        public const int SpiClockFrequency = 20_000_000;
+
+        /// <summary>
+        /// The supported <see cref="System.Device.Spi.SpiMode"/> by the SSD1681 controller.
+        /// </summary>
+        public const SpiMode SpiMode = System.Device.Spi.SpiMode.Mode0;
+
         private const int PagesPerFrame = 5;
         private const int FirstPageIndex = 0;
 
-        private readonly GpioPin _resetPin;
-        private readonly GpioPin _busyPin;
-        private readonly GpioPin _dataCommandPin;
-        private readonly SpiDevice _spiDevice;
+        private readonly bool _shouldDispose;
+
+        private SpiDevice _spiDevice;
+        private GpioController _gpioController;
+        private GpioPin _resetPin;
+        private GpioPin _busyPin;
+        private GpioPin _dataCommandPin;
 
         private int _currentFrameBufferPage;
         private int _currentFrameBufferPageLowerBound;
@@ -31,37 +44,37 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         private int _currentFrameBufferStartXPosition;
         private int _currentFrameBufferStartYPosition;
 
-        private FrameBuffer2BitPerPixel frameBuffer2bpp;
+        private FrameBuffer2BitPerPixel _frameBuffer2bpp;
 
-        private bool disposed;
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ssd1681"/> class.
         /// </summary>
-        /// <param name="resetPin">The reset GPIO pin.</param>
+        /// <param name="spiDevice">The communication channel to the SSD1681-based dispay.</param>
+        /// <param name="resetPin">The reset GPIO pin. Passing an invalid pin number such as -1 will prevent this driver from opening the pin. Caller should handle hardware resets.</param>
         /// <param name="busyPin">The busy GPIO pin.</param>
         /// <param name="dataCommandPin">The data/command GPIO pin.</param>
-        /// <param name="spiBusId">The SPI bus to use to communicate with the display.</param>
-        /// <param name="chipSelectLinePin">The chip select line pin.</param>
-        /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
         /// <param name="width">The width of the display.</param>
         /// <param name="height">The height of the display.</param>
+        /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
         /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
+        /// <param name="shouldDispose"><see langword="true"/> to dispose of the <see cref="GpioController"/>.</param>
         /// <remarks>
         /// For a 200x200 SSD1681 display, a full Frame requires about 5KB of RAM ((200 * 200) / 8). SSD1681 has 2 RAMs for B/W and Red pixel.
         /// This means to have a full frame in memory, you need about 10KB of RAM. If you can't guarantee 10KB to be available to the driver
         /// then enable paging by setting <paramref name="enableFramePaging"/> to true. A page uses about 2KB (1KB for B/W and 1KB for Red).
         /// </remarks>
         public Ssd1681(
+            SpiDevice spiDevice,
             int resetPin,
             int busyPin,
             int dataCommandPin,
-            int spiBusId,
-            int chipSelectLinePin,
-            GpioController gpioController,
             int width,
             int height,
-            bool enableFramePaging = true)
+            GpioController gpioController = null,
+            bool enableFramePaging = true,
+            bool shouldDispose = true)
         {
             if (width <= 0 || width > 200)
             {
@@ -73,25 +86,19 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
                 throw new ArgumentOutOfRangeException(nameof(height), "Display height can't be less than 0 or greater than 200");
             }
 
-            // Setup SPI connection with the display
-            var spiConnectionSettings = new SpiConnectionSettings(spiBusId, chipSelectLinePin)
-            {
-                ClockFrequency = 20_000_000, // 20MHz
-                Mode = SpiMode.Mode0,
-                ChipSelectLineActiveState = false,
-                Configuration = SpiBusConfiguration.HalfDuplex,
-                DataFlow = DataFlow.MsbFirst
-            };
-
-            _spiDevice = new SpiDevice(spiConnectionSettings);
+            _spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
+            _gpioController = _gpioController ?? new GpioController();
 
             // setup the gpio pins
-            this._resetPin = gpioController.OpenPin(resetPin, PinMode.Output);
-            this._dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
-            this._busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
+            _resetPin = resetPin >= 0 ? gpioController.OpenPin(resetPin, PinMode.Output) : null;
+            _dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
+            _busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
+
+            _shouldDispose = shouldDispose;
 
             Width = width;
             Height = height;
+            PagedFrameDrawEnabled = enableFramePaging;
             PowerState = PowerState.Unknown;
 
             InitializeFrameBuffer(width, height, enableFramePaging);
@@ -109,7 +116,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         {
             get
             {
-                return frameBuffer2bpp;
+                return _frameBuffer2bpp;
             }
         }
 
@@ -117,6 +124,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// Gets the current power state of the display panel.
         /// </summary>
         public PowerState PowerState { get; private set; }
+
+        /// <inheritdoc/>
+        public bool PagedFrameDrawEnabled { get; }
 
         /// <summary>
         /// Performs the required steps to "power on" the display.
@@ -216,14 +226,31 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// <inheritdoc/>
         public void Clear(bool triggerPageRefresh = false)
         {
-            BeginFrameDraw();
-            do
-            {
-                // do nothing. internal frame buffers already cleared by BeginFrameDraw()
-            }
-            while (NextFramePage());
+            SetFrameBufferPage(FirstPageIndex);
 
-            EndFrameDraw();
+            // paging is enabled, flush as per number of pages to ensure all display RAM is cleared
+            if (PagedFrameDrawEnabled)
+            {
+                do
+                {
+                    Flush();
+
+                    // sleep for 20ms to allow other threads to have their chance to execute
+                    Thread.Sleep(20);
+
+                    _currentFrameBufferPage++;
+                    CalculateFrameBufferPageBounds();
+                }
+                while (_currentFrameBufferPage < PagesPerFrame);
+
+                _currentFrameBufferPage = FirstPageIndex;
+                CalculateFrameBufferPageBounds();
+            }
+            else
+            {
+                // paging is disabled, so the internal frame covers the entire display frame. we only need to flush once.
+                Flush();
+            }
 
             if (triggerPageRefresh)
             {
@@ -238,12 +265,12 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
             DirectDrawBuffer(
                 _currentFrameBufferStartXPosition,
                 _currentFrameBufferStartYPosition,
-                frameBuffer2bpp.BlackBuffer.Buffer);
+                _frameBuffer2bpp.BlackBuffer.Buffer);
 
             DirectDrawColorBuffer(
                 _currentFrameBufferStartXPosition,
                 _currentFrameBufferStartYPosition,
-                frameBuffer2bpp.ColorBuffer.Buffer);
+                _frameBuffer2bpp.ColorBuffer.Buffer);
         }
 
         /// <inheritdoc/>
@@ -332,17 +359,17 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
                     // this is a colored pixel
                     // according to LUT, no need to change the pixel value in B/W buffer.
                     // red frame buffer starts with 0x00. ORing it to set red pixel to 1.
-                    frameBuffer2bpp.ColorBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                    _frameBuffer2bpp.ColorBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
                 else if (color.R == 0 && color.G == 0 && color.B == 0)
                 {
                     // black pixel
-                    frameBuffer2bpp.BlackBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
+                    _frameBuffer2bpp.BlackBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
                 }
                 else
                 {
                     // assume white if R, G, and B > 0
-                    frameBuffer2bpp.BlackBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                    _frameBuffer2bpp.BlackBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
             }
         }
@@ -387,7 +414,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// <inheritdoc/>
         public bool NextFramePage()
         {
-            if (_currentFrameBufferPage < PagesPerFrame - 1)
+            if (PagedFrameDrawEnabled && _currentFrameBufferPage < PagesPerFrame - 1)
             {
                 Flush();
 
@@ -404,7 +431,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         public void EndFrameDraw()
         {
             Flush();
-            SetFrameBufferPage(FirstPageIndex);
         }
 
         /// <inheritdoc/>
@@ -449,6 +475,13 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// </summary>
         private void HardwareReset()
         {
+            if (_resetPin == null)
+            {
+                // caller opted to reset outside of the driver by not passing a valid reset pin number.
+                // do nothing.
+                return;
+            }
+
             // specs say to wait 10ms after supplying voltage to the display
             WaitMs(10);
 
@@ -541,7 +574,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         private void InitializeFrameBuffer(int width, int height, bool enableFramePaging)
         {
             var frameBufferHeight = enableFramePaging ? height / PagesPerFrame : height;
-            frameBuffer2bpp = new FrameBuffer2BitPerPixel(frameBufferHeight, width);
+            _frameBuffer2bpp = new FrameBuffer2BitPerPixel(frameBufferHeight, width);
         }
 
         /// <summary>
@@ -558,9 +591,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
                 page = 0;
             }
 
-            frameBuffer2bpp.Clear();
-
+            _frameBuffer2bpp.Clear();
             _currentFrameBufferPage = page;
+
             CalculateFrameBufferPageBounds();
         }
 
@@ -571,8 +604,8 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         {
             // black and color buffers have the same size, so we will work with only the black buffer
             // in these calculations.
-            _currentFrameBufferPageLowerBound = _currentFrameBufferPage * frameBuffer2bpp.BlackBuffer.BufferByteCount;
-            _currentFrameBufferPageUpperBound = (_currentFrameBufferPage + 1) * frameBuffer2bpp.BlackBuffer.BufferByteCount;
+            _currentFrameBufferPageLowerBound = _currentFrameBufferPage * _frameBuffer2bpp.BlackBuffer.BufferByteCount;
+            _currentFrameBufferPageUpperBound = (_currentFrameBufferPage + 1) * _frameBuffer2bpp.BlackBuffer.BufferByteCount;
 
             _currentFrameBufferStartXPosition = GetXPositionFromFrameBufferIndex(_currentFrameBufferPageLowerBound);
             _currentFrameBufferStartYPosition = GetYPositionFromFrameBufferIndex(_currentFrameBufferPageLowerBound);
@@ -585,19 +618,30 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
 
         private void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
-                    _resetPin.Dispose();
-                    _busyPin.Dispose();
-                    _dataCommandPin.Dispose();
-                    _spiDevice.Dispose();
+                    _resetPin?.Dispose();
+                    _resetPin = null;
 
-                    frameBuffer2bpp = null;
+                    _busyPin?.Dispose();
+                    _busyPin = null;
+
+                    _dataCommandPin?.Dispose();
+                    _dataCommandPin = null;
+
+                    if (_shouldDispose)
+                    {
+                        _gpioController?.Dispose();
+                    }
+
+                    _spiDevice = null;
+                    _gpioController = null;
+                    _frameBuffer2bpp = null;
                 }
 
-                disposed = true;
+                _disposed = true;
             }
         }
 

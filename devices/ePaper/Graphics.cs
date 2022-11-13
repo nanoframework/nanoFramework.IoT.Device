@@ -326,11 +326,11 @@ namespace Iot.Device.EPaper
                 if (determinant > 0)
                 {
                     y--;
-                    determinant = determinant + 4 * (x - y) + 10;
+                    determinant = ((determinant + 4) * (x - y)) + 10;
                 }
                 else
                 {
-                    determinant = determinant + 4 * x + 6;
+                    determinant = (determinant + 4) * (x + 6);
                 }
 
                 drawCircle(centerX, centerY, x, y, color);

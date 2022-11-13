@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Device.Gpio;
+using System.Device.Spi;
 
 using Iot.Device.EPaper;
 using Iot.Device.EPaper.Buffers;
@@ -43,19 +44,32 @@ namespace SSD1681Sample
         {
             // Create an instance of the GPIO Controller.
             // The display driver uses this to open pins to the display device.
+            // You could also pass null to Ssd1681 instead of a GpioController instance and it will make one for you.
             using var gpioController = new GpioController();
+
+            // Setup SPI connection with the display
+            var spiConnectionSettings = new SpiConnectionSettings(busId: 1, chipSelectLine: 22)
+            {
+                ClockFrequency = Ssd1681.SpiClockFrequency,
+                Mode = Ssd1681.SpiMode,
+                ChipSelectLineActiveState = false,
+                Configuration = SpiBusConfiguration.HalfDuplex,
+                DataFlow = DataFlow.MsbFirst
+            };
+
+            using var spiDevice = new SpiDevice(spiConnectionSettings);
 
             // Create an instance of the display driver
             using var display = new Ssd1681(
+                spiDevice,
                 resetPin: 15,
                 busyPin: 4,
                 dataCommandPin: 5,
-                spiBusId: 1,
-                chipSelectLinePin: 22,
-                gpioController,
                 width: 200,
                 height: 200,
-                enableFramePaging: true);
+                gpioController,
+                enableFramePaging: true,
+                shouldDispose: false);
 
             // Power on the display and initialize it
             display.PowerOn();
