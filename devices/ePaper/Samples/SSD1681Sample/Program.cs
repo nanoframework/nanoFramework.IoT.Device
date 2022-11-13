@@ -6,6 +6,7 @@ using System.Device.Gpio;
 using Iot.Device.EPaper;
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers.Ssd1681;
+using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Fonts;
 using Iot.Device.EPaper.Primitives;
 
@@ -131,7 +132,7 @@ namespace SSD1681Sample
             display.PerformFullRefresh();
 
             // Done! now put the display to sleep to reduce power consumption
-            display.PowerDown(Ssd1681.SleepMode.DeepSleepModeTwo);
+            display.PowerDown(SleepMode.DeepSleepModeTwo);
         }
     }
 }

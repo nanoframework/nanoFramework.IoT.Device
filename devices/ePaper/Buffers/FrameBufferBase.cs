@@ -3,6 +3,7 @@
 
 using System;
 
+using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 
 namespace Iot.Device.EPaper.Buffers
@@ -12,9 +13,9 @@ namespace Iot.Device.EPaper.Buffers
     /// </summary>
     public abstract class FrameBufferBase : IFrameBuffer
     {
-        private int currentFramePage;
-        private int currentFramePageLowerBufferBound;
-        private int currentFramePageUpperBufferBound;
+        private int _currentFramePage;
+        private int _currentFramePageLowerBufferBound;
+        private int _currentFramePageUpperBufferBound;
 
         /// <inheritdoc/>>
         public int Height { get; }
@@ -60,12 +61,12 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public virtual int CurrentFramePage
         {
-            get => this.currentFramePage;
+            get => this._currentFramePage;
             set
             {
-                this.currentFramePage = value;
-                this.currentFramePageLowerBufferBound = this.currentFramePage * this.BufferByteCount;
-                this.currentFramePageUpperBufferBound = (this.currentFramePage + 1) * this.BufferByteCount;
+                this._currentFramePage = value;
+                this._currentFramePageLowerBufferBound = this._currentFramePage * this.BufferByteCount;
+                this._currentFramePageUpperBufferBound = (this._currentFramePage + 1) * this.BufferByteCount;
             }
         }
 
@@ -192,7 +193,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <returns>The index within the <see cref="Buffer"/> for the byte that contains the specified pixe location.</returns>
         protected int GetFrameBufferIndexForPoint(int x, int y)
         {
-            return ((x + (y * this.Width)) / 8) - this.currentFramePageLowerBufferBound;
+            return ((x + (y * this.Width)) / 8) - this._currentFramePageLowerBufferBound;
         }
 
         /// <summary>

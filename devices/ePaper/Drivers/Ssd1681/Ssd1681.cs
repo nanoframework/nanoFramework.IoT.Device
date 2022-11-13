@@ -7,6 +7,7 @@ using System.Device.Spi;
 using System.Threading;
 
 using Iot.Device.EPaper.Buffers;
+using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 
 namespace Iot.Device.EPaper.Drivers.Ssd1681
@@ -19,16 +20,16 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         private const int PagesPerFrame = 5;
         private const int FirstPageIndex = 0;
 
-        private readonly GpioPin resetPin;
-        private readonly GpioPin busyPin;
-        private readonly GpioPin dataCommandPin;
-        private readonly SpiDevice spiDevice;
+        private readonly GpioPin _resetPin;
+        private readonly GpioPin _busyPin;
+        private readonly GpioPin _dataCommandPin;
+        private readonly SpiDevice _spiDevice;
 
-        private int currentFrameBufferPage;
-        private int currentFrameBufferPageLowerBound;
-        private int currentFrameBufferPageUpperBound;
-        private int currentFrameBufferStartXPosition;
-        private int currentFrameBufferStartYPosition;
+        private int _currentFrameBufferPage;
+        private int _currentFrameBufferPageLowerBound;
+        private int _currentFrameBufferPageUpperBound;
+        private int _currentFrameBufferStartXPosition;
+        private int _currentFrameBufferStartYPosition;
 
         private FrameBuffer2BitPerPixel frameBuffer2bpp;
 
@@ -82,12 +83,12 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
                 DataFlow = DataFlow.MsbFirst
             };
 
-            spiDevice = new SpiDevice(spiConnectionSettings);
+            _spiDevice = new SpiDevice(spiConnectionSettings);
 
             // setup the gpio pins
-            this.resetPin = gpioController.OpenPin(resetPin, PinMode.Output);
-            this.dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
-            this.busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
+            this._resetPin = gpioController.OpenPin(resetPin, PinMode.Output);
+            this._dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
+            this._busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
 
             Width = width;
             Height = height;
@@ -152,29 +153,35 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
 
             // set gate lines and scanning sequence
             SendCommand((byte)Command.DriverOutputControl);
-            SendData((byte)(Height - 1), 0x00, 0x00); // refer to spec for description
+
+            // refer to the datasheet for a description of the parameters
+            SendData((byte)(Height - 1), 0x00, 0x00);
 
             // Set data entry sequence
             SendCommand((byte)Command.DataEntryModeSetting);
-            SendData(0x03); // Y Increment, X Increment with RAM address counter auto updated in the X direction.
+
+            // Y Increment, X Increment with RAM address counter auto incremented in the X direction.
+            SendData(0x03);
 
             // Set RAM X start / end position
             SendCommand((byte)Command.SetRAMAddressXStartEndPosition);
-            SendData(
-                /* Start at 0*/ 0x00,
-                /* End */ (byte)((Width / 8) - 1)); // end at width bits converted to bytes (starts @ 0)
+
+            // Param1: Start at 0 | Param2: End at display width converted to bytes
+            SendData(0x00, (byte)((Width / 8) - 1));
 
             // Set RAM Y start / end positon
             SendCommand((byte)Command.SetRAMAddressYStartEndPosition);
+
+            // Param1 & 2: Start at 0 | Param3 & 4: End at display height converted to bytes
             SendData(/* Start at 0 */ 0x00, 0x00, /* End */ (byte)(Height - 1), 0x00);
 
             // Set Panel Border
             SendCommand((byte)Command.BorderWaveformControl);
-            SendData(0xc0); // was 0x05
+            SendData(0xc0);
 
-            // Set Temperature sensor
+            // Set Temperature sensor to use internal temp sensor
             SendCommand((byte)Command.TempSensorControlSelection);
-            SendData(0x80); // use internal temp sensor
+            SendData(0x80);
 
             // Do a full refresh of the display
             PerformFullRefresh();
@@ -229,13 +236,13 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         {
             // write B/W and Color (RED) frame to the display's RAM.
             DirectDrawBuffer(
-                currentFrameBufferStartXPosition,
-                currentFrameBufferStartYPosition,
+                _currentFrameBufferStartXPosition,
+                _currentFrameBufferStartYPosition,
                 frameBuffer2bpp.BlackBuffer.Buffer);
 
             DirectDrawColorBuffer(
-                currentFrameBufferStartXPosition,
-                currentFrameBufferStartYPosition,
+                _currentFrameBufferStartXPosition,
+                _currentFrameBufferStartYPosition,
                 frameBuffer2bpp.ColorBuffer.Buffer);
         }
 
@@ -257,12 +264,30 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// <param name="x">The X Position.</param>
         /// <param name="y">The Y Position.</param>
         /// <param name="inverted">True to invert the pixel from white to black.</param>
+        /// <remarks>
+        /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
+        /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// is by performing a simple binary check: 
+        /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
+        /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
+        /// else, assume white pixel and write to B/W Buffer/RAM.
+        /// </remarks>
         public void DrawPixel(int x, int y, bool inverted)
         {
             DrawPixel(x, y, inverted ? Color.Black : Color.White);
         }
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
+        /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// is by performing a simple binary check: 
+        /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
+        /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
+        /// else, assume white pixel and write to B/W Buffer/RAM.
+        /// </remarks>
         public void DrawPixel(int x, int y, Color color)
         {
             // ignore out of bounds draw attempts
@@ -272,11 +297,11 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
             }
 
             var frameByteIndex = GetFrameBufferIndex(x, y);
-            var pageByteIndex = frameByteIndex - currentFrameBufferPageLowerBound;
+            var pageByteIndex = frameByteIndex - _currentFrameBufferPageLowerBound;
 
             // if the specified point falls in the current page, update the buffer
-            if (currentFrameBufferPageLowerBound <= frameByteIndex
-                && frameByteIndex < currentFrameBufferPageUpperBound)
+            if (_currentFrameBufferPageLowerBound <= frameByteIndex
+                && frameByteIndex < _currentFrameBufferPageUpperBound)
             {
                 /*
                  * Lookup Table for colors on SSD1681
@@ -362,12 +387,12 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// <inheritdoc/>
         public bool NextFramePage()
         {
-            if (currentFrameBufferPage < PagesPerFrame - 1)
+            if (_currentFrameBufferPage < PagesPerFrame - 1)
             {
                 Flush();
 
-                currentFrameBufferPage++;
-                SetFrameBufferPage(currentFrameBufferPage);
+                _currentFrameBufferPage++;
+                SetFrameBufferPage(_currentFrameBufferPage);
 
                 return true;
             }
@@ -386,12 +411,12 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         public void SendCommand(params byte[] command)
         {
             // make sure we are setting data/command pin to low (command mode)
-            dataCommandPin.Write(PinValue.Low);
+            _dataCommandPin.Write(PinValue.Low);
 
             foreach (var b in command)
             {
-                // write the command byte
-                spiDevice.WriteByte(b);
+                // write the command byte to the display controller
+                _spiDevice.WriteByte(b);
             }
         }
 
@@ -399,21 +424,21 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         public void SendData(params byte[] data)
         {
             // set the data/command pin to high to indicate to the display we will be sending data
-            dataCommandPin.Write(PinValue.High);
+            _dataCommandPin.Write(PinValue.High);
 
             foreach (var @byte in data)
             {
-                spiDevice.WriteByte(@byte);
+                _spiDevice.WriteByte(@byte);
             }
 
             // go back to low (command mode)
-            dataCommandPin.Write(PinValue.Low);
+            _dataCommandPin.Write(PinValue.Low);
         }
 
         /// <inheritdoc/>
         public void WaitReady()
         {
-            while (busyPin.Read() == PinValue.High)
+            while (_busyPin.Read() == PinValue.High)
             {
                 WaitMs(5);
             }
@@ -427,10 +452,10 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
             // specs say to wait 10ms after supplying voltage to the display
             WaitMs(10);
 
-            resetPin.Write(PinValue.Low);
+            _resetPin.Write(PinValue.Low);
             WaitMs(200);
 
-            resetPin.Write(PinValue.High);
+            _resetPin.Write(PinValue.High);
             WaitMs(200);
         }
 
@@ -535,7 +560,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
 
             frameBuffer2bpp.Clear();
 
-            currentFrameBufferPage = page;
+            _currentFrameBufferPage = page;
             CalculateFrameBufferPageBounds();
         }
 
@@ -546,508 +571,15 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         {
             // black and color buffers have the same size, so we will work with only the black buffer
             // in these calculations.
-            currentFrameBufferPageLowerBound = currentFrameBufferPage * frameBuffer2bpp.BlackBuffer.BufferByteCount;
-            currentFrameBufferPageUpperBound = (currentFrameBufferPage + 1) * frameBuffer2bpp.BlackBuffer.BufferByteCount;
+            _currentFrameBufferPageLowerBound = _currentFrameBufferPage * frameBuffer2bpp.BlackBuffer.BufferByteCount;
+            _currentFrameBufferPageUpperBound = (_currentFrameBufferPage + 1) * frameBuffer2bpp.BlackBuffer.BufferByteCount;
 
-            currentFrameBufferStartXPosition = GetXPositionFromFrameBufferIndex(currentFrameBufferPageLowerBound);
-            currentFrameBufferStartYPosition = GetYPositionFromFrameBufferIndex(currentFrameBufferPageLowerBound);
+            _currentFrameBufferStartXPosition = GetXPositionFromFrameBufferIndex(_currentFrameBufferPageLowerBound);
+            _currentFrameBufferStartYPosition = GetYPositionFromFrameBufferIndex(_currentFrameBufferPageLowerBound);
 
-            FrameBuffer.StartPoint = new Point(currentFrameBufferStartXPosition, currentFrameBufferStartYPosition);
-            FrameBuffer.CurrentFramePage = currentFrameBufferPage;
+            FrameBuffer.StartPoint = new Point(_currentFrameBufferStartXPosition, _currentFrameBufferStartYPosition);
+            FrameBuffer.CurrentFramePage = _currentFrameBufferPage;
         }
-
-        #region Enums
-
-        /// <summary>
-        /// Commands supported by SSD1681.
-        /// </summary>
-        public enum Command : byte
-        {
-            /// <summary>
-            /// Driver Output Control Command. Sets the gate, scanning order, etc.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            DriverOutputControl = 0x01,
-
-            /// <summary>
-            /// Gate Driving Voltage Command.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            GateDrivingVoltage = 0x03,
-
-            /// <summary>
-            /// Source Driving Voltage Control.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            SourceDrivingVoltageControl = 0x04,
-
-            /// <summary>
-            /// Program Initial Code Setting.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            InitialCodeSettingOtpProgram = 0x08,
-
-            /// <summary>
-            /// Write Register for Initial Code Setting Selection.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteRegisterForInitialCodeSetting = 0x09,
-
-            /// <summary>
-            /// Read Register for Initial Code Setting.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ReadRegisterForInitialCodeSetting = 0x0a,
-
-            /// <summary>
-            /// Booster Enable with Phase 1, Phase 2 and Phase 3 for soft start current and duration setting.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            BoosterSoftStartControl = 0x0c,
-
-            /// <summary>
-            /// Set Deep Sleep Mode.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            DeepSleepMode = 0x10,
-
-            /// <summary>
-            /// Define data entry sequence.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            DataEntryModeSetting = 0x11,
-
-            /// <summary>
-            /// Software Reset. This resets the commands and parameters to their S/W default values except Deep Sleep Mode.
-            /// The Busy pin will read high during this operation.
-            /// RAM contents are not affected by this command.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            SoftwareReset = 0x12,
-
-            /// <summary>
-            /// HV Ready Detection.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            HvReadyDetection = 0x14,
-
-            /// <summary>
-            /// VCI Detection.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            VciDetection = 0x15,
-
-            /// <summary>
-            /// Temperature Sensor Selection (External vs Internal).
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            TempSensorControlSelection = 0x18,
-
-            /// <summary>
-            /// Write to temperature register.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            TempSensorControlWriteRegister = 0x1a,
-
-            /// <summary>
-            /// Read from temperature register.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            TempSensorControlReadRegister = 0x1b,
-
-            /// <summary>
-            /// Temperature Sensor Control. Write command to External temperature sensor.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ExternalTempSensorControlWrite = 0x1c,
-
-            /// <summary>
-            /// Master Activation. Activate display update sequence.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            MasterActivation = 0x20,
-
-            /// <summary>
-            /// Display Update Control 1.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            DisplayUpdateControl1 = 0x21,
-
-            /// <summary>
-            /// Display Update Sequence Option. Enables the stage for <see cref="MasterActivation"/>.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            DisplayUpdateControl2 = 0x22,
-
-            /// <summary>
-            /// Write To B/W RAM. After this command, data will be written to the B/W RAM until another command is sent.
-            /// Address pointers will advance accordingly.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteBackWhiteRAM = 0x24,
-
-            /// <summary>
-            /// Write To RED RAM. After this command, data will be written to the RED RAM until another command is sent.
-            /// Address pointers will advance accordingly.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteRedRAM = 0x26,
-
-            /// <summary>
-            /// Read RAM. After this command, data read on the MCU bus will fetch data from RAM.
-            /// The first byte read is dummy data.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ReadRAM = 0x27,
-
-            /// <summary>
-            /// Enter VCOM sensing conditions.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            VCOMSense = 0x28,
-
-            /// <summary>
-            /// VCOM Sense Duration. Stabling time between entering VCOM sending mode and reading is acquired.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            VCOMSenseDuration = 0x29,
-
-            /// <summary>
-            /// Program VCOM register into OTP.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ProgramVCOMOTP = 0x2a,
-
-            /// <summary>
-            /// Write Register for VCOM Control. This command is used to reduce glitch when ACVCOM toggle.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteRegisterControlVCOM = 0x2b,
-
-            /// <summary>
-            /// Write VCOM register from MCU interface.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteVCOMRegister = 0x2c,
-
-            /// <summary>
-            /// OTP Register Read for Display Options.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            OTPRegisterReadDisplayOption = 0x2d,
-
-            /// <summary>
-            /// Read USER ID.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            UserIdRead = 0x2e,
-
-            /// <summary>
-            /// Read Status Bit.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            StatusBitRead = 0x2f,
-
-            /// <summary>
-            /// Program Waveform Setting OTP. Contents should be written to RAM before sending this command.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ProgramWSOTP = 0x30,
-
-            /// <summary>
-            /// Load OTP of Waveform Setting.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            LoadWSOTP = 0x31,
-
-            /// <summary>
-            /// Write LUT Register from MCU interface.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteLUTRegister = 0x32,
-
-            /// <summary>
-            /// CRC Calculation Command. For information, refer to SSD1681 application note.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            CrcCalculation = 0x34,
-
-            /// <summary>
-            /// CRC Status Read.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            CrcStatusRead = 0x35,
-
-            /// <summary>
-            /// Program OTP Selection according to the <see cref="WriteRegisterForDisplayOption"/> and <see cref="WriteRegisterForUserId"/>.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ProgramOTPSelection = 0x36,
-
-            /// <summary>
-            /// Write Register for Display Option.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteRegisterForDisplayOption = 0x37,
-
-            /// <summary>
-            /// Write Register for USER ID.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            WriteRegisterForUserId = 0x38,
-
-            /// <summary>
-            /// OTP Program Mode.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            OTPProgramMode = 0x39,
-
-            /// <summary>
-            /// Set Border Waveform Control values.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            BorderWaveformControl = 0x3c,
-
-            /// <summary>
-            /// Option for LUT end.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            EndOption = 0x3f,
-
-            /// <summary>
-            /// Read RAM Option.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            ReadRAMOption = 0x41,
-
-            /// <summary>
-            /// Set RAM X-Address Start/End position.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            SetRAMAddressXStartEndPosition = 0x44,
-
-            /// <summary>
-            /// Set RAM Y-Address Start/End position.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            SetRAMAddressYStartEndPosition = 0x45,
-
-            /// <summary>
-            /// Auto Write RED RAM for regular pattern.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            AutoWriteRAMForRegularPatternRed = 0x46,
-
-            /// <summary>
-            /// Auto Write B/W RAM for regular pattern.
-            /// The Busy pin will read high during this operation.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            AutoWriteRAMForRegularPatternBlackWhite = 0x47,
-
-            /// <summary>
-            /// Set RAM X-Address Counter.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            SetRAMAddressCounterX = 0x4e,
-
-            /// <summary>
-            /// Set RAM Y-Address Counter.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            SetRAMAddressCounterY = 0x4f,
-
-            /// <summary>
-            /// NOP. This command is an empty command; it does not have any effect on the display module.
-            /// However, it can be used to terminate frame memory write or read commands.
-            /// </summary>
-            /// <remarks>
-            /// Refer to the datasheet for detailed information about the command and its parameters.
-            /// </remarks>
-            NOP = 0x7f
-        }
-
-        /// <summary>
-        /// SSD1681 Supported Sleep Modes.
-        /// </summary>
-        public enum SleepMode : byte
-        {
-            /// <summary>
-            /// Normal Sleep Mode.
-            /// In this mode: 
-            /// - DC/DC Off 
-            /// - No Clock 
-            /// - No Output load 
-            /// - MCU Interface Access: ON
-            /// - RAM Data Access: ON.
-            /// </summary>
-            Normal = 0x00,
-
-            /// <summary>
-            /// Deep Sleep Mode 1.
-            /// In this mode: 
-            /// - DC/DC Off 
-            /// - No Clock 
-            /// - No Output load 
-            /// - MCU Interface Access: OFF
-            /// - RAM Data Access: ON (RAM contents retained).
-            /// </summary>
-            DeepSleepModeOne = 0x01,
-
-            /// <summary>
-            /// Deep Sleep Mode 2.
-            /// In this mode: 
-            /// - DC/DC Off 
-            /// - No Clock 
-            /// - No Output load 
-            /// - MCU Interface Access: OFF
-            /// - RAM Data Access: OFF (RAM contents NOT retained).
-            /// </summary>
-            DeepSleepModeTwo = 0x11,
-        }
-
-        /// <summary>
-        /// SSD1861 Supported Refresh Modes.
-        /// </summary>
-        public enum RefreshMode : byte
-        {
-            /// <summary>
-            /// Causes the display to perform a full refresh of the panel (Display Mode 1).
-            /// </summary>
-            FullRefresh = 0xf7,
-
-            /// <summary>
-            /// Causes the display to perform a partial refresh of the panel (Display Mode 2).
-            /// </summary>
-            PartialRefresh = 0xff,
-        }
-
-        /// <summary>
-        /// SSD1681 RAM.
-        /// </summary>
-        public enum Ram : byte
-        {
-            /// <summary>
-            /// Specifies the black and white RAM area.
-            /// </summary>
-            BlackWhite = 0x00,
-
-            /// <summary>
-            /// Specifies the Colored RAM area (Red for SSD1681).
-            /// </summary>
-            Color = 0x01,
-        }
-
-#pragma warning restore SA1201 // Missing XML comment for publicly visible type or member
-
-        #endregion
 
         #region IDisposable
 
@@ -1057,10 +589,10 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
             {
                 if (disposing)
                 {
-                    resetPin.Dispose();
-                    busyPin.Dispose();
-                    dataCommandPin.Dispose();
-                    spiDevice.Dispose();
+                    _resetPin.Dispose();
+                    _busyPin.Dispose();
+                    _dataCommandPin.Dispose();
+                    _spiDevice.Dispose();
 
                     frameBuffer2bpp = null;
                 }

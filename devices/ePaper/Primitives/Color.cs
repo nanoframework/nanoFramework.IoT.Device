@@ -58,6 +58,7 @@ namespace Iot.Device.EPaper.Primitives
 
         /// <summary>
         /// Gets the 8-bits per pixel value of this color.
+        /// Colors are encoded in 3 bits for red, 3 bits for green and 2 bits for blue.
         /// </summary>
         public byte Color8bppRgb332
         {
@@ -69,6 +70,7 @@ namespace Iot.Device.EPaper.Primitives
 
         /// <summary>
         /// Gets the 12-bits per pixel value of this color.
+        /// All color components are encoded with 4 bits.
         /// </summary>
         public ushort Color12bppRgb444
         {
@@ -80,6 +82,7 @@ namespace Iot.Device.EPaper.Primitives
 
         /// <summary>
         /// Gets the 16-bits per pixel value of this color.
+        /// Colors are encoded in 5 bits for red, 6 bits for green and 5 bits for blue.
         /// </summary>
         public ushort Color16bppRgb565
         {

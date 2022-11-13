@@ -3,6 +3,7 @@
 
 using System;
 
+using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 
 namespace Iot.Device.EPaper.Buffers
@@ -13,7 +14,7 @@ namespace Iot.Device.EPaper.Buffers
     /// </summary>
     public sealed class FrameBuffer2BitPerPixel : IFrameBuffer
     {
-        private Point startPoint;
+        private Point _startPoint;
 
         /// <inheritdoc/>>
         public int Height { get; }
@@ -24,10 +25,10 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public Point StartPoint
         {
-            get => this.startPoint;
+            get => this._startPoint;
             set
             {
-                this.startPoint = this.BlackBuffer.StartPoint = this.ColorBuffer.StartPoint = value;
+                this._startPoint = this.BlackBuffer.StartPoint = this.ColorBuffer.StartPoint = value;
             }
         }
 

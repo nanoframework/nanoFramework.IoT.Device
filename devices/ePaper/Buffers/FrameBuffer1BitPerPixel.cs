@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
+using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 
 namespace Iot.Device.EPaper.Buffers

@@ -69,15 +69,6 @@ namespace Iot.Device.EPaper.Drivers
         /// <param name="x">The X Position.</param>
         /// <param name="y">The Y Position.</param>
         /// <param name="color">Pixel color. See the remarks for how a buffer is selected based on the color value.</param>
-        /// <remarks>
-        /// The SSD1681 comes with 2 RAMs: a Black and White RAM and a Red RAM.
-        /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
-        /// However, the SSD1681 doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
-        /// is by performing a simple binary check: 
-        /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
-        /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
-        /// else, assume white pixel and write to B/W Buffer/RAM.
-        /// </remarks>
         void DrawPixel(int x, int y, Color color);
 
         /// <summary>

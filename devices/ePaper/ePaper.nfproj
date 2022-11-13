@@ -35,8 +35,14 @@
     <Compile Include="Buffers\FrameBufferBase.cs" />
     <Compile Include="Buffers\IFrameBuffer.cs" />
     <Compile Include="Drivers\IePaperDisplay.cs" />
+    <Compile Include="Drivers\Ssd1681\Command.cs" />
+    <Compile Include="Drivers\Ssd1681\Ram.cs" />
+    <Compile Include="Drivers\Ssd1681\RefreshMode.cs" />
+    <Compile Include="Drivers\Ssd1681\SleepMode.cs" />
     <Compile Include="Drivers\Ssd1681\Ssd1681.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Enums\ColorFormat.cs" />
+    <Compile Include="Enums\PowerState.cs" />
+    <Compile Include="Enums\Rotation.cs" />
     <Compile Include="Fonts\Font8x12.cs" />
     <Compile Include="Fonts\IFont.cs" />
     <Compile Include="Graphics.cs" />

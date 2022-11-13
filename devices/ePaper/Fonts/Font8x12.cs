@@ -8,7 +8,7 @@ namespace Iot.Device.EPaper.Fonts
     /// </summary>
     public class Font8x12 : IFont
     {
-        private readonly byte[][] fontTable =
+        private readonly byte[][] _fontTable =
         {
             new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, // U+0020 (space)
             new byte[] { 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00 }, // U+0021 (!)
@@ -134,10 +134,10 @@ namespace Iot.Device.EPaper.Fonts
                 var index = (byte)character;
                 if (index < 32 || index > 127)
                 {
-                    return this.fontTable[0x20];
+                    return this._fontTable[0x20];
                 }
 
-                return this.fontTable[(byte)character - 0x20];
+                return this._fontTable[(byte)character - 0x20];
             }
         }
     }

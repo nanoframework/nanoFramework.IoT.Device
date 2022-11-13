@@ -5,6 +5,7 @@ using System;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers;
+using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Fonts;
 using Iot.Device.EPaper.Primitives;
 
@@ -15,7 +16,7 @@ namespace Iot.Device.EPaper
     /// </summary>
     public sealed class Graphics : IDisposable
     {
-        private bool disposedValue;
+        private bool _disposedValue;
 
         /// <summary>
         /// Gets the E-Paper display being controlled by this <see cref="Graphics"/> class instance.
@@ -213,11 +214,11 @@ namespace Iot.Device.EPaper
         {
             switch (this.DisplayRotation)
             {
-                case Rotation.NinetyDegreesClockwise:
+                case Rotation.Degrees90Clockwise:
                     return this.EPaperDisplay.Width - y - 1;
-                case Rotation.OneEightyDegreesClockwise:
+                case Rotation.Degrees180Clockwise:
                     return this.EPaperDisplay.Width - x - 1;
-                case Rotation.TwoSeventyDegreesClockwise:
+                case Rotation.Degrees270Clockwise:
                     return y;
                 default:
                     return x;
@@ -234,11 +235,11 @@ namespace Iot.Device.EPaper
         {
             switch (this.DisplayRotation)
             {
-                case Rotation.NinetyDegreesClockwise:
+                case Rotation.Degrees90Clockwise:
                     return x;
-                case Rotation.OneEightyDegreesClockwise:
+                case Rotation.Degrees180Clockwise:
                     return this.EPaperDisplay.Height - y - 1;
-                case Rotation.TwoSeventyDegreesClockwise:
+                case Rotation.Degrees270Clockwise:
                     return this.EPaperDisplay.Height - x - 1;
                 default:
                     return y;
@@ -309,25 +310,27 @@ namespace Iot.Device.EPaper
             }
 
             int x = 0, y = radius;
-            int d = 3 - (2 * radius);
+
+            // This determines when to decrement y.
+            int determinant = 3 - (2 * radius);
+
             drawCircle(centerX, centerY, x, y, color);
+
             while (y >= x)
             {
-                // for each pixel we will
-                // draw all eight pixels
+                // for each pixel we will draw all eight pixels
                 x++;
 
-                // check for decision parameter
-                // and correspondingly
+                // check for decision parameter and correspondingly
                 // update d, x, y
-                if (d > 0)
+                if (determinant > 0)
                 {
                     y--;
-                    d = d + 4 * (x - y) + 10;
+                    determinant = determinant + 4 * (x - y) + 10;
                 }
                 else
                 {
-                    d = d + 4 * x + 6;
+                    determinant = determinant + 4 * x + 6;
                 }
 
                 drawCircle(centerX, centerY, x, y, color);
@@ -338,9 +341,10 @@ namespace Iot.Device.EPaper
         {
             // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
             // C# Implementation: https://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm#C.23
-            var d = 3 - (2 * radius);
-            var x = 0;
-            var y = radius;
+            int x = 0, y = radius;
+
+            // This determines when to decrement y.
+            var determinant = 3 - (2 * radius);
 
             while (x <= y)
             {
@@ -349,13 +353,13 @@ namespace Iot.Device.EPaper
                 this.DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, color);
                 this.DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, color);
 
-                if (d < 0)
+                if (determinant < 0)
                 {
-                    d += (2 * x) + 1;
+                    determinant += (2 * x) + 1;
                 }
                 else
                 {
-                    d += (2 * (x - y)) + 1;
+                    determinant += (2 * (x - y)) + 1;
                     y--;
                 }
 
@@ -378,14 +382,14 @@ namespace Iot.Device.EPaper
 
         private void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
                     this.EPaperDisplay?.Dispose();
                 }
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
