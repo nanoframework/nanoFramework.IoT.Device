@@ -37,11 +37,12 @@ namespace Iot.Device.EPaper.Buffers
         public int BitDepth { get; } = 2;
 
         /// <inheritdoc/>
+        /// <exception cref="InvalidOperationException">Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.</exception>
         public byte[] Buffer
         {
             get
             {
-                throw new InvalidOperationException("Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.");
+                throw new InvalidOperationException();
             }
         }
 

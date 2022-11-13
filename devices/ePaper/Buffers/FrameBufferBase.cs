@@ -109,6 +109,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>
         /// <param name="buffer">The starting frame buffer.</param>
+        /// <exception cref="ArgumentException">Length mismatch between the provided buffer and the specified width and height.</exception>
         protected FrameBufferBase(int height, int width, byte[] buffer)
         {
             Height = height;
@@ -117,7 +118,7 @@ namespace Iot.Device.EPaper.Buffers
 
             if (buffer.Length != BufferByteCount)
             {
-                throw new ArgumentException("Length mismatch between the provided buffer and the specified width and height.");
+                throw new ArgumentException();
             }
         }
 

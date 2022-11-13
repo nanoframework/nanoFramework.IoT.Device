@@ -61,6 +61,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
         /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
         /// <param name="shouldDispose"><see langword="true"/> to dispose of the <see cref="GpioController"/>.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
         /// <remarks>
         /// For a 200x200 SSD1681 display, a full Frame requires about 5KB of RAM ((200 * 200) / 8). SSD1681 has 2 RAMs for B/W and Red pixel.
         /// This means to have a full frame in memory, you need about 10KB of RAM. If you can't guarantee 10KB to be available to the driver
@@ -79,23 +80,23 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         {
             if (width <= 0 || width > 200)
             {
-                throw new ArgumentOutOfRangeException(nameof(width), "Display width can't be less than 0 or greater than 200");
+                throw new ArgumentOutOfRangeException(nameof(width));
             }
 
             if (height <= 0 || height > 200)
             {
-                throw new ArgumentOutOfRangeException(nameof(height), "Display height can't be less than 0 or greater than 200");
+                throw new ArgumentOutOfRangeException(nameof(height));
             }
 
             _spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
-            _gpioController = _gpioController ?? new GpioController();
+            _gpioController = gpioController ?? new GpioController();
 
             // setup the gpio pins
             _resetPin = resetPin >= 0 ? gpioController.OpenPin(resetPin, PinMode.Output) : null;
             _dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
             _busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
 
-            _shouldDispose = shouldDispose;
+            _shouldDispose = shouldDispose || gpioController == null;
 
             Width = width;
             Height = height;
@@ -155,11 +156,12 @@ namespace Iot.Device.EPaper.Drivers.Ssd1681
         /// <summary>
         /// Perform the required initialization steps to set up the display.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Unable to initialize the display until it has been powered on. Call PowerOn() first.</exception>
         public void Initialize()
         {
             if (PowerState != PowerState.PoweredOn)
             {
-                throw new InvalidOperationException("Unable to initialize the display until it has been powered on. Call PowerOn() first.");
+                throw new InvalidOperationException();
             }
 
             // set gate lines and scanning sequence
