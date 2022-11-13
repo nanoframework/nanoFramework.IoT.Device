@@ -25,10 +25,10 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public Point StartPoint
         {
-            get => this._startPoint;
+            get => _startPoint;
             set
             {
-                this._startPoint = this.BlackBuffer.StartPoint = this.ColorBuffer.StartPoint = value;
+                _startPoint = BlackBuffer.StartPoint = ColorBuffer.StartPoint = value;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Iot.Device.EPaper.Buffers
         {
             get
             {
-                return this.BlackBuffer.BufferByteCount + this.ColorBuffer.BufferByteCount;
+                return BlackBuffer.BufferByteCount + ColorBuffer.BufferByteCount;
             }
         }
 
@@ -87,8 +87,8 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public int CurrentFramePage
         {
-            get => this.BlackBuffer.CurrentFramePage;
-            set => this.BlackBuffer.CurrentFramePage = this.ColorBuffer.CurrentFramePage = value;
+            get => BlackBuffer.CurrentFramePage;
+            set => BlackBuffer.CurrentFramePage = ColorBuffer.CurrentFramePage = value;
         }
 
         /// <summary>
@@ -98,37 +98,37 @@ namespace Iot.Device.EPaper.Buffers
         /// <param name="width">The width of the frame to manage.</param>
         public FrameBuffer2BitPerPixel(int height, int width)
         {
-            this.Height = height;
-            this.Width = width;
+            Height = height;
+            Width = width;
 
-            this.BlackBuffer = new FrameBuffer1BitPerPixel(height, width);
-            this.ColorBuffer = new FrameBuffer1BitPerPixel(height, width);
+            BlackBuffer = new FrameBuffer1BitPerPixel(height, width);
+            ColorBuffer = new FrameBuffer1BitPerPixel(height, width);
         }
 
         /// <inheritdoc/>>
         public void Clear()
         {
-            this.BlackBuffer.Clear(Color.White);
-            this.ColorBuffer.Clear(Color.Black); // black sets it to 0s
+            BlackBuffer.Clear(Color.White);
+            ColorBuffer.Clear(Color.Black); // black sets it to 0s
         }
 
         /// <inheritdoc/>>
         public void Clear(Color color)
         {
-            this.BlackBuffer.Clear(color);
-            this.ColorBuffer.Clear(color);
+            BlackBuffer.Clear(color);
+            ColorBuffer.Clear(color);
         }
 
         /// <inheritdoc/>>
         public void Fill(Color color)
         {
-            this.Fill(Point.Zero, this.Width, this.Height, color);
+            Fill(Point.Zero, Width, Height, color);
         }
 
         /// <inheritdoc/>
         public void Fill(Point start, int width, int height, Color color)
         {
-            if (!this.IsPointWithinFrameBuffer(start))
+            if (!IsPointWithinFrameBuffer(start))
             {
                 return;
             }
@@ -137,19 +137,19 @@ namespace Iot.Device.EPaper.Buffers
             if (color != Color.Black
                 && color != Color.White)
             {
-                this.ColorBuffer.Fill(start, width, height, Color.White); // white will write 1 to the buffer
-                this.BlackBuffer.Fill(start, width, height, Color.Black); // black writes 0s to the buffer
+                ColorBuffer.Fill(start, width, height, Color.White); // white will write 1 to the buffer
+                BlackBuffer.Fill(start, width, height, Color.Black); // black writes 0s to the buffer
             }
             else if (color == Color.Black)
             {
-                this.BlackBuffer.Fill(start, width, height, Color.Black);
-                this.ColorBuffer.Fill(start, width, height, Color.Black); // black will write 0 to the buffer
+                BlackBuffer.Fill(start, width, height, Color.Black);
+                ColorBuffer.Fill(start, width, height, Color.Black); // black will write 0 to the buffer
             }
             else
             {
                 // white
-                this.BlackBuffer.Fill(start, width, height, Color.White);
-                this.ColorBuffer.Fill(start, width, height, Color.Black); // black will write 0 to the buffer
+                BlackBuffer.Fill(start, width, height, Color.White);
+                ColorBuffer.Fill(start, width, height, Color.Black); // black will write 0 to the buffer
             }
         }
 
@@ -174,7 +174,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <remarks>Make sure to consider the result of <see cref="IsBlackPixel(Point)"/> as this is not enough on its own.</remarks>
         public bool IsColoredPixel(Point point)
         {
-            return this.ColorBuffer.GetPixel(point) == Color.White; // white indicates the pixel value is 1 (on)
+            return ColorBuffer.GetPixel(point) == Color.White; // white indicates the pixel value is 1 (on)
         }
 
         /// <summary>
@@ -184,8 +184,8 @@ namespace Iot.Device.EPaper.Buffers
         /// <returns>True if pixel is black color, otherwise; false.</returns>
         public bool IsBlackPixel(Point point)
         {
-            return this.IsColoredPixel(point) == false
-                    && this.BlackBuffer.GetPixel(point) == Color.Black;
+            return IsColoredPixel(point) == false
+                    && BlackBuffer.GetPixel(point) == Color.Black;
         }
 
         /// <summary>
@@ -196,13 +196,13 @@ namespace Iot.Device.EPaper.Buffers
         /// <remarks>Make sure to consider the result of <see cref="IsColoredPixel(Point)"/> as this is not enough on its own.</remarks>
         public bool IsWhitePixel(Point point)
         {
-            return this.IsBlackPixel(point) == false;
+            return IsBlackPixel(point) == false;
         }
 
         /// <inheritdoc/>
         public void SetPixel(Point point, Color pixelColor)
         {
-            if (!this.IsPointWithinFrameBuffer(point))
+            if (!IsPointWithinFrameBuffer(point))
             {
                 return;
             }
@@ -211,31 +211,31 @@ namespace Iot.Device.EPaper.Buffers
             if (pixelColor != Color.Black
                 && pixelColor != Color.White)
             {
-                this.ColorBuffer.SetPixel(point, Color.White); // white will write 1 to the buffer
+                ColorBuffer.SetPixel(point, Color.White); // white will write 1 to the buffer
             }
             else if (pixelColor == Color.Black)
             {
-                this.BlackBuffer.SetPixel(point, pixelColor);
-                this.ColorBuffer.SetPixel(point, pixelColor); // black will write 0 to the buffer
+                BlackBuffer.SetPixel(point, pixelColor);
+                ColorBuffer.SetPixel(point, pixelColor); // black will write 0 to the buffer
             }
             else
             {
                 // white
-                this.BlackBuffer.SetPixel(point, pixelColor);
-                this.ColorBuffer.SetPixel(point, Color.Black); // black will write 0 to the buffer
+                BlackBuffer.SetPixel(point, pixelColor);
+                ColorBuffer.SetPixel(point, Color.Black); // black will write 0 to the buffer
             }
         }
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
         {
-            this.WriteBuffer(buffer, Point.Zero);
+            WriteBuffer(buffer, Point.Zero);
         }
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
         {
-            this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+            WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
         }
 
         /// <inheritdoc/>
@@ -244,13 +244,13 @@ namespace Iot.Device.EPaper.Buffers
             if (buffer is FrameBuffer1BitPerPixel buffer1bpp)
             {
                 // I think it is reasonable that a 1-bit deep buffer is copied over to the B/W buffer
-                this.BlackBuffer.WriteBuffer(buffer1bpp, start, end, destinationStart);
+                BlackBuffer.WriteBuffer(buffer1bpp, start, end, destinationStart);
             }
             else if (buffer is FrameBuffer2BitPerPixel buffer2bpp)
             {
                 // if the buffer is the same type (same bit depth), then we copy its contents directly into this instance
-                this.BlackBuffer.WriteBuffer(buffer2bpp.BlackBuffer, start, end, destinationStart);
-                this.ColorBuffer.WriteBuffer(buffer2bpp.ColorBuffer, start, end, destinationStart);
+                BlackBuffer.WriteBuffer(buffer2bpp.BlackBuffer, start, end, destinationStart);
+                ColorBuffer.WriteBuffer(buffer2bpp.ColorBuffer, start, end, destinationStart);
             }
             else
             {
@@ -261,14 +261,14 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public bool IsPointWithinFrameBuffer(Point point)
         {
-            return point.X >= this.StartPoint.X && point.X < (this.StartPoint.X + this.Width)
-                && point.Y >= this.StartPoint.Y && point.Y < (this.StartPoint.Y + this.Height);
+            return point.X >= StartPoint.X && point.X < (StartPoint.X + Width)
+                && point.Y >= StartPoint.Y && point.Y < (StartPoint.Y + Height);
         }
 
         /// <inheritdoc/>>
         public bool IsRangeWithinFrameBuffer(Point start, Point end)
         {
-            return this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
+            return IsPointWithinFrameBuffer(start) && IsPointWithinFrameBuffer(end);
         }
     }
 }

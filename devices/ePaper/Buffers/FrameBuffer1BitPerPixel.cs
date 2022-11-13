@@ -39,16 +39,16 @@ namespace Iot.Device.EPaper.Buffers
         public override void Clear(Color color)
         {
             var colorValue = color.Color1bpp;
-            for (var i = 0; i < this.Buffer.Length; i++)
+            for (var i = 0; i < Buffer.Length; i++)
             {
-                this.Buffer[i] = colorValue;
+                Buffer[i] = colorValue;
             }
         }
 
         /// <inheritdoc/>
         public override void Fill(Point start, int width, int height, Color color)
         {
-            if (!this.IsPointWithinFrameBuffer(start))
+            if (!IsPointWithinFrameBuffer(start))
             {
                 return;
             }
@@ -59,7 +59,7 @@ namespace Iot.Device.EPaper.Buffers
             {
                 for (var x = start.X; x < start.X + width; x++)
                 {
-                    var frameBufferIndex = this.GetFrameBufferIndexForPoint(x, y);
+                    var frameBufferIndex = GetFrameBufferIndexForPoint(x, y);
 
                     // improve performance by trying to set an entire byte at once
                     // if the current x position has 8 more columns ahead of it then set the whole byte
@@ -72,7 +72,7 @@ namespace Iot.Device.EPaper.Buffers
                     }
                     else
                     {
-                        this.SetPixel(new Point(x, y), color);
+                        SetPixel(new Point(x, y), color);
                     }
                 }
             }
@@ -81,7 +81,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public override Color GetPixel(Point point)
         {
-            var frameBufferIndex = this.GetFrameBufferIndexForPoint(point);
+            var frameBufferIndex = GetFrameBufferIndexForPoint(point);
 
             return (this[frameBufferIndex] & GetPointByteMask(point)) != 0
                 ? Color.White
@@ -91,20 +91,20 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>
         public override void SetPixel(Point point, Color pixelColor)
         {
-            if (!this.IsPointWithinFrameBuffer(point))
+            if (!IsPointWithinFrameBuffer(point))
             {
                 return;
             }
 
-            var frameBufferIndex = this.GetFrameBufferIndexForPoint(point);
+            var frameBufferIndex = GetFrameBufferIndexForPoint(point);
 
             if (pixelColor == Color.Black)
             {
-                this[frameBufferIndex] &= (byte)~this.GetPointByteMask(point);
+                this[frameBufferIndex] &= (byte)~GetPointByteMask(point);
             }
             else
             {
-                this[frameBufferIndex] |= this.GetPointByteMask(point);
+                this[frameBufferIndex] |= GetPointByteMask(point);
             }
         }
 
@@ -142,7 +142,7 @@ namespace Iot.Device.EPaper.Buffers
                     }
                     else
                     {
-                        this.SetPixel(
+                        SetPixel(
                             destinationAbsolutePosition,
                             otherBuffer.GetPixel(sourceAbsolutePosition));
                     }

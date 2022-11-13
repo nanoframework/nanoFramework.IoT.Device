@@ -35,8 +35,8 @@ namespace Iot.Device.EPaper
         /// <param name="ePaperDisplay">The E-Paper display device to draw to.</param>
         public Graphics(IEPaperDisplay ePaperDisplay)
         {
-            this.EPaperDisplay = ePaperDisplay;
-            this.DisplayRotation = Rotation.Default;
+            EPaperDisplay = ePaperDisplay;
+            DisplayRotation = Rotation.Default;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Iot.Device.EPaper
             // if there is an error with drawing a point or the line is finished get out of the loop!
             while (!(startX == endX && startY == endY))
             {
-                this.DrawPixel(startX, startY, color);
+                DrawPixel(startX, startY, color);
 
                 e2 = 2 * err;
 
@@ -92,11 +92,11 @@ namespace Iot.Device.EPaper
         {
             if (fill)
             {
-                this.DrawCircleFilled(centerX, centerY, radius, color);
+                DrawCircleFilled(centerX, centerY, radius, color);
             }
             else
             {
-                this.DrawCircleOutline(centerX, centerY, radius, color);
+                DrawCircleOutline(centerX, centerY, radius, color);
             }
         }
 
@@ -117,11 +117,11 @@ namespace Iot.Device.EPaper
 
             if (fill)
             {
-                this.DrawRectangleFilled(startX, startY, endX, endY, color);
+                DrawRectangleFilled(startX, startY, endX, endY, color);
             }
             else
             {
-                this.DrawRectangleOutline(startX, startY, endX, endY, color);
+                DrawRectangleOutline(startX, startY, endX, endY, color);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Iot.Device.EPaper
 
             foreach (char character in text)
             {
-                if (col == this.EPaperDisplay.Width)
+                if (col == EPaperDisplay.Width)
                 {
                     col = 0;
                     line += font.Height + 1;
@@ -158,7 +158,7 @@ namespace Iot.Device.EPaper
                     {
                         if ((b & bitMask) > 0)
                         {
-                            this.DrawPixel(xPos + pixel, yPos, color);
+                            DrawPixel(xPos + pixel, yPos, color);
                         }
 
                         bitMask <<= 1;
@@ -177,15 +177,15 @@ namespace Iot.Device.EPaper
         /// <param name="rotate"><see langword="true"/> to rotate the bitmap with the current <see cref="Rotation"/> specified. It might be slow.</param>
         public void DrawBitmap(IFrameBuffer bitmap, Point start, bool rotate = false)
         {
-            if (this.DisplayRotation == Rotation.Default)
+            if (DisplayRotation == Rotation.Default)
             {
-                this.EPaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
+                EPaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
                 return;
             }
 
             if (!rotate)
             {
-                this.EPaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
+                EPaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
             }
             else
             {
@@ -196,7 +196,7 @@ namespace Iot.Device.EPaper
                     {
                         var currentPoint = new Point(x, y);
 
-                        this.EPaperDisplay
+                        EPaperDisplay
                             .FrameBuffer
                             .SetPixel(start + currentPoint, bitmap.GetPixel(currentPoint));
                     }
@@ -212,12 +212,12 @@ namespace Iot.Device.EPaper
         /// <returns>The real X position on the display.</returns>
         private int GetRealXPosition(int x, int y)
         {
-            switch (this.DisplayRotation)
+            switch (DisplayRotation)
             {
                 case Rotation.Degrees90Clockwise:
-                    return this.EPaperDisplay.Width - y - 1;
+                    return EPaperDisplay.Width - y - 1;
                 case Rotation.Degrees180Clockwise:
-                    return this.EPaperDisplay.Width - x - 1;
+                    return EPaperDisplay.Width - x - 1;
                 case Rotation.Degrees270Clockwise:
                     return y;
                 default:
@@ -233,14 +233,14 @@ namespace Iot.Device.EPaper
         /// <returns>The real Y position on the display.</returns>
         private int GetRealYPosition(int x, int y)
         {
-            switch (this.DisplayRotation)
+            switch (DisplayRotation)
             {
                 case Rotation.Degrees90Clockwise:
                     return x;
                 case Rotation.Degrees180Clockwise:
-                    return this.EPaperDisplay.Height - y - 1;
+                    return EPaperDisplay.Height - y - 1;
                 case Rotation.Degrees270Clockwise:
-                    return this.EPaperDisplay.Height - x - 1;
+                    return EPaperDisplay.Height - x - 1;
                 default:
                     return y;
             }
@@ -254,7 +254,7 @@ namespace Iot.Device.EPaper
         /// <returns>The real position on the display.</returns>
         public Point GetRealPosition(int x, int y)
         {
-            return new Point(this.GetRealXPosition(x, y), this.GetRealYPosition(x, y));
+            return new Point(GetRealXPosition(x, y), GetRealYPosition(x, y));
         }
 
         private void DrawRectangleOutline(int startX, int startY, int endX, int endY, Color color)
@@ -264,22 +264,22 @@ namespace Iot.Device.EPaper
 
             for (int currentX = startX; currentX != endX; currentX++)
             {
-                this.DrawPixel(currentX, startY, color);
+                DrawPixel(currentX, startY, color);
             }
 
             for (int currentX = startX; currentX <= endX; currentX++)
             {
-                this.DrawPixel(currentX, endY, color);
+                DrawPixel(currentX, endY, color);
             }
 
             for (int currentY = startY; currentY != endY; currentY++)
             {
-                this.DrawPixel(startX, currentY, color);
+                DrawPixel(startX, currentY, color);
             }
 
             for (int currentY = startY; currentY <= endY; currentY++)
             {
-                this.DrawPixel(endX, currentY, color);
+                DrawPixel(endX, currentY, color);
             }
         }
 
@@ -289,7 +289,7 @@ namespace Iot.Device.EPaper
             {
                 for (int xx = startX; xx != endX; xx++)
                 {
-                    this.DrawPixel(xx, currentY, color);
+                    DrawPixel(xx, currentY, color);
                 }
             }
         }
@@ -299,14 +299,14 @@ namespace Iot.Device.EPaper
             // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
             void drawCircle(int xc, int yc, int x, int y, Color color)
             {
-                this.DrawPixel(xc + x, yc + y, color);
-                this.DrawPixel(xc - x, yc + y, color);
-                this.DrawPixel(xc + x, yc - y, color);
-                this.DrawPixel(xc - x, yc - y, color);
-                this.DrawPixel(xc + y, yc + x, color);
-                this.DrawPixel(xc - y, yc + x, color);
-                this.DrawPixel(xc + y, yc - x, color);
-                this.DrawPixel(xc - y, yc - x, color);
+                DrawPixel(xc + x, yc + y, color);
+                DrawPixel(xc - x, yc + y, color);
+                DrawPixel(xc + x, yc - y, color);
+                DrawPixel(xc - x, yc - y, color);
+                DrawPixel(xc + y, yc + x, color);
+                DrawPixel(xc - y, yc + x, color);
+                DrawPixel(xc + y, yc - x, color);
+                DrawPixel(xc - y, yc - x, color);
             }
 
             int x = 0, y = radius;
@@ -348,10 +348,10 @@ namespace Iot.Device.EPaper
 
             while (x <= y)
             {
-                this.DrawLine(centerX + x, centerY + y, centerX - x, centerY + y, color);
-                this.DrawLine(centerX + x, centerY - y, centerX - x, centerY - y, color);
-                this.DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, color);
-                this.DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, color);
+                DrawLine(centerX + x, centerY + y, centerX - x, centerY + y, color);
+                DrawLine(centerX + x, centerY - y, centerX - x, centerY - y, color);
+                DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, color);
+                DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, color);
 
                 if (determinant < 0)
                 {
@@ -375,7 +375,7 @@ namespace Iot.Device.EPaper
         /// <param name="color">The color to use when drawing the pixel.</param>
         public void DrawPixel(int x, int y, Color color)
         {
-            this.EPaperDisplay.FrameBuffer.SetPixel(this.GetRealPosition(x, y), color);
+            EPaperDisplay.FrameBuffer.SetPixel(GetRealPosition(x, y), color);
         }
 
         #region IDisposable
@@ -386,7 +386,7 @@ namespace Iot.Device.EPaper
             {
                 if (disposing)
                 {
-                    this.EPaperDisplay?.Dispose();
+                    EPaperDisplay?.Dispose();
                 }
 
                 _disposedValue = true;

@@ -134,10 +134,10 @@ namespace Iot.Device.EPaper.Fonts
                 var index = (byte)character;
                 if (index < 32 || index > 127)
                 {
-                    return this._fontTable[0x20];
+                    return _fontTable[0x20];
                 }
 
-                return this._fontTable[(byte)character - 0x20];
+                return _fontTable[(byte)character - 0x20];
             }
         }
     }

@@ -25,8 +25,8 @@ namespace Iot.Device.EPaper.Primitives
         /// <param name="y">The Y position.</param>
         public Point(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Iot.Device.EPaper.Primitives
         {
             unchecked
             {
-                return this.X.GetHashCode() ^ this.Y.GetHashCode();
+                return X.GetHashCode() ^ Y.GetHashCode();
             }
         }
 
