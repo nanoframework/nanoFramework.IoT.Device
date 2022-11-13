@@ -21,10 +21,10 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.82" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.1.31" />
-      <dependency id="nanoFramework.System.IO.Streams" version="1.1.15" />
-      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.145.0" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.141" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.46" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.27" />
+      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.148.0" />
     </dependencies>
   </metadata>
   <files>

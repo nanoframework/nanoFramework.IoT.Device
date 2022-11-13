@@ -24,8 +24,8 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
       <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.82" />
-      <dependency id="Nerdbank.GitVersioning" version="3.5.113" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.141" />
+      <dependency id="Nerdbank.GitVersioning" version="3.5.119" />
     </dependencies>
   </metadata>
   <files>

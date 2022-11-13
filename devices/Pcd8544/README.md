@@ -141,7 +141,7 @@ This code is also available as a simple C# Console Application in [Img2Pcd8544](
 
 ### Advanced functions
 
-You can adjust couple of factors like `Bias`,  `Temperature`, `Contrast` and `Brightness`. The [samples](./samples/Program.cs) will run thru all of them so you can understand the impact of each of them. The `Bias` will increase the voltage and darken the screen.
+You can adjust couple of factors like `Bias`,  `Temperature`, `Contrast` and `Brightness`. The [sample](./samples/Pcd8544.samples/Program.cs) will run through all of them so you can understand the impact of each of them. The `Bias` will increase the voltage and darken the screen.
 
 In general, it is recommended to leave Temperature to the 0 coefficient, if you are in normal conditions. The Bias can be left to 4 as well as a default value for normal conditions.
 
