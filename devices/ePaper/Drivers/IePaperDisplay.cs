@@ -3,15 +3,15 @@
 
 using System;
 
-using Iot.Device.ePaper.Buffers;
-using Iot.Device.ePaper.Primitives;
+using Iot.Device.EPaper.Buffers;
+using Iot.Device.EPaper.Primitives;
 
-namespace Iot.Device.ePaper.Drivers
+namespace Iot.Device.EPaper.Drivers
 {
     /// <summary>
     /// Represents an ePaper Display device.
     /// </summary>
-    public interface IePaperDisplay : IDisposable
+    public interface IEPaperDisplay : IDisposable
     {
         /// <summary>
         /// Gets the width of the drawable area on the display.

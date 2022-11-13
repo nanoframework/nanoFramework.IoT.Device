@@ -1,9 +1,9 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-using Iot.Device.ePaper.Primitives;
+using Iot.Device.EPaper.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.EPaper.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for dual-color displays.
@@ -14,7 +14,7 @@ namespace Iot.Device.ePaper.Buffers
         public override ColorFormat ColorFormat { get; } = ColorFormat.Color1BitPerPixel;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="FrameBuffer1BitPerPixel"/> class.
+        /// Initializes a new instance of the <see cref="FrameBuffer1BitPerPixel"/> class.
         /// </summary>
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>
@@ -24,7 +24,7 @@ namespace Iot.Device.ePaper.Buffers
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="FrameBuffer1BitPerPixel"/> class by copying the specified buffer.
+        /// Initializes a new instance of the <see cref="FrameBuffer1BitPerPixel"/> class by copying the specified buffer.
         /// </summary>
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>
@@ -39,14 +39,18 @@ namespace Iot.Device.ePaper.Buffers
         {
             var colorValue = color.Color1bpp;
             for (var i = 0; i < this.Buffer.Length; i++)
+            {
                 this.Buffer[i] = colorValue;
+            }
         }
 
         /// <inheritdoc/>
         public override void Fill(Point start, int width, int height, Color color)
         {
             if (!this.IsPointWithinFrameBuffer(start))
+            {
                 return;
+            }
 
             var colorVal = color.Color1bpp;
 
@@ -87,7 +91,9 @@ namespace Iot.Device.ePaper.Buffers
         public override void SetPixel(Point point, Color pixelColor)
         {
             if (!this.IsPointWithinFrameBuffer(point))
+            {
                 return;
+            }
 
             var frameBufferIndex = this.GetFrameBufferIndexForPoint(point);
 
@@ -106,8 +112,7 @@ namespace Iot.Device.ePaper.Buffers
         {
             // if the frame is not the same type (different bit depth), use the slow copy method
             // because it converts every pixel properly.
-
-            if (buffer is not FrameBuffer1BitPerPixel otherBuffer)
+            if (!(buffer is FrameBuffer1BitPerPixel otherBuffer))
             {
                 base.WriteBuffer(buffer, start, end, destinationStart);
                 return;
@@ -136,7 +141,8 @@ namespace Iot.Device.ePaper.Buffers
                     }
                     else
                     {
-                        this.SetPixel(destinationAbsolutePosition,
+                        this.SetPixel(
+                            destinationAbsolutePosition,
                             otherBuffer.GetPixel(sourceAbsolutePosition));
                     }
                 }

@@ -15,7 +15,7 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes .Net nanoFramework drivers for EPD devices with a graphics library.</description>
+    <description>This package includes .Net nanoFramework drivers for EPD devices with a graphics library. This version supports only displays based on the SSD1681 controller. More controllers will be added in the future. Please refer to the README file for more info about support.</description>
     <summary>Iot.Device.ePaper assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf epd ePaper Iot.Device.Display.ePaper</tags>
     <dependencies>

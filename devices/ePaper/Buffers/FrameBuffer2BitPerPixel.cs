@@ -3,9 +3,9 @@
 
 using System;
 
-using Iot.Device.ePaper.Primitives;
+using Iot.Device.EPaper.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.EPaper.Buffers
 {
     /// <summary>
     /// A display frame buffer implementation for tri-color displays with a separate buffer for the 3rd color.
@@ -36,7 +36,12 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>
         public byte[] Buffer
-            => throw new InvalidOperationException("Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.");
+        {
+            get
+            {
+                throw new InvalidOperationException("Unified buffer is not available. Use BlackBuffer and ColorBuffer instead.");
+            }
+        }
 
         /// <inheritdoc/>>
         /// <remarks>
@@ -44,7 +49,12 @@ namespace Iot.Device.ePaper.Buffers
         /// making up <see cref="BlackBuffer"/> and <see cref="ColorBuffer"/>
         /// </remarks>
         public int BufferByteCount
-            => this.BlackBuffer.BufferByteCount + this.ColorBuffer.BufferByteCount;
+        {
+            get
+            {
+                return this.BlackBuffer.BufferByteCount + this.ColorBuffer.BufferByteCount;
+            }
+        }
 
         /// <inheritdoc/>
         public ColorFormat ColorFormat { get; } = ColorFormat.Color2BitPerPixel;
@@ -110,13 +120,17 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>>
         public void Fill(Color color)
-            => this.Fill(Point.Zero, this.Width, this.Height, color);
+        {
+            this.Fill(Point.Zero, this.Width, this.Height, color);
+        }
 
         /// <inheritdoc/>
         public void Fill(Point start, int width, int height, Color color)
         {
             if (!this.IsPointWithinFrameBuffer(start))
+            {
                 return;
+            }
 
             // if the current color isn't black or white, then we send data to the color buffer
             if (color != Color.Black
@@ -158,7 +172,9 @@ namespace Iot.Device.ePaper.Buffers
         /// <returns>True if pixel is a color other than black/white, otherwise; false.</returns>
         /// <remarks>Make sure to consider the result of <see cref="IsBlackPixel(Point)"/> as this is not enough on its own.</remarks>
         public bool IsColoredPixel(Point point)
-            => this.ColorBuffer.GetPixel(point) == Color.White; // white indicates the pixel value is 1 (on)
+        {
+            return this.ColorBuffer.GetPixel(point) == Color.White; // white indicates the pixel value is 1 (on)
+        }
 
         /// <summary>
         /// Checks if the specified pixel is set to 0 in the <see cref="BlackBuffer"/> and 0 in the <see cref="ColorBuffer"/>
@@ -166,8 +182,10 @@ namespace Iot.Device.ePaper.Buffers
         /// <param name="point">The pixel position.</param>
         /// <returns>True if pixel is black color, otherwise; false.</returns>
         public bool IsBlackPixel(Point point)
-            => this.IsColoredPixel(point) == false
-            && this.BlackBuffer.GetPixel(point) == Color.Black;
+        {
+            return this.IsColoredPixel(point) == false
+                    && this.BlackBuffer.GetPixel(point) == Color.Black;
+        }
 
         /// <summary>
         /// Checks if the specified pixel is set to 1 in the <see cref="BlackBuffer"/> and 0 in the <see cref="ColorBuffer"/>
@@ -176,13 +194,17 @@ namespace Iot.Device.ePaper.Buffers
         /// <returns>True if pixel is white color, otherwise; false.</returns>
         /// <remarks>Make sure to consider the result of <see cref="IsColoredPixel(Point)"/> as this is not enough on its own.</remarks>
         public bool IsWhitePixel(Point point)
-            => this.IsBlackPixel(point) == false;
+        {
+            return this.IsBlackPixel(point) == false;
+        }
 
         /// <inheritdoc/>
         public void SetPixel(Point point, Color pixelColor)
         {
             if (!this.IsPointWithinFrameBuffer(point))
+            {
                 return;
+            }
 
             // if the current color isn't black or white, then we send data to the color buffer
             if (pixelColor != Color.Black
@@ -205,11 +227,15 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
-            => this.WriteBuffer(buffer, Point.Zero);
+        {
+            this.WriteBuffer(buffer, Point.Zero);
+        }
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
-            => this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+        {
+            this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+        }
 
         /// <inheritdoc/>
         public void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
@@ -240,6 +266,8 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>>
         public bool IsRangeWithinFrameBuffer(Point start, Point end)
-            => this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
+        {
+            return this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
+        }
     }
 }

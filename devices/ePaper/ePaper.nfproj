@@ -13,10 +13,20 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.ePaper</RootNamespace>
+    <RootNamespace>Iot.Device.EPaper</RootNamespace>
     <AssemblyName>Iot.Device.ePaper</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.ePaper.xml</DocumentationFile>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -25,7 +35,7 @@
     <Compile Include="Buffers\FrameBufferBase.cs" />
     <Compile Include="Buffers\IFrameBuffer.cs" />
     <Compile Include="Drivers\IePaperDisplay.cs" />
-    <Compile Include="Drivers\Ssd1681.cs" />
+    <Compile Include="Drivers\Ssd1681\Ssd1681.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Fonts\Font8x12.cs" />
     <Compile Include="Fonts\IFont.cs" />

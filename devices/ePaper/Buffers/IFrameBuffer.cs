@@ -1,9 +1,9 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-using Iot.Device.ePaper.Primitives;
+using Iot.Device.EPaper.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.EPaper.Buffers
 {
     /// <summary>
     /// Represents a display frame buffer.
@@ -123,6 +123,7 @@ namespace Iot.Device.ePaper.Buffers
         /// <summary>
         /// Resets the current frame buffer to with its default starting values set to the specified color.
         /// </summary>
+        /// <param name="color">The color to use as a default value when clearing the frame buffer.</param>
         void Clear(Color color);
 
         /// <summary>

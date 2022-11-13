@@ -3,9 +3,9 @@
 
 using System;
 
-using Iot.Device.ePaper.Primitives;
+using Iot.Device.EPaper.Primitives;
 
-namespace Iot.Device.ePaper.Buffers
+namespace Iot.Device.EPaper.Buffers
 {
     /// <summary>
     /// Base implementation for a frame buffer class.
@@ -24,20 +24,32 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>>
         public virtual int BitDepth
-            => this.ColorFormat switch
+        {
+            get
             {
-                ColorFormat.Color1BitPerPixel => 1,
-                ColorFormat.Color2BitPerPixel => 2,
-
-                _ => throw new NotImplementedException()
-            };
+                switch (this.ColorFormat)
+                {
+                    case ColorFormat.Color1BitPerPixel:
+                        return 1;
+                    case ColorFormat.Color2BitPerPixel:
+                        return 2;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         /// <inheritdoc/>>
         public virtual byte[] Buffer { get; }
 
         /// <inheritdoc/>>
         public virtual int BufferByteCount
-            => (this.Width * this.Height * this.BitDepth) / 8;
+        {
+            get
+            {
+                return (this.Width * this.Height * this.BitDepth) / 8;
+            }
+        }
 
         /// <inheritdoc/>
         public abstract ColorFormat ColorFormat { get; }
@@ -71,12 +83,14 @@ namespace Iot.Device.ePaper.Buffers
             set
             {
                 if (this.IsPointWithinFrameBuffer(point))
+                {
                     this[this.GetFrameBufferIndexForPoint(point)] = value;
+                }
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="FrameBufferBase"/> class.
+        /// Initializes a new instance of the <see cref="FrameBufferBase"/> class.
         /// </summary>
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>
@@ -88,7 +102,7 @@ namespace Iot.Device.ePaper.Buffers
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="FrameBufferBase"/> class by copying the specified buffer.
+        /// Initializes a new instance of the <see cref="FrameBufferBase"/> class by copying the specified buffer.
         /// </summary>
         /// <param name="height">The height of the frame to manage.</param>
         /// <param name="width">The width of the frame to manage.</param>
@@ -100,7 +114,9 @@ namespace Iot.Device.ePaper.Buffers
             this.Buffer = buffer;
 
             if (buffer.Length != this.BufferByteCount)
+            {
                 throw new ArgumentException("Length mismatch between the provided buffer and the specified width and height.");
+            }
         }
 
         /// <inheritdoc/>>
@@ -114,19 +130,27 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
-            => this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), Point.Zero);
+        {
+            this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), Point.Zero);
+        }
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
-            => this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+        {
+            this.WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+        }
 
         /// <inheritdoc/>>
         public virtual void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
-            => this.WriteBufferSlow(buffer, start, end, destinationStart);
+        {
+            this.WriteBufferSlow(buffer, start, end, destinationStart);
+        }
 
         /// <inheritdoc/>>
         public void Fill(Color color)
-            => this.Fill(Point.Zero, this.Width, this.Height, color);
+        {
+            this.Fill(Point.Zero, this.Width, this.Height, color);
+        }
 
         /// <inheritdoc/>>
         public abstract void Fill(Point start, int width, int height, Color color);
@@ -146,7 +170,9 @@ namespace Iot.Device.ePaper.Buffers
 
         /// <inheritdoc/>>
         public virtual bool IsRangeWithinFrameBuffer(Point start, Point end)
-            => this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
+        {
+            return this.IsPointWithinFrameBuffer(start) && this.IsPointWithinFrameBuffer(end);
+        }
 
         /// <summary>
         /// Gets the index of the byte within the <see cref="Buffer"/> array which contains the specified point.
@@ -154,7 +180,9 @@ namespace Iot.Device.ePaper.Buffers
         /// <param name="point">The point to get its index within <see cref="Buffer"/>.</param>
         /// <returns>The index within the <see cref="Buffer"/> for the byte that contains the specified pixe location.</returns>
         protected int GetFrameBufferIndexForPoint(Point point)
-            => this.GetFrameBufferIndexForPoint(point.X, point.Y);
+        {
+            return this.GetFrameBufferIndexForPoint(point.X, point.Y);
+        }
 
         /// <summary>
         /// Gets the index of the byt within the <see cref="Buffer"/> array which contains the specified point.
@@ -163,7 +191,9 @@ namespace Iot.Device.ePaper.Buffers
         /// <param name="y">The Y position.</param>
         /// <returns>The index within the <see cref="Buffer"/> for the byte that contains the specified pixe location.</returns>
         protected int GetFrameBufferIndexForPoint(int x, int y)
-            => ((x + (y * this.Width)) / 8) - this.currentFramePageLowerBufferBound;
+        {
+            return ((x + (y * this.Width)) / 8) - this.currentFramePageLowerBufferBound;
+        }
 
         /// <summary>
         /// Gets a byte mask pattern for the specified point.
@@ -171,7 +201,9 @@ namespace Iot.Device.ePaper.Buffers
         /// <param name="point">The point within the frame buffer.</param>
         /// <returns>A byte mask pattern with the pixel bit flipped to 1.</returns>
         protected byte GetPointByteMask(Point point)
-            => (byte)(128 >> (point.X & 7));
+        {
+            return (byte)(128 >> (point.X & 7));
+        }
 
         /// <summary>
         /// Copies the specified <see cref="IFrameBuffer"/> to this instance by iterating every pixel.

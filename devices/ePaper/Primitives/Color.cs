@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ePaper.Primitives
+namespace Iot.Device.EPaper.Primitives
 {
     /// <summary>
     /// A color data structure for RGB colors.
@@ -26,32 +26,68 @@ namespace Iot.Device.ePaper.Primitives
         /// <summary>
         /// Gets a value representing this color as On/Off.
         /// </summary>
-        public byte Color1bpp => (byte)((R <= 0 && G <= 0 && B <= 0) ? 0x00 : 0xff);
+        public byte Color1bpp
+        {
+            get
+            {
+                return (byte)((R <= 0 && G <= 0 && B <= 0) ? 0x00 : 0xff);
+            }
+        }
 
         /// <summary>
         /// Gets the 4-bits per pixel grayscale value of this color.
         /// </summary>
-        public byte Color4bppGrayscale => (byte)((byte)(0.2989 * R + 0.587 * G + 0.114 * B) >> 4);
+        public byte Color4bppGrayscale
+        {
+            get
+            {
+                return (byte)((byte)((0.2989 * R) + (0.587 * G) + (0.114 * B)) >> 4);
+            }
+        }
 
         /// <summary>
         /// Gets the 8-bits per pixel grayscale value of this color.
         /// </summary>
-        public byte Color8bppGrayscale => (byte)(0.2989 * R + 0.587 * G + 0.114 * B);
+        public byte Color8bppGrayscale
+        {
+            get
+            {
+                return (byte)((0.2989 * R) + (0.587 * G) + (0.114 * B));
+            }
+        }
 
         /// <summary>
         /// Gets the 8-bits per pixel value of this color.
         /// </summary>
-        public byte Color8bppRgb332 => (byte)((R & 0xE0u) | (uint)((G & 0x70) >> 3) | (uint)((B & 0xC0) >> 6));
+        public byte Color8bppRgb332
+        {
+            get
+            {
+                return (byte)((R & 0xE0u) | (uint)((G & 0x70) >> 3) | (uint)((B & 0xC0) >> 6));
+            }
+        }
 
         /// <summary>
         /// Gets the 12-bits per pixel value of this color.
         /// </summary>
-        public ushort Color12bppRgb444 => (ushort)((uint)((R & 0xF0) << 4) | (G & 0xF0u) | (uint)((B & 0xF0) >> 4));
+        public ushort Color12bppRgb444
+        {
+            get
+            {
+                return (ushort)((uint)((R & 0xF0) << 4) | (G & 0xF0u) | (uint)((B & 0xF0) >> 4));
+            }
+        }
 
         /// <summary>
         /// Gets the 16-bits per pixel value of this color.
         /// </summary>
-        public ushort Color16bppRgb565 => (ushort)(((R & 0xF8) << 8) | ((G & 0xFC) << 3) | (B >> 3));
+        public ushort Color16bppRgb565
+        {
+            get
+            {
+                return (ushort)(((R & 0xF8) << 8) | ((G & 0xFC) << 3) | (B >> 3));
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> struct.
@@ -66,9 +102,29 @@ namespace Iot.Device.ePaper.Primitives
             B = b;
         }
 
+        /// <summary>
+        /// Checks if the specified colors are equivalent based on their <see cref="R"/>, <see cref="G"/>, and <see cref="B"/> values.
+        /// </summary>
+        /// <param name="color">The first to <see cref="Color"/> to check.</param>
+        /// <param name="other">The other <see cref="Color"/> to check.</param>
+        /// <returns>True if both instances are the same color value.</returns>
+        public static bool operator ==(Color color, Color other)
+            => InternalEquals(color, other);
+
+        /// <summary>
+        /// Checks if the specified colors are not equivalent based on their <see cref="R"/>, <see cref="G"/>, and <see cref="B"/> values.
+        /// </summary>
+        /// <param name="color">The first to <see cref="Color"/> to check.</param>
+        /// <param name="other">The other <see cref="Color"/> to check.</param>
+        /// <returns>True if one color has a different color value than the other.</returns>
+        public static bool operator !=(Color color, Color other)
+            => !InternalEquals(color, other);
+
         /// <inheritdoc/>>
         public override bool Equals(object obj)
-            => obj is Color other && InternalEquals(this, other);
+        {
+            return obj is Color other && InternalEquals(this, other);
+        }
 
         /// <inheritdoc/>>
         public override int GetHashCode()
@@ -79,27 +135,20 @@ namespace Iot.Device.ePaper.Primitives
             }
         }
 
-        /// <inheritdoc/>
-        public static bool operator ==(Color color, Color other)
-            => InternalEquals(color, other);
-
-        /// <inheritdoc/>
-        public static bool operator !=(Color color, Color other)
-            => !InternalEquals(color, other);
-
-        /// <inheritdoc/>
-        private static bool InternalEquals(Color color, Color other) 
-            => color.R == other.R && color.G == other.G && color.B == other.B;
+        private static bool InternalEquals(Color color, Color other)
+        {
+            return color.R == other.R && color.G == other.G && color.B == other.B;
+        }
 
         /// <summary>
         /// Black Color.
         /// </summary>
-        public static Color Black = new(r: 0, g: 0, b: 0);
+        public static Color Black = new Color(r: 0, g: 0, b: 0);
 
         /// <summary>
         /// White Color.
         /// </summary>
-        public static Color White = new(r: 255, g: 255, b: 255);
+        public static Color White = new Color(r: 255, g: 255, b: 255);
 
         /// <summary>
         /// Red Color.
