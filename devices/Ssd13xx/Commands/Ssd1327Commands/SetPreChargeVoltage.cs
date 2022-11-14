@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetPreChargeVoltage command
+    /// Represents SetPreChargeVoltage command.
     /// </summary>
     public class SetPreChargeVoltage : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetPreChargeVoltage" /> class.
         /// This command sets the first pre-charge voltage (phase 2) level of segment pins.
         /// </summary>
         /// <param name="level">
@@ -29,12 +30,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0xBC;
 
         /// <summary>
-        /// Pre-charge voltage level.
+        /// Gets Pre-charge voltage level.
         /// </summary>
         public byte Level { get; }
 

@@ -17,6 +17,7 @@
     <AssemblyName>Iot.Device.Sps30</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Sps30.xml</DocumentationFile>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -46,11 +47,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.141\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.158\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.141\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.158\lib\System.Diagnostics.Stopwatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Ports, Version=1.1.46.59502, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -92,4 +93,11 @@
     <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.5.119\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.119\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
   <Import Project="packages\Nerdbank.GitVersioning.3.5.119\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.5.119\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
+  </Target>
 </Project>

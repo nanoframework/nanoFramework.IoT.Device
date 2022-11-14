@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetPageStartAddressForPageAddressingMode command
+    /// Represents SetPageStartAddressForPageAddressingMode command.
     /// </summary>
     public class SetPageStartAddressForPageAddressingMode : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetPageStartAddressForPageAddressingMode" /> class.
         /// This command positions the page start address from 0 to 7 in GDDRAM under Page Addressing Mode.
         /// </summary>
         /// <param name="startAddress">Page start address with a range of 0-7.</param>
@@ -18,12 +19,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => (byte)(0xB0 + StartAddress);
 
         /// <summary>
-        /// Page start address with a range of 0-7.
+        /// Gets page start address with a range of 0-7.
         /// </summary>
         public PageAddress StartAddress { get; }
 

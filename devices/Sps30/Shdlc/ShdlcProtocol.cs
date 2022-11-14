@@ -1,7 +1,5 @@
-﻿//
-// Copyright (c) 2017 The nanoFramework project contributors
+﻿// Copyright (c) 2017 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 using System.IO;
@@ -16,17 +14,17 @@ namespace Iot.Device.Sps30.Shdlc
     /// </summary>
     /// <remarks>
     /// Datasheet can be found at https://sensirion.com/media/documents/8600FF88/616542B5/Sensirion_PM_Sensors_Datasheet_SPS30.pdf
-    /// Information about SHDLC can be found at https://sensirion.github.io/python-shdlc-driver/shdlc.html
+    /// Information about SHDLC can be found at https://sensirion.github.io/python-shdlc-driver/shdlc.html.
     /// </remarks>
     public class ShdlcProtocol
     {
         /// <summary>
-        /// The SerialPort is exposed as public property, but should only be used in very specific circumstances. One example is the Sensirion SPS30, for which a raw "0xFF" must be sent to wake the device from its sleep.
+        /// Gets the SerialPort which is exposed as public property, but should only be used in very specific circumstances. One example is the Sensirion SPS30, for which a raw "0xFF" must be sent to wake the device from its sleep.
         /// </summary>
         public SerialPort Serial { get; private set; }
 
         /// <summary>
-        /// Wraps a serial port to be used for the SHDLC protocol that some Sensirion devices use.
+        /// Initializes a new instance of the <see cref="ShdlcProtocol" /> class.
         /// </summary>
         /// <param name="serialPort">The serial port to be used.</param>
         /// <param name="timeoutInMillis">Timeout to be used on the serial port and as communication timeout for commands.</param>
@@ -40,12 +38,12 @@ namespace Iot.Device.Sps30.Shdlc
         /// <summary>
         /// Execute a command on the SHDLC device. Its documentation should describe the address, commands and what data to send/receive.
         /// </summary>
-        /// <param name="devaddr">Address of the device</param>
-        /// <param name="command">Command to execute</param>
-        /// <param name="data">Data to pass to the command</param>
-        /// <param name="responseTime">Expected (maximum) response time, used to idle the CPU for a bit instead of polling the serial port</param>
+        /// <param name="devaddr">Address of the device.</param>
+        /// <param name="command">Command to execute.</param>
+        /// <param name="data">Data to pass to the command.</param>
+        /// <param name="responseTime">Expected (maximum) response time, used to idle the CPU for a bit instead of polling the serial port.</param>
         /// <returns>The reply of this command. This may be an empty array if this command has no reply.</returns>
-        /// <exception cref="ApplicationException">When the frame could not be verified, a timeout occurred or the device indicates a fault status</exception>
+        /// <exception cref="ApplicationException">When the frame could not be verified, a timeout occurred or the device indicates a fault status.</exception>
         public byte[] Execute(byte devaddr, byte command, byte[] data, int responseTime = 100)
         {
             // Make sure the serial port is opened
@@ -87,27 +85,29 @@ namespace Iot.Device.Sps30.Shdlc
             chk = (byte)(0xff ^ chk);
 
             // Create frame
-            using var frame = new MemoryStream();
-            frame.WriteByte(0x7e);
-            frame.WriteByteStuffed(devaddr);
-            frame.WriteByteStuffed(command);
-            frame.WriteByteStuffed((byte)data.Length);
-            frame.WriteStuffed(data, 0, data.Length);
-            frame.WriteByteStuffed(chk);
-            frame.WriteByte(0x7e);
+            using (var frame = new MemoryStream())
+            {
+                frame.WriteByte(0x7e);
+                frame.WriteByteStuffed(devaddr);
+                frame.WriteByteStuffed(command);
+                frame.WriteByteStuffed((byte)data.Length);
+                frame.WriteStuffed(data, 0, data.Length);
+                frame.WriteByteStuffed(chk);
+                frame.WriteByte(0x7e);
 
-            return frame.ToArray();
+                return frame.ToArray();
+            }
         }
 
         /// <summary>
         /// Validates the MISO frame using its checksum and returns the actual reply. No exception means valid and no device error.
         /// When a MISO frame contains an error, an exception with relevant information is thrown.
         /// </summary>
-        /// <param name="expectedDevAddr">The expected device address used to validate the reply</param>
-        /// <param name="expectedCommand">The expected command used to validate the reply</param>
+        /// <param name="expectedDevAddr">The expected device address used to validate the reply.</param>
+        /// <param name="expectedCommand">The expected command used to validate the reply.</param>
         /// <param name="unstuffedFrame">The unverified frame, without frame start and end bytes.</param>
-        /// <returns>The actual command reply contained within the frame</returns>
-        /// <exception cref="ApplicationException">When the frame could not be verified or the device indicates a fault status</exception>
+        /// <returns>The actual command reply contained within the frame.</returns>
+        /// <exception cref="ApplicationException">When the frame could not be verified or the device indicates a fault status.</exception>
         private byte[] ParseAndValidateMisoFrame(byte expectedDevAddr, byte expectedCommand, byte[] unstuffedFrame)
         {
             // Parse incoming fields

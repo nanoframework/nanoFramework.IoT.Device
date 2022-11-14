@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.141, 1.2.141]",
-        "resolved": "1.2.141",
-        "contentHash": "Brdf+YWUiGxfV1U2ID0LFOwBFQdlGMJr1mil1ZtjMhGE0JEkRLsfPdZATqqmm1vmNywCvECjt0rti+IrM9GsHg=="
+        "requested": "[1.2.158, 1.2.158]",
+        "resolved": "1.2.158",
+        "contentHash": "hLCGUGEwKfC2NK02N0n8Yvhin9lTTs5pqnF61fVxHKoNvOcySzhAB0QHikZq14sfUwYb2tQ62z1GLoW9wnyX+Q=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.141, 1.2.141]",
-        "resolved": "1.2.141",
-        "contentHash": "8RfjSI9l+fUlQ96mpGvzdPl5CH9bHirmFs0WzEpq4FuY04n2pWk9ncbvBGTOzBzxC9/Ks5mklMybfdUtksyWTA=="
+        "requested": "[1.2.158, 1.2.158]",
+        "resolved": "1.2.158",
+        "contentHash": "/PkiduAqMADgZYJHy5GV/yYzbMlcnOwq89F22jkhSbIE2FdTr5PH8Nw7ckxGxNd00R9uL3gZqKQpwBUQN0sucg=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",

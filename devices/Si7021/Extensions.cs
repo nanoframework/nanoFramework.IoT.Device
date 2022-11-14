@@ -6,7 +6,7 @@ namespace Iot.Device.Si7021
     /// <summary>
     /// Extensions for <see cref="Si7021"/> class.
     /// </summary>
-    static public class Extensions
+    public static class Extensions
     {
         /// <summary>
         /// Returns a string representation of a byte array. Hexadecimal formated.
@@ -15,9 +15,9 @@ namespace Iot.Device.Si7021
         /// <returns>A <see cref="string"/> with the representation of <paramref name="array"/>.</returns>
         public static string AsText(this byte[] array)
         {
-            string output = "";
+            string output = string.Empty;
 
-            foreach(var item in array)
+            foreach (var item in array)
             {
                 output += item.ToString("X2");
             }
