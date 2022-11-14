@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Drawing": {
         "type": "Direct",
-        "requested": "[1.2.141, 1.2.141]",
-        "resolved": "1.2.141",
-        "contentHash": "Ss2B7n1oXDX93ti6dHG/ZelfNa0MuRufwMGFd+KUbqQ3TZ4rXqxLAijARwlF/ClSAz0pPfPeaRazDvVohchEgw=="
+        "requested": "[1.2.158, 1.2.158]",
+        "resolved": "1.2.158",
+        "contentHash": "a/UrSnKqJR8m2ds5/l2AIOdJSACxVHxrki+QppEoDDXrG4EZeHJMjtzmb3cVG0dw8zOdTM65SRMXOAoVhn8zYQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
