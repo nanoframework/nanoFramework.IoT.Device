@@ -25,7 +25,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.149\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.158\lib\Iot.Device.ShiftRegister.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
