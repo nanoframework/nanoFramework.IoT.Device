@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetVerticalScrollArea command
+    /// Represents SetVerticalScrollArea command.
     /// </summary>
     public class SetVerticalScrollArea : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetVerticalScrollArea" /> class.
         /// This command consists of 3 consecutive bytes to set up the vertical scroll area.
         /// For the continuous vertical scroll function(command 29/2Ah), the number of rows
         /// that in vertical scrolling can be set smaller or equal to the MUX ratio.
@@ -34,17 +35,17 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0xA3;
 
         /// <summary>
-        /// Top fixed area rows with a range of 0-63.
+        /// Gets top fixed area rows with a range of 0-63.
         /// </summary>
         public byte TopFixedAreaRows { get; }
 
         /// <summary>
-        /// Scroll area rows with a range of 0-127.
+        /// Gets scroll area rows with a range of 0-127.
         /// </summary>
         public byte ScrollAreaRows { get; }
 

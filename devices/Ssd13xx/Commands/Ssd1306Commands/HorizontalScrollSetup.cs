@@ -4,41 +4,42 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Frame frequency type
+    /// Frame frequency type.
     /// </summary>
     public enum FrameFrequencyType
     {
-        /// <summary>Frames2</summary>
+        /// <summary>Frames 2.</summary>
         Frames2 = 0x07,
 
-        /// <summary>Frames3</summary>
+        /// <summary>Frames 3.</summary>
         Frames3 = 0x04,
 
-        /// <summary>Frames4</summary>
+        /// <summary>Frames 4.</summary>
         Frames4 = 0x05,
 
-        /// <summary>Frames5</summary>
+        /// <summary>Frames 5.</summary>
         Frames5 = 0x00,
 
-        /// <summary>Frames25</summary>
+        /// <summary>Frames 25.</summary>
         Frames25 = 0x06,
 
-        /// <summary>Frames64</summary>
+        /// <summary>Frames 64.</summary>
         Frames64 = 0x01,
 
-        /// <summary>Frames128</summary>
+        /// <summary>Frames 128.</summary>
         Frames128 = 0x02,
 
-        /// <summary>Frames256</summary>
+        /// <summary>Frames 256.</summary>
         Frames256 = 0x03
     }
 
     /// <summary>
-    /// Represents HorizontalScrollSetup command
+    /// Represents HorizontalScrollSetup command.
     /// </summary>
     public class HorizontalScrollSetup : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="HorizontalScrollSetup" /> class.
         /// This command consists of consecutive bytes to set up the horizontal scroll parameters
         /// and determines the scrolling start page, end page and scrolling speed.
         /// </summary>
@@ -59,27 +60,27 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => (byte)ScrollType;
 
         /// <summary>
-        /// Horizontal scroll type.
+        /// Gets Horizontal scroll type.
         /// </summary>
         public HorizontalScrollType ScrollType { get; }
 
         /// <summary>
-        /// Start page address with a range of 0-7.
+        /// Gets start page address with a range of 0-7.
         /// </summary>
         public PageAddress StartPageAddress { get; }
 
         /// <summary>
-        /// Frame frequency type with a range of 0-7.
+        /// Gets frame frequency type with a range of 0-7.
         /// </summary>
         public FrameFrequencyType FrameFrequencyType { get; }
 
         /// <summary>
-        /// End page address with a range of 0-7.
+        /// Gets end page address with a range of 0-7.
         /// </summary>
         public PageAddress EndPageAddress { get; }
 
@@ -93,7 +94,7 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// Horizontal scroll type
+        /// Horizontal scroll type.
         /// </summary>
         public enum HorizontalScrollType
         {

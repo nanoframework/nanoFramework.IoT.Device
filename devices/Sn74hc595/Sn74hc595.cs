@@ -9,7 +9,7 @@ namespace Iot.Device.Multiplexing
 {
     /// <summary>
     /// SN74HC595 8-Bit Shift Registers With 3-State Output Registers
-    /// Supports SPI and GPIO control
+    /// Supports SPI and GPIO control.
     /// </summary>
     public class Sn74hc595 : ShiftRegister
     {
@@ -17,7 +17,7 @@ namespace Iot.Device.Multiplexing
         private Sn74hc595PinMapping _pinMapping;
 
         /// <summary>
-        /// Initialize a new shift register connected through GPIO.
+        /// Initializes a new instance of the <see cref="Sn74hc595" /> class.
         /// </summary>
         /// <param name="pinMapping">The pin mapping to use by the binding.</param>
         /// <param name="bitLength">Bit length of register, including chained registers. Default is 8 bits.</param>
@@ -34,6 +34,7 @@ namespace Iot.Device.Multiplexing
         /// Clear storage register.
         /// Requires use of GPIO controller.
         /// </summary>
+        /// <param name="latch">Is latch enabled.</param>
         public void ClearStorage(bool latch = true)
         {
             if (GpioController is null || _pinMapping.SrClr == 0)

@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetLowerColumnStartAddressForPageAddressingMode command
+    /// Represents SetLowerColumnStartAddressForPageAddressingMode command.
     /// </summary>
     public class SetLowerColumnStartAddressForPageAddressingMode : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetLowerColumnStartAddressForPageAddressingMode" /> class.
         /// This command specifies the lower nibble of the 8-bit column start address for the display
         /// data RAM under Page Addressing Mode. The column address will be incremented by each data access.
         /// This command is only for page addressing mode.
@@ -27,12 +28,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => LowerColumnStartAddress;
 
         /// <summary>
-        /// Lower column start address with a range of 0-15.
+        /// Gets lower column start address with a range of 0-15.
         /// </summary>
         public byte LowerColumnStartAddress { get; }
 

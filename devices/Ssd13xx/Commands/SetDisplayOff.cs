@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Represents SetDisplayOff command
+    /// Represents SetDisplayOff command.
     /// </summary>
     public class SetDisplayOff : ISharedCommand
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetDisplayOff" /> class.
         /// This command turns the OLED panel display off.
         /// </summary>
         public SetDisplayOff()

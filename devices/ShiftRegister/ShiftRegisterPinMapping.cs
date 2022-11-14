@@ -16,10 +16,13 @@ namespace Iot.Device.Multiplexing
         // Datasheet: http://archive.fairchip.com/pdf/MACROBLOCK/MBI5168.pdf
         // Datasheet: http://archive.fairchip.com/pdf/MACROBLOCK/MBI5027.pdf
 
-        /// <param name="serialData">Serial data in pin</param>
-        /// <param name="clock">Shift register clock pin</param>
-        /// <param name="latchEnable">Register clock pin (latch)</param>
-        /// <param name="outputEnable">Output enable pin</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShiftRegisterPinMapping" /> struct.
+        /// </summary>
+        /// <param name="serialData">Serial data in pin.</param>
+        /// <param name="clock">Shift register clock pin.</param>
+        /// <param name="latchEnable">Register clock pin (latch).</param>
+        /// <param name="outputEnable">Output enable pin.</param>
         public ShiftRegisterPinMapping(int serialData, int clock, int latchEnable, int outputEnable = -1)
         {
             SerialDataInput = serialData;
@@ -27,7 +30,7 @@ namespace Iot.Device.Multiplexing
             LatchEnable = latchEnable;
             OutputEnable = outputEnable;
         }
-
+        
         /// <summary>
         /// Minimal pin bindings for ShiftRegister.
         /// Output enable should be wired to ground when using Minimal mapping.
@@ -51,22 +54,22 @@ namespace Iot.Device.Multiplexing
         */
 
         /// <summary>
-        /// Serial data in pin.
+        /// Gets or sets serial data in pin.
         /// </summary>
         public int SerialDataInput { get; set; }
 
         /// <summary>
-        /// Storage register clock pin.
+        /// Gets or sets storage register clock pin.
         /// </summary>
         public int Clock { get; set; }
 
         /// <summary>
-        /// Shift register clock pin.
+        /// Gets or sets shift register clock pin.
         /// </summary>
         public int LatchEnable { get; set; }
 
         /// <summary>
-        /// Output enable pin.
+        /// Gets or sets output enable pin.
         /// </summary>
         public int OutputEnable { get; set; }
     }

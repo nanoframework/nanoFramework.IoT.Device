@@ -1,7 +1,5 @@
-﻿//
-// Copyright (c) 2017 The nanoFramework project contributors
+﻿// Copyright (c) 2017 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 
@@ -13,10 +11,10 @@ namespace Iot.Device.Sps30.Entities
     public class VersionInformation
     {
         /// <summary>
-        /// Parsed response after requesting version information.
+        /// Initializes a new instance of the <see cref="VersionInformation" /> class.
         /// </summary>
-        /// <param name="data">Raw data from the response</param>
-        /// <exception cref="ArgumentOutOfRangeException">When less than 7 bytes are provided</exception>
+        /// <param name="data">Raw data from the response.</param>
+        /// <exception cref="ArgumentOutOfRangeException">When less than 7 bytes are provided.</exception>
         public VersionInformation(byte[] data)
         {
             if (data.Length < 7)
@@ -25,35 +23,36 @@ namespace Iot.Device.Sps30.Entities
             }
 
             FirmwareVersion = new Version(data[0], data[1]);
+            
             // data[2] is reserved
             HardwareRevision = data[3];
+
             // data[4] is reserved
             ShdlcProtocolVersion = new Version(data[5], data[6]);
         }
 
         /// <summary>
-        /// Firmware version
+        /// Gets firmware version.
         /// </summary>
         public Version FirmwareVersion { get; private set; }
 
         /// <summary>
-        /// Hardware rivision
+        /// Gets hardware rivision.
         /// </summary>
         public int HardwareRevision { get; private set; }
 
         /// <summary>
-        /// SHDLC protocol version
+        /// Gets SHDLC protocol version.
         /// </summary>
         public Version ShdlcProtocolVersion { get; private set; }
 
         /// <summary>
         /// Conveniently show the version information in a single string.
         /// </summary>
-        /// <returns>The version information as a convenient string</returns>
+        /// <returns>The version information as a convenient string.</returns>
         public override string ToString()
         {
             return $"Firmware V{FirmwareVersion}, Hardware V{HardwareRevision}, SHDLC V{ShdlcProtocolVersion}";
         }
-
     }
 }
