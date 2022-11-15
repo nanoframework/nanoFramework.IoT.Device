@@ -4,7 +4,7 @@
     <id>nanoFramework.Iot.Device.ePaper</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.ePaper</title>
-    <authors>nanoFramework</authors>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
