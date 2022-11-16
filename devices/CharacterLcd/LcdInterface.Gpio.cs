@@ -181,7 +181,7 @@ namespace Iot.Device.CharacterLcd
                 _controller.Write(_rsPin, PinValue.High);
                 for (int i = 0; i < values.Length; i++)
                 {
-                    SendCommand(values[i]);
+                    SendByte(values[i]);
                 }
             }
 
@@ -190,7 +190,7 @@ namespace Iot.Device.CharacterLcd
                 _controller.Write(_rsPin, PinValue.High);
                 for (int i = 0; i < values.Length; i++)
                 {
-                    SendCommand((byte)values[i]);
+                    SendByte((byte)values[i]);
                 }
             }
 
