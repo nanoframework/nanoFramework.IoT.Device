@@ -37,6 +37,7 @@
     <Compile Include="Buffers\FrameBufferBase.cs" />
     <Compile Include="Buffers\IFrameBuffer.cs" />
     <Compile Include="Drivers\IePaperDisplay.cs" />
+    <Compile Include="Drivers\Ssd1680\Ssd1680.cs" />
     <Compile Include="Drivers\Ssd1681\Command.cs" />
     <Compile Include="Drivers\Ssd1681\Ram.cs" />
     <Compile Include="Drivers\Ssd1681\RefreshMode.cs" />
