@@ -4,13 +4,11 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
-using System.Drawing;
 using System.Threading;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681;
 using Iot.Device.EPaper.Enums;
-using Iot.Device.EPaper.Primitives;
 
 namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
 {
@@ -28,9 +26,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
         /// The supported <see cref="System.Device.Spi.SpiMode"/> by the SSD1681 controller.
         /// </summary>
         public const SpiMode SpiMode = System.Device.Spi.SpiMode.Mode0;
-
-        private const int PagesPerFrame = 2;
-        private const int FirstPageIndex = 0;
 
         private FrameBuffer2BitPerPixel _frameBuffer2bpp;
 
@@ -80,6 +75,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
             }
         }
 
+        /// <inheritdoc/>
+        protected override int PagesPerFrame { get; } = 2;
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -122,41 +120,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
 
             // Do a full refresh of the display
             PerformFullRefresh();
-        }
-
-        /// <inheritdoc/>
-        public override void Clear(bool triggerPageRefresh = false)
-        {
-            SetFrameBufferPage(FirstPageIndex);
-
-            // paging is enabled, flush as per number of pages to ensure all display RAM is cleared
-            if (PagedFrameDrawEnabled)
-            {
-                do
-                {
-                    Flush();
-
-                    // sleep for 20ms to allow other threads to have their chance to execute
-                    Thread.Sleep(20);
-
-                    CurrentFrameBufferPage++;
-                    CalculateFrameBufferPageBounds();
-                }
-                while (CurrentFrameBufferPage < PagesPerFrame);
-
-                CurrentFrameBufferPage = FirstPageIndex;
-                CalculateFrameBufferPageBounds();
-            }
-            else
-            {
-                // paging is disabled, so the internal frame covers the entire display frame. we only need to flush once.
-                Flush();
-            }
-
-            if (triggerPageRefresh)
-            {
-                PerformFullRefresh();
-            }
         }
 
         /// <inheritdoc/>
@@ -291,35 +254,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
 
             SendCommand((byte)Command.WriteRedRAM);
             SendData(buffer);
-        }
-
-        /// <inheritdoc/>
-        public override void BeginFrameDraw()
-        {
-            // make sure we start from the first page with clear buffers
-            SetFrameBufferPage(FirstPageIndex);
-        }
-
-        /// <inheritdoc/>
-        public override bool NextFramePage()
-        {
-            if (PagedFrameDrawEnabled && CurrentFrameBufferPage < PagesPerFrame - 1)
-            {
-                Flush();
-
-                CurrentFrameBufferPage++;
-                SetFrameBufferPage(CurrentFrameBufferPage);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <inheritdoc />
-        public override void EndFrameDraw()
-        {
-            Flush();
         }
 
         /// <inheritdoc />

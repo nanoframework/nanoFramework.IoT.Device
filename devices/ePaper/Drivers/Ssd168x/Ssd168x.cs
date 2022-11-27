@@ -25,31 +25,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         private GpioPin _busyPin;
         private GpioPin _dataCommandPin;
 
-        /// <summary>
-        /// Gets or sets the current frame buffer page index.
-        /// </summary>
-        protected int CurrentFrameBufferPage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current frame buffer page lower bounds.
-        /// </summary>
-        protected int CurrentFrameBufferPageLowerBound { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current frame buffer page upper bounds.
-        /// </summary>
-        protected int CurrentFrameBufferPageUpperBound { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current frame buffer start X-Position.
-        /// </summary>
-        protected int CurrentFrameBufferStartXPosition { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current frame buffer start Y-Position.
-        /// </summary>
-        protected int CurrentFrameBufferStartYPosition { get; set; }
-
         private bool _shouldDispose;
         private bool _disposed;
 
@@ -125,8 +100,47 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// </summary>
         public virtual PowerState PowerState { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the current frame buffer page index.
+        /// </summary>
+        protected int CurrentFrameBufferPage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current frame buffer page lower bounds.
+        /// </summary>
+        protected int CurrentFrameBufferPageLowerBound { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current frame buffer page upper bounds.
+        /// </summary>
+        protected int CurrentFrameBufferPageUpperBound { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current frame buffer start X-Position.
+        /// </summary>
+        protected int CurrentFrameBufferStartXPosition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current frame buffer start Y-Position.
+        /// </summary>
+        protected int CurrentFrameBufferStartYPosition { get; set; }
+
+        /// <summary>
+        /// Gets the number of pages in every frame buffer.
+        /// </summary>
+        protected abstract int PagesPerFrame { get; }
+
+        /// <summary>
+        /// Gets the index of the first frame page.
+        /// </summary>
+        protected int FirstPageIndex { get; } = 0;
+
         /// <inheritdoc/>
-        public abstract void BeginFrameDraw();
+        public virtual void BeginFrameDraw()
+        {
+            // make sure we start from the first page with clear buffers
+            SetFrameBufferPage(FirstPageIndex);
+        }
 
         /// <summary>
         /// Calculates the upper and lower bounds of the current frame buffer page.
@@ -144,13 +158,48 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public abstract void Clear(bool triggerPageRefresh = false);
+        public virtual void Clear(bool triggerPageRefresh = false)
+        {
+            SetFrameBufferPage(FirstPageIndex);
+
+            // paging is enabled, flush as per number of pages to ensure all display RAM is cleared
+            if (PagedFrameDrawEnabled)
+            {
+                do
+                {
+                    Flush();
+
+                    // sleep for 20ms to allow other threads to have their chance to execute
+                    Thread.Sleep(20);
+
+                    CurrentFrameBufferPage++;
+                    CalculateFrameBufferPageBounds();
+                }
+                while (CurrentFrameBufferPage < PagesPerFrame);
+
+                CurrentFrameBufferPage = FirstPageIndex;
+                CalculateFrameBufferPageBounds();
+            }
+            else
+            {
+                // paging is disabled, so the internal frame covers the entire display frame. we only need to flush once.
+                Flush();
+            }
+
+            if (triggerPageRefresh)
+            {
+                PerformFullRefresh();
+            }
+        }
 
         /// <inheritdoc/>
         public abstract void DrawPixel(int x, int y, Color color);
 
-        /// <inheritdoc/>
-        public abstract void EndFrameDraw();
+        /// <inheritdoc />
+        public virtual void EndFrameDraw()
+        {
+            Flush();
+        }
 
         /// <summary>
         /// Snaps the provided coordinates to the lower bounds of the display if out of allowed range.
@@ -245,7 +294,20 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         protected abstract void InitializeFrameBuffer(int width, int height, bool enableFramePaging);
 
         /// <inheritdoc/>
-        public abstract bool NextFramePage();
+        public virtual bool NextFramePage()
+        {
+            if (PagedFrameDrawEnabled && CurrentFrameBufferPage < PagesPerFrame - 1)
+            {
+                Flush();
+
+                CurrentFrameBufferPage++;
+                SetFrameBufferPage(CurrentFrameBufferPage);
+
+                return true;
+            }
+
+            return false;
+        }
 
         /// <inheritdoc/>
         public virtual void PerformFullRefresh()
