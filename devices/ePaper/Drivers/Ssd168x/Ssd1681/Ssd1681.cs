@@ -11,7 +11,7 @@ using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Primitives;
 
-namespace Iot.Device.EPaper.Drivers.Ssd1681
+namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681
 {
     /// <summary>
     /// A driver class for the SSD1681 display controller.

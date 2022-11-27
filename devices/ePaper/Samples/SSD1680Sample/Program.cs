@@ -7,8 +7,8 @@ using System.Drawing;
 
 using Iot.Device.EPaper;
 using Iot.Device.EPaper.Buffers;
-using Iot.Device.EPaper.Drivers.Ssd1680;
-using Iot.Device.EPaper.Drivers.Ssd1681;
+using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680;
+using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681;
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Fonts;
 using Iot.Device.EPaper.Primitives;
