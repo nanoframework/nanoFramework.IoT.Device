@@ -4,7 +4,7 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
-using System.Threading;
+using System.Drawing;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681;
@@ -44,9 +44,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
         /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
         /// <remarks>
-        /// For a 200x200 SSD1681 display, a full Frame requires about 5KB of RAM ((200 * 200) / 8). SSD1681 has 2 RAMs for B/W and Red pixel.
-        /// This means to have a full frame in memory, you need about 10KB of RAM. If you can't guarantee 10KB to be available to the driver
-        /// then enable paging by setting <paramref name="enableFramePaging"/> to true. A page uses about 2KB (1KB for B/W and 1KB for Red).
+        /// For a 176x296 SSD1680 display, a full Frame requires about 6KB of RAM ((176 * 296) / 8). SSD1680 has 2 RAMs for B/W and Red pixel.
+        /// This means to have a full frame in memory, you need about 12KB of RAM. If you can't guarantee 12KB to be available to the driver
+        /// then enable paging by setting <paramref name="enableFramePaging"/> to true. A page uses about 3KB (1.5KB for B/W and 1.5KB for Red).
         /// </remarks>
         public Ssd1680(
             SpiDevice spiDevice,
@@ -76,7 +76,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680
         }
 
         /// <inheritdoc/>
-        protected override int PagesPerFrame { get; } = 2;
+        protected override int PagesPerFrame { get; } = 4;
 
         /// <inheritdoc />
         public override void Initialize()

@@ -401,7 +401,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             EnforceBounds(ref x, ref y);
 
             SendCommand((byte)Command.SetRAMAddressCounterX);
-            SendData((byte)(x / 8)); // each row can have up to 200 points each represented by a single bit.
+            SendData((byte)(x / 8));
 
             SendCommand((byte)Command.SetRAMAddressCounterY);
             SendData((byte)y);
