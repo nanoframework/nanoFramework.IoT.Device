@@ -77,7 +77,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681
         }
 
         /// <inheritdoc/>
-        protected override int PagesPerFrame { get; } = 4;
+        protected override int PagesPerFrame { get; } = 5;
 
         /// <summary>
         /// Perform the required initialization steps to set up the display.
