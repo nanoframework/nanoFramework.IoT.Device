@@ -8,12 +8,12 @@ using System.Drawing;
 using Iot.Device.EPaper;
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers.Ssd168x;
-using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681;
+using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1680;
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Fonts;
 using Iot.Device.EPaper.Primitives;
 
-namespace SSD1681Sample
+namespace SSD1680Sample
 {
     public class Program
     {
@@ -52,8 +52,8 @@ namespace SSD1681Sample
             // Setup SPI connection with the display
             var spiConnectionSettings = new SpiConnectionSettings(busId: 1, chipSelectLine: 22)
             {
-                ClockFrequency = Ssd1681.SpiClockFrequency,
-                Mode = Ssd1681.SpiMode,
+                ClockFrequency = Ssd1680.SpiClockFrequency,
+                Mode = Ssd1680.SpiMode,
                 ChipSelectLineActiveState = false,
                 Configuration = SpiBusConfiguration.HalfDuplex,
                 DataFlow = DataFlow.MsbFirst
@@ -62,15 +62,15 @@ namespace SSD1681Sample
             using var spiDevice = new SpiDevice(spiConnectionSettings);
 
             // Create an instance of the display driver
-            using var display = new Ssd1681(
+            using var display = new Ssd1680(
                 spiDevice,
                 resetPin: 15,
                 busyPin: 4,
                 dataCommandPin: 5,
-                width: 200,
-                height: 200,
+                width: 160,
+                height: 152,
                 gpioController,
-                enableFramePaging: true,
+                enableFramePaging: false,
                 shouldDispose: false);
 
             // Power on the display and initialize it
@@ -100,45 +100,16 @@ namespace SSD1681Sample
             display.BeginFrameDraw();
             do
             {
-                // the icons are known to be contained within a single frame page
-                // this speeds up generating the frame as we don't process the bitmaps multiple times
-                if (display.FrameBuffer.IsRangeWithinFrameBuffer(new Point(0, 0), new Point(199, 36)))
-                {
-                    gfx.DrawBitmap(cloudBitmap, new Point(8, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(44, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(80, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(116, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(150, 4), rotate: false);
-                }
+                gfx.DrawBitmap(cloudBitmap, new Point(16, 4), rotate: false);
+                gfx.DrawText("Cloudy & Windy.", font, x: 16, y: 38, Color.Black);
+                gfx.DrawText("Temp. ", font, x: 16, y: 52, Color.Black);
+                gfx.DrawText("24c", font, x: 64, y: 52, Color.Red);
 
-                // this text spans 2 frame pages
-                gfx.DrawText("20c", font, 12, 34, Color.Black);
-                gfx.DrawText("24c", font, 46, 34, Color.Red);
-                gfx.DrawText("21c", font, 88, 34, Color.Black);
-                gfx.DrawText("22c", font, 120, 34, Color.Red);
-                gfx.DrawText("22c", font, 154, 34, Color.Black);
+                gfx.DrawLine(startX: 0, startY: 68, endX: 160, endY: 68, Color.Black);
 
-                // the days of week are known to be within a single frame page
-                // this speeds up generating the frame as we don't process the text multiple times
-                if (display.FrameBuffer.IsRangeWithinFrameBuffer(new Point(0, 50), new Point(199, 70)))
-                {
-                    gfx.DrawText("Mon", font, 12, 50, Color.Black);
-                    gfx.DrawText("Tue", font, 46, 50, Color.Red);
-                    gfx.DrawText("Wed", font, 88, 50, Color.Black);
-                    gfx.DrawText("Thu", font, 120, 50, Color.Red);
-                    gfx.DrawText("Fri", font, 154, 50, Color.Black);
-
-                    gfx.DrawLine(0, 65, 200, 65, Color.Black);
-                }
-
-                gfx.DrawText("Daily Chuck Norris Joke:", font, 4, 75, Color.Black);
-                gfx.DrawText("Chuck Norris's email is   gmail@chucknorris.com", font, 4, 90, Color.Red);
-
-                gfx.DrawLine(0, 120, 200, 120, Color.Black);
-
-                gfx.DrawBitmap(musicBitmap, new Point(84, 125), rotate: false);
-                gfx.DrawText("Now Playing:", font, 8, 160, Color.Black);
-                gfx.DrawText("Megadeth - Dystopia", font, 16, 175, Color.Black);
+                gfx.DrawBitmap(musicBitmap, new Point(x: 64, y: 72));
+                gfx.DrawText("Now Playing:", font, x: 16, y: 108, Color.Black);
+                gfx.DrawText("Megadeth - Lying in State", font, x: 16, y: 122, Color.Red);
 
             } while (display.NextFramePage());
             display.EndFrameDraw();

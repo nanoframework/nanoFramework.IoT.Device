@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.EPaper.Drivers.Ssd1681
+namespace Iot.Device.EPaper.Drivers.Ssd168x
 {
     /// <summary>
     /// Defines the SSD1681 RAMs. This is required to write image data to the correct RAM and control the color output.
