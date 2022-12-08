@@ -1,4 +1,9 @@
-﻿using nanoFramework.Hardware.Esp32;
+﻿//
+// Copyright (c) 2017 The nanoFramework project contributors
+// See LICENSE file in the project root for full license information.
+//
+
+using nanoFramework.Hardware.Esp32;
 using System;
 using System.Buffers.Binary;
 using System.Device.I2c;
