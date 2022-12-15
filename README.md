@@ -128,17 +128,17 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 
 ## Folder Structure
 
-[/src/devices/](/src/devices/) contains devices that were cleaned up and should be working out of the box.
+[/src/devices/](./src/devices/) contains devices that were cleaned up and should be working out of the box.
 
-[/src/devices_generated/](/src/devices_generated/) contains devices that were automatically ported from [the NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices). They might not work or compile at this point, but are a good starting point if you need support for one of the devices contained here but missing from the [/src/devices/](/src/devices/) folder.
+[/src/devices_generated/](./src/devices_generated/) contains devices that were automatically ported from [the NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices). They might not work or compile at this point, but are a good starting point if you need support for one of the devices contained here but missing from the [/src/devices/](./src/devices/) folder.
 
-[/src/nanoFramework.IoT.Device.CodeConverter](/src/nanoFramework.IoT.Device.CodeConverter) contains the tool used to generate the devices from [the NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices).
+[/src/nanoFramework.IoT.Device.CodeConverter](./src/nanoFramework.IoT.Device.CodeConverter) contains the tool used to generate the devices from [the NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices).
 
-Other folders in [/src](/src) contain nanoFramework projects that you can reference when creating/updating devices with provide functionality such as a StopWatach, a DelayHelper, BinaryPrimitives or various System.Device.Model Attributes.
+Other folders in [/src](./src) contain nanoFramework projects that you can reference when creating/updating devices with provide functionality such as a StopWatach, a DelayHelper, BinaryPrimitives or various System.Device.Model Attributes.
 
 ## Contributing
 
-**Important:** If you plan to clean up the code in [/src/devices_generated/](/src/devices_generated/), please copy your work to the [/src/devices/](/src/devices/) folder as the content of [/src/devices_generated/](/src/devices_generated/) will be overwritten by the generator tool.
+**Important:** If you plan to clean up the code in [/src/devices_generated/](./src/devices_generated/), please copy your work to the [/src/devices/](./src/devices/) folder as the content of [/src/devices_generated/](/src/devices_generated/) will be overwritten by the generator tool.
 
 Please check the [detail list of tips and tricks](./tips-trick.md) to facilitate the migration. The generator takes care of some heavy lifting but there is always some manual adjustments needed.
 
