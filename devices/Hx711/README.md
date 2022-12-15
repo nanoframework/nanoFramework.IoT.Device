@@ -2,7 +2,7 @@
 
 This is a library to interact with the Hx711 ADC. This is conveniently assembled and package in the M5Stack WEIGHT module.
 
-![weight_05.png](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hx711/weight_05.png)
+![weight_05.png](./weight_05.png)
 
 ## Documentation
 
@@ -100,4 +100,4 @@ The library exposes several configurations. Please explore the documentation her
 
 The development of this library was kindly sponsored by [greenYng](https://greenyng.com/)!
 
-![greenyng-logo.png](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hx711/greenyng-logo.png)
+![greenyng-logo.png](./greenyng-logo.png)

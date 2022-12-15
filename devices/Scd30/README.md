@@ -2,7 +2,7 @@
 
 This is a library to interact with the Sensirion SCD30 Sensor Module for CO2, humidity and temperature. Currently, only the Modbus interface is implemented. The SCD30 also supports I2C, but requires clock stretching, which is currently not supported in the .NET Nanoframework ESP32 implementation.
 
-![Scd30-image.png](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Scd30/Scd30-image.png)
+![Scd30-image.png](./Scd30-image.png)
 
 ## Documentation
 

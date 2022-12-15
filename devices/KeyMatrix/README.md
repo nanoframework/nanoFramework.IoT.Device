@@ -8,7 +8,7 @@ An M×N key matrix driver.
 
 These key matrices look like this:
 
-![4x4-Keypad](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/KeyMatrix/4x4-Keypad-1.jpg)
+![4x4-Keypad](./4x4-Keypad-1.jpg)
 
 This is a 4×4 matrix. And [here is the schematic](https://www.waveshare.com/w/upload/e/ea/4x4-Keypad-Schematic.pdf)
 
@@ -83,8 +83,8 @@ This shows how to connect the matrix.
 
 ## Connection using on-board GPIO
 
-![Connection using MCU](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/KeyMatrix/4x4kb.png)
+![Connection using MCU](./4x4kb.png)
 
 ## Connection using MCP23017
 
-![Connection using a MCP23017](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/KeyMatrix/4x4kb_via_mcp23017.png)
+![Connection using a MCP23017](./4x4kb_via_mcp23017.png)

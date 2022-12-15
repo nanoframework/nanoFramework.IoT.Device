@@ -59,11 +59,11 @@ You will find a full example on how to extract raw data without calibration on t
 
 If no calibration is performed, you will get a raw data cloud which looks like this:
 
-![raw data](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ak8963/rawcalib.png)
+![raw data](./rawcalib.png)
 
 Running the calibration properly require to **move the sensor in all the possible directions** while performing the calibration. You should consider running it with enough samples, at least few hundreds. The default is set to 1000. While moving the sensor in all direction, far from any magnetic field, you will get the previous clouds. Calculating the average from those clouds and subtracting it from the read value will give you a centered cloud of data like this:
 
-![raw data](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ak8963/corrcalib.png)
+![raw data](./corrcalib.png)
 
 To create those cloud point graphs, every cloud is a coordinate of X-Y, Y-Z and Z-X.
 
