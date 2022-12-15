@@ -61,6 +61,6 @@ static void Main(string[] args)
 }
 ```
 
-![schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/DcMotor/dcmotor_bb.png)
+![schematics](./dcmotor_bb.png)
 
-![BiDirectional Pin schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/DcMotor/DCMotor2pinWithBiDirectionalPin_bb.png)
+![BiDirectional Pin schematics](./DCMotor2pinWithBiDirectionalPin_bb.png)
