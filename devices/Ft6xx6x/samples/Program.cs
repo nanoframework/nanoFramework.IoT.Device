@@ -32,6 +32,7 @@ Debug.WriteLine($"Proximity sensing: {sensor.ProximitySensingEnabled}");
 if(!gpio.IsPinOpen(39))
 {
     gpio.OpenPin(39, PinMode.Input);
+}
 // This will enable an event on GPIO39 on falling edge when the screen if touched
 gpio.RegisterCallbackForPinValueChangedEvent(39, PinEventTypes.Falling, TouchInterrupCallback);
 
