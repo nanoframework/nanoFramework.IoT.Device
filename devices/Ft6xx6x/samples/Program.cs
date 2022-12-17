@@ -28,6 +28,9 @@ Debug.WriteLine($"Time to enter monitor: {sensor.MonitorModeDelaySeconds} second
 Debug.WriteLine($"Monitor mode: {sensor.MonitorModeEnabled}");
 Debug.WriteLine($"Proximity sensing: {sensor.ProximitySensingEnabled}");
 
+// Must test if the pin is already open, because actually it is already opened in M5Core2.InitializeScreen
+if(!gpio.IsPinOpen(39))
+    gpio.OpenPin(39, PinMode.Input);
 // This will enable an event on GPIO39 on falling edge when the screen if touched
 gpio.RegisterCallbackForPinValueChangedEvent(39, PinEventTypes.Falling, TouchInterrupCallback);
 
