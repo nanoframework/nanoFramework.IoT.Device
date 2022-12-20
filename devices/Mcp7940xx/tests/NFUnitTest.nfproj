@@ -60,12 +60,12 @@
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.TestFramework, Version=2.1.52.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.TestFramework.2.1.52\lib\nanoFramework.TestFramework.dll</HintPath>
+    <Reference Include="nanoFramework.TestFramework, Version=2.1.53.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.TestFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.TestFramework.2.1.52\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.1.22.60169, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -87,9 +87,9 @@
     <PropertyGroup>
       <WarningText>Update the Import path in nfproj to the correct nanoFramework.TestFramework NuGet package folder.</WarningText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets')" />
-  <Import Project="..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.2.1.52\build\nanoFramework.TestFramework.targets')" />
+  <Import Project="..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" />
+  <Import Project="..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets" Condition="Exists('..\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" />
 </Project>
