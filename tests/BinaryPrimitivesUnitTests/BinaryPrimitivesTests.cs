@@ -228,58 +228,58 @@ namespace BinaryPrimitivesUnitTests
             });
         }
 
-        [TestMethod]
-        public void TestBeSingle()
-        {
-            // Arrange
-            float floatValue = 3.141593f;
-            byte[] floatValueInBe = new byte[] { 0x40, 0x49, 0x0F, 0xDC };
-            float floatFromBytes;
-            double doubleFromBytes;
-            float floatValueFromBitConverter;
-            SpanByte floatToBytes = new byte[4];
+        //[TestMethod]
+        //public void TestBeSingle()
+        //{
+        //    // Arrange
+        //    float floatValue = 3.141593f;
+        //    byte[] floatValueInBe = new byte[] { 0x40, 0x49, 0x0F, 0xDC };
+        //    float floatFromBytes;
+        //    double doubleFromBytes;
+        //    float floatValueFromBitConverter;
+        //    SpanByte floatToBytes = new byte[4];
 
-            // Act
-            floatFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
-            doubleFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
-            BinaryPrimitives.WriteSingleBigEndian(floatToBytes, floatValue);
-            floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(new byte[] { floatValueInBe[3], floatValueInBe[2], floatValueInBe[1], floatValueInBe[0] }, 0) : BitConverter.ToSingle(floatValueInBe, 0);
+        //    // Act
+        //    floatFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
+        //    doubleFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
+        //    BinaryPrimitives.WriteSingleBigEndian(floatToBytes, floatValue);
+        //    floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(new byte[] { floatValueInBe[3], floatValueInBe[2], floatValueInBe[1], floatValueInBe[0] }, 0) : BitConverter.ToSingle(floatValueInBe, 0);
 
-            // Assert
-            Assert.Equal(floatValueInBe[0], floatToBytes[0]);
-            Assert.Equal(floatValueInBe[1], floatToBytes[1]);
-            Assert.Equal(floatValueInBe[2], floatToBytes[2]);
-            Assert.Equal(floatValueInBe[3], floatToBytes[3]);
-            Assert.Equal(floatValue, floatFromBytes);
-            Assert.Equal(floatValue, floatValueFromBitConverter);
-            Assert.Equal(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
-        }
+        //    // Assert
+        //    Assert.Equal(floatValueInBe[0], floatToBytes[0]);
+        //    Assert.Equal(floatValueInBe[1], floatToBytes[1]);
+        //    Assert.Equal(floatValueInBe[2], floatToBytes[2]);
+        //    Assert.Equal(floatValueInBe[3], floatToBytes[3]);
+        //    Assert.Equal(floatValue, floatFromBytes);
+        //    Assert.Equal(floatValue, floatValueFromBitConverter);
+        //    Assert.Equal(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
+        //}
 
-        [TestMethod]
-        public void TestLeSingle()
-        {
-            // Arrange
-            float floatValue = 3.141593f;
-            byte[] floatValueInLe = new byte[] { 0xDC, 0x0F, 0x49, 0x40 };
-            float floatFromBytes;
-            double doubleFromBytes;
-            float floatValueFromBitConverter;
-            SpanByte floatToBytes = new byte[4];
+        //[TestMethod]
+        //public void TestLeSingle()
+        //{
+        //    // Arrange
+        //    float floatValue = 3.141593f;
+        //    byte[] floatValueInLe = new byte[] { 0xDC, 0x0F, 0x49, 0x40 };
+        //    float floatFromBytes;
+        //    double doubleFromBytes;
+        //    float floatValueFromBitConverter;
+        //    SpanByte floatToBytes = new byte[4];
 
-            // Act
-            floatFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
-            doubleFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
-            BinaryPrimitives.WriteSingleLittleEndian(floatToBytes, floatValue);
-            floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(floatValueInLe, 0) : BitConverter.ToSingle(new byte[] { floatValueInLe[3], floatValueInLe[2], floatValueInLe[1], floatValueInLe[0] }, 0);
+        //    // Act
+        //    floatFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
+        //    doubleFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
+        //    BinaryPrimitives.WriteSingleLittleEndian(floatToBytes, floatValue);
+        //    floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(floatValueInLe, 0) : BitConverter.ToSingle(new byte[] { floatValueInLe[3], floatValueInLe[2], floatValueInLe[1], floatValueInLe[0] }, 0);
 
-            // Assert
-            Assert.Equal(floatValueInLe[0], floatToBytes[0]);
-            Assert.Equal(floatValueInLe[1], floatToBytes[1]);
-            Assert.Equal(floatValueInLe[2], floatToBytes[2]);
-            Assert.Equal(floatValueInLe[3], floatToBytes[3]);
-            Assert.Equal(floatValue, floatFromBytes);
-            Assert.Equal(floatValue, floatValueFromBitConverter);
-            Assert.Equal(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
-        }
+        //    // Assert
+        //    Assert.Equal(floatValueInLe[0], floatToBytes[0]);
+        //    Assert.Equal(floatValueInLe[1], floatToBytes[1]);
+        //    Assert.Equal(floatValueInLe[2], floatToBytes[2]);
+        //    Assert.Equal(floatValueInLe[3], floatToBytes[3]);
+        //    Assert.Equal(floatValue, floatFromBytes);
+        //    Assert.Equal(floatValue, floatValueFromBitConverter);
+        //    Assert.Equal(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
+        //}
     }
 }
