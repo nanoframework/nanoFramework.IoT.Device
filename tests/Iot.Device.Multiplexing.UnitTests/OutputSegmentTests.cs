@@ -16,7 +16,7 @@ namespace Iot.Device.Multiplexing
         public void SegmentLength()
         {
             VirtualOutputSegment segment = new(2);
-            Assert.True(segment.Length == 2);
+            Assert.IsTrue(segment.Length == 2);
         }
 
         [TestMethod]
@@ -28,7 +28,7 @@ namespace Iot.Device.Multiplexing
                 segment.Write(i, i % 2);
             }
 
-            Assert.True(
+            Assert.IsTrue(
                 segment[0] == 0 &&
                 segment[1] == 1 &&
                 segment[2] == 0 &&
@@ -41,7 +41,7 @@ namespace Iot.Device.Multiplexing
             VirtualOutputSegment segment = new(8);
             segment.Write(0b_1001_0110);
 
-            Assert.True(
+            Assert.IsTrue(
                 segment[0] == 0 &&
                 segment[1] == 1 &&
                 segment[2] == 1 &&
@@ -63,7 +63,7 @@ namespace Iot.Device.Multiplexing
             }
 
 
-            Assert.True(
+            Assert.IsTrue(
                 segment[0] == 0 &&
                 segment[1] == 1 &&
                 segment[2] == 0 &&
@@ -87,12 +87,12 @@ namespace Iot.Device.Multiplexing
         {
             VirtualOutputSegment segment = new(8);
             segment.Write(255);
-            Assert.True(segment[3] == 1);
+            Assert.IsTrue(segment[3] == 1);
             segment.TurnOffAll();
 
             for (int i = 0; i < segment.Length; i++)
             {
-                Assert.True(segment[i] == 0);
+                Assert.IsTrue(segment[i] == 0);
             }
         }
     }
