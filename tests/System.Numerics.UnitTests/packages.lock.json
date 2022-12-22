@@ -8,6 +8,12 @@
         "resolved": "1.12.0",
         "contentHash": "qQrFNXmJiStMC4VXk5cVMOJp23/qlT9FW5i9i+igwQVwraQTtvpkam8yK1hj992jqrbjoCIFZP4Hw9E8H0pB7w=="
       },
+      "nanoFramework.System.Math": {
+        "type": "Direct",
+        "requested": "[1.5.18, 1.5.18]",
+        "resolved": "1.5.18",
+        "contentHash": "xsqy3+1gblbeItzVuwDeJlFezy5N8V7CHPATsW1941kZiCNqv0cgcjmurFHSvjkQ3JZUPj5y7dLdcWtusds18Q=="
+      },
       "nanoFramework.TestFramework": {
         "type": "Direct",
         "requested": "[2.1.53, 2.1.53]",

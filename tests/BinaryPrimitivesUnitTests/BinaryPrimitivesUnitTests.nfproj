@@ -21,6 +21,8 @@
     <IsTestProject>true</IsTestProject>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <PropertyGroup>
@@ -31,20 +33,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.10.5.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\src\BinaryPrimitives\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.TestFramework, Version=1.0.154.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.154\lib\nanoFramework.TestFramework.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    <Reference Include="nanoFramework.TestFramework">
+      <HintPath>..\..\src\BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.UnitTestLauncher, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.154\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>True</SpecificVersion>
+    <Reference Include="nanoFramework.UnitTestLauncher">
+      <HintPath>..\..\src\BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -52,12 +48,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DummyBinaryPrimitivesProject\DummyBinaryPrimitivesProject.nfproj" />
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- MANUAL UPDATE HERE -->
-  <Import Project="..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.154\build\nanoFramework.TestFramework.targets" Condition="Exists('..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.154\build\nanoFramework.TestFramework.targets')" />
+  <Import Project="..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets" Condition="Exists('..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>
       <ProjectConfigurationsDeclaredAsItems />
@@ -67,6 +63,6 @@
     <PropertyGroup>
       <WarningText>Update the Import path in nfproj to the correct nanoFramework.TestFramework NuGet package folder.</WarningText>
     </PropertyGroup>
-    <Warning Condition="!Exists('..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.1.0.154\build\nanoFramework.TestFramework.targets')" Text="'$(WarningText)'" />
+    <Warning Condition="!Exists('..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" Text="'$(WarningText)'" />
   </Target>
 </Project>
