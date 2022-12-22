@@ -131,12 +131,11 @@ namespace Iot.Device.Ssd13xx
         /// Initializes a new instance of the <see cref="Ssd13xx" /> class.
         /// </summary>
         /// <param name="i2cDevice">I2C device used to communicate with the device.</param>
+        /// <param name="resolution">Screen resolution to use for device init.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
-        /// <param name="resolution">Screen resolution to use for device init.</param>
         /// <param name="gpio">Gpio Controller.</param>
         /// <param name="shouldDispose">True to dispose the GpioController.</param>
-
         public Ssd13xx(
             I2cDevice i2cDevice,
             DisplayResolution resolution = DisplayResolution.OLED128x64,
@@ -144,7 +143,6 @@ namespace Iot.Device.Ssd13xx
             GpioController gpio = null,
             bool shouldDispose = true)
         {
-
             _resetPin = resetPin;
             if (resetPin >= 0)
             {
@@ -640,7 +638,7 @@ namespace Iot.Device.Ssd13xx
                 }
 
                 _i2cDevice?.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
 
                 _disposed = true;
             }
