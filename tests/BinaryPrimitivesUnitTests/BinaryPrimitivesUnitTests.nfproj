@@ -25,32 +25,30 @@
     <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
-  <PropertyGroup>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)\nano.runsettings</RunSettingsFilePath>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="BinaryPrimitivesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>..\..\src\BinaryPrimitives\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.12.0.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.TestFramework">
-      <HintPath>..\..\src\BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.TestFramework.dll</HintPath>
+      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher">
-      <HintPath>..\..\src\BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nano.runsettings" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.lock.json" />
   </ItemGroup>
-  <Import Project="..\..\src\BinaryPrimitives\BinaryPrimitives.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\devices\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
+  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- MANUAL UPDATE HERE -->
   <Import Project="..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets" Condition="Exists('..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.53\build\nanoFramework.TestFramework.targets')" />
