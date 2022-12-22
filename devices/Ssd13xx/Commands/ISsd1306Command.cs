@@ -4,7 +4,7 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Interface for all Ssd1306 commands
+    /// Interface for all Ssd1306 commands.
     /// </summary>
     public interface ISsd1306Command : ICommand
     {

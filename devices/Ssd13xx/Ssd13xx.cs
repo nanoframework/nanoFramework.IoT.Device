@@ -11,36 +11,114 @@ using Iot.Device.Ssd13xx.Commands.Ssd1306Commands;
 namespace Iot.Device.Ssd13xx
 {
     /// <summary>
-    /// Represents base class for SSD13xx OLED displays
+    /// Represents base class for SSD13xx OLED displays.
     /// </summary>
     public abstract class Ssd13xx : IDisposable
     {
+        /// <summary>
+        /// Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
+        /// First byte is the command byte 0x00.
+        /// </summary>
+        private readonly byte[] _oled128x64Init =
+        {
+            0x00,       // is command
+            0xae,       // turn display off
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x3f, // set multiplex ratio 0x00-0x3f        
+            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x1, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x12, // set COM pins HW configuration
+            0x81, 0xcf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
+        };
+
+        /// <summary>
+        /// Sequence of bytes that should be sent to a 128x32 OLED display to setup the device.
+        /// First byte is the command byte 0x00.
+        /// </summary>
+        private readonly byte[] _oled128x32Init =
+        {
+            0x00,       // is command
+            0xae,       // turn display off
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
+            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x1, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x02, // set COM pins HW configuration
+            0x81, 0x8f, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
+        };
+
+        /// <summary>
+        /// Sequence of bytes that should be sent to a 96x16 OLED display to setup the device.
+        /// First byte is the command byte 0x00.
+        /// </summary>
+        private readonly byte[] _oled96x16Init =
+        {
+            0x00,       // is command
+            0xae,       // turn display off
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
+            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x1, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x02, // set COM pins HW configuration
+            0x81, 0xaf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
+        };
+
         // Multiply of screen resolution plus single command byte.
         private byte[] _genericBuffer;
         private byte[] _pageData;
 
         /// <summary>
-        /// Underlying I2C device
+        /// Gets or sets underlying I2C device.
         /// </summary>
-        protected I2cDevice _i2cDevice;
+        protected I2cDevice _i2cDevice { get; set; }
 
         /// <summary>
-        /// Screen Resolution Width in Pixels
+        /// Gets or sets Screen Resolution Width in Pixels.
         /// </summary>
         public int Width { get; set; }
 
         /// <summary>
-        /// Screen Resolution Height in Pixels
+        /// Gets or sets Screen Resolution Height in Pixels.
         /// </summary>
         public int Height { get; set; }
 
         /// <summary>
-        /// Screen data pages.
+        /// Gets or sets Screen data pages.
         /// </summary>
         public byte Pages { get; set; }
 
         /// <summary>
-        /// Font to use.
+        /// Gets or sets Font to use.
         /// </summary>
         public IFont Font { get; set; }
 
@@ -50,9 +128,9 @@ namespace Iot.Device.Ssd13xx
         private bool _disposed = false;
 
         /// <summary>
-        /// Constructs instance of Ssd13xx
+        /// Initializes a new instance of the <see cref="Ssd13xx" /> class.
         /// </summary>
-        /// <param name="i2cDevice">I2C device used to communicate with the device</param>
+        /// <param name="i2cDevice">I2C device used to communicate with the device.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
         /// <param name="resolution">Screen resolution to use for device init.</param>
@@ -98,7 +176,9 @@ namespace Iot.Device.Ssd13xx
             }
 
             Pages = (byte)(Height / 8);
-            _genericBuffer = new byte[Pages * Width + 4];//adding 4 bytes make it SSH1106 IC OLED compatible
+
+            // Adding 4 bytes make it SSH1106 IC OLED compatible
+            _genericBuffer = new byte[(Pages * Width) + 4];
             _pageData = new byte[Width + 1];
         }
 
@@ -142,17 +222,17 @@ namespace Iot.Device.Ssd13xx
         /// Acquires span of specific length pointing to the command buffer.
         /// If length of the command buffer is too small it will be reallocated.
         /// </summary>
-        /// <param name="length">Requested length</param>
-        /// <returns>Span of bytes pointing to the command buffer</returns>
+        /// <param name="length">Requested length.</param>
+        /// <returns>Span of bytes pointing to the command buffer.</returns>
         protected SpanByte SliceGenericBuffer(int length) => SliceGenericBuffer(0, length);
 
         /// <summary>
         /// Acquires span of specific length at specific position in command buffer.
         /// If length of the command buffer is too small it will be reallocated.
         /// </summary>
-        /// <param name="start">Start index of the requested span</param>
-        /// <param name="length">Requested length</param>
-        /// <returns>Span of bytes pointing to the command buffer</returns>
+        /// <param name="start">Start index of the requested span.</param>
+        /// <param name="length">Requested length.</param>
+        /// <returns>Span of bytes pointing to the command buffer.</returns>
         protected SpanByte SliceGenericBuffer(int start, int length)
         {
             if (_genericBuffer.Length < length)
@@ -170,8 +250,8 @@ namespace Iot.Device.Ssd13xx
         /// Y and height must be byte aligned because buffer will 
         /// be copied without any logical operations on existing content.
         /// </summary>
-        /// <param name="x">The x coordinate on the screen.</param>
-        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="x">The X coordinate on the screen.</param>
+        /// <param name="y">The Y coordinate on the screen.</param>
         /// <param name="width">Width of buffer content in pixels.</param>
         /// <param name="height">Height of buffer content in pixels.</param>
         /// <param name="buffer">Data to copy. Buffer size must be equal to height * width / 8.</param>
@@ -181,6 +261,7 @@ namespace Iot.Device.Ssd13xx
             {
                 throw new ArgumentException("Y must be aligned to byte boundary.");
             }
+
             if ((height % 8) != 0)
             {
                 throw new ArgumentException("Height must be aligned to byte boundary.");
@@ -192,7 +273,7 @@ namespace Iot.Device.Ssd13xx
                 throw new ArgumentException("Width and height do not match the bitmap size.");
             }
 
-            var genericBufferIdx = y / 8 * Width + x;
+            var genericBufferIdx = ((y / 8) * Width) + x;
             var srcIdx = 0;
             for (int i = 0; i < dataHeightInBytes; i++)
             {
@@ -207,8 +288,8 @@ namespace Iot.Device.Ssd13xx
         /// Y and height must be byte aligned because bytes will 
         /// be written without any logical operations on existing content.
         /// </summary>
-        /// <param name="x">The x coordinate on the screen.</param>
-        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="x">The X coordinate on the screen.</param>
+        /// <param name="y">The Y coordinate on the screen.</param>
         /// <param name="width">Width of area in pixels.</param>
         /// <param name="height">Height of area in pixels.</param>
         public void ClearDirectAligned(int x, int y, int width, int height)
@@ -217,13 +298,14 @@ namespace Iot.Device.Ssd13xx
             {
                 throw new ArgumentException("Y must be aligned to byte boundary.");
             }
+
             if ((height % 8) != 0)
             {
                 throw new ArgumentException("Height must be aligned to byte boundary.");
             }
 
             var dataHeightInBytes = height / 8;
-            var genericBufferIdx = y / 8 * Width + x;
+            var genericBufferIdx = ((y / 8) * Width) + x;
             for (int i = 0; i < dataHeightInBytes; i++)
             {
                 Array.Clear(_genericBuffer, genericBufferIdx, width);
@@ -234,8 +316,8 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Draws a pixel on the screen.
         /// </summary>
-        /// <param name="x">The x coordinate on the screen.</param>
-        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="x">The X coordinate on the screen.</param>
+        /// <param name="y">The Y coordinate on the screen.</param>
         /// <param name="inverted">Indicates if color to be used turn the pixel on, or leave off.</param>
         public void DrawPixel(int x, int y, bool inverted = true)
         {
@@ -245,7 +327,7 @@ namespace Iot.Device.Ssd13xx
             }
 
             // x specifies the column
-            int idx = x + (y / 8) * Width;
+            int idx = x + ((y / 8) * Width);
 
             if (inverted)
             {
@@ -260,8 +342,8 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Draws a horizontal line.
         /// </summary>
-        /// <param name="x0">x coordinate starting of the line.</param>
-        /// <param name="y0">y coordinate starting of line.</param>
+        /// <param name="x0">X coordinate starting of the line.</param>
+        /// <param name="y0">Y coordinate starting of line.</param>
         /// <param name="length">Line length.</param>
         /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
         public void DrawHorizontalLine(int x0, int y0, int length, bool inverted = true)
@@ -275,8 +357,8 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Draws a vertical line.
         /// </summary>
-        /// <param name="x0">x coordinate starting of the line.</param>
-        /// <param name="y0">y coordinate starting of line.</param>
+        /// <param name="x0">X coordinate starting of the line.</param>
+        /// <param name="y0">Y coordinate starting of line.</param>
         /// <param name="length">Line length.</param>
         /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
         public void DrawVerticalLine(int x0, int y0, int length, bool inverted = true)
@@ -290,10 +372,10 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Draws a rectangle that is solid/filled.
         /// </summary>
-        /// <param name="x0">x coordinate starting of the top left.</param>
-        /// <param name="y0">y coordinate starting of the top left.</param>
+        /// <param name="x0">X coordinate starting of the top left.</param>
+        /// <param name="y0">Y coordinate starting of the top left.</param>
         /// <param name="width">Width of rectabgle in pixels.</param>
-        /// <param name="height">Height of rectangle in pixels</param>
+        /// <param name="height">Height of rectangle in pixels.</param>
         /// <param name="inverted">Turn the pixel on (true) or off (false).</param>
         public void DrawFilledRectangle(int x0, int y0, int width, int height, bool inverted = true)
         {
@@ -306,8 +388,8 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Displays the  1 bit bit map.
         /// </summary>
-        /// <param name="x">The x coordinate on the screen.</param>
-        /// <param name="y">The y coordinate on the screen.</param>
+        /// <param name="x">The X coordinate on the screen.</param>
+        /// <param name="y">The Y coordinate on the screen.</param>
         /// <param name="width">Width in bytes.</param>
         /// <param name="height">Height in bytes.</param>
         /// <param name="bitmap">Bitmap to display.</param>
@@ -336,12 +418,14 @@ namespace Iot.Device.Ssd13xx
                         }
                         else
                         {
-                            DrawFilledRectangle((x + (8 * xA) + pixel) * size, (y / size + yO) * size, size, size, (b & mask) > 0);
+                            DrawFilledRectangle((x + (8 * xA) + pixel) * size, ((y / size) + yO) * size, size, size, (b & mask) > 0);
                         }
+
                         mask <<= 1;
                     }
 
-                    mask = 0x01;//reset each time to support SSH1106 OLEDs
+                    // Reset each time to support SSH1106 OLEDs
+                    mask = 0x01;
                 }
             }
         }
@@ -353,18 +437,20 @@ namespace Iot.Device.Ssd13xx
         /// <param name="y">The y pixel-coordinate on the screen.</param>
         /// <param name="str">Text string to display.</param>
         /// <param name="size">Text size, normal = 1, larger use 2,3, 4 etc.</param>
-		/// <param name="center">Indicates if text should be centered if possible.</param>
+        /// <param name="center">Indicates if text should be centered if possible.</param>
         /// <seealso cref="Write"/>
         public void DrawString(int x, int y, string str, byte size = 1, bool center = false)
         {
             if (center && str != null)
             {
-                int padSize = (Width / size / Font.Width - str.Length) / 2;
+                int padSize = (((Width / size) / Font.Width) - str.Length) / 2;
                 if (padSize > 0)
+                {
                     str = str.PadLeft(str.Length + padSize);
+                }
             }
 
-            byte[] bitMap = (Font.Width > 8 ? this.GetDoubleTextBytes(str) : this.GetTextBytes(str));
+            byte[] bitMap = Font.Width > 8 ? this.GetDoubleTextBytes(str) : this.GetTextBytes(str);
 
             this.DrawBitmap(x, y, bitMap.Length / Font.Height, Font.Height, bitMap, size);
         }
@@ -376,7 +462,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="y">The y text-coordinate on the screen.</param>
         /// <param name="str">Text string to display.</param>
         /// <param name="size">Text size, normal = 1, larger use 2,3, 4 etc.</param>
-		/// <param name="center">Indicates if text should be centered if possible.</param>
+        /// <param name="center">Indicates if text should be centered if possible.</param>
         /// <seealso cref="DrawString"/>
         public void Write(int x, int y, string str, byte size = 1, bool center = false)
         {
@@ -384,11 +470,11 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// Get the bytes to be drawn on the screen for text, from the font
+        /// Get the bytes to be drawn on the screen for text, from the font.
         /// </summary>
         /// <param name="text">Strint to be shown on the screen.</param>
         /// <returns>The bytes to be drawn using current font.</returns>
-        byte[] GetTextBytes(string text)
+        private byte[] GetTextBytes(string text)
         {
             byte[] bitMap;
 
@@ -402,7 +488,7 @@ namespace Iot.Device.Ssd13xx
 
                     for (int segment = 0; segment < Font.Height; segment++)
                     {
-                        bitMap[i + (segment * text.Length)] = (segment < characterMap.Length ? characterMap[segment] : byte.MinValue);
+                        bitMap[i + (segment * text.Length)] = segment < characterMap.Length ? characterMap[segment] : byte.MinValue;
                     }
                 }
             }
@@ -416,37 +502,37 @@ namespace Iot.Device.Ssd13xx
 
         /// <summary>
         /// Get the bytes to be drawn on the screen for double-byte text, from the font
-        /// e.g. 功夫, カンフー, 쿵후
+        /// e.g. 功夫, カンフー, 쿵후.
         /// </summary>
         /// <param name="text">Strint to be shown on the screen.</param>
         /// <returns>The bytes to be drawn using current font.</returns>
-        byte[] GetDoubleTextBytes(string text)
+        private byte[] GetDoubleTextBytes(string text)
         {
             byte[] bitMap;
 
             if (Font.Width == 16)
             {
-                var charCount = (text.Length * 2);
+                var charCount = text.Length * 2;
                 bitMap = new byte[charCount * Font.Height * Font.Width / 16];
 
                 byte[] characterMap = null;
                 for (int i = 0; i < charCount; i++)
                 {
-                    var even = (i == 0 || i % 2 == 0);
+                    var even = i == 0 || i % 2 == 0;
                     if (even)
                     {
                         characterMap = Font[text[i / 2]];
                     }
 
                     var list = new System.Collections.ArrayList();
-                    for (int idx = (even ? 0 : 1); idx < characterMap.Length; idx += 2)
+                    for (int idx = even ? 0 : 1; idx < characterMap.Length; idx += 2)
                     {
                         list.Add(characterMap[idx]);
                     }
 
                     for (int segment = 0; segment < Font.Height; segment++)
                     {
-                        bitMap[i + (segment * charCount)] = (segment < list.Count ? (byte)list[segment] : byte.MinValue);
+                        bitMap[i + (segment * charCount)] = segment < list.Count ? (byte)list[segment] : byte.MinValue;
                     }
                 }
             }
@@ -485,98 +571,22 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
-        /// First byte is the command byte 0x00.
-        /// </summary>
-        private readonly byte[] _oled128x64Init =
-        {
-            0x00,       // is command
-            0xae,       // turn display off
-            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
-            0xa8, 0x3f, // set multiplex ratio 0x00-0x3f        
-            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
-            0x40 | 0x0, // set display start line 0x40-0x7F
-            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
-            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
-            0xa0 | 0x1, // set segment re-map
-            0xc8,       // set com output scan direction
-            0xda, 0x12, // set COM pins HW configuration
-            0x81, 0xcf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
-            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
-            0xdb,       // set VCOMH deselect level
-            0x40,       // set display start line
-            0xa4,       // set display ON
-            0xa6,       // set normal display
-            0xaf        // turn display on 0xaf
-        };
-
-        /// <summary>
-		/// Sequence of bytes that should be sent to a 128x32 OLED display to setup the device.
-		/// First byte is the command byte 0x00.
-		/// </summary>
-		private readonly byte[] _oled128x32Init =
-        {
-            0x00,       // is command
-            0xae,       // turn display off
-            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
-            0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
-            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
-            0x40 | 0x0, // set display start line 0x40-0x7F
-            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
-            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
-            0xa0 | 0x1, // set segment re-map
-            0xc8,       // set com output scan direction
-            0xda, 0x02, // set COM pins HW configuration
-            0x81, 0x8f, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
-            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
-            0xdb,       // set VCOMH deselect level
-            0x40,       // set display start line
-            0xa4,       // set display ON
-            0xa6,       // set normal display
-            0xaf        // turn display on 0xaf
-        };
-
-        /// <summary>
-		/// Sequence of bytes that should be sent to a 96x16 OLED display to setup the device.
-		///	First byte is the command byte 0x00.
-		/// </summary>
-		private readonly byte[] _oled96x16Init =
-        {
-            0x00,       // is command
-            0xae,       // turn display off
-            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
-            0xa8, 0x1f, // set multiplex ratio 0x00-0x1f        
-            0xd3, 0x00, // set display offset 0x00-0x3f, no offset = 0x00
-            0x40 | 0x0, // set display start line 0x40-0x7F
-            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
-            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
-            0xa0 | 0x1, // set segment re-map
-            0xc8,       // set com output scan direction
-            0xda, 0x02, // set COM pins HW configuration
-            0x81, 0xaf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
-            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
-            0xdb,       // set VCOMH deselect level
-            0x40,       // set display start line
-            0xa4,       // set display ON
-            0xa6,       // set normal display
-            0xaf        // turn display on 0xaf
-        };
-
-        /// <summary>
         /// Resolution specifier.
         /// </summary>
         public enum DisplayResolution
         {
             /// <summary>
-            /// Option for 128x64 OLED
+            /// Option for 128x64 OLED.
             /// </summary>
             OLED128x64,
+
             /// <summary>
-            /// Option for 128x32 OLED
+            /// Option for 128x32 OLED.
             /// </summary>
             OLED128x32,
+
             /// <summary>
-            /// Option for 96x16 OLED
+            /// Option for 96x16 OLED.
             /// </summary>
             OLED96x16
         }
@@ -636,9 +646,7 @@ namespace Iot.Device.Ssd13xx
             }
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

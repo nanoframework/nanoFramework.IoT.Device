@@ -11,16 +11,16 @@ using UnitsNet;
 namespace Iot.Device.Shtc3
 {
     /// <summary>
-    /// Temperature and humidity sensor Shtc3
+    /// Temperature and humidity sensor Shtc3.
     /// </summary>
     public class Shtc3 : IDisposable
     {
         // CRC const
-        private const byte CRC_POLYNOMIAL = 0x31;
-        private const byte CRC_INIT = 0xFF;
+        private const byte CrcPolunomial = 0x31;
+        private const byte CrcInit = 0xFF;
 
         /// <summary>
-        /// Default I2C address
+        /// Default I2C address.
         /// </summary>
         public const int DefaultI2cAddress = 0x70;
 
@@ -44,7 +44,7 @@ namespace Iot.Device.Shtc3
         private Status _status;
 
         /// <summary>
-        /// Set Shtc3 state
+        /// Set Shtc3 state.
         /// </summary>
         internal Status Status => _status;
 
@@ -76,23 +76,23 @@ namespace Iot.Device.Shtc3
 
         /// <summary>
         /// Check the match to the SHTC3 product code
-        /// Table 15  while bits 11 and 5:0 contain the SHTC3 specific product code 0b_0000_1000_0000_0111
+        /// Table 15  while bits 11 and 5:0 contain the SHTC3 specific product code 0b_0000_1000_0000_0111.
         /// </summary>
-        /// <param name="id">Id to test</param>
-        /// <returns></returns>
+        /// <param name="id">Id to test.</param>
+        /// <returns>Is the ID valid.</returns>
         private static bool ValidShtc3Id(int id) =>
-            (id & 0b_0000_1000_0011_1111) == 0b_0000_1000_0000_0111;
+            (id & 0b0000_1000_0011_1111) == 0b0000_1000_0000_0111;
 
         /// <summary>
-        /// 8-bit CRC Checksum Calculation
+        /// 8-bit CRC Checksum Calculation.
         /// </summary>
-        /// <param name="data">Raw Data</param>
-        /// <param name="crc8">Raw CRC8</param>
-        /// <returns>Checksum is true or false</returns>
+        /// <param name="data">Raw Data.</param>
+        /// <param name="crc8">Raw CRC8.</param>
+        /// <returns>Checksum is true or false.</returns>
         private static bool CheckCrc8(SpanByte data, byte crc8)
         {
             // Details in the Datasheet table 16 P9
-            byte crc = CRC_INIT;
+            byte crc = CrcInit;
             for (int i = 0; i < 2; i++)
             {
                 crc ^= data[i];
@@ -101,7 +101,7 @@ namespace Iot.Device.Shtc3
                 {
                     if ((crc & 0x80) != 0)
                     {
-                        crc = (byte)((crc << 1) ^ CRC_POLYNOMIAL);
+                        crc = (byte)((crc << 1) ^ CrcPolunomial);
                     }
                     else
                     {
@@ -114,13 +114,13 @@ namespace Iot.Device.Shtc3
         }
 
         /// <summary>
-        /// Try read Temperature and Humidity
+        /// Try read Temperature and Humidity.
         /// </summary>
-        /// <param name="temperature">Temperature returned by sensor</param>
-        /// <param name="relativeHumidity">Humidity return by sensor</param>
-        /// <param name="lowPower">"true" measured in low power mode, "false"(default) measured in normal power mode</param>
-        /// <param name="clockStretching">"true" allow clock stretching, "false" (default) without clock stretching</param>
-        /// <returns>True if operation was successful</returns>
+        /// <param name="temperature">Temperature returned by sensor.</param>
+        /// <param name="relativeHumidity">Humidity return by sensor.</param>
+        /// <param name="lowPower">True measured in low power mode, "false"(default) measured in normal power mode.</param>
+        /// <param name="clockStretching">True allow clock stretching, "false" (default) without clock stretching.</param>
+        /// <returns>True if operation was successful.</returns>
         public bool TryGetTemperatureAndHumidity(out Temperature temperature, out RelativeHumidity relativeHumidity, bool lowPower = false, bool clockStretching = false)
         {
             if (Status == Status.Sleep)
@@ -138,7 +138,7 @@ namespace Iot.Device.Shtc3
             }
 
             // Details in the Datasheet P9
-            temperature = Temperature.FromDegreesCelsius(Math.Round((st * 175 / 65536.0 - 45) * 10) / 10.0);
+            temperature = Temperature.FromDegreesCelsius(Math.Round(((st * 175 / 65536.0) - 45) * 10) / 10.0);
             relativeHumidity = RelativeHumidity.FromPercent(srh * 100.0 / 65536.0);
             return true;
         }
@@ -171,7 +171,7 @@ namespace Iot.Device.Shtc3
         }
 
         /// <summary>
-        /// SHTC3 Sleep
+        /// SHTC3 Sleep.
         /// </summary>
         public void Sleep()
         {
@@ -184,12 +184,12 @@ namespace Iot.Device.Shtc3
         }
 
         /// <summary>
-        /// SHTC3 Wakeup
+        /// SHTC3 Wakeup.
         /// </summary>
         private void Wakeup() => Write(Register.SHTC3_WAKEUP);
 
         /// <summary>
-        /// SHTC3 Soft Reset
+        /// SHTC3 Soft Reset.
         /// </summary>
         public void Reset()
         {
@@ -202,13 +202,14 @@ namespace Iot.Device.Shtc3
         }
 
         /// <summary>
-        /// Sensor Id
+        /// Sensor Id.
         /// </summary>
         public int Id => _id = _id == int.MinValue ? ReadId() : _id;
 
         /// <summary>
-        /// Read Id
+        /// Read Id.
         /// </summary>
+        /// <returns>Id number.</returns>
         private int ReadId()
         {
             if (Status == Status.Sleep)
@@ -250,13 +251,11 @@ namespace Iot.Device.Shtc3
             DelayHelper.DelayMilliseconds(20, false);
         }
 
-        /// <summary>
-        /// Cleanup
-        /// </summary>
+        /// <inheritdoc/>
         public void Dispose()
         {
             _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            _i2cDevice = null;
         }
     }
 }

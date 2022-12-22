@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetComPinsHardwareConfiguration command
+    /// Represents SetComPinsHardwareConfiguration command.
     /// </summary>
     public class SetComPinsHardwareConfiguration : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetComPinsHardwareConfiguration" /> class.
         /// This command sets the COM signals pin configuration to match the OLED panel hardware layout.
         /// </summary>
         /// <param name="alternativeComPinConfiguration">Alternative COM pin configuration.</param>
@@ -25,12 +26,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         public byte Id => 0xDA;
 
         /// <summary>
-        /// Alternative COM pin configuration.
+        /// Gets a value indicating whether alternative COM pin configuration is enabled.
         /// </summary>
         public bool AlternativeComPinConfiguration { get; }
 
         /// <summary>
-        /// Enable left/right remap.
+        /// Gets a value indicating whether enable left/right remap.
         /// </summary>
         public bool EnableLeftRightRemap { get; }
 

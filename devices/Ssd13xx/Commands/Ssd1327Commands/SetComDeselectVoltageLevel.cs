@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetComDeselectVoltageLevel command
+    /// Represents SetComDeselectVoltageLevel command.
     /// </summary>
     public class SetComDeselectVoltageLevel : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetComDeselectVoltageLevel" /> class.
         /// This command sets the high voltage level of common pins, Vcomh.
         /// </summary>
         /// <param name="level">COM deselect voltage level.</param>
@@ -30,7 +31,7 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         public byte Id => 0xBE;
 
         /// <summary>
-        /// COM deselect voltage level.
+        /// Gets COM deselect voltage level.
         /// </summary>
         public byte Level { get; }
 

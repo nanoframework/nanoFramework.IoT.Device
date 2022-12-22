@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Ak8963</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Ak8963</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -16,16 +15,16 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Ak8963 for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET IoT Core binding Ak8963 for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.Ak8963 assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ak8963</tags>
+    <tags>nanoFramework C# csharp netmf netnf iot ak8963</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Numerics" version="1.1.113.2032" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.158" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.158" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.144" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="nanoFramework.System.Math" version="1.5.18" />
     </dependencies>
   </metadata>
   <files>

@@ -6,12 +6,13 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetRowAddress command
+    /// Represents SetRowAddress command.
     /// </summary>
     public class SetRowAddress : ISsd1327Command
     {
         /// <summary>
-        /// Set row address
+        /// Initializes a new instance of the <see cref="SetRowAddress" /> class.
+        /// Set row address.
         /// </summary>
         /// <param name="startAddress">Column start address with a range of 0-95.</param>
         /// <param name="endAddress">Column end address with a range of 0-95.</param>
@@ -37,12 +38,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         public byte Id => 0x75;
 
         /// <summary>
-        /// Row start address.
+        /// Gets or sets row start address.
         /// </summary>
         public byte StartAddress { get; set; }
 
         /// <summary>
-        /// Row end address.
+        /// Gets or sets row end address.
         /// </summary>
         public byte EndAddress { get; set; }
 

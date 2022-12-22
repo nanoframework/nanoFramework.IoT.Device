@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetMemoryAddressingMode command
+    /// Represents SetMemoryAddressingMode command.
     /// </summary>
     public class SetMemoryAddressingMode : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetMemoryAddressingMode" /> class.
         /// This command sets the memory addressing mode.
         /// </summary>
         /// <param name="memoryAddressingMode">Memory addressing mode.</param>
@@ -18,12 +19,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0x20;
 
         /// <summary>
-        /// Memory addressing mode.
+        /// Gets memory addressing mode.
         /// </summary>
         public AddressingMode MemoryAddressingMode { get; }
 
@@ -37,7 +38,7 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// Addressing mode
+        /// Addressing mode.
         /// </summary>
         public enum AddressingMode
         {

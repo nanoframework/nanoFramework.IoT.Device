@@ -35,7 +35,7 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Converts oversampling to needed measurement cycles for that oversampling.
         /// </summary>
-        protected static readonly int[] s_osToMeasCycles = { 0, 7, 9, 14, 23, 44 };
+        protected static readonly int[] OsToMeasCycles = { 0, 7, 9, 14, 23, 44 };
 
         private Bmx280FilteringMode _filteringMode;
         private StandbyTime _standbyTime;
@@ -61,13 +61,13 @@ namespace Iot.Device.Bmxx80
             set
             {
                 byte current = Read8BitsFromRegister((byte)Bmx280Register.CONFIG);
-                current = (byte)((current & 0b_1110_0011) | (byte)value << 2);
+                current = (byte)((current & 0b1110_0011) | (byte)value << 2);
 
                 SpanByte command = new[]
                 {
                     (byte)Bmx280Register.CONFIG, current
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _filteringMode = value;
             }
         }
@@ -83,13 +83,13 @@ namespace Iot.Device.Bmxx80
             set
             {
                 byte current = Read8BitsFromRegister((byte)Bmx280Register.CONFIG);
-                current = (byte)((current & 0b_0001_1111) | (byte)value << 5);
+                current = (byte)((current & 0b0001_1111) | (byte)value << 5);
 
                 SpanByte command = new[]
                 {
                     (byte)Bmx280Register.CONFIG, current
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _standbyTime = value;
             }
         }
@@ -113,12 +113,11 @@ namespace Iot.Device.Bmxx80
         [Property("PowerMode")]
         public Bmx280PowerMode ReadPowerMode()
         {
-            byte read = Read8BitsFromRegister(_controlRegister);
+            byte read = Read8BitsFromRegister(ControlRegister);
 
             // Get only the power mode bits.
-            var powerMode = (byte)(read & 0b_0000_0011);
+            var powerMode = (byte)(read & 0b0000_0011);
 
-            //if (Enum.IsDefined(typeof(Bmx280PowerMode), powerMode) == false)
             if ((powerMode != (byte)Bmx280PowerMode.Forced) &&
                 (powerMode != (byte)Bmx280PowerMode.Normal) &&
                 (powerMode != (byte)Bmx280PowerMode.Sleep))
@@ -143,7 +142,7 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Calculates the altitude in meters from the specified sea-level pressure(in hPa).
         /// </summary>
-        /// <param name="seaLevelPressure">Sea-level pressure</param>
+        /// <param name="seaLevelPressure">Sea-level pressure.</param>
         /// <param name="altitude">
         /// Contains the calculated metres above sea-level if the <see cref="Bmxx80Base.PressureSampling"/> was not set to <see cref="Sampling.Skipped"/>.
         /// Contains <see cref="double.NaN"/> otherwise.
@@ -205,22 +204,22 @@ namespace Iot.Device.Bmxx80
         }
 
         /// <summary>
-        /// Sets the power mode to the given mode
+        /// Sets the power mode to the given mode.
         /// </summary>
         /// <param name="powerMode">The <see cref="Bmx280PowerMode"/> to set.</param>
         [Property("PowerMode")]
         public void SetPowerMode(Bmx280PowerMode powerMode)
         {
-            byte read = Read8BitsFromRegister(_controlRegister);
+            byte read = Read8BitsFromRegister(ControlRegister);
 
             // Clear last 2 bits.
-            var cleared = (byte)(read & 0b_1111_1100);
+            var cleared = (byte)(read & 0b1111_1100);
 
             SpanByte command = new[]
             {
-                _controlRegister, (byte)(cleared | (byte)powerMode)
+                ControlRegister, (byte)(cleared | (byte)powerMode)
             };
-            _i2cDevice.Write(command);
+            I2cDevice.Write(command);
         }
 
         /// <summary>
@@ -228,7 +227,7 @@ namespace Iot.Device.Bmxx80
         /// </summary>
         /// <returns>The time it takes for the chip to read data in milliseconds rounded up.</returns>
         [Property("MeasurementDuration")]
-        public virtual int GetMeasurementDuration() => s_osToMeasCycles[(int)PressureSampling] + s_osToMeasCycles[(int)TemperatureSampling];
+        public virtual int GetMeasurementDuration() => OsToMeasCycles[(int)PressureSampling] + OsToMeasCycles[(int)TemperatureSampling];
 
         /// <summary>
         /// Sets the default configuration for the sensor.
@@ -244,7 +243,8 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Performs a temperature reading.
         /// </summary>
-        /// <returns><see cref="Temperature"/></returns>
+        /// <param name="temperature">Current temperature reading.</param>
+        /// <returns>True if reading was sucesfully performed.</returns>
         protected bool TryReadTemperatureCore(out Temperature temperature)
         {
             if (TemperatureSampling == Sampling.Skipped)
@@ -262,7 +262,9 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Performs a pressure reading.
         /// </summary>
-        /// <returns><see cref="Pressure"/></returns>
+        /// <param name="pressure">Current preasure reeading.</param>
+        /// <param name="skipTempFineRead">Don't know. Change it.</param>
+        /// <returns>True if the reading was sucesfully performed.</returns>
         protected bool TryReadPressureCore(out Pressure pressure, bool skipTempFineRead = false)
         {
             if (PressureSampling == Sampling.Skipped)
@@ -286,7 +288,7 @@ namespace Iot.Device.Bmxx80
         }
 
         /// <summary>
-        /// Compensates the pressure in Pa, in double format
+        /// Compensates the pressure in Pa, in double format.
         /// </summary>
         /// <param name="adcPressure">The pressure value read from the device.</param>
         /// <returns>Pressure as an instance of <see cref="Pressure"/>.</returns>
@@ -296,21 +298,21 @@ namespace Iot.Device.Bmxx80
             // This uses the recommended approach with floating point math
             double var1, var2, p;
             var1 = (TemperatureFine / 2.0) - 64000.0;
-            var2 = var1 * var1 * ((double)_calibrationData.DigP6) / 32768.0;
-            var2 = var2 + var1 * ((double)_calibrationData.DigP5) * 2.0;
-            var2 = (var2 / 4.0) + (((double)_calibrationData.DigP4) * 65536.0);
-            var1 = (((double)_calibrationData.DigP3) * var1 * var1 / 524288.0 + ((double)_calibrationData.DigP2) * var1) / 524288.0;
-            var1 = (1.0 + var1 / 32768.0) * ((double)_calibrationData.DigP1);
+            var2 = var1 * var1 * CalibrationData.DigP6 / 32768.0;
+            var2 = var2 + ((var1 * CalibrationData.DigP5) * 2.0);
+            var2 = (var2 / 4.0) + (CalibrationData.DigP4 * 65536.0);
+            var1 = ((((CalibrationData.DigP3 * var1) * var1) / 524288.0) + (CalibrationData.DigP2 * var1)) / 524288.0;
+            var1 = (1.0 + (var1 / 32768.0)) * CalibrationData.DigP1;
             if (var1 == 0.0)
             {
                 return Pressure.FromPascals(0); // Avoid exception caused by division by zero
             }
 
-            p = 1048576.0 - (double)adcPressure;
+            p = 1048576.0 - adcPressure;
             p = (p - (var2 / 4096.0)) * 6250.0 / var1;
-            var1 = ((double)_calibrationData.DigP9) * p * p / 2147483648.0;
-            var2 = p * ((double)_calibrationData.DigP8) / 32768.0;
-            p = p + (var1 + var2 + ((double)_calibrationData.DigP7)) / 16.0;
+            var1 = ((CalibrationData.DigP9 * p) * p) / 2147483648.0;
+            var2 = (p * CalibrationData.DigP8) / 32768.0;
+            p = p + ((var1 + var2 + CalibrationData.DigP7) / 16.0);
 
             return Pressure.FromPascals(p);
         }

@@ -12,7 +12,7 @@ namespace Iot.Device.RadioReceiver
     public abstract class RadioReceiverBase : IDisposable
     {
         /// <summary>
-        /// Radio receiver FM frequency.
+        /// Gets or sets radio receiver FM frequency.
         /// </summary>
         public abstract Frequency Frequency { get; set; }
 

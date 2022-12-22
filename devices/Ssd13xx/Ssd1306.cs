@@ -27,7 +27,7 @@ namespace Iot.Device.Ssd13xx
         private bool _disposed = false;
 
         /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
+        /// Initializes a new instance of the <see cref="Ssd1306" /> class.
         /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
         /// light emitting diode dot-matrix graphic display system.
         /// </summary>
@@ -39,12 +39,12 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// Initializes new instance of Ssd1306 device that will communicate using I2C bus.
+        /// Initializes a new instance of the <see cref="Ssd1306" /> class.
         /// A single-chip CMOS OLED/PLED driver with controller for organic/polymer
         /// light emitting diode dot-matrix graphic display system.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="res">Display resolution</param>
+        /// <param name="res">Display resolution.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
         /// <param name="gpio">Gpio Controller.</param> 
@@ -54,15 +54,15 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// Sends command to the device
+        /// Sends command to the device.
         /// </summary>
-        /// <param name="command">Command being send</param>
+        /// <param name="command">Command being send.</param>
         public void SendCommand(ISsd1306Command command) => SendCommand((ICommand)command);
 
         /// <summary>
-        /// Sends command to the device
+        /// Sends command to the device.
         /// </summary>
-        /// <param name="command">Command being send</param>
+        /// <param name="command">Command being send.</param>
         public override void SendCommand(ISharedCommand command) => SendCommand(command);
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Iot.Device.Ssd13xx
         {
             SpanByte commandBytes = command?.GetBytes();
 
-            if (commandBytes is not { Length: > 0 })
+            if (commandBytes.Length == 0)
             {
                 throw new ArgumentNullException(nameof(command), "Argument is either null or there were no bytes to send.");
             }

@@ -8,7 +8,7 @@ using UnitsNet;
 namespace Iot.Device.RadioReceiver
 {
     /// <summary>
-    /// FM Stereo Radio TEA5767
+    /// FM Stereo Radio TEA5767.
     /// </summary>
     public class Tea5767 : RadioReceiverBase
     {
@@ -18,22 +18,23 @@ namespace Iot.Device.RadioReceiver
         public const byte DefaultI2cAddress = 0x60;
 
         private I2cDevice _i2cDevice;
+
         // TEA5767 has no register. Setting TEA5767 requires sending 5 bytes of commands to it.
         // Default values: disable mute, XTAL is 13MHz, disable standby, enable SNC
-        private byte[] _registers = new byte[5] { 0, 0, 0b_0001_0000, 0b_0001_0010, 0 };
+        private byte[] _registers = new byte[5] { 0, 0, 0b0001_0000, 0b0001_0010, 0 };
 
         /// <summary>
-        /// TEA5767 mute.
+        /// Gets or sets a value indicating whether TEA5767 is muted.
         /// </summary>
         public bool Mute { get => GetMute(); set => SetMute(value); }
 
         /// <summary>
-        /// TEA5767 standby.
+        /// Gets or sets a value indicating whether TEA5767 is in standby.
         /// </summary>
         public bool Standby { get => GetStandby(); set => SetStandby(value); }
 
         /// <summary>
-        /// TEA5767 FM frequency range.
+        /// Gets or sets TEA5767 FM frequency range.
         /// </summary>
         public FrequencyRange FrequencyRange { get => GetFrequencyRange(); set => SetFrequencyRange(value); }
 
@@ -43,7 +44,7 @@ namespace Iot.Device.RadioReceiver
         public override Frequency Frequency { get => GetFrequency(); set => SetFrequency(value); }
 
         /// <summary>
-        /// Create a new instance of the TEA5767.
+        /// Initializes a new instance of the <see cref="Tea5767" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="frequencyRange">FM frequency range.</param>
@@ -66,11 +67,11 @@ namespace Iot.Device.RadioReceiver
         {
             if (isMute)
             {
-                _registers[0] |= 0b_1000_0000;
+                _registers[0] |= 0b1000_0000;
             }
             else
             {
-                _registers[0] &= 0b_0111_1111;
+                _registers[0] &= 0b0111_1111;
             }
 
             SaveRegisters();
@@ -94,10 +95,10 @@ namespace Iot.Device.RadioReceiver
             switch (bandRange)
             {
                 case FrequencyRange.Japan:
-                    _registers[3] |= 0b_0010_0000;
+                    _registers[3] |= 0b0010_0000;
                     break;
                 case FrequencyRange.Other:
-                    _registers[3] &= 0b_1101_1111;
+                    _registers[3] &= 0b1101_1111;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(bandRange));
@@ -112,7 +113,7 @@ namespace Iot.Device.RadioReceiver
         /// <returns>FM frequency range.</returns>
         private FrequencyRange GetFrequencyRange()
         {
-            return (FrequencyRange)((_registers[3] & 0b_1101_1111) >> 5);
+            return (FrequencyRange)((_registers[3] & 0b1101_1111) >> 5);
         }
 
         /// <summary>
@@ -142,12 +143,12 @@ namespace Iot.Device.RadioReceiver
                     throw new ArgumentOutOfRangeException(nameof(FrequencyRange));
             }
 
-            int f = (int)((frequencyMhz * 1000000 + 225000) / 8192);
+            int f = (int)(((frequencyMhz * 1000000) + 225000) / 8192);
 
-            byte high = (byte)((f & 0b_0011_1111_0000_0000) >> 8);
-            byte low = (byte)(f & 0b_1111_1111);
+            byte high = (byte)((f & 0b0011_1111_00000000) >> 8);
+            byte low = (byte)(f & 0b1111_1111);
 
-            _registers[0] &= 0b_1100_0000;
+            _registers[0] &= 0b1100_0000;
             _registers[0] |= high;
             _registers[1] = low;
 
@@ -162,9 +163,9 @@ namespace Iot.Device.RadioReceiver
         {
             byte[] readBuffer = ReadRegisters();
 
-            int f = ((readBuffer[0] & 0b_0011_1111) << 8) | readBuffer[1];
+            int f = ((readBuffer[0] & 0b0011_1111) << 8) | readBuffer[1];
 
-            return Frequency.FromMegahertz(Math.Round((f * 8192 - 225000) * 10 / 10000000.0));
+            return Frequency.FromMegahertz(Math.Round(((f * 8192) - 225000) * 10 / 10000000.0));
         }
 
         /// <summary>
@@ -175,11 +176,11 @@ namespace Iot.Device.RadioReceiver
         {
             if (isStandby)
             {
-                _registers[3] |= 0b_0100_0000;
+                _registers[3] |= 0b0100_0000;
             }
             else
             {
-                _registers[3] &= 0b_1011_1111;
+                _registers[3] &= 0b1011_1111;
             }
 
             SaveRegisters();
@@ -191,7 +192,7 @@ namespace Iot.Device.RadioReceiver
         /// <returns>Standby if the value is true.</returns>
         private bool GetStandby()
         {
-            return (_registers[3] & 0b_0100_0000) > 0 ? true : false;
+            return (_registers[3] & 0b0100_0000) > 0 ? true : false;
         }
 
         /// <summary>
@@ -207,20 +208,21 @@ namespace Iot.Device.RadioReceiver
             }
 
             // enable search mode
-            _registers[0] |= 0b_0100_0000;
+            _registers[0] |= 0b0100_0000;
 
             // clear search standard bit
-            _registers[2] &= 0b_0001_1111;
+            _registers[2] &= 0b0001_1111;
+
             // set search stop level
             _registers[2] |= (byte)(stopLevel << 6);
 
             switch (searchDirection)
             {
                 case SearchDirection.Up:
-                    _registers[2] |= 0b_1000_0000;
+                    _registers[2] |= 0b1000_0000;
                     break;
                 case SearchDirection.Down:
-                    _registers[2] &= 0b_01111_1111;
+                    _registers[2] &= 0b01111_1111;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(searchDirection));
@@ -237,16 +239,14 @@ namespace Iot.Device.RadioReceiver
             while (readBuffer[0] >> 7 != 1);
 
             // disable search mode
-            _registers[0] &= 0b_1011_1111;
+            _registers[0] &= 0b1011_1111;
         }
 
-        /// <summary>
-        /// Cleanup
-        /// </summary>
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            _i2cDevice = null;
 
             base.Dispose(disposing);
         }

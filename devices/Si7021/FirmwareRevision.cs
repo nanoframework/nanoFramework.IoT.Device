@@ -14,12 +14,12 @@ namespace Iot.Device.Si7021
         Unknow = 00,
 
         /// <summary>
-        /// Firmware version 2.0
+        /// Firmware version 2.0.
         /// </summary>
         V2_0 = 0x20,
 
         /// <summary>
-        /// Firmware version 1.0
+        /// Firmware version 1.0.
         /// </summary>
         V1_0 = 0xFF,
     }

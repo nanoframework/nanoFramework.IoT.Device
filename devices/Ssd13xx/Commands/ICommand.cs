@@ -4,12 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Interface for all Ssd13xx commands
+    /// Interface for all Ssd13xx commands.
     /// </summary>
     public interface ICommand
     {
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         byte Id { get; }
 

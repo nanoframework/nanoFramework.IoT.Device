@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetSecondPreChargePeriod command
+    /// Represents SetSecondPreChargePeriod command.
     /// </summary>
     public class SetSecondPreChargePeriod : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetSecondPreChargePeriod" /> class.
         /// This command is used to set the phase 3 second pre-charge period.
         /// </summary>
         /// <param name="period">Second pre-charge period.</param>
@@ -25,12 +26,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0xB6;
 
         /// <summary>
-        /// Second Pre-charge period.
+        /// Gets second Pre-charge period.
         /// </summary>
         public byte Period { get; }
 

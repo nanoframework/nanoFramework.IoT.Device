@@ -10,21 +10,21 @@ using UnitsNet;
 namespace Iot.Device.Sht3x
 {
     /// <summary>
-    /// Humidity and Temperature Sensor SHT3x
+    /// Humidity and Temperature Sensor SHT3x.
     /// </summary>
     [Interface("Humidity and Temperature Sensor SHT3x")]
     public class Sht3x : IDisposable
     {
         // CRC const
-        private const byte CRC_POLYNOMIAL = 0x31;
-        private const byte CRC_INIT = 0xFF;
+        private const byte CrcPolynomial = 0x31;
+        private const byte CrcInit = 0xFF;
 
         private I2cDevice _i2cDevice;
 
         #region prop
 
         /// <summary>
-        /// SHT3x Resolution
+        /// Gets or setsSHT3x Resolution.
         /// </summary>
         [Property]
         public Resolution Resolution { get; set; }
@@ -32,7 +32,7 @@ namespace Iot.Device.Sht3x
         private double _temperature;
 
         /// <summary>
-        /// SHT3x Temperature
+        /// Gets SHT3x Temperature.
         /// </summary>
         [Telemetry]
         public Temperature Temperature
@@ -47,7 +47,7 @@ namespace Iot.Device.Sht3x
         private double _humidity;
 
         /// <summary>
-        /// SHT3x Relative Humidity (%)
+        /// Gets SHT3x Relative Humidity (%).
         /// </summary>
         [Telemetry]
         public RelativeHumidity Humidity
@@ -62,7 +62,7 @@ namespace Iot.Device.Sht3x
         private bool _heater;
 
         /// <summary>
-        /// SHT3x Heater
+        /// Gets or sets a value indicating whether SHT3x Heater is on.
         /// </summary>
         [Property]
         public bool Heater
@@ -78,10 +78,10 @@ namespace Iot.Device.Sht3x
         #endregion
 
         /// <summary>
-        /// Creates a new instance of the SHT3x
+        /// Initializes a new instance of the <see cref="Sht3x" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="resolution">SHT3x Read Resolution</param>
+        /// <param name="resolution">SHT3x Read Resolution.</param>
         public Sht3x(I2cDevice i2cDevice, Resolution resolution = Resolution.High)
         {
             _i2cDevice = i2cDevice;
@@ -91,25 +91,23 @@ namespace Iot.Device.Sht3x
             Reset();
         }
 
-        /// <summary>
-        /// Cleanup
-        /// </summary>
+        /// <inheritdoc/>
         public void Dispose()
         {
             _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            _i2cDevice = null;
         }
 
         /// <summary>
-        /// SHT3x Soft Reset
+        /// SHT3x Soft Reset.
         /// </summary>
         public void Reset() =>
             Write(Register.SHT_RESET);
 
         /// <summary>
-        /// Set SHT3x Heater
+        /// Set SHT3x Heater.
         /// </summary>
-        /// <param name="isOn">Heater on when value is true</param>
+        /// <param name="isOn">Heater on when value is true.</param>
         private void SetHeater(bool isOn)
         {
             if (isOn)
@@ -123,7 +121,7 @@ namespace Iot.Device.Sht3x
         }
 
         /// <summary>
-        /// Read Temperature and Humidity
+        /// Read Temperature and Humidity.
         /// </summary>
         private void ReadTempAndHumidity()
         {
@@ -134,6 +132,7 @@ namespace Iot.Device.Sht3x
             SpanByte readBuff = new byte[6];
 
             _i2cDevice.Write(writeBuff);
+
             // wait SCL free
             Thread.Sleep(20);
             _i2cDevice.Read(readBuff);
@@ -151,20 +150,20 @@ namespace Iot.Device.Sht3x
             }
 
             // Details in the Datasheet P13
-            _temperature = Math.Round((st * 175 / 65535.0 - 45) * 10) / 10.0;
+            _temperature = Math.Round(((st * 175 / 65535.0) - 45) * 10) / 10.0;
             _humidity = Math.Round((srh * 100 / 65535.0) * 10) / 10.0;
         }
 
         /// <summary>
-        /// 8-bit CRC Checksum Calculation
+        /// 8-bit CRC Checksum Calculation.
         /// </summary>
-        /// <param name="data">Raw Data</param>
-        /// <param name="crc8">Raw CRC8</param>
-        /// <returns>Checksum is true or false</returns>
+        /// <param name="data">Raw Data.</param>
+        /// <param name="crc8">Raw CRC8.</param>
+        /// <returns>Checksum is true or false.</returns>
         private bool CheckCrc8(SpanByte data, byte crc8)
         {
             // Details in the Datasheet P13
-            byte crc = CRC_INIT;
+            byte crc = CrcInit;
             for (int i = 0; i < 2; i++)
             {
                 crc ^= data[i];
@@ -173,7 +172,7 @@ namespace Iot.Device.Sht3x
                 {
                     if ((crc & 0x80) != 0)
                     {
-                        crc = (byte)((crc << 1) ^ CRC_POLYNOMIAL);
+                        crc = (byte)((crc << 1) ^ CrcPolynomial);
                     }
                     else
                     {

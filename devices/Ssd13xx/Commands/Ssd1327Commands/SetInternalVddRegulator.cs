@@ -6,26 +6,27 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetInternalVddRegulator command
+    /// Represents SetInternalVddRegulator command.
     /// </summary>
     public class SetInternalVddRegulator : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetInternalVddRegulator" /> class.
         /// This command is used to enable internal Vdd regulator.
         /// </summary>
         /// <param name="enable">Represents if internal Vdd have to be enabled.</param>
         public SetInternalVddRegulator(bool enable)
         {
-            UseInternalVdd = (byte)(enable ? 0b_0000_0001 : 0b_0000_0000);
+            UseInternalVdd = (byte)(enable ? 0b0000_0001 : 0b0000_0000);
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0xAB;
 
         /// <summary>
-        /// The value that represent if internal or external Vdd should be used.
+        /// Gets the value that represent if internal or external Vdd should be used.
         /// </summary>
         public byte UseInternalVdd { get; }
 

@@ -21,14 +21,6 @@ namespace Iot.Device.Bmxx80
     [Interface("Represents a BME680 temperature, pressure, relative humidity and VOC gas sensor.")]
     public class Bme680 : Bmxx80Base
     {
-        private static readonly Temperature DefaultAmbientTemperature = Temperature.FromDegreesCelsius(20);
-        private static readonly byte[] s_osToMeasCycles = { 0, 1, 2, 4, 8, 16 };
-        private static readonly byte[] s_osToSwitchCount = { 0, 1, 1, 1, 1, 1 };
-        private static readonly double[] s_k1Lookup = { 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, -0.8, 0.0, 0.0, -0.2, -0.5, 0.0, -1.0, 0.0, 0.0 };
-        private static readonly double[] s_k2Lookup = { 0.0, 0.0, 0.0, 0.0, 0.1, 0.7, 0.0, -0.8, -0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-
-        private readonly Temperature _ambientTemperatureUserDefault;
-
         /// <summary>
         /// Default I2C bus address.
         /// </summary>
@@ -43,6 +35,14 @@ namespace Iot.Device.Bmxx80
         /// The expected chip ID of the BME680.
         /// </summary>
         private const byte DeviceId = 0x61;
+
+        private static readonly Temperature DefaultAmbientTemperature = Temperature.FromDegreesCelsius(20);
+        private static readonly byte[] OsToMeasCycles = { 0, 1, 2, 4, 8, 16 };
+        private static readonly byte[] OsToSwitchCount = { 0, 1, 1, 1, 1, 1 };
+        private static readonly double[] K1Lookup = { 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, -0.8, 0.0, 0.0, -0.2, -0.5, 0.0, -1.0, 0.0, 0.0 };
+        private static readonly double[] K2Lookup = { 0.0, 0.0, 0.0, 0.0, 0.1, 0.7, 0.0, -0.8, -0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+
+        private readonly Temperature _ambientTemperatureUserDefault;
 
         /// <summary>
         /// Calibration data for the <see cref="Bme680"/>.
@@ -61,7 +61,7 @@ namespace Iot.Device.Bmxx80
         private Sampling _humiditySampling;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bme680"/> class.
+        /// Initializes a new instance of the <see cref="Bme680" /> class.
         /// </summary>
         /// <param name="i2cDevice">The <see cref="I2cDevice"/> to create with.</param>
         /// <param name="ambientTemperatureDefault">Assumed ambient temperature for startup. Used for initialization of the gas measurement
@@ -70,11 +70,11 @@ namespace Iot.Device.Bmxx80
             : base(DeviceId, i2cDevice)
         {
             _ambientTemperatureUserDefault = ambientTemperatureDefault;
-            _communicationProtocol = CommunicationProtocol.I2c;
+            CommunicationProtocol1 = CommunicationProtocol.I2c;
         }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bme680"/> class.
+        /// Initializes a new instance of the <see cref="Bme680" /> class.
         /// </summary>
         /// <param name="i2cDevice">The <see cref="I2cDevice"/> to create with.</param>
         public Bme680(I2cDevice i2cDevice)
@@ -92,7 +92,6 @@ namespace Iot.Device.Bmxx80
             get => _humiditySampling;
             set
             {
-                //if (!Enum.IsDefined(typeof(Sampling), value))
                 if ((value != Sampling.HighResolution) &&
                     (value != Sampling.LowPower) &&
                     (value != Sampling.Skipped) &&
@@ -110,7 +109,7 @@ namespace Iot.Device.Bmxx80
                 {
                     (byte)Bme680Register.CTRL_HUM, status
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _humiditySampling = value;
             }
         }
@@ -130,16 +129,16 @@ namespace Iot.Device.Bmxx80
                 {
                     if (heaterConfig.HeaterProfile == value)
                     {
-                        if ((value !=Bme680HeaterProfile.Profile1) &&
-                            (value !=Bme680HeaterProfile.Profile2) &&
-                            (value !=Bme680HeaterProfile.Profile3) &&
-                            (value !=Bme680HeaterProfile.Profile4) &&
-                            (value !=Bme680HeaterProfile.Profile5) &&
-                            (value !=Bme680HeaterProfile.Profile6) &&
-                            (value !=Bme680HeaterProfile.Profile7) &&
-                            (value !=Bme680HeaterProfile.Profile8) &&
-                            (value !=Bme680HeaterProfile.Profile9) &&
-                            (value !=Bme680HeaterProfile.Profile10))
+                        if ((value != Bme680HeaterProfile.Profile1) &&
+                            (value != Bme680HeaterProfile.Profile2) &&
+                            (value != Bme680HeaterProfile.Profile3) &&
+                            (value != Bme680HeaterProfile.Profile4) &&
+                            (value != Bme680HeaterProfile.Profile5) &&
+                            (value != Bme680HeaterProfile.Profile6) &&
+                            (value != Bme680HeaterProfile.Profile7) &&
+                            (value != Bme680HeaterProfile.Profile8) &&
+                            (value != Bme680HeaterProfile.Profile9) &&
+                            (value != Bme680HeaterProfile.Profile10))
                         {
                             throw new ArgumentOutOfRangeException();
                         }
@@ -151,7 +150,7 @@ namespace Iot.Device.Bmxx80
                         {
                             (byte)Bme680Register.CTRL_GAS_1, heaterProfile
                         };
-                        _i2cDevice.Write(command);
+                        I2cDevice.Write(command);
                         _heaterProfile = value;
                     }
                 }
@@ -168,14 +167,14 @@ namespace Iot.Device.Bmxx80
             get => _filterMode;
             set
             {
-                if ((value !=Bme680FilteringMode.C0) &&
-                    (value !=Bme680FilteringMode.C1) &&
-                    (value !=Bme680FilteringMode.C127) &&
-                    (value !=Bme680FilteringMode.C15) &&
-                    (value !=Bme680FilteringMode.C3) &&
-                    (value !=Bme680FilteringMode.C31) &&
-                    (value !=Bme680FilteringMode.C63) &&
-                    (value !=Bme680FilteringMode.C7))
+                if ((value != Bme680FilteringMode.C0) &&
+                    (value != Bme680FilteringMode.C1) &&
+                    (value != Bme680FilteringMode.C127) &&
+                    (value != Bme680FilteringMode.C15) &&
+                    (value != Bme680FilteringMode.C3) &&
+                    (value != Bme680FilteringMode.C31) &&
+                    (value != Bme680FilteringMode.C63) &&
+                    (value != Bme680FilteringMode.C7))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -187,13 +186,13 @@ namespace Iot.Device.Bmxx80
                 {
                     (byte)Bme680Register.CONFIG, filter
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _filterMode = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets whether the heater is enabled.
+        /// Gets or sets a value indicating whether the heater is enabled.
         /// </summary>
         [Property]
         public bool HeaterIsEnabled
@@ -208,13 +207,13 @@ namespace Iot.Device.Bmxx80
                 {
                     (byte)Bme680Register.CTRL_GAS_0, heaterStatus
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _heaterIsEnabled = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets whether gas conversions are enabled.
+        /// Gets or sets a value indicating whether gas conversions are enabled.
         /// </summary>
         [Property]
         public bool GasConversionIsEnabled
@@ -229,7 +228,7 @@ namespace Iot.Device.Bmxx80
                 {
                     (byte)Bme680Register.CTRL_GAS_1, gasConversion
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _gasConversionIsEnabled = value;
             }
         }
@@ -237,6 +236,7 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Reads whether new data is available.
         /// </summary>
+        /// <returns>True if new data is available.</returns>
         public bool ReadNewDataIsAvailable()
         {
             var newData = Read8BitsFromRegister((byte)Bme680Register.STATUS);
@@ -248,6 +248,7 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Reads whether a gas measurement is in process.
         /// </summary>
+        /// <returns>True if gas measurment is in process.</returns>
         public bool ReadGasMeasurementInProcess()
         {
             var gasMeasInProcess = Read8BitsFromRegister((byte)Bme680Register.STATUS);
@@ -259,6 +260,7 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Reads whether a measurement of any kind is in process.
         /// </summary>
+        /// <returns>True if measurment is in process.</returns>
         public bool ReadMeasurementInProcess()
         {
             var measInProcess = Read8BitsFromRegister((byte)Bme680Register.STATUS);
@@ -270,6 +272,7 @@ namespace Iot.Device.Bmxx80
         /// <summary>
         /// Reads whether the target heater temperature is reached.
         /// </summary>
+        /// <returns>True if heater is stable.</returns>
         public bool ReadHeaterIsStable()
         {
             var heaterStable = Read8BitsFromRegister((byte)Bme680Register.GAS_RANGE);
@@ -279,15 +282,14 @@ namespace Iot.Device.Bmxx80
         }
 
         /// <summary>
-        /// Sets the power mode to the given mode
+        /// Sets the power mode to the given mode.
         /// </summary>
         /// <param name="powerMode">The <see cref="Bme680PowerMode"/> to set.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the power mode does not match a defined mode in <see cref="Bme680PowerMode"/>.</exception>
         [Property("PowerMode")]
         public void SetPowerMode(Bme680PowerMode powerMode)
         {
-            if (!powerMode.Equals(Bme680PowerMode.Forced) &&
-                !powerMode.Equals(Bme680PowerMode.Sleep))
+            if ((powerMode != Bme680PowerMode.Forced) && (powerMode != Bme680PowerMode.Sleep))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -299,7 +301,7 @@ namespace Iot.Device.Bmxx80
             {
                 (byte)Bme680Register.CTRL_MEAS, status
             };
-            _i2cDevice.Write(command);
+            I2cDevice.Write(command);
         }
 
         /// <summary>
@@ -312,16 +314,16 @@ namespace Iot.Device.Bmxx80
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the heating profile does not match a defined profile in <see cref="Bme680HeaterProfile"/>.</exception>
         public void ConfigureHeatingProfile(Bme680HeaterProfile profile, Temperature targetTemperature, Duration duration, Temperature ambientTemperature)
         {
-            if ((profile !=Bme680HeaterProfile.Profile1) &&
-                (profile !=Bme680HeaterProfile.Profile2) &&
-                (profile !=Bme680HeaterProfile.Profile3) &&
-                (profile !=Bme680HeaterProfile.Profile4) &&
-                (profile !=Bme680HeaterProfile.Profile5) &&
-                (profile !=Bme680HeaterProfile.Profile6) &&
-                (profile !=Bme680HeaterProfile.Profile7) &&
-                (profile !=Bme680HeaterProfile.Profile8) &&
-                (profile !=Bme680HeaterProfile.Profile9) &&
-                (profile !=Bme680HeaterProfile.Profile10))
+            if ((profile != Bme680HeaterProfile.Profile1) &&
+                (profile != Bme680HeaterProfile.Profile2) &&
+                (profile != Bme680HeaterProfile.Profile3) &&
+                (profile != Bme680HeaterProfile.Profile4) &&
+                (profile != Bme680HeaterProfile.Profile5) &&
+                (profile != Bme680HeaterProfile.Profile6) &&
+                (profile != Bme680HeaterProfile.Profile7) &&
+                (profile != Bme680HeaterProfile.Profile8) &&
+                (profile != Bme680HeaterProfile.Profile9) &&
+                (profile != Bme680HeaterProfile.Profile10))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -338,8 +340,8 @@ namespace Iot.Device.Bmxx80
             {
                 (byte)((byte)Bme680Register.GAS_WAIT_0 + profile), heaterDuration
             };
-            _i2cDevice.Write(resistanceCommand);
-            _i2cDevice.Write(durationCommand);
+            I2cDevice.Write(resistanceCommand);
+            I2cDevice.Write(durationCommand);
 
             // cache heater configuration
             foreach (Bme680HeaterProfileConfig heaterConfig in _heaterConfigs)
@@ -372,16 +374,16 @@ namespace Iot.Device.Bmxx80
         /// The precision of this duration is within 1ms of the actual measurement time.
         /// </summary>
         /// <param name="profile">The used <see cref="Bme680HeaterProfile"/>. </param>
-        /// <returns></returns>
+        /// <returns>Measurement duration.</returns>
         public Duration GetMeasurementDuration(Bme680HeaterProfile profile)
         {
-            var measCycles = s_osToMeasCycles[(int)TemperatureSampling];
-            measCycles += s_osToMeasCycles[(int)PressureSampling];
-            measCycles += s_osToMeasCycles[(int)HumiditySampling];
+            var measCycles = OsToMeasCycles[(int)TemperatureSampling];
+            measCycles += OsToMeasCycles[(int)PressureSampling];
+            measCycles += OsToMeasCycles[(int)HumiditySampling];
 
-            var switchCount = s_osToSwitchCount[(int)TemperatureSampling];
-            switchCount += s_osToSwitchCount[(int)PressureSampling];
-            switchCount += s_osToSwitchCount[(int)HumiditySampling];
+            var switchCount = OsToSwitchCount[(int)TemperatureSampling];
+            switchCount += OsToSwitchCount[(int)PressureSampling];
+            switchCount += OsToSwitchCount[(int)HumiditySampling];
 
             double measDuration = measCycles * 1963;
             measDuration += 477 * switchCount;      // TPH switching duration
@@ -418,12 +420,12 @@ namespace Iot.Device.Bmxx80
             SetPowerMode(Bme680PowerMode.Forced);
             Thread.Sleep((int)GetMeasurementDuration(HeaterProfile).Milliseconds);
 
-            TryReadTemperatureCore(out Temperature temperature);
-            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
-            TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
-            TryReadGasResistanceCore(out ElectricResistance gasResistance);
+            var temperatureIsValid = TryReadTemperatureCore(out Temperature temperature);
+            var pressureIsValid = TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            var humidityIsValid = TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
+            var gasResistanceIsValid = TryReadGasResistanceCore(out ElectricResistance gasResistance);
 
-            return new Bme680ReadResult(temperature, pressure, humidity, gasResistance);
+            return new Bme680ReadResult(temperature, temperatureIsValid, pressure, pressureIsValid, humidity, humidityIsValid, gasResistance, gasResistanceIsValid);
         }
 
         /// <summary>
@@ -477,7 +479,7 @@ namespace Iot.Device.Bmxx80
             HumiditySampling = Sampling.UltraLowPower;
             FilterMode = Bme680FilteringMode.C0;
 
-            _bme680Calibration = (Bme680CalibrationData)_calibrationData;
+            _bme680Calibration = (Bme680CalibrationData)CalibrationData;
             if (!TryReadTemperature(out var temp))
             {
                 temp = _ambientTemperatureUserDefault;
@@ -538,7 +540,7 @@ namespace Iot.Device.Bmxx80
             // Calculate the pressure.
             var var1 = (TemperatureFine / 2.0) - 64000.0;
             var var2 = var1 * var1 * (_bme680Calibration.DigP6 / 131072.0);
-            var2 += (var1 * _bme680Calibration.DigP5 * 2.0);
+            var2 += var1 * _bme680Calibration.DigP5 * 2.0;
             var2 = (var2 / 4.0) + (_bme680Calibration.DigP4 * 65536.0);
             var1 = ((_bme680Calibration.DigP3 * var1 * var1 / 16384.0) + (_bme680Calibration.DigP2 * var1)) / 524288.0;
             var1 = (1.0 + (var1 / 32768.0)) * _bme680Calibration.DigP1;
@@ -577,10 +579,10 @@ namespace Iot.Device.Bmxx80
                 throw new Exception();
             }
 
-            var var1 = 1340.0 + 5.0 * _bme680Calibration.RangeSwErr;
-            var var2 = var1 * (1.0 + s_k1Lookup[gasRange] / 100.0);
-            var var3 = 1.0 + s_k2Lookup[gasRange] / 100.0;
-            var gasResistance = 1.0 / (var3 * 0.000000125 * (1 << gasRange) * ((adcGasRes - 512.0) / var2 + 1.0));
+            var var1 = 1340.0 + (5.0 * _bme680Calibration.RangeSwErr);
+            var var2 = var1 * (1.0 + (K1Lookup[gasRange] / 100.0));
+            var var3 = 1.0 + (K2Lookup[gasRange] / 100.0);
+            var gasResistance = 1.0 / (((var3 * 0.000000125) * (1 << gasRange)) * (((adcGasRes - 512.0) / var2) + 1.0));
 
             return ElectricResistance.FromOhms(gasResistance);
         }
@@ -599,12 +601,12 @@ namespace Iot.Device.Bmxx80
                 temp = 400;
             }
 
-            var var1 = _bme680Calibration.DigGh1 / 16.0 + 49.0;
-            var var2 = _bme680Calibration.DigGh2 / 32768.0 * 0.0005 + 0.00235;
+            var var1 = (_bme680Calibration.DigGh1 / 16.0) + 49.0;
+            var var2 = ((_bme680Calibration.DigGh2 / 32768.0) * 0.0005) + 0.00235;
             var var3 = _bme680Calibration.DigGh3 / 1024.0;
-            var var4 = var1 * (1.0 + var2 * temp);
-            var var5 = var4 + var3 * ambientTemp.DegreesCelsius;
-            var heaterResistance = (byte)(3.4 * (var5 * (4.0 / (4.0 + _bme680Calibration.ResHeatRange)) * (1.0 / (1.0 + _bme680Calibration.ResHeatVal * 0.002)) - 25));
+            var var4 = var1 * (1.0 + (var2 * temp));
+            var var5 = var4 + (var3 * ambientTemp.DegreesCelsius);
+            var heaterResistance = (byte)(3.4 * ((var5 * ((4.0 / (4.0 + _bme680Calibration.ResHeatRange)) * (1.0 / (1.0 + (_bme680Calibration.ResHeatVal * 0.002))))) - 25));
 
             return heaterResistance;
         }
@@ -619,6 +621,7 @@ namespace Iot.Device.Bmxx80
             byte durationValue;
 
             ushort shortDuration = (ushort)duration.Milliseconds;
+
             // check if value exceeds maximum duration
             if (shortDuration > 0xFC0)
             {
@@ -632,7 +635,7 @@ namespace Iot.Device.Bmxx80
                     factor += 1;
                 }
 
-                durationValue = (byte)(shortDuration + factor * 64);
+                durationValue = (byte)(shortDuration + (factor * 64));
             }
 
             return durationValue;

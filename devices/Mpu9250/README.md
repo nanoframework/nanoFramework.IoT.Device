@@ -1,6 +1,6 @@
-# MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)
+# MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)
 
-MPU6500 is a 3 axis Gyroscope, 3 axis Accelerometer and Temperature sensor that can be accessed either thru I2C or SPI. This implementation is only for I2C. The sensor can be found in various implementation but its main usage is in the MPU9250.
+MPU6050/MPU6500 are 3 axis Gyroscope, 3 axis Accelerometer and Temperature sensors that can be accessed either thru I2C or SPI. This implementation is only for I2C. The sensor can be found in various implementation but its main usage is in the MPU9250.
 
 MPU9250 is a 3 axis Gyroscope, 3 axis Accelerometer, 3 axis Magnetometer and Temperature sensor that can be accessed either thru I2C or SPI. This implementation is only for I2C. The sensor can be found in various implementation like [Grove](http://wiki.seeedstudio.com/Grove-IMU_9DOF_v2.0/) or [Sparkfun](https://www.sparkfun.com/products/13762). MPU9250 incorporate a MPU6500 and an AK8963.
 
@@ -208,4 +208,4 @@ It is then up to you to transform them into the correct data. You can multiply y
 
 The following fritzing diagram illustrates one way to wire up the MPU9250 with a MCU like ESP32 using I2C.
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mu9250/Mpu9250_bb.png)
+![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mpu9250/Mpu9250_bb.png)

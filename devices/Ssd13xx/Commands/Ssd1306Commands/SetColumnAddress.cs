@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetColumnAddress
+    /// Represents SetColumnAddress.
     /// </summary>
     public class SetColumnAddress : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetColumnAddress" /> class.
         /// This triple byte command specifies column start address and end address of the display data RAM.
         /// This command also sets the column address pointer to column start address. This pointer is used
         /// to define the current read/write column address in graphic display data RAM. If horizontal address
@@ -38,17 +39,17 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0x21;
 
         /// <summary>
-        /// Column start address with a range of 0-127.
+        /// Gets or sets column start address with a range of 0-127.
         /// </summary>
         public byte StartAddress { get; set; }
 
         /// <summary>
-        /// Column end address with a range of 0-127.
+        /// Gets or sets column end address with a range of 0-127.
         /// </summary>
         public byte EndAddress { get; set; }
 

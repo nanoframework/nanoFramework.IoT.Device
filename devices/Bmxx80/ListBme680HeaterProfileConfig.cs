@@ -7,19 +7,18 @@
 // Once generated, this will be usable as a normal ListSomething
 
 using Iot.Device.Bmxx80;
-using System;
 
 namespace System.Collections.Generic
 {
     /// <summary>
-    /// List class for type Bme680HeaterProfileConfig that has been automatically generated
+    /// List class for type Bme680HeaterProfileConfig that has been automatically generated.
     /// </summary>
     public class ListBme680HeaterProfileConfig : IEnumerable
     {
         private ArrayList _list;
 
         /// <summary>
-        /// Initializes a new instance of the System.Collections.Generic.List class that
+        /// Initializes a new instance of the <see cref="ListBme680HeaterProfileConfig" /> class. List class that
         /// is empty and has the default initial capacity.
         /// </summary>
         public ListBme680HeaterProfileConfig()
@@ -28,12 +27,12 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Collections.Generic.List class that
+        /// Initializes a new instance of the <see cref="ListBme680HeaterProfileConfig" /> class that
         /// contains elements copied from the specified collection and has sufficient capacity
         /// to accommodate the number of elements copied.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new list.</param>
-        /// <exception cref="System.ArgumentNullException">collection is null</exception>
+        /// <exception cref="System.ArgumentNullException">Collection is null.</exception>
         public ListBme680HeaterProfileConfig(IEnumerable collection)
         {
             if (collection == null)
@@ -49,17 +48,18 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Collections.Generic.List class that
+        /// Initializes a new instance of the <see cref="ListBme680HeaterProfileConfig" /> class. List class that
         /// is empty and has the specified initial capacity.
         /// </summary>
         /// <param name="capacity">The number of elements that the new list can initially store.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Capacity is less than 0.</exception>
         public ListBme680HeaterProfileConfig(int capacity)
         {
             if (capacity < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
             _list = new ArrayList();
             _list.Capacity = capacity;
         }
@@ -69,7 +69,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- index is equal to or greater than System.Collections.Generic.List.Count.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- index is equal to or greater than System.Collections.Generic.List.Count.</exception>
         public Bme680HeaterProfileConfig this[int index]
         {
             get
@@ -94,15 +94,14 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Gets the number of elements contained in the System.Collections.Generic.List
+        /// Gets the number of elements contained in the System.Collections.Generic.List.
         /// </summary>
         public int Count => _list.Count;
 
         /// <summary>
-        /// Gets or sets the total number of elements the internal data structure can hold
-        /// without resizing.
+        /// Gets or sets the total number of elements the internal data structure can hold without resizing.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">System.Collections.Generic.List.Capacity is set to a value that is less than System.Collections.Generic.List.Count</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">System.Collections.Generic.List.Capacity is set to a value that is less than System.Collections.Generic.List.Count.</exception>
         public int Capacity
         {
             get => _list.Capacity;
@@ -133,7 +132,7 @@ namespace System.Collections.Generic
         /// <param name="collection">The collection whose elements should be added to the end of the System.Collections.Generic.List.
         /// The collection itself cannot be null, but it can contain elements that are null, if type Bme680HeaterProfileConfig is a reference type.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">collection is null.</exception>
+        /// <exception cref="System.ArgumentNullException">Collection is null.</exception>
         public void AddRange(IEnumerable collection)
         {
             if (collection == null)
@@ -164,9 +163,9 @@ namespace System.Collections.Generic
             private ListBme680HeaterProfileConfig _collection;
 
             /// <summary>
-            /// Create an enumerator of the collection
+            /// Initializes a new instance of the <see cref="Enumerator" /> struct.
             /// </summary>
-            /// <param name="collection"></param>
+            /// <param name="collection">Config profile.</param>
             public Enumerator(ListBme680HeaterProfileConfig collection)
             {
                 _index = -1;
@@ -184,7 +183,8 @@ namespace System.Collections.Generic
             /// Releases all resources used by the System.Collections.Generic.List.Enumerator.
             /// </summary>
             public void Dispose()
-            { }
+            { 
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the System.Collections.Generic.List.
@@ -203,7 +203,7 @@ namespace System.Collections.Generic
             }
 
             /// <summary>
-            /// Move back to first position
+            /// Move back to first position.
             /// </summary>
             public void Reset()
             {
@@ -236,8 +236,8 @@ namespace System.Collections.Generic
         /// <param name="array">The one-dimensional System.Array that is the destination of the elements copied
         /// from System.Collections.Generic.List. The System.Array must have zero-based indexing.</param>
         /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-        /// <exception cref="System.ArgumentNullException">array is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">arrayIndex is less than 0.</exception>
+        /// <exception cref="System.ArgumentNullException">Array is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">ArrayIndex is less than 0.</exception>
         /// <exception cref="System.ArgumentException">The number of elements in the source System.Collections.Generic.List is greater
         /// than the available space from arrayIndex to the end of the destination array.</exception>
         public void CopyTo(Bme680HeaterProfileConfig[] array, int arrayIndex)
@@ -251,7 +251,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="array">The one-dimensional System.Array that is the destination of the elements copied
         /// from System.Collections.Generic.List. The System.Array must have zero-based indexing.</param>
-        /// <exception cref="System.ArgumentNullException">array is null.</exception>
+        /// <exception cref="System.ArgumentNullException">Array is null.</exception>
         /// <exception cref="System.ArgumentException">The number of elements in the source System.Collections.Generic.List is greater
         /// than the number of elements that the destination array can contain.</exception>
         public void CopyTo(Bme680HeaterProfileConfig[] array)
@@ -269,9 +269,9 @@ namespace System.Collections.Generic
         /// from System.Collections.Generic.List. The System.Array must have zero-based indexing.</param>
         /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
         /// <param name="count">The number of elements to copy.</param>
-        /// <exception cref="System.ArgumentNullException">array is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- arrayIndex is less than 0. -or- count is less than 0.</exception>
-        /// <exception cref="System.ArgumentException">index is equal to or greater than the System.Collections.Generic.List.Count
+        /// <exception cref="System.ArgumentNullException">Array is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- arrayIndex is less than 0. -or- count is less than 0.</exception>
+        /// <exception cref="System.ArgumentException">Index is equal to or greater than the System.Collections.Generic.List.Count
         /// of the source System.Collections.Generic.List. -or- The number of elements
         /// from index to the end of the source System.Collections.Generic.List is greater than the available space from arrayIndex to the end of the destination array.</exception>
         public void CopyTo(int index, Bme680HeaterProfileConfig[] array, int arrayIndex, int count)
@@ -290,6 +290,7 @@ namespace System.Collections.Generic
             {
                 throw new ArgumentException();
             }
+
             for (int i = index; i < count; i++)
             {
                 array[arrayIndex + i] = (Bme680HeaterProfileConfig)_list[i];
@@ -302,8 +303,8 @@ namespace System.Collections.Generic
         /// <param name="index">The zero-based System.Collections.Generic.List index at which the range starts.</param>
         /// <param name="count">The number of elements in the range.</param>
         /// <returns> A shallow copy of a range of elements in the source System.Collections.Generic.List.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- count is less than 0.</exception>
-        /// <exception cref="System.ArgumentException">index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- count is less than 0.</exception>
+        /// <exception cref="System.ArgumentException">Index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
         public ListBme680HeaterProfileConfig GetRange(int index, int count)
         {
             if ((index < 0) || (count < 0))
@@ -336,7 +337,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the first occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that starts at index and contains count
         /// number of elements, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List.
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List.
         /// -or- count is less than 0. -or- index and count do not specify a valid section
         /// in the System.Collections.Generic.List.</exception>
         public int IndexOf(Bme680HeaterProfileConfig item, int index, int count) => _list.IndexOf(item, index, count);
@@ -351,7 +352,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the first occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that extends from index to the last
         /// element, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
         public int IndexOf(Bme680HeaterProfileConfig item, int index) => IndexOf(item, index, _list.Count - index);
 
         /// <summary>
@@ -367,7 +368,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based index at which item should be inserted.</param>
         /// <param name="item">The object to insert. The value can be null for reference types.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
         public void Insert(int index, Bme680HeaterProfileConfig item) => _list.Insert(index, item);
 
         /// <summary>
@@ -375,8 +376,8 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based index at which the new elements should be inserted.</param>
         /// <param name="collection">The collection whose elements should be inserted into the System.Collections.Generic.List. The collection itself cannot be null, but it can contain elements that are null, if type Bme680HeaterProfileConfig is a reference type.</param>
-        /// <exception cref="System.ArgumentNullException">collection is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
+        /// <exception cref="System.ArgumentNullException">Collection is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
         public void InsertRange(int index, IEnumerable collection)
         {
             if (collection == null)
@@ -413,7 +414,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the last occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that extends from the first element
         /// to index, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
         public int LastIndexOf(Bme680HeaterProfileConfig item, int index) => LastIndexOf(item, index, _list.Count - index);
 
         /// <summary>
@@ -427,7 +428,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the last occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that contains count number of elements
         /// and ends at index, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List. -or- count is less than 0. -or- index and count do not specify a valid section in the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List. -or- count is less than 0. -or- index and count do not specify a valid section in the System.Collections.Generic.List.</exception>
         public int LastIndexOf(Bme680HeaterProfileConfig item, int index, int count)
         {
             if ((index < 0) || (count < 0) || (index + count > _list.Count))
@@ -474,8 +475,8 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based starting index of the range of elements to remove.</param>
         /// <param name="count">The number of elements to remove.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- count is less than 0.</exception>
-        /// <exception cref="System.ArgumentException">index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- count is less than 0.</exception>
+        /// <exception cref="System.ArgumentException">Index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
         public void RemoveRange(int index, int count)
         {
             if ((index < 0) || (count < 0))
@@ -508,6 +509,5 @@ namespace System.Collections.Generic
 
             return array;
         }
-
     }
 }

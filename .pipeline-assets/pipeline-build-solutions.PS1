@@ -174,7 +174,12 @@ foreach ($folder in $deviceFolders)
         throw "Error restoring '$solutionFile'"
     }
 
-    # for NFC solutions the projects on Card solution needs to be restored too
+    #################################################################
+    ### Some bindings reference other bindings or helper projects ###
+    ### These need to be restored otherwise the build will fail   ###
+    #################################################################
+
+    # NFC solutions require the projects on Card solution to be restored too
     if ($solutionFile.Name -eq "Mfrc522.sln" -or
         $solutionFile.Name -eq "Pn5180.sln" -or 
         $solutionFile.Name -eq "Pn532.sln")
@@ -182,11 +187,14 @@ foreach ($folder in $deviceFolders)
         nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Card\Card.sln
     }
 
-    # Mpu9250 solutions requires Ak8963 to be restored too
+    # Mpu9250 solutions requires Ak8963
     if ($solutionFile.Name -eq "Mpu9250.sln")
     {
         nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Ak8963\Ak8963.sln
     }
+
+    ### done handling references to other bindings or helper libs ###
+    #################################################################
 
     try
     {

@@ -11,15 +11,14 @@ using System;
 namespace System.Collections.Generic
 {
     /// <summary>
-    /// List class for type Byte that has been automatically generated
+    /// List class for type Byte that has been automatically generated.
     /// </summary>
     public class ListByte : IEnumerable
     {
         private ArrayList _list;
 
         /// <summary>
-        /// Initializes a new instance of the System.Collections.Generic.List class that
-        /// is empty and has the default initial capacity.
+        /// Initializes a new instance of the <see cref="ListByte" /> class.
         /// </summary>
         public ListByte()
         {
@@ -27,12 +26,12 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Collections.Generic.List class that
-        /// contains elements copied from the specified collection and has sufficient capacity
+        /// Initializes a new instance of the <see cref="ListByte" /> class.
+        /// Contains elements copied from the specified collection and has sufficient capacity
         /// to accommodate the number of elements copied.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new list.</param>
-        /// <exception cref="System.ArgumentNullException">collection is null</exception>
+        /// <exception cref="System.ArgumentNullException">Collection is null.</exception>
         public ListByte(IEnumerable collection)
         {
             if (collection == null)
@@ -48,17 +47,18 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Collections.Generic.List class that
-        /// is empty and has the specified initial capacity.
+        /// Initializes a new instance of the <see cref="ListByte" /> class.
+        /// Empty and has the specified initial capacity.
         /// </summary>
         /// <param name="capacity">The number of elements that the new list can initially store.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Capacity is less than 0.</exception>
         public ListByte(int capacity)
         {
             if (capacity < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
             _list = new ArrayList();
             _list.Capacity = capacity;
         }
@@ -68,7 +68,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- index is equal to or greater than System.Collections.Generic.List.Count.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- index is equal to or greater than System.Collections.Generic.List.Count.</exception>
         public byte this[int index]
         {
             get
@@ -93,7 +93,7 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Gets the number of elements contained in the System.Collections.Generic.List
+        /// Gets the number of elements contained in the System.Collections.Generic.List.
         /// </summary>
         public int Count => _list.Count;
 
@@ -101,7 +101,7 @@ namespace System.Collections.Generic
         /// Gets or sets the total number of elements the internal data structure can hold
         /// without resizing.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">System.Collections.Generic.List.Capacity is set to a value that is less than System.Collections.Generic.List.Count</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">System.Collections.Generic.List.Capacity is set to a value that is less than System.Collections.Generic.List.Count.</exception>
         public int Capacity
         {
             get => _list.Capacity;
@@ -132,7 +132,7 @@ namespace System.Collections.Generic
         /// <param name="collection">The collection whose elements should be added to the end of the System.Collections.Generic.List.
         /// The collection itself cannot be null, but it can contain elements that are null, if type byte is a reference type.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">collection is null.</exception>
+        /// <exception cref="System.ArgumentNullException">Collection is null.</exception>
         public void AddRange(IEnumerable collection)
         {
             if (collection == null)
@@ -163,9 +163,10 @@ namespace System.Collections.Generic
             private ListByte _collection;
 
             /// <summary>
-            /// Create an enumerator of the collection
+            /// Initializes a new instance of the <see cref="Enumerator" /> struct.
+            /// Create an enumerator of the collection.
             /// </summary>
-            /// <param name="collection"></param>
+            /// <param name="collection">Collection of byte.</param>
             public Enumerator(ListByte collection)
             {
                 _index = -1;
@@ -183,7 +184,8 @@ namespace System.Collections.Generic
             /// Releases all resources used by the System.Collections.Generic.List.Enumerator.
             /// </summary>
             public void Dispose()
-            { }
+            { 
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the System.Collections.Generic.List.
@@ -202,7 +204,7 @@ namespace System.Collections.Generic
             }
 
             /// <summary>
-            /// Move back to first position
+            /// Move back to first position.
             /// </summary>
             public void Reset()
             {
@@ -235,8 +237,8 @@ namespace System.Collections.Generic
         /// <param name="array">The one-dimensional System.Array that is the destination of the elements copied
         /// from System.Collections.Generic.List. The System.Array must have zero-based indexing.</param>
         /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-        /// <exception cref="System.ArgumentNullException">array is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">arrayIndex is less than 0.</exception>
+        /// <exception cref="System.ArgumentNullException">Array is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">ArrayIndex is less than 0.</exception>
         /// <exception cref="System.ArgumentException">The number of elements in the source System.Collections.Generic.List is greater
         /// than the available space from arrayIndex to the end of the destination array.</exception>
         public void CopyTo(byte[] array, int arrayIndex)
@@ -250,7 +252,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="array">The one-dimensional System.Array that is the destination of the elements copied
         /// from System.Collections.Generic.List. The System.Array must have zero-based indexing.</param>
-        /// <exception cref="System.ArgumentNullException">array is null.</exception>
+        /// <exception cref="System.ArgumentNullException">Array is null.</exception>
         /// <exception cref="System.ArgumentException">The number of elements in the source System.Collections.Generic.List is greater
         /// than the number of elements that the destination array can contain.</exception>
         public void CopyTo(byte[] array)
@@ -268,9 +270,9 @@ namespace System.Collections.Generic
         /// from System.Collections.Generic.List. The System.Array must have zero-based indexing.</param>
         /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
         /// <param name="count">The number of elements to copy.</param>
-        /// <exception cref="System.ArgumentNullException">array is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- arrayIndex is less than 0. -or- count is less than 0.</exception>
-        /// <exception cref="System.ArgumentException">index is equal to or greater than the System.Collections.Generic.List.Count
+        /// <exception cref="System.ArgumentNullException">Array is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- arrayIndex is less than 0. -or- count is less than 0.</exception>
+        /// <exception cref="System.ArgumentException">Index is equal to or greater than the System.Collections.Generic.List.Count
         /// of the source System.Collections.Generic.List. -or- The number of elements
         /// from index to the end of the source System.Collections.Generic.List is greater than the available space from arrayIndex to the end of the destination array.</exception>
         public void CopyTo(int index, byte[] array, int arrayIndex, int count)
@@ -289,6 +291,7 @@ namespace System.Collections.Generic
             {
                 throw new ArgumentException();
             }
+
             for (int i = index; i < count; i++)
             {
                 array[arrayIndex + i] = (byte)_list[i];
@@ -301,8 +304,8 @@ namespace System.Collections.Generic
         /// <param name="index">The zero-based System.Collections.Generic.List index at which the range starts.</param>
         /// <param name="count">The number of elements in the range.</param>
         /// <returns> A shallow copy of a range of elements in the source System.Collections.Generic.List.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- count is less than 0.</exception>
-        /// <exception cref="System.ArgumentException">index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- count is less than 0.</exception>
+        /// <exception cref="System.ArgumentException">Index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
         public ListByte GetRange(int index, int count)
         {
             if ((index < 0) || (count < 0))
@@ -335,7 +338,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the first occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that starts at index and contains count
         /// number of elements, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List.
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List.
         /// -or- count is less than 0. -or- index and count do not specify a valid section
         /// in the System.Collections.Generic.List.</exception>
         public int IndexOf(byte item, int index, int count) => _list.IndexOf(item, index, count);
@@ -350,7 +353,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the first occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that extends from index to the last
         /// element, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
         public int IndexOf(byte item, int index) => IndexOf(item, index, _list.Count - index);
 
         /// <summary>
@@ -366,7 +369,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based index at which item should be inserted.</param>
         /// <param name="item">The object to insert. The value can be null for reference types.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
         public void Insert(int index, byte item) => _list.Insert(index, item);
 
         /// <summary>
@@ -374,8 +377,8 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based index at which the new elements should be inserted.</param>
         /// <param name="collection">The collection whose elements should be inserted into the System.Collections.Generic.List. The collection itself cannot be null, but it can contain elements that are null, if type byte is a reference type.</param>
-        /// <exception cref="System.ArgumentNullException">collection is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
+        /// <exception cref="System.ArgumentNullException">Collection is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- index is greater than System.Collections.Generic.List.Count.</exception>
         public void InsertRange(int index, IEnumerable collection)
         {
             if (collection == null)
@@ -412,7 +415,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the last occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that extends from the first element
         /// to index, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List.</exception>
         public int LastIndexOf(byte item, int index) => LastIndexOf(item, index, _list.Count - index);
 
         /// <summary>
@@ -426,7 +429,7 @@ namespace System.Collections.Generic
         /// <returns>The zero-based index of the last occurrence of item within the range of elements
         /// in the System.Collections.Generic.List that contains count number of elements
         /// and ends at index, if found; otherwise, -1.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is outside the range of valid indexes for the System.Collections.Generic.List. -or- count is less than 0. -or- index and count do not specify a valid section in the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is outside the range of valid indexes for the System.Collections.Generic.List. -or- count is less than 0. -or- index and count do not specify a valid section in the System.Collections.Generic.List.</exception>
         public int LastIndexOf(byte item, int index, int count)
         {
             if ((index < 0) || (count < 0) || (index + count > _list.Count))
@@ -449,7 +452,7 @@ namespace System.Collections.Generic
         /// Removes the first occurrence of a specific object from the System.Collections.Generic.List.
         /// </summary>
         /// <param name="item">The object to remove from the System.Collections.Generic.List. The value can be null for reference types.</param>
-        /// <returns>true if item is successfully removed; otherwise, false. This method also returns
+        /// <returns>True if item is successfully removed; otherwise, false. This method also returns
         /// false if item was not found in the System.Collections.Generic.List.</returns>
         public bool Remove(byte item)
         {
@@ -473,8 +476,8 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="index">The zero-based starting index of the range of elements to remove.</param>
         /// <param name="count">The number of elements to remove.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0. -or- count is less than 0.</exception>
-        /// <exception cref="System.ArgumentException">index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index is less than 0. -or- count is less than 0.</exception>
+        /// <exception cref="System.ArgumentException">Index and count do not denote a valid range of elements in the System.Collections.Generic.List.</exception>
         public void RemoveRange(int index, int count)
         {
             if ((index < 0) || (count < 0))
@@ -496,7 +499,9 @@ namespace System.Collections.Generic
         /// <summary>
         /// Copies the elements of the System.Collections.Generic.List to a new array.
         /// </summary>
-        /// <returns> An array containing copies of the elements of the System.Collections.Generic.List.</returns>
+        /// <returns>
+        /// An array containing copies of the elements of the System.Collections.Generic.List.
+        /// </returns>
         public byte[] ToArray()
         {
             byte[] array = new byte[_list.Count];
@@ -507,6 +512,5 @@ namespace System.Collections.Generic
 
             return array;
         }
-
     }
 }
