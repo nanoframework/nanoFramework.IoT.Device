@@ -18,15 +18,15 @@
     <description>This package contains a driver to communicate with the SCD30 via the UART interface.</description>
     <tags>nanoFramework C# csharp netnf scd30</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.158" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.188" />
       <dependency id="nanoFramework.System.IO.Ports" version="1.1.46" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.27" />
-      <dependency id="nanoFramework.System.Math" version="1.5.18" />
+      <dependency id="nanoFramework.System.Math" version="1.5.25" />
       <dependency id="nanoFramework.System.Text" version="1.2.22" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.158" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.188" />
       <dependency id="UnitsNet.nanoFramework.Length" version="4.148.0" />
       <dependency id="UnitsNet.nanoFramework.Pressure" version="4.148.0" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.148.0" />

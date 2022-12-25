@@ -19,23 +19,23 @@
     <summary>Iot.Device.Ccs811 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot lcd</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.141" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.158" />
-      <dependency id="nanoFramework.ResourceManager" version="1.2.7" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
-      <dependency id="nanoFramework.System.Collections" version="1.4.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.188" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.189" />
+      <dependency id="nanoFramework.ResourceManager" version="1.2.13" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.18" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.3.22" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.158" />
-      <dependency id="nanoFramework.System.Drawing" version="1.2.158" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.6" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.3.32" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.188" />
+      <dependency id="nanoFramework.System.Drawing" version="1.2.188" />
       <dependency id="nanoFramework.System.IO.FileSystem" version="1.1.15" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.27" />
-      <dependency id="nanoFramework.System.Math" version="1.5.18" />
+      <dependency id="nanoFramework.System.Math" version="1.5.25" />
       <dependency id="nanoFramework.System.Text" version="1.2.22" />
-      <dependency id="nanoFramework.System.Threading" version="1.1.8" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.19" />
     </dependencies>
   </metadata>
   <files>

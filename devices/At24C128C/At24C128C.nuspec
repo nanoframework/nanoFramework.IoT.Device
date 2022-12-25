@@ -19,8 +19,8 @@
     <summary>Iot.Device.At24C128C assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot AT24C128C</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.6" />
     </dependencies>
   </metadata>
   <files>
