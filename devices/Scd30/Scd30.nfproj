@@ -39,15 +39,17 @@
     <Compile Include="Scd30Sensor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.1.42088, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Events.1.11.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.14.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Native">
-      <HintPath>packages\nanoFramework.Runtime.Native.1.5.4\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Native, Version=1.6.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Native.1.6.6\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=1.2.22.3995, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Text.1.2.22\lib\nanoFramework.System.Text.dll</HintPath>
@@ -69,8 +71,8 @@
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.27\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Math, Version=1.5.18.41298, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.1.5.18\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.25.33130, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.5.25\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=4.148.0.0, Culture=neutral, PublicKeyToken=null">

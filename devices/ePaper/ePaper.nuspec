@@ -19,11 +19,11 @@
     <summary>Iot.Device.ePaper assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf epd ePaper Iot.Device.Display.ePaper</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.22" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.3.22" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.3.32" />
       <dependency id="nanoFramework.System.Drawing" version="1.2.158" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.1" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
     </dependencies>
   </metadata>
   <files>
