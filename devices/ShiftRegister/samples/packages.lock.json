@@ -22,15 +22,15 @@
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.22, 1.1.22]",
-        "resolved": "1.1.22",
-        "contentHash": "yR+uD2YZDLJMP0E0zcQk+kEYM2/Yvs6FR8jYJe9FgaETJeyLdIyRXISmb5BaF4vbkaCC9jt60cpzg1xvmKDwcQ=="
+        "requested": "[1.1.28, 1.1.28]",
+        "resolved": "1.1.28",
+        "contentHash": "G/l2hkWAwQoMsCHJUK0iZsavYjKykewOXlLF1+fDUylOuBvoHo/iY5Lec+sAnJ3WMcoY2Uo6miYrCMI07g59Tg=="
       },
       "nanoFramework.System.Device.Spi": {
         "type": "Direct",
-        "requested": "[1.3.32, 1.3.32]",
-        "resolved": "1.3.32",
-        "contentHash": "/h4HQM5VmJsrKCgJ5tsa23E8rXRKPeDPRFNoeNIVcdfiCpnrcEqJFrwZNlPj/gTLYAKEx3dI58Wq3c00Kq9Yzw=="
+        "requested": "[1.3.34, 1.3.34]",
+        "resolved": "1.3.34",
+        "contentHash": "BLeWX1ErZYfOCKByVXdkC3eMF7gWON7rKBrlSJtFCDtbAy6K/LZPo9d77ufiYqHfgrbmRhd+I7KqG+EQnonsQA=="
       },
       "nanoFramework.System.Threading": {
         "type": "Direct",
