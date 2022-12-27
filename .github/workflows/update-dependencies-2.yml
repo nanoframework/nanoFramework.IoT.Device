@@ -24,5 +24,3 @@ jobs:
       branchToPr: 'develop'      
       solutionsToCheck: |
         ShiftRegister.sln
-    secrets:
-      githubAuth: ${{ secrets.NFBOT_GITHUB_ACTIONS }}

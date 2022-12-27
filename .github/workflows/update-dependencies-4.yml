@@ -26,5 +26,3 @@ jobs:
       branchToPr: 'develop'      
       solutionsToCheck: |
         Ft6xx6x.sln
-    secrets:
-      githubAuth: ${{ secrets.NFBOT_GITHUB_ACTIONS }}

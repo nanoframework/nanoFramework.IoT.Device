@@ -24,5 +24,3 @@ jobs:
       workingDirectory: devices
       branchToPr: 'develop'
       exclusionList: 'Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper'
-    secrets:
-      githubAuth: ${{ secrets.NFBOT_GITHUB_ACTIONS }}

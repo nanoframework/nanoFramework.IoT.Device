@@ -30,5 +30,3 @@ jobs:
         System.Drawing.sln
         System.Numerics.sln
         WeatherHelper.sln
-    secrets:
-      githubAuth: ${{ secrets.NFBOT_GITHUB_ACTIONS }}
