@@ -7,8 +7,8 @@ name: Update dependencies (round 1)
 
 on:
   schedule:
-    # At 00:00 UTC every day.
-    - cron:  '00 00 * * *'
+    # At 00:00 UTC.
+    - cron:  '00 00 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
 
@@ -16,6 +16,7 @@ jobs:
   update-nuget-dependencies:
     name: nanoFramework
     uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
     with:
       timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
       workingDirectory: devices
