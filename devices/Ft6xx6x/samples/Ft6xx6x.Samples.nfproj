@@ -120,8 +120,8 @@
       <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.158\lib\System.Diagnostics.Stopwatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.FileSystem, Version=1.1.15.5532, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.1.15\lib\System.IO.FileSystem.dll</HintPath>
+    <Reference Include="System.IO.FileSystem, Version=1.1.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.1.18\lib\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Ports, Version=1.1.46.59502, Culture=neutral, PublicKeyToken=c07d481e9758c731">
