@@ -4,15 +4,15 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.12.0, 1.12.0]",
-        "resolved": "1.12.0",
-        "contentHash": "qQrFNXmJiStMC4VXk5cVMOJp23/qlT9FW5i9i+igwQVwraQTtvpkam8yK1hj992jqrbjoCIFZP4Hw9E8H0pB7w=="
+        "requested": "[1.14.2, 1.14.2]",
+        "resolved": "1.14.2",
+        "contentHash": "j1mrz4mitl5LItvmHMsw1aHzCAfvTTgIkRxA0mhs5mSpctJ/BBcuNwua5j3MspfRNKreCQPy/qZy/D9ADLL/PA=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.1, 1.11.1]",
-        "resolved": "1.11.1",
-        "contentHash": "hHRPhNagq1T0oN9QJfPOqreuWUV42DJamT0f7GrPQvrOYcr9ne4YTZq8MIpudvKtSALs50iYqxJ+raOF2CiNsA=="
+        "requested": "[1.11.6, 1.11.6]",
+        "resolved": "1.11.6",
+        "contentHash": "xkltRh/2xKaZ9zmPHbVr32s1k+e17AInUBhzxKKkUDicJKF39yzTShSklb1OL6DBER5z71SpkGLyl9IdMK9l6w=="
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",
-        "requested": "[1.1.46, 1.1.46]",
-        "resolved": "1.1.46",
-        "contentHash": "rMJ06tS/W82+AWWJ09BvgldqcK8YRkezzrmiYyiarr3BVLlIuhoNfXOzX1zD+AEA7XmHZx0WZZFExZvlaC7ZSQ=="
+        "requested": "[1.1.54, 1.1.54]",
+        "resolved": "1.1.54",
+        "contentHash": "sy3n8nRu/GS35Cz4Qy6HU3xrnZ1DO2EufLNeMLN0nYPnk6Ike+0PWzKsazAhosZ5vW5AeIYaQC0PjWILNgoW8A=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
