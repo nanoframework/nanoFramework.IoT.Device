@@ -11,6 +11,7 @@ on:
     - cron:  '00 00 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
+  workflow_dispatch:
 
 jobs:
   update-nuget-dependencies:
