@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Multiplexing", "Multiplexing.nfproj", "{82EFB396-B670-412D-871A-5C32EE51D472}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Multiplexing.UnitTests", "..\..\tests\Iot.Device.Multiplexing.UnitTests\Iot.Device.Multiplexing.UnitTests.nfproj", "{C8E5B1F1-18EF-462F-8DC4-791FE3AE4C46}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AB4A764-BE8D-4ACD-A7BE-728F39CE8923}"
 	ProjectSection(SolutionItems) = preProject
 		.runsettings = .runsettings
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		version.json = version.json
 	EndProjectSection
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Iot.Device.Multiplexing.UnitTests", "Iot.Device.Multiplexing.UnitTests\Iot.Device.Multiplexing.UnitTests.nfproj", "{C8E5B1F1-18EF-462F-8DC4-791FE3AE4C46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
