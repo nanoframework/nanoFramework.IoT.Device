@@ -19,7 +19,7 @@
     <tags>nanoFramework C# csharp netmf netnf iot ft6xx6x</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.6" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
     </dependencies>
   </metadata>
   <files>
