@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf iot numerics</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Math" version="1.5.25" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
     </dependencies>
   </metadata>
   <files>
