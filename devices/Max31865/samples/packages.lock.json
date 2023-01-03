@@ -34,27 +34,27 @@
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.25, 1.5.25]",
-        "resolved": "1.5.25",
-        "contentHash": "MRrMdssEsDEz8JyPXFjSUpjh35JPnAeZ3/jSG9zkkprjPZfUv5JCzGa69Vp01GIQux83YgnU8ayJhaSfqGhoDQ=="
+        "requested": "[1.5.29, 1.5.29]",
+        "resolved": "1.5.29",
+        "contentHash": "PyufZzrtDA7HKCbrbOEbqDhaWK5vflJmAi7RJ+a4cPLMmO9cSWc0dUbylMg6Wxg7Ggu1VmcPqfCIZPFHbx5/2A=="
       },
       "UnitsNet.nanoFramework.ElectricResistance": {
         "type": "Direct",
-        "requested": "[4.148.0, 4.148.0]",
-        "resolved": "4.148.0",
-        "contentHash": "0kHOyx2lY2ktiTakXVQ0h/1hT5mZ/kcA6a/AaeA5nuy8PqlQEKJQcC2srUd4DHCHUj7HnJEoEX5Ijfi9LJBB3w=="
+        "requested": "[5.0.0-rc009, 5.0.0-rc009]",
+        "resolved": "5.0.0-rc009",
+        "contentHash": "LFmb6naE/EE0/+zLxYW6SwzwHHONv75FZTSp5OAK6UyfDPopbgGsgKps41Q0ZMVJMtC8QPqpb3QzeH5tcXYkPw=="
       },
       "UnitsNet.nanoFramework.Frequency": {
         "type": "Direct",
-        "requested": "[4.148.0, 4.148.0]",
-        "resolved": "4.148.0",
-        "contentHash": "+jbX8hrJWb0H63EdL7ysutCcmOe+0e3ZblSVXLvkd0k1y7bAaWV+jYjMJ8y5wflgGlgtmHN+55uh+s+uk3weFg=="
+        "requested": "[5.0.0-rc009, 5.0.0-rc009]",
+        "resolved": "5.0.0-rc009",
+        "contentHash": "1vc0O+YyzaXT6WuyZigvq7Psf8Oo+1h2hwpBPYdihIWXw953KWYTw769X1qosNm928i5DXCzyTlqvIFRChizSA=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[4.148.0, 4.148.0]",
-        "resolved": "4.148.0",
-        "contentHash": "Govk4JMC9t6ZgjPtEcE2lTQsK2COds8AK8I9Zm0wx1tpCk7XPglnPiq+ofDRrkLUCrMAfXxm9Cf3+/VqJXnW0Q=="
+        "requested": "[5.0.0-rc009, 5.0.0-rc009]",
+        "resolved": "5.0.0-rc009",
+        "contentHash": "6yRKIxhiD4rYfewnRpYhi9cy3FjDCsyR31qwvEA2jrd8sUFqUva0eEL2l6GmtZYlzFI5D9KRG4pz5W4M7wkXYQ=="
       }
     }
   }
