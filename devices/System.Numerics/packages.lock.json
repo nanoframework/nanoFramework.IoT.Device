@@ -10,9 +10,9 @@
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.25, 1.5.25]",
-        "resolved": "1.5.25",
-        "contentHash": "MRrMdssEsDEz8JyPXFjSUpjh35JPnAeZ3/jSG9zkkprjPZfUv5JCzGa69Vp01GIQux83YgnU8ayJhaSfqGhoDQ=="
+        "requested": "[1.5.29, 1.5.29]",
+        "resolved": "1.5.29",
+        "contentHash": "PyufZzrtDA7HKCbrbOEbqDhaWK5vflJmAi7RJ+a4cPLMmO9cSWc0dUbylMg6Wxg7Ggu1VmcPqfCIZPFHbx5/2A=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
