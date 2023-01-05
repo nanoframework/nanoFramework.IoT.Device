@@ -49,7 +49,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Drawing.1.2.158\lib\System.Drawing.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Drawing.1.2.211\lib\System.Drawing.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

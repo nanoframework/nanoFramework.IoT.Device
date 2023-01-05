@@ -26,7 +26,7 @@
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
       <dependency id="nanoFramework.System.Math" version="1.5.29" />
       <dependency id="nanoFramework.System.Text" version="1.2.37" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.158" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.211" />
       <dependency id="UnitsNet.nanoFramework.Length" version="5.0.0-rc009" />
       <dependency id="UnitsNet.nanoFramework.Pressure" version="5.0.0-rc009" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.0.0-rc009" />
