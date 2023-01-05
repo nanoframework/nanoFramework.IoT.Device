@@ -10,15 +10,15 @@
       },
       "nanoFramework.Logging": {
         "type": "Direct",
-        "requested": "[1.1.60, 1.1.60]",
-        "resolved": "1.1.60",
-        "contentHash": "KC8uVePUAp2DamIP7PXRNxnTwzyE5623U4LDnbJB4wRAsjTdASQRl1O1NnPs6Jpn9c1uU6EVylkzeOYTgcdDyQ=="
+        "requested": "[1.1.63, 1.1.63]",
+        "resolved": "1.1.63",
+        "contentHash": "gutjQRIKKJc91qKzkGtpA8uvTpNUK1r2OuEy7C8W+dEICkFgR+z1itcG7gKv9I12oiHyurc/3mMgDyz8CsPD3A=="
       },
       "nanoFramework.Logging.Stream": {
         "type": "Direct",
-        "requested": "[1.1.60, 1.1.60]",
-        "resolved": "1.1.60",
-        "contentHash": "N1fqtU3h/0UdrfINOct/c+OM9XJNVffbAw2v3VDlm/s9qUs/fxdLLntzKtT8NxkwCeyCbYivy6NxspZt566o5g=="
+        "requested": "[1.1.63, 1.1.63]",
+        "resolved": "1.1.63",
+        "contentHash": "D+gBbTH/6fguYugkI6MC203N+cItDi6o/Ivulxxfa5EcjLraT1dVUpPxtonhKr7TpZWbQSWQ0W9EBvFxfhICwQ=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.158, 1.2.158]",
-        "resolved": "1.2.158",
-        "contentHash": "hLCGUGEwKfC2NK02N0n8Yvhin9lTTs5pqnF61fVxHKoNvOcySzhAB0QHikZq14sfUwYb2tQ62z1GLoW9wnyX+Q=="
+        "requested": "[1.2.211, 1.2.211]",
+        "resolved": "1.2.211",
+        "contentHash": "A4lNu8dmYeKM6vOOiCkCO2FWe+k+mMW3FlcePoXZd09wPo5Y6JGTlkljIZKBqu4WjvFUnMOcBA9oxB2nUZ08HQ=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
