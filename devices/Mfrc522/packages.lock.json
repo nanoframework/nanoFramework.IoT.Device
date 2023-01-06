@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Card": {
         "type": "Direct",
-        "requested": "[1.2.203, 1.2.203]",
-        "resolved": "1.2.203",
-        "contentHash": "y7ctFdhEvoYu41oSmundoQghguV68rwOKc5VE0stm80/RdNugOHj4QW4rvxUCJ+FNgerrCAOMdXkcpWxWnvAMA=="
+        "requested": "[1.2.212, 1.2.212]",
+        "resolved": "1.2.212",
+        "contentHash": "ssdv70iTW2DMmm7L0KilSdLJ3WQNVK6DXzDeH82Z9GHW4PYVyWuUVgjVemQY+Oi4ZXqU7CWtHe68TZzNYOHVnQ=="
       },
       "nanoFramework.Logging": {
         "type": "Direct",
