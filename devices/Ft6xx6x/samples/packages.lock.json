@@ -28,9 +28,9 @@
       },
       "nanoFramework.Iot.Device.Bmm150": {
         "type": "Direct",
-        "requested": "[1.2.215, 1.2.215]",
-        "resolved": "1.2.215",
-        "contentHash": "+oyBTfiP55DdZuUzPJ4UNSRto8xlYUHCms6BK4ct7HHpCMOfrPXJPy+xKyYYG0SQI2UTGDOcpslOvuSNsmkfMA=="
+        "requested": "[1.2.217, 1.2.217]",
+        "resolved": "1.2.217",
+        "contentHash": "SvQGKx7dXpnRSBZ7TCMJ/SA1j28KrUbGsHXuWCC+yKdc6amvgWGNzcCaciIsbu3ODfdoR8enFr1lD0igIjSHXA=="
       },
       "nanoFramework.Iot.Device.Button": {
         "type": "Direct",
@@ -52,9 +52,9 @@
       },
       "nanoFramework.Iot.Device.Mpu6886": {
         "type": "Direct",
-        "requested": "[1.2.212, 1.2.212]",
-        "resolved": "1.2.212",
-        "contentHash": "OdkZ3L7vIzr5b4lDKxhT12gT34f24WdnfE3NxPIDiFDqKoTr7jXlsf/utQhM/+cmPRbwfVtHDV36lksxLul/IA=="
+        "requested": "[1.2.217, 1.2.217]",
+        "resolved": "1.2.217",
+        "contentHash": "qvQP+VT2Ww5MHRDSn7v1gNTm8wPbnHaGVAABTXeus/iEZkI6EGxwsqBh6V71PEYG7QW9t38QVTtTu4gzEa+GXA=="
       },
       "nanoFramework.Iot.Device.Rtc": {
         "type": "Direct",
@@ -64,9 +64,9 @@
       },
       "nanoFramework.M5Core2": {
         "type": "Direct",
-        "requested": "[1.1.98, 1.1.98]",
-        "resolved": "1.1.98",
-        "contentHash": "YN84GAqAGYP116ftYRhe+0Us7BOGyiD3W9gZ93eMxP5bfB9Tx4/wB2dVL8gmBnHbHMYMUruy1F/Sw/66tq3Meg=="
+        "requested": "[1.1.100, 1.1.100]",
+        "resolved": "1.1.100",
+        "contentHash": "JAGnqY73JGYQyvFF9Er6nTddlpdfbmStEuh+E1ArAPX763tHQbTlzswfD37yyjmWAvrk0IbO04Cu/DELYVN2+A=="
       },
       "nanoFramework.ResourceManager": {
         "type": "Direct",
@@ -124,9 +124,9 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.158, 1.2.158]",
-        "resolved": "1.2.158",
-        "contentHash": "PH/T3yyGEx1q+QUm190pjawi3FT4P6Tfxpi/8SUuHZv6DZ9crt2swx2QbdNrmUQrFF7NXe7CGKeEhBzSfrPy/g=="
+        "requested": "[1.2.216, 1.2.216]",
+        "resolved": "1.2.216",
+        "contentHash": "j10+Y5KT+f0p7czUA+sJhvVYfJBu7D3cfFiXAsx0bUgBn53J87cda3AeXukU0U0sXhhNWGmmz3XWBS/qMCL9eg=="
       },
       "nanoFramework.System.Device.Pwm": {
         "type": "Direct",
