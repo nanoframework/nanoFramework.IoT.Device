@@ -17,6 +17,8 @@ The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for
 
 ## Board
 
+Address on the I2C bus: Ssd1306.DefaultI2cAddress 0x3C
+
 ![Connection schematics](./Ssd1306_I2c_PiOled.png)
 
 Version with 7-pin I2C/SPI
