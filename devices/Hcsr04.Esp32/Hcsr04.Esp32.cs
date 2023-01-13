@@ -93,7 +93,13 @@ namespace Iot.Device.Hcsr04.Esp32
             // Make sure we don't measure before the 60 ms
             while (DateTime.UtcNow.Ticks - _lastMeasurment < 60 * TimeSpan.TicksPerMillisecond)
             {
-                Thread.Sleep(TimeSpan.FromTicks(DateTime.UtcNow.Ticks - _lastMeasurment));
+               if (DateTime.UtcNow.Ticks <= _lastMeasurment )
+               {
+                   _lastMeasurment = DateTime.UtcNow.Ticks;
+                   continue;
+               }
+               
+               Thread.Sleep(TimeSpan.FromTicks(DateTime.UtcNow.Ticks - _lastMeasurment));
             }
 
             _lastMeasurment = DateTime.UtcNow.Ticks;

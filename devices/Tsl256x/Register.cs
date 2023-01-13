@@ -22,6 +22,7 @@ namespace Iot.Device.Tsl256x
         DATA0HIGH = 0x0D,
         DATA1LOW = 0x0E,
         DATA1HIGH = 0x0F,
+
         // Those are the commands and flags to add
         CMD = 0b1000_0000,
         CLEAR = 0b0100_0000,

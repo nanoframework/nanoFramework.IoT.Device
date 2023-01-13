@@ -38,8 +38,8 @@ namespace Iot.Device.Bmxx80
         public Bme280(I2cDevice i2cDevice)
             : base(DeviceId, i2cDevice)
         {
-            _bme280Calibration = (Bme280CalibrationData)_calibrationData;
-            _communicationProtocol = CommunicationProtocol.I2c;
+            _bme280Calibration = (Bme280CalibrationData)CalibrationData;
+            CommunicationProtocol1 = CommunicationProtocol.I2c;
         }
 
         /// <summary>
@@ -63,14 +63,14 @@ namespace Iot.Device.Bmxx80
                 }
 
                 byte status = Read8BitsFromRegister((byte)Bme280Register.CTRL_HUM);
-                status = (byte)(status & 0b_1111_1000);
+                status = (byte)(status & 0b1111_1000);
                 status = (byte)(status | (byte)value);
 
                 SpanByte command = new[]
                 {
                     (byte)Bme280Register.CTRL_HUM, status
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
 
                 // Changes to the above register only become effective after a write operation to "CTRL_MEAS".
                 byte measureState = Read8BitsFromRegister((byte)Bmx280Register.CTRL_MEAS);
@@ -79,7 +79,7 @@ namespace Iot.Device.Bmxx80
                 {
                     (byte)Bmx280Register.CTRL_MEAS, measureState
                 };
-                _i2cDevice.Write(command);
+                I2cDevice.Write(command);
                 _humiditySampling = value;
             }
         }
@@ -101,7 +101,7 @@ namespace Iot.Device.Bmxx80
         /// <returns>The time it takes for the chip to read data in milliseconds rounded up.</returns>
         public override int GetMeasurementDuration()
         {
-            return s_osToMeasCycles[(int)PressureSampling] + s_osToMeasCycles[(int)TemperatureSampling] + s_osToMeasCycles[(int)HumiditySampling];
+            return OsToMeasCycles[(int)PressureSampling] + OsToMeasCycles[(int)TemperatureSampling] + OsToMeasCycles[(int)HumiditySampling];
         }
 
         /// <summary>
@@ -116,11 +116,11 @@ namespace Iot.Device.Bmxx80
                 Thread.Sleep(GetMeasurementDuration());
             }
 
-            TryReadTemperatureCore(out Temperature temperature);
-            TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
-            TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
+            var temperatureIsValid = TryReadTemperatureCore(out Temperature temperature);
+            var presureIsValid = TryReadPressureCore(out Pressure pressure, skipTempFineRead: true);
+            var humidityIsValid = TryReadHumidityCore(out RelativeHumidity humidity, skipTempFineRead: true);
 
-            return new Bme280ReadResult(temperature, pressure, humidity);
+            return new Bme280ReadResult(temperature, temperatureIsValid, pressure, presureIsValid, humidity, humidityIsValid);
         }
 
         /// <summary>
@@ -141,10 +141,10 @@ namespace Iot.Device.Bmxx80
         {
             // The humidity is calculated using the compensation formula in the BME280 datasheet.
             double varH = TemperatureFine - 76800.0;
-            varH = (adcHumidity - (_bme280Calibration.DigH4 * 64.0 + _bme280Calibration.DigH5 / 16384.0 * varH)) *
-                (_bme280Calibration.DigH2 / 65536.0 * (1.0 + _bme280Calibration.DigH6 / 67108864.0 * varH *
-                                               (1.0 + _bme280Calibration.DigH3 / 67108864.0 * varH)));
-            varH *= 1.0 - _bme280Calibration.DigH1 * varH / 524288.0;
+            varH = (adcHumidity - ((_bme280Calibration.DigH4 * 64.0) + ((_bme280Calibration.DigH5 / 16384.0) * varH))) *
+                ((_bme280Calibration.DigH2 / 65536.0) * (1.0 + ((_bme280Calibration.DigH6 / 67108864.0) * varH)) *
+                                               (1.0 + (_bme280Calibration.DigH3 / (67108864.0 * varH))));
+            varH *= 1.0 - (_bme280Calibration.DigH1 * (varH / 524288.0));
 
             if (varH > 100)
             {

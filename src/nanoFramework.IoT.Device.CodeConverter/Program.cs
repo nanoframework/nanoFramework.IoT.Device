@@ -380,7 +380,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             if(projectType == ProjectType.Regular)
             {
-                packageReferences = packageReferences.Append(@"  <package id=""Nerdbank.GitVersioning"" version=""3.5.103"" developmentDependency=""true"" targetFramework=""netnanoframework10"" />");
+                packageReferences = packageReferences.Append(@"  <package id=""Nerdbank.GitVersioning"" version=""3.5.103"" developmentDependency=""true"" targetFramework=""netnano1.0"" />");
             }
 
             if (packageReferences.Any())

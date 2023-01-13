@@ -15,16 +15,16 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.SparkFunLcd for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET IoT Core binding SparkFun LCD for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.SparkFunLcd assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.SparkFunLcd</tags>
+    <tags>nanoFramework C# csharp netmf netnf iot sparkfun lcd</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.5.4" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Drawing" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="nanoFramework.System.Drawing" version="1.2.211" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
     </dependencies>
   </metadata>
   <files>

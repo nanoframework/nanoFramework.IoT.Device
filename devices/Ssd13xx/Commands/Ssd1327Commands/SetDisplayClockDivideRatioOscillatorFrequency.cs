@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetDisplayClockDivideRatioOscillatorFrequency command
+    /// Represents SetDisplayClockDivideRatioOscillatorFrequency command.
     /// </summary>
     public class SetDisplayClockDivideRatioOscillatorFrequency : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetDisplayClockDivideRatioOscillatorFrequency" /> class.
         /// This command sets the divide ratio to generate DCLK (Display Clock) from CLK and
         /// programs the oscillator frequency Fosc that is the source of CLK if CLS pin is pulled high.
         /// </summary>
@@ -38,12 +39,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         public byte Id => 0xB3;
 
         /// <summary>
-        /// Display clock divide ratio with a range of 0-15.
+        /// Gets display clock divide ratio with a range of 0-15.
         /// </summary>
         public byte DisplayClockDivideRatio { get; }
 
         /// <summary>
-        /// Oscillator frequency with a range of 0-15.
+        /// Gets oscillator frequency with a range of 0-15.
         /// </summary>
         public byte OscillatorFrequency { get; }
 

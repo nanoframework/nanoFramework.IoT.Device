@@ -11,20 +11,30 @@ namespace Iot.Device.Bmxx80.ReadResult
     public class Bme280ReadResult : Bmp280ReadResult
     {
         /// <summary>
-        /// Collected humidity measurement.
+        /// Gets the collected humidity measurement.
         /// </summary>
         public RelativeHumidity Humidity { get; }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Bme280ReadResult"/> class.
+        /// Gets a value indicating whether last humidity value read was successful.
+        /// </summary>
+        public bool HumidityIsValid { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bme280ReadResult" /> class.
         /// </summary>
         /// <param name="temperature">The <see cref="Temperature"/> measurement.</param>
+        /// <param name="temperatureIsValid">Last temperature value read was successful.</param>
         /// <param name="pressure">The <see cref="Pressure"/> measurement.</param>
+        /// <param name="pressureIsValid">Last pressure value read was successful.</param>
         /// <param name="humidity">The humidity measurement.</param>
-        public Bme280ReadResult(Temperature temperature, Pressure pressure, RelativeHumidity humidity)
-            : base(temperature, pressure)
+        /// <param name="humidityIsValid">Last humidity value read was successful.</param>
+        public Bme280ReadResult(Temperature temperature, bool temperatureIsValid, Pressure pressure, bool pressureIsValid, RelativeHumidity humidity, bool humidityIsValid)
+            : base(temperature, temperatureIsValid, pressure, pressureIsValid)
         {
             Humidity = humidity;
+
+            HumidityIsValid = humidityIsValid;
         }
     }
 }

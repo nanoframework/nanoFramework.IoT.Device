@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetComOutputScanDirection command
+    /// Represents SetComOutputScanDirection command.
     /// </summary>
     public class SetComOutputScanDirection : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetComOutputScanDirection" /> class.
         /// This command sets the scan direction of the COM output, allowing layout flexibility
         /// in the OLED module design. Additionally, the display will show once this command is
         /// issued. For example, if this command is sent during normal display then the graphic
@@ -29,6 +30,7 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         public byte Id => (byte)(NormalMode ? 0xC0 : 0xC8);
 
         /// <summary>
+        /// Gets or sets a value indicating whether normal mode is enabled.
         /// Scan from COM0 to COM[N –1] when TRUE.
         /// Scan from COM[N - 1] to COM0 when FALSE.
         /// </summary>

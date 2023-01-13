@@ -48,8 +48,14 @@ namespace Iot.Device.Bmxx80.sample
                 var readResult = i2CBmp280.Read();
 
                 // Print out the measured data
-                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                if (readResult.TemperatureIsValid)
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
+                if (readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
 
                 // Note that if you already have the pressure value and the temperature, you could also calculate altitude by using
                 // double altValue = WeatherHelper.CalculateAltitude(preValue, defaultSeaLevelPressure, tempValue) which would be more performant.
@@ -67,11 +73,17 @@ namespace Iot.Device.Bmxx80.sample
                 readResult = i2CBmp280.Read();
 
                 // Print out the measured data
-                Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
-                Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                if (readResult.TemperatureIsValid)
+                {
+                    Debug.WriteLine($"Temperature: {readResult.Temperature.DegreesCelsius}\u00B0C");
+                }
+                if (readResult.PressureIsValid)
+                {
+                    Debug.WriteLine($"Pressure: {readResult.Pressure.Hectopascals}hPa");
+                }
 
                 // This time use altitude calculation
-                if (!readResult.Temperature.Equals(null) && !readResult.Pressure.Equals(null))
+                if (readResult.TemperatureIsValid && readResult.PressureIsValid)
                 {
                     altValue = WeatherHelper.CalculateAltitude((Pressure)readResult.Pressure, defaultSeaLevelPressure, (Temperature)readResult.Temperature);
                     Debug.WriteLine($"Calculated Altitude: {altValue.Meters}m");
@@ -81,7 +93,7 @@ namespace Iot.Device.Bmxx80.sample
                 // Change the stationHeight value above to get a correct reading, but do not be tempted to insert
                 // the value obtained from the formula above. Since that estimates the altitude based on pressure,
                 // using that altitude to correct the pressure won't work.
-                if (!readResult.Temperature.Equals(null) && !readResult.Pressure.Equals(null))
+                if (readResult.TemperatureIsValid && readResult.PressureIsValid)
                 {
                     var correctedPressure = WeatherHelper.CalculateBarometricPressure((Pressure)readResult.Pressure, (Temperature)readResult.Temperature, stationHeight);
                     Debug.WriteLine($"Pressure corrected for altitude {stationHeight}m (with average humidity): {correctedPressure.Hectopascals} hPa");

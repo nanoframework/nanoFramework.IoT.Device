@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.ServoMotor</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.ServoMotor</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -16,12 +15,12 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.ServoMotor for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET IoT Core binding Servo Motor for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.ServoMotor assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.ServoMotor</tags>
+    <tags>nanoFramework C# csharp netmf netnf iot servo motor</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="1.0.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="1.1.6" />
     </dependencies>
   </metadata>
   <files>

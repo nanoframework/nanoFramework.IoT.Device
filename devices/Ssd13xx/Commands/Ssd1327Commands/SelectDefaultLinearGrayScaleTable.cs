@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SelectDefaultLinearGrayScaleTable command
+    /// Represents SelectDefaultLinearGrayScaleTable command.
     /// </summary>
     public class SelectDefaultLinearGrayScaleTable : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SelectDefaultLinearGrayScaleTable" /> class.
         /// This command reloads the preset linear Gray Scale table.
         /// </summary>
         public SelectDefaultLinearGrayScaleTable()

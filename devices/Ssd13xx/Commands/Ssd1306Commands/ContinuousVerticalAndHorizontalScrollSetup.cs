@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents ContinuousVerticalAndHorizontalScrollSetup command
+    /// Represents ContinuousVerticalAndHorizontalScrollSetup command.
     /// </summary>
     public class ContinuousVerticalAndHorizontalScrollSetup : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContinuousVerticalAndHorizontalScrollSetup" /> class.
         /// This command consists of 6 consecutive bytes to set up the continuous vertical
         /// scroll parameters and determines the scrolling start page, end page, scrolling
         /// speed and vertical scrolling offset.
@@ -40,32 +41,32 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => (byte)ScrollType;
 
         /// <summary>
-        /// Vertical/Horizontal scroll type.
+        /// Gets Vertical/Horizontal scroll type.
         /// </summary>
         public VerticalHorizontalScrollType ScrollType { get; }
 
         /// <summary>
-        /// Start page address with a range of 0-7.
+        /// Gets start page address with a range of 0-7.
         /// </summary>
         public PageAddress StartPageAddress { get; }
 
         /// <summary>
-        /// Frame frequency type with a range of 0-7.
+        /// Gets frame frequency type with a range of 0-7.
         /// </summary>
         public FrameFrequencyType FrameFrequencyType { get; }
 
         /// <summary>
-        /// End page address with a range of 0-7.
+        /// Gets end page address with a range of 0-7.
         /// </summary>
         public PageAddress EndPageAddress { get; }
 
         /// <summary>
-        /// Vertical scrolling offset with a range of 0-63.
+        /// Gets vertical scrolling offset with a range of 0-63.
         /// </summary>
         public byte VerticalScrollingOffset { get; }
 
@@ -79,7 +80,7 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         }
 
         /// <summary>
-        /// Vertical and horizontal scroll
+        /// Vertical and horizontal scroll.
         /// </summary>
         public enum VerticalHorizontalScrollType
         {
