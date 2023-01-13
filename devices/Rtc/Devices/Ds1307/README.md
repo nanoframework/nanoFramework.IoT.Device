@@ -3,7 +3,7 @@ The DS1307 serial real-time clock (RTC) is a lowpower, full binary-coded decimal
 
 ## Sensor Image
 
-![sensor](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ds1307/sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

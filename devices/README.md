@@ -252,7 +252,7 @@
 
 ## EEPROM
 
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.At24C128C.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.At24C128C/) [AT24C128C - I2C EEPROM read/write](At24C128C/README.md)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.At24cxx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.At24cxx/) [At24cxx family of I2C EEPROM](At24cxx/README.md)
 
 ## Iot.Device helpers and common
 

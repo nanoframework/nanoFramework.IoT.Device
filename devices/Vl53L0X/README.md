@@ -10,7 +10,7 @@ You will find this device as ["Distance Sensor"](https://www.dexterindustries.co
 
 ## Board
 
-![VL53L0X](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Vl53L0x/VL53L0X.jpg)
+![VL53L0X](./VL53L0X.jpg)
 
 ## Usage
 

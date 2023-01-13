@@ -5,7 +5,7 @@ The sensors of the AMG88xx family of infrared array sensors have 64 thermophile 
 The manufacturer (Panasonic) names the following applications: home appliances (microwaves and air-conditioners), building automation (people counting, air conditioning control), home automation (people detection), factory automation (fault prevention). The sensor delivers a heat image through its digital interface (I2C) at a rate of 1 or 10 frames per second.
 Additionally an interrupt pin can raise an event when any individual pixel goes above or below a configured threshold.
 
-![Illustration of thermophile pixel array and heat map](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Amg88xx/AMG88xx.png)
+![Illustration of thermophile pixel array and heat map](./AMG88xx.png)
 
 ## Documentation
 
@@ -152,7 +152,7 @@ The sensor supports a moving average mode. In this mode it builds the twice movi
 - If the frame rate is set to 1fps the sensor takes the readings of 10 frames (as the sensor runs internally always at 10fps) and builds the average.
 The average of two averages of 10 readings is the resulting output.
 
-![Moving average principle](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Amg88xx/AMG88xxAvgMode.svg)
+![Moving average principle](./AMG88xxAvgMode.svg)
 
 The noise per pixel will decrease to 1/sqrt2 when using the moving average mode.
 
@@ -191,7 +191,7 @@ After the sensor raised an interrupt the triggering pixels can be readout from t
 public bool[,] GetInterruptFlagTable()
 ```
 
-![Interrupt levels and hysteresis](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Amg88xx/AMG8833Int.svg)
+![Interrupt levels and hysteresis](./AMG8833Int.svg)
 
 Interrupt levels and hysteresis
 
@@ -221,4 +221,4 @@ There are AMG88xx breakout boards available from a variety of vendors. You can u
 For demonstration purpose the INT-pin of the sensor is connected to a valid GPIO PIN of the MCU. Additionally an LED is connected to another valid GPIO PIN of the MCU. The LED signals the occurrence of an interrupt.
 The resistor depends on the LED type; however 150R-220R is a safe choice for a standard red LED. Or precisely: `R = (3,3V -  U LED,forward) / I LED, forward`
 
-![Wiring of a sensor breakout and LED for the sample](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Amg88xx/AMG88xxSample.png)
+![Wiring of a sensor breakout and LED for the sample](./AMG88xxSample.png)

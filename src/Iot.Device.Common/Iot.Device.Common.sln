@@ -1,8 +1,6 @@
-
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31313.79
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Iot.Device.Common", "Iot.Device.Common.shproj", "{B439A23D-A742-4D1E-B182-7EC4C84DE211}"
 EndProject
@@ -11,10 +9,6 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Iot.Device.Common.NumberHelper", "Iot.Device.Common.NumberHelper.shproj", "{EE03A922-C27C-4D22-AE86-F2FF3C209C2E}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Iot.Device.Common.projitems*{b439a23d-a742-4d1e-b182-7ec4c84de211}*SharedItemsImports = 13
-		Iot.Device.Common.NumberHelper.projitems*{ee03a922-c27c-4d22-ae86-f2ff3c209c2e}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -32,5 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6123A820-5D25-4F4C-8BA8-78B7B99DF70D}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Iot.Device.Common.projitems*{b439a23d-a742-4d1e-b182-7ec4c84de211}*SharedItemsImports = 13
+		Iot.Device.Common.NumberHelper.projitems*{ee03a922-c27c-4d22-ae86-f2ff3c209c2e}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

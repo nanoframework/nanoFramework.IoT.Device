@@ -6,7 +6,7 @@ The LM75 is a temperature sensor, Delta-Sigma analog-to-digital converter, and d
 
 - LM75 [datasheet](https://cdn.datasheetspdf.com/pdf-down/L/M/7/LM75_NationalSemiconductor.pdf)
 
-![sensor](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Lm75/sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -36,7 +36,7 @@ using(Lm75 sensor = new Lm75(device))
 
 ### Circuit
 
-![circuit](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Lm75/LM75_circuit_bb.png)
+![circuit](./LM75_circuit_bb.png)
 
 - SCL - SCL
 - SDA - SDA
@@ -63,4 +63,4 @@ using(Lm75 sensor = new Lm75(device))
 
 ### Result
 
-![running result](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Lm75/RunningResult.jpg)
+![running result](./RunningResult.jpg)

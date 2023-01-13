@@ -186,7 +186,7 @@ A variety of tests and reading, including changing the temperature and humidity 
 
 You can log the date an nicely import them later on in Excel. The following example shows a measurement over time. In blue, the equivalent CO2 in ppm and in orange the equivalent TVOC in ppb. Note that the measurement started to be accurate around 11:35 on this graph.
 
-![Graph](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ccs811/graph.png)
+![Graph](./graph.png)
 
 ### Sample wiring
 
@@ -194,4 +194,4 @@ You can log the date an nicely import them later on in Excel. The following exam
 
 In order to have this sensor working on a MCU, you need to lower the bus speed. This sensor uses a mode called I2C stretching and it *may* not be supported natively on your MCU. So you **must** lower the I2C clock to the minimum to make it working properly or use a software I2C with a low clock as well
 
-![Wiring sample](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ccs811/ccs811_bb.png)
+![Wiring sample](./ccs811_bb.png)

@@ -2,7 +2,7 @@
 
 The MAX31865 device is a SPI interface Resistance Temperature Detector to Digital Converter.
 
-![MAX31865](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Max31865/sensor.jpg)
+![MAX31865](./sensor.jpg)
 
 ## Documentation
 
@@ -55,7 +55,7 @@ while (true)
 
 The following fritzing diagram illustrates one way to wire up the MAX31865 Resistance Temperature Detector to Digital Converter with a MCU
 
-![MCU circuit diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Max31865/MAX31865_circuit_bb.png)
+![MCU circuit diagram](./MAX31865_circuit_bb.png)
 
 * SDI - MOSI
 * SDO - MISO

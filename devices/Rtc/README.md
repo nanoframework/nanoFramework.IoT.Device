@@ -8,7 +8,7 @@ The RTC devices supported by the project include DS1307, DS3231, PCF8563 (or com
 
 ## Board
 
-![Circuit RTC](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Rtc/circuit_rtc.png)
+![Circuit RTC](./circuit_rtc.png)
 
 ## Usage
 
@@ -63,5 +63,5 @@ using (Pcf8563 rtc = new Pcf8563(device))
 ```
 ### Result
 
-![Sample result](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Rtc/output.png)
+![Sample result](./output.png)
 

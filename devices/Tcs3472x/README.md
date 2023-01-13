@@ -15,7 +15,7 @@ Note: TCS34721 and TCS34723 have a default I2C address which is 0x39 while TCS34
 
 ## Board
 
-![image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Tcs3472x/Tcs34725Fitzing.png)
+![image](./Tcs34725Fitzing.png)
 
 ## Usage
 

@@ -35,7 +35,7 @@ using (var sonar = new Hcsr04(4, 17))
 
 ### Circuit
 
-![Fritz diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hcsr04/raspberry_hc-sr04.png)
+![Fritz diagram](./raspberry_hc-sr04.png)
 
 * VCC - 5V
 * GND - GND

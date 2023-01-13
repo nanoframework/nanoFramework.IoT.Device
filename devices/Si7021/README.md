@@ -8,8 +8,8 @@ The Si7021 device provides temperature and humidity sensor readings with an I2C 
 
 ## Board
 
-![Sensor image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Si7021/sensor.jpg)
-![Si7021 sensor](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Si7021/Si7021_I2c_Read_Temp_Humidity.png)
+![Sensor image](./sensor.jpg)
+![Si7021 sensor](./Si7021_I2c_Read_Temp_Humidity.png)
 
 ## Usage
 
@@ -65,4 +65,4 @@ using (Si7021 sensor = new Si7021(device, Resolution.Resolution1))
 
 ### Result
 
-![Sample result](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Si7021/RunningResult.jpg)
+![Sample result](./RunningResult.jpg)
