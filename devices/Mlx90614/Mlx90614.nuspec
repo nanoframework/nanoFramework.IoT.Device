@@ -20,12 +20,12 @@
     <summary>Iot.Device.Mlx90614 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mlx90614</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.158" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.158" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Math" version="1.5.18" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.148.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.211" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.216" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.150.0" />
     </dependencies>
   </metadata>
   <files>

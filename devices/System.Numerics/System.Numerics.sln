@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31613.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Numerics", "System.Numerics.nfproj", "{103A194A-9B7B-47D1-8990-4F6F81A841D4}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Numerics.UnitTests", "..\..\tests\System.Numerics.UnitTests\System.Numerics.UnitTests.nfproj", "{0375CC54-D61F-4E52-88DB-618E3B227A2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70461F6A-6A62-4283-8899-E515B852B930}"
+	ProjectSection(SolutionItems) = preProject
+		category.txt = category.txt
+		README.md = README.md
+		System.Numerics.nuspec = System.Numerics.nuspec
+		version.json = version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +27,12 @@ Global
 		{103A194A-9B7B-47D1-8990-4F6F81A841D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{103A194A-9B7B-47D1-8990-4F6F81A841D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{103A194A-9B7B-47D1-8990-4F6F81A841D4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0375CC54-D61F-4E52-88DB-618E3B227A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0375CC54-D61F-4E52-88DB-618E3B227A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0375CC54-D61F-4E52-88DB-618E3B227A2C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0375CC54-D61F-4E52-88DB-618E3B227A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0375CC54-D61F-4E52-88DB-618E3B227A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0375CC54-D61F-4E52-88DB-618E3B227A2C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

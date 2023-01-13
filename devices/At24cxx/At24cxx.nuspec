@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.At24cxx</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.At24cxx</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.At24cxx for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.At24cxx assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.At24cxx</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.At24cxx.dll" target="lib\Iot.Device.At24cxx.dll" />
+    <file src="bin\Release\Iot.Device.At24cxx.pdb" target="lib\Iot.Device.At24cxx.pdb" />
+    <file src="bin\Release\Iot.Device.At24cxx.pdbx" target="lib\Iot.Device.At24cxx.pdbx" />
+    <file src="bin\Release\Iot.Device.At24cxx.pe" target="lib\Iot.Device.At24cxx.pe" />
+    <file src="bin\Release\Iot.Device.At24cxx.xml" target="lib\Iot.Device.At24cxx.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
