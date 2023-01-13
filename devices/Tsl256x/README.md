@@ -14,7 +14,7 @@ clears it.
 
 ## Board
 
-![image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Tsl256x/Tsl256xBoard.png)
+![image](./Tsl256xBoard.png)
 
 ## Usage
 

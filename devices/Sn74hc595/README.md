@@ -36,7 +36,7 @@ sr.ShiftByte(0b_1000_1101);
 
 The following diagram demonstrates the required wiring for the `Minimal` pin mapping. In particular, `OE` must be wired to ground, and `SRCLR` must be wired high.
 
-![SN74HC595 Minimal pin mapping](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Sn74hc595/sn74hc595-minimal-led-bar-graph_bb.png)
+![SN74HC595 Minimal pin mapping](./sn74hc595-minimal-led-bar-graph_bb.png)
 
 The following example demonstrates using additional features and requires different wiring.
 
@@ -72,6 +72,6 @@ sr.Latch();
 
 The following diagram demonstrates the required wiring for the `Complete` pin mapping.
 
-![SN74HC595 Minimal pin mapping](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Sn74hc595/sn74hc595-led-bar-graph_bb.png)
+![SN74HC595 Minimal pin mapping](./sn74hc595-led-bar-graph_bb.png)
 
 If you want to use SPI, see the [`ShiftRegister`](../ShiftRegister/README.md) binding, which includes more information on SPI.

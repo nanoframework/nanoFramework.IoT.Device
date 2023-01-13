@@ -7,7 +7,7 @@ HC-SR501 is used to detect motion based on the infrared heat in the surrounding 
 - In [Chinese](http://wenku.baidu.com/view/26ef5a9c49649b6648d747b2.html)
 - In [English](https://cdn.datasheetspdf.com/pdf-down/H/C/-/HC-SR501-1-ETC.pdf)
 
-![sensor](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hcsr501/sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -58,11 +58,11 @@ using (Iot.Device.Hcsr501.Hcsr501 sensor =
 
 ### Circuit
 
-![circuit](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hcsr501/circuit_bb.png)
+![circuit](./circuit_bb.png)
 
 ### HC-SR501
 
-![settings](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hcsr501/Hcsr501Setting.png)
+![settings](./Hcsr501Setting.png)
 
 - VCC - 5V
 - GND - GND
@@ -75,4 +75,4 @@ using (Iot.Device.Hcsr501.Hcsr501 sensor =
 
 ### Result
 
-![result ](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hcsr501/RunningResult.gif)
+![result ](./RunningResult.gif)

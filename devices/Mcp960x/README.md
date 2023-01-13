@@ -8,7 +8,7 @@ The MCP9600/01 converts the thermocouple EMF to degree Celsius with integrated c
 
 ## Sensor Image
 
-![Illustration of wiring from a Raspberry Pi device](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp960x/device.png)
+![Illustration of wiring from a Raspberry Pi device](./device.png)
 
 ## Documentation
 

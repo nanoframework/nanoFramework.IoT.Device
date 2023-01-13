@@ -19,7 +19,7 @@ The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for
 
 Address on the I2C bus: Ssd1306.DefaultI2cAddress 0x3C
 
-![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_I2c_PiOled.png)
+![Connection schematics](./Ssd1306_I2c_PiOled.png)
 
 Version with 7-pin I2C/SPI
 
@@ -125,4 +125,4 @@ device.Display();
 
 Follows the output on the display:
 
-![double-byte.fonts](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/display-with-double-byte-chars.jpg)
+![double-byte.fonts](./display-with-double-byte-chars.jpg)

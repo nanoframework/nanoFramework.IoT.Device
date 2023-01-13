@@ -4,7 +4,7 @@
 
  The following fritzing diagram illustrates one way to wire up the Max7219, with a MCU like ESP32.
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Max7219/Schema_bb.png)
+![ESP32 Breadboard diagram](./Schema_bb.png)
 
 ## Usage
 

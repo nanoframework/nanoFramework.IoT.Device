@@ -2,7 +2,7 @@
 
 This is a library to interact with the Sensirion SPS30 Particulate Matter Sensor. Currently, only the UART interface using the SHDLC protocol is implemented. The SPS30 also supports I2C.
 
-![sps30-image.png](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Sps30/sps30-image.png)
+![sps30-image.png](./sps30-image.png)
 
 ## Documentation
 

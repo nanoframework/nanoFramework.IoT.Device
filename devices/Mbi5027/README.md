@@ -62,7 +62,7 @@ The following breadboard circuit demonstrates the correct wiring pattern, includ
 
 It is easy to mis-wire the MBI5027. The following image captures the most basic aspects for correct configuration.
 
-![MBI5027 basic wiring](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mbi5027/mbi5027-basic-wiring.png)
+![MBI5027 basic wiring](./mbi5027-basic-wiring.png)
 
 The following are key aspects to ensure are correct:
 

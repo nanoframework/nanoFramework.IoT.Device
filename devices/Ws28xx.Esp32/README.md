@@ -19,7 +19,7 @@ To see how to use the binding in code, see the [sample](samples/Program.cs).
 
 ### WS2812B
 
-![image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ws28xx.Esp32/WS2812B.png)
+![image](./WS2812B.png)
 
 ## Usage
 

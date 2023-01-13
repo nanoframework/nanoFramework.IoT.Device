@@ -6,7 +6,7 @@ All operations for a current usage has been developed. The individual interrupti
 
 ## Documentation
 
-![BNO055](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Bno055/BNO055.jpg)
+![BNO055](./BNO055.jpg)
 
 BNO055 [datasheet](https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BNO055-DS000.pdf)
 
