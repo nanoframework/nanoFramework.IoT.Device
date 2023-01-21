@@ -7,7 +7,7 @@ HC-SR501 is used to detect motion based on the infrared heat in the surrounding 
 - In [Chinese](http://wenku.baidu.com/view/26ef5a9c49649b6648d747b2.html)
 - In [English](https://cdn.datasheetspdf.com/pdf-down/H/C/-/HC-SR501-1-ETC.pdf)
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -58,11 +58,11 @@ using (Iot.Device.Hcsr501.Hcsr501 sensor =
 
 ### Circuit
 
-![circuit](circuit_bb.png)
+![circuit](./circuit_bb.png)
 
 ### HC-SR501
 
-![settings](Hcsr501Setting.png)
+![settings](./Hcsr501Setting.png)
 
 - VCC - 5V
 - GND - GND
@@ -75,4 +75,4 @@ using (Iot.Device.Hcsr501.Hcsr501 sensor =
 
 ### Result
 
-![result ](RunningResult.gif)
+![result ](./RunningResult.gif)

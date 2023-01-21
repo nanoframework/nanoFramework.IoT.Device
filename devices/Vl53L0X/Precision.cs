@@ -5,17 +5,17 @@ namespace Iot.Device.Vl53L0X
 {
     /// <summary>
     /// Sensor have multiple modes, you can select one of the
-    /// predefined mode using the SetPrecision method
+    /// predefined mode using the SetPrecision method.
     /// </summary>
     public enum Precision
     {
-        /// <summary>Short range</summary>
+        /// <summary>Short range.</summary>
         ShortRange = 0,
 
-        /// <summary>Long range</summary>
+        /// <summary>Long range.</summary>
         LongRange,
 
-        /// <summary>High precision</summary>
+        /// <summary>High precision.</summary>
         HighPrecision,
     }
 }

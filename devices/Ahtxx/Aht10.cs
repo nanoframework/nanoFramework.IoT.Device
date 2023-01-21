@@ -11,13 +11,14 @@ namespace Iot.Device.Ahtxx
     public class Aht10 : AhtBase
     {
         /// <summary>
-        /// Initialization command acc. to datasheet
+        /// Initialization command acc. to datasheet.
         /// </summary>
         private const byte Aht10InitCommand = 0b1110_0001;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Aht10"/> class.
         /// </summary>
+        /// <param name="i2cDevice">I2C bus.</param>
         public Aht10(I2cDevice i2cDevice)
             : base(i2cDevice, Aht10InitCommand)
         {

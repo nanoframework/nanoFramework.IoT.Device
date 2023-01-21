@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "AtomQrCode", "AtomQrCode.nfproj", "{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A1A16DD8-00E2-4294-B081-C6EA1DAA2580}"
+	ProjectSection(SolutionItems) = preProject
+		AtomQrCode.nuspec = AtomQrCode.nuspec
+		category.txt = category.txt
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{F9A5EDA3-E605-4E72-B5D3-12E4B383570B}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "AtomQrCode.ReadCode", "samples\AtomQrCode.Sample\AtomQrCode.ReadCode.nfproj", "{DF7229DC-9DAC-482B-AB09-4416A9895985}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "AtomQrCode.ReadingWithEvent", "samples\AtomQrCode.ReadingWithEvent\AtomQrCode.ReadingWithEvent.nfproj", "{4D369794-6D77-4463-A205-FCA63FFADF0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4753E7DA-F0B5-4CCE-B8CD-808B07EBF074}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DF7229DC-9DAC-482B-AB09-4416A9895985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7229DC-9DAC-482B-AB09-4416A9895985}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7229DC-9DAC-482B-AB09-4416A9895985}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DF7229DC-9DAC-482B-AB09-4416A9895985}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7229DC-9DAC-482B-AB09-4416A9895985}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF7229DC-9DAC-482B-AB09-4416A9895985}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4D369794-6D77-4463-A205-FCA63FFADF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D369794-6D77-4463-A205-FCA63FFADF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D369794-6D77-4463-A205-FCA63FFADF0A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4D369794-6D77-4463-A205-FCA63FFADF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D369794-6D77-4463-A205-FCA63FFADF0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D369794-6D77-4463-A205-FCA63FFADF0A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF7229DC-9DAC-482B-AB09-4416A9895985} = {F9A5EDA3-E605-4E72-B5D3-12E4B383570B}
+		{4D369794-6D77-4463-A205-FCA63FFADF0A} = {F9A5EDA3-E605-4E72-B5D3-12E4B383570B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B0DEBC1-5179-4BA7-81A8-02F021CA0445}
+	EndGlobalSection
+EndGlobal

@@ -8,7 +8,7 @@ Product datasheet can be found [here](https://cdn.datasheetspdf.com/pdf-down/B/H
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -38,7 +38,7 @@ using (Bh1750fvi sensor = new Bh1750fvi(device))
 
 ## Circuit
 
-![circuit](BH1750FVI_Circuit_bb.png)
+![circuit](./BH1750FVI_Circuit_bb.png)
 
 * SCL - SCL
 * SDA - SDA
@@ -48,4 +48,4 @@ using (Bh1750fvi sensor = new Bh1750fvi(device))
 
 Result of the sample:
 
-![running result](RunningResult.jpg)
+![running result](./RunningResult.jpg)

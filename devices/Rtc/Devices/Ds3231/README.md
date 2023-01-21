@@ -3,7 +3,7 @@ DS3231 is a low-cost, extremely accurate I2C realtime clock (RTC) with an integr
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

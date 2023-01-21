@@ -1,20 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Max44009", "Max44009.nfproj", "{983C391F-6C88-49E6-A31D-BDDFBF9B0C3B}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Max44009.Samples", "samples\Max44009.Samples.nfproj", "{42CFFAA5-1988-4EB8-98E4-330A3B1BEEED}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{BBF97145-5D22-4614-9888-1750D19F245C}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -35,9 +27,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{23325B14-3651-4879-9697-9846FF123FEB} = {BBF97145-5D22-4614-9888-1750D19F245C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1F9E3F4-14B4-4C27-9FC8-E701B2AA8279}

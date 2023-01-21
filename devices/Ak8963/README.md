@@ -20,7 +20,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
-You can find an example in the [sample](https://github.com/dotnet/iot/tree/main/src/devices/Ak8963/samples/ak8963.sample.cs) directory. Usage is straight forward including the possibility to have a calibration.
+You can find an example in the [sample](https://github.com/dotnet/iot/tree/main/src/devices/Ak8963/samples) directory. Usage is straight forward including the possibility to have a calibration.
 
 ```csharp
 var mpui2CConnectionSettingmpus = new I2cConnectionSettings(1, Ak8963.Ak8963.DefaultI2cAddress);

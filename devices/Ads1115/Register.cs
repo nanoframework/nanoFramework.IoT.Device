@@ -4,7 +4,7 @@
 namespace Iot.Device.Ads1115
 {
     /// <summary>
-    /// Registers of ADS1115
+    /// Registers of ADS1115.
     /// </summary>
     internal enum Register : byte
     {

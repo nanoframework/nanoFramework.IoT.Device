@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Relay4</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Relay4</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding M5Stack Relay4 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Relay assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf iot relay m5stack</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Relay.dll" target="lib\Iot.Device.Relay.dll" />
+    <file src="bin\Release\Iot.Device.Relay.pdb" target="lib\Iot.Device.Relay.pdb" />
+    <file src="bin\Release\Iot.Device.Relay.pdbx" target="lib\Iot.Device.Relay.pdbx" />
+    <file src="bin\Release\Iot.Device.Relay.pe" target="lib\Iot.Device.Relay.pe" />
+    <file src="bin\Release\Iot.Device.Relay.xml" target="lib\Iot.Device.Relay.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

@@ -1,20 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Apa102", "Apa102.nfproj", "{BAFCA06F-E7CA-4476-BA1C-829F09589F83}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Apa102.Samples", "samples\Apa102.Samples.nfproj", "{D8D03F9E-81C2-4A67-9C95-95E5EBE097B2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{6D6D0363-6333-41E0-BF7A-9859769DC1C8}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Drawing", "..\..\src\System.Drawing\System.Drawing.shproj", "{E86896A2-B40C-4C03-B0E3-979DAF764CD6}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Drawing\System.Drawing.projitems*{e86896a2-b40c-4c03-b0e3-979daf764cd6}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -35,9 +27,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E86896A2-B40C-4C03-B0E3-979DAF764CD6} = {6D6D0363-6333-41E0-BF7A-9859769DC1C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0EBD36CA-794A-4CC2-A933-0289CE646F36}

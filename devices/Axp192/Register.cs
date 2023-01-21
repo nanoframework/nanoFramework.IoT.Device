@@ -19,7 +19,7 @@ namespace Iot.Device.Axp192
         VoltageSettingDcDc1 = 0x26,
         VoltageSettingDcDc3 = 0x27,
         VoltageSettingLdo2_3 = 0x28,
-        
+
         PathSettingVbus = 0x30,
         VoltageSettingOff = 0x31,
         ShutdownBatteryDetectionControl = 0x32,
@@ -73,8 +73,12 @@ namespace Iot.Device.Axp192
         ControlGpio2 = 0x93,
         GpioState012 = 0x94,
         ControlGpio34 = 0x95,
-        GpioState34 = 0x96,        
+        GpioState34 = 0x96,
         GpioInpputSetting012 = 0x97,
+
+        Pwm1OutputFrequencySetting = 0x98,
+        Pwm1DutyCycleSetting1 = 0x99,
+        Pwm1DutyCycleSetting2 = 0x9A,
 
         CoulombCounterChargingData1 = 0xB0,
         CoulombCounterChargingData2 = 0xB1,

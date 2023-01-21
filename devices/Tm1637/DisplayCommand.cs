@@ -6,7 +6,7 @@ using System;
 namespace Iot.Device.Tm1637
 {
     /// <summary>
-    /// Switch on or off the 8 segments LCD
+    /// Switch on or off the 8 segments LCD.
     /// </summary>
     internal enum DisplayCommand
     {

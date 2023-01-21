@@ -13,79 +13,79 @@ using System.Threading;
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// Bmm150 class implementing a magnetometer
+    /// Bmm150 class implementing a magnetometer.
     /// </summary>
     [Interface("Bmm150 class implementing a magnetometer")]
     public sealed class Bmm150 : IDisposable
     {
         /// <summary>
-        /// I2c device comm channel
+        /// I2c device comm channel.
         /// </summary>
         private I2cDevice _i2cDevice;
 
         /// <summary>
-        /// Bmm150 device interface
+        /// Bmm150 device interface.
         /// </summary>
-        private Bmm150I2cBase _Bmm150Interface;
+        private Bmm150I2cBase _bmm150Interface;
 
         /// <summary>
-        /// Bmm150 Trim extended register data
+        /// Bmm150 Trim extended register data.
         /// </summary>
         private Bmm150TrimRegisterData _trimData;
 
         /// <summary>
-        /// Magnetometer (R-HALL) temperature compensation value, used in axis compensation calculation functions
+        /// Magnetometer (R-HALL) temperature compensation value, used in axis compensation calculation functions.
         /// </summary>
         private uint _rHall;
 
         /// <summary>
-        /// Flag to evaluate disposal of resources
+        /// Flag to evaluate disposal of resources.
         /// </summary>
         private bool _shouldDispose = true;
 
         /// <summary>
-        /// Gets or sets Magnetometer calibration compensation vector
+        /// Gets or sets Magnetometer calibration compensation vector.
         /// </summary>
         public Vector3 CalibrationCompensation { get; set; } = new Vector3();
 
         /// <summary>
         /// Primary I2C address for the Bmm150
-        /// In the official sheet (P36) states that address is 0x13: https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L163
+        /// In the official sheet (P36) states that address is 0x13.
+        /// Visit https://github.com/m5stack/M5_BMM150/blob/master/src/M5_BMM150_DEFS.h#L16.3 for more information.
         /// </summary>
         public const byte PrimaryI2cAddress = 0x13;
 
         /// <summary>
         /// Secondary I2C address for the Bmm150
-        /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10
+        /// In the official sheet (P36) states that address is 0x13, alhtough for m5stack is 0x10.
         /// </summary>
         public const byte SecondaryI2cAddress = 0x10;
 
         /// <summary>
-        /// Default timeout to use when timeout is not provided in the reading methods
+        /// Gets or sets default timeout to use when timeout is not provided in the reading methods.
         /// </summary>
         [Property]
         public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        /// Default constructor for an independent Bmm150
+        /// Initializes a new instance of the <see cref="Bmm150" /> class.
         /// </summary>
-        /// <param name="i2CDevice">The I2C device</param>
+        /// <param name="i2CDevice">The I2C device.</param>
         public Bmm150(I2cDevice i2CDevice)
             : this(i2CDevice, new Bmm150I2c())
         {
         }
 
         /// <summary>
-        /// Constructor to use if Bmm150 is behind another element and need a special I2C protocol like
-        /// when used with the MPU9250
+        /// Initializes a new instance of the <see cref="Bmm150" /> class.
         /// </summary>
-        /// <param name="i2cDevice">The I2C device</param>
-        /// <param name="Bmm150Interface">The specific interface to communicate with the Bmm150</param>
-        /// <param name="shouldDispose">True to dispose the I2C device when class is disposed</param>
-        public Bmm150(I2cDevice i2cDevice, Bmm150I2cBase Bmm150Interface, bool shouldDispose = true)
+        /// <param name="i2cDevice">The I2C device.</param>
+        /// <param name="bmm150Interface">The specific interface to communicate with the Bmm150.</param>
+        /// <param name="shouldDispose">True to dispose the I2C device when class is disposed.</param>
+        public Bmm150(I2cDevice i2cDevice, Bmm150I2cBase bmm150Interface, bool shouldDispose = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
-            _Bmm150Interface = Bmm150Interface;
+            _bmm150Interface = bmm150Interface;
             _shouldDispose = shouldDispose;
 
             Initialize();
@@ -96,9 +96,9 @@ namespace Iot.Device.Magnetometer
 
         /// <summary>
         /// Reads the trim registers of the sensor, used in compensation (x,y,z) calculation
-        /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L1199
+        /// Visit https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L1199 for more information.
         /// </summary>
-        /// <returns>Trim registers value</returns>
+        /// <returns>Trim registers value.</returns>
         private Bmm150TrimRegisterData ReadTrimRegisters()
         {
             SpanByte trimX1y1Data = new byte[2];
@@ -114,7 +114,7 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Starts the Bmm150 init sequence
+        /// Starts the Bmm150 init sequence.
         /// </summary>
         private void Initialize()
         {
@@ -133,18 +133,18 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Get the device information
+        /// Get the device information.
         /// </summary>
-        /// <returns>The device information</returns>
+        /// <returns>The device information.</returns>
         public byte GetDeviceInfo() => ReadByte(Register.INFO);
 
         /// <summary>
         /// Calibrate the magnetometer. 
         /// Please make sure you are not close to any magnetic field like magnet or phone
         /// Please make sure you are moving the magnetometer all over space, rotating it.
+        /// Visit https://platformio.org/lib/show/12697/M5_BMM150 for more information.
         /// </summary>
-        /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 100</param>
-        // https://platformio.org/lib/show/12697/M5_BMM150
+        /// <param name="numberOfMeasurements">Number of measurement for the calibration, default is 100.</param>
         public void CalibrateMagnetometer(int numberOfMeasurements = 100)
         {
             Vector3 mag_min = new Vector3() { X = 9000, Y = 9000, Z = 30000 };
@@ -194,30 +194,30 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// True if there is a data to read
+        /// True if there is a data to read.
         /// </summary>
         public bool HasDataToRead => (ReadByte(Register.DATA_READY_STATUS) & 0x01) == 0x01;
 
         /// <summary>
-        /// Check if the version is the correct one (0x32). This is fixed for this device
+        /// Check if the version is the correct one (0x32). This is fixed for this device.
         /// </summary>
-        /// <returns>Returns true if the version match</returns>
+        /// <returns>Returns true if the version match.</returns>
         public bool IsVersionCorrect => ReadByte(Register.WIA) == 0x32;
 
         /// <summary>
-        /// Read the magnetometer without Bias correction and can wait for new data to be present
+        /// Read the magnetometer without Bias correction and can wait for new data to be present.
         /// </summary>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
+        /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData = true) => ReadMagnetometerWithoutCorrection(waitForData, DefaultTimeout);
 
         /// <summary>
         /// Read the magnetometer without Bias correction and can wait for new data to be present
-        /// More info, permalink: https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921
+        /// Visit https://github.com/BoschSensortec/BMM150-Sensor-API/blob/a20641f216057f0c54de115fe81b57368e119c01/bmm150.c#L921 for more information.
         /// </summary>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
+        /// <param name="timeout">Timeout for waiting the data, ignored if <paramref name="waitForData"/> is <see langword="false"/>.</param>
+        /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
             SpanByte rawData = new byte[8];
@@ -269,19 +269,19 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Read the magnetometer with bias correction and can wait for new data to be present
+        /// Read the magnetometer with bias correction and can wait for new data to be present.
         /// </summary>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
+        /// <returns>The data from the magnetometer.</returns>
         [Telemetry("Magnetometer")]
         public Vector3 ReadMagnetometer(bool waitForData = true) => ReadMagnetometer(waitForData, DefaultTimeout);
 
         /// <summary>
-        /// Read the magnetometer with compensation calculation and can wait for new data to be present
+        /// Read the magnetometer with compensation calculation and can wait for new data to be present.
         /// </summary>
-        /// <param name="waitForData">true to wait for new data</param>
-        /// <param name="timeout">timeout for waiting the data, ignored if waitForData is false</param>
-        /// <returns>The data from the magnetometer</returns>
+        /// <param name="waitForData"><see langword="true"/> to wait for new data.</param>
+        /// <param name="timeout">Timeout for waiting the data, ignored if <paramref name="waitForData"/> is <see langword="false"/>.</param>
+        /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometer(bool waitForData, TimeSpan timeout)
         {
             var magn = ReadMagnetometerWithoutCorrection(waitForData, timeout);
@@ -293,11 +293,11 @@ namespace Iot.Device.Magnetometer
             return magn;
         }
 
-        private void WriteRegister(Register reg, byte data) => _Bmm150Interface.WriteRegister(_i2cDevice, (byte)reg, data);
+        private void WriteRegister(Register reg, byte data) => _bmm150Interface.WriteRegister(_i2cDevice, (byte)reg, data);
 
-        private byte ReadByte(Register reg) => _Bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
+        private byte ReadByte(Register reg) => _bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
 
-        private void ReadBytes(Register reg, SpanByte readBytes) => _Bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
+        private void ReadBytes(Register reg, SpanByte readBytes) => _bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
 
         private void Wait(int milisecondsTimeout)
         {
@@ -305,14 +305,14 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Cleanup everything
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {
             if (_shouldDispose)
             {
                 _i2cDevice?.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
             }
         }
     }

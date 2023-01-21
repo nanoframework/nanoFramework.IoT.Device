@@ -4,14 +4,14 @@
 namespace Iot.Device.Bno055
 {
     /// <summary>
-    /// Temperature success
+    /// Temperature success.
     /// </summary>
     public enum TemperatureSource
     {
-        /// <summary>Accelerometer</summary>
+        /// <summary>Accelerometer.</summary>
         Accelerometer = 0x00,
 
-        /// <summary>Gyroscope</summary>
+        /// <summary>Gyroscope.</summary>
         Gyroscope = 0x01
     }
 }

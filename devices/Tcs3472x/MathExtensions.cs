@@ -1,22 +1,22 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.CompilerServices;
 
 namespace Iot.Device
 {
     /// <summary>
-    /// Implementations of some functions missing in older .NET versions
+    /// Implementations of some functions missing in older .NET versions.
     /// </summary>
-#if BUILDING_IOT_DEVICE_BINDINGS
-    internal
-#else
-    public
-#endif
-    static class MathExtensions
+    internal static class MathExtensions
     {
         /// <summary>
-        /// Returns val, limited to the range min-max (inclusive)
+        /// Returns val, limited to the range min-max (inclusive).
         /// </summary>
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <param name="val">The value to restrict.</param>
+        /// <param name="min">The min value to compare against.</param>
+        /// <param name="max">The max value to compare against.</param>
+        /// <returns>Value between min and max values.</returns>
         public static double Clamp(double val, double min, double max)
         {
 #if !NET5_0_OR_GREATER
@@ -37,9 +37,12 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Returns val, limited to the range min-max (inclusive)
+        /// Returns val, limited to the range min-max (inclusive).
         /// </summary>
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <param name="val">The value to restrict.</param>
+        /// <param name="min">The min value to compare against.</param>
+        /// <param name="max">The max value to compare against.</param>
+        /// <returns>Value between min and max values.</returns>
         public static int Clamp(int val, int min, int max)
         {
 #if !NET5_0_OR_GREATER
@@ -60,9 +63,12 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Returns val, limited to the range min-max (inclusive)
+        /// Returns val, limited to the range min-max (inclusive).
         /// </summary>
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <param name="val">The value to restrict.</param>
+        /// <param name="min">The min value to compare against.</param>
+        /// <param name="max">The max value to compare against.</param>
+        /// <returns>Value between min and max values.</returns>
         public static byte Clamp(byte val, byte min, byte max)
         {
 #if !NET5_0_OR_GREATER
@@ -83,9 +89,12 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Returns val, limited to the range min-max (inclusive)
+        /// Returns val, limited to the range min-max (inclusive).
         /// </summary>
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <param name="val">The value to restrict.</param>
+        /// <param name="min">The min value to compare against.</param>
+        /// <param name="max">The max value to compare against.</param>
+        /// <returns>Value between min and max values.</returns>
         public static long Clamp(long val, long min, long max)
         {
 #if !NET5_0_OR_GREATER
@@ -106,9 +115,12 @@ namespace Iot.Device
         }
 
         /// <summary>
-        /// Returns val, limited to the range min-max (inclusive)
+        /// Returns val, limited to the range min-max (inclusive).
         /// </summary>
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <param name="val">The value to restrict.</param>
+        /// <param name="min">The min value to compare against.</param>
+        /// <param name="max">The max value to compare against.</param>
+        /// <returns>Value between min and max values.</returns>
         public static uint Clamp(uint val, uint min, uint max)
         {
 #if !NET5_0_OR_GREATER

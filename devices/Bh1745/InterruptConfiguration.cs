@@ -67,7 +67,7 @@ namespace Iot.Device.Bh1745
         LatchUntilReadOrInitialized = 0b00,
 
         /// <summary>
-        /// Interrupt pin is latched after each measurement
+        /// Interrupt pin is latched after each measurement.
         /// </summary>
         LatchEachMeasurement = 0b01
     }

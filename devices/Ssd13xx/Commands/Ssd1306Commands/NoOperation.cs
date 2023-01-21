@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents NoOperation command
+    /// Represents NoOperation command.
     /// </summary>
     public class NoOperation : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="NoOperation" /> class.
         /// This command is a no operation command.
         /// </summary>
         public NoOperation()

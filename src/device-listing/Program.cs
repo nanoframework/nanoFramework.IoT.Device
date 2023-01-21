@@ -52,7 +52,10 @@ string[] categoriesToDisplay = new string[]
     "eeprom",
     "helper",
     "system",
-    "lidar"
+    "lidar",
+    "reader",
+    "satellite",
+    "particulatematter",
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -115,6 +118,9 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "helper", "Iot.Device helpers and common" },
     { "system", ".NET System libraries" },
     { "lidar", "Lidar" },
+    { "reader", "Readers" },
+    { "satellite", " modules" },
+    { "particulatematter", "Particulate Matter Sensor" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()
@@ -124,7 +130,11 @@ HashSet<string> ignoredDeviceDirectories = new()
     "Interop",
 };
 
-string? repoRoot = FindRepoRoot(Environment.CurrentDirectory);
+var repoRootPath = Path.Combine(Environment.GetEnvironmentVariable("BUILD_SOURCESDIRECTORY"), "nanoFramework.IoT.Device");
+
+Console.WriteLine($"Finding repository root. Starting point is: {repoRootPath}");
+
+string? repoRoot = CheckRepoRoot(repoRootPath);
 
 if (repoRoot is null)
 {
@@ -216,7 +226,7 @@ string GetDeviceListing(string devicesPath, IEnumerable<DeviceInfo> devices)
             }
             else if (device.Name == "Card")
             {
-                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.CardRfid.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.CardRfid/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
+                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Card.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Card/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
             }
             else
             {
@@ -252,7 +262,7 @@ string GetCategorizedDeviceListing(string devicesPath, IEnumerable<DeviceInfo> d
     return deviceListing.ToString();
 }
 
-string? FindRepoRoot(string dir)
+string? CheckRepoRoot(string dir)
 {
     if (dir is { Length: > 0 })
     {
@@ -263,7 +273,7 @@ string? FindRepoRoot(string dir)
         else
         {
             DirectoryInfo? parentDir = new DirectoryInfo(dir).Parent;
-            return parentDir?.FullName == null ? null : FindRepoRoot(parentDir.FullName);
+            return parentDir?.FullName == null ? null : CheckRepoRoot(parentDir.FullName);
         }
     }
 

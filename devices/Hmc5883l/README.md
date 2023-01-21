@@ -6,7 +6,7 @@ HMC5883L is a surface-mount, multi-chip module designed for low-field magnetic s
 
 - HMC5883L [datasheet](https://cdn.datasheetspdf.com/pdf-down/H/M/C/HMC5883L-Honeywell.pdf)
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

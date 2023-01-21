@@ -10,29 +10,29 @@ using UnitsNet;
 namespace Iot.Device.Amg88xx
 {
     /// <summary>
-    /// AMG88xx - family of infrared array sensors
+    /// AMG88xx - family of infrared array sensors.
     /// </summary>
     public class Amg88xx : IDisposable
     {
         /// <summary>
         /// Standard device address
-        /// (AD_SELECT pin is low, c.f. reference specification, pg. 11)
+        /// (AD_SELECT pin is low, c.f. reference specification, pg. 11).
         /// </summary>
         public const int DefaultI2cAddress = 0x68;
 
         /// <summary>
         /// Alternative device address
-        /// (AD_SELECT pin is high, c.f. reference specification, pg. 11)
+        /// (AD_SELECT pin is high, c.f. reference specification, pg. 11).
         /// </summary>
         public const int AlternativeI2cAddress = 0x69;
 
         /// <summary>
-        /// Number of sensor pixel array columns
+        /// Number of sensor pixel array columns.
         /// </summary>
         public const int Width = 0x8;
 
         /// <summary>
-        /// Number of sensor pixel array rows
+        /// Number of sensor pixel array rows.
         /// </summary>
         public const int Height = 0x8;
 
@@ -42,25 +42,26 @@ namespace Iot.Device.Amg88xx
         public const int PixelCount = Width * Height;
 
         /// <summary>
-        /// Number of bytes per pixel
+        /// Number of bytes per pixel.
         /// </summary>
         private const int BytesPerPixel = 2;
 
         /// <summary>
-        /// Temperature resolution of thermistor (in degrees Celsius)
+        /// Temperature resolution of thermistor (in degrees Celsius).
         /// </summary>
         private const double ThermistorTemperatureResolution = 0.0625;
 
         /// <summary>
-        /// Internal storage for the most recently image read from the sensor
+        /// Internal storage for the most recently image read from the sensor.
         /// </summary>
         private readonly byte[] _imageData = new byte[PixelCount * BytesPerPixel];
 
         private I2cDevice _i2cDevice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Amg88xx"/> binding.
+        /// Initializes a new instance of the <see cref="Amg88xx"/> class.
         /// </summary>
+        /// <param name="i2cDevice">I2C device.</param>
         public Amg88xx(I2cDevice i2cDevice)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
@@ -72,8 +73,8 @@ namespace Iot.Device.Amg88xx
         /// Gets temperature of the specified pixel froSm the current thermal image.
         /// </summary>
         /// <param name="pt">The x-y-coordinate of the pixel to retrieve.</param>
-        /// <exception cref="ArgumentException">x is less than 0, or greater than or equal to Width.</exception>
-        /// <exception cref="ArgumentException">y is less than 0, or greater than or equal to Height.</exception>
+        /// <exception cref="ArgumentException">X is less than 0, or greater than or equal to Width.</exception>
+        /// <exception cref="ArgumentException">Y is less than 0, or greater than or equal to Height.</exception>
         /// <returns>Temperature of the specified pixel.</returns>
         public Temperature this[Point pt]
         {
@@ -90,7 +91,7 @@ namespace Iot.Device.Amg88xx
                 }
 
                 SpanByte buffer = _imageData;
-                return Amg88xxUtils.ConvertToTemperature(buffer.Slice(BytesPerPixel * (Width * pt.Y + pt.X), BytesPerPixel));
+                return Amg88xxUtils.ConvertToTemperature(buffer.Slice(BytesPerPixel * ((Width * pt.Y) + pt.X), BytesPerPixel));
             }
         }
 
@@ -103,8 +104,8 @@ namespace Iot.Device.Amg88xx
         {
             get
             {
-                Temperature[][] temperatureImage = new Temperature[Width][];                
-                for(int i=0; i<Width; i++)
+                Temperature[][] temperatureImage = new Temperature[Width][];
+                for (int i = 0; i < Width; i++)
                 {
                     temperatureImage[i] = new Temperature[Height];
                 }
@@ -113,7 +114,7 @@ namespace Iot.Device.Amg88xx
                 {
                     for (int x = 0; x < Width; x++)
                     {
-                        temperatureImage[x][y] = this[new Point(x,y)];
+                        temperatureImage[x][y] = this[new Point(x, y)];
                     }
                 }
 
@@ -125,9 +126,9 @@ namespace Iot.Device.Amg88xx
         /// Gets raw reading (12-bit two's complement format) of the specified pixel from the current thermal image.
         /// </summary>
         /// <param name="n">The number of the pixel to retrieve.</param>
-        /// <exception cref="ArgumentException">n is less than 0, or greater than or equal to PixelCount.</exception>
+        /// <exception cref="ArgumentException">N is less than 0, or greater than or equal to PixelCount.</exception>
         /// <returns>Reading of the specified pixel.</returns>
-        public Int16 this[int n]
+        public short this[int n]
         {
             get
             {
@@ -142,7 +143,7 @@ namespace Iot.Device.Amg88xx
         }
 
         /// <summary>
-        /// Reads the current image from the sensor
+        /// Reads the current image from the sensor.
         /// </summary>
         public void ReadImage()
         {
@@ -154,7 +155,7 @@ namespace Iot.Device.Amg88xx
         /// <summary>
         /// Gets the temperature reading from the internal thermistor.
         /// </summary>
-        /// <value>Temperature reading</value>
+        /// <value>Temperature reading.</value>
         public Temperature SensorTemperature
         {
             get
@@ -180,7 +181,7 @@ namespace Iot.Device.Amg88xx
         /// The overflow indication will last even if all pixels are returned to readings within normal range.
         /// The indicator is reset using <see cfref="ClearTemperatureOverflow"/>.
         /// </summary>
-        /// <returns>True, if an overflow occured</returns>
+        /// <returns>True, if an overflow occured.</returns>
         public bool HasTemperatureOverflow()
         {
             return GetBit(Register.STAT, (byte)StatusFlagBit.OVF_IRS);
@@ -204,7 +205,7 @@ namespace Iot.Device.Amg88xx
         /// It is not clear whether this is a specification error or a change in a newer
         /// revision of the sensor.
         /// </summary>
-        /// <returns>True, if an overflow occured</returns>
+        /// <returns>True, if an overflow occured.</returns>
         public bool HasThermistorOverflow()
         {
             return GetBit(Register.STAT, (byte)StatusFlagBit.OVF_THS);
@@ -220,16 +221,16 @@ namespace Iot.Device.Amg88xx
         }
 
         /// <summary>
-        /// Gets the interrupt flag from the status register
+        /// Gets the interrupt flag from the status register.
         /// </summary>
-        /// <returns>Interrupt flag</returns>
+        /// <returns>Interrupt flag.</returns>
         public bool HasInterrupt()
         {
             return GetBit(Register.STAT, (byte)StatusFlagBit.INTF);
         }
 
         /// <summary>
-        /// Clears the interrupt flag in the status register
+        /// Clears the interrupt flag in the status register.
         /// </summary>
         public void ClearInterrupt()
         {
@@ -252,7 +253,7 @@ namespace Iot.Device.Amg88xx
         #region Moving average
 
         /// <summary>
-        /// Get or sets the state of the moving average mode
+        /// Gets or sets a value indicating whether use moving average mode
         /// Important: the reference specification states that the current mode can be read,
         /// but it doesn't seem to work at the time being.
         /// In this case the property is always read as ```false```.
@@ -269,9 +270,9 @@ namespace Iot.Device.Amg88xx
         #region Frame Rate
 
         /// <summary>
-        /// Get or sets the frame rate of the sensor internal thermal image update.
+        /// Gets or sets the frame rate of the sensor internal thermal image update.
         /// </summary>
-        /// <exception cref="ArgumentException">Thrown when attempting to set a frame rate other than 1 or 10 frames per second</exception>
+        /// <exception cref="ArgumentException">Thrown when attempting to set a frame rate other than 1 or 10 frames per second.</exception>
         /// <value>The frame rate for the pixel update interval (either 1 or 10fps). The default is 10fps.</value>
         public FrameRate FrameRate
         {
@@ -347,10 +348,10 @@ namespace Iot.Device.Amg88xx
         }
 
         /// <summary>
-        /// Get or sets whether the interrupt output  pin of the sensor is enabled.
+        /// Gets or sets a value indicating whether the interrupt output  pin of the sensor is enabled.
         /// If enabled, the pin is pulled down if an interrupt is active.
         /// </summary>
-        /// <value>True, if the INT pin sould be enabled; otherwise false. The default is false."</value>
+        /// <value>True, if the INT pin sould be enabled; otherwise false. The default is false.</value>
         public bool InterruptPinEnabled
         {
             get => GetBit(Register.INTC, (byte)InterruptModeBit.INTEN);
@@ -423,7 +424,7 @@ namespace Iot.Device.Amg88xx
         /// <summary>
         /// Gets the interrupt flags of all pixels.
         /// </summary>
-        /// <returns>Interrupt flags</returns>
+        /// <returns>Interrupt flags.</returns>
         public bool[][] GetInterruptFlagTable()
         {
             var registers = new Register[]
@@ -440,7 +441,7 @@ namespace Iot.Device.Amg88xx
             }
 
             var flags = new bool[Width][];
-            for(int i=0;i<Width;i++)
+            for (int i = 0; i < Width; i++)
             {
                 flags[i] = new bool[Height];
             }
@@ -493,7 +494,7 @@ namespace Iot.Device.Amg88xx
             if (_i2cDevice != null)
             {
                 _i2cDevice?.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
             }
         }
     }

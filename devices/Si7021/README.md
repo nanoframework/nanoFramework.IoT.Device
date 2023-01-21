@@ -8,8 +8,8 @@ The Si7021 device provides temperature and humidity sensor readings with an I2C 
 
 ## Board
 
-![Sensor image](sensor.jpg)
-![Si7021 sensor](Si7021_I2c_Read_Temp_Humidity.png)
+![Sensor image](./sensor.jpg)
+![Si7021 sensor](./Si7021_I2c_Read_Temp_Humidity.png)
 
 ## Usage
 
@@ -50,12 +50,12 @@ using (Si7021 sensor = new Si7021(device, Resolution.Resolution1))
         var tempValue = sensor.Temperature;
         var humValue = sensor.Humidity;
 
-        Debug.WriteLine($"Temperature: {tempValue.Celsius:0.#}\u00B0C");
-        Debug.WriteLine($"Relative humidity: {humValue:0.#}%");
+        Debug.WriteLine($"Temperature: {tempValue.Celsius:N2}\u00B0C");
+        Debug.WriteLine($"Relative humidity: {humValue:N2}%");
 
         // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-        Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).Celsius:0.#}\u00B0C");
-        Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).Celsius:0.#}\u00B0C");
+        Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).Celsius:N2}\u00B0C");
+        Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).Celsius:N2}\u00B0C");
         Debug.WriteLine();
 
         Thread.Sleep(1000);
@@ -65,4 +65,4 @@ using (Si7021 sensor = new Si7021(device, Resolution.Resolution1))
 
 ### Result
 
-![Sample result](RunningResult.jpg)
+![Sample result](./RunningResult.jpg)

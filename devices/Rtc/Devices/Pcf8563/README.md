@@ -3,7 +3,7 @@ The PCF8563 is a CMOS1 Real-Time Clock (RTC) and calendar optimized for low powe
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

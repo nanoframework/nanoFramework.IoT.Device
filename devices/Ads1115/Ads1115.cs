@@ -3,17 +3,17 @@
 
 using System;
 using System.Buffers.Binary;
-using System.Threading;
 using System.Device;
-using System.Device.I2c;
 using System.Device.Gpio;
+using System.Device.I2c;
+using System.Threading;
 using UnitsNet;
 using UnitsNet.Units;
 
 namespace Iot.Device.Ads1115
 {
     /// <summary>
-    /// Analog-to-Digital Converter ADS1115
+    /// Analog-to-Digital Converter ADS1115.
     /// </summary>
     public class Ads1115 : IDisposable
     {
@@ -31,7 +31,7 @@ namespace Iot.Device.Ads1115
         private DeviceMode _deviceMode;
 
         /// <summary>
-        /// The pin of the GPIO controller that is connected to the interrupt line of the ADS1115
+        /// The pin of the GPIO controller that is connected to the interrupt line of the ADS1115.
         /// </summary>
         private int _gpioInterruptPin;
 
@@ -40,15 +40,19 @@ namespace Iot.Device.Ads1115
         private ComparatorQueue _comparatorQueue;
 
         /// <summary>
-        /// Initialize a new Ads1115 device connected through I2C
+        /// Initializes a new instance of the <see cref="Ads1115" /> class connected through I2C.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="inputMultiplexer">Input Multiplexer</param>
-        /// <param name="measuringRange">Programmable Gain Amplifier</param>
-        /// <param name="dataRate">Data Rate</param>
-        /// <param name="deviceMode">Initial device mode</param>
-        public Ads1115(I2cDevice i2cDevice, InputMultiplexer inputMultiplexer = InputMultiplexer.AIN0, MeasuringRange measuringRange = MeasuringRange.FS4096,
-            DataRate dataRate = DataRate.SPS128, DeviceMode deviceMode = DeviceMode.Continuous)
+        /// <param name="inputMultiplexer">Input Multiplexer.</param>
+        /// <param name="measuringRange">Programmable Gain Amplifier.</param>
+        /// <param name="dataRate">Data Rate.</param>
+        /// <param name="deviceMode">Initial device mode.</param>
+        public Ads1115(
+            I2cDevice i2cDevice, 
+            InputMultiplexer inputMultiplexer = InputMultiplexer.AIN0, 
+            MeasuringRange measuringRange = MeasuringRange.FS4096,
+            DataRate dataRate = DataRate.SPS128, 
+            DeviceMode deviceMode = DeviceMode.Continuous)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _inputMultiplexer = inputMultiplexer;
@@ -67,19 +71,25 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// Initialize a new Ads1115 device connected through I2C with an additional GPIO controller for interrupt handling.
+        /// Initializes a new instance of the <see cref="Ads1115" /> class connected through I2C with an additional GPIO controller for interrupt handling.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="gpioController">The GPIO Controller used for interrupt handling</param>
-        /// <param name="gpioInterruptPin">The pin number where the interrupt line is attached on the GPIO controller</param>
-        /// <param name="shouldDispose">True (the default) if the GPIO controller shall be disposed when disposing this instance</param>
-        /// <param name="inputMultiplexer">Input Multiplexer</param>
-        /// <param name="measuringRange">Programmable Gain Amplifier</param>
-        /// <param name="dataRate">Data Rate</param>
-        /// <param name="deviceMode">Initial device mode</param>
-        public Ads1115(I2cDevice i2cDevice,
-            GpioController? gpioController, int gpioInterruptPin, bool shouldDispose = true, InputMultiplexer inputMultiplexer = InputMultiplexer.AIN0, MeasuringRange measuringRange = MeasuringRange.FS4096,
-            DataRate dataRate = DataRate.SPS128, DeviceMode deviceMode = DeviceMode.Continuous)
+        /// <param name="gpioController">The GPIO Controller used for interrupt handling.</param>
+        /// <param name="gpioInterruptPin">The pin number where the interrupt line is attached on the GPIO controller.</param>
+        /// <param name="shouldDispose">True (the default) if the GPIO controller shall be disposed when disposing this instance.</param>
+        /// <param name="inputMultiplexer">Input Multiplexer.</param>
+        /// <param name="measuringRange">Programmable Gain Amplifier.</param>
+        /// <param name="dataRate">Data Rate.</param>
+        /// <param name="deviceMode">Initial device mode.</param>
+        public Ads1115(
+            I2cDevice i2cDevice,
+            GpioController? gpioController, 
+            int gpioInterruptPin, 
+            bool shouldDispose = true, 
+            InputMultiplexer inputMultiplexer = InputMultiplexer.AIN0, 
+            MeasuringRange measuringRange = MeasuringRange.FS4096,
+            DataRate dataRate = DataRate.SPS128, 
+            DeviceMode deviceMode = DeviceMode.Continuous)
             : this(i2cDevice, inputMultiplexer, measuringRange, dataRate, deviceMode)
         {
             _gpioController = gpioController ?? new GpioController();
@@ -93,7 +103,7 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// ADS1115 Input Multiplexer.
+        /// Gets or sets ADS1115 Input Multiplexer.
         /// This selects the channel(s) for the next read operation, <see cref="Iot.Device.Ads1115.InputMultiplexer"/>.
         /// Setting this property will wait until a value is available from the newly selected input channel.
         /// </summary>
@@ -108,7 +118,7 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// ADS1115 Programmable Gain Amplifier
+        /// Gets or sets ADS1115 Programmable Gain Amplifier
         /// This sets the maximum value that can be measured. Regardless of this setting, the input value on any pin must not exceed VDD + 0.3V,
         /// so high ranges are only usable with a VDD of more than 5V.
         /// Setting this property will wait until a new value is available.
@@ -124,7 +134,7 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// ADS1115 Data Rate.
+        /// Gets or sets ADS1115 Data Rate.
         /// The number of conversions per second that will take place. One conversion will take "1/rate" seconds to become ready. If in
         /// power-down mode, only one conversion will happen automatically, then another request is required.
         /// Setting this property will wait until a new value is available.
@@ -140,7 +150,7 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// ADS1115 operation mode.
+        /// Gets or sets ADS1115 operation mode.
         /// When set to <see cref="DeviceMode.Continuous"/> the chip continously measures the input and the values can be read directly.
         /// If set to <see cref="DeviceMode.PowerDown"/> the chip enters idle mode after each conversion and
         /// a new value will be requested each time a read request is performed. This is the recommended setting when frequently
@@ -152,6 +162,7 @@ namespace Iot.Device.Ads1115
             {
                 return _deviceMode;
             }
+
             set
             {
                 _deviceMode = value;
@@ -160,14 +171,14 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// Comparator mode.
+        /// Gets Comparator mode.
         /// Only relevant if the comparator trigger event is set up and is changed by <see cref="EnableComparator(short, short, ComparatorMode, ComparatorQueue)"/>.
         /// </summary>
         public ComparatorMode ComparatorMode { get; private set; }
 
         /// <summary>
-        /// Comparator polarity. Indicates whether the rising or the falling edge of the ALRT/RDY Pin is relevant.
-        /// Default: Low (falling edge)
+        /// Gets or sets comparator polarity. Indicates whether the rising or the falling edge of the ALRT/RDY Pin is relevant.
+        /// Default: Low (falling edge).
         /// </summary>
         public ComparatorPolarity ComparatorPolarity
         {
@@ -175,6 +186,7 @@ namespace Iot.Device.Ads1115
             {
                 return _comparatorPolarity;
             }
+
             set
             {
                 _comparatorPolarity = value;
@@ -183,7 +195,7 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// Comparator latching mode. If enabled, the ALRT/RDY Pin will be kept signaled until the conversion value is read.
+        /// Gets or sets comparator latching mode. If enabled, the ALRT/RDY Pin will be kept signaled until the conversion value is read.
         /// Only relevant when the comparator is enabled.
         /// </summary>
         public ComparatorLatching ComparatorLatching
@@ -192,6 +204,7 @@ namespace Iot.Device.Ads1115
             {
                 return _comparatorLatching;
             }
+
             set
             {
                 _comparatorLatching = value;
@@ -215,7 +228,7 @@ namespace Iot.Device.Ads1115
         /// Set ADS1115 Config Register.
         /// Register Layout:
         /// 15    14    13    12    11    10    9      8     7      6      5       4          3          2        1     0
-        /// OS  |      MUX        |       PGA      | MODE |    DATA RATE      | COMP_MODE | COMP_POL | COMP_LAT |   COMP_QUE
+        /// OS  |      MUX        |       PGA      | MODE |    DATA RATE      | COMP_MODE | COMP_POL | COMP_LAT |   COMP_QUE.
         /// </summary>
         private void SetConfig()
         {
@@ -257,12 +270,13 @@ namespace Iot.Device.Ads1115
 
         /// <summary>
         /// Resets the comparator registers to default values (effectively disabling the comparator) and disables the
-        /// Alert / Ready pin (if configured)
+        /// Alert / Ready pin (if configured).
         /// </summary>
         private void DisableAlertReadyPin()
         {
             _comparatorQueue = ComparatorQueue.Disable;
             SetConfig();
+
             // Reset to defaults
             SpanByte writeBuff = new byte[3]
             {
@@ -282,10 +296,10 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// Write the two comparator registers
+        /// Write the two comparator registers.
         /// </summary>
-        /// <param name="loThreshold">High threshold value (unsigned short)</param>
-        /// <param name="hiThreshold">Low threshold value (unsigned short)</param>
+        /// <param name="loThreshold">High threshold value (unsigned short).</param>
+        /// <param name="hiThreshold">Low threshold value (unsigned short).</param>
         private void WriteComparatorRegisters(short loThreshold, short hiThreshold)
         {
             SpanByte writeBuff = new byte[3]
@@ -322,12 +336,12 @@ namespace Iot.Device.Ads1115
                 _comparatorQueue = ComparatorQueue.AssertAfterOne;
                 _deviceMode = DeviceMode.Continuous;
                 SetConfig();
+
                 // Writing a negative value to the max value register and a positive value to the min value register
                 // configures the ALRT/RDY pin to trigger after each conversion (with a transition from high to low, when ComparatorPolarity is Low)
                 WriteComparatorRegisters(short.MaxValue, short.MinValue);
 
                 _gpioController.RegisterCallbackForPinValueChangedEvent(_gpioInterruptPin, ComparatorPolarity == ComparatorPolarity.Low ? PinEventTypes.Falling : PinEventTypes.Rising, ConversionReadyCallback);
-
             }
             catch (Exception)
             {
@@ -351,13 +365,13 @@ namespace Iot.Device.Ads1115
         /// In window comparator mode, the callback is triggered each time the measured value exceeds the given upper value or gets
         /// less than the given lower value.
         /// </summary>
-        /// <param name="lowerValue">Lower value for the comparator</param>
-        /// <param name="upperValue">Upper value for the comparator</param>
-        /// <param name="mode">Traditional or Window comparator mode</param>
-        /// <param name="queueLength">Minimum number of samples that must exceed the threshold to trigger the event</param>
-        /// <exception cref="InvalidOperationException">The GPIO Controller for the interrupt handler has not been set up</exception>
-        public void EnableComparator(ElectricPotential lowerValue, ElectricPotential upperValue, ComparatorMode mode,
-            ComparatorQueue queueLength) => EnableComparator(VoltageToRaw(lowerValue), VoltageToRaw(upperValue), mode, queueLength);
+        /// <param name="lowerValue">Lower value for the comparator.</param>
+        /// <param name="upperValue">Upper value for the comparator.</param>
+        /// <param name="mode">Traditional or Window comparator mode.</param>
+        /// <param name="queueLength">Minimum number of samples that must exceed the threshold to trigger the event.</param>
+        /// <exception cref="InvalidOperationException">The GPIO Controller for the interrupt handler has not been set up.</exception>
+        public void EnableComparator(ElectricPotential lowerValue, ElectricPotential upperValue, ComparatorMode mode, ComparatorQueue queueLength) 
+            => EnableComparator(VoltageToRaw(lowerValue), VoltageToRaw(upperValue), mode, queueLength);
 
         /// <summary>
         /// Enable comparator callback mode.
@@ -366,13 +380,12 @@ namespace Iot.Device.Ads1115
         /// In window comparator mode, the callback is triggered each time the measured value exceeds the given upper value or gets
         /// less than the given lower value.
         /// </summary>
-        /// <param name="lowerValue">Lower value for the comparator</param>
-        /// <param name="upperValue">Upper value for the comparator</param>
-        /// <param name="mode">Traditional or Window comparator mode</param>
-        /// <param name="queueLength">Minimum number of samples that must exceed the threshold to trigger the event</param>
-        /// <exception cref="InvalidOperationException">The GPIO Controller for the interrupt handler has not been set up</exception>
-        public void EnableComparator(short lowerValue, short upperValue, ComparatorMode mode,
-            ComparatorQueue queueLength)
+        /// <param name="lowerValue">Lower value for the comparator.</param>
+        /// <param name="upperValue">Upper value for the comparator.</param>
+        /// <param name="mode">Traditional or Window comparator mode.</param>
+        /// <param name="queueLength">Minimum number of samples that must exceed the threshold to trigger the event.</param>
+        /// <exception cref="InvalidOperationException">The GPIO Controller for the interrupt handler has not been set up.</exception>
+        public void EnableComparator(short lowerValue, short upperValue, ComparatorMode mode, ComparatorQueue queueLength)
         {
             if (_gpioController is null)
             {
@@ -396,15 +409,16 @@ namespace Iot.Device.Ads1115
 
                 _comparatorQueue = queueLength;
                 ComparatorMode = mode;
+
                 // Event callback mode is only useful in Continuous mode
                 _deviceMode = DeviceMode.Continuous;
                 SetConfig();
+
                 // Writing a negative value to the max value register and a positive value to the min value register
                 // configures the ALRT/RDY pin to trigger after each conversion (with a transition from high to low, when ComparatorPolarity is Low)
                 WriteComparatorRegisters(lowerValue, upperValue);
 
                 _gpioController.RegisterCallbackForPinValueChangedEvent(_gpioInterruptPin, ComparatorPolarity == ComparatorPolarity.Low ? PinEventTypes.Falling : PinEventTypes.Rising, ConversionReadyCallback);
-
             }
             catch (Exception)
             {
@@ -430,7 +444,7 @@ namespace Iot.Device.Ads1115
         /// This method must only be called in powerdown mode, otherwise it would timeout, since the busy bit never changes.
         /// Due to that, we always write the configuration first in power down mode and then enable the continuous bit.
         /// </summary>
-        /// <exception cref="TimeoutException">A timeout occurred waiting for the ADC to finish the conversion</exception>
+        /// <exception cref="TimeoutException">A timeout occurred waiting for the ADC to finish the conversion.</exception>
         private void WaitWhileBusy()
         {
             // In powerdown-mode, wait until the busy bit goes high
@@ -453,7 +467,7 @@ namespace Iot.Device.Ads1115
         /// Read Raw Data.
         /// If in PowerDown (single-shot) mode, one new sample is requested first.
         /// </summary>
-        /// <returns>Raw Value</returns>
+        /// <returns>Raw Value.</returns>
         public short ReadRaw()
         {
             if (DeviceMode == DeviceMode.PowerDown)
@@ -482,8 +496,8 @@ namespace Iot.Device.Ads1115
         /// <summary>
         /// Reads the next raw value, first switching to the given input and ranges.
         /// </summary>
-        /// <param name="inputMultiplexer">New input multiplexer setting</param>
-        /// <returns>Measured value as short</returns>
+        /// <param name="inputMultiplexer">New input multiplexer setting.</param>
+        /// <returns>Measured value as short.</returns>
         /// <remarks>
         /// For performance reasons, it is advised to use this method if quick readings with different input channels are required,
         /// instead of setting all the properties first and then calling <see cref="ReadRaw()"/>.
@@ -493,10 +507,10 @@ namespace Iot.Device.Ads1115
         /// <summary>
         /// Reads the next raw value, first switching to the given input and ranges.
         /// </summary>
-        /// <param name="inputMultiplexer">New input multiplexer setting</param>
-        /// <param name="measuringRange">New measuring range</param>
-        /// <param name="dataRate">New data rate</param>
-        /// <returns>Measured value as short</returns>
+        /// <param name="inputMultiplexer">New input multiplexer setting.</param>
+        /// <param name="measuringRange">New measuring range.</param>
+        /// <param name="dataRate">New data rate.</param>
+        /// <returns>Measured value as short.</returns>
         /// <remarks>
         /// For performance reasons, it is advised to use this method if quick readings with different settings
         /// (i.e. different input channels) are required, instead of setting all the properties first and then
@@ -510,6 +524,7 @@ namespace Iot.Device.Ads1115
                 _measuringRange = measuringRange;
                 _dataRate = dataRate;
                 SetConfig();
+
                 // We just set the config, so no need to query another sample
                 return ReadRawInternal();
             }
@@ -528,10 +543,10 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// Returns the electric potential (voltage) of the given channel, performs a measurement first
+        /// Returns the electric potential (voltage) of the given channel, performs a measurement first.
         /// </summary>
-        /// <param name="inputMultiplexer">Channel to use</param>
-        /// <returns>The voltage at the selected channel</returns>
+        /// <param name="inputMultiplexer">Channel to use.</param>
+        /// <returns>The voltage at the selected channel.</returns>
         public ElectricPotential ReadVoltage(InputMultiplexer inputMultiplexer)
         {
             short raw = ReadRaw(inputMultiplexer, MeasuringRange, DataRate);
@@ -539,10 +554,10 @@ namespace Iot.Device.Ads1115
         }
 
         /// <summary>
-        /// Convert Raw Data to Voltage
+        /// Convert Raw Data to Voltage.
         /// </summary>
-        /// <param name="val">Raw Data</param>
-        /// <returns>Voltage, based on the current measuring range</returns>
+        /// <param name="val">Raw Data.</param>
+        /// <returns>Voltage, based on the current measuring range.</returns>
         public ElectricPotential RawToVoltage(short val)
         {
             double resolution;
@@ -556,8 +571,8 @@ namespace Iot.Device.Ads1115
         /// <summary>
         /// Converts voltage to raw data.
         /// </summary>
-        /// <param name="voltage">Input voltage</param>
-        /// <returns>Corresponding raw value, based on the current measuring range</returns>
+        /// <param name="voltage">Input voltage.</param>
+        /// <returns>Corresponding raw value, based on the current measuring range.</returns>
         public short VoltageToRaw(ElectricPotential voltage)
         {
             double resolution;
@@ -566,24 +581,49 @@ namespace Iot.Device.Ads1115
             return (short)Math.Round(voltage.Volts / (maxVoltage.Volts / resolution));
         }
 
+        private double ConvertMeasuringRangeToVolts(MeasuringRange measuringRange)
+        {
+            if (measuringRange == MeasuringRange.FS6144) 
+            { 
+                return 6.144; 
+            }
+
+            if (measuringRange == MeasuringRange.FS4096) 
+            { 
+                return 4.096; 
+            }
+
+            if (measuringRange == MeasuringRange.FS2048) 
+            { 
+                return 2.048; 
+            }
+
+            if (measuringRange == MeasuringRange.FS1024) 
+            { 
+                return 1.024; 
+            }
+
+            if (measuringRange == MeasuringRange.FS0512) 
+            { 
+                return 0.512; 
+            }
+
+            if (measuringRange == MeasuringRange.FS0256) 
+            { 
+                return 0.256; 
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(measuringRange), "Unknown measuring range used");
+        }
+
         /// <summary>
         /// Returns the voltage assigned to the given MeasuringRange enumeration value.
         /// </summary>
-        /// <param name="measuringRange">One of the <see cref="MeasuringRange"/> enumeration members</param>
+        /// <param name="measuringRange">One of the <see cref="MeasuringRange"/> enumeration members.</param>
         /// <returns>An electric potential (voltage).</returns>
         public ElectricPotential MaxVoltageFromMeasuringRange(MeasuringRange measuringRange)
         {
-            double voltage = measuringRange switch
-            {
-                MeasuringRange.FS6144 => 6.144,
-                MeasuringRange.FS4096 => 4.096,
-                MeasuringRange.FS2048 => 2.048,
-                MeasuringRange.FS1024 => 1.024,
-                MeasuringRange.FS0512 => 0.512,
-                MeasuringRange.FS0256 => 0.256,
-                _ => throw new ArgumentOutOfRangeException(nameof(measuringRange), "Unknown measuring range used")
-            };
-
+            double voltage = ConvertMeasuringRangeToVolts(measuringRange);
             return ElectricPotential.FromVolts(voltage);
         }
 
@@ -591,19 +631,51 @@ namespace Iot.Device.Ads1115
         /// Returns the sampling frequency in Hz for the given data rate enumeration member.
         /// </summary>
         /// <param name="dataRate">One of the <see cref="DataRate"/> enumeration members.</param>
-        /// <returns>A frequency, in Hertz</returns>
-        public double FrequencyFromDataRate(DataRate dataRate) => dataRate switch
+        /// <returns>A frequency, in Hertz.</returns>
+        public double FrequencyFromDataRate(DataRate dataRate)
         {
-                DataRate.SPS008 => 8.0,
-                DataRate.SPS016 => 16.0,
-                DataRate.SPS032 => 32.0,
-                DataRate.SPS064 => 64.0,
-                DataRate.SPS128 => 128.0,
-                DataRate.SPS250 => 250.0,
-                DataRate.SPS475 => 475.0,
-                DataRate.SPS860 => 860.0,
-                _ => throw new ArgumentOutOfRangeException(nameof(dataRate), "Unknown data rate used")
-        };
+            if (dataRate == DataRate.SPS008)
+            {
+                return 8.0;
+            }
+
+            if (dataRate == DataRate.SPS016)
+            {
+                return 16.0;
+            }
+
+            if (dataRate == DataRate.SPS032)
+            {
+                return 32.0;
+            }
+
+            if (dataRate == DataRate.SPS064)
+            {
+                return 64.0;
+            }
+
+            if (dataRate == DataRate.SPS128)
+            {
+                return 128.0;
+            }
+
+            if (dataRate == DataRate.SPS250)
+            {
+                return 250.0;
+            }
+
+            if (dataRate == DataRate.SPS475)
+            {
+                return 475.0;
+            }
+
+            if (dataRate == DataRate.SPS860)
+            {
+                return 860.0;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(dataRate), "Unknown data rate used");
+        }
 
         /// <summary>
         /// Cleanup.
@@ -611,11 +683,11 @@ namespace Iot.Device.Ads1115
         /// </summary>
         public void Dispose()
         {
-            if (_i2cDevice is object)
+            if (_i2cDevice != null && _i2cDevice is object)
             {
                 DisableAlertReadyPin();
                 _i2cDevice.Dispose();
-                _i2cDevice = null!;
+                _i2cDevice = null;
             }
 
             if (_shouldDispose)

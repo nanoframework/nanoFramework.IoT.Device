@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Represents ActivateScroll command
+    /// Represents ActivateScroll command.
     /// </summary>
     public class ActivateScroll : ISharedCommand
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ActivateScroll" /> class.
         /// This command starts the motion of scrolling and should only be issued
         /// after the scroll setup parameters have been defined by the scrolling
         /// setup commands :26h/27h/29h/2Ah. The setting in the last scrolling setup

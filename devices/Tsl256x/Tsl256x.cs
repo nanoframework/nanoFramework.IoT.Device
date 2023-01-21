@@ -9,10 +9,10 @@ using System.Threading;
 using UnitsNet;
 using UnitsNet.Units;
 
-namespace IoT.Device.Tsl256x
+namespace Iot.Device.Tsl256x
 {
     /// <summary>
-    /// Light to Digital Converter TSL2560 and TSL2561
+    /// Light to Digital Converter TSL2560 and TSL2561.
     /// </summary>
     [Interface("Light to Digital Converter TSL2560 and TSL2561")]
     public class Tsl256x : IDisposable
@@ -26,25 +26,25 @@ namespace IoT.Device.Tsl256x
         private PackageType _packageType;
 
         /// <summary>
-        /// When the address select pin if float
+        /// When the address select pin if float.
         /// </summary>
         public const int DefaultI2cAddress = 0x39;
 
         /// <summary>
-        /// When the address select pin is to ground
+        /// When the address select pin is to ground.
         /// </summary>
         public const int SecondI2cAddress = 0x29;
 
         /// <summary>
-        /// When the select pin is to VDD
+        /// When the select pin is to VDD.
         /// </summary>
         public const int ThirdI2cAddress = 0x49;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Tsl256x"/> class.
         /// </summary>
-        /// <param name="i2cDevice">And I2C Device</param>
-        /// <param name="packageType">The type of package to have a proper illuminance calculation</param>
+        /// <param name="i2cDevice">And I2C Device.</param>
+        /// <param name="packageType">The type of package to have a proper illuminance calculation.</param>
         public Tsl256x(I2cDevice i2cDevice, PackageType packageType = PackageType.Other)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException($"I2C Device can't be null");
@@ -54,7 +54,7 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Set power On or Off
+        /// Gets or sets a value indicating whether power is On or Off.
         /// </summary>
         [Property]
         public bool Enabled
@@ -65,9 +65,9 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get the version 0 for major for TSL2560 and 1 for TSL2561, minor is devision number
+        /// Gets the version 0 for major for TSL2560 and 1 for TSL2561, minor is devision number.
         /// </summary>
-        /// <returns>The version</returns>
+        /// <returns>The version.</returns>
         [Property]
         public Version Version
         {
@@ -79,7 +79,7 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get or Set the integration time
+        /// Gets or sets the integration time.
         /// </summary>
         [Property]
         public IntegrationTime IntegrationTime
@@ -94,7 +94,7 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get or Set the gain
+        /// Gets or sets the gain.
         /// </summary>
         [Property]
         public Gain Gain
@@ -109,7 +109,7 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Start the manual integration
+        /// Start the manual integration.
         /// </summary>
         public void StartManualIntegration()
         {
@@ -120,7 +120,7 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Stop the manual integration
+        /// Stop the manual integration.
         /// </summary>
         public void StopManualIntegration()
         {
@@ -128,10 +128,10 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// This will set the threshold and enable the interrupt
+        /// This will set the threshold and enable the interrupt.
         /// </summary>
-        /// <param name="low">The low threshold</param>
-        /// <param name="high">The high threshold</param>
+        /// <param name="low">The low threshold.</param>
+        /// <param name="high">The high threshold.</param>
         public void SetThreshold(ushort low, ushort high)
         {
             WriteByte(Register.THRESHLOWLOW, (byte)(low & 0xFF));
@@ -141,9 +141,9 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get or Set the interrupt Control Select
+        /// Gets or sets the interrupt Control Select.
         /// </summary>
-        /// <remarks>Interrupts are only on Channel 0</remarks>
+        /// <remarks>Interrupts are only on Channel 0.</remarks>
         public InterruptControl InterruptControl
         {
             get => _interruptControl;
@@ -155,9 +155,9 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get or Set the interrupt Persistence Select
+        /// Gets or sets the interrupt Persistence Select.
         /// </summary>
-        /// <remarks>Interrupts are only on Channel 0</remarks>
+        /// <remarks>Interrupts are only on Channel 0.</remarks>
         public InterruptPersistence InterruptPersistence
         {
             get => _interruptPersistence;
@@ -169,10 +169,10 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get the raw data from both channels
+        /// Get the raw data from both channels.
         /// </summary>
-        /// <param name="channel0">Channel 0</param>
-        /// <param name="channel1">Channel 1</param>
+        /// <param name="channel0">Channel 0.</param>
+        /// <param name="channel1">Channel 1.</param>
         public void GetRawChannels(out ushort channel0, out ushort channel1)
         {
             channel0 = ReadWord(Register.DATA0LOW | Register.CLEAR);
@@ -180,10 +180,10 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get the raw luminosity for a specific channel
+        /// Get the raw luminosity for a specific channel.
         /// </summary>
-        /// <param name="channel">The channel to get the luminosity</param>
-        /// <returns>The raw luminosity from the ADC</returns>
+        /// <param name="channel">The channel to get the luminosity.</param>
+        /// <returns>The raw luminosity from the ADC.</returns>
         public ushort GetRawLuminosity(Channel channel)
         {
             GetRawChannels(out ushort channel0, out ushort channel1);
@@ -201,14 +201,15 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Measure the illuminance, will wait for the measurement based on integration time
+        /// Measure the illuminance, will wait for the measurement based on integration time.
         /// </summary>
-        /// <returns>The illuminance</returns>
+        /// <returns>The illuminance.</returns>
         [Telemetry("Illuminance")]
         public Illuminance MeasureAndGetIlluminance()
         {
             // We need to make sure we're on otherwise the sensor won't measure anything
             Enabled = true;
+
             // We need to write the timing timer to start a measurement
             WriteByte(Register.TIMING, (byte)((byte)_integrationTime | (byte)_gain));
             switch (_integrationTime)
@@ -231,18 +232,20 @@ namespace IoT.Device.Tsl256x
         }
 
         /// <summary>
-        /// Get the calculated Illuminance. Default range is Lux
+        /// Get the calculated Illuminance. Default range is Lux.
         /// </summary>
-        /// <returns>The illuminance</returns>
-        /// <remarks>If you have used the manual integration, you won't be able to use this formula</remarks>
+        /// <returns>The illuminance.</returns>
+        /// <remarks>If you have used the manual integration, you won't be able to use this formula.</remarks>
         public Illuminance GetIlluminance()
         {
             // See documentation page 23 and following for the constant and the calculation
             // Integration time scaling
             // scale channel values by 2^10
             const int ChannelScale = 1024;
+
             // 322/11 * 2^CH_SCALE
             const int ChannelScale13_7 = 0x7517;
+
             // 322/81 * 2^CH_SCALE
             const int ChannelScale101 = 0x0fe7;
 
@@ -253,6 +256,7 @@ namespace IoT.Device.Tsl256x
             }
 
             double ratio = ch1 / ch0;
+           
             // Calculate the integration and scaling
             double scale = 0;
             switch (_integrationTime)
@@ -280,19 +284,19 @@ namespace IoT.Device.Tsl256x
             {
                 if (ratio <= 0.52)
                 {
-                    lux = 0.0315 * channel0 - 0.0593 * channel0 * Math.Pow(ratio, 1.4);
+                    lux = (0.0315 * channel0) - (0.0593 * channel0 * Math.Pow(ratio, 1.4));
                 }
                 else if ((ratio > 0.52) && (ratio <= 0.65))
                 {
-                    lux = 0.0229 * channel0 - 0.0291 * channel1;
+                    lux = (0.0229 * channel0) - (0.0291 * channel1);
                 }
                 else if ((ratio > 0.65) && (ratio <= 0.80))
                 {
-                    lux = 0.0157 * channel0 - 0.0180 * channel1;
+                    lux = (0.0157 * channel0) - (0.0180 * channel1);
                 }
                 else if ((ratio > 0.80) && (ratio <= 1.30))
                 {
-                    lux = 0.00338 * channel0 - 0.00260 * channel1;
+                    lux = (0.00338 * channel0) - (0.00260 * channel1);
                 }
                 else if (ratio > 1.30)
                 {
@@ -303,19 +307,19 @@ namespace IoT.Device.Tsl256x
             {
                 if (ratio <= 0.50)
                 {
-                    lux = 0.0304 * channel0 - 0.062 * channel0 * Math.Pow(ratio, 1.4);
+                    lux = (0.0304 * channel0) - (0.062 * channel0 * Math.Pow(ratio, 1.4));
                 }
                 else if ((ratio > 0.50) && (ratio <= 0.61))
                 {
-                    lux = 0.0224 * channel0 - 0.031 * channel1;
+                    lux = (0.0224 * channel0) - (0.031 * channel1);
                 }
                 else if ((ratio > 0.61) && (ratio <= 0.80))
                 {
-                    lux = 0.0128 * channel0 - 0.0153 * channel1;
+                    lux = (0.0128 * channel0) - (0.0153 * channel1);
                 }
                 else if ((ratio > 0.80) && (ratio <= 1.30))
                 {
-                    lux = 0.00146 * channel0 - 0.00112 * channel1;
+                    lux = (0.00146 * channel0) - (0.00112 * channel1);
                 }
                 else if (ratio > 1.30)
                 {

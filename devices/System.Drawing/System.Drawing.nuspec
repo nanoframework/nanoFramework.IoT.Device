@@ -1,26 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.System.Drawing</id>
     <version>$version$</version>
     <title>nanoFramework.System.Drawing</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
     </releaseNotes>
+    <readme>docs\README.md</readme>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core System.Drawing for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET System.Drawing namespace for .NET nanoFramework C# projects.</description>
     <summary>System.Drawing assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf System.Drawing</tags>
+    <tags>nanoFramework C# csharp netmf netnf iot drawing</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.5" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
     </dependencies>
   </metadata>
   <files>
@@ -29,6 +28,7 @@
     <file src="bin\Release\System.Drawing.pdbx" target="lib\System.Drawing.pdbx" />
     <file src="bin\Release\System.Drawing.pe" target="lib\System.Drawing.pe" />
     <file src="bin\Release\System.Drawing.xml" target="lib\System.Drawing.xml" />
+    <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
   </files>

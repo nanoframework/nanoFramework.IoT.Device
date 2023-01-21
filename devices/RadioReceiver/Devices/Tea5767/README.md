@@ -3,7 +3,7 @@ The TEA5767HN is a single-chip electronically tuned FM stereo radio for low-volt
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

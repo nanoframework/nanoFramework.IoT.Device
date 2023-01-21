@@ -1,23 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Sht3x", "Sht3x.nfproj", "{5CAA85D0-961D-442A-91B2-526722EE4432}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Sht3x.Samples", "samples\Sht3x.Samples.nfproj", "{ED67C08D-3856-46F8-A9C7-123F895B4ACA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{DFAC593F-76DF-46D5-8001-C76D54A14150}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "System.Device.Model", "..\..\src\System.Device.Model\System.Device.Model.shproj", "{23325B14-3651-4879-9697-9846FF123FEB}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Iot.Device.Common", "..\..\src\Iot.Device.Common\Iot.Device.Common.shproj", "{B439A23D-A742-4D1E-B182-7EC4C84DE211}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\System.Device.Model\System.Device.Model.projitems*{23325b14-3651-4879-9697-9846ff123feb}*SharedItemsImports = 13
-		..\..\src\Iot.Device.Common\Iot.Device.Common.projitems*{b439a23d-a742-4d1e-b182-7ec4c84de211}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -38,9 +27,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{23325B14-3651-4879-9697-9846FF123FEB} = {DFAC593F-76DF-46D5-8001-C76D54A14150}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {445C97F4-940D-4838-B59D-B1575E11B9FE}

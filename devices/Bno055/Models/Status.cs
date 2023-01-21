@@ -4,29 +4,29 @@
 namespace Iot.Device.Bno055
 {
     /// <summary>
-    /// Status
+    /// Status.
     /// </summary>
     public enum Status
     {
-        /// <summary>Idle</summary>
+        /// <summary>Idle.</summary>
         Idle = 0,
 
-        /// <summary>System error</summary>
+        /// <summary>System error.</summary>
         SystemError,
 
-        /// <summary>Initializing peripherals</summary>
+        /// <summary>Initializing peripherals.</summary>
         InitializingPeripherals,
 
-        /// <summary>System initialization</summary>
+        /// <summary>System initialization.</summary>
         SystemInitialization,
 
-        /// <summary>Executing self test</summary>
+        /// <summary>Executing self test.</summary>
         ExcecutingSelftest,
 
-        /// <summary>Sensor fusion algorithm running</summary>
+        /// <summary>Sensor fusion algorithm running.</summary>
         SensorFusionAlgorithmRunning,
 
-        /// <summary>System running without fusion algorithm</summary>
+        /// <summary>System running without fusion algorithm.</summary>
         SystemRunningWithoutFusionAlgorithm
     }
 }

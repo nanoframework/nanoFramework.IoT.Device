@@ -5,6 +5,7 @@ using Iot.Device.Ws28xx;
 using nanoFramework.Hardware.Esp32;
 using System;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Drawing;
 
 // Configure the count of pixels
@@ -14,7 +15,7 @@ const int Count = 16;
 Configuration.SetPinFunction(23, DeviceFunction.SPI2_MOSI);
 Configuration.SetPinFunction(19, DeviceFunction.SPI2_MISO);
 Configuration.SetPinFunction(18, DeviceFunction.SPI2_CLOCK);
-// Pin 22 must be set to ADC to use as the chip selector 
+// Pin 22 must be set to ADC to use as the chip selector
 Configuration.SetPinFunction(22, DeviceFunction.ADC1_CH10);
 
 // Using VSPI on bus 2 for ESP32 and pin 22 for chipselect
@@ -32,9 +33,11 @@ Ws28xx neo = new Ws2808(spi, count);
 Ws28xx neo = new Ws2812b(spi, Count);
 #endif
 
+// BenchmarkClearPixel(); uncomment to benchmark
 
 while (true)
 {
+    ColorFade(neo, Count);
     ColorWipe(neo, Color.White, Count);
     ColorWipe(neo, Color.Red, Count);
     ColorWipe(neo, Color.Green, Count);
@@ -57,6 +60,55 @@ void ColorWipe(Ws28xx neo, Color color, int count)
     {
         img.SetPixel(i, 0, color);
         neo.Update();
+    }
+}
+
+void ColorFade(Ws28xx neo, int count)
+{
+    BitmapImage img = neo.Image;
+
+    // White
+    for (byte iteration = 0; iteration < 255; iteration++)
+    {
+        for (var pixel = 0; pixel < count; pixel++)
+        {
+            img.SetPixel(pixel, 0, iteration, iteration, iteration);
+        }
+        neo.Update();
+        System.Threading.Thread.Sleep(10);
+    }
+
+    // Red
+    for (byte iteration = 0; iteration < 255; iteration++)
+    {
+        for (var pixel = 0; pixel < count; pixel++)
+        {
+            img.SetPixel(pixel, 0, iteration, 0, 0);
+        }
+        neo.Update();
+        System.Threading.Thread.Sleep(10);
+    }
+
+    // Green
+    for (byte iteration = 0; iteration < 255; iteration++)
+    {
+        for (var pixel = 0; pixel < count; pixel++)
+        {
+            img.SetPixel(pixel, 0, 0, iteration, 0);
+        }
+        neo.Update();
+        System.Threading.Thread.Sleep(10);
+    }
+
+    // Blue
+    for (byte iteration = 0; iteration < 255; iteration++)
+    {
+        for (var pixel = 0; pixel < count; pixel++)
+        {
+            img.SetPixel(pixel, 0, 0, 0, iteration);
+        }
+        neo.Update();
+        System.Threading.Thread.Sleep(10);
     }
 }
 
@@ -121,7 +173,7 @@ void RainbowCycle(Ws28xx neo, int count, int iterations = 1)
     {
         for (var j = 0; j < count; j++)
         {
-            img.SetPixel(j, 0, Wheel(((int)(j * 255 / count) + i) & 255));
+            img.SetPixel(j, 0, Wheel(((j * 255 / count) + i) & 255));
         }
 
         neo.Update();
@@ -149,4 +201,38 @@ void TheaterChaseRainbow(Ws28xx neo, int count)
             }
         }
     }
+}
+
+void BenchmarkClearPixel()
+{
+    Stopwatch sw = new Stopwatch();
+
+    sw.Start();
+    for (int i = 0; i < 1000; i++)
+    {
+        neo.Image.Clear();
+        neo.Update();
+    }
+
+    sw.Stop();
+    Debug.WriteLine("Clear all" + sw.Elapsed.ToString());
+
+    Stopwatch sw2 = new Stopwatch();
+
+    sw2.Start();
+    for (int i = 0; i < 1000; i++)
+    {
+        for (int y = 0; y < neo.Image.Height; y++)
+        {
+            for (int x = 0; x < neo.Image.Width; x++)
+            {
+                neo.Image.Clear(x, y);
+            }
+        }
+
+        neo.Update();
+    }
+
+    sw2.Stop();
+    Debug.WriteLine("Clear pixel by pixel " + sw2.Elapsed.ToString());
 }

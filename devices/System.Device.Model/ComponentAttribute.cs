@@ -4,18 +4,18 @@
 namespace System.Device.Model
 {
     /// <summary>
-    /// Component attribute class referencing to an interface
+    /// Component attribute class referencing to an interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class ComponentAttribute : Attribute
     {
         /// <summary>
-        /// Name of the component
+        /// Gets name of the component.
         /// </summary>
         public string? Name { get; }
 
         /// <summary>
-        /// Constructs ComponentAttribute
+        /// Initializes a new instance of the <see cref="ComponentAttribute" /> class.
         /// </summary>
         /// <param name="name">Optional name of the component. If not provided property name will be used.</param>
         public ComponentAttribute(string? name)
@@ -24,7 +24,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs ComponentAttribute
+        /// Initializes a new instance of the <see cref="ComponentAttribute" /> class.
         /// </summary>
         public ComponentAttribute()
         {

@@ -25,7 +25,7 @@ There are many servo motor sizes available that offer both standard and continuo
 
 ## Board
 
-![schema](ServoMotor.png)
+![image](./ServoMotor.png)
 
 ## Usage
 

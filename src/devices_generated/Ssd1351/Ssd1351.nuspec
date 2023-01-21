@@ -5,14 +5,14 @@
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Ssd1351</title>
     <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors,dotnetfoundation</owners>
+    <owners>nanoFramework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
     </releaseNotes>
+    <readme>docs\README.md</readme>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
@@ -29,7 +29,8 @@
     <file src="bin\Release\Iot.Device.Ssd1351.pdbx" target="lib\Iot.Device.Ssd1351.pdbx" />
     <file src="bin\Release\Iot.Device.Ssd1351.pe" target="lib\Iot.Device.Ssd1351.pe" />
     <file src="bin\Release\Iot.Device.Ssd1351.xml" target="lib\Iot.Device.Ssd1351.xml" />
-    <file src="readme.md" target="" />
+
+    <file src="README.md" target="docs\" />
     <file src="..\assets\nf-logo.png" target="images" />
     <file src="..\LICENSE.md" target="" />
   </files>

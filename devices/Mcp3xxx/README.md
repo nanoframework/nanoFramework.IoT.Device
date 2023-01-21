@@ -6,7 +6,7 @@ You can use these converters in your project to access analog devices.
 
 The following fritzing diagram illustrates one way to wire up the Mcp3008, with an ESP32 and a potentiometer.
 
-![ESP32 Breadboard diagram](rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_spi.png)
 
 ## Documentation
 

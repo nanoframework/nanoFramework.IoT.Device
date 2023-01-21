@@ -63,4 +63,4 @@ Debug.WriteLine($"Altitude: {altValue:0.##}m");
 
 The following fritzing diagram illustrates one way to wire up the BMP180 with an MCU like ESP32 using I2C.
 
-![ESP32 Breadboard diagram](rpi-bmp180_i2c_bb.png)
+![ESP32 Breadboard diagram](./rpi-bmp180_i2c_bb.png)

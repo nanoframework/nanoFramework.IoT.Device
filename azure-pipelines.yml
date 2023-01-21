@@ -1,8 +1,27 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
 trigger:
   branches:
-    include: ["main", "develop*", "release-*", "refs/tags/*" ]
+    include:
+      - main
+      - develop
+      - release-*
+      - refs/tags/*
   paths:
-    exclude: [ "doc", "*.md", ".gitignore", "README.md", "devices/README.md", "tips-trick.md", "src/devices_generated_status.md", "LICENSE.md" ]
+    exclude:
+      - src/*
+      - tests/*
+      - devices/README.md
+      - devices/key.snk
+      - .gitignore
+      - LICENSE.md
+      - README.md
+      - tips-trick.md
+      - assets/*
+      - config/*
+      - .github/*
+      - StyleCop/*
 
 # PR always trigger build
 pr:
@@ -17,7 +36,7 @@ resources:
       endpoint: nanoframework
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: 'windows-latest'
 
 variables:
   DOTNET_NOLOGO: true
@@ -29,6 +48,8 @@ steps:
 # need this here in order to persist GitHub credentials 
 - checkout: self
   submodules: true
+- checkout: templates
+  fetchDepth: 1
 
 - script: |
     git config --global user.email "nanoframework@outlook.com"
@@ -37,184 +58,35 @@ steps:
   displayName: Setup git identity
 
 - template: azure-pipelines-templates/install-nuget.yml@templates
+- task: Cache@2
+  displayName: Cache NuGet packages
+  condition: succeeded()
+  continueOnError: true
+  inputs:
+    key: 'nuget | **/packages.lock.json'
+    path: $(UserProfile)/.nuget/packages
 
 - task: DotNetCoreCLI@2  
-  displayName: Install NBGV tool
+  displayName: Install nanovc tool
   condition: succeeded()
   inputs:
     command: custom
     custom: tool
-    arguments: install -g nbgv
+    arguments: install -g nanovc --add-source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json
 
-- script: nbgv cloud -a -c
-  condition: succeeded()
-  displayName: Set build number
-
-- task: PowerShell@2
-  condition: succeeded()
-  displayName: Get NuGet build number
-  inputs:
-    targetType: 'inline'
-    script: |
-      $MyNuGetVersion = $env:NBGV_NuGetPackageVersion -replace ".g$env:NBGV_GitCommitIdShort", ""
-
-      # replace preview with alpha if this is a PR build
-      if($env:System_PullRequest_PullRequestId -ne $null)
-      {
-          # mix PR and VersionHeight
-          $alphaNumber = [int]$env:System_PullRequest_PullRequestNumber + $env:NBGV_VersionHeight;
-
-          $alphaPrString = "alpha." + $alphaNumber.ToString()
-          $MyNuGetVersion = $MyNuGetVersion -replace "preview", $alphaPrString
-      }
-      if ($env:System_PullRequest_SourceBranch -like 'release*')
-      {
-          $MyNuGetVersion = $MyNuGetVersion + "-rc." + $env:NBGV_VersionHeight
-      }
-
-      Write-Host "NuGet build is: $MyNuGetVersion"
-      Write-Host "Assembly version is: $env:NBGV_AssemblyVersion"
-
-      Write-Host "$("##vso[task.setvariable variable=MY_NUGET_VERSION]")$MyNuGetVersion"
-
-- task: InstallnFBuildComponents@1
+- task: InstallNanoMSBuildComponents@1
   condition: succeeded()
   displayName: Install nanoFramework MSBuild components
+  env:
+    GITHUB_TOKEN: $(GitHubToken)
 
 # build solutions that need to be build
-- powershell: |
-    # setup msbuild
-    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
-    if ($msbuild) {
-        $msbuild = join-path $msbuild 'MSBuild\Current\Bin\MSBuild.exe'
-    }
-
-    $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
-  
-    if($env:DEVICE_TO_BUILD -eq "")
-    {
-        if($env:System_PullRequest_PullRequestId -ne $null)
-        {
-            "" | Write-Host -ForegroundColor Yellow
-            "**********************" | Write-Host -ForegroundColor Yellow
-            "* Building from a PR *" | Write-host -ForegroundColor Yellow
-            "**********************" | Write-Host -ForegroundColor Yellow
-            "" | Write-Host -ForegroundColor Yellow
-
-            # get files changed in PR, if this is a PR
-            # can get max of 100 files using this method (for more requires paging)
-            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
-
-            # filter removed files              
-            $files = $commit.where{$_.status -ne 'removed'}
-        }
-        else
-        {
-            "" | Write-Host -ForegroundColor Yellow
-            "**************************" | Write-Host -ForegroundColor Yellow
-            "* Building from a commit *" | Write-host -ForegroundColor Yellow
-            "**************************" | Write-Host -ForegroundColor Yellow
-            "" | Write-Host -ForegroundColor Yellow
-
-            # get files changed in the commit, if this is NOT a PR
-            $commit = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$(Build.SourceVersion)" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
-
-            # filter removed files              
-            $files = $commit.files.where{$_.status -ne 'removed'}
-        }
-
-        # get file names only
-        $files1 = $files | % {$_.filename} | Where-Object {$_ -match 'devices/*'} 
-
-        if($null -eq $files1)
-        {
-            Write-host "No 'bindings' to build"
-            exit
-        }
-
-        Write-host "Files changed:"
-        $files1 | % { Write-host $_ }
-        Write-host ""
-
-        # pattern to select device folder name
-        $pattern = '(devices\/)(?<folder>[a-zA-Z0-9._]+)(?>\/)'
-
-        # filter out the collection
-        $results = [Regex]::Matches($files1, $pattern)
-
-        # get unique folder names
-        $deviceFolders = $results | Sort-Object | Select-Object | Foreach-Object {$_.Groups["folder"].Value} | Get-Unique 
-
-        Write-host "Found $($deviceFolders.count) package(s) to build"
-    }
-    else
-    {
-        # build for a specific device
-
-        $deviceFolders = New-Object System.Collections.ArrayList
-        $deviceFolders.Add("$env:DEVICE_TO_BUILD")
-    }
-
-    foreach ($folder in $deviceFolders)
-    {
-        "" | Write-Host -ForegroundColor Yellow
-        "***********************" | Write-Host -ForegroundColor Yellow
-        "Processing binding '$folder'..." | Write-Host -ForegroundColor Yellow
-        "***********************" | Write-Host -ForegroundColor Yellow
-        "" | Write-Host -ForegroundColor Yellow
-        
-        # try to find the solution
-        $solutionFile = Get-ChildItem -Path "devices\$folder\" -Include "$folder.sln" -Recurse
-
-        if($null -eq $solutionFile)
-        {
-            "Couldn't find any solution file!"  | Write-Host -ForegroundColor Red
-            throw "Couldn't the solution for '$folder'..."
-        }
-        else
-        {
-            "" | Write-Host -ForegroundColor Yellow
-            "***********************" | Write-Host -ForegroundColor Yellow
-            "Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
-            "***********************" | Write-Host -ForegroundColor Yellow
-            "" | Write-Host -ForegroundColor Yellow
-        }
-
-        # try to find the nuspec
-        $nuspecFile = Get-ChildItem -Path "devices\$folder\" -Include "$folder.nuspec" -Recurse
-  
-        if($null -eq $nuspecFile)
-        {
-            "Couldn't find the nuspec file!"  | Write-Host -ForegroundColor Red
-            throw "Couldn't the nuspec for '$folder'..."
-        }
-        else
-        {
-            "nuspec file is: '$nuspecFile'" | Write-Host -ForegroundColor Yellow
-        }
-
-        # need to restore NuGets first
-        nuget restore $solutionFile
-        if (-not $?) { throw "Error restoring '$solutionFile'" }
-
-        # for NFC solutions the projects on Card solution needs to be restored too
-        if ($solutionFile.Name -eq "Mfrc522.sln" -or
-            $solutionFile.Name -eq "Pn5180.sln" -or 
-            $solutionFile.Name -eq "Pn532.sln")
-        {
-            nuget restore devices\Card\Card.sln
-        }
-
-        # build solution
-        & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release
-        if (-not $?) { throw "Error building '$solutionFile'" }
-
-        # package NuGet
-        nuget pack $nuspecFile -Version $(MY_NUGET_VERSION) -Symbols -SymbolPackageFormat snupkg -properties commit="$(Build.SourceVersion)" -OutputDirectory $env:Agent_TempDirectory
-        if (-not $?) { throw "Error packaging '$nuspecFile'" }
-    }
+- task: PowerShell@2
   displayName: Build and pack solutions
+  inputs:
+    workingDirectory: 'nanoFramework.IoT.Device\devices'
+    targetType: 'filePath'
+    filePath: '$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\.pipeline-assets\pipeline-build-solutions.PS1'
   env:
     MY_GITHUBTOKEN: $(GitHubToken)
 
@@ -229,9 +101,28 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
 
+# find if there are NuGet artifacts
+- task: PowerShell@2
+  displayName: Count artifacts
+  name: Count_Artifacts
+  inputs:
+    workingDirectory: '$(Build.ArtifactStagingDirectory)'
+    targetType: inline
+    script: |
+      $count = (Get-ChildItem -Path '.' -Filter '*.nupkg' -Recurse).Count
+      Write-Host $count ' NuGet packages found'
+
+      # set variable to forward 
+      echo "##vso[task.setvariable variable=NUGET_COUNT;isOutput=true]$count"
+
 - task: DotNetCoreCLI@2
   displayName: Install SignTool tool
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   inputs:
     command: custom
     custom: tool
@@ -241,8 +132,8 @@ steps:
     .\SignClient "Sign" `
     --baseDirectory "$(Build.ArtifactStagingDirectory)" `
     --input "**/*.nupkg" `
-    --config "$(Build.Repository.LocalPath)\config\SignClient.json" `
-    --filelist "$(Build.Repository.LocalPath)\config\filelist.txt" `
+    --config "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\SignClient.json" `
+    --filelist "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
     --user "$(SignClientUser)" `
     --secret '$(SignClientSecret)' `
     --name "IoT.Device" `
@@ -250,9 +141,14 @@ steps:
     --descriptionUrl "https://github.com/$env:Build_Repository_Name"
   displayName: Sign packages
   continueOnError: true
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], '') )
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   
-# publish artifacts (only possible if this is not a PR originated on a fork)
+# publish artifacts
 - task: PublishBuildArtifacts@1
   condition: succeeded()
   displayName: Publish deployables artifacts
@@ -261,31 +157,59 @@ steps:
     ArtifactName: deployables
     ArtifactType: Container
 
-# push NuGet class lib package to NuGet (always happens except on PR builds)
-- task: NuGetCommand@2
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
-  continueOnError: true
-  displayName: Push NuGet packages to NuGet
+# push NuGet class lib package to Azure Artifacts (always happens except on PR builds)
+- task: NuGetAuthenticate@0
   inputs:
-    command: push
-    nuGetFeedType: external
-    allowPackageConflicts: true
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
+    nuGetServiceConnections: 'AzureArtifacts-$(System.TeamProject)'
+
+- script: nuget push -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json *.nupkg -NonInteractive -SkipDuplicate
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
+  continueOnError: false
+  displayName: Push NuGet packages to NuGet
+
+# push NuGet class lib package to NuGet (always happens except on PR builds)
+- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
+  continueOnError: false
+  displayName: Push NuGet packages to NuGet
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   inputs:
     command: custom
     custom: run
     projects: '**/device-listing.csproj'
+    workingDirectory: 'nanoFramework.IoT.Device'
 
 - task: PowerShell@2
-  condition: and( succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
   displayName: Push READMEs to GitHub
+  condition: >-
+    and(
+      succeeded(),
+      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
+      eq(variables['System.PullRequest.PullRequestId'], '')
+    )
   continueOnError: true
   inputs:
+    workingDirectory: 'nanoFramework.IoT.Device'
     targetType: 'inline'
     script: |
       git config user.email 'nanoframework@outlook.com'
@@ -306,6 +230,7 @@ steps:
 # report error
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
   parameters:
+    workingDirectory: 'nanoFramework.IoT.Device'
     status: 'failure'
     webhookUrl: '$(DiscordWebhook)'
     message: ''

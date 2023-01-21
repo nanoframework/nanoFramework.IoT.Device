@@ -105,7 +105,7 @@ You also have 3 examples on how to use this device binding are available in the 
 
 The following fritzing diagram illustrates one way to wire up the BMP280 with an MCU like ESP32 using I2C:
 
-![ESP32 Breadboard diagram](rpi-bmp280_i2c.png)
+![ESP32 Breadboard diagram](./rpi-bmp280_i2c.png)
 
 General:
 

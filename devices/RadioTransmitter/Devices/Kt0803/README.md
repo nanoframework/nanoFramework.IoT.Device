@@ -3,7 +3,7 @@ KT0803, a new generation of low cost Monolithic Digital FM Transmitter, is desig
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

@@ -331,12 +331,12 @@ namespace nanoFramework.IoT.Device.CodeConverter
             if(projectType == ProjectType.Regular)
             {
                 projectReplacements.Add("<!-- INSERT NBGV IMPORT HERE -->",
-                    @"<Import Project=""packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets"" Condition=""Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')"" />
+                    @"<Import Project=""packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets"" Condition=""Exists('packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets')"" />
   <Target Name = ""EnsureNuGetPackageBuildImports"" BeforeTargets = ""PrepareForBuild"">
     <PropertyGroup>
       <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition = ""!Exists('packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets')"" Text = ""$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.4.194\build\Nerdbank.GitVersioning.targets'))"" />
+    <Error Condition = ""!Exists('packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets')"" Text = ""$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.103\build\Nerdbank.GitVersioning.targets'))"" />
   </Target>");
 
             }
@@ -380,7 +380,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
 
             if(projectType == ProjectType.Regular)
             {
-                packageReferences = packageReferences.Append(@"  <package id=""Nerdbank.GitVersioning"" version=""3.4.194"" developmentDependency=""true"" targetFramework=""netnanoframework10"" />");
+                packageReferences = packageReferences.Append(@"  <package id=""Nerdbank.GitVersioning"" version=""3.5.103"" developmentDependency=""true"" targetFramework=""netnano1.0"" />");
             }
 
             if (packageReferences.Any())

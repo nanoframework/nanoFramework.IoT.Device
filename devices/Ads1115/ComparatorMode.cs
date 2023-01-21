@@ -4,14 +4,14 @@
 namespace Iot.Device.Ads1115
 {
     /// <summary>
-    ///  Comparator Mode of Operation
+    ///  Comparator Mode of Operation.
     /// </summary>
     public enum ComparatorMode
     {
-        /// <summary>Traditional mode</summary>
+        /// <summary>Traditional mode.</summary>
         Traditional = 0x00,
 
-        /// <summary>Window mode</summary>
+        /// <summary>Window mode.</summary>
         Window = 0x01
     }
 }

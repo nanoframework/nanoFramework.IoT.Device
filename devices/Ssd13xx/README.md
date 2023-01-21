@@ -1,4 +1,4 @@
-﻿# SSD13xx & SSH1106 OLED display family
+# SSD13xx & SSH1106 OLED display family
 
 The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for organic/polymer light emitting diode dot-matrix graphic display system. It consists of 128 segments and 64 commons. This IC is designed for Common Cathode type OLED panel.
 
@@ -17,7 +17,35 @@ The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for
 
 ## Board
 
-![Connection schematics](Ssd1306_I2c_PiOled.png)
+Address on the I2C bus: Ssd1306.DefaultI2cAddress 0x3C
+
+![Connection schematics](./Ssd1306_I2c_PiOled.png)
+
+Version with 7-pin I2C/SPI
+
+Address on the I2C bus: Ssd1306.SecondaryI2cAddress 0x3D
+
+Connecting resistors:
+- I2C — R1, R4, R8;
+- SPI — R3, R4.
+
+For only I2C
+
+![Ssd1306 I2C/SPI back](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_I2C_SPI_back.jpg)
+
+![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_OLED_128x64_I2C_SPI.png)
+
+### Connection table:
+
+| Pin No: | Pin Name: | Description: |
+| ------------ | ------------ | ------------ |
+| 1 | Ground (Gnd) | Connected to the ground of the circuit |
+| 2 | Supply (Vdd,Vcc,5V) | Can be powered by either 3.3V or 5V |
+| 3 | SCK (D0,SCL,CLK) | The display supports both IIC and SPI, for which clock is supplied through this pin |
+| 4 | SDA (D1,MOSI) | This is the data pin of the both, it can either be used for IIC or for SPI |
+| 5 | RES(RST,RESET) | When held to ground momentarily this pin resets the module (operational work, High value) |
+| 6 | DC (A0) | I2C — must be connected to power (3.3V or 5V). SPI — this is command pin |
+| 7 | Chip Select (CS) | Normally held low, used only when more than one SPI device is connected to MCU |
 
 ## Binding Notes
 
@@ -27,3 +55,74 @@ The following connection types are supported by this binding.
 
 - [X] I2C
 - [ ] SPI
+
+## Usage notes
+
+There are two groups of drawing methods.
+
+1. Various specialized drawing methods allowing to draw on screen pixel-by-pixel, like:
+    - ````DrawPixel(...)````: draws one pixel
+    - ````DrawHorizontalLine(...)````: draws a horizontal line
+    - ````DrawVerticalLine(...)````: draws a vertical line
+    - ````DrawFilledRectangle(...)````: draws a filled rectangle
+    - ````DrawBitmap(...)````: draws a bitmap
+    - ````DrawString(...)````: draws a string with preset font
+    
+    Using these methods you do not need to care about any technique the driver uses to display 
+    your drawing instructions.
+   
+2. Methods allowing to modify screen content by blocks of internal representation (screen buffer), like:
+    - ````DrawDirectAligned(...)````: overwrites screen buffer with given content
+    - ````ClearDirectAligned(...)````: clears out (with 0x00) given part of screen buffer
+    
+    These methods allow faster (~100 times) display access but with some constraints. 
+    - bitmaps handed over here must be in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode").
+    - no bit operations occure with existing buffer data (with pixels drawn via other means), the new data will overwrite the pixels "below" newly drawed content.
+    - the "y" coordinate and the bitmap height must be byte aligned with screen buffer (again, see above docs)
+
+The use of two groups can be freely mixed (e.g. display text via ````DrawString(...)```` and displaying an image below via ````DrawDirectAligned(...)````)
+
+Examples for 1. can be found in ````samples```` folder.
+
+Example for 2. follows here.
+
+````csharp
+// There are superb online helpers like the one below which are able to
+// create an appropriate byte array from an image in code use ready format.
+// https://www.mischianti.org/images-to-byte-array-online-converter-cpp-arduino/
+// On the site above use these settings to get bytes needed here:
+// - "plain bytes"
+// - "vertical - 1 bit per pixel"
+var buffer = new byte[] { ... }; 
+var width = 16;
+var height = 16;
+
+// instantiation example
+var ssd1306 = new Ssd1306(
+    I2cDevice.Create(
+        new I2cConnectionSettings(
+            1, 
+            Ssd1306.DefaultI2cAddress, 
+            I2cBusSpeed.FastMode)), 
+    Ssd13xx.DisplayResolution.OLED128x64);
+
+// this line sends the image data to the screen
+ssd1306.DrawDirectAligned(x, y, width, height, buffer);
+
+// this one wipes its place to blank
+ssd1306.ClearDirectAligned(x, y, width, height);
+
+````
+
+To display double byte fonts (for example fonts of Asian languages) you have to set the font to `DoubleByteFont()`, like this:
+
+```csharp
+device.Font = new DoubleByteFont();
+device.DrawString(2, 2, "功夫＄", 2, false);
+device.DrawString(2, 34, "８９ＡＢ功夫＄", 1, true);
+device.Display();
+```
+
+Follows the output on the display:
+
+![double-byte.fonts](./display-with-double-byte-chars.jpg)

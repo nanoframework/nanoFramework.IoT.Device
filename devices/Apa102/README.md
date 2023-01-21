@@ -34,7 +34,7 @@ Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
 // Make sure as well you are using the right chip select
 ```
 
-For other devices like STM32, please make sure you're using the preset pins for the SPI bus you want to use. The chip select can as well be pre setup.
+For other devices like STM32, please make sure you're using the pre-set pins for the SPI bus you want to use. The chip select can as well be pre setup.
 
 Here is an example how to use the APA102:
 

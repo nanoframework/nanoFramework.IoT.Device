@@ -17,16 +17,16 @@ namespace Iot.Device.Buzzer
         private PwmChannel _pwmChannel;
 
         /// <summary>
-        /// Constructs Buzzer instance
+        /// Initializes a new instance of the <see cref="Buzzer" /> class.
         /// </summary>
-        /// <param name="pinNumber">Pin connected to buzzer</param>
+        /// <param name="pinNumber">Pin connected to buzzer.</param>
         public Buzzer(int pinNumber)
             : this(PwmChannel.CreateFromPin(pinNumber))
         {
         }
 
         /// <summary>
-        /// Create Buzzer class instance with output on specified pin with specified channel.
+        /// Initializes a new instance of the <see cref="Buzzer" /> class.
         /// </summary>
         /// <param name="chip">The GPIO pin number in case of a software PWM. The chip in case of a hardware PWM.</param>
         /// <param name="channel">The channel to use in case of a hardware PWM.</param>
@@ -36,7 +36,7 @@ namespace Iot.Device.Buzzer
         }
 
         /// <summary>
-        /// Create Buzzer class instance with output on specified pin with specified channel using passed PWM controller.
+        /// Initializes a new instance of the <see cref="Buzzer" /> class.
         /// </summary>
         /// <param name="pwmChannel">The PWM controller to use during work.</param>
         public Buzzer(PwmChannel pwmChannel) => _pwmChannel = pwmChannel;
@@ -77,7 +77,7 @@ namespace Iot.Device.Buzzer
         public void Dispose()
         {
             _pwmChannel?.Dispose();
-            _pwmChannel = null!;
+            _pwmChannel = null;
         }
     }
 }

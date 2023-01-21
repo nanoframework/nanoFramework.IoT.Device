@@ -8,12 +8,12 @@ using System.Drawing;
 namespace Iot.Device.Apa102
 {
     /// <summary>
-    /// Driver for APA102. A double line transmission integrated control LED
+    /// Driver for APA102. A double line transmission integrated control LED.
     /// </summary>
     public class Apa102 : IDisposable
     {
         /// <summary>
-        /// Colors of LEDs
+        /// Gets colors of LEDs.
         /// </summary>
         public SpanColor Pixels { get => _pixels; }
 
@@ -22,10 +22,10 @@ namespace Iot.Device.Apa102
         private byte[] _buffer;
 
         /// <summary>
-        /// Initializes a new instance of the APA102 device.
+        /// Initializes a new instance of the <see cref="Apa102" /> class.
         /// </summary>
         /// <param name="spiDevice">The SPI device used for communication.</param>
-        /// <param name="length">Number of LEDs</param>
+        /// <param name="length">Number of LEDs.</param>
         public Apa102(SpiDevice spiDevice, int length)
         {
             _spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
@@ -39,14 +39,14 @@ namespace Iot.Device.Apa102
             }
 
             // Original code: _buffer.AsSpan((length + 1) * 4, 4).Fill(0xFF); // end frame
-            for (int i = (length + 1) * 4; i < (length + 1) * 4 + 4; i++)
+            for (int i = (length + 1) * 4; i < ((length + 1) * 4) + 4; i++)
             {
                 _buffer[i] = 0xFF;
             }
         }
 
         /// <summary>
-        /// Update color data to LEDs
+        /// Update color data to LEDs.
         /// </summary>
         public void Flush()
         {
@@ -67,9 +67,9 @@ namespace Iot.Device.Apa102
         public void Dispose()
         {
             _spiDevice?.Dispose();
-            _spiDevice = null!;
-            _pixels = null!;
-            _buffer = null!;
+            _spiDevice = null;
+            _pixels = null;
+            _buffer = null;
         }
     }
 }

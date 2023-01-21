@@ -7,16 +7,16 @@ using System.Device.I2c;
 namespace Iot.Device.Magnetometer
 {
     /// <summary>
-    /// Default I2C interface for the Bmm150
+    /// Default I2C interface for the Bmm150.
     /// </summary>
     public class Bmm150I2c : Bmm150I2cBase
     {
         /// <summary>
-        /// Read a byte
+        /// Read a byte.
         /// </summary>
-        /// <param name="i2cDevice">An I2C device</param>
-        /// <param name="reg">The register to read</param>
-        /// <returns>The register value</returns>
+        /// <param name="i2cDevice">An I2C device.</param>
+        /// <param name="reg">The register to read.</param>
+        /// <returns>The register value.</returns>
         public override byte ReadByte(I2cDevice i2cDevice, byte reg)
         {
             i2cDevice.WriteByte(reg);
@@ -24,11 +24,11 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Read a byte array
+        /// Read a byte array.
         /// </summary>
-        /// <param name="i2cDevice">An I2C device</param>
-        /// <param name="reg">>The register to read</param>
-        /// <param name="readBytes">A span of bytes with the read values</param>
+        /// <param name="i2cDevice">An I2C device.</param>
+        /// <param name="reg">The register to read.</param>
+        /// <param name="readBytes">A span of bytes with the read values.</param>
         public override void ReadBytes(I2cDevice i2cDevice, byte reg, SpanByte readBytes)
         {
             i2cDevice.WriteByte(reg);
@@ -36,11 +36,11 @@ namespace Iot.Device.Magnetometer
         }
 
         /// <summary>
-        /// Write a byte
+        /// Write a byte.
         /// </summary>
-        /// <param name="i2cDevice">>An I2C device</param>
-        /// <param name="reg">The register to read</param>
-        /// <param name="data">A byte to write</param>
+        /// <param name="i2cDevice">An I2C device.</param>
+        /// <param name="reg">The register to read.</param>
+        /// <param name="data">A byte to write.</param>
         public override void WriteRegister(I2cDevice i2cDevice, byte reg, byte data)
         {
             SpanByte dataout = new byte[]

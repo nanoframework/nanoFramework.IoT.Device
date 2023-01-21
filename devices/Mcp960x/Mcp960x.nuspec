@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Mcp960x</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Mcp960x</title>
+    <authors>nanoFramework project contributors</authors>
+    <owners>nanoFramework,dotnetfoundation</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Mcp960x for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Mcp960x assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mcp960x</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.150.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Mcp960x.dll" target="lib\Iot.Device.Mcp960x.dll" />
+    <file src="bin\Release\Iot.Device.Mcp960x.pdb" target="lib\Iot.Device.Mcp960x.pdb" />
+    <file src="bin\Release\Iot.Device.Mcp960x.pdbx" target="lib\Iot.Device.Mcp960x.pdbx" />
+    <file src="bin\Release\Iot.Device.Mcp960x.pe" target="lib\Iot.Device.Mcp960x.pe" />
+    <file src="bin\Release\Iot.Device.Mcp960x.xml" target="lib\Iot.Device.Mcp960x.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

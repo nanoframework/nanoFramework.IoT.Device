@@ -22,9 +22,6 @@ namespace System.Device
         private const long TicksPerMillisecond = TimeSpan.TicksPerMillisecond;
         private const long TicksPerMicrosecond = TimeSpan.TicksPerMillisecond / 1000;
 
-        /// <summary>A scale that normalizes the hardware ticks to <see cref="TimeSpan" /> ticks which are 100ns in length.</summary>
-        private static readonly double s_tickFrequency = (double)TicksPerSecond / TimeSpan.TicksPerSecond; // Stopwatch.Frequency;
-
         /// <summary>
         /// Delay for at least the specified <paramref name="time" />.
         /// </summary>
@@ -36,15 +33,13 @@ namespace System.Device
         public static void Delay(TimeSpan time, bool allowThreadYield)
         {
             long start = Stopwatch.GetTimestamp();
-            long delta = (long)(time.Ticks / s_tickFrequency);
-            long target = start + delta;
+            long target = start + time.Ticks;
 
             if (!allowThreadYield)
             {
                 do
                 {
-                    // No spin wait
-                    ;
+                    Thread.SpinWait(1);
                 }
                 while (Stopwatch.GetTimestamp() < target);
             }
@@ -53,7 +48,6 @@ namespace System.Device
                 do
                 {
                     // No spin wait 
-                    ;
                 }
                 while (Stopwatch.GetTimestamp() < target);
             }

@@ -4,27 +4,27 @@
 namespace Iot.Device.Adxl345
 {
     /// <summary>
-    /// Gravity Measurement Range
+    /// Gravity Measurement Range.
     /// </summary>
     public enum GravityRange
     {
         /// <summary>
-        /// ±2G
+        /// Plus/minus 2G.
         /// </summary>
         Range02 = 0x00,
 
         /// <summary>
-        /// ±4G
+        /// Plus/minus 4G.
         /// </summary>
         Range04 = 0x01,
 
         /// <summary>
-        /// ±8G
+        /// Plus/minus 8G.
         /// </summary>
         Range08 = 0x02,
 
         /// <summary>
-        /// ±16G
+        /// Plus/minus 16G.
         /// </summary>
         Range16 = 0x03
     }

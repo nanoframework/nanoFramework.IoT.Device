@@ -8,7 +8,7 @@ The RTC devices supported by the project include DS1307, DS3231, PCF8563 (or com
 
 ## Board
 
-![Circuit RTC](circuit_rtc.png)
+![Circuit RTC](./circuit_rtc.png)
 
 ## Usage
 
@@ -63,5 +63,5 @@ using (Pcf8563 rtc = new Pcf8563(device))
 ```
 ### Result
 
-![Sample result](output.png)
+![Sample result](./output.png)
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Am2320</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Am2320</title>
+    <authors>nanoFramework project contributors</authors>
+    <owners>nanoFramework,dotnetfoundation</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Am2320 for .NET nanoFramework C# projects.</description>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Am2320</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.211" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.216" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.150.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.150.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Am2320.dll" target="lib\Iot.Device.Am2320.dll" />
+    <file src="bin\Release\Iot.Device.Am2320.pdb" target="lib\Iot.Device.Am2320.pdb" />
+    <file src="bin\Release\Iot.Device.Am2320.pdbx" target="lib\Iot.Device.Am2320.pdbx" />
+    <file src="bin\Release\Iot.Device.Am2320.pe" target="lib\Iot.Device.Am2320.pe" />
+    <file src="bin\Release\Iot.Device.Am2320.xml" target="lib\Iot.Device.Am2320.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

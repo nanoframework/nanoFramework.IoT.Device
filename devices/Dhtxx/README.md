@@ -1,6 +1,7 @@
 # DHTxx - Digital-Output Relative Humidity & Temperature Sensor Module
 
-**IMPORTANT** This ensor is very time sensitive. This implementation will only work on few boards. It doesn't work on nay ESP32. Don't use this implementation for those MCU.
+> **IMPORTANT** This sensor is very time sensitive. This implementation will only work on few boards. Do not use with ESP32.
+> If you are working with an ESP32, to use any of the DHT with 1 wire protocol, please use the [Dhtxx.Esp32](../Dhtxx.Esp32/README.md) version.
 
 The DHT temperature and humidity sensors are very popular. This projects support DHT10, DHT11, DHT12, DHT21(AM2301), DHT22(AM2302).
 
@@ -175,7 +176,7 @@ Some sensors are already sold with the 10K resistor. Connect the GPIO26 to the *
 
 #### I2C Protocol Circuit
 
-![schematics](DHT12_circuit_bb.png)
+![schematics](./DHT12_circuit_bb.png)
 
 * SCL - SCL
 * SDA - SDA

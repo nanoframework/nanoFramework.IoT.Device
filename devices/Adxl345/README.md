@@ -10,7 +10,7 @@ In [English](https://www.analog.com/media/en/technical-documentation/data-sheets
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -56,7 +56,7 @@ using (Adxl345 sensor = new Adxl345(device, GravityRange.Range04))
 
 ## Circuit
 
-![cicuit](ADXL345_circuit_bb.png)
+![cicuit](./ADXL345_circuit_bb.png)
 
 * VCC - 3.3 V
 * GND -  GND
@@ -97,4 +97,4 @@ using (Adxl345 sensor = new Adxl345(device, GravityRange.Range04))
 
 ### Result
 
-![running result](RunningResult.jpg)
+![running result](./RunningResult.jpg)

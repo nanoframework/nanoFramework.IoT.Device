@@ -8,11 +8,11 @@ The nRF24L01 is a single chip radio transceiver for the world wide 2.4 - 2.5 GHz
 
 ## Board
 
-![Sensor picture](sensor.jpg)
+![Sensor picture](./sensor.jpg)
 
 Note: the following diagram uses a Raspberry Pi. This can be achieved with any MCU having 2 available SPI.
 
-![Connection Diagram](NRF_circuit_bb.jpg)
+![Connection Diagram](./NRF_circuit_bb.jpg)
 
 ## Usage
 
@@ -117,4 +117,4 @@ private static void Receiver_ReceivedData(object sender, DataReceivedEventArgs e
 
 ### Result
 
-![Sample result](RunningResult.jpg)
+![Sample result](./RunningResult.jpg)

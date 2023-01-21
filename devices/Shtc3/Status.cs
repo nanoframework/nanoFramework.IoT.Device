@@ -4,17 +4,17 @@
 namespace Iot.Device.Shtc3
 {
     /// <summary>
-    /// Shtc3 Status
+    /// Shtc3 Status.
     /// </summary>
     internal enum Status
     {
         /// <summary>
-        /// Sensor ready to use
+        /// Sensor ready to use.
         /// </summary>
         Idle,
 
         /// <summary>
-        /// Sensor in sleep mode
+        /// Sensor in sleep mode.
         /// </summary>
         Sleep
     }

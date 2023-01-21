@@ -27,10 +27,10 @@ namespace Iot.Device.Ahtxx
         private double _humidity;
 
         /// <summary>
-        /// Initializes a new instance of the binding for a sensor connected through I2C interface.
+        /// Initializes a new instance of the <see cref="AhtBase" /> class for a sensor connected through I2C interface.
         /// </summary>
-        /// <paramref name="i2cDevice">Reference to the initialized I2C interface device</paramref>
-        /// <paramref name="initCommand">Type specific command for device initialization</paramref>
+        /// <param name="i2cDevice">Reference to the initialized I2C interface device.</param>
+        /// <param name="initCommand">Type specific command for device initialization.</param>
         public AhtBase(I2cDevice i2cDevice, byte initCommand)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
@@ -51,7 +51,7 @@ namespace Iot.Device.Ahtxx
         /// Gets the current temperature reading from the sensor.
         /// Reading the temperature takes between 10 ms and 80 ms.
         /// </summary>
-        /// <returns>Temperature reading</returns>
+        /// <returns>Temperature reading.</returns>
         [Telemetry("Temperature")]
         public Temperature GetTemperature()
         {
@@ -63,7 +63,7 @@ namespace Iot.Device.Ahtxx
         /// Gets the current relative humidity reading from the sensor.
         /// Reading the humidity takes between 10 ms and 80 ms.
         /// </summary>
-        /// <returns>Relative humidity reading</returns>
+        /// <returns>Relative humidity reading.</returns>
         [Telemetry("Humidity")]
         public RelativeHumidity GetHumidity()
         {
@@ -72,7 +72,7 @@ namespace Iot.Device.Ahtxx
         }
 
         /// <summary>
-        /// Perform sequence to retrieve current readings from device
+        /// Perform sequence to retrieve current readings from device.
         /// </summary>
         private void Measure()
         {
@@ -100,26 +100,29 @@ namespace Iot.Device.Ahtxx
             // 7               0 7              0 7             4           0 7          0 7         0
             // [humidity 19..12] [humidity 11..4] [humidity 3..0|temp 19..16] [temp 15..8] [temp 7..0]
             // c.f. datasheet ch. 5.4.5
-            Int32 rawHumidity = (buffer[1] << 12) | (buffer[2] << 4) | (buffer[3] >> 4);
-            Int32 rawTemperature = ((buffer[3] & 0xF) << 16) | (buffer[4] << 8) | buffer[5];
+            int rawHumidity = (buffer[1] << 12) | (buffer[2] << 4) | (buffer[3] >> 4);
+            int rawTemperature = ((buffer[3] & 0xF) << 16) | (buffer[4] << 8) | buffer[5];
+
             // RH[%] = Hraw / 2^20 * 100%, c.f. datasheet ch. 6.1
             _humidity = (rawHumidity * 100.0) / 0x100000;
+
             // T[°C] = Traw / 2^20 * 200 - 50, c.f. datasheet ch. 6.1
             _temperature = ((rawTemperature * 200.0) / 0x100000) - 50;
         }
 
         /// <summary>
-        /// Perform soft reset command sequence
+        /// Perform soft reset command sequence.
         /// </summary>
         private void SoftReset()
         {
             _i2cDevice.WriteByte((byte)CommonCommand.SoftReset);
+
             // reset requires 20ms at most, c.f. datasheet version 1.1, ch. 5.5
             Thread.Sleep(20);
         }
 
         /// <summary>
-        /// Perform initialization (calibration) command sequence
+        /// Perform initialization (calibration) command sequence.
         /// </summary>
         private void Initialize()
         {
@@ -131,6 +134,7 @@ namespace Iot.Device.Ahtxx
             };
 
             _i2cDevice.Write(buffer);
+
             // wait 10ms c.f. datasheet, version 1.1, ch. 5.4
             Thread.Sleep(10);
         }
@@ -138,6 +142,7 @@ namespace Iot.Device.Ahtxx
         private byte GetStatus()
         {
             _i2cDevice.WriteByte(0x71);
+
             // without this delay the reading the status fails often.
             Thread.Sleep(10);
             return _i2cDevice.ReadByte();
@@ -150,15 +155,18 @@ namespace Iot.Device.Ahtxx
         /// <inheritdoc cref="IDisposable" />
         public void Dispose()
         {
-            _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            if (_i2cDevice != null)
+            {
+                _i2cDevice?.Dispose();
+                _i2cDevice = null;
+            }
         }
 
         // datasheet version 1.1, table 10
         [Flags]
         private enum StatusBit : byte
         {
-            Calibrated = 0b_0000_1000,
+            Calibrated = 0b0000_1000,
             Busy = 0b1000_0000
         }
 

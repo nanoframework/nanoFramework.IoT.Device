@@ -19,6 +19,7 @@ namespace GenerateDocFxStructure
         private static int _returnvalue;
         private static MessageHelper? _message;
         private static Regex _rxContent = new Regex(@"(\[{1}.*\]{1}\({1}.*\){1}?)", RegexOptions.Compiled);
+        private const int _ParseErrorCode = 2;
 
         private static List<string> allFiles = new List<string>();
 
@@ -33,11 +34,21 @@ namespace GenerateDocFxStructure
             }
             catch (Exception ex)
             {
+                Console.WriteLine();
                 Console.WriteLine($"ERROR: Parsing arguments threw an exception with message `{ex.Message}`");
+                Console.WriteLine();
+
                 _returnvalue = 1;
             }
 
-            Console.WriteLine($"Exit with return code {_returnvalue}");
+            if (_returnvalue >= _ParseErrorCode)
+            {
+                Console.WriteLine();
+                Console.WriteLine("*********************************************************************");
+                Console.WriteLine("Parsing errors occurred. Look for ERROR messages on the output above.");
+                Console.WriteLine("*********************************************************************");
+                Console.WriteLine();
+            }
 
             return _returnvalue;
         }
@@ -82,8 +93,8 @@ namespace GenerateDocFxStructure
 
             if (!Directory.Exists(_options.SourceFolder))
             {
-                _message.Error($"ERROR: Documentation folder '{_options.SourceFolder}' doesn't exist.");
-                _returnvalue = 1;
+                _message.Error($"Documentation folder '{_options.SourceFolder}' doesn't exist.");
+                _returnvalue = _ParseErrorCode;
                 return;
             }
 
@@ -243,8 +254,8 @@ namespace GenerateDocFxStructure
                             {
                                 // link is full path - not allowed
                                 _message!.Output($"{filepath} {linenr}:{match.Index}");
-                                _message.Error($"Full path '{relative}' used. Use relative path.");
-                                _returnvalue = 1;
+                                _message.Error($"Full path '{relative}' used. Need to use relative path.");
+                                _returnvalue = _ParseErrorCode;
                             }
 
                             // don't need to check if reference is to a directory
@@ -255,10 +266,10 @@ namespace GenerateDocFxStructure
                                 {
                                     // ERROR: link to non existing file
                                     _message!.Output($"{filepath} {linenr}:{match.Index}");
-                                    _message.Error($"Not found: {relative}");
+                                    _message.Error($"Couldn't find '{relative}'");
 
                                     // mark error in returnvalue of the tool
-                                    _returnvalue = 1;
+                                    _returnvalue = _ParseErrorCode;
                                 }
                                 else
                                 {

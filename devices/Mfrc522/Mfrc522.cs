@@ -449,7 +449,7 @@ namespace Iot.Device.Mfrc522
         }
 
         /// <summary>
-        /// Sand and Receive Data.
+        /// Send and Receive Data.
         /// </summary>
         /// <param name="command">The MFRC522 command.</param>
         /// <param name="sendData">The data to send.</param>

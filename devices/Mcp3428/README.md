@@ -12,7 +12,7 @@ The  3 devices differ only in addressing capability and channel number. The libr
 
 ## Board
 
-![MCU Breadboard diagram](rpi_led_adc_i2c.png)
+![MCU Breadboard diagram](./rpi_led_adc_i2c.png)
 
 ## Usage
 

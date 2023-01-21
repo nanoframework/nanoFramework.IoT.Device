@@ -4,11 +4,11 @@ A Rotary encoder is a device that detects angular position. One use of this is s
 
 ## Board
 
-![image of rotary encoder](pec11r.png)
+![image of rotary encoder](./pec11r.png)
 
 Typically a quadrature rotary encoder will have two outputs A and B, perhaps called clock and data. For each part of a rotation then the A pin will provide a clock signal and the B pin will provide a data signal that is out of phase with the clock. The sign of the phase difference between the pins indicates the direction of rotation.
 
-![encoder](encoder.png)
+![encoder](./encoder.png)
 
 From above if we look at Pin B (data) at the time of a falling edge on Pin A (clk) then the if the value of pin P is 1 then the direction is clockwise and if it is 0 then the rotation is counter clockwise.
 
@@ -16,7 +16,7 @@ From above if we look at Pin B (data) at the time of a falling edge on Pin A (cl
 
 This sample shows how to implement an FM radio tuner control using the `ScaledQuadradureEncoder` binding. It simply prints the tuner value to the console as the knob is turned.
 
-![rotary example](RotaryEncoder.Sample_bb.png)
+![rotary example](./RotaryEncoder.Sample_bb.png)
 
 This binding implements scaled quadrature rotary encoder as `ScaledQuadratureEncoder`. The value is a double. You can for example set it up as a tuning dial for an FM radio with a range of 88.0 to 108.0 with a step of 0.1.
 

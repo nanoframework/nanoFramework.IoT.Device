@@ -12,6 +12,7 @@ namespace Iot.Device.Hts221
         }
 
         public byte B1 { get; set; }
+
         public byte B2 { get; set; }
     }
 }

@@ -24,7 +24,7 @@ For other devices like STM32, please make sure you're using the preset pins for 
 
 2 examples on how to use this device binding are available in the [samples folder](samples).
 
-![sensor](sensor.jpg)
+![sensor](./Bh1745/sensor.jpg)
 
 The quality of the color measurements is very reliant on the lighting. For accurate color readings it is advisable to calibrate the sensor on first use and to use it under stable lighting conditions.
 

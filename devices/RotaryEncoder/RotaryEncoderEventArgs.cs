@@ -10,13 +10,13 @@ namespace Iot.Device.RotaryEncoder
     /// </summary>
     public class RotaryEncoderEventArgs : BaseEvent
     {
-        /// <summary>The Value property represents current value associated with the RotaryEncoder.</summary>
+        /// <summary>Gets current value associated with the RotaryEncoder.</summary>
         public double Value { get; private set; }
 
         /// <summary>
-        /// Construct a new RotaryEncoderEventArgs
+        /// Initializes a new instance of the <see cref="RotaryEncoderEventArgs" /> class.
         /// </summary>
-        /// <param name="value">Current value associated with the rotary encoder</param>
+        /// <param name="value">Current value associated with the rotary encoder.</param>
         public RotaryEncoderEventArgs(double value)
         {
             Value = value;

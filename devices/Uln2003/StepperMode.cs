@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 namespace Iot.Device.Uln2003
 {
     /// <summary>
@@ -7,13 +10,13 @@ namespace Iot.Device.Uln2003
     /// </summary>
     public enum StepperMode
     {
-        /// <summary>Half step mode</summary>
+        /// <summary>Half step mode.</summary>
         HalfStep,
 
-        /// <summary>Full step mode (single phase)</summary>
+        /// <summary>Full step mode (single phase).</summary>
         FullStepSinglePhase,
 
-        /// <summary>Full step mode (dual phase)</summary>
+        /// <summary>Full step mode (dual phase).</summary>
         FullStepDualPhase
     }
 }

@@ -10,19 +10,19 @@ using UnitsNet;
 namespace Iot.Device.Bh1750fvi
 {
     /// <summary>
-    /// Ambient Light Sensor BH1750FVI
+    /// Ambient Light Sensor BH1750FVI.
     /// </summary>
     [Interface("Ambient Light Sensor BH1750FVI")]
     public class Bh1750fvi : IDisposable
     {
-        private const byte DefaultLightTransmittance = 0b_0100_0101;
+        private const byte DefaultLightTransmittance = 0b0100_0101;
 
         private I2cDevice _i2cDevice;
 
         private double _lightTransmittance;
 
         /// <summary>
-        /// BH1750FVI Light Transmittance, from 27.20% to 222.50%
+        /// Gets or sets light transmittance, from 27.20% to 222.50%.
         /// </summary>
         [Property]
         public double LightTransmittance
@@ -36,23 +36,23 @@ namespace Iot.Device.Bh1750fvi
         }
 
         /// <summary>
-        /// BH1750FVI Measuring Mode
+        /// Gets or sets measuring mode.
         /// </summary>
         [Property]
         public MeasuringMode MeasuringMode { get; set; }
 
         /// <summary>
-        /// BH1750FVI Illuminance (Lux)
+        /// BH1750FVI Illuminance (Lux).
         /// </summary>
         [Telemetry]
         public Illuminance Illuminance => GetIlluminance();
 
         /// <summary>
-        /// Creates a new instance of the BH1750FVI
+        /// Initializes a new instance of the <see cref="Bh1750fvi" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        /// <param name="measuringMode">The measuring mode of BH1750FVI</param>
-        /// <param name="lightTransmittance">BH1750FVI Light Transmittance, from 27.20% to 222.50%</param>
+        /// <param name="measuringMode">The measuring mode of BH1750FVI.</param>
+        /// <param name="lightTransmittance">BH1750FVI Light Transmittance, from 27.20% to 222.50%.</param>
         public Bh1750fvi(I2cDevice i2cDevice, MeasuringMode measuringMode = MeasuringMode.ContinuouslyHighResolutionMode, double lightTransmittance = 1)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
@@ -65,9 +65,9 @@ namespace Iot.Device.Bh1750fvi
         }
 
         /// <summary>
-        /// Set BH1750FVI Light Transmittance
+        /// Set BH1750FVI Light Transmittance.
         /// </summary>
-        /// <param name="transmittance">Light Transmittance, from 27.20% to 222.50%</param>
+        /// <param name="transmittance">Light Transmittance, from 27.20% to 222.50%.</param>
         private void SetLightTransmittance(double transmittance)
         {
             if (transmittance > 2.225 || transmittance < 0.272)
@@ -78,13 +78,13 @@ namespace Iot.Device.Bh1750fvi
             byte val = (byte)(DefaultLightTransmittance / transmittance);
 
             _i2cDevice.WriteByte((byte)((byte)Command.MeasurementTimeHigh | (val >> 5)));
-            _i2cDevice.WriteByte((byte)((byte)Command.MeasurementTimeLow | (val & 0b_0001_1111)));
+            _i2cDevice.WriteByte((byte)((byte)Command.MeasurementTimeLow | (val & 0b0001_1111)));
         }
 
         /// <summary>
-        /// Get BH1750FVI Illuminance
+        /// Get BH1750FVI Illuminance.
         /// </summary>
-        /// <returns>Illuminance (Default unit: Lux)</returns>
+        /// <returns>Illuminance (Default unit: Lux).</returns>
         private Illuminance GetIlluminance()
         {
             if (MeasuringMode == MeasuringMode.OneTimeHighResolutionMode || MeasuringMode == MeasuringMode.OneTimeHighResolutionMode2 || MeasuringMode == MeasuringMode.OneTimeLowResolutionMode)
@@ -110,12 +110,12 @@ namespace Iot.Device.Bh1750fvi
         }
 
         /// <summary>
-        /// Cleanup
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {
             _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            _i2cDevice = null;
         }
     }
 }

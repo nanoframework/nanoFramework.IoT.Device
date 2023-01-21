@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Represents DeactivateScroll command
+    /// Represents DeactivateScroll command.
     /// </summary>
     public class DeactivateScroll : ISharedCommand
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeactivateScroll" /> class.
         /// This command stops the motion of scrolling. After sending 2Eh command to deactivate
         /// the scrolling action, the ram data needs to be rewritten.
         /// </summary>

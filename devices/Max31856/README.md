@@ -2,7 +2,7 @@
 
 The Max31856 device is a SPI interface cold-junction compensated thermocouple to digital converter.
 
-![Illustration of wiring from an ESP32 device](MAX31856_circuit_bb.png)
+![Illustration of wiring from an ESP32 device](./MAX31856_circuit_bb.png)
 
 **Note:** _ThermocoupleType.K is configured for a K type thermocouple if you want to use a B,E,J,K,N,R,S, or T simply change the K to the thermocouple type of your choosing._
 

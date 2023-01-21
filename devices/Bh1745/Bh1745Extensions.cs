@@ -15,25 +15,34 @@ namespace Iot.Device.Bh1745
         /// </summary>
         /// <param name="time">The MeasurementTime.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when a not supported MeasurementTime is used.</exception>
-        /// <returns></returns>
-        public static int ToMilliseconds(this MeasurementTime time) =>
-            time switch
+        /// <returns>Value in miliseconds.</returns>
+        public static int ToMilliseconds(this MeasurementTime time)
+        {
+            switch (time)
             {
-                MeasurementTime.Ms160 => 160,
-                MeasurementTime.Ms320 => 320,
-                MeasurementTime.Ms640 => 640,
-                MeasurementTime.Ms1280 => 1280,
-                MeasurementTime.Ms2560 => 2560,
-                MeasurementTime.Ms5120 => 5120,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                case MeasurementTime.Ms160:
+                    return 160;
+                case MeasurementTime.Ms320:
+                    return 320;
+                case MeasurementTime.Ms640: 
+                    return 640;
+                case MeasurementTime.Ms1280: 
+                    return 1280;
+                case MeasurementTime.Ms2560: 
+                    return 2560;
+                case MeasurementTime.Ms5120: 
+                    return 5120;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         /// <summary>
         /// Converts the enum Measurement time to a TimeSpan.
         /// </summary>
         /// <param name="bh1745">The BH1745 device.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when a not supported MeasurementTime is used.</exception>
-        /// <returns></returns>
+        /// <returns>Time as TimeSpan object.</returns>
         public static TimeSpan MeasurementTimeAsTimeSpan(this Bh1745 bh1745) => new TimeSpan(bh1745.MeasurementTime.ToMilliseconds());
     }
 }

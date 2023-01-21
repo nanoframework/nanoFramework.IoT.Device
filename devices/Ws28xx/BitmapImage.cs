@@ -7,17 +7,17 @@ using System.Drawing;
 namespace Iot.Device.Ws28xx
 {
     /// <summary>
-    /// Represents bitmap image
+    /// Represents bitmap image.
     /// </summary>
     public abstract class BitmapImage
     {
         /// <summary>
-        /// Initializes a <see cref="T:Iot.Device.Graphics.BitmapImage" /> instance with the specified data, width, height and stride.
+        /// Initializes a new instance of the <see cref="BitmapImage" /> class.
         /// </summary>
-        /// <param name="data">Data representing the image (derived class defines a specific format)</param>
-        /// <param name="width">Width of the image</param>
-        /// <param name="height">Height of the image</param>
-        /// <param name="stride">Number of bytes per row</param>
+        /// <param name="data">Data representing the image (derived class defines a specific format).</param>
+        /// <param name="width">Width of the image.</param>
+        /// <param name="height">Height of the image.</param>
+        /// <param name="stride">Number of bytes per row.</param>
         protected BitmapImage(byte[] data, int width, int height, int stride)
         {
             _data = data;
@@ -29,38 +29,48 @@ namespace Iot.Device.Ws28xx
         private byte[] _data;
 
         /// <summary>
-        /// Data related to the image (derived class defines a specific format)
+        /// Data related to the image (derived class defines a specific format).
         /// </summary>
         public byte[] Data => _data;
 
         /// <summary>
-        /// Width of the image
+        /// Gets width of the image.
         /// </summary>
         public int Width { get; }
 
         /// <summary>
-        /// Height of the image
+        /// Gets height of the image.
         /// </summary>
         public int Height { get; }
 
         /// <summary>
-        /// Number of bytes per row
+        /// Gets number of bytes per row.
         /// </summary>
         public int Stride { get; }
 
         /// <summary>
-        /// Sets pixel at specific position
+        /// Sets pixel at specific position.
         /// </summary>
-        /// <param name="x">X coordinate of the pixel</param>
-        /// <param name="y">Y coordinate of the pixel</param>
-        /// <param name="color">Color to set the pixel to</param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="color">Color to set the pixel to.</param>
         public abstract void SetPixel(int x, int y, Color color);
 
         /// <summary>
-        /// Clears the image to specific color
+        /// Sets pixel at specific position.
+        /// </summary>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="r">Red color.</param>
+        /// <param name="g">Green color.</param>
+        /// <param name="b">Blue color.</param>
+        public abstract void SetPixel(int x, int y, byte r, byte g, byte b);
+
+        /// <summary>
+        /// Clears the image to specific color.
         /// </summary>
         /// <param name="color">Color to clear the image. Defaults to black.</param>
-        public virtual void Clear(Color color = default)
+        public virtual void Clear(Color color)
         {
             for (int y = 0; y < Height; y++)
             {
@@ -70,5 +80,17 @@ namespace Iot.Device.Ws28xx
                 }
             }
         }
+
+        /// <summary>
+        /// Clears whole image.
+        /// </summary>
+        public abstract void Clear();
+
+        /// <summary>
+        /// Clears selected pixel.
+        /// </summary>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        public abstract void Clear(int x, int y);
     }
 }

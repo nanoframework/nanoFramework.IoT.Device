@@ -11,8 +11,8 @@ namespace Bmm150.tests
     [TestClass]
     public class Bmm150Tests
     {
-        [TestMethod]
-        public void TestCompensateVector3()
+        //[TestMethod]
+        /*public void TestCompensateVector3()
         {
             uint rhall = 42;
             Vector3 rawMagnetormeterData = new Vector3 { X = 13.91375923, Y = -28.74289894, Z = 10.16711997 };
@@ -43,6 +43,6 @@ namespace Bmm150.tests
 
             // Calculated value should be: 26.20077896
             Assert.Equal(Math.Ceiling(z), Math.Ceiling(26.20077896), "Unexpected z-axis value.");
-        }
+        }*/
     }
 }

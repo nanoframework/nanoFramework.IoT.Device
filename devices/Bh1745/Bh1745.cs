@@ -16,6 +16,7 @@ namespace Iot.Device.Bh1745
     public class Bh1745 : IDisposable
     {
         private byte ManufacturerId => Read8BitsFromRegister((byte)Register.MANUFACTURER_ID);
+
         private byte PartId => (byte)(Read8BitsFromRegister((byte)Register.SYSTEM_CONTROL) & (byte)Mask.PART_ID);
 
         private I2cDevice _i2cDevice;
@@ -30,26 +31,27 @@ namespace Iot.Device.Bh1745
         private ushort _higherInterruptThreshold;
 
         /// <summary>
-        /// Digital color sensor Bh1745.
+        /// Initializes a new instance of the <see cref="Bh1745" /> class.
         /// </summary>
         /// <param name="device">The used I2c communication device.</param>
         public Bh1745(I2cDevice device)
         {
             _i2cDevice = device;
-            // ChannelCompensationMultipliers: Red, Green, Blue, Clear
-            ChannelCompensationMultipliers = new(2.2, 1.0, 1.8, 10.0);
 
-            // reset device and set default configuration
+            // ChannelCompensationMultipliers: Red, Green, Blue, Clear
+            ChannelCompensationMultipliers = new ChannelCompensationMultipliers(2.2, 1.0, 1.8, 10.0);
+
+            // Reset device and set default configuration
             InitDevice();
         }
 
         /// <summary>
-        /// The primary I2c address of the BH1745
+        /// The primary I2c address of the BH1745.
         /// </summary>
         public const byte DefaultI2cAddress = 0x38;
 
         /// <summary>
-        /// The secondary I2c address of the BH1745
+        /// The secondary I2c address of the BH1745.
         /// </summary>
         public const byte SecondaryI2cAddress = 0x39;
 
@@ -65,6 +67,7 @@ namespace Iot.Device.Bh1745
                 intReset = (byte)((intReset & (byte)Mask.INT_RESET) >> 6);
                 return (InterruptStatus)intReset;
             }
+
             set
             {
                 var intReset = Read8BitsFromRegister((byte)Register.SYSTEM_CONTROL);
@@ -93,7 +96,7 @@ namespace Iot.Device.Bh1745
         }
 
         /// <summary>
-        /// Gets or sets whether the measurement is active.
+        /// Gets or sets a value indicating whether the measurement is active.
         /// </summary>
         public bool MeasurementIsActive
         {
@@ -127,7 +130,7 @@ namespace Iot.Device.Bh1745
         }
 
         /// <summary>
-        /// Gets whether the interrupt signal is active.
+        /// Gets a value indicating whether the interrupt signal is active.
         /// </summary>
         public bool InterruptSignalIsActive
         {
@@ -173,7 +176,7 @@ namespace Iot.Device.Bh1745
         }
 
         /// <summary>
-        /// Gets or sets whether the interrupt pin is enabled.
+        /// Gets or sets a value indicating whether the interrupt pin is enabled.
         /// </summary>
         public bool InterruptIsEnabled
         {
@@ -268,6 +271,7 @@ namespace Iot.Device.Bh1745
         /// <summary>
         /// Reads whether the last measurement is valid.
         /// </summary>
+        /// <returns>True if measurment is valid.</returns>
         public bool ReadMeasurementIsValid()
         {
             var valid = Read8BitsFromRegister((byte)Register.MODE_CONTROL2);
@@ -278,31 +282,31 @@ namespace Iot.Device.Bh1745
         /// <summary>
         /// Reads the red data register of the sensor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Red value from data register.</returns>
         public ushort ReadRedDataRegister() => Read16BitsFromRegister((byte)Register.RED_DATA);
 
         /// <summary>
         /// Reads the green data register of the sensor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Green value from data register.</returns>
         public ushort ReadGreenDataRegister() => Read16BitsFromRegister((byte)Register.GREEN_DATA);
 
         /// <summary>
         /// Reads the blue data register of the sensor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Blue value from data register.</returns>
         public ushort ReadBlueDataRegister() => Read16BitsFromRegister((byte)Register.BLUE_DATA);
 
         /// <summary>
         /// Reads the clear data register of the sensor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Clear value from data register.</returns>
         public ushort ReadClearDataRegister() => Read16BitsFromRegister((byte)Register.CLEAR_DATA);
 
         /// <summary>
         /// Gets the compensated color reading from the sensor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Compensated color.</returns>
         [Telemetry]
         public Color GetCompensatedColor()
         {
@@ -377,6 +381,7 @@ namespace Iot.Device.Bh1745
             }
 
             bytes[0] = register;
+
             // Original code:Buffer.BlockCopy(source, 0, bytes, 1, source.Length);
             for (int i = 0; i < source.Length - 1; i++)
             {
@@ -396,12 +401,12 @@ namespace Iot.Device.Bh1745
         }
 
         /// <summary>
-        /// Disposes the Bh1745 resources.
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {
             _i2cDevice?.Dispose();
-            _i2cDevice = null!;
+            _i2cDevice = null;
         }
     }
 }

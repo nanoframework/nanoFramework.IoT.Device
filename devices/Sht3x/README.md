@@ -8,9 +8,9 @@ SHT3x is the next generation of Sensirion’s temperature and humidity sensors. 
 
 ## Board
 
-![Sensor](sensor.jpg)
+![Sensor](./sensor.jpg)
 
-![Circuit diagram](SHT3x_circuit_bb.png)
+![Circuit diagram](./SHT3x_circuit_bb.png)
 
 ## Usage
 
@@ -58,4 +58,4 @@ using (Sht3x sensor = new Sht3x(device))
 
 ### Result
 
-![Sample result](RunningResult.jpg)
+![Sample result](./RunningResult.jpg)

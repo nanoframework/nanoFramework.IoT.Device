@@ -4,17 +4,17 @@
 namespace Iot.Device.Amg88xx
 {
     /// <summary>
-    /// Defines the reset types of the reset register (addr: 0x01)
+    /// Defines the reset types of the reset register (addr: 0x01).
     /// </summary>
     internal enum ResetType : byte
     {
         /// <summary>
-        /// flag reset (clear all flags and interrupt flag registers)
+        /// Flag reset (clear all flags and interrupt flag registers).
         /// </summary>
         Flag = 0x30,
 
         /// <summary>
-        /// initial reset (set all registers to defaults)
+        /// Initial reset (set all registers to defaults).
         /// </summary>
         Initial = 0x3f
     }

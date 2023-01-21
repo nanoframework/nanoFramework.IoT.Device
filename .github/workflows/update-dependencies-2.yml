@@ -1,0 +1,27 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
+# This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
+
+name: Update dependencies (round 2)
+
+on:
+  schedule:
+    # At 00:15 UTC .
+    # Set 15 min apart from round 1 to allow enough time for any changes to propagate.
+    - cron:  '15 00 * * Wed,Fri'
+  repository_dispatch:
+    types: update-dependencies
+  workflow_dispatch:
+
+jobs:
+  update-nuget-dependencies:
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
+    with:
+      timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+      workingDirectory: devices
+      branchToPr: 'develop'      
+      solutionsToCheck: |
+        ShiftRegister.sln

@@ -65,4 +65,4 @@ using (Shtc3 sensor = new Shtc3(device))
 
 ### Result
 
-![Sample result](RunningResult.JPG)
+![Sample result](./RunningResult.JPG)

@@ -4,23 +4,23 @@
 namespace System.Device.Model
 {
     /// <summary>
-    /// Property of the interface
+    /// Property of the interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class PropertyAttribute : Attribute
     {
         /// <summary>
-        /// Name of the property in the interface
+        /// Gets name of the property in the interface.
         /// </summary>
         public string? Name { get; }
 
         /// <summary>
-        /// Display name of the property
+        /// Gets display name of the property.
         /// </summary>
         public string? DisplayName { get; }
 
         /// <summary>
-        /// Constructs PropertyAttribute
+        /// Initializes a new instance of the <see cref="PropertyAttribute" /> class.
         /// </summary>
         /// <param name="name">Optional name of the property in the interface. If not provided property name will be used.</param>
         /// <param name="displayName">Optional name of the property in the interface. If not provided it may be infered from the type.</param>
@@ -31,7 +31,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs PropertyAttribute
+        /// Initializes a new instance of the <see cref="PropertyAttribute" /> class.
         /// </summary>
         /// <param name="name">Optional name of the property in the interface. If not provided property name will be used.</param>
         public PropertyAttribute(string? name)
@@ -40,7 +40,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs PropertyAttribute
+        /// Initializes a new instance of the <see cref="PropertyAttribute" /> class.
         /// </summary>
         public PropertyAttribute()
         {

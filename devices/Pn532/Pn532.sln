@@ -1,10 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Card Projects", "Card Projects", "{6F2CD363-FCFC-430C-806B-82DE583E5D61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardRfid", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Card", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "..\Card\Mifare\Mifare.nfproj", "{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}"
 EndProject
@@ -12,22 +12,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultralight", "..\Card\Ultra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ndef", "..\Card\Ndef\Ndef.nfproj", "{150CED27-7CF0-4671-9370-B330D2D49066}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{0B3F0D4C-B399-4C22-9BA0-C2BF8029E4B8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{EB7F3487-80F6-4406-956D-9EA1067C88EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pn532", "Pn532.nfproj", "{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
-EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Pn532.sample", "samples\Pn532.sample.nfproj", "{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{150ced27-7cf0-4671-9370-b330d2d49066}*SharedItemsImports = 5
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{49c8ee42-c9c3-9db8-45c7-3fc2a8454fc7}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -37,18 +28,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x64.Build.0 = Debug|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x86.Build.0 = Debug|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x64.ActiveCfg = Release|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x64.Build.0 = Release|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x86.ActiveCfg = Release|Any CPU
-		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x86.Build.0 = Release|Any CPU
 		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -97,6 +76,18 @@ Global
 		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|x64.Build.0 = Release|Any CPU
 		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|x86.ActiveCfg = Release|Any CPU
 		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|x86.Build.0 = Release|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x64.Build.0 = Debug|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Debug|x86.Build.0 = Debug|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x64.ActiveCfg = Release|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x64.Build.0 = Release|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{49C8EE42-C9C3-9DB8-45C7-3FC2A8454FC7}.Release|x86.Build.0 = Release|Any CPU
 		{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -124,7 +115,6 @@ Global
 		{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7} = {6F2CD363-FCFC-430C-806B-82DE583E5D61}
 		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2} = {6F2CD363-FCFC-430C-806B-82DE583E5D61}
 		{150CED27-7CF0-4671-9370-B330D2D49066} = {6F2CD363-FCFC-430C-806B-82DE583E5D61}
-		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {0B3F0D4C-B399-4C22-9BA0-C2BF8029E4B8}
 		{8E0F4C9B-1AAD-4FD1-82DF-8BD877322C4E} = {EB7F3487-80F6-4406-956D-9EA1067C88EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

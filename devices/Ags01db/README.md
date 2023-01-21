@@ -10,7 +10,7 @@ Datasheet in [Chinese](http://www.aosong.com/userfiles/files/media/AGS01DB%E6%B0
 
 ## Sensor Image
 
-![sensor](sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -51,7 +51,7 @@ using (Ags01db sensor = new Ags01db(device))
 
 ### Circuit
 
-![circuit](AGS01DB_circuit_bb.png)
+![circuit](./AGS01DB_circuit_bb.png)
 
 * SCL - SCL
 * SDA - SDA
@@ -85,4 +85,4 @@ using (Ags01db sensor = new Ags01db(device))
 
 ### Result
 
-![running result](RunningResult.jpg)
+![running result](./RunningResult.jpg)

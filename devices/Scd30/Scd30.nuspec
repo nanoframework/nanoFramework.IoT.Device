@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Scd30</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Scd30</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package contains a driver to communicate with the SCD30 via the UART interface.</description>
+    <tags>nanoFramework C# csharp netnf scd30</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.195" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.60" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="nanoFramework.System.Text" version="1.2.37" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.211" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="4.150.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="4.150.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="4.150.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.150.0" />
+      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="4.150.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Scd30.dll" target="lib\Iot.Device.Scd30.dll" />
+    <file src="bin\Release\Iot.Device.Scd30.pdb" target="lib\Iot.Device.Scd30.pdb" />
+    <file src="bin\Release\Iot.Device.Scd30.pdbx" target="lib\Iot.Device.Scd30.pdbx" />
+    <file src="bin\Release\Iot.Device.Scd30.pe" target="lib\Iot.Device.Scd30.pe" />
+    <file src="bin\Release\Iot.Device.Scd30.xml" target="lib\Iot.Device.Scd30.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

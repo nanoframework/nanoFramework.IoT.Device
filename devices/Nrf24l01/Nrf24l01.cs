@@ -167,9 +167,9 @@ namespace Iot.Device.Nrf24l01
                 Pipe3 is null ||
                 Pipe4 is null ||
                 Pipe5 is null)
-                {
-                    throw new Exception($"{nameof(Nrf24l01)} is incorrectly configuted");
-                }
+            {
+                throw new Exception($"{nameof(Nrf24l01)} is incorrectly configuted");
+            }
 #endif
         }
 
@@ -826,7 +826,10 @@ namespace Iot.Device.Nrf24l01
             SpanByte readBuf = new byte[1 + writeData.Length];
 
             writeBuf[0] = (byte)((byte)command + (byte)register);
-            writeData.CopyTo(writeBuf.Slice(1));
+            if (writeData.Length > 0)
+            {
+                writeData.CopyTo(writeBuf.Slice(1));
+            }
 
             _sensor.TransferFullDuplex(writeBuf, readBuf);
         }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.DhcpServer</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.DhcpServer</title>
+    <authors>nanoFramework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.DhcpServer for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.DhcpServer assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.DhcpServer</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
+      <dependency id="nanoFramework.System.Net" version="1.10.52" />
+      <dependency id="nanoFramework.System.Text" version="1.2.37" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.19" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.DhcpServer.dll" target="lib\Iot.Device.DhcpServer.dll" />
+    <file src="bin\Release\Iot.Device.DhcpServer.pdb" target="lib\Iot.Device.DhcpServer.pdb" />
+    <file src="bin\Release\Iot.Device.DhcpServer.pdbx" target="lib\Iot.Device.DhcpServer.pdbx" />
+    <file src="bin\Release\Iot.Device.DhcpServer.pe" target="lib\Iot.Device.DhcpServer.pe" />
+    <file src="bin\Release\Iot.Device.DhcpServer.xml" target="lib\Iot.Device.DhcpServer.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

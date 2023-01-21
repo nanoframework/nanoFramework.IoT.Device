@@ -3,7 +3,7 @@
 
 namespace Iot.Device.Hts221
 {
-    class TuppleShortShort
+    internal class TuppleShortShort
     {
         public TuppleShortShort(short s1, short s2)
         {
@@ -12,6 +12,7 @@ namespace Iot.Device.Hts221
         }
 
         public short S1 { get; set; }
+
         public short S2 { get; set; }
     }
 }
