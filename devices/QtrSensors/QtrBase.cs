@@ -7,31 +7,31 @@ using System.Device.Gpio;
 namespace Iot.Device.QtrSensors
 {
     /// <summary>
-    /// Qtr Sensors Base class
+    /// Qtr Sensors Base class.
     /// </summary>
     public abstract class QtrBase
     {
         /// <summary>
-        /// Gets or sets the Emitter selection
+        /// Gets or sets the Emitter selection.
         /// </summary>
         public abstract EmitterSelection EmitterSelection { get; set; }
 
         /// <summary>
-        /// Gets or sets the EmmiterValue.
+        /// Gets or sets the EmmiterValue..
         /// </summary>
         public abstract PinValue EmitterValue { get; set; }
 
         /// <summary>
-        /// Sets or gets the samples per sensor at each read.
+        /// Gets or sets the samples per sensor at each read.
         /// </summary>
         public byte SamplesPerSensor { get; set; } = 1;
 
         /// <summary>
         /// Calibrates the sensors.
         /// </summary>
-        /// <param name="itteration">number of itterations.</param>
+        /// <param name="itteration">Number of itterations.</param>
         /// <param name="emitterOn">True to set the emmitters on.</param>
-        /// <returns></returns>
+        /// <returns>The calibration data.</returns>
         public abstract CalibrationData[] Calibrate(int itteration, bool emitterOn);
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Iot.Device.QtrSensors
         public abstract void ResetCalibration(bool emitterOn);
 
         /// <summary>
-        /// Returns the values in a ration from 0.0 to 1.0
+        /// Returns the values in a ration from 0.0 to 1.0.
         /// </summary>
         /// <returns>An array of raw values.</returns>
         public abstract double[] ReadRatio();
@@ -58,7 +58,7 @@ namespace Iot.Device.QtrSensors
         /// If no position is found, the last position will be returned.
         /// </summary>
         /// <param name="blackLine">True for a black line, false for a white line.</param>
-        /// <returns>-1.0 to 1.0</returns>
+        /// <returns>The position between -1.0 and 1.0.</returns>
         public abstract double ReadPosition(bool blackLine = true);
     }
 }

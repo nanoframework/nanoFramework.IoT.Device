@@ -6,21 +6,20 @@ using System;
 namespace Iot.Device.QtrSensors
 {
     /// <summary>
-    /// Select emitters to use
+    /// Select emitters to use.
     /// </summary>
     public enum EmitterSelection
     {
-        /// <summary>None</summary>
+        /// <summary>None.</summary>
         None = 0,
 
-        /// <summary>Even only</summary>
+        /// <summary>Even only.</summary>
         Even = 1,
 
-        /// <summary>Odd only</summary>
+        /// <summary>Odd only.</summary>
         Odd = 2,
 
-        /// <summary>All</summary>
+        /// <summary>All.</summary>
         All = 3,
-
     }
 }

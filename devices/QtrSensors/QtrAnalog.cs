@@ -8,20 +8,20 @@ using System.Device.Gpio;
 namespace Iot.Device.QtrSensors
 {
     /// <summary>
-    /// QTR Pololu Reflectance Analog Sensor
+    /// QTR Pololu Reflectance Analog Sensor.
     /// </summary>
     public class QtrAnalog : QtrBase, IDisposable
     {
         /// <summary>
-        /// The default noise threshold is set to 5%
+        /// The default noise threshold is set to 5%.
         /// </summary>
         public const double DefaultNoiseThreshold = 0.05;
 
+        private readonly AdcChannel[] _qtrSensors;
+        private readonly GpioPin[] _emiters;
         private GpioController _gpio;
         private AdcController _adc;
         private bool _shouldDisposeGpio;
-        private readonly AdcChannel[] _qtrSensors;
-        private readonly GpioPin[] _emiters;
         private EmitterSelection _emitterSelection;
         private PinValue _emitterValue;
         private CalibrationData[] _calibOn;
@@ -30,12 +30,12 @@ namespace Iot.Device.QtrSensors
         private double _lastPosition;
 
         /// <summary>
-        /// The noise threshold
+        /// Gets or sets the noise threshold.
         /// </summary>
         public double NoiseThreshold { get; set; } = DefaultNoiseThreshold;
 
         /// <summary>
-        /// Gets or sets the Emitter selection
+        /// Gets or sets the Emitter selection.
         /// </summary>
         public override EmitterSelection EmitterSelection
         {
@@ -102,18 +102,19 @@ namespace Iot.Device.QtrSensors
             set
             {
                 _emitterValue = value;
+
                 // Force the refresh of the emmiter pins
                 EmitterSelection = _emitterSelection;
             }
         }
 
         /// <summary>
-        /// Creates a QTR Pololu sensor.
+        /// Initializes a new instance of the <see cref="QtrAnalog"/> class.
         /// </summary>
         /// <param name="sensors">Array of Adc channels.</param>
         /// <param name="emmiters">Gpio emmiter pins. Array of 0 = no emmiter managed here, 1 = common emmiter, 2 = one for even one for odds.</param>
-        /// <param name="gpioController">A GPIO controller</param>
-        /// <param name="adcController">An ADC controller</param>
+        /// <param name="gpioController">A GPIO controller.</param>
+        /// <param name="adcController">An ADC controller.</param>
         /// <param name="shouldDisposeo">Tru to dispose GPIO controller.</param>
         public QtrAnalog(int[] sensors, int[] emmiters, GpioController gpioController = null, AdcController adcController = null, bool shouldDisposeo = false)
         {
@@ -123,8 +124,8 @@ namespace Iot.Device.QtrSensors
             }
 
             _shouldDisposeGpio = gpioController == null || shouldDisposeo;
-            _gpio = gpioController ?? new();
-            _adc = adcController ?? new();
+            _gpio = gpioController ?? new ();
+            _adc = adcController ?? new ();
             _qtrSensors = new AdcChannel[sensors.Length];
             for (int i = 0; i < _qtrSensors.Length; i++)
             {
@@ -144,9 +145,9 @@ namespace Iot.Device.QtrSensors
         /// <summary>
         /// Calibrates the sensors.
         /// </summary>
-        /// <param name="iteration">number of iterations.</param>
+        /// <param name="iteration">Number of iterations.</param>
         /// <param name="emitterOn">True to set the emitters on.</param>
-        /// <returns></returns>
+        /// <returns>Calibration data.</returns>
         public override CalibrationData[] Calibrate(int iteration, bool emitterOn)
         {
             PinValue oldEmit = _emitterValue;
@@ -222,7 +223,7 @@ namespace Iot.Device.QtrSensors
         }
 
         /// <summary>
-        /// Returns the values in a ration from 0.0 to 1.0
+        /// Returns the values in a ration from 0.0 to 1.0.
         /// </summary>
         /// <returns>An array of raw values.</returns>
         public override double[] ReadRatio()
@@ -290,7 +291,7 @@ namespace Iot.Device.QtrSensors
             {
                 for (int qtr = 0; qtr < _qtrSensors.Length; qtr++)
                 {
-                    vals[qtr] = (vals[qtr] * (i - 1) + _qtrSensors[qtr].ReadValue()) / i;
+                    vals[qtr] = ((vals[qtr] * (i - 1)) + _qtrSensors[qtr].ReadValue()) / i;
                 }
             }
 
@@ -303,7 +304,7 @@ namespace Iot.Device.QtrSensors
         /// If no position is found, the last position will be returned.
         /// </summary>
         /// <param name="blackLine">True for a black line, false for a white line.</param>
-        /// <returns>-1.0 to 1.0</returns>
+        /// <returns>The position between -1.0 and 1.0.</returns>
         public override double ReadPosition(bool blackLine = true)
         {
             var ratios = ReadRatio();
@@ -320,7 +321,8 @@ namespace Iot.Device.QtrSensors
             }
 
             // Normalize it
-            pos = pos / ratios.Length - 1;
+            pos = (pos / ratios.Length) - 1;
+
             // Check if the last read is still valid as -1 will just give full left and is the default value if no line is detected
             if (pos == -1)
             {

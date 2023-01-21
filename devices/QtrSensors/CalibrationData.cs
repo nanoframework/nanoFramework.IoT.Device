@@ -6,17 +6,17 @@ using System;
 namespace Iot.Device.QtrSensors
 {
     /// <summary>
-    /// Contains calibration data for a channel
+    /// Contains calibration data for a channel.
     /// </summary>
     public class CalibrationData
     {
         /// <summary>
-        /// Minimum value
+        /// Gets or sets the minimum value.
         /// </summary>
         public int MinimumValue { get; set; }
 
         /// <summary>
-        /// Maximum value
+        /// Gets or sets the maximum value.
         /// </summary>
         public int MaximumValue { get; set; }
     }
