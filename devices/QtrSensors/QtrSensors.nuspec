@@ -4,15 +4,14 @@
     <id>nanoFramework.Iot.Device.QtrSensors</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.QtrSensors</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
     </releaseNotes>
+    <readme>docs\README.md</readme>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
@@ -43,6 +42,7 @@
     <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pe" target="lib\Iot.Device.Mifare.pe" />
     <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.xml" target="lib\Iot.Device.Mifare.xml" />
     <file src="readme.md" target="" />
+    <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
   </files>

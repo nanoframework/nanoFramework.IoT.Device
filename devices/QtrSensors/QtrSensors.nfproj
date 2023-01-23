@@ -16,7 +16,7 @@
     <RootNamespace>Iot.Device.QtrSensors</RootNamespace>
     <AssemblyName>Iot.Device.QtrSensors</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.At24cxx.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.QtrSensors.xml</DocumentationFile>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
