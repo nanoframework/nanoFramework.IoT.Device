@@ -31,16 +31,6 @@
     <file src="bin\Release\Iot.Device.QtrSensors.pdbx" target="lib\Iot.Device.QtrSensors.pdbx" />
     <file src="bin\Release\Iot.Device.QtrSensors.pe" target="lib\Iot.Device.QtrSensors.pe" />
     <file src="bin\Release\Iot.Device.QtrSensors.xml" target="lib\Iot.Device.QtrSensors.xml" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.dll" target="lib\Iot.Device.CardRfid.dll" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.pdb" target="lib\Iot.Device.CardRfid.pdb" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.pdbx" target="lib\Iot.Device.CardRfid.pdbx" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.pe" target="lib\Iot.Device.CardRfid.pe" />
-    <file src="..\Card\bin\Release\Iot.Device.CardRfid.xml" target="lib\Iot.Device.CardRfid.xml" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.dll" target="lib\Iot.Device.Mifare.dll" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pdb" target="lib\Iot.Device.Mifare.pdb" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pdbx" target="lib\Iot.Device.Mifare.pdbx" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.pe" target="lib\Iot.Device.Mifare.pe" />
-    <file src="..\Card\Mifare\bin\Release\Iot.Device.Mifare.xml" target="lib\Iot.Device.Mifare.xml" />
     <file src="readme.md" target="" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
