@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.QtrSensors</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.QtrSensors</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.QtrSensors for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.QtrSensors assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.QtrSensors</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
+      <dependency id="nanoFramework.System.Device.Adc" version="1.1.6" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.QtrSensors.dll" target="lib\Iot.Device.QtrSensors.dll" />
+    <file src="bin\Release\Iot.Device.QtrSensors.pdb" target="lib\Iot.Device.QtrSensors.pdb" />
+    <file src="bin\Release\Iot.Device.QtrSensors.pdbx" target="lib\Iot.Device.QtrSensors.pdbx" />
+    <file src="bin\Release\Iot.Device.QtrSensors.pe" target="lib\Iot.Device.QtrSensors.pe" />
+    <file src="bin\Release\Iot.Device.QtrSensors.xml" target="lib\Iot.Device.QtrSensors.xml" />
+    <file src="readme.md" target="" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
