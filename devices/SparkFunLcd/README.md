@@ -1,6 +1,6 @@
 # LCD library for SparkFun RGB Serial Open LCD display (sizes 20x4 or 16x2) with I2C connection
 
- Use [SparkFunLcd.cs](SparkFunLcd.cs) to drive SparkFun LCD modules via I2C.
+ Use [SparkFunLcd.cs](./SparkFunLcd.cs) to drive SparkFun LCD modules via I2C.
  
  For example product information see [SparkFun LCD-16398](https://www.sparkfun.com/products/16398)
  
@@ -29,7 +29,7 @@ using (var i2cDevice = I2cDevice.Create(settings))
 
 (code validated against Adafruit Huzzah32 Feather)
 
-![Example usage](SparkFunLcd.jpg)
+![Example usage](./SparkFunLcd.jpg)
 
  ### Custom Characters
  

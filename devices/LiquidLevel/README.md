@@ -32,4 +32,4 @@ An example on how to use the specific LLC200D3SH device binding is available in 
 
 The following fritzing diagram illustrates one way to wire up the Optomax LLC200D3SH digital liquid level switch with a MCU.
 
-![MCU Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/LiquidLevel/rpi-llc200d3sh_bb.png)
+![MCU Breadboard diagram](./rpi-llc200d3sh_bb.png)

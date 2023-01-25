@@ -6,7 +6,7 @@ You can use these converters in your project to access analog devices.
 
 The following fritzing diagram illustrates one way to wire up the Mcp3008, with an ESP32 and a potentiometer.
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp3xxx/rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_spi.png)
 
 ## Documentation
 
@@ -79,7 +79,7 @@ The following pin layout can be used:
 - MCP3008 DIN to MCU MOSI
 - MCP3008 CS/SHDN to MCU CE0
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp3xxx/rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_spi.png)
 
 ### Accessing the MCP3008 via GPIO
 
@@ -113,7 +113,7 @@ The following pin layout can be used:
 - MCP3008 DIN to any valid GPIO on the MCU
 - MCP3008 CS/SHDN to any valid GPIO on the MCU
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp3xxx/rpi-trimpot_gpio.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_gpio.png)
 
 ### Processing the data
 

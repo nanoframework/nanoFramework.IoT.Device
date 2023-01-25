@@ -208,4 +208,4 @@ It is then up to you to transform them into the correct data. You can multiply y
 
 The following fritzing diagram illustrates one way to wire up the MPU9250 with a MCU like ESP32 using I2C.
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mpu9250/Mpu9250_bb.png)
+![ESP32 Breadboard diagram](./Mpu9250_bb.png)

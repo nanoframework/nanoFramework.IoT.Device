@@ -39,4 +39,4 @@ while (true)
 
 The following fritzing diagram illustrates one way to wire up the Hdc1080 sensor with an MCU like ESP32 using I2C.
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hdc1080/Hdc1080_bb.png)
+![ESP32 Breadboard diagram](./Hdc1080_bb.png)
