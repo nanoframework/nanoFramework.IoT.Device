@@ -2,7 +2,7 @@
 
 This is a library to interact with the ATOM QR Code reader from M5Stack.
 
-![atom-qr-reader.png](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/AtomQrCode/atom-qr-reader.png)
+![atom-qr-reader.png](./atom-qr-reader.png)
 
 ## Documentation
 
@@ -91,4 +91,4 @@ The library exposes several configurations and working options for the reader th
 
 The development of this library was kindly sponsored by [greenYng](https://greenyng.com/)!
 
-![greenyng-logo.png](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/AtomQrCode/greenyng-logo.png)
+![greenyng-logo.png](./greenyng-logo.png)

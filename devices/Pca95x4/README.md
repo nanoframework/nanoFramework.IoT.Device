@@ -21,7 +21,7 @@ The PCA95x4 provides 8 bits of General Purpose parallel Input/Output (GPIO) expa
 
 ## Board
 
-![Connection Diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Pca95x4/Pca95x4_I2c_WriteLeds.png)
+![Connection Diagram](./Pca95x4_I2c_WriteLeds.png)
 
 ## Usage
 

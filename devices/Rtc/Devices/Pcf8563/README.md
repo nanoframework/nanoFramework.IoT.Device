@@ -3,7 +3,7 @@ The PCF8563 is a CMOS1 Real-Time Clock (RTC) and calendar optimized for low powe
 
 ## Sensor Image
 
-![sensor](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Pcf8563/sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 

@@ -10,7 +10,7 @@ Product documentation can be found [here](https://www.analog.com/en/products/adx
 
 ## Sensor Image
 
-![Source: https://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer_40g-ADXL357/](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Adxl357/sensor.png)
+![Source: https://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer_40g-ADXL357/](./sensor.png)
 
 ## Usage
 

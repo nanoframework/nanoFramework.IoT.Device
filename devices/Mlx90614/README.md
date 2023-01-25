@@ -8,7 +8,7 @@ The MLX90614 is an Infra Red thermometer for noncontact temperature measurements
 
 ## Board
 
-![Connection image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mlx90614/sensor.jpg)
+![Connection image](./sensor.jpg)
 
 ## Usage
 
@@ -31,7 +31,7 @@ For other devices like STM32, please make sure you're using the preset pins for 
 
 ### Circuit
 
-![MLX90614 circuit](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mlx90614/MLX90614_circuit_bb.png)
+![MLX90614 circuit](./MLX90614_circuit_bb.png)
 
 - SCL - SCL
 - SDA - SDA
@@ -61,4 +61,4 @@ using (Mlx90614 sensor = new Mlx90614(i2cDevice))
 
 ### Result
 
-![Sample result](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mlx90614/RunningResult.jpg)
+![Sample result](./RunningResult.jpg)

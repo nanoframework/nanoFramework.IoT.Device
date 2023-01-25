@@ -62,17 +62,7 @@ namespace System.Numerics
         /// <returns>The string representation.</returns>
         public override string ToString()
         {
-            return ToString("G");
-        }
-
-        /// <summary>
-        /// Returns a String representing this Vector3 instance, using the specified format to format individual elements.
-        /// </summary>
-        /// <param name="format">The format of individual elements.</param>
-        /// <returns>The string representation.</returns>
-        public string ToString(string format)
-        {
-            return ToString(format);
+            return $"<{X} {Y} {Z}>";
         }
 
         /// <summary>

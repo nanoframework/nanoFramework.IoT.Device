@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
+using System.Threading;
 using Iot.Device.Ssd13xx.Commands;
 using Iot.Device.Ssd13xx.Commands.Ssd1306Commands;
 
@@ -120,13 +122,36 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         public IFont Font { get; set; }
 
+        private GpioController _gpioController;
+        private int _resetPin;
+        private bool _shouldDispose;
+        private bool _disposed = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Ssd13xx" /> class.
         /// </summary>
         /// <param name="i2cDevice">I2C device used to communicate with the device.</param>
         /// <param name="resolution">Screen resolution to use for device init.</param>
-        public Ssd13xx(I2cDevice i2cDevice, DisplayResolution resolution = DisplayResolution.OLED128x64)
+        /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
+        /// reset pin).</param>
+        /// <param name="gpio">Gpio Controller.</param>
+        /// <param name="shouldDispose">True to dispose the GpioController.</param>
+        public Ssd13xx(
+            I2cDevice i2cDevice,
+            DisplayResolution resolution = DisplayResolution.OLED128x64,
+            int resetPin = -1,
+            GpioController gpio = null,
+            bool shouldDispose = true)
         {
+            _resetPin = resetPin;
+            if (resetPin >= 0)
+            {
+                _gpioController = gpio ?? new GpioController();
+                this.Reset();
+            }
+
+            _shouldDispose = shouldDispose || (gpio == null);
+
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
             switch (resolution)
@@ -189,13 +214,6 @@ namespace Iot.Device.Ssd13xx
             writeBuffer[0] = 0x40; // Control byte.
             data.CopyTo(writeBuffer.Slice(1));
             _i2cDevice.Write(writeBuffer);
-        }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            _i2cDevice?.Dispose();
-            _i2cDevice = null;
         }
 
         /// <summary>
@@ -581,5 +599,56 @@ namespace Iot.Device.Ssd13xx
             0x00, // lower columns address =0
             0x10, // upper columns address =0
         };
+
+        /// <summary>
+        /// Reset display controller.
+        /// </summary>        
+        private void Reset()
+        {
+            GpioPin rstPin = _gpioController.OpenPin(_resetPin, PinMode.Output);
+            rstPin.Write(PinValue.High);
+            Thread.Sleep(1);                // VDD goes high at start, pause for 1 ms            
+            rstPin.Write(PinValue.Low);     // Bring reset low
+            Thread.Sleep(10);               // Wait 10 ms
+            rstPin.Write(PinValue.High);    // Bring out of reset
+            Thread.Sleep(1);
+        }
+
+        /// <summary>
+        /// Cleanup resources.
+        /// </summary>
+        /// <param name="disposing">Should dispose managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_resetPin >= 0)
+                {
+                    _gpioController.ClosePin(_resetPin);
+                    if (_shouldDispose)
+                    {
+                        _gpioController.Dispose();
+                        _gpioController = null;
+                    }
+                }
+
+                _i2cDevice?.Dispose();
+                _i2cDevice = null;
+
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }
