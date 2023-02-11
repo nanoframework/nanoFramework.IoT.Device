@@ -19,7 +19,6 @@ namespace Iot.Device.Hcsr04.Esp32
     {
         ReceiverChannel _rxChannel;
         TransmitterChannel _txChannel;
-        RmtCommand _txPulse;
         long _lastMeasurment;
 
         const double _speedOfSound = 340.29;
@@ -39,26 +38,37 @@ namespace Iot.Device.Hcsr04.Esp32
         {
             // Set-up TX & RX channels
             // We need to send a 10us pulse to initiate measurement
-            _txChannel = new TransmitterChannel(trigger);
+            var txChannelSettings = new TransmitChannelSettings(pinNumber: trigger)
+            {
+                // 1us clock ( 80Mhz / 80 ) = 1Mhz
+                ClockDivider = 80,
+                EnableCarrierWave = true,
+                IdleLevel = false,
+            };
+
+            _txChannel = new TransmitterChannel(txChannelSettings);
             // we only need 1 pulse of 10 us high
             _txChannel.AddCommand(new RmtCommand(10, true, 0, false));
 
-            _txChannel.ClockDivider = 80;
-            _txChannel.CarrierEnabled = false;
-            _txChannel.IdleLevel = false;
-
             // The received echo pulse width represents the distance to obstacle
             // 150us to 38ms
-            _rxChannel = new ReceiverChannel(echo);
+            var rxChannelSettings = new ReceiverChannelSettings(pinNumber: echo)
+            {
+                // 1us clock ( 80Mhz / 80 ) = 1Mhz
+                ClockDivider = 80,
 
-            // 1us clock ( 80Mhz / 80 ) = 1Mhz
-            _rxChannel.ClockDivider = 80;
-            // filter out 200Us / noise 
-            _rxChannel.EnableFilter(true, 200);
-            // 40ms based on 1us clock
-            _rxChannel.SetIdleThresold(40000);
-            // 100 millisecond timeout is enough
-            _rxChannel.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
+                // filter out 200Us / noise
+                EnableFilter = true,
+                FilterThreshold = 200,
+
+                // 40ms based on 1us clock
+                IdleThreshold = 40_000,
+
+                // 100 millisecond timeout is enough
+                ReceiveTimeout = TimeSpan.FromMilliseconds(100)
+            };
+
+            _rxChannel = new ReceiverChannel(rxChannelSettings);
         }
 
         /// <summary>
