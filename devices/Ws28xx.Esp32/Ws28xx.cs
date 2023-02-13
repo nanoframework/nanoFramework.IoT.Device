@@ -62,12 +62,16 @@ namespace Iot.Device.Ws28xx.Esp32
         /// </summary>
         public void Update()
         {
-            var transmitter = new TransmitterChannel(GpioPin);
-            transmitter.CarrierEnabled = false;
+            var transmitterSettings = new TransmitChannelSettings(pinNumber: GpioPin)
+            {
+                EnableCarrierWave = false,
+                IdleLevel = false,
 
-            // this value for the clock divider considers a clock source of 80MHz which is what we have fixed in native
-            transmitter.ClockDivider = ClockDivider;
-            transmitter.IdleLevel = false;
+                // this value for the clock divider considers a clock source of 80MHz which is what we have fixed in native
+                ClockDivider = this.ClockDivider,
+            };
+            var transmitter = new TransmitterChannel(transmitterSettings);
+
             for (int i = 0; i < Image.Data.Length; i++)
             {
                 SerializeColor(Image.Data[i], transmitter);
