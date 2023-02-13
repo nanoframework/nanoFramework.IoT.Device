@@ -1,14 +1,15 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using nanoFramework.Hardware.Esp32.Rmt;
 using System;
 using System.Device;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Device.Model;
-using System.Diagnostics;
 using System.Threading;
+
+using nanoFramework.Hardware.Esp32.Rmt;
+
 using UnitsNet;
 
 namespace Iot.Device.DHTxx.Esp32
@@ -104,17 +105,26 @@ namespace Iot.Device.DHTxx.Esp32
             _shouldDispose = shouldDispose || gpioController is null;
             _controller = gpioController ?? new GpioController(pinNumberingScheme);
             _pin = pinTrigger;
-            _rxChannel = new ReceiverChannel(pinEcho);
-            // 1us clock ( 80Mhz / 80 ) = 1Mhz
-            _rxChannel.ClockDivider = 80;
-            // no filter
-            _rxChannel.EnableFilter(false, 5);
-            // max time 1us clock
-            _rxChannel.SetIdleThresold(ushort.MaxValue);
-            // timeout after 1 second
-            _rxChannel.ReceiveTimeout = TimeSpan.FromSeconds(1);
 
+            var rxChannelSettings = new ReceiverChannelSettings(pinNumber: pinEcho)
+            {
+                // 1us clock ( 80Mhz / 80 ) = 1Mhz
+                ClockDivider = 80,
+
+                // no filter
+                EnableFilter = false,
+                FilterThreshold = 5,
+
+                // max time 1us clock
+                IdleThreshold = ushort.MaxValue,
+
+                // timeout after 1 second
+                ReceiveTimeout = TimeSpan.FromSeconds(1)
+            };
+
+            _rxChannel = new ReceiverChannel(rxChannelSettings);
             _controller.OpenPin(_pin, PinMode.Output);
+
             // delay 1s to make sure DHT stable
             Thread.Sleep(1000);
         }
