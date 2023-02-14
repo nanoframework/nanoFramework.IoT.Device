@@ -3,12 +3,14 @@
 // See LICENSE file in the project root for full license information.
 //
 
-using nanoFramework.Hardware.Esp32;
+using System;
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Numerics;
 using System.Threading;
-using ADXL343;
+using nanoFramework.Hardware.Esp32;
+using Iot.Device.ADXL343;
+using Iot.Device.ADXL343Lib;
 
 namespace ADXL343Samples
 {
@@ -37,7 +39,7 @@ namespace ADXL343Samples
 
             i2c = new(new I2cConnectionSettings(i2cBusId, i2cAddr));
 
-            ADXL343.ADXL343 sensor = new ADXL343.ADXL343(i2c, GravityRange.Range16);
+            ADXL343 sensor = new ADXL343(i2c, GravityRange.Range16);
 
             Debug.WriteLine("Testing Vector...");
 
