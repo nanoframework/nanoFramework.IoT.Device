@@ -7,7 +7,6 @@ using System.Device.I2c;
 using System.Numerics;
 using System.Threading;
 using Iot.Device.Adxl343Lib;
-using nanoFramework.Hardware.Esp32;
 using UnitsNet;
 
 namespace Iot.Device.Adxl343Lib
@@ -232,7 +231,7 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="duration">Reference to maximum duration above thresh tap value.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetDuration(ref TimeSpan duration)
+        public bool TryGetDuration(ref Duration duration)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.Dur);
@@ -240,7 +239,7 @@ namespace Iot.Device.Adxl343Lib
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
-                duration = TimeSpan.FromMilliseconds((long)Duration.FromMicroseconds(readBuf[0]).Milliseconds);
+                duration = Duration.FromMicroseconds(readBuf[0]);
                 return true;
             }
 
@@ -257,7 +256,7 @@ namespace Iot.Device.Adxl343Lib
         /// <param name="duration">Maximum duration above thresh tap value.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
         /// <exception cref="ArgumentException">Duration must be between 0ms and 159.</exception>
-        public bool TrySetDuration(TimeSpan duration)
+        public bool TrySetDuration(Duration duration)
         {
             double d = Duration.FromMilliseconds(duration.Milliseconds).Microseconds / 625;
 
