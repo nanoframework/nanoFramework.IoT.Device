@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Device.I2c</name>
+    </assembly>
+    <members>
+        <member name="T:System.Device.I2c.I2cBusSpeed">
+            <summary>
+            Describes the bus speeds that are available for connecting to an inter-integrated circuit (I2C) device. 
+            The bus speed is the frequency at which to clock the I2C bus when accessing the device.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cBusSpeed.StandardMode">
+            <summary>
+            The standard speed of 100 kilohertz (kHz). This speed is the default.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cBusSpeed.FastMode">
+            <summary>
+            A fast speed of 400 kHz.
+            </summary>
+        </member>
+        <member name="T:System.Device.I2c.I2cConnectionSettings">
+            <summary>
+            The connection settings of a device on an I2C bus.
+            </summary>
+        </member>
+        <member name="M:System.Device.I2c.I2cConnectionSettings.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Device.I2c.I2cConnectionSettings"/> class.
+            </summary>
+            <param name="busId">The bus ID the I2C device is connected to.</param>
+            <param name="deviceAddress">The bus address of the I2C device.</param>
+        </member>
+        <member name="M:System.Device.I2c.I2cConnectionSettings.#ctor(System.Int32,System.Int32,System.Device.I2c.I2cBusSpeed)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Device.I2c.I2cConnectionSettings"/> class.
+            </summary>
+            <param name="busId">The bus ID the I2C device is connected to.</param>
+            <param name="deviceAddress">The bus address of the I2C device.</param>
+            <param name="busSpeed">The bus speed of the I2C device.</param>
+        </member>
+        <member name="P:System.Device.I2c.I2cConnectionSettings.BusId">
+            <summary>
+            The bus ID the I2C device is connected to.
+            </summary>
+        </member>
+        <member name="P:System.Device.I2c.I2cConnectionSettings.DeviceAddress">
+            <summary>
+            The bus address of the I2C device.
+            </summary>
+        </member>
+        <member name="P:System.Device.I2c.I2cConnectionSettings.BusSpeed">
+            <summary>
+            The bus speed of the I2C device
+            </summary>
+        </member>
+        <member name="T:System.Device.I2c.I2cDevice">
+            <summary>
+            The communications channel to a device on an I2C bus.
+            </summary>
+        </member>
+        <member name="P:System.Device.I2c.I2cDevice.ConnectionSettings">
+            <summary>
+            The connection settings of a device on an I2C bus. The connection settings are immutable after the device is created
+            so the object returned will be a clone of the settings object.
+            </summary>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.ReadByte">
+            <summary>
+            Reads a byte from the I2C device.
+            </summary>
+            <returns>A byte read from the I2C device.</returns>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.Read(System.SpanByte)">
+            <summary>
+            Reads data from the I2C device.
+            </summary>
+            <param name="buffer">
+            The buffer to read the data from the I2C device.
+            The length of the buffer determines how much data to read from the I2C device.
+            </param>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.WriteByte(System.Byte)">
+            <summary>
+            Writes a byte to the I2C device.
+            </summary>
+            <param name="value">The byte to be written to the I2C device.</param>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.Write(System.SpanByte)">
+            <summary>
+            Writes data to the I2C device.
+            </summary>
+            <param name="buffer">
+            The buffer that contains the data to be written to the I2C device.
+            The data should not include the I2C device address.
+            </param>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.WriteRead(System.SpanByte,System.SpanByte)">
+            <summary>
+            Performs an atomic operation to write data to and then read data from the I2C bus on which the device is connected,
+            and sends a restart condition between the write and read operations.
+            </summary>
+            <param name="writeBuffer">
+            The buffer that contains the data to be written to the I2C device.
+            The data should not include the I2C device address.</param>
+            <param name="readBuffer">
+            The buffer to read the data from the I2C device.
+            The length of the buffer determines how much data to read from the I2C device.
+            </param>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.Create(System.Device.I2c.I2cConnectionSettings)">
+            <summary>
+            Creates a communications channel to a device on an I2C bus running on the current platform
+            </summary>
+            <param name="settings">The connection settings of a device on an I2C bus.</param>
+            <returns>A communications channel to a device on an I2C bus</returns>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.#ctor(System.Device.I2c.I2cConnectionSettings)">
+            <summary>
+            Create an I2C Device
+            </summary>
+            <param name="settings">Connection settings</param>
+        </member>
+        <member name="M:System.Device.I2c.I2cDevice.Dispose">
+            <summary>
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+            </summary>
+        </member>
+        <member name="T:System.Device.I2c.I2cTransferResult">
+            <summary>
+            Provides information about whether the data transfers that the <see cref="M:System.Device.I2c.I2cDevice.Read(System.SpanByte)"/>, <see cref="M:System.Device.I2c.I2cDevice.Write(System.SpanByte)"/>, or <see cref="M:System.Device.I2c.I2cDevice.WriteRead(System.SpanByte,System.SpanByte)"/> method performed succeeded, and the actual number
+            of bytes the method transferred.
+            </summary>
+        </member>
+        <member name="P:System.Device.I2c.I2cTransferResult.BytesTransferred">
+            <summary>
+            The actual number of bytes that the operation actually transferred. The following table describes what this value represents for each method.
+            </summary>
+        </member>
+        <member name="P:System.Device.I2c.I2cTransferResult.Status">
+            <summary>
+            An enumeration value that indicates if the read or write operation transferred the full number of bytes that the method requested, or the reason
+            that the full transfer did not succeed. For WriteReadPartial, the value indicates whether the data for both the write and the read operations was entirely transferred.
+            </summary>
+        </member>
+        <member name="T:System.Device.I2c.I2cTransferStatus">
+            <summary>
+            Describes whether the data transfers that the <see cref="M:System.Device.I2c.I2cDevice.Read(System.SpanByte)"/>, <see cref="M:System.Device.I2c.I2cDevice.Write(System.SpanByte)"/>, or <see cref="M:System.Device.I2c.I2cDevice.WriteRead(System.SpanByte,System.SpanByte)"/> methods performed succeeded, or provides the reason that the transfers did not succeed.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cTransferStatus.UnknownError">
+            <summary>
+            The transfer failed for an unknown reason.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cTransferStatus.FullTransfer">
+            <summary>
+            The data was entirely transferred. For WriteRead, the data for both the write and the read operations was entirely transferred.
+            For this status code, the value of the <see cref="P:System.Device.I2c.I2cTransferResult.BytesTransferred"/> member that the method returns is the same as the size of the buffer
+            you specified when you called the method, or is equal to the sum of the sizes of two buffers that you specified for WriteRead.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cTransferStatus.ClockStretchTimeout">
+            <summary>
+            The transfer failed due to the clock being stretched for too long. Ensure the clock line is not being held low.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cTransferStatus.PartialTransfer">
+            <summary>
+            The I2C device negatively acknowledged the data transfer before all of the data was transferred.
+            For this status code, the value of the <see cref="P:System.Device.I2c.I2cTransferResult.BytesTransferred"/> member that the method returns is the number of bytes actually transferred.
+            For <see cref="M:System.Device.I2c.I2cDevice.WriteRead(System.SpanByte,System.SpanByte)"/>, the value is the sum of the number of bytes that the operation wrote and the number of bytes that the operation read.
+            </summary>
+        </member>
+        <member name="F:System.Device.I2c.I2cTransferStatus.SlaveAddressNotAcknowledged">
+            <summary>
+            The bus address was not acknowledged. For this status code, the value of the <see cref="P:System.Device.I2c.I2cTransferResult.BytesTransferred"/> member that the method returns of the method is 0.
+            </summary>
+        </member>
+    </members>
+</doc>

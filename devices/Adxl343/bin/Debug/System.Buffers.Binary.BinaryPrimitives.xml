@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Buffers.Binary.BinaryPrimitives</name>
+    </assembly>
+    <members>
+        <member name="T:System.Buffers.Binary.BinaryPrimitives">
+            <summary>
+            Reads bytes as primitives with specific endianness.
+            </summary>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadInt16BigEndian(System.SpanByte)">
+            <summary>
+            Reads an System.Int16 from the beginning of a read-only span of bytes, as big endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadInt16LittleEndian(System.SpanByte)">
+            <summary>
+            Reads an System.Int16 from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(System.SpanByte)">
+            <summary>
+            Reads an System.Int32 from the beginning of a read-only span of bytes, as big endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadInt32LittleEndian(System.SpanByte)">
+            <summary>
+            Reads an System.Int32 from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadInt64BigEndian(System.SpanByte)">
+            <summary>
+            Reads an System.Int64 from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadInt64LittleEndian(System.SpanByte)">
+            <summary>
+            Reads an System.Int64 from the beginning of a read-only span of bytes, as big endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(System.SpanByte)">
+            <summary>
+            Reads a System.UInt16 from the beginning of a read-only span of bytes, as big  endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(System.SpanByte)">
+            <summary>
+            Reads a System.UInt16 from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadUInt32BigEndian(System.SpanByte)">
+            <summary>
+            Reads a System.UInt32 from the beginning of a read-only span of bytes, as big endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns> The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(System.SpanByte)">
+            <summary>
+            Reads a System.UInt32 from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span of bytes to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadUInt64BigEndian(System.SpanByte)">
+            <summary>
+            Reads a System.UInt64 from the beginning of a read-only span of bytes, as big  endian.
+            </summary>
+            <param name="source">The read-only span of bytes to read.</param>
+            <returns>The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadUInt64LittleEndian(System.SpanByte)">
+            <summary>
+            Reads a System.UInt64 from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span of bytes to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadSingleBigEndian(System.SpanByte)">
+            <summary>
+            Reads a <see cref="T:System.Single"/> from the beginning of a read-only span of bytes, as big endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The big endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain a <see cref="T:System.Single"/>.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.ReadSingleLittleEndian(System.SpanByte)">
+            <summary>
+            Reads a <see cref="T:System.Single"/> from the beginning of a read-only span of bytes, as little endian.
+            </summary>
+            <param name="source">The read-only span to read.</param>
+            <returns>The little endian value.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain a <see cref="T:System.Single"/>.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteInt16BigEndian(System.SpanByte,System.Int16)">
+            <summary>
+            Writes an System.Int16 into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteInt16LittleEndian(System.SpanByte,System.Int16)">
+            <summary>
+            Writes an System.Int16 into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(System.SpanByte,System.Int32)">
+            <summary>
+            Writes an System.Int32 into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(System.SpanByte,System.Int32)">
+            <summary>
+            Writes an System.Int32 into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteInt64BigEndian(System.SpanByte,System.Int64)">
+            <summary>
+            Writes an System.Int64 into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteInt64LittleEndian(System.SpanByte,System.Int64)">
+            <summary>
+            Writes an System.Int64 into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteUInt16BigEndian(System.SpanByte,System.UInt16)">
+            <summary>
+            Writes a System.UInt16 into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(System.SpanByte,System.UInt16)">
+            <summary>
+            Writes a System.UInt16 into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteUInt32BigEndian(System.SpanByte,System.UInt32)">
+            <summary>
+            Writes a System.UInt32 into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteUInt32LittleEndian(System.SpanByte,System.UInt32)">
+            <summary>
+            Writes a System.UInt32 into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteUInt64BigEndian(System.SpanByte,System.UInt64)">
+            <summary>
+            Writes a System.UInt64 into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteUInt64LittleEndian(System.SpanByte,System.UInt64)">
+            <summary>
+            Writes a System.UInt64 into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteSingleBigEndian(System.SpanByte,System.Single)">
+            <summary>
+            Writes a <see cref="T:System.Single"/> into a span of bytes, as big endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Destination is too small to contain a <see cref="T:System.Single"/>.</exception>
+        </member>
+        <member name="M:System.Buffers.Binary.BinaryPrimitives.WriteSingleLittleEndian(System.SpanByte,System.Single)">
+            <summary>
+            Writes a <see cref="T:System.Single"/> into a span of bytes, as little endian.
+            </summary>
+            <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+            <param name="value">The value to write into the span of bytes.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Destination is too small to contain a <see cref="T:System.Single"/>.</exception>
+        </member>
+    </members>
+</doc>

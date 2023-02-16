@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>nanoFramework.Runtime.Events</name>
+    </assembly>
+    <members>
+        <member name="T:nanoFramework.Runtime.Events.IEventListener">
+            <summary>
+            Provides an interface to use as the basis of event listeners.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.IEventListener.InitializeForEventSource">
+            <summary>
+            Initializes an event listener so that it listens to events from a particular source.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.IEventListener.OnEvent(nanoFramework.Runtime.Events.BaseEvent)">
+            <summary>
+            Reacts to an event.
+            </summary>
+            <param name="ev">Holds the event that occurred.</param>
+            <returns><code>true</code> if the event was processed, or <code>false</code> if not. </returns>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.IEventProcessor">
+            <summary>
+            Provides an interface to use as the basis of event processors.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.IEventProcessor.ProcessEvent(System.UInt32,System.UInt32,System.DateTime)">
+            <summary>
+            Processes an event
+            IEventProcessor should return null if it cannot process an event,
+            in that case next processor will be given an opportunity.
+            </summary>
+            <param name="data1">Holds event-specific data.</param>
+            <param name="data2">Holds event-specific data.</param>
+            <param name="time">Contains the time stamp for the event.</param>
+            <returns>The event that was processed, or null if the event can't be processed.</returns>
+            <remarks>In the event that the processor cannot process an event, IEventProcessor should return null.
+            In that case next processor will be given an opportunity.</remarks>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.GenericEvent">
+            <summary>
+            Creates an instance of the <see cref="T:nanoFramework.Runtime.Events.GenericEvent"/> class.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.GenericEvent.Category">
+            <summary>
+            Specifies the event category.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.GenericEvent.Data">
+            <summary>
+            Contains the data associated with the event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.GenericEvent.Time">
+            <summary>
+            Holds the event's time stamp.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.BaseEvent">
+            <summary>
+            This is a base class from which other nanoFramework event classes derive. 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.BaseEvent.Source">
+            <summary>
+            Specifies the source of the event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.BaseEvent.Message">
+            <summary>
+            A byte characterizing the event message.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.EventSink">
+            <summary>
+            Provides a dispatcher for handling events.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.AddEventListener(nanoFramework.Runtime.Events.EventCategory,nanoFramework.Runtime.Events.IEventListener)">
+            <summary>
+            Adds a listener for particular types of events.
+            </summary>
+            <param name="eventCategory">Selects the event category.</param>
+            <param name="eventListener">Specifies the event listener.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.AddEventFilter(nanoFramework.Runtime.Events.EventCategory,nanoFramework.Runtime.Events.IEventListener)">
+            <summary>
+            Adds an event filter to the dispatcher.
+            </summary>
+            <param name="eventCategory">Selects the event category.</param>
+            <param name="eventFilter">Specifies the event filter.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.AddEventProcessor(nanoFramework.Runtime.Events.EventCategory,nanoFramework.Runtime.Events.IEventProcessor)">
+            <summary>
+            Adds an event processing routine.
+            </summary>
+            <param name="eventCategory">Selects the event category.</param>
+            <param name="eventProcessor">Specifies the event processor.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.RemoveEventListener(nanoFramework.Runtime.Events.EventCategory,nanoFramework.Runtime.Events.IEventListener)">
+            <summary>
+            Removes an event listener.
+            </summary>
+            <param name="eventCategory">Selects an event category.</param>
+            <param name="eventListener">Specifies the event listener to be removed.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.RemoveEventFilter(nanoFramework.Runtime.Events.EventCategory,nanoFramework.Runtime.Events.IEventListener)">
+            <summary>
+            Removes an event filter.
+            </summary>
+            <param name="eventCategory">Selects an event category.</param>
+            <param name="eventFilter">Specifies the event filter to be removed.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.RemoveEventProcessor(nanoFramework.Runtime.Events.EventCategory,nanoFramework.Runtime.Events.IEventProcessor)">
+            <summary>
+            Removes an event processor.
+            </summary>
+            <param name="eventCategory">Selects an event category.</param>
+            <param name="eventProcessor">Specifies the event processor to be removed.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.EventSink.PostManagedEvent(System.Byte,System.Byte,System.UInt16,System.UInt32)">
+            <summary>
+            Processes event information.
+            </summary>
+            <param name="category">The event category.</param>
+            <param name="subCategory">The event subcategory.</param>
+            <param name="data1">Data related to the event.</param>
+            <param name="data2">Data related to the event.</param>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.EventCategory">
+            <summary>
+            Defines the categories events are classified into.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Unknown">
+            <summary>
+            Specifies an unknown event type.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Custom">
+            <summary>
+            Specifies a programmer-defined event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Gpio">
+            <summary>
+            Specifies a GPIO event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.SerialDevice">
+            <summary>
+            Specifies a SerialDevice event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Network">
+            <summary>
+            Specifies a Network event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.WiFi">
+            <summary>
+            Specifies a WiFi event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Can">
+            <summary>
+            Specifies a CAN event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Storage">
+            <summary>
+            Specifies a Storage event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Radio">
+            <summary>
+            Specifies a Radio event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.HighResolutionTimer">
+            <summary>
+            Specifies a HighResolutionTimer event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Bluetooth">
+            <summary>
+            Specifies a Bluetooth event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Usb">
+            <summary>
+            Specifies a USB event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Touch">
+            <summary>
+            Specifies a Touch event.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.EventCategory.Gesture">
+            <summary>
+            Specifies a Gesture event.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.NativeEventHandler">
+            <summary>
+            A multicast (combinable) delegate that defines the event handler for a native event.
+            </summary>
+            <param name="data1">First parameter (can be the port).</param>
+            <param name="data2">First parameter (can be the port).</param>
+            <param name="time">Time of the event.</param>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.NativeEventDispatcher">
+            <summary>
+            Initializes a new instance of the <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> class.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.NativeEventDispatcher.threadSpawn">
+            <summary>
+            The event handler for this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object (a multicast combinable delegate).
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.NativeEventDispatcher.callbacks">
+            <summary>
+            The event handler for this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object (a multicast combinable delegate).
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Runtime.Events.NativeEventDispatcher.disposed">
+            <summary>
+            Set to <code>true</code> if this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object has been disposed, or <code>false</code> if not.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.NativeEventDispatcher.#ctor(System.String,System.UInt64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> class.
+            </summary>
+            <param name="driverName">The name of a registered driver.</param>
+            <param name="driverData">Driver data to be used when initializing the driver.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.NativeEventDispatcher.EnableInterrupt">
+            <summary>
+            Enables the interrupt for this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.NativeEventDispatcher.DisableInterrupt">
+            <summary>
+            Disables the interrupt for this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.NativeEventDispatcher.Dispose(System.Boolean)">
+            <summary>
+            Releases resources used by this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object.
+            </summary>
+            <param name="disposing"><code>true</code> if in the process of disposing, or <code>false</code> otherwise.</param>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.NativeEventDispatcher.Dispose">
+            <summary>
+            Releases resources used by this <see cref="T:nanoFramework.Runtime.Events.NativeEventDispatcher"/> object.
+            </summary>
+        </member>
+        <member name="E:nanoFramework.Runtime.Events.NativeEventDispatcher.OnInterrupt">
+            <summary>
+            Adds or removes callback methods for native events.
+            </summary>
+            <remarks>Applications can subscribe to this event to be notified when an interrupt event occurs.</remarks>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.CustomEventArgs">
+            <summary>
+            Contains argument values for custom events.
+            </summary>
+        </member>
+        <member name="P:nanoFramework.Runtime.Events.CustomEventArgs.Data1">
+            <summary>
+            Value of 1st field in event.
+            </summary>
+        </member>
+        <member name="P:nanoFramework.Runtime.Events.CustomEventArgs.Data2">
+            <summary>
+            Value of 1st field in event.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.CustomEventPostedEventHandler">
+            <summary>
+            Provides an event handler that is called when a custom event is posted.
+            </summary>
+            <param name="sender">Specifies the object that sent the custom event. </param>
+            <param name="e">Contains the custom event arguments. </param>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.CustomEvent">
+            <summary>
+            Provides handling for custom native events. 
+            </summary>
+        </member>
+        <member name="E:nanoFramework.Runtime.Events.CustomEvent.CustomEventPosted">
+            <summary>
+            Event occurs when a custom event is posted.
+            </summary>
+            <remarks>
+            The <see cref="T:nanoFramework.Runtime.Events.CustomEvent"/> class raises <see cref="E:nanoFramework.Runtime.Events.CustomEvent.CustomEventPosted"/> event when a custom event is posted. 
+            
+            To have a <see cref="T:nanoFramework.Runtime.Events.CustomEvent"/> object call an event-handling method when a <see cref="E:nanoFramework.Runtime.Events.CustomEvent.CustomEventPosted"/> event occurs, 
+            you must associate the method with a <see cref="T:nanoFramework.Runtime.Events.CustomEventPostedEventHandler"/> delegate, and add this delegate to this event. 
+            </remarks>
+        </member>
+        <member name="T:nanoFramework.Runtime.Events.WeakDelegate">
+            <summary>
+            Provides methods for combining and removing "weak" delegates. 
+            </summary>
+            <remarks>When instances of the WeakDelegate class are created, the object references in the delegate list are treated like WeakReference objects. 
+            This means that these object references are prone to garbage collection even if they are still targets in the list of delegates. 
+            When such object references are collected as garbage, they are automatically removed from the list of delegates.
+            </remarks>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.WeakDelegate.Combine(System.Delegate,System.Delegate)">
+            <summary>
+            Concatenates the invocation lists of two multicast (combinable) delegates. 
+            </summary>
+            <param name="a">The combinable delegate whose invocation list comes first.</param>
+            <param name="b">The combinable delegate whose invocation list comes second.</param>
+            <returns>A new combinable delegate with an invocation list that concatenates the invocation lists of the a and b parameters, in that order. 
+            If b is a null reference, this method returns a. 
+            If a is a null reference, this method returns b. 
+            If both a and b are null references, this method returns null. </returns>
+        </member>
+        <member name="M:nanoFramework.Runtime.Events.WeakDelegate.Remove(System.Delegate,System.Delegate)">
+            <summary>
+            Removes the invocation list of a specified delegate from the invocation list of another specified delegate. 
+            </summary>
+            <param name="a">The delegate from which the invocation list is to be removed.</param>
+            <param name="b">The delegate that supplies the invocation list to be removed from the delegate specified in a.</param>
+            <returns>A new delegate with an invocation list formed by taking the invocation list of the a parameter and removing the invocation list of the b parameter, if b's invocation list is found in a's invocation list.
+            If b is a null reference, or if b's invocation list is not found in a's invocation list, this method returns a. 
+            If b's invocation list is equal to a's invocation list, or if b is a null reference, this method returns null.</returns>
+        </member>
+    </members>
+</doc>

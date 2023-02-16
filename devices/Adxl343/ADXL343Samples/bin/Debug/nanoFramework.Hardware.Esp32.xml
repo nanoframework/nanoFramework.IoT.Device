@@ -1,0 +1,1178 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>nanoFramework.Hardware.Esp32</name>
+    </assembly>
+    <members>
+        <member name="T:nanoFramework.Hardware.Esp32.Gpio">
+            <summary>
+            ESP32 GPIO pins
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO00">
+            <summary>
+            Gpio IO00
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO01">
+            <summary>
+            Gpio IO01 (UART0 TXD)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO02">
+            <summary>
+            Gpio IO02
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO03">
+            <summary>
+            Gpio IO03 (UART0 RXD)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO04">
+            <summary>
+            Gpio IO04
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO05">
+            <summary>
+            Gpio IO05
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO06">
+            <summary>
+            Gpio IO06 (Reserved for SPI flash)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO07">
+            <summary>
+            Gpio IO07 (Reserved for SPI flash)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO08">
+            <summary>
+            Gpio IO08 (Reserved for SPI flash)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO09">
+            <summary>
+            Gpio IO09 (Reserved for SPI flash)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO10">
+            <summary>
+            Gpio IO10 (Reserved for SPI flash)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO11">
+            <summary>
+            Gpio IO11 (Reserved for SPI flash)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO12">
+            <summary>
+            Gpio IO12  (also used for JTAG TDI)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO13">
+            <summary>
+            Gpio IO13  (also used for JTAG TCK)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO14">
+            <summary>
+            Gpio IO14  (also used for JTAG TMS)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO15">
+            <summary>
+            Gpio IO15  (also used for JTAG TDO)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO16">
+            <summary>
+            Gpio IO16
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO17">
+            <summary>
+            Gpio IO17
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO18">
+            <summary>
+            Gpio IO18
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO19">
+            <summary>
+            Gpio IO19
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO20">
+            <summary>
+            Gpio IO20, No Physical pin for IO20
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO21">
+            <summary>
+            Gpio IO21
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO22">
+            <summary>
+            Gpio IO22
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO23">
+            <summary>
+            Gpio IO23
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO24">
+            <summary>
+            Gpio IO24, No Physical pin for IO24
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO25">
+            <summary>
+            Gpio IO25
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO26">
+            <summary>
+            Gpio IO26
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO27">
+            <summary>
+            Gpio IO27
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO28">
+            <summary>
+            Gpio IO28, No Physical pin for IO28
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO29">
+            <summary>
+            Gpio IO29, No Physical pin for IO29
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO30">
+            <summary>
+            Gpio IO30, No Physical pin for IO30
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO31">
+            <summary>
+            Gpio IO31, No Physical pin for IO31
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO32">
+            <summary>
+            Gpio IO32
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO33">
+            <summary>
+            Gpio IO33
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO34">
+            <summary>
+            Gpio IO34 (Input Only, no software pullup/pulldown functions)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO35">
+            <summary>
+            Gpio IO35 (Input Only, no software pullup/pulldown functions)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO36">
+            <summary>
+            Gpio IO36 SENSOR_VP (Input Only, no software pullup/pulldown functions)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO37">
+            <summary>
+            Gpio IO37 (Input Only, no software pullup/pulldown functions)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO38">
+            <summary>
+            Gpio IO38 (Input Only, no software pullup/pulldown functions)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Gpio.IO39">
+            <summary>
+            Gpio IO39 SENSOR_VN (Input Only, no software pullup/pulldown functions)
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResEventListener.OnEvent(nanoFramework.Runtime.Events.BaseEvent)">
+            <summary>
+            Fire event on correct timer
+            </summary>
+            <param name="ev"></param>
+            <returns></returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResEventListener.ProcessEvent(System.UInt32,System.UInt32,System.DateTime)">
+            <summary>
+            Process an event
+            </summary>
+            <param name="data1"></param>
+            <param name="data2"></param>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.HighResTimerExpiredEventHandler">
+            <summary>
+            Event raised when a High res timer expires. 
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.HighResTimer">
+            <summary>
+            The class encapsulates the ESP32 High Resolution Timer API.
+            </summary>
+        </member>
+        <member name="E:nanoFramework.Hardware.Esp32.HighResTimer.OnHighResTimerExpired">
+            <summary>
+            Event raised when a HighRes timer expires.  
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.GetCurrent">
+            <summary>
+            Returns the number of micro seconds since boot
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.#ctor">
+            <summary>
+            Create a High Resolution Timer. A maximum of 10 timers can be created.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.Stop">
+            <summary>
+            Stop the Timer.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.StartOneShot(System.UInt64)">
+            <summary>
+            Start a one shot timer.
+            Once the timer has expired the timer event will be fired.
+            </summary>
+            <param name="timeout_us">Timeout in mirco seconds</param>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.StartOnePeriodic(System.UInt64)">
+            <summary>
+            Start a periodic timer.
+            </summary>
+            <param name="period_us">Period between firing timer events.</param>
+            <returns></returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.Dispose(System.Boolean)">
+            <summary>
+            Dispose(bool disposing)
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.HighResTimer.Dispose">
+            <summary>
+            Dispose HighResTimer
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Logging">
+            <summary>
+            Controls the logging output.
+            By default the logging is LOG_LEVEL_NONE as the same port is used for the Visual Studio debug connection when connected via serial port.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Logging.LogLevel">
+            <summary>
+            Enumeration of Log levels
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Logging.LogLevel.LOG_LEVEL_NONE">
+            <summary>
+            No log output 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Logging.LogLevel.LOG_LEVEL_ERROR">
+            <summary>
+            Critical errors, software module can not recover on its own 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Logging.LogLevel.LOG_LEVEL_WARN">
+            <summary>
+            Error conditions from which recovery measures have been taken 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Logging.LogLevel.LOG_LEVEL_INFO">
+            <summary>
+            Information messages which describe normal flow of events 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Logging.LogLevel.LOG_LEVEL_DEBUG">
+            <summary>
+            Extra information which is not necessary for normal use (values, pointers, sizes, etc). 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Logging.LogLevel.LOG_LEVEL_VERBOSE">
+            <summary>
+            Bigger chunks of debugging information, or frequent messages which can potentially flood the output. 
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Logging.SetLogLevel(nanoFramework.Hardware.Esp32.Logging.LogLevel)">
+            <summary>
+            Set overall logging level.
+            </summary>
+            <param name="level"></param>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Logging.SetLogLevel(System.String,nanoFramework.Hardware.Esp32.Logging.LogLevel)">
+            <summary>
+             Set overall logging level for specific tag, tag "*" equals all tags.
+            </summary>
+            <param name="tag"></param>
+            <param name="level"></param>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Configuration">
+            <summary>
+            Change Configuration
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(System.Int32,nanoFramework.Hardware.Esp32.DeviceFunction)">
+            <summary>
+            Set the default function for a GPIO pin.
+            </summary>
+            <remarks>
+            Allows gpio pins to be assigned a device function.
+            For example setting the I2C1 data pin to use GPIO pin 17.
+            </remarks>
+            <param name="pin">The pin number to set against function.</param>
+            <param name="value">The device function to be assigned the pin.</param>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Configuration.GetFunctionPin(nanoFramework.Hardware.Esp32.DeviceFunction)">
+            <summary>
+            Returns the current pin number used by a device function.
+            </summary>
+            <param name="function"></param>
+            <returns>The pin number used by device function. If value is -1 then pins is not assigned.</returns>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.DeviceTypes">
+            <summary>
+            Device Types
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.GPIO">
+            <summary>
+            GPIO Device type
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.SPI">
+            <summary>
+            SPI Device type
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.I2C">
+            <summary>
+            I2C Device type
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.SERIAL">
+            <summary>
+            SERIAL Device type
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.PWM">
+            <summary>
+            PWM Device type
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.ADC">
+            <summary>
+            ADC Device type
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceTypes.I2S">
+            <summary>
+            I2S Device type
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.DeviceFunction">
+            <summary>
+            Defines values used to change pin configuration via the GPIO alternate 
+            drivemode interface.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.SPI1_MOSI">
+            <summary>
+            Device function MOSI for SPI1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.SPI1_MISO">
+            <summary>
+            Device function MISO for SPI1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.SPI1_CLOCK">
+            <summary>
+            Device function CLOCK for SPI1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.SPI2_MOSI">
+            <summary>
+            Device function MOSI for SPI2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.SPI2_MISO">
+            <summary>
+            Device function MISO for SPI2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.SPI2_CLOCK">
+            <summary>
+            Device function CLOCK for SPI2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2C1_DATA">
+            <summary>
+            Device function DATA for I2C1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2C1_CLOCK">
+            <summary>
+            Device function CLOCK for I2C1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2C2_DATA">
+            <summary>
+            Device function DATA for I2C2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2C2_CLOCK">
+            <summary>
+            Device function CLOCK for I2C2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM1_TX">
+            <summary>
+            Device function TX data for COM1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM1_RX">
+            <summary>
+            Device function RX data for COM1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM1_RTS">
+            <summary>
+            Device function Request to Send(RTS) for COM1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM1_CTS">
+            <summary>
+            Device function Clear to Send(CTS) for COM1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM2_TX">
+            <summary>
+            Device function TX data for COM2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM2_RX">
+            <summary>
+            Device function RX data for COM2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM2_RTS">
+            <summary>
+            Device function Request to Send(RTS) for COM2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM2_CTS">
+            <summary>
+            Device function Clear to Send(CTS) for COM2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM3_TX">
+            <summary>
+            Device function TX data for COM3 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM3_RX">
+            <summary>
+            Device function RX data for COM3 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM3_RTS">
+            <summary>
+            Device function Request to Send(RTS) for COM3 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.COM3_CTS">
+            <summary>
+            Device function Clear to Send(CTS) for COM3 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM1">
+            <summary>
+            Device function PWM1 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM2">
+            <summary>
+            Device function PWM2 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM3">
+            <summary>
+            Device function PWM3 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM4">
+            <summary>
+            Device function PWM4 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM5">
+            <summary>
+            Device function PWM5 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM6">
+            <summary>
+            Device function PWM6 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM7">
+            <summary>
+            Device function PWM7 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM8">
+            <summary>
+            Device function PWM8 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM9">
+            <summary>
+            Device function PWM9
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM10">
+            <summary>
+            Device function PWM10 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM11">
+            <summary>
+            Device function PWM11 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM12">
+            <summary>
+            Device function PWM12 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM13">
+            <summary>
+            Device function PWM13 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM14">
+            <summary>
+            Device function PWM14 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM15">
+            <summary>
+            Device function PWM15 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.PWM16">
+            <summary>
+            Device function PWM16 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH0">
+            <summary>
+            ADC1 channel 0
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH1">
+            <summary>
+            ADC1 channel 1
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH2">
+            <summary>
+            ADC1 channel 2
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH3">
+            <summary>
+            ADC1 channel 3
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH4">
+            <summary>
+            ADC1 channel 4
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH5">
+            <summary>
+            ADC1 channel 5 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH6">
+            <summary>
+            ADC1 channel 6
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH7">
+            <summary>
+            ADC1 channel 7
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH8">
+            <summary>
+            ADC1 channel 8
+            Internal Temperture sensor (VP)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH9">
+            <summary>
+            ADC1 channel 9
+            Internal Hall Sensor (VN)
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH10">
+            <summary>
+            ADC1 channel 10
+            Internally ESP32 Adc2 channel 10
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH11">
+            <summary>
+            ADC1 channel 11
+            Internally ESP32 Adc2 channel 11
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH12">
+            <summary>
+            ADC1 channel 12
+            Internally ESP32 Adc2 channel 12
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH13">
+            <summary>
+            ADC1 channel 13 
+            Internally ESP32 Adc2 channel 13
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH14">
+            <summary>
+            ADC1 channel 14
+            Internally ESP32 Adc2 channel 14
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH15">
+            <summary>
+            ADC1 channel 15
+            Internally ESP32 Adc2 channel 15
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH16">
+            <summary>
+            ADC1 channel 16
+            Internally ESP32 Adc2 channel 16
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH17">
+            <summary>
+            ADC1 channel 17
+            Internally ESP32 Adc2 channel 17
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH18">
+            <summary>
+            ADC1 channel 18
+            Internally ESP32 Adc2 channel 18
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.ADC1_CH19">
+            <summary>
+            ADC1 channel 19
+            Internally ESP32 Adc2 channel 19
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S1_MCK">
+            <summary>
+            I2S1 function Master Clock.
+            Used only in master mode.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S1_BCK">
+            <summary>
+            I2S1 function Bit Clock.
+            Used for general purpose read and write on the I2S bus.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S1_WS">
+            <summary>
+            I2S1 function WS.
+            Used if your have stereo.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S1_DATA_OUT">
+            <summary>
+            I2S1 function DATA_OUT.
+            Used for output data typically on a speaker.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S1_MDATA_IN">
+            <summary>
+            I2S1 function MDATA_IN.
+            Used for input data typically from a microphone.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S2_MCK">
+            <summary>
+            I2S2 function Master Clock.
+            Used only in master mode.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S2_BCK">
+            <summary>
+            I2S2 function Bit Clock.
+            Used for general purpose read and write on the I2S bus.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S2_WS">
+            <summary>
+            I2S2 function WS.
+            Used if your have stereo.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S2_DATA_OUT">
+            <summary>
+            I2S2 function DATA_OUT.
+            Used for output data typically on a speaker.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.DeviceFunction.I2S2_MDATA_IN">
+            <summary>
+            I2S2 function MDATA_IN.
+            Used for input data typically from a microphone.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.EspNativeError">
+            <summary>
+            Encapsulates the ESP32 native errors
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.OK">
+            <summary>
+            No error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.FAIL">
+            <summary>
+            The function failed
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.NO_MEM">
+            <summary>
+            Memory allocation failed error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_ARG">
+            <summary>
+            Invalid argument error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_STATE">
+            <summary>
+            Invalid state error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_SIZE">
+            <summary>
+            Invalid size error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.NOT_FOUND">
+            <summary>
+            The function failed
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.NOT_SUPPORTED">
+            <summary>
+            Function not supported error 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.TIMEOUT">
+            <summary>
+            Timeout error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_RESPONSE">
+            <summary>
+            Invalid response
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_CRC">
+            <summary>
+            CRC error
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_VERSION">
+            <summary>
+            Invalid version
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.INVALID_MAC">
+            <summary>
+            Invalid MAC address
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.EspNativeError.WIFI_BASE">
+            <summary>
+            Base of WiFi errors
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.NativeMemory">
+            <summary>
+            Class to access information on Native Memory.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.NativeMemory.MemoryType">
+            <summary>
+            Native memory type.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.NativeMemory.MemoryType.All">
+            <summary>
+            All memory ( Internal and SpiRam ).
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.NativeMemory.MemoryType.Internal">
+            <summary>
+            Only Internal memory. Memory contained in ESP32. 
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.NativeMemory.MemoryType.SpiRam">
+            <summary>
+            Memory in external SPI Ram.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.NativeMemory.GetMemoryInfo(nanoFramework.Hardware.Esp32.NativeMemory.MemoryType,System.UInt32@,System.UInt32@,System.UInt32@)">
+            <summary>
+            Get information on native memory.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Sleep">
+            <summary>
+            Encapsulates ESP32 sleep functions.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Sleep.WakeupMode">
+            <summary>
+            Wakeup mode used by <see cref="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByMultiPins(nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin,nanoFramework.Hardware.Esp32.Sleep.WakeupMode)"/>.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupMode.AllLow">
+            <summary>
+            Wakeup when all pins are low.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupMode.AnyHigh">
+            <summary>
+            Wakeup when any pin is high.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Sleep.WakeupCause">
+            <summary>
+            Sleep wakeup cause.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Undefined">
+            <summary>
+            In case of deep sleep, reset was not caused by exit from deep sleep.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Ext0">
+            <summary>
+            Wakeup caused by external signal using RTC_IO.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Ext1">
+            <summary>
+            Wakeup caused by external signal using RTC_CNTL.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Timer">
+            <summary>
+            Wakeup caused by timer.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.TouchPad">
+            <summary>
+             Wakeup caused by Touchpad.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Ulp">
+            <summary>
+             Wakeup caused by ULP program.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Gpio">
+            <summary>
+            Wakeup caused by GPIO (light sleep only).
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupCause.Uart">
+            <summary>
+            Wakeup caused by UART (light sleep only).
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin">
+            <summary>
+            Gpio pins that can be used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.None">
+            <summary>
+            No wake up pin.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin0">
+            <summary>
+            Gpio Pin 1 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin2">
+            <summary>
+            Gpio Pin 2 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin4">
+            <summary>
+            Gpio Pin 4 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin12">
+            <summary>
+            Gpio Pin 12 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin13">
+            <summary>
+            Gpio Pin 13 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin14">
+            <summary>
+            Gpio Pin 14 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin15">
+            <summary>
+            Gpio Pin 15 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin25">
+            <summary>
+            Gpio Pin 25 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin26">
+            <summary>
+            Gpio Pin 26 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin27">
+            <summary>
+            Gpio Pin 27 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin32">
+            <summary>
+            Gpio Pin 32 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin33">
+            <summary>
+            Gpio Pin 33 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin34">
+            <summary>
+            Gpio Pin 34 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin35">
+            <summary>
+            Gpio Pin 35 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin36">
+            <summary>
+            Gpio Pin 36 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin37">
+            <summary>
+            Gpio Pin 37 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin38">
+            <summary>
+            Gpio Pin 38 used for wakeup.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.Pin39">
+            <summary>
+            Gpio Pin 39 used for wakeup.
+            </summary>
+        </member>
+        <member name="T:nanoFramework.Hardware.Esp32.Sleep.TouchPad">
+            <summary>
+            Enumeration of Touchpad numbers.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num0">
+            <summary>
+             Touchpad channel 0 is GPIO4.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num1">
+            <summary>
+            Touchpad channel 1 is GPIO0.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num2">
+            <summary>
+            Touchpad channel 2 is GPIO2.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num3">
+            <summary>
+            Touchpad channel 3 is GPIO15.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num4">
+            <summary>
+            Touchpad channel 4 is GPIO13.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num5">
+            <summary>
+            Touchpad channel 5 is GPIO12.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num6">
+            <summary>
+            Touchpad channel 6 is GPIO14.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num7">
+            <summary>
+            Touchpad channel 7 is GPIO27.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num8">
+            <summary>
+            Touchpad channel 8 is GPIO33.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.Num9">
+            <summary>
+            Touchpad channel 9 is GPIO32.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Hardware.Esp32.Sleep.TouchPad.None">
+            <summary>
+            Number returned when no Touchpad used on wakeup.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByTimer(System.TimeSpan)">
+            <summary>
+            Enable Wakeup by Timer.
+            </summary>
+            <param name="time">Period after which wakeup occurs.</param>
+            <returns>returns ESP32 native error enumeration.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByPin(nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin,System.Int32)">
+            <summary>
+            Enable wakeup using a gpio pin.
+            </summary>
+            <param name="pin">GPIO number used as wakeup source. Only pins that have RTC functionality can be used.
+            0,2,4,12->15,25->27,32->39</param>
+            <param name="level">Analog threshold at or above which pin causes wake up, or zero if pin is not active for wakeup.</param>
+            <returns>Returns ESP32 native error enumeration.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByMultiPins(nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin,nanoFramework.Hardware.Esp32.Sleep.WakeupMode)">
+            <summary>
+            Enable wakeup using multiple pins.
+            </summary>
+            <remarks>
+            Only pins that are RTC connected. 
+            </remarks>
+            <param name="pins">Combination of pins that are enabled for wakeup.</param>
+            <param name="mode">Logical mode used for wakeup to occur.</param>
+            <returns>Returns ESP32 native error enumeration.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByTouchPad">
+            <summary>
+            Enable wakeup by Touchpad.
+            </summary>
+            <returns>Returns ESP32 native error enumeration.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.StartLightSleep">
+            <summary>
+            Enter light sleep with the configured wakeup options. 
+            </summary>
+            <returns>Returns ESP32 native error enumeration, ESP_ERR_INVALID_STATE if Wifi or BT is not stopped.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.StartDeepSleep">
+            <summary>
+            Enter deep sleep using configured wakeup sources. 
+            </summary>
+            <remarks>
+            After a call to this method the device enters deep sleep, a wakeup source will wake the device and the execution will start as if it was a reset.
+            After this occurs the cause can be queried using <see cref="M:nanoFramework.Hardware.Esp32.Sleep.GetWakeupCause"/>.
+            Keep in mind that the execution WILL NOT continue after the call to this method.
+            This call never returns.
+            If no wakeup sources are configured then the device enters an indefinite sleep.
+            </remarks>
+            <seealso cref="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByMultiPins(nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin,nanoFramework.Hardware.Esp32.Sleep.WakeupMode)"/>
+            <seealso cref="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByPin(nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin,System.Int32)"/>
+            <seealso cref="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByTimer(System.TimeSpan)"/>
+            <seealso cref="M:nanoFramework.Hardware.Esp32.Sleep.EnableWakeupByTouchPad"/>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.GetWakeupCause">
+            <summary>
+            Get the cause for waking up.
+            </summary>
+            <returns>Returns the wakeup cause.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.GetWakeupGpioPin">
+            <summary>
+            Returns a combination of pins that caused the wakeup.
+            </summary>
+            <returns>Returns a combination of the pins that caused the wakeup.</returns>
+        </member>
+        <member name="M:nanoFramework.Hardware.Esp32.Sleep.GetWakeupTouchpad">
+            <summary>
+            Get the Touchpad which caused the wakeup. 
+            </summary>
+            <returns>Returns TouchPad number which caused the wakeup, else <see cref="F:nanoFramework.Hardware.Esp32.Sleep.WakeupGpioPin.None"/>.</returns>
+        </member>
+    </members>
+</doc>
