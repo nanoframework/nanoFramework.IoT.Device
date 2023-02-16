@@ -12,15 +12,16 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>ADXL343Lib</RootNamespace>
-    <AssemblyName>ADXL343Lib</AssemblyName>
+    <RootNamespace>Adxl343Lib</RootNamespace>
+    <AssemblyName>Adxl343Lib</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <Name>Adxl343</Name>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="ActTapStatusMap.cs" />
-    <Compile Include="ADXL343.cs" />
+    <Compile Include="Adxl343.cs" />
     <Compile Include="BwRateMap.cs" />
     <Compile Include="DataFormatMap.cs" />
     <Compile Include="FifoControlMap.cs" />
@@ -33,6 +34,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="TapAxesMap.cs" />
+    <Compile Include="WakeUpBits.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -58,6 +60,12 @@
     </Reference>
     <Reference Include="System.Numerics">
       <HintPath>packages\nanoFramework.System.Numerics.1.2.227\lib\System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Duration">
+      <HintPath>packages\UnitsNet.nanoFramework.Duration.5.2.0\lib\UnitsNet.Duration.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Mass">
+      <HintPath>packages\UnitsNet.nanoFramework.Mass.5.2.0\lib\UnitsNet.Mass.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

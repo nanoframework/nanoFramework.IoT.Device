@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2017 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ADXL343
+namespace Iot.Device.Adxl343Lib
 {
     /// <summary>
     /// Active Inactive Control Map.

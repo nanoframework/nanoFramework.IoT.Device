@@ -4,28 +4,28 @@
 namespace Iot.Device.Adxl343Lib
 {
     /// <summary>
-    /// Tap Axes Map.
+    /// Wakeup Bits for use in Power Control.
     /// </summary>
-    internal enum TapAxesMap : byte
+    public enum WakeUpBits : byte
     {
         /// <summary>
-        /// Suppress.
+        /// Frequency 8.
         /// </summary>
-        Suppress = 0x08,
+        Frequency8 = 0,
 
         /// <summary>
-        /// Tap X Enable.
+        /// Frequency 4.
         /// </summary>
-        TapXEnable = 0x04,
+        Frequency4 = 1,
+        
+        /// <summary>
+        /// Frequency 2.
+        /// </summary>
+        Frequency2 = 2,
 
         /// <summary>
-        /// Tap Y Enable.
+        /// Frequency 1.
         /// </summary>
-        TapYEnable = 0x02,
-
-        /// <summary>
-        /// Tap Z Enable.
-        /// </summary>
-        TapZEnable = 0x01
+        Frequency1 = 3
     }
 }

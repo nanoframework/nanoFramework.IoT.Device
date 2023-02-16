@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2017 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.ADXL343Lib
+namespace Iot.Device.Adxl343Lib
 {
     /// <summary>
     /// Power control Map.

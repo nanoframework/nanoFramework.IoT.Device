@@ -12,9 +12,10 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>ADXL343Samples</RootNamespace>
-    <AssemblyName>ADXL343Samples</AssemblyName>
+    <RootNamespace>Adxl343Samples</RootNamespace>
+    <AssemblyName>Adxl343Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <Name>Adxl343Samples</Name>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -25,7 +26,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADXL343.nfproj" />
+    <ProjectReference Include="..\Adxl343.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
