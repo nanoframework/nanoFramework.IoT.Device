@@ -20,7 +20,7 @@ namespace Iot.Device.Adxl343Lib
         private const int Resolution = 1024;
 
         private int _range = 4;
-        private byte _gravityRangeByte = 0;
+        private GravityRange _gravityRangeByte = 0;
         private I2cDevice _i2c;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Iot.Device.Adxl343Lib
         public Adxl343(I2cDevice i2cDevice, GravityRange gravityRange)
         {
             _range = ConvertGravityRangeToInt(gravityRange);
-            _gravityRangeByte = (byte)gravityRange;
+            _gravityRangeByte = gravityRange;
             _i2c = i2cDevice;
             Initialize();
         }
@@ -120,19 +120,20 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="threshTap">Scale factor value 0 to 255.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
+        /// <exception cref="ArgumentException">ThreshTap needs to be between 0mg and 15,937.</exception>
         public bool TrySetThresholdTap(Mass threshTap)
         {
             int tt = (int)(threshTap.Milligrams / 62.5);
 
             if (tt < 0 || tt > 255)
             {
-                throw new ArgumentOutOfRangeException("threshTap", "threshTap needs to be between 0mg and 15,937");
+                throw new ArgumentOutOfRangeException();
             }
 
             SpanByte writeBuf = new byte[2];
             writeBuf[0] = (byte)Register.ThreshTap;
             writeBuf[1] = (byte)tt;
-            var res = _i2c.Write(writeBuf); 
+            var res = _i2c.Write(writeBuf);
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
@@ -183,21 +184,24 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="point">Point containing X, Y, and Z offset values.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
+        /// <exception cref="ArgumentException">Point.X needs to be between 0 and 255.</exception>
+        /// <exception cref="ArgumentException">Point.Y needs to be between 0 and 255.</exception>
+        /// <exception cref="ArgumentException">Point.Z needs to be between 0 and 255.</exception>
         public bool TrySetOffsetAdjustments(Vector3 point)
         {
             if (point.X < 0 || point.X > 255)
             {
-                throw new ArgumentOutOfRangeException("point.X", "point.X needs to be between 0 and 255");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (point.Y < 0 || point.Y > 255)
             {
-                throw new ArgumentOutOfRangeException("point.Y", "point.Y needs to be between 0 and 255");
+                throw new ArgumentOutOfRangeException();
             }
 
             if (point.Z < 0 || point.Z > 255)
             {
-                throw new ArgumentOutOfRangeException("point.Z", "point.Z needs to be between 0 and 255");
+                throw new ArgumentOutOfRangeException();
             }
 
             SpanByte writeBuf = new byte[4];
@@ -205,7 +209,7 @@ namespace Iot.Device.Adxl343Lib
             writeBuf[1] = (byte)point.X;
             writeBuf[2] = (byte)point.Y;
             writeBuf[3] = (byte)point.Z;
-            var res = _i2c.Write(writeBuf); 
+            var res = _i2c.Write(writeBuf);
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
@@ -226,9 +230,9 @@ namespace Iot.Device.Adxl343Lib
         /// is 625 µs/LSB. A value of 0 disables the single tap/ double tap
         /// functions.
         /// </summary>
-        /// <param name="dur">Reference to maximum duration above thresh tap value.</param>
+        /// <param name="duration">Reference to maximum duration above thresh tap value.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetDuration(ref TimeSpan dur)
+        public bool TryGetDuration(ref TimeSpan duration)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.Dur);
@@ -236,7 +240,7 @@ namespace Iot.Device.Adxl343Lib
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
-                dur = TimeSpan.FromMilliseconds((long)Duration.FromMicroseconds(readBuf[0]).Milliseconds);
+                duration = TimeSpan.FromMilliseconds((long)Duration.FromMicroseconds(readBuf[0]).Milliseconds);
                 return true;
             }
 
@@ -250,21 +254,22 @@ namespace Iot.Device.Adxl343Lib
         /// is 625 µs/LSB. A value of 0 disables the single tap/ double tap
         /// functions.
         /// </summary>
-        /// <param name="dur">Maximum duration above thresh tap value.</param>
+        /// <param name="duration">Maximum duration above thresh tap value.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetDuration(TimeSpan dur)
+        /// <exception cref="ArgumentException">Duration must be between 0ms and 159.</exception>
+        public bool TrySetDuration(TimeSpan duration)
         {
-            double d = Duration.FromMilliseconds(dur.Milliseconds).Microseconds / 625;
+            double d = Duration.FromMilliseconds(duration.Milliseconds).Microseconds / 625;
 
             if (d > 255 || d < 0)
             {
-                throw new ArgumentOutOfRangeException("dur", "dur must be between 0ms and 159");
+                throw new ArgumentOutOfRangeException();
             }
 
             SpanByte writeBuf = new byte[2];
             writeBuf[0] = (byte)Register.Dur;
             writeBuf[1] = (byte)d;
-            var res = _i2c.Write(writeBuf); 
+            var res = _i2c.Write(writeBuf);
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
@@ -311,12 +316,13 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="latent">Wait time between a tap even and a double-tap.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
+        /// <exception cref="ArgumentException">Latent must be between 0ms and 318ms.</exception>
         public bool TrySetLatent(TimeSpan latent)
         {
             double l = latent.TotalMilliseconds / 1.25;
             if (l < 0 || l > 255)
             {
-                throw new ArgumentOutOfRangeException("latent", "latent must be between 0ms and 318ms");
+                throw new ArgumentOutOfRangeException();
             }
 
             SpanByte writeBuf = new byte[2];
@@ -343,9 +349,9 @@ namespace Iot.Device.Adxl343Lib
         /// second valid tap can begin.The scale factor is 1.25 ms/LSB.A
         /// value of 0 disables the double tap function.
         /// </summary>
-        /// <param name="win">Reference to amount of time after expiration of latency time.</param>
+        /// <param name="window">Reference to amount of time after expiration of latency time.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetWindow(ref TimeSpan win)
+        public bool TryGetWindow(ref TimeSpan window)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.Window);
@@ -353,7 +359,7 @@ namespace Iot.Device.Adxl343Lib
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
-                win = TimeSpan.FromMilliseconds((long)(readBuf[0] * 1.25));
+                window = TimeSpan.FromMilliseconds((long)(readBuf[0] * 1.25));
                 return true;
             }
 
@@ -367,15 +373,16 @@ namespace Iot.Device.Adxl343Lib
         /// second valid tap can begin.The scale factor is 1.25 ms/LSB.A
         /// value of 0 disables the double tap function.
         /// </summary>
-        /// <param name="win">Amount of time after expiration of latency time.</param>
+        /// <param name="window">Amount of time after expiration of latency time.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetWindow(TimeSpan win)
+        /// <exception cref="ArgumentException">Window must be between 0ms and 318ms.</exception>
+        public bool TrySetWindow(TimeSpan window)
         {
-            double w = win.Milliseconds / 1.25;
-            
+            double w = window.Milliseconds / 1.25;
+
             if (w < 0 || w > 255)
             {
-                throw new ArgumentOutOfRangeException("win", "win must be between 0ms and 318ms");
+                throw new ArgumentOutOfRangeException();
             }
 
             SpanByte writeBuf = new byte[2];
@@ -430,12 +437,13 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="thresholdDetect">Threshold value for detecting activity.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
+        /// <exception cref="ArgumentException">ThresholdDetect must be between 0mg and 15,937mg.</exception>
         public bool TrySetThresholdActivity(Mass thresholdDetect)
         {
             double td = thresholdDetect.Milligrams / 62.5;
             if (td < 0 || td > 255)
             {
-                throw new ArgumentException("thresholdDetect", "thresholdDetect must be between 0mg and 15,937mg");
+                throw new ArgumentException();
             }
 
             SpanByte writeBuf = new byte[2];
@@ -490,12 +498,13 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="thresholdDetect">Reference to threshold value for detecting inactivity.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
+        /// <exception cref="ArgumentException">ThresholdDetect must be between 0mg and 15,937mg.</exception>
         public bool TrySetThresholdInactivity(Mass thresholdDetect)
         {
             double td = thresholdDetect.Milligrams / 62.5;
             if (td < 0 || td > 255)
             {
-                throw new ArgumentException("thresholdDetect", "thresholdDetect must be between 0mg and 15,937mg");
+                throw new ArgumentException();
             }
 
             SpanByte writeBuf = new byte[2];
@@ -562,11 +571,11 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="time">Amount of time that acceleration must be less than Threshhold Inactivity to register for inactivity.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetTimeInactactivity(int time)
+        public bool TrySetTimeInactactivity(byte time)
         {
             SpanByte writeBuf = new byte[2];
             writeBuf[0] = (byte)Register.TimeInact;
-            writeBuf[1] = (byte)time;
+            writeBuf[1] = time;
             var res = _i2c.Write(writeBuf);
 
             if (res.Status == I2cTransferStatus.FullTransfer)
@@ -750,7 +759,7 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="threshFF">Free-fall detection value.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetThresholdFreeFall(ref int threshFF)
+        public bool TryGetThresholdFreeFall(ref Mass threshFF)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.ThreshFF);
@@ -758,7 +767,7 @@ namespace Iot.Device.Adxl343Lib
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
-                threshFF = readBuf[0];
+                threshFF = Mass.FromMilligrams(readBuf[0] * 62.5);
                 return true;
             }
 
@@ -776,11 +785,18 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="threshFF">Free-fall detection value.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetThresholdFreeFall(int threshFF)
+        /// <exception cref="ArgumentException">ThreshFF must be between 0mg and 15,937mg.</exception>
+        public bool TrySetThresholdFreeFall(Mass threshFF)
         {
+            double td = threshFF.Milligrams / 62.5;
+            if (td < 0 || td > 255)
+            {
+                throw new ArgumentException();
+            }
+
             SpanByte writeBuf = new byte[2];
             writeBuf[0] = (byte)Register.ThreshFF;
-            writeBuf[1] = (byte)threshFF;
+            writeBuf[1] = (byte)td;
             var res = _i2c.Write(writeBuf);
 
             if (res.Status == I2cTransferStatus.FullTransfer)
@@ -805,7 +821,7 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="timeFF">Minimum time all axes less than Thresh FF.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetTimeFreeFall(ref int timeFF)
+        public bool TryGetTimeFreeFall(ref TimeSpan timeFF)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.TimeFF);
@@ -813,7 +829,7 @@ namespace Iot.Device.Adxl343Lib
 
             if (res.Status == I2cTransferStatus.FullTransfer)
             {
-                timeFF = readBuf[0];
+                timeFF = TimeSpan.FromMilliseconds(readBuf[0] * 5);
                 return true;
             }
 
@@ -830,11 +846,18 @@ namespace Iot.Device.Adxl343Lib
         /// </summary>
         /// <param name="timeFF">Minimum time all axes less than Thresh FF.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetTimeFreeFall(int timeFF)
+        /// <exception cref="ArgumentException">TimFF can only be between 0 and 1.275 seconds.</exception>
+        public bool TrySetTimeFreeFall(TimeSpan timeFF)
         {
+            double ms = timeFF.TotalMilliseconds / 5;
+            if (ms < 0 || ms > 255)
+            {
+                throw new ArgumentException();
+            }
+
             SpanByte writeBuf = new byte[2];
             writeBuf[0] = (byte)Register.TimeFF;
-            writeBuf[1] = (byte)timeFF;
+            writeBuf[1] = (byte)ms;
             var res = _i2c.Write(writeBuf);
 
             if (res.Status == I2cTransferStatus.FullTransfer)
@@ -1013,7 +1036,7 @@ namespace Iot.Device.Adxl343Lib
         /// <param name="lowPower">Low Power.</param>
         /// <param name="rate">Rate.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetBWRate(ref bool lowPower, ref int rate)
+        public bool TryGetBWRate(ref bool lowPower, ref OutputDataRate rate)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.BwRate);
@@ -1024,7 +1047,7 @@ namespace Iot.Device.Adxl343Lib
                 byte map = readBuf[0];
 
                 lowPower = (map & (byte)BwRateMap.LowPower) == (byte)BwRateMap.LowPower;
-                rate = (byte)(map & (byte)BwRateMap.Rate);
+                rate = (OutputDataRate)(map & (byte)BwRateMap.Rate);
 
                 return true;
             }
@@ -1048,13 +1071,13 @@ namespace Iot.Device.Adxl343Lib
         /// <param name="lowPower">Low Power.</param>
         /// <param name="rate">Rate.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetBWRates(bool lowPower, int rate)
+        public bool TrySetBWRates(bool lowPower, OutputDataRate rate)
         {
             byte map = 0;
 
             if (rate != 0)
             {
-                map = (byte)(rate & (byte)BwRateMap.Rate);
+                map = (byte)((byte)rate & (byte)BwRateMap.Rate);
             }
 
             if (lowPower)
@@ -1559,7 +1582,7 @@ namespace Iot.Device.Adxl343Lib
         /// <param name="justify">Justify.</param>
         /// <param name="range">Range.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TryGetDataFormat(ref bool selfTest, ref bool spi, ref bool intInvert, ref bool fullRes, ref bool justify, ref byte range)
+        public bool TryGetDataFormat(ref bool selfTest, ref bool spi, ref bool intInvert, ref bool fullRes, ref bool justify, ref GravityRange range)
         {
             SpanByte readBuf = new byte[1];
             var res = _i2c.WriteByte((byte)Register.DataFormat);
@@ -1574,7 +1597,7 @@ namespace Iot.Device.Adxl343Lib
                 intInvert = (map & (byte)DataFormatMap.IntInvert) == (byte)DataFormatMap.IntInvert;
                 fullRes = (map & (byte)DataFormatMap.FullRes) == (byte)DataFormatMap.FullRes;
                 justify = (map & (byte)DataFormatMap.Justify) == (byte)DataFormatMap.Justify;
-                range = (byte)(map & (byte)DataFormatMap.Range);
+                range = (GravityRange)(map & (byte)DataFormatMap.Range);
 
                 return true;
             }
@@ -1618,13 +1641,13 @@ namespace Iot.Device.Adxl343Lib
         /// <param name="justify">Justify.</param>
         /// <param name="range">Range.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetDataFormat(bool selfTest, bool spi, bool intInvert, bool fullRes, bool justify, byte range)
+        public bool TrySetDataFormat(bool selfTest, bool spi, bool intInvert, bool fullRes, bool justify, GravityRange range)
         {
             byte map = 0;
 
             if (range != 0)
             {
-                map = (byte)(range & (byte)DataFormatMap.Range);
+                map = (byte)((byte)range & (byte)DataFormatMap.Range);
             }
 
             if (selfTest)
@@ -1699,7 +1722,7 @@ namespace Iot.Device.Adxl343Lib
                 accel.X = (float)accelerationX;
                 accel.Y = (float)accelerationY;
                 accel.Z = (float)accelerationZ;
-               
+
                 return true;
             }
 
@@ -1800,7 +1823,8 @@ namespace Iot.Device.Adxl343Lib
         /// <param name="trigger">Trigger.</param>
         /// <param name="samples">Samples.</param>
         /// <returns>True if Full Transfer result, false if any other result.</returns>
-        public bool TrySetFifoControl(FifoMode mode, bool trigger, int samples)
+        /// <exception cref="ArgumentException">Samples need to between 0 and 15.</exception>
+        public bool TrySetFifoControl(FifoMode mode, bool trigger, byte samples)
         {
             byte map = 0;
 
@@ -1811,6 +1835,11 @@ namespace Iot.Device.Adxl343Lib
 
             if (samples != 0)
             {
+                if (samples > 15)
+                {
+                    throw new ArgumentException();
+                }
+
                 map |= (byte)((byte)samples & (byte)FifoControlMap.Samples);
             }
 

@@ -1,1 +1,1 @@
-# nanoADXL343
+# ADXL343
