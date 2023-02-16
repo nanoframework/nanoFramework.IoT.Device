@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Adxl343</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Adxl343</title>
+    <authors>nanoFramework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Adxl343 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Adxl343 assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Adxl343</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.211" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.227" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="UnitsNet.nanoFramework.Duration" version="5.2.0" />
+      <dependency id="UnitsNet.nanoFramework.Mass" version="5.2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Adxl343.dll" target="lib\Iot.Device.Adxl343.dll" />
+    <file src="bin\Release\Iot.Device.Adxl343.pdb" target="lib\Iot.Device.Adxl343.pdb" />
+    <file src="bin\Release\Iot.Device.Adxl343.pdbx" target="lib\Iot.Device.Adxl343.pdbx" />
+    <file src="bin\Release\Iot.Device.Adxl343.pe" target="lib\Iot.Device.Adxl343.pe" />
+    <file src="bin\Release\Iot.Device.Adxl343.xml" target="lib\Iot.Device.Adxl343.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
