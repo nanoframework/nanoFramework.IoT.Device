@@ -48,8 +48,8 @@
       <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.195\lib\System.Diagnostics.Stopwatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential, Version=4.150.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.150.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotential, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.3.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
