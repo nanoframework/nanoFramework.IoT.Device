@@ -24,4 +24,4 @@ jobs:
       solutionsToCheck: '*.sln'
       workingDirectory: devices
       branchToPr: 'develop'
-      exclusionList: 'Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper'
+      exclusionList: 'Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper,BoardLed,BuildHat,Common,Display,Ft232H,Ili9341,Pca9685,RGBLedMatrix,Scd4x,Seesaw,SensorHub,Sht4x,SocketCan,Ssd1351,StUsb4500,UFireIse'
