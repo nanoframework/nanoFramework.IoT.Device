@@ -10,15 +10,15 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.5.1, 1.5.1]",
-        "resolved": "1.5.1",
-        "contentHash": "1g2WrEJ8LTN2W+R34ar6gjlFhZJKy76+bZOs2A+9Ui/lOjbNKsDUpezDAUf+9HILSRP5/wCnvD+2/DCZ4bKP/w=="
+        "requested": "[1.6.1, 1.6.1]",
+        "resolved": "1.6.1",
+        "contentHash": "5DaDnXCVDJBevR7UB74SXfZvPbC4VfVyi2yTBY/r4hts+K3NbyyJEGpOcy0ZnT8RUEhNHr5XSpUcYTHPoOrP7A=="
       },
       "nanoFramework.Iot.Device.Card": {
         "type": "Direct",
-        "requested": "[1.2.212, 1.2.212]",
-        "resolved": "1.2.212",
-        "contentHash": "ssdv70iTW2DMmm7L0KilSdLJ3WQNVK6DXzDeH82Z9GHW4PYVyWuUVgjVemQY+Oi4ZXqU7CWtHe68TZzNYOHVnQ=="
+        "requested": "[1.2.243, 1.2.243]",
+        "resolved": "1.2.243",
+        "contentHash": "qXMyWvFkrdCKx4X0dTDyigyWSDy1bo3M3pLJo5IucB+dtaTo3SuxEqmX/+tuye6ZdZ0hu1UXWZ2Hx4XHoPyMsw=="
       },
       "nanoFramework.Logging": {
         "type": "Direct",
