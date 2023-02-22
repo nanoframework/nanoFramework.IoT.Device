@@ -64,9 +64,9 @@
       },
       "nanoFramework.M5Core2": {
         "type": "Direct",
-        "requested": "[1.1.111, 1.1.111]",
-        "resolved": "1.1.111",
-        "contentHash": "953U6Dy7Hzhn4e9LhebVRvXJwsk2yRhCamxB5T6HWkONK7s+KmgX3yDn4RpzijUBeTvg/TcLlAlXvafHs4caow=="
+        "requested": "[1.1.113, 1.1.113]",
+        "resolved": "1.1.113",
+        "contentHash": "wvtQ+rtXnMUA9F6KTx7Vhxa/nHIBmHdJXSOmJNajoYN/HNTQFRZgl5uqlDNfj6YPYeMh4JmVaMCAIthJMxE/7g=="
       },
       "nanoFramework.ResourceManager": {
         "type": "Direct",
@@ -190,27 +190,27 @@
       },
       "UnitsNet.nanoFramework.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.2.0, 5.2.0]",
-        "resolved": "5.2.0",
-        "contentHash": "ywFsFQtBcDWyrMDInFeNEl87NtKyoWiDkPcrmN5qxiZz2ALJfWo0z69A4vuTaxiehLg3pQjloR7lyqbYAm7WcQ=="
+        "requested": "[5.3.0, 5.3.0]",
+        "resolved": "5.3.0",
+        "contentHash": "jJhCYFqOJXyxus0nraJ0I2ul/Mll9i4dorICUPKm1ZmIc7nFn/eA17oGn3WmmzXuQUclAWxeEcYdxCZK+hGW4Q=="
       },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.2.0, 5.2.0]",
-        "resolved": "5.2.0",
-        "contentHash": "2It65j7UzH7hFkShvBzuBH+9zE1s+3Ds0i/D3p89l8tY/ATDMo7ngnj0MpkgSAF4S/TH/S6ANavYJ4q6hh5OLA=="
+        "requested": "[5.3.0, 5.3.0]",
+        "resolved": "5.3.0",
+        "contentHash": "aOo7mInGb8v97BFKnxWOexy0OnMkzeKpGMEEjXBpnALn6QAIPDdPh9VDYxdoSasAScEVGqXvG71cmHBo2yOydg=="
       },
       "UnitsNet.nanoFramework.Power": {
         "type": "Direct",
-        "requested": "[5.2.0, 5.2.0]",
-        "resolved": "5.2.0",
-        "contentHash": "ndy4MhJcfW4l2d8eeUB9JPQHx94kVOBeRxUR+CNa0nJz41MPIUBcovyoSWjhFrzO4K2B3vSIK+4FEDNK13qRuA=="
+        "requested": "[5.3.0, 5.3.0]",
+        "resolved": "5.3.0",
+        "contentHash": "uYTsCPDp6OhgYJFvEWJxA4x2C/bE2N3jGAUzreli10nQSWRmjVdzbj455CdQo/oze6bicBi7Z0g5SxUkwlH86w=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.2.0, 5.2.0]",
-        "resolved": "5.2.0",
-        "contentHash": "449Gy5+/4AXkSj4KUB/dWTnTPEa5o7C5lpMU2HyNoy8IiiwJvFB9alFizQ67Qmvnbk+yNr6lW86dzIXB8E5IGg=="
+        "requested": "[5.3.0, 5.3.0]",
+        "resolved": "5.3.0",
+        "contentHash": "mcv8Ijej7Px93SqctKIgMTyKNWzulKMxwm5ttVPGpDB0ufQvxiT9tcM+92fFJdIx4snIBld8EGFIOAf9qZ++8g=="
       }
     }
   }
