@@ -1,3 +1,5 @@
+document language: [English](README.md) | [简体中文](README.zh-cn.md)
+
 # On-board LED driver
 
 This binding is used to control on-board LEDs.
