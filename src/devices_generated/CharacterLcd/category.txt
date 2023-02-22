@@ -1,3 +1,0 @@
-characterlcd
-lcd
-display
