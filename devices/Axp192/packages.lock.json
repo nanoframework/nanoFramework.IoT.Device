@@ -40,27 +40,27 @@
       },
       "UnitsNet.nanoFramework.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.4.0, 5.4.0]",
-        "resolved": "5.4.0",
-        "contentHash": "R3V4eDbb5ioIIsSiGQ4bHsUudUUIXLpkqpHhfDqL0y7r48l37YX/EturVheZsOlmgA+Nnja7MuTFFybNQlQXpQ=="
+        "requested": "[5.5.0, 5.5.0]",
+        "resolved": "5.5.0",
+        "contentHash": "Rfbly8er4mb0M6EC/DxeMALp7BRcf494IOYNayo5H0LRFebpNWfhchlXIZnieh/QqYPwnUVOtTN/9R88Uh3U1A=="
       },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.4.0, 5.4.0]",
-        "resolved": "5.4.0",
-        "contentHash": "kwtNc1a2SDxIHDrdtAV5S2E4PcqtQ2t3t66c7sUUKchIRuoK2M/8pH1KWcrrbBbTyo8YCdeAeufUm+vhW+1oJA=="
+        "requested": "[5.5.0, 5.5.0]",
+        "resolved": "5.5.0",
+        "contentHash": "U5TKYMVbXBibMO2Py/MwZOYEwFJSoFzcIdWpmOtoA1Y6aWyw21kIiAkOCy1v2/HimNN1UPYnmr6WHu8xCURdNQ=="
       },
       "UnitsNet.nanoFramework.Power": {
         "type": "Direct",
-        "requested": "[5.4.0, 5.4.0]",
-        "resolved": "5.4.0",
-        "contentHash": "MtXnOYw2w4cY8Z+3cHZxgY43j8mGfOqKUxJeiCXMQ+l1c9b3ipZrE/t/XaZ15WzXpI3j5HxAVBx1uJpusec0Hg=="
+        "requested": "[5.5.0, 5.5.0]",
+        "resolved": "5.5.0",
+        "contentHash": "/JAJYjv2RyGYekkQ6rs/Cjn8Bqn/wWXuDAXhRMgI0HFv9g3zchCSijI4o+QBqvdsSyGUQreXs0wrq7+bFk6YtQ=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.4.0, 5.4.0]",
-        "resolved": "5.4.0",
-        "contentHash": "62vHyBBzMhShKkT/uU+Xj4sMVtybspMH+e5KlSVl9Z+tCwLHMAEzvVmb9dN3mD3AXKr/be+9ICX2VVjTcSCbZg=="
+        "requested": "[5.5.0, 5.5.0]",
+        "resolved": "5.5.0",
+        "contentHash": "Z/xKTe6sjjU17zKoireU9tvdbAPSPBWvuSWDpMowJicE42jYDmsGzDedzA5jV4eYqQ1YUshR1bUEbrZy4SxelQ=="
       }
     }
   }
