@@ -40,9 +40,9 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.4.0, 5.4.0]",
-        "resolved": "5.4.0",
-        "contentHash": "65/7LNHs1aI33/WN1XUXkVXB53xBMQ7GmgFeiN8PCwN5clkojD+DJ6vzzTYwDkP91mQNwu5jD5DhL0csE4KTjg=="
+        "requested": "[5.5.0, 5.5.0]",
+        "resolved": "5.5.0",
+        "contentHash": "ly+KO+j4EsknQ6OJQh9sgc7jbUTsSFiHdoZhyXWwjoDvb5rFdxMQelEs4U35WujSpLD/Dx0QxgBSuwzmgrfb8Q=="
       }
     }
   }
