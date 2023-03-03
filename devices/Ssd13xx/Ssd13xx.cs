@@ -42,6 +42,34 @@ namespace Iot.Device.Ssd13xx
         };
 
         /// <summary>
+        /// Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
+        /// First byte is the command byte 0x00.
+        /// </summary>
+        private readonly byte[] _oled64x128Init =
+        {
+            0x00,       // is command
+            0xd5,       // 1 clk div
+            0xae,       // turn display off
+            0xd5, 0x80, // set display clock divide ratio/oscillator,  set ratio = 0x80
+            0xa8, 0x3f, // set multiplex ratio 0x00-0x3f        
+            0xd3, 0x1f, // set display offset 0x00-0x3f, no offset = 0x00
+            0x40 | 0x0, // set display start line 0x40-0x7F
+            0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
+            0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
+            0xa0 | 0x01, // set segment re-map
+            // 0xa1 | 0x01, // set segment re-map
+            0xc8,       // set com output scan direction
+            0xda, 0x12, // set COM pins HW configuration
+            0x81, 0xcf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
+            0xd9, 0xf1, // set pre-charge period  to 0xf1,  if extVcc then set to 0x22
+            0xdb,       // set VCOMH deselect level
+            0x40,       // set display start line
+            0xa4,       // set display ON
+            0xa6,       // set normal display
+            0xaf        // turn display on 0xaf
+        };
+
+        /// <summary>
         /// Sequence of bytes that should be sent to a 128x32 OLED display to setup the device.
         /// First byte is the command byte 0x00.
         /// </summary>
@@ -103,6 +131,11 @@ namespace Iot.Device.Ssd13xx
         protected I2cDevice _i2cDevice { get; set; }
 
         /// <summary>
+        /// Gets or sets Screen rotation.  0 = no rotation, 1 = 90, 2 = 180, 3 = 270.
+        /// </summary>
+        public int Rotation { get; set; } = 0;
+
+        /// <summary>
         /// Gets or sets Screen Resolution Width in Pixels.
         /// </summary>
         public int Width { get; set; }
@@ -160,6 +193,11 @@ namespace Iot.Device.Ssd13xx
                     Width = 128;
                     Height = 64;
                     _i2cDevice.Write(_oled128x64Init);
+                    break;
+                case DisplayResolution.OLED64x128:
+                    Width = 64;
+                    Height = 128;
+                    i2cDevice.Write(_oled64x128Init);
                     break;
                 case DisplayResolution.OLED128x32:
                     Width = 128;
@@ -312,6 +350,18 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
+        /// In-place swap of a and b values without the use of a temp variable.
+        /// </summary>
+        /// <param name="a">1st variable to be swapped.</param>
+        /// <param name="b">2nd variable to be swapped.</param>
+        private void Ssd1306Swap(ref int a, ref int b)
+        {
+            a ^= b;
+            b ^= a;
+            a ^= b;     
+        }
+
+        /// <summary>
         /// Draws a pixel on the screen.
         /// </summary>
         /// <param name="x">The X coordinate on the screen.</param>
@@ -319,7 +369,23 @@ namespace Iot.Device.Ssd13xx
         /// <param name="inverted">Indicates if color to be used turn the pixel on, or leave off.</param>
         public void DrawPixel(int x, int y, bool inverted = true)
         {
-            if ((x >= Width) || (y >= Height))
+            switch (Rotation)
+            {
+                case 1:
+                    Ssd1306Swap(ref x, ref y);
+                    x = Width - x - 1;
+                    break;
+                case 2:
+                    x = Width - x - 1;
+                    y = Height - y - 1;
+                    break;
+                case 3:
+                    Ssd1306Swap(ref x, ref y);
+                    y = Height - y - 1;
+                    break;
+            }
+
+            if (x >= Width || x < 0 || y >= Height || y < 0)
             {
                 return;
             }
@@ -586,7 +652,12 @@ namespace Iot.Device.Ssd13xx
             /// <summary>
             /// Option for 96x16 OLED.
             /// </summary>
-            OLED96x16
+            OLED96x16,
+
+            /// <summary>
+            /// Option for 64x128 OLED.
+            /// </summary>
+            OLED64x128
         }
 
         /// <summary>
