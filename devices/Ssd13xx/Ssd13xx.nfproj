@@ -53,6 +53,7 @@
     <Compile Include="Commands\Ssd1306Commands\*.cs" />
     <Compile Include="IFont.cs" />
     <Compile Include="ListByte.cs" />
+    <Compile Include="RotationOptions.cs" />
     <Compile Include="Ssd1306.cs" />
     <Compile Include="Ssd1327.cs" />
     <Compile Include="Ssd13xx.cs" />

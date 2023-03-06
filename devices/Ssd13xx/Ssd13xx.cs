@@ -133,7 +133,7 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Gets or sets Screen rotation.  0 = no rotation, 1 = 90, 2 = 180, 3 = 270.
         /// </summary>
-        public int Rotation { get; set; } = 0;
+        public RotationOptions Rotation { get; set; } = RotationOptions.NoRotation;
 
         /// <summary>
         /// Gets or sets Screen Resolution Width in Pixels.
@@ -354,7 +354,7 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="a">1st variable to be swapped.</param>
         /// <param name="b">2nd variable to be swapped.</param>
-        private void Ssd1306Swap(ref int a, ref int b)
+        private void Swap(ref int a, ref int b)
         {
             a ^= b;
             b ^= a;
@@ -372,7 +372,7 @@ namespace Iot.Device.Ssd13xx
             switch (Rotation)
             {
                 case 1:
-                    Ssd1306Swap(ref x, ref y);
+                    Swap(ref x, ref y);
                     x = Width - x - 1;
                     break;
                 case 2:
@@ -380,7 +380,7 @@ namespace Iot.Device.Ssd13xx
                     y = Height - y - 1;
                     break;
                 case 3:
-                    Ssd1306Swap(ref x, ref y);
+                    Swap(ref x, ref y);
                     y = Height - y - 1;
                     break;
             }
