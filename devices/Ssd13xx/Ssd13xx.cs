@@ -371,15 +371,15 @@ namespace Iot.Device.Ssd13xx
         {
             switch (Rotation)
             {
-                case 1:
+                case RotationOptions.Rotate90Degrees:
                     Swap(ref x, ref y);
                     x = Width - x - 1;
                     break;
-                case 2:
+                case RotationOptions.Rotate180Degrees:
                     x = Width - x - 1;
                     y = Height - y - 1;
                     break;
-                case 3:
+                case RotationOptions.Rotate270Degrees:
                     Swap(ref x, ref y);
                     y = Height - y - 1;
                     break;
