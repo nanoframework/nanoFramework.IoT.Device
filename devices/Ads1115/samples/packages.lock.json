@@ -46,9 +46,9 @@
       },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.5.0, 5.5.0]",
-        "resolved": "5.5.0",
-        "contentHash": "U5TKYMVbXBibMO2Py/MwZOYEwFJSoFzcIdWpmOtoA1Y6aWyw21kIiAkOCy1v2/HimNN1UPYnmr6WHu8xCURdNQ=="
+        "requested": "[5.7.0, 5.7.0]",
+        "resolved": "5.7.0",
+        "contentHash": "fsiW1osPDTo39UQAGKQM3YGfRvq2Zd/AaqcWpfuaejVQMCR4L2GCqGv8qlMojmKfpxmZKocpV1bBoexDcOZtdQ=="
       }
     }
   }
