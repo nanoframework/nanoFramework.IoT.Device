@@ -57,7 +57,6 @@ namespace Iot.Device.Ssd13xx
             0x8d, 0x14, // set charge pump,  enable  = 0x14  disable = 0x10
             0x20, 0x00, // 0x20 set memory address mode,  0x0 = horizontal addressing mode
             0xa0 | 0x01, // set segment re-map
-            // 0xa1 | 0x01, // set segment re-map
             0xc8,       // set com output scan direction
             0xda, 0x12, // set COM pins HW configuration
             0x81, 0xcf, // set contrast control for BANK0, extVcc = 0x9F,  internal = 0xcf
@@ -133,7 +132,7 @@ namespace Iot.Device.Ssd13xx
         /// <summary>
         /// Gets or sets Screen rotation.  0 = no rotation, 1 = 90, 2 = 180, 3 = 270.
         /// </summary>
-        public RotationOptions Rotation { get; set; } = RotationOptions.NoRotation;
+        public DisplayOrientation Orientation { get; set; } = DisplayOrientation.Landscape;
 
         /// <summary>
         /// Gets or sets Screen Resolution Width in Pixels.
@@ -165,6 +164,7 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="i2cDevice">I2C device used to communicate with the device.</param>
         /// <param name="resolution">Screen resolution to use for device init.</param>
+        /// <param name="orientation">Orientation of the displayn.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
         /// <param name="gpio">Gpio Controller.</param>
@@ -172,6 +172,7 @@ namespace Iot.Device.Ssd13xx
         public Ssd13xx(
             I2cDevice i2cDevice,
             DisplayResolution resolution = DisplayResolution.OLED128x64,
+            DisplayOrientation orientation = DisplayOrientation.Landscape,
             int resetPin = -1,
             GpioController gpio = null,
             bool shouldDispose = true)
@@ -186,6 +187,8 @@ namespace Iot.Device.Ssd13xx
             _shouldDispose = shouldDispose || (gpio == null);
 
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+
+            Orientation = orientation;
 
             switch (resolution)
             {
@@ -369,20 +372,33 @@ namespace Iot.Device.Ssd13xx
         /// <param name="inverted">Indicates if color to be used turn the pixel on, or leave off.</param>
         public void DrawPixel(int x, int y, bool inverted = true)
         {
-            switch (Rotation)
+            DisplayOrientation defaultOrientation = DisplayOrientation.Landscape;
+            if (Width < Height)
             {
-                case RotationOptions.Rotate90Degrees:
-                    Swap(ref x, ref y);
-                    x = Width - x - 1;
-                    break;
-                case RotationOptions.Rotate180Degrees:
-                    x = Width - x - 1;
-                    y = Height - y - 1;
-                    break;
-                case RotationOptions.Rotate270Degrees:
-                    Swap(ref x, ref y);
-                    y = Height - y - 1;
-                    break;
+                defaultOrientation = DisplayOrientation.Portrait;
+            }
+
+            int rotation = 0;
+
+            if (defaultOrientation != Orientation)
+            {
+                rotation = Math.Abs((int)defaultOrientation - (int)Orientation) * 90;
+
+                switch (rotation)
+                {
+                    case 90:
+                        Swap(ref x, ref y);
+                        x = Width - x - 1;
+                        break;
+                    case 180:
+                        x = Width - x - 1;
+                        y = Height - y - 1;
+                        break;
+                    case 270:
+                        Swap(ref x, ref y);
+                        y = Height - y - 1;
+                        break;
+                }
             }
 
             if (x >= Width || x < 0 || y >= Height || y < 0)
@@ -505,9 +521,16 @@ namespace Iot.Device.Ssd13xx
         /// <seealso cref="Write"/>
         public void DrawString(int x, int y, string str, byte size = 1, bool center = false)
         {
+            int w = Width;
+
+            if (Width < Height && (Orientation == DisplayOrientation.Landscape || Orientation == DisplayOrientation.Landscape180))
+            {
+                w = Height;
+            }
+
             if (center && str != null)
             {
-                int padSize = (((Width / size) / Font.Width) - str.Length) / 2;
+                int padSize = (((w / size) / Font.Width) - str.Length) / 2;
                 if (padSize > 0)
                 {
                     str = str.PadLeft(str.Length + padSize);

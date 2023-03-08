@@ -4,28 +4,28 @@
 namespace Iot.Device.Ssd13xx
 {
     /// <summary>
-    /// Options for rotation of the screen.
+    /// Display orientation. No all display drivers support every orientation.
     /// </summary>
-    public enum RotationOptions
+    public enum DisplayOrientation : int
     {
         /// <summary>
-        /// No Rotation.
+        /// Portrait.
         /// </summary>
-        NoRotation = 0,
+        Portrait = 1,
 
         /// <summary>
-        /// 90 degree rotation.
+        /// Landscape.
         /// </summary>
-        Rotate90Degrees = 1,
+        Landscape = 2,
 
         /// <summary>
-        /// 180 degree rotation.
+        /// Portrait 180.
         /// </summary>
-        Rotate180Degrees = 2,
+        Portrait180 = 3,
 
         /// <summary>
-        /// 270 degree rotation.
+        /// Landscape 180.
         /// </summary>
-        Rotate270Degrees = 3
+        Landscape180 = 4
     }
 }

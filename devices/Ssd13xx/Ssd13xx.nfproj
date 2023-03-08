@@ -46,6 +46,9 @@
     <Reference Include="System.Device.I2c">
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.9\lib\System.Device.I2c.dll</HintPath>
     </Reference>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.5.29\lib\System.Math.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\*.cs" />
@@ -53,7 +56,7 @@
     <Compile Include="Commands\Ssd1306Commands\*.cs" />
     <Compile Include="IFont.cs" />
     <Compile Include="ListByte.cs" />
-    <Compile Include="RotationOptions.cs" />
+    <Compile Include="DisplayOrientation.cs" />
     <Compile Include="Ssd1306.cs" />
     <Compile Include="Ssd1327.cs" />
     <Compile Include="Ssd13xx.cs" />

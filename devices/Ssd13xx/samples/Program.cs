@@ -21,7 +21,6 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 using Ssd1306 device = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(1, Ssd1306.DefaultI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64);
 //with reset. Pin number 18. Assembly needs to be added a nanoFramework.System.Device.Gpio
 //using Ssd1306 device = new Ssd1306(I2cDevice.Create(new I2cConnectionSettings(1, Ssd1306.SecondaryI2cAddress)), Ssd13xx.DisplayResolution.OLED128x64, 18);
-device.Rotation = RotationOptions.NoRotation;
 
 device.ClearScreen();
 device.Font = new BasicFont();
