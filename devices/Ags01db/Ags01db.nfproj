@@ -57,12 +57,12 @@
       <HintPath>packages\nanoFramework.System.Device.Model.1.2.216\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=5.7.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.5.7.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=5.8.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Length.5.8.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Ratio, Version=5.7.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.7.0\lib\UnitsNet.Ratio.dll</HintPath>
+    <Reference Include="UnitsNet.Ratio, Version=5.8.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.8.0\lib\UnitsNet.Ratio.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
