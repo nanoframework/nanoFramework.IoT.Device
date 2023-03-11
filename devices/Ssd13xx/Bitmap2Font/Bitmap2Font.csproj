@@ -52,6 +52,7 @@
     <Compile Include="Bitmap2Font.Designer.cs">
       <DependentUpon>Bitmap2Font.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Bitmap2Font.resx">
