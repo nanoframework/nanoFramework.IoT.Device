@@ -29,7 +29,7 @@ rmrkbold-14.png	parameters:	font width:			8
 					Bitmap starting row:	1
 					Bitmap end row:		4	
 
-lbitalic-16		parameters:	font width:			8
+lbitalic-16.png	parameters:	font width:			8
 					font height:		16
 					Bitmap columns:		32
 					Bitmap starting row:	1
