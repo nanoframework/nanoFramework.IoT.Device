@@ -18,41 +18,48 @@ namespace Bitmap2Font
             InitializeComponent();
         }
 
-        Bitmap myBitmap = new Bitmap(1, 1);
-        string ImageIdentification = "";
-        string ImageColorDepth = "";
-        string ImageDimensions = "";
-        string ImageName = "banana";
-        List<string> CSfile = new List<string>();
+        private Bitmap _myBitmap = new Bitmap(1, 1);
+        private string _imageIdentification = string.Empty;
+        private string _imageColorDepth = string.Empty;
+        private string _imageDimensions = string.Empty;
+        private string _imageName = "Banana";
+        private List<string> _cSfiles = new List<string>();
 
-        public static ImageType GetFileImageTypeFromHeader(string file) // from StackOverFlow
-        
+        /// <summary>
+        /// Gets the file type from the header.
+        /// </summary>
+        /// <param name="file">The file header.</param>
+        /// <returns>The image type.</returns>
+        public static ImageType GetFileImageTypeFromHeader(string file) // from StackOverFlow      
         {
             byte[] headerBytes;
             using (FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read))
             {
                 const int mostBytesNeeded = 11;//For JPEG
                 if (fileStream.Length < mostBytesNeeded)
+                {
                     return ImageType.Unknown;
+                }
+
                 headerBytes = new byte[mostBytesNeeded];
                 fileStream.Read(headerBytes, 0, mostBytesNeeded);
             }
 
-            //Sources:
-            //http://stackoverflow.com/questions/9354747
-            //http://en.wikipedia.org/wiki/Magic_number_%28programming%29#Magic_numbers_in_files
-            //http://www.mikekunz.com/image_file_header.html
+            // Sources:
+            // http://stackoverflow.com/questions/9354747
+            // http://en.wikipedia.org/wiki/Magic_number_%28programming%29#Magic_numbers_in_files
+            // http://www.mikekunz.com/image_file_header.html
 
-            //JPEG:
-            if (headerBytes[0] == 0xFF &&//FF D8
+            // JPEG:
+            if (headerBytes[0] == 0xFF && // FF D8
                 headerBytes[1] == 0xD8 &&
                 (
-                 (headerBytes[6] == 0x4A &&//'JFIF'
+                 (headerBytes[6] == 0x4A && // 'JFIF'
                   headerBytes[7] == 0x46 &&
                   headerBytes[8] == 0x49 &&
                   headerBytes[9] == 0x46)
                   ||
-                 (headerBytes[6] == 0x45 &&//'EXIF'
+                 (headerBytes[6] == 0x45 && // 'EXIF'
                   headerBytes[7] == 0x78 &&
                   headerBytes[8] == 0x69 &&
                   headerBytes[9] == 0x66)
@@ -61,8 +68,9 @@ namespace Bitmap2Font
             {
                 return ImageType.JPEG;
             }
-            //PNG 
-            if (headerBytes[0] == 0x89 && //89 50 4E 47 0D 0A 1A 0A
+
+            // PNG 
+            if (headerBytes[0] == 0x89 && // 89 50 4E 47 0D 0A 1A 0A
                 headerBytes[1] == 0x50 &&
                 headerBytes[2] == 0x4E &&
                 headerBytes[3] == 0x47 &&
@@ -73,26 +81,29 @@ namespace Bitmap2Font
             {
                 return ImageType.PNG;
             }
-            //GIF
-            if (headerBytes[0] == 0x47 &&//'GIF'
+
+            // GIF
+            if (headerBytes[0] == 0x47 && // 'GIF'
                 headerBytes[1] == 0x49 &&
                 headerBytes[2] == 0x46)
             {
                 return ImageType.GIF;
             }
-            //BMP
-            if (headerBytes[0] == 0x42 &&//42 4D
+
+            // BMP
+            if (headerBytes[0] == 0x42 && // 42 4D
                 headerBytes[1] == 0x4D)
             {
                 return ImageType.BMP;
             }
-            //TIFF
-            if ((headerBytes[0] == 0x49 &&//49 49 2A 00
+
+            // TIFF
+            if ((headerBytes[0] == 0x49 && // 49 49 2A 00
                  headerBytes[1] == 0x49 &&
                  headerBytes[2] == 0x2A &&
                  headerBytes[3] == 0x00)
                  ||
-                (headerBytes[0] == 0x4D &&//4D 4D 00 2A
+                (headerBytes[0] == 0x4D && // 4D 4D 00 2A
                  headerBytes[1] == 0x4D &&
                  headerBytes[2] == 0x00 &&
                  headerBytes[3] == 0x2A))
@@ -102,45 +113,38 @@ namespace Bitmap2Font
 
             return ImageType.Unknown;
         }
-        public enum ImageType
-        {
-            Unknown,
-            JPEG,
-            PNG,
-            GIF,
-            BMP,
-            TIFF,
-        }
 
         private void UpdateText()
         {
-            textBox1.Clear();
-            textBox1.Text += "Filename: " + ImageName + "\r\n";
-            textBox1.Text += "File type: " + ImageIdentification + "\r\n";
-            textBox1.Text += "Pixel format: " + myBitmap.PixelFormat + "\r\n";
-            textBox1.Text += "Size: " + ImageDimensions + "\r\n";
+            TextBoxOriginalInfo.Clear();
+            TextBoxOriginalInfo.Text += "Filename: " + _imageName + "\r\n";
+            TextBoxOriginalInfo.Text += "File type: " + _imageIdentification + "\r\n";
+            TextBoxOriginalInfo.Text += "Pixel format: " + _myBitmap.PixelFormat + "\r\n";
+            TextBoxOriginalInfo.Text += "Size: " + _imageDimensions + "\r\n";
         }
 
         private void OpenButton_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = null;
-            pictureBox2.Image = null;
-            ImageName = "";
-            CSfile.Clear();
-            DialogResult result = openFileDialog1.ShowDialog();
+            PictureBoxOriginal.Image = null;
+            PictureBoxPreview.Image = null;
+            _imageName = string.Empty;
+            _cSfiles.Clear();
+            DialogResult result = OpenFileDialog.ShowDialog();
+
             if (result == DialogResult.OK)
             {
-                textBox1.Clear();
-                textBox2.Text = openFileDialog1.FileName;
-                ImageIdentification = GetFileImageTypeFromHeader(openFileDialog1.FileName).ToString();
-                textBox1.Text += "Image type: " + ImageIdentification + "\r\n";
-                if (ImageIdentification != "Unknown")
+                TextBoxOriginalInfo.Clear();
+                TextBoxFilePath.Text = OpenFileDialog.FileName;
+                _imageIdentification = GetFileImageTypeFromHeader(OpenFileDialog.FileName).ToString();
+                TextBoxOriginalInfo.Text += "Image type: " + _imageIdentification + "\r\n";
+
+                if (_imageIdentification != "Unknown")
                 {
-                    ImageName = Path.GetFileNameWithoutExtension(textBox2.Text);
-                    myBitmap = new Bitmap(Image.FromFile(openFileDialog1.FileName));
-                    pictureBox1.Image = myBitmap;
-                    ImageColorDepth = Image.FromFile(openFileDialog1.FileName).PixelFormat + "\r\n";
-                    ImageDimensions = myBitmap.Width.ToString() + "x" + myBitmap.Height.ToString() + "\r\n";
+                    _imageName = Path.GetFileNameWithoutExtension(TextBoxFilePath.Text).Replace(".", "").Replace("-", "");
+                    _myBitmap = new Bitmap(Image.FromFile(OpenFileDialog.FileName));
+                    PictureBoxOriginal.Image = _myBitmap;
+                    _imageColorDepth = Image.FromFile(OpenFileDialog.FileName).PixelFormat + "\r\n";
+                    _imageDimensions = _myBitmap.Width.ToString() + "x" + _myBitmap.Height.ToString() + "\r\n";
                     UpdateText();
                 }
             }
@@ -148,31 +152,37 @@ namespace Bitmap2Font
 
         private void PrevButton_Click(object sender, EventArgs e)
         {
-            if (ImageName != "")
+            if (!string.IsNullOrEmpty(_imageName))
             {
                 try
                 {
-                    Bitmap PreviewBMP = new Bitmap((int)Font_Width_Sel.Value * (int)Bmp_Col_Sel.Value, ((int)Font_Height_Sel.Value * ((int)Bmp_End_Sel.Value - (int)Bmp_Start_Sel.Value)));
-                    int RowCount = -1;
-                    for (int j = (int)Bmp_Start_Sel.Value; j < (int)Bmp_End_Sel.Value; j++) //bitmap Rows
+                    Bitmap previewBMP = new Bitmap((int)FontWidthSel.Value * (int)BmpColSel.Value, ((int)FontHeightSel.Value * ((int)BmpEndSel.Value - (int)BmpStartSel.Value)));
+                    int rowCount = -1;
+
+                    // bitmap Rows
+                    for (int j = (int)BmpStartSel.Value; j < (int)BmpEndSel.Value; j++)
                     {
-                        RowCount++;
-                        for (int i = 0; i < (int)Bmp_Col_Sel.Value; i++)  //Bitmap columns
+                        rowCount++;
+
+                        // Bitmap columns
+                        for (int i = 0; i < (int)BmpColSel.Value; i++)
                         {
-                            Rectangle cloneRect = new Rectangle(i * (int)Font_Width_Sel.Value, j * (int)Font_Height_Sel.Value, (int)Font_Width_Sel.Value, (int)Font_Height_Sel.Value);
-                            Bitmap cloneBitmap = myBitmap.Clone(cloneRect, myBitmap.PixelFormat);
+                            Rectangle cloneRect = new Rectangle(i * (int)FontWidthSel.Value, j * (int)FontHeightSel.Value, (int)FontWidthSel.Value, (int)FontHeightSel.Value);
+                            Bitmap cloneBitmap = _myBitmap.Clone(cloneRect, _myBitmap.PixelFormat);
                             Graphics g = Graphics.FromImage(cloneBitmap);
+
                             // Draw the cloned portion of the Bitmap object.
                             g.DrawImage(cloneBitmap, 0, 0);
-                            Graphics gg = Graphics.FromImage(PreviewBMP);
-                            gg.DrawImage(cloneBitmap, i * (int)Font_Width_Sel.Value, RowCount * (int)Font_Height_Sel.Value);
+                            Graphics gg = Graphics.FromImage(previewBMP);
+                            gg.DrawImage(cloneBitmap, i * (int)FontWidthSel.Value, rowCount * (int)FontHeightSel.Value);
                         }
                     }
-                    pictureBox2.Image = PreviewBMP;
+
+                    PictureBoxPreview.Image = previewBMP;
                 }
                 catch (Exception ex)
                 {
-                    string message = "Numerical error: try other values";
+                    string message = $"Numerical error: try other values. {ex}";
                     string title = "Error";
                     MessageBox.Show(message, title);
                 }
@@ -187,62 +197,78 @@ namespace Bitmap2Font
 
         private void WriteHeader()
         {
-            CSfile.Add("// Licensed to the .NET Foundation under one or more agreements.");
-            CSfile.Add("// The .NET Foundation licenses this file to you under the MIT license.");
-            CSfile.Add("// File Generated by Bitmap2Font");
-            CSfile.Add("");
-            CSfile.Add("using System;");
-            CSfile.Add("");
-            CSfile.Add("namespace Iot.Device.Ssd13xx.Samples");
-            CSfile.Add("{");
-            CSfile.Add("    public class " + ImageName + " : IFont");
-            CSfile.Add("    {");
-            CSfile.Add("        private static readonly byte[][] _fontTable =");
-            CSfile.Add("        {");
+            _cSfiles.Add("// Licensed to the .NET Foundation under one or more agreements.");
+            _cSfiles.Add("// The .NET Foundation licenses this file to you under the MIT license.");
+            _cSfiles.Add("// File Automatically Generated by Bitmap2Font");
+            _cSfiles.Add("");
+            _cSfiles.Add("using System;");
+            _cSfiles.Add("");
+            _cSfiles.Add("namespace Iot.Device.Ssd13xx");
+            _cSfiles.Add("{");
+            _cSfiles.Add("    /// <summary>");
+            _cSfiles.Add("    /// " + _imageName + " font.");
+            _cSfiles.Add("    /// </summary>");
+            _cSfiles.Add("    public class " + _imageName + " : IFont");
+            _cSfiles.Add("    {");
+            _cSfiles.Add("        private static readonly byte[][] _fontTable =");
+            _cSfiles.Add("        {");
         }
 
         private void WriteFooter()
         {
-            CSfile.Add("        };");
-            CSfile.Add("");
-            CSfile.Add("        public override byte Width { get => "+ ((int)Font_Width_Sel.Value).ToString()+ "; }");
-            CSfile.Add("        public override byte Height { get =>" + ((int)Font_Height_Sel.Value).ToString() + "; }");
-            CSfile.Add("");
-            CSfile.Add("        public override byte[] this[char character]");
-            CSfile.Add("        {");
-            CSfile.Add("            get");
-            CSfile.Add("            {");
-            CSfile.Add("                var index = (byte)character;");
-            CSfile.Add("                if ((index < 32) || (index > 127))");
-            CSfile.Add("                    return _fontTable[0x20];");
-            CSfile.Add("                else");
-            CSfile.Add("                    return _fontTable[index - 0x20];");
-            CSfile.Add("            }");
-            CSfile.Add("        }");
-            CSfile.Add("    }");
-            CSfile.Add("}");
+            _cSfiles.Add("        };");
+            _cSfiles.Add("");
+            _cSfiles.Add("        /// <inheritdoc/>");
+            _cSfiles.Add("        public override byte Width { get => " + ((int)FontWidthSel.Value).ToString() + "; }");
+            _cSfiles.Add("");
+            _cSfiles.Add("        /// <inheritdoc/>");
+            _cSfiles.Add("        public override byte Height { get => " + ((int)FontHeightSel.Value).ToString() + "; }");
+            _cSfiles.Add("");
+            _cSfiles.Add("        /// <inheritdoc/>");
+            _cSfiles.Add("        public override byte[] this[char character]");
+            _cSfiles.Add("        {");
+            _cSfiles.Add("            get");
+            _cSfiles.Add("            {");
+            _cSfiles.Add("                var index = (byte)character;");
+            _cSfiles.Add("                if ((index < " + FirstAsciiCharacter.Value + ") || (index > " + (FirstAsciiCharacter.Value + BmpColSel.Value * (BmpEndSel.Value - BmpStartSel.Value) -1) + "))");
+            _cSfiles.Add("                {");
+            _cSfiles.Add("                    return _fontTable[" + FirstAsciiCharacter.Value + "];");
+            _cSfiles.Add("                }");
+            _cSfiles.Add("                else");
+            _cSfiles.Add("                {");
+            _cSfiles.Add("                    return _fontTable[index - " + FirstAsciiCharacter.Value + "];");
+            _cSfiles.Add("                }");
+            _cSfiles.Add("            }");
+            _cSfiles.Add("        }");
+            _cSfiles.Add("    }");
+            _cSfiles.Add("}");
         }
 
         private void GenButton_Click(object sender, EventArgs e)
         {
-            if (ImageName != "")
+            if (!string.IsNullOrEmpty(_imageName))
             {
                 try
                 {
                     WriteHeader();
-                    Bitmap PreviewBMP = new Bitmap((int)Font_Width_Sel.Value * (int)Bmp_Col_Sel.Value, ((int)Font_Height_Sel.Value * ((int)Bmp_End_Sel.Value - (int)Bmp_Start_Sel.Value)));
-                    int RowCount = -1;
-                    for (int j = (int)Bmp_Start_Sel.Value; j < (int)Bmp_End_Sel.Value; j++) //bitmap Rows
+                    Bitmap previewBMP = new Bitmap((int)FontWidthSel.Value * (int)BmpColSel.Value, ((int)FontHeightSel.Value * ((int)BmpEndSel.Value - (int)BmpStartSel.Value)));
+                    int rowCount = -1;
+
+                    //bitmap Rows
+                    for (int j = (int)BmpStartSel.Value; j < (int)BmpEndSel.Value; j++)
                     {
-                        RowCount++;
-                        for (int i = 0; i < (int)Bmp_Col_Sel.Value; i++)  //Bitmap columns
+                        rowCount++;
+
+                        //Bitmap columns
+                        for (int i = 0; i < (int)BmpColSel.Value; i++) 
                         {
-                            Rectangle cloneRect = new Rectangle(i * (int)Font_Width_Sel.Value, j * (int)Font_Height_Sel.Value, (int)Font_Width_Sel.Value, (int)Font_Height_Sel.Value);
-                            Bitmap cloneBitmap = myBitmap.Clone(cloneRect, myBitmap.PixelFormat);
+                            Rectangle cloneRect = new Rectangle(i * (int)FontWidthSel.Value, j * (int)FontHeightSel.Value, (int)FontWidthSel.Value, (int)FontHeightSel.Value);
+                            Bitmap cloneBitmap = _myBitmap.Clone(cloneRect, _myBitmap.PixelFormat);
                             Graphics g = Graphics.FromImage(cloneBitmap);
+
                             // Draw the cloned portion of the Bitmap object.
                             g.DrawImage(cloneBitmap, 0, 0);
-                            byte[] byteArray = new byte[(int)Font_Height_Sel.Value];
+                            byte[] byteArray = new byte[(int)FontHeightSel.Value];
 
                             for (int y = 0; y < cloneBitmap.Height; y++)
                             {
@@ -254,38 +280,38 @@ namespace Bitmap2Font
                                         rowByte |= (byte)(1 << x);
                                     }
                                 }
+
                                 byteArray[y] = rowByte;
                             }
+
                             string str = string.Join(", ", byteArray.Select(item => "0x" + item.ToString("X2")));
-                            CSfile.Add("        new byte[] { " + str + "},");
-                            Graphics gg = Graphics.FromImage(PreviewBMP);
-                            gg.DrawImage(cloneBitmap, i * (int)Font_Width_Sel.Value, RowCount * (int)Font_Height_Sel.Value);
+                            _cSfiles.Add("            new byte[] { " + str + " },");
+                            Graphics gg = Graphics.FromImage(previewBMP);
+                            gg.DrawImage(cloneBitmap, i * (int)FontWidthSel.Value, rowCount * (int)FontHeightSel.Value);
                         }
                     }
+
                     WriteFooter();
-                    pictureBox2.Image = PreviewBMP;
+                    PictureBoxPreview.Image = previewBMP;
 
-                    saveFileDialog1.Filter = "cs files (*.cs)|*.cs|All files (*.*)|*.*";
-                    saveFileDialog1.FileName = Path.GetFileNameWithoutExtension(textBox2.Text);
-                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                    SaveFileDialog.Filter = "cs files (*.cs)|*.cs|All files (*.*)|*.*";
+                    SaveFileDialog.FileName = Path.GetFileNameWithoutExtension(TextBoxFilePath.Text);
+                    if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        File.WriteAllLines(saveFileDialog1.FileName, CSfile.ToArray());
-                        PreviewBMP.Save(saveFileDialog1.FileName + ".bmp", ImageFormat.Bmp);
+                        File.WriteAllLines(SaveFileDialog.FileName, _cSfiles.ToArray());
+                        previewBMP.Save(SaveFileDialog.FileName + ".bmp", ImageFormat.Bmp);
                     }
-
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
-                    string message = "Numerical error: try other values";
+                    string message = $"Numerical error: try other values. {ex}";
                     string title = "Error";
                     MessageBox.Show(message, title);
                 }
-
-
             }
             else
             {
-                string message = "Load File and run Preview";
+                string message = "Load File and run Preview.";
                 string title = "Error";
                 MessageBox.Show(message, title);
             }
