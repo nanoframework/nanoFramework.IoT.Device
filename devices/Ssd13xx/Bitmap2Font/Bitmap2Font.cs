@@ -22,6 +22,7 @@ namespace Bitmap2Font
         private string _imageIdentification = string.Empty;
         private string _imageColorDepth = string.Empty;
         private string _imageDimensions = string.Empty;
+        private string _imageName= string.Empty;
         private List<string> _cSfiles = new List<string>();
 
         /// <summary>
