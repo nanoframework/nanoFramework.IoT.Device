@@ -1,12 +1,59 @@
 ﻿using System;
 
+using UnitsNet;
+
 namespace Ld2410
 {
+	/// <summary>
+	/// Defines the configurations for a <see cref="Ld2410"/> device.
+	/// </summary>
 	public sealed class Configuration
 	{
-		public ushort MaximumMovingDistanceGate { get; set; } = 8;
+		private const ushort MaxSupportedDistanceGates = 8;
+		private const float DistanceGate = 0.75f;
 
-		public ushort MaximumRestingDistanceDoor { get; set; } = 8;
+		public const float MaxSupportedDistanceInCentemeters = MaxSupportedDistanceGates * DistanceGate;
+
+		private Length maximumMovementDetectionDistance;
+		private Length maximumRestingDetectionDistance;
+
+		/// <summary>
+		/// Gets or sets the farthest detectable distance of moving targets.
+		/// Only human targets appearing within this distance range will be detected.
+		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The specified distance is greater than the maximum supported distance as per <see cref="MaxSupportedDistanceInCentemeters"/></exception>
+		public Length MaximumMovementDetectionDistance
+		{
+			get => this.maximumMovementDetectionDistance;
+			set
+			{
+				if (value.Centimeters > MaxSupportedDistanceInCentemeters)
+				{
+					throw new ArgumentOutOfRangeException();
+				}
+
+				this.maximumMovementDetectionDistance = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the farthest detectable distance of resting targets.
+		/// Only human targets appearing within this distance range will be detected.
+		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The specified distance is greater than the maximum supported distance as per <see cref="MaxSupportedDistanceInCentemeters"/></exception>
+		public Length MaximumRestingDetectionDistance
+		{
+			get => this.maximumRestingDetectionDistance;
+			set
+			{
+				if (value.Centimeters > MaxSupportedDistanceInCentemeters)
+				{
+					throw new ArgumentOutOfRangeException();
+				}
+
+				this.maximumRestingDetectionDistance = value;
+			}
+		}
 
 		/// <summary>
 		/// The duration to wait before no movement is confirmed.
@@ -28,6 +75,7 @@ namespace Ld2410
 		/// </summary>
 		public Configuration()
 		{
+			this.MaximumMovementDetectionDistance = this.MaximumRestingDetectionDistance = Length.FromCentimeters(MaxSupportedDistanceInCentemeters);
 			this.NoOneDuration = TimeSpan.FromSeconds(5);
 
 			this.GateConfiguration = new GateConfiguration[]
@@ -45,10 +93,14 @@ namespace Ld2410
 		}
 	}
 
+	/// <summary>
+	/// Defines a specific gate's sensitivity configurations.
+	/// </summary>
 	public sealed class GateConfiguration
 	{
 		private ushort gate;
 		private ushort restSensitivity;
+		private ushort motionSensitivity;
 
 		/// <summary>
 		/// The gate number.
@@ -68,14 +120,36 @@ namespace Ld2410
 		}
 
 		/// <summary>
-		/// The motion sensitivity threshold.
+		/// The motion sensitivity threshold. Any target with a movement "energy" greater than the specified range will be detected, otherwise it will be ignored.
+		/// Setting a gate's sensitivity to 100 will effectively disable detection of movement within that distance gate.
+		/// This can enable fine control over the range of distance to detect movements in. 
+		/// For example, All gates except 4 and 7 are set to 100. This means movement will only be detected in gates 4 and 5 (between 3 meters and 5.25 meters from the radar).
 		/// </summary>
-		public ushort MotionSensitivity { get; set; }
+		/// <remarks>There is no defined unit of measurement for this and should be treated as a percentage. It is recommended to experiment with the values to find the right threshold for the use-case at hand.</remarks>
+		/// <exception cref="ArgumentOutOfRangeException">This value cannot be less than 0 or greater than 100.</exception>
+		public ushort MotionSensitivity
+		{
+			get => this.motionSensitivity;
+			set
+			{
+				if (value is < 0 or > 100)
+				{
+					throw new ArgumentOutOfRangeException();
+				}
+
+				this.motionSensitivity = value;
+			}
+		}
 
 		/// <summary>
-		/// Rest sensitivity threshold for the specified gate.
+		/// The resting sensitivity threshold. Any target without movement "energy" (resting) greater than the specified range will be detected, otherwise it will be ignored.
+		/// Setting a gate's sensitivity to 100 will effectively disable detection of resting targets within that distance gate.
+		/// This can enable fine control over the range of distance to detect resting targets in. 
+		/// For example, All gates except 4 and 7 are set to 100. This means resting targets will only be detected in gates 4 and 5 (between 3 meters and 5.25 meters from the radar).
 		/// </summary>
+		/// <remarks>There is no defined unit of measurement for this and should be treated as a percentage. It is recommended to experiment with the values to find the right threshold for the use-case at hand.</remarks>
 		/// <exception cref="InvalidOperationException">Cannot set this value for Gate 0 and 1.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">This value cannot be less than 0 or greater than 100.</exception>
 		public ushort RestSensitivity
 		{
 			get => this.restSensitivity;
@@ -84,6 +158,11 @@ namespace Ld2410
 				if (this.Gate == 0 || this.Gate == 1)
 				{
 					throw new InvalidOperationException();
+				}
+
+				if (value is < 0 or > 100)
+				{
+					throw new ArgumentOutOfRangeException();
 				}
 
 				this.restSensitivity = value;
