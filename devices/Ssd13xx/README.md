@@ -26,6 +26,7 @@ Version with 7-pin I2C/SPI
 Address on the I2C bus: Ssd1306.SecondaryI2cAddress 0x3D
 
 Connecting resistors:
+
 - I2C — R1, R4, R8;
 - SPI — R3, R4.
 
@@ -35,7 +36,7 @@ For only I2C
 
 ![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_OLED_128x64_I2C_SPI.png)
 
-### Connection table:
+### Connection table
 
 | Pin No: | Pin Name: | Description: |
 | ------------ | ------------ | ------------ |
@@ -67,14 +68,13 @@ There are two groups of drawing methods.
     - ````DrawFilledRectangle(...)````: draws a filled rectangle
     - ````DrawBitmap(...)````: draws a bitmap
     - ````DrawString(...)````: draws a string with preset font
-    
-    Using these methods you do not need to care about any technique the driver uses to display 
-    your drawing instructions.
-   
+
+    Using these methods you do not need to care about any technique the driver uses to display your drawing instructions.
+
 2. Methods allowing to modify screen content by blocks of internal representation (screen buffer), like:
     - ````DrawDirectAligned(...)````: overwrites screen buffer with given content
     - ````ClearDirectAligned(...)````: clears out (with 0x00) given part of screen buffer
-    
+
     These methods allow faster (~100 times) display access but with some constraints. 
     - bitmaps handed over here must be in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode").
     - no bit operations occure with existing buffer data (with pixels drawn via other means), the new data will overwrite the pixels "below" newly drawed content.
@@ -126,3 +126,9 @@ device.Display();
 Follows the output on the display:
 
 ![double-byte.fonts](./display-with-double-byte-chars.jpg)
+
+## Fonts
+
+Fonts can be used following the [IFont](./IFont.cs) implementation.
+
+Sample fonts are provided both in the [sample directory](./samples/) and in the [additional font one](./Additionnal_Fonts/). A tool called `Bitmap2Font` is also provided helping to automatically generate the Font class. In short, it can take any black and white image of fixed size font and generate the Font class. More [information here](./Bitmap2Font/).
