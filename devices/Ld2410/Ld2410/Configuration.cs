@@ -9,13 +9,15 @@ namespace Ld2410
 	/// </summary>
 	public sealed class Configuration
 	{
-		private const ushort MaxSupportedDistanceGates = 8;
-		private const float DistanceGate = 0.75f;
-
+		public const ushort MaxSupportedDistanceGates = 8;
+		public const float DistanceGate = 0.75f;
 		public const float MaxSupportedDistanceInCentemeters = MaxSupportedDistanceGates * DistanceGate;
+
+		public const ushort MaxSupportedNoOneDuration = ushort.MaxValue;
 
 		private Length maximumMovementDetectionDistance;
 		private Length maximumRestingDetectionDistance;
+		private TimeSpan noOneDuration;
 
 		/// <summary>
 		/// Gets or sets the farthest detectable distance of moving targets.
@@ -58,7 +60,19 @@ namespace Ld2410
 		/// <summary>
 		/// The duration to wait before no movement is confirmed.
 		/// </summary>
-		public TimeSpan NoOneDuration { get; set; }
+		public TimeSpan NoOneDuration
+		{
+			get => noOneDuration;
+			set
+			{
+				if (value.TotalSeconds < 0 || value.TotalSeconds > MaxSupportedNoOneDuration)
+				{
+					throw new ArgumentOutOfRangeException();
+				}
+
+				this.noOneDuration = value;
+			}
+		}
 
 		/// <summary>
 		/// Gets or sets the serial port baud rate.
