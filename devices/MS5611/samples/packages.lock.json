@@ -16,9 +16,9 @@
       },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
-        "requested": "[1.2.266, 1.2.266]",
-        "resolved": "1.2.266",
-        "contentHash": "dZ4H0MjPxdUy4KSr7rqTYtKRMhxneJycZfV07Mr4PRuj6CwXHV2+6Ml7LdZ31JnhKRNCStOJvO3Q4vROJna8HA=="
+        "requested": "[1.2.270, 1.2.270]",
+        "resolved": "1.2.270",
+        "contentHash": "9E/a2X2uxo10/r+RqvpXbd8CQmQLwo4VPWVAy4DoEi6Vbt/A3X7cdX1baMwMZ2pgvu4bZ5sYt8lvdvWT27Fw5g=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -46,27 +46,27 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.8.0, 5.8.0]",
-        "resolved": "5.8.0",
-        "contentHash": "B0YlATC92yzsTNv5KjQxnOeGx++Nq7g62+RpnHqFi+CBeU/7VRUsee71vOE+D7ESLq2z4u7wL5pzStd/gHlalQ=="
+        "requested": "[5.9.0, 5.9.0]",
+        "resolved": "5.9.0",
+        "contentHash": "Ydn0W+MCDI3fVrV8Ue2QkvPvK1au/TgApAaKk5gAGmBwb56N2xcP0z0FvkzC7YJAXoy9p2WYc5D8iUf7dmcrRA=="
       },
       "UnitsNet.nanoFramework.Pressure": {
         "type": "Direct",
-        "requested": "[5.8.0, 5.8.0]",
-        "resolved": "5.8.0",
-        "contentHash": "VsYxctb6KB1HdGc4fSDkrjeE9U9TiF18i/WyGT51vmMy6M32A2EZ+xMl99rgzwrcb/qaTkuA1ya+gvZIucluzQ=="
+        "requested": "[5.9.0, 5.9.0]",
+        "resolved": "5.9.0",
+        "contentHash": "C6YcPLeEyWoKKSgv9Ud9BxgRO7WLmvNEnxgOLCT022BWZ10QLuZ6SjPQ+o5wBhUgXyWLUkkCfH4PIxtAMoFSow=="
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.8.0, 5.8.0]",
-        "resolved": "5.8.0",
-        "contentHash": "dVc/FHMQCAYx0iGJ8eCDRlYuRvbzwbaP3MOVikxjxwQkfE55ZucOfnQKm84Ha2lQcPbmLVzu9AjaLnmS8cmQLA=="
+        "requested": "[5.9.0, 5.9.0]",
+        "resolved": "5.9.0",
+        "contentHash": "fBSeCHVNXXWgz1ZcAYRlStjiGhj0b93sE4cJkzVLocAjp+xApSaZzcac+svXsYXd7XTKuYh5sHkcBiQYBVEBLw=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.8.0, 5.8.0]",
-        "resolved": "5.8.0",
-        "contentHash": "FBZf5bxee1Yl8LdKIDUUTc6TvWjvkk4oeiW+rC8XLNeRInlp8n5aB9/8rNluZ3oPfccauYJf7m1BuRmF6diFTw=="
+        "requested": "[5.9.0, 5.9.0]",
+        "resolved": "5.9.0",
+        "contentHash": "dLVE6dwYh3ZYCiZhDkx7K5I2DtnR4WuS06JVUbeVjHO0CfVpzBySkqJ4fFqta2IjS4X1b6y2u3G/FXy1/JzlOg=="
       }
     }
   }
