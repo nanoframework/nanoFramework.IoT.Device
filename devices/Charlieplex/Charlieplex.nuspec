@@ -21,7 +21,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Charlieplex</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.201" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.270" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.195" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
