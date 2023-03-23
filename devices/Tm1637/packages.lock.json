@@ -26,12 +26,6 @@
         "resolved": "1.1.28",
         "contentHash": "G/l2hkWAwQoMsCHJUK0iZsavYjKykewOXlLF1+fDUylOuBvoHo/iY5Lec+sAnJ3WMcoY2Uo6miYrCMI07g59Tg=="
       },
-      "nanoFramework.System.Diagnostics.Stopwatch": {
-        "type": "Direct",
-        "requested": "[1.2.195, 1.2.195]",
-        "resolved": "1.2.195",
-        "contentHash": "fckyWQCKJaHtmeQvIo3XS+X9mdcWpO78YTvWH7epbkM7huDHmKXSys+EbhrIIouryxTnP8Mc/VQPMIR20ixIVQ=="
-      },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
         "requested": "[3.5.119, 3.5.119]",
