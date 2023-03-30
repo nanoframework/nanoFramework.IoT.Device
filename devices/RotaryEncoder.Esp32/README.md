@@ -1,6 +1,8 @@
-﻿# Quadrature Rotary Encoder
+﻿# Quadrature Rotary Encoder (ESP32)
 
 A Rotary encoder is a device that detects angular position. One use of this is similar to a volume control on an FM radio where the user turns a shaft and the loudness of the broadcast is changed. Incremental rotary encoders do not provide information on their exact position but supply information about how much they have moved and in which direction.
+
+This version is specific for ESP32 devices as it takes advantage of the [`GpioPulseCounter`](https://docs.nanoframework.net/api/System.Device.Gpio.GpioPulseCounter.html) class (available in [`nanoFramework.Hardware.Esp32`](https://www.nuget.org/packages/nanoFramework.Hardware.Esp32) NuGet).
 
 ## Board
 
