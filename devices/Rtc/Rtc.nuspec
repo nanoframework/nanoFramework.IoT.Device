@@ -20,8 +20,8 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Rtc</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.9.0" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.10.0" />
       <dependency id="nanoFramework.Iot.Device.Common.NumberHelper" version="1.2.211" />
     </dependencies>
   </metadata>
