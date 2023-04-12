@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[1.1.9, 1.1.9]",
-        "resolved": "1.1.9",
-        "contentHash": "ufBbB/mtkaxDrPCP1JfzUmPQkrJaXGSTuOfvRL/gl46ZP+PIFmO6wuaF+RNU1jL4sgKTKx8uNe+FakIrTpLABA=="
+        "requested": "[1.1.11, 1.1.11]",
+        "resolved": "1.1.11",
+        "contentHash": "zV9CfXGTzTV8C+5SSBF5w6wZK4zcZeDtgv0XtXkkCEx8Z4woICsD+9me6YQEYz6IKQKoRAw6VEaQMScqs0b0mQ=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
@@ -58,15 +58,15 @@
       },
       "UnitsNet.nanoFramework.Duration": {
         "type": "Direct",
-        "requested": "[5.9.0, 5.9.0]",
-        "resolved": "5.9.0",
-        "contentHash": "/kyfn77rg0MCZBXslEiyJNS/0RlTXn65bOewe3Uz/77Oy/t8gBqdgL+xgLcUcDaVMpYTCyU/Lx974YWbppCfOw=="
+        "requested": "[5.11.0, 5.11.0]",
+        "resolved": "5.11.0",
+        "contentHash": "qRutYF1S9I0rtY2jcR56ndB1vsutkUzAKZs2ad6YiuwZhg7SjHa4ZOMlWE+PNhuOwsULAO5y9Tnh0rDh2N9viQ=="
       },
       "UnitsNet.nanoFramework.Mass": {
         "type": "Direct",
-        "requested": "[5.9.0, 5.9.0]",
-        "resolved": "5.9.0",
-        "contentHash": "eJZtnKOTlpaZkTTgDcZEryjiAgB1yuSX+xMQioB5rdGk50dpMisVLJdknacM51vErTJCO5USPZu9S2lwZ+wywQ=="
+        "requested": "[5.11.0, 5.11.0]",
+        "resolved": "5.11.0",
+        "contentHash": "vZswEk4ujuIPfZ6Ul8s9gGYfTFB82Y3eaHsTJ02TAhEFu9MyTiDDgXUNKxf4zVAe0VamkV+3qy34j/zY5GXOUg=="
       }
     }
   }
