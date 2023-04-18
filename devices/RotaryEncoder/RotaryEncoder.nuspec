@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.RotaryEncoder</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.RotaryEncoder</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>

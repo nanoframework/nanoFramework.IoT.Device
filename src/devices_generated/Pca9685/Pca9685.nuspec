@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Pca9685</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Pca9685</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
