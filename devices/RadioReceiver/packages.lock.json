@@ -10,9 +10,9 @@
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[1.1.9, 1.1.9]",
-        "resolved": "1.1.9",
-        "contentHash": "ufBbB/mtkaxDrPCP1JfzUmPQkrJaXGSTuOfvRL/gl46ZP+PIFmO6wuaF+RNU1jL4sgKTKx8uNe+FakIrTpLABA=="
+        "requested": "[1.1.11, 1.1.11]",
+        "resolved": "1.1.11",
+        "contentHash": "zV9CfXGTzTV8C+5SSBF5w6wZK4zcZeDtgv0XtXkkCEx8Z4woICsD+9me6YQEYz6IKQKoRAw6VEaQMScqs0b0mQ=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "UnitsNet.nanoFramework.Frequency": {
         "type": "Direct",
-        "requested": "[5.9.0, 5.9.0]",
-        "resolved": "5.9.0",
-        "contentHash": "SDUx8wFvqkqXU8x4qqRmCi/KEfoc+2J62lqQrHk5H0p0GPfB90o1wNiRK99Ullnv7s/PCq/yGAL2f9bjDzEzeg=="
+        "requested": "[5.12.0, 5.12.0]",
+        "resolved": "5.12.0",
+        "contentHash": "zr/6N98RVrQ6Y3dkU/nquXuukAbc0IvFOErQsT2uZhyPIf83HETDNdmsjdGYidhjjgKZgbd4n1lyf4vAqsLdPg=="
       }
     }
   }
