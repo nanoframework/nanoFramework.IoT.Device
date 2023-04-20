@@ -30,6 +30,7 @@
     <Reference Include="mscorlib, Version=1.14.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="nanoFramework.TestFramework, Version=2.1.60.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.TestFramework.2.1.60\lib\nanoFramework.TestFramework.dll</HintPath>
@@ -45,12 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <!-- INSERT FILE REFERENCES HERE -->
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\*.cs" />
     <None Include="*.md" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="nano.runsettings" />
     <None Include="packages.config" />
   </ItemGroup>
