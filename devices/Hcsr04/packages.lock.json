@@ -40,15 +40,15 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.5.119, 3.5.119]",
-        "resolved": "3.5.119",
-        "contentHash": "x8k4zV6YKZA5Rr810439lG9NngdbyPtFv0QpIYz32m1Im59kvSbEHO8gKGZoNvsfZSquayjEDUCa8acbut372g=="
+        "requested": "[3.6.128, 3.6.128]",
+        "resolved": "3.6.128",
+        "contentHash": "zeA+Ho3XlPgt6P9MRALlkEvfOOzDQdNseV0xia/nSfC1lSrl0+gizlWyixaHvSYUw2ru7pBIKnK451bYOjPRjA=="
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.9.0, 5.9.0]",
-        "resolved": "5.9.0",
-        "contentHash": "Ydn0W+MCDI3fVrV8Ue2QkvPvK1au/TgApAaKk5gAGmBwb56N2xcP0z0FvkzC7YJAXoy9p2WYc5D8iUf7dmcrRA=="
+        "requested": "[5.12.0, 5.12.0]",
+        "resolved": "5.12.0",
+        "contentHash": "573WYdvKrYAyXqmU95wbSmMTPMK34grrWMU+QEwplxjb1YSxL/s7MlHASghYXFbV2QqWPxQrKHXBHjbnZe2WjQ=="
       }
     }
   }
