@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.ShiftRegister</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.285" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.295" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.3.37" />
     </dependencies>
   </metadata>
