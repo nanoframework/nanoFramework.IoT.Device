@@ -20,9 +20,9 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ssd13xx</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
-    <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
     </dependencies>
   </metadata>
   <files>
