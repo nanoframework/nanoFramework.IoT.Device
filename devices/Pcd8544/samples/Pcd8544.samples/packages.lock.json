@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.CharacterLcd": {
         "type": "Direct",
-        "requested": "[1.1.192, 1.1.192]",
-        "resolved": "1.1.192",
-        "contentHash": "k0VeWgCyrOEZBILeF0T7mDGgDQAnsIZzMyO4qQ3lwN5aJQKJOlj+4p4tbI6wlA3JhQ9iw96Qb2y+YAw8219JBg=="
+        "requested": "[1.1.216, 1.1.216]",
+        "resolved": "1.1.216",
+        "contentHash": "zSyfDmoHqhXGijjb2l8eFxrnPqmcLHHjxZdgjHRq7An80YHvfEgOeFvXx4gLEw0SwsgsscVf6PtW4zTJJZgPUA=="
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",
