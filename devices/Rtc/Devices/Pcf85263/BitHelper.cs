@@ -4,7 +4,7 @@
 namespace Iot.Device.Rtc
 {
     /// <summary>
-    /// Helper that allows setting and getting each bit separately
+    /// Helper that allows setting and getting each bit separately.
     /// </summary>
     internal static class BitHelper
     {
@@ -14,7 +14,6 @@ namespace Iot.Device.Rtc
 
         public static byte SetBit(byte data, int bitNumber) => (byte)(data | (1 << bitNumber));
 
-        public static bool GetBit(this byte b, int bitNumber) =>  (b & (1 << bitNumber - 1)) != 0;
-
+        public static bool GetBit(this byte b, int bitNumber) => (b & (1 << (bitNumber - 1))) != 0;
     }
 }
