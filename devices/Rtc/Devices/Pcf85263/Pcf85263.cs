@@ -4,7 +4,7 @@
 using System;
 using System.Device.I2c;
 ////using System.Diagnostics;
-////using Iot.Device.Common;
+using Iot.Device.Common;
 
 namespace Iot.Device.Rtc
 {
@@ -147,12 +147,12 @@ namespace Iot.Device.Rtc
 
             ////    byte[] dtNow = new byte[6];
             ////    _i2cDevice.Read(dtNow);
-            ////    byte ss = NumberHelper.Bcd2Bin(dtNow[0]);
-            ////    byte mm = NumberHelper.Bcd2Bin(dtNow[1]);
-            ////    byte hh = NumberHelper.Bcd2Bin(dtNow[2]);
-            ////    byte d = NumberHelper.Bcd2Bin(dtNow[3]);
-            ////    byte m = NumberHelper.Bcd2Bin(dtNow[4]);
-            ////    int y = NumberHelper.Bcd2Bin(dtNow[5]) + 2000;
+            ////    byte ss = NumberHelperExtra.Bcd2Bin(dtNow[0]);
+            ////    byte mm = NumberHelperExtra.Bcd2Bin(dtNow[1]);
+            ////    byte hh = NumberHelperExtra.Bcd2Bin(dtNow[2]);
+            ////    byte d = NumberHelperExtra.Bcd2Bin(dtNow[3]);
+            ////    byte m = NumberHelperExtra.Bcd2Bin(dtNow[4]);
+            ////    int y = NumberHelperExtra.Bcd2Bin(dtNow[5]) + 2000;
 
             ////    try
             ////    {
