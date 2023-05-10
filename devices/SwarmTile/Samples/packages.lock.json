@@ -8,6 +8,12 @@
         "resolved": "1.14.2",
         "contentHash": "j1mrz4mitl5LItvmHMsw1aHzCAfvTTgIkRxA0mhs5mSpctJ/BBcuNwua5j3MspfRNKreCQPy/qZy/D9ADLL/PA=="
       },
+      "nanoFramework.Graphics.Core": {
+        "type": "Direct",
+        "requested": "[1.1.34, 1.1.34]",
+        "resolved": "1.1.34",
+        "contentHash": "sVwvcnKyGzDPPRGFp/AduVWkQ2S/qZzqzPmFGn96W6KCQt+tDpNmNnfDXHTPk4jEvVBhFEZG1eGtjpSvAA13Xw=="
+      },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
         "requested": "[1.6.3, 1.6.3]",
@@ -49,12 +55,6 @@
         "requested": "[1.3.37, 1.3.37]",
         "resolved": "1.3.37",
         "contentHash": "mTg3wAj001TOHSt+sqQblZXimuV5yWlHlRwEGV4+DLlJeuxTBDhGdukIFaGklwBgPwsOxa9VT0bYeBHXPYtqSA=="
-      },
-      "nanoFramework.System.Drawing": {
-        "type": "Direct",
-        "requested": "[1.2.295, 1.2.295]",
-        "resolved": "1.2.295",
-        "contentHash": "prz5nA68b4FmknZKWXvvF4HVM/R2lU/og6AsiJgcA9MsLmZy4UEtw3DLvIvat1hyG2f4JgWshAs/GcmaU09BqQ=="
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",

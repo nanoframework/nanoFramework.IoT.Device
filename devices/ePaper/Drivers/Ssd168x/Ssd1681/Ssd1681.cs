@@ -4,12 +4,6 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
-using System.Drawing;
-using System.Threading;
-
-using Iot.Device.EPaper.Buffers;
-using Iot.Device.EPaper.Enums;
-using Iot.Device.EPaper.Primitives;
 
 namespace Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681
 {

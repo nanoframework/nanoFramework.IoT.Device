@@ -8,7 +8,7 @@ using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers;
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Fonts;
-using Iot.Device.EPaper.Primitives;
+using nanoFramework.UI;
 
 namespace Iot.Device.EPaper
 {

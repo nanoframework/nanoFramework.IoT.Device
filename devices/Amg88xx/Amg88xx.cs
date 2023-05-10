@@ -5,6 +5,7 @@ using System;
 using System.Buffers.Binary;
 using System.Collections;
 using System.Device.I2c;
+using nanoFramework.UI;
 using UnitsNet;
 
 namespace Iot.Device.Amg88xx
