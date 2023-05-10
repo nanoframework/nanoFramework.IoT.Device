@@ -23,12 +23,11 @@
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.Graphics.Core">
+      <HintPath>..\..\packages\nanoFramework.Graphics.Core.1.1.34\lib\nanoFramework.Graphics.Core.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Buffers.Binary">
-      <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.0.259\lib\System.Buffers.Binary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -47,10 +46,6 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.295\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Drawing.1.2.295\lib\System.Drawing.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -63,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Bh1745.nfproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->

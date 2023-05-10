@@ -36,6 +36,9 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.Graphics.Core">
+      <HintPath>packages\nanoFramework.Graphics.Core.1.1.34\lib\nanoFramework.Graphics.Core.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
@@ -76,12 +79,14 @@
     <Compile Include="InterruptModeBit.cs" />
     <Compile Include="MovingAverageModeBit.cs" />
     <Compile Include="OperatingMode.cs" />
-    <Compile Include="Point.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="ResetType.cs" />
     <Compile Include="StatusClearBit.cs" />
     <Compile Include="StatusFlagBit.cs" />
     <Compile Include="TemperatureLowHighBytes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

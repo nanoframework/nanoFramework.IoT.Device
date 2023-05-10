@@ -11,7 +11,7 @@ using Iot.Device.EPaper.Drivers.Ssd168x;
 using Iot.Device.EPaper.Drivers.Ssd168x.Ssd1681;
 using Iot.Device.EPaper.Enums;
 using Iot.Device.EPaper.Fonts;
-using Iot.Device.EPaper.Primitives;
+using nanoFramework.UI;
 
 namespace SSD1681Sample
 {

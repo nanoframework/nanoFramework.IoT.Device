@@ -8,6 +8,12 @@
         "resolved": "1.14.2",
         "contentHash": "j1mrz4mitl5LItvmHMsw1aHzCAfvTTgIkRxA0mhs5mSpctJ/BBcuNwua5j3MspfRNKreCQPy/qZy/D9ADLL/PA=="
       },
+      "nanoFramework.Graphics.Core": {
+        "type": "Direct",
+        "requested": "[1.1.34, 1.1.34]",
+        "resolved": "1.1.34",
+        "contentHash": "sVwvcnKyGzDPPRGFp/AduVWkQ2S/qZzqzPmFGn96W6KCQt+tDpNmNnfDXHTPk4jEvVBhFEZG1eGtjpSvAA13Xw=="
+      },
       "nanoFramework.Hardware.Esp32.Rmt": {
         "type": "Direct",
         "requested": "[2.0.1, 2.0.1]",
@@ -19,12 +25,6 @@
         "requested": "[1.11.6, 1.11.6]",
         "resolved": "1.11.6",
         "contentHash": "xkltRh/2xKaZ9zmPHbVr32s1k+e17AInUBhzxKKkUDicJKF39yzTShSklb1OL6DBER5z71SpkGLyl9IdMK9l6w=="
-      },
-      "nanoFramework.System.Drawing": {
-        "type": "Direct",
-        "requested": "[1.2.295, 1.2.295]",
-        "resolved": "1.2.295",
-        "contentHash": "prz5nA68b4FmknZKWXvvF4HVM/R2lU/og6AsiJgcA9MsLmZy4UEtw3DLvIvat1hyG2f4JgWshAs/GcmaU09BqQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

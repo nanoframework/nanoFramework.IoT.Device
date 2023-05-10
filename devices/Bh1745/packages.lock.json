@@ -8,6 +8,12 @@
         "resolved": "1.14.2",
         "contentHash": "j1mrz4mitl5LItvmHMsw1aHzCAfvTTgIkRxA0mhs5mSpctJ/BBcuNwua5j3MspfRNKreCQPy/qZy/D9ADLL/PA=="
       },
+      "nanoFramework.Graphics.Core": {
+        "type": "Direct",
+        "requested": "[1.1.34, 1.1.34]",
+        "resolved": "1.1.34",
+        "contentHash": "sVwvcnKyGzDPPRGFp/AduVWkQ2S/qZzqzPmFGn96W6KCQt+tDpNmNnfDXHTPk4jEvVBhFEZG1eGtjpSvAA13Xw=="
+      },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
         "requested": "[1.11.6, 1.11.6]",
@@ -38,12 +44,6 @@
         "resolved": "1.2.295",
         "contentHash": "XAa+ZN1qzM+tjXb3Ju7F5weK/tdpNVoHRF0HaQT+QExb9GqGhQwPS6438CMrxUJ08bKaRnYxbT65mdreOsj9+w=="
       },
-      "nanoFramework.System.Drawing": {
-        "type": "Direct",
-        "requested": "[1.2.295, 1.2.295]",
-        "resolved": "1.2.295",
-        "contentHash": "prz5nA68b4FmknZKWXvvF4HVM/R2lU/og6AsiJgcA9MsLmZy4UEtw3DLvIvat1hyG2f4JgWshAs/GcmaU09BqQ=="
-      },
       "nanoFramework.System.Math": {
         "type": "Direct",
         "requested": "[1.5.29, 1.5.29]",
@@ -64,9 +64,9 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.12.0, 5.12.0]",
-        "resolved": "5.12.0",
-        "contentHash": "573WYdvKrYAyXqmU95wbSmMTPMK34grrWMU+QEwplxjb1YSxL/s7MlHASghYXFbV2QqWPxQrKHXBHjbnZe2WjQ=="
+        "requested": "[5.13.0, 5.13.0]",
+        "resolved": "5.13.0",
+        "contentHash": "sBAl4Rsj0yX22RE/cmfgswLkwySlYj9ImKLyWsejW2wh1FCAKrQGCXA7AKZYsg2R1TctxQmTOR+crKprR4cbNA=="
       }
     }
   }

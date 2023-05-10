@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
+using nanoFramework.UI;
+
 namespace Iot.Device.EPaper.Fonts
 {
     /// <summary>
@@ -109,7 +111,7 @@ namespace Iot.Device.EPaper.Fonts
         };
 
         /// <inheritdoc/>
-        public int Width
+        public new int Width
         {
             get
             {
@@ -118,7 +120,7 @@ namespace Iot.Device.EPaper.Fonts
         }
 
         /// <inheritdoc/>
-        public int Height
+        public new int Height
         {
             get
             {
@@ -127,7 +129,7 @@ namespace Iot.Device.EPaper.Fonts
         }
 
         /// <inheritdoc/>
-        public byte[] this[char character]
+        public override byte[] this[char character]
         {
             get
             {
