@@ -11,6 +11,7 @@ using System.Threading;
 using Iot.Device.CharacterLcd;
 using Iot.Device.Graphics;
 using Iot.Device.Pcd8544Enums;
+using nanoFramework.UI;
 
 namespace Iot.Device
 {
