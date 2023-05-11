@@ -8,11 +8,17 @@
         "resolved": "1.14.2",
         "contentHash": "j1mrz4mitl5LItvmHMsw1aHzCAfvTTgIkRxA0mhs5mSpctJ/BBcuNwua5j3MspfRNKreCQPy/qZy/D9ADLL/PA=="
       },
+      "nanoFramework.Graphics.Core": {
+        "type": "Direct",
+        "requested": "[1.1.37, 1.1.37]",
+        "resolved": "1.1.37",
+        "contentHash": "JSO5PU+CczzjqLZTTgdi/fx5BGtA8Z1m1RxpjxaYhLFPDPN1ATbDGwAdIUgxNeU77EAl1QRuni9lTA0OnfDrIQ=="
+      },
       "nanoFramework.Iot.Device.CharacterLcd": {
         "type": "Direct",
-        "requested": "[1.1.216, 1.1.216]",
-        "resolved": "1.1.216",
-        "contentHash": "zSyfDmoHqhXGijjb2l8eFxrnPqmcLHHjxZdgjHRq7An80YHvfEgOeFvXx4gLEw0SwsgsscVf6PtW4zTJJZgPUA=="
+        "requested": "[1.1.223, 1.1.223]",
+        "resolved": "1.1.223",
+        "contentHash": "i9hFxvC2YJUnRA76Qpe2bfyJ0QSNqGC35qzD0nnvFnaKV3r5tXTacgoENEGnZYuxJDu6cnMhvuZ0Z9fWjIX9yA=="
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",

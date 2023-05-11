@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.216\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.223\lib\Iot.Device.CharacterLcd.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -36,6 +36,10 @@
     </Reference>
     <Reference Include="mscorlib, Version=1.14.3.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.Graphics.Core, Version=1.1.37.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.Graphics.Core.1.1.37\lib\nanoFramework.Graphics.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager, Version=1.2.13.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
