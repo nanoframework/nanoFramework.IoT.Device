@@ -19,6 +19,11 @@
     <tags>nanoFramework C# csharp netnf Sen5x</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.295" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
+      <dependency id="UnitsNet.nanoFramework.MassConcentration" version="5.13.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.13.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.13.0" />
     </dependencies>
   </metadata>
   <files>
