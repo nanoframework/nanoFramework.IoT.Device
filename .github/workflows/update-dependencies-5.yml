@@ -4,7 +4,7 @@
 # This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
 # Second round, because of dependencies from other IoT bindings.
 
-name: Update dependencies (round 4)
+name: Update dependencies (round 5)
 
 on:
   schedule:
