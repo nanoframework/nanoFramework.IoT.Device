@@ -9,6 +9,12 @@ namespace Iot.Device.Sen5x.Entities
     /// </summary>
     public abstract class AbstractReadWriteEntity : AbstractReadEntity
     {
-        internal virtual void ToSpanByte(SpanByte data) => throw new NotImplementedException();
+        /// <summary>
+        /// The entity will write its data contents into the provided buffer, which already has the correct size according to <see cref="AbstractReadEntity.ByteCount"/>. The
+        /// only commonality is that every 3rd byte is always a checksum byte and must be skipped. The checksum is calculated after this method is called, so it can be
+        /// skipped by the implemented method.
+        /// </summary>
+        /// <param name="data">The data buffer that needs to be filled in by this entity.</param>
+        internal abstract void ToSpanByte(SpanByte data);
     }
 }

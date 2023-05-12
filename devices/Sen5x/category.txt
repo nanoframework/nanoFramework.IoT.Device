@@ -2,4 +2,4 @@ particulatematter
 hygrometer
 thermometer
 voc
-nox
+gas

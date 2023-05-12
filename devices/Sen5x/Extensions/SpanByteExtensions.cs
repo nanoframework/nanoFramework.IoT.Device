@@ -16,7 +16,7 @@ namespace Iot.Device.Sen5x.Extensions
         {
             if (data.Length % 3 != 0)
             {
-                throw new ArgumentException(nameof(data), "Bytes in data must be a multiple of 3");
+                throw new ArgumentException();
             }
 
             for (int i = 0; i < data.Length; i += 3)
@@ -24,7 +24,7 @@ namespace Iot.Device.Sen5x.Extensions
                 var chk = data.Slice(i, 2).CalculateCrc();
                 if (data[i + 2] != chk)
                 {
-                    throw new IndexOutOfRangeException("CRC verification failed");
+                    throw new IndexOutOfRangeException();
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace Iot.Device.Sen5x.Extensions
         {
             if (data.Length % 3 != 0)
             {
-                throw new ArgumentException(nameof(data), "Bytes in data must be a multiple of 3");
+                throw new ArgumentException();
             }
 
             for (int i = 0; i < data.Length; i += 3)

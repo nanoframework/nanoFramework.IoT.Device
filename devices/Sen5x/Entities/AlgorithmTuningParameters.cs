@@ -18,7 +18,7 @@ namespace Iot.Device.Sen5x.Entities
             LearningTimeOffset = TimeSpan.FromHours(BinaryPrimitives.ReadInt16BigEndian(data.Slice(3)));
             LearningTimeGain = TimeSpan.FromHours(BinaryPrimitives.ReadInt16BigEndian(data.Slice(6)));
             GatingMaxDuration = TimeSpan.FromMinutes(BinaryPrimitives.ReadInt16BigEndian(data.Slice(9)));
-            StdInitial = BinaryPrimitives.ReadInt16BigEndian(data.Slice(12));
+            InitialStandardDeviation = BinaryPrimitives.ReadInt16BigEndian(data.Slice(12));
             GainFactor = BinaryPrimitives.ReadInt16BigEndian(data.Slice(15));
         }
 
@@ -28,7 +28,7 @@ namespace Iot.Device.Sen5x.Entities
             BinaryPrimitives.WriteInt16BigEndian(data.Slice(3), (short)LearningTimeOffset.TotalHours);
             BinaryPrimitives.WriteInt16BigEndian(data.Slice(6), (short)LearningTimeGain.TotalHours);
             BinaryPrimitives.WriteInt16BigEndian(data.Slice(9), (short)GatingMaxDuration.TotalMinutes);
-            BinaryPrimitives.WriteInt16BigEndian(data.Slice(12), StdInitial);
+            BinaryPrimitives.WriteInt16BigEndian(data.Slice(12), InitialStandardDeviation);
             BinaryPrimitives.WriteInt16BigEndian(data.Slice(15), GainFactor);
         }
 
@@ -53,9 +53,9 @@ namespace Iot.Device.Sen5x.Entities
         public TimeSpan GatingMaxDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets the Std Initial.
+        /// Gets or sets the initial (estimate for) standard deviation.
         /// </summary>
-        public short StdInitial { get; set; }
+        public short InitialStandardDeviation { get; set; }
 
         /// <summary>
         /// Gets or sets the Gain Factor.

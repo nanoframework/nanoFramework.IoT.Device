@@ -39,34 +39,38 @@ namespace Iot.Device.Sen5x
         /// <summary>
         /// Starts the measurement. After power up, the module is in Idle-Mode. Before any measurement values can be read, the Measurement-Mode needs to be started using this command.
         /// </summary>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void StartMeasurement()
         {
-            Read(0x0021, TimeSpan.FromMilliseconds(50));
+            Read(Command.StartMeasurement, TimeSpan.FromMilliseconds(50));
         }
 
         /// <summary>
         /// Starts a continuous measurement without PM. Only humidity, temperature, VOC, and NOx are available in this mode. Laser and fan are switched off to keep power consumption low.
         /// </summary>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void StartMeasurementWithoutPM()
         {
-            Read(0x0037, TimeSpan.FromMilliseconds(50));
+            Read(Command.StartMeasurementWithoutPM, TimeSpan.FromMilliseconds(50));
         }
 
         /// <summary>
         /// Stops the measurement. Use this command to return to the initial state (Idle-Mode).
         /// </summary>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void StopMeasurement()
         {
-            Read(0x0104, TimeSpan.FromMilliseconds(200));
+            Read(Command.StopMeasurement, TimeSpan.FromMilliseconds(200));
         }
 
         /// <summary>
         /// This command can be used for polling to find out when new measurements are available.
         /// </summary>
         /// <returns>True when data is ready to be read, false otherwise.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public bool ReadDataReadyFlag()
         {
-            var data = Read(0x0202, TimeSpan.FromMilliseconds(20), new byte[3]);
+            var data = Read(Command.DataReadyFlag, TimeSpan.FromMilliseconds(20), new byte[3]);
             return data[1] > 0;
         }
 
@@ -76,27 +80,30 @@ namespace Iot.Device.Sen5x
         /// the latest measured values. In RHT/Gas-Only Measurement Mode, the PM output is 0xFFFF. If any value is unknown, 0xFFFF is returned.
         /// </summary>
         /// <returns>The measured values.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public Measurement ReadMeasurement()
         {
-            return (Measurement)Read(0x03c4, TimeSpan.FromMilliseconds(20), new Measurement());
+            return (Measurement)Read(Command.Measurement, TimeSpan.FromMilliseconds(20), new Measurement());
         }
 
         /// <summary>
         /// These commands allow to compensate temperature effects of the design-in at customer side by applying a custom temperature offset to the ambient temperature.
         /// </summary>
         /// <returns>The current temperature compensation parameters.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public TemperatureCompensationParameters ReadTemperatureCompensationParameters()
         {
-            return (TemperatureCompensationParameters)Read(0x60b2, TimeSpan.FromMilliseconds(20), new TemperatureCompensationParameters());
+            return (TemperatureCompensationParameters)Read(Command.TemperatureCompensationParameters, TimeSpan.FromMilliseconds(20), new TemperatureCompensationParameters());
         }
 
         /// <summary>
         /// These commands allow to compensate temperature effects of the design-in at customer side by applying a custom temperature offset to the ambient temperature.
         /// </summary>
         /// <param name="value">The new temperature compensation parameters to be set.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteTemperatureCompensationParameters(TemperatureCompensationParameters value)
         {
-            Write(0x60b2, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.TemperatureCompensationParameters, TimeSpan.FromMilliseconds(20), value);
         }
 
         /// <summary>
@@ -106,9 +113,10 @@ namespace Iot.Device.Sen5x
         /// measurement is started.
         /// </summary>
         /// <returns>The warm start parameter.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public WarmStartParameters ReadWarmStartParameter()
         {
-            return (WarmStartParameters)Read(0x60c6, TimeSpan.FromMilliseconds(20), new WarmStartParameters());
+            return (WarmStartParameters)Read(Command.WarmStartParameters, TimeSpan.FromMilliseconds(20), new WarmStartParameters());
         }
 
         /// <summary>
@@ -118,45 +126,50 @@ namespace Iot.Device.Sen5x
         /// measurement is started.
         /// </summary>
         /// <param name="value">The new warm start parameter to be set.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteWarmStartParameter(WarmStartParameters value)
         {
-            Write(0x60c6, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.WarmStartParameters, TimeSpan.FromMilliseconds(20), value);
         }
 
         /// <summary>
         /// The VOC algorithm can be customized by tuning 6 different parameters. Note that this command is available only in idle mode. In measure mode, this command has no effect. In addition, it has no effect if at least one parameter is outside the specified range.
         /// </summary>
         /// <returns>The algorithm tuning parametes for VOC.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public AlgorithmTuningParameters ReadVocAlgorithmTuningParameters()
         {
-            return (AlgorithmTuningParameters)Read(0x60d0, TimeSpan.FromMilliseconds(20), new AlgorithmTuningParameters());
+            return (AlgorithmTuningParameters)Read(Command.VocAlgorithmTuningParameters, TimeSpan.FromMilliseconds(20), new AlgorithmTuningParameters());
         }
 
         /// <summary>
         /// The VOC algorithm can be customized by tuning 6 different parameters. Note that this command is available only in idle mode. In measure mode, this command has no effect. In addition, it has no effect if at least one parameter is outside the specified range.
         /// </summary>
         /// <param name="value">The new algorithm tuning parameters for VOC.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteVocAlgorithmTuningParameters(AlgorithmTuningParameters value)
         {
-            Write(0x60d0, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.VocAlgorithmTuningParameters, TimeSpan.FromMilliseconds(20), value);
         }
 
         /// <summary>
         /// The NOx algorithm can be customized by tuning 6 different parameters. Note that this command is available only in idle mode. In measure mode, this command has no effect. In addition, it has no effect if at least one parameter is outside the specified range.
         /// </summary>
         /// <returns>The algorithm tuning parametes for NOx.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public AlgorithmTuningParameters ReadNoxAlgorithmTuningParameters()
         {
-            return (AlgorithmTuningParameters)Read(0x60e1, TimeSpan.FromMilliseconds(20), new AlgorithmTuningParameters());
+            return (AlgorithmTuningParameters)Read(Command.NoxAlgorithmTuningParameters, TimeSpan.FromMilliseconds(20), new AlgorithmTuningParameters());
         }
 
         /// <summary>
         /// The NOx algorithm can be customized by tuning 6 different parameters. Note that this command is available only in idle mode. In measure mode, this command has no effect. In addition, it has no effect if at least one parameter is outside the specified range.
         /// </summary>
         /// <param name="value">The new algorithm tuning parameters for NOx.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteNoxAlgorithmTuningParameters(AlgorithmTuningParameters value)
         {
-            Write(0x60e1, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.NoxAlgorithmTuningParameters, TimeSpan.FromMilliseconds(20), value);
         }
 
         /// <summary>
@@ -165,9 +178,10 @@ namespace Iot.Device.Sen5x
         /// acceleration behavior for the actual use-case, leading in an improvement of the ambient RH/T output accuracy.
         /// </summary>
         /// <returns>The parameters for the RH/T acceleration mode.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public RhtAccelerationModeParameters ReadRhtAccelerationMode()
         {
-            return (RhtAccelerationModeParameters)Read(0x60f7, TimeSpan.FromMilliseconds(20), new RhtAccelerationModeParameters());
+            return (RhtAccelerationModeParameters)Read(Command.RhtAccelerationModeParameters, TimeSpan.FromMilliseconds(20), new RhtAccelerationModeParameters());
         }
 
         /// <summary>
@@ -176,11 +190,12 @@ namespace Iot.Device.Sen5x
         /// acceleration behavior for the actual use-case, leading in an improvement of the ambient RH/T output accuracy.
         /// </summary>
         /// <param name="value">The new RH/T acceleration mode parameters.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteRhtAccelerationMode(RhtAccelerationModeParameters value)
         {
-            Write(0x60f7, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.RhtAccelerationModeParameters, TimeSpan.FromMilliseconds(20), value);
         }
-        
+
         /// <summary>
         /// Allows to backup and restore the VOC algorithm state to resume operation after a short interruption, skipping initial learning phase. By default,
         /// the VOC algorithm resets its state to initial values each time a measurement is started, even if the measurement was stopped only for a short time.
@@ -188,9 +203,10 @@ namespace Iot.Device.Sen5x
         /// state before starting the measure mode.
         /// </summary>
         /// <returns>The current VOC algorithm state.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public VocAlgorithmState ReadVocAlgorithmState()
         {
-            return (VocAlgorithmState)Read(0x6181, TimeSpan.FromMilliseconds(20), new VocAlgorithmState());
+            return (VocAlgorithmState)Read(Command.VocAlgorithmState, TimeSpan.FromMilliseconds(20), new VocAlgorithmState());
         }
 
         /// <summary>
@@ -200,62 +216,69 @@ namespace Iot.Device.Sen5x
         /// state before starting the measure mode.
         /// </summary>
         /// <param name="value">The new VOC algorithm state to write.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteVocAlgorithmState(VocAlgorithmState value)
         {
-            Write(0x6181, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.VocAlgorithmState, TimeSpan.FromMilliseconds(20), value);
         }
 
         /// <summary>
         /// Starts the fan-cleaning manually. This command can only be executed in Measurement-Mode.
         /// </summary>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void StartFanCleaning()
         {
-            Read(0x5607, TimeSpan.FromMilliseconds(20));
+            Read(Command.StartFanCleaning, TimeSpan.FromMilliseconds(20));
         }
 
         /// <summary>
         /// Reads the interval [s] of the periodic fan-cleaning.
         /// </summary>
         /// <returns>The current auto cleaning interval parameters.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public AutoCleaningIntervalParameters ReadAutoCleaningInterval()
         {
-            return (AutoCleaningIntervalParameters)Read(0x8004, TimeSpan.FromMilliseconds(20), new AutoCleaningIntervalParameters());
+            return (AutoCleaningIntervalParameters)Read(Command.AutoCleaningIntervalParameters, TimeSpan.FromMilliseconds(20), new AutoCleaningIntervalParameters());
         }
 
         /// <summary>
         /// Writes the interval [s] of the periodic fan-cleaning. Please note that since this configuration is volatile, it will be reverted to the default value after a device reset.
         /// </summary>
         /// <param name="value">The new auto cleaning interval to be set.</param>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void WriteAutoCleaningInterval(AutoCleaningIntervalParameters value)
         {
-            Write(0x8004, TimeSpan.FromMilliseconds(20), value);
+            Write(Command.AutoCleaningIntervalParameters, TimeSpan.FromMilliseconds(20), value);
         }
 
         /// <summary>
         /// This command returns the product name SEN5x (SEN50, SEN54 or SEN55).
         /// </summary>
         /// <returns>The product name SEN5x (SEN50, SEN54 or SEN55).</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public string ReadProductName()
         {
-            return ((StringValue)Read(0xd014, TimeSpan.FromMilliseconds(20), new StringValue(32))).Text;
+            return ((StringValue)Read(Command.ProductName, TimeSpan.FromMilliseconds(20), new StringValue(32))).Text;
         }
 
         /// <summary>
         /// This command returns the requested serial number.
         /// </summary>
         /// <returns>The serial number.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public string ReadSerialNumber()
         {
-            return ((StringValue)Read(0xd033, TimeSpan.FromMilliseconds(20), new StringValue(32))).Text;
+            return ((StringValue)Read(Command.SerialNumber, TimeSpan.FromMilliseconds(20), new StringValue(32))).Text;
         }
 
         /// <summary>
         /// Get firmware version. There is no Major/Minor, only a single value.
         /// </summary>
         /// <returns>The firmware version.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public byte ReadFirmwareVersion()
         {
-            var data = Read(0xd100, TimeSpan.FromMilliseconds(20), new byte[3]);
+            var data = Read(Command.FirmwareVersion, TimeSpan.FromMilliseconds(20), new byte[3]);
             return data[0];
         }
 
@@ -263,35 +286,38 @@ namespace Iot.Device.Sen5x
         /// Use this command to read the Device Status Register.
         /// </summary>
         /// <returns>The device status.</returns>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public DeviceStatus ReadDeviceStatus()
         {
-            return (DeviceStatus)Read(0xd206, TimeSpan.FromMilliseconds(20), new DeviceStatus());
+            return (DeviceStatus)Read(Command.ReadDeviceStatus, TimeSpan.FromMilliseconds(20), new DeviceStatus());
         }
 
         /// <summary>
         /// Clears all flags in device status register.
         /// </summary>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void ClearDeviceStatus()
         {
-            Read(0xd210, TimeSpan.FromMilliseconds(20));
+            Read(Command.ClearDeviceStatus, TimeSpan.FromMilliseconds(20));
         }
 
         /// <summary>
         /// Device software reset command. After calling this command, the module is in the same state as after a power reset.
         /// </summary>
+        /// <exception cref="InvalidOperationException">When the I2C operation fails.</exception>
         public void DeviceReset()
         {
-            Read(0xd304, TimeSpan.FromMilliseconds(100));
+            Read(Command.DeviceReset, TimeSpan.FromMilliseconds(100));
         }
 
-        private AbstractReadEntity Read(ushort cmd, TimeSpan commandExecutionTime, AbstractReadEntity entity = null)
+        private AbstractReadEntity Read(Command cmd, TimeSpan commandExecutionTime, AbstractReadEntity entity = null)
         {
             SpanByte data = new byte[2];
-            BinaryPrimitives.WriteUInt16BigEndian(data, cmd);
+            BinaryPrimitives.WriteUInt16BigEndian(data, (ushort)cmd);
             var result = _i2c.Write(data);
             if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                throw new InvalidOperationException($"Unexpected status ({result.Status}) on I2C write");
+                throw new InvalidOperationException();
             }
 
             Thread.Sleep(commandExecutionTime);
@@ -301,7 +327,7 @@ namespace Iot.Device.Sen5x
                 result = _i2c.Read(response);
                 if (result.Status != I2cTransferStatus.FullTransfer)
                 {
-                    throw new InvalidOperationException($"Unexpected status ({result.Status}) on I2C read");
+                    throw new InvalidOperationException();
                 }
 
                 response.VerifyCrc();
@@ -311,14 +337,14 @@ namespace Iot.Device.Sen5x
             return entity;
         }
 
-        private SpanByte Read(ushort cmd, TimeSpan commandExecutionTime, SpanByte response)
+        private SpanByte Read(Command cmd, TimeSpan commandExecutionTime, SpanByte response)
         {
             SpanByte data = new byte[2];
-            BinaryPrimitives.WriteUInt16BigEndian(data, cmd);
+            BinaryPrimitives.WriteUInt16BigEndian(data, (ushort)cmd);
             var result = _i2c.Write(data);
             if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                throw new InvalidOperationException($"Unexpected status ({result.Status}) on I2C write");
+                throw new InvalidOperationException();
             }
 
             Thread.Sleep(commandExecutionTime);
@@ -327,7 +353,7 @@ namespace Iot.Device.Sen5x
                 result = _i2c.Read(response);
                 if (result.Status != I2cTransferStatus.FullTransfer)
                 {
-                    throw new InvalidOperationException($"Unexpected status ({result.Status}) on I2C read");
+                    throw new InvalidOperationException();
                 }
 
                 response.VerifyCrc();
@@ -336,17 +362,17 @@ namespace Iot.Device.Sen5x
             return response;
         }
 
-        private void Write(ushort cmd, TimeSpan commandExecutionTime, AbstractReadWriteEntity entity)
+        private void Write(Command cmd, TimeSpan commandExecutionTime, AbstractReadWriteEntity entity)
         {
             SpanByte data = new byte[2 + entity.ByteCount];
-            BinaryPrimitives.WriteUInt16BigEndian(data, cmd);
+            BinaryPrimitives.WriteUInt16BigEndian(data, (ushort)cmd);
             SpanByte entityPart = data.Slice(2);
             entity.ToSpanByte(entityPart);
             entityPart.UpdateCrc();
             var result = _i2c.Write(data);
             if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                throw new InvalidOperationException($"Unexpected status ({result.Status}) on I2C write");
+                throw new InvalidOperationException();
             }
 
             Thread.Sleep(commandExecutionTime);

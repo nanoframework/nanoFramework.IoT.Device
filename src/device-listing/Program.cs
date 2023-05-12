@@ -56,7 +56,6 @@ string[] categoriesToDisplay = new string[]
     "reader",
     "satellite",
     "particulatematter",
-    "nox",
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -122,7 +121,6 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "reader", "Readers" },
     { "satellite", " modules" },
     { "particulatematter", "Particulate Matter Sensor" },
-    { "nox", "Nitrogen Oxide Sensor" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()

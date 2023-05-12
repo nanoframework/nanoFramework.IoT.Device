@@ -13,6 +13,7 @@ Description from its [product page](https://developer.sensirion.com/sensirion-pr
 For the implementation of this library the official [datasheet](https://developer.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/15_Environmental_Sensor_Node/Datasheets/Sensirion_Environmental_Sensor_Node_SEN5x_Datasheet.pdf). Any other documentation can be found on its [product page](https://developer.sensirion.com/sensirion-products/sen5x-environmental-sensor-node/).
 
 There are three variants at the time of this writing:
+
 * `SEN50-SDN-T`, which outputs: Particulate Matter
 * `SEN54-SDN-T`, which outputs: Particulate Matter, Relative Humidity, Temperature, VOC Index
 * `SEN55-SDN-T`, which outputs: Particulate Matter, Relative Humidity, Temperature, VOC Index, NOx Index

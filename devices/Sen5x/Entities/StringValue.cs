@@ -9,7 +9,7 @@ namespace Iot.Device.Sen5x.Entities
     /// </summary>
     internal class StringValue : AbstractReadEntity
     {
-        private int _maxLength;
+        private readonly int _maxLength;
 
         internal StringValue(int maxLength = 32)
         {
@@ -17,13 +17,19 @@ namespace Iot.Device.Sen5x.Entities
             _maxLength = maxLength;
         }
 
-        internal override int ByteCount => _maxLength / 2 * 3;
+        internal override int ByteCount => _maxLength / 2 * 3; // To account for checksum bytes.
 
         internal override void FromSpanByte(SpanByte data)
         {
+            // We don't use Encoding.UTF8.GetString(), because:
+            // - We need to skip every 3rd byte, which is a checksum byte, so we'd need to make a
+            //   copy of the data and filter every 3rd byte specifically for this purpose.
+            // - It would add another nuget dependency for only this.
+            // - The sensor does not support any special characters anyway.
             Text = string.Empty;
             for (int i = 0; i < data.Length; i += 3)
             {
+                // Any null byte ends the string.
                 if (data[i] == '\0')
                 {
                     break;
@@ -38,7 +44,7 @@ namespace Iot.Device.Sen5x.Entities
 
                 Text += (char)data[i + 1];
 
-                // skip 3rd byte, which contains the checksum
+                // Skip 3rd byte, which contains the checksum.
             }
         }
 
