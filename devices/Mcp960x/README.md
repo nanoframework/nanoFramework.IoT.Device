@@ -1,4 +1,4 @@
-﻿# MCP960X - device family of cold-junction compensated thermocouple to digital converter
+﻿# MCP960X/MCP9600/MCP9601 - device family of cold-junction compensated thermocouple to digital converter
 
 The MCP960X device family is an I2C interface cold-junction compensated thermocouple to digital converter.
 Supported thermocouple types (designated by NIST ITS-90) are: K, J, T, N, S, E, B and R.

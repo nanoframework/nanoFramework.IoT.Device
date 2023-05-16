@@ -1,6 +1,6 @@
-# SHT3x - Temperature & Humidity Sensor
+# SHT3x/SHT30/SHT31/SHT35 - Temperature & Humidity Sensor
 
-SHT3x is the next generation of Sensirion’s temperature and humidity sensors. This project supports SHT30, SHT31 and SHT35.
+SHT3x is the next generation of Sensirion's temperature and humidity sensors. This project supports SHT30, SHT31 and SHT35.
 
 ## Documentation
 

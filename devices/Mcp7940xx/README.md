@@ -1,4 +1,4 @@
-# Mcp7940xx - I2C Real-Time Clock/Calendar with SRAM
+# Mcp7940xx/MCP79400/MCP79401/MCP79402 - I2C Real-Time Clock/Calendar with SRAM
 
 The MCP7940M Real-Time Clock/Calendar (RTCC) tracks time using internal counters for hours, minutes, seconds, days, months, years, and day of week. Alarms can be configured on all counters up to and including months.
 

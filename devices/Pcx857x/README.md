@@ -1,4 +1,4 @@
-﻿# NXP/TI PCx857x
+﻿# PCx857x/PCF8574/PCF8575/PCA8574/PCA8575 - NXP/TI GPIO expansion
 
 The PCX857X device family provides 8/16-bit, general purpose parallel I/O expansion for I2C SPI applications. These chips provide simple I/O expansion with reduced bus traffic as they don't take command bytes.
 

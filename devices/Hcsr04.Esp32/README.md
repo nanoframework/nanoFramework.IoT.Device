@@ -1,4 +1,4 @@
-﻿# HC-SR04 - Ultrasonic Ranging Module for ESP32 with RMT
+﻿# HC-SR04 for ESP32 with RMT - Ultrasonic Ranging Module
 
 Device bindings for the HC-SR04 sonar distance sensor. Calculates the distance from an object by using the HC-SR04 distance sensor. Specific implementation with ESP32 using RMT. This implementation is more precise than the other generic Hcsr04.
 

@@ -1,4 +1,4 @@
-# SSD13xx & SSH1106 OLED display family
+# SSD13xx/SSD1306/SSD1327 & SSH1106 - OLED display family
 
 The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for organic/polymer light emitting diode dot-matrix graphic display system. It consists of 128 segments and 64 commons. This IC is designed for Common Cathode type OLED panel.
 
@@ -26,6 +26,7 @@ Version with 7-pin I2C/SPI
 Address on the I2C bus: Ssd1306.SecondaryI2cAddress 0x3D
 
 Connecting resistors:
+
 - I2C — R1, R4, R8;
 - SPI — R3, R4.
 
@@ -35,7 +36,7 @@ For only I2C
 
 ![Connection schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ssd13xx/Ssd1306_OLED_128x64_I2C_SPI.png)
 
-### Connection table:
+### Connection table
 
 | Pin No: | Pin Name: | Description: |
 | ------------ | ------------ | ------------ |
@@ -67,15 +68,14 @@ There are two groups of drawing methods.
     - ````DrawFilledRectangle(...)````: draws a filled rectangle
     - ````DrawBitmap(...)````: draws a bitmap
     - ````DrawString(...)````: draws a string with preset font
-    
-    Using these methods you do not need to care about any technique the driver uses to display 
-    your drawing instructions.
-   
+
+    Using these methods you do not need to care about any technique the driver uses to display your drawing instructions.
+
 2. Methods allowing to modify screen content by blocks of internal representation (screen buffer), like:
     - ````DrawDirectAligned(...)````: overwrites screen buffer with given content
     - ````ClearDirectAligned(...)````: clears out (with 0x00) given part of screen buffer
-    
-    These methods allow faster (~100 times) display access but with some constraints. 
+
+    These methods allow faster (~100 times) display access but with some constraints.
     - bitmaps handed over here must be in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode").
     - no bit operations occure with existing buffer data (with pixels drawn via other means), the new data will overwrite the pixels "below" newly drawed content.
     - the "y" coordinate and the bitmap height must be byte aligned with screen buffer (again, see above docs)

@@ -1,4 +1,4 @@
-# At24cxx family of I2C EEPROM
+# AT24C32/AT24C64/AT24C128/AT24C256 family of I2C EEPROM
 
 The At24cxx is a family of Serial EEPROM utilizing an I2C (2-wire) serial interface.
 
