@@ -126,3 +126,9 @@ device.Display();
 Follows the output on the display:
 
 ![double-byte.fonts](./display-with-double-byte-chars.jpg)
+
+## Fonts
+
+Fonts can be used following the [IFont](./IFont.cs) implementation.
+
+Sample fonts are provided both in the [sample directory](./samples/) and in the [additional font one](./Additionnal_Fonts/). A tool called `Bitmap2Font` is also provided helping to automatically generate the Font class. In short, it can take any black and white image of fixed size font and generate the Font class. More [information here](./Bitmap2Font/).

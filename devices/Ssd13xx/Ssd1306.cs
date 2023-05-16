@@ -34,7 +34,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
-        public Ssd1306(I2cDevice i2cDevice, int resetPin = -1) : base(i2cDevice, DisplayResolution.OLED128x64, resetPin)
+        public Ssd1306(I2cDevice i2cDevice, int resetPin = -1) : base(i2cDevice, DisplayResolution.OLED128x64, DisplayOrientation.Landscape, resetPin)
         {
         }
 
@@ -45,11 +45,12 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="res">Display resolution.</param>
+        /// <param name="orientation">Rotation of the display with reference to the hardware's default orientation.</param>
         /// <param name="resetPin">Reset pin (some displays might be wired to share the microcontroller's
         /// reset pin).</param>
         /// <param name="gpio">Gpio Controller.</param> 
         /// <param name="shouldDispose">True to dispose the GpioController.</param>        
-        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, int resetPin = -1, GpioController gpio = null, bool shouldDispose = true) : base(i2cDevice, res, resetPin, gpio, shouldDispose)
+        public Ssd1306(I2cDevice i2cDevice, DisplayResolution res, DisplayOrientation orientation = DisplayOrientation.Landscape, int resetPin = -1, GpioController gpio = null, bool shouldDispose = true) : base(i2cDevice, res, orientation, resetPin, gpio, shouldDispose)
         {
         }
 

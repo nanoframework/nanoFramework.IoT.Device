@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Pn5180</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Pn5180</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -21,8 +20,8 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Pn5180</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.211" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.195" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.295" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.295" />
       <dependency id="nanoFramework.Logging" version="1.1.63" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />

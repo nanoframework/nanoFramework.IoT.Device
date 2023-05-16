@@ -215,6 +215,19 @@ steps:
       git config user.email 'nanoframework@outlook.com'
       git config user.name 'nfbot'
 
+      # check if anything was changed
+      $repoStatus = "$(git status --short --porcelain)"
+
+      if ($repoStatus -ne "")
+      {
+          Write-Host "There are changes in README files, changes will be pushed to GitHub"
+      }
+      else
+      {
+          Write-Host "Repository is clean, no changes to push to GitHub"
+          exit 0
+      }
+
       git add README.md
       git add devices/README.md
       git commit -m "Update device lists" -m"***NO_CI***"
@@ -223,7 +236,7 @@ steps:
 
       # compute authorization header in format "AUTHORIZATION: basic 'encoded token'"
       # 'encoded token' is the Base64 of the string "nfbot:personal-token"
-      $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:$(GitHubToken)"))))"
+      $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:$(GitHubToken)")))"
       git -c http.extraheader="AUTHORIZATION: $auth" push origin "HEAD:$(Build.SourceBranchName)"
 
 # step from template @ nf-tools repo

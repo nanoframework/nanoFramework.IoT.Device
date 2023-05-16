@@ -9,7 +9,7 @@ using System.Threading;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
-using Iot.Device.EPaper.Primitives;
+using nanoFramework.UI;
 
 namespace Iot.Device.EPaper.Drivers.Ssd168x
 {

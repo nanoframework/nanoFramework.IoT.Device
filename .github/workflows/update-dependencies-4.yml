@@ -2,15 +2,14 @@
 # See LICENSE file in the project root for full license information.
 
 # This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
-# Second round, because of dependencies from other IoT bindings.
 
-name: Update dependencies (round 4)
+name: Update dependencies (round 3)
 
 on:
   schedule:
-    # At 02:30 UTC.
-    # Set 2 hours apart from round 3 to allow enough time for any changes to propagate.
-    - cron:  '30 02 * * Wed,Fri'
+    # At 00:45 UTC.
+    # Set 15 min apart from previous round to allow enough time for any changes to propagate.
+    - cron:  '45 00 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
@@ -22,7 +21,7 @@ jobs:
     secrets: inherit
     with:
       timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+      solutionsToCheck: '*.sln'
       workingDirectory: devices
-      branchToPr: 'develop'      
-      solutionsToCheck: |
-        Ft6xx6x.sln
+      branchToPr: 'develop'
+      exclusionList: 'Card,CharacterLcd,Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper,BoardLed,BuildHat,Common,Display,Ft232H,Ili9341,Pca9685,RGBLedMatrix,Scd4x,Seesaw,SensorHub,Sht4x,SocketCan,Ssd1351,StUsb4500,UFireIse'

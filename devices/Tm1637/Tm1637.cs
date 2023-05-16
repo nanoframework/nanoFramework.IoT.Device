@@ -6,6 +6,7 @@ using System.Device;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Iot.Device.Tm1637
 {
@@ -132,7 +133,7 @@ namespace Iot.Device.Tm1637
             for (byte i = 0; i < 8; i++)
             {
                 _controller.Write(_pinClk, PinValue.Low);
-                DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+                Thread.SpinWait(ClockWidthMicroseconds);
 
                 // LSB first
                 if ((data & 0x01) == 0x01)
@@ -147,19 +148,19 @@ namespace Iot.Device.Tm1637
                 // LSB first
                 data >>= 1;
                 _controller.Write(_pinClk, PinValue.High);
-                DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+                Thread.SpinWait(ClockWidthMicroseconds);
             }
 
             // Wait for the acknowledge
             _controller.Write(_pinClk, PinValue.Low);
             _controller.Write(_pinDio, PinValue.High);
             _controller.Write(_pinClk, PinValue.High);
-            DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+            Thread.SpinWait(ClockWidthMicroseconds);
             _controller.SetPinMode(_pinDio, PinMode.Input);
 
             // Wait 1 µs, it's the waiting time between clk up and down
             // That's according to the documentation
-            DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+            Thread.SpinWait(ClockWidthMicroseconds);
 
             var ack = _controller.Read(_pinDio);
             if (ack == PinValue.Low)
@@ -170,9 +171,9 @@ namespace Iot.Device.Tm1637
             }
 
             _controller.Write(_pinClk, PinValue.High);
-            DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+            Thread.SpinWait(ClockWidthMicroseconds);
             _controller.Write(_pinClk, PinValue.Low);
-            DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+            Thread.SpinWait(ClockWidthMicroseconds);
 
             _controller.SetPinMode(_pinDio, PinMode.Output);
             return ack;
@@ -182,7 +183,7 @@ namespace Iot.Device.Tm1637
         {
             _controller.Write(_pinClk, PinValue.High);
             _controller.Write(_pinDio, PinValue.High);
-            DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+            Thread.SpinWait(ClockWidthMicroseconds);
             _controller.Write(_pinDio, PinValue.Low);
         }
 
@@ -190,7 +191,7 @@ namespace Iot.Device.Tm1637
         {
             _controller.Write(_pinClk, PinValue.Low);
             _controller.Write(_pinDio, PinValue.Low);
-            DelayHelper.DelayMicroseconds(ClockWidthMicroseconds, true);
+            Thread.SpinWait(ClockWidthMicroseconds);
             _controller.Write(_pinClk, PinValue.High);
             _controller.Write(_pinDio, PinValue.High);
         }

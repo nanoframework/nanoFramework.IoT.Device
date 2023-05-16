@@ -8,7 +8,7 @@ name: Update dependencies (round 2)
 on:
   schedule:
     # At 00:15 UTC .
-    # Set 15 min apart from round 1 to allow enough time for any changes to propagate.
+    # Set 15 min apart from previous round to allow enough time for any changes to propagate.
     - cron:  '15 00 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
@@ -25,3 +25,4 @@ jobs:
       branchToPr: 'develop'      
       solutionsToCheck: |
         ShiftRegister.sln
+        Card.sln

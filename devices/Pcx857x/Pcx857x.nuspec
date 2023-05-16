@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Pcx857x</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Pcx857x</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -23,7 +22,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.9" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
       <dependency id="nanoFramework.System.Threading" version="1.1.19" />
     </dependencies>
   </metadata>

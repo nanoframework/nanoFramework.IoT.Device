@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Mcp25xxx</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Mcp25xxx</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>

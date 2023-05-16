@@ -4,7 +4,7 @@
 using System.Drawing;
 
 using Iot.Device.EPaper.Enums;
-using Iot.Device.EPaper.Primitives;
+using nanoFramework.UI;
 
 namespace Iot.Device.EPaper.Buffers
 {
@@ -40,7 +40,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public override void Clear(Color color)
         {
-            var colorValue = color.GetAs1bpp();
+            var colorValue = color.To1bpp();
             for (var i = 0; i < Buffer.Length; i++)
             {
                 Buffer[i] = colorValue;
@@ -55,7 +55,7 @@ namespace Iot.Device.EPaper.Buffers
                 return;
             }
 
-            var colorVal = color.GetAs1bpp();
+            var colorVal = color.To1bpp();
 
             for (var y = start.Y; y < start.Y + height; y++)
             {

@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Ws28xx</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Ws28xx</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -23,7 +22,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.System.Device.Spi" version="1.3.37" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
-      <dependency id="nanoFramework.System.Drawing" version="1.2.211" />
+      <dependency id="nanoFramework.Graphics.Core" version="1.1.37" />
     </dependencies>
   </metadata>
   <files>
