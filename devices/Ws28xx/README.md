@@ -1,4 +1,4 @@
-﻿# Ws28xx LED drivers
+﻿# Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel using SPI - LED drivers
 
 This binding allows you to update the RGB LEDs on Ws28xx and based strips and matrices.
 

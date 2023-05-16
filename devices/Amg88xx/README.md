@@ -1,4 +1,4 @@
-﻿# AMG88xx Infrared Array Sensor Family
+﻿# AMG8833/AMG8834/AMG8853/AMG8854 Infrared Array Sensor Family
 
 The sensors of the AMG88xx family of infrared array sensors have 64 thermophile pixels arranged in an 8×8 matrix. The sensor works as a thermal infrared camera. It can detect objects (e.g. human bodies) from a distance of up 5-7m. A pixel can measure object temperatures in a range of 0 to 80°C / -20 to 100°C with a resolution of 0.25°C and an accuracy of ±2.5°C / ±4.5°C. The sensor has a view field angle of 60° and a 7.5° view angle per pixel.
 
