@@ -45,7 +45,7 @@
     <Content Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bq25798.nfproj" />
+    <ProjectReference Include="..\Bq2579x.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

@@ -30,10 +30,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Model.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="ThresholdFastCharge.cs" />
     <None Include="packages.config" />
-    <Compile Include="Bq25798.cs" />
+    <Compile Include="Bq2579x.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,7 +3,7 @@
 // See LICENSE file in the project root for full license information.
 ////
 
-namespace Iot.Device.Bq25798
+namespace Iot.Device.Bq2579x
 {
     /// <summary>
     /// Battery voltage thresholds for the transition from precharge to fast charge, which is defined as a ratio of battery regulation limit (VREG).

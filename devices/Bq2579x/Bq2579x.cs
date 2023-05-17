@@ -8,16 +8,16 @@ using System.Device.I2c;
 using System.Device.Model;
 using UnitsNet;
 
-namespace Iot.Device.Bq25798
+namespace Iot.Device.Bq2579x
 {
     /// <summary>
-    /// Buck-Boost Battery Charger Bq25798.
+    /// Buck-Boost Battery Charger Bq2579x.
     /// </summary>
-    [Interface("Buck-Boost Battery Charger Bq25798")]
-    public class Bq25798 : IDisposable
+    [Interface("Buck-Boost Battery Charger Bq2579x")]
+    public class Bq2579x : IDisposable
     {
         /// <summary>
-        /// Bq25798 Default I2C Address.
+        /// Bq25792/8 Default I2C Address.
         /// </summary>
         public const byte DefaultI2cAddress = 0x6B;
 
@@ -32,12 +32,17 @@ namespace Iot.Device.Bq25798
         private const int StepPrechargeCurrentLimit = 40;
         private const int PrechargeCurrentLimitMaxValue = 2000;
 
-        private const int Bq25798PartNumber = 0b00011000;
         private const int DeviceRevision = 0b00000001;
         private const int PrechargeCurrentLimitMask = 0b00111111;
         private const int VbusAdcStep = 1;
 
         private I2cDevice _i2cDevice;
+        private Model _deviceModel;
+
+        /// <summary>
+        /// Gets de model of the Bq2579x device connected.
+        /// </summary>
+        public Model Model => _deviceModel;
 
         /// <summary>
         /// Gets or sets minimal system voltage.
@@ -76,13 +81,13 @@ namespace Iot.Device.Bq25798
         public ElectricPotentialDc Vbus => GetVbus();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bq25798" /> class.
+        /// Initializes a new instance of the <see cref="Bq2579x" /> class.
         /// </summary>
         /// <param name="i2cDevice"><see cref="I2cDevice"/> to communicate with Si7021 device.</param>
         /// <exception cref="InvalidOperationException">When failing to read part information.</exception>
-        /// <exception cref="NotSupportedException">If the part information returned is invalid, thus the connected part is not a BQ25798.</exception>
+        /// <exception cref="NotSupportedException">If the part information returned is invalid, thus the connected part is not one of the supported BQ2579x devices.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="i2cDevice"/> is null.</exception>
-        public Bq25798(I2cDevice i2cDevice)
+        public Bq2579x(I2cDevice i2cDevice)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException();
 
@@ -97,8 +102,11 @@ namespace Iot.Device.Bq25798
         {
             byte[] buffer = ReadFromRegister(Register.REG48_Part_Information, 1);
 
-            if ((buffer[0] & DevicePartNumberMask) != Bq25798PartNumber
-                || (buffer[0] & DeviceRevisionMask) != DeviceRevision)
+            _deviceModel = (Model)(buffer[0] & DevicePartNumberMask);
+
+            // sanity check for valid part
+            if (_deviceModel != Model.Bq25792
+                && _deviceModel != Model.Bq25798)
             {
                 throw new NotSupportedException();
             }

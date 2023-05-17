@@ -3,7 +3,7 @@
 // See LICENSE file in the project root for full license information.
 ////
 
-namespace Iot.Device.Bq25798
+namespace Iot.Device.Bq2579x
 {
     // refer to Table 9-12. I2C Registers in device datasheet for register definitions
     internal enum Register : byte
