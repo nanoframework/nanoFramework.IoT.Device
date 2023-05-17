@@ -30,6 +30,10 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="ChargerStatus0.cs" />
+    <Compile Include="WatchdogSetting.cs" />
+    <Compile Include="VbusStatus.cs" />
+    <Compile Include="ChargeStatus.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="ThresholdFastCharge.cs" />
@@ -56,6 +60,12 @@
     <Reference Include="UnitsNet.ElectricPotentialDc">
       <HintPath>packages\UnitsNet.nanoFramework.ElectricPotentialDc.5.13.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.13.0\lib\UnitsNet.Temperature.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

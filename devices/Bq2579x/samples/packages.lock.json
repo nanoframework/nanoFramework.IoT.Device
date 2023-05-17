@@ -25,6 +25,12 @@
         "requested": "[5.13.0, 5.13.0]",
         "resolved": "5.13.0",
         "contentHash": "LksawQ9idxke6TEUdTrkx802li/YM+UNZYz0XyimDOeb0iSkH6kG6NqDS6AlrG6XyYG8p2wl8MBo2z8DwdGnQA=="
+      },
+      "UnitsNet.nanoFramework.Temperature": {
+        "type": "Direct",
+        "requested": "[5.13.0, 5.13.0]",
+        "resolved": "5.13.0",
+        "contentHash": "+AFLSxcB8A1VX5Z4P+Z/sD4oUoe5bvEwVBmVIilKUQ627fFvu5nJfoyfiHpvUjQfaIkKVJD6wKpLe5d9uZXaAQ=="
       }
     }
   }

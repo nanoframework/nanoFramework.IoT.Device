@@ -33,6 +33,9 @@
     <Reference Include="UnitsNet.ElectricPotentialDc">
       <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotentialDc.5.13.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Temperature">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.13.0\lib\UnitsNet.Temperature.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
