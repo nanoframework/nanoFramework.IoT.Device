@@ -22,9 +22,9 @@
       },
       "nanoFramework.Iot.Device.Ws28xx": {
         "type": "Direct",
-        "requested": "[1.2.308, 1.2.308]",
-        "resolved": "1.2.308",
-        "contentHash": "igWWoqtVPiI84RgT/j3K/8qi2KFyacbiELVtF+pGqD1Kl3VgnWi6roSbzZLP7fY8MCy1EBlFkFDrignUVzJFVw=="
+        "requested": "[1.2.316, 1.2.316]",
+        "resolved": "1.2.316",
+        "contentHash": "UInkG1i9Cs14pSqWX6aFWb/cIJosK1NsVVeLPYyeMKV3EwOiOa9jb8N8SQS0lKuKf9h4CHKFnBHemfz0E8/yag=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
