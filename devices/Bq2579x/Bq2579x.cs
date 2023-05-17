@@ -222,7 +222,7 @@ namespace Iot.Device.Bq2579x
 
         private ElectricPotentialDc GetVbus()
         {
-            byte[] buffer = ReadFromRegister(Register.REG35_VBUS_ADC_Register, 2);
+            byte[] buffer = ReadFromRegister(Register.REG35_VBUS_ADC, 2);
 
             var vbus = (buffer[0] << 8) | buffer[1];
 

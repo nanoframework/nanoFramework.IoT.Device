@@ -10,7 +10,7 @@ namespace Iot.Device.Bq2579x
     {
         REG00_Minimal_System_Voltage = 0x01,
         REG08_Precharge_Control = 0x08,
-        REG35_VBUS_ADC_Register = 0x35,
+        REG35_VBUS_ADC = 0x35,
         REG48_Part_Information = 0x48,
     }
 }
