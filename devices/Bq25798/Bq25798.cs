@@ -81,9 +81,10 @@ namespace Iot.Device.Bq25798
         /// <param name="i2cDevice"><see cref="I2cDevice"/> to communicate with Si7021 device.</param>
         /// <exception cref="InvalidOperationException">When failing to read part information.</exception>
         /// <exception cref="NotSupportedException">If the part information returned is invalid, thus the connected part is not a BQ25798.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="i2cDevice"/> is null.</exception>
         public Bq25798(I2cDevice i2cDevice)
         {
-            _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+            _i2cDevice = i2cDevice ?? throw new ArgumentNullException();
 
             // read part information
             ReadPartInformation();
@@ -94,7 +95,7 @@ namespace Iot.Device.Bq25798
         /// </summary>
         private void ReadPartInformation()
         {
-            byte[] buffer = ReadContentsFromRegister(Register.REG48_Part_Information, 1);
+            byte[] buffer = ReadFromRegister(Register.REG48_Part_Information, 1);
 
             if ((buffer[0] & DevicePartNumberMask) != Bq25798PartNumber
                 || (buffer[0] & DeviceRevisionMask) != DeviceRevision)
@@ -119,7 +120,7 @@ namespace Iot.Device.Bq25798
 
         private ElectricPotentialDc GetMinimalSystemVoltage()
         {
-            byte[] buffer = ReadContentsFromRegister(Register.REG00_Minimal_System_Voltage, 1);
+            byte[] buffer = ReadFromRegister(Register.REG00_Minimal_System_Voltage, 1);
 
             return new ElectricPotentialDc(
                 (buffer[0] * StepMinimalSystemVoltage) + FixedOffsetMinimalSystemVoltage,
@@ -136,7 +137,7 @@ namespace Iot.Device.Bq25798
             }
 
             // read existing content
-            byte[] buffer = ReadContentsFromRegister(Register.REG00_Minimal_System_Voltage, 1);
+            byte[] buffer = ReadFromRegister(Register.REG00_Minimal_System_Voltage, 1);
 
             // divide by step value, as the register takes the value as 240mV steps
             var newValue = value.MillivoltsDc / StepMinimalSystemVoltage;
@@ -159,7 +160,7 @@ namespace Iot.Device.Bq25798
 
         private ThresholdFastCharge GetThresholdFastCharge()
         {
-            byte[] buffer = ReadContentsFromRegister(Register.REG08_Precharge_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG08_Precharge_Control, 1);
 
             return (ThresholdFastCharge)(buffer[0] >> 6);
         }
@@ -167,7 +168,7 @@ namespace Iot.Device.Bq25798
         private void SetThresholdFastCharge(ThresholdFastCharge value)
         {
             // read existing content
-            byte[] buffer = ReadContentsFromRegister(Register.REG08_Precharge_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG08_Precharge_Control, 1);
 
             // process value to replace VBAT_LOWV_1:0
             buffer[0] = (byte)(((byte)value << 6) | (byte)(buffer[0] & 0b0011_1111));
@@ -175,7 +176,7 @@ namespace Iot.Device.Bq25798
 
         private ElectricCurrent GetPrechargeCurrentLimit()
         {
-            byte[] buffer = ReadContentsFromRegister(Register.REG08_Precharge_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG08_Precharge_Control, 1);
 
             return new ElectricCurrent(
                 buffer[0] & PrechargeCurrentLimitMask * StepPrechargeCurrentLimit,
@@ -192,7 +193,7 @@ namespace Iot.Device.Bq25798
             }
 
             // read existing content
-            byte[] buffer = ReadContentsFromRegister(Register.REG08_Precharge_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG08_Precharge_Control, 1);
 
             // divide by 40 as the register takes the value as 40mA steps
             var newValue = value.Milliamperes / StepPrechargeCurrentLimit;
@@ -213,7 +214,7 @@ namespace Iot.Device.Bq25798
 
         private ElectricPotentialDc GetVbus()
         {
-            byte[] buffer = ReadContentsFromRegister(Register.REG35_VBUS_ADC, 2);
+            byte[] buffer = ReadFromRegister(Register.REG35_VBUS_ADC_Register, 2);
 
             var vbus = (buffer[0] << 8) | buffer[1];
 
@@ -226,7 +227,7 @@ namespace Iot.Device.Bq25798
 
         #region Helper Methods to Read and Write to Registers
 
-        private void WriteContentsToRegister(Register register, byte[] contents)
+        private void WriteToRegister(Register register, byte[] contents)
         {
             byte[] writeBuffer = new byte[contents.Length + 1];
             writeBuffer[0] = (byte)register;
@@ -241,7 +242,7 @@ namespace Iot.Device.Bq25798
             }
         }
 
-        private byte[] ReadContentsFromRegister(Register register, int readByteCount)
+        private byte[] ReadFromRegister(Register register, int readByteCount)
         {
             SpanByte writeBuff = new byte[1] { (byte)register };
 
