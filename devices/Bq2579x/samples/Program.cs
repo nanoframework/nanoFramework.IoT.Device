@@ -24,6 +24,9 @@ Debug.WriteLine("");
 // disabling I2C watchog for simplicity
 charger.WatchdogTimerSetting = WatchdogSetting.Disable;
 
+// enable ADC
+charger.AdcEnable = true;
+
 Debug.WriteLine($"Minimum System Voltage is config @ {charger.MinimalSystemVoltage.VoltsDc:N3}V");
 
 while (true)

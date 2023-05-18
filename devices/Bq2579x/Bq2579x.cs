@@ -22,24 +22,33 @@ namespace Iot.Device.Bq2579x
         public const byte DefaultI2cAddress = 0x6B;
 
         private const byte DevicePartNumberMask = 0b00111000;
-        private const byte DeviceRevisionMask = 0b00000111;
         private const byte PrechargeCurrentLimitMask = 0b00111111;
         private const byte ChargerStatus1ChargeStatusMask = 0b1110_0000;
         private const byte ChargerStatus1VbusStatusMask = 0b0001_1110;
         private const byte ChargerStatus1Bc12DetectionMask = 0b0000_0001;
         private const byte ChargerControl1WatchdogMask = 0b0000_0111;
+        private const byte AdcControlEnableMask = 0b1000_0000;
+        private const byte AdcControlConversionRateMask = 0b0100_0000;
+        private const byte AdcControlResolutionMask = 0b0011_0000;
+        private const byte AdcControlAverageControlMask = 0b0000_1000;
+        private const byte AdcControlInitialAverageMask = 0b0000_0100;
 
         private const int FixedOffsetMinimalSystemVoltage = 2500;
         private const int MaxValueMinimalSystemVoltage = 16000;
         private const int StepMinimalSystemVoltage = 250;
-
         private const int PrechargeCurrentLimitMinValue = 40;
         private const int StepPrechargeCurrentLimit = 40;
         private const int PrechargeCurrentLimitMaxValue = 2000;
+        private const int FixedOffsetMinimalChargeVoltageLimit = 3000;
+        private const int MaxValueChargeVoltageLimit = 18800;
+        private const int FixedOffsetMinimalChargeCurrentLimit = 50;
+        private const int MaxValueChargeCurrentLimit = 5000;
 
-        private const int DeviceRevision = 0b00000001;
         private const int VbusAdcStep = 1;
+        private const int ChargeVoltageStep = 10;
+        private const int ChargeCurrentStep = 10;
         private const float TdieStemp = 0.5f;
+
         private I2cDevice _i2cDevice;
         private Model _deviceModel;
 
@@ -68,6 +77,37 @@ namespace Iot.Device.Bq2579x
         public bool Bc12Detection => GetBc12Detection();
 
         /// <summary>
+        /// Gets or sets a value indicating whether the ADC is enable.
+        /// </summary>
+        /// <value><see langword="true"/> to enable ADC, otherwise <see langword="false"/>.</value>
+        [Property]
+        public bool AdcEnable { get => GetAdcEnable(); set => SetAdcEnable(value); }
+
+        /// <summary>
+        /// Gets or sets ADC conversion rate.
+        /// </summary>
+        [Property]
+        public AdcConversioRate AdcConversionRate { get => GetAdcConversionRate(); set => SetAdcConversionRate(value); }
+
+        /// <summary>
+        /// Gets or sets ADC resolution.
+        /// </summary>
+        [Property]
+        public AdcResolution AdcResolution { get => GetAdcResolution(); set => SetAdcResolution(value); }
+
+        /// <summary>
+        /// Gets or sets ADC resolution.
+        /// </summary>
+        [Property]
+        public AdcAveraging AdcAveraging { get => GetAdcAveraging(); set => SetAdcAveraging(value); }
+
+        /// <summary>
+        /// Gets or sets ADC resolution.
+        /// </summary>
+        [Property]
+        public AdcInitialAverage AdcInitialAverage { get => GetAdcInitialAverage(); set => SetAdcInitialAverage(value); }
+
+        /// <summary>
         /// Gets charger status 0.
         /// </summary>
         [Property]
@@ -87,6 +127,34 @@ namespace Iot.Device.Bq2579x
         /// </remarks>
         [Property]
         public ElectricPotentialDc MinimalSystemVoltage { get => GetMinimalSystemVoltage(); set => SetMinimalSystemVoltage(value); }
+
+        /// <summary>
+        /// Gets or sets Battery Voltage Limit.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">If value is out of range (3000mV-18800mV).</exception>
+        /// <remarks>
+        /// <para>
+        /// During POR, the device reads the resistance tie to PROG pin, to identify the default battery cell count and determine the default power-on battery voltage regulation limit.
+        /// </para>
+        /// <para>
+        /// Range: 3000mV-18800mV.
+        /// </para>
+        /// </remarks>
+        public ElectricPotentialDc ChargeVoltageLimit { get => GetChargeVoltageLimit(); set => SetChargeVoltageLimit(value); }
+
+        /// <summary>
+        /// Gets or sets Charge Current Limit.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">If value is out of range (50mA-5000mA).</exception>
+        /// <remarks>
+        /// <para>
+        /// During POR, the device reads the resistance tie to PROG pin, to identify the default battery cell count and determine the default power-on battery charging current: 1A.
+        /// </para>
+        /// <para>
+        /// Range: 50mA-5000mA.
+        /// </para>
+        /// </remarks>
+        public ElectricCurrent ChargeCurrentLimit { get => GetChargeCurrentLimit(); set => SetChargeCurrentLimit(value); }
 
         /// <summary>
         /// Gets or sets battery voltage thresholds for the transition from precharge to fast charge.
@@ -278,6 +346,88 @@ namespace Iot.Device.Bq2579x
 
         #endregion
 
+        #region REG01_Charge_Voltage_Limit
+
+        // REG01_Charge_Voltage_Limit
+        // | 15 14 13 12 11 | 10 9 8 | 7 6 5 4 3 2 1 0 |
+        // |    RESERVED    |        VREG_10:0         |
+        ////
+
+        private ElectricPotentialDc GetChargeVoltageLimit()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG01_Charge_Voltage_Limit, 2);
+
+            var vbus = (buffer[0] << 8) | buffer[1];
+
+            return new ElectricPotentialDc(
+                vbus * ChargeVoltageStep,
+                UnitsNet.Units.ElectricPotentialDcUnit.MillivoltDc);
+        }
+
+        private void SetChargeVoltageLimit(ElectricPotentialDc value)
+        {
+            // sanity check
+            if (value.MillivoltsDc < FixedOffsetMinimalChargeVoltageLimit
+                || value.MillivoltsDc > MaxValueChargeVoltageLimit)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            // divide by step value, as the register takes the value as 10mV steps
+            var newValue = value.MillivoltsDc / ChargeVoltageStep;
+
+            byte[] buffer = new byte[2];
+
+            // process value 
+            buffer[0] |= (byte)newValue;
+            buffer[1] |= (byte)((int)newValue >> 8);
+
+            WriteToRegister(Register.REG01_Charge_Voltage_Limit, buffer);
+        }
+
+        #endregion
+
+        #region REG03_Charge_Current_Limit
+
+        // REG03_Charge_Current_Limit
+        // | 15 14 13 12 11 10 9 8 | 7 6 5 4 3 2 1 0 |
+        // |       RESERVED        |     ICHG_8:0    |
+        ////
+
+        private ElectricCurrent GetChargeCurrentLimit()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG03_Charge_Current_Limit, 2);
+
+            var vbus = (buffer[0] << 8) | buffer[1];
+
+            return new ElectricCurrent(
+                vbus * ChargeCurrentStep,
+                UnitsNet.Units.ElectricCurrentUnit.Milliampere);
+        }
+
+        private void SetChargeCurrentLimit(ElectricCurrent value)
+        {
+            // sanity check
+            if (value.Milliamperes < FixedOffsetMinimalChargeCurrentLimit
+                || value.Milliamperes > MaxValueChargeCurrentLimit)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            // divide by step value, as the register takes the value as 10mA steps
+            var newValue = value.Milliamperes / ChargeCurrentStep;
+
+            byte[] buffer = new byte[2];
+
+            // process value 
+            buffer[0] |= (byte)newValue;
+            buffer[1] |= (byte)((int)newValue >> 8);
+
+            WriteToRegister(Register.REG03_Charge_Current_Limit, buffer);
+        }
+
+        #endregion
+
         #region REG08_Precharge_Control
 
         // REG08_Precharge_Control Register
@@ -354,6 +504,115 @@ namespace Iot.Device.Bq2579x
 
         #endregion
 
+        #region REG2E_ADC_Control
+
+        // REG08_Precharge_Control Register
+        // |    7   |    6     |       5 4      |    3    |      2       |    1 0   |
+        // | ADC_EN | ADC_RATE | ADC_SAMPLE_1:0 | ADC_AVG | ADC_AVG_INIT | RESERVED |
+        ////
+
+        private bool GetAdcEnable()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            return (buffer[0] & AdcControlEnableMask) != 0;
+        }
+
+        private void SetAdcEnable(bool value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            // clear bit
+            buffer[0] = (byte)(buffer[0] & ~AdcControlEnableMask);
+
+            // set bit if needed
+            if (value)
+            {
+                buffer[0] |= AdcControlEnableMask;
+            }
+
+            WriteToRegister(Register.REG2E_ADC_Control, buffer[0]);
+        }
+
+        private AdcConversioRate GetAdcConversionRate()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            return (AdcConversioRate)(buffer[0] & AdcControlConversionRateMask);
+        }
+
+        private void SetAdcConversionRate(AdcConversioRate value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            // clear bit
+            buffer[0] = (byte)(buffer[0] & ~AdcControlConversionRateMask);
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG2E_ADC_Control, buffer[0]);
+        }
+
+        private AdcResolution GetAdcResolution()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            return (AdcResolution)(buffer[0] & AdcControlResolutionMask);
+        }
+
+        private void SetAdcResolution(AdcResolution value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~AdcControlResolutionMask);
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG2E_ADC_Control, buffer[0]);
+        }
+
+        private AdcAveraging GetAdcAveraging()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            return (AdcAveraging)(buffer[0] & AdcControlAverageControlMask);
+        }
+
+        private void SetAdcAveraging(AdcAveraging value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~AdcControlAverageControlMask);
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG2E_ADC_Control, buffer[0]);
+        }
+
+        private AdcInitialAverage GetAdcInitialAverage()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            return (AdcInitialAverage)(buffer[0] & AdcControlInitialAverageMask);
+        }
+
+        private void SetAdcInitialAverage(AdcInitialAverage value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG2E_ADC_Control, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~AdcControlInitialAverageMask);
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG2E_ADC_Control, buffer[0]);
+        }
+
+        #endregion
+
         #region REGxx_NN_ADCs
 
         // REG35_VBUS_ADC Register
@@ -392,7 +651,7 @@ namespace Iot.Device.Bq2579x
             var ascReading = (buffer[0] << 8) | buffer[1];
 
             return new Temperature(
-                ascReading * TdieStemp, 
+                ascReading * TdieStemp,
                 UnitsNet.Units.TemperatureUnit.DegreeCelsius);
         }
 

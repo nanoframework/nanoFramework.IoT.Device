@@ -30,7 +30,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="AdcInitialAverage.cs" />
+    <Compile Include="AdcAveraging.cs" />
+    <Compile Include="AdcResolution.cs" />
     <Compile Include="ChargerStatus0.cs" />
+    <Compile Include="AdcConversioRate.cs" />
     <Compile Include="WatchdogSetting.cs" />
     <Compile Include="VbusStatus.cs" />
     <Compile Include="ChargeStatus.cs" />

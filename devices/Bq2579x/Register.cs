@@ -9,10 +9,13 @@ namespace Iot.Device.Bq2579x
     internal enum Register : byte
     {
         REG00_Minimal_System_Voltage = 0x01,
+        REG01_Charge_Voltage_Limit = 0x01,
+        REG03_Charge_Current_Limit = 0x03,
         REG08_Precharge_Control = 0x08,
         REG10_Charger_Control_1 = 0x10,
         REG1B_Charger_Status_0 = 0x1B,
         REG1C_Charger_Status_1 = 0x1C,
+        REG2E_ADC_Control = 0x2E,
         REG35_VBUS_ADC = 0x35,
         REG37_VAC1_ADC = 0x37,
         REG39_VAC2_ADC = 0x39,
