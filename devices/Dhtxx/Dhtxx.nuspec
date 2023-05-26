@@ -20,14 +20,14 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Dhtxx</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.295" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.295" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.325" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.325" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
       <dependency id="nanoFramework.System.Math" version="1.5.29" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.13.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.13.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.15.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.15.0" />
     </dependencies>
   </metadata>
   <files>
