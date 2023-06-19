@@ -15,6 +15,9 @@ The 'SIM7080G' supports both 'CAT-M' and 'NB-IoT'. It can be controlled through 
 **Important**: make sure you properly setup the RT/RX pins especially for ESP32 before creating the `SerialPort`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
 
 ```csharp
+static SerialPort _serialPort;
+static Sim7080G _sim;
+
 private static void OpenSerialPort(
     string port = "COM3",
     int baudRate = 115200,
@@ -65,7 +68,7 @@ private static void SerialDevice_DataReceived(object sender, SerialDataReceivedE
 Initiate the module by passing in the `SerialPort` instance into the constructor:
 
 ```csharp
- Sim7080G sim = new Sim7080G(_serialPort);
+ _sim = new Sim7080G(_serialPort);
 ```
 
 An example on how to use this device binding is available in the [samples](samples) folder.
