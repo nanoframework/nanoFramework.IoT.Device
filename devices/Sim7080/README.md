@@ -75,3 +75,11 @@ Initiate the module by passing in the `SerialPort` instance into the constructor
 ```
 
 An example on how to use this device binding is available in the [samples](samples) folder.
+
+## Articles
+
+[Starting a Narrowband IoT project with nanoFramework](https://medium.com/itnext/when-machines-talk-bccba9a8c049)
+
+[Establishing a connection to Azure IoT Hub using an MQTT client with nanoFramework](https://medium.com/itnext/establishing-a-connection-to-azure-iot-hub-using-an-mqtt-client-with-nanoframework-d9c2e1b4ebbe)
+
+[Creating a tracking device with nanoFramework](https://medium.com/itnext/creating-a-tracking-device-with-nanoframework-6d27b5b4e7ab)
