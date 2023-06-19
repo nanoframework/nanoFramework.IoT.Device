@@ -59,6 +59,9 @@ private static void OpenSerialPort(
 Create an EventHandler to handle the `AT Command Acknowledge messages` received via the `SerialPort`:
 
 ```csharp
+
+_serialPort.DataReceived += SerialDevice_DataReceived;
+
 private static void SerialDevice_DataReceived(object sender, SerialDataReceivedEventArgs e)
 {
     _sim.ReadResponse();
