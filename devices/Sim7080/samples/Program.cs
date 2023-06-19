@@ -102,9 +102,6 @@ namespace Sim7080.Sample
             StopBits stopBits = StopBits.One,
             Handshake handshake = Handshake.XOnXOff,
             int dataBits = 8,
-            //int readBufferSize = 2048,
-            //int readTimeout = 1000,
-            //int writeTimeout = 1000,
             char watchChar = '\r')
         {
             //Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
@@ -119,11 +116,6 @@ namespace Sim7080.Sample
                 StopBits = stopBits,
                 Handshake = handshake,
                 DataBits = dataBits,
-
-                //If dealing with massive data input, increase the buffer size
-                //ReadBufferSize = readBufferSize,
-                //ReadTimeout = readTimeout,
-                //WriteTimeout = writeTimeout
             };
 
             try

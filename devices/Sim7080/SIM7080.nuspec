@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
-		<id>nanoFramework.Iot.Device.SIM7080</id>
+		<id>nanoFramework.Iot.Device.SIM7080G</id>
 		<version>$version$</version>
-		<title>nanoFramework.Iot.Device.SIM7080</title>
+		<title>nanoFramework.Iot.Device.SIM7080G</title>
 		<authors>nanoframework</authors>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<license type="file">LICENSE.md</license>
 		<releaseNotes>
-    </releaseNotes>
+		</releaseNotes>
 		<readme>docs\README.md</readme>
 		<developmentDependency>false</developmentDependency>
 		<projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
