@@ -40,8 +40,8 @@
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.3.37\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential, Version=5.19.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.19.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotential, Version=5.21.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.21.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
