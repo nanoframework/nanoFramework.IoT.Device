@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
@@ -186,7 +189,6 @@ namespace IoT.Device.Sim7080
         /// Disconnect from MQTT Endpoint
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem</param>
-        /// <param name="topic">The name of the topic</param>
         /// <returns><see cref="ConnectionStatus"/></returns>
         public static ConnectionStatus EndpointDisconnect(SerialPort serialPort)
         {

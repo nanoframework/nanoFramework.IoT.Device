@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Text;
@@ -6,6 +9,9 @@ using System.Threading;
 
 namespace IoT.Device.Sim7080
 {
+    /// <summary>
+    /// Sim7080G Multi-Band CAT-M(eMTC) and NB-IoT module
+    /// </summary>
     public class Sim7080G
     {
         /// <summary>

@@ -9,9 +9,11 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Sim7080.Sample", "samples\S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF444B8B-2008-4DAF-A001-7DC2A22ECC86}"
 	ProjectSection(SolutionItems) = preProject
+		category.txt = category.txt
 		README.md = README.md
-		SIM7080.nuspec = SIM7080.nuspec
+		Settings.StyleCop = Settings.StyleCop
 		version.json = version.json
+		Sim7080.nuspec = Sim7080.nuspec
 	EndProjectSection
 EndProject
 Global

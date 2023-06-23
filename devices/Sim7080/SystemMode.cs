@@ -1,7 +1,16 @@
-﻿namespace IoT.Device.Sim7080
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+namespace IoT.Device.Sim7080
 {
+    /// <summary>
+    /// The mode the system will use to connect to the provider network
+    /// </summary>
     public enum SystemMode
     {
+        /// <summary>
+        /// No Service detected
+        /// </summary>
         NoService = 0,
 
         /// <summary>

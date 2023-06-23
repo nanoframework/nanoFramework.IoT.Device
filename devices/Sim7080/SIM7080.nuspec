@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
-		<id>nanoFramework.Iot.Device.SIM7080</id>
+		<id>nanoFramework.Iot.Device.Sim7080</id>
 		<version>$version$</version>
-		<title>nanoFramework.Iot.Device.SIM7080</title>
+		<title>nanoFramework.Iot.Device.Sim7080</title>
 		<authors>nanoframework,LINKIT</authors>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<license type="file">LICENSE.md</license>
@@ -15,9 +15,9 @@
 		<icon>images\nf-logo.png</icon>
 		<repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$"/>
 		<copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-		<description>This package includes the .NET IoT Core binding Iot.Device.SIM7080 for .NET nanoFramework C# projects.</description>
-		<summary>Iot.Device.SIM7080 assembly for .NET nanoFramework C# projects</summary>
-		<tags>nanoFramework C# csharp netmf netnf SIM7080</tags>
+		<description>This package includes the .NET IoT Core binding Iot.Device.Sim7080 for .NET nanoFramework C# projects.</description>
+		<summary>Iot.Device.Sim7080 assembly for .NET nanoFramework C# projects</summary>
+		<tags>nanoFramework C# csharp netmf netnf Sim7080</tags>
 		<dependencies>
 			<dependency id="nanoFramework.CoreLibrary" version="1.14.2"/>
 			<dependency id="nanoFramework.Runtime.Events" version="1.11.6"/>
@@ -29,11 +29,11 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="bin\Release\Iot.Device.SIM7080.dll" target="lib\Iot.Device.SIM7080.dll"/>
-		<file src="bin\Release\Iot.Device.SIM7080.pdb" target="lib\Iot.Device.SIM7080.pdb"/>
-		<file src="bin\Release\Iot.Device.SIM7080.pdbx" target="lib\Iot.Device.SIM7080.pdbx"/>
-		<file src="bin\Release\Iot.Device.SIM7080.pe" target="lib\Iot.Device.SIM7080.pe"/>
-		<file src="bin\Release\Iot.Device.SIM7080.xml" target="lib\Iot.Device.SIM7080.xml"/>
+		<file src="bin\Release\Iot.Device.Sim7080.dll" target="lib\Iot.Device.Sim7080.dll"/>
+		<file src="bin\Release\Iot.Device.Sim7080.pdb" target="lib\Iot.Device.Sim7080.pdb"/>
+		<file src="bin\Release\Iot.Device.Sim7080.pdbx" target="lib\Iot.Device.Sim7080.pdbx"/>
+		<file src="bin\Release\Iot.Device.Sim7080.pe" target="lib\Iot.Device.Sim7080.pe"/>
+		<file src="bin\Release\Iot.Device.Sim7080.xml" target="lib\Iot.Device.Sim7080.xml"/>
 		<file src="README.md" target="docs\"/>
 		<file src="..\..\assets\nf-logo.png" target="images"/>
 		<file src="..\..\LICENSE.md" target=""/>
