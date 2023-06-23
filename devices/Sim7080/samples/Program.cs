@@ -15,18 +15,13 @@ namespace Sim7080.Sample
         static SerialPort _serialPort;
         static Sim7080G _sim;
 
-        //// Provider variables
-        //static readonly string _apn = "<YOUR-APN>";
+        // Provider variables
+        static readonly string _apn = "<YOUR-APN>";
 
-        //// Azure EventHub variables
-        //static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
-        //static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
-        //static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
-
-        static readonly string _apn = "sam.iot-provider.com";
-        static readonly string _deviceId = "hive07";
-        static readonly string _hubName = "lnkt-dev-weu-769-iot";
-        static readonly string _sasToken = "HostName=lnkt-dev-weu-769-iot.azure-devices.net;DeviceId=hive7;SharedAccessSignature=SharedAccessSignature sr=lnkt-dev-weu-769-iot.azure-devices.net%2Fdevices%2Fhive7&sig=ErbmINfD8GL7R44wN5DZzbHT5aqL55Ty%2F5%2Fa3SQ1Qkk%3D&se=1719082106";
+        // Azure EventHub variables
+        static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
+        static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
+        static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
 
         private static ConnectionStatus _networkConnected { get; set; } = ConnectionStatus.Disconnected;
 
