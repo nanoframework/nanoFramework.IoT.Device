@@ -12,9 +12,11 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>NFApp2</RootNamespace>
-    <AssemblyName>NFApp2</AssemblyName>
+    <RootNamespace>Sim7080.Sample</RootNamespace>
+    <AssemblyName>Sim7080.Sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -49,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IoT.Device.Sim7080.nfproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="secret" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

@@ -3,6 +3,7 @@
 The 'Sim7080' supports both 'CAT-M' and 'NB-IoT'. It can be controlled through AT command via a Serial/UART interface.
 
 > Note: The module is tested on a Sim7080 but is also compatible with Sim7070 and Sim7090.
+
 ## Documentation
 
 [Datasheet](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/sim7080g/en/Sim7080_Series_SPEC_20200427.pdf) for the Sim7080G.

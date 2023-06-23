@@ -10,18 +10,27 @@ using System.Threading;
 
 namespace Sim7080.Sample
 {
-    public class Program
+    public static class Program
     {
         static SerialPort _serialPort;
         static Sim7080G _sim;
 
-        // Provider variables
-        static string _apn = "<YOUR-APN>";
+        //// Provider variables
+        //static readonly string _apn = "<YOUR-APN>";
 
-        // Azure EventHub variables
-        static string _deviceId = "<YOUR-DEVICE-NAME>";
-        static string _hubName = "<YOUR-IOT-HUB-NAME>";
-        static string _sasToken = "<YOUR-SAS-TOKEN>";
+        //// Azure EventHub variables
+        //static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
+        //static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
+        //static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
+
+        static readonly string _apn = "sam.iot-provider.com";
+        static readonly string _deviceId = "hive07";
+        static readonly string _hubName = "lnkt-dev-weu-769-iot";
+        static readonly string _sasToken = "HostName=lnkt-dev-weu-769-iot.azure-devices.net;DeviceId=hive7;SharedAccessSignature=SharedAccessSignature sr=lnkt-dev-weu-769-iot.azure-devices.net%2Fdevices%2Fhive7&sig=ErbmINfD8GL7R44wN5DZzbHT5aqL55Ty%2F5%2Fa3SQ1Qkk%3D&se=1719082106";
+
+        private static ConnectionStatus _networkConnected { get; set; } = ConnectionStatus.Disconnected;
+
+        private static ConnectionStatus _endpointConnected { get; set; } = ConnectionStatus.Disconnected;
 
         public static void Main()
         {
@@ -37,7 +46,7 @@ namespace Sim7080.Sample
             _sim.SetNetworkSystemMode(SystemMode.LTE_NB, false);
 
             // Connect to network access point
-            _sim.NetworkConnect(_apn);
+            _networkConnected = _sim.NetworkConnect(_apn);
 
             // Display network operator
             Debug.WriteLine(_sim.Operator);
@@ -46,26 +55,26 @@ namespace Sim7080.Sample
             Debug.WriteLine(_sim.IPAddress);
 
             // Connect to Endpoint
-            if (_sim.NetworkConnected == ConnectionStatus.Connected)
+            if (_networkConnected == ConnectionStatus.Connected)
             {
-                _sim.ConnectAzureIoTHub(_deviceId, _hubName, _sasToken);
+                _endpointConnected = _sim.ConnectAzureIoTHub(_deviceId, _hubName, _sasToken);
             }
 
-            if (_sim.EndpointConnected == ConnectionStatus.Connected)
+            if (_endpointConnected == ConnectionStatus.Connected)
             {
                 _sim.SendMessage($"test{Guid.NewGuid()}");
             }
 
             // Disconnect from Endpoint
-            if (_sim.EndpointConnected == ConnectionStatus.Connected)
+            if (_endpointConnected == ConnectionStatus.Connected)
             {
-                _sim.DisonnectAzureIoTHub();
+                _endpointConnected = _sim.DisonnectAzureIoTHub();
             }
 
             // Disconnect from network access point
             if (_sim.NetworkConnected == ConnectionStatus.Connected)
             {
-                _sim.NetworkDisconnect();
+                _networkConnected = _sim.NetworkDisconnect();
             }
 
             CloseSerialPort();

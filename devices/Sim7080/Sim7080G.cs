@@ -87,12 +87,13 @@ namespace IoT.Device.Sim7080
         /// Connect to the cellular network.
         /// </summary>
         /// <param name="apn">Cellular network access point name.</param>
-        public void NetworkConnect(string apn)
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus NetworkConnect(string apn)
         {
             if (!_serialPort.IsOpen)
             {
                 NetworkConnected = ConnectionStatus.Disconnected;
-                return;
+                return NetworkConnected;
             }
 
             var retryCount = 0;
@@ -104,18 +105,22 @@ namespace IoT.Device.Sim7080
                 SimController.NetworkConnect(_serialPort, apn);
             }
             while (NetworkConnected == ConnectionStatus.Disconnected && retryCount < Retry);
+            return NetworkConnected;
         }
 
         /// <summary>
         /// Disconnect to the cellular network .
         /// </summary>
-        public void NetworkDisconnect()
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus NetworkDisconnect()
         {
             if (_serialPort.IsOpen &&
                 NetworkConnected == ConnectionStatus.Connected)
             {
                 SimController.NetworkDisconnect(_serialPort);
             }
+
+            return NetworkConnected;
         }
 
         /// <summary>
@@ -127,12 +132,13 @@ namespace IoT.Device.Sim7080
         /// <param name="portNumber">The MQTT port number.</param>
         /// <param name="apiVersion">The Azure IoT Hub API version.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
-        public void ConnectAzureIoTHub(string deviceId, string hubName, string sasToken, int portNumber = 8883, string apiVersion = "2021-04-12", int wait = 5000)
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus ConnectAzureIoTHub(string deviceId, string hubName, string sasToken, int portNumber = 8883, string apiVersion = "2021-04-12", int wait = 5000)
         {
             if (!_serialPort.IsOpen || NetworkConnected == ConnectionStatus.Disconnected)
             {
                 EndpointConnected = ConnectionStatus.Disconnected;
-                return;
+                return EndpointConnected;
             }
 
             string username = $"{hubName}.azure-devices.net/{deviceId}/?api-version={apiVersion}";
@@ -153,6 +159,8 @@ namespace IoT.Device.Sim7080
 
             // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c"/>
             PubTopic = $"devices/{deviceId}/messages/events/";
+
+            return EndpointConnected;
         }
 
         /// <summary>
@@ -164,12 +172,13 @@ namespace IoT.Device.Sim7080
         /// <param name="username">The user name for endpoint authentication.</param>
         /// <param name="password">The password for endpoint authentication.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
-        public void ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 5000)
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 5000)
         {
             if (!_serialPort.IsOpen || NetworkConnected == ConnectionStatus.Disconnected)
             {
                 EndpointConnected = ConnectionStatus.Disconnected;
-                return;
+                return EndpointConnected;
             }
 
             var retryCount = 0;
@@ -181,13 +190,16 @@ namespace IoT.Device.Sim7080
                 EndpointConnected = SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, wait);
             }
             while (EndpointConnected == ConnectionStatus.Disconnected && retryCount < Retry);
+
+            return EndpointConnected;
         }
 
         /// <summary>
         /// Subscribe to Cloud-2-Device Event Hub Topic.
         /// </summary>
         /// <param name="topic">Event Hub Topic Name, uses <see cref="SubTopic"/>when null.</param> 
-        public void Subscribe2Topic(string topic)
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus Subscribe2Topic(string topic)
         {
             SubTopic = (topic != null) ? topic : SubTopic;
 
@@ -200,6 +212,8 @@ namespace IoT.Device.Sim7080
                 TopicConnected = SimController.SubscribeToTopic(_serialPort, topic);
             }
             while (TopicConnected == ConnectionStatus.Disconnected && retryCount < Retry);
+
+            return TopicConnected;
         }
 
         /// <summary>
@@ -215,7 +229,8 @@ namespace IoT.Device.Sim7080
         /// <summary>
         /// Disconnect to Azure IoT Hub.
         /// </summary>
-        public void DisonnectAzureIoTHub()
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus DisonnectAzureIoTHub()
         {
             if (_serialPort.IsOpen &&
                 NetworkConnected == ConnectionStatus.Connected &&
@@ -230,12 +245,15 @@ namespace IoT.Device.Sim7080
 
                 EndpointConnected = SimController.EndpointDisconnect(_serialPort);
             }
+
+            return EndpointConnected;
         }
 
         /// <summary>
         /// Disconnect from generic endpoint.
         /// </summary>
-        public void DisonnectEndpoint()
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        public ConnectionStatus DisonnectEndpoint()
         {
             if (_serialPort.IsOpen &&
                 NetworkConnected == ConnectionStatus.Connected &&
@@ -243,6 +261,8 @@ namespace IoT.Device.Sim7080
             {
                 EndpointConnected = SimController.EndpointDisconnect(_serialPort);
             }
+
+            return EndpointConnected;
         }
 
         /// <summary>
