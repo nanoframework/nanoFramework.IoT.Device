@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
-		<id>nanoFramework.Iot.Device.SIM7080G</id>
+		<id>nanoFramework.Iot.Device.SIM7080</id>
 		<version>$version$</version>
-		<title>nanoFramework.Iot.Device.SIM7080G</title>
+		<title>nanoFramework.Iot.Device.SIM7080</title>
 		<authors>nanoframework</authors>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<license type="file">LICENSE.md</license>
