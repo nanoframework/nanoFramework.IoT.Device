@@ -25,27 +25,27 @@ namespace Sim7080.Sample
 
         public static void Main()
         {
-            //Open serial port
+            // Open serial port
             OpenSerialPort();
 
-            //Setup an event handler that will fire when a char is received in the serial device input stream
+            // Setup an event handler that will fire when a char is received in the serial device input stream
             _serialPort.DataReceived += SerialDevice_DataReceived;
 
             _sim = new Sim7080G(_serialPort);
 
-            //Switch to prefered network mode
+            // Switch to prefered network mode
             _sim.SetNetworkSystemMode(SystemMode.LTE_NB, false);
 
-            //Connect to network access point
+            // Connect to network access point
             _sim.NetworkConnect(_apn);
 
-            //Display network operator
+            // Display network operator
             Debug.WriteLine(_sim.Operator);
 
-            //Display Public IP address
+            // Display Public IP address
             Debug.WriteLine(_sim.IPAddress);
 
-            //Connect to Endpoint
+            // Connect to Endpoint
             if (_sim.NetworkConnected == ConnectionStatus.Connected)
             {
                 _sim.ConnectAzureIoTHub(_deviceId, _hubName, _sasToken);
@@ -56,13 +56,13 @@ namespace Sim7080.Sample
                 _sim.SendMessage($"test{Guid.NewGuid()}");
             }
 
-            //Disconnect from Endpoint
+            // Disconnect from Endpoint
             if (_sim.EndpointConnected == ConnectionStatus.Connected)
             {
                 _sim.DisonnectAzureIoTHub();
             }
 
-            //Disconnect from network access point
+            // Disconnect from network access point
             if (_sim.NetworkConnected == ConnectionStatus.Connected)
             {
                 _sim.NetworkDisconnect();
@@ -74,7 +74,7 @@ namespace Sim7080.Sample
         }
 
         /// <summary>
-        /// Event raised when message is received from the serial port
+        /// Event raised when message is received from the serial port.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -86,7 +86,7 @@ namespace Sim7080.Sample
         #region serial
 
         /// <summary>
-        /// Configure and open the serial port for communication
+        /// Configure and open the serial port for communication.
         /// </summary>
         /// <param name="port"></param>
         /// <param name="baudRate"></param>
@@ -107,7 +107,7 @@ namespace Sim7080.Sample
             int dataBits = 8,
             char watchChar = '\r')
         {
-            //Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
+            // Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
             Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
 
@@ -123,7 +123,7 @@ namespace Sim7080.Sample
 
             try
             {
-                //Open the serial port
+                // Open the serial port
                 _serialPort.Open();
             }
             catch (Exception exception)
@@ -131,7 +131,7 @@ namespace Sim7080.Sample
                 Debug.WriteLine(exception.Message);
             }
 
-            //Set a watch char to be notified when it's available in the input stream
+            // Set a watch char to be notified when it's available in the input stream
             _serialPort.WatchChar = watchChar;
         }
 

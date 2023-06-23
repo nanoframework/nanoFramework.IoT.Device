@@ -4,22 +4,22 @@
 namespace IoT.Device.Sim7080
 {
     /// <summary>
-    /// Information about the status of the connection
+    /// Information about the status of the connection.
     /// </summary>
     public enum ConnectionStatus
     {
         /// <summary>
-        /// The connection is disconnected
+        /// The connection is disconnected.
         /// </summary>
         Disconnected,
 
         /// <summary>
-        /// The connection is connected
+        /// The connection is connected.
         /// </summary>
         Connected,
 
         /// <summary>
-        /// An error occured when establishing a connection
+        /// An error occured when establishing a connection.
         /// </summary>
         Error
     }
