@@ -4,7 +4,7 @@
 		<id>nanoFramework.Iot.Device.Sim7080</id>
 		<version>$version$</version>
 		<title>nanoFramework.Iot.Device.Sim7080</title>
-		<authors>nanoframework,LINKIT</authors>
+		<authors>nanoframework</authors>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<license type="file">LICENSE.md</license>
 		<releaseNotes>
@@ -17,7 +17,7 @@
 		<copyright>Copyright (c) .NET Foundation and Contributors</copyright>
 		<description>This package includes the .NET IoT Core binding Iot.Device.Sim7080 for .NET nanoFramework C# projects.</description>
 		<summary>Iot.Device.Sim7080 assembly for .NET nanoFramework C# projects</summary>
-		<tags>nanoFramework C# csharp netmf netnf Sim7080</tags>
+		<tags>nanoFramework C# csharp netmf netnf Iot.Device.Sim7080</tags>
 		<dependencies>
 			<dependency id="nanoFramework.CoreLibrary" version="1.14.2"/>
 			<dependency id="nanoFramework.Runtime.Events" version="1.11.6"/>
