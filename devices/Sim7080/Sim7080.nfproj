@@ -36,7 +36,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="AcknowledgementTranslator.cs" />
     <Compile Include="ConnectionStatus.cs" />
+    <Compile Include="DeviceInformation.cs" />
+    <Compile Include="SimCardInformation.cs" />
+    <Compile Include="NetworkInformation.cs" />
     <Compile Include="SimController.cs" />
     <Compile Include="Sim7080G.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,8 +65,14 @@
     <Reference Include="System.IO.Streams">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.38\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.RegularExpressions">
-      <HintPath>packages\nanoFramework.System.Text.RegularExpressions.1.1.37\lib\System.Text.RegularExpressions.dll</HintPath>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.5.29\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net">
+      <HintPath>packages\nanoFramework.System.Net.1.10.52\lib\System.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>packages\nanoFramework.System.Threading.1.1.19\lib\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
-using System.Text;
 using System.Threading;
 
 namespace IoT.Device.Sim7080
@@ -20,25 +19,52 @@ namespace IoT.Device.Sim7080
         private readonly SerialPort _serialPort;
 
         /// <summary>
+        /// The current acknowledgement message that is translated with the <see cref="AcknowledgementTranslator"/>
+        /// </summary>
+        private string _acknowledgement;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Sim7080G"/> class.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
-        public Sim7080G(SerialPort serialPort) => _serialPort = serialPort;
+        public Sim7080G(SerialPort serialPort)
+        {
+            _serialPort = serialPort;
+        }
+
+        /// <summary>
+        /// Gets the current Network Information.
+        /// </summary>
+        public NetworkInformation NetworkInformation { get; private set; } = new NetworkInformation();
+
+        /// <summary>
+        /// Gets the current Sim Card Information.
+        /// </summary>
+        public SimCardInformation SimCardInformation { get; private set; } = new SimCardInformation();
+
+        /// <summary>
+        /// Gets the current Device Information.
+        /// </summary>
+        public DeviceInformation DeviceInformation { get; private set; } = new DeviceInformation();
+
+        /// <summary>
+        /// Read information from module.
+        /// </summary>
+        public void Initialize()
+        {
+            GetNetworkSystemMode();
+
+            SimController.GetDeviceInformation(_serialPort);
+            SimController.GetNetworkInformation(_serialPort);
+            SimController.GetSimCardInformation(_serialPort);
+        }
 
         /// <summary>
         /// Gets or sets number of retries on failure.
         /// </summary>
         public int Retry { get; set; } = 3;
 
-        /// <summary>
-        /// Gets the network system mode for wireless and cellular network communication service.
-        /// </summary>
-        public SystemMode SystemMode { get; private set; }
-
-        /// <summary>
-        /// Gets thecellular network connection status.
-        /// </summary>
-        public ConnectionStatus NetworkConnected { get; private set; } = ConnectionStatus.Disconnected;
+        #region MQTT
 
         /// <summary>
         /// Gets MQTT endpoint connection status.
@@ -51,16 +77,6 @@ namespace IoT.Device.Sim7080
         public ConnectionStatus TopicConnected { get; private set; } = ConnectionStatus.Disconnected;
 
         /// <summary>
-        /// Gets the Cellular Network Operator.
-        /// </summary>
-        public string Operator { get; private set; } = "Unknown";
-
-        /// <summary>
-        /// Gets the Public IP Address.
-        /// </summary>
-        public string IPAddress { get; private set; } = "0.0.0.0";
-
-        /// <summary>
         /// Gets or sets Cloud-2-Device subscription topic Name.
         /// </summary>
         public string SubTopic { get; set; }
@@ -69,6 +85,16 @@ namespace IoT.Device.Sim7080
         /// Gets or sets Device-2-Cloud publication topic Name.
         /// </summary>
         public string PubTopic { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Get the available network system mode for wireless and cellular network communication service.
+        /// </summary>
+        public void GetNetworkSystemMode()
+        {
+            SimController.GetSystemMode(_serialPort);
+        }
 
         /// <summary>
         /// Set the network system mode for wireless and cellular network communication service.
@@ -92,8 +118,8 @@ namespace IoT.Device.Sim7080
         {
             if (!_serialPort.IsOpen)
             {
-                NetworkConnected = ConnectionStatus.Disconnected;
-                return NetworkConnected;
+                NetworkInformation.ConnectionStatus = ConnectionStatus.Disconnected;
+                return NetworkInformation.ConnectionStatus;
             }
 
             var retryCount = 0;
@@ -104,8 +130,8 @@ namespace IoT.Device.Sim7080
 
                 SimController.NetworkConnect(_serialPort, apn);
             }
-            while (NetworkConnected == ConnectionStatus.Disconnected && retryCount < Retry);
-            return NetworkConnected;
+            while (NetworkInformation.ConnectionStatus == ConnectionStatus.Disconnected && retryCount < Retry);
+            return NetworkInformation.ConnectionStatus;
         }
 
         /// <summary>
@@ -115,12 +141,12 @@ namespace IoT.Device.Sim7080
         public ConnectionStatus NetworkDisconnect()
         {
             if (_serialPort.IsOpen &&
-                NetworkConnected == ConnectionStatus.Connected)
+                NetworkInformation.ConnectionStatus == ConnectionStatus.Connected)
             {
                 SimController.NetworkDisconnect(_serialPort);
             }
 
-            return NetworkConnected;
+            return NetworkInformation.ConnectionStatus;
         }
 
         /// <summary>
@@ -135,7 +161,7 @@ namespace IoT.Device.Sim7080
         /// <returns><see cref="ConnectionStatus"/></returns>
         public ConnectionStatus ConnectAzureIoTHub(string deviceId, string hubName, string sasToken, int portNumber = 8883, string apiVersion = "2021-04-12", int wait = 5000)
         {
-            if (!_serialPort.IsOpen || NetworkConnected == ConnectionStatus.Disconnected)
+            if (!_serialPort.IsOpen || NetworkInformation.ConnectionStatus == ConnectionStatus.Disconnected)
             {
                 EndpointConnected = ConnectionStatus.Disconnected;
                 return EndpointConnected;
@@ -175,7 +201,7 @@ namespace IoT.Device.Sim7080
         /// <returns><see cref="ConnectionStatus"/></returns>
         public ConnectionStatus ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 5000)
         {
-            if (!_serialPort.IsOpen || NetworkConnected == ConnectionStatus.Disconnected)
+            if (!_serialPort.IsOpen || NetworkInformation.ConnectionStatus == ConnectionStatus.Disconnected)
             {
                 EndpointConnected = ConnectionStatus.Disconnected;
                 return EndpointConnected;
@@ -233,7 +259,7 @@ namespace IoT.Device.Sim7080
         public ConnectionStatus DisonnectAzureIoTHub()
         {
             if (_serialPort.IsOpen &&
-                NetworkConnected == ConnectionStatus.Connected &&
+                NetworkInformation.ConnectionStatus == ConnectionStatus.Connected &&
                 EndpointConnected == ConnectionStatus.Connected)
             {
                 if (SubTopic != null)
@@ -256,7 +282,7 @@ namespace IoT.Device.Sim7080
         public ConnectionStatus DisonnectEndpoint()
         {
             if (_serialPort.IsOpen &&
-                NetworkConnected == ConnectionStatus.Connected &&
+                NetworkInformation.ConnectionStatus == ConnectionStatus.Connected &&
                 EndpointConnected == ConnectionStatus.Connected)
             {
                 EndpointConnected = SimController.EndpointDisconnect(_serialPort);
@@ -272,50 +298,116 @@ namespace IoT.Device.Sim7080
         {
             if (!_serialPort.IsOpen)
             {
-                NetworkConnected = ConnectionStatus.Disconnected;
+                NetworkInformation.ConnectionStatus = ConnectionStatus.Disconnected;
                 return;
             }
 
-            if (_serialPort.BytesToRead > 0)
+            string readLine;
+
+            while (_serialPort.BytesToRead > 0)
             {
-                byte[] buffer = new byte[_serialPort.BytesToRead];
-
-                var bytesRead = _serialPort.Read(buffer, 0, buffer.Length);
-
                 try
                 {
-                    string responseMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    readLine = _serialPort.ReadLine();
 
-                    switch (responseMessage)
+                    // Detect and remember new acknowledgement message
+                    _acknowledgement = readLine.StartsWith("AT")
+                        ? ExtractAcknowledgement(readLine)
+                        : _acknowledgement;
+
+                    // Skip, only read acknowledgement information
+                    if (readLine.StartsWith(_acknowledgement) ||
+                        readLine == "\r" ||
+                        readLine.StartsWith("OK"))
                     {
-                        case string m when m.Contains("ERROR"):
+                        continue;
+                    }
 
-                            Debug.WriteLine(responseMessage);
-
+                    // Derive information from acknowledgement
+                    switch (_acknowledgement)
+                    {
+                        case "AT+CGNAPN":
+                            // Save APN
                             break;
-                        case string m when m.Contains("+COPS:"):
-
-                            Operator = SimController.ExtractATResponse(responseMessage);
-
+                        case "AT+CGDCONT?":
+                            // PDP Context
                             break;
-                        case string m when m.Contains("+CNACT:"):
-
-                            IPAddress = (IPAddress == "0.0.0.0") ?
-                                SimController.ExtractATResponse(responseMessage) :
-                                IPAddress;
-
-                            NetworkConnected = (IPAddress == "0.0.0.0") ?
-                                ConnectionStatus.Disconnected :
-                                ConnectionStatus.Connected;
-
+                        case "AT+CGACT?":
+                            // PDP Context Activate or Deactivate
+                            break;
+                        case "AT+CBANDCFG=?":
+                            // List of supported SystemMode
+                            break;
+                        case "AT+SNPDPID=0":
+                            // PDP Selected for ping
+                            break;
+                        case "AT+CGMI":
+                            DeviceInformation.Manufacturer = AcknowledgementTranslator.Clean(readLine);
+                            Debug.WriteLine(DeviceInformation.Manufacturer);
+                            break;
+                        case "AT+CGMM":
+                            DeviceInformation.Model = AcknowledgementTranslator.Clean(readLine);
+                            Debug.WriteLine(DeviceInformation.Model);
+                            break;
+                        case "AT+CGMR":
+                            DeviceInformation.FirmwareVersion = AcknowledgementTranslator.Clean(readLine);
+                            Debug.WriteLine(DeviceInformation.FirmwareVersion);
+                            break;
+                        case "ATI":
+                            DeviceInformation.ProductNumber = AcknowledgementTranslator.Clean(readLine);
+                            Debug.WriteLine(DeviceInformation.ProductNumber);
+                            break;
+                        case "AT+CNSMOD":
+                            DeviceInformation.SystemMode = AcknowledgementTranslator.DeviceSystemMode(readLine);
+                            Debug.WriteLine(DeviceInformation.SystemMode.ToString());
+                            break;
+                        case "AT+CGSN":
+                            SimCardInformation.IMEI = AcknowledgementTranslator.Convert(readLine);
+                            Debug.WriteLine(SimCardInformation.IMEI.ToString());
+                            break;
+                        case "AT+CIMI":
+                            SimCardInformation.IMSI = AcknowledgementTranslator.Convert(readLine);
+                            Debug.WriteLine(SimCardInformation.IMSI.ToString());
+                            break;
+                        case "AT+CCID":
+                            SimCardInformation.ICCM = AcknowledgementTranslator.Clean(readLine);
+                            Debug.WriteLine(SimCardInformation.ICCM);
+                            break;
+                        case "AT+COPS?":
+                            NetworkInformation.NetworkOperator = AcknowledgementTranslator.Extract(readLine);
+                            Debug.WriteLine(NetworkInformation.NetworkOperator);
+                            break;
+                        case "AT+CGPADDR":
+                            NetworkInformation.IPAddress = AcknowledgementTranslator.NetworkIPAddress(readLine, NetworkInformation.IPAddress);
+                            Debug.WriteLine(NetworkInformation.IPAddress.ToString());
+                            break;
+                        case "AT+CGATT?":
+                            NetworkInformation.ConnectionStatus = AcknowledgementTranslator.NetworkConnectionStatus(readLine);
+                            Debug.WriteLine(NetworkInformation.ConnectionStatus.ToString());
+                            break;
+                        case "AT+CSQ":
+                            NetworkInformation.SignalQuality = AcknowledgementTranslator.NetworkSignalQuality(readLine);
+                            Debug.WriteLine(NetworkInformation.SignalQuality.ToString());
+                            break;
+                        default:
+                            Debug.WriteLine($"{_acknowledgement}[IGNORED]");
                             break;
                     }
+                }
+                catch (TimeoutException timeoutException)
+                {
+                    Debug.WriteLine(timeoutException.Message);
                 }
                 catch (Exception exception)
                 {
                     Debug.WriteLine(exception.Message);
                 }
             }
+        }
+
+        private string ExtractAcknowledgement(string line)
+        {
+            return line.Split('\r')[0];
         }
     }
 }

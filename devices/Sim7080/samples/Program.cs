@@ -36,18 +36,13 @@ namespace Sim7080.Sample
             _serialPort.DataReceived += SerialDevice_DataReceived;
 
             _sim = new Sim7080G(_serialPort);
+            _sim.Initialize();
 
             // Switch to prefered network mode
             _sim.SetNetworkSystemMode(SystemMode.LTE_NB, false);
 
             // Connect to network access point
             _networkConnected = _sim.NetworkConnect(_apn);
-
-            // Display network operator
-            Debug.WriteLine(_sim.Operator);
-
-            // Display Public IP address
-            Debug.WriteLine(_sim.IPAddress);
 
             // Connect to Endpoint
             if (_networkConnected == ConnectionStatus.Connected)
@@ -67,7 +62,7 @@ namespace Sim7080.Sample
             }
 
             // Disconnect from network access point
-            if (_sim.NetworkConnected == ConnectionStatus.Connected)
+            if (_networkConnected == ConnectionStatus.Connected)
             {
                 _networkConnected = _sim.NetworkDisconnect();
             }
@@ -84,10 +79,10 @@ namespace Sim7080.Sample
         /// <param name="e"></param>
         private static void SerialDevice_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            _sim.ReadResponse();
+            _sim?.ReadResponse();
         }
 
-        #region serial
+        #region SerialPort
 
         /// <summary>
         /// Configure and open the serial port for communication.
@@ -109,7 +104,7 @@ namespace Sim7080.Sample
             StopBits stopBits = StopBits.One,
             Handshake handshake = Handshake.XOnXOff,
             int dataBits = 8,
-            char watchChar = '\r')
+            char watchChar = '\n')
         {
             // Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
@@ -122,7 +117,7 @@ namespace Sim7080.Sample
                 Parity = parity,
                 StopBits = stopBits,
                 Handshake = handshake,
-                DataBits = dataBits,
+                DataBits = dataBits
             };
 
             try

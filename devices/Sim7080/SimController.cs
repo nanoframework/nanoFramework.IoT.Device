@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
-using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace IoT.Device.Sim7080
@@ -12,12 +11,97 @@ namespace IoT.Device.Sim7080
     internal static class SimController
     {
         /// <summary>
+        /// Get the device information.
+        /// </summary>
+        /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
+        public static void GetDeviceInformation(SerialPort serialPort)
+        {
+            try
+            {
+                // Request manufacturer identification
+                ExecuteCommand(serialPort, "AT+CGMI");
+
+                // Request model identification 
+                ExecuteCommand(serialPort, "AT+CGMM");
+
+                // Request firmware version identification  
+                ExecuteCommand(serialPort, "AT+CGMR");
+
+                // Request product type number
+                ExecuteCommand(serialPort, "ATI");
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get SIM card information details.
+        /// </summary>
+        /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
+        public static void GetSimCardInformation(SerialPort serialPort)
+        {
+            try
+            {
+                // Request IMEI
+                ExecuteCommand(serialPort, "AT+CGSN");
+
+                // Request IMSI of the SIM card
+                ExecuteCommand(serialPort, "AT+CIMI");
+
+                // Request CCID of the SIM card
+                ExecuteCommand(serialPort, "AT+CCID");
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get network provider network information.
+        /// </summary>
+        /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
+        public static void GetNetworkInformation(SerialPort serialPort)
+        {
+            try
+            {
+                // Return current Operator
+                ExecuteCommand(serialPort, "AT+COPS?");
+
+                // Read Signal Quality
+                ExecuteCommand(serialPort, "AT+CSQ");
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get available network system modes for wireless and cellular network communication service.
+        /// </summary>
+        /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
+        public static void GetSystemMode(SerialPort serialPort)
+        {
+            try
+            {
+                ExecuteCommand(serialPort, "AT+CBANDCFG=?");
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+            }
+        }
+
+        /// <summary>
         /// Set the network system mode for wireless and cellular network communication service.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="systemMode">The desired <see cref="SystemMode"/>.</param>
         /// <param name="enableReporting">Report the network system mode information.</param>
-        public static void SetSystemMode(SerialPort serialPort, SystemMode systemMode, bool enableReporting)
+        public static void SetSystemMode(SerialPort serialPort, SystemMode systemMode, bool enableReporting = true)
         {
             try
             {
@@ -32,7 +116,8 @@ namespace IoT.Device.Sim7080
         }
 
         /// <summary>
-        /// Connect to the cellular network.
+        /// Connect to the cellular network with PDP context.
+        /// It offers a packet data connection over which the device and the mobile network can exchange IP packets.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="apn">Cellular network access point name.</param>
@@ -41,23 +126,33 @@ namespace IoT.Device.Sim7080
         {
             try
             {
-                // Read Signal Quality
-                ExecuteCommand(serialPort, "AT+CSQ");
-
-                // Return current Operator
-                ExecuteCommand(serialPort, "AT+COPS?");
-
                 // Get Network APN in CAT-M or NB-IoT
                 ExecuteCommand(serialPort, "AT+CGNAPN");
 
-                // Define PDP Context, saves APN
+                // Define PDP Context, configure APN
                 ExecuteCommand(serialPort, $"AT+CGDCONT=1,\"IP\",\"{apn}\"");
 
-                // App Network Active, assign IP
-                ExecuteCommand(serialPort, "AT+CNACT=0,2");
+                // Query the configured APN
+                ExecuteCommand(serialPort, "AT+CGDCONT?");
 
-                // Read IP
-                ExecuteCommand(serialPort, "AT+CNACT?");
+                // Activate the PDP (packet data protocol) context
+                ExecuteCommand(serialPort, "AT+CGACT=1,1");
+                ExecuteCommand(serialPort, "AT+CGACT?");
+
+                // Validate if device received an IP address
+                ExecuteCommand(serialPort, "AT+CGPADDR");
+
+                // Set the APN
+                ExecuteCommand(serialPort, $"AT+CNCFG=0,1,\"{apn}\"");
+
+                // Select PDP
+                ExecuteCommand(serialPort, "AT+SNPDPID=0");
+
+                // Activate PDP context, assign IP
+                ExecuteCommand(serialPort, "AT+CNACT=0,1");
+
+                // Check network connection
+                ExecuteCommand(serialPort, "AT+CGATT?");
 
                 return ConnectionStatus.Connected;
             }
@@ -70,7 +165,7 @@ namespace IoT.Device.Sim7080
         }
 
         /// <summary>
-        /// Disconnect to the cellular network.
+        /// Disconnect to the cellular network, deactivate Packet Data Protocol (PDP) context.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <returns><see cref="ConnectionStatus"/></returns>
@@ -105,20 +200,20 @@ namespace IoT.Device.Sim7080
         {
             try
             {
-                // Simcom module MQTT parameter that sets the client id
-                ExecuteCommand(serialPort, $"AT+SMCONF=\"CLIENTID\",\"{clientId}\"");
-
-                // Set MQTT time to connect server
-                ExecuteCommand(serialPort, "AT+SMCONF=\"KEEPTIME\",60");
+                // Quality of Service 
+                ExecuteCommand(serialPort, "AT+SMCONF=\"QOS\",1");
 
                 // Simcom module MQTT parameter that sets the server URL and port
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"URL\",\"{endpointUrl}\",\"{portNumber}\"");
 
+                // Set MQTT time to connect server
+                ExecuteCommand(serialPort, "AT+SMCONF=\"KEEPTIME\",60");
+
                 // Delete messages after they have been successfully sent
                 ExecuteCommand(serialPort, "AT+SMCONF=\"CLEANSS\",1");
 
-                // Quality of Service 
-                ExecuteCommand(serialPort, "AT+SMCONF=\"QOS\",1");
+                // Simcom module MQTT parameter that sets the client id
+                ExecuteCommand(serialPort, $"AT+SMCONF=\"CLIENTID\",\"{clientId}\"");
 
                 // Simcom module MQTT parameter that sets the api endpoint for the specific device
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"USERNAME\",\"{username}\"");
@@ -234,26 +329,14 @@ namespace IoT.Device.Sim7080
         }
 
         /// <summary>
-        /// Extract the response from AT Acknowledgement message.
-        /// </summary>
-        /// <param name="responseMessage">The acknowledgement message.</param>
-        /// <returns>The acknowledgement response.</returns>
-        public static string ExtractATResponse(string responseMessage)
-        {
-            return Regex.Match(responseMessage, @"""([^""]*)""").Groups[1].Value;
-        }
-
-        /// <summary>
         /// Execute AT command.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="command">The AT command.</param>
         /// <param name="wait">The time to wait for the AT command to complete.</param>
-        private static void ExecuteCommand(SerialPort serialPort, string command, int wait = 1000)
+        internal static void ExecuteCommand(SerialPort serialPort, string command, int wait = 1000)
         {
             serialPort.WriteLine($"{command}\r");
-
-            Debug.WriteLine(command);
 
             Thread.Sleep(wait);
         }
