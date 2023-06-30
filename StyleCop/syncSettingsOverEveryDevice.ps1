@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 
 #Whitelisted projects
-$projectWhiteList = ("AD5328", "4Relay", "Ads1115", "Adxl345", "Adxl357", "Ags01db", "Ahtxx")
+$projectWhiteList = ("AD5328", "4Relay", "Ads1115", "Adxl345", "Adxl357", "Ags01db", "Ahtxx","Modbus")
 
 #Const packages.config
 $styleCopPackageId = "StyleCop.MSBuild"
