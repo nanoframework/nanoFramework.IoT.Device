@@ -1,11 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+using System.IO.Ports;
 using Iot.Device.Modbus.Protocol;
 using Iot.Device.Modbus.Structures;
 using Iot.Device.Modbus.Util;
-using System;
-using System.IO.Ports;
 
 namespace Iot.Device.Modbus.Client
 {
@@ -27,8 +27,8 @@ namespace Iot.Device.Modbus.Client
             int baudRate = 9600,
             Parity parity = Parity.None,
             int dataBits = 8,
-            StopBits stopBits = StopBits.One
-            ) : base(portName, baudRate, parity, dataBits, stopBits)
+            StopBits stopBits = StopBits.One)
+            : base(portName, baudRate, parity, dataBits, stopBits)
         {
         }
 
@@ -95,7 +95,7 @@ namespace Iot.Device.Modbus.Client
                     {
                         Address = (ushort)(startAddress + i),
                         HiByte = data[i * 2],
-                        LoByte = data[i * 2 + 1]
+                        LoByte = data[(i * 2) + 1]
                     };
                     values[i] = register.Value;
                 }
@@ -163,7 +163,7 @@ namespace Iot.Device.Modbus.Client
                     {
                         Address = (ushort)(startAddress + i),
                         HiByte = data[i * 2],
-                        LoByte = data[i * 2 + 1]
+                        LoByte = data[(i * 2) + 1]
                     };
                     values[i] = register.Value;
                 }
@@ -186,14 +186,30 @@ namespace Iot.Device.Modbus.Client
                 throw new ArgumentException(nameof(function));
             }
 
-            ValidParameters(deviceId, startAddress, count, function switch
+            // We cannot use the new way of whicth like this becaquse of Style Cop:
+            ////ValidParameters(deviceId, startAddress, count, function switch
+            ////{
+            ////    FunctionCode.ReadCoils => Consts.MaxCoilCountRead,
+            ////    FunctionCode.ReadDiscreteInputs => Consts.MaxCoilCountRead,
+            ////    FunctionCode.ReadHoldingRegisters => Consts.MaxRegisterCountRead,
+            ////    FunctionCode.ReadInputRegisters => Consts.MaxRegisterCountRead,
+            ////    _ => ushort.MaxValue
+            ////});
+
+            switch (function)
             {
-                FunctionCode.ReadCoils => Consts.MaxCoilCountRead,
-                FunctionCode.ReadDiscreteInputs => Consts.MaxCoilCountRead,
-                FunctionCode.ReadHoldingRegisters => Consts.MaxRegisterCountRead,
-                FunctionCode.ReadInputRegisters => Consts.MaxRegisterCountRead,
-                _ => ushort.MaxValue
-            });
+                case FunctionCode.ReadCoils:
+                case FunctionCode.ReadDiscreteInputs:
+                    ValidParameters(deviceId, startAddress, count, Consts.MaxCoilCountRead);
+                    break;
+                case FunctionCode.ReadHoldingRegisters:
+                case FunctionCode.ReadInputRegisters:
+                    ValidParameters(deviceId, startAddress, count, Consts.MaxRegisterCountRead);
+                    break;
+                default:
+                    ValidParameters(deviceId, startAddress, count, ushort.MaxValue);
+                    break;
+            }
 
             var response = this.SendRequest(new Request
             {
@@ -292,11 +308,11 @@ namespace Iot.Device.Modbus.Client
                 throw new ArgumentOutOfRangeException(nameof(values));
             }
 
-            var buffer = new DataBuffer(values.Length * 2 + 1);
+            var buffer = new DataBuffer((values.Length * 2) + 1);
             buffer.Set(0, (byte)(values.Length * 2));
             for (int i = 0; i < values.Length; i++)
             {
-                buffer.Set(i * 2 + 1, values[i]);
+                buffer.Set((i * 2) + 1, values[i]);
             }
 
             return Write(deviceId, startAddress, (ushort)values.Length, buffer, FunctionCode.WriteMultipleRegisters);
@@ -314,14 +330,30 @@ namespace Iot.Device.Modbus.Client
 
             if (count > 0)
             {
-                ValidParameters(deviceId, startAddress, count, function switch
+                // We can't use the new way of using switch because of StyleCop
+                ////ValidParameters(deviceId, startAddress, count, function switch
+                ////{
+                ////    FunctionCode.ReadCoils => Consts.MaxCoilCountWrite,
+                ////    FunctionCode.ReadDiscreteInputs => Consts.MaxCoilCountWrite,
+                ////    FunctionCode.ReadHoldingRegisters => Consts.MaxRegisterCountWrite,
+                ////    FunctionCode.ReadInputRegisters => Consts.MaxRegisterCountWrite,
+                ////    _ => ushort.MaxValue
+                ////});
+
+                switch (function)
                 {
-                    FunctionCode.ReadCoils => Consts.MaxCoilCountWrite,
-                    FunctionCode.ReadDiscreteInputs => Consts.MaxCoilCountWrite,
-                    FunctionCode.ReadHoldingRegisters => Consts.MaxRegisterCountWrite,
-                    FunctionCode.ReadInputRegisters => Consts.MaxRegisterCountWrite,
-                    _ => ushort.MaxValue
-                });
+                    case FunctionCode.ReadCoils:
+                    case FunctionCode.ReadDiscreteInputs:
+                        ValidParameters(deviceId, startAddress, count, Consts.MaxCoilCountWrite);
+                        break;
+                    case FunctionCode.ReadHoldingRegisters:
+                    case FunctionCode.ReadInputRegisters:
+                        ValidParameters(deviceId, startAddress, count, Consts.MaxRegisterCountWrite);
+                        break;
+                    default:
+                        ValidParameters(deviceId, startAddress, count, ushort.MaxValue);
+                        break;
+                }
             }
             else
             {
@@ -437,7 +469,9 @@ namespace Iot.Device.Modbus.Client
                 response = new Response(responseBytes.Buffer);
 #if DEBUG
                 if (response.ErrorCode != ErrorCode.NoError)
+                {
                     System.Diagnostics.Debug.WriteLine($"{PortName} RX (E): Modbus ErrorCode {response.ErrorCode}");
+                }
 #endif
             }
             catch (TimeoutException)

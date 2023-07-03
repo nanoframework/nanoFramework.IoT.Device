@@ -3,20 +3,24 @@
 
 namespace Iot.Device.Modbus.Structures
 {
-    abstract class ModbusObject
+    internal abstract class ModbusObject
     {
         public ushort Address { get; set; }
+        
         public byte HiByte { get; set; }
+        
         public byte LoByte { get; set; }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj is not ModbusObject mo)
+            // We cannot do obj is not ModbusObject mo as StyleCop do not support this syntax
+            if (obj.GetType() != typeof(ModbusObject))
             {
                 return false;
             }
 
+            ModbusObject mo = (ModbusObject)obj;
             return GetType() == mo.GetType()
                 && Address == mo.Address
                 && HiByte == mo.HiByte

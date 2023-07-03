@@ -1,11 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+using System.IO.Ports;
 using Iot.Device.Modbus.Protocol;
 using Iot.Device.Modbus.Structures;
 using Iot.Device.Modbus.Util;
-using System;
-using System.IO.Ports;
 
 namespace Iot.Device.Modbus.Server
 {
@@ -31,8 +31,8 @@ namespace Iot.Device.Modbus.Server
             int baudRate = 9600,
             Parity parity = Parity.None,
             int dataBits = 8,
-            StopBits stopBits = StopBits.One
-            ) : base(portName, baudRate, parity, dataBits, stopBits, 6)
+            StopBits stopBits = StopBits.One)
+            : base(portName, baudRate, parity, dataBits, stopBits, 6)
         {
             _device = device;
         }
@@ -64,7 +64,7 @@ namespace Iot.Device.Modbus.Server
             var buffer = DataRead(bytesToRead);
 
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine($"{this.PortName} RX ({buffer.Length}): {Format(buffer)}");
+            System.Diagnostics.Debug.WriteLine($"{PortName} RX ({buffer.Length}): {Format(buffer)}");
 #endif
 
             if (buffer.Length >= 6)
@@ -79,10 +79,12 @@ namespace Iot.Device.Modbus.Server
                             var response = HandleRequest(new Request(buffer));
                             var bytes = response.Serialize();
 
-                            this.DataWrite(bytes, 0, bytes.Length);
+                            DataWrite(bytes, 0, bytes.Length);
                         }
                         else
-                            this.DataWrite(0);
+                        {
+                            DataWrite(0);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -96,25 +98,63 @@ namespace Iot.Device.Modbus.Server
 
         private Response HandleRequest(Request request)
         {
-            var response = request.Function switch
+            // We can't use this modern way of swith because of StyleCop
+            ////var response = request.Function switch
+            ////{
+            ////    FunctionCode.ReadCoils => HandleReadCoils(request),
+            ////    FunctionCode.ReadDiscreteInputs => HandleReadDiscreteInputs(request),
+            ////    FunctionCode.ReadHoldingRegisters => HandleReadHoldingRegisters(request),
+            ////    FunctionCode.ReadInputRegisters => HandleReadInputRegisters(request),
+
+            ////    FunctionCode.WriteSingleCoil => HandleWriteSingleCoil(request),
+            ////    FunctionCode.WriteSingleRegister => HandleWritSingleRegister(request),
+            ////    FunctionCode.WriteMultipleCoils => HandleWriteMultipleCoils(request),
+            ////    FunctionCode.WriteMultipleRegisters => HandleWriteMultipleRegisters(request),
+
+            ////    _ => new Response(request)
+            ////    {
+            ////        ErrorCode = (request.Function == FunctionCode.EncapsulatedInterface ?
+            ////            ErrorCode.NegativeAcknowledge :
+            ////            ErrorCode.IllegalFunction)
+            ////    },
+            ////};
+            Response response;
+            switch (request.Function)
             {
-                FunctionCode.ReadCoils => HandleReadCoils(request),
-                FunctionCode.ReadDiscreteInputs => HandleReadDiscreteInputs(request),
-                FunctionCode.ReadHoldingRegisters => HandleReadHoldingRegisters(request),
-                FunctionCode.ReadInputRegisters => HandleReadInputRegisters(request),
-
-                FunctionCode.WriteSingleCoil => HandleWriteSingleCoil(request),
-                FunctionCode.WriteSingleRegister => HandleWritSingleRegister(request),
-                FunctionCode.WriteMultipleCoils => HandleWriteMultipleCoils(request),
-                FunctionCode.WriteMultipleRegisters => HandleWriteMultipleRegisters(request),
-
-                _ => new Response(request)
-                {
-                    ErrorCode = (request.Function == FunctionCode.EncapsulatedInterface ?
+                case FunctionCode.ReadCoils:
+                    response = HandleReadCoils(request);
+                    break;
+                case FunctionCode.ReadDiscreteInputs:
+                    response = HandleReadDiscreteInputs(request);
+                    break;
+                case FunctionCode.ReadHoldingRegisters:
+                    response = HandleReadHoldingRegisters(request);
+                    break;
+                case FunctionCode.ReadInputRegisters:
+                    response = HandleReadInputRegisters(request);
+                    break;
+                case FunctionCode.WriteSingleCoil:
+                    response = HandleWriteSingleCoil(request);
+                    break;
+                case FunctionCode.WriteSingleRegister:
+                    response = HandleWritSingleRegister(request);
+                    break;
+                case FunctionCode.WriteMultipleCoils:
+                    response = HandleWriteMultipleCoils(request);
+                    break;
+                case FunctionCode.WriteMultipleRegisters:
+                    response = HandleWriteMultipleRegisters(request);
+                    break;
+                default:
+                    response = new Response(request)
+                    {
+                        ErrorCode = request.Function == FunctionCode.EncapsulatedInterface ?
                         ErrorCode.NegativeAcknowledge :
-                        ErrorCode.IllegalFunction)
-                },
-            };
+                        ErrorCode.IllegalFunction
+                    };
+                    break;
+            }
+
 #if DEBUG
             System.Diagnostics.Debug.WriteLine($"ResponeCode: {response.ErrorCode}");
 #endif
@@ -340,7 +380,9 @@ namespace Iot.Device.Modbus.Server
             try
             {
                 if (!_device.SetCoil(request.Address, val > 0))
+                {
                     response.ErrorCode = ErrorCode.IllegalDataAddress;
+                }
             }
             catch
             {
@@ -369,7 +411,9 @@ namespace Iot.Device.Modbus.Server
             try
             {
                 if (!_device.SetHoldingRegister(request.Address, val))
+                {
                     response.ErrorCode = ErrorCode.IllegalDataAddress;
+                }
             }
             catch
             {
