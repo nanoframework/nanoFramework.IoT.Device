@@ -1,4 +1,7 @@
-﻿namespace Iot.Device.Modbus.Structures
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+namespace Iot.Device.Modbus.Structures
 {
     abstract class ModbusObject
     {
@@ -10,12 +13,14 @@
         public override bool Equals(object obj)
         {
             if (obj is not ModbusObject mo)
+            {
                 return false;
+            }
 
-            return this.GetType() == mo.GetType()
-                && this.Address == mo.Address
-                && this.HiByte == mo.HiByte
-                && this.LoByte == mo.LoByte;
+            return GetType() == mo.GetType()
+                && Address == mo.Address
+                && HiByte == mo.HiByte
+                && LoByte == mo.LoByte;
         }
 
         /// <inheritdoc/>

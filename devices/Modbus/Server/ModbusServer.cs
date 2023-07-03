@@ -1,4 +1,7 @@
-﻿using Iot.Device.Modbus.Protocol;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Modbus.Protocol;
 using Iot.Device.Modbus.Structures;
 using Iot.Device.Modbus.Util;
 using System;
@@ -6,10 +9,22 @@ using System.IO.Ports;
 
 namespace Iot.Device.Modbus.Server
 {
+    /// <summary>
+    /// Modbus server implementation that listens for Modbus requests and handles them.
+    /// </summary>
     public class ModbusServer : Port
     {
         private readonly ModbusDevice _device;
 
+        /// <summary>
+        /// Initializes a new instance of the ModbusServer class with the specified Modbus device and communication parameters.
+        /// </summary>
+        /// <param name="device">The Modbus device.</param>
+        /// <param name="portName">The name of the serial port.</param>
+        /// <param name="baudRate">The baud rate.</param>
+        /// <param name="parity">The parity.</param>
+        /// <param name="dataBits">The number of data bits.</param>
+        /// <param name="stopBits">The stop bits.</param>
         public ModbusServer(
             ModbusDevice device,
             string portName,
@@ -22,22 +37,34 @@ namespace Iot.Device.Modbus.Server
             _device = device;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the ModbusServer class with the specified Modbus device and serial port.
+        /// </summary>
+        /// <param name="device">The Modbus device.</param>
+        /// <param name="port">The serial port.</param>
         public ModbusServer(ModbusDevice device, SerialPort port) : base(port, 6)
         {
             _device = device;
         }
 
+        /// <summary>
+        /// Starts listening for Modbus requests on the server.
+        /// </summary>
         public void StartListening()
         {
-            this.CheckOpen();
+            CheckOpen();
         }
 
+        /// <summary>
+        /// Called when data is received on the serial port.
+        /// </summary>
+        /// <param name="bytesToRead">The number of bytes to read from the serial port.</param>
         protected override void DataReceived(int bytesToRead)
         {
             var buffer = DataRead(bytesToRead);
 
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine(String.Format("{0} RX ({1}): {2}", this.PortName, buffer.Length, Format(buffer)));
+            System.Diagnostics.Debug.WriteLine($"{this.PortName} RX ({buffer.Length}): {Format(buffer)}");
 #endif
 
             if (buffer.Length >= 6)
@@ -67,7 +94,7 @@ namespace Iot.Device.Modbus.Server
 
         #region Private methods       
 
-        Response HandleRequest(Request request)
+        private Response HandleRequest(Request request)
         {
             var response = request.Function switch
             {
@@ -89,21 +116,25 @@ namespace Iot.Device.Modbus.Server
                 },
             };
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine(String.Format("ResponeCode: {0}", response.ErrorCode));
+            System.Diagnostics.Debug.WriteLine($"ResponeCode: {response.ErrorCode}");
 #endif
             return response;
         }
 
         #region Read requests
 
-        Response HandleReadCoils(Request request)
+        private Response HandleReadCoils(Request request)
         {
             var response = new Response(request);
             if (response.Count < Consts.MinCount || response.Count > Consts.MaxCoilCountRead)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             int len = (int)Math.Ceiling(request.Count / 8.0);
             response.Data = new DataBuffer(len);
@@ -140,17 +171,22 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndRead();
             }
+
             return response;
         }
 
-        Response HandleReadDiscreteInputs(Request request)
+        private Response HandleReadDiscreteInputs(Request request)
         {
             var response = new Response(request);
             if (response.Count < Consts.MinCount || request.Count > Consts.MaxCoilCountRead)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             int len = (int)Math.Ceiling(request.Count / 8.0);
             response.Data = new DataBuffer(len);
@@ -187,17 +223,22 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndRead();
             }
+
             return response;
         }
 
-        Response HandleReadHoldingRegisters(Request request)
+        private Response HandleReadHoldingRegisters(Request request)
         {
             var response = new Response(request);
             if (response.Count < Consts.MinCount || response.Count > Consts.MaxRegisterCountRead)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             response.Data = new DataBuffer(request.Count * 2);
 
@@ -226,17 +267,22 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndRead();
             }
+
             return response;
         }
 
-        Response HandleReadInputRegisters(Request request)
+        private Response HandleReadInputRegisters(Request request)
         {
             var response = new Response(request);
             if (response.Count < Consts.MinCount || request.Count > Consts.MaxRegisterCountRead)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             response.Data = new DataBuffer(request.Count * 2);
 
@@ -265,6 +311,7 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndRead();
             }
+
             return response;
         }
 
@@ -272,16 +319,20 @@ namespace Iot.Device.Modbus.Server
 
         #region Write requests
 
-        Response HandleWriteSingleCoil(Request request)
+        private Response HandleWriteSingleCoil(Request request)
         {
             var response = new Response(request);
 
             ushort val = request.Data.GetUInt16(0);
             if (val != 0x0000 && val != 0xFF00)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             response.Data = request.Data;
 
@@ -299,14 +350,17 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndWrite();
             }
+
             return response;
         }
 
-        Response HandleWritSingleRegister(Request request)
+        private Response HandleWritSingleRegister(Request request)
         {
             var response = new Response(request);
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             ushort val = request.Data.GetUInt16(0);
             response.Data = request.Data;
@@ -325,19 +379,24 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndWrite();
             }
+
             return response;
         }
 
-        Response HandleWriteMultipleCoils(Request request)
+        private Response HandleWriteMultipleCoils(Request request)
         {
             var response = new Response(request);
 
             int numBytes = (int)Math.Ceiling(request.Count / 8.0);
             if (request.Count < Consts.MinCount || request.Count > Consts.MaxCoilCountWrite || numBytes != request.Data.Length)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             _device.BeginWrite();
             try
@@ -367,18 +426,23 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndWrite();
             }
+
             return response;
         }
 
-        Response HandleWriteMultipleRegisters(Request request)
+        private Response HandleWriteMultipleRegisters(Request request)
         {
             var response = new Response(request);
 
             if (request.Count < Consts.MinCount || request.Count > Consts.MaxRegisterCountWrite || request.Count * 2 != request.Data.Length)
+            {
                 response.ErrorCode = ErrorCode.IllegalDataValue;
+            }
 
             if (response.ErrorCode != ErrorCode.NoError)
+            {
                 return response;
+            }
 
             _device.BeginWrite();
             try
@@ -403,6 +467,7 @@ namespace Iot.Device.Modbus.Server
             {
                 _device.EndWrite();
             }
+
             return response;
         }
 

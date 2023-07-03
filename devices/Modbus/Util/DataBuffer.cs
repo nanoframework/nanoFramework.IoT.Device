@@ -1,8 +1,11 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 
 namespace Iot.Device.Modbus.Util
 {
-    class DataBuffer
+    internal class DataBuffer
     {
         public DataBuffer(int byteCount) : this(new byte[byteCount])
         {
@@ -14,6 +17,7 @@ namespace Iot.Device.Modbus.Util
         }
 
         public byte[] Buffer { get; private set; }
+
         public int Length => (Buffer != null ? Buffer.Length : 0);
 
         public byte this[int index]
@@ -22,6 +26,7 @@ namespace Iot.Device.Modbus.Util
             {
                 return Get(index);
             }
+
             set
             {
                 Set(index, value);
@@ -54,12 +59,18 @@ namespace Iot.Device.Modbus.Util
         public void Set(int index, params byte[] bytes)
         {
             if (Length < index + bytes.Length)
+            {
                 throw new ArgumentOutOfRangeException("Buffer too small.");
+            }
 
             if (bytes.Length == 1)
+            {
                 Buffer[index] = bytes[0];
+            }
             else
+            {
                 Array.Copy(bytes, 0, Buffer, index, bytes.Length);
+            }
         }
 
         public void Set(int index, ushort value)
@@ -77,7 +88,9 @@ namespace Iot.Device.Modbus.Util
         public byte[] Get(int index, int count)
         {
             if (Length < index + count)
+            {
                 throw new ArgumentOutOfRangeException(nameof(count));
+            }
 
             byte[] bytes = new byte[count];
             Array.Copy(Buffer, index, bytes, 0, count);

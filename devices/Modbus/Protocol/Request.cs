@@ -1,11 +1,15 @@
-﻿using Iot.Device.Modbus.Util;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Modbus.Util;
 
 namespace Iot.Device.Modbus.Protocol
 {
-    class Request : Protocol
+    internal class Request : Protocol
     {
         public Request()
-        { }
+        {
+        }
 
         public Request(byte[] bytes)
         {
@@ -20,8 +24,11 @@ namespace Iot.Device.Modbus.Protocol
         }
 
         public byte DeviceId { get; set; }
+
         public FunctionCode Function { get; set; }
+
         public ushort Address { get; set; }
+
         public ushort Count { get; set; }
 
         public byte[] Serialize()
@@ -44,17 +51,26 @@ namespace Iot.Device.Modbus.Protocol
                     buffer.Add(Address);
                     buffer.Add(Count);
                     if (Data != null && Data.Length > 0)
+                    {
                         buffer.Add(Data.Buffer);
+                    }
+
                     break;
                 case FunctionCode.WriteSingleCoil:
                 case FunctionCode.WriteSingleRegister:
                     buffer.Add(Address);
                     if (Data != null && Data.Length > 0)
+                    {
                         buffer.Add(Data.Buffer);
+                    }
+
                     break;
                 default:
                     if (Data != null && Data.Length > 0)
+                    {
                         buffer.Add(Data.Buffer);
+                    }
+
                     break;
             }
 
@@ -67,7 +83,9 @@ namespace Iot.Device.Modbus.Protocol
         private void Deserialize(byte[] bytes)
         {
             if (IsEmpty(bytes))
+            {
                 return;
+            }
 
             var buffer = new DataBuffer(bytes);
             DeviceId = buffer.Get(0);
@@ -107,27 +125,6 @@ namespace Iot.Device.Modbus.Protocol
                     Data = new DataBuffer(buffer.Get(2, buffer.Length - 4));
                     break;
             }
-        }
-    }
-
-    abstract class Protocol
-    {
-        public DataBuffer Data { get; set; }
-        public bool IsValid { get; protected set; } = true;
-
-        protected bool IsEmpty(byte[] bytes)
-        {
-            if (bytes != null && bytes.Length != 0)
-            {
-                foreach (byte b in bytes)
-                {
-                    if (b != 0)
-                        return false;
-                }
-            }
-
-            this.IsValid = false;
-            return true;
         }
     }
 }

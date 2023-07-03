@@ -1,26 +1,50 @@
-﻿using Iot.Device.Modbus.Util;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
+using Iot.Device.Modbus.Util;
 
 namespace Iot.Device.Modbus.Protocol
 {
-    class Response : Protocol
+    internal class Response : Protocol
     {
+        /// <summary>
+        /// Sets the bit at the specified index to the specified value.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="index">From left to right: 8,7,6,5,4,3,2,1.</param>
+        /// <param name="flag">True: 1 and false: 0.</param>
+        /// <returns>The byte set.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Index must be between 1 and 8.</exception>
+        private static byte SetBit(byte data, byte index, bool flag)
+        {
+            if (index > 8 || index < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            int v = index < 2 ? index : (2 << (index - 2));
+            return flag ? (byte)(data | v) : (byte)(data & ~v);
+        }
+
         public Response(Request request)
         {
-            this.DeviceId = request.DeviceId;
-            this.Function = request.Function;
-            this.Address = request.Address;
-            this.Count = request.Count;
+            DeviceId = request.DeviceId;
+            Function = request.Function;
+            Address = request.Address;
+            Count = request.Count;
 
-            if (this.Address < Consts.MinAddress || this.Address + this.Count > Consts.MaxAddress)
-                this.ErrorCode = ErrorCode.IllegalDataAddress;
+            if (Address < Consts.MinAddress || Address + Count > Consts.MaxAddress)
+            {
+                ErrorCode = ErrorCode.IllegalDataAddress;
+            }
         }
 
         public Response(byte[] bytes)
         {
             try
             {
-                this.Deserialize(bytes);
+                Deserialize(bytes);
             }
             catch
             {
@@ -29,8 +53,11 @@ namespace Iot.Device.Modbus.Protocol
         }
 
         public byte DeviceId { get; private set; }
+       
         public FunctionCode Function { get; private set; }
+        
         public ushort Address { get; private set; }
+        
         public ushort Count { get; private set; }
 
         public ErrorCode ErrorCode { get; set; } = ErrorCode.NoError;
@@ -43,7 +70,8 @@ namespace Iot.Device.Modbus.Protocol
             var fn = (byte)Function;
             if (ErrorCode != ErrorCode.NoError)
             {
-                fn = SetBit(fn, 8, true);	// 如果出错，将功能码最左边 Bit 设为 1
+                // 如果出错，将功能码最左边 Bit 设为 1
+                fn = SetBit(fn, 8, true);
                 buffer.Set(1, fn);
                 buffer.Add((byte)ErrorCode);
             }
@@ -84,7 +112,9 @@ namespace Iot.Device.Modbus.Protocol
         private void Deserialize(byte[] bytes)
         {
             if (IsEmpty(bytes))
+            {
                 return;
+            }
 
             var buffer = new DataBuffer(bytes);
             DeviceId = buffer.Get(0);
@@ -118,14 +148,14 @@ namespace Iot.Device.Modbus.Protocol
 
                         // following bytes + 3 byte head + 2 byte CRC
                         if (buffer.Length < length + 5)
+                        {
                             IsValid = false;
+                        }
                         else
                         {
-                            //if (buffer.Length > length + 5)
-                            //	buffer = new DataBuffer((byte[])bytes.Slice(0, length + 5));
-
                             Data = new DataBuffer(buffer.Get(3, buffer.Length - 5));
                         }
+
                         break;
                     case FunctionCode.WriteMultipleCoils:
                     case FunctionCode.WriteMultipleRegisters:
@@ -142,20 +172,6 @@ namespace Iot.Device.Modbus.Protocol
                         break;
                 }
             }
-        }
-
-        /// <param name="data"></param>
-        /// <param name="index">From left to right: 8,7,6,5,4,3,2,1</param>
-        /// <param name="flag">true: 1 / false: 0</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        static byte SetBit(byte data, byte index, bool flag)
-        {
-            if (index > 8 || index < 1)
-                throw new ArgumentOutOfRangeException(nameof(index));
-
-            int v = index < 2 ? index : (2 << (index - 2));
-            return flag ? (byte)(data | v) : (byte)(data & ~v);
         }
     }
 }

@@ -1,34 +1,43 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 
 namespace Iot.Device.Modbus.Util
 {
-    static class Crc16
+    internal static class Crc16
     {
         /// <summary>
-        /// 计算16位数组的校验和
+        /// Calculates the checksum (CRC16) for a 16-bit array.
         /// </summary>
-        /// <param name="array">数组</param>
-        /// <returns>CRC16 校验和. [0] = low byte, [1] = high byte.</returns>
+        /// <param name="array">The array.</param>
+        /// <returns>The CRC16 checksum. [0] = low byte, [1] = high byte.</returns>
         public static byte[] Calculate(this byte[] array)
             => array.Calculate(0, array.Length);
 
         /// <summary>
-        /// 计算16位数组的校验和 
+        /// Calculates the checksum (CRC16) for a 16-bit array.
         /// </summary>
-        /// <param name="array">数组</param>
-        /// <param name="start">起始位</param>
-        /// <param name="length">长度</param>
-        /// <returns>CRC16 校验和. [0] = low byte, [1] = high byte.</returns>
+        /// <param name="array">The array.</param>
+        /// <param name="start">Starting position.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>The CRC16 checksum. [0] = low byte, [1] = high byte.</returns>
         public static byte[] Calculate(this byte[] array, int start, int length)
         {
             if (array == null || array.Length == 0)
+            {
                 throw new ArgumentNullException(nameof(array));
+            }
 
             if (start < 0 || start >= array.Length)
+            {
                 throw new ArgumentOutOfRangeException(nameof(start));
+            }
 
             if (length <= 0 || (start + length) > array.Length)
+            {
                 throw new ArgumentOutOfRangeException(nameof(length));
+            }
 
             ushort crc16 = 0xFFFF;
             byte lsb;

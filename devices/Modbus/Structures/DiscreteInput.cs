@@ -1,6 +1,9 @@
-﻿namespace Iot.Device.Modbus.Structures
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+namespace Iot.Device.Modbus.Structures
 {
-    class DiscreteInput : ModbusObject
+    internal class DiscreteInput : ModbusObject
     {
         public bool Value
         {
@@ -8,6 +11,7 @@
             {
                 return HiByte > 0 || LoByte > 0;
             }
+
             set
             {
                 HiByte = 0;

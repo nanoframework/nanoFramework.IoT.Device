@@ -1,4 +1,7 @@
-﻿using Iot.Device.Modbus.Protocol;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Modbus.Protocol;
 using Iot.Device.Modbus.Structures;
 using Iot.Device.Modbus.Util;
 using System;
@@ -6,8 +9,19 @@ using System.IO.Ports;
 
 namespace Iot.Device.Modbus.Client
 {
+    /// <summary>
+    /// Represents a Modbus client that communicates with a Modbus device over a serial port.
+    /// </summary>
     public class ModbusClient : Port
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModbusClient"/> class with the specified port settings.
+        /// </summary>
+        /// <param name="portName">The name of the serial port.</param>
+        /// <param name="baudRate">The baud rate. Default is 9600.</param>
+        /// <param name="parity">The parity. Default is None.</param>
+        /// <param name="dataBits">The number of data bits. Default is 8.</param>
+        /// <param name="stopBits">The number of stop bits. Default is One.</param>
         public ModbusClient(
             string portName,
             int baudRate = 9600,
@@ -18,11 +32,22 @@ namespace Iot.Device.Modbus.Client
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModbusClient"/> class with the specified serial port.
+        /// </summary>
+        /// <param name="port">The serial port.</param>
         public ModbusClient(SerialPort port) : base(port)
         {
         }
 
         #region Read methods
+        /// <summary>
+        /// Reads the values of discrete inputs from the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The starting address of the inputs.</param>
+        /// <param name="count">The number of inputs to read.</param>
+        /// <returns>An array of boolean values representing the state of the discrete inputs.</returns>
         public bool[] ReadDiscreteInputs(byte deviceId, ushort startAddress, ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadDiscreteInputs);
@@ -42,12 +67,22 @@ namespace Iot.Device.Modbus.Client
                     };
                     values[i] = dinput.Value;
                 }
+
                 return values;
             }
             else
+            {
                 return null;
+            }
         }
 
+        /// <summary>
+        /// Reads the values of input registers from the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The starting address of the registers.</param>
+        /// <param name="count">The number of registers to read.</param>
+        /// <returns>An array of ushort values representing the values of the input registers.</returns>
         public ushort[] ReadInputRegisters(byte deviceId, ushort startAddress, ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadInputRegisters);
@@ -64,12 +99,22 @@ namespace Iot.Device.Modbus.Client
                     };
                     values[i] = register.Value;
                 }
+
                 return values;
             }
             else
+            {
                 return null;
+            }
         }
 
+        /// <summary>
+        /// Reads the values of coils from the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The starting address of the coils.</param>
+        /// <param name="count">The number of coils to read.</param>
+        /// <returns>An array of boolean values representing the state of the coils.</returns>
         public bool[] ReadCoils(byte deviceId, ushort startAddress, ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadCoils);
@@ -90,12 +135,22 @@ namespace Iot.Device.Modbus.Client
 
                     values[i] = coil.Value;
                 }
+
                 return values;
             }
             else
+            {
                 return null;
+            }
         }
 
+        /// <summary>
+        /// Reads the values of holding registers from the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The starting address of the registers.</param>
+        /// <param name="count">The number of registers to read.</param>
+        /// <returns>An array of ushort values representing the values of the holding registers.</returns>
         public ushort[] ReadHoldingRegisters(byte deviceId, ushort startAddress, ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadHoldingRegisters);
@@ -112,10 +167,13 @@ namespace Iot.Device.Modbus.Client
                     };
                     values[i] = register.Value;
                 }
+
                 return values;
             }
             else
+            {
                 return null;
+            }
         }
 
         private byte[] Read(byte deviceId, ushort startAddress, ushort count, FunctionCode function)
@@ -124,7 +182,9 @@ namespace Iot.Device.Modbus.Client
                 function != FunctionCode.ReadDiscreteInputs &&
                 function != FunctionCode.ReadHoldingRegisters &&
                 function != FunctionCode.ReadInputRegisters)
+            {
                 throw new ArgumentException(nameof(function));
+            }
 
             ValidParameters(deviceId, startAddress, count, function switch
             {
@@ -149,11 +209,20 @@ namespace Iot.Device.Modbus.Client
                 return response.Data.Buffer;
             }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
         #region Write methods
+        /// <summary>
+        /// Writes a single coil value to the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The address of the coil to write.</param>
+        /// <param name="value">The value to write to the coil.</param>
+        /// <returns>True if the write operation is successful, false otherwise.</returns>
         public bool WriteSingleCoil(byte deviceId, ushort startAddress, bool value)
         {
             var buffer = new DataBuffer(2);
@@ -162,6 +231,13 @@ namespace Iot.Device.Modbus.Client
             return Write(deviceId, startAddress, 0, buffer, FunctionCode.WriteSingleCoil);
         }
 
+        /// <summary>
+        /// Writes a single register value to the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The address of the register to write.</param>
+        /// <param name="value">The value to write to the register.</param>
+        /// <returns>True if the write operation is successful, false otherwise.</returns>
         public bool WriteSingleRegister(byte deviceId, ushort startAddress, ushort value)
         {
             var register = new HoldingRegister { Value = value };
@@ -170,10 +246,19 @@ namespace Iot.Device.Modbus.Client
             return Write(deviceId, startAddress, 0, buffer, FunctionCode.WriteSingleRegister);
         }
 
+        /// <summary>
+        /// Writes multiple coil values to the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The starting address of the coils to write.</param>
+        /// <param name="values">An array of boolean values representing the state of the coils to write.</param>
+        /// <returns>True if the write operation is successful, false otherwise.</returns>
         public bool WriteMultipleCoils(byte deviceId, ushort startAddress, bool[] values)
         {
             if (values.Length == 0)
+            {
                 throw new ArgumentOutOfRangeException(nameof(values));
+            }
 
             int numBytes = (int)Math.Ceiling(values.Length / 8.0);
             byte[] coilBytes = new byte[numBytes];
@@ -193,10 +278,19 @@ namespace Iot.Device.Modbus.Client
             return Write(deviceId, startAddress, (ushort)values.Length, buffer, FunctionCode.WriteMultipleCoils);
         }
 
+        /// <summary>
+        /// Writes multiple register values to the Modbus device.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="startAddress">The starting address of the registers to write.</param>
+        /// <param name="values">An array of ushort values representing the values to write to the registers.</param>
+        /// <returns>True if the write operation is successful, false otherwise.</returns>
         public bool WriteMultipleRegisters(byte deviceId, ushort startAddress, ushort[] values)
         {
             if (values.Length == 0)
+            {
                 throw new ArgumentOutOfRangeException(nameof(values));
+            }
 
             var buffer = new DataBuffer(values.Length * 2 + 1);
             buffer.Set(0, (byte)(values.Length * 2));
@@ -214,7 +308,9 @@ namespace Iot.Device.Modbus.Client
                 function != FunctionCode.WriteSingleRegister &&
                 function != FunctionCode.WriteMultipleCoils &&
                 function != FunctionCode.WriteMultipleRegisters)
+            {
                 throw new ArgumentException(nameof(function));
+            }
 
             if (count > 0)
             {
@@ -228,7 +324,9 @@ namespace Iot.Device.Modbus.Client
                 });
             }
             else
+            {
                 ValidParameters(deviceId, startAddress);
+            }
 
             var request = new Request
             {
@@ -251,6 +349,14 @@ namespace Iot.Device.Modbus.Client
         #endregion
 
         #region Send Raw
+
+        /// <summary>
+        /// Sends a raw Modbus request to the device and returns the raw response.
+        /// </summary>
+        /// <param name="deviceId">The device ID.</param>
+        /// <param name="function">The Modbus function code.</param>
+        /// <param name="data">The raw data of the request.</param>
+        /// <returns>The raw data of the response.</returns>
         public byte[] Raw(byte deviceId, FunctionCode function, byte[] data)
         {
             var request = new Request
@@ -264,24 +370,29 @@ namespace Iot.Device.Modbus.Client
             ValidError(response);
 
             if (response.IsValid)
+            {
                 return response.Data.Buffer;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
         #region Private Methods
 
-        Response SendRequest(Request request)
+        private Response SendRequest(Request request)
         {
             var buffer = request.Serialize();
-            this.DataWrite(buffer, 0, buffer.Length);
+            DataWrite(buffer, 0, buffer.Length);
 
             Response response;
             try
             {
                 // Device/Slave ID
                 var id = DataRead();
+
                 // Function number
                 var fn = DataRead();
 
@@ -309,7 +420,9 @@ namespace Iot.Device.Modbus.Client
                             break;
                         default:
                             if ((fn & Consts.ErrorMask) != 0)
+                            {
                                 expectedBytes = 1;
+                            }
 
                             break;
                     }
@@ -319,46 +432,59 @@ namespace Iot.Device.Modbus.Client
                 responseBytes.Add(DataRead(expectedBytes));
 
 #if DEBUG
-                System.Diagnostics.Debug.WriteLine(String.Format("{0} RX ({1}): {2}", this.PortName, responseBytes.Length, Format(responseBytes.Buffer)));
+                System.Diagnostics.Debug.WriteLine($"{PortName} RX ({responseBytes.Length}): {Format(responseBytes.Buffer)}");
 #endif
                 response = new Response(responseBytes.Buffer);
 #if DEBUG
                 if (response.ErrorCode != ErrorCode.NoError)
-                    System.Diagnostics.Debug.WriteLine(String.Format("{0} RX (E): Modbus ErrorCode {1}", this.PortName, response.ErrorCode));
+                    System.Diagnostics.Debug.WriteLine($"{PortName} RX (E): Modbus ErrorCode {response.ErrorCode}");
 #endif
             }
             catch (TimeoutException)
             {
                 response = new Response(new byte[0]);
             }
+
             return response;
         }
 
-        void ValidParameters(byte deviceId, ushort startAddress)
+        private void ValidParameters(byte deviceId, ushort startAddress)
         {
             if (deviceId < Consts.MinDeviceId || Consts.MaxDeviceId < deviceId)
+            {
                 throw new ArgumentOutOfRangeException(nameof(deviceId));
+            }
 
             if (startAddress < Consts.MinAddress || Consts.MaxAddress < startAddress)
+            {
                 throw new ArgumentOutOfRangeException(nameof(startAddress));
+            }
         }
 
-        void ValidParameters(byte deviceId, ushort startAddress, ushort count, ushort maxReadWrite)
+        private void ValidParameters(byte deviceId, ushort startAddress, ushort count, ushort maxReadWrite)
         {
             if (deviceId < Consts.MinDeviceId || Consts.MaxDeviceId < deviceId)
+            {
                 throw new ArgumentOutOfRangeException(nameof(deviceId));
+            }
 
             if (startAddress < Consts.MinAddress || Consts.MaxAddress < startAddress + count)
+            {
                 throw new ArgumentOutOfRangeException(nameof(startAddress));
+            }
 
             if (count < Consts.MinCount || maxReadWrite < count)
+            {
                 throw new ArgumentOutOfRangeException(nameof(count));
+            }
         }
 
-        void ValidError(Response response)
+        private void ValidError(Response response)
         {
             if (response.IsValid && response.ErrorCode != ErrorCode.NoError)
-                throw new Exception(String.Format("{0} RX: Modbus ErrorCode {1}", this.PortName, response.ErrorCode));
+            {
+                throw new Exception($"{PortName} RX: Modbus ErrorCode {response.ErrorCode}");
+            }
         }
 
         #endregion
