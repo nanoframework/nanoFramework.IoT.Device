@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+using System.Diagnostics;
 using System.Net;
 
 namespace IoT.Device.Sim7080
@@ -22,6 +24,34 @@ namespace IoT.Device.Sim7080
             return message.Contains("+CGATT: 1") ?
                                     ConnectionStatus.Connected :
                                     ConnectionStatus.Disconnected;
+        }
+
+        /// <summary>
+        /// Determine MQTT endpoint <see cref="ConnectionStatus"/> from ACK.
+        /// </summary>
+        /// <param name="message">The acknowledgement message.</param>
+        /// <returns><see cref="ConnectionStatus"/></returns>
+        internal static ConnectionStatus EndpointConnectionStatus(string message)
+        {
+            try
+            {
+                Debug.WriteLine($"!!{message}");
+
+                if (message.Contains("OK"))
+                {
+                    return ConnectionStatus.Connected;
+                }
+                else if (message.Contains("ERROR"))
+                {
+                    return ConnectionStatus.Error;
+                }
+            } 
+            catch
+            {
+                return ConnectionStatus.Error;
+            }
+
+            return ConnectionStatus.Disconnected;
         }
 
         /// <summary>
@@ -51,11 +81,13 @@ namespace IoT.Device.Sim7080
         /// <returns>The signal quality.</returns>
         internal static double NetworkSignalQuality(string message)
         {
-            int start = message.IndexOf("+CSQ: ");
-            message = message.Substring(start + 6);
-            message = Clean(message);
-            message = $"{message.Split(',')[0]}.{message.Split(',')[1]}";
+            if (!message.StartsWith("+CSQ: "))
+            {
+                return 0;
+            }
 
+            message = Clean(message);
+            message = message.Substring(6);
             double.TryParse(message, out double signal);
 
             return signal;
@@ -68,26 +100,55 @@ namespace IoT.Device.Sim7080
         /// <returns><see cref="SystemMode"/></returns>
         internal static SystemMode DeviceSystemMode(string message)
         {
-            var systemMode = message.Split(',')[1];
+            var systemMode = Clean(message);
+            systemMode = systemMode.Split('=')[1];
+            systemMode = systemMode.Split(',')[1];
             int.TryParse(systemMode, out int systemModeNumber);
 
-            return (SystemMode)systemModeNumber;
+            return Interpret(systemModeNumber);
         }
 
         /// <summary>
-        /// Clean message, remove line feed.
+        /// Parse integer to <see cref="SystemMode"/>
+        /// </summary>
+        /// <param name="systemModeNumber">Integer corresponding to <see cref="SystemMode"/> value.</param>
+        /// <returns><see cref="SystemMode"/></returns>
+        internal static SystemMode Interpret(int systemModeNumber)
+        {
+            switch (systemModeNumber)
+            {
+                case 1:
+                    return SystemMode.GSM;
+                case 3:
+                    return SystemMode.EGPRS;
+                case 7:
+                    return SystemMode.LTE_M1;
+                case 9:
+                    return SystemMode.LTE_NB;
+                default:
+                    return SystemMode.NoService;
+            }
+        }
+
+        /// <summary>
+        /// Remove line feed.
         /// </summary>
         /// <param name="message">The acknowledgement message.</param>
         /// <returns>String without <see cref="LineFeed"/></returns>
         internal static string Clean(string message)
         {
             int index = message.IndexOf(LineFeed);
+            if (index == 0) 
+            { 
+                index = LineFeed.Length; 
+            }
+
             var substring = message.Substring(0, index);
             return substring;
         }
 
         /// <summary>
-        /// Clean message and convert to long.
+        /// Convert to long.
         /// </summary>
         /// <param name="message">The acknowledgement message.</param>
         /// <returns>Long without <see cref="LineFeed"/></returns>

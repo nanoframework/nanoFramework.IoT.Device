@@ -11,6 +11,17 @@ namespace IoT.Device.Sim7080
     internal static class SimController
     {
         /// <summary>
+        /// Set Flow Control.
+        /// </summary>
+        /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
+        /// <param name="softwareFlowMode">The desired <see cref="SoftwareFlowMode"/>.</param>
+        public static void SetFlowControl(SerialPort serialPort, SoftwareFlowMode softwareFlowMode)
+        {
+            ExecuteCommand(serialPort, "AT+ICF?");
+            ExecuteCommand(serialPort, $"AT+IFC={(int)softwareFlowMode},{(int)softwareFlowMode}");
+        }
+
+        /// <summary>
         /// Get the device information.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
@@ -121,13 +132,16 @@ namespace IoT.Device.Sim7080
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="apn">Cellular network access point name.</param>
-        /// <returns><see cref="ConnectionStatus"/></returns>
-        public static ConnectionStatus NetworkConnect(SerialPort serialPort, string apn)
+        /// <param name="retryCount">The number of retries after error.</param>
+        public static void NetworkConnect(SerialPort serialPort, string apn, int retryCount)
         {
             try
             {
-                // Get Network APN in CAT-M or NB-IoT
-                ExecuteCommand(serialPort, "AT+CGNAPN");
+                if (retryCount > 1)
+                {
+                    // Deactive App Network on error
+                    ExecuteCommand(serialPort, "AT+CNACT=0,0");
+                }
 
                 // Define PDP Context, configure APN
                 ExecuteCommand(serialPort, $"AT+CGDCONT=1,\"IP\",\"{apn}\"");
@@ -135,32 +149,20 @@ namespace IoT.Device.Sim7080
                 // Query the configured APN
                 ExecuteCommand(serialPort, "AT+CGDCONT?");
 
-                // Activate the PDP (packet data protocol) context
-                ExecuteCommand(serialPort, "AT+CGACT=1,1");
-                ExecuteCommand(serialPort, "AT+CGACT?");
+                // Activate PDP context, assign IP
+                ExecuteCommand(serialPort, "AT+CNACT=0,1");
 
                 // Validate if device received an IP address
                 ExecuteCommand(serialPort, "AT+CGPADDR");
 
-                // Set the APN
-                ExecuteCommand(serialPort, $"AT+CNCFG=0,1,\"{apn}\"");
-
-                // Select PDP
-                ExecuteCommand(serialPort, "AT+SNPDPID=0");
-
-                // Activate PDP context, assign IP
-                ExecuteCommand(serialPort, "AT+CNACT=0,1");
-
                 // Check network connection
                 ExecuteCommand(serialPort, "AT+CGATT?");
-
-                return ConnectionStatus.Connected;
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.Message);
 
-                return ConnectionStatus.Error;
+                Reset(serialPort);
             }
         }
 
@@ -181,6 +183,8 @@ namespace IoT.Device.Sim7080
             {
                 Debug.WriteLine(exception.Message);
 
+                Reset(serialPort);
+
                 return ConnectionStatus.Error;
             }
         }
@@ -194,14 +198,14 @@ namespace IoT.Device.Sim7080
         /// <param name="portNumber">The endpoint port number.</param>
         /// <param name="username">The username for authentication.</param>
         /// <param name="password">The password for authentication.</param>
+        /// <param name="retryCount">The number of retries after error.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
-        /// <returns><see cref="ConnectionStatus"/></returns>
-        public static ConnectionStatus EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 5000)
+        public static void EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int retryCount, int wait)
         {
             try
             {
-                // Quality of Service 
-                ExecuteCommand(serialPort, "AT+SMCONF=\"QOS\",1");
+                // Time to wait should be minimal the same as serial port write timout
+                wait = serialPort.WriteTimeout > wait ? serialPort.WriteTimeout : wait;
 
                 // Simcom module MQTT parameter that sets the server URL and port
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"URL\",\"{endpointUrl}\",\"{portNumber}\"");
@@ -212,10 +216,13 @@ namespace IoT.Device.Sim7080
                 // Delete messages after they have been successfully sent
                 ExecuteCommand(serialPort, "AT+SMCONF=\"CLEANSS\",1");
 
+                // Send packet QOS level, at least once.
+                ExecuteCommand(serialPort, "AT+SMCONF=\"QOS\",2");
+
                 // Simcom module MQTT parameter that sets the client id
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"CLIENTID\",\"{clientId}\"");
 
-                // Simcom module MQTT parameter that sets the api endpoint for the specific device
+                // Simcom module MQTT parameter that sets the user name
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"USERNAME\",\"{username}\"");
 
                 // Simcom module MQTT parameter that sets the secure access token
@@ -223,16 +230,12 @@ namespace IoT.Device.Sim7080
 
                 // Simcom module MQTT open the connection
                 ExecuteCommand(serialPort, "AT+SMCONN", wait);
-
-                return ConnectionStatus.Connected;
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.Message);
 
-                ExecuteCommand(serialPort, "+CEDUMP=1");
-
-                return ConnectionStatus.Error;
+                Reset(serialPort);
             }
         }
 
@@ -297,6 +300,8 @@ namespace IoT.Device.Sim7080
             {
                 Debug.WriteLine(exception.Message);
 
+                Reset(serialPort);
+
                 return ConnectionStatus.Error;
             }
         }
@@ -334,11 +339,20 @@ namespace IoT.Device.Sim7080
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="command">The AT command.</param>
         /// <param name="wait">The time to wait for the AT command to complete.</param>
-        internal static void ExecuteCommand(SerialPort serialPort, string command, int wait = 1000)
+        internal static void ExecuteCommand(SerialPort serialPort, string command, int wait = 2000)
         {
             serialPort.WriteLine($"{command}\r");
 
             Thread.Sleep(wait);
+        }
+
+        /// <summary>
+        /// Reset Module.
+        /// </summary>
+        /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
+        internal static void Reset(SerialPort serialPort)
+        {
+            ExecuteCommand(serialPort, "AT+CEDUMP=1");
         }
     }
 }

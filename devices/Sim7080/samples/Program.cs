@@ -23,6 +23,15 @@ namespace Sim7080.Sample
         static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
         static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
 
+        static readonly int _portNumber = 8883;
+        static readonly string _apiVersion = "2021-04-12";
+
+        // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d"/>
+        static string subTopic = $"devices/{_deviceId}/messages/devicebound/#";
+
+        // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c"/>
+        static string pubTopic = $"devices/{_deviceId}/messages/events/";
+
         private static ConnectionStatus _networkConnected { get; set; } = ConnectionStatus.Disconnected;
 
         private static ConnectionStatus _endpointConnected { get; set; } = ConnectionStatus.Disconnected;
@@ -35,8 +44,7 @@ namespace Sim7080.Sample
             // Setup an event handler that will fire when a char is received in the serial device input stream
             _serialPort.DataReceived += SerialDevice_DataReceived;
 
-            _sim = new Sim7080G(_serialPort);
-            _sim.Initialize();
+            _sim = new Sim7080G(_serialPort, true);
 
             // Switch to prefered network mode
             _sim.SetNetworkSystemMode(SystemMode.LTE_NB, false);
@@ -47,22 +55,25 @@ namespace Sim7080.Sample
             // Connect to Endpoint
             if (_networkConnected == ConnectionStatus.Connected)
             {
-                _endpointConnected = _sim.ConnectAzureIoTHub(_deviceId, _hubName, _sasToken);
+                string username = $"{_hubName}.azure-devices.net/{_deviceId}/?api-version={_apiVersion}";
+                string endpointUrl = $"{_hubName}.azure-devices.net";
+
+                _endpointConnected = _sim.ConnectEndpoint(_deviceId, endpointUrl, _portNumber, username, _sasToken);
             }
 
             if (_endpointConnected == ConnectionStatus.Connected)
             {
-                _sim.SendMessage($"test{Guid.NewGuid()}");
+                _sim.SendMessage($"test{Guid.NewGuid()}", pubTopic);
             }
 
             // Disconnect from Endpoint
-            if (_endpointConnected == ConnectionStatus.Connected)
+            if (_endpointConnected != ConnectionStatus.Disconnected)
             {
-                _endpointConnected = _sim.DisonnectAzureIoTHub();
+                _endpointConnected = _sim.DisonnectEndpoint();
             }
 
             // Disconnect from network access point
-            if (_networkConnected == ConnectionStatus.Connected)
+            if (_networkConnected != ConnectionStatus.Disconnected)
             {
                 _networkConnected = _sim.NetworkDisconnect();
             }
@@ -79,7 +90,9 @@ namespace Sim7080.Sample
         /// <param name="e"></param>
         private static void SerialDevice_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            _sim?.ReadResponse();
+            var message = _sim?.ReadResponse();
+
+            // Debug.WriteLine(message);
         }
 
         #region SerialPort
@@ -102,9 +115,10 @@ namespace Sim7080.Sample
             int baudRate = 115200,
             Parity parity = Parity.None,
             StopBits stopBits = StopBits.One,
-            Handshake handshake = Handshake.XOnXOff,
+            Handshake handshake = Handshake.None,
             int dataBits = 8,
-            char watchChar = '\n')
+            int readTimeout = Timeout.Infinite,
+            int writeTimeout = Timeout.Infinite)
         {
             // Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
@@ -117,7 +131,9 @@ namespace Sim7080.Sample
                 Parity = parity,
                 StopBits = stopBits,
                 Handshake = handshake,
-                DataBits = dataBits
+                DataBits = dataBits,
+                ReadTimeout = readTimeout,
+                WriteTimeout = writeTimeout
             };
 
             try
@@ -129,9 +145,6 @@ namespace Sim7080.Sample
             {
                 Debug.WriteLine(exception.Message);
             }
-
-            // Set a watch char to be notified when it's available in the input stream
-            _serialPort.WatchChar = watchChar;
         }
 
         /// <summary>
@@ -142,6 +155,7 @@ namespace Sim7080.Sample
             if (_serialPort.IsOpen)
             {
                 _serialPort.Close();
+                _serialPort.Dispose();
             }
         }
 
