@@ -245,6 +245,7 @@
 ## Protocols providers/libraries
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.DhcpServer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.DhcpServer/) [DHCP Server](DhcpServer/README.md)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Modbus.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Modbus/) [Modbus - Machine to machine communication protocol](Modbus/README.md)
 
 ## Power monitors and related devices
 
