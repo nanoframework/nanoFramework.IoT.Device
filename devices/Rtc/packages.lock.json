@@ -34,9 +34,9 @@
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.21.0, 5.21.0]",
-        "resolved": "5.21.0",
-        "contentHash": "hzl1v0JDmpjcy1n1K4HYMrUAJsNq4my0JS1l5rgGuWwY3YT19zBpORZlL1ysnt859sVh8ZGeHnHdsqn7ZHL9Kw=="
+        "requested": "[5.24.0, 5.24.0]",
+        "resolved": "5.24.0",
+        "contentHash": "15zN/c3+byYXU3R38jRhNjaTFs8bcHytxZsI94b6zln/TynPV6bYdgz0VNO18g7NidP80mO/Z0JM+6iUTWDF3g=="
       }
     }
   }
