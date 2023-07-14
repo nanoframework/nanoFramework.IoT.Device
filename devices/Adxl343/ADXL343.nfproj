@@ -74,12 +74,12 @@
       <HintPath>packages\nanoFramework.System.Numerics.1.2.325\lib\System.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Duration, Version=5.21.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Duration.5.21.0\lib\UnitsNet.Duration.dll</HintPath>
+    <Reference Include="UnitsNet.Duration, Version=5.25.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Duration.5.25.0\lib\UnitsNet.Duration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Mass, Version=5.21.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Mass.5.21.0\lib\UnitsNet.Mass.dll</HintPath>
+    <Reference Include="UnitsNet.Mass, Version=5.25.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Mass.5.25.0\lib\UnitsNet.Mass.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
