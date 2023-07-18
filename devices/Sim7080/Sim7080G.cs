@@ -26,7 +26,7 @@ namespace IoT.Device.Sim7080
         /// <summary>
         /// Determine wether connection sequence has been started, to wait for <see cref="ConnectionStatus"/> acknowledgement.
         /// </summary>
-        private bool _sequenceStarted = false;
+        private bool _sequenceStarted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim7080G"/> class.
@@ -188,6 +188,8 @@ namespace IoT.Device.Sim7080
                 return NetworkInformation.ConnectionStatus;
             }
 
+            _sequenceStarted = false;
+
             var retryCount = 0;
 
             do
@@ -195,9 +197,9 @@ namespace IoT.Device.Sim7080
                 if (!_sequenceStarted)
                 {
                     retryCount++;
-                }
 
-                _sequenceStarted = SimController.NetworkConnect(_serialPort, apn, retryCount, _sequenceStarted);
+                    _sequenceStarted = SimController.NetworkConnect(_serialPort, apn, retryCount);
+                }
             }
             while (NetworkInformation.ConnectionStatus != ConnectionStatus.Connected && retryCount < Retry);
 
@@ -237,6 +239,8 @@ namespace IoT.Device.Sim7080
                 return EndpointConnected;
             }
 
+            _sequenceStarted = false;
+
             var retryCount = 0;
 
             do
@@ -245,7 +249,7 @@ namespace IoT.Device.Sim7080
                 {
                     retryCount++;
 
-                    _sequenceStarted = SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, wait, _sequenceStarted);
+                    _sequenceStarted = SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, wait);
                 }
             }
             while (EndpointConnected != ConnectionStatus.Connected && retryCount < Retry);

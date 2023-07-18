@@ -133,16 +133,9 @@ namespace IoT.Device.Sim7080
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="apn">Cellular network access point name.</param>
         /// <param name="retryCount">The number of retries after error.</param>
-        /// <param name="sequenceStarted">Indicates that the sequence was executed.</param>
         /// <returns>Ackowledgement that the sequence was started.</returns>
-        public static bool NetworkConnect(SerialPort serialPort, string apn, int retryCount, bool sequenceStarted)
+        public static bool NetworkConnect(SerialPort serialPort, string apn, int retryCount)
         {
-            if (sequenceStarted)
-            {
-                // Wait for acknowledgement
-                return sequenceStarted;
-            }
-
             try
             {
                 if (retryCount > 1)
@@ -211,16 +204,9 @@ namespace IoT.Device.Sim7080
         /// <param name="username">The username for authentication.</param>
         /// <param name="password">The password for authentication.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
-        /// <param name="sequenceStarted">Indicates that the sequence was executed.</param>
         /// <returns>Ackowledgement that the sequence was started.</returns>
-        public static bool EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int wait, bool sequenceStarted)
+        public static bool EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int wait)
         {
-            if (sequenceStarted)
-            {
-                // Wait for acknowledgement
-                return sequenceStarted;
-            }
-
             try
             {
                 // Time to wait should be minimal the same as serial port write timout
