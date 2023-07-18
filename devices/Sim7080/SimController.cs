@@ -198,9 +198,8 @@ namespace IoT.Device.Sim7080
         /// <param name="portNumber">The endpoint port number.</param>
         /// <param name="username">The username for authentication.</param>
         /// <param name="password">The password for authentication.</param>
-        /// <param name="retryCount">The number of retries after error.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
-        public static void EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int retryCount, int wait)
+        public static void EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int wait)
         {
             try
             {

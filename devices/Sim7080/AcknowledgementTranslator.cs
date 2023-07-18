@@ -34,8 +34,6 @@ namespace IoT.Device.Sim7080
         {
             try
             {
-                Debug.WriteLine($"!!{message}");
-
                 if (message.Contains("OK"))
                 {
                     return ConnectionStatus.Connected;
