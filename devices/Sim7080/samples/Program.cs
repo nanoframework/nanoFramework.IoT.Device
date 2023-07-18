@@ -15,18 +15,13 @@ namespace Sim7080.Sample
         static SerialPort _serialPort;
         static Sim7080G _sim;
 
-        static readonly string _apn = "sam.iot-provider.com";
-        static readonly string _deviceId = "thermostat67";
-        static readonly string _hubName = "lnkt-dev-weu-769-iot";
-        static readonly string _sasToken = "SharedAccessSignature sr=lnkt-dev-weu-769-iot.azure-devices.net%2Fdevices%2Fthermostat67&sig=0nyd%2FinScQ1OIjJFAwVhweHwrL%2B9XHuQ8WHppdDum9w%3D&se=3581851971";
+        // Provider variables
+        static readonly string _apn = "<YOUR-APN>";
 
-        //// Provider variables
-        //static readonly string _apn = "<YOUR-APN>";
-
-        //// Azure EventHub variables
-        //static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
-        //static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
-        //static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
+        // Azure EventHub variables
+        static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
+        static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
+        static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
         static readonly int _portNumber = 8883;
         static readonly string _apiVersion = "2021-04-12";
 

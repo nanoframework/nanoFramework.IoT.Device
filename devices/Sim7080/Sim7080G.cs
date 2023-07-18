@@ -231,7 +231,7 @@ namespace IoT.Device.Sim7080
         /// <param name="password">The password for endpoint authentication.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
         /// <returns><see cref="ConnectionStatus"/></returns>
-        public ConnectionStatus ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 2000)
+        public ConnectionStatus ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 3000)
         {
             if (!_serialPort.IsOpen || NetworkInformation.ConnectionStatus == ConnectionStatus.Disconnected)
             {
