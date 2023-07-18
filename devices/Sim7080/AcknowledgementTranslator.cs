@@ -64,9 +64,19 @@ namespace IoT.Device.Sim7080
         {
             message = Clean(message);
 
-            var ipString = message.Split(',')[1].Split('/')[0];
+            string ipString = null;
 
-            if (ipAddress == null)
+            if (message.Contains(",")) 
+            {
+                ipString = message.Split(',')[1];
+            }
+
+            if (ipString.Contains("/"))
+            {
+                ipString = ipString.Split('/')[0];
+            }
+
+            if (!string.IsNullOrEmpty(ipString) && ipAddress == null)
             {
                 ipAddress = IPAddress.Parse(ipString);
             }
@@ -139,8 +149,8 @@ namespace IoT.Device.Sim7080
         {
             int index = message.IndexOf(LineFeed);
             if (index == 0) 
-            { 
-                index = LineFeed.Length; 
+            {
+                return message; 
             }
 
             var substring = message.Substring(0, index);

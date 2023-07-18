@@ -250,7 +250,7 @@ namespace IoT.Device.Sim7080
 
                 SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, retryCount, wait);
 
-                CheckSequenceStatus();
+                CheckSequenceStatus(); 
             }
             while (EndpointConnected != ConnectionStatus.Connected && retryCount < Retry);
 
@@ -353,6 +353,9 @@ namespace IoT.Device.Sim7080
                 // Derive information from acknowledgement
                 switch (_acknowledgement)
                 {
+                    case "ERROR":
+                        Notify("ERROR", AcknowledgementTranslator.Clean(readLine));
+                        break;
                     case "AT+CGMI":
                         DeviceInformation.Manufacturer = AcknowledgementTranslator.Clean(readLine);
                         Notify("DeviceInformation_Manufacturer", DeviceInformation.Manufacturer);
@@ -403,13 +406,9 @@ namespace IoT.Device.Sim7080
                         Notify("NetworkInformation_SignalQuality", NetworkInformation.SignalQuality.ToString());
                         break;
                     case "AT+SMCONN":
-
                         EndpointConnected = AcknowledgementTranslator.EndpointConnectionStatus(readLine);
                         Notify("MQTT_EndpointConnected", EndpointConnected.ToString());
                         _commandSequenceReady = true;
-                        break;
-                    case "ERROR":
-                        Notify("ERROR", AcknowledgementTranslator.Clean(readLine));
                         break;
                 }
             }

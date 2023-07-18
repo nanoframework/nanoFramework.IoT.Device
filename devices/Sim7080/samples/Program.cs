@@ -18,13 +18,10 @@ namespace Sim7080.Sample
         // Provider variables
         static readonly string _apn = "<YOUR-APN>";
 
-        // Azure EventHub variables
+        //// Azure EventHub variables
         static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
         static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
         static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
-
-        static readonly int _portNumber = 8883;
-        static readonly string _apiVersion = "2021-04-12";
 
         // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d"/>
         static string subTopic = $"devices/{_deviceId}/messages/devicebound/#";
