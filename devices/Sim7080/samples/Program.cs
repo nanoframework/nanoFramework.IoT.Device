@@ -18,10 +18,12 @@ namespace Sim7080.Sample
         // Provider variables
         static readonly string _apn = "<YOUR-APN>";
 
-        //// Azure EventHub variables
+        // Azure EventHub variables
         static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
         static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
         static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
+        static readonly int _portNumber = 8883;
+        static readonly string _apiVersion = "2021-04-12";
 
         // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d"/>
         static string subTopic = $"devices/{_deviceId}/messages/devicebound/#";
@@ -41,7 +43,7 @@ namespace Sim7080.Sample
             // Setup an event handler that will fire when a char is received in the serial device input stream
             _serialPort.DataReceived += SerialDevice_DataReceived;
 
-            _sim = new Sim7080G(_serialPort, true);
+            _sim = new Sim7080G(_serialPort);
 
             // Switch to prefered network mode
             _sim.SetNetworkSystemMode(SystemMode.LTE_NB, false);
@@ -113,9 +115,7 @@ namespace Sim7080.Sample
             Parity parity = Parity.None,
             StopBits stopBits = StopBits.One,
             Handshake handshake = Handshake.None,
-            int dataBits = 8,
-            int readTimeout = Timeout.Infinite,
-            int writeTimeout = Timeout.Infinite)
+            int dataBits = 8)
         {
             // Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
@@ -129,14 +129,17 @@ namespace Sim7080.Sample
                 StopBits = stopBits,
                 Handshake = handshake,
                 DataBits = dataBits,
-                ReadTimeout = readTimeout,
-                WriteTimeout = writeTimeout
+                NewLine = "\r\n",
+                ReadTimeout = Timeout.Infinite,
+                WriteTimeout = Timeout.Infinite
             };
 
             try
             {
                 // Open the serial port
                 _serialPort.Open();
+                
+                _serialPort.WatchChar = '\n';
             }
             catch (Exception exception)
             {

@@ -23,21 +23,13 @@ namespace IoT.Device.Sim7080
         /// </summary>
         private string _acknowledgement;
 
-        private bool _commandSequenceReady = false;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim7080G"/> class.
         /// </summary>
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
-        /// <param name="reset">Reset Module on initialization.</param>
-        public Sim7080G(SerialPort serialPort, bool reset = false)
+        public Sim7080G(SerialPort serialPort)
         {
-            _serialPort = serialPort;
-
-            if (reset)
-            {
-                Reset(serialPort);
-            }     
+            _serialPort = serialPort;   
         }
 
         /// <summary>
@@ -191,8 +183,6 @@ namespace IoT.Device.Sim7080
                 return NetworkInformation.ConnectionStatus;
             }
 
-            _commandSequenceReady = false;
-
             var retryCount = 0;
 
             do
@@ -200,8 +190,6 @@ namespace IoT.Device.Sim7080
                 retryCount++;
 
                 SimController.NetworkConnect(_serialPort, apn, retryCount);
-
-                CheckSequenceStatus();
             }
             while (NetworkInformation.ConnectionStatus != ConnectionStatus.Connected && retryCount < Retry);
             return NetworkInformation.ConnectionStatus;
@@ -232,15 +220,13 @@ namespace IoT.Device.Sim7080
         /// <param name="password">The password for endpoint authentication.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
         /// <returns><see cref="ConnectionStatus"/></returns>
-        public ConnectionStatus ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 3000)
+        public ConnectionStatus ConnectEndpoint(string clientId, string endpointUrl, int portNumber, string username, string password, int wait = 5000)
         {
             if (!_serialPort.IsOpen || NetworkInformation.ConnectionStatus == ConnectionStatus.Disconnected)
             {
                 EndpointConnected = ConnectionStatus.Disconnected;
                 return EndpointConnected;
             }
-
-            _commandSequenceReady = false;
 
             var retryCount = 0;
 
@@ -249,21 +235,10 @@ namespace IoT.Device.Sim7080
                 retryCount++;
 
                 SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, retryCount, wait);
-
-                CheckSequenceStatus(); 
             }
             while (EndpointConnected != ConnectionStatus.Connected && retryCount < Retry);
 
             return EndpointConnected;
-        }
-
-        private void CheckSequenceStatus()
-        {
-            do
-            {
-                // Wait for command sequence to finish
-            }
-            while (!_commandSequenceReady);
         }
 
         /// <summary>
@@ -398,7 +373,6 @@ namespace IoT.Device.Sim7080
                         break;
                     case "AT+CGATT?":
                         NetworkInformation.ConnectionStatus = AcknowledgementTranslator.NetworkConnectionStatus(readLine);
-                        _commandSequenceReady = true;
                         Notify("NetworkInformation_ConnectionStatus", NetworkInformation.ConnectionStatus.ToString());
                         break;
                     case "AT+CSQ":
@@ -408,7 +382,6 @@ namespace IoT.Device.Sim7080
                     case "AT+SMCONN":
                         EndpointConnected = AcknowledgementTranslator.EndpointConnectionStatus(readLine);
                         Notify("MQTT_EndpointConnected", EndpointConnected.ToString());
-                        _commandSequenceReady = true;
                         break;
                 }
             }

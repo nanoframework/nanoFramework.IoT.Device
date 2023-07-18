@@ -339,11 +339,11 @@ namespace IoT.Device.Sim7080
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="command">The AT command.</param>
         /// <param name="wait">The time to wait for the AT command to complete.</param>
-        internal static void ExecuteCommand(SerialPort serialPort, string command, int wait = 3000)
+        internal static void ExecuteCommand(SerialPort serialPort, string command, int wait = 5000)
         {
             serialPort.WriteLine($"{command}\r");
 
-            Thread.Sleep(wait);
+            // Thread.Sleep(wait);
         }
 
         /// <summary>
