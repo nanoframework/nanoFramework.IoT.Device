@@ -14,6 +14,11 @@ namespace IoT.Device.Sim7080
     public class Sim7080G
     {
         /// <summary>
+        /// Determine wether connection sequence has been started, to wait for <see cref="ConnectionStatus"/> acknowledgement.
+        /// </summary>
+        private static bool _sequenceStarted;
+
+        /// <summary>
         /// The UART <see cref="SerialPort"/> for communication with the modem.
         /// </summary>
         private readonly SerialPort _serialPort;
@@ -22,11 +27,6 @@ namespace IoT.Device.Sim7080
         /// The current acknowledgement message that is translated with the <see cref="AcknowledgementTranslator"/>
         /// </summary>
         private string _acknowledgement;
-
-        /// <summary>
-        /// Determine wether connection sequence has been started, to wait for <see cref="ConnectionStatus"/> acknowledgement.
-        /// </summary>
-        private bool _sequenceStarted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim7080G"/> class.
@@ -168,7 +168,7 @@ namespace IoT.Device.Sim7080
         /// <param name="systemMode">The desired <see cref="SystemMode"/>.</param>
         /// <param name="enableReporting">Report the network system mode information.</param>
         /// <param name="wait">The time to wait to switch system mode.</param>
-        public void SetNetworkSystemMode(SystemMode systemMode = SystemMode.GSM, bool enableReporting = true, int wait = 5000)
+        public void SetNetworkSystemMode(SystemMode systemMode = SystemMode.GSM, bool enableReporting = true, int wait = 2000)
         {
             SimController.SetSystemMode(_serialPort, systemMode, enableReporting);
 
@@ -188,17 +188,17 @@ namespace IoT.Device.Sim7080
                 return NetworkInformation.ConnectionStatus;
             }
 
-            _sequenceStarted = false;
-
             var retryCount = 0;
 
             do
             {
-                if (!_sequenceStarted)
+                if (!_sequenceStarted && NetworkInformation.ConnectionStatus != ConnectionStatus.Connected)
                 {
                     retryCount++;
 
-                    _sequenceStarted = SimController.NetworkConnect(_serialPort, apn, retryCount);
+                    _sequenceStarted = true;
+                        
+                    SimController.NetworkConnect(_serialPort, apn, retryCount);
                 }
             }
             while (NetworkInformation.ConnectionStatus != ConnectionStatus.Connected && retryCount < Retry);
@@ -239,17 +239,17 @@ namespace IoT.Device.Sim7080
                 return EndpointConnected;
             }
 
-            _sequenceStarted = false;
-
             var retryCount = 0;
 
             do
             {
-                if (!_sequenceStarted)
+                if (!_sequenceStarted && EndpointConnected != ConnectionStatus.Connected)
                 {
                     retryCount++;
 
-                    _sequenceStarted = SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, wait);
+                    _sequenceStarted = true;
+                    
+                    SimController.EndpointConnect(_serialPort, clientId, endpointUrl, portNumber, username, password, wait);
                 }
             }
             while (EndpointConnected != ConnectionStatus.Connected && retryCount < Retry);
@@ -330,7 +330,7 @@ namespace IoT.Device.Sim7080
                 // Skip, only read acknowledgement information
                 if ((readLine.StartsWith(_acknowledgement) && !readLine.Contains("=")) ||
                     readLine == "\r" ||
-                    readLine.StartsWith("OK"))
+                    (readLine.StartsWith("OK") && _acknowledgement != "AT+SMCONN"))
                 {                
                     return readLine;
                 }
@@ -398,7 +398,7 @@ namespace IoT.Device.Sim7080
                         break;
                     case "AT+SMCONN":
                         EndpointConnected = AcknowledgementTranslator.EndpointConnectionStatus(readLine);
-                        Notify("MQTT_EndpointConnected", EndpointConnected.ToString());
+                        Notify("MQTT_ConnectionStatus", EndpointConnected.ToString());
                         _sequenceStarted = false;
                         break;
                 }

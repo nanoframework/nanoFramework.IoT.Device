@@ -133,8 +133,7 @@ namespace IoT.Device.Sim7080
         /// <param name="serialPort">The UART <see cref="SerialPort"/> for communication with the modem.</param>
         /// <param name="apn">Cellular network access point name.</param>
         /// <param name="retryCount">The number of retries after error.</param>
-        /// <returns>Ackowledgement that the sequence was started.</returns>
-        public static bool NetworkConnect(SerialPort serialPort, string apn, int retryCount)
+        public static void NetworkConnect(SerialPort serialPort, string apn, int retryCount)
         {
             try
             {
@@ -158,16 +157,12 @@ namespace IoT.Device.Sim7080
 
                 // Check network connection
                 ExecuteCommand(serialPort, "AT+CGATT?");
-
-                return true;
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.Message);
 
                 Reset(serialPort);
-
-                return false;
             }
         }
 
@@ -204,16 +199,12 @@ namespace IoT.Device.Sim7080
         /// <param name="username">The username for authentication.</param>
         /// <param name="password">The password for authentication.</param>
         /// <param name="wait">The time to wait to establish the connection.</param>
-        /// <returns>Ackowledgement that the sequence was started.</returns>
-        public static bool EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int wait)
+        public static void EndpointConnect(SerialPort serialPort, string clientId, string endpointUrl, int portNumber, string username, string password, int wait)
         {
             try
             {
                 // Time to wait should be minimal the same as serial port write timout
                 wait = serialPort.WriteTimeout > wait ? serialPort.WriteTimeout : wait;
-
-                // Set MQTT parameter that sets the device/client id
-                ExecuteCommand(serialPort, $"AT+SMCONF=\"CLIENTID\",\"{clientId}\"");
 
                 // Simcom module MQTT parameter that sets the server URL and port
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"URL\",\"{endpointUrl}\",\"{portNumber}\"");
@@ -224,6 +215,9 @@ namespace IoT.Device.Sim7080
                 // Delete messages after they have been successfully sent
                 ExecuteCommand(serialPort, "AT+SMCONF=\"CLEANSS\",1");
 
+                // Set MQTT parameter that sets the device/client id
+                ExecuteCommand(serialPort, $"AT+SMCONF=\"CLIENTID\",\"{clientId}\"");
+
                 // Simcom module MQTT parameter that sets the user name
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"USERNAME\",\"{username}\"");
 
@@ -231,17 +225,13 @@ namespace IoT.Device.Sim7080
                 ExecuteCommand(serialPort, $"AT+SMCONF=\"PASSWORD\",\"{password}\"");
 
                 // Simcom module MQTT open the connection
-                ExecuteCommand(serialPort, "AT+SMCONN", wait);
-
-                return true;
+                ExecuteCommand(serialPort, "AT+SMCONN");
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.Message);
 
                 Reset(serialPort);
-
-                return false;
             }
         }
 

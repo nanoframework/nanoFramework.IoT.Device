@@ -15,21 +15,26 @@ namespace Sim7080.Sample
         static SerialPort _serialPort;
         static Sim7080G _sim;
 
-        // Provider variables
-        static readonly string _apn = "<YOUR-APN>";
+        static readonly string _apn = "sam.iot-provider.com";
+        static readonly string _deviceId = "thermostat67";
+        static readonly string _hubName = "lnkt-dev-weu-769-iot";
+        static readonly string _sasToken = "SharedAccessSignature sr=lnkt-dev-weu-769-iot.azure-devices.net%2Fdevices%2Fthermostat67&sig=0nyd%2FinScQ1OIjJFAwVhweHwrL%2B9XHuQ8WHppdDum9w%3D&se=3581851971";
 
-        // Azure EventHub variables
-        static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
-        static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
-        static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
+        //// Provider variables
+        //static readonly string _apn = "<YOUR-APN>";
+
+        //// Azure EventHub variables
+        //static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
+        //static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
+        //static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
         static readonly int _portNumber = 8883;
         static readonly string _apiVersion = "2021-04-12";
 
-        // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d"/>
-        static string subTopic = $"devices/{_deviceId}/messages/devicebound/#";
-
         // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c"/>
         static string pubTopic = $"devices/{_deviceId}/messages/events/";
+
+        // <see cref="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d"/>
+        static string subTopic = $"devices/{_deviceId}/messages/devicebound/#";
 
         private static ConnectionStatus _networkConnected { get; set; } = ConnectionStatus.Disconnected;
 
@@ -60,10 +65,10 @@ namespace Sim7080.Sample
                 _endpointConnected = _sim.ConnectEndpoint(_deviceId, endpointUrl, _portNumber, username, _sasToken);
             }
 
-            //if (_endpointConnected == ConnectionStatus.Connected)
-            //{
+            if (_endpointConnected == ConnectionStatus.Connected)
+            {
                 _sim.SendMessage($"test{Guid.NewGuid()}", pubTopic);
-            //}
+            }
 
             // Disconnect from Endpoint
             if (_endpointConnected != ConnectionStatus.Disconnected)
