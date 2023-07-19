@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Documentation\SIM7070_SIM7080_SIM7090 Series_MQTT(S)_Application Note_V1.03.pdf = Documentation\SIM7070_SIM7080_SIM7090 Series_MQTT(S)_Application Note_V1.03.pdf
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim7080.Sample.Full.Net", "samples\Sim7080.Sample.Full.Net\Sim7080.Sample.Full.Net.csproj", "{578C8CCB-B8A0-474E-997C-226238D9BD0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,12 +41,17 @@ Global
 		{2DE14402-56DD-487D-A5DB-84F659A9008B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DE14402-56DD-487D-A5DB-84F659A9008B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2DE14402-56DD-487D-A5DB-84F659A9008B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{578C8CCB-B8A0-474E-997C-226238D9BD0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{578C8CCB-B8A0-474E-997C-226238D9BD0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{578C8CCB-B8A0-474E-997C-226238D9BD0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{578C8CCB-B8A0-474E-997C-226238D9BD0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DE14402-56DD-487D-A5DB-84F659A9008B} = {D32BBD43-5D1C-4C51-9A9B-A5385C48FFB4}
+		{578C8CCB-B8A0-474E-997C-226238D9BD0B} = {D32BBD43-5D1C-4C51-9A9B-A5385C48FFB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C159A759-D554-4D04-B989-2BCC1A1C32D3}

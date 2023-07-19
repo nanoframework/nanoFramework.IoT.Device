@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using IoT.Device.Sim7080;
+#if NANOFRAMEWORK_1_0
 using nanoFramework.Hardware.Esp32;
+#endif
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -16,12 +18,13 @@ namespace Sim7080.Sample
         static Sim7080G _sim;
 
         // Provider variables
-        static readonly string _apn = "<YOUR-APN>";
+        static readonly string _apn = "free";
+        const string ComPort = "COM10";
 
         // Azure EventHub variables
-        static readonly string _deviceId = "<YOUR-DEVICE-NAME>";
-        static readonly string _hubName = "<YOUR-IOT-HUB-NAME>";
-        static readonly string _sasToken = "<YOUR-SAS-TOKEN>";
+        static readonly string _deviceId = "99AAC86800430028";
+        static readonly string _hubName = "EllerbachIOT.azure-devices.net";
+        static readonly string _sasToken = "UpZArSv//NNLYB8aluqKWd3TXoyvSFPgrhsIWAdE790=";
 
         static readonly int _portNumber = 8883;
         static readonly string _apiVersion = "2021-04-12";
@@ -39,7 +42,7 @@ namespace Sim7080.Sample
         public static void Main()
         {
             // Open serial port
-            OpenSerialPort();
+            OpenSerialPort(ComPort);
 
             // Setup an event handler that will fire when a char is received in the serial device input stream
             _serialPort.DataReceived += SerialDevice_DataReceived;
@@ -120,9 +123,11 @@ namespace Sim7080.Sample
             int readTimeout = Timeout.Infinite,
             int writeTimeout = Timeout.Infinite)
         {
+#if NANOFRAMEWORK_1_0
             // Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
             Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
             Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
+#endif
 
             _serialPort = new(port)
             {

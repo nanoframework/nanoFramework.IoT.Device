@@ -37,8 +37,49 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="AcknowledgementTranslator.cs" />
+    <Compile Include="AtParser\AtChannel.cs" />
+    <Compile Include="AtParser\AtCommand.cs" />
+    <Compile Include="AtParser\AtCommandType.cs" />
+    <Compile Include="AtParser\AtError.cs" />
+    <Compile Include="AtParser\AtErrorParsers.cs" />
+    <Compile Include="AtParser\AtReader.cs" />
+    <Compile Include="AtParser\AtResponse.cs" />
+    <Compile Include="AtParser\AtWriter.cs" />
+    <Compile Include="CodingSchemes\Ansi.cs" />
+    <Compile Include="CodingSchemes\CodingHelpers.cs" />
+    <Compile Include="CodingSchemes\CodingScheme.cs" />
+    <Compile Include="CodingSchemes\Gsm7.cs" />
+    <Compile Include="CodingSchemes\UCS2.cs" />
     <Compile Include="ConnectionStatus.cs" />
     <Compile Include="DeviceInformation.cs" />
+    <Compile Include="AtParser\Error.cs" />
+    <Compile Include="AtParser\IAtReader.cs" />
+    <Compile Include="AtParser\IAtWriter.cs" />
+    <Compile Include="DTOs\BatteryChargeStatus.cs" />
+    <Compile Include="DTOs\BatteryStatus.cs" />
+    <Compile Include="DTOs\CallDetails.cs" />
+    <Compile Include="DTOs\Imsi.cs" />
+    <Compile Include="DTOs\NumberPlanIdentification.cs" />
+    <Compile Include="DTOs\PersonalIdentificationNumber.cs" />
+    <Compile Include="DTOs\PhoneNumber.cs" />
+    <Compile Include="DTOs\PhoneNumberExtensions.cs" />
+    <Compile Include="DTOs\PreferredMessageStorage.cs" />
+    <Compile Include="DTOs\PreferredMessageStorages.cs" />
+    <Compile Include="DTOs\ProductIdentificationInformation.cs" />
+    <Compile Include="DTOs\RemainingPinPukAttempts.cs" />
+    <Compile Include="DTOs\SignalStrength.cs" />
+    <Compile Include="DTOs\SimStatus.cs" />
+    <Compile Include="DTOs\Sms.cs" />
+    <Compile Include="DTOs\SmsReference.cs" />
+    <Compile Include="DTOs\SmsStatus.cs" />
+    <Compile Include="DTOs\SmsStatusHelpers.cs" />
+    <Compile Include="DTOs\SmsTextFormat.cs" />
+    <Compile Include="DTOs\SmsWithIndex.cs" />
+    <Compile Include="DTOs\SupportedPreferredMessageStorages.cs" />
+    <Compile Include="DTOs\TypeOfNumber.cs" />
+    <Compile Include="Modem\ModemBase.cs" />
+    <Compile Include="Modem\ModemResponse.cs" />
+    <Compile Include="Modem\Sim7080.cs" />
     <Compile Include="SimCardInformation.cs" />
     <Compile Include="NetworkInformation.cs" />
     <Compile Include="SimController.cs" />
@@ -72,12 +113,24 @@
     <Reference Include="System.Net">
       <HintPath>packages\nanoFramework.System.Net.1.10.52\lib\System.Net.dll</HintPath>
     </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>packages\nanoFramework.System.Text.RegularExpressions.1.1.37\lib\System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.19\lib\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.ElectricPotential">
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.5.26.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Ratio">
+      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.26.0\lib\UnitsNet.Ratio.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Events\" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <Import Project=".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />
