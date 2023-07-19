@@ -34,21 +34,21 @@
       },
       "UnitsNet.nanoFramework.MassConcentration": {
         "type": "Direct",
-        "requested": "[5.25.0, 5.25.0]",
-        "resolved": "5.25.0",
-        "contentHash": "YS6eeDyn4pLOj/22D2O1Pu6Kj6W5p234p5M+08yAHJmtGjJJYTmKRJYRLOtWrpkHPBXUyEG9HTWn6Sug/Kdhzg=="
+        "requested": "[5.26.0, 5.26.0]",
+        "resolved": "5.26.0",
+        "contentHash": "YWgzo/BSoY8EuktbuzYWI8azmnOrAp3QO7eMRZY271Utc/T/QkRLgDrpoaf5Tq1jY00a3gmVOyUW2QPFJFGcIw=="
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.25.0, 5.25.0]",
-        "resolved": "5.25.0",
-        "contentHash": "9Hgfr1Q8DT/b9xA1hoGGCT7PFGKWKSTavN7bEESQlY0W3JgzCUxTD+BQoRjc35rjmEtCsXRBzWKy6tqK16ev2w=="
+        "requested": "[5.26.0, 5.26.0]",
+        "resolved": "5.26.0",
+        "contentHash": "COQh2Hc4XoJ27KqpMZw2WC7JD6ntz/eeS5l5cgcYmUh3ep3wqK42zmu2Dc41FA1beNhNbdIZ+4rTfA+fWXBSQg=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.25.0, 5.25.0]",
-        "resolved": "5.25.0",
-        "contentHash": "b+mt5Sw96tbavyzACvG1TfhXhJNBOBBB4tMK6dSGpTTRMzTZPPPlMM7+zq5CKWAvl5fAl5+uOZNondMIakLWrA=="
+        "requested": "[5.26.0, 5.26.0]",
+        "resolved": "5.26.0",
+        "contentHash": "w8AHOoYeMmWHpFwa7/lu32GGLOCAy1ID0/GRugoEKV/FLLk7H5rXeFxk7g5FUN7rzBLLkvB+FqPchOS0bKW7MQ=="
       }
     }
   }
