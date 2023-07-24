@@ -1,14 +1,14 @@
-# Sim7080G - Dual Mode Wireless Module CatM
+# Generic AT Modem and SIM7070, SIM7080, SIM7090  - Dual Mode Wireless Module CatM
 
-The 'Sim7080' supports both 'CAT-M' and 'NB-IoT'. It can be controlled through AT command via a Serial/UART interface.
+This binding is a generic AT Modem handler that can be extended for different usage. The first implementation is for the 'Sim7080' which supports both 'CAT-M' and 'NB-IoT'. It can be controlled through AT command via a Serial/UART interface.
 
 > Note: The module is tested on a Sim7080 but is also compatible with Sim7070 and Sim7090.
 
 ## Documentation
 
-[Datasheet](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/sim7080g/en/Sim7080_Series_SPEC_20200427.pdf) for the Sim7080G.
-
-[Manual](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/sim7080g/en/SIM7070_Sim7080_SIM7090%20Series_AT%20Command%20Manual_V1.04.pdf) for the AT Commands.
+* [Product details](https://www.simcom.com/index.php/product/SIM7080G.html)
+* [Datasheet](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/sim7080g/en/Sim7080_Series_SPEC_20200427.pdf) for the Sim7080G.
+* [Manual](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/sim7080g/en/SIM7070_Sim7080_SIM7090%20Series_AT%20Command%20Manual_V1.04.pdf) for the AT Commands.
 
 ## Usage
 
@@ -56,30 +56,30 @@ private static void OpenSerialPort(
 }
 ```
 
-Create an EventHandler to handle the `AT Command Acknowledge messages` received via the `SerialPort`:
+## Internal storage
 
-```csharp
+TODO
 
-_serialPort.DataReceived += SerialDevice_DataReceived;
+## SMS
 
-private static void SerialDevice_DataReceived(object sender, SerialDataReceivedEventArgs e)
-{
-    _sim.ReadResponse();
-}
-```
+TODO
 
-Initiate the module by passing in the `SerialPort` instance into the constructor:
+## Networking
 
-```csharp
- _sim = new Sim7080G(_serialPort);
-```
+TODO
 
-An example on how to use this device binding is available in the [samples](samples) folder.
+## Call
+
+TODO
+
+## MQTT
+
+TODO
 
 ## Articles
 
-[Starting a Narrowband IoT project with nanoFramework](https://medium.com/itnext/when-machines-talk-bccba9a8c049)
+Part of this code is adaptation and port of [ATLib](https://github.com/hbjorgo/ATLib).
 
-[Establishing a connection to Azure IoT Hub using an MQTT client with nanoFramework](https://medium.com/itnext/establishing-a-connection-to-azure-iot-hub-using-an-mqtt-client-with-nanoframework-d9c2e1b4ebbe)
-
-[Creating a tracking device with nanoFramework](https://medium.com/itnext/creating-a-tracking-device-with-nanoframework-6d27b5b4e7ab)
+* [Starting a Narrowband IoT project with nanoFramework](https://medium.com/itnext/when-machines-talk-bccba9a8c049)
+* [Establishing a connection to Azure IoT Hub using an MQTT client with nanoFramework](https://medium.com/itnext/establishing-a-connection-to-azure-iot-hub-using-an-mqtt-client-with-nanoframework-d9c2e1b4ebbe)
+* [Creating a tracking device with nanoFramework](https://medium.com/itnext/creating-a-tracking-device-with-nanoframework-6d27b5b4e7ab)

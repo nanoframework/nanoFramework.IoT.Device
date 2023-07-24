@@ -10,10 +10,6 @@
 
   <ItemGroup>
     <Compile Include="../Program.cs" />
-    <Compile Include="../../AcknowledgementTranslator.cs" />
-    <Compile Include="../../Sim7080G.cs" />
-    <Compile Include="../../SimController.cs" />
-    <Compile Include="../../SoftwareFlowMode.cs" />
     <Compile Include="../../AtParser/*.cs" />
     <Compile Include="../../CodingSchemes/*.cs" />
     <Compile Include="../../DTOs/*.cs" />

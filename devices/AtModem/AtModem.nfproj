@@ -36,7 +36,6 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="AcknowledgementTranslator.cs" />
     <Compile Include="AtParser\AtChannel.cs" />
     <Compile Include="AtParser\AtCommand.cs" />
     <Compile Include="AtParser\AtCommandType.cs" />

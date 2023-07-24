@@ -18,6 +18,7 @@ namespace IoT.Device.AtModem.Modem
         private IFileStorage _fileStorage = null;
         private IMqttClient _mqttClient = null;
         private INetwork _network = null;
+        private IMqttClient _mqtt = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim7080"/> class.
