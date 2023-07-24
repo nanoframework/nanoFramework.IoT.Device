@@ -197,6 +197,12 @@ namespace IoT.Device.AtModem
             return SendFullCommandAsync(new AtCommand(AtCommandType.NoResult, command, null, null, timeout == default ? DefaultCommandTimeout : timeout));
         }
 
+        /// <inheritdoc/>
+        public virtual void SendBytesWithoutAck(byte[] content)
+        {
+            _atWriter.Write(content);
+        }
+
         /// <summary>
         /// Sends a single-line command and retrieves the command response.
         /// </summary>

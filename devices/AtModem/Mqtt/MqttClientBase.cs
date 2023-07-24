@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using nanoFramework.M2Mqtt.Messages;
 
 namespace nanoFramework.M2Mqtt
@@ -14,23 +15,41 @@ namespace nanoFramework.M2Mqtt
     /// The change of the nanoFramework M2Mqtt client is not done yet. Once done, this interface will be removed and replaced by a reference to the core nanoFramework M2Mqtt client nuget containing the core elements.
     /// In the longer term, this will allow to use higher level classes like Azure or AWS in a full transparent way.
     /// </remarks>
-    public interface IMqttClient
+    public partial class MqttClientBase
     {
         /// <summary>
-        /// Gets a value indicating whether the connection status between client and broker.
-        /// </summary>
-        public bool IsConnected { get; }
-
-        /// <summary>
-        /// MqttClient initialization
+        /// Constructor
         /// </summary>
         /// <param name="brokerHostName">Broker Host Name or IP Address</param>
         /// <param name="brokerPort">Broker port</param>
-        /// <param name="secure">>Using secure connection</param>
+        /// <param name="secure">Using secure connection</param>
         /// <param name="caCert">CA certificate for secure connection</param>
         /// <param name="clientCert">Client certificate</param>
-        /// <param name="sslProtocol">SSL/TLS protocol version</param>
-        void Init(string brokerHostName, int brokerPort, bool secure, byte[] caCert, byte[] clientCert, MqttSslProtocols sslProtocol);
+        /// <param name="sslProtocol">SSL/TLS protocol</param>
+        public MqttClientBase(string brokerHostName, int brokerPort, bool secure, X509Certificate caCert, X509Certificate clientCert, MqttSslProtocols sslProtocol)
+        {
+            BrokerHostName = brokerHostName;
+            BrokerPort = brokerPort;
+            Secure = secure;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the connection status between client and broker.
+        /// </summary>
+        public bool IsConnected { get; internal set; }
+
+        internal string ClientId { get; set; }
+
+        internal string Username { get; set; }
+
+        internal string Password { get; set; }
+
+        internal string BrokerHostName { get; set; }
+
+        internal int BrokerPort { get; set; }
+
+        internal bool Secure { get; set; }
+
 
         /// <summary>
         /// Connect to broker.
@@ -56,12 +75,20 @@ namespace nanoFramework.M2Mqtt
             string willTopic,
             string willMessage,
             bool cleanSession,
-            ushort keepAlivePeriod);
+            ushort keepAlivePeriod)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// Disconnect from broker.
         /// </summary>
-        public void Disconnect();
+        public void Disconnect()
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// Subscribe for message topics.
@@ -69,14 +96,22 @@ namespace nanoFramework.M2Mqtt
         /// <param name="topics">List of topics to subscribe.</param>
         /// <param name="qosLevels">QOS levels related to topics.</param>
         /// <returns>Message Id related to SUBSCRIBE message.</returns>
-        public ushort Subscribe(string[] topics, MqttQoSLevel[] qosLevels);
+        public ushort Subscribe(string[] topics, MqttQoSLevel[] qosLevels)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// Unsubscribe for message topics.
         /// </summary>
         /// <param name="topics">List of topics to unsubscribe.</param>
         /// <returns>Message Id in UNSUBACK message from broker.</returns>
-        public ushort Unsubscribe(string[] topics);
+        public ushort Unsubscribe(string[] topics)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// Publish a message asynchronously.
@@ -89,14 +124,18 @@ namespace nanoFramework.M2Mqtt
         /// <param name="retain">Retain flag.</param>
         /// <returns>Message Id related to PUBLISH message.</returns>
         /// <exception cref="ArgumentException">If <paramref name="userProperties"/> elements aren't of type <see cref="UserProperty"/>.</exception>
-        /// <exception cref="NotSupportedException">If setting a parameter that is not supported in the MQTT version set for this <see cref="IMqttClient"/>.</exception>
+        /// <exception cref="NotSupportedException">If setting a parameter that is not supported in the MQTT version set for this <see cref="MqttClientBase"/>.</exception>
         public ushort Publish(
             string topic,
             byte[] message,
             string contentType,
             ArrayList userProperties,
             MqttQoSLevel qosLevel,
-            bool retain);
+            bool retain)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// Delegate that defines event handler for PUBLISH message received.

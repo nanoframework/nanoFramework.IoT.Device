@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+
 namespace IoT.Device.AtModem
 {
     /// <summary>
@@ -25,6 +27,15 @@ namespace IoT.Device.AtModem
         public bool WriteFile(string fileName, string content);
 
         /// <summary>
+        /// Writes content to a storage file.
+        /// Content must be plain string without \r \n chars.
+        /// </summary>
+        /// <param name="fileName">File name including full path.</param>
+        /// <param name="content">File content.</param>
+        /// <returns>True if file was successfully written. False otherwise.</returns>
+        public bool WriteFile(string fileName, byte[] content);
+
+        /// <summary>
         /// Returns available storage space.
         /// </summary>
         /// <returns>File available storage space in bytes or -1 if size couldn't be determined.</returns>
@@ -43,6 +54,14 @@ namespace IoT.Device.AtModem
         /// <param name="fileName">File name including full path.</param>
         /// <returns>File contents or NULL if file is empty or doesn't exist.</returns>
         public string ReadFile(string fileName);
+
+        /// <summary>
+        /// Read a file from the file storage.
+        /// </summary>
+        /// <param name="fileName">File name including full path.</param>
+        /// <param name="content">File contents as a span of bytes.</param>
+        /// <returns>File contents or NULL if file is empty or doesn't exist.</returns>
+        public bool ReadFile(string fileName, ref byte[] content);
 
         /// <summary>
         /// Renames a file in the file storage.

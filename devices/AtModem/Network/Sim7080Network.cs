@@ -3,7 +3,6 @@
 
 using System;
 using System.IO.Ports;
-using System.Net;
 using System.Threading;
 using IoT.Device.AtModem.DTOs;
 using IoT.Device.AtModem.Modem;

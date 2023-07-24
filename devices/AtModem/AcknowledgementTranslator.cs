@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Net;
 using IoT.Device.AtModem.DTOs;
 
 namespace IoT.Device.Sim7080
@@ -46,7 +45,7 @@ namespace IoT.Device.Sim7080
                 {
                     return ConnectionStatus.Error;
                 }
-            } 
+            }
             catch
             {
                 return ConnectionStatus.Error;
@@ -61,18 +60,11 @@ namespace IoT.Device.Sim7080
         /// <param name="message">The acknowledgement message.</param>
         /// <param name="ipAddress">The current <see cref="IPAddress"/></param>
         /// <returns><see cref="IPAddress"/></returns>
-        internal static IPAddress NetworkIPAddress(string message, IPAddress ipAddress)
+        internal static string NetworkIPAddress(string message, string ipAddress)
         {
             message = Clean(message);
 
-            var ipString = message.Split(',')[1].Split('/')[0];
-
-            if (ipAddress == null)
-            {
-                ipAddress = IPAddress.Parse(ipString);
-            }
-
-            return ipAddress;
+            return message;
         }
 
         /// <summary>
@@ -139,9 +131,9 @@ namespace IoT.Device.Sim7080
         internal static string Clean(string message)
         {
             int index = message.IndexOf(LineFeed);
-            if (index == 0) 
-            { 
-                index = LineFeed.Length; 
+            if (index == 0)
+            {
+                index = LineFeed.Length;
             }
 
             var substring = message.Substring(0, index);

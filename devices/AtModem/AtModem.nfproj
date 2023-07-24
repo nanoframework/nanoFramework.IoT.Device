@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Mqtt\MqttQoSLevel.cs" />
     <Compile Include="Mqtt\MqttReasonCode.cs" />
+    <Compile Include="Mqtt\MqttSslProtocols.cs" />
     <Compile Include="Mqtt\Sim7080MqttClient.cs" />
     <Compile Include="Mqtt\UserProperty.cs" />
     <Compile Include="Network\INetwork.cs" />
@@ -135,14 +136,11 @@
     </Compile>
     <Compile Include="DTOs\SimCardInformation.cs" />
     <Compile Include="DTOs\NetworkInformation.cs" />
-    <Compile Include="SimController.cs" />
-    <Compile Include="Sim7080G.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sms\ISmsProvider.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Sms\GenericSmsProvider.cs" />
-    <Compile Include="SoftwareFlowMode.cs" />
     <Compile Include="DTOs\SystemMode.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +164,6 @@
     </Reference>
     <Reference Include="System.Math">
       <HintPath>packages\nanoFramework.System.Math.1.5.29\lib\System.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net">
-      <HintPath>packages\nanoFramework.System.Net.1.10.52\lib\System.Net.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.19\lib\System.Threading.dll</HintPath>

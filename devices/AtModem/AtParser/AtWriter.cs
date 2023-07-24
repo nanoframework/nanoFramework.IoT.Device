@@ -27,6 +27,12 @@ namespace IoT.Device.AtModem
         }
 
         /// <inheritdoc/>
+        public void Write(byte[] content)
+        {
+            _writer.Write(content, 0, content.Length);
+        }
+
+        /// <inheritdoc/>
         public void WriteLineAsync(string command, CancellationToken cancellationToken = default)
         {
             WriteAsync(command, cancellationToken);

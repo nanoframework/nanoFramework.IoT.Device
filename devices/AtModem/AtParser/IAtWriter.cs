@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Threading;
 
 namespace IoT.Device.AtModem
@@ -10,6 +11,12 @@ namespace IoT.Device.AtModem
     /// </summary>
     public interface IAtWriter
     {
+        /// <summary>
+        /// Writes raw bytes to the underlying stream.
+        /// </summary>
+        /// <param name="content">The array of bytes to send.</param>
+        void Write(byte[] content);
+
         /// <summary>
         /// Asynchronously writes a line of AT command.
         /// </summary>
