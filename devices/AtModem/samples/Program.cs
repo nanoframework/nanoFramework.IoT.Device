@@ -132,8 +132,8 @@ void CloseSerialPort()
 void ConnectToNetwork()
 {
     var network = sim7080.Network;
-    ////var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
-    var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
+    var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
+    ////var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
     if (connectRes)
     {
         Console.WriteLine($"Connected to network.");

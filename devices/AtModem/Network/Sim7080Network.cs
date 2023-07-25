@@ -67,14 +67,7 @@ namespace IoT.Device.AtModem.Network
 
         /// <inheritdoc/>
         public bool Connect(PersonalIdentificationNumber pin = null, AccessPointConfiguration apn = null, int maxRetry = 10)
-        {          
-            // Check if the PIN is ready
-            var status = _modem.GetSimStatus();
-            if (!status.IsSuccess)
-            {
-                return false;
-            }
-
+        {
             AtResponse response;
         Retry:
             // set the APN if nay to set
@@ -101,7 +94,7 @@ namespace IoT.Device.AtModem.Network
                     {
                         goto Retry;
                     }
-                    
+
                     return false;
                 }
 
@@ -112,8 +105,49 @@ namespace IoT.Device.AtModem.Network
                     {
                         goto Retry;
                     }
-                    
+
                     return false;
+                }
+
+                // Check if the PIN is ready
+                var status = _modem.GetSimStatus();
+                if (!status.IsSuccess)
+                {
+                    return false;
+                }
+
+                // Get the status of the pin
+                // Reconnect if needed
+                if ((SimStatus)status.Result != SimStatus.SIM_READY)
+                {
+                    if (pin != null)
+                    {
+                    RetryPin:
+                        status = _modem.GetSimStatus();
+                        if (!status.IsSuccess)
+                        {
+                            if (maxRetry-- > 0)
+                            {
+                                goto Retry;
+                            }
+
+                            return false;
+                        }
+
+                        if ((SimStatus)status.Result != SimStatus.SIM_READY)
+                        {
+                            status = _modem.EnterSimPin(pin);
+                            if (!status.IsSuccess)
+                            {
+                                if (maxRetry-- > 0)
+                                {
+                                    goto RetryPin;
+                                }
+
+                                return false;
+                            }
+                        }
+                    }
                 }
 
                 // Set the operator selection to automatic
@@ -124,32 +158,8 @@ namespace IoT.Device.AtModem.Network
                     {
                         goto Retry;
                     }
-                    
+
                     return false;
-                }
-
-                // Get the status of the pin
-                // Reconnect if needed
-                if ((SimStatus)status.Result != SimStatus.SIM_READY)
-                {
-                    if (pin != null)
-                    {
-                        status = _modem.GetSimStatus();
-                        if (!status.IsSuccess)
-                        {
-                            if (maxRetry-- > 0)
-                            {
-                                goto Retry;
-                            }
-                            
-                            return false;
-                        }
-
-                        if ((SimStatus)status.Result != SimStatus.SIM_READY)
-                        {
-                            return false;
-                        }
-                    }
                 }
 
                 // now connect with the apn, user and password
@@ -173,11 +183,11 @@ namespace IoT.Device.AtModem.Network
                 {
                     goto Retry;
                 }
-                
+
                 return false;
             }
 
-            RetryIp:
+        RetryIp:
             // check if the connection is made
             var ipAddress = GetIpAddress();
             if (!IsValidIpAddress(ipAddress))
@@ -243,7 +253,7 @@ namespace IoT.Device.AtModem.Network
 
         /// <inheritdoc/>
         public bool Disconnect()
-        {            
+        {
             var response = _modem.Channel.SendCommand("AT+CNACT=0,0");
             IsConnected = !response.Success;
             return response.Success;
