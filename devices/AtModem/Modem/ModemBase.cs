@@ -619,7 +619,7 @@ namespace IoT.Device.AtModem.Modem
         /// Gets the network registration status.
         /// </summary>
         /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
-        /// If success, Result will contain a <see cref="NetworkRegistration"/> enum.
+        /// If success, Result will contain a <see cref="NetworkRegistration"/> enum.</returns>
         public virtual ModemResponse GetNetworkRegistration()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync("AT+CREG?", "+CREG:");
@@ -629,6 +629,7 @@ namespace IoT.Device.AtModem.Modem
                 if (line.StartsWith("+CREG: "))
                 {
                     string[] parts = line.Substring(7).Split(',');
+
                     // The first one is the notification level with proactive +CREG
                     ////int n = int.Parse(parts[0]);
                     int stat = int.Parse(parts[1]);

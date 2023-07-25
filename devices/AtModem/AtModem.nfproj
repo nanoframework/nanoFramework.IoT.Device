@@ -62,6 +62,7 @@
     <Compile Include="DTOs\BatteryChargeStatus.cs" />
     <Compile Include="DTOs\BatteryStatus.cs" />
     <Compile Include="DTOs\CallDetails.cs" />
+    <Compile Include="DTOs\NetworkRegistration.cs" />
     <Compile Include="DTOs\NumberPlanIdentification.cs" />
     <Compile Include="DTOs\Operator.cs" />
     <Compile Include="DTOs\OperatorType.cs" />
