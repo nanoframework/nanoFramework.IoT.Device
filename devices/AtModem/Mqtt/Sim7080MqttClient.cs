@@ -85,9 +85,6 @@ namespace IoT.Device.AtModem.Mqtt
                 _modem.FileStorage.WriteFile(ClientCertName, clientCert);
             }
 
-            // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
-            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{CaCertName}\",\"{ClientCertName}\"");
-
             // Enable SSL
             // 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
             // 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
@@ -120,6 +117,9 @@ namespace IoT.Device.AtModem.Mqtt
             // Converts the certificates. 1 = certificate, 2 = CA, 3 = private key
             _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"CONVERT\",2,\"{CaCertName}\"");
             _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"CONVERT\",1,\"{ClientCertName}\"");
+
+            // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
+            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{CaCertName}\",\"{ClientCertName}\"");
         }
 
         /// <inheritdoc/>
