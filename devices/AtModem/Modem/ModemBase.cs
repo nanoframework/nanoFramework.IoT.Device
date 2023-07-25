@@ -523,7 +523,7 @@ namespace IoT.Device.AtModem.Modem
             AtResponse response = Channel.SendSingleLineCommandAsync("AT+CNUM", "+CNUM:");
             if (response.Success)
             {
-                  string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
+                string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
                 if (line.StartsWith("+CNUM: "))
                 {
                     string[] parts = line.Substring(7).Split(',');
@@ -613,6 +613,30 @@ namespace IoT.Device.AtModem.Modem
         {
             AtResponse response = Channel.SendCommand($"AT+CMEE={errorFormat}");
             return ModemResponse.Success(response.Success);
+        }
+
+        /// <summary>
+        /// Gets the network registration status.
+        /// </summary>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="NetworkRegistration"/> enum.
+        public virtual ModemResponse GetNetworkRegistration()
+        {
+            AtResponse response = Channel.SendSingleLineCommandAsync("AT+CREG?", "+CREG:");
+            if (response.Success)
+            {
+                string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
+                if (line.StartsWith("+CREG: "))
+                {
+                    string[] parts = line.Substring(7).Split(',');
+                    // The first one is the notification level with proactive +CREG
+                    ////int n = int.Parse(parts[0]);
+                    int stat = int.Parse(parts[1]);
+                    return ModemResponse.ResultSuccess((NetworkRegistration)stat);
+                }
+            }
+
+            return ModemResponse.ResultError();
         }
 
         /// <summary>

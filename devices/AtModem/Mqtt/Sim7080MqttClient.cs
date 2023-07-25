@@ -19,6 +19,7 @@ namespace IoT.Device.AtModem.Mqtt
     {
         private const string CaCertName = "ca.crt";
         private const string ClientCertName = "client.crt";
+        private const int IndexSSL = 1;
         private ModemBase _modem;
         private string _brokerHostName;
         private int _brokerPort;
@@ -74,11 +75,51 @@ namespace IoT.Device.AtModem.Mqtt
             _sslProtocol = sslProtocol;
 
             // Store the caCert and the client cert in the storage
-            _modem.FileStorage.WriteFile(CaCertName, caCert);
-            _modem.FileStorage.WriteFile(ClientCertName, clientCert);
+            if (caCert != null)
+            {
+                _modem.FileStorage.WriteFile(CaCertName, caCert);
+            }
+
+            if (clientCert != null)
+            {
+                _modem.FileStorage.WriteFile(ClientCertName, clientCert);
+            }
 
             // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
-            var response = _modem.Channel.SendCommand($"AT+SMSSL=1,\"{CaCertName}\",\"{ClientCertName}\"");
+            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{CaCertName}\",\"{ClientCertName}\"");
+
+            // Enable SSL
+            // 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
+            // 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
+            // 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
+            // 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
+            // 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
+            // 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
+            int sslVersion = 0;
+            switch (sslProtocol)
+            {
+                default:
+                    sslVersion = 0;
+                    break;
+                case MqttSslProtocols.TLSv1_0:
+                    sslVersion = 1;
+                    break;
+                case MqttSslProtocols.TLSv1_1:
+                    sslVersion = 2;
+                    break;
+                case MqttSslProtocols.TLSv1_2:
+                    sslVersion = 3;
+                    break;                
+            }
+
+            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"SSLVERSION\",{sslVersion}");
+
+            // 1 = TLS
+            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"PROTOCOL\",1");
+
+            // Converts the certificates. 1 = certificate, 2 = CA, 3 = private key
+            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"CONVERT\",2,\"{CaCertName}\"");
+            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"CONVERT\",1,\"{ClientCertName}\"");
         }
 
         /// <inheritdoc/>
