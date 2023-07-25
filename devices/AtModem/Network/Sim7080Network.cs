@@ -128,7 +128,7 @@ namespace IoT.Device.AtModem.Network
                         {
                             if (maxRetry-- > 0)
                             {
-                                goto Retry;
+                                goto RetryPin;
                             }
 
                             return false;

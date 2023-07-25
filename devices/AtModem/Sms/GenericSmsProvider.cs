@@ -36,15 +36,7 @@ namespace IoT.Device.AtModem.Sms
 
         #region list send read sms
 
-        /// <summary>
-        /// Sets the new SMS indication settings.
-        /// </summary>
-        /// <param name="mode">The mode for the new SMS indication.</param>
-        /// <param name="mt">The message type for the new SMS indication.</param>
-        /// <param name="bm">The buffer management for the new SMS indication.</param>
-        /// <param name="ds">The discard status for the new SMS indication.</param>
-        /// <param name="bfr">The bit field reporting for the new SMS indication.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse SetNewSmsIndication(int mode, int mt, int bm, int ds, int bfr)
         {
             if (mode < 0 || mode > 2)
@@ -76,12 +68,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.Success(response.Success);
         }
 
-        /// <summary>
-        /// Sends an SMS in text format.
-        /// </summary>
-        /// <param name="phoneNumber">The phone number of the recipient.</param>
-        /// <param name="message">The text message to be sent.</param>
-        /// <returns>A <see cref="ModemResponse"/> containing the reference to the sent SMS if successful, or an error response.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse SendSmsInTextFormat(PhoneNumber phoneNumber, string message)
         {
             if (phoneNumber is null)
@@ -116,14 +103,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultError();
         }
 
-        /// <summary>
-        /// Sends an SMS in PDU format asynchronously with optional SMS center address length inclusion.
-        /// </summary>
-        /// <param name="phoneNumber">The phone number of the recipient.</param>
-        /// <param name="message">The text message to be sent.</param>
-        /// <param name="codingScheme">The coding scheme to be used for encoding the message.</param>
-        /// <param name="includeEmptySmscLength">A flag indicating whether to include an empty SMS center address length in the PDU.</param>
-        /// <returns>A <see cref="ModemResponse"/> containing the reference to the sent SMS if successful, or an error response.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse SendSmsInPduFormat(PhoneNumber phoneNumber, string message, CodingScheme codingScheme, bool includeEmptySmscLength)
         {
             if (phoneNumber is null)
@@ -178,12 +158,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultError();
         }
 
-        /// <summary>
-        /// Reads an SMS.
-        /// </summary>
-        /// <param name="index">The index of the SMS to read.</param>
-        /// <param name="smsTextFormat">The SMS text format (PDU or Text).</param>
-        /// <returns>A <see cref="ModemResponse"/> containing the read SMS.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse ReadSms(int index, SmsTextFormat smsTextFormat)
         {
             switch (smsTextFormat)
@@ -264,10 +239,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultError();
         }
 
-        /// <summary>
-        /// Gets the SMS message format.
-        /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the SMS message format.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse GetSmsMessageFormat()
         {
             AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CMGF?", "+CMGF:");
@@ -285,22 +257,14 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultError();
         }
 
-        /// <summary>
-        /// Sets the SMS message format.
-        /// </summary>
-        /// <param name="format">The SMS text format to be set.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse SetSmsMessageFormat(SmsTextFormat format)
         {
             AtResponse response = ModemBase.Channel.SendCommand($"AT+CMGF={(int)format}");
             return ModemResponse.Success(response.Success);
         }
 
-        /// <summary>
-        /// Lists SMS messages asynchronously based on the provided SMS status.
-        /// </summary>
-        /// <param name="smsStatus">The SMS status to filter the messages.</param>
-        /// <returns>A <see cref="ModemResponse"/> containing the list of SMS messages.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse ListSmss(SmsStatus smsStatus)
         {
             // Gets the SMS format to be able to run the proper querry
@@ -408,11 +372,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultSuccess(smss);
         }
 
-        /// <summary>
-        /// Deletes an SMS message.
-        /// </summary>
-        /// <param name="index">The index of the SMS to delete.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse DeleteSms(int index)
         {
             AtResponse response = ModemBase.Channel.SendCommand($"AT+CMGD={index}");
@@ -423,10 +383,7 @@ namespace IoT.Device.AtModem.Sms
 
         #region sms storage
 
-        /// <summary>
-        /// Gets the supported preferred message storages.
-        /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the supported preferred message storages.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse GetSupportedPreferredMessageStorages()
         {
             AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CPMS=?", "+CPMS:");
@@ -468,10 +425,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultError();
         }
 
-        /// <summary>
-        /// Gets the supported preferred message storages.
-        /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the supported preferred message storages.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse GetPreferredMessageStorages()
         {
             AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CPMS?", "+CPMS:");
@@ -494,13 +448,7 @@ namespace IoT.Device.AtModem.Sms
             return ModemResponse.ResultError();
         }
 
-        /// <summary>
-        /// Sets the preferred message storage.
-        /// </summary>
-        /// <param name="storage1Name">Name of the first storage.</param>
-        /// <param name="storage2Name">Name of the second storage.</param>
-        /// <param name="storage3Name">Name of the third storage.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <inheritdoc/>
         public virtual ModemResponse SetPreferredMessageStorage(string storage1Name, string storage2Name, string storage3Name)
         {
             AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CPMS=\"{storage1Name}\",\"{storage2Name}\",\"{storage3Name}\"", "+CPMS:");

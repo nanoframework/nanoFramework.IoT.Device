@@ -80,6 +80,7 @@
     <Compile Include="DTOs\SmsStatusHelpers.cs" />
     <Compile Include="DTOs\SmsTextFormat.cs" />
     <Compile Include="DTOs\SmsWithIndex.cs" />
+    <Compile Include="DTOs\SubscriberNumber.cs" />
     <Compile Include="DTOs\SupportedPreferredMessageStorages.cs" />
     <Compile Include="DTOs\TypeOfNumber.cs" />
     <Compile Include="Events\CallEndedEventArgs.cs" />

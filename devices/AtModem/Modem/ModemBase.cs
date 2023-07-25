@@ -159,7 +159,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the International Mobile Subscriber Identity (IMSI).
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the IMSI if successful, or an error response.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the IMSI if successful, or an error response.
+        /// If success, Result will contain a <see cref="SimCardInformation"/> class.</returns>
         public virtual ModemResponse GetSimCardInformation()
         {
             SimCardInformation simCardInformation = new SimCardInformation();
@@ -199,7 +200,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Disables echo mode.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse DisableEcho()
         {
             AtResponse response = Channel.SendCommand("ATE0");
@@ -209,7 +211,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the product identification information.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the product identification information if successful, or an error response.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the product identification information if successful, or an error response.
+        /// If success, Result will contain a <see cref="ProductIdentificationInformation"/> class.</returns>
         public virtual ModemResponse GetProductIdentificationInformation()
         {
             AtResponse response = Channel.SendMultilineCommand("ATI", null);
@@ -232,7 +235,8 @@ namespace IoT.Device.AtModem.Modem
         /// Gets the current baud rate.
         /// </summary>
         /// <param name="baudRate">The baud rate to be set.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse SetBaudRate(int baudRate)
         {
             AtResponse response = Channel.SendCommand($"AT+IPR={baudRate}");
@@ -242,7 +246,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the current baud rate.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.
+        /// If success, Result will contain a <see cref="int"/>.</returns>
         public virtual ModemResponse GetCurrentBaudRate()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync($"AT+IPR?", "+IPR:");
@@ -267,7 +272,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the available character sets.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the available character sets if successful, or an error response.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the available character sets if successful, or an error response.
+        /// If success, Result will contain a <see cref="string"/> array.</returns>
         public virtual ModemResponse GetAvailableCharacterSets()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync($"AT+CSCS=?", "+CSCS:");
@@ -294,7 +300,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the current character set.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the current character set if successful, or an error response.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the current character set if successful, or an error response.
+        /// If success, Result will contain a <see cref="string"/> indicating the current character set.</returns>
         public virtual ModemResponse GetCurrentCharacterSet()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync($"AT+CSCS?", "+CSCS:");
@@ -317,7 +324,8 @@ namespace IoT.Device.AtModem.Modem
         /// Sets the character set.
         /// </summary>
         /// <param name="characterSet">The character set to be set.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse SetCharacterSet(string characterSet)
         {
             AtResponse response = Channel.SendCommand($"AT+CSCS=\"{characterSet}\"");
@@ -327,7 +335,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the manufacturer identification and other device information.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="DeviceInformation"/> class.</returns>
         public virtual ModemResponse GetDeviceInformation()
         {
             // We need to keep for all the commands the intermediate responses, because it contains the information we need
@@ -375,7 +384,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the status of the SIM card.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the status of the SIM card.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the status of the SIM card.
+        /// If success, Result will contain a <see cref="SimStatus"/> enum.</returns>
         public virtual ModemResponse GetSimStatus()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync("AT+CPIN?", "+CPIN:");
@@ -418,7 +428,8 @@ namespace IoT.Device.AtModem.Modem
         /// Enters the SIM PIN.
         /// </summary>
         /// <param name="pin">The Personal Identification Number (PIN) to enter.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indication the success of the operation.</returns>
         public virtual ModemResponse EnterSimPin(PersonalIdentificationNumber pin)
         {
             AtResponse response = Channel.SendCommand($"AT+CPIN={pin}");
@@ -428,7 +439,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Reinitializes the SIM.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse ReInitializeSim()
         {
             AtResponse response = Channel.SendCommand($"AT+CRFSIM");
@@ -438,7 +450,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the signal strength.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the signal strength information.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the signal strength information.
+        /// If success, Result will contain a <see cref="SignalStrength"/> class.</returns>
         public virtual ModemResponse GetSignalStrength()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync("AT+CSQ", "+CSQ:");
@@ -462,7 +475,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the battery status.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the battery status information.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the battery status information.
+        /// If success, Result will contain a <see cref="BatteryStatus"/> class.</returns>
         public virtual ModemResponse GetBatteryStatus()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync("AT+CBC", "+CBC:");
@@ -500,10 +514,35 @@ namespace IoT.Device.AtModem.Modem
         }
 
         /// <summary>
+        /// Gets the subscriber number from the SIM card.
+        /// </summary>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="SubscriberNumber"/> class.</returns>
+        public virtual ModemResponse GetSubscriberNumber()
+        {
+            AtResponse response = Channel.SendSingleLineCommandAsync("AT+CNUM", "+CNUM:");
+            if (response.Success)
+            {
+                  string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
+                if (line.StartsWith("+CNUM: "))
+                {
+                    string[] parts = line.Substring(7).Split(',');
+                    string status = parts[0].Trim('"');
+                    string number = parts[1].Trim('"');
+                    int type = int.Parse(parts[2]);
+                    return ModemResponse.ResultSuccess(new SubscriberNumber(number, status, type));
+                }
+            }
+
+            return ModemResponse.ResultError();
+        }
+
+        /// <summary>
         /// Sets the date and time of the modem.
         /// </summary>
         /// <param name="value">The date and time value to set.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse SetDateTime(DateTime value)
         {
             var sb = new StringBuilder("AT+CCLK=\"");
@@ -520,7 +559,8 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets the date and time of the modem.
         /// </summary>
-        /// <returns>A <see cref="ModemResponse"/> containing the date and time value.</returns>
+        /// <returns>A <see cref="ModemResponse"/> containing the date and time value.
+        /// If success, Result will contain a <see cref="DateTime"/> class.</returns>
         public virtual ModemResponse GetDateTime()
         {
             AtResponse response = Channel.SendSingleLineCommandAsync("AT+CCLK?", "+CCLK:");
@@ -554,7 +594,8 @@ namespace IoT.Device.AtModem.Modem
         /// </summary>
         /// <param name="code">The USSD code to send.</param>
         /// <param name="codingScheme">The coding scheme to use (optional).</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse SendUssd(string code, int codingScheme = 15)
         {
             AtResponse response = Channel.SendCommand($"AT+CUSD=1,\"{code}\",{codingScheme}");
@@ -566,7 +607,8 @@ namespace IoT.Device.AtModem.Modem
         /// Sets the error format of the modem.
         /// </summary>
         /// <param name="errorFormat">The error format to set.</param>
-        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.</returns>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
+        /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         public virtual ModemResponse SetErrorFormat(int errorFormat)
         {
             AtResponse response = Channel.SendCommand($"AT+CMEE={errorFormat}");
