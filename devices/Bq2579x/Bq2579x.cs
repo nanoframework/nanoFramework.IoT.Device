@@ -328,16 +328,9 @@ namespace Iot.Device.Bq2579x
         // | IINDPM_STAT | VINDPM_STAT | WD_STAT | RESERVED | PG_STAT | AC2_PRESENT_STAT | AC1_PRESENT_STAT | VBUS_PRESENT_STAT |
         ////
 
-        private ChargeStatus GetChargeStatus()
-        {
-            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
-
-            return (ChargeStatus)(buffer[0] & ChargerStatus1ChargeStatusMask);
-        }
-
         private bool GetPowerGood()
         {
-            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
+            byte[] buffer = ReadFromRegister(Register.REG1B_Charger_Status_0, 1);
 
             return (buffer[0] & ChargerStatus0PowerGoodStatusMask) >> 4 == 1;
         }
@@ -351,9 +344,16 @@ namespace Iot.Device.Bq2579x
         // | CHG_STAT_2:0 | VBUS_STAT_3:0 | BC1.2_DONE_STAT |
         ////
 
+        private ChargeStatus GetChargeStatus()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
+
+            return (ChargeStatus)((buffer[0] & ChargerStatus1ChargeStatusMask) >> 5);
+        }
+
         private ChargerStatus0 GetChargerStatus0()
         {
-            byte[] buffer = ReadFromRegister(Register.REG1B_Charger_Status_0, 1);
+            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
 
             return (ChargerStatus0)buffer[0];
         }
