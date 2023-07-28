@@ -13,10 +13,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Bq25798</RootNamespace>
-    <AssemblyName>Iot.Device.Bq25798</AssemblyName>
+    <RootNamespace>Iot.Device.Bq2579x</RootNamespace>
+    <AssemblyName>Iot.Device.Bq2579x</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Bq25798.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Bq2579x.xml</DocumentationFile>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup>
