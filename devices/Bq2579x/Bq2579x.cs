@@ -410,7 +410,6 @@ namespace Iot.Device.Bq2579x
 
         #endregion
 
-
         #region REG1D_Charger_Status_2
 
         // REG1D_Charger_Status_2 Register
