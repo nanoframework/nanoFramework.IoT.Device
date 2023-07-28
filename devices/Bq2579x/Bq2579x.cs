@@ -116,12 +116,6 @@ namespace Iot.Device.Bq2579x
         public AdcInitialAverage AdcInitialAverage { get => GetAdcInitialAverage(); set => SetAdcInitialAverage(value); }
 
         /// <summary>
-        /// Gets charger status 0.
-        /// </summary>
-        [Property]
-        public ChargerStatus0 ChargerStatus0 => GetChargerStatus0();
-
-        /// <summary>
         /// Gets or sets minimal system voltage.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">If value is out of range (2500mV-16000mV).</exception>
@@ -272,6 +266,27 @@ namespace Iot.Device.Bq2579x
         /// <value><see langword="true"/> if power is good, otherwise <see langword="false"/>.</value>
         [Property]
         public bool PowerGood => GetChargerStatus0().HasFlag(ChargerStatus0.PowerGood);
+
+        /// <summary>
+        /// Gets state of VAC2 inserted.
+        /// </summary>
+        /// <value><see langword="true"/> if VAC2 is inserted, otherwise <see langword="false"/>.</value>
+        [Property]
+        public bool VAC2Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac2Inserted);
+
+        /// <summary>
+        /// Gets state of VBUS inserted.
+        /// </summary>
+        /// <value><see langword="true"/> if VBUS is inserted, otherwise <see langword="false"/>.</value>
+        [Property]
+        public bool VBUSPresent => GetChargerStatus0().HasFlag(ChargerStatus0.VbusPresent);
+
+        /// <summary>
+        /// Gets state of VAC1 inserted.
+        /// </summary>
+        /// <value><see langword="true"/> if VAC1 is inserted, otherwise <see langword="false"/>.</value>
+        [Property]
+        public bool VAC1Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac1Inserted);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bq2579x" /> class.
