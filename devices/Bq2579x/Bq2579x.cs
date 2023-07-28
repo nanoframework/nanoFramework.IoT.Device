@@ -32,6 +32,8 @@ namespace Iot.Device.Bq2579x
         private const byte AdcControlResolutionMask = 0b0011_0000;
         private const byte AdcControlAverageControlMask = 0b0000_1000;
         private const byte AdcControlInitialAverageMask = 0b0000_0100;
+        private const byte ThermalRegulationThresholdMask = 0b0000_0011;
+        private const byte ThermalShutdownThresholdMask = 0b0000_1100;
 
         private const int FixedOffsetMinimalSystemVoltage = 2500;
         private const int MaxValueMinimalSystemVoltage = 16000;
@@ -250,6 +252,18 @@ namespace Iot.Device.Bq2579x
         /// Gets or sets the watchdog timer setting (in milliseconds).
         /// </summary>
         public WatchdogSetting WatchdogTimerSetting { get => GetWatchdogTimerSetting(); set => SetWatchdogTimerSetting(value); }
+
+        /// <summary>
+        /// Gets or sets Thermal regulation threshold.
+        /// </summary>
+        [Property]
+        public ThermalRegulationThreshold ThermalRegulationThreshold { get => GetThermalRegulationThreshold(); set => SetThermalRegulationThreshold(value); }
+
+        /// <summary>
+        /// Gets or sets Thermal shutdown threshold.
+        /// </summary>
+        [Property]
+        public ThermalShutdownThreshold ThermalShutdownThreshold { get => GetThermalShutdownThreshold(); set => SetThermalShutdownThreshold(value); }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bq2579x" /> class.
@@ -722,6 +736,44 @@ namespace Iot.Device.Bq2579x
             buffer[0] |= (byte)value;
 
             WriteToRegister(Register.REG2E_ADC_Control, buffer[0]);
+        }
+
+        private ThermalRegulationThreshold GetThermalRegulationThreshold()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+
+            return (ThermalRegulationThreshold)(buffer[0] & ThermalRegulationThresholdMask);
+        }
+
+        private void SetThermalRegulationThreshold(ThermalRegulationThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~ThermalRegulationThresholdMask);
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG15_Temperatue_Control, buffer[0]);
+        }
+
+        private ThermalShutdownThreshold GetThermalShutdownThreshold()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+
+            return (ThermalShutdownThreshold)((buffer[0] & ThermalShutdownThresholdMask) >> 2);
+        }
+
+        private void SetThermalShutdownThreshold(ThermalShutdownThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~ThermalShutdownThresholdMask);
+            buffer[0] |= (byte)((byte)value << 2);
+
+            WriteToRegister(Register.REG15_Temperatue_Control, buffer[0]);
         }
 
         #endregion

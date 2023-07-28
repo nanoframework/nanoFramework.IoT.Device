@@ -35,6 +35,8 @@
     <Compile Include="AdcResolution.cs" />
     <Compile Include="ChargerStatus0.cs" />
     <Compile Include="AdcConversioRate.cs" />
+    <Compile Include="ThermalShutdownThreshold.cs" />
+    <Compile Include="ThermalRegulationThreshold.cs" />
     <Compile Include="WatchdogSetting.cs" />
     <Compile Include="VbusStatus.cs" />
     <Compile Include="ChargeStatus.cs" />
