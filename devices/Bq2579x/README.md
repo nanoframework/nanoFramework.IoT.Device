@@ -1,9 +1,10 @@
-﻿# BQ25792/8 - Buck-boost solar battery charger
+﻿# BQ25792/8 - 5A, 1-4 cell buck-boost charger
 
-The BQ25792/8 is a I²C controlled, 1-4-cell, 5-A buck-boost solar battery charger with dual-input selector and MPPT.
+The BQ25792/8 is a I²C controlled, 1-4-cell, 5-A buck-boost charger. The x8 is solar battery charger with dual-input selector and MPPT. The x2 has  dual-input selector and USB PD 3.0 OTG output.
 
 ## Documentation
 
+- BQ25792 [datasheet](https://www.ti.com/lit/gpn/bq25792)
 - BQ25798 [datasheet](https://www.ti.com/lit/gpn/bq25798)
 
 ## Device & EVM
