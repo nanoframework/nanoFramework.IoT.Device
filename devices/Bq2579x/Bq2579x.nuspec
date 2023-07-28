@@ -24,6 +24,7 @@
       <dependency id="nanoFramework.System.Device.Model" version="1.2.295" />
       <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.13.0" />
       <dependency id="UnitsNet.nanoFramework.ElectricPotentialDc" version="5.13.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.13.0" />
     </dependencies>
   </metadata>
   <files>
