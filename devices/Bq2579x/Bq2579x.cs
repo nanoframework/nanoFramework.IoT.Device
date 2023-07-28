@@ -271,7 +271,7 @@ namespace Iot.Device.Bq2579x
         /// </summary>
         /// <value><see langword="true"/> if power is good, otherwise <see langword="false"/>.</value>
         [Property]
-        public bool PowerGood => GetPowerGood();
+        public bool PowerGood => GetChargerStatus0().HasFlag(ChargerStatus0.PowerGood);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bq2579x" /> class.
@@ -328,11 +328,11 @@ namespace Iot.Device.Bq2579x
         // | IINDPM_STAT | VINDPM_STAT | WD_STAT | RESERVED | PG_STAT | AC2_PRESENT_STAT | AC1_PRESENT_STAT | VBUS_PRESENT_STAT |
         ////
 
-        private bool GetPowerGood()
+        private ChargerStatus0 GetChargerStatus0()
         {
-            byte[] buffer = ReadFromRegister(Register.REG1B_Charger_Status_0, 1);
+            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
 
-            return (buffer[0] & ChargerStatus0PowerGoodStatusMask) >> 4 == 1;
+            return (ChargerStatus0)buffer[0];
         }
 
         #endregion
@@ -348,14 +348,7 @@ namespace Iot.Device.Bq2579x
         {
             byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
 
-            return (ChargeStatus)((buffer[0] & ChargerStatus1ChargeStatusMask) >> 5);
-        }
-
-        private ChargerStatus0 GetChargerStatus0()
-        {
-            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
-
-            return (ChargerStatus0)buffer[0];
+            return (ChargeStatus)(buffer[0] & ChargerStatus1ChargeStatusMask);
         }
 
         private VbusStatus GetVbusStatus()
