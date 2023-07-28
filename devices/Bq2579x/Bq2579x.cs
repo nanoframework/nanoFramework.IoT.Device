@@ -35,6 +35,7 @@ namespace Iot.Device.Bq2579x
         private const byte AdcControlInitialAverageMask = 0b0000_0100;
         private const byte ThermalRegulationThresholdMask = 0b0000_0011;
         private const byte ThermalShutdownThresholdMask = 0b0000_1100;
+        private const byte ChargerStatus3IcoStatusMask = 0b1100_0000;
 
         private const int FixedOffsetMinimalSystemVoltage = 2500;
         private const int MaxValueMinimalSystemVoltage = 16000;
@@ -289,6 +290,33 @@ namespace Iot.Device.Bq2579x
         public bool VAC1Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac1Inserted);
 
         /// <summary>
+        /// Gets state IC thermal regulation.
+        /// </summary>
+        /// <value><see langword="true"/> if device is in thermal regulation, <see langword="false"/> for normal operation.</value>
+        [Property]
+        public bool IsInThermalRegulation => GetChargerStatus2().HasFlag(ChargerStatus2.ThermalRegulation);
+
+        /// <summary>
+        /// Gets D+/D- detection status bits.
+        /// </summary>
+        /// <value><see langword="true"/> if D+/D- detection is ongoing, <see langword="false"/>  D+/D- detection is NOT started yet, or the detection is done.</value>
+        [Property]
+        public bool DpDmDetectionOngoing => GetChargerStatus2().HasFlag(ChargerStatus2.DpDmStatus);
+
+        /// <summary>
+        /// Gets battery present status.
+        /// </summary>
+        /// <value><see langword="true"/> if VBAT present, otherwise <see langword="false"/>.</value>
+        [Property]
+        public bool VbatPresent => GetChargerStatus2().HasFlag(ChargerStatus2.VbatPresent);
+
+        /// <summary>
+        /// Gets Input Current Optimizer (ICO) status.
+        /// </summary>
+        [Property]
+        public IcoStatus IcoStatus => GetIcoStatus();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Bq2579x" /> class.
         /// </summary>
         /// <param name="i2cDevice"><see cref="I2cDevice"/> to communicate with Si7021 device.</param>
@@ -378,6 +406,30 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
 
             return (buffer[0] & ChargerStatus1Bc12DetectionMask) == 1;
+        }
+
+        #endregion
+
+
+        #region REG1D_Charger_Status_2
+
+        // REG1D_Charger_Status_2 Register
+        // |      7 6     |   5 4 3  |     2     |    1      |         0         |
+        // | ICO_STAT_1:0 | RESERVED | TREG_STAT | DPDM_STAT | VBAT_PRESENT_STAT |
+        ////
+
+        private ChargerStatus2 GetChargerStatus2()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG1D_Charger_Status_2, 1);
+
+            return (ChargerStatus2)buffer[0];
+        }
+
+        private IcoStatus GetIcoStatus()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG1D_Charger_Status_2, 1);
+
+            return (IcoStatus)(buffer[0] & ChargerStatus3IcoStatusMask);
         }
 
         #endregion

@@ -33,8 +33,10 @@
     <Compile Include="AdcInitialAverage.cs" />
     <Compile Include="AdcAveraging.cs" />
     <Compile Include="AdcResolution.cs" />
+    <Compile Include="ChargerStatus2.cs" />
     <Compile Include="ChargerStatus0.cs" />
     <Compile Include="AdcConversioRate.cs" />
+    <Compile Include="IcoStatus.cs" />
     <Compile Include="ThermalShutdownThreshold.cs" />
     <Compile Include="ThermalRegulationThreshold.cs" />
     <Compile Include="WatchdogSetting.cs" />
