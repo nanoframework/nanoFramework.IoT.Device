@@ -43,10 +43,15 @@ namespace Iot.Device.Bq2579x
         private const int MaxValueChargeVoltageLimit = 18800;
         private const int FixedOffsetMinimalChargeCurrentLimit = 50;
         private const int MaxValueChargeCurrentLimit = 5000;
+        private const int MaxValueInputVoltageLimit = 22000;
+        private const int MinValueInputVoltageLimit = 3600;
+        private const int FixedOffsetMinimalInputCurrentLimit = 100;
+        private const int MaxValueInputCurrentLimit = 3300;
 
         private const int VbusAdcStep = 1;
         private const int ChargeVoltageStep = 10;
-        private const int ChargeCurrentStep = 10;
+        private const int ChargeInputCurrentStep = 10;
+        private const int InputVoltageStep = 100;
         private const float TdieStemp = 0.5f;
 
         private I2cDevice _i2cDevice;
@@ -155,6 +160,40 @@ namespace Iot.Device.Bq2579x
         /// </para>
         /// </remarks>
         public ElectricCurrent ChargeCurrentLimit { get => GetChargeCurrentLimit(); set => SetChargeCurrentLimit(value); }
+
+        /// <summary>
+        /// Gets or sets Input Voltage Limit.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">If value is out of range (3600mV-22000mV).</exception>
+        /// <remarks>
+        /// <para>
+        /// VINDPM register is reset to 3600mV upon adapter unplugged and  it is set to the value based on the VBUS measurement when the adapter plugs in. It is not reset by the REG_RST and the WATCHDOG.
+        /// </para>
+        /// <para>
+        /// Range: 3600mV-22000mV.
+        /// </para>
+        /// </remarks>
+        public ElectricPotentialDc InputVoltageLimit { get => GetInputVoltageLimit(); set => SetInputVoltageLimit(value); }
+
+        /// <summary>
+        /// Gets or sets Input Current Limit.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">If value is out of range (100mA-3300mA).</exception>
+        /// <remarks>
+        /// <para>
+        /// Based on D+/D- detection results:
+        /// USB SDP = 500mA
+        /// USB CDP = 1.5A
+        /// USB DCP = 3.25A
+        /// Adjustable High Voltage DCP = 1.5A
+        /// Unknown Adapter = 3A
+        /// Non-Standard Adapter = 1A/2A/2.1A/2.4A
+        /// </para>
+        /// <para>
+        /// Range: 100mA-3300mA.
+        /// </para>
+        /// </remarks>
+        public ElectricCurrent InputCurrentLimit { get => GetInputCurrentLimit(); set => SetInputCurrentLimit(value); }
 
         /// <summary>
         /// Gets or sets battery voltage thresholds for the transition from precharge to fast charge.
@@ -401,7 +440,7 @@ namespace Iot.Device.Bq2579x
             var vbus = (buffer[0] << 8) | buffer[1];
 
             return new ElectricCurrent(
-                vbus * ChargeCurrentStep,
+                vbus * ChargeInputCurrentStep,
                 UnitsNet.Units.ElectricCurrentUnit.Milliampere);
         }
 
@@ -415,7 +454,7 @@ namespace Iot.Device.Bq2579x
             }
 
             // divide by step value, as the register takes the value as 10mA steps
-            var newValue = value.Milliamperes / ChargeCurrentStep;
+            var newValue = value.Milliamperes / ChargeInputCurrentStep;
 
             byte[] buffer = new byte[2];
 
@@ -424,6 +463,80 @@ namespace Iot.Device.Bq2579x
             buffer[1] |= (byte)((int)newValue >> 8);
 
             WriteToRegister(Register.REG03_Charge_Current_Limit, buffer);
+        }
+
+        #endregion
+
+        #region REG05_Input_Voltage_Limit
+
+        // REG05_INput_Voltage_Limit
+        // | 7 6 5 4 3 2 1 0 |
+        // |   VINDPM_7:0    |
+        ////
+
+        private ElectricPotentialDc GetInputVoltageLimit()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG05_Input_Voltage_Limit, 1);
+
+            return new ElectricPotentialDc(
+                buffer[0] * InputVoltageStep,
+                UnitsNet.Units.ElectricPotentialDcUnit.MillivoltDc);
+        }
+
+        private void SetInputVoltageLimit(ElectricPotentialDc value)
+        {
+            // sanity check
+            if (value.MillivoltsDc < MinValueInputVoltageLimit
+                || value.MillivoltsDc > MaxValueInputVoltageLimit)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            // divide by step value, as the register takes the value as 100mV steps
+            var newValue = value.MillivoltsDc / InputVoltageStep;
+
+            WriteToRegister(Register.REG05_Input_Voltage_Limit, (byte)newValue);
+        }
+
+        #endregion
+
+        #region REG06_Input_Current_Limit
+
+        // REG06_Charge_Current_Limit
+        // | 15 14 13 12 11 10 9 | 8 7 6 5 4 3 2 1 0 |
+        // |      RESERVED       |    IINDPM_8:0     |
+        ////
+
+        private ElectricCurrent GetInputCurrentLimit()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG06_Input_Current_Limit, 2);
+
+            var vbus = (buffer[0] << 8) | buffer[1];
+
+            return new ElectricCurrent(
+                vbus * ChargeInputCurrentStep,
+                UnitsNet.Units.ElectricCurrentUnit.Milliampere);
+        }
+
+        private void SetInputCurrentLimit(ElectricCurrent value)
+        {
+            // sanity check
+            if (value.Milliamperes < FixedOffsetMinimalInputCurrentLimit
+                || value.Milliamperes > MaxValueInputCurrentLimit)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            // divide by step value, as the register takes the value as 10mA steps
+            var newValue = value.Milliamperes / ChargeInputCurrentStep;
+
+            byte[] buffer = new byte[2];
+
+            // process value 
+            buffer[0] |= (byte)newValue;
+            buffer[1] |= (byte)((int)newValue >> 8);
+
+            WriteToRegister(Register.REG06_Input_Current_Limit, buffer);
         }
 
         #endregion

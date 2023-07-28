@@ -11,6 +11,8 @@ namespace Iot.Device.Bq2579x
         REG00_Minimal_System_Voltage = 0x01,
         REG01_Charge_Voltage_Limit = 0x01,
         REG03_Charge_Current_Limit = 0x03,
+        REG05_Input_Voltage_Limit = 0x05,
+        REG06_Input_Current_Limit = 0x06,
         REG08_Precharge_Control = 0x08,
         REG10_Charger_Control_1 = 0x10,
         REG1B_Charger_Status_0 = 0x1B,
