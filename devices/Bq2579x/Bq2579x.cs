@@ -23,6 +23,7 @@ namespace Iot.Device.Bq2579x
 
         private const byte DevicePartNumberMask = 0b00111000;
         private const byte PrechargeCurrentLimitMask = 0b00111111;
+        private const byte ChargerStatus0PowerGoodStatusMask = 0b0000_1000;
         private const byte ChargerStatus1ChargeStatusMask = 0b1110_0000;
         private const byte ChargerStatus1VbusStatusMask = 0b0001_1110;
         private const byte ChargerStatus1Bc12DetectionMask = 0b0000_0001;
@@ -266,6 +267,13 @@ namespace Iot.Device.Bq2579x
         public ThermalShutdownThreshold ThermalShutdownThreshold { get => GetThermalShutdownThreshold(); set => SetThermalShutdownThreshold(value); }
 
         /// <summary>
+        /// Gets Power Good Status.
+        /// </summary>
+        /// <value><see langword="true"/> if power is good, otherwise <see langword="false"/>.</value>
+        [Property]
+        public bool PowerGood => GetPowerGood();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Bq2579x" /> class.
         /// </summary>
         /// <param name="i2cDevice"><see cref="I2cDevice"/> to communicate with Si7021 device.</param>
@@ -325,6 +333,13 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
 
             return (ChargeStatus)(buffer[0] & ChargerStatus1ChargeStatusMask);
+        }
+
+        private bool GetPowerGood()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG1C_Charger_Status_1, 1);
+
+            return (buffer[0] & ChargerStatus0PowerGoodStatusMask) >> 4 == 1;
         }
 
         #endregion
