@@ -109,10 +109,17 @@ namespace IoT.Device.AtModem.Network
                     return false;
                 }
 
+            RetryStatus:
                 // Check if the PIN is ready
                 var status = _modem.GetSimStatus();
                 if (!status.IsSuccess)
                 {
+                    if (maxRetry-- > 0)
+                    {
+                        Thread.Sleep(1000);
+                        goto RetryStatus;
+                    }
+
                     return false;
                 }
 
@@ -150,12 +157,27 @@ namespace IoT.Device.AtModem.Network
                     }
                 }
 
+            // Check the quality of the signal and wait a bit if needed
+            WaitForSignal:
+                var signqual = _modem.GetSignalStrength();
+                if (!signqual.IsSuccess || ((SignalStrength)signqual.Result).Rssi.Percent == 99)
+                {
+                    if (maxRetry-- > 0)
+                    {
+                        Thread.Sleep(1500);
+                        goto WaitForSignal;
+                    }
+
+                    return false;
+                }
+
                 // Set the operator selection to automatic
                 response = _modem.Channel.SendCommand("AT+COPS=0");
                 if (!response.Success)
                 {
                     if (maxRetry-- > 0)
                     {
+                        Thread.Sleep(1000);
                         goto Retry;
                     }
 
@@ -173,6 +195,9 @@ namespace IoT.Device.AtModem.Network
 
                     return false;
                 }
+
+                // We need to wait for the connection to be made
+                Thread.Sleep(1500);
             }
 
             // Make the connection
@@ -194,7 +219,7 @@ namespace IoT.Device.AtModem.Network
             {
                 if (maxRetry-- > 0)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(2000);
                     goto RetryIp;
                 }
 
