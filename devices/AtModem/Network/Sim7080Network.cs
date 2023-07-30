@@ -69,6 +69,7 @@ namespace IoT.Device.AtModem.Network
         public bool Connect(PersonalIdentificationNumber pin = null, AccessPointConfiguration apn = null, int maxRetry = 10)
         {
             AtResponse response;
+
         Retry:
             // set the APN if nay to set
             if (!string.IsNullOrEmpty(apn.AccessPointName))
@@ -77,11 +78,6 @@ namespace IoT.Device.AtModem.Network
                 response = _modem.Channel.SendCommand("AT+CFUN=0");
                 if (!response.Success)
                 {
-                    if (maxRetry-- > 0)
-                    {
-                        goto Retry;
-                    }
-
                     return false;
                 }
 
@@ -90,22 +86,12 @@ namespace IoT.Device.AtModem.Network
                 {
                     // Try to set back on regardless of the result
                     _modem.Channel.SendCommand("AT+CFUN=1");
-                    if (maxRetry-- > 0)
-                    {
-                        goto Retry;
-                    }
-
                     return false;
                 }
 
                 response = _modem.Channel.SendCommand("AT+CFUN=1");
                 if (!response.Success)
                 {
-                    if (maxRetry-- > 0)
-                    {
-                        goto Retry;
-                    }
-
                     return false;
                 }
 
