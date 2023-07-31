@@ -266,28 +266,28 @@ namespace Iot.Device.Bq2579x
         /// </summary>
         /// <value><see langword="true"/> if power is good, otherwise <see langword="false"/>.</value>
         [Property]
-        public bool PowerGood => GetChargerStatus0().HasFlag(ChargerStatus0.PowerGood);
+        public bool IsPowerGood => GetChargerStatus0().HasFlag(ChargerStatus0.PowerGood);
 
         /// <summary>
         /// Gets state of VAC2 inserted.
         /// </summary>
         /// <value><see langword="true"/> if VAC2 is inserted, otherwise <see langword="false"/>.</value>
         [Property]
-        public bool VAC2Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac2Inserted);
+        public bool IsVac2Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac2Inserted);
 
         /// <summary>
         /// Gets state of VBUS inserted.
         /// </summary>
         /// <value><see langword="true"/> if VBUS is inserted, otherwise <see langword="false"/>.</value>
         [Property]
-        public bool VBUSPresent => GetChargerStatus0().HasFlag(ChargerStatus0.VbusPresent);
+        public bool IsVbusPresent => GetChargerStatus0().HasFlag(ChargerStatus0.VbusPresent);
 
         /// <summary>
         /// Gets state of VAC1 inserted.
         /// </summary>
         /// <value><see langword="true"/> if VAC1 is inserted, otherwise <see langword="false"/>.</value>
         [Property]
-        public bool VAC1Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac1Inserted);
+        public bool IsVac1Present => GetChargerStatus0().HasFlag(ChargerStatus0.Vac1Inserted);
 
         /// <summary>
         /// Gets state IC thermal regulation.
@@ -308,7 +308,7 @@ namespace Iot.Device.Bq2579x
         /// </summary>
         /// <value><see langword="true"/> if VBAT present, otherwise <see langword="false"/>.</value>
         [Property]
-        public bool VbatPresent => GetChargerStatus2().HasFlag(ChargerStatus2.VbatPresent);
+        public bool IsVbatPresent => GetChargerStatus2().HasFlag(ChargerStatus2.VbatPresent);
 
         /// <summary>
         /// Gets Input Current Optimizer (ICO) status.
