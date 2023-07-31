@@ -46,7 +46,7 @@ namespace Iot.Device.Bq2579x
         /// <summary>
         /// VAC1 insert status.
         /// </summary>
-        /// <remarks><see langword="true"/>  VAC1 present (above present threshold), <see langword="false"/> for VAC1 NOT present.</remarks>
+        /// <remarks><see langword="true"/> if VAC1 is present (above present threshold), <see langword="false"/> for VAC1 NOT present.</remarks>
         Vac1Inserted = 0b0000_0010,
 
         /// <summary>
