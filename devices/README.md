@@ -250,6 +250,7 @@
 ## Power monitors and related devices
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192/README.md)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Bq2579x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Bq2579x/) [BQ2579x/BQ25792/BQ25798 - Buck-boost battery charger](Bq2579x/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ina219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ina219/) [INA219 - Bidirectional Current/Power Monitor](Ina219/README.md)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ip5306.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ip5306/) [IP5306 - Power management](Ip5306/README.md)
 
