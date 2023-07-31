@@ -52,7 +52,7 @@ namespace Iot.Device.Bq2579x
         /// <summary>
         /// VBUS present status.
         /// </summary>
-        /// <remarks><see langword="true"/>  VBUS present (above present threshold), <see langword="false"/> for VBUS NOT present.</remarks>
+        /// <remarks><see langword="true"/> if VBUS is present (above present threshold), <see langword="false"/> for VBUS NOT present.</remarks>
         VbusPresent = 0b0000_0001,
     }
 }
