@@ -32,7 +32,7 @@ namespace Iot.Device.Bq2579x
         /// <summary>
         /// VAC1 insert status.
         /// </summary>
-        /// <remarks><see langword="true"/> The D+/D- detection is ongoing, <see langword="false"/> for D+/D- detection NOT started yet, or the detection is done.</remarks>
+        /// <remarks><see langword="true"/> if the D+/D- detection is ongoing, <see langword="false"/> for D+/D- detection NOT started yet, or the detection is done.</remarks>
         DpDmStatus = 0b0000_0010,
 
         /// <summary>
