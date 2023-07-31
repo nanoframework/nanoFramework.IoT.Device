@@ -34,7 +34,7 @@ namespace Iot.Device.Bq2579x
         /// <summary>
         /// Power Good Status.
         /// </summary>
-        /// <remarks><see langword="true"/> if power good, <see langword="false"/> for power NOT good.</remarks>
+        /// <remarks><see langword="true"/> if power is good, <see langword="false"/> for power NOT good.</remarks>
         PowerGood = 0b0000_1000,
 
         /// <summary>
