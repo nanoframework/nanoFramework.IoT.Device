@@ -76,3 +76,9 @@ using (Bq25798 charger = new Bq25798(device))
     }
 }
 ```
+
+## Acknowledgments
+
+The development of this library was kindly sponsored by [OrgPal.IoT](https://www.orgpal.com/)!
+
+![orgpallogo.png](./orgpallogo.png)
