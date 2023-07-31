@@ -26,7 +26,7 @@ namespace Iot.Device.Bq2579x
         /// <summary>
         /// C thermal regulation status.
         /// </summary>
-        /// <remarks><see langword="true"/> Device in thermal regulation, <see langword="false"/> for normal operation.</remarks>
+        /// <remarks><see langword="true"/> if device is in thermal regulation, <see langword="false"/> for normal operation.</remarks>
         ThermalRegulation = 0b0000_0100,
 
         /// <summary>
