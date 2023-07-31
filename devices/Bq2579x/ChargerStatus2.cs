@@ -38,7 +38,7 @@ namespace Iot.Device.Bq2579x
         /// <summary>
         /// VBUS present status.
         /// </summary>
-        /// <remarks><see langword="true"/> VBAT present, <see langword="false"/> VBAT NOT present.</remarks>
+        /// <remarks><see langword="true"/> if VBAT is present, <see langword="false"/> VBAT NOT present.</remarks>
         VbatPresent = 0b0000_0001,
     }
 }
