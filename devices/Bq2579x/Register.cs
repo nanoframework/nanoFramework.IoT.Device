@@ -16,6 +16,8 @@ namespace Iot.Device.Bq2579x
         REG08_Precharge_Control = 0x08,
         REG10_Charger_Control_1 = 0x10,
         REG16_Temperature_Control = 0x16,
+        REG17_NTC_Control_0 = 0x17,
+        REG18_NTC_Control_1 = 0x18,
         REG1B_Charger_Status_0 = 0x1B,
         REG1C_Charger_Status_1 = 0x1C,
         REG1D_Charger_Status_2 = 0x1D,

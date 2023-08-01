@@ -36,6 +36,13 @@ namespace Iot.Device.Bq2579x
         private const byte ThermalRegulationThresholdMask = 0b0000_0011;
         private const byte ThermalShutdownThresholdMask = 0b0000_1100;
         private const byte ChargerStatus3IcoStatusMask = 0b1100_0000;
+        private const byte NtcControl0ChargerVoltageMask = 0b1110_0000;
+        private const byte NtcControl0ChargeCurrentMask = 0b0001_1000;
+        private const byte NtcControl1Vt2ComparatorVoltageMask = 0b1100_0000;
+        private const byte NtcControl1Vt3ComparatorVoltageMask = 0b0011_0000;
+        private const byte NtcControl1OtgHotTemperatureMask = 0b0000_1100;
+        private const byte NtcControl1OtgColdTemperatureMask = 0b0000_0010;
+        private const byte NtcControl1IgnoreTSMask = 0b0000_0001;
 
         private const int FixedOffsetMinimalSystemVoltage = 2500;
         private const int MaxValueMinimalSystemVoltage = 16000;
@@ -262,6 +269,58 @@ namespace Iot.Device.Bq2579x
         public ThermalShutdownThreshold ThermalShutdownThreshold { get => GetThermalShutdownThreshold(); set => SetThermalShutdownThreshold(value); }
 
         /// <summary>
+        /// Gets or sets charge voltage for JEITA high temperature range (TWARN – THOT). 
+        /// </summary>
+        [Property]
+        public ChargeVoltage ChargeVoltageHighTempRange { get => GetChargeVoltage(); set => SetChargeVoltage(value); }
+
+        /// <summary>
+        /// Gets or sets charge current for JEITA high temperature range (TWARN – THOT). 
+        /// </summary>
+        [Property]
+        public ChargeCurrent ChargeCurrentHighTempRange { get => GetChargeCurrentHighTempRange(); set => SetChargeCurrentHighTempRange(value); }
+
+        /// <summary>
+        /// Gets or sets charge current for JEITA low temperature range (TCOLD – TCOOL). 
+        /// </summary>
+        [Property]
+        public ChargeCurrent ChargeCurrentLowTempRange { get => GetChargeCurrentLowTempRange(); set => SetChargeCurrentLowTempRange(value); }
+
+        /// <summary>
+        /// Gets or sets VT2 comparator voltage rising thresholds as a percentage of REGN.
+        /// </summary>
+        [Property]
+        public CompVoltageRisingThreshold Vt2ComparatorRisingThreshold { get => GetVt2ComparatorVoltage(); set => SetVt2ComparatorVoltage(value); }
+
+        /// <summary>
+        /// Gets or sets VT3 comparator voltage falling thresholds as a percentage of REGN.
+        /// </summary>
+        [Property]
+        public CompVoltageFallingThreshold Vt3ComparatorFallingThreshold { get => GetVt3ComparatorVoltage(); set => SetVt3ComparatorVoltage(value); }
+
+        /// <summary>
+        /// Gets or sets OTG mode TS HOT temperature threshold.
+        /// </summary>
+        [Property]
+        public OtgHotTempThreshold OtgHotTempThreshold { get => GetOtgHotTempThreshold(); set => SetOtgHotTempThreshold(value); }
+
+        /// <summary>
+        /// Gets or sets OTG mode TS COLD temperature threshold.
+        /// </summary>
+        [Property]
+        public OtgColdTempThreshold OtgColdTempThreshold { get => GetOtgColdTempThreshold(); set => SetOtgColdTempThreshold(value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the temperature sensor feedback should be ignored.
+        /// </summary>
+        /// <value><see langword="true"/> if ignoring temperature sensor feedback, otherwise <see langword="false"/>.</value>
+        /// <remarks>
+        /// Ignore the temperature sensor (TS) feedback, the charger considers the TS is always good to allow the charging and OTG modes. <see cref="Vt2ComparatorRisingThreshold"/> and <see cref="Vt3ComparatorFallingThreshold"/> always read 0 to report the normal condition.
+        /// </remarks>
+        [Property]
+        public bool IgnoreTempSensor { get => GetIgnoreTempSensor(); set => SetIgnoreTempSensor(value); }
+
+        /// <summary>
         /// Gets Power Good Status.
         /// </summary>
         /// <value><see langword="true"/> if power is good, otherwise <see langword="false"/>.</value>
@@ -429,6 +488,196 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = ReadFromRegister(Register.REG1D_Charger_Status_2, 1);
 
             return (IcoStatus)(buffer[0] & ChargerStatus3IcoStatusMask);
+        }
+
+        #endregion
+
+        #region REG17_NTC_Control_0
+
+        // REG17_NTC_Control_0 Register
+        // |    7   6   5   |     4    3      |     2    1      |     0    |
+        // | JEITA_VSET_2:0 | JEITA_ISETH_1:0 | JEITA_ISETC_1:0 | RESERVED |
+        ////
+
+        private ChargeVoltage GetChargeVoltage()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG17_NTC_Control_0, 1);
+
+            return (ChargeVoltage)(buffer[0] & NtcControl0ChargerVoltageMask);
+        }
+
+        private void SetChargeVoltage(ChargeVoltage value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG17_NTC_Control_0, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl0ChargerVoltageMask);
+
+            // set value
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG17_NTC_Control_0, buffer[0]);
+        }
+
+        private ChargeCurrent GetChargeCurrentHighTempRange()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG17_NTC_Control_0, 1);
+            
+            // need to shift 3 positions to the right to get the value
+            return (ChargeCurrent)((buffer[0] & NtcControl0ChargeCurrentMask) >> 3);
+        }
+
+        private void SetChargeCurrentHighTempRange(ChargeCurrent value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG17_NTC_Control_0, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl0ChargeCurrentMask);
+
+            // set value
+            // need to shift 3 positions to the left to get the value into the correct position
+            buffer[0] |= (byte)((byte)value << 3);
+
+            WriteToRegister(Register.REG17_NTC_Control_0, buffer[0]);
+        }
+
+        private ChargeCurrent GetChargeCurrentLowTempRange()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG17_NTC_Control_0, 1);
+
+            // need to shift 1 position to the right to get the value
+            return (ChargeCurrent)((buffer[0] & NtcControl0ChargeCurrentMask) >> 1);
+        }
+
+        private void SetChargeCurrentLowTempRange(ChargeCurrent value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG17_NTC_Control_0, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl0ChargeCurrentMask);
+
+            // set value
+            // need to shift 1 position to the left to get the value into the correct position
+            buffer[0] |= (byte)((byte)value << 1);
+
+            WriteToRegister(Register.REG17_NTC_Control_0, buffer[0]);
+        }
+
+        #endregion
+
+        #region REG18_NTC_Control_1
+
+        // REG18_NTC_Control_1 Register
+        // |    7   6    |    5  4     |   3  2   |   1   |     0     |
+        // | TS_COOL_1:0 | TS_WARM_1:0 | BHOT_1:0 | BCOLD | TS_IGNORE |
+        ////
+
+        private CompVoltageRisingThreshold GetVt2ComparatorVoltage()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            return (CompVoltageRisingThreshold)(buffer[0] & NtcControl1Vt2ComparatorVoltageMask);
+        }
+
+        private void SetVt2ComparatorVoltage(CompVoltageRisingThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl1Vt2ComparatorVoltageMask);
+
+            // set value
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG18_NTC_Control_1, buffer[0]);
+        }
+
+        private CompVoltageFallingThreshold GetVt3ComparatorVoltage()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            return (CompVoltageFallingThreshold)(buffer[0] & NtcControl1Vt3ComparatorVoltageMask);
+        }
+
+        private void SetVt3ComparatorVoltage(CompVoltageFallingThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl1Vt3ComparatorVoltageMask);
+
+            // set value
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG18_NTC_Control_1, buffer[0]);
+        }
+
+        private OtgHotTempThreshold GetOtgHotTempThreshold()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            return (OtgHotTempThreshold)(buffer[0] & NtcControl1OtgHotTemperatureMask);
+        }
+
+        private void SetOtgHotTempThreshold(OtgHotTempThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl1OtgHotTemperatureMask);
+
+            // set value
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG18_NTC_Control_1, buffer[0]);
+        }
+
+        private OtgColdTempThreshold GetOtgColdTempThreshold()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            return (OtgColdTempThreshold)(buffer[0] & NtcControl1OtgColdTemperatureMask);
+        }
+
+        private void SetOtgColdTempThreshold(OtgColdTempThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl1OtgColdTemperatureMask);
+
+            // set value
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG18_NTC_Control_1, buffer[0]);
+        }
+
+        private bool GetIgnoreTempSensor()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            return (buffer[0] & NtcControl1IgnoreTSMask) == 1;
+        }
+
+        private void SetIgnoreTempSensor(bool value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG18_NTC_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~NtcControl1IgnoreTSMask);
+
+            // set value
+            buffer[0] |= (byte)(value ? 0b0001 : 0b0000);
+
+            WriteToRegister(Register.REG18_NTC_Control_1, buffer[0]);
         }
 
         #endregion
