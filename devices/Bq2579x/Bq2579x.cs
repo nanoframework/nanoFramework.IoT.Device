@@ -814,7 +814,7 @@ namespace Iot.Device.Bq2579x
 
         private ThermalRegulationThreshold GetThermalRegulationThreshold()
         {
-            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG16_Temperature_Control, 1);
 
             return (ThermalRegulationThreshold)(buffer[0] & ThermalRegulationThresholdMask);
         }
@@ -822,18 +822,18 @@ namespace Iot.Device.Bq2579x
         private void SetThermalRegulationThreshold(ThermalRegulationThreshold value)
         {
             // read existing content
-            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG16_Temperature_Control, 1);
 
             // clear bits
             buffer[0] = (byte)(buffer[0] & ~ThermalRegulationThresholdMask);
             buffer[0] |= (byte)value;
 
-            WriteToRegister(Register.REG15_Temperatue_Control, buffer[0]);
+            WriteToRegister(Register.REG16_Temperature_Control, buffer[0]);
         }
 
         private ThermalShutdownThreshold GetThermalShutdownThreshold()
         {
-            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG16_Temperature_Control, 1);
 
             return (ThermalShutdownThreshold)((buffer[0] & ThermalShutdownThresholdMask) >> 2);
         }
@@ -841,13 +841,13 @@ namespace Iot.Device.Bq2579x
         private void SetThermalShutdownThreshold(ThermalShutdownThreshold value)
         {
             // read existing content
-            byte[] buffer = ReadFromRegister(Register.REG15_Temperatue_Control, 1);
+            byte[] buffer = ReadFromRegister(Register.REG16_Temperature_Control, 1);
 
             // clear bits
             buffer[0] = (byte)(buffer[0] & ~ThermalShutdownThresholdMask);
             buffer[0] |= (byte)((byte)value << 2);
 
-            WriteToRegister(Register.REG15_Temperatue_Control, buffer[0]);
+            WriteToRegister(Register.REG16_Temperature_Control, buffer[0]);
         }
 
         #endregion
