@@ -361,7 +361,7 @@ namespace IoT.Device.AtModem
                 _currentResponse.Success = false;
                 HandleFinalResponse(line);
             }
-            else if (_currentCommand.SmsPdu != null && line == "> ")
+            else if (_currentCommand?.SmsPdu != null && line == "> ")
             {
                 // See eg. TS 27.005 4.3
                 // Commands like AT+CMGS have a "> " prompt
@@ -375,54 +375,61 @@ namespace IoT.Device.AtModem
             }
             else
             {
-                switch (_currentCommand.CommandType)
+                if (_currentCommand != null)
                 {
-                    case AtCommandType.NoResult:
-                        HandleUnsolicited(line);
-                        break;
-                    case AtCommandType.Numeric:
-                        if (!(_currentResponse.Intermediates.Count > 0) && IsDigit(line[0]))
-                        {
-                            AddIntermediate(line);
-                        }
-                        else
-                        {
-                            // Either we already have an intermediate response or the line doesn't begin with a digit
+                    switch (_currentCommand.CommandType)
+                    {
+                        case AtCommandType.NoResult:
                             HandleUnsolicited(line);
-                        }
+                            break;
+                        case AtCommandType.Numeric:
+                            if (!(_currentResponse.Intermediates.Count > 0) && IsDigit(line[0]))
+                            {
+                                AddIntermediate(line);
+                            }
+                            else
+                            {
+                                // Either we already have an intermediate response or the line doesn't begin with a digit
+                                HandleUnsolicited(line);
+                            }
 
-                        break;
-                    case AtCommandType.SingleLine:
-                        if (!(_currentResponse.Intermediates.Count > 0) && line.StartsWith(_currentCommand.ResponsePrefix))
-                        {
+                            break;
+                        case AtCommandType.SingleLine:
+                            if (!(_currentResponse.Intermediates.Count > 0) && line.StartsWith(_currentCommand.ResponsePrefix))
+                            {
+                                AddIntermediate(line);
+                            }
+                            else
+                            {
+                                // We already have an intermediate response
+                                HandleUnsolicited(line);
+                            }
+
+                            break;
+                        case AtCommandType.MultiLine:
+                            if (line.StartsWith(_currentCommand.ResponsePrefix))
+                            {
+                                AddIntermediate(line);
+                            }
+                            else
+                            {
+                                HandleUnsolicited(line);
+                            }
+
+                            break;
+                        case AtCommandType.MultiLineNoPreeffiixx:
                             AddIntermediate(line);
-                        }
-                        else
-                        {
-                            // We already have an intermediate response
+                            break;
+                        default:
+                            // This should never be reached
+                            // TODO: Log error or something
                             HandleUnsolicited(line);
-                        }
-
-                        break;
-                    case AtCommandType.MultiLine:
-                        if (line.StartsWith(_currentCommand.ResponsePrefix))
-                        {
-                            AddIntermediate(line);
-                        }
-                        else
-                        {
-                            HandleUnsolicited(line);
-                        }
-
-                        break;
-                    case AtCommandType.MultiLineNoPreeffiixx:
-                        AddIntermediate(line);
-                        break;
-                    default:
-                        // This should never be reached
-                        // TODO: Log error or something
-                        HandleUnsolicited(line);
-                        break;
+                            break;
+                    }
+                }
+                else
+                {
+                    HandleUnsolicited(line);
                 }
             }
         }

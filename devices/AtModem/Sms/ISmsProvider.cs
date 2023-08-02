@@ -121,5 +121,10 @@ namespace IoT.Device.AtModem.Sms
         /// <returns>A <see cref="ModemResponse"/> indicating the success of the operation.
         /// If success, Result will contain a <see cref="bool"/> indicating the success of the operation.</returns>
         ModemResponse SetPreferredMessageStorage(string storage1Name, string storage2Name, string storage3Name);
+        
+        /// <summary>
+        /// Gets the value indicating whether the modem is ready to send SMS.
+        /// </summary>
+        bool IsSmsReady { get; }
     }
 }

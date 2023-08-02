@@ -75,9 +75,9 @@ namespace IoT.Device.AtModem.PDU
 
             // TP-User-Data-Length. If TP-DCS field indicates 7-bit data, the length is the number of septets.
             // If TP-DCS indicates 8-bit data or Unicode, the length is the number of octets.
-            if (dataCodingScheme == 0)
+            if (dataCodingScheme != 0)
             {
-                int messageBitLength = encodedMessage.Length / 2 * 7;
+                int messageBitLength = encodedMessage.Length * 7 / 2 ;
                 int messageLength = messageBitLength % 8 == 0 ? messageBitLength / 8 : (messageBitLength / 8) + 1;
                 sb.Append(messageLength.ToString("X2"));
             }
@@ -261,7 +261,7 @@ namespace IoT.Device.AtModem.PDU
 
         private static byte GetAddressType(PhoneNumber phoneNumber)
         {
-            return (byte)(0b1000_0000 + (byte)phoneNumber.GetTypeOfNumber() + (byte)phoneNumber.GetNumberPlanIdentification());
+            return (byte)(0b1000_0000 + (byte)(phoneNumber.GetTypeOfNumber() == TypeOfNumber.International ? 0b0001_0001 : 0b0000_0001));
         }
 
         private static PhoneNumber DecodePhoneNumber(SpanChar data)
@@ -309,7 +309,7 @@ namespace IoT.Device.AtModem.PDU
 
         private static byte DecimalToByte(SpanChar text)
         {
-            return Convert.ToByte(new string(text.ToArray()), 16);
+            return Convert.ToByte(new string(text.ToArray()), 10);
         }
     }
 }

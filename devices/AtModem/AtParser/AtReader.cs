@@ -110,8 +110,7 @@ namespace IoT.Device.AtModem
                             }
                             else if ((prevbyte == SmsPromptSequence[0]) && (buff[0] == SmsPromptSequence[1]))
                             {
-                                // we have a prompt
-                                _lineRead.Remove(_lineRead.Length - 2, 2);
+                                // we have a prompt for SMS
                                 bloop = false;
                             }
 

@@ -81,9 +81,16 @@ namespace IoT.Device.AtModem.Sms
                 throw new ArgumentNullException(nameof(message));
             }
 
+            // Ensure proper encoding
+            var smsEncoding = SetSmsMessageFormat(SmsTextFormat.Text);
+            if (!smsEncoding.IsSuccess)
+            {
+                return smsEncoding;
+            }
+
             string cmd1 = $"AT+CMGS=\"{phoneNumber}\"";
             string cmd2 = message;
-            AtResponse response = ModemBase.Channel.SendSmsAsync(cmd1, cmd2, "+CMGS:");
+            AtResponse response = ModemBase.Channel.SendSmsAsync(cmd1, cmd2, "+CMGS:", TimeSpan.FromMinutes(1));
 
             if (response.Success)
             {
@@ -116,6 +123,13 @@ namespace IoT.Device.AtModem.Sms
                 throw new ArgumentNullException(nameof(message));
             }
 
+            // Ensure proper encoding
+            var smsEncoding = SetSmsMessageFormat(SmsTextFormat.PDU);
+            if(!smsEncoding.IsSuccess)
+            {
+                return smsEncoding;
+            }
+
             byte dataCodingScheme;
             string encodedMessage;
             switch (codingScheme)
@@ -137,9 +151,9 @@ namespace IoT.Device.AtModem.Sms
             }
 
             string pdu = Pdu.EncodeSmsSubmit(phoneNumber, encodedMessage, dataCodingScheme, includeEmptySmscLength);
-            string cmd1 = $"AT+CMGS={(pdu.Length) / 2}";
+            string cmd1 = $"AT+CMGS={(pdu.Length) / 2 - 1}";
             string cmd2 = pdu;
-            AtResponse response = ModemBase.Channel.SendSmsAsync(cmd1, cmd2, "+CMGS:", TimeSpan.FromSeconds(30));
+            AtResponse response = ModemBase.Channel.SendSmsAsync(cmd1, cmd2, "+CMGS:", TimeSpan.FromMinutes(1));
 
             if (response.Success)
             {
@@ -309,15 +323,25 @@ namespace IoT.Device.AtModem.Sms
                                 status = SmsStatusHelpers.ToSmsStatus(match[1].Trim('\"'));
                                 sender = new PhoneNumber(match[2].Trim('\"'));
                                 var dates = match[4].Split('/');
-                                int year = int.Parse(dates[0].Substring(1));
-                                int month = int.Parse(dates[1]);
-                                int day = int.Parse(dates[2]);
-                                var times = match[5].Split(':');
-                                int hour = int.Parse(times[0]);
-                                int minute = int.Parse(times[1]);
-                                int second = int.Parse(times[2].Substring(0, 2));
-                                int zone = int.Parse(times[2].Substring(2, 3));
-                                received = new DateTime(2000 + year, month, day, hour, minute, second).Add(TimeSpan.FromMinutes(15 * zone));
+                                if (dates.Length >= 3)
+                                {
+                                    int year = int.Parse(dates[0].Substring(1));
+                                    int month = int.Parse(dates[1]);
+                                    int day = int.Parse(dates[2]);
+                                    var times = match[5].Split(':');
+                                    if (times.Length >= 3)
+                                    {
+                                        int hour = int.Parse(times[0]);
+                                        int minute = int.Parse(times[1]);
+                                        int second = int.Parse(times[2].Substring(0, 2));
+                                        int zone = int.Parse(times[2].Substring(2, 3));
+                                        received = new DateTime(2000 + year, month, day, hour, minute, second).Add(TimeSpan.FromMinutes(15 * zone));
+                                    }
+                                    else
+                                    {
+                                        received = new DateTime(2000 + year, month, day);
+                                    }
+                                }
 
                                 AdvanceIterator();
                                 while (line != null && !line.StartsWith("+CMGL: "))
@@ -377,6 +401,17 @@ namespace IoT.Device.AtModem.Sms
         {
             AtResponse response = ModemBase.Channel.SendCommand($"AT+CMGD={index}");
             return ModemResponse.Success(response.Success);
+        }
+
+        /// <inheritdoc/>
+        public virtual bool IsSmsReady
+        {
+            get
+            {
+                // Check if we can list messages
+                AtResponse response = ModemBase.Channel.SendCommand("AT+CMGL");
+                return response.Success;
+            }
         }
 
         #endregion

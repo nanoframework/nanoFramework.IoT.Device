@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using System.Threading;
 using IoT.Device.AtModem.Call;
 using IoT.Device.AtModem.DTOs;
 using IoT.Device.AtModem.Events;
@@ -35,8 +36,10 @@ namespace IoT.Device.AtModem.Modem
                 _channel.Open();
             }
 
-            // TODO: Uncomment this when the event is implemented
             channel.UnsolicitedEvent += ChannelUnsolicitedEvent;
+
+            // Ask for network registration changes.
+            channel.SendCommand("AT+CREG=1");
         }
 
         #region events
@@ -46,6 +49,10 @@ namespace IoT.Device.AtModem.Modem
             if (e.Line1.StartsWith("+CUSD: "))
             {
                 UssdResponseReceived?.Invoke(this, UssdResponseEventArgs.CreateFromResponse(e.Line1));
+            }
+            else if (e.Line1.StartsWith("+CREG: "))
+            {
+                NetworkConnectionChanged?.Invoke(this, NetworkConnectionEventArgs.CreateFromResponse(e.Line1));
             }
             else if (AtErrorParsers.TryGetError(e.Line1, out Error error))
             {
@@ -92,6 +99,18 @@ namespace IoT.Device.AtModem.Modem
         /// Occurs when a USSD response is received.
         /// </summary>
         public event UssdResponseEventHandler UssdResponseReceived;
+
+        /// <summary>
+        /// Represents the method that will handle network connection events.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void NetworkConnectionHandler(object sender, NetworkConnectionEventArgs e);
+
+        /// <summary>
+        /// Occurs when the network connection changes.
+        /// </summary>
+        public event NetworkConnectionHandler NetworkConnectionChanged;
 
         #endregion
 
@@ -638,6 +657,37 @@ namespace IoT.Device.AtModem.Modem
             }
 
             return ModemResponse.ResultError();
+        }
+
+        /// <summary>
+        /// Waits for the modem to register to the network.
+        /// </summary>
+        /// <param name="token">A valid cancellation token</param>
+        /// <returns>True if the connection happends otherwise false.</returns>
+        public bool WaitForNetworkRegistration(CancellationToken token)
+        {
+            // Check if there is any network connection, if not, wait for it
+            ModemResponse networkReg;
+
+            while (!token.IsCancellationRequested)
+            {
+                networkReg = GetNetworkRegistration();
+                if (networkReg.IsSuccess)
+                {
+                    if ((NetworkRegistration)networkReg.Result == NetworkRegistration.RegisteredHomeNetwork || (NetworkRegistration)networkReg.Result == NetworkRegistration.RegisteredRoaming)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Network registration failed: {networkReg.ErrorMessage}");
+                }
+
+                token.WaitHandle.WaitOne(1000, true);
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
 
 using IoT.Device.AtModem;
 using IoT.Device.AtModem.DTOs;
+using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 //using nanoFramework.Hardware.Esp32;
 using System;
@@ -21,9 +22,11 @@ OpenSerialPort("COM10");
 _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
-Sim7080 sim7080 = new(atChannel);
+Sim7080 modem = new(atChannel);
+////Sim800 modem = new(atChannel);
+modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
 
-var respDeviceInfo = sim7080.GetDeviceInformation();
+var respDeviceInfo = modem.GetDeviceInformation();
 if (respDeviceInfo.IsSuccess)
 {
     Console.WriteLine($"Device info: {respDeviceInfo.Result}");
@@ -33,13 +36,13 @@ else
     Console.WriteLine($"Device info failed: {respDeviceInfo.ErrorMessage}");
 }
 
-var pinStatus = sim7080.GetSimStatus();
+var pinStatus = modem.GetSimStatus();
 if (pinStatus.IsSuccess)
 {
     Console.WriteLine($"SIM status: {(SimStatus)pinStatus.Result}");
     if ((SimStatus)pinStatus.Result == SimStatus.SIM_PIN)
     {
-        var pinRes = sim7080.EnterSimPin(new PersonalIdentificationNumber("1234"));
+        var pinRes = modem.EnterSimPin(new PersonalIdentificationNumber("1234"));
         if (pinRes.IsSuccess)
         {
             Console.WriteLine("PIN entered successfully");
@@ -55,23 +58,47 @@ else
     Console.WriteLine($"SIM status failed: {pinStatus.ErrorMessage}");
 }
 
+// Wait for network registration for 5 minutes max, if not connected, then something is most likely very wrong
+var isConnected = modem.WaitForNetworkRegistration(new CancellationTokenSource(300_000).Token);
+
+if (!isConnected)
+{
+    Console.WriteLine("Something is very wrong and we did not manage to connect to the network.");
+    // Here you can try to setup manually the stored APN, username and password or anything like this
+    return;
+}
+
+SignalStrength strenght;
+ModemResponse networkReg;
+while (true)
+{
+    networkReg = modem.GetSignalStrength();
+    if (networkReg.IsSuccess)
+    {
+        Console.WriteLine($"Signal strength: {networkReg.Result}");
+        strenght = (SignalStrength)networkReg.Result;
+        if (strenght.Rssi.Percent < 99)
+        {
+            Console.WriteLine("Network quality is good!");
+            break;
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Signal strength failed: {networkReg.ErrorMessage}");
+    }
+
+    Thread.Sleep(1000);
+}
+
 ConnectToNetwork();
+////TestBinaryStorage();
 ////TestStorage();
 ////GetNetworkOperators();
 ////TestStorageSmsAndCharSet();
-//TestSms();
+////TestSms();
 
-var signalRes = sim7080.GetSignalStrength();
-if (signalRes.IsSuccess)
-{
-    Console.WriteLine($"Signal strength: {signalRes.Result}");
-}
-else
-{
-    Console.WriteLine($"Signal strength failed: {signalRes.ErrorMessage}");
-}
-
-sim7080.Dispose();
+modem.Dispose();
 CloseSerialPort();
 
 /// <summary>
@@ -131,9 +158,9 @@ void CloseSerialPort()
 
 void ConnectToNetwork()
 {
-    var network = sim7080.Network;
-    ////var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
-    var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
+    var network = modem.Network;
+    var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
+    ////var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
     if (connectRes)
     {
         Console.WriteLine($"Connected to network.");
@@ -154,7 +181,7 @@ void ConnectToNetwork()
 
 void TestStorageSmsAndCharSet()
 {
-    var resp = sim7080.GetAvailableCharacterSets();
+    var resp = modem.GetAvailableCharacterSets();
     if (resp.IsSuccess)
     {
         Console.Write($"Available character sets: ");
@@ -169,7 +196,7 @@ void TestStorageSmsAndCharSet()
         Console.WriteLine($"Available character sets failed: {resp.ErrorMessage}");
     }
 
-    var respChar = sim7080.GetCurrentCharacterSet();
+    var respChar = modem.GetCurrentCharacterSet();
     if (respChar.IsSuccess)
     {
         Console.WriteLine($"Current character set: {respChar.Result}");
@@ -179,11 +206,11 @@ void TestStorageSmsAndCharSet()
         Console.WriteLine($"Current character set failed: {respChar.ErrorMessage}");
     }
 
-    var respCpms = sim7080.SmsProvider.GetSupportedPreferredMessageStorages();
+    var respCpms = modem.SmsProvider.GetSupportedPreferredMessageStorages();
     if (respCpms.IsSuccess)
     {
         Console.WriteLine($"Supported preferred message storages: {respCpms.Result}");
-        var respPrefStorageSet = sim7080.SmsProvider.SetPreferredMessageStorage(((SupportedPreferredMessageStorages)respCpms.Result).Storage1[0], ((SupportedPreferredMessageStorages)respCpms.Result).Storage2[0], ((SupportedPreferredMessageStorages)respCpms.Result).Storage3[0]);
+        var respPrefStorageSet = modem.SmsProvider.SetPreferredMessageStorage(((SupportedPreferredMessageStorages)respCpms.Result).Storage1[0], ((SupportedPreferredMessageStorages)respCpms.Result).Storage2[0], ((SupportedPreferredMessageStorages)respCpms.Result).Storage3[0]);
         if (respPrefStorageSet.IsSuccess)
         {
             Console.WriteLine($"Preferred message storages set successfully: {respPrefStorageSet.Result}");
@@ -198,7 +225,7 @@ void TestStorageSmsAndCharSet()
         Console.WriteLine($"Supported preferred message storages failed: {respCpms.ErrorMessage}");
     }
 
-    var respPRefStor = sim7080.SmsProvider.GetPreferredMessageStorages();
+    var respPRefStor = modem.SmsProvider.GetPreferredMessageStorages();
     if (respPRefStor.IsSuccess)
     {
         Console.WriteLine($"Preferred message storages: {respPRefStor.Result}");
@@ -211,7 +238,19 @@ void TestStorageSmsAndCharSet()
 
 void TestSms()
 {
-    var resplistSms = sim7080.SmsProvider.ListSmss(SmsStatus.ALL);
+    while (true)
+    {
+        if(modem.SmsProvider.IsSmsReady)
+        {
+            Console.WriteLine($"SMS is ready!");
+            break;
+        }
+
+        Console.WriteLine($"Waiting for SMS to be ready...");
+        Thread.Sleep(1000);
+    }
+
+    var resplistSms = modem.SmsProvider.ListSmss(SmsStatus.ALL);
     if (resplistSms.IsSuccess)
     {
         Console.WriteLine($"SMS list:");
@@ -228,8 +267,8 @@ void TestSms()
         if (((ArrayList)resplistSms.Result).Count > 0)
         {
             // Making sur"e we are using the PDU format
-            sim7080.SmsProvider.SetSmsMessageFormat(SmsTextFormat.PDU);
-            var respSmsRead = sim7080.SmsProvider.ReadSms(0, SmsTextFormat.PDU);
+            modem.SmsProvider.SetSmsMessageFormat(SmsTextFormat.PDU);
+            var respSmsRead = modem.SmsProvider.ReadSms(((SmsWithIndex)((ArrayList)resplistSms.Result)[0]).Index, SmsTextFormat.PDU);
             if (respSmsRead.IsSuccess)
             {
                 Sms sms = (Sms)respSmsRead.Result;
@@ -251,7 +290,7 @@ void TestSms()
         Console.WriteLine($"SMS list failed: {resplistSms.ErrorMessage}");
     }
 
-    var respSmsSend = sim7080.SmsProvider.SendSmsInTextFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework");
+    var respSmsSend = modem.SmsProvider.SendSmsInTextFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework text");
     if (respSmsSend.IsSuccess)
     {
         Console.WriteLine($"SMS sent successfully: {respSmsSend.Result}");
@@ -261,7 +300,7 @@ void TestSms()
         Console.WriteLine($"SMS sent failed: {respSmsSend.ErrorMessage}");
     }
 
-    respSmsSend = sim7080.SmsProvider.SendSmsInPduFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework", IoT.Device.AtModem.CodingSchemes.CodingScheme.Gsm7, true);
+    respSmsSend = modem.SmsProvider.SendSmsInPduFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework pdu", IoT.Device.AtModem.CodingSchemes.CodingScheme.Gsm7, true);
     if (respSmsSend.IsSuccess)
     {
         Console.WriteLine($"SMS sent successfully: {respSmsSend.Result}");
@@ -274,7 +313,7 @@ void TestSms()
 
 void GetNetworkOperators()
 {
-    var network = sim7080.Network;
+    var network = modem.Network;
 
     Console.WriteLine("Getting the list of operators, this may take a while, up to 5 minutes...");
     // Get the operators
@@ -298,18 +337,18 @@ void TestStorage()
     const string Content = "Hello from nanoFramework";
 
     // Available storage
-    var size = sim7080.FileStorage.GetAvailableStorage();
+    var size = modem.FileStorage.GetAvailableStorage();
     Console.WriteLine($"Available storage: {size}");
 
     // Create a file
-    var respCreate = sim7080.FileStorage.WriteFile(FileName, Content);
+    var respCreate = modem.FileStorage.WriteFile(FileName, Content);
     Console.WriteLine($"Create file: {(respCreate ? "success" : "failure")}");
 
     // Get file size
-    Console.WriteLine($"File size: {sim7080.FileStorage.GetFileSize(FileName)}");
+    Console.WriteLine($"File size: {modem.FileStorage.GetFileSize(FileName)}");
 
     // Read file
-    var respRead = sim7080.FileStorage.ReadFile(FileName);
+    var respRead = modem.FileStorage.ReadFile(FileName);
     if (respRead != null && respRead == Content)
     {
         Console.WriteLine($"Read file: success");
@@ -329,19 +368,74 @@ void TestStorage()
     bool respDelete = false;
 
     // Rename file
-    var respRename = sim7080.FileStorage.RenameFile(FileName, "test2.txt");
+    var respRename = modem.FileStorage.RenameFile(FileName, "test2.txt");
     if (respRename)
     {
         Console.WriteLine($"Rename file: success");
         // Delete file
-        respDelete = sim7080.FileStorage.DeleteFile("test2.txt");
+        respDelete = modem.FileStorage.DeleteFile("test2.txt");
     }
     else
     {
         Console.WriteLine($"Rename file: failure");
         // Delete file
-        respDelete = sim7080.FileStorage.DeleteFile(FileName);
+        respDelete = modem.FileStorage.DeleteFile(FileName);
     }
 
     Console.WriteLine($"Delete file: {(respDelete ? "success" : "failure")}");
+}
+
+void TestBinaryStorage()
+{
+    byte[] bytes = new byte[255];
+
+    for (int i = 0; i < bytes.Length; i++)
+    {
+        bytes[i] = (byte)i;
+    }
+
+    // Create the file
+    var respCreate = modem.FileStorage.WriteFile("test.bin", bytes);
+    if (respCreate)
+    {
+        Console.WriteLine($"Create file: success");
+    }
+    else
+    {
+        Console.WriteLine($"Create file: failure");
+    }
+
+    // Read the file
+    var respRead = modem.FileStorage.ReadFile("test.bin");
+    if (respRead != null)
+    {
+        Console.WriteLine($"Read file: success");
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            if (bytes[i] != respRead[i])
+            {
+                Console.WriteLine($"Read file: failure, byte {i} is {respRead[i]} instead of {bytes[i]}");
+            }
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Read file: failure");
+    }
+
+    // Delete the file to clean everything
+    var respDelete = modem.FileStorage.DeleteFile("test.bin");
+    if (respDelete)
+    {
+        Console.WriteLine($"Delete file: success");
+    }
+    else
+    {
+        Console.WriteLine($"Delete file: failure");
+    }
+}
+
+void ModemNetworkConnectionChanged(object sender, NetworkConnectionEventArgs e)
+{
+    Console.WriteLine($"Network connection changed to: {e.NetworkRegistration}");
 }

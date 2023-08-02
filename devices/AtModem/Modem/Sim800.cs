@@ -1,29 +1,23 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Diagnostics;
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Mqtt;
 using IoT.Device.AtModem.Network;
-using nanoFramework.M2Mqtt;
+using System.Diagnostics;
 
 namespace IoT.Device.AtModem.Modem
 {
     /// <summary>
-    /// Represents a SIM7080 modem.
+    /// Represents a SIM800 modem.
     /// </summary>
-    public class Sim7080 : ModemBase
+    public class Sim800 : ModemBase
     {
-        private IFileStorage _fileStorage = null;
-        private IMqttClient _mqttClient = null;
         private INetwork _network = null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Sim7080"/> class.
+        /// Initializes a new instance of the <see cref="Sim800"/> class.
         /// </summary>
-        /// <param name="channel">A channel to communicate with the modem.</param>
-        public Sim7080(AtChannel channel) : base(channel)
+        /// <param name="channel"></param>
+        public Sim800(AtChannel channel) : base(channel)
         {
             // Wake up the device and set the automatic baud rate detection
             const int MaxRetry = 10;
@@ -54,41 +48,13 @@ namespace IoT.Device.AtModem.Modem
         }
 
         /// <inheritdoc/>
-        public override IFileStorage FileStorage
-        {
-            get
-            {
-                if (_fileStorage == null)
-                {
-                    _fileStorage = new FileStorage.Sim7080FileStorage(this);
-                }
-
-                return _fileStorage;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override IMqttClient MqttClient
-        {
-            get
-            {
-                if (_mqttClient == null)
-                {
-                    _mqttClient = new Sim7080MqttClient(this);
-                }
-
-                return _mqttClient;
-            }
-        }
-
-        /// <inheritdoc/>
         public override INetwork Network
         {
             get
             {
                 if (_network == null)
                 {
-                    _network = new Sim7080Network(this);
+                    _network = new Sim800Network(this);
                 }
 
                 return _network;
