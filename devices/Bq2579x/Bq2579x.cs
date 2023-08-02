@@ -269,19 +269,19 @@ namespace Iot.Device.Bq2579x
         public ThermalShutdownThreshold ThermalShutdownThreshold { get => GetThermalShutdownThreshold(); set => SetThermalShutdownThreshold(value); }
 
         /// <summary>
-        /// Gets or sets charge voltage for JEITA high temperature range (TWARN – THOT). 
+        /// Gets or sets charge voltage for JEITA high temperature range (TWARN - THOT). 
         /// </summary>
         [Property]
         public ChargeVoltage ChargeVoltageHighTempRange { get => GetChargeVoltage(); set => SetChargeVoltage(value); }
 
         /// <summary>
-        /// Gets or sets charge current for JEITA high temperature range (TWARN – THOT). 
+        /// Gets or sets charge current for JEITA high temperature range (TWARN - THOT). 
         /// </summary>
         [Property]
         public ChargeCurrent ChargeCurrentHighTempRange { get => GetChargeCurrentHighTempRange(); set => SetChargeCurrentHighTempRange(value); }
 
         /// <summary>
-        /// Gets or sets charge current for JEITA low temperature range (TCOLD – TCOOL). 
+        /// Gets or sets charge current for JEITA low temperature range (TCOLD - TCOOL). 
         /// </summary>
         [Property]
         public ChargeCurrent ChargeCurrentLowTempRange { get => GetChargeCurrentLowTempRange(); set => SetChargeCurrentLowTempRange(value); }
