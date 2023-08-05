@@ -90,7 +90,7 @@ namespace IoT.Device.AtModem.Sms
 
             string cmd1 = $"AT+CMGS=\"{phoneNumber}\"";
             string cmd2 = message;
-            AtResponse response = ModemBase.Channel.SendSmsAsync(cmd1, cmd2, "+CMGS:", TimeSpan.FromMinutes(1));
+            AtResponse response = ModemBase.Channel.SendSms(cmd1, cmd2, "+CMGS:", TimeSpan.FromMinutes(1));
 
             if (response.Success)
             {
@@ -125,7 +125,7 @@ namespace IoT.Device.AtModem.Sms
 
             // Ensure proper encoding
             var smsEncoding = SetSmsMessageFormat(SmsTextFormat.PDU);
-            if(!smsEncoding.IsSuccess)
+            if (!smsEncoding.IsSuccess)
             {
                 return smsEncoding;
             }
@@ -153,7 +153,7 @@ namespace IoT.Device.AtModem.Sms
             string pdu = Pdu.EncodeSmsSubmit(phoneNumber, encodedMessage, dataCodingScheme, includeEmptySmscLength);
             string cmd1 = $"AT+CMGS={(pdu.Length) / 2 - 1}";
             string cmd2 = pdu;
-            AtResponse response = ModemBase.Channel.SendSmsAsync(cmd1, cmd2, "+CMGS:", TimeSpan.FromMinutes(1));
+            AtResponse response = ModemBase.Channel.SendSms(cmd1, cmd2, "+CMGS:", TimeSpan.FromMinutes(1));
 
             if (response.Success)
             {
@@ -256,7 +256,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse GetSmsMessageFormat()
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CMGF?", "+CMGF:");
+            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CMGF?", "+CMGF:");
 
             if (response.Success)
             {
@@ -421,7 +421,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse GetSupportedPreferredMessageStorages()
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CPMS=?", "+CPMS:");
+            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CPMS=?", "+CPMS:");
 
             if (response.Success && response.Intermediates.Count > 0)
             {
@@ -463,7 +463,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse GetPreferredMessageStorages()
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CPMS?", "+CPMS:");
+            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CPMS?", "+CPMS:");
 
             if (response.Success && response.Intermediates.Count > 0)
             {
@@ -486,7 +486,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse SetPreferredMessageStorage(string storage1Name, string storage2Name, string storage3Name)
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommandAsync($"AT+CPMS=\"{storage1Name}\",\"{storage2Name}\",\"{storage3Name}\"", "+CPMS:");
+            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CPMS=\"{storage1Name}\",\"{storage2Name}\",\"{storage3Name}\"", "+CPMS:");
 
             if (response.Success && response.Intermediates.Count > 0)
             {

@@ -22,8 +22,8 @@ OpenSerialPort("COM10");
 _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
-Sim7080 modem = new(atChannel);
-////Sim800 modem = new(atChannel);
+////Sim7080 modem = new(atChannel);
+Sim800 modem = new(atChannel);
 modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
 
 var respDeviceInfo = modem.GetDeviceInformation();
@@ -91,9 +91,9 @@ while (true)
     Thread.Sleep(1000);
 }
 
-ConnectToNetwork();
+////ConnectToNetwork();
 ////TestBinaryStorage();
-////TestStorage();
+TestStorage();
 ////GetNetworkOperators();
 ////TestStorageSmsAndCharSet();
 ////TestSms();
@@ -101,19 +101,6 @@ ConnectToNetwork();
 modem.Dispose();
 CloseSerialPort();
 
-/// <summary>
-/// Configure and open the serial port for communication.
-/// </summary>
-/// <param name="port"></param>
-/// <param name="baudRate"></param>
-/// <param name="parity"></param>
-/// <param name="stopBits"></param>
-/// <param name="handshake"></param>
-/// <param name="dataBits"></param>
-/// <param name="readBufferSize"></param>
-/// <param name="readTimeout"></param>
-/// <param name="writeTimeout"></param>
-/// <param name="watchChar"></param>
 void OpenSerialPort(
     string port = "COM3",
     int baudRate = 115200,
@@ -240,7 +227,7 @@ void TestSms()
 {
     while (true)
     {
-        if(modem.SmsProvider.IsSmsReady)
+        if (modem.SmsProvider.IsSmsReady)
         {
             Console.WriteLine($"SMS is ready!");
             break;
@@ -383,6 +370,56 @@ void TestStorage()
     }
 
     Console.WriteLine($"Delete file: {(respDelete ? "success" : "failure")}");
+
+    // Check if we have the support for directory, if yes, we test it
+    if (modem.FileStorage.HasDirectorySupport)
+    {
+        const string DirectoryName = "test";
+        // Create a directory
+        var respCreateDir = modem.FileStorage.CreateDirectory(DirectoryName);
+        Console.WriteLine($"Create directory: {(respCreateDir ? "success" : "failure")}");
+
+        // Create few files in the directory
+        for (int i = 0; i < 5; i++)
+        {
+            var res = modem.FileStorage.WriteFile($"{DirectoryName}\\test{i}.txt", Content);
+            if (!res)
+            {
+                Console.WriteLine($"Create file {i}: failure");
+            }
+            else
+            {
+                Console.WriteLine($"Create file {i}: success");
+            }
+        }
+
+        // List the directory
+        var respListDir = modem.FileStorage.ListDirectory(DirectoryName);
+        if (respListDir != null)
+        {
+            Console.WriteLine($"List directory: success");
+            foreach (var file in respListDir)
+            {
+                Console.WriteLine($"  {file}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"List directory: failure");
+        }
+
+        // Delete the directory
+        var respDeleteDir = modem.FileStorage.DeleteDirectory(DirectoryName);
+        Console.WriteLine($"Delete directory: {(respDeleteDir ? "success" : "failure")}, failure is normal if the directory is not empty.");
+
+        foreach(string file in respListDir)
+        {
+            Console.WriteLine($"Delete file {file}: {(modem.FileStorage.DeleteFile($"{DirectoryName}\\{file}") ? "success" : "failure")}");
+        }
+
+        respDeleteDir = modem.FileStorage.DeleteDirectory(DirectoryName);
+        Console.WriteLine($"Delete directory: {(respDeleteDir ? "success" : "failure")}. Should be success as the directory should be empty.");
+    }
 }
 
 void TestBinaryStorage()

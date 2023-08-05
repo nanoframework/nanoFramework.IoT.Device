@@ -94,8 +94,10 @@
     <Compile Include="Events\SmsReceivedEventArgs.cs" />
     <Compile Include="Events\UnsolicitedEventArgs.cs" />
     <Compile Include="Events\UssdResponseEventArgs.cs" />
+    <Compile Include="FileStorage\CreateMode.cs" />
     <Compile Include="FileStorage\IFileStorage.cs" />
     <Compile Include="FileStorage\Sim7080FileStorage.cs" />
+    <Compile Include="FileStorage\Sim800FileStorage.cs" />
     <Compile Include="Modem\ModemBase.cs" />
     <Compile Include="Modem\ModemResponse.cs" />
     <Compile Include="Modem\Sim7080.cs" />

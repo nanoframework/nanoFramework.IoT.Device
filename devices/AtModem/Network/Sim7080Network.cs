@@ -33,7 +33,7 @@ namespace IoT.Device.AtModem.Network
                     SignalQuality = new SignalStrength(Ratio.FromPercent(99), Ratio.FromPercent(99)),
                     IPAddress = string.Empty,
                 };
-                AtResponse response = _modem.Channel.SendSingleLineCommandAsync("AT+COPS?", "+COPS");
+                AtResponse response = _modem.Channel.SendSingleLineCommand("AT+COPS?", "+COPS");
 
                 if (response.Success)
                 {
@@ -218,7 +218,7 @@ namespace IoT.Device.AtModem.Network
 
         private string GetIpAddress()
         {
-            var response = _modem.Channel.SendSingleLineCommandAsync("AT+CNACT?", "+CNACT");
+            var response = _modem.Channel.SendSingleLineCommand("AT+CNACT?", "+CNACT");
             if (response.Success)
             {
                 var line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
@@ -274,7 +274,7 @@ namespace IoT.Device.AtModem.Network
         public Operator[] GetOperators()
         {
             // Timeout is 120 seconds
-            AtResponse response = _modem.Channel.SendSingleLineCommandAsync("AT+COPS=?", "+COPS", TimeSpan.FromMinutes(5));
+            AtResponse response = _modem.Channel.SendSingleLineCommand("AT+COPS=?", "+COPS", TimeSpan.FromMinutes(5));
             if (response.Success)
             {
                 string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;

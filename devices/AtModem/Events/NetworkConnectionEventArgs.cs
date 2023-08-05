@@ -1,8 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using IoT.Device.AtModem.DTOs;
 using System;
+using IoT.Device.AtModem.DTOs;
 
 namespace IoT.Device.AtModem.Events
 {
@@ -28,8 +28,8 @@ namespace IoT.Device.AtModem.Events
         /// <summary>
         /// Creates a new instance of the <see cref="NetworkConnectionEventArgs"/> class from the response string.
         /// </summary>
-        /// <param name="response">The response</param>
-        /// <returns></returns>
+        /// <param name="response">The response.</param>
+        /// <returns>A new instance of the <see cref="NetworkConnectionEventArgs"/>.</returns>
         public static NetworkConnectionEventArgs CreateFromResponse(string response)
         {
             // +CREG: <stat>[,<lac>,<ci>[,<AcT>]]

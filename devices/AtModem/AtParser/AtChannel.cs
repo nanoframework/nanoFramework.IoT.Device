@@ -150,7 +150,7 @@ namespace IoT.Device.AtModem
         {
             IsOpen = true;
             _atReader.Open();
-            ClearAsync();
+            Clear();
             _thread = new Thread(ReaderLoopAsync);
             _thread.Start();
         }
@@ -178,7 +178,7 @@ namespace IoT.Device.AtModem
         /// Clears all available items from the AT reader.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
-        public void ClearAsync(CancellationToken cancellationToken = default)
+        public void Clear(CancellationToken cancellationToken = default)
         {
             for (int i = 0; i < _atReader.AvailableItems(); i++)
             {
@@ -194,7 +194,7 @@ namespace IoT.Device.AtModem
         /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
         public virtual AtResponse SendCommand(string command, TimeSpan timeout = default)
         {
-            return SendFullCommandAsync(new AtCommand(AtCommandType.NoResult, command, null, null, timeout == default ? DefaultCommandTimeout : timeout));
+            return SendFullCommand(new AtCommand(AtCommandType.NoResult, command, null, null, timeout == default ? DefaultCommandTimeout : timeout));
         }
 
         /// <inheritdoc/>
@@ -210,9 +210,9 @@ namespace IoT.Device.AtModem
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
-        public virtual AtResponse SendSingleLineCommandAsync(string command, string responsePrefix, TimeSpan timeout = default)
+        public virtual AtResponse SendSingleLineCommand(string command, string responsePrefix, TimeSpan timeout = default)
         {
-            AtResponse response = SendFullCommandAsync(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
+            AtResponse response = SendFullCommand(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
 
             if (response != null && response.Success && !(response.Intermediates.Count > 0))
             {
@@ -233,7 +233,7 @@ namespace IoT.Device.AtModem
         public virtual AtResponse SendMultilineCommand(string command, string responsePrefix, TimeSpan timeout = default)
         {
             AtCommandType commandType = responsePrefix == null ? AtCommandType.MultiLineNoPreeffiixx : AtCommandType.MultiLine;
-            return SendFullCommandAsync(new AtCommand(commandType, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
+            return SendFullCommand(new AtCommand(commandType, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
         }
 
         /// <summary>
@@ -244,9 +244,9 @@ namespace IoT.Device.AtModem
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
-        public virtual AtResponse SendSmsAsync(string command, string pdu, string responsePrefix, TimeSpan timeout = default)
+        public virtual AtResponse SendSms(string command, string pdu, string responsePrefix, TimeSpan timeout = default)
         {
-            AtResponse response = SendFullCommandAsync(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, pdu, timeout == default ? DefaultCommandTimeout : timeout));
+            AtResponse response = SendFullCommand(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, pdu, timeout == default ? DefaultCommandTimeout : timeout));
 
             if (response != null && response.Success && !(response.Intermediates.Count > 0))
             {
@@ -257,7 +257,7 @@ namespace IoT.Device.AtModem
             return response;
         }
 
-        private AtResponse SendFullCommandAsync(AtCommand command, CancellationToken cancellationToken = default)
+        private AtResponse SendFullCommand(AtCommand command, CancellationToken cancellationToken = default)
         {
             try
             {

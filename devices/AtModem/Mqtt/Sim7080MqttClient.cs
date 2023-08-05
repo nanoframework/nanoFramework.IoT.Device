@@ -279,7 +279,7 @@ namespace IoT.Device.AtModem.Mqtt
         private bool IsStillConnected()
         {
             int state = 0;
-            var response = _modem.Channel.SendSingleLineCommandAsync("AT+SMSTATE?", "+SMSTATE");
+            var response = _modem.Channel.SendSingleLineCommand("AT+SMSTATE?", "+SMSTATE");
             if (response.Success)
             {
                 string line = response.Intermediates.Count > 1 ? (string)response.Intermediates[1] : string.Empty;

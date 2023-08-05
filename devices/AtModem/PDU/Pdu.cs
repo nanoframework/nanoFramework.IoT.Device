@@ -77,7 +77,7 @@ namespace IoT.Device.AtModem.PDU
             // If TP-DCS indicates 8-bit data or Unicode, the length is the number of octets.
             if (dataCodingScheme != 0)
             {
-                int messageBitLength = encodedMessage.Length * 7 / 2 ;
+                int messageBitLength = encodedMessage.Length * 7 / 2;
                 int messageLength = messageBitLength % 8 == 0 ? messageBitLength / 8 : (messageBitLength / 8) + 1;
                 sb.Append(messageLength.ToString("X2"));
             }

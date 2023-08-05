@@ -71,7 +71,7 @@ namespace IoT.Device.AtModem.FileStorage
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
-            var response = _modem.Channel.SendSingleLineCommandAsync("AT+CFSGFRS?", "+CFSGFRS:");
+            var response = _modem.Channel.SendSingleLineCommand("AT+CFSGFRS?", "+CFSGFRS:");
             if (response.Success)
             {
                 size = response.Intermediates.Count > 0 ? int.Parse(((string)response.Intermediates[0]).Substring(10)) : -1;
@@ -104,7 +104,7 @@ namespace IoT.Device.AtModem.FileStorage
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
-            var response = _modem.Channel.SendSingleLineCommandAsync($"AT+AT+CFSDFILE={(int)Storage},\"{fileName}\"", string.Empty);
+            var response = _modem.Channel.SendSingleLineCommand($"AT+AT+CFSDFILE={(int)Storage},\"{fileName}\"", string.Empty);
             if (response.Success)
             {
                 size = response.Intermediates.Count > 0 ? int.Parse(((string)response.Intermediates[0]).Substring(10)) : -1;
@@ -116,7 +116,7 @@ namespace IoT.Device.AtModem.FileStorage
         }
 
         /// <inheritdoc/>
-        public string ReadFile(string fileName)
+        public string ReadFile(string fileName, int position = 0)
         {
             string result = null;
 
@@ -124,17 +124,25 @@ namespace IoT.Device.AtModem.FileStorage
             _modem.Channel.SendCommand("AT+CFSINIT");
 
             // Get the file size
-            var response = _modem.Channel.SendSingleLineCommandAsync($"AT+CFSGFIS={(int)Storage},\"{fileName}\"", "+CFSGFIS:");
+            var response = _modem.Channel.SendSingleLineCommand($"AT+CFSGFIS={(int)Storage},\"{fileName}\"", "+CFSGFIS:");
             if (response.Success)
             {
                 var size = response.Intermediates.Count > 0 ? int.Parse(((string)response.Intermediates[0]).Substring(10)) : -1;
                 if (size > 0)
                 {
                     // Read the file
-                    var fileresp = _modem.Channel.SendMultilineCommand($"AT+CFSRFILE={(int)Storage},\"{fileName}\",0,{size},0", string.Empty);
+                    var fileresp = _modem.Channel.SendMultilineCommand($"AT+CFSRFILE={(int)Storage},\"{fileName}\",{(position > 0 ? 1 : 0)},{size - position},{position}", string.Empty);
                     if (fileresp.Success)
                     {
-                        result = fileresp.Intermediates.Count > 1 ? (string)fileresp.Intermediates[1] : null;
+                        foreach (var item in fileresp.Intermediates)
+                        {
+                            result += (string)item + "\r\n";
+                        }
+
+                        if (result != null)
+                        {
+                            result = result.Substring(0, result.Length - 2);
+                        }
                     }
                 }
             }
@@ -145,13 +153,13 @@ namespace IoT.Device.AtModem.FileStorage
         }
 
         /// <inheritdoc/>
-        public bool WriteFile(string fileName, string content)
+        public bool WriteFile(string fileName, string content, CreateMode createMode = CreateMode.Override)
         {
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
             // 10 seconds timeout
-            _modem.Channel.SendCommand($"AT+CFSWFILE={(int)Storage},\"{fileName}\",0,{content.Length},10000");
+            _modem.Channel.SendCommand($"AT+CFSWFILE={(int)Storage},\"{fileName}\",{(int)createMode},{content.Length},10000");
 
             // Send the content
             var response = _modem.Channel.SendCommand(content);
@@ -163,13 +171,13 @@ namespace IoT.Device.AtModem.FileStorage
         }
 
         /// <inheritdoc/>
-        public bool WriteFile(string fileName, byte[] content)
+        public bool WriteFile(string fileName, byte[] content, CreateMode createMode = CreateMode.Override)
         {
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
             // 10 seconds timeout
-            _modem.Channel.SendCommand($"AT+CFSWFILE={(int)Storage},\"{fileName}\",0,{content.Length},10000");
+            _modem.Channel.SendCommand($"AT+CFSWFILE={(int)Storage},\"{fileName}\",{(int)createMode},{content.Length},10000");
 
             // Send the content
             _modem.Channel.SendBytesWithoutAck(content);
@@ -181,9 +189,30 @@ namespace IoT.Device.AtModem.FileStorage
         }
 
         /// <inheritdoc/>
-        public bool ReadFile(string fileName, ref byte[] content)
+        public bool ReadFile(string fileName, ref byte[] content, int position = 0)
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public bool DeleteDirectory(string directoryName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool CreateDirectory(string directoryName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public string[] ListDirectory(string directoryName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool HasDirectorySupport => false;
     }
 }
