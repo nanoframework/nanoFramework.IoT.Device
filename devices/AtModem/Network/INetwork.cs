@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using IoT.Device.AtModem.DTOs;
 
 namespace IoT.Device.AtModem.Network
@@ -8,7 +9,7 @@ namespace IoT.Device.AtModem.Network
     /// <summary>
     /// Represents a network interface.
     /// </summary>
-    public interface INetwork
+    public interface INetwork : IDisposable
     {
         /// <summary>
         /// Gets the network information.

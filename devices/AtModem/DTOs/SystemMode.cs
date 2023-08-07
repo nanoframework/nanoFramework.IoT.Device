@@ -19,6 +19,11 @@ namespace IoT.Device.AtModem.DTOs
         GSM = 1,
 
         /// <summary>
+        /// General Packet Radio Service (GPRS).
+        /// </summary>
+        GPRS = 2,
+
+        /// <summary>
         /// Enhanced General Packet Radio Service (EGPRS).
         /// </summary>
         EGPRS = 3,
@@ -31,6 +36,6 @@ namespace IoT.Device.AtModem.DTOs
         /// <summary>
         /// Long Term Evolution (LTE) NarrowBand.
         /// </summary>
-        LTE_NB = 9
+        LTE_NB = 9,
     }
 }

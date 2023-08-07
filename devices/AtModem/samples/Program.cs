@@ -5,7 +5,9 @@ using IoT.Device.AtModem;
 using IoT.Device.AtModem.DTOs;
 using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
-//using nanoFramework.Hardware.Esp32;
+#if (NANOFRAMEWORK_1_0)
+using nanoFramework.Hardware.Esp32;
+#endif
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -91,12 +93,20 @@ while (true)
     Thread.Sleep(1000);
 }
 
-////ConnectToNetwork();
+ConnectToNetwork();
 ////TestBinaryStorage();
-TestStorage();
+////TestStorage();
 ////GetNetworkOperators();
 ////TestStorageSmsAndCharSet();
 ////TestSms();
+TestHttp();
+
+void TestHttp()
+{
+    var httpClient = modem.HttpClient;
+    var resp = httpClient.Get("http://www.ellerbach.net/DateHeure/");
+    Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
+}
 
 modem.Dispose();
 CloseSerialPort();
@@ -111,9 +121,11 @@ void OpenSerialPort(
     int readTimeout = Timeout.Infinite,
     int writeTimeout = Timeout.Infinite)
 {
+#if (NANOFRAMEWORK_1_0)
     // Configure GPIOs 16 and 17 to be used in UART2 (that's refered as COM3)
-    //Configuration.SetPinFunction(32, DeviceFunction.COM3_RX);
-    //Configuration.SetPinFunction(33, DeviceFunction.COM3_TX);
+    Configuration.SetPinFunction(32, DeviceFunction.COM3_RX);
+    Configuration.SetPinFunction(33, DeviceFunction.COM3_TX);
+#endif
 
     _serialPort = new(port)
     {

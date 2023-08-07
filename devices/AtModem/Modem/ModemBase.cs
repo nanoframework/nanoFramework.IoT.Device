@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using IoT.Device.AtModem.Call;
@@ -24,7 +25,6 @@ namespace IoT.Device.AtModem.Modem
         private bool _isDisposed;
         private ISmsProvider _smsProvider;
         private ICall _genericCall;
-        private Sim800FileStorage _fileStorage;
 
         /// <summary>
         /// Initializes a new instance of the ModemBase class with the specified AT channel.
@@ -129,18 +129,7 @@ namespace IoT.Device.AtModem.Modem
         /// <summary>
         /// Gets a <see cref="IFileStorage"/> object used to store files on the modem..
         /// </summary>
-        public virtual IFileStorage FileStorage
-        {
-            get
-            {
-                if (_fileStorage == null)
-                {
-                    _fileStorage = new Sim800FileStorage(this);
-                }
-
-                return _fileStorage;
-            }
-        }
+        public virtual IFileStorage FileStorage { get => throw new NotImplementedException(); }
 
         /// <summary>
         /// Gets a <see cref="IMqttClient"/> object used to communicate with an MQTT broker.
@@ -151,6 +140,11 @@ namespace IoT.Device.AtModem.Modem
         /// Gets a <see cref="INetwork"/> object used to communicate with the network.
         /// </summary>
         public virtual INetwork Network { get => throw new NotImplementedException(); }
+
+        /// <summary>
+        /// Gets a <see cref="HttpClient"/> object used to communicate with the network.
+        /// </summary>
+        public virtual HttpClient HttpClient { get => throw new NotImplementedException(); }
 
         /// <summary>
         /// Gets a <see cref="ISmsProvider"/> object used to send and receive SMS messages and mget access to the SMS storage.
@@ -184,7 +178,7 @@ namespace IoT.Device.AtModem.Modem
             }
         }
 
-        #endregion 
+        #endregion
 
         #region _V_25TER
 
@@ -196,7 +190,7 @@ namespace IoT.Device.AtModem.Modem
         public virtual ModemResponse GetSimCardInformation()
         {
             SimCardInformation simCardInformation = new SimCardInformation();
-            AtResponse response = Channel.SendSingleLineCommand("AT+CIMI", string.Empty);
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CIMI", string.Empty);
 
             if (!response.Success)
             {
@@ -206,7 +200,7 @@ namespace IoT.Device.AtModem.Modem
             string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
             simCardInformation.Imsi = line;
 
-            response = Channel.SendSingleLineCommand("AT+CGSN", string.Empty);
+            response = Channel.SendCommandReadSingleLine("AT+CGSN", string.Empty);
 
             if (!response.Success)
             {
@@ -216,7 +210,7 @@ namespace IoT.Device.AtModem.Modem
             line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
             simCardInformation.Imei = line;
 
-            response = Channel.SendSingleLineCommand("AT+CCID", string.Empty);
+            response = Channel.SendCommandReadSingleLine("AT+CCID", string.Empty);
 
             if (!response.Success)
             {
@@ -247,7 +241,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="ProductIdentificationInformation"/> class.</returns>
         public virtual ModemResponse GetProductIdentificationInformation()
         {
-            AtResponse response = Channel.SendMultilineCommand("ATI", null);
+            AtResponse response = Channel.SendCommandReadMultiline("ATI", null);
 
             if (response.Success)
             {
@@ -282,7 +276,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="int"/>.</returns>
         public virtual ModemResponse GetCurrentBaudRate()
         {
-            AtResponse response = Channel.SendSingleLineCommand($"AT+IPR?", "+IPR:");
+            AtResponse response = Channel.SendCommandReadSingleLine($"AT+IPR?", "+IPR:");
 
             if (response.Success)
             {
@@ -308,7 +302,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="string"/> array.</returns>
         public virtual ModemResponse GetAvailableCharacterSets()
         {
-            AtResponse response = Channel.SendSingleLineCommand($"AT+CSCS=?", "+CSCS:");
+            AtResponse response = Channel.SendCommandReadSingleLine($"AT+CSCS=?", "+CSCS:");
 
             if (response.Success)
             {
@@ -336,7 +330,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="string"/> indicating the current character set.</returns>
         public virtual ModemResponse GetCurrentCharacterSet()
         {
-            AtResponse response = Channel.SendSingleLineCommand($"AT+CSCS?", "+CSCS:");
+            AtResponse response = Channel.SendCommandReadSingleLine($"AT+CSCS?", "+CSCS:");
 
             if (response.Success)
             {
@@ -372,7 +366,7 @@ namespace IoT.Device.AtModem.Modem
         public virtual ModemResponse GetDeviceInformation()
         {
             // We need to keep for all the commands the intermediate responses, because it contains the information we need
-            AtResponse response = Channel.SendSingleLineCommand("AT+CGMI", string.Empty);
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CGMI", string.Empty);
             DeviceInformation deviceInformation = new DeviceInformation();
 
             if (!response.Success)
@@ -383,7 +377,7 @@ namespace IoT.Device.AtModem.Modem
             string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
             deviceInformation.Manufacturer = line;
 
-            response = Channel.SendSingleLineCommand("AT+CGMM", string.Empty);
+            response = Channel.SendCommandReadSingleLine("AT+CGMM", string.Empty);
             if (!response.Success)
             {
                 return ModemResponse.ResultError();
@@ -392,7 +386,7 @@ namespace IoT.Device.AtModem.Modem
             line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
             deviceInformation.Model = line;
 
-            response = Channel.SendSingleLineCommand("AT+CGMR", string.Empty);
+            response = Channel.SendCommandReadSingleLine("AT+CGMR", string.Empty);
             if (!response.Success)
             {
                 return ModemResponse.ResultError();
@@ -401,7 +395,7 @@ namespace IoT.Device.AtModem.Modem
             line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
             deviceInformation.FirmwareVersion = line;
 
-            response = Channel.SendSingleLineCommand("ATI", string.Empty);
+            response = Channel.SendCommandReadSingleLine("ATI", string.Empty);
             if (!response.Success)
             {
                 return ModemResponse.ResultError();
@@ -420,7 +414,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="SimStatus"/> enum.</returns>
         public virtual ModemResponse GetSimStatus()
         {
-            AtResponse response = Channel.SendSingleLineCommand("AT+CPIN?", "+CPIN:");
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CPIN?", "+CPIN:");
 
             if (!response.Success)
             {
@@ -486,7 +480,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="SignalStrength"/> class.</returns>
         public virtual ModemResponse GetSignalStrength()
         {
-            AtResponse response = Channel.SendSingleLineCommand("AT+CSQ", "+CSQ:");
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CSQ", "+CSQ:");
 
             if (response.Success)
             {
@@ -511,7 +505,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="BatteryStatus"/> class.</returns>
         public virtual ModemResponse GetBatteryStatus()
         {
-            AtResponse response = Channel.SendSingleLineCommand("AT+CBC", "+CBC:");
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CBC", "+CBC:");
 
             if (response.Success)
             {
@@ -552,7 +546,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="SubscriberNumber"/> class.</returns>
         public virtual ModemResponse GetSubscriberNumber()
         {
-            AtResponse response = Channel.SendSingleLineCommand("AT+CNUM", "+CNUM:");
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CNUM", "+CNUM:");
             if (response.Success)
             {
                 string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
@@ -595,7 +589,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="DateTime"/> class.</returns>
         public virtual ModemResponse GetDateTime()
         {
-            AtResponse response = Channel.SendSingleLineCommand("AT+CCLK?", "+CCLK:");
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CCLK?", "+CCLK:");
 
             if (response.Success)
             {
@@ -654,7 +648,7 @@ namespace IoT.Device.AtModem.Modem
         /// If success, Result will contain a <see cref="NetworkRegistration"/> enum.</returns>
         public virtual ModemResponse GetNetworkRegistration()
         {
-            AtResponse response = Channel.SendSingleLineCommand("AT+CREG?", "+CREG:");
+            AtResponse response = Channel.SendCommandReadSingleLine("AT+CREG?", "+CREG:");
             if (response.Success)
             {
                 string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
@@ -720,6 +714,34 @@ namespace IoT.Device.AtModem.Modem
             {
                 if (disposing)
                 {
+                    try
+                    {
+                        Network?.Dispose();
+                    }
+                    catch
+                    {
+                        // Nothing on purpose, if not implemented, it will thrwo an exception
+                    }
+                    
+                    try
+                    {
+                        FileStorage?.Dispose();
+                    }
+                    catch
+                    {
+                        // Nothing on purpose, if not implemented, it will thrwo an exception
+                    }
+
+                    try
+                    {
+                        HttpClient?.Dispose();
+                    }
+                    catch
+                    {
+                        // Nothing on purpose, if not implemented, it will thrwo an exception
+                    }
+
+                    // And finally dispose the channel after
                     Channel.Dispose();
                 }
 

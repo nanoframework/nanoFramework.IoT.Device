@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using IoT.Device.AtModem.FileStorage;
 
 namespace IoT.Device.AtModem
@@ -8,7 +9,7 @@ namespace IoT.Device.AtModem
     /// <summary>
     /// Interface for use internal flash storage space.
     /// </summary>
-    public interface IFileStorage
+    public interface IFileStorage : IDisposable
     {
         /// <summary>
         /// Deletes a file from the file storage.

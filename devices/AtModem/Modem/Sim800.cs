@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
+using System.Net.Http;
+using IoT.Device.AtModem.FileStorage;
+using IoT.Device.AtModem.Http;
 using IoT.Device.AtModem.Network;
 
 namespace IoT.Device.AtModem.Modem
@@ -12,6 +15,8 @@ namespace IoT.Device.AtModem.Modem
     public class Sim800 : ModemBase
     {
         private INetwork _network = null;
+        private Sim800FileStorage _fileStorage = null;
+        private Sim800HttpClient _httpClient = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim800"/> class.
@@ -58,6 +63,34 @@ namespace IoT.Device.AtModem.Modem
                 }
 
                 return _network;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override IFileStorage FileStorage
+        {
+            get
+            {
+                if (_fileStorage == null)
+                {
+                    _fileStorage = new Sim800FileStorage(this);
+                }
+
+                return _fileStorage;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override HttpClient HttpClient
+        {
+            get
+            {
+                if (_httpClient == null)
+                {
+                    _httpClient = new Sim800HttpClient(this);
+                }
+
+                return _httpClient;
             }
         }
     }

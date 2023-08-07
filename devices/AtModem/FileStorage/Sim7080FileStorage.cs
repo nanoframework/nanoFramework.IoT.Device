@@ -44,6 +44,9 @@ namespace IoT.Device.AtModem.FileStorage
             Customer,
         }
 
+        /// <inheritdoc/>
+        public bool HasDirectorySupport => false;
+
         /// <summary>
         /// Gets or sets the storage directory.
         /// </summary>
@@ -71,7 +74,7 @@ namespace IoT.Device.AtModem.FileStorage
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
-            var response = _modem.Channel.SendSingleLineCommand("AT+CFSGFRS?", "+CFSGFRS:");
+            var response = _modem.Channel.SendCommandReadSingleLine("AT+CFSGFRS?", "+CFSGFRS:");
             if (response.Success)
             {
                 size = response.Intermediates.Count > 0 ? int.Parse(((string)response.Intermediates[0]).Substring(10)) : -1;
@@ -104,7 +107,7 @@ namespace IoT.Device.AtModem.FileStorage
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
-            var response = _modem.Channel.SendSingleLineCommand($"AT+AT+CFSDFILE={(int)Storage},\"{fileName}\"", string.Empty);
+            var response = _modem.Channel.SendCommandReadSingleLine($"AT+AT+CFSDFILE={(int)Storage},\"{fileName}\"", string.Empty);
             if (response.Success)
             {
                 size = response.Intermediates.Count > 0 ? int.Parse(((string)response.Intermediates[0]).Substring(10)) : -1;
@@ -124,14 +127,14 @@ namespace IoT.Device.AtModem.FileStorage
             _modem.Channel.SendCommand("AT+CFSINIT");
 
             // Get the file size
-            var response = _modem.Channel.SendSingleLineCommand($"AT+CFSGFIS={(int)Storage},\"{fileName}\"", "+CFSGFIS:");
+            var response = _modem.Channel.SendCommandReadSingleLine($"AT+CFSGFIS={(int)Storage},\"{fileName}\"", "+CFSGFIS:");
             if (response.Success)
             {
                 var size = response.Intermediates.Count > 0 ? int.Parse(((string)response.Intermediates[0]).Substring(10)) : -1;
                 if (size > 0)
                 {
                     // Read the file
-                    var fileresp = _modem.Channel.SendMultilineCommand($"AT+CFSRFILE={(int)Storage},\"{fileName}\",{(position > 0 ? 1 : 0)},{size - position},{position}", string.Empty);
+                    var fileresp = _modem.Channel.SendCommandReadMultiline($"AT+CFSRFILE={(int)Storage},\"{fileName}\",{(position > 0 ? 1 : 0)},{size - position},{position}", string.Empty);
                     if (fileresp.Success)
                     {
                         foreach (var item in fileresp.Intermediates)
@@ -213,6 +216,9 @@ namespace IoT.Device.AtModem.FileStorage
         }
 
         /// <inheritdoc/>
-        public bool HasDirectorySupport => false;
+        public void Dispose()
+        {
+            // Nothing to to
+        }
     }
 }

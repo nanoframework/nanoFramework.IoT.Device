@@ -178,7 +178,7 @@ namespace IoT.Device.AtModem.Sms
             switch (smsTextFormat)
             {
                 case SmsTextFormat.PDU:
-                    AtResponse pduResponse = ModemBase.Channel.SendMultilineCommand($"AT+CMGR={index},0", null);
+                    AtResponse pduResponse = ModemBase.Channel.SendCommandReadMultiline($"AT+CMGR={index},0", null);
 
                     if (pduResponse.Success)
                     {
@@ -219,7 +219,7 @@ namespace IoT.Device.AtModem.Sms
 
                     break;
                 case SmsTextFormat.Text:
-                    AtResponse textResponse = ModemBase.Channel.SendMultilineCommand($"AT+CMGR={index},0", null);
+                    AtResponse textResponse = ModemBase.Channel.SendCommandReadMultiline($"AT+CMGR={index},0", null);
 
                     if (textResponse.Success && textResponse.Intermediates.Count > 0)
                     {
@@ -256,7 +256,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse GetSmsMessageFormat()
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CMGF?", "+CMGF:");
+            AtResponse response = ModemBase.Channel.SendCommandReadSingleLine($"AT+CMGF?", "+CMGF:");
 
             if (response.Success)
             {
@@ -291,11 +291,11 @@ namespace IoT.Device.AtModem.Sms
             AtResponse response;
             if ((SmsTextFormat)formatResponse.Result == SmsTextFormat.Text)
             {
-                response = ModemBase.Channel.SendMultilineCommand($"AT+CMGL=\"{SmsStatusHelpers.ToString(smsStatus)}\",0", null, TimeSpan.FromSeconds(20));
+                response = ModemBase.Channel.SendCommandReadMultiline($"AT+CMGL=\"{SmsStatusHelpers.ToString(smsStatus)}\",0", null, TimeSpan.FromSeconds(20));
             }
             else
             {
-                response = ModemBase.Channel.SendMultilineCommand($"AT+CMGL={(int)smsStatus},0", null, TimeSpan.FromSeconds(20));
+                response = ModemBase.Channel.SendCommandReadMultiline($"AT+CMGL={(int)smsStatus},0", null, TimeSpan.FromSeconds(20));
             }
 
             ArrayList smss = new ArrayList();
@@ -421,7 +421,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse GetSupportedPreferredMessageStorages()
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CPMS=?", "+CPMS:");
+            AtResponse response = ModemBase.Channel.SendCommandReadSingleLine($"AT+CPMS=?", "+CPMS:");
 
             if (response.Success && response.Intermediates.Count > 0)
             {
@@ -463,7 +463,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse GetPreferredMessageStorages()
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CPMS?", "+CPMS:");
+            AtResponse response = ModemBase.Channel.SendCommandReadSingleLine($"AT+CPMS?", "+CPMS:");
 
             if (response.Success && response.Intermediates.Count > 0)
             {
@@ -486,7 +486,7 @@ namespace IoT.Device.AtModem.Sms
         /// <inheritdoc/>
         public virtual ModemResponse SetPreferredMessageStorage(string storage1Name, string storage2Name, string storage3Name)
         {
-            AtResponse response = ModemBase.Channel.SendSingleLineCommand($"AT+CPMS=\"{storage1Name}\",\"{storage2Name}\",\"{storage3Name}\"", "+CPMS:");
+            AtResponse response = ModemBase.Channel.SendCommandReadSingleLine($"AT+CPMS=\"{storage1Name}\",\"{storage2Name}\",\"{storage3Name}\"", "+CPMS:");
 
             if (response.Success && response.Intermediates.Count > 0)
             {

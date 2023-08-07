@@ -210,7 +210,7 @@ namespace IoT.Device.AtModem
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
-        public virtual AtResponse SendSingleLineCommand(string command, string responsePrefix, TimeSpan timeout = default)
+        public virtual AtResponse SendCommandReadSingleLine(string command, string responsePrefix, TimeSpan timeout = default)
         {
             AtResponse response = SendFullCommand(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
 
@@ -230,7 +230,7 @@ namespace IoT.Device.AtModem
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
-        public virtual AtResponse SendMultilineCommand(string command, string responsePrefix, TimeSpan timeout = default)
+        public virtual AtResponse SendCommandReadMultiline(string command, string responsePrefix, TimeSpan timeout = default)
         {
             AtCommandType commandType = responsePrefix == null ? AtCommandType.MultiLineNoPreeffiixx : AtCommandType.MultiLine;
             return SendFullCommand(new AtCommand(commandType, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
@@ -448,9 +448,8 @@ namespace IoT.Device.AtModem
         }
 
         private void HandleUnsolicited(string line1, string line2 = null)
-        {
-            // TODO: Handle unsolicited messages
-            ////UnsolicitedEvent?.Invoke(this, new UnsolicitedEventArgs(line1, line2));
+        {            
+            UnsolicitedEvent?.Invoke(this, new UnsolicitedEventArgs(line1, line2));
         }
 
         #region Dispose

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Compile Include="../Program.cs" />
+    <Compile Include="SpanByte.cs" />
     <Compile Include="../../AtParser/*.cs" />
     <Compile Include="../../CodingSchemes/*.cs" />
     <Compile Include="../../DTOs/*.cs" />
@@ -21,6 +22,8 @@
     <Compile Include="../../Network/*.cs" />
     <Compile Include="../../Sms/*.cs" />
     <Compile Include="../../Call/*.cs" />
+    <Compile Include="../../Http/*.cs" />
+	<Compile Include="../../Http/Http/*.cs" />
   </ItemGroup>
 
   <ItemGroup>

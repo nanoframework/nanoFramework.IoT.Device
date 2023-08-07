@@ -39,6 +39,9 @@ namespace IoT.Device.AtModem.FileStorage
             SdCard,
         }
 
+        /// <inheritdoc/>
+        public bool HasDirectorySupport => true;
+
         /// <summary>
         /// Gets or sets the storage directory.
         /// </summary>
@@ -47,7 +50,7 @@ namespace IoT.Device.AtModem.FileStorage
             get => _storage;
             set
             {
-                var response = _modem.Channel.SendSingleLineCommand($"AT+FSDRIVE={(int)value}", "+FSDRIVE");
+                var response = _modem.Channel.SendCommandReadSingleLine($"AT+FSDRIVE={(int)value}", "+FSDRIVE");
                 if (response.Success)
                 {
                     _currentDrive = ((string)response.Intermediates[0]).Substring(10) + @":\";
@@ -66,7 +69,7 @@ namespace IoT.Device.AtModem.FileStorage
         /// <inheritdoc/>
         public int GetAvailableStorage()
         {
-            var response = _modem.Channel.SendSingleLineCommand("AT+FSMEM", "+FSMEM");
+            var response = _modem.Channel.SendCommandReadSingleLine("AT+FSMEM", "+FSMEM");
             if (response.Success)
             {
                 try
@@ -95,7 +98,7 @@ namespace IoT.Device.AtModem.FileStorage
         /// <inheritdoc/>
         public int GetFileSize(string fileName)
         {
-            var response = _modem.Channel.SendSingleLineCommand($"AT+FSFLSIZE={_currentDrive}{fileName}", "+FSFLSIZE");
+            var response = _modem.Channel.SendCommandReadSingleLine($"AT+FSFLSIZE={_currentDrive}{fileName}", "+FSFLSIZE");
             if (response.Success)
             {
                 try
@@ -118,7 +121,7 @@ namespace IoT.Device.AtModem.FileStorage
             string result = null;
 
             int size = GetFileSize(fileName);
-            var fileresp = _modem.Channel.SendSingleLineCommand($"AT+FSREAD={_currentDrive}{fileName},{(position > 0 ? 1 : 0)},{size - position},{position}", string.Empty);
+            var fileresp = _modem.Channel.SendCommandReadSingleLine($"AT+FSREAD={_currentDrive}{fileName},{(position > 0 ? 1 : 0)},{size - position},{position}", string.Empty);
             if (fileresp.Success)
             {
                 foreach (var item in fileresp.Intermediates)
@@ -168,7 +171,7 @@ namespace IoT.Device.AtModem.FileStorage
             }
 
             // Then we can write the data, here, it'sz like for SMS, we are getting a > prompt
-            response = _modem.Channel.SendSingleLineCommand($"AT+FSWRITE={_currentDrive}{fileName},{(int)createMode},{content.Length},10", string.Empty, TimeSpan.FromSeconds(1));
+            response = _modem.Channel.SendCommandReadSingleLine($"AT+FSWRITE={_currentDrive}{fileName},{(int)createMode},{content.Length},10", string.Empty, TimeSpan.FromMilliseconds(200));
             _modem.Channel.SendBytesWithoutAck(content);
 
             // We need to wait a bit
@@ -199,7 +202,7 @@ namespace IoT.Device.AtModem.FileStorage
         /// <inheritdoc/>
         public string[] ListDirectory(string directoryName)
         {
-            var response = _modem.Channel.SendMultilineCommand($"AT+FSLS={_currentDrive}{(directoryName.EndsWith("\\") ? directoryName : directoryName + "\\")}", string.Empty);
+            var response = _modem.Channel.SendCommandReadMultiline($"AT+FSLS={_currentDrive}{(directoryName.EndsWith("\\") ? directoryName : directoryName + "\\")}", string.Empty);
             if (response.Success)
             {
                 try
@@ -222,6 +225,9 @@ namespace IoT.Device.AtModem.FileStorage
         }
 
         /// <inheritdoc/>
-        public bool HasDirectorySupport => true;
+        public void Dispose()
+        {
+            // Nothing to to
+        }
     }
 }
