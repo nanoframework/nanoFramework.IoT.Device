@@ -139,6 +139,11 @@ namespace IoT.Device.AtModem
         public bool IsOpen { get; private set; }
 
         /// <summary>
+        /// Gets a value indicating whether the AT channel is running.
+        /// </summary>
+        public bool IsRunning { get; internal set; }
+
+        /// <summary>
         /// Gets or sets the default timeout duration for AT commands.
         /// </summary>
         public TimeSpan DefaultCommandTimeout { get; set; } = TimeSpan.FromSeconds(5);
@@ -151,8 +156,7 @@ namespace IoT.Device.AtModem
             IsOpen = true;
             _atReader.Open();
             Clear();
-            _thread = new Thread(ReaderLoopAsync);
-            _thread.Start();
+            Start();
         }
 
         /// <summary>
@@ -182,7 +186,7 @@ namespace IoT.Device.AtModem
         {
             for (int i = 0; i < _atReader.AvailableItems(); i++)
             {
-                _atReader.ReadAsync(cancellationToken);
+                _atReader.Read(cancellationToken);
             }
         }
 
@@ -197,10 +201,54 @@ namespace IoT.Device.AtModem
             return SendFullCommand(new AtCommand(AtCommandType.NoResult, command, null, null, timeout == default ? DefaultCommandTimeout : timeout));
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Send bytes in a raw format without waiting for an acknowledgement.
+        /// </summary>
+        /// <param name="content">The byte array to send.</param>
         public virtual void SendBytesWithoutAck(byte[] content)
         {
             _atWriter.Write(content);
+        }
+
+        /// <summary>
+        /// Reads bytes in a raw format.
+        /// </summary>
+        /// <param name="length">The number of bytes to read.</param>
+        /// <returns>A buffer with the bytes read of the desired size even if there has been less data read.</returns>
+        public virtual byte[] ReadRawBytes(int length)
+        {
+            return _atReader.ReadBytes(length);
+        }
+
+        /// <summary>
+        /// Stops the reading thread.
+        /// </summary>
+        public void Stop()
+        {
+            // We have to pause the thread
+            _cancellationTokenSource.Cancel();
+            _thread.Join();
+            IsRunning = false;
+        }
+
+        /// <summary>
+        /// Starts the reading thread.
+        /// </summary>
+        public void Start()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            _thread = new Thread(ReaderLoopAsync);
+            _thread.Start();
+            IsRunning = true;
+        }
+
+        /// <summary>
+        /// Reads a single line from the AT reader.
+        /// </summary>
+        /// <returns>A string containing a line.</returns>
+        public virtual string ReadLine(TimeSpan timeout = default)
+        {
+            return _atReader.ReadSingleLine(new CancellationTokenSource(timeout == default ? DefaultCommandTimeout : timeout).Token);
         }
 
         /// <summary>
@@ -294,7 +342,7 @@ namespace IoT.Device.AtModem
                 string line1;
                 try
                 {
-                    line1 = _atReader.ReadAsync(_cancellationTokenSource.Token);
+                    line1 = _atReader.Read(_cancellationTokenSource.Token);
                     if (_debugEnabled)
                     {
                         Debug.WriteLine($"In: {line1}");
@@ -320,7 +368,7 @@ namespace IoT.Device.AtModem
                     string line2;
                     try
                     {
-                        line2 = _atReader.ReadAsync(_cancellationTokenSource.Token);
+                        line2 = _atReader.Read(_cancellationTokenSource.Token);
                         if (_debugEnabled)
                         {
                             Debug.WriteLine($"In: {line2}");
@@ -448,7 +496,7 @@ namespace IoT.Device.AtModem
         }
 
         private void HandleUnsolicited(string line1, string line2 = null)
-        {            
+        {
             UnsolicitedEvent?.Invoke(this, new UnsolicitedEventArgs(line1, line2));
         }
 

@@ -23,7 +23,7 @@ namespace IoT.Device.AtModem.Http
         private HttpActionResult _httpActionResult = null;
 
         /// <summary>
-        /// Class with the result of an <see cref="HttpAction"/> request.
+        /// Class with the result of a request.
         /// </summary>
         private class HttpActionResult
         {
@@ -55,6 +55,8 @@ namespace IoT.Device.AtModem.Http
             {
                 AtResponse response;
                 long contentLength = 0;
+                int index;
+                int retry = 5;
 
                 // Check the method used, only few supported.
                 int method = -1;
@@ -80,9 +82,17 @@ namespace IoT.Device.AtModem.Http
                     return result;
                 }
 
+            Retry:
                 response = Modem.Channel.SendCommand("AT+HTTPINIT");
                 if (!response.Success)
                 {
+                    // Give it another try
+                    if (retry-- > 0)
+                    {
+                        Thread.Sleep(500);
+                        goto Retry;
+                    }
+
                     return result;
                 }
 
@@ -122,12 +132,8 @@ namespace IoT.Device.AtModem.Http
                     return result;
                 }
 
-                // Set SSL
-                response = Modem.Channel.SendCommand($"AT+HTTPSSL={(request.RequestUri.Scheme == "https" ? 1 : 0)}");
-                if (!response.Success)
-                {
-                    return result;
-                }
+                // Set SSL and don't check the answer as some models do not support.
+                Modem.Channel.SendCommand($"AT+HTTPSSL={(request.RequestUri.Scheme == "https" ? 1 : 0)}");               
 
                 // Set the URL
                 response = Modem.Channel.SendCommand($"AT+HTTPPARA=\"URL\",\"{request.RequestUri.AbsoluteUri}\"");
@@ -154,7 +160,7 @@ namespace IoT.Device.AtModem.Http
                     }
 
                     // write data in chunks of 64 bytes because of UART buffer size
-                    int index = 0;
+                    index = 0;
                     const int chunkSize = 64;
                     int bytesToSend;
                     SpanByte toSend = request.Content.ReadAsByteArray();
@@ -188,25 +194,39 @@ namespace IoT.Device.AtModem.Http
                     _httpActionArrived.WaitOne(milisecondsTimeout, true);
                 }
 
+                // Stop the internal thread on AT Channel
+                Modem.Channel.Stop();
+
                 // Check if we have a response
-                response = Modem.Channel.SendCommandReadMultiline("AT+HTTPREAD", string.Empty);
-                if (!response.Success)
+                Modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes("AT+HTTPREAD\r\n"));
+
+                // We will read a first line then a second one and find the +HTTPREAD: lengh, then we will read the data
+                Modem.Channel.ReadLine();
+                var line = Modem.Channel.ReadLine();
+                if (!line.Contains("+HTTPREAD:"))
                 {
                     return result;
                 }
 
-                // sent the result
-                // TODO: adjust for binary reading, so far, it's not the case!
-                StringBuilder sb = new StringBuilder();
-                for (int i = 1; i < response.Intermediates.Count; i++)
+                line = line.Substring(11);
+                var length = int.Parse(line);
+                // Read by chunk of 64 bytes
+                byte[] data = new byte[length];
+                Thread.Sleep(20);
+                index = 0;
+                while (index < length)
                 {
-                    sb.Append(response.Intermediates[i]);
-                    sb.Append("\r\n");
+                    var chunk = Modem.Channel.ReadRawBytes(Math.Min(64, length - index));
+                    chunk.CopyTo(data, index);
+                    index += chunk.Length;
                 }
 
-                sb.Remove(sb.Length - 2, 2);
-                result = new HttpResponseMessage(_httpActionResult == null ? HttpStatusCode.OK: (HttpStatusCode)_httpActionResult.StatusCode);
-                result.Content = new StringContent(sb.ToString());
+                // Restart the internal thread on AT Channel
+                Modem.Channel.Clear();
+                Modem.Channel.Start();
+
+                result = new HttpResponseMessage(_httpActionResult == null ? HttpStatusCode.OK : (HttpStatusCode)_httpActionResult.StatusCode);
+                result.Content = new ByteArrayContent(data);
             }
             catch (Exception)
             {
@@ -230,8 +250,21 @@ namespace IoT.Device.AtModem.Http
             }
 
             // We are using the CID 1 for HTTP
-            Modem.Channel.SendCommand("AT+HTTPPARA=\"CID\",1");
-            Modem.Channel.SendCommand("AT+HTTPPARA=\"REDIR\",1");
+            var response = Modem.Channel.SendCommand("AT+HTTPPARA=\"CID\",1");
+            if (!response.Success)
+            {
+                // Give it another try
+                Thread.Sleep(200);
+                Modem.Channel.SendCommand("AT+HTTPPARA=\"CID\",1");
+            }
+
+            response = Modem.Channel.SendCommand("AT+HTTPPARA=\"REDIR\",1");
+            if (!response.Success)
+            {
+                // Give it another try
+                Thread.Sleep(200);
+                Modem.Channel.SendCommand("AT+HTTPPARA=\"REDIR\",1");
+            }
         }
 
         private void ModemGenericEvent(object sender, GenericEventArgs e)

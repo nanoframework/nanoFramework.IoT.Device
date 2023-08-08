@@ -11,11 +11,24 @@ namespace IoT.Device.AtModem
     public interface IAtReader
     {
         /// <summary>
-        /// Asynchronously reads a line of AT command response.
+        /// Reads a line of AT command response.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>A task representing the asynchronous read operation. The task result contains the read line.</returns>
-        string ReadAsync(CancellationToken cancellationToken = default);
+        string Read(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reads a raw number of bytes on the channel. It will return the desired number of bytes even if it has to read less.
+        /// </summary>
+        /// <param name="count">The number of bytes to read.</param>
+        /// <returns>The bytes read.</returns>
+        byte[] ReadBytes(int count);
+
+        /// <summary>
+        /// Reads a single line from the serial port. Without processing it.
+        /// </summary>
+        /// <returns>The line read.</returns>
+        string ReadSingleLine(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Opens the AT reader.

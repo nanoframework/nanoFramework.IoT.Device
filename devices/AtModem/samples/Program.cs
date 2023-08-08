@@ -105,7 +105,24 @@ void TestHttp()
 {
     var httpClient = modem.HttpClient;
     var resp = httpClient.Get("http://www.ellerbach.net/DateHeure/");
+    Console.WriteLine($"Status should be OK 200: {resp.StatusCode}");
     Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
+    Console.WriteLine();
+
+    resp = httpClient.Get("http://www.ellerbach.net/DateHeure");
+    Console.WriteLine($"Status should be MovedPermanently 301: {resp.StatusCode}");
+    Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
+    Console.WriteLine();
+
+    resp = httpClient.Get("http://www.ellerbach.net/DateTime");
+    Console.WriteLine($"Status should be NotFound 404: {resp.StatusCode}");
+    Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
+    Console.WriteLine();
+
+    resp = httpClient.Get("https://www.ellerbach.net/DateHeure/");
+    Console.WriteLine($"Status should be OK 200: {resp.StatusCode}");
+    Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
+    Console.WriteLine();
 }
 
 modem.Dispose();
@@ -166,7 +183,16 @@ void ConnectToNetwork()
     }
     else
     {
-        Console.WriteLine($"Connected to network failed!");
+        Console.WriteLine($"Connected to network failed! Trying to reconnect...");
+        connectRes = network.Reconnect();
+        if(connectRes)
+        {
+            Console.WriteLine($"Reconnected to network.");
+        }
+        else
+        {
+            Console.WriteLine($"Reconnected to network failed!");
+        }
     }
 
     NetworkInformation networkInformation = network.NetworkInformation;

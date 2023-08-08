@@ -31,6 +31,12 @@ namespace IoT.Device.AtModem.Network
         bool Connect(PersonalIdentificationNumber pin = null, AccessPointConfiguration apn = null, int maxRetry = 10);
 
         /// <summary>
+        /// Reconnects the device to the network.
+        /// </summary>
+        /// <returns>True is the reconnection worked.</returns>
+        bool Reconnect();
+
+        /// <summary>
         /// Disconnects the device from the network.
         /// </summary>
         /// <returns>True if the disconnection is successful, otherwise false.</returns>

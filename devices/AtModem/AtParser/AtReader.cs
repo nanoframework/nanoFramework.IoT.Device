@@ -75,9 +75,58 @@ namespace IoT.Device.AtModem
         }
 
         /// <inheritdoc/>
-        public string ReadAsync(CancellationToken cancellationToken = default)
+        public string Read(CancellationToken cancellationToken = default)
         {
             return ReadLine(cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public byte[] ReadBytes(int count)
+        {
+            byte[] buffer = new byte[count];
+            _reader.Read(buffer, 0, count);
+            return buffer;
+        }
+
+        /// <inheritdoc/>
+        public string ReadSingleLine(CancellationToken cancellationToken = default)
+        {
+            bool bloop = true;
+            byte[] buff = new byte[1];
+            byte prevbyte = 0;
+            
+            // Start clean
+            _lineRead.Clear();
+
+            while ((!cancellationToken.IsCancellationRequested) && bloop)
+            {
+                try
+                {
+                    if (_reader.BytesToRead > 0)
+                    {
+                        buff[0] = (byte)_reader.ReadByte();
+
+                        // TODO: so far only ASCII is used here but this can be improved for a proper UTF8 conversion as well
+                        _lineRead.Append(GetUTF8StringFrombytes(buff));
+
+                        // do we have a new line?
+                        if ((prevbyte == EolSequence[0]) && (buff[0] == EolSequence[1]))
+                        {
+                            _lineRead.Remove(_lineRead.Length - 2, 2);
+                            bloop = false;
+                        }
+
+                        prevbyte = buff[0];
+                    }
+                }
+                catch (Exception)
+                {
+                    // Nothing to read!
+                    break;
+                }
+            }
+
+            return _lineRead.ToString();
         }
 
         private string ReadLine(CancellationToken cancellationToken = default)
@@ -161,6 +210,7 @@ namespace IoT.Device.AtModem
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

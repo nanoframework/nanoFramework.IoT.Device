@@ -15,6 +15,8 @@ namespace IoT.Device.AtModem.Network
     public class Sim7080Network : INetwork
     {
         private readonly ModemBase _modem;
+        private PersonalIdentificationNumber _pin;
+        private AccessPointConfiguration _apn;
 
         internal Sim7080Network(ModemBase modem)
         {
@@ -65,13 +67,27 @@ namespace IoT.Device.AtModem.Network
         public bool IsConnected { get; internal set; } = false;
 
         /// <inheritdoc/>
+        public bool Reconnect()
+        {
+            Disconnect();
+            return ConnectInternal();
+        }
+
+        /// <inheritdoc/>
         public bool Connect(PersonalIdentificationNumber pin = null, AccessPointConfiguration apn = null, int maxRetry = 10)
+        {
+            _apn = apn;
+            _pin = pin;
+            return ConnectInternal(maxRetry);
+        }
+
+        private bool ConnectInternal(int maxRetry = 10)
         {
             AtResponse response;
 
         Retry:
             // set the APN if nay to set
-            if (!string.IsNullOrEmpty(apn.AccessPointName))
+            if (!string.IsNullOrEmpty(_apn.AccessPointName))
             {
                 // Disable the RF function
                 response = _modem.Channel.SendCommand("AT+CFUN=0");
@@ -80,7 +96,7 @@ namespace IoT.Device.AtModem.Network
                     return false;
                 }
 
-                response = _modem.Channel.SendCommand($"AT+CGDCONT=1,\"IP\",\"{apn.AccessPointName}\"");
+                response = _modem.Channel.SendCommand($"AT+CGDCONT=1,\"IP\",\"{_apn.AccessPointName}\"");
                 if (!response.Success)
                 {
                     // Try to set back on regardless of the result
@@ -112,7 +128,7 @@ namespace IoT.Device.AtModem.Network
                 // Reconnect if needed
                 if ((SimStatus)status.Result != SimStatus.SIM_READY)
                 {
-                    if (pin != null)
+                    if (_pin != null)
                     {
                     RetryPin:
                         status = _modem.GetSimStatus();
@@ -128,7 +144,7 @@ namespace IoT.Device.AtModem.Network
 
                         if ((SimStatus)status.Result != SimStatus.SIM_READY)
                         {
-                            status = _modem.EnterSimPin(pin);
+                            status = _modem.EnterSimPin(_pin);
                             if (!status.IsSuccess)
                             {
                                 if (maxRetry-- > 0)
@@ -170,7 +186,7 @@ namespace IoT.Device.AtModem.Network
                 }
 
                 // now connect with the apn, user and password
-                response = _modem.Channel.SendCommand($"AT+CNCFG=0,1,\"{apn.AccessPointName}\"{(string.IsNullOrEmpty(apn.UserName) ? string.Empty : $",\"{apn.UserName}\"")}{(string.IsNullOrEmpty(apn.Password) ? string.Empty : $",\"{apn.Password}\"")}");
+                response = _modem.Channel.SendCommand($"AT+CNCFG=0,1,\"{_apn.AccessPointName}\"{(string.IsNullOrEmpty(_apn.UserName) ? string.Empty : $",\"{_apn.UserName}\"")}{(string.IsNullOrEmpty(_apn.Password) ? string.Empty : $",\"{_apn.Password}\"")}");
                 if (!response.Success)
                 {
                     if (maxRetry-- > 0)

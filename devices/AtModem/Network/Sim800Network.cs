@@ -16,6 +16,8 @@ namespace IoT.Device.AtModem.Network
     public class Sim800Network : INetwork
     {
         private readonly ModemBase _modem;
+        private PersonalIdentificationNumber _pin;
+        private AccessPointConfiguration _apn;
 
         internal Sim800Network(ModemBase modem)
         {
@@ -66,7 +68,22 @@ namespace IoT.Device.AtModem.Network
         public bool IsConnected { get; internal set; } = false;
 
         /// <inheritdoc/>
+        public bool Reconnect()
+        {
+            Disconnect();
+            return ConnectInternal();
+        }
+
+        /// <inheritdoc/>
         public bool Connect(PersonalIdentificationNumber pin = null, AccessPointConfiguration apn = null, int maxRetry = 10)
+        {
+            _apn = apn;
+            _pin = pin;
+            return ConnectInternal(maxRetry);
+        }
+
+        /// <inheritdoc/>
+        private bool ConnectInternal(int maxRetry = 10)
         {
             // Disconnect in all cases connected
             _modem.Channel.SendCommand("AT+CIPSHUT");
@@ -91,7 +108,7 @@ namespace IoT.Device.AtModem.Network
             // Reconnect if needed
             if ((SimStatus)status.Result != SimStatus.SIM_READY)
             {
-                if (pin != null)
+                if (_pin != null)
                 {
                 RetryPin:
                     status = _modem.GetSimStatus();
@@ -107,7 +124,7 @@ namespace IoT.Device.AtModem.Network
 
                     if ((SimStatus)status.Result != SimStatus.SIM_READY)
                     {
-                        status = _modem.EnterSimPin(pin);
+                        status = _modem.EnterSimPin(_pin);
                         if (!status.IsSuccess)
                         {
                             if (maxRetry-- > 0)
@@ -125,16 +142,16 @@ namespace IoT.Device.AtModem.Network
             var response = _modem.Channel.SendCommand("AT+CIPMUX=1;+CIPQSEND=1", TimeSpan.FromSeconds(85));
 
             // Then set the access point configuration
-            if (apn != null)
+            if (_apn != null)
             {
             RetryApn:
-                if (string.IsNullOrEmpty(apn.UserName) && string.IsNullOrEmpty(apn.Password))
+                if (string.IsNullOrEmpty(_apn.UserName) && string.IsNullOrEmpty(_apn.Password))
                 {
-                    response = _modem.Channel.SendCommand($"AT+CSTT=\"{apn.AccessPointName}\"", TimeSpan.FromSeconds(85));
+                    response = _modem.Channel.SendCommand($"AT+CSTT=\"{_apn.AccessPointName}\"", TimeSpan.FromSeconds(85));
                 }
                 else
                 {
-                    response = _modem.Channel.SendCommand($"AT+CSTT=\"{apn.AccessPointName}\"{(apn.UserName)}\",\"{apn.Password}\"", TimeSpan.FromSeconds(85));
+                    response = _modem.Channel.SendCommand($"AT+CSTT=\"{_apn.AccessPointName}\"{(_apn.UserName)}\",\"{_apn.Password}\"", TimeSpan.FromSeconds(85));
                 }
 
                 if (!response.Success)
@@ -150,9 +167,9 @@ namespace IoT.Device.AtModem.Network
 
                 // Set the bearer configuration
                 _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"Contype\",\"GPRS\"");
-                _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"APN\",\"{apn.AccessPointName}\"");
-                _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"USER\",\"{apn.UserName}\"");
-                _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"PWD\",\"{apn.Password}\"");
+                _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"APN\",\"{_apn.AccessPointName}\"");
+                _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"USER\",\"{_apn.UserName}\"");
+                _modem.Channel.SendCommand($"AT+SAPBR=3,1,\"PWD\",\"{_apn.Password}\"");
             }
 
             // Then connect to the network
