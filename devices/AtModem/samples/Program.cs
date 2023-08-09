@@ -13,19 +13,23 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Net.Http;
 using System.Threading;
 
 Console.WriteLine("Hello SIM7080!");
 
 SerialPort _serialPort;
-//OpenSerialPort("COM3");
+#if (NANOFRAMEWORK_1_0)
+OpenSerialPort("COM3");
+#else
 OpenSerialPort("COM10");
+#endif
 
 _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
-////Sim7080 modem = new(atChannel);
-Sim800 modem = new(atChannel);
+Sim7080 modem = new(atChannel);
+////Sim800 modem = new(atChannel);
 modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
 
 var respDeviceInfo = modem.GetDeviceInformation();
@@ -93,18 +97,19 @@ while (true)
     Thread.Sleep(1000);
 }
 
-ConnectToNetwork();
-////TestBinaryStorage();
+////ConnectToNetwork();
+TestBinaryStorage();
 ////TestStorage();
 ////GetNetworkOperators();
 ////TestStorageSmsAndCharSet();
 ////TestSms();
-TestHttp();
+////TestHttp();
 
 void TestHttp()
 {
     var httpClient = modem.HttpClient;
-    var resp = httpClient.Get("http://www.ellerbach.net/DateHeure/");
+    HttpResponseMessage resp;
+    resp = httpClient.Get("http://www.ellerbach.net/DateHeure/");
     Console.WriteLine($"Status should be OK 200: {resp.StatusCode}");
     Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
     Console.WriteLine();
@@ -122,6 +127,11 @@ void TestHttp()
     resp = httpClient.Get("https://www.ellerbach.net/DateHeure/");
     Console.WriteLine($"Status should be OK 200: {resp.StatusCode}");
     Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
+    Console.WriteLine();
+
+    resp = httpClient.Post("https://jsonplaceholder.typicode.com/posts", new StringContent("{\"title\":\"nano\",\"body\":\"Framework\",\"userId\":101}", System.Text.Encoding.UTF8, "application/json"));
+    Console.WriteLine($"Status should be OK 200: {resp.StatusCode}");
+    Console.WriteLine($"HTTP POST: {resp.Content?.ReadAsString()}");
     Console.WriteLine();
 }
 
@@ -175,8 +185,8 @@ void CloseSerialPort()
 void ConnectToNetwork()
 {
     var network = modem.Network;
-    var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
-    ////var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
+    ////var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
+    var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
     if (connectRes)
     {
         Console.WriteLine($"Connected to network.");
@@ -315,7 +325,8 @@ void TestSms()
         Console.WriteLine($"SMS list failed: {resplistSms.ErrorMessage}");
     }
 
-    var respSmsSend = modem.SmsProvider.SendSmsInTextFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework text");
+    ModemResponse respSmsSend;
+    respSmsSend = modem.SmsProvider.SendSmsInTextFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework text");
     if (respSmsSend.IsSuccess)
     {
         Console.WriteLine($"SMS sent successfully: {respSmsSend.Result}");
@@ -480,16 +491,17 @@ void TestBinaryStorage()
         Console.WriteLine($"Create file: failure");
     }
 
-    // Read the file
-    var respRead = modem.FileStorage.ReadFile("test.bin");
-    if (respRead != null)
+    // Read the file, forces to test the resize feature as well
+    byte[] buff = new byte[0];
+    var respRead = modem.FileStorage.ReadFile("test.bin", ref buff);
+    if (respRead)
     {
         Console.WriteLine($"Read file: success");
         for (int i = 0; i < bytes.Length; i++)
         {
-            if (bytes[i] != respRead[i])
+            if (bytes[i] != buff[i])
             {
-                Console.WriteLine($"Read file: failure, byte {i} is {respRead[i]} instead of {bytes[i]}");
+                Console.WriteLine($"Read file: failure, byte {i} is {buff[i]} instead of {bytes[i]}");
             }
         }
     }

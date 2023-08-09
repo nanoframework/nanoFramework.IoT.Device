@@ -170,6 +170,7 @@
     <Compile Include="Http\Http\MediaTypeHeaderValue.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Http\Sim7080HttpClient.cs" />
     <Compile Include="Http\Sim800HttpClient.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>

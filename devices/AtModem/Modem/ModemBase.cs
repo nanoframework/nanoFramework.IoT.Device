@@ -26,6 +26,15 @@ namespace IoT.Device.AtModem.Modem
         private ISmsProvider _smsProvider;
         private ICall _genericCall;
 
+        // Those can be used by the derived classes.
+        // This does allow to Dispose them properly for example.
+        internal bool IsFileStorageInstancieted = false;
+        internal bool IsNetworkInstancieted = false;
+        internal bool IsSmsInstancieted = false;
+        internal bool IsCallInstancieted = false;
+        internal bool IsHttpClientInstancieted = false;
+        internal bool IsMqttClientInstancieted = false;
+
         /// <summary>
         /// Initializes a new instance of the ModemBase class with the specified AT channel.
         /// </summary>
@@ -156,6 +165,7 @@ namespace IoT.Device.AtModem.Modem
                 if (_smsProvider == null)
                 {
                     _smsProvider = new GenericSmsProvider(this);
+                    IsSmsInstancieted = true;
                 }
 
                 return _smsProvider;
@@ -172,6 +182,7 @@ namespace IoT.Device.AtModem.Modem
                 if (_genericCall == null)
                 {
                     _genericCall = new GenericCall(this);
+                    IsCallInstancieted = true;
                 }
 
                 return _genericCall;
@@ -714,32 +725,20 @@ namespace IoT.Device.AtModem.Modem
             {
                 if (disposing)
                 {
-                    try
+                    if (IsNetworkInstancieted)
                     {
                         Network?.Dispose();
                     }
-                    catch
-                    {
-                        // Nothing on purpose, if not implemented, it will thrwo an exception
-                    }
-                    
-                    try
+
+                    if (IsFileStorageInstancieted)
                     {
                         FileStorage?.Dispose();
                     }
-                    catch
-                    {
-                        // Nothing on purpose, if not implemented, it will thrwo an exception
-                    }
-
-                    try
+                    
+                    if(IsHttpClientInstancieted)
                     {
                         HttpClient?.Dispose();
-                    }
-                    catch
-                    {
-                        // Nothing on purpose, if not implemented, it will thrwo an exception
-                    }
+                    }                    
 
                     // And finally dispose the channel after
                     Channel.Dispose();

@@ -2,8 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
+using System.Net.Http;
 using IoT.Device.AtModem.CodingSchemes;
 using IoT.Device.AtModem.DTOs;
+using IoT.Device.AtModem.Http;
 using IoT.Device.AtModem.Mqtt;
 using IoT.Device.AtModem.Network;
 using nanoFramework.M2Mqtt;
@@ -18,6 +20,7 @@ namespace IoT.Device.AtModem.Modem
         private IFileStorage _fileStorage = null;
         private IMqttClient _mqttClient = null;
         private INetwork _network = null;
+        private Sim7080HttpClient _httpClient = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim7080"/> class.
@@ -61,6 +64,7 @@ namespace IoT.Device.AtModem.Modem
                 if (_fileStorage == null)
                 {
                     _fileStorage = new FileStorage.Sim7080FileStorage(this);
+                    IsFileStorageInstancieted = true;
                 }
 
                 return _fileStorage;
@@ -75,6 +79,7 @@ namespace IoT.Device.AtModem.Modem
                 if (_mqttClient == null)
                 {
                     _mqttClient = new Sim7080MqttClient(this);
+                    IsMqttClientInstancieted = true;
                 }
 
                 return _mqttClient;
@@ -89,9 +94,25 @@ namespace IoT.Device.AtModem.Modem
                 if (_network == null)
                 {
                     _network = new Sim7080Network(this);
+                    IsNetworkInstancieted = true;
                 }
 
                 return _network;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override HttpClient HttpClient
+        {
+            get
+            {
+                if (_httpClient == null)
+                {
+                    _httpClient = new Sim7080HttpClient(this);
+                    IsHttpClientInstancieted = true;
+                }
+
+                return _httpClient;
             }
         }
     }

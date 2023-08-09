@@ -47,6 +47,7 @@ namespace IoT.Device.AtModem.Http
         {
             Initilaize();
         }
+
         internal override HttpResponseMessage SendInternal(HttpRequestMessage request)
         {
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
@@ -57,6 +58,7 @@ namespace IoT.Device.AtModem.Http
                 long contentLength = 0;
                 int index;
                 int retry = 5;
+                string line;
 
                 // Check the method used, only few supported.
                 int method = -1;
@@ -89,7 +91,8 @@ namespace IoT.Device.AtModem.Http
                     // Give it another try
                     if (retry-- > 0)
                     {
-                        Thread.Sleep(500);
+                        // Experience shows that 1 second is ok in most of the times
+                        Thread.Sleep(1000);
                         goto Retry;
                     }
 
@@ -119,12 +122,12 @@ namespace IoT.Device.AtModem.Http
                     customHeaders.Replace(@"""", @"\""");
 
                     // set custom headers removing last '|' separator
-                    Modem.Channel.SendCommand($"AT+USERDATA={customHeaders.ToString().Substring(0, customHeaders.Length - 4)}");
+                    Modem.Channel.SendCommand($"AT++HTTPPARA=\"USERDATA\",{customHeaders.ToString().Substring(0, customHeaders.Length - 4)}");
                 }
                 else
                 {
                     // clear user headers, just in case
-                    Modem.Channel.SendCommand($"AT+USERDATA= ");
+                    Modem.Channel.SendCommand($"AT++HTTPPARA=\"USERDATA\", ");
                 }
 
                 if (!response.Success)
@@ -133,7 +136,7 @@ namespace IoT.Device.AtModem.Http
                 }
 
                 // Set SSL and don't check the answer as some models do not support.
-                Modem.Channel.SendCommand($"AT+HTTPSSL={(request.RequestUri.Scheme == "https" ? 1 : 0)}");               
+                Modem.Channel.SendCommand($"AT+HTTPSSL={(request.RequestUri.Scheme == "https" ? 1 : 0)}");
 
                 // Set the URL
                 response = Modem.Channel.SendCommand($"AT+HTTPPARA=\"URL\",\"{request.RequestUri.AbsoluteUri}\"");
@@ -153,9 +156,17 @@ namespace IoT.Device.AtModem.Http
                     int timeout = ((int)contentLength / 100) * 500;
                     // min allowed timeout is 1000
                     timeout = timeout < 1000 ? 2000 : timeout;
-                    response = Modem.Channel.SendCommandReadSingleLine($"AT+HTTPDATA={contentLength},{(timeout > 120000 ? 120000 : timeout)}", "DOWNLOAD");
-                    if (!response.Success)
+
+                    // We stop the thread reading continuously
+                    Modem.Channel.Stop();
+                    // We send a raw data the order to upload the data
+                    Modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+HTTPDATA={contentLength},{(timeout > 120000 ? 120000 : timeout)}\r\n"));
+                    // We read the response
+                    Modem.Channel.ReadLine();
+                    line = Modem.Channel.ReadLine();
+                    if (!line.Contains("DOWNLOAD"))
                     {
+                        Modem.Channel.Start();
                         return result;
                     }
 
@@ -175,6 +186,8 @@ namespace IoT.Device.AtModem.Http
                         Modem.Channel.SendBytesWithoutAck(toSend.Slice(index, bytesToSend).ToArray());
                         index += bytesToSend;
                     }
+
+                    Modem.Channel.Start();
                 }
 
                 _httpActionArrived.Reset();
@@ -202,9 +215,10 @@ namespace IoT.Device.AtModem.Http
 
                 // We will read a first line then a second one and find the +HTTPREAD: lengh, then we will read the data
                 Modem.Channel.ReadLine();
-                var line = Modem.Channel.ReadLine();
+                line = Modem.Channel.ReadLine();
                 if (!line.Contains("+HTTPREAD:"))
                 {
+                    Modem.Channel.Start();
                     return result;
                 }
 
@@ -222,16 +236,14 @@ namespace IoT.Device.AtModem.Http
                 }
 
                 // Restart the internal thread on AT Channel
-                Modem.Channel.Clear();
                 Modem.Channel.Start();
 
                 result = new HttpResponseMessage(_httpActionResult == null ? HttpStatusCode.OK : (HttpStatusCode)_httpActionResult.StatusCode);
                 result.Content = new ByteArrayContent(data);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-
+                result.Content = new StringContent(ex.Message);
             }
             finally
             {
@@ -291,7 +303,11 @@ namespace IoT.Device.AtModem.Http
                     httpMethod = HttpMethod.Delete;
                 }
 
-                _httpActionResult = new HttpActionResult(httpMethod, int.Parse(responseParts[1]), int.Parse(responseParts[2]));
+                if (responseParts.Length > 2)
+                {
+                    _httpActionResult = new HttpActionResult(httpMethod, int.Parse(responseParts[1]), int.Parse(responseParts[2]));
+                }
+
                 _httpActionArrived.Set();
                 _waitingForResponse = false;
             }

@@ -351,7 +351,7 @@ namespace System.Net.Http
 
         private HttpResponseMessage SendWorker(HttpRequestMessage request, HttpCompletionOption completionOption)
         {
-            // need to pass to the HttpWebRequest:
+            // TODO: need to pass to the HttpWebRequest:
             // - timeout
             // - SSL protocol
             // - CA root certs
