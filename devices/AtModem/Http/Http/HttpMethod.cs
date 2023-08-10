@@ -20,6 +20,8 @@ namespace System.Net.Http
         private static readonly HttpMethod s_headMethod = new("HEAD");
         private static readonly HttpMethod s_optionsMethod = new("OPTIONS");
         private static readonly HttpMethod s_patchMethod = new("PATCH");
+        private static readonly HttpMethod s_connectMethod = new("CONNECT");
+        private static readonly HttpMethod s_traceMethod = new("TRACE");
 
         /// <summary>
         /// Represents an HTTP GET protocol method.
@@ -54,7 +56,17 @@ namespace System.Net.Http
         /// <summary>
         /// Represents an HTTP PATCH protocol method.
         /// </summary>
-        public static HttpMethod Patch => s_patchMethod;
+        public static HttpMethod Patch => s_patchMethod;        
+        
+        /// <summary>
+        /// Represents an HTTP CONNECT protocol method.
+        /// </summary>
+        public static HttpMethod Connect => s_connectMethod;        
+        
+        /// <summary>
+        /// Represents an HTTP TRACE protocol method.
+        /// </summary>
+        public static HttpMethod Trace => s_traceMethod;
 
         /// <summary>
         /// An HTTP method.

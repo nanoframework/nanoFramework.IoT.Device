@@ -97,13 +97,13 @@ while (true)
     Thread.Sleep(1000);
 }
 
-////ConnectToNetwork();
-TestBinaryStorage();
-////TestStorage();
-////GetNetworkOperators();
-////TestStorageSmsAndCharSet();
-////TestSms();
-////TestHttp();
+ConnectToNetwork();
+//TestBinaryStorage();
+//TestStorage();
+//GetNetworkOperators();
+//TestStorageSmsAndCharSet();
+//TestSms();
+TestHttp();
 
 void TestHttp()
 {
@@ -129,7 +129,7 @@ void TestHttp()
     Console.WriteLine($"HTTP GET: {resp.Content?.ReadAsString()}");
     Console.WriteLine();
 
-    resp = httpClient.Post("https://jsonplaceholder.typicode.com/posts", new StringContent("{\"title\":\"nano\",\"body\":\"Framework\",\"userId\":101}", System.Text.Encoding.UTF8, "application/json"));
+    resp = httpClient.Post("https://httpbin.org/post", new StringContent("{\"title\":\"nano\",\"body\":\"Framework\",\"userId\":101}", System.Text.Encoding.UTF8, "application/json"));
     Console.WriteLine($"Status should be OK 200: {resp.StatusCode}");
     Console.WriteLine($"HTTP POST: {resp.Content?.ReadAsString()}");
     Console.WriteLine();

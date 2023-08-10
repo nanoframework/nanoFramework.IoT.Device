@@ -27,6 +27,7 @@ namespace IoT.Device.AtModem
         /// <summary>
         /// Reads a single line from the serial port. Without processing it.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>The line read.</returns>
         string ReadSingleLine(CancellationToken cancellationToken = default);
 

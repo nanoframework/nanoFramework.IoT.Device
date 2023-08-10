@@ -19,7 +19,6 @@ namespace IoT.Device.AtModem.Http
     public class Sim800HttpClient : HttpClient
     {
         private ManualResetEvent _httpActionArrived = new ManualResetEvent(false);
-        private bool _waitingForResponse = false;
         private HttpActionResult _httpActionResult = null;
 
         /// <summary>
@@ -166,6 +165,7 @@ namespace IoT.Device.AtModem.Http
                     line = Modem.Channel.ReadLine();
                     if (!line.Contains("DOWNLOAD"))
                     {
+                        Modem.Channel.Clear();
                         Modem.Channel.Start();
                         return result;
                     }
@@ -187,11 +187,11 @@ namespace IoT.Device.AtModem.Http
                         index += bytesToSend;
                     }
 
+                    Modem.Channel.Clear();
                     Modem.Channel.Start();
                 }
 
                 _httpActionArrived.Reset();
-                _waitingForResponse = true;
                 _httpActionResult = null;
                 Modem.GenericEvent += ModemGenericEvent;
 
@@ -202,10 +202,7 @@ namespace IoT.Device.AtModem.Http
                 int milisecondsTimeout = (int)(contentLength > 5000 ? contentLength * 1.6 : 15000);
 
                 // Read if we have a response
-                if (_waitingForResponse)
-                {
-                    _httpActionArrived.WaitOne(milisecondsTimeout, true);
-                }
+                _httpActionArrived.WaitOne(milisecondsTimeout, true);
 
                 // Stop the internal thread on AT Channel
                 Modem.Channel.Stop();
@@ -309,7 +306,6 @@ namespace IoT.Device.AtModem.Http
                 }
 
                 _httpActionArrived.Set();
-                _waitingForResponse = false;
             }
         }
 

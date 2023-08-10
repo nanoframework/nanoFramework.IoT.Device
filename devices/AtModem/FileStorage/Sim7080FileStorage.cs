@@ -240,21 +240,24 @@ namespace IoT.Device.AtModem.FileStorage
 
                     // Stop the reading thread and go for manual mode
                     _modem.Channel.Stop();
+
                     // Read the file
                     _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+CFSRFILE={(int)Storage},\"{fileName}\",{(position > 0 ? 1 : 0)},{_fileStorageResult - position},{position}\r\n"));
                     string line;
                     do
                     {
                         line = _modem.Channel.ReadLine();
-                    } while (!line.StartsWith("+CFSRFILE: "));
+                    } 
+                    while (!line.StartsWith("+CFSRFILE: "));
 
-                    int size = int.Parse(line.Substring(10));
+                    int size = int.Parse(line.Substring(11));
                     if (content.Length < size)
                     {
                         content = new byte[size];
                     }
 
                     Thread.Sleep(20);
+
                     // Read by chunk of 64 bytes
                     int index = 0;
                     while (index < size)

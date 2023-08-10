@@ -245,6 +245,7 @@ namespace IoT.Device.AtModem
         /// <summary>
         /// Reads a single line from the AT reader.
         /// </summary>
+        /// <param name="timeout">The optional timeout duration for the command.</param>
         /// <returns>A string containing a line.</returns>
         public virtual string ReadLine(TimeSpan timeout = default)
         {

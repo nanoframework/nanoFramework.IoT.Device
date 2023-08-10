@@ -28,12 +28,17 @@ namespace IoT.Device.AtModem.Modem
 
         // Those can be used by the derived classes.
         // This does allow to Dispose them properly for example.
-        internal bool IsFileStorageInstancieted = false;
-        internal bool IsNetworkInstancieted = false;
-        internal bool IsSmsInstancieted = false;
-        internal bool IsCallInstancieted = false;
-        internal bool IsHttpClientInstancieted = false;
-        internal bool IsMqttClientInstancieted = false;
+        internal bool IsFileStorageInstancieted { get; set; } = false;
+
+        internal bool IsNetworkInstancieted { get; set; } = false;
+
+        internal bool IsSmsInstancieted { get; set; } = false;
+
+        internal bool IsCallInstancieted { get; set; } = false;
+
+        internal bool IsHttpClientInstancieted { get; set; } = false;
+
+        internal bool IsMqttClientInstancieted { get; set; } = false;
 
         /// <summary>
         /// Initializes a new instance of the ModemBase class with the specified AT channel.
@@ -734,11 +739,11 @@ namespace IoT.Device.AtModem.Modem
                     {
                         FileStorage?.Dispose();
                     }
-                    
-                    if(IsHttpClientInstancieted)
+
+                    if (IsHttpClientInstancieted)
                     {
                         HttpClient?.Dispose();
-                    }                    
+                    }
 
                     // And finally dispose the channel after
                     Channel.Dispose();
