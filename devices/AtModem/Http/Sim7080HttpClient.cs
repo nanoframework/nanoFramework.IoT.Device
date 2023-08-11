@@ -15,9 +15,14 @@ namespace IoT.Device.AtModem.Http
 {
     internal class Sim7080HttpClient : HttpClient
     {
+        private const string RootCaFileName = "crt";
+
+        // 1 is MQTT, so let's take 2 for HTTP
+        private const int IndexSSL = 2;
         private ManualResetEvent _httpActionArrived = new ManualResetEvent(false);
-        private bool _waitingForResponse = false;
         private HttpActionResult _httpActionResult = null;
+        private byte[] _certAuth;
+        private string _certName;
 
         /// <summary>
         /// Class with the result of a request.
@@ -35,6 +40,33 @@ namespace IoT.Device.AtModem.Http
                 Action = action;
                 StatusCode = statusCode;
                 DataLenght = dataLenght;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override byte[] HttpsAuthentCert
+        {
+            get => _certAuth;
+            set
+            {
+                _certAuth = value;
+                if (_certAuth != null)
+                {
+                    // We need to setup the certificate in the native mode
+                    // First store the certificate in the modem
+                    int hash = ComputeHash(_certAuth);
+                    _certName = RootCaFileName + hash + "." + RootCaFileName;
+                    Modem.FileStorage.WriteFile(_certName, _certAuth);
+
+                    // Open the file system to convert
+                    Modem.Channel.SendCommand("AT+CFSINIT");
+
+                    // Convert the certificate
+                    Modem.Channel.SendCommand($"AT+CFSCONVERT=\"CONVERT\",2,\"{_certName}\"");
+
+                    // And finalize it
+                    Modem.Channel.SendCommand("AT+CFSTERM");
+                }
             }
         }
 
@@ -65,6 +97,40 @@ namespace IoT.Device.AtModem.Http
                 // Making sure we are in a good initial state
                 Modem.Channel.SendCommand("AT+SHDISC");
 
+            Retry:
+                if (request.RequestUri.Scheme == "https")
+                {
+                    // This is to read the current configuration, we don't need it now.
+                    ////Modem.Channel.SendCommand($"AT+CSSLCFG=\"\"CTXINDEX\",{IndexSSL}");
+
+                    switch (SslProtocols)
+                    {
+                        case System.Net.Security.SslProtocols.None:
+                            break;
+                        case System.Net.Security.SslProtocols.Tls:
+                            Modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},1");
+                            break;
+                        case System.Net.Security.SslProtocols.Tls11:
+                            Modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},2");
+                            break;
+                        case System.Net.Security.SslProtocols.Tls12:
+                            Modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},3");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    // If there is a certificate attached, we check it otherwise, we ignore (less secure)
+                    if (_certAuth != null)
+                    {
+                        Modem.Channel.SendCommand($"AT+SHSSL={IndexSSL},\"{RootCaFileName}\"");
+                    }
+                    else
+                    {
+                        Modem.Channel.SendCommand($"AT+SHSSL={IndexSSL},\"\"");
+                    }
+                }
+
                 response = Modem.Channel.SendCommand($"AT+SHCONF=\"URL\",\"{request.RequestUri.Scheme}://{request.RequestUri.Host}:{request.RequestUri.Port}\"");
                 if (!response.Success)
                 {
@@ -75,7 +141,6 @@ namespace IoT.Device.AtModem.Http
                 Modem.Channel.SendCommand($"AT+SHCONF=\"BODYLEN\",4096");
                 Modem.Channel.SendCommand($"AT+SHCONF=\"HEADERLEN\",350");
 
-            Retry:
                 response = Modem.Channel.SendCommand($"AT+SHCONN");
                 if (!response.Success)
                 {
@@ -86,7 +151,7 @@ namespace IoT.Device.AtModem.Http
                     }
 
                     return result;
-                }                
+                }
 
                 response = Modem.Channel.SendCommandReadSingleLine("AT+SHSTATE?", "+SHSTATE");
                 if (!response.Success)
@@ -107,14 +172,14 @@ namespace IoT.Device.AtModem.Http
                     // Add all the headers
                     foreach (var header in request.Headers._headerStore.AllKeys)
                     {
-                        Modem.Channel.SendCommand($"AT+SHCHEAD=\"{header}\",\"{request.Headers._headerStore[header]}\"");
+                        Modem.Channel.SendCommand($"AT+SHAHEAD=\"{header}\",\"{request.Headers._headerStore[header]}\"");
                     }
                 }
 
                 // Set the content type
                 if (request.Content != null)
                 {
-                    response = Modem.Channel.SendCommand($"AT+SHCHEAD=\"Content-Type\",\"{request.Content.Headers.ContentType}\"");
+                    response = Modem.Channel.SendCommand($"AT+SHAHEAD=\"Content-Type\",\"{request.Content.Headers.ContentType}\"");
                     if (!response.Success)
                     {
                         return result;
@@ -272,12 +337,14 @@ namespace IoT.Device.AtModem.Http
                         {
                             toRead = int.Parse(line.Substring(9));
 
+                            Thread.Sleep(20);
+
                             // Read chunks of 64 bytes
                             index = 0;
                             while (index < toRead)
                             {
                                 var chunk = Modem.Channel.ReadRawBytes(Math.Min(64, toRead - index));
-                                chunk.CopyTo(data, lengthRead);
+                                chunk.CopyTo(data, lengthRead + index);
                                 index += chunk.Length;
                             }
 

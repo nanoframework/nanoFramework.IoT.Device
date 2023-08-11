@@ -3,6 +3,7 @@
 
 using System;
 using IoT.Device.AtModem.DTOs;
+using IoT.Device.AtModem.Events;
 
 namespace IoT.Device.AtModem.Network
 {
@@ -20,6 +21,11 @@ namespace IoT.Device.AtModem.Network
         /// Gets a value indicating whether the device is connected to the network.
         /// </summary>
         bool IsConnected { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the device should automatically reconnect to the network.
+        /// </summary>
+        bool AutoReconnect { get; set; }
 
         /// <summary>
         /// Connects the device to the network using the specified system mode and enables reporting.
@@ -47,5 +53,17 @@ namespace IoT.Device.AtModem.Network
         /// </summary>
         /// <returns>An array of available operators.</returns>
         Operator[] GetOperators();
+
+        /// <summary>
+        /// Represents the method that will handle network-related events for an application.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="ApplicationNetworkEventArgs"/> object that contains event data.</param>
+        public delegate void ApplicationNetworkEventHandler(object sender, ApplicationNetworkEventArgs e);
+
+        /// <summary>
+        /// Occurs when there is a network-related event for an application.
+        /// </summary>
+        public event ApplicationNetworkEventHandler ApplicationNetworkEvent;
     }
 }

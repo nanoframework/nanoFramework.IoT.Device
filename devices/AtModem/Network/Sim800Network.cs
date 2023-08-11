@@ -5,6 +5,7 @@ using System;
 using System.IO.Ports;
 using System.Threading;
 using IoT.Device.AtModem.DTOs;
+using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 using UnitsNet;
 
@@ -19,9 +20,35 @@ namespace IoT.Device.AtModem.Network
         private PersonalIdentificationNumber _pin;
         private AccessPointConfiguration _apn;
 
+        /// <inheritdoc/>
+        public event INetwork.ApplicationNetworkEventHandler ApplicationNetworkEvent;
+
         internal Sim800Network(ModemBase modem)
         {
             _modem = modem;
+            _modem.GenericEvent += ModemGenericEvent;
+        }
+
+        private void ModemGenericEvent(object sender, GenericEventArgs e)
+        {
+            if (e.Message.Contains("+SAPBR:"))
+            {
+                string line = e.Message.Substring(8);
+                var parts = line.Split(':');
+                if (parts.Length >= 2)
+                {
+                    if ((parts[0] == "1") && parts[1].Contains("DEACT"))
+                    {
+                        IsConnected = false;
+                        ApplicationNetworkEvent?.Invoke(this, new ApplicationNetworkEventArgs(false));
+
+                        if (AutoReconnect)
+                        {
+                            _modem.Channel.SendCommand("AT+SAPBR=1,1");
+                        }
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -66,6 +93,9 @@ namespace IoT.Device.AtModem.Network
 
         /// <inheritdoc/>
         public bool IsConnected { get; internal set; } = false;
+
+        /// <inheritdoc/>
+        public bool AutoReconnect { get; set; }
 
         /// <inheritdoc/>
         public bool Reconnect()
@@ -197,6 +227,7 @@ namespace IoT.Device.AtModem.Network
             }
 
             IsConnected = true;
+            ApplicationNetworkEvent?.Invoke(this, new ApplicationNetworkEventArgs(IsConnected));
             return true;
         }
 
@@ -298,6 +329,8 @@ namespace IoT.Device.AtModem.Network
         /// <inheritdoc/>
         public void Dispose()
         {
+            _modem.GenericEvent -= ModemGenericEvent;
+            AutoReconnect = false;
             Disconnect();
         }
     }

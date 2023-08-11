@@ -323,8 +323,7 @@ namespace IoT.Device.AtModem
 
                 if ((!_waitingForCommandResponse.WaitOne((int)command.Timeout.TotalMilliseconds, true)) || cancellationToken.IsCancellationRequested)
                 {
-                    _currentResponse.Success = false;
-                    _currentResponse.FinalResponse = "Command timed out";
+                    return new AtResponse() { Success = false, FinalResponse = "Command timed out" };
                 }
 
                 return _currentResponse;

@@ -84,6 +84,7 @@
     <Compile Include="DTOs\SubscriberNumber.cs" />
     <Compile Include="DTOs\SupportedPreferredMessageStorages.cs" />
     <Compile Include="DTOs\TypeOfNumber.cs" />
+    <Compile Include="Events\ApplicationNetworkEventArgs.cs" />
     <Compile Include="Events\CallEndedEventArgs.cs" />
     <Compile Include="Events\CallStartedEventArgs.cs" />
     <Compile Include="Events\ErrorEventArgs.cs" />
@@ -224,7 +225,9 @@
     <Compile Include="Mqtt\MqttSslProtocols.cs" />
     <Compile Include="Mqtt\Sim7080MqttClient.cs" />
     <Compile Include="Mqtt\UserProperty.cs" />
-    <Compile Include="Network\INetwork.cs" />
+    <Compile Include="Network\INetwork.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Network\Sim7080Network.cs" />
     <Compile Include="Network\Sim800Network.cs" />
     <Compile Include="PDU\Pdu.cs" />

@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using IoT.Device.AtModem.DTOs;
+using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 using UnitsNet;
 
@@ -18,9 +19,45 @@ namespace IoT.Device.AtModem.Network
         private PersonalIdentificationNumber _pin;
         private AccessPointConfiguration _apn;
 
+        /// <inheritdoc/>
+        public event INetwork.ApplicationNetworkEventHandler ApplicationNetworkEvent;
+
         internal Sim7080Network(ModemBase modem)
         {
             _modem = modem;
+            _modem.GenericEvent += ModemGenericEvent;
+        }
+
+        private void ModemGenericEvent(object sender, GenericEventArgs e)
+        {
+            if (e.Message.Contains("+APP PDP:"))
+            {
+                string line = e.Message.Substring(10);
+                var parts = line.Split(',');
+                if (parts.Length >= 2)
+                {
+                    if (parts[0] == "0")
+                    {
+                        if (parts[1] == "DEACTIVE")
+                        {
+                            IsConnected = false;
+                            ApplicationNetworkEvent?.Invoke(this, new ApplicationNetworkEventArgs(false));
+
+                            // check if we have auto connect enabled
+                            if (AutoReconnect)
+                            {
+                                // try to reconnect
+                                _modem.Channel.SendCommand($"AT+CNACT=0,2");
+                            }
+                        }
+                        else
+                        {
+                            IsConnected = true;
+                            ApplicationNetworkEvent?.Invoke(this, new ApplicationNetworkEventArgs(true));
+                        }
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -65,6 +102,9 @@ namespace IoT.Device.AtModem.Network
 
         /// <inheritdoc/>
         public bool IsConnected { get; internal set; } = false;
+
+        /// <inheritdoc/>
+        public bool AutoReconnect { get; set; }
 
         /// <inheritdoc/>
         public bool Reconnect()
@@ -202,7 +242,7 @@ namespace IoT.Device.AtModem.Network
             }
 
             // Make the connection
-            response = _modem.Channel.SendCommand("AT+CNACT=0,1");
+            response = _modem.Channel.SendCommand($"AT+CNACT=0,{(AutoReconnect ? 2 : 1)}");
             if (!response.Success)
             {
                 if (maxRetry-- > 0)
@@ -228,6 +268,7 @@ namespace IoT.Device.AtModem.Network
             }
 
             IsConnected = true;
+            ApplicationNetworkEvent?.Invoke(this, new ApplicationNetworkEventArgs(IsConnected));
             return true;
         }
 
@@ -329,6 +370,8 @@ namespace IoT.Device.AtModem.Network
         /// <inheritdoc/>
         public void Dispose()
         {
+            _modem.GenericEvent -= ModemGenericEvent;
+            AutoReconnect = false;
             Disconnect();
         }
     }

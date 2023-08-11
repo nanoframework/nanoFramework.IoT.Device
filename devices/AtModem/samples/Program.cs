@@ -28,9 +28,12 @@ OpenSerialPort("COM10");
 _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
+int retries = 10;
 Sim7080 modem = new(atChannel);
 ////Sim800 modem = new(atChannel);
 modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
+modem.Network.AutoReconnect = true;
+modem.Network.ApplicationNetworkEvent += NetworkApplicationNetworkEvent;
 
 var respDeviceInfo = modem.GetDeviceInformation();
 if (respDeviceInfo.IsSuccess)
@@ -42,6 +45,7 @@ else
     Console.WriteLine($"Device info failed: {respDeviceInfo.ErrorMessage}");
 }
 
+RetryConnect:
 var pinStatus = modem.GetSimStatus();
 if (pinStatus.IsSuccess)
 {
@@ -62,15 +66,39 @@ if (pinStatus.IsSuccess)
 else
 {
     Console.WriteLine($"SIM status failed: {pinStatus.ErrorMessage}");
+    // Retry
+    if (retries-- > 0)
+    {
+        Console.WriteLine("Retrying to get SIM status");
+        Thread.Sleep(1000);
+        goto RetryConnect;
+    }
+    else
+    {
+        Console.WriteLine("Giving up");
+        return;
+    }
 }
 
-// Wait for network registration for 5 minutes max, if not connected, then something is most likely very wrong
-var isConnected = modem.WaitForNetworkRegistration(new CancellationTokenSource(300_000).Token);
+// Wait for network registration for 2 minutes max, if not connected, then something is most likely very wrong
+var isConnected = modem.WaitForNetworkRegistration(new CancellationTokenSource(120_000).Token);
 
 if (!isConnected)
 {
     Console.WriteLine("Something is very wrong and we did not manage to connect to the network.");
     // Here you can try to setup manually the stored APN, username and password or anything like this
+    // Lat's try to disable and reanable the engine
+    if (retries-- > 0)
+    {
+        Console.WriteLine("Retrying to connect");
+        modem.Enabled = false;
+        Thread.Sleep(200);
+        modem.Enabled = true;
+        Thread.Sleep(1000);
+        goto RetryConnect;
+    }
+
+    Console.WriteLine("Giving up");
     return;
 }
 
@@ -195,7 +223,7 @@ void ConnectToNetwork()
     {
         Console.WriteLine($"Connected to network failed! Trying to reconnect...");
         connectRes = network.Reconnect();
-        if(connectRes)
+        if (connectRes)
         {
             Console.WriteLine($"Reconnected to network.");
         }
@@ -461,7 +489,7 @@ void TestStorage()
         var respDeleteDir = modem.FileStorage.DeleteDirectory(DirectoryName);
         Console.WriteLine($"Delete directory: {(respDeleteDir ? "success" : "failure")}, failure is normal if the directory is not empty.");
 
-        foreach(string file in respListDir)
+        foreach (string file in respListDir)
         {
             Console.WriteLine($"Delete file {file}: {(modem.FileStorage.DeleteFile($"{DirectoryName}\\{file}") ? "success" : "failure")}");
         }
@@ -525,4 +553,9 @@ void TestBinaryStorage()
 void ModemNetworkConnectionChanged(object sender, NetworkConnectionEventArgs e)
 {
     Console.WriteLine($"Network connection changed to: {e.NetworkRegistration}");
+}
+
+void NetworkApplicationNetworkEvent(object sender, ApplicationNetworkEventArgs e)
+{
+    Console.WriteLine($"Application network event received, connection is: {e.IsConnected}");
 }

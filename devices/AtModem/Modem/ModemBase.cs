@@ -251,6 +251,32 @@ namespace IoT.Device.AtModem.Modem
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the functionality of the device is enabled.
+        /// </summary>
+        public virtual bool Enabled
+        {
+            get
+            {
+                bool enabled = false;
+                AtResponse response = Channel.SendCommandReadSingleLine("AT+CFUN?", "+CFUN");
+                if (response.Success)
+                {
+                    if ((string)response.Intermediates[0] != "0")
+                    {
+                        enabled = true;
+                    }
+                }
+
+                return enabled;
+            }
+
+            set
+            {
+                Channel.SendCommand($"AT+CFUN={(value ? "1" : "0")}");
+            }
+        }
+
+        /// <summary>
         /// Gets the product identification information.
         /// </summary>
         /// <returns>A <see cref="ModemResponse"/> containing the product identification information if successful, or an error response.

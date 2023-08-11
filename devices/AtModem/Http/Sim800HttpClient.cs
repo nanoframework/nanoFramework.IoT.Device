@@ -18,8 +18,11 @@ namespace IoT.Device.AtModem.Http
     /// </summary>
     public class Sim800HttpClient : HttpClient
     {
+        private const string RootCaFileName = "crt";
+
         private ManualResetEvent _httpActionArrived = new ManualResetEvent(false);
         private HttpActionResult _httpActionResult = null;
+        private byte[] _certAuth;
 
         /// <summary>
         /// Class with the result of a request.
@@ -35,6 +38,27 @@ namespace IoT.Device.AtModem.Http
                 Action = action;
                 StatusCode = statusCode;
                 DataLenght = dataLenght;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override byte[] HttpsAuthentCert
+        {
+            get => _certAuth;
+            set
+            {
+                _certAuth = value;
+                if (_certAuth != null)
+                {
+                    // We need to setup the certificate in the native mode
+                    // First store the certificate in the modem
+                    int hash = ComputeHash(_certAuth);
+                    string fileName = RootCaFileName + hash + "." + RootCaFileName;
+                    Modem.FileStorage.WriteFile(fileName, _certAuth);
+
+                    // Set the SSL to this certificate
+                    Modem.Channel.SendCommand($"AT+SSLSETROOT=\"{fileName}\",{_certAuth.Length}");
+                }
             }
         }
 

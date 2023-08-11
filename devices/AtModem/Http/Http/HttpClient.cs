@@ -23,7 +23,7 @@ namespace System.Net.Http
     ///
     /// HttpClient is intended to be instantiated once and reused throughout the life of an application. 
     /// </remarks>
-    public abstract class HttpClient: IDisposable
+    public abstract class HttpClient : IDisposable
     {
         private const HttpCompletionOption DefaultCompletionOption = HttpCompletionOption.ResponseContentRead;
         private Version _defaultRequestVersion = HttpRequestMessage.DefaultRequestVersion;
@@ -79,7 +79,7 @@ namespace System.Net.Http
         /// <remarks>
         /// This property is an extension from the full .NET required by nanoFramework.
         /// </remarks>
-        public byte[] HttpsAuthentCert { get; set; }
+        public virtual byte[] HttpsAuthentCert { get; set; }
 
         /// <summary>
         /// Gets or sets the TLS/SSL protocol used by the <see cref="HttpClient"/> class.
@@ -351,17 +351,6 @@ namespace System.Net.Http
 
         private HttpResponseMessage SendWorker(HttpRequestMessage request, HttpCompletionOption completionOption)
         {
-            // TODO: need to pass to the HttpWebRequest:
-            // - timeout
-            // - SSL protocol
-            // - CA root certs
-            ////if (_handler is HttpClientHandler clientHandler)
-            ////{
-            ////    clientHandler.SetWebRequestTimeout(_timeout);
-            ////    clientHandler.SetWebRequestSslProcol(SslProtocols);
-            ////    clientHandler.SetWebRequestHttpAuthCert(HttpsAuthentCert);
-            ////}
-
             HttpResponseMessage response = SendInternal(request);
 
             // Read the content when default HttpCompletionOption.ResponseContentRead is set
@@ -377,7 +366,7 @@ namespace System.Net.Http
 
         #region helper methods
 
-        private void SetOperationStarted()
+        internal void SetOperationStarted()
         {
             // This method flags the HttpClient instances as "active". I.e. we executed at least one request (or are
             // in the process of doing so). This information is used to lock-down all property setters. Once a
@@ -388,11 +377,11 @@ namespace System.Net.Http
             }
         }
 
-        private Uri CreateUri(string uri) => string.IsNullOrEmpty(uri) ? null : new Uri(uri, UriKind.RelativeOrAbsolute);
+        internal Uri CreateUri(string uri) => string.IsNullOrEmpty(uri) ? null : new Uri(uri, UriKind.RelativeOrAbsolute);
 
-        private HttpRequestMessage CreateRequestMessage(HttpMethod method, string uri) => new HttpRequestMessage(method, uri) { Version = _defaultRequestVersion };
+        internal HttpRequestMessage CreateRequestMessage(HttpMethod method, string uri) => new HttpRequestMessage(method, uri) { Version = _defaultRequestVersion };
 
-        private void CheckDisposedOrStarted()
+        internal void CheckDisposedOrStarted()
         {
             CheckDisposed();
 
@@ -402,13 +391,34 @@ namespace System.Net.Http
             }
         }
 
-        private void CheckDisposed()
+        internal void CheckDisposed()
         {
             if (_disposed)
             {
                 throw new ObjectDisposedException(string.Empty);
             }
-        }        
+        }
+
+        /// <summary>
+        /// This helper to facilitate the creation of unique file names.
+        /// </summary>
+        /// <param name="data">The data to be processed</param>
+        /// <returns>A simple hash.</returns>
+        internal static int ComputeHash(params byte[] data)
+        {
+            unchecked
+            {
+                const int p = 16777619;
+                int hash = (int)2166136261;
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    hash = (hash ^ data[i]) * p;
+                }
+
+                return hash;
+            }
+        }
 
         /// <inheritdoc/>
         public virtual void Dispose()

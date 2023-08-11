@@ -109,14 +109,14 @@ namespace IoT.Device.AtModem.Mqtt
                     break;                
             }
 
-            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"SSLVERSION\",{sslVersion}");
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
 
             // 1 = TLS
-            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"PROTOCOL\",1");
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
 
             // Converts the certificates. 1 = certificate, 2 = CA, 3 = private key
-            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"CONVERT\",2,\"{CaCertName}\"");
-            _modem.Channel.SendCommand($"AT+CSSLCFG={IndexSSL},\"CONVERT\",1,\"{ClientCertName}\"");
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{CaCertName}\"");
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{ClientCertName}\"");
 
             // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
             _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{CaCertName}\",\"{ClientCertName}\"");
