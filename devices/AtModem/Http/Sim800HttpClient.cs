@@ -6,6 +6,7 @@ using System.Collections;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using IoT.Device.AtModem.Events;
@@ -22,7 +23,8 @@ namespace IoT.Device.AtModem.Http
 
         private ManualResetEvent _httpActionArrived = new ManualResetEvent(false);
         private HttpActionResult _httpActionResult = null;
-        private byte[] _certAuth;
+        private X509Certificate _certAuth;
+        private string _certName;
 
         /// <summary>
         /// Class with the result of a request.
@@ -42,7 +44,7 @@ namespace IoT.Device.AtModem.Http
         }
 
         /// <inheritdoc/>
-        public override byte[] HttpsAuthentCert
+        public override X509Certificate HttpsAuthentCert
         {
             get => _certAuth;
             set
@@ -52,12 +54,12 @@ namespace IoT.Device.AtModem.Http
                 {
                     // We need to setup the certificate in the native mode
                     // First store the certificate in the modem
-                    int hash = ComputeHash(_certAuth);
-                    string fileName = RootCaFileName + hash + "." + RootCaFileName;
-                    Modem.FileStorage.WriteFile(fileName, _certAuth);
+                    int hash = ComputeHash(_certAuth.GetRawCertData());
+                    _certName = RootCaFileName + hash + "." + RootCaFileName;
+                    Modem.FileStorage.WriteFile(_certName, _certAuth.GetRawCertData());
 
                     // Set the SSL to this certificate
-                    Modem.Channel.SendCommand($"AT+SSLSETROOT=\"{fileName}\",{_certAuth.Length}");
+                    Modem.Channel.SendCommand($"AT+SSLSETROOT=\"{_certName}\",{_certAuth.GetRawCertData().Length}");
                 }
             }
         }

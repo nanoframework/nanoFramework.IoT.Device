@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using nanoFramework.M2Mqtt.Messages;
 
 namespace nanoFramework.M2Mqtt
@@ -30,7 +31,7 @@ namespace nanoFramework.M2Mqtt
         /// <param name="caCert">CA certificate for secure connection</param>
         /// <param name="clientCert">Client certificate</param>
         /// <param name="sslProtocol">SSL/TLS protocol version</param>
-        void Init(string brokerHostName, int brokerPort, bool secure, byte[] caCert, byte[] clientCert, MqttSslProtocols sslProtocol);
+        void Init(string brokerHostName, int brokerPort, bool secure, X509Certificate caCert, X509Certificate clientCert, MqttSslProtocols sslProtocol);
 
         /// <summary>
         /// Connect to broker.

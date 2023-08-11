@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 namespace System.Net.Http
@@ -79,7 +80,7 @@ namespace System.Net.Http
         /// <remarks>
         /// This property is an extension from the full .NET required by nanoFramework.
         /// </remarks>
-        public virtual byte[] HttpsAuthentCert { get; set; }
+        public virtual X509Certificate HttpsAuthentCert { get; set; }
 
         /// <summary>
         /// Gets or sets the TLS/SSL protocol used by the <see cref="HttpClient"/> class.

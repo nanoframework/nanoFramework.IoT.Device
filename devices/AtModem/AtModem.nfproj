@@ -171,6 +171,7 @@
     <Compile Include="Http\Http\MediaTypeHeaderValue.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Http\Http\X509Certificate2.cs" />
     <Compile Include="Http\Sim7080HttpClient.cs" />
     <Compile Include="Http\Sim800HttpClient.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
@@ -230,6 +231,7 @@
     </Compile>
     <Compile Include="Network\Sim7080Network.cs" />
     <Compile Include="Network\Sim800Network.cs" />
+    <Compile Include="Http\Http\X509Certificate.cs" />
     <Compile Include="PDU\Pdu.cs" />
     <Compile Include="PDU\PduMessage.cs" />
     <Compile Include="PDU\PduType.cs" />

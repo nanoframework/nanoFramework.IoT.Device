@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.IO.Ports;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
@@ -67,7 +68,7 @@ namespace IoT.Device.AtModem.Mqtt
         public event IMqttClient.ConnectionClosedEventHandler ConnectionClosed;
 
         /// <inheritdoc/>
-        public void Init(string brokerHostName, int brokerPort, bool secure, byte[] caCert, byte[] clientCert, MqttSslProtocols sslProtocol)
+        public void Init(string brokerHostName, int brokerPort, bool secure, X509Certificate caCert, X509Certificate clientCert, MqttSslProtocols sslProtocol)
         {
             _brokerHostName = brokerHostName;
             _brokerPort = brokerPort;
@@ -77,12 +78,12 @@ namespace IoT.Device.AtModem.Mqtt
             // Store the caCert and the client cert in the storage
             if (caCert != null)
             {
-                _modem.FileStorage.WriteFile(CaCertName, caCert);
+                _modem.FileStorage.WriteFile(CaCertName, caCert.GetRawCertData());
             }
 
             if (clientCert != null)
             {
-                _modem.FileStorage.WriteFile(ClientCertName, clientCert);
+                _modem.FileStorage.WriteFile(ClientCertName, clientCert.GetRawCertData());
             }
 
             // Enable SSL
