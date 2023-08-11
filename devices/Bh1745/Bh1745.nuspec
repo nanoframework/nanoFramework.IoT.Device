@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.29.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="5.30.0" />
       <dependency id="nanoFramework.System.Math" version="1.5.29" />
       <dependency id="nanoFramework.Graphics.Core" version="1.1.37" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.325" />
