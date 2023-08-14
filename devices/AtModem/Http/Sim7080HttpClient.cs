@@ -95,9 +95,6 @@ namespace IoT.Device.AtModem.Http
                 int index;
                 int retries = 5;
 
-                // Making sure we are in a good initial state
-                Modem.Channel.SendCommand("AT+SHDISC");
-
             Retry:
                 if (request.RequestUri.Scheme == "https")
                 {
@@ -147,6 +144,8 @@ namespace IoT.Device.AtModem.Http
                 {
                     if (retries-- > 0)
                     {
+                        // Making sure we are in a good initial state
+                        Modem.Channel.SendCommand("AT+SHDISC");
                         Thread.Sleep(1000);
                         goto Retry;
                     }

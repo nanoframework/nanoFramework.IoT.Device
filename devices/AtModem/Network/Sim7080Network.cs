@@ -373,6 +373,7 @@ namespace IoT.Device.AtModem.Network
             _modem.GenericEvent -= ModemGenericEvent;
             AutoReconnect = false;
             Disconnect();
+            _modem.Channel.SendCommand("AT+CREBOOT");
         }
     }
 }
