@@ -6,6 +6,7 @@ using System.Collections;
 using System.IO.Ports;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 using nanoFramework.M2Mqtt;
@@ -40,7 +41,9 @@ namespace IoT.Device.AtModem.Mqtt
             if (e.Message.StartsWith("+SMSUB: "))
             {
                 var line = e.Message.Substring(8);
-                var elements = line.Split(',');
+
+                // Split after the first comma in the line
+                var elements = line.Split(new char[] { ',' }, 2);
                 var topic = elements[0].Trim('"');
                 var message = elements[1].Trim('"');
 
@@ -50,7 +53,7 @@ namespace IoT.Device.AtModem.Mqtt
         }
 
         /// <inheritdoc/>
-        public bool IsConnected => throw new System.NotImplementedException();
+        public bool IsConnected { get; internal set; }
 
         /// <inheritdoc/>
         public event IMqttClient.MqttMsgPublishEventHandler MqttMsgPublishReceived;
@@ -75,57 +78,71 @@ namespace IoT.Device.AtModem.Mqtt
             _secure = secure;
             _sslProtocol = sslProtocol;
 
-            // Store the caCert and the client cert in the storage
-            if (caCert != null)
-            {
-                _modem.FileStorage.WriteFile(CaCertName, caCert.GetRawCertData());
-            }
+            // FIXME: This is not working
+            ////// Store the caCert and the client cert in the storage
+            ////if (caCert != null)
+            ////{
+            ////    _modem.FileStorage.WriteFile(CaCertName, caCert.GetRawCertData());
+            ////}
 
-            if (clientCert != null)
-            {
-                _modem.FileStorage.WriteFile(ClientCertName, clientCert.GetRawCertData());
-            }
+            ////if (clientCert != null)
+            ////{
+            ////    _modem.FileStorage.WriteFile(ClientCertName, clientCert.GetRawCertData());
+            ////}
 
-            // Enable SSL
-            // 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
-            // 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
-            // 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
-            // 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
-            // 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
-            // 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
-            int sslVersion = 0;
-            switch (sslProtocol)
-            {
-                default:
-                    sslVersion = 0;
-                    break;
-                case MqttSslProtocols.TLSv1_0:
-                    sslVersion = 1;
-                    break;
-                case MqttSslProtocols.TLSv1_1:
-                    sslVersion = 2;
-                    break;
-                case MqttSslProtocols.TLSv1_2:
-                    sslVersion = 3;
-                    break;                
-            }
+            ////// Enable SSL
+            ////// 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
+            ////// 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
+            ////// 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
+            ////// 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
+            ////// 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
+            ////// 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
+            ////int sslVersion = 0;
+            ////switch (sslProtocol)
+            ////{
+            ////    default:
+            ////        sslVersion = 0;
+            ////        break;
+            ////    case MqttSslProtocols.TLSv1_0:
+            ////        sslVersion = 1;
+            ////        break;
+            ////    case MqttSslProtocols.TLSv1_1:
+            ////        sslVersion = 2;
+            ////        break;
+            ////    case MqttSslProtocols.TLSv1_2:
+            ////        sslVersion = 3;
+            ////        break;
+            ////}
 
-            _modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
+            ////_modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
 
-            // 1 = TLS
-            _modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
+            ////// 1 = TLS
+            ////_modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
 
-            // Converts the certificates. 1 = certificate, 2 = CA, 3 = private key
-            _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{CaCertName}\"");
-            _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{ClientCertName}\"");
+            ////// Converts the certificates. 1 = certificate, 2 = CA, 3 = private key
+            ////if (caCert != null)
+            ////{
+            ////    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{CaCertName}\"");
+            ////}
+
+            ////if (clientCert != null)
+            ////{
+            ////    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{ClientCertName}\"");
+            ////}
 
             // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
-            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{CaCertName}\",\"{ClientCertName}\"");
+            ////_modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(caCert != null ? CaCertName : string.Empty)}\",\"{(clientCert != null ? ClientCertName : string.Empty)}\"");
+            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"\",\"\"");
         }
 
         /// <inheritdoc/>
         public MqttReasonCode Connect(string clientId, string username, string password, bool willRetain, MqttQoSLevel willQosLevel, bool willFlag, string willTopic, string willMessage, bool cleanSession, ushort keepAlivePeriod)
         {
+            if (IsStillConnected())
+            {
+                Disconnect();
+            }
+
             // Server URL and port
             var response = _modem.Channel.SendCommand($"AT+SMCONF=\"URL\",\"{_brokerHostName}\",\"{_brokerPort}\"");
             if (!response.Success)
@@ -190,11 +207,13 @@ namespace IoT.Device.AtModem.Mqtt
             }
 
             // Setup the will topic
-            response = _modem.Channel.SendCommand($"AT+SMCONF=\"\"TOPIC\"\",\"{willTopic}\"");
+            response = _modem.Channel.SendCommand($"AT+SMCONF=\"TOPIC\",\"{willTopic}\"");
             if (!response.Success)
             {
                 return MqttReasonCode.UnspecifiedError;
             }
+
+            Thread.Sleep(1000);
 
             // Simcom module MQTT open the connection
             response = _modem.Channel.SendCommand("AT+SMCONN", TimeSpan.FromMinutes(1));
@@ -203,15 +222,20 @@ namespace IoT.Device.AtModem.Mqtt
                 return MqttReasonCode.UnspecifiedError;
             }
 
+            IsConnected = true;
             return MqttReasonCode.Success;
         }
 
         /// <inheritdoc/>
         public void Disconnect()
-        {
+        {            
             // Disconnect from the MQTT server
             _modem.Channel.SendCommand("AT+SMDISC");
-            ConnectionClosed?.Invoke(this, new EventArgs());
+            if (IsConnected == true)
+            {
+                IsConnected = false;
+                ConnectionClosed?.Invoke(this, new EventArgs());
+            }
         }
 
         /// <inheritdoc/>
@@ -226,8 +250,6 @@ namespace IoT.Device.AtModem.Mqtt
             _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r"));
             _modem.Channel.SendBytesWithoutAck(message);
 
-            // Just to make sure we have back a OK
-            _modem.Channel.SendCommand("AT");
             return IncrementtMessageId();
         }
 
@@ -279,23 +301,72 @@ namespace IoT.Device.AtModem.Mqtt
 
         private bool IsStillConnected()
         {
+            int retry = 3;
             int state = 0;
+        RetryState:
             var response = _modem.Channel.SendCommandReadSingleLine("AT+SMSTATE?", "+SMSTATE");
             if (response.Success)
             {
-                string line = response.Intermediates.Count > 1 ? (string)response.Intermediates[1] : string.Empty;
+                string line = response.Intermediates.Count > 0 ? (string)response.Intermediates[0] : string.Empty;
                 if (line.StartsWith("+SMSTATE: "))
                 {
                     state = int.Parse(line.Substring(10));
                 }
             }
+            else
+            {
+                if (retry-- > 0)
+                {
+                    Thread.Sleep(1000);
+                    goto RetryState;
+                }
+            }
 
             if (state == 0)
             {
-                ConnectionClosed?.Invoke(this, new EventArgs());
+                if (IsConnected)
+                {
+                    IsConnected = false;
+                    ConnectionClosed?.Invoke(this, new EventArgs());
+                }
             }
 
             return state != 0;
+        }
+
+        /// <inheritdoc/>
+        public void Close()
+        {
+            Disconnect();
+        }
+
+        /// <inheritdoc/>
+        public ushort Publish(
+            string topic,
+            byte[] message,
+            string contentType)
+        {
+            return Publish(
+                topic,
+                message,
+                contentType,
+                null,
+                MqttQoSLevel.AtMostOnce,
+                false);
+        }
+
+        /// <inheritdoc/>
+        public ushort Publish(
+            string topic,
+            byte[] message)
+        {
+            return Publish(
+                topic,
+                message,
+                null,
+                null,
+                MqttQoSLevel.AtMostOnce,
+                false);
         }
     }
 }

@@ -100,6 +100,34 @@ namespace nanoFramework.M2Mqtt
             bool retain);
 
         /// <summary>
+        /// Publish a message asynchronously (QoS Level <see cref="MqttQoSLevel.AtMostOnce"/> and not retained).
+        /// </summary>
+        /// <param name="topic">Message topic.</param>
+        /// <param name="message">Message data (payload).</param>
+        /// <param name="contentType">Content of the application message. This is only available for MQTT v5.0.</param>
+        /// <returns>Message Id related to PUBLISH message.</returns>
+        /// <exception cref="NotSupportedException">If setting a parameter that is not supported in the MQTT version set for this <see cref="MqttClient"/>.</exception>
+        public ushort Publish(
+            string topic,
+            byte[] message,
+            string contentType);
+
+        /// <summary>
+        /// Publish a message asynchronously (QoS Level <see cref="MqttQoSLevel.AtMostOnce"/> and not retained).
+        /// </summary>
+        /// <param name="topic">Message topic.</param>
+        /// <param name="message">Message data (payload).</param>
+        /// <returns>Message Id related to PUBLISH message.</returns>
+        public ushort Publish(
+            string topic,
+            byte[] message);
+
+        /// <summary>
+        /// Close client
+        /// </summary>
+        public void Close();
+
+        /// <summary>
         /// Delegate that defines event handler for PUBLISH message received.
         /// </summary>
         public delegate void MqttMsgPublishEventHandler(object sender, MqttMsgPublishEventArgs e);
