@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -228,7 +229,7 @@ namespace IoT.Device.AtModem.Mqtt
 
         /// <inheritdoc/>
         public void Disconnect()
-        {            
+        {
             // Disconnect from the MQTT server
             _modem.Channel.SendCommand("AT+SMDISC");
             if (IsConnected == true)
@@ -241,14 +242,29 @@ namespace IoT.Device.AtModem.Mqtt
         /// <inheritdoc/>
         public ushort Publish(string topic, byte[] message, string contentType, ArrayList userProperties, MqttQoSLevel qosLevel, bool retain)
         {
-            if (!IsStillConnected())
-            {
-                return 0;
-            }
+            ////if (!IsStillConnected())
+            ////{
+            ////    return 0;
+            ////}
 
             // Publish a message on a topic
             _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r"));
-            _modem.Channel.SendBytesWithoutAck(message);
+
+            // To read the >, there are not that may options than waiting a bit. We can't stop the reading thread as events are connected
+            // to it and we don't want to miss them.
+            Thread.Sleep(200);
+            
+            // We need to send the message in chunk of 64 bytes maximum
+            int offset = 0;
+            SpanByte messageSpan = message;
+            while (offset < message.Length)
+            {
+                int length = Math.Min(64, message.Length - offset);
+                _modem.Channel.SendBytesWithoutAck(messageSpan.Slice(offset, length).ToArray());
+                offset += length;
+            }
+
+            Debug.WriteLine($"PUB: Topic: {topic} lengh: {message.Length}");
 
             return IncrementtMessageId();
         }
