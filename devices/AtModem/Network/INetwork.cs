@@ -65,5 +65,17 @@ namespace IoT.Device.AtModem.Network
         /// Occurs when there is a network-related event for an application.
         /// </summary>
         public event ApplicationNetworkEventHandler ApplicationNetworkEvent;
+
+        /// <summary>
+        /// Represents the method that will handle an event with DateTime event data.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An instance of DateTimeEventArgs containing the event data.</param>
+        public delegate void DateTimeEventHandler(object sender, DateTimeEventArgs e);
+
+        /// <summary>
+        /// Occurs when the DateTime value is changed.
+        /// </summary>
+        public event DateTimeEventHandler DateTimeChanged;
     }
 }

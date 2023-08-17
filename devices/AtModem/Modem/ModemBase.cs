@@ -53,9 +53,6 @@ namespace IoT.Device.AtModem.Modem
             }
 
             channel.UnsolicitedEvent += ChannelUnsolicitedEvent;
-
-            // Ask for network registration changes.
-            channel.SendCommand("AT+CREG=1");
         }
 
         #region events

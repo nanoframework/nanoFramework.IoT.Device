@@ -23,6 +23,9 @@ namespace IoT.Device.AtModem.Network
         /// <inheritdoc/>
         public event INetwork.ApplicationNetworkEventHandler ApplicationNetworkEvent;
 
+        /// <inheritdoc/>
+        public event INetwork.DateTimeEventHandler DateTimeChanged;
+
         internal Sim800Network(ModemBase modem)
         {
             _modem = modem;

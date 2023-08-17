@@ -22,6 +22,9 @@ namespace IoT.Device.AtModem.Network
         /// <inheritdoc/>
         public event INetwork.ApplicationNetworkEventHandler ApplicationNetworkEvent;
 
+        /// <inheritdoc/>
+        public event INetwork.DateTimeEventHandler DateTimeChanged;
+
         internal Sim7080Network(ModemBase modem)
         {
             _modem = modem;
@@ -56,6 +59,33 @@ namespace IoT.Device.AtModem.Network
                             ApplicationNetworkEvent?.Invoke(this, new ApplicationNetworkEventArgs(true));
                         }
                     }
+                }
+            }
+            else if (e.Message.StartsWith("*PSUTTZ:"))
+            {
+                try
+                {
+                    // this is the format of the message: *PSUTTZ: 23/08/17,11:35:17","+08",1
+                    var parts = e.Message.Substring(9).Split(',');
+                    if (parts.Length == 4)
+                    {
+                        var dates = parts[0].Split('/');
+                        var times = parts[1].Trim('"').Split(':');
+
+                        var dateTime = new System.DateTime(
+                            int.Parse(dates[0]) + 2000,
+                            int.Parse(dates[1]),
+                            int.Parse(dates[2]),
+                            int.Parse(times[0]),
+                            int.Parse(times[1]),
+                            int.Parse(times[2]));
+
+                        DateTimeChanged?.Invoke(this, new DateTimeEventArgs(dateTime));
+                    }
+                }
+                catch
+                {
+                    // Nothing on purpose                    
                 }
             }
         }

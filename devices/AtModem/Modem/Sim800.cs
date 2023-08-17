@@ -50,6 +50,12 @@ namespace IoT.Device.AtModem.Modem
 
             // Getting rid of the echo
             Channel.SendCommand("ATE0");
+
+            // Set full functionality
+            Enabled = true;
+
+            // Ask for network registration changes.
+            channel.SendCommand("AT+CREG=1");
         }
 
         /// <inheritdoc/>

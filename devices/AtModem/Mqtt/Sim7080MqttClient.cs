@@ -93,7 +93,7 @@ namespace IoT.Device.AtModem.Mqtt
                 if (_modem.FileStorage.GetFileSize(_caCertName) <= 0)
                 {
                     _modem.FileStorage.WriteFile(_caCertName, caCert.GetRawCertData());
-                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{CaCertName}\"");
+                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{_caCertName}\"");
                 }
             }
 
@@ -106,42 +106,9 @@ namespace IoT.Device.AtModem.Mqtt
                 if (_modem.FileStorage.GetFileSize(_clCertName) <= 0)
                 {
                     _modem.FileStorage.WriteFile(_clCertName, clientCert.GetRawCertData());
-                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{ClientCertName}\"");
+                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{_clCertName}\"");
                 }
             }
-
-            // Enable SSL
-            // 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
-            // 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
-            // 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
-            // 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
-            // 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
-            // 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
-            int sslVersion = 0;
-            switch (sslProtocol)
-            {
-                default:
-                    sslVersion = 0;
-                    break;
-                case MqttSslProtocols.TLSv1_0:
-                    sslVersion = 1;
-                    break;
-                case MqttSslProtocols.TLSv1_1:
-                    sslVersion = 2;
-                    break;
-                case MqttSslProtocols.TLSv1_2:
-                    sslVersion = 3;
-                    break;
-            }
-
-            _modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
-
-            // 1 = TLS
-            _modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
-
-            // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
-            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(caCert != null ? _caCertName : string.Empty)}\",\"{(clientCert != null ? _clCertName : string.Empty)}\"");
-            ////_modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"\",\"\"");
         }
 
         /// <inheritdoc/>
@@ -150,7 +117,7 @@ namespace IoT.Device.AtModem.Mqtt
             int retries = 3;
 
             // Server URL and port
-            var response = _modem.Channel.SendCommand($"AT+SMCONF=\"URL\",\"{_brokerHostName}\",\"{_brokerPort}\"");
+            var response = _modem.Channel.SendCommand($"AT+SMCONF=\"URL\",\"{_brokerHostName}\",{_brokerPort}");
             if (!response.Success)
             {
                 return MqttReasonCode.UnspecifiedError;
@@ -218,6 +185,41 @@ namespace IoT.Device.AtModem.Mqtt
             {
                 return MqttReasonCode.UnspecifiedError;
             }
+
+            // Enable SSL
+            // 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
+            // 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
+            // 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
+            // 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
+            // 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
+            // 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
+            int sslVersion = 0;
+            switch (_sslProtocol)
+            {
+                default:
+                    sslVersion = 0;
+                    break;
+                case MqttSslProtocols.TLSv1_0:
+                    sslVersion = 1;
+                    break;
+                case MqttSslProtocols.TLSv1_1:
+                    sslVersion = 2;
+                    break;
+                case MqttSslProtocols.TLSv1_2:
+                    sslVersion = 3;
+                    break;
+            }
+
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
+
+            // 1 = TLS
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
+
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"IGNORERTCTIME\",{IndexSSL},1");
+
+            // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
+            ////_modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(_caCertName != null ? _caCertName : string.Empty)}\",\"{(_caCertName != null ? _clCertName : string.Empty)}\"");
+            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"\",\"\"");
 
         RetryConnect:
             // Simcom module MQTT open the connection

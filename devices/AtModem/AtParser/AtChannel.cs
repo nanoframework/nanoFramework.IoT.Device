@@ -37,6 +37,8 @@ namespace IoT.Device.AtModem
             "+CBM:"
         };
 
+        private object _lock = new object();
+
         /// <summary>
         /// Represents the method that will handle unsolicited events.
         /// </summary>
@@ -346,13 +348,16 @@ namespace IoT.Device.AtModem
                 string endOfLine = null;
                 try
                 {
-                    if ((_currentCommand != null) && (_currentCommand.CommandType == AtCommandType.CustomEndOfLine))
+                    lock (_lock)
                     {
-                        endOfLine = _currentCommand.ResponsePrefix;
-                    }
-                    else
-                    {
-                        endOfLine = null;
+                        if ((_currentCommand != null) && (_currentCommand.CommandType == AtCommandType.CustomEndOfLine))
+                        {
+                            endOfLine = _currentCommand.ResponsePrefix;
+                        }
+                        else
+                        {
+                            endOfLine = null;
+                        }
                     }
 
                     line1 = _atReader.Read(endOfLine, _cancellationTokenSource.Token);

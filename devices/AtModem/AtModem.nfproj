@@ -89,6 +89,7 @@
     <Compile Include="Events\ApplicationNetworkEventArgs.cs" />
     <Compile Include="Events\CallEndedEventArgs.cs" />
     <Compile Include="Events\CallStartedEventArgs.cs" />
+    <Compile Include="Events\DateTimeEventArgs.cs" />
     <Compile Include="Events\ErrorEventArgs.cs" />
     <Compile Include="Events\GenericEventArgs.cs" />
     <Compile Include="Events\IncomingCallEventArgs.cs" />
