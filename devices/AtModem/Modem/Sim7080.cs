@@ -53,7 +53,7 @@ namespace IoT.Device.AtModem.Modem
             }
 
             // Getting rid of the echo
-            Channel.SendCommand("ATE0");
+            Channel.SendCommand("ATE0");            
         }
 
         /// <inheritdoc/>
