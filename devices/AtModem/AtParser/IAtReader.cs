@@ -13,9 +13,10 @@ namespace IoT.Device.AtModem
         /// <summary>
         /// Reads a line of AT command response.
         /// </summary>
+        /// <param name="endOfLine">The end of line string. If null, the default end of line will be used.</param>
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>A task representing the asynchronous read operation. The task result contains the read line.</returns>
-        string Read(CancellationToken cancellationToken = default);
+        string Read(string endOfLine = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Reads a raw number of bytes on the channel. It will return the desired number of bytes even if it has to read less.

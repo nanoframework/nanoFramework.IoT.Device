@@ -8,6 +8,7 @@ using System.IO.Ports;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
+using IoT.Device.AtModem.CodingSchemes;
 using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 using nanoFramework.M2Mqtt;
@@ -21,13 +22,15 @@ namespace IoT.Device.AtModem.Mqtt
     public class Sim7080MqttClient : IMqttClient
     {
         private const string CaCertName = "ca.crt";
-        private const string ClientCertName = "client.crt";
+        private const string ClientCertName = "cl.crt";
         private const int IndexSSL = 1;
         private ModemBase _modem;
         private string _brokerHostName;
         private int _brokerPort;
         private bool _secure;
         private ushort _messageId = 0;
+        private string _caCertName;
+        private string _clCertName;
 
         private MqttSslProtocols _sslProtocol;
 
@@ -80,69 +83,71 @@ namespace IoT.Device.AtModem.Mqtt
             _sslProtocol = sslProtocol;
 
             // FIXME: This is not working
-            ////// Store the caCert and the client cert in the storage
-            ////if (caCert != null)
-            ////{
-            ////    _modem.FileStorage.WriteFile(CaCertName, caCert.GetRawCertData());
-            ////}
+            // Store the caCert and the client cert in the storage
+            if (caCert != null)
+            {
+                int hash = HashHelper.ComputeHash(caCert.GetRawCertData());
 
-            ////if (clientCert != null)
-            ////{
-            ////    _modem.FileStorage.WriteFile(ClientCertName, clientCert.GetRawCertData());
-            ////}
+                // Check first if the file exists already
+                _caCertName = hash + CaCertName;
+                if (_modem.FileStorage.GetFileSize(_caCertName) <= 0)
+                {
+                    _modem.FileStorage.WriteFile(_caCertName, caCert.GetRawCertData());
+                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{CaCertName}\"");
+                }
+            }
 
-            ////// Enable SSL
-            ////// 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
-            ////// 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
-            ////// 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
-            ////// 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
-            ////// 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
-            ////// 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
-            ////int sslVersion = 0;
-            ////switch (sslProtocol)
-            ////{
-            ////    default:
-            ////        sslVersion = 0;
-            ////        break;
-            ////    case MqttSslProtocols.TLSv1_0:
-            ////        sslVersion = 1;
-            ////        break;
-            ////    case MqttSslProtocols.TLSv1_1:
-            ////        sslVersion = 2;
-            ////        break;
-            ////    case MqttSslProtocols.TLSv1_2:
-            ////        sslVersion = 3;
-            ////        break;
-            ////}
+            if (clientCert != null)
+            {
+                int hash = HashHelper.ComputeHash(clientCert.GetRawCertData());
 
-            ////_modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
+                // Check first if the file exists already
+                _clCertName = hash + ClientCertName;
+                if (_modem.FileStorage.GetFileSize(_clCertName) <= 0)
+                {
+                    _modem.FileStorage.WriteFile(_clCertName, clientCert.GetRawCertData());
+                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{ClientCertName}\"");
+                }
+            }
 
-            ////// 1 = TLS
-            ////_modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
+            // Enable SSL
+            // 0 QAPI_NET_SSL_PROTOCOL_UNKNOWN
+            // 1 QAPI_NET_SSL_PROTOCOL_TLS_1_0
+            // 2 QAPI_NET_SSL_PROTOCOL_TLS_1_1
+            // 3 QAPI_NET_SSL_PROTOCOL_TLS_1_2
+            // 4 QAPI_NET_SSL_PROTOCOL_DTLS_1_0
+            // 5 QAPI_NET_SSL_PROTOCOL_DTLS_1_2
+            int sslVersion = 0;
+            switch (sslProtocol)
+            {
+                default:
+                    sslVersion = 0;
+                    break;
+                case MqttSslProtocols.TLSv1_0:
+                    sslVersion = 1;
+                    break;
+                case MqttSslProtocols.TLSv1_1:
+                    sslVersion = 2;
+                    break;
+                case MqttSslProtocols.TLSv1_2:
+                    sslVersion = 3;
+                    break;
+            }
 
-            ////// Converts the certificates. 1 = certificate, 2 = CA, 3 = private key
-            ////if (caCert != null)
-            ////{
-            ////    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{CaCertName}\"");
-            ////}
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"SSLVERSION\",{IndexSSL},{sslVersion}");
 
-            ////if (clientCert != null)
-            ////{
-            ////    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{ClientCertName}\"");
-            ////}
+            // 1 = TLS
+            _modem.Channel.SendCommand($"AT+CSSLCFG=\"PROTOCOL\",{IndexSSL},1");
 
             // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
-            ////_modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(caCert != null ? CaCertName : string.Empty)}\",\"{(clientCert != null ? ClientCertName : string.Empty)}\"");
-            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"\",\"\"");
+            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(caCert != null ? _caCertName : string.Empty)}\",\"{(clientCert != null ? _clCertName : string.Empty)}\"");
+            ////_modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"\",\"\"");
         }
 
         /// <inheritdoc/>
         public MqttReasonCode Connect(string clientId, string username, string password, bool willRetain, MqttQoSLevel willQosLevel, bool willFlag, string willTopic, string willMessage, bool cleanSession, ushort keepAlivePeriod)
         {
-            if (IsStillConnected())
-            {
-                Disconnect();
-            }
+            int retries = 3;
 
             // Server URL and port
             var response = _modem.Channel.SendCommand($"AT+SMCONF=\"URL\",\"{_brokerHostName}\",\"{_brokerPort}\"");
@@ -214,12 +219,22 @@ namespace IoT.Device.AtModem.Mqtt
                 return MqttReasonCode.UnspecifiedError;
             }
 
-            Thread.Sleep(1000);
-
+        RetryConnect:
             // Simcom module MQTT open the connection
             response = _modem.Channel.SendCommand("AT+SMCONN", TimeSpan.FromMinutes(1));
             if (!response.Success)
             {
+                if (IsStillConnected())
+                {
+                    Disconnect();
+                }
+
+                if (retries-- > 0)
+                {
+                    Thread.Sleep(1000);
+                    goto RetryConnect;
+                }
+
                 return MqttReasonCode.UnspecifiedError;
             }
 
@@ -247,26 +262,27 @@ namespace IoT.Device.AtModem.Mqtt
             ////    return 0;
             ////}
 
-            // Publish a message on a topic
-            _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r"));
-
-            // To read the >, there are not that may options than waiting a bit. We can't stop the reading thread as events are connected
-            // to it and we don't want to miss them.
-            Thread.Sleep(200);
-            
-            // We need to send the message in chunk of 64 bytes maximum
-            int offset = 0;
-            SpanByte messageSpan = message;
-            while (offset < message.Length)
+            // Publish a message on a topic, wait for the prompt '>' and then send the message
+            AtCommand command = new AtCommand(AtCommandType.CustomEndOfLine, $"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r", ">", null, TimeSpan.FromSeconds(1));
+            var response = _modem.Channel.SendFullCommand(command, new CancellationTokenSource(1000).Token);
+            if (response.Success)
             {
-                int length = Math.Min(64, message.Length - offset);
-                _modem.Channel.SendBytesWithoutAck(messageSpan.Slice(offset, length).ToArray());
-                offset += length;
+                // We need to send the message in chunk of 64 bytes maximum
+                int offset = 0;
+                SpanByte messageSpan = message;
+                while (offset < message.Length)
+                {
+                    int length = Math.Min(64, message.Length - offset);
+                    _modem.Channel.SendBytesWithoutAck(messageSpan.Slice(offset, length).ToArray());
+                    offset += length;
+                }
+
+                Debug.WriteLine($"PUB: Topic: {topic} lengh: {message.Length}");
+
+                return IncrementtMessageId();
             }
 
-            Debug.WriteLine($"PUB: Topic: {topic} lengh: {message.Length}");
-
-            return IncrementtMessageId();
+            return 0;
         }
 
         /// <inheritdoc/>

@@ -31,6 +31,11 @@ namespace IoT.Device.AtModem
         /// <summary>
         /// Multiple line intermediate response without a prefix.
         /// </summary>
-        MultiLineNoPreeffiixx
+        MultiLineNoPreeffiixx,
+
+        /// <summary>
+        /// A single intermediate response with a specifc end of line.
+        /// </summary>
+        CustomEndOfLine,
     }
 }

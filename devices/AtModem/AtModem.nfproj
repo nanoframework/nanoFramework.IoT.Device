@@ -53,6 +53,7 @@
     <Compile Include="CodingSchemes\CodingScheme.cs" />
     <Compile Include="CodingSchemes\ConvertHelper.cs" />
     <Compile Include="CodingSchemes\Gsm7.cs" />
+    <Compile Include="CodingSchemes\HashHelper.cs" />
     <Compile Include="CodingSchemes\UCS2.cs" />
     <Compile Include="DTOs\AccessPointConfiguration.cs" />
     <Compile Include="DTOs\ConnectionStatus.cs" />

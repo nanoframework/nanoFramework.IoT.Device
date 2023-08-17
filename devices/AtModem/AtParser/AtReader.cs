@@ -53,9 +53,9 @@ namespace IoT.Device.AtModem
         }
 
         /// <inheritdoc/>
-        public string Read(CancellationToken cancellationToken = default)
+        public string Read(string endOfLine = null, CancellationToken cancellationToken = default)
         {
-            return ReadLine(cancellationToken);
+            return ReadLine(endOfLine, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -83,7 +83,7 @@ namespace IoT.Device.AtModem
                     if (_reader.BytesToRead > 0)
                     {
                         buff[0] = (byte)_reader.ReadByte();
-                        
+
                         _lineRead.Add(buff[0]);
 
                         // do we have a new line?
@@ -108,7 +108,7 @@ namespace IoT.Device.AtModem
             return ConvertHelper.ConvertAsciiToString(_lineRead);
         }
 
-        private string ReadLine(CancellationToken cancellationToken = default)
+        private string ReadLine(string endOfLine = null, CancellationToken cancellationToken = default)
         {
             string ret = string.Empty;
             try
@@ -116,8 +116,9 @@ namespace IoT.Device.AtModem
                 // so do a loop and either finish to read all or return nothing
                 _lineRead.Clear();
                 bool bloop = true;
-                byte[] buff = new byte[1];
+                byte buff;
                 byte prevbyte = 0;
+                int idxEol = 0;
 
                 while ((!cancellationToken.IsCancellationRequested) && bloop)
                 {
@@ -125,24 +126,44 @@ namespace IoT.Device.AtModem
                     {
                         if (_reader.BytesToRead > 0)
                         {
-                            buff[0] = (byte)_reader.ReadByte();
+                            buff = (byte)_reader.ReadByte();
 
-                            _lineRead.Add(buff[0]);
+                            _lineRead.Add(buff);
 
-                            // do we have a new line?
-                            if ((prevbyte == EolSequence[0]) && (buff[0] == EolSequence[1]))
+                            if (endOfLine == null)
                             {
-                                _lineRead.RemoveAt(_lineRead.Count - 1);
-                                _lineRead.RemoveAt(_lineRead.Count - 1);
-                                bloop = false;
-                            }
-                            else if ((prevbyte == SmsPromptSequence[0]) && (buff[0] == SmsPromptSequence[1]))
-                            {
-                                // we have a prompt for SMS
-                                bloop = false;
-                            }
+                                // do we have a new line?
+                                if ((prevbyte == EolSequence[0]) && (buff == EolSequence[1]))
+                                {
+                                    _lineRead.RemoveAt(_lineRead.Count - 1);
+                                    _lineRead.RemoveAt(_lineRead.Count - 1);
+                                    bloop = false;
+                                }
+                                else if ((prevbyte == SmsPromptSequence[0]) && (buff == SmsPromptSequence[1]))
+                                {
+                                    // we have a prompt for SMS
+                                    bloop = false;
+                                }
 
-                            prevbyte = buff[0];
+                                prevbyte = buff;
+                            }
+                            else
+                            {
+                                if (endOfLine[idxEol] == buff)
+                                {
+                                    idxEol++;
+                                }
+                                else
+                                {
+                                    idxEol = 0;
+                                }
+
+                                if (idxEol == endOfLine.Length)
+                                {
+                                    // we have a match
+                                    bloop = false;
+                                }
+                            }
                         }
                     }
                     catch (Exception)

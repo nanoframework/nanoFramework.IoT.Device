@@ -45,6 +45,10 @@ else
     Console.WriteLine($"Device info failed: {respDeviceInfo.ErrorMessage}");
 }
 
+// To test the different storage, we don't need connection
+TestBinaryStorage();
+TestStorage();
+
 RetryConnect:
 var pinStatus = modem.GetSimStatus();
 if (pinStatus.IsSuccess)
@@ -125,13 +129,11 @@ while (true)
     Thread.Sleep(1000);
 }
 
-ConnectToNetwork();
-//TestBinaryStorage();
-//TestStorage();
+//ConnectToNetwork();
 //GetNetworkOperators();
 //TestStorageSmsAndCharSet();
 //TestSms();
-TestHttp();
+//TestHttp();
 
 void TestHttp()
 {

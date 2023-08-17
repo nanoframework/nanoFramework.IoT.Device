@@ -188,33 +188,56 @@ namespace IoT.Device.AtModem.FileStorage
             // Allocate buffer
             _modem.Channel.SendCommand("AT+CFSINIT");
 
-            _modem.Channel.Stop();
+            // Old way, keeping up to being deeply tested
+            ////_modem.Channel.Stop();
 
-            // 10 seconds timeout
-            _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+CFSWFILE={(int)Storage},\"{fileName}\",{(int)createMode},{content.Length},10000\r\n"));
+            ////// 10 seconds timeout
+            ////_modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+CFSWFILE={(int)Storage},\"{fileName}\",{(int)createMode},{content.Length},10000\r\n"));
 
-            // Waiting for the DOWNLOAD prompt to arrive
-            _modem.Channel.ReadLine();
-            var download = _modem.Channel.ReadLine();
-            if (!download.StartsWith("DOWNLOAD"))
+            ////// Waiting for the DOWNLOAD prompt to arrive
+            ////_modem.Channel.ReadLine();
+            ////var download = _modem.Channel.ReadLine();
+            ////if (!download.StartsWith("DOWNLOAD"))
+            ////{
+            ////    _modem.Channel.Start();
+            ////    return false;
+            ////}
+
+            ////// Send the content
+            ////_modem.Channel.SendBytesWithoutAck(content);
+            ////Thread.Sleep(200);
+            ////_modem.Channel.Clear();
+            ////_modem.Channel.Start();
+
+            bool success = false;
+            AtCommand command = new AtCommand(AtCommandType.CustomEndOfLine, $"AT+CFSWFILE={(int)Storage},\"{fileName}\",{(int)createMode},{content.Length},10000", "DOWNLOAD", null, TimeSpan.FromSeconds(1));
+            var response = _modem.Channel.SendFullCommand(command, new CancellationTokenSource(1000).Token);
+            if (response.Success)
             {
+                _modem.Channel.SendBytesWithoutAck(content);
+                _modem.Channel.Stop();
+
+                // Waiting for the OK prompt to arrive
+                var tocken = new CancellationTokenSource(5000).Token;
+                string line;
+                do
+                {
+                    line = _modem.Channel.ReadLine();
+                }
+                while (((line == "OK") || (line == "ERROR")) && (!tocken.IsCancellationRequested));
+
+                if (line == "OK")
+                {
+                    success = true;
+                }
+
                 _modem.Channel.Start();
-                return false;
             }
 
-            // Send the content
-            _modem.Channel.SendBytesWithoutAck(content);
-            Thread.Sleep(200);
-            _modem.Channel.Clear();
-            _modem.Channel.Start();
-
-            // Waiting for the OK prompt to arrive
-            Thread.Sleep(100);
-
             // Free data buffer
-            var response = _modem.Channel.SendCommand("AT+CFSTERM");
+            _modem.Channel.SendCommand("AT+CFSTERM");
 
-            return response.Success;
+            return success;
         }
 
         /// <inheritdoc/>
@@ -247,7 +270,7 @@ namespace IoT.Device.AtModem.FileStorage
                     do
                     {
                         line = _modem.Channel.ReadLine();
-                    } 
+                    }
                     while (!line.StartsWith("+CFSRFILE: "));
 
                     int size = int.Parse(line.Substring(11));

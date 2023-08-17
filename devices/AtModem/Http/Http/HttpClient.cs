@@ -400,27 +400,6 @@ namespace System.Net.Http
             }
         }
 
-        /// <summary>
-        /// This helper to facilitate the creation of unique file names.
-        /// </summary>
-        /// <param name="data">The data to be processed</param>
-        /// <returns>A simple hash.</returns>
-        internal static int ComputeHash(params byte[] data)
-        {
-            unchecked
-            {
-                const int p = 16777619;
-                int hash = (int)2166136261;
-
-                for (int i = 0; i < data.Length; i++)
-                {
-                    hash = (hash ^ data[i]) * p;
-                }
-
-                return hash;
-            }
-        }
-
         /// <inheritdoc/>
         public virtual void Dispose()
         {

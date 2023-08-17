@@ -184,10 +184,7 @@ namespace IoT.Device.AtModem
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         public void Clear(CancellationToken cancellationToken = default)
         {
-            for (int i = 0; i < _atReader.AvailableItems(); i++)
-            {
-                _atReader.Read(cancellationToken);
-            }
+            _atReader.ReadBytes(_atReader.AvailableItems());
         }
 
         /// <summary>
@@ -195,7 +192,7 @@ namespace IoT.Device.AtModem
         /// </summary>
         /// <param name="command">The AT command string to send.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
+        /// <returns>The <see cref="AtResponse"/> class representing the answer. The content of the answer will vary depending on the request.</returns>
         public virtual AtResponse SendCommand(string command, TimeSpan timeout = default)
         {
             return SendFullCommand(new AtCommand(AtCommandType.NoResult, command, null, null, timeout == default ? DefaultCommandTimeout : timeout));
@@ -258,7 +255,7 @@ namespace IoT.Device.AtModem
         /// <param name="command">The AT command string to send.</param>
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
+        /// <returns>The <see cref="AtResponse"/> class representing the answer. The content of the answer will vary depending on the request.</returns>
         public virtual AtResponse SendCommandReadSingleLine(string command, string responsePrefix, TimeSpan timeout = default)
         {
             AtResponse response = SendFullCommand(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, null, timeout == default ? DefaultCommandTimeout : timeout));
@@ -278,7 +275,7 @@ namespace IoT.Device.AtModem
         /// <param name="command">The AT command string to send.</param>
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
+        /// <returns>The <see cref="AtResponse"/> class representing the answer. The content of the answer will vary depending on the request.</returns>
         public virtual AtResponse SendCommandReadMultiline(string command, string responsePrefix, TimeSpan timeout = default)
         {
             AtCommandType commandType = responsePrefix == null ? AtCommandType.MultiLineNoPreeffiixx : AtCommandType.MultiLine;
@@ -292,7 +289,7 @@ namespace IoT.Device.AtModem
         /// <param name="pdu">The SMS Protocol Data Unit (PDU).</param>
         /// <param name="responsePrefix">The expected response prefix.</param>
         /// <param name="timeout">The optional timeout duration for the command.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains the command response.</returns>
+        /// <returns>The <see cref="AtResponse"/> class representing the answer. The content of the answer will vary depending on the request.</returns>
         public virtual AtResponse SendSms(string command, string pdu, string responsePrefix, TimeSpan timeout = default)
         {
             AtResponse response = SendFullCommand(new AtCommand(AtCommandType.SingleLine, command, responsePrefix, pdu, timeout == default ? DefaultCommandTimeout : timeout));
@@ -306,7 +303,13 @@ namespace IoT.Device.AtModem
             return response;
         }
 
-        private AtResponse SendFullCommand(AtCommand command, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Sends a custom command and retrieves the command response.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <param name="cancellationToken">A cancellation token for receiving the response.</param>
+        /// <returns>The <see cref="AtResponse"/> class representing the answer. The content of the answer will vary depending on the request.</returns>
+        public AtResponse SendFullCommand(AtCommand command, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -340,9 +343,19 @@ namespace IoT.Device.AtModem
             while (!_cancellationTokenSource.Token.IsCancellationRequested)
             {
                 string line1;
+                string endOfLine = null;
                 try
                 {
-                    line1 = _atReader.Read(_cancellationTokenSource.Token);
+                    if ((_currentCommand != null) && (_currentCommand.CommandType == AtCommandType.CustomEndOfLine))
+                    {
+                        endOfLine = _currentCommand.ResponsePrefix;
+                    }
+                    else
+                    {
+                        endOfLine = null;
+                    }
+
+                    line1 = _atReader.Read(endOfLine, _cancellationTokenSource.Token);
                     if (_debugEnabled)
                     {
                         Debug.WriteLine($"In: {line1}");
@@ -368,7 +381,7 @@ namespace IoT.Device.AtModem
                     string line2;
                     try
                     {
-                        line2 = _atReader.Read(_cancellationTokenSource.Token);
+                        line2 = _atReader.Read(null, _cancellationTokenSource.Token);
                         if (_debugEnabled)
                         {
                             Debug.WriteLine($"In: {line2}");
@@ -467,6 +480,10 @@ namespace IoT.Device.AtModem
                             break;
                         case AtCommandType.MultiLineNoPreeffiixx:
                             AddIntermediate(line);
+                            break;
+                        case AtCommandType.CustomEndOfLine:
+                            _currentResponse.Success = true;
+                            HandleFinalResponse(line);
                             break;
                         default:
                             // This should never be reached

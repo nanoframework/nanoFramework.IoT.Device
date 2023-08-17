@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
+using IoT.Device.AtModem.CodingSchemes;
 using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 
@@ -54,7 +55,7 @@ namespace IoT.Device.AtModem.Http
                 {
                     // We need to setup the certificate in the native mode
                     // First store the certificate in the modem
-                    int hash = ComputeHash(_certAuth.GetRawCertData());
+                    int hash = HashHelper.ComputeHash(_certAuth.GetRawCertData());
                     _certName = RootCaFileName + hash + "." + RootCaFileName;
                     Modem.FileStorage.WriteFile(_certName, _certAuth.GetRawCertData());
 
