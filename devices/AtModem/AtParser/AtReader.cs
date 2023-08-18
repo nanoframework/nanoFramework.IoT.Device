@@ -73,9 +73,8 @@ namespace IoT.Device.AtModem
             byte[] buff = new byte[1];
             byte prevbyte = 0;
 
-            // Start clean
+            // start clean
             _lineRead.Clear();
-
             while ((!cancellationToken.IsCancellationRequested) && bloop)
             {
                 try

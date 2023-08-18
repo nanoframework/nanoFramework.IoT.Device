@@ -31,6 +31,7 @@ namespace IoT.Device.AtModem.Mqtt
         private ushort _messageId = 0;
         private string _caCertName;
         private string _clCertName;
+        private ManualResetEvent _promptArived = new ManualResetEvent(false);
 
         private MqttSslProtocols _sslProtocol;
 
@@ -53,6 +54,10 @@ namespace IoT.Device.AtModem.Mqtt
 
                 // There is no trace of QoS Level or retain flag in the response
                 MqttMsgPublishReceived?.Invoke(sender, new MqttMsgPublishEventArgs(topic, Encoding.UTF8.GetBytes(message), false, MqttQoSLevel.AtMostOnce, false));
+            }
+            else if (e.Message == ">")
+            {
+                _promptArived.Set();
             }
         }
 
@@ -259,32 +264,26 @@ namespace IoT.Device.AtModem.Mqtt
         /// <inheritdoc/>
         public ushort Publish(string topic, byte[] message, string contentType, ArrayList userProperties, MqttQoSLevel qosLevel, bool retain)
         {
-            ////if (!IsStillConnected())
-            ////{
-            ////    return 0;
-            ////}
+            // We have to send the topic and then send the message once the > prompt is here
+            _promptArived.Reset();
+            _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r\n"));
+            Debug.WriteLine($"Out: AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}");   
 
-            // Publish a message on a topic, wait for the prompt '>' and then send the message
-            AtCommand command = new AtCommand(AtCommandType.CustomEndOfLine, $"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r", ">", null, TimeSpan.FromSeconds(1));
-            var response = _modem.Channel.SendFullCommand(command, new CancellationTokenSource(1000).Token);
-            if (response.Success)
+            CancellationTokenSource cts = new CancellationTokenSource(1000);
+            cts.Token.WaitHandle.WaitOne(1000, true);
+
+            if (message.Length > 0)
             {
-                // We need to send the message in chunk of 64 bytes maximum
-                int offset = 0;
-                SpanByte messageSpan = message;
-                while (offset < message.Length)
-                {
-                    int length = Math.Min(64, message.Length - offset);
-                    _modem.Channel.SendBytesWithoutAck(messageSpan.Slice(offset, length).ToArray());
-                    offset += length;
-                }
-
-                Debug.WriteLine($"PUB: Topic: {topic} lengh: {message.Length}");
-
-                return IncrementtMessageId();
+                _modem.Channel.SendBytesWithoutAck(message);
+            }
+            else
+            {
+                // This is needed to send an empty message
+                Thread.Sleep(20);
             }
 
-            return 0;
+            // We don't check the status
+            return IncrementtMessageId();
         }
 
         /// <inheritdoc/>
