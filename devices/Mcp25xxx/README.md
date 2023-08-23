@@ -1,4 +1,4 @@
-﻿# Mcp25xxx device family - CAN bus
+﻿# Mcp25xxx/MCP2515/MCP2565 device family - CAN bus
 
 **This binding is currently not finished. Please consider contributing to help us finish it.**
 

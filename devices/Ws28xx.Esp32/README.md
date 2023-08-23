@@ -1,4 +1,4 @@
-﻿# Ws28xx, SK6812 LED drivers
+﻿# Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel for ESP32 using RMT - LED drivers
 
 This binding allows you to update the RGB LEDs on Ws28xx, SK6812 and based strips and matrices.
 

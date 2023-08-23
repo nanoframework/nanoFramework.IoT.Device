@@ -10,15 +10,15 @@
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",
-        "requested": "[1.2.295, 1.2.295]",
-        "resolved": "1.2.295",
-        "contentHash": "qvkhANzBm/GupNQ/bUZMxRlDW9idppsCj8sM8GyDo/QzmlZPousqLxeth8E5fISt+KrA5J49jqdNSLM/tvX0lA=="
+        "requested": "[1.2.325, 1.2.325]",
+        "resolved": "1.2.325",
+        "contentHash": "PNyeM6BBg+p9EvJEPjFBchrEFbxpIlz/byXjSh9A4xetyyXDMRcE4LB43aZQcW36bJ7H+84Hm49DCY0LsQDURg=="
       },
       "nanoFramework.Iot.Device.ShiftRegister": {
         "type": "Direct",
-        "requested": "[1.2.296, 1.2.296]",
-        "resolved": "1.2.296",
-        "contentHash": "pt4OJ74hBNLW8/cr/V8Hyox5G/LMszRyqZys4J6SYzKH7eWJknehhYrnRurgENnQc0KpLLIxukEMzgfHTrOnHA=="
+        "requested": "[1.2.326, 1.2.326]",
+        "resolved": "1.2.326",
+        "contentHash": "kPuVGAxvriu8xX9V0Mg4FjnMVRO7E0NcuV7DOXAW7ANwigH22mmNEoY0crmm2efOm9BtV5ThAA6F6PU0P7gjZg=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -46,9 +46,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.6.128, 3.6.128]",
-        "resolved": "3.6.128",
-        "contentHash": "zeA+Ho3XlPgt6P9MRALlkEvfOOzDQdNseV0xia/nSfC1lSrl0+gizlWyixaHvSYUw2ru7pBIKnK451bYOjPRjA=="
+        "requested": "[3.6.133, 3.6.133]",
+        "resolved": "3.6.133",
+        "contentHash": "VZWMd5YAeDxpjWjAP/X6bAxnRMiEf6tES/ITN0X5CHJgkWLLeHGmEALivmTAfYM6P+P/3Szy6VCITUAkqjcHVw=="
       },
       "StyleCop.MSBuild": {
         "type": "Direct",

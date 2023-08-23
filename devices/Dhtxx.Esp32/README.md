@@ -1,4 +1,4 @@
-# DHTxx.Esp32 - Digital-Output Relative Humidity & Temperature Sensor Module
+# DHT10/DHT11/DHT12/DHT21/DHT22 for Esp32 using RMT - Digital-Output Relative Humidity & Temperature Sensor Module
 
 > **IMPORTANT** This implementation will only work on with ESP32. Don't use this implementation for those MCU.
 > This implementation requires 2 pins. One is used to write to the sensor and the other is used to read the data using RMT.

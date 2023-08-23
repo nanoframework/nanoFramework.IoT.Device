@@ -1,4 +1,4 @@
-# SSD13xx & SSH1106 OLED display family
+# SSD13xx/SSD1306/SSD1327 & SSH1106 - OLED display family
 
 The SSD1306/SSH1106 are a single-chip CMOS OLED/PLED driver with controllers for organic/polymer light emitting diode dot-matrix graphic display system. It consists of 128 segments and 64 commons. This IC is designed for Common Cathode type OLED panel.
 
@@ -75,7 +75,7 @@ There are two groups of drawing methods.
     - ````DrawDirectAligned(...)````: overwrites screen buffer with given content
     - ````ClearDirectAligned(...)````: clears out (with 0x00) given part of screen buffer
 
-    These methods allow faster (~100 times) display access but with some constraints. 
+    These methods allow faster (~100 times) display access but with some constraints.
     - bitmaps handed over here must be in appropriate format (see SSD13xx docs for "GDDRAM" and "Horizontal addressing mode").
     - no bit operations occure with existing buffer data (with pixels drawn via other means), the new data will overwrite the pixels "below" newly drawed content.
     - the "y" coordinate and the bitmap height must be byte aligned with screen buffer (again, see above docs)

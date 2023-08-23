@@ -1,4 +1,4 @@
-# BMxx80 Device Family
+# BMP280/BME280/BME680 Device Family
 
 BMxx80 is a device family that senses temperature, barometric pressure, altitude, humidity and VOC gas.
 

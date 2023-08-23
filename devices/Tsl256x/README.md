@@ -1,4 +1,4 @@
-# TSL256x - Illuminance sensor
+# TSL256x/TSL2560/TSL2561 - Illuminance sensor
 
 TSL2560 and TSL2561 are illuminance sensor. They are light-to-digital converters that transform light intensity to a digital signal output capable of direct I2C (TSL2561) or
 SMBus (TSL2560) interface. Each device combines one broadband photodiode (visible plus infrared) and one infrared-responding photodiode on a single CMOS integrated circuit capable of providing a near-photopic response over an effective 20-bit dynamic range (16-bit resolution).
