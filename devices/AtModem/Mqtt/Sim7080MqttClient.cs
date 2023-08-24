@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using IoT.Device.AtModem.CodingSchemes;
 using IoT.Device.AtModem.Events;
+using IoT.Device.AtModem.FileStorage;
 using IoT.Device.AtModem.Modem;
 using nanoFramework.M2Mqtt;
 using nanoFramework.M2Mqtt.Messages;
@@ -95,11 +96,15 @@ namespace IoT.Device.AtModem.Mqtt
 
                 // Check first if the file exists already
                 _caCertName = hash + CaCertName;
-                if (_modem.FileStorage.GetFileSize(_caCertName) <= 0)
+                var preivousStorage = ((Sim7080FileStorage)_modem.FileStorage).Storage;
+                ((Sim7080FileStorage)_modem.FileStorage).Storage = Sim7080FileStorage.StorageDirectory.Customer;
+                if (_modem.FileStorage.GetFileSize(_caCertName) > 0)
                 {
-                    _modem.FileStorage.WriteFile(_caCertName, caCert.GetRawCertData());
-                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{_caCertName}\"");
+                    _modem.FileStorage.DeleteFile(_caCertName);
                 }
+
+                _modem.FileStorage.WriteFile(_caCertName, caCert.GetRawCertData());
+                ((Sim7080FileStorage)_modem.FileStorage).Storage = preivousStorage;
             }
 
             if (clientCert != null)
@@ -107,12 +112,17 @@ namespace IoT.Device.AtModem.Mqtt
                 int hash = HashHelper.ComputeHash(clientCert.GetRawCertData());
 
                 // Check first if the file exists already
+                _caCertName = hash + CaCertName;
+                var preivousStorage = ((Sim7080FileStorage)_modem.FileStorage).Storage;
+                ((Sim7080FileStorage)_modem.FileStorage).Storage = Sim7080FileStorage.StorageDirectory.Customer;
                 _clCertName = hash + ClientCertName;
-                if (_modem.FileStorage.GetFileSize(_clCertName) <= 0)
+                if (_modem.FileStorage.GetFileSize(_clCertName) > 0)
                 {
-                    _modem.FileStorage.WriteFile(_clCertName, clientCert.GetRawCertData());
-                    _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{_clCertName}\"");
+                    _modem.FileStorage.DeleteFile(_clCertName);
                 }
+
+                _modem.FileStorage.WriteFile(_clCertName, clientCert.GetRawCertData());
+                ((Sim7080FileStorage)_modem.FileStorage).Storage = preivousStorage;
             }
         }
 
@@ -222,9 +232,18 @@ namespace IoT.Device.AtModem.Mqtt
 
             _modem.Channel.SendCommand($"AT+CSSLCFG=\"IGNORERTCTIME\",{IndexSSL},1");
 
+            if (_caCertName != null)
+            {
+                _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",2,\"{_caCertName}\"");
+            }
+
+            if (_clCertName != null)
+            {
+                _modem.Channel.SendCommand($"AT+CSSLCFG=\"CONVERT\",1,\"{_clCertName}\"");
+            }
+
             // Set the SSL parameters, this is using the index 1, that may have to be updated somewhow
-            ////_modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(_caCertName != null ? _caCertName : string.Empty)}\",\"{(_caCertName != null ? _clCertName : string.Empty)}\"");
-            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"\",\"\"");
+            _modem.Channel.SendCommand($"AT+SMSSL={IndexSSL},\"{(_caCertName != null ? _caCertName : string.Empty)}\",\"{(_caCertName != null ? _clCertName : string.Empty)}\"");
 
         RetryConnect:
             // Simcom module MQTT open the connection
@@ -267,7 +286,7 @@ namespace IoT.Device.AtModem.Mqtt
             // We have to send the topic and then send the message once the > prompt is here
             _promptArived.Reset();
             _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}\r\n"));
-            Debug.WriteLine($"Out: AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}");   
+            Debug.WriteLine($"Out: AT+SMPUB=\"{topic}\",{message.Length},{(int)qosLevel},{(retain ? "1" : "0")}");
 
             CancellationTokenSource cts = new CancellationTokenSource(1000);
             cts.Token.WaitHandle.WaitOne(1000, true);
