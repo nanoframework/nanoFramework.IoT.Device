@@ -3,7 +3,10 @@
 	/// <summary>
 	/// List of known command words.
 	/// </summary>
-	public enum Command : byte
+	/// <remarks>
+	/// The LD2410 operates in Little-Endian.
+	/// </remarks>
+	public enum Command : ushort
 	{
 		/// <summary>
 		/// This command sets the LD2410 in configuration mode. 

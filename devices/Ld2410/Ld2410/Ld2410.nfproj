@@ -18,9 +18,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="ArrayExtensions.cs" />
     <Compile Include="BaudRate.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="EndiannessExtensions.cs" />
     <Compile Include="Frame.cs" />
     <Compile Include="Ld2410.cs" />
     <Compile Include="ReportDataType.cs" />
