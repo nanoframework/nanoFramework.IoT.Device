@@ -19,7 +19,7 @@ This library supports DAC63004 and DAC63004W devices.
 
 ## Usage
 
->**Warning**: If using an ESP32, make sure to properly setup the I2C pins before creating the `I2cDevice`. If the device is connected through SPI, the respective SPI pins have to be configured instead. Add a reference to  `nanoFramework.Hardware.ESP32` NuGet package and add the following code lines:
+>**Warning**: If using an ESP32, make sure to properly setup the I2C pins before creating the `I2cDevice`. Add a reference to  `nanoFramework.Hardware.ESP32` NuGet package and add the following code lines:
 
 ```csharp
 //////////////////////////////////////////////////////////////////////
@@ -27,18 +27,6 @@ This library supports DAC63004 and DAC63004W devices.
 // used for the bus
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
-```
-
-If connecting through SPI:
-
-```csharp
-//////////////////////////////////////////////////////////////////////
-// when connecting to an ESP32 device, need to configure the SPI GPIOs
-// used for the bus
-Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
-Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
-Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
-// Make sure as well you are using the right chip select
 ```
 
 For other devices like STM32, please make sure you're using the preset pins for the I2C/SPI bus you want to use.

@@ -59,7 +59,8 @@ namespace Iot.Device.Dac63004
         [Property]
         public bool InternalRefEnabled
         {
-            get => GetInternalRefEnabled(); set => SetInternalRefEnabled(value);
+            get => GetInternalRefEnabled();
+            set => SetInternalRefEnabled(value);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Iot.Device.Dac63004
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException();
 
             // read part information
-            ReadPartInformation();
+            CheckDeviceId();
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Iot.Device.Dac63004
         /// <param name="channel">The <see cref="Channel"/> to configure.</param>
         /// <param name="mode">The funcional mode to put the channel in.</param>
         /// <exception cref="NotSupportedException">If the <paramref name="mode"/> is not supported.</exception>"
-        public void ConfigChannelMode(
+        public void ConfigureChannelMode(
             Channel channel,
             Mode mode)
         {
@@ -112,11 +113,11 @@ namespace Iot.Device.Dac63004
         }
 
         /// <summary>
-        /// Configures the DAC channel funcional mode.
+        /// Configures the Vout gain for DAC channel.
         /// </summary>
         /// <param name="channel">The <see cref="Channel"/> to configure.</param>
         /// <param name="gain">The <see cref="VoutGain"/> to configure the <paramref name="channel"/> to.</param>
-        public void ConfigChannelVoutGain(
+        public void ConfigureChannelVoutGain(
             Channel channel,
             VoutGain gain)
         {
@@ -129,14 +130,21 @@ namespace Iot.Device.Dac63004
         }
 
         /// <summary>
-        /// Data for DAC output.
+        /// Sets output data value for DAC channel.
         /// </summary>
         /// <param name="channel">The <see cref="Channel"/> to set data to.</param>
         /// <param name="value">The value to configure the data register for the <paramref name="channel"/>.</param>
-        public void ConfigChannelVoutGain(
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="value"/> is not in the range of 0 to 4095 (12 bits).</exception>
+        public void SetChannelDataValue(
             Channel channel,
             int value)
         {
+            // check allowed range (12 bits)
+            if (value < 0 || value > 4095)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             byte[] buffer = new byte[2];
 
             Register registerAddress = Register.Reg19_DAC0_Data + (byte)channel;
@@ -159,9 +167,9 @@ namespace Iot.Device.Dac63004
         }
 
         /// <summary>
-        /// Read part information to perform a sanity check for the correct part.
+        /// Read device information to perform a sanity check if expected device is connected.
         /// </summary>
-        private void ReadPartInformation()
+        private void CheckDeviceId()
         {
             byte[] buffer = ReadFromRegister(Register.Reg22_GeneralStatus, 2);
 
@@ -183,7 +191,7 @@ namespace Iot.Device.Dac63004
         // | LATCH- | LOCK |   ADDR   |   REF   |            | PDN-3 |            | PDN-2 |            | PDN-1 |            | PDN-0 |
         // |  EN    |      |          |         |            |       |            |       |            |       |            |       |
         ////
-        
+
         private void SetInternalRefEnabled(bool value)
         {
             byte[] buffer = ReadFromRegister(Register.Reg1F_CommonConfig, 2);

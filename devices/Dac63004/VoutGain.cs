@@ -15,31 +15,31 @@ namespace Iot.Device.Dac63004
         /// <summary>
         /// Using external reference on VREF pin. Multiply factor is 1x.
         /// </summary>
-        ExternalRef_1x = 0x0,
+        ExternalRef1x = 0x0,
 
         /// <summary>
         /// Using VDD as reference. Multiply factor is 1x.
         /// </summary>
-        VddRef_1x = 0b0000_0100,
+        VddRef1x = 0b0000_0100,
 
         /// <summary>
         /// Internal reference. Multiply factor is 1.5x.
         /// </summary>
-        Internal_1_5x = 0b0000_1000,
+        Internal1_5x = 0b0000_1000,
 
         /// <summary>
         /// Internal reference. Multiply factor is 2x.
         /// </summary>
-        Internal_2x = 0b0000_1100,
+        Internal2x = 0b0000_1100,
 
         /// <summary>
         /// Internal reference. Multiply factor is 3x.
         /// </summary>
-        Internal_3x = 0b0001_0000,
+        Internal3x = 0b0001_0000,
 
         /// <summary>
         /// Internal reference. Multiply factor is 4x.
         /// </summary>
-        Internal_4x = 0b0001_0100,
+        Internal4x = 0b0001_0100,
     }
 }

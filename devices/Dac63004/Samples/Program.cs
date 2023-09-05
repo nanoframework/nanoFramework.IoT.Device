@@ -21,21 +21,36 @@ Debug.WriteLine("");
 Debug.WriteLine($"DAC63004 connected to I2C{device.ConnectionSettings.BusId}");
 Debug.WriteLine("");
 
-//Debug.WriteLine($"Minimum System Voltage is config @ {dac.MinimalSystemVoltage.VoltsDc:N3}V");
+Debug.WriteLine("Set channels 0 and 1 to volrage output");
 
-//while (true)
-//{
-//    Debug.WriteLine($"Vbus status is {dac.VbusStatus}");
-    
-//    Debug.WriteLine($"Current Vbus: {dac.Vbus.VoltsDc:N3}V");
-//    Debug.WriteLine($"Current Vac1: {dac.Vac1.VoltsDc:N3}V");
-//    Debug.WriteLine($"Current Vac2: {dac.Vac2.VoltsDc:N3}V");
-//    Debug.WriteLine($"Current Vbat: {dac.Vbat.VoltsDc:N3}V");
-//    Debug.WriteLine($"Current Vsys: {dac.Vsys.VoltsDc:N3}V");
+dac.ConfigureChannelMode(Channel.Channel0, Mode.VoltageOutput);
+dac.ConfigureChannelMode(Channel.Channel1, Mode.VoltageOutput);
 
-//    Debug.WriteLine($"Die Temp: {dac.DieTemperature.DegreesCelsius:N1}°C");
+Debug.WriteLine("Enabling internal reference");
+dac.InternalRefEnabled = true;
 
-//    Debug.WriteLine("");
+Debug.WriteLine("Setting channel 0 to 1.5x gain and channel 1 to 2x gain");
+dac.ConfigureChannelVoutGain(Channel.Channel0, VoutGain.Internal1_5x);
+dac.ConfigureChannelVoutGain(Channel.Channel1, VoutGain.Internal2x);
 
-//    Thread.Sleep(3000);
-//}
+int dacValue = 100;
+
+while (true)
+{
+    Debug.WriteLine($"Setting channel data to {dacValue}");
+
+    dac.SetChannelDataValue(Channel.Channel0, dacValue);
+    dac.SetChannelDataValue(Channel.Channel1, dacValue);
+
+    Debug.WriteLine("");
+
+    dacValue += 100;
+
+    // wrap around
+    if (dacValue > 4095)
+    {
+        dacValue = 100;
+    }
+
+    Thread.Sleep(3000);
+}
