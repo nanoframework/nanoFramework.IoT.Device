@@ -203,32 +203,7 @@
     <Compile Include="Modem\Sim7080.cs" />
     <Compile Include="Modem\Sim7090.cs" />
     <Compile Include="Modem\Sim800.cs" />
-    <Compile Include="Mqtt\IMqttClient.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttMsgPublishedEventArgs.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttMsgPublishEventArgs.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttMsgSubscribedEventArgs.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttMsgSubscribeEventArgs .cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttMsgUnsubscribedEventArgs.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttMsgUnsubscribeEventArgs.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mqtt\MqttQoSLevel.cs" />
-    <Compile Include="Mqtt\MqttReasonCode.cs" />
-    <Compile Include="Mqtt\MqttSslProtocols.cs" />
     <Compile Include="Mqtt\Sim7080MqttClient.cs" />
-    <Compile Include="Mqtt\UserProperty.cs" />
     <Compile Include="Network\INetwork.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
@@ -257,8 +232,14 @@
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.M2Mqtt.Core">
+      <HintPath>packages\nanoFramework.M2Mqtt.Core.5.1.92\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>packages\nanoFramework.Runtime.Native.1.6.6\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections">
       <HintPath>packages\nanoFramework.System.Collections.1.5.18\lib\nanoFramework.System.Collections.dll</HintPath>
@@ -275,6 +256,9 @@
     <Reference Include="System.Math">
       <HintPath>packages\nanoFramework.System.Math.1.5.29\lib\System.Math.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net">
+      <HintPath>packages\nanoFramework.System.Net.1.10.52\lib\System.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.19\lib\System.Threading.dll</HintPath>
     </Reference>
@@ -287,6 +271,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <Import Project=".\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="$(Configuration)=='Debug'" />

@@ -11,31 +11,31 @@ namespace IoT.Device.AtModem.DTOs
         /// <summary>
         /// SIM card absent.
         /// </summary>
-        SIM_ABSENT = 0,
+        Absent = 0,
 
         /// <summary>
         /// SIM card not ready.
         /// </summary>
-        SIM_NOT_READY = 1,
+        NotReady = 1,
 
         /// <summary>
         /// SIM card ready.
         /// </summary>
-        SIM_READY = 2,
+        Ready = 2,
 
         /// <summary>
         /// SIM card requires PIN.
         /// </summary>
-        SIM_PIN = 3,
+        PinRequired = 3,
 
         /// <summary>
         /// SIM card requires PUK.
         /// </summary>
-        SIM_PUK = 4,
+        PukRequired = 4,
 
         /// <summary>
         /// SIM card network personalization required.
         /// </summary>
-        SIM_NETWORK_PERSONALIZATION = 5,
+        NetworkPersonalization = 5,
     }
 }

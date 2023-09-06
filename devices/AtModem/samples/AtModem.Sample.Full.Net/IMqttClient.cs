@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using System.Security.Cryptography.X509Certificates;
 using nanoFramework.M2Mqtt.Messages;
 
 namespace nanoFramework.M2Mqtt
@@ -31,7 +30,7 @@ namespace nanoFramework.M2Mqtt
         /// <param name="caCert">CA certificate for secure connection</param>
         /// <param name="clientCert">Client certificate</param>
         /// <param name="sslProtocol">SSL/TLS protocol version</param>
-        void Init(string brokerHostName, int brokerPort, bool secure, X509Certificate caCert, X509Certificate clientCert, MqttSslProtocols sslProtocol);
+        void Init(string brokerHostName, int brokerPort, bool secure, byte[] caCert, byte[] clientCert, MqttSslProtocols sslProtocol);
 
         /// <summary>
         /// Connect to broker.
@@ -106,7 +105,7 @@ namespace nanoFramework.M2Mqtt
         /// <param name="message">Message data (payload).</param>
         /// <param name="contentType">Content of the application message. This is only available for MQTT v5.0.</param>
         /// <returns>Message Id related to PUBLISH message.</returns>
-        /// <exception cref="NotSupportedException">If setting a parameter that is not supported in the MQTT version set for this <see cref="MqttClient"/>.</exception>
+        /// <exception cref="NotSupportedException">If setting a parameter that is not supported in the MQTT version set for this <see cref="IMqttClient"/>.</exception>
         public ushort Publish(
             string topic,
             byte[] message,
@@ -135,7 +134,7 @@ namespace nanoFramework.M2Mqtt
         /// <summary>
         /// The event for PUBLISH message received.
         /// </summary>
-        public event MqttMsgPublishEventHandler MqttMsgPublishReceived;
+        public event IMqttClient.MqttMsgPublishEventHandler MqttMsgPublishReceived;
 
         /// <summary>
         /// Delegate that defines event handler for published message.

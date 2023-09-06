@@ -1,5 +1,19 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿/*
+Copyright (c) 2013, 2014 Paolo Patierno
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+and Eclipse Distribution License v1.0 which accompany this distribution. 
+
+The Eclipse Public License is available at 
+   http://www.eclipse.org/legal/epl-v10.html
+and the Eclipse Distribution License is available at 
+   http://www.eclipse.org/org/documents/edl-v10.php.
+
+Contributors:
+   Paolo Patierno - initial API and implementation and/or initial documentation
+   .NET Foundation and Contributors - nanoFramework support
+*/
 
 namespace nanoFramework.M2Mqtt
 {
@@ -36,6 +50,6 @@ namespace nanoFramework.M2Mqtt
         /// <summary>
         /// TLS version 1.3.
         /// </summary>
-        TLSv1_3
+        TLSv1_3,
     }
 }

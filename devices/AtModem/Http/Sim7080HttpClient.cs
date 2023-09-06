@@ -286,7 +286,7 @@ namespace IoT.Device.AtModem.Http
                     Modem.Channel.Start();
                 }
 
-                // Set the querry URL
+                // Set the query URL
                 // URL = <scheme>://<host>(:<port>)/<path>
                 // Do we have a last slash?
                 string querryUrl = string.Empty;

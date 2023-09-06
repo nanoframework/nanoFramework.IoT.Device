@@ -473,16 +473,16 @@ namespace IoT.Device.AtModem.Modem
                 switch (cpinResult)
                 {
                     case "SIM PIN":
-                        return ModemResponse.ResultSuccess(SimStatus.SIM_PIN);
+                        return ModemResponse.ResultSuccess(SimStatus.PinRequired);
                     case "SIM PUK":
-                        return ModemResponse.ResultSuccess(SimStatus.SIM_PUK);
+                        return ModemResponse.ResultSuccess(SimStatus.PukRequired);
                     case "PH-NET PIN":
-                        return ModemResponse.ResultSuccess(SimStatus.SIM_NETWORK_PERSONALIZATION);
+                        return ModemResponse.ResultSuccess(SimStatus.NetworkPersonalization);
                     case "READY":
-                        return ModemResponse.ResultSuccess(SimStatus.SIM_READY);
+                        return ModemResponse.ResultSuccess(SimStatus.Ready);
                     default:
                         // Treat unsupported lock types as "sim absent"
-                        return ModemResponse.ResultSuccess(SimStatus.SIM_ABSENT);
+                        return ModemResponse.ResultSuccess(SimStatus.Absent);
                 }
             }
 
@@ -709,7 +709,7 @@ namespace IoT.Device.AtModem.Modem
         /// Waits for the modem to register to the network.
         /// </summary>
         /// <param name="token">A valid cancellation token.</param>
-        /// <returns>True if the connection happends otherwise false.</returns>
+        /// <returns>True if the connection happens otherwise false.</returns>
         public bool WaitForNetworkRegistration(CancellationToken token)
         {
             // Check if there is any network connection, if not, wait for it

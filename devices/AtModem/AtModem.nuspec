@@ -15,7 +15,8 @@
 		<icon>images\nf-logo.png</icon>
 		<repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$"/>
 		<copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-		<description>This package includes the .NET IoT Core binding Iot.Device.AtModem for .NET nanoFramework C# projects.</description>
+		<description>This package includes the .NET nanoFramework binding Iot.Device.AtModem for .NET nanoFramework C# projects.
+This nuget allows to use AT Modem for SMS, calls, network, internal storage, HTTP, MQTT for some modems.</description>
 		<summary>Iot.Device.AtModem assembly for .NET nanoFramework C# projects</summary>
 		<tags>nanoFramework C# csharp netmf netnf Iot.Device.AtModem</tags>
 		<dependencies>

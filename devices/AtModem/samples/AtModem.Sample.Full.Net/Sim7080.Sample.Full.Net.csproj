@@ -10,7 +10,18 @@
 
   <ItemGroup>
     <Compile Include="../Program.cs" />
+    <Compile Include="IMqttClient.cs" />
+    <Compile Include="MqttMsgPublishedEventArgs.cs" />
+    <Compile Include="MqttMsgPublishEventArgs.cs" />
+    <Compile Include="MqttMsgSubscribedEventArgs.cs" />
+    <Compile Include="MqttMsgSubscribeEventArgs.cs" />
+    <Compile Include="MqttMsgUnsubscribedEventArgs.cs" />
+    <Compile Include="MqttMsgUnsubscribeEventArgs.cs" />
+    <Compile Include="MqttQoSLevel.cs" />
+    <Compile Include="MqttReasonCode.cs" />
+    <Compile Include="MqttSslProtocols.cs" />
     <Compile Include="SpanByte.cs" />
+    <Compile Include="UserProperty.cs" />
     <Compile Include="../../AtParser/*.cs" />
     <Compile Include="../../CodingSchemes/*.cs" />
     <Compile Include="../../DTOs/*.cs" />

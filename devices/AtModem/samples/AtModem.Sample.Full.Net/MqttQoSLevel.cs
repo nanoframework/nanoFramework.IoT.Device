@@ -4,7 +4,7 @@
 namespace nanoFramework.M2Mqtt.Messages
 {
     /// <summary>
-    /// MQTT Quality of Service Level.
+    /// MQTT Quality of Service Level
     /// </summary>
     public enum MqttQoSLevel
     {

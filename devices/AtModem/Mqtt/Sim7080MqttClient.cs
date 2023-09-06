@@ -80,8 +80,20 @@ namespace IoT.Device.AtModem.Mqtt
         /// <inheritdoc/>
         public event IMqttClient.ConnectionClosedEventHandler ConnectionClosed;
 
+        /// <summary>
+        /// Initializes the MQTT client.
+        /// </summary>
+        /// <param name="brokerHostName">The broker host name.</param>
+        /// <param name="brokerPort">The broker port.</param>
+        /// <param name="secure">True if the connection is secured.</param>
+        /// <param name="caCert">The root certificate.</param>
+        /// <param name="clientCert">The client certificate.</param>
+        /// <param name="sslProtocol">The SSL protocol to use.</param>
+        public void Init(string brokerHostName, int brokerPort, bool secure, X509Certificate caCert, X509Certificate clientCert, MqttSslProtocols sslProtocol) =>
+            Init(brokerHostName, brokerPort, secure, caCert?.GetRawCertData(), clientCert?.GetRawCertData(), sslProtocol);
+
         /// <inheritdoc/>
-        public void Init(string brokerHostName, int brokerPort, bool secure, X509Certificate caCert, X509Certificate clientCert, MqttSslProtocols sslProtocol)
+        public void Init(string brokerHostName, int brokerPort, bool secure, byte[] caCert, byte[] clientCert, MqttSslProtocols sslProtocol)
         {
             _brokerHostName = brokerHostName;
             _brokerPort = brokerPort;
@@ -92,7 +104,7 @@ namespace IoT.Device.AtModem.Mqtt
             // Store the caCert and the client cert in the storage
             if (caCert != null)
             {
-                int hash = HashHelper.ComputeHash(caCert.GetRawCertData());
+                int hash = HashHelper.ComputeHash(caCert);
 
                 // Check first if the file exists already
                 _caCertName = hash + CaCertName;
@@ -103,13 +115,13 @@ namespace IoT.Device.AtModem.Mqtt
                     _modem.FileStorage.DeleteFile(_caCertName);
                 }
 
-                _modem.FileStorage.WriteFile(_caCertName, caCert.GetRawCertData());
+                _modem.FileStorage.WriteFile(_caCertName, caCert);
                 ((Sim7080FileStorage)_modem.FileStorage).Storage = preivousStorage;
             }
 
             if (clientCert != null)
             {
-                int hash = HashHelper.ComputeHash(clientCert.GetRawCertData());
+                int hash = HashHelper.ComputeHash(clientCert);
 
                 // Check first if the file exists already
                 _caCertName = hash + CaCertName;
@@ -121,7 +133,7 @@ namespace IoT.Device.AtModem.Mqtt
                     _modem.FileStorage.DeleteFile(_clCertName);
                 }
 
-                _modem.FileStorage.WriteFile(_clCertName, clientCert.GetRawCertData());
+                _modem.FileStorage.WriteFile(_clCertName, clientCert);
                 ((Sim7080FileStorage)_modem.FileStorage).Storage = preivousStorage;
             }
         }

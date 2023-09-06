@@ -30,7 +30,16 @@ AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
 int retries = 10;
 Sim7080 modem = new(atChannel);
-////Sim800 modem = new(atChannel);
+
+// If you want to use a different modem, you can use the following:
+// Sim800 modem = new(atChannel);
+// In the case of a SIM800, you may have a key pin to drive high/low to enable the modem
+// GpioController gpioController = new();
+// GpioPin keyPin = gpioController.OpenPin(5, PinMode.Output);
+// keyPin.Write(PinValue.High);
+// Thred.Sleep(1000);
+// keyPin.Write(PinValue.Low);
+
 modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
 modem.Network.AutoReconnect = true;
 modem.Network.ApplicationNetworkEvent += NetworkApplicationNetworkEvent;
@@ -54,7 +63,7 @@ var pinStatus = modem.GetSimStatus();
 if (pinStatus.IsSuccess)
 {
     Console.WriteLine($"SIM status: {(SimStatus)pinStatus.Result}");
-    if ((SimStatus)pinStatus.Result == SimStatus.SIM_PIN)
+    if ((SimStatus)pinStatus.Result == SimStatus.PinRequired)
     {
         var pinRes = modem.EnterSimPin(new PersonalIdentificationNumber("1234"));
         if (pinRes.IsSuccess)
@@ -331,7 +340,7 @@ void TestSms()
         // Checking if we have at least 1 SMS
         if (((ArrayList)resplistSms.Result).Count > 0)
         {
-            // Making sur"e we are using the PDU format
+            // Making sure we are using the PDU format
             modem.SmsProvider.SetSmsMessageFormat(SmsTextFormat.PDU);
             var respSmsRead = modem.SmsProvider.ReadSms(((SmsWithIndex)((ArrayList)resplistSms.Result)[0]).Index, SmsTextFormat.PDU);
             if (respSmsRead.IsSuccess)
@@ -499,6 +508,40 @@ void TestStorage()
         respDeleteDir = modem.FileStorage.DeleteDirectory(DirectoryName);
         Console.WriteLine($"Delete directory: {(respDeleteDir ? "success" : "failure")}. Should be success as the directory should be empty.");
     }
+}
+
+void TestCall()
+{
+    var call = modem.Call;
+    call.IncomingCall += CallIncomingCall;
+    call.CallStarted += CallCallStarted;
+    call.CallEnded += CallCallEnded;
+    call.MissedCall += CallMissedCall;
+
+    // Let's do a call now and being anonymous ;-)
+    call.Dial(new PhoneNumber("+33123456789"), true);
+}
+
+void CallCallStarted(object sender, CallStartedEventArgs e)
+{
+    Console.WriteLine("A call has started");
+}
+
+void CallMissedCall(object sender, MissedCallEventArgs e)
+{
+    Console.WriteLine($"Missed call from {e.PhoneNumber} at {e.Time}");
+}
+
+void CallIncomingCall(object sender, IncomingCallEventArgs e)
+{
+    Console.WriteLine($"Incoming!");
+    // We have an incoming call, we answer it
+    modem.Call.AnswerIncomingCall();
+}
+
+void CallCallEnded(object sender, CallEndedEventArgs e)
+{
+    Console.WriteLine($"Call ended!");
 }
 
 void TestBinaryStorage()

@@ -196,7 +196,7 @@ namespace IoT.Device.AtModem.Network
 
                 // Get the status of the pin
                 // Reconnect if needed
-                if ((SimStatus)status.Result != SimStatus.SIM_READY)
+                if ((SimStatus)status.Result != SimStatus.Ready)
                 {
                     if (_pin != null)
                     {
@@ -212,7 +212,7 @@ namespace IoT.Device.AtModem.Network
                             return false;
                         }
 
-                        if ((SimStatus)status.Result != SimStatus.SIM_READY)
+                        if ((SimStatus)status.Result != SimStatus.Ready)
                         {
                             status = _modem.EnterSimPin(_pin);
                             if (!status.IsSuccess)

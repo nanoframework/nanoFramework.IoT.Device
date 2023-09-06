@@ -82,10 +82,9 @@ namespace nanoFramework.M2Mqtt.Messages
 
         /// <summary>Keep Alive timeout.</summary>
         KeepAliveTimeout = 0x8D,
-
-        /// <summary>Session taken over.</summary>        
+        /// <summary>Session taken over.</summary>
+        /// 
         SessionTakenOver = 0x8E,
-
         /// <summary>Topic Filter invalid.</summary>
         TopicFilterInvalid = 0x8F,
 
@@ -147,7 +146,6 @@ namespace nanoFramework.M2Mqtt.Messages
         WildcardSubscriptionsNotSupported = 0xA2,
 
         // v3.1.1.1
-
         /// <summary>The Server does not support the level of the MQTT protocol requested by the Client.</summary>
         ConnectionRefusedUnacceptableProtocolVersion = 0x01,
 
@@ -162,5 +160,6 @@ namespace nanoFramework.M2Mqtt.Messages
 
         /// <summary>The Client is not authorized to connect.</summary>
         ConnectionRefusedNotAuthorized = 0x05,
+
     }
 }
