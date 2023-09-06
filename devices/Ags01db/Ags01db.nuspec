@@ -25,8 +25,8 @@
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.31.0" />
-      <dependency id="UnitsNet.nanoFramework.Ratio" version="5.31.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="5.32.0" />
+      <dependency id="UnitsNet.nanoFramework.Ratio" version="5.32.0" />
     </dependencies>
   </metadata>
   <files>
