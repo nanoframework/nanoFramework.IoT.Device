@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Sim7080.Sample</RootNamespace>
-    <AssemblyName>Sim7080.Sample</AssemblyName>
+    <RootNamespace>AtModem.Sample</RootNamespace>
+    <AssemblyName>AtModem.Sample</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
