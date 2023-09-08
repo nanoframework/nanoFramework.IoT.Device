@@ -1,6 +1,7 @@
 ﻿# DAC63004/DAC63004W - Ultra-low-power quad-channel 12-bit smart DAC with I²C, SPI and PWM
 
 This library supports DAC63004 and DAC63004W devices.
+Currently the implementation allows I2C connection to the device. SPI will be added in the future.
 
 ## Documentation
 
