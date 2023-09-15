@@ -79,13 +79,15 @@ namespace Iot.Device.Modbus.Samples
             throw new NotImplementedException();
         }
 
-        protected override bool TryReadHoldingRegister(ushort address, out ushort value)
+        protected override bool TryReadHoldingRegister(
+            ushort address,
+            out short value)
         {
             // Similar to the code above...
             throw new NotImplementedException();
         }
 
-        protected override bool TryReadInputRegister(ushort address, out ushort value)
+        protected override bool TryReadInputRegister(ushort address, out short value)
         {
             // Similar to the code above...
             throw new NotImplementedException();
@@ -97,7 +99,7 @@ namespace Iot.Device.Modbus.Samples
             throw new NotImplementedException();
         }
 
-        protected override bool TryWriteHoldingRegister(ushort address, ushort value)
+        protected override bool TryWriteHoldingRegister(ushort address, short value)
         {
             // Similar to the code above...
             throw new NotImplementedException();
