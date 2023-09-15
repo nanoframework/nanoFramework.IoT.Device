@@ -419,11 +419,17 @@ namespace Iot.Device.Modbus.Client
             var buffer = request.Serialize();
             DataWrite(buffer, 0, buffer.Length);
 
+            byte id = 0;
+
             Response response;
+
             try
             {
-                // Device/Slave ID
-                var id = DataRead();
+                // read dummy byte (from specs: 3.5 chars time start marker, will never ever be read in a understandible manner)
+                _ = DataRead();
+
+                // read device ID
+                id = DataRead();
 
                 // Function number
                 var fn = DataRead();
@@ -444,12 +450,14 @@ namespace Iot.Device.Modbus.Client
                             expectedBytes = DataRead();
                             responseBytes.Add(expectedBytes);
                             break;
+
                         case FunctionCode.WriteSingleCoil:
                         case FunctionCode.WriteSingleRegister:
                         case FunctionCode.WriteMultipleCoils:
                         case FunctionCode.WriteMultipleRegisters:
                             expectedBytes = 4;
                             break;
+
                         default:
                             if ((fn & Consts.ErrorMask) != 0)
                             {
@@ -460,7 +468,8 @@ namespace Iot.Device.Modbus.Client
                     }
                 }
 
-                expectedBytes += 2; // CRC Check
+                // CRC Check
+                expectedBytes += 2;
                 responseBytes.Add(DataRead(expectedBytes));
 
 #if DEBUG
