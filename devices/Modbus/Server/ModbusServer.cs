@@ -404,7 +404,7 @@ namespace Iot.Device.Modbus.Server
                 return response;
             }
 
-            ushort val = request.Data.GetUInt16(0);
+            short val = request.Data.GetInt16(0);
             response.Data = request.Data;
 
             _device.BeginWrite();
@@ -494,7 +494,7 @@ namespace Iot.Device.Modbus.Server
                 for (int i = 0; i < request.Count; i++)
                 {
                     ushort addr = (ushort)(request.Address + i);
-                    ushort val = request.Data.GetUInt16(i * 2);
+                    short val = request.Data.GetInt16(i * 2);
 
                     if (!_device.SetHoldingRegister(addr, val))
                     {

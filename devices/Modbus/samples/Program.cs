@@ -33,7 +33,7 @@ namespace Iot.Device.Modbus.Samples
             var client = new ModbusClient("COM3");
             client.ReadTimeout = client.WriteTimeout = 2000;
 
-            client.WriteMultipleRegisters(2, 0x5, new ushort[] { 3, 5, 2, 3 });
+            client.WriteMultipleRegisters(2, 0x5, new short[] { 3, 5, 2, 3 });
             client.Raw(2, FunctionCode.Diagnostics, new byte[] { 0x01, 0x01, 0x01, 0x01 });
 
             var data1 = client.ReadHoldingRegisters(2, 0x7, 4);
@@ -79,13 +79,17 @@ namespace Iot.Device.Modbus.Samples
             throw new NotImplementedException();
         }
 
-        protected override bool TryReadHoldingRegister(ushort address, out ushort value)
+        protected override bool TryReadHoldingRegister(
+            ushort address,
+            out short value)
         {
             // Similar to the code above...
             throw new NotImplementedException();
         }
 
-        protected override bool TryReadInputRegister(ushort address, out ushort value)
+        protected override bool TryReadInputRegister(
+            ushort address,
+            out short value)
         {
             // Similar to the code above...
             throw new NotImplementedException();
@@ -97,7 +101,9 @@ namespace Iot.Device.Modbus.Samples
             throw new NotImplementedException();
         }
 
-        protected override bool TryWriteHoldingRegister(ushort address, ushort value)
+        protected override bool TryWriteHoldingRegister(
+            ushort address,
+            short value)
         {
             // Similar to the code above...
             throw new NotImplementedException();

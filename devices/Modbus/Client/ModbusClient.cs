@@ -83,12 +83,17 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the registers.</param>
         /// <param name="count">The number of registers to read.</param>
         /// <returns>An array of ushort values representing the values of the input registers.</returns>
-        public ushort[] ReadInputRegisters(byte deviceId, ushort startAddress, ushort count)
+        public short[] ReadInputRegisters(
+            byte deviceId,
+            ushort startAddress,
+            ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadInputRegisters);
+
             if (data != null)
             {
-                var values = new ushort[count];
+                var values = new short[count];
+
                 for (int i = 0; i < count; i++)
                 {
                     var register = new InputRegister
@@ -97,6 +102,7 @@ namespace Iot.Device.Modbus.Client
                         HiByte = data[i * 2],
                         LoByte = data[(i * 2) + 1]
                     };
+
                     values[i] = register.Value;
                 }
 
@@ -151,12 +157,17 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the registers.</param>
         /// <param name="count">The number of registers to read.</param>
         /// <returns>An array of ushort values representing the values of the holding registers.</returns>
-        public ushort[] ReadHoldingRegisters(byte deviceId, ushort startAddress, ushort count)
+        public short[] ReadHoldingRegisters(
+            byte deviceId,
+            ushort startAddress,
+            ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadHoldingRegisters);
+
             if (data != null)
             {
-                var values = new ushort[count];
+                var values = new short[count];
+
                 for (int i = 0; i < count; i++)
                 {
                     var register = new HoldingRegister
@@ -165,6 +176,7 @@ namespace Iot.Device.Modbus.Client
                         HiByte = data[i * 2],
                         LoByte = data[(i * 2) + 1]
                     };
+
                     values[i] = register.Value;
                 }
 
@@ -239,10 +251,13 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The address of the coil to write.</param>
         /// <param name="value">The value to write to the coil.</param>
         /// <returns>True if the write operation is successful, false otherwise.</returns>
-        public bool WriteSingleCoil(byte deviceId, ushort startAddress, bool value)
+        public bool WriteSingleCoil(
+            byte deviceId,
+            ushort startAddress,
+            bool value)
         {
             var buffer = new DataBuffer(2);
-            buffer.Set(0, (ushort)(value ? 0xFF00 : 0x0000));
+            buffer.Set(0, (short)(value ? 0xFF00 : 0x0000));
 
             return Write(deviceId, startAddress, 0, buffer, FunctionCode.WriteSingleCoil);
         }
@@ -254,12 +269,20 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The address of the register to write.</param>
         /// <param name="value">The value to write to the register.</param>
         /// <returns>True if the write operation is successful, false otherwise.</returns>
-        public bool WriteSingleRegister(byte deviceId, ushort startAddress, ushort value)
+        public bool WriteSingleRegister(
+            byte deviceId,
+            ushort startAddress,
+            short value)
         {
             var register = new HoldingRegister { Value = value };
             var buffer = new DataBuffer(new[] { register.HiByte, register.LoByte });
 
-            return Write(deviceId, startAddress, 0, buffer, FunctionCode.WriteSingleRegister);
+            return Write(
+                deviceId,
+                startAddress,
+                0,
+                buffer,
+                FunctionCode.WriteSingleRegister);
         }
 
         /// <summary>
@@ -301,7 +324,10 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the registers to write.</param>
         /// <param name="values">An array of ushort values representing the values to write to the registers.</param>
         /// <returns>True if the write operation is successful, false otherwise.</returns>
-        public bool WriteMultipleRegisters(byte deviceId, ushort startAddress, ushort[] values)
+        public bool WriteMultipleRegisters(
+            byte deviceId,
+            ushort startAddress,
+            short[] values)
         {
             if (values.Length == 0)
             {
@@ -310,12 +336,18 @@ namespace Iot.Device.Modbus.Client
 
             var buffer = new DataBuffer((values.Length * 2) + 1);
             buffer.Set(0, (byte)(values.Length * 2));
+
             for (int i = 0; i < values.Length; i++)
             {
-                buffer.Set((i * 2) + 1, values[i]);
+                buffer.Set((i * 2) + 1, (byte)values[i]);
             }
 
-            return Write(deviceId, startAddress, (ushort)values.Length, buffer, FunctionCode.WriteMultipleRegisters);
+            return Write(
+                deviceId,
+                startAddress,
+                (ushort)values.Length,
+                buffer,
+                FunctionCode.WriteMultipleRegisters);
         }
 
         private bool Write(byte deviceId, ushort startAddress, ushort count, DataBuffer buffer, FunctionCode function)

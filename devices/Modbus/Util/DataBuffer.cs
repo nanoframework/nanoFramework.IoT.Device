@@ -44,6 +44,14 @@ namespace Iot.Device.Modbus.Util
             Buffer = newBytes;
         }
 
+        public void Add(short value)
+        {
+            byte[] blob = BitConverter.GetBytes(value);
+            blob.JudgReverse();
+
+            Add(blob);
+        }
+
         public void Add(ushort value)
         {
             byte[] blob = BitConverter.GetBytes(value);
@@ -73,7 +81,7 @@ namespace Iot.Device.Modbus.Util
             }
         }
 
-        public void Set(int index, ushort value)
+        public void Set(int index, short value)
         {
             byte[] blob = BitConverter.GetBytes(value);
             blob.JudgReverse();
@@ -103,12 +111,24 @@ namespace Iot.Device.Modbus.Util
             return Buffer[index];
         }
 
+        public short GetInt16(int index)
+        {
+            byte[] blob = Get(index, 2);
+            blob.JudgReverse();
+
+            return BitConverter.ToInt16(
+                blob,
+                0);
+        }
+
         public ushort GetUInt16(int index)
         {
             byte[] blob = Get(index, 2);
             blob.JudgReverse();
 
-            return BitConverter.ToUInt16(blob, 0);
+            return BitConverter.ToUInt16(
+                blob,
+                0);
         }
 
         #endregion
