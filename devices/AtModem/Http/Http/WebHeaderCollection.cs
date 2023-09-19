@@ -6,7 +6,6 @@
 
 namespace System.Net
 {
-
     using System.Collections;
     using System.Text;
 
@@ -730,8 +729,5 @@ namespace System.Net
             // Return count of bytes copied.
             return headersBytes.Length;
         }
-
     }
-} // namespace System.Net
-
-
+}

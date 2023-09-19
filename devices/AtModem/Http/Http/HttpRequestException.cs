@@ -4,8 +4,6 @@
 // See LICENSE file in the project root for full license information.
 //
 
-using IoT.Device.AtModem.Http;
-
 namespace System.Net.Http
 {
     /// <summary>

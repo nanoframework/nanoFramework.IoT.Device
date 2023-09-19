@@ -7,13 +7,11 @@
 
 namespace System.Net
 {
-
     /// <summary>
     /// Internal class that parses the string with date in HTTP headers to DateTime object.
     /// </summary>
     internal class HttpDateParse
     {
-
         /// <summary>
         /// Bse for decimal numbers
         /// </summary>
@@ -489,6 +487,4 @@ namespace System.Net
             return fRet;
         }
     }
-} // namespace System.Net
-
-
+}

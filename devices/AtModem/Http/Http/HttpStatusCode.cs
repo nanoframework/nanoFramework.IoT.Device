@@ -4,10 +4,8 @@
 // See LICENSE file in the project root for full license information.
 //
 
-
 namespace System.Net
 {
-
     // Any int can be cast to a HttpStatusCode to allow checking for non http1.1
     // codes.
 
@@ -24,7 +22,6 @@ namespace System.Net
     /// </remarks>
     public enum HttpStatusCode
     {
-
         /// Informational -- 1xx.
         /// <summary>Equivalent to HTTP status 100.  Indicates that the client can continue with its
         /// request.</summary>
@@ -295,6 +292,4 @@ namespace System.Net
        10.5.5   504 Gateway Timeout ......................................71
        10.5.6   505 HTTP Version Not Supported ...........................71
     */
-} // namespace System.Net
-
-
+}
