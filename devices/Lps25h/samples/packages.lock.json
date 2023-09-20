@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
-        "requested": "[1.2.381, 1.2.381]",
-        "resolved": "1.2.381",
-        "contentHash": "z38NdXpx4TwhgjN9dK0R2bD5eHFOuM7i0gt0JedGjMHkKOPCaZdeCPMSNeCYAHUuCb0qYxbXXj5hbtjBw0EJjA=="
+        "requested": "[1.2.392, 1.2.392]",
+        "resolved": "1.2.392",
+        "contentHash": "T3Z+l1XsNwbAIPppwyMupD3vwXUyd1L9M7TeIoUY/UT/asCW/YTTcARPP5q1JfOMRykcyeFE9kP39gpDeNyq8Q=="
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
@@ -52,27 +52,27 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.32.0, 5.32.0]",
-        "resolved": "5.32.0",
-        "contentHash": "HQcrhIAtkZHWhzBhIJ4FLzJJY3FhlEtTyAMfZaAFPSv5wscea682Pz3FQQ3gCEMTvGScfxf1GLO18/omz/K7Tg=="
+        "requested": "[5.33.0, 5.33.0]",
+        "resolved": "5.33.0",
+        "contentHash": "h1iz6TWlVBhsN9FMY31Fd/ZO9V5YyFMcwfdemPaTlpniBGC62QnMAWwKaxRXTDXMDOZH8ufQrDvSzkabaQHnwg=="
       },
       "UnitsNet.nanoFramework.Pressure": {
         "type": "Direct",
-        "requested": "[5.32.0, 5.32.0]",
-        "resolved": "5.32.0",
-        "contentHash": "9Yag8pUhbuhL9fNC1T4v2q/U2DDally4CAP5g5zE72PXsg64oV7LRrZhsonCeKPXQ6GzwBVlUvfuSrEbHz6Bnw=="
+        "requested": "[5.33.0, 5.33.0]",
+        "resolved": "5.33.0",
+        "contentHash": "kjT3EM8k7u5LQf40hgPEtrMoGnEeYNgbBqRrXzHxNRf6rKDpy6faxH0L8wFYianij4S6PfjiO1sspY2/sfFU/A=="
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.32.0, 5.32.0]",
-        "resolved": "5.32.0",
-        "contentHash": "7mStiyUKqsO1ipKcY+bOjYtUw9i9wVKVZGycBV9mbfRfWPSLmwm4hVaUqimdhbwkUEqKELQyq403Mu3hLYHbuA=="
+        "requested": "[5.33.0, 5.33.0]",
+        "resolved": "5.33.0",
+        "contentHash": "8tJrFdyQO14/+8xJiPebBHtwh29vCNomlZNemX9TRPD2OM4XH87zqOEELuPhFIeKbPXHkin/nu5zXy6fplrqSQ=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.32.0, 5.32.0]",
-        "resolved": "5.32.0",
-        "contentHash": "syecl0f0yIEcQqdcHeIW8/fBllX0iqVKJ5R1b1r2cn8wl6B1QUhuoUlkMtp2rGB0gr2g8Ga4mfhUHyGCuhlOlA=="
+        "requested": "[5.33.0, 5.33.0]",
+        "resolved": "5.33.0",
+        "contentHash": "NLsoaOdX4tBr7MlmdE9xG3moKEmclRn6JeeZyETzLFcSqMLS2iO0ZPT0Wu/naM9urFBoeafj06YLZKzW/VxX1w=="
       }
     }
   }

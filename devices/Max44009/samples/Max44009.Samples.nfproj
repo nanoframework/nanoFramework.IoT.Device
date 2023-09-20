@@ -32,8 +32,8 @@
       <HintPath>..\packages\nanoFramework.System.Device.Model.1.2.325\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Illuminance, Version=5.32.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.5.32.0\lib\UnitsNet.Illuminance.dll</HintPath>
+    <Reference Include="UnitsNet.Illuminance, Version=5.33.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.5.33.0\lib\UnitsNet.Illuminance.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
