@@ -7,7 +7,7 @@ namespace Ld2410
 	/// <summary>
 	/// Defines the configurations for a <see cref="Ld2410"/> device.
 	/// </summary>
-	public sealed class Configuration
+	public sealed class DeviceConfiguration
 	{
 		public const ushort MaxSupportedDistanceGates = 8;
 		public const float DistanceGate = 0.75f;
@@ -77,7 +77,7 @@ namespace Ld2410
 		/// <summary>
 		/// Gets or sets the serial port baud rate.
 		/// </summary>
-		public BaudRate BaudRate { get; set; } = BaudRate.BaudRate256000;
+		public int BaudRate { get; set; } = 256_000;
 
 		/// <summary>
 		/// Gets all available gate configurations.
@@ -87,7 +87,7 @@ namespace Ld2410
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Configuration"/> class.
 		/// </summary>
-		public Configuration()
+		public DeviceConfiguration()
 		{
 			this.MaximumMovementDetectionDistance = this.MaximumRestingDetectionDistance = Length.FromCentimeters(MaxSupportedDistanceInCentemeters);
 			this.NoOneDuration = TimeSpan.FromSeconds(5);

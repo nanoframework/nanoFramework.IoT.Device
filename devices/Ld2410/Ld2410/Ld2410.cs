@@ -1,94 +1,144 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO.Ports;
 
 namespace Ld2410
 {
-	public sealed class Ld2410 : IDisposable
-	{
-		private readonly SerialPort serialPort;
+    public sealed class Ld2410 : IDisposable
+    {
+        private readonly SerialPort serialPort;
 
-		public Configuration Configuration { get; }
+        public delegate void MeasurementEventHandler(object sender, ReportFrame report);
 
-		public bool ConfigurationModeEnabled { get; private set; }
+        public event MeasurementEventHandler OnMeasurementReceived;
 
-		public bool EngineeringModeEnabled { get; private set; }
+        public DeviceConfiguration Configuration { get; }
 
-		public string FirmwareVersion { get; private set; }
+        public bool ConfigurationModeEnabled { get; private set; }
 
-		public Ld2410(string serialPortName, BaudRate baudRate = BaudRate.BaudRate256000)
-		{
-			this.Configuration = new()
-			{
-				BaudRate = baudRate
-			};
+        public bool EngineeringModeEnabled { get; private set; }
 
-			this.serialPort = new SerialPort(portName: serialPortName,
-				baudRate: (int)baudRate,
-				stopBits: StopBits.One,
-				parity: Parity.None);
-		}
+        public string FirmwareVersion { get; private set; }
 
-		public static BaudRate FindBaudRate(string serialPortName)
-		{
-			return BaudRate.BaudRate256000;
-		}
+        public Ld2410(string serialPortName, int baudRate = 256_000)
+        {
+            this.Configuration = new()
+            {
+                BaudRate = baudRate
+            };
 
-		public void EnterConfigurationMode()
-		{
-			this.ConfigurationModeEnabled = true;
-		}
+            this.serialPort = new SerialPort(portName: serialPortName,
+                baudRate: baudRate,
+                parity: Parity.None,
+                dataBits: 8,
+                stopBits: StopBits.One);
 
-		public void ExitConfigurationMode()
-		{
-			this.ConfigurationModeEnabled = false;
-		}
+            this.serialPort.DataReceived += OnSerialDataReceived;
+        }
 
-		public void ReadConfigurations()
-		{
-			this.ThrowIfNotInConfigurationMode();
-		}
+        public static int FindBaudRate(string serialPortName)
+        {
+            return 256_000;
+        }
 
-		public void CommitConfigurations()
-		{
-			this.ThrowIfNotInConfigurationMode();
-		}
+        public void Connect()
+        {
+            if (!this.serialPort.IsOpen)
+            {
+                this.serialPort.Open();
+            }
+        }
 
-		public void SetEngineeringMode(bool enabled)
-		{
-			this.ThrowIfNotInConfigurationMode();
+        public void Disconnect()
+        {
+            if (this.serialPort.IsOpen)
+            {
+                this.serialPort.Close();
+            }
+        }
 
-			this.EngineeringModeEnabled = enabled;
-		}
+        public void EnterConfigurationMode()
+        {
+            this.ConfigurationModeEnabled = true;
+        }
 
-		public void RestoreFactorySettings(bool restartOnCompletion)
-		{
-			this.ThrowIfNotInConfigurationMode();
-		}
+        public void ExitConfigurationMode()
+        {
+            this.ThrowIfNotInConfigurationMode();
 
-		public void Restart()
-		{
-			this.ThrowIfNotInConfigurationMode();
-		}
+            this.ConfigurationModeEnabled = false;
+        }
 
-		private void ReadFirmwareVersion()
-		{
-			this.ThrowIfNotInConfigurationMode();
+        public void ReadConfigurations()
+        {
+            this.ThrowIfNotInConfigurationMode();
+        }
 
-			this.FirmwareVersion = "1.02.22062416";
-		}
+        public void CommitConfigurations()
+        {
+            this.ThrowIfNotInConfigurationMode();
+        }
 
-		private void ThrowIfNotInConfigurationMode()
-		{
-			if (!this.ConfigurationModeEnabled)
-			{
-				throw new InvalidOperationException();
-			}
-		}
+        public void SetEngineeringMode(bool enabled)
+        {
+            this.ThrowIfNotInConfigurationMode();
 
-		/// <inheritdoc/>
-		public void Dispose()
-		{
-			serialPort?.Dispose();
-		}
-	}
+            this.EngineeringModeEnabled = enabled;
+        }
+
+        public void RestoreFactorySettings(bool restartOnCompletion)
+        {
+            this.ThrowIfNotInConfigurationMode();
+        }
+
+        public void Restart()
+        {
+            this.ThrowIfNotInConfigurationMode();
+        }
+
+        private void ThrowIfNotInConfigurationMode()
+        {
+            if (!this.ConfigurationModeEnabled)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        private void OnSerialDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            // need to make sure that there is data to be read, because
+            // the event could have been queued several times and data read on a previous call
+            if (this.serialPort.BytesToRead <= 0)
+            {
+                return;
+            }
+
+            var buffer = new byte[this.serialPort.BytesToRead];
+            var bytesRead = this.serialPort.Read(buffer, offset: 0, count: buffer.Length);
+
+//#if DEBUG
+//            Debug.WriteLine();
+//            for (var i = 0; i < bytesRead; i++)
+//            {
+//                Debug.Write(buffer[i].ToString("x2"));
+//            }
+
+//#endif
+
+            // figure out what we received
+            if (ReportFrameDecoder.TryParse(buffer, startIndex: 0, out ReportFrame reportFrame))
+            {
+                if (this.OnMeasurementReceived != null)
+                {
+                    this.OnMeasurementReceived(this, reportFrame);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            serialPort?.Dispose();
+        }
+    }
 }

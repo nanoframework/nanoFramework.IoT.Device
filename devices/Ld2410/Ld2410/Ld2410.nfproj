@@ -18,15 +18,16 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="ArrayExtensions.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="BaudRate.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="EndiannessExtensions.cs" />
-    <Compile Include="Frame.cs" />
+    <Compile Include="DeviceConfiguration.cs" />
+    <Compile Include="Extensions\EndiannessExtensions.cs" />
+    <Compile Include="ProtocolFrame.cs" />
     <Compile Include="Ld2410.cs" />
     <Compile Include="ReportDataType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportFrame.cs" />
     <Compile Include="TargetState.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +47,7 @@
       <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.38\lib\System.IO.Streams.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Length">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.9.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\_Playground\NFApp_LD2410\packages\UnitsNet.nanoFramework.Length.5.9.0\lib\UnitsNet.Length.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
