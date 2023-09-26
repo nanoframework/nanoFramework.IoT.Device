@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO.Ports;
+using System.Threading;
 
 namespace Ld2410
 {
     public sealed class Ld2410 : IDisposable
     {
         private readonly SerialPort serialPort;
+        private readonly AutoResetEvent autoResetEvent;
 
         public delegate void MeasurementEventHandler(object sender, ReportFrame report);
 
@@ -34,6 +35,8 @@ namespace Ld2410
                 stopBits: StopBits.One);
 
             this.serialPort.DataReceived += OnSerialDataReceived;
+
+            this.autoResetEvent = new AutoResetEvent(initialState: false);
         }
 
         public static int FindBaudRate(string serialPortName)
@@ -59,6 +62,7 @@ namespace Ld2410
 
         public void EnterConfigurationMode()
         {
+            this.SendCommand(Command.EnableConfiguration, new byte[] { 0x01, 0x00 });
             this.ConfigurationModeEnabled = true;
         }
 
@@ -66,6 +70,7 @@ namespace Ld2410
         {
             this.ThrowIfNotInConfigurationMode();
 
+            this.SendCommand(Command.EnableConfiguration, new byte[] { 0x01, 0x00 });
             this.ConfigurationModeEnabled = false;
         }
 
@@ -104,6 +109,14 @@ namespace Ld2410
             }
         }
 
+        private void SendCommand(Command command, byte[] value)
+        {
+            var commandFrame = new ProtocolCommandFrame(command, value);
+            var serializedCommandFrame = commandFrame.Serialize();
+            this.serialPort.Write(serializedCommandFrame, offset: 0, count: serializedCommandFrame.Length);
+            this.autoResetEvent.WaitOne();
+        }
+
         private void OnSerialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             // need to make sure that there is data to be read, because
@@ -116,15 +129,6 @@ namespace Ld2410
             var buffer = new byte[this.serialPort.BytesToRead];
             var bytesRead = this.serialPort.Read(buffer, offset: 0, count: buffer.Length);
 
-//#if DEBUG
-//            Debug.WriteLine();
-//            for (var i = 0; i < bytesRead; i++)
-//            {
-//                Debug.Write(buffer[i].ToString("x2"));
-//            }
-
-//#endif
-
             // figure out what we received
             if (ReportFrameDecoder.TryParse(buffer, startIndex: 0, out ReportFrame reportFrame))
             {
@@ -132,6 +136,10 @@ namespace Ld2410
                 {
                     this.OnMeasurementReceived(this, reportFrame);
                 }
+            }
+            else // TODO: write actual condition
+            {
+                this.autoResetEvent.Set();
             }
         }
 

@@ -35,31 +35,36 @@ namespace Ld2410
 
     public sealed class EngineeringModeReportFrame : BasicReportFrame
     {
-        public byte MaxMovingDistanceGate { get; private set; }
+        public byte MaxMovingDistanceGate { get; internal set; }
 
-        public byte MaxStaticDistanceGate { get; private set; }
+        public byte MaxStaticDistanceGate { get; internal set; }
 
-        public byte Gate0MovingDistanceEnergy { get; private set; }
-        public byte Gate1MovingDistanceEnergy { get; private set; }
-        public byte Gate2MovingDistanceEnergy { get; private set; }
-        public byte Gate3MovingDistanceEnergy { get; private set; }
-        public byte Gate4MovingDistanceEnergy { get; private set; }
-        public byte Gate5MovingDistanceEnergy { get; private set; }
-        public byte Gate6MovingDistanceEnergy { get; private set; }
-        public byte Gate7MovingDistanceEnergy { get; private set; }
-        public byte Gate8MovingDistanceEnergy { get; private set; }
+        public byte Gate0MovingDistanceEnergy { get; internal set; }
+        public byte Gate1MovingDistanceEnergy { get; internal set; }
+        public byte Gate2MovingDistanceEnergy { get; internal set; }
+        public byte Gate3MovingDistanceEnergy { get; internal set; }
+        public byte Gate4MovingDistanceEnergy { get; internal set; }
+        public byte Gate5MovingDistanceEnergy { get; internal set; }
+        public byte Gate6MovingDistanceEnergy { get; internal set; }
+        public byte Gate7MovingDistanceEnergy { get; internal set; }
+        public byte Gate8MovingDistanceEnergy { get; internal set; }
 
-        public byte Gate0StaticDistanceEnergy { get; private set; }
-        public byte Gate1StaticDistanceEnergy { get; private set; }
-        public byte Gate2StaticDistanceEnergy { get; private set; }
-        public byte Gate3StaticDistanceEnergy { get; private set; }
-        public byte Gate4StaticDistanceEnergy { get; private set; }
-        public byte Gate5StaticDistanceEnergy { get; private set; }
-        public byte Gate6StaticDistanceEnergy { get; private set; }
-        public byte Gate7StaticDistanceEnergy { get; private set; }
-        public byte Gate8StaticDistanceEnergy { get; private set; }
+        public byte Gate0StaticDistanceEnergy { get; internal set; }
+        public byte Gate1StaticDistanceEnergy { get; internal set; }
+        public byte Gate2StaticDistanceEnergy { get; internal set; }
+        public byte Gate3StaticDistanceEnergy { get; internal set; }
+        public byte Gate4StaticDistanceEnergy { get; internal set; }
+        public byte Gate5StaticDistanceEnergy { get; internal set; }
+        public byte Gate6StaticDistanceEnergy { get; internal set; }
+        public byte Gate7StaticDistanceEnergy { get; internal set; }
+        public byte Gate8StaticDistanceEnergy { get; internal set; }
 
         public byte[] AdditionalData { get; private set; }
+
+        public EngineeringModeReportFrame()
+        {
+            this.DataType = ReportingDataType.EngineeringMode;
+        }
     }
 
     public static class ReportFrameDecoder
@@ -125,7 +130,7 @@ namespace Ld2410
             }
 
             // at this point, we probably have a valid payload to construct a BasicReportFrame
-            var reportFrame = new BasicReportFrame
+            return new BasicReportFrame
             {
                 TargetState = (TargetState)data[++startIndex], // 1 byte
                 MovementTargetDistance = new Length(BitConverter.ToInt16(data, ++startIndex), LengthUnit.Centimeter), // 2 bytes
@@ -134,8 +139,6 @@ namespace Ld2410
                 StationaryTargetEnergy = data[(startIndex += 2)], // 1 byte
                 DetectionDistance = new Length(BitConverter.ToInt16(data, ++startIndex), LengthUnit.Centimeter), // 2 bytes
             };
-
-            return reportFrame;
         }
 
         private static EngineeringModeReportFrame CreateEngineeringReportFrame(byte[] data, int startIndex, ushort length)
@@ -145,7 +148,39 @@ namespace Ld2410
                 throw new FormatException();
             }
 
-            return null;
+            // at this point, we probably have a valid payload to construct an EngineeringModeReportFrame
+
+            return new EngineeringModeReportFrame
+            {
+                TargetState = (TargetState)data[++startIndex], // 1 byte
+                MovementTargetDistance = new Length(BitConverter.ToInt16(data, ++startIndex), LengthUnit.Centimeter), // 2 bytes
+                MovementTargetEnergy = data[(startIndex += 2)], // 1 byte
+                StationaryTargetDistance = new Length(BitConverter.ToInt16(data, ++startIndex), LengthUnit.Centimeter), // 2 bytes
+                StationaryTargetEnergy = data[(startIndex += 2)], // 1 byte
+                DetectionDistance = new Length(BitConverter.ToInt16(data, ++startIndex), LengthUnit.Centimeter), // 2 bytes
+                MaxMovingDistanceGate = data[(startIndex += 2)], // 1 byte
+                MaxStaticDistanceGate = data[++startIndex], // 1 byte
+
+                Gate0MovingDistanceEnergy = data[++startIndex],
+                Gate1MovingDistanceEnergy = data[++startIndex],
+                Gate2MovingDistanceEnergy = data[++startIndex],
+                Gate3MovingDistanceEnergy = data[++startIndex],
+                Gate4MovingDistanceEnergy = data[++startIndex],
+                Gate5MovingDistanceEnergy = data[++startIndex],
+                Gate6MovingDistanceEnergy = data[++startIndex],
+                Gate7MovingDistanceEnergy = data[++startIndex],
+                Gate8MovingDistanceEnergy = data[++startIndex],
+
+                Gate0StaticDistanceEnergy = data[++startIndex],
+                Gate1StaticDistanceEnergy = data[++startIndex],
+                Gate2StaticDistanceEnergy = data[++startIndex],
+                Gate3StaticDistanceEnergy = data[++startIndex],
+                Gate4StaticDistanceEnergy = data[++startIndex],
+                Gate5StaticDistanceEnergy = data[++startIndex],
+                Gate6StaticDistanceEnergy = data[++startIndex],
+                Gate7StaticDistanceEnergy = data[++startIndex],
+                Gate8StaticDistanceEnergy = data[++startIndex],
+            };
         }
     }
 }
