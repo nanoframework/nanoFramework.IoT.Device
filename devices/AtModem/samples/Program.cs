@@ -124,7 +124,7 @@ while (true)
     {
         Console.WriteLine($"Signal strength: {networkReg.Result}");
         strenght = (SignalStrength)networkReg.Result;
-        if (strenght.Rssi.Percent < 99)
+        if (strenght.Rssi < 99)
         {
             Console.WriteLine("Network quality is good!");
             break;

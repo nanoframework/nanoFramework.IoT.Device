@@ -233,7 +233,7 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.M2Mqtt.Core">
-      <HintPath>packages\nanoFramework.M2Mqtt.Core.5.1.92\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
+      <HintPath>packages\nanoFramework.M2Mqtt.Core.5.1.94\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
@@ -263,10 +263,10 @@
       <HintPath>packages\nanoFramework.System.Threading.1.1.19\lib\System.Threading.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.5.26.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.5.34.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Ratio">
-      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.26.0\lib\UnitsNet.Ratio.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.34.0\lib\UnitsNet.Ratio.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

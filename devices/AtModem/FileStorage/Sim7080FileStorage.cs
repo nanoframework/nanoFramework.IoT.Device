@@ -1,11 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
 using System;
 using System.Text;
 using System.Threading;
+using IoT.Device.AtModem.Events;
+using IoT.Device.AtModem.Modem;
 
 namespace IoT.Device.AtModem.FileStorage
 {
