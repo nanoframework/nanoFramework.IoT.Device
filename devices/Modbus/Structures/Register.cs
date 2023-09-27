@@ -7,17 +7,18 @@ namespace Iot.Device.Modbus.Structures
 {
     internal abstract class Register : ModbusObject
     {
-        public ushort Value
+        public short Value
         {
             get
             {
                 var blob = new[] { HiByte, LoByte };
+
                 if (BitConverter.IsLittleEndian)
                 {
                     blob.JudgReverse();
                 }
 
-                return BitConverter.ToUInt16(blob, 0);
+                return BitConverter.ToInt16(blob, 0);
             }
 
             set
