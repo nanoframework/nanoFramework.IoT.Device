@@ -42,9 +42,6 @@ namespace System.Net.Http
         /// <value>
         /// The headers which should be sent with each request.
         /// </value>
-        /// <remarks>
-        /// Headers set on this property don't need to be set on request messages again. <see cref="DefaultRequestHeaders"/> should not be modified while there are outstanding requests, because it is not thread-safe.
-        /// </remarks>
         public HttpRequestHeaders DefaultRequestHeaders => _headers ??= new HttpRequestHeaders();
 
         /// <summary>
@@ -94,7 +91,7 @@ namespace System.Net.Http
         public SslProtocols SslProtocols { get; set; } = SslProtocols.Tls12;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpClient"/> class using a <see cref="HttpClientHandler"/> that is disposed when this instance is disposed.
+        /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="modem">The modem to use.</param>
         public HttpClient(ModemBase modem)

@@ -9,8 +9,6 @@ namespace System.Net
 
     /// <summary>
     /// Defines the HTTP version numbers that are supported by the
-    /// <see cref="HttpWebRequest"/> and
-    /// <see cref="HttpWebResponse"/> classes.
     /// </summary>
     public class HttpVersion
     {
