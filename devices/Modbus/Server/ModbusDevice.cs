@@ -44,7 +44,9 @@ namespace Iot.Device.Modbus.Server
         /// <param name="address">The address of the input register.</param>
         /// <param name="value">When this method returns, contains the value of the input register if the read operation succeeds, or zero if the read operation fails.</param>
         /// <returns>True if the read operation succeeds; otherwise, false.</returns>
-        protected abstract bool TryReadInputRegister(ushort address, out ushort value);
+        protected abstract bool TryReadInputRegister(
+            ushort address,
+            out short value);
 
         /// <summary>
         /// Tries to read a coil from the Modbus device at the specified address.
@@ -68,7 +70,9 @@ namespace Iot.Device.Modbus.Server
         /// <param name="address">The address of the holding register.</param>
         /// <param name="value">When this method returns, contains the value of the holding register if the read operation succeeds, or zero if the read operation fails.</param>
         /// <returns>True if the read operation succeeds; otherwise, false.</returns>
-        protected abstract bool TryReadHoldingRegister(ushort address, out ushort value);
+        protected abstract bool TryReadHoldingRegister(
+            ushort address,
+            out short value);
 
         /// <summary>
         /// Tries to write a holding register to the Modbus device at the specified address.
@@ -76,7 +80,9 @@ namespace Iot.Device.Modbus.Server
         /// <param name="address">The address of the holding register.</param>
         /// <param name="value">The value to write to the holding register.</param>
         /// <returns>True if the write operation succeeds; otherwise, false.</returns>
-        protected abstract bool TryWriteHoldingRegister(ushort address, ushort value);
+        protected abstract bool TryWriteHoldingRegister(
+            ushort address,
+            short value);
 
         /// <summary>
         /// Method called before reading from the Modbus device.
@@ -131,11 +137,16 @@ namespace Iot.Device.Modbus.Server
         /// <param name="address">The address of the input register.</param>
         /// <param name="inputRegister">When this method returns, contains the input register if the read operation succeeds, or null if the read operation fails.</param>
         /// <returns>True if the read operation succeeds; otherwise, false.</returns>
-        internal bool GetInputRegister(ushort address, out InputRegister inputRegister)
+        internal bool GetInputRegister(
+            ushort address,
+            out InputRegister inputRegister)
         {
             inputRegister = null;
 
-            var result = TryReadInputRegister(address, out ushort value);
+            var result = TryReadInputRegister(
+                address,
+                out short value);
+            
             if (result)
             {
                 inputRegister = new InputRegister() { Address = address, Value = value };
@@ -180,11 +191,16 @@ namespace Iot.Device.Modbus.Server
         /// <param name="address">The address of the holding register.</param>
         /// <param name="holdingRegister">When this method returns, contains the holding register if the read operation succeeds, or null if the read operation fails.</param>
         /// <returns>True if the read operation succeeds; otherwise, false.</returns>
-        internal bool GetHoldingRegister(ushort address, out HoldingRegister holdingRegister)
+        internal bool GetHoldingRegister(
+            ushort address,
+            out HoldingRegister holdingRegister)
         {
             holdingRegister = null;
 
-            var result = TryReadHoldingRegister(address, out ushort value);
+            var result = TryReadHoldingRegister(
+                address,
+                out short value);
+
             if (result)
             {
                 holdingRegister = new HoldingRegister { Address = address, Value = value };
@@ -199,9 +215,13 @@ namespace Iot.Device.Modbus.Server
         /// <param name="address">The address of the holding register.</param>
         /// <param name="value">The value to set for the holding register.</param>
         /// <returns>True if the write operation succeeds; otherwise, false.</returns>
-        internal bool SetHoldingRegister(ushort address, ushort value)
+        internal bool SetHoldingRegister(
+            ushort address,
+            short value)
         {
-            return TryWriteHoldingRegister(address, value);
+            return TryWriteHoldingRegister(
+                address,
+                value);
         }
     }
 }
