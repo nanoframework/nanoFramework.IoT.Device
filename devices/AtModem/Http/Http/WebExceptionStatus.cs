@@ -58,8 +58,5 @@ namespace System.Net
         /// <summary>The name resolver service could not resolve the proxy host
         /// name.</summary>
         ProxyNameResolutionFailure = 15
-    } // enum WebStatus
-
-} // namespace System.Net
-
-
+    }
+}

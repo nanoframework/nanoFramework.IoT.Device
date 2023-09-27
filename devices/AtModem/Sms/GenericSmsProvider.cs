@@ -1,14 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections;
-using System.Text;
 using IoT.Device.AtModem.CodingSchemes;
 using IoT.Device.AtModem.DTOs;
 using IoT.Device.AtModem.Events;
 using IoT.Device.AtModem.Modem;
 using IoT.Device.AtModem.PDU;
+using System;
+using System.Collections;
+using System.Text;
 using static IoT.Device.AtModem.Sms.ISmsProvider;
 
 namespace IoT.Device.AtModem.Sms

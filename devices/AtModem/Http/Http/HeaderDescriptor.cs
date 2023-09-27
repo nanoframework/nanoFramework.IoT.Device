@@ -30,6 +30,5 @@ namespace System.Net.Http.Headers
         public HttpHeaderType HeaderType => _descriptor is KnownHeader knownHeader ? knownHeader.HeaderType : HttpHeaderType.Custom;
 
         public KnownHeader KnownHeader => _descriptor as KnownHeader;
-
     }
 }

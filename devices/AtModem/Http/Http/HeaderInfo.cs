@@ -6,7 +6,6 @@
 
 namespace System.Net
 {
-
     internal delegate string[] HeaderParser(string value);
 
     /// <summary>
@@ -14,7 +13,6 @@ namespace System.Net
     /// </summary>
     internal class HeaderInfo
     {
-
         internal bool IsRestricted;
         internal HeaderParser Parser;
 
