@@ -81,6 +81,14 @@ namespace Iot.Device.Modbus.Util
             Set(index, blob);
         }
 
+        public void Set(int index, short value)
+        {
+            byte[] blob = BitConverter.GetBytes(value);
+            blob.JudgReverse();
+
+            Set(index, blob);
+        }
+
         #endregion
 
         #region Getter
@@ -109,6 +117,14 @@ namespace Iot.Device.Modbus.Util
             blob.JudgReverse();
 
             return BitConverter.ToUInt16(blob, 0);
+        }
+
+        public short GetInt16(int index)
+        {
+            byte[] blob = Get(index, 2);
+            blob.JudgReverse();
+
+            return BitConverter.ToInt16(blob, 0);
         }
 
         #endregion
