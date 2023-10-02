@@ -425,7 +425,7 @@ namespace System
         /// </summary>
         /// <param name="uriString">String to construct Uri from</param>
         /// <param name="kind">Type of Uri to construct</param>
-        /// <exception cref="ArgumentException">The scheme specified in the URI formed by combining <paramref name="baseUri"/> and <paramref name="relativeUri"/> is not valid.</exception>
+        /// <exception cref="FormatException">Exceptions will be raised if the URI is not properly formed.</exception>
         public Uri(string uriString, UriKind kind)
         {
             // ParseUriString provides full validation including testing for null.

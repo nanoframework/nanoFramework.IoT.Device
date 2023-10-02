@@ -53,7 +53,7 @@ namespace System.Net.Http
         /// <summary>
         /// Gets a value that indicates if the HTTP response was successful.
         /// </summary>
-        /// <value><see langword="true"/> if <see cref="StatusCode"/> was in the range 200-299; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if StatusCode was in the range 200-299; otherwise, <see langword="false"/>.</value>
         public bool IsSuccessStatusCode
         {
             get { return ((int)_statusCode >= 200) && ((int)_statusCode <= 299); }

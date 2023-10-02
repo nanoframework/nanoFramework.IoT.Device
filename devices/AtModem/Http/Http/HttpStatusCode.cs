@@ -58,17 +58,11 @@ namespace System.Net
         /// <summary>Equivalent to HTTP status 300.  Indicates that the requested information has
         /// multiple representations.  The default action is to treat this status as a redirect and
         /// follow the contents of the Location header associated with this response.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>MultipleChoices</itemref> will cause an exception to
-        /// be thrown.</para>
         /// <para><itemref>MultipleChoices</itemref> is a synonym for <itemref>Ambiguous</itemref>.</para></summary>
         MultipleChoices = 300,
         /// <summary>Equivalent to HTTP status 300.  Indicates that the requested
         /// information has multiple representations.  The default action is to treat this status as
         /// a redirect and follow the contents of the Location header associated with this response.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>Ambiguous</itemref> will cause an exception to be
-        /// thrown.</para>
         /// <para><itemref>Ambiguous</itemref> is a synonym for <itemref>MultipleChoices</itemref>.</para></summary>
         Ambiguous = 300,
         /// <summary>Equivalent to HTTP status 301. Indicates that the requested information has
@@ -86,33 +80,22 @@ namespace System.Net
         /// located at the URI specified in the Location header. The default action when this status
         /// is received is to follow the Location header associated with the response. When the
         /// original request method was POST, the redirected request will use the GET method.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>Found</itemref> will cause an exception to be thrown.</para>
         /// <para><itemref>Found</itemref> is a synonym for <itemref>Redirect</itemref>.</para></summary>
         Found = 302,
         /// <summary>Equivalent to HTTP status 302. Indicates that the requested information is
         /// located at the URI specified in the Location header. The default action when this status
         /// is received is to follow the Location header associated with the response. When the
         /// original request method was POST, the redirected request will use the GET method.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>Redirect</itemref> will cause an exception to be
-        /// thrown.</para>
         /// <para><itemref>Redirect</itemref> is a synonym for <itemref>Found</itemref>.</para></summary>
         Redirect = 302,
         /// <summary>Equivalent to HTTP status 303. Automatically redirects the client to
         /// the URI specified in the Location header as the result of a POST. The request to the
         /// resource specified by the Location header will be made with a GET.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>SeeOther</itemref> will cause an exception to be
-        /// thrown.</para>
         /// <para><itemref>SeeOther</itemref> is a synonym for <itemref>RedirectMethod</itemref>.</para></summary>
         SeeOther = 303,
         /// <summary>Equivalent to HTTP status 303. Automatically redirects the
         /// client to the URI specified in the Location header as the result of a POST. The request
         /// to the resource specified by the Location header will be made with a GET.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>RedirectMethod</itemref> will cause an exception to
-        /// be thrown.</para>
         /// <para><itemref>RedirectMethod</itemref> is a synonym for <itemref>SeeOther</itemref>.</para></summary>
         RedirectMethod = 303,
         /// <summary>Equivalent to HTTP status 304. Indicates that the client's cached copy is
@@ -128,9 +111,6 @@ namespace System.Net
         /// located at the URI specified in the Location header. The default action when this status
         /// is received is to follow the Location header associated with the response. When the
         /// original request method was POST, the redirected request will also use the POST method.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>TemporaryRedirect</itemref> will cause an exception
-        /// to be thrown.</para>
         /// <para><itemref>TemporaryRedirect</itemref> is a synonym for <itemref>RedirectKeepVerb</itemref>.</para></summary>
         TemporaryRedirect = 307,
         /// <summary>Equivalent to HTTP status 307. Indicates that the request
@@ -138,9 +118,6 @@ namespace System.Net
         /// when this status is received is to follow the Location header associated with the
         /// response. When the original request method was POST, the redirected request will also
         /// use the POST method.
-        /// <para>If the <see cref="HttpWebRequest.AllowAutoRedirect"/> property is
-        /// <itemref>false</itemref>, <itemref>RedirectKeepVerb</itemref> will cause an exception to
-        /// be thrown.</para>
         /// <para><itemref>RedirectKeepVerb</itemref> is a synonym for <itemref>TemporaryRedirect</itemref>.</para></summary>
         RedirectKeepVerb = 307,
 

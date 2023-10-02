@@ -38,7 +38,7 @@ namespace System.Net.Http.Headers
         /// </summary>
         /// <param name="mediaType">The source represented as a string to initialize the new instance.</param>
         /// <exception cref="ArgumentException">If <paramref name="mediaType"/> parameter is null or empty</exception>
-        /// <exception cref="FormatException">If <paramref name="mediaType"/> parameter contains invalid value for <see cref="MediaType"/>.</exception>
+        /// <exception cref="FormatException">If <paramref name="mediaType"/> parameter contains invalid value for MediaType.</exception>
 		public MediaTypeHeaderValue(string mediaType)
         {
             if (string.IsNullOrEmpty(mediaType))

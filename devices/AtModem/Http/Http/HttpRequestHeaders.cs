@@ -36,9 +36,9 @@ namespace System.Net.Http.Headers
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates if the <see cref="Connection"/> header for an HTTP request contains Close.
+        /// Gets or sets a value that indicates if theConnection header for an HTTP request contains Close.
         /// </summary>
-        /// <value><see langword="true"/> if the <see cref="Connection"/> header contains Close, otherwise <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the Connection header contains Close, otherwise <see langword="false"/>.</value>
         public bool ConnectionClose
         {
             get

@@ -31,7 +31,7 @@ namespace System.Net
         PipelineFailure = 5,
         /// <summary>The request was canceled or an unclassifiable error
         /// occurred.  This is the default value for
-        /// <see cref="WebException.Status"/>.</summary>
+        /// WebException.Status.</summary>
         RequestCanceled = 6,
         /// <summary>The response received from the server was complete but
         /// indicated a protocol-level error.  For example, an HTTP protocol
