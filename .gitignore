@@ -259,3 +259,4 @@ paket-files/
 #Development App Settings
 appsettings.Development.json
 .vscode/settings.json
+/devices/Sim7080/samples/secret
