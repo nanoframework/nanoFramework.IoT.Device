@@ -64,25 +64,6 @@ namespace System.Net
             }
         }
 
-        // Not used in this context, keeping those in case.
-        ////public static short ValidatePort(int port)
-        ////{
-
-        ////    if ((port < IPEndPoint.MinPort) ||
-        ////        (port > IPEndPoint.MaxPort))
-        ////    {       // If upper 16b is not zero...
-        ////        throw new ArgumentOutOfRangeException("port");  // Then this is not valid port
-        ////    }
-
-        ////    return (short)port;
-        ////}
-
-        ////public static bool ValidateTcpPort(int port)
-        ////{
-        ////    // on false, API should throw new ArgumentOutOfRangeException("port");
-        ////    return port >= IPEndPoint.MinPort && port <= IPEndPoint.MaxPort;
-        ////}
-
         public static void ValidateRange(int actual, int fromAllowed, int toAllowed)
         {
             if (actual > toAllowed || actual < fromAllowed)

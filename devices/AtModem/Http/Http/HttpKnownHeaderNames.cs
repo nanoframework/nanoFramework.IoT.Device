@@ -177,28 +177,6 @@ namespace System.Net
         public const string close = "close";
     }
 
-    /*
-    File:      httpreq.cs
-
-    Summary:   Basic HTTP Protocol support for HttpWeb request Class.
-             Contains the implimention of various HTTP primitives.
-
-    Classes:   HttpWebReques
-
-    Functions:
-
-    ----------------------------------------------------------------------------
-    This file is part of the Microsoft COM+ Netclasses.
-
-    Copyright (C) 1998-1999 Microsoft Corporation.  All rights reserved.
-    ==========================================================================+*/
-
-    //      - seperate HTTP header names/header data
-    //      - improve/check var/func naming
-    //      - stress parsering cases
-    //      - Chunked transfer needs a better algorithm, to prevent over copying
-    //      - keep-alive
-
     /// <summary>
     /// Represents the method that notifies callers when a continue response is
     /// received by the client.
@@ -266,12 +244,6 @@ namespace System.Net
             m_knownVerbs[1] = new HttpVerb("POST", true, false, false, false);
             m_knownVerbs[2] = new HttpVerb("HEAD", false, true, false, true);
             m_knownVerbs[3] = new HttpVerb("PUT", true, false, false, false);
-            /*
-             * XXX
-             * * Mon 02/25/2002
-             * I've changed this from the desktop.  There is no entity response
-             * in a connect request.  It won't be there, and don't close it.
-             * */
             m_knownVerbs[4] = new HttpVerb("CONNECT", false, true, true, true);
 
             // default Verb
