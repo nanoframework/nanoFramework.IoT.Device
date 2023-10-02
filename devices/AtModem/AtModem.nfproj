@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>IoT.Device.AtModem</RootNamespace>
-    <AssemblyName>IoT.Device.AtModem</AssemblyName>
+    <RootNamespace>Iot.Device.AtModem</RootNamespace>
+    <AssemblyName>Iot.Device.AtModem</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\IoT.Device.AtModem.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>

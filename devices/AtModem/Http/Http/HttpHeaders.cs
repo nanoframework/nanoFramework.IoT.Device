@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace System.Net.Http.Headers
 {
     /// <summary>
-    /// Key/value pairs of headers. The value is either a raw <see cref="string"/> or a <see cref="HttpHeaders.HeaderStoreItemInfo"/>.
+    /// Key/value pairs of headers. The value is either a raw <see cref="string"/>.
     /// </summary>
     internal struct HeaderEntry
     {
