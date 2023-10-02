@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
+
+using Ld2410.Commands;
+using Ld2410.Reporting;
 
 namespace Ld2410
 {
     public sealed class Ld2410 : IDisposable
     {
         private readonly SerialPort serialPort;
-        private readonly AutoResetEvent autoResetEvent;
+        private readonly AutoResetEvent onAckReceived;
 
         public delegate void MeasurementEventHandler(object sender, ReportFrame report);
-
         public event MeasurementEventHandler OnMeasurementReceived;
 
         public DeviceConfiguration Configuration { get; }
@@ -21,8 +24,20 @@ namespace Ld2410
 
         public string FirmwareVersion { get; private set; }
 
-        public Ld2410(string serialPortName, int baudRate = 256_000)
+        public TimeSpan CommandTimeout { get; }
+
+        public Ld2410(string serialPortName, int baudRate = 256_000, TimeSpan commandTimeout = default)
         {
+            if (string.IsNullOrEmpty(serialPortName))
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (baudRate <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             this.Configuration = new()
             {
                 BaudRate = baudRate
@@ -36,7 +51,8 @@ namespace Ld2410
 
             this.serialPort.DataReceived += OnSerialDataReceived;
 
-            this.autoResetEvent = new AutoResetEvent(initialState: false);
+            this.onAckReceived = new AutoResetEvent(initialState: false);
+            this.CommandTimeout = commandTimeout == default ? TimeSpan.FromSeconds(5) : commandTimeout;
         }
 
         public static int FindBaudRate(string serialPortName)
@@ -62,16 +78,35 @@ namespace Ld2410
 
         public void EnterConfigurationMode()
         {
-            this.SendCommand(Command.EnableConfiguration, new byte[] { 0x01, 0x00 });
+            this.SendCommand(new EnableConfigurationCommand());
             this.ConfigurationModeEnabled = true;
+
+            Debug.WriteLine("Entered Config Mode.");
         }
 
         public void ExitConfigurationMode()
         {
             this.ThrowIfNotInConfigurationMode();
 
-            this.SendCommand(Command.EnableConfiguration, new byte[] { 0x01, 0x00 });
+            this.SendCommand(new EndConfigurationCommand());
             this.ConfigurationModeEnabled = false;
+
+            Debug.WriteLine("Exited Config Mode.");
+        }
+
+        public void SetMaxDistanceGateAndUnmannedDuration(
+            uint maximumMovementDistanceGate = 8,
+            uint maximumRestingDistanceGate = 8,
+            TimeSpan noOneDuration = default
+            )
+        {
+            var command = new SetMaxDistanceGateAndNoOneDurationCommand(
+                maximumMovementDistanceGate,
+                maximumRestingDistanceGate,
+                noOneDuration
+                );
+
+            this.SendCommand(command);
         }
 
         public void ReadConfigurations()
@@ -109,12 +144,11 @@ namespace Ld2410
             }
         }
 
-        private void SendCommand(Command command, byte[] value)
+        private void SendCommand(CommandFrame command)
         {
-            var commandFrame = new ProtocolCommandFrame(command, value);
-            var serializedCommandFrame = commandFrame.Serialize();
+            var serializedCommandFrame = command.Serialize();
             this.serialPort.Write(serializedCommandFrame, offset: 0, count: serializedCommandFrame.Length);
-            this.autoResetEvent.WaitOne();
+            this.onAckReceived.WaitOne();
         }
 
         private void OnSerialDataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -130,7 +164,7 @@ namespace Ld2410
             var bytesRead = this.serialPort.Read(buffer, offset: 0, count: buffer.Length);
 
             // figure out what we received
-            if (ReportFrameDecoder.TryParse(buffer, startIndex: 0, out ReportFrame reportFrame))
+            if (ReportFrameParser.TryParse(buffer, index: 0, out ReportFrame reportFrame))
             {
                 if (this.OnMeasurementReceived != null)
                 {
@@ -139,7 +173,11 @@ namespace Ld2410
             }
             else // TODO: write actual condition
             {
-                this.autoResetEvent.Set();
+                Debug.WriteLine("ACK Received:");
+                foreach (var b in buffer)
+                    Debug.Write($"{b:x2} ");
+
+                this.onAckReceived.Set();
             }
         }
 

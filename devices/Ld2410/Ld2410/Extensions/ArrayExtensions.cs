@@ -1,4 +1,6 @@
-﻿namespace Ld2410.Extensions
+﻿using System;
+
+namespace Ld2410.Extensions
 {
     internal static class ArrayExtensions
     {
@@ -19,6 +21,23 @@
             }
 
             return array;
+        }
+
+        internal static void CopyToArrayWithIndexAndAdvance(
+            this byte[] sourceArray,
+            byte[] destinationArray,
+            ref int destinationArrayIndex
+            )
+        {
+            Array.Copy(
+                sourceArray,
+                sourceIndex: 0,
+                destinationArray,
+                destinationArrayIndex,
+                length: sourceArray.Length
+                );
+
+            destinationArrayIndex += sourceArray.Length;
         }
     }
 }

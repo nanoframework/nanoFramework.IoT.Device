@@ -3,73 +3,11 @@
 using UnitsNet;
 using UnitsNet.Units;
 
-namespace Ld2410
+namespace Ld2410.Reporting
 {
-    public abstract class ReportFrame
+    internal static class ReportFrameParser
     {
-        public static byte[] Header = new byte[4] { 0xF4, 0xF3, 0xF2, 0xF1 };
-        public static byte[] End = new byte[4] { 0xF8, 0xF7, 0xF6, 0xF5 };
-
-        public ReportingDataType DataType { get; internal set; }
-    }
-
-    public class BasicReportFrame : ReportFrame
-    {
-        public TargetState TargetState { get; internal set; }
-
-        public Length MovementTargetDistance { get; internal set; }
-
-        public byte MovementTargetEnergy { get; internal set; }
-
-        public Length StationaryTargetDistance { get; internal set; }
-
-        public byte StationaryTargetEnergy { get; internal set; }
-
-        public Length DetectionDistance { get; internal set; }
-
-        internal BasicReportFrame()
-        {
-            this.DataType = ReportingDataType.BasicMode;
-        }
-    }
-
-    public sealed class EngineeringModeReportFrame : BasicReportFrame
-    {
-        public byte MaxMovingDistanceGate { get; internal set; }
-
-        public byte MaxStaticDistanceGate { get; internal set; }
-
-        public byte Gate0MovingDistanceEnergy { get; internal set; }
-        public byte Gate1MovingDistanceEnergy { get; internal set; }
-        public byte Gate2MovingDistanceEnergy { get; internal set; }
-        public byte Gate3MovingDistanceEnergy { get; internal set; }
-        public byte Gate4MovingDistanceEnergy { get; internal set; }
-        public byte Gate5MovingDistanceEnergy { get; internal set; }
-        public byte Gate6MovingDistanceEnergy { get; internal set; }
-        public byte Gate7MovingDistanceEnergy { get; internal set; }
-        public byte Gate8MovingDistanceEnergy { get; internal set; }
-
-        public byte Gate0StaticDistanceEnergy { get; internal set; }
-        public byte Gate1StaticDistanceEnergy { get; internal set; }
-        public byte Gate2StaticDistanceEnergy { get; internal set; }
-        public byte Gate3StaticDistanceEnergy { get; internal set; }
-        public byte Gate4StaticDistanceEnergy { get; internal set; }
-        public byte Gate5StaticDistanceEnergy { get; internal set; }
-        public byte Gate6StaticDistanceEnergy { get; internal set; }
-        public byte Gate7StaticDistanceEnergy { get; internal set; }
-        public byte Gate8StaticDistanceEnergy { get; internal set; }
-
-        public byte[] AdditionalData { get; private set; }
-
-        public EngineeringModeReportFrame()
-        {
-            this.DataType = ReportingDataType.EngineeringMode;
-        }
-    }
-
-    public static class ReportFrameDecoder
-    {
-        public static bool TryParse(byte[] data, int startIndex, out ReportFrame result)
+        internal static bool TryParse(byte[] data, int index, out ReportFrame result)
         {
             result = null;
 
@@ -79,10 +17,10 @@ namespace Ld2410
             }
 
             // check if we have a measurement report frame to parse
-            if (data[startIndex] != ReportFrame.Header[0]
-                || data[++startIndex] != ReportFrame.Header[1]
-                || data[++startIndex] != ReportFrame.Header[2]
-                || data[++startIndex] != ReportFrame.Header[3])
+            if (data[index] != ReportFrame.Header[0]
+                || data[++index] != ReportFrame.Header[1]
+                || data[++index] != ReportFrame.Header[2]
+                || data[++index] != ReportFrame.Header[3])
             {
                 return false;
             }
@@ -94,25 +32,25 @@ namespace Ld2410
             }
 
             // read the next 2 bytes to find the length of the payload
-            var payloadSize = BitConverter.ToUInt16(data, startIndex: ++startIndex);
+            var payloadSize = BitConverter.ToUInt16(data, startIndex: ++index);
 
             // make sure we actually have the payload to parse through
-            if (data.Length - startIndex < payloadSize)
+            if (data.Length - index < payloadSize)
             {
                 return false;
             }
 
             // the next byte dictates the type of report: basic (0x02) vs engineering (0x01)
-            switch (data[(startIndex += 2)])
+            switch (data[(index += 2)])
             {
-                case (byte)ReportingDataType.BasicMode:
+                case (byte)ReportingType.BasicMode:
                     {
-                        result = CreateBasicReportFrame(data, ++startIndex, payloadSize);
+                        result = CreateBasicReportFrame(data, ++index, payloadSize);
                         return true;
                     }
-                case (byte)ReportingDataType.EngineeringMode:
+                case (byte)ReportingType.EngineeringMode:
                     {
-                        result = CreateEngineeringReportFrame(data, ++startIndex, payloadSize);
+                        result = CreateEngineeringReportFrame(data, ++index, payloadSize);
                         return true;
                     }
                 default:
@@ -149,7 +87,6 @@ namespace Ld2410
             }
 
             // at this point, we probably have a valid payload to construct an EngineeringModeReportFrame
-
             return new EngineeringModeReportFrame
             {
                 TargetState = (TargetState)data[++startIndex], // 1 byte

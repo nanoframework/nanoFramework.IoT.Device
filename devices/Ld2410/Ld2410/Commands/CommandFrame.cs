@@ -1,34 +1,32 @@
-﻿using System;
-using Ld2410.Extensions;
+﻿using Ld2410.Extensions;
 
-namespace Ld2410
+using System;
+
+namespace Ld2410.Commands
 {
-    public abstract class ProtocolFrame
+    internal abstract class CommandFrame
     {
-        public static byte[] Header = new byte[4] { 0xFD, 0xFC, 0xFB, 0xFA };
-        public static byte[] End = new byte[4] { 0x04, 0x03, 0x02, 0x01 };
+        internal static byte[] Header = new byte[4] { 0xFD, 0xFC, 0xFB, 0xFA };
+        internal static byte[] End = new byte[4] { 0x04, 0x03, 0x02, 0x01 };
 
         protected const ushort DataLengthSegmentSize = 2;
         protected const ushort CommandWordLength = 2;
 
-        public Command Command { get; protected set; }
+        internal CommandWord Command { get; set; }
 
-        public byte[] Value { get; protected set; }
-    }
+        protected byte[] Value { get; set; }
 
-    public sealed class ProtocolCommandFrame : ProtocolFrame
-    {
-        public ProtocolCommandFrame(Command command, byte[] value)
+        protected CommandFrame(CommandWord command)
         {
-            base.Command = command;
-            base.Value = value;
+            this.Command = command;
+            this.Value = new byte[0];
         }
 
         /// <summary>
         /// Serializes this frame to its binary format as per the LD2410 specs and writes it to a stream.
         /// </summary>
         /// <param name="stream">The output stream to write the serialized frame to.</param>
-        public byte[] Serialize()
+        internal virtual byte[] Serialize()
         {
             /*
              * The structure of the command frame in the stream is:
@@ -69,7 +67,7 @@ namespace Ld2410
              * The Length value has to be 2 bytes long so we cast to C# Short.
              * 
              */
-            var frameDataLength = BitConverter.GetBytes((short)(CommandWordLength + base.Value.Length));
+            var frameDataLength = BitConverter.GetBytes((short)(CommandWordLength + this.Value.Length));
             Array.Copy(
                 sourceArray: frameDataLength,
                 sourceIndex: 0,
@@ -113,15 +111,6 @@ namespace Ld2410
                 );
 
             return serializedFrame;
-        }
-    }
-
-    public sealed class ProtocolCommandAckFrame : ProtocolFrame
-    {
-        public ProtocolCommandAckFrame(Command command, byte[] value)
-        {
-            base.Command = command;
-            base.Value = value;
         }
     }
 }

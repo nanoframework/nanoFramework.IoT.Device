@@ -18,17 +18,26 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Commands\CommandAckParser.cs" />
+    <Compile Include="Commands\CommandAckFrame.cs" />
+    <Compile Include="Commands\CommandFrame.cs" />
+    <Compile Include="Commands\EndConfigurationCommand.cs" />
+    <Compile Include="Commands\EnableConfigurationCommand.cs" />
+    <Compile Include="Commands\ReadConfigurationsCommand.cs" />
+    <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommand.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="BaudRate.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="Reporting\BasicReportFrame.cs" />
+    <Compile Include="Reporting\EngineeringModeReportFrame.cs" />
+    <Compile Include="Reporting\ReportFrameParser.cs" />
+    <Compile Include="Commands\CommandWord.cs" />
     <Compile Include="DeviceConfiguration.cs" />
     <Compile Include="Extensions\EndiannessExtensions.cs" />
-    <Compile Include="ProtocolFrame.cs" />
     <Compile Include="Ld2410.cs" />
-    <Compile Include="ReportDataType.cs" />
+    <Compile Include="Reporting\ReportType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportFrame.cs" />
-    <Compile Include="TargetState.cs" />
+    <Compile Include="Reporting\ReportFrame.cs" />
+    <Compile Include="Reporting\TargetState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
