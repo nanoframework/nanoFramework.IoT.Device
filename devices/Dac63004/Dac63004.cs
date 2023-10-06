@@ -145,7 +145,8 @@ namespace Iot.Device.Dac63004
             Register registerAddress = DacVoutConfigFromChannel(channel);
             var currentConfig = ReadFromRegister(registerAddress, 2);
 
-            currentConfig[1] &= (byte)gain;
+            // MSB 1st
+            currentConfig[0] &= (byte)gain;
 
             WriteToRegister(registerAddress, currentConfig);
         }
@@ -173,9 +174,9 @@ namespace Iot.Device.Dac63004
             // Data are in straight-binary format. MSB left-aligned.
             var data = value << 4;
 
-            // split and fill buffer
-            buffer[1] = (byte)(data >> 8);
-            buffer[0] = (byte)(data & 0xFF);
+            // split and fill buffer (MSB 1st)
+            buffer[0] = (byte)(data >> 8);
+            buffer[1] = (byte)data;
 
             WriteToRegister(registerAddress, buffer);
         }
