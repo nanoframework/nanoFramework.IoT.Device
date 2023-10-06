@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
-	<metadata>
-		<id>nanoFramework.Iot.Device.AtModem</id>
-		<version>$version$</version>
-		<title>nanoFramework.Iot.Device.AtModem</title>
-		<authors>nanoframework</authors>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<license type="file">LICENSE.md</license>
-		<releaseNotes>
-		</releaseNotes>
-		<readme>docs\README.md</readme>
-		<developmentDependency>false</developmentDependency>
-		<projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
-		<icon>images\nf-logo.png</icon>
-		<repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$"/>
-		<copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-		<description>This package includes the .NET nanoFramework binding Iot.Device.AtModem for .NET nanoFramework C# projects.
+  <metadata>
+    <id>nanoFramework.Iot.Device.AtModem</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.AtModem</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET nanoFramework binding Iot.Device.AtModem for .NET nanoFramework C# projects.
 This nuget allows to use AT Modem for SMS, calls, network, internal storage, HTTP, MQTT for some modems.</description>
-		<summary>Iot.Device.AtModem assembly for .NET nanoFramework C# projects</summary>
-		<tags>nanoFramework C# csharp netmf netnf Iot.Device.AtModem</tags>
-		<dependencies>
-			<dependency id="nanoFramework.CoreLibrary" version="1.14.2"/>
-			<dependency id="nanoFramework.M2Mqtt.Core" version="5.1.94"/>
-			<dependency id="nanoFramework.Runtime.Native" version="1.6.6"/>
-			<dependency id="nanoFramework.System.Collections" version="1.5.18"/>
-			<dependency id="nanoFramework.System.IO.Ports" version="1.1.60"/>
-			<dependency id="nanoFramework.System.Math" version="1.5.29"/>
-			<dependency id="nanoFramework.System.Threading" version="1.1.19"/>
-			<dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.34.0"/>			
-			<dependency id="UnitsNet.nanoFramework.Ratio" version="5.34.0"/>
-		</dependencies>
-	</metadata>
-	<files>
-		<file src="bin\Release\Iot.Device.AtModem.dll" target="lib\Iot.Device.AtModem.dll"/>
-		<file src="bin\Release\Iot.Device.AtModem.pdb" target="lib\Iot.Device.AtModem.pdb"/>
-		<file src="bin\Release\Iot.Device.AtModem.pdbx" target="lib\Iot.Device.AtModem.pdbx"/>
-		<file src="bin\Release\Iot.Device.AtModem.pe" target="lib\Iot.Device.AtModem.pe"/>
-		<file src="bin\Release\Iot.Device.AtModem.xml" target="lib\Iot.Device.AtModem.xml"/>
-		<file src="README.md" target="docs\"/>
-		<file src="..\..\assets\nf-logo.png" target="images"/>
-		<file src="..\..\LICENSE.md" target=""/>
-	</files>
+    <summary>Iot.Device.AtModem assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.AtModem</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.M2Mqtt.Core" version="5.1.94" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.18" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.60" />
+      <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.19" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.35.0" />
+      <dependency id="UnitsNet.nanoFramework.Ratio" version="5.35.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.AtModem.dll" target="lib\Iot.Device.AtModem.dll" />
+    <file src="bin\Release\Iot.Device.AtModem.pdb" target="lib\Iot.Device.AtModem.pdb" />
+    <file src="bin\Release\Iot.Device.AtModem.pdbx" target="lib\Iot.Device.AtModem.pdbx" />
+    <file src="bin\Release\Iot.Device.AtModem.pe" target="lib\Iot.Device.AtModem.pe" />
+    <file src="bin\Release\Iot.Device.AtModem.xml" target="lib\Iot.Device.AtModem.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
 </package>

@@ -46,9 +46,9 @@
       },
       "UnitsNet.nanoFramework.VolumeConcentration": {
         "type": "Direct",
-        "requested": "[5.34.0, 5.34.0]",
-        "resolved": "5.34.0",
-        "contentHash": "AI/U2HzhEegclWRnk7wbF42WMwgc5X96l7x4dATfJC45r6afl6mWTfleiEXtFhkOKP7GnsEcm4wqcxPovDLPOw=="
+        "requested": "[5.35.0, 5.35.0]",
+        "resolved": "5.35.0",
+        "contentHash": "bWoDrW6BzRUdxW6Ksz/2zS7XHUsC+Z1XT5DZMvVHbMdCqjJYjIyEr47hZKlGdIsmBrN1zDZ61L1VdFEvq//MyQ=="
       }
     }
   }
