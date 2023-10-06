@@ -34,9 +34,9 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.34.0, 5.34.0]",
-        "resolved": "5.34.0",
-        "contentHash": "uQ3pRslgJYn9BPN3zhXNEZkLdoOLEPMpJTyiPyLoASxHjXqKuJBtPQoLI1esYk41saM6OquCeY6ypjQGitbw4w=="
+        "requested": "[5.35.0, 5.35.0]",
+        "resolved": "5.35.0",
+        "contentHash": "+wSEBVEatkgeZtrgF+jdVFjBTSVO6LgY/w70GGA96pTFXqD83s2ISalGV3Tyjtr9uysV+aePTNqIFefVWhBemQ=="
       }
     }
   }

@@ -28,9 +28,9 @@
       },
       "UnitsNet.nanoFramework.Illuminance": {
         "type": "Direct",
-        "requested": "[5.34.0, 5.34.0]",
-        "resolved": "5.34.0",
-        "contentHash": "1DQ6+VhH87E2TAx3Sbga+LuAEuJJC5DWtIJSVo83I9hjem50YZZ8LyZNduymgY06+wIfg3Hqgmc6sYs5CgIdug=="
+        "requested": "[5.35.0, 5.35.0]",
+        "resolved": "5.35.0",
+        "contentHash": "QYD/SOwZ+Uun5BSSUikxIKBj9d7Q4qFCxRqQ1wpOsiksRv+7d6HauR+B1bJPkmsfwIT2CkprXP9nhVnGMa4g6A=="
       }
     }
   }
