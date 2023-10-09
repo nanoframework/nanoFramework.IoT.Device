@@ -40,23 +40,18 @@ namespace Ld2410.Commands
 
             // the next 2 bytes indicate the command this acknowledgment is for
             var commandWord = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
-            index++; // move the index one step forward to account for ushort size read above
+            index += 2; // move the index one step forward to account for ushort size read above
 
             // according to protocol spec, the command word is modified in ACK frames like this:
             // Command Word | 0x0100
-            // protocol is in little endian, the following operations account for that.
-            // example: an ACK for 0xFF01 is for command 0x00FF because 0x00FF | 0x0100 = 0x01FF
-            // 0x01FF in little endian is 0xFF01
-            // to get the original command back, subtract 0x0001 and bit shift the result
-            commandWord -= 0x0001;
-            commandWord >>= 0x08;
+            commandWord -= 0x0100;
 
             // at this point, the AckType should be equal to one of the known commands
             switch ((CommandWord)commandWord)
             {
                 case CommandWord.EnableConfiguration:
                     {
-                        var status = data[++index] == 0x00 && data[++index] == 0x00; // 2 bytes
+                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
                         var protocolVersion = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
                         var bufferSize = BitConverter.ToUInt16(data, startIndex: index += 2); // 2 bytes
 
@@ -70,7 +65,7 @@ namespace Ld2410.Commands
                     }
                 case CommandWord.EndConfiguration:
                     {
-                        var status = data[++index] == 0x00 && data[++index] == 0x00; // 2 bytes
+                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
 
                         result = new EndConfigurationCommandAck(status);
 
@@ -78,9 +73,47 @@ namespace Ld2410.Commands
                     }
                 case CommandWord.SetMaxDistanceGateAndNoOneDuration:
                     {
-                        var status = data[++index] == 0x00 && data[++index] == 0x00; // 2 bytes
+                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
 
                         result = new SetMaxDistanceGateAndNoOneDurationCommandAck(status);
+
+                        return true;
+                    }
+                case CommandWord.ReadConfigurations:
+                    {
+                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
+
+                        // skip the header (0xAA). Not needed.
+                        index++;
+
+                        result = new ReadConfigurationsCommandAck(status)
+                        {
+                            MaxDistanceGate = data[++index],
+                            MaxMovingDistanceGate = data[++index],
+                            MaxStaticDistanceGate = data[++index],
+
+                            Gate0MotionSensitivity = data[++index],
+                            Gate1MotionSensitivity = data[++index],
+                            Gate2MotionSensitivity = data[++index],
+                            Gate3MotionSensitivity = data[++index],
+                            Gate4MotionSensitivity = data[++index],
+                            Gate5MotionSensitivity = data[++index],
+                            Gate6MotionSensitivity = data[++index],
+                            Gate7MotionSensitivity = data[++index],
+                            Gate8MotionSensitivity = data[++index],
+
+                            Gate0RestSensitivity = data[++index],
+                            Gate1RestSensitivity = data[++index],
+                            Gate2RestSensitivity = data[++index],
+                            Gate3RestSensitivity = data[++index],
+                            Gate4RestSensitivity = data[++index],
+                            Gate5RestSensitivity = data[++index],
+                            Gate6RestSensitivity = data[++index],
+                            Gate7RestSensitivity = data[++index],
+                            Gate8RestSensitivity = data[++index],
+
+                            NoOneDuration = TimeSpan.FromSeconds(BitConverter.ToUInt16(data, startIndex: ++index))
+                        };
 
                         return true;
                     }

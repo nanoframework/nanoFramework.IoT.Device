@@ -111,6 +111,9 @@ namespace Ld2410
 
         public void ReadConfigurations()
         {
+            var command = new ReadConfigurationsCommand();
+            this.SendCommand(command);
+
             this.ThrowIfNotInConfigurationMode();
         }
 
@@ -148,36 +151,57 @@ namespace Ld2410
         {
             var serializedCommandFrame = command.Serialize();
             this.serialPort.Write(serializedCommandFrame, offset: 0, count: serializedCommandFrame.Length);
-            this.onAckReceived.WaitOne();
+            this.onAckReceived.WaitOne((int)this.CommandTimeout.TotalMilliseconds, exitContext: false);
         }
 
         private void OnSerialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            // need to make sure that there is data to be read, because
-            // the event could have been queued several times and data read on a previous call
-            if (this.serialPort.BytesToRead <= 0)
-            {
-                return;
-            }
+            Debug.WriteLine("===DATA===");
 
-            var buffer = new byte[this.serialPort.BytesToRead];
-            var bytesRead = this.serialPort.Read(buffer, offset: 0, count: buffer.Length);
-
-            // figure out what we received
-            if (ReportFrameParser.TryParse(buffer, index: 0, out ReportFrame reportFrame))
+            try
             {
-                if (this.OnMeasurementReceived != null)
+                // need to make sure that there is data to be read, because
+                // the event could have been queued several times and data read on a previous call
+                if (this.serialPort.BytesToRead <= 0)
                 {
-                    this.OnMeasurementReceived(this, reportFrame);
+                    Debug.WriteLine("===0 Bytes===");
+                    return;
+                }
+
+                var buffer = new byte[this.serialPort.BytesToRead];
+                var bytesRead = this.serialPort.Read(buffer, offset: 0, count: buffer.Length);
+
+                // figure out what we received
+                if (ReportFrameParser.TryParse(buffer, index: 0, out ReportFrame reportFrame))
+                {
+                    Debug.WriteLine("===Measurement===");
+
+                    if (this.OnMeasurementReceived != null)
+                    {
+                        this.OnMeasurementReceived(this, reportFrame);
+                    }
+                }
+                else if (CommandAckParser.TryParse(buffer, index: 0, out CommandAckFrame ackFrame)) // TODO: write actual condition
+                {
+                    Debug.WriteLine("===ACK===");
+                    foreach (var b in buffer)
+                        Debug.Write($"{b:x2} ");
+
+                    if (ackFrame is ReadConfigurationsCommandAck readConfigResult)
+                    {
+                        Debug.WriteLine(readConfigResult.MaxDistanceGate.ToString("x2"));
+                    }
+
+                    this.onAckReceived.Set();
+                }
+                else
+                {
+                    Debug.WriteLine("Unknown Data...");
                 }
             }
-            else // TODO: write actual condition
+            catch (Exception ex)
             {
-                Debug.WriteLine("ACK Received:");
-                foreach (var b in buffer)
-                    Debug.Write($"{b:x2} ");
-
-                this.onAckReceived.Set();
+                Debug.WriteLine("===ERROR===");
             }
         }
 
