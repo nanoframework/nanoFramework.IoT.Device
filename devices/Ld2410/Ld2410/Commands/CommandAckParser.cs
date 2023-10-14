@@ -51,7 +51,7 @@ namespace Ld2410.Commands
             {
                 case CommandWord.EnableConfiguration:
                     {
-                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
+                        var status = GetStatus(data, ref index);
                         var protocolVersion = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
                         var bufferSize = BitConverter.ToUInt16(data, startIndex: index += 2); // 2 bytes
 
@@ -65,23 +65,21 @@ namespace Ld2410.Commands
                     }
                 case CommandWord.EndConfiguration:
                     {
-                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
-
+                        var status = GetStatus(data, ref index);
                         result = new EndConfigurationCommandAck(status);
 
                         return true;
                     }
                 case CommandWord.SetMaxDistanceGateAndNoOneDuration:
                     {
-                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
-
+                        var status = GetStatus(data, ref index);
                         result = new SetMaxDistanceGateAndNoOneDurationCommandAck(status);
 
                         return true;
                     }
                 case CommandWord.ReadConfigurations:
                     {
-                        var status = data[index] == 0x00 && data[++index] == 0x00; // 2 bytes
+                        var status = GetStatus(data, ref index);
 
                         // skip the header (0xAA). Not needed.
                         index++;
@@ -117,11 +115,73 @@ namespace Ld2410.Commands
 
                         return true;
                     }
+                case CommandWord.EnableEngineeringMode:
+                case CommandWord.EndEngineeringMode:
+                    {
+                        var status = GetStatus(data, ref index);
+                        result = new SetEngineeringModeCommandAck((CommandWord)commandWord, status);
+
+                        return true;
+                    }
+                case CommandWord.ConfigureGateSensitivity:
+                    {
+                        var status = GetStatus(data, ref index);
+                        result = new SetGateSensitivityCommandAck(status);
+
+                        return true;
+                    }
+                case CommandWord.ReadFirmwareVersion:
+                    {
+                        var status = GetStatus(data, ref index);
+                        var firmwareType = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
+
+                        index++;
+
+                        var major = data[++index]; // 1 byte
+                        var minor = data[++index]; // 1 byte
+                        var patch = BitConverter.ToUInt32(data, startIndex: ++index);
+
+                        result = new GetFirmwareVersionCommandAck(
+                            status,
+                            firmwareType: firmwareType,
+                            major: major,
+                            minor: minor,
+                            patch: patch
+                            );
+
+                        return true;
+                    }
+                case CommandWord.SetBaudRate:
+                    {
+                        var status = GetStatus(data, ref index);
+                        result = new SetSerialPortBaudRateCommandAck(status);
+
+                        return true;
+                    }
+                case CommandWord.Reset:
+                    {
+                        var status = GetStatus(data, ref index);
+                        result = new FactoryResetCommandAck(status);
+
+                        return true;
+                    }
+                case CommandWord.Restart:
+                    {
+                        var status = GetStatus(data, ref index);
+                        result = new RestartCommandAck(status);
+
+                        return true;
+                    }
                 default:
                     {
                         throw new FormatException();
                     }
             }
+        }
+
+        private static bool GetStatus(byte[] data, ref int index)
+        {
+            return data[index] == 0x00 && data[++index] == 0x00;
         }
     }
 }

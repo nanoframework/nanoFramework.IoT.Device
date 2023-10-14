@@ -6,6 +6,8 @@ using System.Threading;
 using Ld2410.Commands;
 using Ld2410.Reporting;
 
+using UnitsNet;
+
 namespace Ld2410
 {
     public sealed class Ld2410 : IDisposable
@@ -60,6 +62,13 @@ namespace Ld2410
             return 256_000;
         }
 
+        public void SetBaudRate(BaudRate baudRate)
+        {
+            this.ThrowIfNotInConfigurationMode();
+
+            this.SendCommand(new SetSerialPortBaudRateCommand(baudRate));
+        }
+
         public void Connect()
         {
             if (!this.serialPort.IsOpen)
@@ -111,10 +120,10 @@ namespace Ld2410
 
         public void ReadConfigurations()
         {
+            this.ThrowIfNotInConfigurationMode();
+
             var command = new ReadConfigurationsCommand();
             this.SendCommand(command);
-
-            this.ThrowIfNotInConfigurationMode();
         }
 
         public void CommitConfigurations()
@@ -126,17 +135,24 @@ namespace Ld2410
         {
             this.ThrowIfNotInConfigurationMode();
 
+            this.SendCommand(new SetEngineeringModeCommand(enabled));
+
             this.EngineeringModeEnabled = enabled;
         }
 
         public void RestoreFactorySettings(bool restartOnCompletion)
         {
             this.ThrowIfNotInConfigurationMode();
+
+            this.SendCommand(new FactoryResetCommand());
         }
 
         public void Restart()
         {
             this.ThrowIfNotInConfigurationMode();
+
+            this.SendCommand(new RestartCommand());
+            this.ConfigurationModeEnabled = false;
         }
 
         private void ThrowIfNotInConfigurationMode()
@@ -156,15 +172,12 @@ namespace Ld2410
 
         private void OnSerialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Debug.WriteLine("===DATA===");
-
             try
             {
                 // need to make sure that there is data to be read, because
                 // the event could have been queued several times and data read on a previous call
                 if (this.serialPort.BytesToRead <= 0)
                 {
-                    Debug.WriteLine("===0 Bytes===");
                     return;
                 }
 
@@ -189,7 +202,24 @@ namespace Ld2410
 
                     if (ackFrame is ReadConfigurationsCommandAck readConfigResult)
                     {
-                        Debug.WriteLine(readConfigResult.MaxDistanceGate.ToString("x2"));
+                        this.Configuration.MaxDistanceGate = readConfigResult.MaxDistanceGate;
+                        this.Configuration.MaximumMovementDetectionDistance = DeviceConfiguration.GetMaxSupportedDistance(readConfigResult.MaxMovingDistanceGate);
+                        this.Configuration.MaximumRestingDetectionDistance = DeviceConfiguration.GetMaxSupportedDistance(readConfigResult.MaxStaticDistanceGate);
+
+                        this.Configuration.NoOneDuration = readConfigResult.NoOneDuration;
+
+                        this.Configuration.GateConfiguration = new GateConfiguration[]
+                        {
+                            new (gate: 0) { MotionSensitivity = readConfigResult.Gate0MotionSensitivity },
+                            new (gate: 1) { MotionSensitivity = readConfigResult.Gate1MotionSensitivity },
+                            new (gate: 2) { MotionSensitivity = readConfigResult.Gate2MotionSensitivity, RestSensitivity = readConfigResult.Gate2RestSensitivity },
+                            new (gate: 3) { MotionSensitivity = readConfigResult.Gate3MotionSensitivity, RestSensitivity = readConfigResult.Gate3RestSensitivity },
+                            new (gate: 4) { MotionSensitivity = readConfigResult.Gate4MotionSensitivity, RestSensitivity = readConfigResult.Gate4RestSensitivity },
+                            new (gate: 5) { MotionSensitivity = readConfigResult.Gate5MotionSensitivity, RestSensitivity = readConfigResult.Gate5RestSensitivity },
+                            new (gate: 6) { MotionSensitivity = readConfigResult.Gate6MotionSensitivity, RestSensitivity = readConfigResult.Gate6RestSensitivity },
+                            new (gate: 7) { MotionSensitivity = readConfigResult.Gate7MotionSensitivity, RestSensitivity = readConfigResult.Gate7RestSensitivity },
+                            new (gate: 8) { MotionSensitivity = readConfigResult.Gate8MotionSensitivity, RestSensitivity = readConfigResult.Gate8RestSensitivity },
+                        };
                     }
 
                     this.onAckReceived.Set();
