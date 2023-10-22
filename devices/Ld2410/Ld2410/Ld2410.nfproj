@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.props')" />
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>71ad3ffa-9a69-4a28-bfc0-6935597a1c29</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Iot.Device.Ld2410</RootNamespace>
+    <AssemblyName>Iot.Device.Ld2410</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Ld2410.xml</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="Commands\CommandAckParser.cs" />
+    <Compile Include="Commands\CommandAckFrame.cs" />
+    <Compile Include="Commands\CommandFrame.cs" />
+    <Compile Include="Commands\SetEngineeringModeCommand.cs" />
+    <Compile Include="Commands\EndConfigurationCommand.cs" />
+    <Compile Include="Commands\EnableConfigurationCommand.cs" />
+    <Compile Include="Commands\RestartCommand.cs" />
+    <Compile Include="Commands\FactoryResetCommand.cs" />
+    <Compile Include="Commands\ReadFirmwareVersionCommand.cs" />
+    <Compile Include="Commands\ReadConfigurationsCommand.cs" />
+    <Compile Include="Commands\SetGateSensitivityCommand.cs" />
+    <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommand.cs" />
+    <Compile Include="Commands\SetSerialPortBaudRateCommand.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="BaudRate.cs" />
+    <Compile Include="Reporting\BasicReportFrame.cs" />
+    <Compile Include="Reporting\EngineeringModeReportFrame.cs" />
+    <Compile Include="Reporting\ReportFrameParser.cs" />
+    <Compile Include="Commands\CommandWord.cs" />
+    <Compile Include="DeviceConfiguration.cs" />
+    <Compile Include="Extensions\EndiannessExtensions.cs" />
+    <Compile Include="Ld2410.cs" />
+    <Compile Include="Reporting\ReportType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\ReportFrame.cs" />
+    <Compile Include="Reporting\TargetState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\packages\nanoFramework.System.Text.1.2.37\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Ports">
+      <HintPath>..\packages\nanoFramework.System.IO.Ports.1.1.60\lib\System.IO.Ports.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Streams">
+      <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.38\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Length">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.9.0\lib\UnitsNet.Length.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project="..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
+  <Import Project="..\packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
+    <Error Condition="!Exists('..\packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.props'))" />
+    <Error Condition="!Exists('..\packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Nerdbank.GitVersioning.3.6.133\build\Nerdbank.GitVersioning.targets'))" />
+  </Target>
+</Project>
