@@ -1,13 +1,13 @@
 ﻿namespace Ld2410.Commands
 {
-    internal sealed class GetFirmwareVersionCommand : CommandFrame
+    internal sealed class ReadFirmwareVersionCommand : CommandFrame
     {
-        internal GetFirmwareVersionCommand() : base(CommandWord.ReadFirmwareVersion)
+        internal ReadFirmwareVersionCommand() : base(CommandWord.ReadFirmwareVersion)
         {
         }
     }
 
-    internal sealed class GetFirmwareVersionCommandAck : CommandAckFrame
+    internal sealed class ReadFirmwareVersionCommandAck : CommandAckFrame
     {
         internal ushort FirmwareType { get; }
 
@@ -15,9 +15,9 @@
 
         internal byte Minor { get; }
 
-        internal uint Patch { get; }
+        internal byte[] Patch { get; }
 
-        internal GetFirmwareVersionCommandAck(bool isSuccess, ushort firmwareType, byte major, byte minor, uint patch) 
+        internal ReadFirmwareVersionCommandAck(bool isSuccess, ushort firmwareType, byte major, byte minor, byte[] patch)
             : base(CommandWord.ReadFirmwareVersion, isSuccess)
         {
             this.FirmwareType = firmwareType;

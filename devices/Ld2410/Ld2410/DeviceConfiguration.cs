@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 using UnitsNet;
 
@@ -10,7 +9,7 @@ namespace Ld2410
 	/// </summary>
 	public sealed class DeviceConfiguration
 	{
-		public readonly static byte DistancePerGateInCm = 75;
+		
 		public const ushort MaxSupportedNoOneDuration = ushort.MaxValue;
 
 		private Length maximumMovementDetectionDistance;
@@ -18,50 +17,27 @@ namespace Ld2410
 		private TimeSpan noOneDuration;
 
 		/// <summary>
-		/// Gets or sets the max number of distance gates available on the radar module.
+		/// Gets the max number of distance gates available on the radar module.
 		/// </summary>
 		/// <remarks>
-		/// Each gate covers a distance of 75cm. If a module reports max distance gate of 8, then it covers 8x75=600cm or 6m.
+		/// Each gate covers a distance of 75cm.
+		/// If a module reports max distance gate of 8, then it covers 8x75=600cm or 6m.
 		/// </remarks>
-		public byte MaxDistanceGate { get; set; }
+		public byte MaxDistanceGate { get; internal set; }
 
 		/// <summary>
-		/// Gets or sets the farthest detectable distance of moving targets.
-		/// Only human targets appearing within this distance range will be detected.
+		/// Gets or sets the fathest detectable distance of moving targets.
+		/// The distance is measured by number of radar distance gates where each gate is equal 
+		/// to 75cm.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException">The specified distance is greater than the maximum supported distance as per <see cref="MaxSupportedDistanceInCentemeters"/></exception>
-		public Length MaximumMovementDetectionDistance
-		{
-			get => this.maximumMovementDetectionDistance;
-			set
-			{
-				if (value.Centimeters > GetMaxSupportedDistance(this.MaxDistanceGate).Centimeters)
-				{
-					throw new ArgumentOutOfRangeException();
-				}
-
-				this.maximumMovementDetectionDistance = value;
-			}
-		}
+		public byte MaximumMovementDetectionDistanceGate { get; set; }
 
 		/// <summary>
-		/// Gets or sets the farthest detectable distance of resting targets.
-		/// Only human targets appearing within this distance range will be detected.
+		/// Gets or sets the fatherst detectable distance of static objects.
+		/// The distance is measured by number of radar distance gates where each gate is equal
+		/// to 75cm.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException">The specified distance is greater than the maximum supported distance as per <see cref="MaxSupportedDistanceInCentemeters"/></exception>
-		public Length MaximumRestingDetectionDistance
-		{
-			get => this.maximumRestingDetectionDistance;
-			set
-			{
-				if (value.Centimeters > GetMaxSupportedDistance(this.MaxDistanceGate).Centimeters)
-				{
-					throw new ArgumentOutOfRangeException();
-				}
-
-				this.maximumRestingDetectionDistance = value;
-			}
-		}
+		public byte MaximumRestingDetectionDistanceGate { get; set; }
 
 		/// <summary>
 		/// The duration to wait before no movement is confirmed.
@@ -89,9 +65,6 @@ namespace Ld2410
 		/// Gets all available gate configurations.
 		/// </summary>
 		public GateConfiguration[] GateConfiguration { get; set; }
-
-		public static Length GetMaxSupportedDistance(byte numberOfGates)
-			=> Length.FromCentimeters(numberOfGates * DistancePerGateInCm);
 	}
 
 	/// <summary>
@@ -99,6 +72,8 @@ namespace Ld2410
 	/// </summary>
 	public sealed class GateConfiguration
 	{
+		public readonly static byte DistancePerGateInCm = 75;
+
 		private ushort restSensitivity;
 		private ushort motionSensitivity;
 
@@ -155,19 +130,25 @@ namespace Ld2410
 		}
 
 		/// <summary>
+		/// Gets the detection distance of this gate.
+		/// </summary>
+		public Length DetectionDistance
+			=> Length.FromCentimeters(this.Gate * DistancePerGateInCm);
+
+		/// <summary>
 		/// Initializes a new instance of <see cref="GateConfiguration"/> with the specified gate number.
 		/// </summary>
 		/// <param name="gate">The gate number to initialize the <see cref="GateConfiguration"/> class for.</param>
-        public GateConfiguration(byte gate)
-        {
+		public GateConfiguration(byte gate)
+		{
 			this.Gate = gate;
-        }
+		}
 
 #if DEBUG
-        public override string ToString()
-        {
+		public override string ToString()
+		{
 			return $"Gate: {this.Gate}, Motion Sensitivity: {this.MotionSensitivity}, Rest Sensitivity: {this.RestSensitivity}";
-        }
+		}
 #endif
-    }
+	}
 }

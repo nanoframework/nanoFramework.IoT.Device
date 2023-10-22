@@ -21,12 +21,12 @@
     <Compile Include="Commands\CommandAckParser.cs" />
     <Compile Include="Commands\CommandAckFrame.cs" />
     <Compile Include="Commands\CommandFrame.cs" />
-    <Compile Include="Commands\EnableEngineeringModeCommand.cs" />
+    <Compile Include="Commands\SetEngineeringModeCommand.cs" />
     <Compile Include="Commands\EndConfigurationCommand.cs" />
     <Compile Include="Commands\EnableConfigurationCommand.cs" />
     <Compile Include="Commands\RestartCommand.cs" />
     <Compile Include="Commands\FactoryResetCommand.cs" />
-    <Compile Include="Commands\GetFirmwareVersionCommand.cs" />
+    <Compile Include="Commands\ReadFirmwareVersionCommand.cs" />
     <Compile Include="Commands\ReadConfigurationsCommand.cs" />
     <Compile Include="Commands\SetGateSensitivityCommand.cs" />
     <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommand.cs" />
