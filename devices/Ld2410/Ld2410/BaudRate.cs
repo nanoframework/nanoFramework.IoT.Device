@@ -8,7 +8,7 @@ namespace Ld2410
 	/// <remarks>
 	/// The serial communication of LD2410 uses little-endian format.
 	/// All the values in this enum are in big-endian to match the manufacturer docs.
-	/// Use <see cref="EndiannessExtensions.ToLittleEndianBytes(short)"/> before writing to the serial port
+	/// Use <see cref="EndiannessExtensions.ToLittleEndianBytes(ushort)"/> before writing to the serial port
 	/// to ensure that the byte representation will be converted to little-endian if the code is running on a big-endian CPU.
 	/// </remarks>
 	public enum BaudRate : ushort

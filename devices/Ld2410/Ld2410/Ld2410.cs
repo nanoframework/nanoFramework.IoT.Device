@@ -8,20 +8,32 @@ using Ld2410.Reporting;
 
 namespace Ld2410
 {
+	/// <summary>
+	/// LD2410 radar module client.
+	/// </summary>
 	public sealed class Radar : IDisposable
 	{
 		private readonly SerialPort serialPort;
 		private readonly AutoResetEvent onAckReceived;
 
+		/// <summary>
+		/// Measurement event handler delegate.
+		/// </summary>
+		/// <param name="sender">The sender object instance.</param>
+		/// <param name="report">The report frame instance.</param>
 		public delegate void MeasurementEventHandler(object sender, ReportFrame report);
+
+		/// <summary>
+		/// Occurs when a new measurement report has been received from the radar module.
+		/// </summary>
 		public event MeasurementEventHandler OnMeasurementReceived;
 
 		/// <summary>
 		/// Gets the current radar configurations.
 		/// </summary>
 		/// <remarks>
-		/// These configurations are retrieved when <see cref="Ld2410.Connect"/> is executed.
-		/// You must call <see cref="Ld2410.ReadConfigurations"/> as needed to refresh this property.
+		/// These configurations are retrieved when <see cref="Radar.Connect"/> is executed.
+		/// You must call <see cref="Radar.ReadConfigurations"/> as needed to refresh this property.
 		/// </remarks>
 		public DeviceConfiguration Configuration { get; }
 
@@ -54,7 +66,7 @@ namespace Ld2410
 		/// <exception cref="ArgumentNullException"><paramref name="serialPortName"/> was null or empty string.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="baudRate"/> was equal or less than 0.</exception>
 		/// <remarks>
-		/// Initializing the <see cref="Ld2410"/> is not enough to connect to the radar. You must call <see cref="Ld2410.Connect"/>
+		/// Initializing the <see cref="Radar"/> is not enough to connect to the radar. You must call <see cref="Radar.Connect"/>
 		/// when ready to start reading measurements and controlling the radar.
 		/// </remarks>
 		public Radar(string serialPortName, int baudRate = 256_000, TimeSpan commandTimeout = default)
@@ -92,7 +104,7 @@ namespace Ld2410
 		/// <param name="baudRate">The baud-rate to use.</param>
 		/// <remarks>
 		/// This will only be applied after the radar is restarted it.
-		/// Call <see cref="Ld2410.Restart"/> to restart the radar and use the new baud-rate specified here.
+		/// Call <see cref="Radar.Restart"/> to restart the radar and use the new baud-rate specified here.
 		/// </remarks>
 		public void SetBaudRate(BaudRate baudRate)
 		{
@@ -134,7 +146,7 @@ namespace Ld2410
 		/// <remarks>
 		/// Before calling any other "config" methods, you must call this one first.
 		/// When a device is in configuration mode, it will stop reporting measurement data
-		/// until <see cref="Ld2410.ExitConfigurationMode"/> is called.
+		/// until <see cref="Radar.ExitConfigurationMode"/> is called.
 		/// </remarks>
 		public void EnterConfigurationMode()
 		{
@@ -159,7 +171,7 @@ namespace Ld2410
 
 		/// <summary>
 		/// Reads the current configurations from the radar and populates
-		/// <see cref="Ld2410.Configuration"/> with that data.
+		/// <see cref="Radar.Configuration"/> with that data.
 		/// </summary>
 		public void ReadConfigurations()
 		{
@@ -171,7 +183,7 @@ namespace Ld2410
 
 		/// <summary>
 		/// Reads the current firmware version from the radar and populates
-		/// <see cref="Ld2410.FirmwareVersion"/>.
+		/// <see cref="Radar.FirmwareVersion"/>.
 		/// </summary>
 		public void ReadFirmwareVersion()
 		{

@@ -98,25 +98,25 @@ namespace Ld2410.Reporting
                 MaxMovingDistanceGate = data[(startIndex += 2)], // 1 byte
                 MaxStaticDistanceGate = data[++startIndex], // 1 byte
 
-                Gate0MovingDistanceEnergy = data[++startIndex],
-                Gate1MovingDistanceEnergy = data[++startIndex],
-                Gate2MovingDistanceEnergy = data[++startIndex],
-                Gate3MovingDistanceEnergy = data[++startIndex],
-                Gate4MovingDistanceEnergy = data[++startIndex],
-                Gate5MovingDistanceEnergy = data[++startIndex],
-                Gate6MovingDistanceEnergy = data[++startIndex],
-                Gate7MovingDistanceEnergy = data[++startIndex],
-                Gate8MovingDistanceEnergy = data[++startIndex],
+                Gate0MovementEnergy = data[++startIndex],
+                Gate1MovementEnergy = data[++startIndex],
+                Gate2MovementEnergy = data[++startIndex],
+                Gate3MovementEnergy = data[++startIndex],
+                Gate4MovementEnergy = data[++startIndex],
+                Gate5MovementEnergy = data[++startIndex],
+                Gate6MovementEnergy = data[++startIndex],
+                Gate7MovementEnergy = data[++startIndex],
+                Gate8MovementEnergy = data[++startIndex],
 
-                Gate0StaticDistanceEnergy = data[++startIndex],
-                Gate1StaticDistanceEnergy = data[++startIndex],
-                Gate2StaticDistanceEnergy = data[++startIndex],
-                Gate3StaticDistanceEnergy = data[++startIndex],
-                Gate4StaticDistanceEnergy = data[++startIndex],
-                Gate5StaticDistanceEnergy = data[++startIndex],
-                Gate6StaticDistanceEnergy = data[++startIndex],
-                Gate7StaticDistanceEnergy = data[++startIndex],
-                Gate8StaticDistanceEnergy = data[++startIndex],
+                Gate0StaticEnergy = data[++startIndex],
+                Gate1StaticEnergy = data[++startIndex],
+                Gate2StaticEnergy = data[++startIndex],
+                Gate3StaticEnergy = data[++startIndex],
+                Gate4StaticEnergy = data[++startIndex],
+                Gate5StaticEnergy = data[++startIndex],
+                Gate6StaticEnergy = data[++startIndex],
+                Gate7StaticEnergy = data[++startIndex],
+                Gate8StaticEnergy = data[++startIndex],
             };
         }
     }

@@ -25,7 +25,6 @@ namespace Ld2410.Commands
         /// <summary>
         /// Serializes this frame to its binary format as per the LD2410 specs and writes it to a stream.
         /// </summary>
-        /// <param name="stream">The output stream to write the serialized frame to.</param>
         internal virtual byte[] Serialize()
         {
             /*

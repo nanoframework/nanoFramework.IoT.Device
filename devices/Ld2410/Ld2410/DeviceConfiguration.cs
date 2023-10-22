@@ -9,11 +9,11 @@ namespace Ld2410
 	/// </summary>
 	public sealed class DeviceConfiguration
 	{
-		
+		/// <summary>
+		/// The maximum allowd 'No-One' duration in seconds.
+		/// </summary>
 		public const ushort MaxSupportedNoOneDuration = ushort.MaxValue;
 
-		private Length maximumMovementDetectionDistance;
-		private Length maximumRestingDetectionDistance;
 		private TimeSpan noOneDuration;
 
 		/// <summary>
@@ -72,11 +72,17 @@ namespace Ld2410
 	/// </summary>
 	public sealed class GateConfiguration
 	{
+		/// <summary>
+		/// The distance, in centimeters, per each radar distance gate.
+		/// </summary>
 		public readonly static byte DistancePerGateInCm = 75;
 
 		private ushort restSensitivity;
 		private ushort motionSensitivity;
 
+		/// <summary>
+		/// Gets the gate number of this configuration instance.
+		/// </summary>
 		public byte Gate { get; }
 
 		/// <summary>
@@ -145,6 +151,7 @@ namespace Ld2410
 		}
 
 #if DEBUG
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return $"Gate: {this.Gate}, Motion Sensitivity: {this.MotionSensitivity}, Rest Sensitivity: {this.RestSensitivity}";
