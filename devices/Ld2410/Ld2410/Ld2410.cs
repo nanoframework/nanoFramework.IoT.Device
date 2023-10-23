@@ -99,6 +99,31 @@ namespace Ld2410
 		}
 
 		/// <summary>
+		/// Initializes a new instance of <see cref="Radar"/> using the specified <see cref="SerialPort"/> instance.
+		/// </summary>
+		/// <param name="serialPort">An initialized <see cref="SerialPort"/> instance connected to the radar module.</param>
+		/// <param name="commandTimeout">The command timeout. If not specified, the default is 5 seconds.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="serialPort"/> was null or empty string.</exception>
+		public Radar(SerialPort serialPort, TimeSpan commandTimeout = default)
+		{
+			if (serialPort == null)
+			{
+				throw new ArgumentNullException();
+			}
+
+			this.Configuration = new()
+			{
+				BaudRate = serialPort.BaudRate,
+			};
+
+			this.serialPort = serialPort;
+			this.serialPort.DataReceived += OnSerialDataReceived;
+
+			this.onAckReceived = new AutoResetEvent(initialState: false);
+			this.CommandTimeout = commandTimeout == default ? TimeSpan.FromSeconds(5) : commandTimeout;
+		}
+
+		/// <summary>
 		/// sets the baud-rate for the connected radar.
 		/// </summary>
 		/// <param name="baudRate">The baud-rate to use.</param>
@@ -324,26 +349,25 @@ namespace Ld2410
 				{
 					if (ackFrame is ReadConfigurationsCommandAck readConfigResult)
 					{
-						this.Configuration.MaxDistanceGate = readConfigResult.MaxDistanceGate;
-						this.Configuration.MaximumMovementDetectionDistanceGate = readConfigResult.MaxMovingDistanceGate;
-						this.Configuration.MaximumRestingDetectionDistanceGate = readConfigResult.MaxStaticDistanceGate;
+						this.Configuration.MaxDistanceGateIndex = readConfigResult.MaxDistanceGate;
+						this.Configuration.MaximumMovementDetectionDistanceGate = readConfigResult.MotionRangeGate;
+						this.Configuration.MaximumRestingDetectionDistanceGate = readConfigResult.StaticRangeGate;
 
 						this.Configuration.NoOneDuration = readConfigResult.NoOneDuration;
 
-						this.Configuration.GateConfiguration = new GateConfiguration[]
+						this.Configuration.GateConfiguration = new GateConfiguration[this.Configuration.NumberOfDistanceGatesAvailable];
+						for (var gate = 0; gate < this.Configuration.GateConfiguration.Length; gate++)
 						{
-							// gate 0 & 1 cannot have custom static sensitivity
-							new (gate: 0) { MotionSensitivity = readConfigResult.Gate0MotionSensitivity },
-							new (gate: 1) { MotionSensitivity = readConfigResult.Gate1MotionSensitivity },
+							this.Configuration.GateConfiguration[gate] = new GateConfiguration((byte)gate)
+							{
+								MotionSensitivity = readConfigResult.MotionSensitivityLevelPerGate[gate],
+							};
 
-							new (gate: 2) { MotionSensitivity = readConfigResult.Gate2MotionSensitivity, RestSensitivity = readConfigResult.Gate2RestSensitivity },
-							new (gate: 3) { MotionSensitivity = readConfigResult.Gate3MotionSensitivity, RestSensitivity = readConfigResult.Gate3RestSensitivity },
-							new (gate: 4) { MotionSensitivity = readConfigResult.Gate4MotionSensitivity, RestSensitivity = readConfigResult.Gate4RestSensitivity },
-							new (gate: 5) { MotionSensitivity = readConfigResult.Gate5MotionSensitivity, RestSensitivity = readConfigResult.Gate5RestSensitivity },
-							new (gate: 6) { MotionSensitivity = readConfigResult.Gate6MotionSensitivity, RestSensitivity = readConfigResult.Gate6RestSensitivity },
-							new (gate: 7) { MotionSensitivity = readConfigResult.Gate7MotionSensitivity, RestSensitivity = readConfigResult.Gate7RestSensitivity },
-							new (gate: 8) { MotionSensitivity = readConfigResult.Gate8MotionSensitivity, RestSensitivity = readConfigResult.Gate8RestSensitivity },
-						};
+							if (gate > 1) // gate 0 & 1 cannot have custom static sensitivity
+							{
+								this.Configuration.GateConfiguration[gate].RestSensitivity = readConfigResult.RestingSensitivityLevelPerGate[gate];
+							}
+						}
 					}
 					else if (ackFrame is ReadFirmwareVersionCommandAck firmwareVersionCommandAck)
 					{

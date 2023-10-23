@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection;
+
+using Ld2410.Extensions;
 
 namespace Ld2410.Commands
 {
@@ -84,34 +87,44 @@ namespace Ld2410.Commands
 						// skip the header (0xAA). Not needed.
 						index++;
 
-						result = new ReadConfigurationsCommandAck(status)
-						{
-							MaxDistanceGate = data[++index],
-							MaxMovingDistanceGate = data[++index],
-							MaxStaticDistanceGate = data[++index],
+						var maxDistanceGate = data[++index];
+						var motionRangeGate = data[++index];
+						var staticRangeGate = data[++index];
 
-							Gate0MotionSensitivity = data[++index],
-							Gate1MotionSensitivity = data[++index],
-							Gate2MotionSensitivity = data[++index],
-							Gate3MotionSensitivity = data[++index],
-							Gate4MotionSensitivity = data[++index],
-							Gate5MotionSensitivity = data[++index],
-							Gate6MotionSensitivity = data[++index],
-							Gate7MotionSensitivity = data[++index],
-							Gate8MotionSensitivity = data[++index],
+						var motionSensitivityLevelPerGate = new byte[9];
+						var staticSensitivityLevelPerGate = new byte[9];
 
-							Gate0RestSensitivity = data[++index],
-							Gate1RestSensitivity = data[++index],
-							Gate2RestSensitivity = data[++index],
-							Gate3RestSensitivity = data[++index],
-							Gate4RestSensitivity = data[++index],
-							Gate5RestSensitivity = data[++index],
-							Gate6RestSensitivity = data[++index],
-							Gate7RestSensitivity = data[++index],
-							Gate8RestSensitivity = data[++index],
+						Array.Copy(
+							sourceArray: data,
+							sourceIndex: ++index,
+							destinationArray: motionSensitivityLevelPerGate,
+							destinationIndex: 0,
+							motionSensitivityLevelPerGate.Length
+							);
 
-							NoOneDuration = TimeSpan.FromSeconds(BitConverter.ToUInt16(data, startIndex: ++index))
-						};
+						index += motionSensitivityLevelPerGate.Length;
+
+						Array.Copy(
+							sourceArray: data,
+							sourceIndex: index,
+							destinationArray: staticSensitivityLevelPerGate,
+							destinationIndex: 0,
+							staticSensitivityLevelPerGate.Length
+							);
+
+						index += staticSensitivityLevelPerGate.Length;
+
+						var noOneDuration = TimeSpan.FromSeconds(BitConverter.ToUInt16(data, startIndex: index));
+
+						result = new ReadConfigurationsCommandAck(
+							status,
+							maxDistanceGate,
+							motionRangeGate,
+							staticRangeGate,
+							motionSensitivityLevelPerGate,
+							staticSensitivityLevelPerGate,
+							noOneDuration
+							);
 
 						return true;
 					}

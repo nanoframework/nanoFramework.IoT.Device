@@ -17,13 +17,19 @@ namespace Ld2410
 		private TimeSpan noOneDuration;
 
 		/// <summary>
-		/// Gets the max number of distance gates available on the radar module.
+		/// Gets the max gate index value of distance gates available on the radar module.
 		/// </summary>
 		/// <remarks>
+		/// Gate numbers start from 0. So a radar reporting <see cref="MaxDistanceGateIndex"/> of 8 means it has 9 gates.
 		/// Each gate covers a distance of 75cm.
-		/// If a module reports max distance gate of 8, then it covers 8x75=600cm or 6m.
+		/// If a module reports max distance gate of 8, then it covers 9x75=675cm or 6.75m.
 		/// </remarks>
-		public byte MaxDistanceGate { get; internal set; }
+		public byte MaxDistanceGateIndex { get; internal set; }
+
+		/// <summary>
+		/// Gets the number of available distance gates on the radar module.
+		/// </summary>
+		public int NumberOfDistanceGatesAvailable => MaxDistanceGateIndex + 1;
 
 		/// <summary>
 		/// Gets or sets the fathest detectable distance of moving targets.
