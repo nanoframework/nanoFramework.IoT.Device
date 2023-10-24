@@ -103,7 +103,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// VRES[8:0]: Vertical Display Resolution (second and third data)
         /// Active channel calculation:
         ///     - GD: First active gate = G0(Fixed); LAST active gate = first active + VRES[8:0] – 1
-        ///     - SD: First active source = S0(Fixed); LAST active source = first active+HRES[7:3]*8–1
+        ///     - SD: First active source = S0(Fixed); LAST active source = first active+HRES[7:3] * 8 – 1.
         /// </remarks>
         ResolutionSetting = 0x61,
 
@@ -116,7 +116,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// the power saving mechanism will be activated.
         /// The active period width is defined by the following two parameters.
         ///     - VCOM_W[3:0]: VCOM power saving width (unit = line period)
-        ///     - SD_W[3:0]: Source power saving width (unit = 660nS)
+        ///     - SD_W[3:0]: Source power saving width (unit = 660nS).
         /// </remarks>
         PowerSaving = 0xe3
     }
