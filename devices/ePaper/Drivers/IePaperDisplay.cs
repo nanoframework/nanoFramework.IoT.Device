@@ -92,7 +92,10 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Blocks the current thread until the display is in idle mode again.
         /// </summary>
-        void WaitReady();
+        /// <param name="waitingTime">The maximum time to wait in ms before exiting the method. -1 to wait infinitely.</param>
+        /// <returns>True if it returns before the time to wait, false otherwise.</returns>
+        /// <remarks>Be careful if waiting infinitely as the thread will be block without any possibilities to exit.</remarks>
+        bool WaitReady(int waitingTime);
 
         /// <summary>
         /// Begins a frame draw operation with frame paging support.
@@ -109,7 +112,7 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Moves the current buffers to the next frame page and returns true if successful.
         /// </summary>
-        /// <returns>True if the next frame page is available and the internal buffers have moved to it, otherwise; false.</returns>
+        /// <returns>True if the next frame page is available and the internal buffers have moved to it, false otherwise.</returns>
         bool NextFramePage();
 
         /// <summary>

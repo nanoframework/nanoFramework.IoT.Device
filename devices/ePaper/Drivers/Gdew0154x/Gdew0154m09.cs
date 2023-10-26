@@ -21,6 +21,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <param name="dataCommandPin">The data/command GPIO pin.</param>
         /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
         /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
         /// <remarks>
@@ -34,7 +35,8 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             int busyPin,
             int dataCommandPin,
             GpioController gpioController = null,
-            bool enableFramePaging = false) : base(spiDevice, resetPin, busyPin, dataCommandPin, 200, 200, gpioController, enableFramePaging)
+            bool enableFramePaging = false,
+            bool shouldDispose = true) : base(spiDevice, resetPin, busyPin, dataCommandPin, 200, 200, gpioController, enableFramePaging, shouldDispose)
         {
         }
 

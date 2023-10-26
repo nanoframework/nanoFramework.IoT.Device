@@ -17,13 +17,16 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
     /// </summary>
     public abstract class Gdew0154x : IEPaperDisplay
     {
+        private readonly int _maxWaitingTime = 500;
+        private readonly bool _shouldDispose;
+        private readonly byte[] _whiteBuffer;
+        private bool _disposed;
+
         private SpiDevice _spiDevice;
         private GpioController _gpioController;
         private GpioPin _resetPin;
         private GpioPin _busyPin;
         private GpioPin _dataCommandPin;
-
-        private bool _disposed;
 
         /// <summary>
         /// The max supported clock frequency for the GDEW0154x controller. 10MHz.
@@ -46,6 +49,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <param name="height">The height of the display.</param>
         /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
         /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
         protected Gdew0154x(
@@ -56,10 +60,12 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             int width,
             int height,
             GpioController gpioController,
-            bool enableFramePaging = false)
+            bool enableFramePaging = false,
+            bool shouldDispose = true)
         {
             _spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
-            _gpioController = gpioController ?? throw new ArgumentNullException(nameof(gpioController));
+            _gpioController = gpioController ?? new GpioController();
+            _shouldDispose = shouldDispose || gpioController is null;
 
             // setup the gpio pins
             _resetPin = resetPin >= 0 ? _gpioController.OpenPin(resetPin, PinMode.Output) : null;
@@ -69,6 +75,12 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             Width = width;
             Height = height;
             PagedFrameDrawEnabled = enableFramePaging;
+
+            _whiteBuffer = new byte[Width * Height];
+            for (int i = 0; i < _whiteBuffer.Length; i++)
+            {
+                _whiteBuffer[i] = 0xff;
+            }
 
             PowerState = PowerState.Unknown;
 
@@ -209,12 +221,13 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <param name="buffer">The buffer array to draw.</param>
         public void DirectDrawBuffer(params byte[] buffer)
         {
+            SendCommand((byte)Command.DataStartTransmission1);
+            SendData(_whiteBuffer);
             SendCommand((byte)Command.DataStartTransmission2);
             SendData(buffer);
             WaitMs(5);
 
-            SendCommand((byte)Command.DisplayRefresh);
-            WaitMs(500);
+            PerformFullRefresh();
         }
 
         /// <summary>
@@ -368,29 +381,30 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             WaitMs(10);
 
             _resetPin.Write(PinValue.High);
-            WaitMs(100);
+            WaitMs(10);
 
             _resetPin.Write(PinValue.Low);
-            WaitMs(100);
+            WaitMs(10);
 
             _resetPin.Write(PinValue.High);
+
+            // as per samples from screen manufacturer, wait finally 100ms for reset IC + select BUS
             WaitMs(100);
         }
 
         /// <summary>
         /// Perform the required initialization steps to set up the display.
         /// </summary>
-        /// <exception cref="InvalidOperationException">Unable to initialize the display until it has been powered on. Call PowerOn() first.</exception>
         public virtual void Initialize()
         {
-            if (PowerState != PowerState.PoweredOn)
+            if (PowerState == PowerState.DeepSleep)
             {
-                throw new InvalidOperationException();
+                // When in deep sleep mode, hardware init is required to set the screen on stand-by.
+                HardwareReset();
             }
 
             SendCommand((byte)Command.PanelSetting);
-            SendData(0xdf);
-            SendData(0x0e);
+            SendData(0xdf, 0x0e);
 
             // FITIinternal code
             SendCommand(0x4d);
@@ -409,9 +423,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             SendData(0x0a);
 
             SendCommand((byte)Command.ResolutionSetting);
-            SendData(0xc8);
-            SendData(0x00);
-            SendData(0xc8);
+            SendData(0xc8, 0x00, 0xc8);
 
             SendCommand((byte)Command.TCONSetting);
             SendData(0x00);
@@ -421,7 +433,15 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
 
             SendCommand((byte)Command.PowerOn);
 
-            WaitReady();
+            if (WaitReady(_maxWaitingTime))
+            {
+                PowerState = PowerState.PoweredOn;
+            }
+            else
+            {
+                // Set to deep sleep to force an hardware reset on next request
+                PowerState = PowerState.DeepSleep;
+            }
         }
 
         /// <summary>
@@ -455,9 +475,12 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <inheritdoc/>
         public virtual void PerformFullRefresh()
         {
-            WaitMs(10);
             SendCommand((byte)Command.DisplayRefresh);
-            WaitReady();
+
+            // as per samples from screen manufacturer, refresh wait should be at least 200µs
+            // using a spin wait of 5ms, any value should be ok
+            // and use a large waiting time in case of something unexpected happens.
+            WaitReady(_maxWaitingTime);
         }
 
         /// <inheritdoc/>
@@ -476,15 +499,21 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             SendCommand(0x50);
             SendData(0x07);
             SendCommand((byte)Command.PowerOff);
-            WaitReady();
+            WaitReady(_maxWaitingTime);
+
+            // as per samples from screen manufacturer, power off request a time delay of 1s before continue.
+            WaitMs(1000);
 
             if (sleepMode == SleepMode.DeepSleepMode)
             {
                 SendCommand((byte)Command.DeepSleepMode);
                 SendData(0xa5);
+                PowerState = PowerState.DeepSleep;
             }
-
-            PowerState = PowerState.PoweredOff;
+            else
+            {
+                PowerState = PowerState.PoweredOff;
+            }
         }
 
         /// <summary>
@@ -492,12 +521,16 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// </summary>
         public virtual void PowerOn()
         {
-            HardwareReset();
-            WaitMs(1000);
+            if (PowerState == PowerState.DeepSleep)
+            {
+                // When in deep sleep mode, hardware init is required to set the screen on stand-by.
+                HardwareReset();
+            }
+
             SendCommand(0x50);
             SendData(0xd7);
             SendCommand((byte)Command.PowerOn);
-            WaitReady();
+            WaitReady(_maxWaitingTime);
 
             PowerState = PowerState.PoweredOn;
         }
@@ -508,11 +541,8 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             // make sure we are setting data/command pin to low (command mode)
             _dataCommandPin.Write(PinValue.Low);
 
-            foreach (var b in command)
-            {
-                // write the command byte to the display controller
-                _spiDevice.WriteByte(b);
-            }
+            // write the command byte to the display controller
+            _spiDevice.Write(command);
         }
 
         /// <inheritdoc/>
@@ -521,10 +551,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
             // set the data/command pin to high to indicate to the display we will be sending data
             _dataCommandPin.Write(PinValue.High);
 
-            foreach (var @byte in data)
-            {
-                _spiDevice.WriteByte(@byte);
-            }
+            _spiDevice.Write(data);
 
             // go back to low (command mode)
             _dataCommandPin.Write(PinValue.Low);
@@ -563,7 +590,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         {
             SendCommand(0x04);
 
-            WaitReady(PinValue.High);
+            WaitReady(_maxWaitingTime);
             WaitMs(10);
         }
 
@@ -577,21 +604,16 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         }
 
         /// <inheritdoc/>
-        public virtual void WaitReady(PinValue pinValue)
+        public virtual bool WaitReady(int waitingTime)
         {
-            while (_busyPin.Read() != pinValue)
+            int currentWait = 0;
+            while (currentWait < waitingTime && _busyPin.Read() == PinValue.Low)
             {
-                WaitMs(5);
+                SpinWait.SpinUntil(5);
+                currentWait += 5;
             }
-        }
 
-        /// <inheritdoc/>
-        public virtual void WaitReady()
-        {
-            while (_busyPin.Read() == PinValue.Low)
-            {
-                WaitMs(5);
-            }
+            return currentWait >= waitingTime;
         }
 
         #region IDisposable
@@ -611,7 +633,10 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
                     _dataCommandPin?.Dispose();
                     _dataCommandPin = null;
 
-                    _gpioController = null;
+                    if (_shouldDispose)
+                    {
+                        _gpioController?.Dispose();
+                    }
 
                     _spiDevice = null;
                     _gpioController = null;

@@ -18,6 +18,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
     /// </summary>
     public abstract class Ssd168x : IEPaperDisplay
     {
+        private readonly int _maxWaitingTime = 500;
         private SpiDevice _spiDevice;
         private GpioController _gpioController;
         private GpioPin _resetPin;
@@ -507,7 +508,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.FullRefresh); // Display Mode 1 (Full Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            WaitReady();
+            WaitReady(_maxWaitingTime);
         }
 
         /// <inheritdoc/>
@@ -520,7 +521,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.PartialRefresh); // Display Mode 2 (Partial Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            WaitReady();
+            WaitReady(_maxWaitingTime);
         }
 
         /// <summary>
@@ -613,7 +614,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         {
             SendCommand((byte)Command.SoftwareReset);
 
-            WaitReady();
+            WaitReady(_maxWaitingTime);
             WaitMs(10);
         }
 
@@ -627,12 +628,16 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public virtual void WaitReady()
+        public virtual bool WaitReady(int waitingTime)
         {
-            while (_busyPin.Read() == PinValue.High)
+            int currentWait = 0;
+            while (currentWait < waitingTime && _busyPin.Read() == PinValue.High)
             {
                 WaitMs(5);
+                currentWait += 5;
             }
+
+            return currentWait >= waitingTime;
         }
 
         #region IDisposable
