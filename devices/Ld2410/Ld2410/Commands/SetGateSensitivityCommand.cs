@@ -1,6 +1,5 @@
 ﻿using System;
-
-using Ld2410.Extensions;
+using System.Buffers.Binary;
 
 namespace Ld2410.Commands
 {
@@ -15,36 +14,26 @@ namespace Ld2410.Commands
 				throw new ArgumentOutOfRangeException();
 			}
 
-			var gateBytes = gate.ToLittleEndianBytes();
-			var motionSensitivityBytes = motionSensitivity.ToLittleEndianBytes();
-			var staticSensitivityBytes = staticSensitivity.ToLittleEndianBytes();
+			var valueSpan = new SpanByte(base.Value = new byte[18]);
 
-			base.Value = new byte[18];
-
+			// set gate number
 			// the first 2 bytes represent the distance gate word (0x0000)
 			// we don't have to set those as the array is initialized with 0x00
 			var currentIndex = 2;
 
-			gateBytes.CopyToArrayWithIndexAndAdvance(
-				destinationArray: base.Value,
-				ref currentIndex
-				);
+			BinaryPrimitives.WriteInt32LittleEndian(valueSpan.Slice(currentIndex), gate);
+			currentIndex += 4; // size of gate variable
 
 			// set motion sensitivity for this gate
-			base.Value[currentIndex] = 0x01;
+			valueSpan[currentIndex] = 0x01;
 			currentIndex += 2;
-			motionSensitivityBytes.CopyToArrayWithIndexAndAdvance(
-				destinationArray: base.Value,
-				ref currentIndex
-				);
+			BinaryPrimitives.WriteUInt32LittleEndian(valueSpan.Slice(currentIndex), motionSensitivity);
+			currentIndex += 4; // size of gate variable
 
 			// set static sensitivity for this gate
-			base.Value[currentIndex] = 0x02;
+			valueSpan[currentIndex] = 0x02;
 			currentIndex += 2;
-			staticSensitivityBytes.CopyToArrayWithIndexAndAdvance(
-				destinationArray: base.Value,
-				ref currentIndex
-				);
+			BinaryPrimitives.WriteUInt32LittleEndian(valueSpan.Slice(currentIndex), staticSensitivity);
 		}
 	}
 

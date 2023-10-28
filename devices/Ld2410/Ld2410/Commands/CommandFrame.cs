@@ -1,115 +1,91 @@
-﻿using Ld2410.Extensions;
-
-using System;
+﻿using System;
+using System.Buffers.Binary;
 
 namespace Ld2410.Commands
 {
-    internal abstract class CommandFrame
-    {
-        internal static byte[] Header = new byte[4] { 0xFD, 0xFC, 0xFB, 0xFA };
-        internal static byte[] End = new byte[4] { 0x04, 0x03, 0x02, 0x01 };
+	internal abstract class CommandFrame
+	{
+		internal static readonly byte[] Header = new byte[4] { 0xFD, 0xFC, 0xFB, 0xFA };
+		internal static readonly byte[] End = new byte[4] { 0x04, 0x03, 0x02, 0x01 };
 
-        protected const ushort DataLengthSegmentSize = 2;
-        protected const ushort CommandWordLength = 2;
+		protected const ushort DataLengthSegmentSize = 2;
+		protected const ushort CommandWordLength = 2;
 
-        internal CommandWord Command { get; set; }
+		internal CommandWord Command { get; set; }
 
-        protected byte[] Value { get; set; }
+		protected byte[] Value { get; set; }
 
-        protected CommandFrame(CommandWord command)
-        {
-            this.Command = command;
-            this.Value = new byte[0];
-        }
+		protected CommandFrame(CommandWord command)
+		{
+			this.Command = command;
+			this.Value = new byte[0];
+		}
 
-        /// <summary>
-        /// Serializes this frame to its binary format as per the LD2410 specs and writes it to a stream.
-        /// </summary>
-        internal virtual byte[] Serialize()
-        {
-            /*
-             * The structure of the command frame in the stream is:
-             * 
-             * FRAME HEADER | FRAME DATA LENGTH | FRAME DATA (COMMAND + VALUE) | FRAME END
-             * 
-             * All in little-endian.
-             * 
-             */
+		/// <summary>
+		/// Serializes this frame to its binary format as per the LD2410 specs and writes it to a stream.
+		/// </summary>
+		internal virtual byte[] Serialize()
+		{
+			/*
+			 * The structure of the command frame in the stream is:
+			 * 
+			 * FRAME HEADER | FRAME DATA LENGTH | FRAME DATA (COMMAND + VALUE) | FRAME END
+			 * 
+			 * All in little-endian.
+			 * 
+			 */
 
-            /*
-             * The full frame length is: 4 (FRAME HEADER) + 2 (Data Length Segment) + 2 (COMMAND WORD) + X (COMMAND VALUE) + 4 (FRAME END)
-             */
-            var serializedFrame = new byte[
-                Header.Length +
-                DataLengthSegmentSize +
-                CommandWordLength +
-                Value.Length +
-                End.Length];
+			var header = new SpanByte(Header);
+			var end = new SpanByte(End);
 
-            var serializedFrameCurrentPosition = 0;
+			/*
+			 * The full frame length is: 4 (FRAME HEADER) + 2 (Data Length Segment) + 2 (COMMAND WORD) + X (COMMAND VALUE) + 4 (FRAME END)
+			 */
+			var serializedFrame = new byte[
+				Header.Length +
+				DataLengthSegmentSize +
+				CommandWordLength +
+				Value.Length +
+				End.Length];
 
-            // FRAME HEADER
-            Array.Copy(
-                sourceArray: Header,
-                sourceIndex: 0,
-                destinationArray: serializedFrame,
-                destinationIndex: 0,
-                length: Header.Length);
+			var serializedFrameSpan = new SpanByte(serializedFrame);
 
-            serializedFrameCurrentPosition += Header.Length;
+			var serializedFrameCurrentPosition = 0;
 
-            /*
-             * FRAME DATA LENGTH = Command Word Length + Command Value Length.
-             * 
-             * Command Word Length is always 2 Bytes.
-             * 
-             * The Length value has to be 2 bytes long so we cast to C# Short.
-             * 
-             */
-            var frameDataLength = BitConverter.GetBytes((short)(CommandWordLength + this.Value.Length));
-            Array.Copy(
-                sourceArray: frameDataLength,
-                sourceIndex: 0,
-                destinationArray: serializedFrame,
-                destinationIndex: serializedFrameCurrentPosition,
-                length: frameDataLength.Length
-                );
+			// FRAME HEADER
+			header.CopyTo(serializedFrameSpan.Slice(serializedFrameCurrentPosition));
+			serializedFrameCurrentPosition += header.Length;
 
-            serializedFrameCurrentPosition += frameDataLength.Length;
+			/*
+			 * FRAME DATA LENGTH = Command Word Length + Command Value Length.
+			 * 
+			 * Command Word Length is always 2 Bytes.
+			 * 
+			 * The Length value has to be 2 bytes long so we cast to C# Short.
+			 * 
+			 */
+			BinaryPrimitives.WriteUInt16LittleEndian(
+				destination: serializedFrameSpan.Slice(serializedFrameCurrentPosition),
+				value: (ushort)(CommandWordLength + this.Value.Length)
+				);
+			serializedFrameCurrentPosition += 2;
 
-            // FRAME DATA: COMMAND
-            var commandBytes = ((ushort)Command).ToLittleEndianBytes();
-            Array.Copy(
-                sourceArray: commandBytes,
-                sourceIndex: 0,
-                destinationArray: serializedFrame,
-                destinationIndex: serializedFrameCurrentPosition,
-                length: commandBytes.Length
-                );
+			// FRAME DATA: COMMAND
+			BinaryPrimitives.WriteUInt16LittleEndian(
+				destination: serializedFrameSpan.Slice(serializedFrameCurrentPosition),
+				value: (ushort)Command
+				);
+			serializedFrameCurrentPosition += 2;
 
-            serializedFrameCurrentPosition += commandBytes.Length;
+			// FRAME DATA: VALUE
+			var value = new SpanByte(this.Value);
+			value.CopyTo(serializedFrameSpan.Slice(serializedFrameCurrentPosition));
+			serializedFrameCurrentPosition += value.Length;
 
-            // FRAME DATA: VALUE
-            Array.Copy(
-                sourceArray: Value,
-                sourceIndex: 0,
-                destinationArray: serializedFrame,
-                destinationIndex: serializedFrameCurrentPosition,
-                length: Value.Length
-                );
+			// FRAME END
+			end.CopyTo(serializedFrameSpan.Slice(serializedFrameCurrentPosition));
 
-            serializedFrameCurrentPosition += Value.Length;
-
-            // FRAME END
-            Array.Copy(
-                sourceArray: End,
-                sourceIndex: 0,
-                destinationArray: serializedFrame,
-                destinationIndex: serializedFrameCurrentPosition,
-                length: End.Length
-                );
-
-            return serializedFrame;
-        }
-    }
+			return serializedFrame;
+		}
+	}
 }

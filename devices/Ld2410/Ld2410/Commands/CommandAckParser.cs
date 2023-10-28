@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Reflection;
-
-using Ld2410.Extensions;
+using System.Buffers.Binary;
 
 namespace Ld2410.Commands
 {
@@ -31,8 +29,10 @@ namespace Ld2410.Commands
 				return false;
 			}
 
+			var dataSpan = new SpanByte(data);
+
 			// read the next 2 bytes to find the length of the payload
-			var payloadSize = BitConverter.ToUInt16(data, startIndex: ++index);
+			var payloadSize = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(++index));
 			index++; // move the index one step forward to account for ushort size read above
 
 			// make sure we actually have the payload to parse through
@@ -42,7 +42,7 @@ namespace Ld2410.Commands
 			}
 
 			// the next 2 bytes indicate the command this acknowledgment is for
-			var commandWord = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
+			var commandWord = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(++index)); // 2 bytes
 			index += 2; // move the index one step forward to account for ushort size read above
 
 			// according to protocol spec, the command word is modified in ACK frames like this:
@@ -55,8 +55,8 @@ namespace Ld2410.Commands
 				case CommandWord.EnableConfiguration:
 					{
 						var status = GetStatus(data, ref index);
-						var protocolVersion = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
-						var bufferSize = BitConverter.ToUInt16(data, startIndex: index += 2); // 2 bytes
+						var protocolVersion = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(++index)); // 2 bytes
+						var bufferSize = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(index += 2)); // 2 bytes
 
 						result = new EnableConfigurationCommandAck(
 							status,
@@ -91,38 +91,26 @@ namespace Ld2410.Commands
 						var motionRangeGate = data[++index];
 						var staticRangeGate = data[++index];
 
-						var motionSensitivityLevelPerGate = new byte[9];
-						var staticSensitivityLevelPerGate = new byte[9];
+						var motionSensitivityLevelPerGate = new SpanByte(new byte[9]);
+						var staticSensitivityLevelPerGate = new SpanByte(new byte[9]);
 
-						Array.Copy(
-							sourceArray: data,
-							sourceIndex: ++index,
-							destinationArray: motionSensitivityLevelPerGate,
-							destinationIndex: 0,
-							motionSensitivityLevelPerGate.Length
-							);
-
+						dataSpan.Slice(start: ++index, length: motionSensitivityLevelPerGate.Length)
+							.CopyTo(motionSensitivityLevelPerGate);
 						index += motionSensitivityLevelPerGate.Length;
 
-						Array.Copy(
-							sourceArray: data,
-							sourceIndex: index,
-							destinationArray: staticSensitivityLevelPerGate,
-							destinationIndex: 0,
-							staticSensitivityLevelPerGate.Length
-							);
-
+						dataSpan.Slice(start: index, length: staticSensitivityLevelPerGate.Length)
+							.CopyTo(staticSensitivityLevelPerGate);
 						index += staticSensitivityLevelPerGate.Length;
 
-						var noOneDuration = TimeSpan.FromSeconds(BitConverter.ToUInt16(data, startIndex: index));
+						var noOneDuration = TimeSpan.FromSeconds(BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(index)));
 
 						result = new ReadConfigurationsCommandAck(
 							status,
 							maxDistanceGate,
 							motionRangeGate,
 							staticRangeGate,
-							motionSensitivityLevelPerGate,
-							staticSensitivityLevelPerGate,
+							motionSensitivityLevelPerGate.ToArray(),
+							staticSensitivityLevelPerGate.ToArray(),
 							noOneDuration
 							);
 
@@ -146,12 +134,12 @@ namespace Ld2410.Commands
 				case CommandWord.ReadFirmwareVersion:
 					{
 						var status = GetStatus(data, ref index);
-						var firmwareType = BitConverter.ToUInt16(data, startIndex: ++index); // 2 bytes
+						var firmwareType = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(++index)); // 2 bytes
 
 						index++;
 
-						var minor = data[++index]; // 1 byte
-						var major = data[++index]; // 1 byte
+						var minor = dataSpan[++index]; // 1 byte
+						var major = dataSpan[++index]; // 1 byte
 
 						result = new ReadFirmwareVersionCommandAck(
 							status,
@@ -160,10 +148,10 @@ namespace Ld2410.Commands
 							minor: minor,
 							patch: new byte[4]
 								{
-									data[index + 4],
-									data[index + 3],
-									data[index + 2],
-									data[index + 1]
+									dataSpan[index + 4],
+									dataSpan[index + 3],
+									dataSpan[index + 2],
+									dataSpan[index + 1]
 								}
 							);
 

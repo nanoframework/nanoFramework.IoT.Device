@@ -1,6 +1,6 @@
 ﻿namespace Ld2410.Commands
 {
-    internal sealed class ReadFirmwareVersionCommand : CommandFrame
+	internal sealed class ReadFirmwareVersionCommand : CommandFrame
     {
         internal ReadFirmwareVersionCommand() : base(CommandWord.ReadFirmwareVersion)
         {

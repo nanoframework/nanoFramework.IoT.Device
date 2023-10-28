@@ -34,14 +34,12 @@
     <Compile Include="Commands\SetGateSensitivityCommand.cs" />
     <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommand.cs" />
     <Compile Include="Commands\SetSerialPortBaudRateCommand.cs" />
-    <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="BaudRate.cs" />
     <Compile Include="Reporting\BasicReportFrame.cs" />
     <Compile Include="Reporting\EngineeringModeReportFrame.cs" />
     <Compile Include="Reporting\ReportFrameParser.cs" />
     <Compile Include="Commands\CommandWord.cs" />
     <Compile Include="DeviceConfiguration.cs" />
-    <Compile Include="Extensions\EndiannessExtensions.cs" />
     <Compile Include="Ld2410.cs" />
     <Compile Include="Reporting\ReportType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +56,9 @@
     <Reference Include="nanoFramework.System.Text">
       <HintPath>..\packages\nanoFramework.System.Text.1.2.37\lib\nanoFramework.System.Text.dll</HintPath>
     </Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives">
+      <HintPath>..\..\..\..\..\..\_Playground\NFApp_LD2410\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.325\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Ports">
       <HintPath>..\packages\nanoFramework.System.IO.Ports.1.1.60\lib\System.IO.Ports.dll</HintPath>
     </Reference>
@@ -70,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ProjectExtensions>
     <ProjectCapabilities>
