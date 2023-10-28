@@ -35,8 +35,10 @@
     <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommand.cs" />
     <Compile Include="Commands\SetSerialPortBaudRateCommand.cs" />
     <Compile Include="BaudRate.cs" />
+    <Compile Include="GateConfiguration.cs" />
     <Compile Include="Reporting\BasicReportFrame.cs" />
     <Compile Include="Reporting\EngineeringModeReportFrame.cs" />
+    <Compile Include="Reporting\GateEnergy.cs" />
     <Compile Include="Reporting\ReportFrameParser.cs" />
     <Compile Include="Commands\CommandWord.cs" />
     <Compile Include="DeviceConfiguration.cs" />

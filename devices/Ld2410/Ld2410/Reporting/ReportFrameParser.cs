@@ -58,7 +58,7 @@ namespace Ld2410.Reporting
 					}
 				default:
 					{
-						throw new FormatException();
+						return false;
 					}
 			}
 		}
@@ -91,7 +91,7 @@ namespace Ld2410.Reporting
 			}
 
 			// at this point, we probably have a valid payload to construct an EngineeringModeReportFrame
-			return new EngineeringModeReportFrame
+			var engineeringFrame = new EngineeringModeReportFrame
 			{
 				TargetState = (TargetState)data[++index], // 1 byte
 				MovementTargetDistance = new Length(BinaryPrimitives.ReadUInt16LittleEndian(data.Slice(++index)), LengthUnit.Centimeter), // 2 bytes
@@ -101,27 +101,17 @@ namespace Ld2410.Reporting
 				DetectionDistance = new Length(BinaryPrimitives.ReadUInt16LittleEndian(data.Slice(++index)), LengthUnit.Centimeter), // 2 bytes
 				MaxMovingDistanceGate = data[(index += 2)], // 1 byte
 				MaxStaticDistanceGate = data[++index], // 1 byte
-
-				Gate0MovementEnergy = data[++index],
-				Gate1MovementEnergy = data[++index],
-				Gate2MovementEnergy = data[++index],
-				Gate3MovementEnergy = data[++index],
-				Gate4MovementEnergy = data[++index],
-				Gate5MovementEnergy = data[++index],
-				Gate6MovementEnergy = data[++index],
-				Gate7MovementEnergy = data[++index],
-				Gate8MovementEnergy = data[++index],
-
-				Gate0StaticEnergy = data[++index],
-				Gate1StaticEnergy = data[++index],
-				Gate2StaticEnergy = data[++index],
-				Gate3StaticEnergy = data[++index],
-				Gate4StaticEnergy = data[++index],
-				Gate5StaticEnergy = data[++index],
-				Gate6StaticEnergy = data[++index],
-				Gate7StaticEnergy = data[++index],
-				Gate8StaticEnergy = data[++index],
 			};
+
+			for (var gate = 0; gate < 9; gate++)
+			{
+				engineeringFrame.GateData[gate] = new GateEnergy(
+					movementEnergy: data[++index],
+					staticEnergy: data[gate + 9]
+					);
+			}
+
+			return engineeringFrame;
 		}
 	}
 }
