@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ld2410", "Ld2410\Ld2410.nfproj", "{71AD3FFA-9A69-4A28-BFC0-6935597A1C29}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ld2410", "Ld2410.nfproj", "{71AD3FFA-9A69-4A28-BFC0-6935597A1C29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
