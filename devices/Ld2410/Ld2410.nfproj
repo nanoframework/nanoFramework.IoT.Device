@@ -24,6 +24,12 @@
     <Compile Include="Commands\CommandAckParser.cs" />
     <Compile Include="Commands\CommandAckFrame.cs" />
     <Compile Include="Commands\CommandFrame.cs" />
+    <Compile Include="Commands\EnableConfigurationCommandAck.cs" />
+    <Compile Include="Commands\EndConfigurationCommandAck.cs" />
+    <Compile Include="Commands\FactoryResetCommandAck.cs" />
+    <Compile Include="Commands\ReadConfigurationsCommandAck.cs" />
+    <Compile Include="Commands\ReadFirmwareVersionCommandAck.cs" />
+    <Compile Include="Commands\RestartCommandAck.cs" />
     <Compile Include="Commands\SetEngineeringModeCommand.cs" />
     <Compile Include="Commands\EndConfigurationCommand.cs" />
     <Compile Include="Commands\EnableConfigurationCommand.cs" />
@@ -31,14 +37,22 @@
     <Compile Include="Commands\FactoryResetCommand.cs" />
     <Compile Include="Commands\ReadFirmwareVersionCommand.cs" />
     <Compile Include="Commands\ReadConfigurationsCommand.cs" />
+    <Compile Include="Commands\SetEngineeringModeCommandAck.cs" />
     <Compile Include="Commands\SetGateSensitivityCommand.cs" />
+    <Compile Include="Commands\SetGateSensitivityCommandAck.cs" />
     <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommand.cs" />
+    <Compile Include="Commands\SetMaxDistanceGateAndNoOneDurationCommandAck.cs" />
     <Compile Include="Commands\SetSerialPortBaudRateCommand.cs" />
     <Compile Include="BaudRate.cs" />
-    <Compile Include="GateConfiguration.cs" />
+    <Compile Include="Commands\SetSerialPortBaudRateCommandAck.cs" />
+    <Compile Include="GateConfiguration.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Reporting\BasicReportFrame.cs" />
     <Compile Include="Reporting\EngineeringModeReportFrame.cs" />
-    <Compile Include="Reporting\GateEnergy.cs" />
+    <Compile Include="Reporting\GateEnergy.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Reporting\ReportFrameParser.cs" />
     <Compile Include="Commands\CommandWord.cs" />
     <Compile Include="DeviceConfiguration.cs" />

@@ -1,4 +1,7 @@
-﻿namespace Ld2410.Commands
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+namespace Iot.Device.Ld2410.Commands
 {
     internal abstract class CommandAckFrame
     {
@@ -8,8 +11,8 @@
 
         protected CommandAckFrame(CommandWord command, bool isSuccess)
         {
-            this.Command = command;
-            this.IsSuccess = isSuccess;
+            Command = command;
+            IsSuccess = isSuccess;
         }
     }
 }

@@ -1,6 +1,9 @@
-﻿using UnitsNet;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Ld2410.Reporting
+using UnitsNet;
+
+namespace Iot.Device.Ld2410.Reporting
 {
     /// <summary>
     /// Represents a measurement report frame with basic information only.
@@ -39,7 +42,7 @@ namespace Ld2410.Reporting
 
         internal BasicReportFrame()
         {
-            this.DataType = ReportingType.BasicMode;
+            DataType = ReportingType.BasicMode;
         }
     }
 }

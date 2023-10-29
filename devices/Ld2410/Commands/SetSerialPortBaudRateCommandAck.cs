@@ -3,10 +3,10 @@
 
 namespace Iot.Device.Ld2410.Commands
 {
-    internal sealed class ReadConfigurationsCommand : CommandFrame
+    internal sealed class SetSerialPortBaudRateCommandAck : CommandAckFrame
     {
-        internal ReadConfigurationsCommand()
-            : base(CommandWord.ReadConfigurations)
+        public SetSerialPortBaudRateCommandAck(bool isSuccess)
+            : base(CommandWord.SetBaudRate, isSuccess)
         {
         }
     }

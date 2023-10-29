@@ -3,10 +3,10 @@
 
 namespace Iot.Device.Ld2410.Commands
 {
-    internal sealed class ReadConfigurationsCommand : CommandFrame
+    internal sealed class SetGateSensitivityCommandAck : CommandAckFrame
     {
-        internal ReadConfigurationsCommand()
-            : base(CommandWord.ReadConfigurations)
+        public SetGateSensitivityCommandAck(bool isSuccess)
+            : base(CommandWord.ConfigureGateSensitivity, isSuccess)
         {
         }
     }

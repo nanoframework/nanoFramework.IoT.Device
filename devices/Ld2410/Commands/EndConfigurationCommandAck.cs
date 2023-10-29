@@ -3,10 +3,10 @@
 
 namespace Iot.Device.Ld2410.Commands
 {
-    internal sealed class ReadConfigurationsCommand : CommandFrame
+    internal sealed class EndConfigurationCommandAck : CommandAckFrame
     {
-        internal ReadConfigurationsCommand()
-            : base(CommandWord.ReadConfigurations)
+        internal EndConfigurationCommandAck(bool isSuccess)
+            : base(CommandWord.EndConfiguration, isSuccess)
         {
         }
     }
