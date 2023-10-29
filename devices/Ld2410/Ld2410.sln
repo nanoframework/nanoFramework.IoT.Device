@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ld2410", "Ld2410.nfproj", "{71AD3FFA-9A69-4A28-BFC0-6935597A1C29}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{2C2AE376-FC14-4845-AD5A-02A503BCC020}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ld2410Sample", "Samples\Ld2410Sample\Ld2410Sample.nfproj", "{AFE9D663-7392-4A8D-A47C-41319B169E20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,9 +21,18 @@ Global
 		{71AD3FFA-9A69-4A28-BFC0-6935597A1C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71AD3FFA-9A69-4A28-BFC0-6935597A1C29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71AD3FFA-9A69-4A28-BFC0-6935597A1C29}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AFE9D663-7392-4A8D-A47C-41319B169E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE9D663-7392-4A8D-A47C-41319B169E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE9D663-7392-4A8D-A47C-41319B169E20}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AFE9D663-7392-4A8D-A47C-41319B169E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE9D663-7392-4A8D-A47C-41319B169E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFE9D663-7392-4A8D-A47C-41319B169E20}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AFE9D663-7392-4A8D-A47C-41319B169E20} = {2C2AE376-FC14-4845-AD5A-02A503BCC020}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACFDD6CC-8433-441E-B228-ABED3973A554}
