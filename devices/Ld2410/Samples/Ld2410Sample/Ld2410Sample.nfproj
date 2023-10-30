@@ -22,6 +22,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Ld2410.nfproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
     </Reference>
@@ -37,15 +40,15 @@
     <Reference Include="System.IO.Ports">
       <HintPath>..\..\packages\nanoFramework.System.IO.Ports.1.1.60\lib\System.IO.Ports.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Streams">
+      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.38\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
     <Reference Include="UnitsNet.Length">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Length.5.35.0\lib\UnitsNet.Length.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Length.5.9.0\lib\UnitsNet.Length.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Ld2410.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
