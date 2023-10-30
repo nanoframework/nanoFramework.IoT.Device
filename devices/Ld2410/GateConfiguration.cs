@@ -17,8 +17,8 @@ namespace Iot.Device.Ld2410
         /// </summary>
         public readonly static byte DistancePerGateInCm = 75;
 
-        private ushort restSensitivity;
-        private ushort motionSensitivity;
+        private ushort _restSensitivity;
+        private ushort _motionSensitivity;
 
         /// <summary>
         /// Gets the gate number of this configuration instance.
@@ -35,7 +35,7 @@ namespace Iot.Device.Ld2410
         /// <exception cref="ArgumentOutOfRangeException">This value cannot be less than 0 or greater than 100.</exception>
         public ushort MotionSensitivity
         {
-            get => motionSensitivity;
+            get => _motionSensitivity;
             set
             {
                 if (value is < 0 or > 100)
@@ -43,7 +43,7 @@ namespace Iot.Device.Ld2410
                     throw new ArgumentOutOfRangeException();
                 }
 
-                motionSensitivity = value;
+                _motionSensitivity = value;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Iot.Device.Ld2410
         /// <exception cref="ArgumentOutOfRangeException">This value cannot be less than 0 or greater than 100.</exception>
         public ushort RestSensitivity
         {
-            get => restSensitivity;
+            get => _restSensitivity;
             set
             {
                 if (Gate == 0 || Gate == 1)
@@ -71,7 +71,7 @@ namespace Iot.Device.Ld2410
                     throw new ArgumentOutOfRangeException();
                 }
 
-                restSensitivity = value;
+                _restSensitivity = value;
             }
         }
 

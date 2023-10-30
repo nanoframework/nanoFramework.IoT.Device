@@ -5,7 +5,7 @@ namespace Iot.Device.Ld2410.Commands
 {
     internal sealed class SetGateSensitivityCommandAck : CommandAckFrame
     {
-        public SetGateSensitivityCommandAck(bool isSuccess)
+        internal SetGateSensitivityCommandAck(bool isSuccess)
             : base(CommandWord.ConfigureGateSensitivity, isSuccess)
         {
         }

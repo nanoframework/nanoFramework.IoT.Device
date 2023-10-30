@@ -20,9 +20,8 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Display.Ld2410</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Text" version="1.2.37" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.IO.Ports" version="1.1.60" />
-      <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.325" />
       <dependency id="UnitsNet.nanoFramework.Length" version="5.9.0" />
     </dependencies>

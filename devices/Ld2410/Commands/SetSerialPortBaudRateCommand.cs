@@ -7,7 +7,7 @@ namespace Iot.Device.Ld2410.Commands
 {
     internal sealed class SetSerialPortBaudRateCommand : CommandFrame
     {
-        public SetSerialPortBaudRateCommand(BaudRate baudRate = BaudRate.BaudRate256000)
+        internal SetSerialPortBaudRateCommand(BaudRate baudRate = BaudRate.BaudRate256000)
             : base(CommandWord.SetBaudRate)
         {
             BinaryPrimitives.WriteUInt16LittleEndian(Value = new byte[2], (ushort)baudRate);

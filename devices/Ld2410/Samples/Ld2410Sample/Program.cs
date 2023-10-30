@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -25,10 +28,9 @@ namespace Ld2410Sample
 #endif
 
 #if ESP32
-			Configuration.SetPinFunction(32, DeviceFunction.COM2_RX);
-			Configuration.SetPinFunction(33, DeviceFunction.COM2_TX);
+            Configuration.SetPinFunction(32, DeviceFunction.COM2_RX);
+            Configuration.SetPinFunction(33, DeviceFunction.COM2_TX);
 #endif
-
 
             using var radar = new Radar("COM2");
             radar.OnMeasurementReceived += OnMeasurement;

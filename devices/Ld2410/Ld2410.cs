@@ -16,8 +16,8 @@ namespace Iot.Device.Ld2410
     /// </summary>
     public sealed class Radar : IDisposable
     {
-        private readonly SerialPort serialPort;
-        private readonly AutoResetEvent onAckReceived;
+        private readonly SerialPort _serialPort;
+        private readonly AutoResetEvent _onAckReceived;
 
         /// <summary>
         /// Measurement event handler delegate.
@@ -89,16 +89,16 @@ namespace Iot.Device.Ld2410
                 BaudRate = baudRate
             };
 
-            serialPort = new SerialPort(
+            _serialPort = new SerialPort(
                 portName: serialPortName,
                 baudRate: baudRate,
                 parity: Parity.None,
                 dataBits: 8,
                 stopBits: StopBits.One);
 
-            serialPort.DataReceived += OnSerialDataReceived;
+            _serialPort.DataReceived += OnSerialDataReceived;
 
-            onAckReceived = new AutoResetEvent(initialState: false);
+            _onAckReceived = new AutoResetEvent(initialState: false);
             CommandTimeout = commandTimeout == default ? TimeSpan.FromSeconds(5) : commandTimeout;
         }
 
@@ -120,10 +120,10 @@ namespace Iot.Device.Ld2410
                 BaudRate = serialPort.BaudRate,
             };
 
-            this.serialPort = serialPort;
-            this.serialPort.DataReceived += OnSerialDataReceived;
+            _serialPort = serialPort;
+            _serialPort.DataReceived += OnSerialDataReceived;
 
-            onAckReceived = new AutoResetEvent(initialState: false);
+            _onAckReceived = new AutoResetEvent(initialState: false);
             CommandTimeout = commandTimeout == default ? TimeSpan.FromSeconds(5) : commandTimeout;
         }
 
@@ -147,12 +147,12 @@ namespace Iot.Device.Ld2410
         /// </summary>
         public void Connect()
         {
-            if (serialPort.IsOpen)
+            if (_serialPort.IsOpen)
             {
                 return;
             }
 
-            serialPort.Open();
+            _serialPort.Open();
 
             EnterConfigurationMode();
             ReadFirmwareVersion();
@@ -165,9 +165,9 @@ namespace Iot.Device.Ld2410
         /// </summary>
         public void Disconnect()
         {
-            if (serialPort.IsOpen)
+            if (_serialPort.IsOpen)
             {
-                serialPort.Close();
+                _serialPort.Close();
             }
         }
 
@@ -251,8 +251,8 @@ namespace Iot.Device.Ld2410
             ThrowIfNotInConfigurationMode();
 
             SetMaxDistanceGateAndUnmannedDuration(
-                Configuration.MaximumMovementDetectionDistanceGate,
-                Configuration.MaximumRestingDetectionDistanceGate,
+                Configuration.MaxMovementDetectionDistanceGate,
+                Configuration.MaxStationaryTargetDetectionDistanceGate,
                 Configuration.NoOneDuration);
 
             foreach (var gateConfig in Configuration.GateConfiguration)
@@ -320,8 +320,8 @@ namespace Iot.Device.Ld2410
         private void SendCommand(CommandFrame command)
         {
             var serializedCommandFrame = command.Serialize();
-            serialPort.Write(serializedCommandFrame, offset: 0, count: serializedCommandFrame.Length);
-            onAckReceived.WaitOne((int)CommandTimeout.TotalMilliseconds, exitContext: false);
+            _serialPort.Write(serializedCommandFrame, offset: 0, count: serializedCommandFrame.Length);
+            _onAckReceived.WaitOne((int)CommandTimeout.TotalMilliseconds, exitContext: false);
         }
 
         private void OnSerialDataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -330,13 +330,13 @@ namespace Iot.Device.Ld2410
             {
                 // need to make sure that there is data to be read, because
                 // the event could have been queued several times and data read on a previous call
-                if (serialPort.BytesToRead <= 0)
+                if (_serialPort.BytesToRead <= 0)
                 {
                     return;
                 }
 
-                var buffer = new byte[serialPort.BytesToRead];
-                var bytesRead = serialPort.Read(buffer, offset: 0, count: buffer.Length);
+                var buffer = new byte[_serialPort.BytesToRead];
+                var bytesRead = _serialPort.Read(buffer, offset: 0, count: buffer.Length);
 
                 // figure out what we received
                 if (ReportFrameParser.TryParse(buffer, index: 0, out ReportFrame reportFrame))
@@ -351,8 +351,8 @@ namespace Iot.Device.Ld2410
                     if (ackFrame is ReadConfigurationsCommandAck readConfigResult)
                     {
                         Configuration.MaxDistanceGateIndex = readConfigResult.MaxDistanceGate;
-                        Configuration.MaximumMovementDetectionDistanceGate = readConfigResult.MotionRangeGate;
-                        Configuration.MaximumRestingDetectionDistanceGate = readConfigResult.StaticRangeGate;
+                        Configuration.MaxMovementDetectionDistanceGate = readConfigResult.MotionRangeGate;
+                        Configuration.MaxStationaryTargetDetectionDistanceGate = readConfigResult.StaticRangeGate;
 
                         Configuration.NoOneDuration = readConfigResult.NoOneDuration;
 
@@ -387,7 +387,7 @@ namespace Iot.Device.Ld2410
 
                     Debug.WriteLine("==ACK==");
 
-                    onAckReceived.Set();
+                    _onAckReceived.Set();
                 }
             }
             catch (Exception ex)
@@ -399,7 +399,7 @@ namespace Iot.Device.Ld2410
         /// <inheritdoc/>
         public void Dispose()
         {
-            serialPort?.Dispose();
+            _serialPort?.Dispose();
         }
     }
 }

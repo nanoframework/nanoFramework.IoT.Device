@@ -5,7 +5,7 @@ namespace Iot.Device.Ld2410.Commands
 {
     internal sealed class SetEngineeringModeCommand : CommandFrame
     {
-        public SetEngineeringModeCommand(bool enable)
+        internal SetEngineeringModeCommand(bool enable)
             : base(enable ? CommandWord.EnableEngineeringMode : CommandWord.EndEngineeringMode)
         {
         }

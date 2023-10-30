@@ -3,6 +3,8 @@
 
 using System;
 
+using UnitsNet;
+
 namespace Iot.Device.Ld2410
 {
     /// <summary>
@@ -10,12 +12,14 @@ namespace Iot.Device.Ld2410
     /// </summary>
     public sealed class DeviceConfiguration
     {
+        private const ushort DistancePerGateCm = 75;
+
+        private TimeSpan _noOneDuration;
+
         /// <summary>
         /// The maximum allowd 'No-One' duration in seconds.
         /// </summary>
         public const ushort MaxSupportedNoOneDuration = ushort.MaxValue;
-
-        private TimeSpan noOneDuration;
 
         /// <summary>
         /// Gets the max gate index value of distance gates available on the radar module.
@@ -33,25 +37,40 @@ namespace Iot.Device.Ld2410
         public int NumberOfDistanceGatesAvailable => MaxDistanceGateIndex + 1;
 
         /// <summary>
+        /// Gets the maximum distance the radar can detect targets within based on the <see cref="NumberOfDistanceGatesAvailable"/>.
+        /// </summary>
+        public Length MaxDetectableDistance => Length.FromCentimeters(NumberOfDistanceGatesAvailable * DistancePerGateCm);
+
+        /// <summary>
         /// Gets or sets the fathest detectable distance of moving targets.
         /// The distance is measured by number of radar distance gates where each gate is equal 
         /// to 75cm.
         /// </summary>
-        public byte MaximumMovementDetectionDistanceGate { get; set; }
+        public byte MaxMovementDetectionDistanceGate { get; set; }
+
+        /// <summary>
+        /// Gets the currently configured maximum detection distance for moving targets based on <see cref="MaxMovementDetectionDistanceGate"/>.
+        /// </summary>
+        public Length MaxMovementDetectionDistance => Length.FromCentimeters(MaxMovementDetectionDistanceGate * DistancePerGateCm);
 
         /// <summary>
         /// Gets or sets the fatherst detectable distance of static objects.
         /// The distance is measured by number of radar distance gates where each gate is equal
         /// to 75cm.
         /// </summary>
-        public byte MaximumRestingDetectionDistanceGate { get; set; }
+        public byte MaxStationaryTargetDetectionDistanceGate { get; set; }
+
+        /// <summary>
+        /// Gets the currently configured maximum detection distance for stationary targets based on <see cref="MaxStationaryTargetDetectionDistanceGate"/>.
+        /// </summary>
+        public Length MaxStationaryTargetDetectionDistance => Length.FromCentimeters(MaxStationaryTargetDetectionDistanceGate * DistancePerGateCm);
 
         /// <summary>
         /// Gets or sets the duration to wait before no movement is confirmed.
         /// </summary>
         public TimeSpan NoOneDuration
         {
-            get => noOneDuration;
+            get => _noOneDuration;
             set
             {
                 if (value.TotalSeconds < 0 || value.TotalSeconds > MaxSupportedNoOneDuration)
@@ -59,7 +78,7 @@ namespace Iot.Device.Ld2410
                     throw new ArgumentOutOfRangeException();
                 }
 
-                noOneDuration = value;
+                _noOneDuration = value;
             }
         }
 

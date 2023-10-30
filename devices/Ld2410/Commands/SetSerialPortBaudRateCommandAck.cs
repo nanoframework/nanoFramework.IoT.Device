@@ -5,7 +5,7 @@ namespace Iot.Device.Ld2410.Commands
 {
     internal sealed class SetSerialPortBaudRateCommandAck : CommandAckFrame
     {
-        public SetSerialPortBaudRateCommandAck(bool isSuccess)
+        internal SetSerialPortBaudRateCommandAck(bool isSuccess)
             : base(CommandWord.SetBaudRate, isSuccess)
         {
         }

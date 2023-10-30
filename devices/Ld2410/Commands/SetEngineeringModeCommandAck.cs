@@ -5,7 +5,7 @@ namespace Iot.Device.Ld2410.Commands
 {
     internal sealed class SetEngineeringModeCommandAck : CommandAckFrame
     {
-        public SetEngineeringModeCommandAck(CommandWord command, bool isSuccess)
+        internal SetEngineeringModeCommandAck(CommandWord command, bool isSuccess)
             : base(command, isSuccess)
         {
         }
