@@ -56,9 +56,7 @@
     <Compile Include="Commands\SetSerialPortBaudRateCommand.cs" />
     <Compile Include="BaudRate.cs" />
     <Compile Include="Commands\SetSerialPortBaudRateCommandAck.cs" />
-    <Compile Include="GateConfiguration.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="GateConfiguration.cs" />
     <Compile Include="Reporting\BasicReportFrame.cs" />
     <Compile Include="Reporting\EngineeringModeReportFrame.cs" />
     <Compile Include="Reporting\GateEnergy.cs">
