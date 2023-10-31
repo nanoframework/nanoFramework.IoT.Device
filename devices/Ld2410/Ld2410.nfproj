@@ -95,6 +95,9 @@
     <Reference Include="UnitsNet.Length">
       <HintPath>packages\UnitsNet.nanoFramework.Length.5.9.0\lib\UnitsNet.Length.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Ratio">
+      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.9.0\lib\UnitsNet.Ratio.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

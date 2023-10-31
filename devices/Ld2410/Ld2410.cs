@@ -9,6 +9,8 @@ using System.Threading;
 using Iot.Device.Ld2410.Commands;
 using Iot.Device.Ld2410.Reporting;
 
+using UnitsNet;
+
 namespace Iot.Device.Ld2410
 {
     /// <summary>
@@ -259,8 +261,8 @@ namespace Iot.Device.Ld2410
             {
                 SendCommand(new SetGateSensitivityCommand(
                     gateConfig.Gate,
-                    gateConfig.MotionSensitivity,
-                    gateConfig.RestSensitivity));
+                    (uint)gateConfig.MotionSensitivity.As(UnitsNet.Units.RatioUnit.Percent),
+                    (uint)gateConfig.RestSensitivity.As(UnitsNet.Units.RatioUnit.Percent)));
             }
         }
 
@@ -361,13 +363,13 @@ namespace Iot.Device.Ld2410
                         {
                             Configuration.GateConfiguration[gate] = new GateConfiguration((byte)gate)
                             {
-                                MotionSensitivity = readConfigResult.MotionSensitivityLevelPerGate[gate],
+                                MotionSensitivity = Ratio.FromPercent(readConfigResult.MotionSensitivityLevelPerGate[gate]),
                             };
 
                             // gate 0 & 1 cannot have custom static sensitivity
                             if (gate > 1)
                             {
-                                Configuration.GateConfiguration[gate].RestSensitivity = readConfigResult.RestingSensitivityLevelPerGate[gate];
+                                Configuration.GateConfiguration[gate].RestSensitivity = Ratio.FromPercent(readConfigResult.RestingSensitivityLevelPerGate[gate]);
                             }
                         }
                     }
