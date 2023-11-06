@@ -10,12 +10,12 @@ using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
 using nanoFramework.UI;
 
-namespace Iot.Device.EPaper.Drivers.GDEW0154x
+namespace Iot.Device.EPaper.Drivers.JD796xx
 {
     /// <summary>
     /// Base class for GDEW0154-based ePaper devices.
     /// </summary>
-    public abstract class Gdew0154x : IEPaperDisplay
+    public abstract class JD79653A : IEPaperDisplay
     {
         private readonly int _maxWaitingTime = 500;
         private readonly bool _shouldDispose;
@@ -29,17 +29,17 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         private GpioPin _dataCommandPin;
 
         /// <summary>
-        /// The max supported clock frequency for the GDEW0154x controller. 10MHz.
+        /// The max supported clock frequency for the JD79653A controller. 10MHz.
         /// </summary>
         public const int SpiClockFrequency = 10_000_000;
 
         /// <summary>
-        /// The supported <see cref="System.Device.Spi.SpiMode"/> by the GDEW0154x controller.
+        /// The supported <see cref="System.Device.Spi.SpiMode"/> by the JD79653A controller.
         /// </summary>
         public const SpiMode SpiMode = System.Device.Spi.SpiMode.Mode0;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Gdew0154x"/> class.
+        /// Initializes a new instance of the <see cref="JD79653A"/> class.
         /// </summary>
         /// <param name="spiDevice">The communication channel to the SSD1681-based dispay.</param>
         /// <param name="resetPin">The reset GPIO pin. Passing an invalid pin number such as -1 will prevent this driver from opening the pin. Caller should handle hardware resets.</param>
@@ -52,14 +52,14 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
-        protected Gdew0154x(
+        protected JD79653A(
             SpiDevice spiDevice,
             int resetPin,
             int busyPin,
             int dataCommandPin,
             int width,
             int height,
-            GpioController gpioController,
+            GpioController gpioController = null,
             bool enableFramePaging = false,
             bool shouldDispose = true)
         {
@@ -148,7 +148,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         protected abstract int PagesPerFrame { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="FrameBuffer1BitPerPixel"/> used internally by <see cref="GDEW0154x"/> devices to represents the frame.
+        /// Gets or sets the <see cref="FrameBuffer1BitPerPixel"/> used internally by <see cref="JD79653A"/> devices to represents the frame.
         /// </summary>
         protected FrameBuffer1BitPerPixel FrameBuffer1bpp { get; set; }
 
@@ -237,9 +237,9 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <param name="y">The Y Position.</param>
         /// <param name="inverted">True to invert the pixel from white to black.</param>
         /// <remarks>
-        /// The GDEW0154x comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// The JD79653A comes with 2 RAMs: a Black and White RAM and a Red RAM.
         /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
-        /// However, the GDEW0154x doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// However, the JD79653A doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
         /// is by performing a simple binary check: 
         /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
         /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
@@ -252,9 +252,9 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
 
         /// <inheritdoc/>
         /// <remarks>
-        /// The GDEW0154x comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// The JD79653A comes with 2 RAMs: a Black and White RAM and a Red RAM.
         /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
-        /// However, the GDEW0154x doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// However, the JD79653A doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
         /// is by performing a simple binary check: 
         /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
         /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
@@ -276,9 +276,9 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
                 && frameByteIndex < CurrentFrameBufferPageUpperBound)
             {
                 /*
-                 * Lookup Table for colors on GDEW0154x
+                 * Lookup Table for colors on JD79653A
                  * 
-                 *  LUT for Black and White ePaper display with GDEW0154x
+                 *  LUT for Black and White ePaper display with JD79653A
                  * |                |                    |
                  * |  Data B/W RAM  | Result Pixel Color |
                  * |----------------|--------------------|
@@ -496,7 +496,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// <param name="sleepMode">The sleep mode to use when powering down the display.</param>
         public virtual void PowerDown(SleepMode sleepMode = SleepMode.Normal)
         {
-            SendCommand(0x50);
+            SendCommand((byte)Command.IntervalSetting);
             SendData(0x07);
             SendCommand((byte)Command.PowerOff);
             WaitReady(_maxWaitingTime);
@@ -527,7 +527,7 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
                 HardwareReset();
             }
 
-            SendCommand(0x50);
+            SendCommand((byte)Command.IntervalSetting);
             SendData(0xd7);
             SendCommand((byte)Command.PowerOn);
             WaitReady(_maxWaitingTime);

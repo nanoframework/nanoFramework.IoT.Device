@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.EPaper.Drivers.GDEW0154x
+namespace Iot.Device.EPaper.Drivers.JD796xx
 {
     /// <summary>
     /// Commands supported by SSD1681.
@@ -85,6 +85,14 @@ namespace Iot.Device.EPaper.Drivers.GDEW0154x
         /// In B/W/Red mode, this command writes “RED” data to SRAM.
         /// </remarks>
         DataStartTransmission2 = 0x13,
+
+        /// <summary>
+        ///  VCOM and DATA interval setting.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the datasheet for detailed information about the command and its parameters.
+        /// </remarks>
+        IntervalSetting = 0x50,
 
         /// <summary>
         /// Defines non-overlap period of Gate and Source.
