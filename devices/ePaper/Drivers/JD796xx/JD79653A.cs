@@ -395,6 +395,7 @@ namespace Iot.Device.EPaper.Drivers.JD796xx
         /// <summary>
         /// Perform the required initialization steps to set up the display.
         /// </summary>
+        /// <remarks>Sequence order can be found at https://github.com/m5stack/M5Core-Ink/blob/master/src/utility/WFT0154CZB3_INIT.h</remarks>
         public virtual void Initialize()
         {
             if (PowerState == PowerState.DeepSleep)
