@@ -30,6 +30,10 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="FunctionGeneratorExtensions.cs" />
+    <Compile Include="SlewRate.cs" />
+    <Compile Include="CodeStep.cs" />
+    <Compile Include="Wave.cs" />
     <Compile Include="VoutGain.cs" />
     <Compile Include="Mode.cs" />
     <Compile Include="Channel.cs" />
