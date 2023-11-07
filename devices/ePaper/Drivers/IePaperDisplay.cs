@@ -55,12 +55,14 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Initiates the full refresh sequence on the display.
         /// </summary>
-        void PerformFullRefresh();
+        /// <returns>True if the screen sucessfully refresh. False otherwise (still busy after a predefined waiting time).</returns>
+        bool PerformFullRefresh();
 
         /// <summary>
         /// Initiates the partial refresh sequence on the display if the panel supports it.
         /// </summary>
-        void PerformPartialRefresh();
+        /// <returns>True if the screen sucessfully refresh. False otherwise (still busy after a predefined waiting time).</returns>
+        bool PerformPartialRefresh();
 
         /// <summary>
         /// Sets the drawing position on the display.

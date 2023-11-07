@@ -499,7 +499,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public virtual void PerformFullRefresh()
+        public virtual bool PerformFullRefresh()
         {
             SendCommand((byte)Command.BoosterSoftStartControl);
             SendData(0x8b, 0x9c, 0x96, 0x0f);
@@ -508,11 +508,11 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.FullRefresh); // Display Mode 1 (Full Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            WaitReady(_maxWaitingTime);
+            return WaitReady(_maxWaitingTime);
         }
 
         /// <inheritdoc/>
-        public virtual void PerformPartialRefresh()
+        public virtual bool PerformPartialRefresh()
         {
             SendCommand((byte)Command.BoosterSoftStartControl);
             SendData(0x8b, 0x9c, 0x96, 0x0f);
@@ -521,7 +521,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.PartialRefresh); // Display Mode 2 (Partial Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            WaitReady(_maxWaitingTime);
+            return WaitReady(_maxWaitingTime);
         }
 
         /// <summary>

@@ -473,21 +473,21 @@ namespace Iot.Device.EPaper.Drivers.JD796xx
         }
 
         /// <inheritdoc/>
-        public virtual void PerformFullRefresh()
+        public virtual bool PerformFullRefresh()
         {
             SendCommand((byte)Command.DisplayRefresh);
 
             // as per samples from screen manufacturer, refresh wait should be at least 200µs
             // using a spin wait of 5ms, any value should be ok
             // and use a large waiting time in case of something unexpected happens.
-            WaitReady(_maxWaitingTime);
+            return WaitReady(_maxWaitingTime);
         }
 
         /// <inheritdoc/>
-        public virtual void PerformPartialRefresh()
+        public virtual bool PerformPartialRefresh()
         {
             // No partial refresh implemented
-            PerformFullRefresh();
+            return PerformFullRefresh();
         }
 
         /// <summary>
@@ -530,9 +530,11 @@ namespace Iot.Device.EPaper.Drivers.JD796xx
             SendCommand((byte)Command.IntervalSetting);
             SendData(0xd7);
             SendCommand((byte)Command.PowerOn);
-            WaitReady(_maxWaitingTime);
 
-            PowerState = PowerState.PoweredOn;
+            if (WaitReady(_maxWaitingTime))
+            {
+                PowerState = PowerState.PoweredOn;
+            }
         }
 
         /// <inheritdoc/>
