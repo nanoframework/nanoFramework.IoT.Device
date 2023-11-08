@@ -19,7 +19,7 @@
     <summary>System.Diagnostics.Stopwatch assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot stopwatch</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.20" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
     </dependencies>
   </metadata>
