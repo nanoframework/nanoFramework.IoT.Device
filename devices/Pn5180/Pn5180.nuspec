@@ -20,8 +20,8 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Pn5180</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.325" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.325" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.415" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.415" />
       <dependency id="nanoFramework.Logging" version="1.1.63" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />

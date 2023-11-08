@@ -21,12 +21,12 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.325" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.325" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.415" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.415" />
       <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.35.0" />
       <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.35.0" />
       <dependency id="UnitsNet.nanoFramework.Power" version="5.35.0" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.325" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.415" />
     </dependencies>
   </metadata>
   <files>

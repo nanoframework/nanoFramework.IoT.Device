@@ -60,7 +60,7 @@
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.325\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.415\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.I2c, Version=1.1.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -71,7 +71,7 @@
       <HintPath>packages\nanoFramework.System.Math.1.5.29\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Numerics.1.2.325\lib\System.Numerics.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Numerics.1.2.415\lib\System.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Duration, Version=5.35.0.0, Culture=neutral, PublicKeyToken=null">

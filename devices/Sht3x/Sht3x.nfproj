@@ -40,7 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Model.1.2.325\lib\System.Device.Model.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Model.1.2.415\lib\System.Device.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.5.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">

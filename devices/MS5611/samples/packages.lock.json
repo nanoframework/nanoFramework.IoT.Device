@@ -16,9 +16,9 @@
       },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
-        "requested": "[1.2.401, 1.2.401]",
-        "resolved": "1.2.401",
-        "contentHash": "WsFMwMD3iUv8TLMTszOb1Ex5ebnqKXrSSZRld1bFIUf7CZCF4kii5RNti7WXlsEpGkdYmLmKnM5pCieJTX8NYQ=="
+        "requested": "[1.2.415, 1.2.415]",
+        "resolved": "1.2.415",
+        "contentHash": "k0747fC1+hcmpENfc7B2IlWESqmKWjvVrM4a3TfTEAhbM0t3YEvRTlcTbtucBmLiZucBGRFlqzYuW3USAxYISA=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.325, 1.2.325]",
-        "resolved": "1.2.325",
-        "contentHash": "0g0ohwuDmBIKm3hycmCnGZC/d/mYhAl2GPMMRcLhcnQJWNeDBvMe3hJlUBpo36tgjfrjniF11n+HkvGy4DzJ5Q=="
+        "requested": "[1.2.415, 1.2.415]",
+        "resolved": "1.2.415",
+        "contentHash": "J6rj1tQz85GfWUcYH+5xSdGMGRqZr3eNgwB8q72b7+VTH0/cVkqnnEnrN+TWbs3vCVrgsEaK86vPcapK3VLpNw=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
