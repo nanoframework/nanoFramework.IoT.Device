@@ -19,13 +19,13 @@
     <summary>Iot.Device.Lsm9Ds1 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot lsm9ds1</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.415" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.415" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.415" />
-      <dependency id="nanoFramework.System.Numerics" version="1.2.415" />
-      <dependency id="nanoFramework.System.Math" version="1.5.29" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.418" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.423" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
     </dependencies>
   </metadata>
   <files>
