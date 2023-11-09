@@ -19,15 +19,15 @@
     <summary>Iot.Device.Bh1745 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bh1745</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
       <dependency id="UnitsNet.nanoFramework.Length" version="5.35.0" />
       <dependency id="nanoFramework.System.Math" version="1.5.29" />
-      <dependency id="nanoFramework.Graphics.Core" version="1.1.37" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.415" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.415" />
+      <dependency id="nanoFramework.Graphics.Core" version="1.2.2" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
     </dependencies>
   </metadata>
   <files>

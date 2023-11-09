@@ -19,10 +19,10 @@
     <summary>Iot.Device.Yx5300 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Yx5300</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Collections" version="1.5.18" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.1.60" />
-      <dependency id="nanoFramework.System.Text" version="1.2.37" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.31" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.75" />
+      <dependency id="nanoFramework.System.Text" version="1.2.54" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
     </dependencies>
   </metadata>

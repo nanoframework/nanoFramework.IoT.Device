@@ -19,9 +19,9 @@
     <summary>Iot.Device.RadioTransmitter assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.RadioTransmitter</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
       <dependency id="UnitsNet.nanoFramework.Frequency" version="5.35.0" />
     </dependencies>
   </metadata>

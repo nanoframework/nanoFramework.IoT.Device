@@ -18,9 +18,9 @@
     <description>This package includes the .NET IoT Core binding CHSC6540 for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf CHSC6540</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="nanoFramework.Graphics.Core" version="1.1.37" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="nanoFramework.Graphics.Core" version="1.2.2" />
     </dependencies>
   </metadata>
   <files>
