@@ -79,10 +79,10 @@ namespace Iot.Device.SparkFunLcd
             {
                 default:
                 case DisplaySizeEnum.Size20x4:
-                    Size = new Size() { Width = 20, Height = 4 };
+                    Size = new CharacterLcd.Size() { Width = 20, Height = 4 };
                     break;
                 case DisplaySizeEnum.Size16x2:
-                    Size = new Size() { Width = 16, Height = 2 };
+                    Size = new CharacterLcd.Size() { Width = 16, Height = 2 };
                     break;
             }
 
@@ -107,7 +107,7 @@ namespace Iot.Device.SparkFunLcd
         /// <summary>
         /// Gets the size of the display.
         /// </summary>
-        public Size Size { get; private set; }
+        public CharacterLcd.Size Size { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the display is turned on.

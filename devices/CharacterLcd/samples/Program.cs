@@ -139,7 +139,7 @@ static void UsingGroveRgbDisplay()
 {
     var i2cLcdDevice = I2cDevice.Create(new I2cConnectionSettings(busId: 1, deviceAddress: 0x3E));
     var i2cRgbDevice = I2cDevice.Create(new I2cConnectionSettings(busId: 1, deviceAddress: 0x62));
-    using LcdRgb lcd = new LcdRgb(new Size(16, 2), i2cLcdDevice, i2cRgbDevice);
+    using LcdRgb lcd = new LcdRgb(new Iot.Device.CharacterLcd.Size(16, 2), i2cLcdDevice, i2cRgbDevice);
     {
         lcd.Write("Hello World!");
         lcd.SetBacklightColor(Color.Azure);
