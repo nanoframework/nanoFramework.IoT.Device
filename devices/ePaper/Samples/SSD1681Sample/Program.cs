@@ -102,13 +102,13 @@ namespace SSD1681Sample
             {
                 // the icons are known to be contained within a single frame page
                 // this speeds up generating the frame as we don't process the bitmaps multiple times
-                if (display.FrameBuffer.IsRangeWithinFrameBuffer(new Point(0, 0), new Point(199, 36)))
+                if (display.FrameBuffer.IsRangeWithinFrameBuffer(new System.Drawing.Point(0, 0), new System.Drawing.Point(199, 36)))
                 {
-                    gfx.DrawBitmap(cloudBitmap, new Point(8, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(44, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(80, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(116, 4), rotate: false);
-                    gfx.DrawBitmap(cloudBitmap, new Point(150, 4), rotate: false);
+                    gfx.DrawBitmap(cloudBitmap, new System.Drawing.Point(8, 4), rotate: false);
+                    gfx.DrawBitmap(cloudBitmap, new System.Drawing.Point(44, 4), rotate: false);
+                    gfx.DrawBitmap(cloudBitmap, new System.Drawing.Point(80, 4), rotate: false);
+                    gfx.DrawBitmap(cloudBitmap, new System.Drawing.Point(116, 4), rotate: false);
+                    gfx.DrawBitmap(cloudBitmap, new System.Drawing.Point(150, 4), rotate: false);
                 }
 
                 // this text spans 2 frame pages
@@ -120,7 +120,7 @@ namespace SSD1681Sample
 
                 // the days of week are known to be within a single frame page
                 // this speeds up generating the frame as we don't process the text multiple times
-                if (display.FrameBuffer.IsRangeWithinFrameBuffer(new Point(0, 50), new Point(199, 70)))
+                if (display.FrameBuffer.IsRangeWithinFrameBuffer(new System.Drawing.Point(0, 50), new System.Drawing.Point(199, 70)))
                 {
                     gfx.DrawText("Mon", font, 12, 50, Color.Black);
                     gfx.DrawText("Tue", font, 46, 50, Color.Red);
@@ -136,7 +136,7 @@ namespace SSD1681Sample
 
                 gfx.DrawLine(0, 120, 200, 120, Color.Black);
 
-                gfx.DrawBitmap(musicBitmap, new Point(84, 125), rotate: false);
+                gfx.DrawBitmap(musicBitmap, new System.Drawing.Point(84, 125), rotate: false);
                 gfx.DrawText("Now Playing:", font, 8, 160, Color.Black);
                 gfx.DrawText("Megadeth - Dystopia", font, 16, 175, Color.Black);
 
