@@ -12,23 +12,23 @@ namespace Iot.Device.SparkFunLcd
     /// <summary>
     /// LCD library for SparkFun RGB Serial Open LCD display (sizes 20x4 or 16x2) with I2C connection
     /// for product information see https://www.sparkfun.com/products/16398
-    /// code based on https://github.com/sparkfun/OpenLCD
+    /// code based on https://github.com/sparkfun/OpenLCD.
     /// </summary>
     public partial class SparkFunLcd
     {
         /// <summary>
-        /// Text flow direction
+        /// Text flow.
         /// </summary>
         /// <see cref="SetTextFlowDirectionState"/>
         public enum TextFlowDirectionEnum
         {
             /// <summary>
-            /// Left to right, the direction common to most Western languages
+            /// Left to right, the direction common to most Western languages.
             /// </summary>
             LeftToRight,
 
             /// <summary>
-            /// Right to left
+            /// Right to left.
             /// </summary>
             RightToLeft
         }

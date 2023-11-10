@@ -12,22 +12,22 @@ namespace Iot.Device.SparkFunLcd
     /// <summary>
     /// LCD library for SparkFun RGB Serial Open LCD display (sizes 20x4 or 16x2) with I2C connection
     /// for product information see https://www.sparkfun.com/products/16398
-    /// code based on https://github.com/sparkfun/OpenLCD
+    /// code based on https://github.com/sparkfun/OpenLCD.
     /// </summary>
     public partial class SparkFunLcd
     {
         /// <summary>
-        /// Display size
+        /// Display size.
         /// </summary>
         public enum DisplaySizeEnum
         {
             /// <summary>
-            /// Display size 20 x 4
+            /// Display size 20 x 4.
             /// </summary>
             Size20x4,
 
             /// <summary>
-            /// Display size 16 x 2
+            /// Display size 16 x 2.
             /// </summary>
             Size16x2
         }

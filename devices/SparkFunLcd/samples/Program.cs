@@ -3,21 +3,19 @@
 
 namespace Iot.Device.SparkFunLcd.Sample
 {
-    using System;
+    using Iot.Device.SparkFunLcd;
+    using nanoFramework.Hardware.Esp32;
     using System.Device.I2c;
     using System.Diagnostics;
     using System.Drawing;
-    using System.Threading;
-    using Iot.Device.SparkFunLcd;
-    using nanoFramework.Hardware.Esp32;
 
     /// <summary>
-    /// Class containing main executable code
+    /// Class containing main executable code.
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// code executed at device reset
+        /// Code executed at device reset.
         /// </summary>
         public static void Main()
         {
