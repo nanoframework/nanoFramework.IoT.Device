@@ -48,7 +48,7 @@ namespace Iot.Device.EPaper.Buffers
         }
 
         /// <inheritdoc/>
-        public override void Fill(Point start, int width, int height, Color color)
+        public override void Fill(System.Drawing.Point start, int width, int height, Color color)
         {
             if (!IsPointWithinFrameBuffer(start))
             {
@@ -74,14 +74,14 @@ namespace Iot.Device.EPaper.Buffers
                     }
                     else
                     {
-                        SetPixel(new Point(x, y), color);
+                        SetPixel(new System.Drawing.Point(x, y), color);
                     }
                 }
             }
         }
 
         /// <inheritdoc/>
-        public override Color GetPixel(Point point)
+        public override Color GetPixel(System.Drawing.Point point)
         {
             var frameBufferIndex = GetFrameBufferIndexForPoint(point);
 
@@ -91,7 +91,7 @@ namespace Iot.Device.EPaper.Buffers
         }
 
         /// <inheritdoc/>
-        public override void SetPixel(Point point, Color pixelColor)
+        public override void SetPixel(System.Drawing.Point point, Color pixelColor)
         {
             if (!IsPointWithinFrameBuffer(point))
             {
@@ -111,7 +111,7 @@ namespace Iot.Device.EPaper.Buffers
         }
 
         /// <inheritdoc/>
-        public override void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
+        public override void WriteBuffer(IFrameBuffer buffer, System.Drawing.Point start, System.Drawing.Point end, System.Drawing.Point destinationStart)
         {
             // if the frame is not the same type (different bit depth), use the slow copy method
             // because it converts every pixel properly.
@@ -127,9 +127,9 @@ namespace Iot.Device.EPaper.Buffers
             {
                 for (var x = 0; x < end.X; x++)
                 {
-                    var currentRelativePoint = new Point(x, y);
-                    var sourceAbsolutePosition = start + currentRelativePoint;
-                    var destinationAbsolutePosition = destinationStart + currentRelativePoint;
+                    var currentRelativePoint = new System.Drawing.Point(x, y);
+                    var sourceAbsolutePosition = new System.Drawing.Point(start.X + currentRelativePoint.X, start.Y + currentRelativePoint.Y);
+                    var destinationAbsolutePosition = new System.Drawing.Point(destinationStart.X + currentRelativePoint.X, destinationStart.Y + currentRelativePoint.Y);
 
                     // improve performance by trying to copy an entire byte at once
                     // if the current x position has 8 more columns ahead of it then set the whole byte

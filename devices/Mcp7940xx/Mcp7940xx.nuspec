@@ -19,12 +19,12 @@
     <summary>Iot.Device.Mcp7940xx assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mcp7940xx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.Iot.Device.Common.NumberHelper" version="1.2.415" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.28" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="nanoFramework.System.Math" version="1.5.29" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.Iot.Device.Common.NumberHelper" version="1.2.418" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.38" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
     </dependencies>
   </metadata>
   <files>

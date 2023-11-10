@@ -57,7 +57,7 @@ namespace Iot.Device.EPaper.Buffers
         public abstract ColorFormat ColorFormat { get; }
 
         /// <inheritdoc/>
-        public virtual Point StartPoint { get; set; }
+        public virtual System.Drawing.Point StartPoint { get; set; }
 
         /// <inheritdoc/>
         public virtual int CurrentFramePage
@@ -79,7 +79,7 @@ namespace Iot.Device.EPaper.Buffers
         }
 
         /// <inheritdoc/>
-        public virtual byte this[Point point]
+        public virtual byte this[System.Drawing.Point point]
         {
             get => this[GetFrameBufferIndexForPoint(point)];
             set
@@ -134,17 +134,17 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
         {
-            WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), Point.Zero);
+            WriteBuffer(buffer, new System.Drawing.Point(0, 0), new System.Drawing.Point(buffer.Width, buffer.Height), new System.Drawing.Point(0, 0));
         }
 
         /// <inheritdoc/>>
-        public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
+        public void WriteBuffer(IFrameBuffer buffer, System.Drawing.Point destinationStart)
         {
-            WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+            WriteBuffer(buffer, new System.Drawing.Point(0, 0), new System.Drawing.Point(buffer.Width, buffer.Height), destinationStart);
         }
 
         /// <inheritdoc/>>
-        public virtual void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
+        public virtual void WriteBuffer(IFrameBuffer buffer, System.Drawing.Point start, System.Drawing.Point end, System.Drawing.Point destinationStart)
         {
             WriteBufferSlow(buffer, start, end, destinationStart);
         }
@@ -152,27 +152,27 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public void Fill(Color color)
         {
-            Fill(Point.Zero, Width, Height, color);
+            Fill(new System.Drawing.Point(0, 0), Width, Height, color);
         }
 
         /// <inheritdoc/>>
-        public abstract void Fill(Point start, int width, int height, Color color);
+        public abstract void Fill(System.Drawing.Point start, int width, int height, Color color);
 
         /// <inheritdoc/>>
-        public abstract Color GetPixel(Point point);
+        public abstract Color GetPixel(System.Drawing.Point point);
 
         /// <inheritdoc/>>
-        public abstract void SetPixel(Point point, Color pixelColor);
+        public abstract void SetPixel(System.Drawing.Point point, Color pixelColor);
 
         /// <inheritdoc/>>
-        public virtual bool IsPointWithinFrameBuffer(Point point)
+        public virtual bool IsPointWithinFrameBuffer(System.Drawing.Point point)
         {
             return point.X >= StartPoint.X && point.X < (StartPoint.X + Width)
                 && point.Y >= StartPoint.Y && point.Y < (StartPoint.Y + Height);
         }
 
         /// <inheritdoc/>>
-        public virtual bool IsRangeWithinFrameBuffer(Point start, Point end)
+        public virtual bool IsRangeWithinFrameBuffer(System.Drawing.Point start, System.Drawing.Point end)
         {
             return IsPointWithinFrameBuffer(start) && IsPointWithinFrameBuffer(end);
         }
@@ -182,7 +182,7 @@ namespace Iot.Device.EPaper.Buffers
         /// </summary>
         /// <param name="point">The point to get its index within <see cref="Buffer"/>.</param>
         /// <returns>The index within the <see cref="Buffer"/> for the byte that contains the specified pixe location.</returns>
-        protected int GetFrameBufferIndexForPoint(Point point)
+        protected int GetFrameBufferIndexForPoint(System.Drawing.Point point)
         {
             return GetFrameBufferIndexForPoint(point.X, point.Y);
         }
@@ -203,7 +203,7 @@ namespace Iot.Device.EPaper.Buffers
         /// </summary>
         /// <param name="point">The point within the frame buffer.</param>
         /// <returns>A byte mask pattern with the pixel bit flipped to 1.</returns>
-        protected byte GetPointByteMask(Point point)
+        protected byte GetPointByteMask(System.Drawing.Point point)
         {
             return (byte)(128 >> (point.X & 7));
         }
@@ -216,13 +216,13 @@ namespace Iot.Device.EPaper.Buffers
         /// <param name="start">The starting point to copy from and write to.</param>
         /// <param name="end">The point at which copying from the buffer will stop.</param>
         /// <param name="destinationStart">The start point to begin writing to.</param>
-        protected virtual void WriteBufferSlow(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
+        protected virtual void WriteBufferSlow(IFrameBuffer buffer, System.Drawing.Point start, System.Drawing.Point end, System.Drawing.Point destinationStart)
         {
             for (var x = start.X; x < buffer.Width; x++)
             {
                 for (var y = start.Y; y < buffer.Height; y++)
                 {
-                    var currentPoint = new Point(x, y);
+                    var currentPoint = new System.Drawing.Point(x, y);
                     SetPixel(currentPoint, buffer.GetPixel(currentPoint));
                 }
             }

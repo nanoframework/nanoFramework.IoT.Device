@@ -100,14 +100,14 @@ namespace SSD1680Sample
             display.BeginFrameDraw();
             do
             {
-                gfx.DrawBitmap(cloudBitmap, new Point(16, 4), rotate: false);
+                gfx.DrawBitmap(cloudBitmap, new System.Drawing.Point(16, 4), rotate: false);
                 gfx.DrawText("Cloudy & Windy.", font, x: 16, y: 38, Color.Black);
                 gfx.DrawText("Temp. ", font, x: 16, y: 52, Color.Black);
                 gfx.DrawText("24c", font, x: 64, y: 52, Color.Red);
 
                 gfx.DrawLine(startX: 0, startY: 68, endX: 160, endY: 68, Color.Black);
 
-                gfx.DrawBitmap(musicBitmap, new Point(x: 64, y: 72));
+                gfx.DrawBitmap(musicBitmap, new System.Drawing.Point(x: 64, y: 72));
                 gfx.DrawText("Now Playing:", font, x: 16, y: 108, Color.Black);
                 gfx.DrawText("Megadeth - Lying in State", font, x: 16, y: 122, Color.Red);
 
