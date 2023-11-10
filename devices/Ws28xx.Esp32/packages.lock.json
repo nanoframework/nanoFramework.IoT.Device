@@ -4,27 +4,27 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.14.2, 1.14.2]",
-        "resolved": "1.14.2",
-        "contentHash": "j1mrz4mitl5LItvmHMsw1aHzCAfvTTgIkRxA0mhs5mSpctJ/BBcuNwua5j3MspfRNKreCQPy/qZy/D9ADLL/PA=="
+        "requested": "[1.15.5, 1.15.5]",
+        "resolved": "1.15.5",
+        "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
       },
       "nanoFramework.Graphics.Core": {
         "type": "Direct",
-        "requested": "[1.1.37, 1.1.37]",
-        "resolved": "1.1.37",
-        "contentHash": "JSO5PU+CczzjqLZTTgdi/fx5BGtA8Z1m1RxpjxaYhLFPDPN1ATbDGwAdIUgxNeU77EAl1QRuni9lTA0OnfDrIQ=="
+        "requested": "[1.2.4, 1.2.4]",
+        "resolved": "1.2.4",
+        "contentHash": "rr9GjMQ3Fucn3LQllQOR1D6DAwEF731GRCBxMIqz4YYpPtidy4XsCSyetZeW/ArMoqYRFwyPqaMtKDhrIHwnDg=="
       },
       "nanoFramework.Hardware.Esp32.Rmt": {
         "type": "Direct",
-        "requested": "[2.0.1, 2.0.1]",
-        "resolved": "2.0.1",
-        "contentHash": "h3xaxgk1vIeWxFYxRa+6bvYmg5TlNuCS9GwYzbVba0T0mq2nYWUNqTUoWtLEGReZY17vmULzu5AXQzGz+q7tZQ=="
+        "requested": "[2.0.7, 2.0.7]",
+        "resolved": "2.0.7",
+        "contentHash": "o8YN260NWION1GzRDEMWVE8RdMD3e26T18afue1UUCws27nndjQ69uTk67VCF6T8Ycu+h55hQ7KjzHrxaTXV7g=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.6, 1.11.6]",
-        "resolved": "1.11.6",
-        "contentHash": "xkltRh/2xKaZ9zmPHbVr32s1k+e17AInUBhzxKKkUDicJKF39yzTShSklb1OL6DBER5z71SpkGLyl9IdMK9l6w=="
+        "requested": "[1.11.15, 1.11.15]",
+        "resolved": "1.11.15",
+        "contentHash": "3uDNSTfiaewDAyi6fOMWYru0JCn/gr8DEv+Ro/V12SzojU9Dyxl5nSVOBtBXts7vErfIthB6SPiK180AMnrI8A=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
