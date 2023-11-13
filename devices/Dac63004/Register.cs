@@ -8,7 +8,10 @@ namespace Iot.Device.Dac63004
     // refer to Table 7-21. Register Names in device datasheet for register definitions
     internal enum Register : byte
     {
+        Reg01_DACX_MarginHigh = 0x01,
+        Reg02_DACX_MarginLow = 0x02,
         Reg03_DAC0_VoutCompareConfig = 0x03,
+        Reg06_DACX_FunctionConfig = 0x06,
         Reg09_DAC1_VoutCompareConfig = 0x09,
         Reg0F_DAC2_VoutCompareConfig = 0x0F,
         Reg15_DAC3_VoutCompareConfig = 0x15,

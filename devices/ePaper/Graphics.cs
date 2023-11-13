@@ -176,7 +176,7 @@ namespace Iot.Device.EPaper
         /// <param name="bitmap">The bitmap buffer to draw.</param>
         /// <param name="start">The start point on the display to start drawing from.</param>
         /// <param name="rotate"><see langword="true"/> to rotate the bitmap with the current <see cref="Rotation"/> specified. It might be slow.</param>
-        public void DrawBitmap(IFrameBuffer bitmap, Point start, bool rotate = false)
+        public void DrawBitmap(IFrameBuffer bitmap, System.Drawing.Point start, bool rotate = false)
         {
             if (DisplayRotation == Rotation.Default)
             {
@@ -195,11 +195,11 @@ namespace Iot.Device.EPaper
                 {
                     for (var x = 0; x < bitmap.Width; x++)
                     {
-                        var currentPoint = new Point(x, y);
+                        var currentPoint = new System.Drawing.Point(x, y);
 
                         EPaperDisplay
                             .FrameBuffer
-                            .SetPixel(start + currentPoint, bitmap.GetPixel(currentPoint));
+                            .SetPixel(new System.Drawing.Point(start.X + currentPoint.X, start.Y + currentPoint.Y), bitmap.GetPixel(currentPoint));
                     }
                 }
             }
@@ -253,9 +253,9 @@ namespace Iot.Device.EPaper
         /// <param name="x">The X Position in the current rotation.</param>
         /// <param name="y">The Y Position in the current rotation.</param>
         /// <returns>The real position on the display.</returns>
-        public Point GetRealPosition(int x, int y)
+        public System.Drawing.Point GetRealPosition(int x, int y)
         {
-            return new Point(GetRealXPosition(x, y), GetRealYPosition(x, y));
+            return new System.Drawing.Point(GetRealXPosition(x, y), GetRealYPosition(x, y));
         }
 
         private void DrawRectangleOutline(int startX, int startY, int endX, int endY, Color color)
