@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bmxx80</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.433" />
+      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.439" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
