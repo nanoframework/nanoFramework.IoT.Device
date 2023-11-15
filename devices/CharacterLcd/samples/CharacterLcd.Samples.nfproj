@@ -25,7 +25,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Pcx857x, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.329\lib\Iot.Device.Pcx857x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.436\lib\Iot.Device.Pcx857x.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
