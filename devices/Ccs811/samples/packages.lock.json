@@ -10,15 +10,15 @@
       },
       "nanoFramework.Logging": {
         "type": "Direct",
-        "requested": "[1.1.74, 1.1.74]",
-        "resolved": "1.1.74",
-        "contentHash": "zlzB9kh1mgjTza67vVnbn5hBD2w9RJoHq1x4hB2brSX7/YrT0rZeqJQgg5OTWWOKBAxNL3HG8XpsYypFjcp9pA=="
+        "requested": "[1.1.76, 1.1.76]",
+        "resolved": "1.1.76",
+        "contentHash": "vmVqO62JmCzP4wHdUuqmP7aiDLzTakcJ1CMeb9dJxcONwrxXGuK6YeOIrIhvqhBsIjz6ebv4FW8o4CP9ttGh0g=="
       },
       "nanoFramework.Logging.Stream": {
         "type": "Direct",
-        "requested": "[1.1.74, 1.1.74]",
-        "resolved": "1.1.74",
-        "contentHash": "7wI225bjeb16lEfoa04ldXOMPr/3g99AtkzA87D9SHEYrh8bR/I9JDP1i8TY8JE/27iXv+e/0K6enuc7Ls7Dpg=="
+        "requested": "[1.1.76, 1.1.76]",
+        "resolved": "1.1.76",
+        "contentHash": "bhKbcT3jcZVGTRT1EaJM/6rHgdzobGekN3/7hht6FLCktJhSFOQJnlzaSAOf8YS6xyEJvWms7xCHvPBngTqfxA=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -52,15 +52,21 @@
       },
       "nanoFramework.System.IO.FileSystem": {
         "type": "Direct",
-        "requested": "[1.1.30, 1.1.30]",
-        "resolved": "1.1.30",
-        "contentHash": "nez5pc1lhnKe4espuy5OG5J1ENu7ZRtCtWc4O+Nqkp3KbNdlUrZxrp+z+hJYf6Fa9QvCk2tZSlCv1BqxyrpJYw=="
+        "requested": "[1.1.32, 1.1.32]",
+        "resolved": "1.1.32",
+        "contentHash": "wZMqZFaQcN5BGlzCMgS7R0pMyNL2hxE+FGrng0xiOydTLCXIJsmloGHJkv9oZ/MxEVYQhTlqsn8vxd8ouQUnOg=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
         "requested": "[1.1.52, 1.1.52]",
         "resolved": "1.1.52",
         "contentHash": "gdExWfWNSl4dgaIoVHHFmhLiRSKAabHA8ueHuErGAWd97qaoN2wSHCtvKqfOu1zuzyccbFpm4HBxVsh6bWMyXw=="
+      },
+      "nanoFramework.System.Runtime": {
+        "type": "Direct",
+        "requested": "[1.0.6, 1.0.6]",
+        "resolved": "1.0.6",
+        "contentHash": "n87itPUMSsOJkUsdoXr0vhiBTggZBMgCtIIC7c+RsVAhF2u/0TU/h+ZLNyFL8Xhl0taPcTN4LiPPTkI+e95Q/g=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",

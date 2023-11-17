@@ -30,7 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.CharacterLcd.1.1.354\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.CharacterLcd.1.1.364\lib\Iot.Device.CharacterLcd.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -65,6 +65,10 @@
       <HintPath>packages\nanoFramework.System.Collections.1.5.31\lib\nanoFramework.System.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.System.Runtime, Version=1.0.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Runtime.1.0.6\lib\nanoFramework.System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nanoFramework.System.Text, Version=1.2.54.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Text.1.2.54\lib\nanoFramework.System.Text.dll</HintPath>
       <Private>True</Private>
@@ -93,8 +97,8 @@
       <HintPath>packages\nanoFramework.System.Drawing.1.2.418\lib\System.Drawing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.FileSystem, Version=1.1.30.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.FileSystem.1.1.30\lib\System.IO.FileSystem.dll</HintPath>
+    <Reference Include="System.IO.FileSystem, Version=1.1.32.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.IO.FileSystem.1.1.32\lib\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.52.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
