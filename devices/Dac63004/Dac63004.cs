@@ -243,7 +243,7 @@ namespace Iot.Device.Dac63004
 
         #region Helper Methods to Read and Write to Registers
 
-        private void WriteToRegister(Register register, byte[] contents)
+        internal void WriteToRegister(Register register, byte[] contents)
         {
             byte[] writeBuffer = new byte[contents.Length + 1];
             writeBuffer[0] = (byte)register;

@@ -18,20 +18,20 @@
     <description>This package contains a driver to communicate with the SCD30 via the UART interface.</description>
     <tags>nanoFramework C# csharp netnf scd30</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.325" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.1.60" />
-      <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
-      <dependency id="nanoFramework.System.Math" version="1.5.29" />
-      <dependency id="nanoFramework.System.Text" version="1.2.37" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.325" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.35.0" />
-      <dependency id="UnitsNet.nanoFramework.Pressure" version="5.35.0" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.35.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.35.0" />
-      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="5.35.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.12" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.418" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.78" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.52" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
+      <dependency id="nanoFramework.System.Text" version="1.2.54" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="5.36.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="5.36.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.36.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.36.0" />
+      <dependency id="UnitsNet.nanoFramework.VolumeConcentration" version="5.36.0" />
     </dependencies>
   </metadata>
   <files>

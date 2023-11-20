@@ -243,7 +243,7 @@ namespace GenerateDocFxStructure
                             !relative.StartsWith("https:") &&
                             !relative.StartsWith("#") &&
                             !relative.Contains("@") &&
-                            !string.IsNullOrEmpty(Path.GetExtension(relative)) &&
+                            //!string.IsNullOrEmpty(Path.GetExtension(relative)) &&
                             !string.IsNullOrWhiteSpace(relative))
                         {
                             // check validity of the link
@@ -329,6 +329,14 @@ namespace GenerateDocFxStructure
                                     _message.Verbose($"  Replacing {initialReletive} by {newRelative}");
                                     lineToWrite = line.Replace(initialReletive, newRelative);
                                 }
+                            }
+                            else
+                            {
+                                // We will adjust the directory to the repo
+                                var relativeLinkPath = absolute.Substring(_options.SourceFolder.Length + 1).Replace('\\', '/');
+                                var newRelative = $"{_options.Repo}/{relativeLinkPath}";
+                                _message.Verbose($"  Replacing {initialReletive} by {newRelative}");
+                                lineToWrite = line.Replace(initialReletive, newRelative);
                             }
                         }
                     }

@@ -15,7 +15,7 @@ namespace Iot.Device.EPaper.Buffers
     /// </summary>
     public sealed class FrameBuffer2BitPerPixel : IFrameBuffer
     {
-        private Point _startPoint;
+        private System.Drawing.Point _startPoint;
 
         /// <inheritdoc/>>
         public int Height { get; }
@@ -24,7 +24,7 @@ namespace Iot.Device.EPaper.Buffers
         public int Width { get; }
 
         /// <inheritdoc/>
-        public Point StartPoint
+        public System.Drawing.Point StartPoint
         {
             get => _startPoint;
             set
@@ -70,7 +70,7 @@ namespace Iot.Device.EPaper.Buffers
         }
 
         /// <inheritdoc/>
-        public byte this[Point point]
+        public byte this[System.Drawing.Point point]
         {
             get => throw new NotSupportedException();
             set => throw new NotSupportedException();
@@ -124,11 +124,11 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public void Fill(Color color)
         {
-            Fill(Point.Zero, Width, Height, color);
+            Fill(new System.Drawing.Point(0, 0), Width, Height, color);
         }
 
         /// <inheritdoc/>
-        public void Fill(Point start, int width, int height, Color color)
+        public void Fill(System.Drawing.Point start, int width, int height, Color color)
         {
             if (!IsPointWithinFrameBuffer(start))
             {
@@ -163,7 +163,7 @@ namespace Iot.Device.EPaper.Buffers
         /// into a <see cref="Color"/> struct. We don't know what color <see cref="ColorBuffer"/>
         /// represents in the actual display hardware.
         /// </remarks>
-        public Color GetPixel(Point point)
+        public Color GetPixel(System.Drawing.Point point)
         {
             throw new InvalidOperationException();
         }
@@ -173,8 +173,8 @@ namespace Iot.Device.EPaper.Buffers
         /// </summary>
         /// <param name="point">The pixel position.</param>
         /// <returns>True if pixel is a color other than black/white, otherwise; false.</returns>
-        /// <remarks>Make sure to consider the result of <see cref="IsBlackPixel(Point)"/> as this is not enough on its own.</remarks>
-        public bool IsColoredPixel(Point point)
+        /// <remarks>Make sure to consider the result of <see cref="IsBlackPixel(System.Drawing.Point)"/> as this is not enough on its own.</remarks>
+        public bool IsColoredPixel(System.Drawing.Point point)
         {
             return ColorBuffer.GetPixel(point) == Color.White; // white indicates the pixel value is 1 (on)
         }
@@ -184,7 +184,7 @@ namespace Iot.Device.EPaper.Buffers
         /// </summary>
         /// <param name="point">The pixel position.</param>
         /// <returns>True if pixel is black color, otherwise; false.</returns>
-        public bool IsBlackPixel(Point point)
+        public bool IsBlackPixel(System.Drawing.Point point)
         {
             return IsColoredPixel(point) == false
                     && BlackBuffer.GetPixel(point) == Color.Black;
@@ -195,14 +195,14 @@ namespace Iot.Device.EPaper.Buffers
         /// </summary>
         /// <param name="point">The pixel position.</param>
         /// <returns>True if pixel is white color, otherwise; false.</returns>
-        /// <remarks>Make sure to consider the result of <see cref="IsColoredPixel(Point)"/> as this is not enough on its own.</remarks>
-        public bool IsWhitePixel(Point point)
+        /// <remarks>Make sure to consider the result of <see cref="IsColoredPixel(System.Drawing.Point)"/> as this is not enough on its own.</remarks>
+        public bool IsWhitePixel(System.Drawing.Point point)
         {
             return IsBlackPixel(point) == false;
         }
 
         /// <inheritdoc/>
-        public void SetPixel(Point point, Color pixelColor)
+        public void SetPixel(System.Drawing.Point point, Color pixelColor)
         {
             if (!IsPointWithinFrameBuffer(point))
             {
@@ -231,17 +231,17 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
         {
-            WriteBuffer(buffer, Point.Zero);
+            WriteBuffer(buffer, new System.Drawing.Point(0, 0));
         }
 
         /// <inheritdoc/>>
-        public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
+        public void WriteBuffer(IFrameBuffer buffer, System.Drawing.Point destinationStart)
         {
-            WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+            WriteBuffer(buffer, new System.Drawing.Point(0, 0), new System.Drawing.Point(buffer.Width, buffer.Height), destinationStart);
         }
 
         /// <inheritdoc/>
-        public void WriteBuffer(IFrameBuffer buffer, Point start, Point end, Point destinationStart)
+        public void WriteBuffer(IFrameBuffer buffer, System.Drawing.Point start, System.Drawing.Point end, System.Drawing.Point destinationStart)
         {
             if (buffer is FrameBuffer1BitPerPixel buffer1bpp)
             {
@@ -261,14 +261,14 @@ namespace Iot.Device.EPaper.Buffers
         }
 
         /// <inheritdoc/>
-        public bool IsPointWithinFrameBuffer(Point point)
+        public bool IsPointWithinFrameBuffer(System.Drawing.Point point)
         {
             return point.X >= StartPoint.X && point.X < (StartPoint.X + Width)
                 && point.Y >= StartPoint.Y && point.Y < (StartPoint.Y + Height);
         }
 
         /// <inheritdoc/>>
-        public bool IsRangeWithinFrameBuffer(Point start, Point end)
+        public bool IsRangeWithinFrameBuffer(System.Drawing.Point start, System.Drawing.Point end)
         {
             return IsPointWithinFrameBuffer(start) && IsPointWithinFrameBuffer(end);
         }

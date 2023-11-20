@@ -169,7 +169,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             CurrentFrameBufferStartXPosition = GetXPositionFromFrameBufferIndex(CurrentFrameBufferPageLowerBound);
             CurrentFrameBufferStartYPosition = GetYPositionFromFrameBufferIndex(CurrentFrameBufferPageLowerBound);
 
-            FrameBuffer.StartPoint = new Point(CurrentFrameBufferStartXPosition, CurrentFrameBufferStartYPosition);
+            FrameBuffer.StartPoint = new System.Drawing.Point(CurrentFrameBufferStartXPosition, CurrentFrameBufferStartYPosition);
             FrameBuffer.CurrentFramePage = CurrentFrameBufferPage;
         }
 

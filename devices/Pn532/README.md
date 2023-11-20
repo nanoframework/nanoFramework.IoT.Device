@@ -5,7 +5,7 @@ PN532 is a RFID and NFC reader. It does supports various standards: IsoIec14443T
 ## Documentation
 
 - Official documentation can be fond [here](https://www.nxp.com/docs/en/user-guide/141520.pdf)
-- Check out the [sample]'./samples) which contains more detailed on how to read other type of cards like [Ultralight](../Cards/Ultralight)
+- Check out the [sample]'./samples) which contains more detailed on how to read other type of cards like [Ultralight](../Card/Ultralight/)
 
 ## Usage
 
