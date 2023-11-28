@@ -5,12 +5,12 @@ using System;
 using System.Device.Gpio;
 using System.Device.Spi;
 
-namespace Iot.Device.EPaper.Drivers.JD796xx
+namespace Iot.Device.EPaper.Drivers.Jd796xx
 {
     /// <summary>
     /// A driver class for the GDEW0154M09 display controller.
     /// </summary>
-    public class Gdew0154m09 : JD79653A
+    public class Gdew0154m09 : Jd79653A
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Gdew0154m09"/> class.

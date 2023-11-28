@@ -38,7 +38,7 @@
     <Compile Include="Buffers\IFrameBuffer.cs" />
     <Compile Include="Drivers\JD796xx\Command.cs" />
     <Compile Include="Drivers\JD796xx\Gdew0154m09.cs" />
-    <Compile Include="Drivers\JD796xx\JD79653A.cs" />
+    <Compile Include="Drivers\JD796xx\Jd79653A.cs" />
     <Compile Include="Drivers\JD796xx\SleepMode.cs" />
     <Compile Include="Drivers\IePaperDisplay.cs" />
     <Compile Include="Drivers\Ssd168x\Ssd1680\Ssd1680.cs" />

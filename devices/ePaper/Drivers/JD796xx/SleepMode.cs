@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2022 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
 
-namespace Iot.Device.EPaper.Drivers.JD796xx
+namespace Iot.Device.EPaper.Drivers.Jd796xx
 {
     /// <summary>
     /// SSD1681 Supported Sleep Modes.
