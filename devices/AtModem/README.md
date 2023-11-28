@@ -4,6 +4,10 @@ This binding is a generic AT Modem handler that can be extended for different us
 
 > Note: The module is tested on a `Sim7080` but is also compatible with Sim7070 and Sim7090 and with a `SIM800H`.
 
+This project is officially supported by [SIMCom](https://www.simcom.com/).
+
+[![SIMCom](./simcom-logo.png)](https://www.simcom.com/)
+
 ## Documentation
 
 * [SIM7080 Product details](https://www.simcom.com/index.php/product/SIM7080G.html)
