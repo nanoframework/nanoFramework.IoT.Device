@@ -181,7 +181,7 @@ steps:
   displayName: Push NuGet packages to NuGet
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
-- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
+- script: nuget push -ApiKey $env:NUGET_APIKEY -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   condition: >-
     and(
@@ -191,6 +191,8 @@ steps:
     )
   continueOnError: false
   displayName: Push NuGet packages to NuGet
+  env:
+    NUGET_APIKEY: $(NuGetApiKey)
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs
