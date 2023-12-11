@@ -181,18 +181,21 @@ steps:
   displayName: Push NuGet packages to NuGet
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
-- script: nuget push -ApiKey $env:NUGET_APIKEY -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
-  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+- task: NuGetCommand@2
   condition: >-
     and(
       succeeded(),
       gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
-  continueOnError: false
+  continueOnError: true
   displayName: Push NuGet packages to NuGet
-  env:
-    NUGET_APIKEY: $(NuGetApiKey)
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs
