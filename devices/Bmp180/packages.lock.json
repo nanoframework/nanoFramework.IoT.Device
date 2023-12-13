@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
-        "requested": "[1.2.439, 1.2.439]",
-        "resolved": "1.2.439",
-        "contentHash": "U3T8dOyHTM5OOhMDCSH8Uc+Feym1t9LU3RicYYyXsA8MspfHXZf0NLF2gFRajwfxySwU3BR27Gw0D6jvDjaSTw=="
+        "requested": "[1.2.455, 1.2.455]",
+        "resolved": "1.2.455",
+        "contentHash": "LuRr9PpsoSIvjqvBfyWB89HzPuyB0HGPtZgyfvAwJpvJt+Je0fEBy5O42hbk1Cvuwc8Ht6m2MSWZAAi3+3w60A=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
