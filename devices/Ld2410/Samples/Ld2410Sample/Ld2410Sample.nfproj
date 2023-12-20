@@ -49,8 +49,8 @@
       <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.52\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=5.38.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Length.5.38.2\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=5.39.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Length.5.39.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
