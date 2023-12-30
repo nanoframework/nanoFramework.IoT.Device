@@ -52,7 +52,7 @@ namespace Iot.Device.MAX1704x
             get
             {
                 var vCell = Read16(Registers.Max17043Vcell);
-                return vCell / Divider / FullScale;    
+                return vCell / Divider * FullScale;    
             }
         }
 
