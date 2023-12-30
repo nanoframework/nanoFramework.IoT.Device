@@ -15,11 +15,12 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Uln2003 for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET IoT Core binding Iot.Device.MAX1704x for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.MAX1704x assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.MAX1704x</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
     </dependencies>
   </metadata>
   <files>
