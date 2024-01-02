@@ -1,13 +1,16 @@
 # RGB diode - PWM
+
 Library designed for controlling RGB diodes using PWM.
 
-### Functions
+## Functions
+
 The binding supports the following sensor functions:
 
 * Control of RGB diodes
 * PWM-based color intensity management
 
-### Classes
+## Classes
+
 * RgbDiode: Main class for RGB LED control
 
 ## Usage
