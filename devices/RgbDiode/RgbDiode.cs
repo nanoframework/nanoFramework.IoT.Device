@@ -3,6 +3,7 @@
 
 using System;
 using System.Device.Pwm;
+using System.Drawing;
 
 namespace Iot.Device.RgbDiode
 {
@@ -59,6 +60,18 @@ namespace Iot.Device.RgbDiode
             SetValue(_rChannel, red * _rFactor);
             SetValue(_gChannel, green * _gFactor);
             SetValue(_bChannel, blue * _bFactor);
+        }
+
+        /// <summary>
+        /// Sets the color of an RGB LED using PWM channels.
+        /// is adjusted by their respective factors set during the initialization of the PwmPixelDriver.
+        /// </summary>
+        /// <param name="color">The color to set.</param>
+        public void SetColor(Color color)
+        {
+            SetValue(_rChannel, color.R * _rFactor);
+            SetValue(_gChannel, color.G * _gFactor);
+            SetValue(_bChannel, color.B * _bFactor);
         }
 
         private static void GuardFactor(params double[] factors)
