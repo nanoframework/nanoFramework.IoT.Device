@@ -7,6 +7,18 @@
         "requested": "[1.15.5, 1.15.5]",
         "resolved": "1.15.5",
         "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
+      },
+      "nanoFramework.Graphics.Core": {
+        "type": "Direct",
+        "requested": "[1.2.4, 1.2.4]",
+        "resolved": "1.2.4",
+        "contentHash": "rr9GjMQ3Fucn3LQllQOR1D6DAwEF731GRCBxMIqz4YYpPtidy4XsCSyetZeW/ArMoqYRFwyPqaMtKDhrIHwnDg=="
+      },
+      "nanoFramework.System.Device.Pwm": {
+        "type": "Direct",
+        "requested": "[1.1.10, 1.1.10]",
+        "resolved": "1.1.10",
+        "contentHash": "vk/Dr8No2ec+eBwwufxDK0Rm6BRnOoevjaqEXbvpFz2BK3UPiC4OhUWH3Rwel34rywg1mXozAAY9ZwvN2gnxlA=="
       }
     }
   }
