@@ -41,7 +41,7 @@ namespace Iot.Device.Max1704x
                 var configReg = GetConfigRegister();
                 configReg &= 0x00FF;
                 configReg |= value;
-                Write16(configReg, Registers.Max17043Config);
+                Write16(configReg, (byte)Registers.Max17043Config);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var vCell = Read16(Registers.Max17043Vcell);
+                var vCell = Read16((byte)Registers.Max17043Vcell);
                 return vCell / Divider * FullScale;    
             }
         }
@@ -66,7 +66,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var soc = Read16(Registers.Max17043Soc);
+                var soc = Read16((byte)Registers.Max17043Soc);
                 var percent = (float)((soc & 0xFF00) >> 8);
                 percent += (soc & 0x00FF) / 256.0f;
                 return percent;    
@@ -77,7 +77,7 @@ namespace Iot.Device.Max1704x
         /// Gets the version of the device.
         /// </summary>
         /// <value>The version of the device.</value>
-        public ushort Version => Read16(Registers.Max17043Version);
+        public ushort Version => Read16((byte)Registers.Max17043Version);
 
         /// <summary>
         /// Gets or sets the threshold of the property.
@@ -104,7 +104,7 @@ namespace Iot.Device.Max1704x
                 var configReg = GetConfigRegister();
                 configReg &= 0xFFE0;
                 configReg |= (ushort)percent;
-                Write16(configReg, Registers.Max17043Config);
+                Write16(configReg, (byte)Registers.Max17043Config);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Iot.Device.Max1704x
             get
             {
                 var configReg = GetConfigRegister();
-                if ((configReg & Registers.Max17043ConfigAlert) != 0)
+                if ((configReg & (byte)Registers.Max17043ConfigAlert) != 0)
                 {
                     return true;
                 }
@@ -153,8 +153,8 @@ namespace Iot.Device.Max1704x
         public void ClearAlert()
         {
             var configReg = GetConfigRegister();
-            configReg &= Negate(Registers.Max17043ConfigAlert);
-            Write16(configReg, Registers.Max17043Config);
+            configReg &= Negate((byte)Registers.Max17043ConfigAlert);
+            Write16(configReg, (byte)Registers.Max17043Config);
         }
 
         /// <summary>
@@ -169,13 +169,13 @@ namespace Iot.Device.Max1704x
         public virtual void Sleep()
         {
             var configReg = GetConfigRegister();
-            if ((configReg & Registers.Max17043ConfigSleep) != 0)
+            if ((configReg & (byte)Registers.Max17043ConfigSleep) != 0)
             {
                 return;
             }
 
-            configReg |= Registers.Max17043ConfigSleep;
-            Write16(configReg, Registers.Max17043Config);
+            configReg |= (byte)Registers.Max17043ConfigSleep;
+            Write16(configReg, (byte)Registers.Max17043Config);
         }
 
         /// <summary>
@@ -184,13 +184,13 @@ namespace Iot.Device.Max1704x
         public virtual void Wake()
         {
             var configReg = GetConfigRegister();
-            if ((configReg & Registers.Max17043ConfigSleep) == 0)
+            if ((configReg & (byte)Registers.Max17043ConfigSleep) == 0)
             {
                 return;
             }
 
-            configReg &= Negate(Registers.Max17043ConfigSleep);
-            Write16(configReg, Registers.Max17043Config);
+            configReg &= Negate((byte)Registers.Max17043ConfigSleep);
+            Write16(configReg, (byte)Registers.Max17043Config);
         }
         
         /// <summary>
@@ -204,7 +204,7 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public void QuickStart()
         {
-            Write16(Registers.Max17043ModeQuickstart, Registers.Max17043Mode);
+            Write16((ushort)Registers16.Max17043ModeQuickstart, (byte)Registers.Max17043Mode);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public void Reset()
         {
-            Write16(Registers.Max17043CommandPor, Registers.Max17043Command);
+            Write16((ushort)Registers16.Max17043CommandPor, (byte)(byte)Registers.Max17043Command);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Iot.Device.Max1704x
         /// <returns>The config register value as an unsigned short.</returns>
         protected ushort GetConfigRegister()
         {
-            return Read16(Registers.Max17043Config);
+            return Read16((byte)Registers.Max17043Config);
         }
 
         /// <summary>

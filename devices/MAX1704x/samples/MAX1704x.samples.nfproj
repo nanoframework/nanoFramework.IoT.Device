@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>MAX1704x.samples</RootNamespace>
-    <AssemblyName>MAX1704x.samples</AssemblyName>
+    <RootNamespace>Max1704x.samples</RootNamespace>
+    <AssemblyName>Max1704x.samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -32,7 +32,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MAX1704x.nfproj" />
+    <ProjectReference Include="..\Max1704x.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.lock.json" />

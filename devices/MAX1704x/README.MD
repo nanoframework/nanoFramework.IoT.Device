@@ -23,4 +23,4 @@ Console.WriteLine($"Voltage: {max.BatteryVoltage}");
 Console.WriteLine($"Percent: {max.BatteryPercent} %");
 ```
 
-**Important**: make sure you properly setup the PWM pins especially for ESP32 before creating the `I2cDevice`.
+**Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`.
