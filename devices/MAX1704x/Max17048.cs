@@ -4,7 +4,7 @@
 using System;
 using System.Device.I2c;
 
-namespace Iot.Device.MAX1704x
+namespace Iot.Device.Max1704x
 {
     /// <summary>
     /// Represents the MAX17048 class, which inherits from MAX17044.

@@ -3,7 +3,7 @@
 
 using System.Device.I2c;
 
-namespace Iot.Device.MAX1704x
+namespace Iot.Device.Max1704x
 {
     /// <summary>
     /// Represents a MAX17043 gauge which extends from Max1704X.

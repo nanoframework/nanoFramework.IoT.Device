@@ -4,7 +4,7 @@
 using System;
 using System.Device.I2c;
 using System.Threading;
-using Iot.Device.MAX1704x;
+using Iot.Device.Max1704x;
 
 namespace MAX1704x.samples
 {

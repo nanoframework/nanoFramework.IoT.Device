@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.MAX1704x
+namespace Iot.Device.Max1704x
 {
     /// <summary>
     /// The Registers class contains constant values representing memory addresses of various registers in the MAX17043 IC.

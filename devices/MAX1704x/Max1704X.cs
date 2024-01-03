@@ -4,7 +4,7 @@
 using System;
 using System.Device.I2c;
 
-namespace Iot.Device.MAX1704x
+namespace Iot.Device.Max1704x
 {
     /// <summary>
     /// Base class for controlling MAX1704x via I2C interface.
@@ -17,6 +17,8 @@ namespace Iot.Device.MAX1704x
         public const byte DefaultAddress = 0x36;
         
         private const byte ThresholdMinValue = 32;
+        
+        private readonly I2cDevice _i2CDevice;
 
         /// <summary>
         /// Gets or sets the compensation value for the model gauge algorithm.
@@ -135,9 +137,7 @@ namespace Iot.Device.MAX1704x
         /// Gets the value used to divide two numbers in the implementation of a division operation.
         /// </summary>
         protected abstract float Divider { get; }
-
-        private readonly I2cDevice _i2CDevice;
-
+        
         /// <summary>
         /// Initializes a new instance of the Max1704X class.
         /// </summary>

@@ -3,7 +3,7 @@
 
 using System.Device.I2c;
 
-namespace Iot.Device.MAX1704x
+namespace Iot.Device.Max1704x
 {
     /// <summary>
     /// Represents the MAX17049 class.
