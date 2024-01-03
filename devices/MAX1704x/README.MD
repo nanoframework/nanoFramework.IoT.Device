@@ -1,10 +1,12 @@
 # MAX1704x battery gauge
 Library designed for controlling MAX1704x IC.
 
-### Functions
-The binding supports all funcionalities for MAX1704x family. Implemented based on https://github.com/sparkfun/SparkFun_MAX1704x_Fuel_Gauge_Arduino_Library/blob/main/src/SparkFun_MAX1704x_Fuel_Gauge_Arduino_Library.cpp
+## Functions
 
-### Classes
+The binding supports all functionalities for MAX1704x family. Implemented based on [SparkFun implementation](https://github.com/sparkfun/SparkFun_MAX1704x_Fuel_Gauge_Arduino_Library/blob/main/src/SparkFun_MAX1704x_Fuel_Gauge_Arduino_Library.cpp).
+
+## Classes
+
 * Max17043 - class for MAX17043
 * Max17044 - class for MAX17044
 * Max17048 - class for MAX17048
