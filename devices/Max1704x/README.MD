@@ -1,4 +1,4 @@
-# MAX1704x battery gauge
+# MAX1704x/MAX17043/MAX17044/MAX17048/MAX17049 - Battery gauge
 Library designed for controlling MAX1704x IC.
 
 ## Functions

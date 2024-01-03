@@ -65,12 +65,8 @@ namespace Iot.Device.Max1704x
         /// Gets the change rate of the property.
         /// </summary>
         /// <remarks>
-        /// This property returns the change rate of a certain value that is obtained from the MAX17048_CRATE register.
-        /// The value is then multiplied by 0.208 to convert it to the desired float value.
+        /// Approximate charge or discharge rate of the battery. 
         /// </remarks>
-        /// <value>
-        /// The change rate of the property.
-        /// </value>
         public float ChangeRate
         {
             get
