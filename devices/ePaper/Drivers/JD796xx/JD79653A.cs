@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Threading;
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
-using nanoFramework.UI;
 
 namespace Iot.Device.EPaper.Drivers.Jd796xx
 {
@@ -395,7 +394,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
         /// <summary>
         /// Perform the required initialization steps to set up the display.
         /// </summary>
-        /// <remarks>Sequence order can be found at https://github.com/m5stack/M5Core-Ink/blob/master/src/utility/WFT0154CZB3_INIT.h</remarks>
+        /// <remarks>Sequence order can be found at https://github.com/m5stack/M5Core-Ink/blob/master/src/utility/WFT0154CZB3_INIT.h.</remarks>
         public virtual void Initialize()
         {
             if (PowerState == PowerState.DeepSleep)
@@ -607,16 +606,24 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
         }
 
         /// <inheritdoc/>
-        public virtual bool WaitReady(int waitingTime)
+        public virtual bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken = default)
         {
-            int currentWait = 0;
-            while (currentWait < waitingTime && _busyPin.Read() == PinValue.Low)
+            if (cancellationToken == default)
             {
-                SpinWait.SpinUntil(5);
-                currentWait += 5;
+                if (waitingTime < 0)
+                {
+                    throw new ArgumentNullException(nameof(cancellationToken), $"{nameof(cancellationToken)} cannot be null with {nameof(waitingTime)} < 0");
+                }
+
+                cancellationToken = new CancellationTokenSource(waitingTime);
             }
 
-            return currentWait >= waitingTime;
+            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.Low)
+            {
+                cancellationToken.Token.WaitHandle.WaitOne(5, true);
+            }
+
+            return !cancellationToken.IsCancellationRequested;
         }
 
         #region IDisposable

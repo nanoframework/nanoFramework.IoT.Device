@@ -3,7 +3,7 @@
 
 using System;
 using System.Drawing;
-
+using System.Threading;
 using Iot.Device.EPaper.Buffers;
 using nanoFramework.UI;
 
@@ -95,9 +95,10 @@ namespace Iot.Device.EPaper.Drivers
         /// Blocks the current thread until the display is in idle mode again.
         /// </summary>
         /// <param name="waitingTime">The maximum time to wait in ms before exiting the method. -1 to wait infinitely.</param>
-        /// <returns>True if it returns before the time to wait, false otherwise.</returns>
-        /// <remarks>Be careful if waiting infinitely as the thread will be block without any possibilities to exit.</remarks>
-        bool WaitReady(int waitingTime);
+        /// <param name="cancellationToken">The <see cref="CancellationTokenSource"/> to be able to cancel the waiting time.</param>
+        /// <returns>True if it returns before the <see cref="CancellationTokenSource"/> expires, false otherwise.</returns>
+        /// <remarks>If _waitingTime_ is set to -1, _cancellationToken_ could not be null, and a exception will be throw.</remarks>
+        bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken);
 
         /// <summary>
         /// Begins a frame draw operation with frame paging support.
