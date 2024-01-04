@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.MAX1704x</id>
+    <id>nanoFramework.Iot.Device.Max1704x</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.MAX1704x</title>
+    <title>nanoFramework.Iot.Device.Max1704x</title>
     <authors>nanoFramework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
@@ -17,7 +17,7 @@
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.MAX1704x for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.MAX1704x assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.MAX1704x</tags>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Max1704x Max1704x</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
