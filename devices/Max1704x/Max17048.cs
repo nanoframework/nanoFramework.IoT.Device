@@ -418,7 +418,7 @@ namespace Iot.Device.Max1704x
         /// <summary>
         /// Enables the State of Charge (SOC) alert on the MAX17043 device.
         /// </summary>
-        public void EnableSOCAlert()
+        public void EnableStateOfChangeAlert()
         {
             var configReg = GetConfigRegister();
             configReg |= (byte)Registers.Max17043ConfigAlsc;
@@ -428,7 +428,7 @@ namespace Iot.Device.Max1704x
         /// <summary>
         /// Disables the State of Charge (SOC) alert on the MAX17043 device.
         /// </summary>
-        public void DisableSOCAlert()
+        public void DisableStateOfChangeAlert()
         {
             var configReg = GetConfigRegister();
             configReg &= Negate((byte)Registers.Max17043ConfigAlsc);

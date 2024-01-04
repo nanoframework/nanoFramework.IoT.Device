@@ -41,6 +41,9 @@
     <Reference Include="System.Device.I2c, Version=1.1.16.0, Culture=neutral, PublicKeyToken=c07d481e9758c731, processorArchitecture=MSIL">
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Ratio, Version=5.42.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.42.0\lib\UnitsNet.Ratio.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -3,6 +3,7 @@
 
 using System;
 using System.Device.I2c;
+using UnitsNet;
 
 namespace Iot.Device.Max1704x
 {
@@ -62,14 +63,14 @@ namespace Iot.Device.Max1704x
         /// Gets the battery percentage.
         /// </summary>
         /// <returns>The battery percentage as a float value.</returns>
-        public float BatteryPercent
+        public Ratio BatteryPercent
         {
             get
             {
                 var soc = Read16((byte)Registers.Max17043Soc);
                 var percent = (float)((soc & 0xFF00) >> 8);
                 percent += (soc & 0x00FF) / 256.0f;
-                return percent;    
+                return Ratio.FromPercent(percent);    
             }
         }
 
