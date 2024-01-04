@@ -50,12 +50,12 @@ namespace Iot.Device.Max1704x
         /// Gets the voltage of the battery.
         /// </summary>
         /// <returns>The voltage of the battery in volts.</returns>
-        public float BatteryVoltage
+        public ElectricPotential BatteryVoltage
         {
             get
             {
                 var vCell = Read16((byte)Registers.Max17043Vcell);
-                return vCell / Divider * FullScale;    
+                return ElectricPotential.FromVolts(vCell / Divider * FullScale);    
             }
         }
 
@@ -81,27 +81,33 @@ namespace Iot.Device.Max1704x
         public ushort Version => Read16((byte)Registers.Max17043Version);
 
         /// <summary>
-        /// Gets or sets the threshold of the property.
+        /// Gets or sets the empty alert threshold for the device.
         /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is out of range.</exception>
-        public byte Threshold
+        /// <remarks>
+        /// The empty alert threshold determines the remaining capacity at which an alert should be triggered indicating that
+        /// the device is empty or near empty.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when the specified threshold is invalid. The threshold must be between 0% and 32%.
+        /// </exception>
+        public Ratio EmptyAlertThreshold
         {
             get
             {
                 var configReg = GetConfigRegister();
                 var threshold = configReg & 0x001F;
                 threshold = 32 - threshold;
-                return (byte)threshold;    
+                return Ratio.FromPercent(threshold);    
             }
 
             set
             {
-                if (value > 100 || value < ThresholdMinValue)
+                if (value.Percent > ThresholdMinValue || value.Percent < 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 
-                var percent = ThresholdMinValue - value;
+                var percent = ThresholdMinValue - (int)value.Percent;
                 var configReg = GetConfigRegister();
                 configReg &= 0xFFE0;
                 configReg |= (ushort)percent;

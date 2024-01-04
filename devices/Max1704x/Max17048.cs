@@ -3,6 +3,7 @@
 
 using System;
 using System.Device.I2c;
+using UnitsNet;
 
 namespace Iot.Device.Max1704x
 {
@@ -25,22 +26,22 @@ namespace Iot.Device.Max1704x
         /// Gets or sets the reset voltage of a device.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the provided value is outside the valid range of 0 to 5.08.</exception>
-        public float ResetVoltage
+        public ElectricPotential ResetVoltage
         {
             get
             {
                 var value = Read16((byte)Registers.Max17048VresetId) >> 9;
-                return value * 0.04f;
+                return ElectricPotential.FromVolts(value * 0.04f);
             }
 
             set
             {
-                if (value < 0 || value > 5.08)
+                if (value.Volts < 0 || value.Volts > 5.08)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
 
-                var thresh = (byte)(value / 0.04);
+                var thresh = (byte)(value.Volts / 0.04);
                 var vreset = Read16((byte)Registers.Max17048VresetId);
                 vreset &= 0x01FF;
                 vreset |= (ushort)(thresh << 9);
@@ -67,12 +68,12 @@ namespace Iot.Device.Max1704x
         /// <remarks>
         /// Approximate charge or discharge rate of the battery. 
         /// </remarks>
-        public float ChangeRate
+        public Ratio ChangeRate
         {
             get
             {
                 var changeRate = Read16((byte)Registers.Max17048Crate);
-                return changeRate * 0.208f;
+                return Ratio.FromPercent(changeRate * 0.208f);
             }
         }
 
@@ -94,29 +95,30 @@ namespace Iot.Device.Max1704x
         }
 
         /// <summary>
-        /// Gets or sets maximum voltage threshold in volts for the VALRT interrupt.
+        /// Gets or sets maximum voltage threshold in volts for the overvoltage (VALRT) interrupt.
         /// </summary>
         /// <remarks>
         /// This property gets or sets the maximum voltage threshold for the VALRT interrupt.
         /// The value is in volts, ranging from 0 to 5.1 volts.
         /// </remarks>
-        public float VALRTMax
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the assigned value is less than 0 or greater than 5.1.</exception>
+        public ElectricPotential OvervoltageAlertThreshold
         {
             get
             {
                 var valrt = Read16((byte)Registers.Max17048Cvalrt);
                 valrt &= 0x00FF; // Mask off max bits
-                return valrt * 0.02f;
+                return ElectricPotential.FromVolts(valrt * 0.02f);
             }
 
             set
             {
-                if (value < 0 || value > 5.1)
+                if (value.Volts < 0 || value.Volts > 5.1)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
 
-                var thresh = value / 0.02f;
+                var thresh = value.Volts / 0.02f;
                 var valrt = Read16((byte)Registers.Max17048Cvalrt);
                 valrt &= 0xFF00;
                 valrt |= (ushort)thresh;
@@ -125,26 +127,30 @@ namespace Iot.Device.Max1704x
         }
         
         /// <summary>
-        /// Gets or sets the minimum voltage alert threshold value.
+        /// Gets or sets maximum voltage threshold in volts for the undervoltage (VALRT) interrupt.
         /// </summary>
+        /// <remarks>
+        /// This property gets or sets the maximum voltage threshold for the VALRT interrupt.
+        /// The value is in volts, ranging from 0 to 5.1 volts.
+        /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the assigned value is less than 0 or greater than 5.1.</exception>
-        public float VALRTMin
+        public ElectricPotential UnervoltageAlertThreshold
         {
             get
             {
                 var valrt = Read16((byte)Registers.Max17048Cvalrt);
                 valrt >>= 8; // Shift min into LSB
-                return valrt * 0.02f;
+                return ElectricPotential.FromVolts(valrt * 0.02f);
             }
 
             set
             {
-                if (value < 0 || value > 5.1)
+                if (value.Volts < 0 || value.Volts > 5.1)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
 
-                var thresh = value / 0.02f;
+                var thresh = value.Volts / 0.02f;
                 var valrt = Read16((byte)Registers.Max17048Cvalrt);
                 valrt &= 0x00FF; // Mask off min bits
                 valrt |= (ushort)((ushort)thresh << 8);
@@ -154,25 +160,26 @@ namespace Iot.Device.Max1704x
 
         /// <summary>
         /// Gets or sets the Hibernation Active Threshold value.
+        /// This property represents the battery threshold for exiting hibernation mode.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the value is less than 0 or greater than 0.31875.</exception>
-        public float HIBRTActThr
+        public ElectricPotential HibernateExitThreshold
         {
             get
             {
                 var hibrt = Read16((byte)Registers.Max17048Hibrt);
                 hibrt &= 0x00FF;
-                return hibrt * 0.00125f;
+                return ElectricPotential.FromVolts(hibrt * 0.00125f);
             }
 
             set
             {
-                if (value < 0 || value > 0.31875)
+                if (value.Volts < 0 || value.Volts > 0.31875)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
 
-                var thresh = value / 0.00125f;
+                var thresh = value.Volts / 0.00125f;
                 var hibrt = Read16((byte)Registers.Max17048Hibrt);
                 hibrt &= 0xFF00; // Mask off Act bits
                 hibrt |= (ushort)thresh;
@@ -185,23 +192,23 @@ namespace Iot.Device.Max1704x
         /// This property represents the battery threshold for entering hibernation mode.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 0 or greater than 53.04.</exception>
-        public float HIBRTHibThr
+        public ElectricPotential HibernateThreshold
         {
             get
             {
                 var hibrt = Read16((byte)Registers.Max17048Hibrt);
                 hibrt >>= 8; // Shift HibThr into LSB
-                return hibrt * 0.208f;    
+                return ElectricPotential.FromVolts(hibrt * 0.208f);    
             }
 
             set
             {
-                if (value < 0 || value > 53.04)
+                if (value.Volts < 0 || value.Volts > 53.04)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 
-                var thresh = value / 0.208f;
+                var thresh = value.Volts / 0.208f;
                 var hibrt = Read16((byte)Registers.Max17048Hibrt);
                 hibrt &= 0x00FF;
                 hibrt |= (ushort)(((ushort)thresh) << 8);

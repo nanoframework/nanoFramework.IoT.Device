@@ -14,6 +14,12 @@
         "resolved": "1.1.16",
         "contentHash": "33YPnlZVjFwx0mOhdKTOggx+TvbjTD3WZ6rkSB33ytF9fHoqfvS1AYr4+ScUHW4z2yE7vxVWBol5mI7iEg4Aiw=="
       },
+      "UnitsNet.nanoFramework.ElectricPotential": {
+        "type": "Direct",
+        "requested": "[5.42.0, 5.42.0]",
+        "resolved": "5.42.0",
+        "contentHash": "8DYEyqBLljNqYEQ2HEOqk5kIbS7yHF+rw+mYHxgX3H4HVNHHXTUvy6NAAwV+lAhi1s/VjRGNoi4LRUKRe+oMpA=="
+      },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
         "requested": "[5.42.0, 5.42.0]",
