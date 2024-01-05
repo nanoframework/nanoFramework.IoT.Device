@@ -257,6 +257,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Dac63004.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Dac63004/) [DAC63004/DAC63004W - Ultra-low-power quad-channel 12-bit smart DAC with I²C, SPI and PWM](Dac63004)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ina219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ina219/) [INA219 - Bidirectional Current/Power Monitor](Ina219)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ip5306.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ip5306/) [IP5306 - Power management](Ip5306)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Max1704x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Max1704x/) [MAX1704x/MAX17043/MAX17044/MAX17048/MAX17049 - Battery gauge](Max1704x)
 
 ## Digital/Analog converters
 
