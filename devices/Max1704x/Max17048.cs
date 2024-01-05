@@ -134,7 +134,7 @@ namespace Iot.Device.Max1704x
         /// The value is in volts, ranging from 0 to 5.1 volts.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the assigned value is less than 0 or greater than 5.1.</exception>
-        public ElectricPotential UnervoltageAlertThreshold
+        public ElectricPotential UnderVoltageAlertThreshold
         {
             get
             {
