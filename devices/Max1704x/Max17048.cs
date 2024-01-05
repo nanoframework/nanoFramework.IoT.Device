@@ -30,7 +30,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var value = Read16((byte)Registers.Max17048VresetId) >> 9;
+                var value = Read16(Registers.Max17048VresetId) >> 9;
                 return ElectricPotential.FromVolts(value * 0.04f);
             }
 
@@ -42,10 +42,10 @@ namespace Iot.Device.Max1704x
                 }
 
                 var thresh = (byte)(value.Volts / 0.04);
-                var vreset = Read16((byte)Registers.Max17048VresetId);
+                var vreset = Read16(Registers.Max17048VresetId);
                 vreset &= 0x01FF;
                 vreset |= (ushort)(thresh << 9);
-                Write16(vreset, (byte)Registers.Max17048VresetId);
+                Write16(vreset, Registers.Max17048VresetId);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var statusReg = Read16((byte)Registers.Max17048Status) >> 8;
+                var statusReg = Read16(Registers.Max17048Status) >> 8;
                 return (byte)(statusReg & 0x7F);
             }
         }
@@ -72,7 +72,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var changeRate = Read16((byte)Registers.Max17048Crate);
+                var changeRate = Read16(Registers.Max17048Crate);
                 return Ratio.FromPercent(changeRate * 0.208f);
             }
         }
@@ -89,7 +89,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var vresetID = Read16((byte)Registers.Max17048VresetId);
+                var vresetID = Read16(Registers.Max17048VresetId);
                 return (byte)(vresetID & 0xFF);
             }
         }
@@ -106,7 +106,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var valrt = Read16((byte)Registers.Max17048Cvalrt);
+                var valrt = Read16(Registers.Max17048Cvalrt);
                 valrt &= 0x00FF; // Mask off max bits
                 return ElectricPotential.FromVolts(valrt * 0.02f);
             }
@@ -119,10 +119,10 @@ namespace Iot.Device.Max1704x
                 }
 
                 var thresh = value.Volts / 0.02f;
-                var valrt = Read16((byte)Registers.Max17048Cvalrt);
+                var valrt = Read16(Registers.Max17048Cvalrt);
                 valrt &= 0xFF00;
                 valrt |= (ushort)thresh;
-                Write16(valrt, (byte)Registers.Max17048Cvalrt);
+                Write16(valrt, Registers.Max17048Cvalrt);
             }
         }
         
@@ -138,7 +138,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var valrt = Read16((byte)Registers.Max17048Cvalrt);
+                var valrt = Read16(Registers.Max17048Cvalrt);
                 valrt >>= 8; // Shift min into LSB
                 return ElectricPotential.FromVolts(valrt * 0.02f);
             }
@@ -151,10 +151,10 @@ namespace Iot.Device.Max1704x
                 }
 
                 var thresh = value.Volts / 0.02f;
-                var valrt = Read16((byte)Registers.Max17048Cvalrt);
+                var valrt = Read16(Registers.Max17048Cvalrt);
                 valrt &= 0x00FF; // Mask off min bits
                 valrt |= (ushort)((ushort)thresh << 8);
-                Write16(valrt, (byte)Registers.Max17048Cvalrt);
+                Write16(valrt, Registers.Max17048Cvalrt);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var hibrt = Read16((byte)Registers.Max17048Hibrt);
+                var hibrt = Read16(Registers.Max17048Hibrt);
                 hibrt &= 0x00FF;
                 return ElectricPotential.FromVolts(hibrt * 0.00125f);
             }
@@ -180,10 +180,10 @@ namespace Iot.Device.Max1704x
                 }
 
                 var thresh = value.Volts / 0.00125f;
-                var hibrt = Read16((byte)Registers.Max17048Hibrt);
+                var hibrt = Read16(Registers.Max17048Hibrt);
                 hibrt &= 0xFF00; // Mask off Act bits
                 hibrt |= (ushort)thresh;
-                Write16(hibrt, (byte)Registers.Max17048Hibrt);
+                Write16(hibrt, Registers.Max17048Hibrt);
             }
         }
 
@@ -196,7 +196,7 @@ namespace Iot.Device.Max1704x
         {
             get
             {
-                var hibrt = Read16((byte)Registers.Max17048Hibrt);
+                var hibrt = Read16(Registers.Max17048Hibrt);
                 hibrt >>= 8; // Shift HibThr into LSB
                 return ElectricPotential.FromVolts(hibrt * 0.208f);    
             }
@@ -209,10 +209,10 @@ namespace Iot.Device.Max1704x
                 }
                 
                 var thresh = value.Volts / 0.208f;
-                var hibrt = Read16((byte)Registers.Max17048Hibrt);
+                var hibrt = Read16(Registers.Max17048Hibrt);
                 hibrt &= 0x00FF;
                 hibrt |= (ushort)(((ushort)thresh) << 8);
-                Write16(hibrt, (byte)Registers.Max17048Hibrt);
+                Write16(hibrt, Registers.Max17048Hibrt);
             }
         }
 
@@ -229,7 +229,7 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public override void Sleep()
         {
-            Write16((ushort)Registers16.Max17048ModeEnsleep, (byte)Registers.Max17043Mode);
+            Write16((ushort)Registers16.Max17048ModeEnsleep, Registers.Max17043Mode);
             base.Sleep();
         }
 
@@ -239,7 +239,7 @@ namespace Iot.Device.Max1704x
         public override void Wake()
         {
             base.Wake();
-            Write16(0x0000, (byte)Registers.Max17043Mode);
+            Write16(0x0000, Registers.Max17043Mode);
         }
 
         /// <summary>
@@ -247,9 +247,9 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public void EnableAlert()
         {
-            var statusReg = Read16((byte)Registers.Max17048Status);
+            var statusReg = Read16(Registers.Max17048Status);
             statusReg |= (ushort)Registers16.Max1704XStatusEnVr;
-            Write16(statusReg, (byte)Registers.Max17048Status);
+            Write16(statusReg, Registers.Max17048Status);
         }
 
         /// <summary>
@@ -257,9 +257,9 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public void DisableAlert()
         {
-            var statusReg = Read16((byte)Registers.Max17048Status);
+            var statusReg = Read16(Registers.Max17048Status);
             statusReg &= Negate((ushort)Registers16.Max1704XStatusEnVr);
-            Write16(statusReg, (byte)Registers.Max17048Status);
+            Write16(statusReg, Registers.Max17048Status);
         }
 
         /// <summary>
@@ -267,9 +267,9 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public void EnableComparator()
         {
-            var vresetReg = Read16((byte)Registers.Max17048VresetId);
+            var vresetReg = Read16(Registers.Max17048VresetId);
             vresetReg &= Negate(1 << 8);
-            Write16(vresetReg, (byte)Registers.Max17048VresetId);
+            Write16(vresetReg, Registers.Max17048VresetId);
         }
 
         /// <summary>
@@ -277,9 +277,9 @@ namespace Iot.Device.Max1704x
         /// </summary>
         public void DisableComparator()
         {
-            var vresetReg = Read16((byte)Registers.Max17048VresetId);
+            var vresetReg = Read16(Registers.Max17048VresetId);
             vresetReg |= 1 << 8;
-            Write16(vresetReg, (byte)Registers.Max17048VresetId);
+            Write16(vresetReg, Registers.Max17048VresetId);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Iot.Device.Max1704x
                 return;
             }
 
-            Write16((ushort)Registers16.Max17048HibrtEnhib, (byte)Registers.Max17048Hibrt);
+            Write16((ushort)Registers16.Max17048HibrtEnhib, Registers.Max17048Hibrt);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Iot.Device.Max1704x
                 return;
             }
 
-            Write16((byte)Registers.Max17048HibrtDishib, (byte)Registers.Max17048Hibrt);
+            Write16((byte)Registers.Max17048HibrtDishib, Registers.Max17048Hibrt);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Iot.Device.Max1704x
         /// </returns>
         public bool IsHibernating()
         {
-            var mode = Read16((byte)Registers.Max17043Mode);
+            var mode = Read16(Registers.Max17043Mode);
             return (mode & (ushort)Registers16.Max17048ModeHibstat) > 0;
         }
 
@@ -429,7 +429,7 @@ namespace Iot.Device.Max1704x
         {
             var configReg = GetConfigRegister();
             configReg |= (byte)Registers.Max17043ConfigAlsc;
-            Write16(configReg, (byte)Registers.Max17043Config);
+            Write16(configReg, Registers.Max17043Config);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Iot.Device.Max1704x
         {
             var configReg = GetConfigRegister();
             configReg &= Negate((byte)Registers.Max17043ConfigAlsc);
-            Write16(configReg, (byte)Registers.Max17043Config);
+            Write16(configReg, Registers.Max17043Config);
         }
 
         /// <summary>
@@ -448,9 +448,9 @@ namespace Iot.Device.Max1704x
         /// <param name="mask">The mask indicating which bits to clear.</param>
         private void ClearStatusRegBits(int mask)
         {
-            var statusReg = Read16((byte)Registers.Max17048Status);
+            var statusReg = Read16(Registers.Max17048Status);
             statusReg &= Negate(mask);
-            Write16(statusReg, (byte)Registers.Max17048Status);
+            Write16(statusReg, Registers.Max17048Status);
         }
     }
 }

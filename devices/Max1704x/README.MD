@@ -24,3 +24,10 @@ Console.WriteLine($"Percent: {max.BatteryPercent} %");
 ```
 
 **Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`.
+```csharp
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus
+Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+```

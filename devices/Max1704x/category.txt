@@ -1,2 +1,2 @@
 power
-battery
+power
