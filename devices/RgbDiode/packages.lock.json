@@ -20,6 +20,12 @@
         "resolved": "1.1.10",
         "contentHash": "vk/Dr8No2ec+eBwwufxDK0Rm6BRnOoevjaqEXbvpFz2BK3UPiC4OhUWH3Rwel34rywg1mXozAAY9ZwvN2gnxlA=="
       },
+      "nanoFramework.System.Threading": {
+        "type": "Direct",
+        "requested": "[1.1.32, 1.1.32]",
+        "resolved": "1.1.32",
+        "contentHash": "6o7Y4gH15FLuo2FWGLecABiCD57V5QMf5g/hEneV64VmhoXI8Bk7r6BDBPTfAePs738xbc1ECpA5dJmbSmtilg=="
+      },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
         "requested": "[3.6.133, 3.6.133]",
