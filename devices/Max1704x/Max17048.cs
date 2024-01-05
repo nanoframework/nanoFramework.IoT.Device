@@ -371,7 +371,7 @@ namespace Iot.Device.Max1704x
         /// </summary>
         /// <param name="clear">If set to true, clears the status register bits if they have changed.</param>
         /// <returns>Returns true if the status register has changed; otherwise, false.</returns>
-        public bool IsChange(bool clear = false)
+        public bool IsChanged(bool clear = false)
         {
             var status = Status;
             var flag = (status & (byte)Registers.Max1704XStatusSc) > 0;
