@@ -32,8 +32,8 @@
       <HintPath>..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Frequency, Version=5.39.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.5.39.0\lib\UnitsNet.Frequency.dll</HintPath>
+    <Reference Include="UnitsNet.Frequency, Version=5.42.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.5.42.0\lib\UnitsNet.Frequency.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
