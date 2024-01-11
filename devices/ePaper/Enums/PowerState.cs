@@ -22,5 +22,10 @@ namespace Iot.Device.EPaper.Enums
         /// The display is powered off (sleeping) and depending on the sleep mode it may or may not allow some functions.
         /// </summary>
         PoweredOff,
+
+        /// <summary>
+        /// The display is powered off and in deep sleep mode.
+        /// </summary>
+        DeepSleep,
     }
 }
