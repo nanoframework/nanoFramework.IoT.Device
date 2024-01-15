@@ -91,7 +91,7 @@ namespace Iot.Device.RgbDiode
         /// <param name="steps">Number of transition steps.</param>
         /// <param name="delay">Delay between each transition step.</param>
         /// <returns>The new Thread or null if color is the same as current color.</returns>
-        public Thread TransitionAsync(Color color, CancellationToken cancellationToken, int steps = DefaultSteps, int delay = DefaultDelay)
+        public Thread TransitionAsync(Color color, CancellationToken cancellationToken = default, int steps = DefaultSteps, int delay = DefaultDelay)
         {
             if (Equals(color, CurrentColor))
             {
@@ -113,10 +113,9 @@ namespace Iot.Device.RgbDiode
         /// Transitions the pixel to new color.
         /// </summary>
         /// <param name="color">The new color.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
         /// <param name="steps">Number of transition steps.</param>
         /// <param name="delay">Delay between each transition step.</param>
-        public void Transition(Color color, CancellationToken cancellationToken, int steps = DefaultSteps, int delay = DefaultDelay)
+        public void Transition(Color color, int steps = DefaultSteps, int delay = DefaultDelay)
         {
             if (Equals(color, CurrentColor))
             {
@@ -127,7 +126,7 @@ namespace Iot.Device.RgbDiode
             var dg = (byte)((color.G - CurrentColor.G) / (double)steps);
             var db = (byte)((color.B - CurrentColor.B) / (double)steps);
 
-            TransitionInternal(cancellationToken, steps, delay, dr, dg, db);
+            TransitionInternal(new CancellationToken(), steps, delay, dr, dg, db);
         }
 
         /// <summary>
