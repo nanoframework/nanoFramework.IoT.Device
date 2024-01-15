@@ -6,39 +6,39 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Drawing;
 using System.Threading;
-
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
 
-namespace Iot.Device.EPaper.Drivers.Ssd168x
+namespace Iot.Device.EPaper.Drivers.Jd796xx
 {
     /// <summary>
-    /// Base class for SSD168X-based ePaper devices.
+    /// Base class for GDEW0154-based ePaper devices.
     /// </summary>
-    public abstract class Ssd168x : IEPaperDisplay
+    public abstract class Jd79653A : IEPaperDisplay
     {
         private readonly int _maxWaitingTime = 500;
         private readonly bool _shouldDispose;
+        private readonly byte[] _whiteBuffer;
+        private bool _disposed;
+
         private SpiDevice _spiDevice;
         private GpioController _gpioController;
         private GpioPin _resetPin;
         private GpioPin _busyPin;
         private GpioPin _dataCommandPin;
 
-        private bool _disposed;
-
         /// <summary>
-        /// The max supported clock frequency for the SSD168x controller. 20MHz.
+        /// The max supported clock frequency for the Jd79653A controller. 10MHz.
         /// </summary>
-        public const int SpiClockFrequency = 20_000_000;
+        public const int SpiClockFrequency = 10_000_000;
 
         /// <summary>
-        /// The supported <see cref="System.Device.Spi.SpiMode"/> by the SSD168x controller.
+        /// The supported <see cref="System.Device.Spi.SpiMode"/> by the Jd79653A controller.
         /// </summary>
         public const SpiMode SpiMode = System.Device.Spi.SpiMode.Mode0;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Ssd168x"/> class.
+        /// Initializes a new instance of the <see cref="Jd79653A"/> class.
         /// </summary>
         /// <param name="spiDevice">The communication channel to the SSD1681-based dispay.</param>
         /// <param name="resetPin">The reset GPIO pin. Passing an invalid pin number such as -1 will prevent this driver from opening the pin. Caller should handle hardware resets.</param>
@@ -48,10 +48,10 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// <param name="height">The height of the display.</param>
         /// <param name="gpioController">The <see cref="GpioController"/> to use when initializing the pins.</param>
         /// <param name="enableFramePaging">Page the frame buffer and all operations to use less memory.</param>
-        /// <param name="shouldDispose"><see langword="true"/> to dispose of the <see cref="GpioController"/>.</param>
+        /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
-        protected Ssd168x(
+        protected Jd79653A(
             SpiDevice spiDevice,
             int resetPin,
             int busyPin,
@@ -59,27 +59,33 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             int width,
             int height,
             GpioController gpioController = null,
-            bool enableFramePaging = true,
+            bool enableFramePaging = false,
             bool shouldDispose = true)
         {
-            this._spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
-            this._gpioController = gpioController ?? new GpioController();
+            _spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
+            _gpioController = gpioController ?? new GpioController();
+            _shouldDispose = shouldDispose || gpioController is null;
 
             // setup the gpio pins
-            this._resetPin = resetPin >= 0 ? gpioController.OpenPin(resetPin, PinMode.Output) : null;
-            this._dataCommandPin = gpioController.OpenPin(dataCommandPin, PinMode.Output);
-            this._busyPin = gpioController.OpenPin(busyPin, PinMode.Input);
-
-            this._shouldDispose = shouldDispose || gpioController == null;
+            _resetPin = resetPin >= 0 ? _gpioController.OpenPin(resetPin, PinMode.Output) : null;
+            _dataCommandPin = _gpioController.OpenPin(dataCommandPin, PinMode.Output);
+            _busyPin = _gpioController.OpenPin(busyPin, PinMode.Input);
 
             Width = width;
             Height = height;
             PagedFrameDrawEnabled = enableFramePaging;
 
+            _whiteBuffer = new byte[Width * Height];
+            for (int i = 0; i < _whiteBuffer.Length; i++)
+            {
+                _whiteBuffer[i] = 0xff;
+            }
+
             PowerState = PowerState.Unknown;
 
             InitializeFrameBuffer(width, height, enableFramePaging);
             CalculateFrameBufferPageBounds();
+            FrameBuffer1bpp.Clear(Color.White);
         }
 
         /// <inheritdoc/>
@@ -93,12 +99,12 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         {
             get
             {
-                return FrameBuffer2bpp;
+                return FrameBuffer1bpp;
             }
 
             protected set
             {
-                FrameBuffer2bpp = (FrameBuffer2BitPerPixel)value;
+                FrameBuffer1bpp = (FrameBuffer1BitPerPixel)value;
             }
         }
 
@@ -141,9 +147,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         protected abstract int PagesPerFrame { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="FrameBuffer2BitPerPixel"/> used internally by <see cref="Ssd168x"/> devices to represents the frame.
+        /// Gets or sets the <see cref="FrameBuffer1BitPerPixel"/> used internally by <see cref="Jd79653A"/> devices to represents the frame.
         /// </summary>
-        protected FrameBuffer2BitPerPixel FrameBuffer2bpp { get; set; }
+        protected FrameBuffer1BitPerPixel FrameBuffer1bpp { get; set; }
 
         /// <summary>
         /// Gets the index of the first frame page.
@@ -211,30 +217,16 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// Draws the specified buffer directly to the Black/White RAM on the display.
         /// Call <see cref="PerformFullRefresh"/> after to update the display.
         /// </summary>
-        /// <param name="startXPos">X start position.</param>
-        /// <param name="startYPos">Y start position.</param>
         /// <param name="buffer">The buffer array to draw.</param>
-        public void DirectDrawBuffer(int startXPos, int startYPos, params byte[] buffer)
+        public void DirectDrawBuffer(params byte[] buffer)
         {
-            SetPosition(startXPos, startYPos);
-
-            SendCommand((byte)Command.WriteBackWhiteRAM);
+            SendCommand((byte)Command.DataStartTransmission1);
+            SendData(_whiteBuffer);
+            SendCommand((byte)Command.DataStartTransmission2);
             SendData(buffer);
-        }
+            WaitMs(5);
 
-        /// <summary>
-        /// Draws the specified buffer directly to the Red RAM on the display.
-        /// Call <see cref="PerformFullRefresh"/> after to update the display.
-        /// </summary>
-        /// <param name="startXPos">X start position.</param>
-        /// <param name="startYPos">Y start position.</param>
-        /// <param name="buffer">The buffer array to draw.</param>
-        public void DirectDrawColorBuffer(int startXPos, int startYPos, params byte[] buffer)
-        {
-            SetPosition(startXPos, startYPos);
-
-            SendCommand((byte)Command.WriteRedRAM);
-            SendData(buffer);
+            PerformFullRefresh();
         }
 
         /// <summary>
@@ -244,9 +236,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// <param name="y">The Y Position.</param>
         /// <param name="inverted">True to invert the pixel from white to black.</param>
         /// <remarks>
-        /// The SSD168x comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// The Jd79653A comes with 2 RAMs: a Black and White RAM and a Red RAM.
         /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
-        /// However, the SSD168x doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// However, the Jd79653A doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
         /// is by performing a simple binary check: 
         /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
         /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
@@ -259,9 +251,9 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
 
         /// <inheritdoc/>
         /// <remarks>
-        /// The SSD168x comes with 2 RAMs: a Black and White RAM and a Red RAM.
+        /// The Jd79653A comes with 2 RAMs: a Black and White RAM and a Red RAM.
         /// Writing to the B/W RAM draws B/W pixels on the panel. While writing to the Red RAM draws red pixels on the panel (if the panel supports red).
-        /// However, the SSD168x doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
+        /// However, the Jd79653A doesn't support specifying the color level (no grayscaling), therefore the way the buffer is selected 
         /// is by performing a simple binary check: 
         /// if R >= 128 and G == 0 and B == 0 then write a red pixel to the Red Buffer/RAM
         /// if R == 0 and G == 0 and B == 0 then write a black pixel to B/W Buffer/RAM
@@ -283,45 +275,25 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
                 && frameByteIndex < CurrentFrameBufferPageUpperBound)
             {
                 /*
-                 * Lookup Table for colors on SSD168x
+                 * Lookup Table for colors on Jd79653A
                  * 
-                 *  LUT for Red, Black, and White ePaper display
-                 * 
-                 * |                |               |                    |
-                 * | Data Red RAM   | Data B/W RAM  | Result Pixel Color |
-                 * |----------------|---------------|--------------------|
-                 * |        0       |       0       |       Black        |
-                 * |        0       |       1       |       White        |
-                 * |        1       |       0       |       Red          |
-                 * |        1       |       1       |       Red          |
-                 * 
-                 * 
-                 *  LUT for Black and White ePaper display with SSD168x
-                 * |                |               |                    |
-                 * | Data Red RAM   | Data B/W RAM  | Result Pixel Color |
-                 * |----------------|---------------|--------------------|
-                 * |        0       |       0       |       Black        |
-                 * |        0       |       1       |       White        |
-                 * |        1       |       0       |       Black        |
-                 * |        1       |       1       |       White        |
+                 *  LUT for Black and White ePaper display with Jd79653A
+                 * |                |                    |
+                 * |  Data B/W RAM  | Result Pixel Color |
+                 * |----------------|--------------------|
+                 * |        0       |       Black        |
+                 * |        1       |       White        |
                  */
 
-                if (color.R >= 128 && color.G == 0 && color.B == 0)
-                {
-                    // this is a colored pixel
-                    // according to LUT, no need to change the pixel value in B/W buffer.
-                    // red frame buffer starts with 0x00. ORing it to set red pixel to 1.
-                    FrameBuffer2bpp.ColorBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
-                }
-                else if (color.R == 0 && color.G == 0 && color.B == 0)
+                if (color == Color.Black)
                 {
                     // black pixel
-                    FrameBuffer2bpp.BlackBuffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
+                    FrameBuffer1bpp.Buffer[pageByteIndex] &= (byte)~(128 >> (x & 7));
                 }
                 else
                 {
-                    // assume white if R, G, and B > 0
-                    FrameBuffer2bpp.BlackBuffer[pageByteIndex] |= (byte)(128 >> (x & 7));
+                    // white pixel
+                    FrameBuffer1bpp.Buffer[pageByteIndex] |= (byte)(128 >> (x & 7));
                 }
             }
         }
@@ -346,16 +318,8 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// <inheritdoc/>
         public virtual void Flush()
         {
-            // write B/W and Color (RED) frame to the display's RAM.
-            DirectDrawBuffer(
-                CurrentFrameBufferStartXPosition,
-                CurrentFrameBufferStartYPosition,
-                FrameBuffer2bpp.BlackBuffer.Buffer);
-
-            DirectDrawColorBuffer(
-                CurrentFrameBufferStartXPosition,
-                CurrentFrameBufferStartYPosition,
-                FrameBuffer2bpp.ColorBuffer.Buffer);
+            // write B/W frame to the display's RAM.
+            DirectDrawBuffer(FrameBuffer1bpp.Buffer);
         }
 
         /// <summary>
@@ -415,58 +379,69 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             // specs say to wait 10ms after supplying voltage to the display
             WaitMs(10);
 
+            _resetPin.Write(PinValue.High);
+            WaitMs(10);
+
             _resetPin.Write(PinValue.Low);
-            WaitMs(200);
+            WaitMs(10);
 
             _resetPin.Write(PinValue.High);
-            WaitMs(200);
+
+            // as per samples from screen manufacturer, wait finally 100ms for reset IC + select BUS
+            WaitMs(100);
         }
 
         /// <summary>
         /// Perform the required initialization steps to set up the display.
         /// </summary>
-        /// <exception cref="InvalidOperationException">Unable to initialize the display until it has been powered on. Call PowerOn() first.</exception>
+        /// <remarks>Sequence order can be found at https://github.com/m5stack/M5Core-Ink/blob/master/src/utility/WFT0154CZB3_INIT.h.</remarks>
         public virtual void Initialize()
         {
-            if (PowerState != PowerState.PoweredOn)
+            if (PowerState == PowerState.DeepSleep)
             {
-                throw new InvalidOperationException();
+                // When in deep sleep mode, hardware init is required to set the screen on stand-by.
+                HardwareReset();
             }
 
-            // set gate lines and scanning sequence
-            SendCommand((byte)Command.DriverOutputControl);
+            SendCommand((byte)Command.PanelSetting);
+            SendData(0xdf, 0x0e);
 
-            // refer to the datasheet for a description of the parameters
-            SendData((byte)Height, 0x00, 0x00);
+            // FITIinternal code
+            SendCommand(0x4d);
+            SendData(0x55);
 
-            // Set data entry sequence
-            SendCommand((byte)Command.DataEntryModeSetting);
+            SendCommand(0xaa);
+            SendData(0x0f);
 
-            // Y Increment, X Increment with RAM address counter auto incremented in the X direction.
-            SendData(0x03);
+            SendCommand(0xe9);
+            SendData(0x02);
 
-            // Set RAM X start / end position
-            SendCommand((byte)Command.SetRAMAddressXStartEndPosition);
+            SendCommand(0xb6);
+            SendData(0x11);
 
-            // Param1: Start at 0 | Param2: End at display width converted to bytes
-            SendData(0x00, (byte)((Width / 8) - 1));
+            SendCommand(0xf3);
+            SendData(0x0a);
 
-            // Set RAM Y start / end positon
-            SendCommand((byte)Command.SetRAMAddressYStartEndPosition);
+            SendCommand((byte)Command.ResolutionSetting);
+            SendData(0xc8, 0x00, 0xc8);
 
-            // Param1 & 2: Start at 0 | Param3 & 4: End at display height converted to bytes
-            SendData(0x00, 0x00, (byte)(Height - 1), 0x00);
+            SendCommand((byte)Command.TCONSetting);
+            SendData(0x00);
 
-            // Set Panel Border
-            SendCommand((byte)Command.BorderWaveformControl);
-            SendData(0xc0);
+            SendCommand((byte)Command.PowerSaving);
+            SendData(0x00);
 
-            // Set Temperature sensor to use internal temp sensor
-            SendCommand((byte)Command.TempSensorControlSelection);
-            SendData(0x80);
+            SendCommand((byte)Command.PowerOn);
 
-            // Do a full refresh of the display
-            PerformFullRefresh();
+            if (WaitReady(_maxWaitingTime))
+            {
+                PowerState = PowerState.PoweredOn;
+            }
+            else
+            {
+                // Set to deep sleep to force an hardware reset on next request
+                PowerState = PowerState.DeepSleep;
+            }
         }
 
         /// <summary>
@@ -478,7 +453,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         protected virtual void InitializeFrameBuffer(int width, int height, bool enableFramePaging)
         {
             var frameBufferHeight = enableFramePaging ? height / PagesPerFrame : height;
-            FrameBuffer2bpp = new FrameBuffer2BitPerPixel(frameBufferHeight, width);
+            FrameBuffer1bpp = new FrameBuffer1BitPerPixel(frameBufferHeight, width);
         }
 
         /// <inheritdoc/>
@@ -500,27 +475,19 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// <inheritdoc/>
         public virtual bool PerformFullRefresh()
         {
-            SendCommand((byte)Command.BoosterSoftStartControl);
-            SendData(0x8b, 0x9c, 0x96, 0x0f);
+            SendCommand((byte)Command.DisplayRefresh);
 
-            SendCommand((byte)Command.DisplayUpdateControl2);
-            SendData((byte)RefreshMode.FullRefresh); // Display Mode 1 (Full Refresh)
-
-            SendCommand((byte)Command.MasterActivation);
+            // as per samples from screen manufacturer, refresh wait should be at least 200µs
+            // using a spin wait of 5ms, any value should be ok
+            // and use a large waiting time in case of something unexpected happens.
             return WaitReady(_maxWaitingTime);
         }
 
         /// <inheritdoc/>
         public virtual bool PerformPartialRefresh()
         {
-            SendCommand((byte)Command.BoosterSoftStartControl);
-            SendData(0x8b, 0x9c, 0x96, 0x0f);
-
-            SendCommand((byte)Command.DisplayUpdateControl2);
-            SendData((byte)RefreshMode.PartialRefresh); // Display Mode 2 (Partial Refresh)
-
-            SendCommand((byte)Command.MasterActivation);
-            return WaitReady(_maxWaitingTime);
+            // No partial refresh implemented
+            return PerformFullRefresh();
         }
 
         /// <summary>
@@ -529,10 +496,24 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// <param name="sleepMode">The sleep mode to use when powering down the display.</param>
         public virtual void PowerDown(SleepMode sleepMode = SleepMode.Normal)
         {
-            SendCommand((byte)Command.DeepSleepMode);
-            SendData((byte)sleepMode);
+            SendCommand((byte)Command.IntervalSetting);
+            SendData(0x07);
+            SendCommand((byte)Command.PowerOff);
+            WaitReady(_maxWaitingTime);
 
-            PowerState = PowerState.PoweredOff;
+            // as per samples from screen manufacturer, power off request a time delay of 1s before continue.
+            WaitMs(1000);
+
+            if (sleepMode == SleepMode.DeepSleepMode)
+            {
+                SendCommand((byte)Command.DeepSleepMode);
+                SendData(0xa5);
+                PowerState = PowerState.DeepSleep;
+            }
+            else
+            {
+                PowerState = PowerState.PoweredOff;
+            }
         }
 
         /// <summary>
@@ -540,10 +521,20 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// </summary>
         public virtual void PowerOn()
         {
-            HardwareReset();
-            SoftwareReset();
+            if (PowerState == PowerState.DeepSleep)
+            {
+                // When in deep sleep mode, hardware init is required to set the screen on stand-by.
+                HardwareReset();
+            }
 
-            PowerState = PowerState.PoweredOn;
+            SendCommand((byte)Command.IntervalSetting);
+            SendData(0xd7);
+            SendCommand((byte)Command.PowerOn);
+
+            if (WaitReady(_maxWaitingTime))
+            {
+                PowerState = PowerState.PoweredOn;
+            }
         }
 
         /// <inheritdoc/>
@@ -552,11 +543,8 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             // make sure we are setting data/command pin to low (command mode)
             _dataCommandPin.Write(PinValue.Low);
 
-            foreach (var b in command)
-            {
-                // write the command byte to the display controller
-                _spiDevice.WriteByte(b);
-            }
+            // write the command byte to the display controller
+            _spiDevice.Write(command);
         }
 
         /// <inheritdoc/>
@@ -565,10 +553,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             // set the data/command pin to high to indicate to the display we will be sending data
             _dataCommandPin.Write(PinValue.High);
 
-            foreach (var @byte in data)
-            {
-                _spiDevice.WriteByte(@byte);
-            }
+            _spiDevice.Write(data);
 
             // go back to low (command mode)
             _dataCommandPin.Write(PinValue.Low);
@@ -588,7 +573,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
                 page = 0;
             }
 
-            FrameBuffer2bpp.Clear();
+            FrameBuffer1bpp.Clear();
             CurrentFrameBufferPage = page;
 
             CalculateFrameBufferPageBounds();
@@ -597,13 +582,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// <inheritdoc/>
         public virtual void SetPosition(int x, int y)
         {
-            EnforceBounds(ref x, ref y);
-
-            SendCommand((byte)Command.SetRAMAddressCounterX);
-            SendData((byte)(x / 8));
-
-            SendCommand((byte)Command.SetRAMAddressCounterY);
-            SendData((byte)y);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -611,7 +590,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         /// </summary>
         protected virtual void SoftwareReset()
         {
-            SendCommand((byte)Command.SoftwareReset);
+            SendCommand(0x04);
 
             WaitReady(_maxWaitingTime);
             WaitMs(10);
@@ -639,7 +618,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
                 cancellationToken = new CancellationTokenSource(waitingTime);
             }
 
-            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.High)
+            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.Low)
             {
                 cancellationToken.Token.WaitHandle.WaitOne(5, true);
             }
