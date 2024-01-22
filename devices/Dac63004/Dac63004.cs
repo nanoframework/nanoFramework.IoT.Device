@@ -23,23 +23,15 @@ namespace Iot.Device.Dac63004
         private const byte InternalRefEnableMask = 0b0001_0000;
         private const byte InternalRefDisableMask = 0b1110_1111;
 
-        private const byte ConfigPowerUpCurrentOutChannel0Mask = 0b0000_0001;
-        private const byte ConfigPowerDownCurrentOutChannel0Mask = 0b1111_1110;
-        private const byte ConfigPowerUpCurrentOutChannel1Mask = 0b0000_1000;
-        private const byte ConfigPowerDownCurrentOutChannel1Mask = 0b1111_0111;
-        private const byte ConfigPowerUpCurrentOutChannel2Mask = 0b0100_0000;
-        private const byte ConfigPowerDownCurrentOutChannel2Mask = 0b1011_1111;
-        private const ushort ConfigPowerUpCurrentOutChannel3Mask = 0b0000_0010_0000_0000;
-        private const ushort ConfigPowerDownCurrentOutChannel3Mask = 0b1111_1101_0000_0000;
+        private const ushort ConfigPowerDownCurrentOutChannel0Mask = 0b0000_0000_0000_0001;
+        private const ushort ConfigPowerDownCurrentOutChannel1Mask = 0b0000_0000_0000_1000;
+        private const ushort ConfigPowerDownCurrentOutChannel2Mask = 0b0000_0000_0100_0000;
+        private const ushort ConfigPowerDownCurrentOutChannel3Mask = 0b0000_0010_0000_0000;
 
-        private const byte ConfigPowerUpVoltageOutChannel0Mask = 0b0000_0110;
-        private const byte ConfigPowerDownVoltageOutChannel0Mask = 0b1111_1001;
-        private const byte ConfigPowerUpVoltageOutChannel1Mask = 0b0011_0000;
-        private const byte ConfigPowerDownVoltageOutChannel1Mask = 0b1100_1111;
-        private const ushort ConfigPowerUpVoltageOutChannel2Mask = 0b0000_0001_1000_0000;
-        private const ushort ConfigPowerDownVoltageOutChannel2Mask = 0b1111_1110_0111_1111;
-        private const ushort ConfigPowerUpVoltageOutChannel3Mask = 0b0000_1100_0000_0000;
-        private const ushort ConfigPowerDownVoltageOutChannel3Mask = 0b1111_0011_0000_0000;
+        private const ushort ConfigPowerDownVoltageOutChannel0Mask = 0b0000_0000_0000_0110;
+        private const ushort ConfigPowerDownVoltageOutChannel1Mask = 0b0000_0000_0011_0000;
+        private const ushort ConfigPowerDownVoltageOutChannel2Mask = 0b0000_0001_1000_0000;
+        private const ushort ConfigPowerDownVoltageOutChannel3Mask = 0b0000_1100_0000_0000;
 
         private I2cDevice _i2cDevice;
         private byte _deviceModel;
@@ -103,32 +95,46 @@ namespace Iot.Device.Dac63004
         {
             var currentConfig = ReadFromRegister(Register.Reg1F_CommonConfig, 2);
             ushort newConfig;
+            ushort clearPreviousConfig;
 
             switch (channel)
             {
                 case Channel.Channel0:
-                    newConfig = mode == Mode.CurrentOutput ? (ushort)(ConfigPowerUpCurrentOutChannel0Mask | ConfigPowerDownVoltageOutChannel0Mask) : (ushort)(ConfigPowerUpVoltageOutChannel0Mask | ConfigPowerDownCurrentOutChannel0Mask);
+                    clearPreviousConfig = ConfigPowerDownVoltageOutChannel0Mask & ConfigPowerDownCurrentOutChannel0Mask;
+                    newConfig = mode == Mode.CurrentOutput ? ConfigPowerDownCurrentOutChannel0Mask : ConfigPowerDownVoltageOutChannel0Mask;
                     break;
 
                 case Channel.Channel1:
-                    newConfig = mode == Mode.CurrentOutput ? (ushort)(ConfigPowerUpCurrentOutChannel1Mask | ConfigPowerDownVoltageOutChannel1Mask) : (ushort)(ConfigPowerUpVoltageOutChannel1Mask | ConfigPowerDownCurrentOutChannel1Mask);
+                    clearPreviousConfig = ConfigPowerDownVoltageOutChannel1Mask & ConfigPowerDownCurrentOutChannel1Mask;
+                    newConfig = mode == Mode.CurrentOutput ? ConfigPowerDownCurrentOutChannel1Mask : ConfigPowerDownVoltageOutChannel1Mask;
                     break;
 
                 case Channel.Channel2:
-                    newConfig = mode == Mode.CurrentOutput ? (ushort)(ConfigPowerUpCurrentOutChannel2Mask | ConfigPowerDownVoltageOutChannel2Mask) : (ushort)(ConfigPowerUpVoltageOutChannel2Mask | ConfigPowerDownCurrentOutChannel2Mask);
+                    clearPreviousConfig = ConfigPowerDownVoltageOutChannel2Mask & ConfigPowerDownCurrentOutChannel2Mask;
+                    newConfig = mode == Mode.CurrentOutput ? ConfigPowerDownCurrentOutChannel2Mask : ConfigPowerDownVoltageOutChannel2Mask;
                     break;
 
                 case Channel.Channel3:
-                    newConfig = mode == Mode.CurrentOutput ? (ushort)(ConfigPowerUpCurrentOutChannel3Mask | ConfigPowerDownVoltageOutChannel3Mask) : (ushort)(ConfigPowerUpVoltageOutChannel3Mask | ConfigPowerDownCurrentOutChannel3Mask);
+                    clearPreviousConfig = ConfigPowerDownVoltageOutChannel3Mask & ConfigPowerDownCurrentOutChannel3Mask;
+                    newConfig = mode == Mode.CurrentOutput ? ConfigPowerDownCurrentOutChannel3Mask : ConfigPowerDownVoltageOutChannel3Mask;
                     break;
 
                 default:
                     throw new NotSupportedException();
             }
 
+            // clear previous config    
             // MSB 1st
-            currentConfig[0] &= (byte)~(newConfig >> 8);
-            currentConfig[1] &= (byte)~newConfig;
+            currentConfig[0] |= (byte)(clearPreviousConfig >> 8);
+            currentConfig[1] |= (byte)clearPreviousConfig;
+
+            if (mode != Mode.Disable)
+            {
+                // set new config for the channel
+                currentConfig[0] &= (byte)~(newConfig >> 8);
+                currentConfig[1] &= (byte)~newConfig;
+            }
+            //// else: keep previous config, except for power-down the channel
 
             WriteToRegister(Register.Reg1F_CommonConfig, currentConfig);
         }
