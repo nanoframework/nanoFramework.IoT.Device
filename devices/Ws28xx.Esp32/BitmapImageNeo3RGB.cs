@@ -10,7 +10,7 @@ namespace Iot.Device.Ws28xx.Esp32
     /// A one is converted to 110, a zero is converted to 100.
     /// </summary>
     /// <seealso cref="Iot.Device.Ws28xx.BitmapImageNeo3" />
-    internal class BitmapImageNeo3Rgb : BitmapImageNeo3
+    public class BitmapImageNeo3Rgb : BitmapImageNeo3
     {
         public BitmapImageNeo3Rgb(int width, int height)
             : base(width, height)

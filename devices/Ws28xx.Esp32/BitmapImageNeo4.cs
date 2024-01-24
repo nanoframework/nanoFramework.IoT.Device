@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Iot.Device.Ws28xx.Esp32
 {
-    internal class BitmapImageNeo4 : BitmapImage
+    public class BitmapImageNeo4 : BitmapImage
     {
         private const int BytesPerComponent = 3;
         private const int BytesPerPixel = BytesPerComponent * 4;

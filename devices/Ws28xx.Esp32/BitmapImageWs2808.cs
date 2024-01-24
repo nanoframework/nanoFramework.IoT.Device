@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Iot.Device.Ws28xx.Esp32
 {
-    internal class BitmapImageWs2808 : BitmapImage
+    public class BitmapImageWs2808 : BitmapImage
     {
         private const int BytesPerPixel = 3;
 
