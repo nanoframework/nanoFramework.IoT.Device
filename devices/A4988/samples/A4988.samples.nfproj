@@ -34,8 +34,8 @@
       <HintPath>..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Angle, Version=5.42.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Angle.5.42.0\lib\UnitsNet.Angle.dll</HintPath>
+    <Reference Include="UnitsNet.Angle, Version=5.43.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Angle.5.43.0\lib\UnitsNet.Angle.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

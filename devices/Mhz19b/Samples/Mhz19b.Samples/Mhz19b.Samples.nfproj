@@ -48,8 +48,8 @@
       <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.52\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.VolumeConcentration, Version=5.42.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.VolumeConcentration.5.42.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+    <Reference Include="UnitsNet.VolumeConcentration, Version=5.43.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.VolumeConcentration.5.43.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
