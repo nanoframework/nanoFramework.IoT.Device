@@ -6,7 +6,7 @@ using System.Drawing;
 namespace Iot.Device.Ws28xx.Esp32
 {
     /// <summary>
-    /// BitmapImage Neo4
+    /// BitmapImage Neo4.
     /// </summary>
     public class BitmapImageNeo4 : BitmapImage
     {
