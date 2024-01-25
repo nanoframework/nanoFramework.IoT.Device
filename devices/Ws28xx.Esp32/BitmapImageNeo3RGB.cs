@@ -12,11 +12,17 @@ namespace Iot.Device.Ws28xx.Esp32
     /// <seealso cref="Iot.Device.Ws28xx.BitmapImageNeo3" />
     public class BitmapImageNeo3Rgb : BitmapImageNeo3
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitmapImageNeo3Rgb"/> class.
+        /// </summary>
+        /// <param name="width">Width of the image.</param>
+        /// <param name="height">Height of the image.</param>
         public BitmapImageNeo3Rgb(int width, int height)
             : base(width, height)
         {
         }
 
+        /// <inheritdoc />
         public override void SetPixel(int x, int y, Color c)
         {
             var offset = (y * Stride) + (x * BytesPerPixel);

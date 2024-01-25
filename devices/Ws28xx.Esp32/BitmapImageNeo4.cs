@@ -5,9 +5,19 @@ using System.Drawing;
 
 namespace Iot.Device.Ws28xx.Esp32
 {
+    /// <summary>
+    /// BitmapImage Neo4
+    /// </summary>
     public class BitmapImageNeo4 : BitmapImage
     {
+        /// <summary>
+        /// The number of bytes per component.
+        /// </summary>
         private const int BytesPerComponent = 3;
+
+        /// <summary>
+        /// The number of bytes per pixel.
+        /// </summary>
         private const int BytesPerPixel = BytesPerComponent * 4;
 
         // This field defines the count within the lookup table. The length correlates to the possible values of a single byte.
@@ -20,11 +30,17 @@ namespace Iot.Device.Ws28xx.Esp32
             ClearInternal();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitmapImageNeo4"/> class.
+        /// </summary>
+        /// <param name="width">Width of the image.</param>
+        /// <param name="height">Height of the image.</param>
         public BitmapImageNeo4(int width, int height)
                             : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
         }
 
+        /// <inheritdoc />
         public override void Clear() => ClearInternal();
 
         private static void ClearInternal()
@@ -43,8 +59,10 @@ namespace Iot.Device.Ws28xx.Esp32
             }
         }
 
+        /// <inheritdoc />
         public override void Clear(int x, int y) => SetPixel(x, y, Color.Black);
 
+        /// <inheritdoc />
         public override void SetPixel(int x, int y, Color c)
         {
             // Alpha is used as white.
@@ -63,6 +81,7 @@ namespace Iot.Device.Ws28xx.Esp32
             Data[offset++] = Lookup[(c.A * BytesPerComponent) + 2];
         }
 
+        /// <inheritdoc />
         public override void SetPixel(int x, int y, byte r, byte g, byte b) => SetPixel(x, y, Color.FromArgb(r, g, b));
     }
 }
