@@ -10,9 +10,16 @@ namespace Iot.Device.Ws28xx.Esp32
     /// Special 24bit RGB format for Neo pixel LEDs where each bit is converted to 3 bits.
     /// A one is converted to 110, a zero is converted to 100.
     /// </summary>
-    internal class BitmapImageNeo3 : BitmapImage
+    public class BitmapImageNeo3 : BitmapImage
     {
+        /// <summary>
+        /// The number of bytes per component.
+        /// </summary>
         protected const int BytesPerComponent = 3;
+
+        /// <summary>
+        /// The number of bytes per pixel.
+        /// </summary>
         protected const int BytesPerPixel = BytesPerComponent * 3;
 
         static BitmapImageNeo3()
@@ -31,11 +38,17 @@ namespace Iot.Device.Ws28xx.Esp32
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitmapImageNeo3"/> class.
+        /// </summary>
+        /// <param name="width">Width of the image.</param>
+        /// <param name="height">Height of the image.</param>
         public BitmapImageNeo3(int width, int height)
             : base(new byte[width * height * BytesPerPixel], width, height, width * BytesPerPixel)
         {
         }
 
+        /// <inheritdoc />
         public override void SetPixel(int x, int y, Color c)
         {
             var offset = (y * Stride) + (x * BytesPerPixel);
@@ -50,17 +63,20 @@ namespace Iot.Device.Ws28xx.Esp32
             Data[offset++] = Lookup[(c.B * BytesPerComponent) + 2];
         }
 
+        /// <inheritdoc />
         public override void Clear(int x, int y)
         {
             var offset = (y * Stride) + (x * BytesPerPixel);
             Array.Clear(Data, offset, 9);
         }
 
+        /// <inheritdoc />
         public override void Clear()
         {
             Array.Clear(Data, 0, Data.Length);
         }
 
+        /// <inheritdoc />
         public override void SetPixel(int x, int y, byte r, byte g, byte b)
         {
             var offset = (y * Stride) + (x * BytesPerPixel);
@@ -75,6 +91,9 @@ namespace Iot.Device.Ws28xx.Esp32
             Data[offset++] = Lookup[(b * BytesPerComponent) + 2];
         }
 
+        /// <summary>
+        /// Lookup table for color conversion.
+        /// </summary>
         protected static readonly byte[] Lookup = new byte[256 * BytesPerComponent];
     }
 }
