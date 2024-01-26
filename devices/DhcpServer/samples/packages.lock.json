@@ -58,9 +58,9 @@
       },
       "nanoFramework.System.Net.Http": {
         "type": "Direct",
-        "requested": "[1.5.113, 1.5.113]",
-        "resolved": "1.5.113",
-        "contentHash": "Joz2pqbhYFWisREs2EhPBfGAoDdHizzR0Hhhg5gsgANBqtziEUX2w4tlklF75gdGwHjg36t1SVvhbdjmJJD4BQ=="
+        "requested": "[1.5.118, 1.5.118]",
+        "resolved": "1.5.118",
+        "contentHash": "aDAHjUIsiAPKIq8WCi65eoDoTAOgfPKpM+W5nwqSWvmvmpbcDagCgZ5qa5CH0422evFNzMUdr9oKLk3vWbghSA=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
