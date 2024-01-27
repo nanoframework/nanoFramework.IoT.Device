@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Hmc5883l</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Hmc5883l</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -16,16 +15,16 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Hmc5883l for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET IoT Core binding HMC5883L for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.Hmc5883l assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hmc5883l</tags>
+    <tags>nanoFramework C# csharp netmf netnf iot hmc5883l</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Numerics" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.423" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
     </dependencies>
   </metadata>
   <files>

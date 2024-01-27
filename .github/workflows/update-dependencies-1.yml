@@ -7,39 +7,27 @@ name: Update dependencies (round 1)
 
 on:
   schedule:
-    # At 00:00 UTC every day.
-    - cron:  '00 00 * * *'
+    # At 00:00 UTC.
+    - cron:  '00 00 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: pwsh
-
 jobs:
   update-nuget-dependencies:
-    name: Update .NET nanoFramework dependencies
-    timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
-    runs-on: windows-latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Update dependencies
-        uses: nanoframework/nanodu@v1
-        with:
-          solutionsToCheck: |
-            NumberHelper.sln
-            System.Buffers.Binary.BinaryPrimitives.sln
-            Multiplexing.sln
-            System.Device.Model.sln
-            System.Diagnostics.Stopwatch.sln
-            System.Drawing.sln
-            System.Numerics.sln
-            WeatherHelper.sln
-          workingDirectory: '${{ github.workspace }}/devices'
-          branchToPr: 'develop'
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
+    with:
+      timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+      workingDirectory: devices
+      branchToPr: 'develop'      
+      solutionsToCheck: |
+        NumberHelper.sln
+        System.Buffers.Binary.BinaryPrimitives.sln
+        Multiplexing.sln
+        System.Device.Model.sln
+        System.Diagnostics.Stopwatch.sln
+        System.Drawing.sln
+        System.Numerics.sln
+        WeatherHelper.sln

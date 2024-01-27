@@ -17,7 +17,7 @@ This binding is intended to support both the A and B grades of the INA219. The g
 
 ## Board
 
-![image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Ina219/Ina219.png)
+![image](./Ina219.png)
 
 
 ## Usage

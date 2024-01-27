@@ -1,4 +1,4 @@
-# MCP3xxx family of Analog to Digital Converters
+# MCP3001/MCP3002/MCP3004/MCP3008/MCP3201/MCP3202/MCP3204/MCP3208/MCP3301/MCP3302/MCP3304 family of Analog to Digital Converters
 
 Some devices like the Raspberry Pi cannot read analog values directly so rely on  [analog to digital converters](https://en.wikipedia.org/wiki/Analog-to-digital_converter), like the ones available from Microchip in the Mcp3000, Mcp3200 and Mcp3300 ranges. These chips can be accessed as an [SPI device](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) or manually via raw GPIO pins. Normally all MCU has an analogic capability but the number of pins can be limited. This is typically useful when you want your MCU to have more than the number of ADC available. Another case is if you need a different resolution or voltage reference.
 
@@ -6,7 +6,7 @@ You can use these converters in your project to access analog devices.
 
 The following fritzing diagram illustrates one way to wire up the Mcp3008, with an ESP32 and a potentiometer.
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp3xxx/rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_spi.png)
 
 ## Documentation
 
@@ -79,7 +79,7 @@ The following pin layout can be used:
 - MCP3008 DIN to MCU MOSI
 - MCP3008 CS/SHDN to MCU CE0
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp3xxx/rpi-trimpot_spi.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_spi.png)
 
 ### Accessing the MCP3008 via GPIO
 
@@ -113,7 +113,7 @@ The following pin layout can be used:
 - MCP3008 DIN to any valid GPIO on the MCU
 - MCP3008 CS/SHDN to any valid GPIO on the MCU
 
-![ESP32 Breadboard diagram](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Mcp3xxx/rpi-trimpot_gpio.png)
+![ESP32 Breadboard diagram](./rpi-trimpot_gpio.png)
 
 ### Processing the data
 

@@ -6,8 +6,8 @@ The LP3943 is an integrated device capable of independently driving 16 LEDs. It 
 
 - Lp3943 [datasheet](https://www.ti.com/lit/ds/symlink/lp3943.pdf)
 
-![Lp3943 eval board example back side](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Lp3943/Lp3943_eval_back.png)
-![Lp3943 eval board example front side](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Lp3943/Lp3943_eval_front.png)
+![Lp3943 eval board example back side](./Lp3943_eval_back.png)
+![Lp3943 eval board example front side](./Lp3943_eval_front.png)
 
 ## Usage
 

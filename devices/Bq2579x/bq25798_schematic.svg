@@ -1,0 +1,4851 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="798-1stpage-diag.svg"
+   id="svg1584"
+   version="1.1"
+   class="st26"
+   color-interpolation-filters="sRGB"
+   xml:space="preserve"
+   viewBox="0 0 503.49199 522.64397"
+   height="7.258944in"
+   width="6.9929442in"><metadata
+   id="metadata1588"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   id="namedview1586"
+   inkscape:window-height="480"
+   inkscape:window-width="640"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0"
+   guidetolerance="10"
+   gridtolerance="10"
+   objecttolerance="10"
+   borderopacity="1"
+   bordercolor="#666666"
+   pagecolor="#ffffff" />
+	<v:documentProperties
+   v:viewMarkup="false"
+   v:langID="1033">
+		<v:userDefs>
+			<v:ud
+   v:val="VT0(1):26"
+   v:nameU="msvNoAutoConnect" />
+			<v:ud
+   v:nameU="msvConvertTheme" />
+		</v:userDefs>
+	</v:documentProperties>
+
+	<style
+   id="style2"
+   type="text/css">
+	<![CDATA[
+		.st1 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st2 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st3 {fill:#000000;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st4 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.5}
+		.st5 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
+		.st6 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st7 {fill:#000000;font-family:Arial;font-size:1.16666em}
+		.st8 {marker-end:url(#mrkr5-207);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st9 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.15923566878981}
+		.st10 {fill:#000000;font-family:Arial;font-size:1.99999em}
+		.st11 {font-size:1em}
+		.st12 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5}
+		.st13 {fill:none;stroke:#000000;stroke-dasharray:3.5,2.5;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5}
+		.st14 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5}
+		.st15 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5}
+		.st16 {fill:none}
+		.st17 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
+		.st18 {fill:#a5a5a5;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st19 {fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5}
+		.st20 {fill:#000000;font-family:Arial;font-size:0.833336em}
+		.st21 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st22 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st23 {fill:#000000;font-family:Arial;font-size:0.75em}
+		.st24 {fill:#000000;font-family:Calibri;font-size:1.16666em}
+		.st25 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st26 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs
+   id="Markers">
+		<g
+   id="lend5">
+			<path
+   inkscape:connector-curvature="0"
+   id="path4"
+   style="stroke:none"
+   d="M 2,1 0,0 1.98117,-0.993387 C 1.67173,-0.364515 1.67301,0.372641 1.98465,1.00043" />
+		</g>
+		<marker
+   overflow="visible"
+   markerUnits="strokeWidth"
+   orient="auto"
+   refX="-10.99"
+   v:setback="10.99"
+   v:arrowSize="4"
+   v:arrowType="5"
+   class="st9"
+   id="mrkr5-207">
+			<use
+   height="100%"
+   width="100%"
+   y="0"
+   x="0"
+   id="use7"
+   transform="scale(-6.28)"
+   xlink:href="#lend5" />
+		</marker>
+	</defs>
+	<g
+   transform="translate(-54.507828,-125.716)"
+   id="g1582"
+   v:groupContext="foregroundPage"
+   v:index="1"
+   v:mID="15">
+		<title
+   id="title11">798-1stpage-diag</title>
+		<v:pageProperties
+   v:shadowOffsetY="-4.25197"
+   v:shadowOffsetX="4.25197"
+   v:drawingUnits="19"
+   v:pageScale="1"
+   v:drawingScale="1" />
+		<g
+   transform="rotate(90,239.3195,848.0905)"
+   v:groupContext="shape"
+   v:mID="1"
+   id="shape1-1">
+			<title
+   id="title13">Sheet.1</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path15"
+   class="st1"
+   d="M 0,792 H 14.47" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="2"
+   transform="matrix(-1,0,0,1,258.686,-450.29)"
+   id="group2-4">
+			<title
+   id="title18"> Power N-channel.3042</title>
+			<g
+   transform="rotate(90,40.5,787.5)"
+   v:groupContext="shape"
+   v:mID="3"
+   id="shape3-5">
+				<title
+   id="title20">Sheet.3</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path22"
+   class="st1"
+   d="M 0,792 H 36" />
+			</g>
+			<g
+   transform="translate(32.0625,-31.5)"
+   v:groupContext="shape"
+   v:mID="4"
+   id="shape4-8">
+				<title
+   id="title25">Sheet.4</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path27"
+   class="st1"
+   d="M 0,792 H 7.5" />
+			</g>
+			<g
+   transform="rotate(-90,-7.875,761.625)"
+   v:groupContext="shape"
+   v:mID="5"
+   id="shape5-11">
+				<title
+   id="title30">Sheet.5</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path32"
+   class="st1"
+   d="M 0,792 H 15.75" />
+			</g>
+			<g
+   transform="rotate(-90,-13.219,766.969)"
+   v:groupContext="shape"
+   v:mID="6"
+   id="shape6-14">
+				<title
+   id="title35">Sheet.6</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path37"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(13.5,-28.125)"
+   v:groupContext="shape"
+   v:mID="7"
+   id="shape7-17">
+				<title
+   id="title40">Sheet.7</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path42"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="translate(18.9,-28.125)"
+   v:groupContext="shape"
+   v:mID="8"
+   id="shape8-20">
+				<title
+   id="title45">Sheet.8</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path47"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(90,25.3125,789.1875)"
+   v:groupContext="shape"
+   v:mID="9"
+   id="shape9-23">
+				<title
+   id="title50">Sheet.9</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path52"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="rotate(-90,-8.1565,772.0315)"
+   v:groupContext="shape"
+   v:mID="10"
+   id="shape10-26">
+				<title
+   id="title55">Sheet.10</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path57"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(-90,11.25,780.75)"
+   v:groupContext="shape"
+   v:mID="11"
+   id="shape11-29">
+				<title
+   id="title60">Sheet.11</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path62"
+   class="st1"
+   d="M 0,792 H 28.12" />
+			</g>
+			<g
+   transform="rotate(180,11.25,777.94)"
+   v:groupContext="shape"
+   v:mID="12"
+   id="shape12-32">
+				<title
+   id="title65">Sheet.12</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path67"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(180,9.45,777.94)"
+   v:groupContext="shape"
+   v:mID="13"
+   id="shape13-35">
+				<title
+   id="title70">Sheet.13</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path72"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="rotate(180,6.75,777.94)"
+   v:groupContext="shape"
+   v:mID="14"
+   id="shape14-38">
+				<title
+   id="title75">Sheet.14</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path77"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-3.094,777.094)"
+   v:groupContext="shape"
+   v:mID="15"
+   id="shape15-41">
+				<title
+   id="title80">Sheet.15</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path82"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(180,4.21875,783)"
+   v:groupContext="shape"
+   v:mID="16"
+   id="shape16-44">
+				<title
+   id="title85">Sheet.16</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path87"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(-90,-4.781,778.781)"
+   v:groupContext="shape"
+   v:mID="17"
+   id="shape17-47">
+				<title
+   id="title90">Sheet.17</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path92"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(180,11.25,772.875)"
+   v:groupContext="shape"
+   v:mID="18"
+   id="shape18-50">
+				<title
+   id="title95">Sheet.18</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path97"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(0,-18)"
+   v:groupContext="shape"
+   v:mID="19"
+   id="shape19-53">
+				<title
+   id="title100">Sheet.19</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path102"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(90,23.9065,776.5315)"
+   v:groupContext="shape"
+   v:mID="20"
+   id="shape20-56">
+				<title
+   id="title105">Sheet.20</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path107"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(-90,-1.4065,778.7815)"
+   v:groupContext="shape"
+   v:mID="21"
+   id="shape21-59">
+				<title
+   id="title110">Sheet.21</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path112"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="22"
+   id="shape22-62">
+				<title
+   id="title115">Sheet.22</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path117"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="rotate(-90,-6.469,773.719)"
+   v:groupContext="shape"
+   v:mID="23"
+   id="shape23-65">
+				<title
+   id="title120">Sheet.23</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path122"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-28.125)"
+   v:groupContext="shape"
+   v:mID="24"
+   id="shape24-68">
+				<title
+   id="title125">Sheet.24</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path127"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-11.5315,768.6565)"
+   v:groupContext="shape"
+   v:mID="25"
+   id="shape25-71">
+				<title
+   id="title130">Sheet.25</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path132"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-38.25)"
+   v:groupContext="shape"
+   v:mID="26"
+   id="shape26-74">
+				<title
+   id="title135">Sheet.26</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path137"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(14.0625,-25.3125)"
+   v:groupContext="shape"
+   v:mID="27"
+   id="shape27-77">
+				<title
+   id="title140">Sheet.27</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path142"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="matrix(0,1,1,0,-753.188,760.5)"
+   v:groupContext="shape"
+   v:mID="28"
+   id="shape28-79">
+				<title
+   id="title145">Sheet.28</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path147"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="29"
+   id="shape29-81">
+				<title
+   id="title150">Sheet.29</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path152"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="translate(12.375,-18)"
+   v:groupContext="shape"
+   v:mID="30"
+   id="shape30-84">
+				<title
+   id="title155">Sheet.30</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path157"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="translate(22.5,-18)"
+   v:groupContext="shape"
+   v:mID="31"
+   id="shape31-87">
+				<title
+   id="title160">Junction.20</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path162"
+   class="st3"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="32"
+   id="shape32-89">
+				<title
+   id="title165">Junction.243</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path167"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="33"
+   id="shape33-91">
+				<title
+   id="title170">Junction.223</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path172"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="34"
+   transform="matrix(0,-1,-1,0,1044.4,291.901)"
+   id="group34-93">
+			<title
+   id="title176"> Power N-channel.3074</title>
+			<g
+   transform="rotate(90,40.5,787.5)"
+   v:groupContext="shape"
+   v:mID="35"
+   id="shape35-94">
+				<title
+   id="title178">Sheet.35</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path180"
+   class="st1"
+   d="M 0,792 H 36" />
+			</g>
+			<g
+   transform="translate(32.0625,-31.5)"
+   v:groupContext="shape"
+   v:mID="36"
+   id="shape36-97">
+				<title
+   id="title183">Sheet.36</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path185"
+   class="st1"
+   d="M 0,792 H 7.5" />
+			</g>
+			<g
+   transform="rotate(-90,-7.875,761.625)"
+   v:groupContext="shape"
+   v:mID="37"
+   id="shape37-100">
+				<title
+   id="title188">Sheet.37</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path190"
+   class="st1"
+   d="M 0,792 H 15.75" />
+			</g>
+			<g
+   transform="rotate(-90,-13.219,766.969)"
+   v:groupContext="shape"
+   v:mID="38"
+   id="shape38-103">
+				<title
+   id="title193">Sheet.38</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path195"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(13.5,-28.125)"
+   v:groupContext="shape"
+   v:mID="39"
+   id="shape39-106">
+				<title
+   id="title198">Sheet.39</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path200"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="translate(18.9,-28.125)"
+   v:groupContext="shape"
+   v:mID="40"
+   id="shape40-109">
+				<title
+   id="title203">Sheet.40</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path205"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(90,25.3125,789.1875)"
+   v:groupContext="shape"
+   v:mID="41"
+   id="shape41-112">
+				<title
+   id="title208">Sheet.41</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path210"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="rotate(-90,-8.1565,772.0315)"
+   v:groupContext="shape"
+   v:mID="42"
+   id="shape42-115">
+				<title
+   id="title213">Sheet.42</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path215"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(-90,11.25,780.75)"
+   v:groupContext="shape"
+   v:mID="43"
+   id="shape43-118">
+				<title
+   id="title218">Sheet.43</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path220"
+   class="st1"
+   d="M 0,792 H 28.12" />
+			</g>
+			<g
+   transform="rotate(180,11.25,777.94)"
+   v:groupContext="shape"
+   v:mID="44"
+   id="shape44-121">
+				<title
+   id="title223">Sheet.44</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path225"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(180,9.45,777.94)"
+   v:groupContext="shape"
+   v:mID="45"
+   id="shape45-124">
+				<title
+   id="title228">Sheet.45</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path230"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="rotate(180,6.75,777.94)"
+   v:groupContext="shape"
+   v:mID="46"
+   id="shape46-127">
+				<title
+   id="title233">Sheet.46</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path235"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-3.094,777.094)"
+   v:groupContext="shape"
+   v:mID="47"
+   id="shape47-130">
+				<title
+   id="title238">Sheet.47</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path240"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(180,4.21875,783)"
+   v:groupContext="shape"
+   v:mID="48"
+   id="shape48-133">
+				<title
+   id="title243">Sheet.48</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path245"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(-90,-4.781,778.781)"
+   v:groupContext="shape"
+   v:mID="49"
+   id="shape49-136">
+				<title
+   id="title248">Sheet.49</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path250"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(180,11.25,772.875)"
+   v:groupContext="shape"
+   v:mID="50"
+   id="shape50-139">
+				<title
+   id="title253">Sheet.50</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path255"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(0,-18)"
+   v:groupContext="shape"
+   v:mID="51"
+   id="shape51-142">
+				<title
+   id="title258">Sheet.51</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path260"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(90,23.9065,776.5315)"
+   v:groupContext="shape"
+   v:mID="52"
+   id="shape52-145">
+				<title
+   id="title263">Sheet.52</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path265"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(-90,-1.4065,778.7815)"
+   v:groupContext="shape"
+   v:mID="53"
+   id="shape53-148">
+				<title
+   id="title268">Sheet.53</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path270"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="54"
+   id="shape54-151">
+				<title
+   id="title273">Sheet.54</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path275"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="rotate(-90,-6.469,773.719)"
+   v:groupContext="shape"
+   v:mID="55"
+   id="shape55-154">
+				<title
+   id="title278">Sheet.55</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path280"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-28.125)"
+   v:groupContext="shape"
+   v:mID="56"
+   id="shape56-157">
+				<title
+   id="title283">Sheet.56</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path285"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-11.5315,768.6565)"
+   v:groupContext="shape"
+   v:mID="57"
+   id="shape57-160">
+				<title
+   id="title288">Sheet.57</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path290"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-38.25)"
+   v:groupContext="shape"
+   v:mID="58"
+   id="shape58-163">
+				<title
+   id="title293">Sheet.58</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path295"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(14.0625,-25.3125)"
+   v:groupContext="shape"
+   v:mID="59"
+   id="shape59-166">
+				<title
+   id="title298">Sheet.59</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path300"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="matrix(0,1,1,0,-753.188,760.5)"
+   v:groupContext="shape"
+   v:mID="60"
+   id="shape60-168">
+				<title
+   id="title303">Sheet.60</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path305"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="61"
+   id="shape61-170">
+				<title
+   id="title308">Sheet.61</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path310"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="translate(12.375,-18)"
+   v:groupContext="shape"
+   v:mID="62"
+   id="shape62-173">
+				<title
+   id="title313">Sheet.62</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path315"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="translate(22.5,-18)"
+   v:groupContext="shape"
+   v:mID="63"
+   id="shape63-176">
+				<title
+   id="title318">Junction.20</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path320"
+   class="st3"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="64"
+   id="shape64-178">
+				<title
+   id="title323">Junction.243</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path325"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="65"
+   id="shape65-180">
+				<title
+   id="title328">Junction.223</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path330"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+		</g>
+		<g
+   transform="rotate(0.205043,79667.989,109513.89)"
+   v:groupContext="shape"
+   v:mID="66"
+   id="shape66-182">
+			<title
+   id="title334">Sheet.66</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path336"
+   class="st1"
+   d="M 0,792 H 86.63" />
+		</g>
+		<g
+   transform="translate(202.82,-182.849)"
+   v:groupContext="shape"
+   v:mID="67"
+   id="shape67-185">
+			<title
+   id="title339">Package outline.3106</title>
+			<rect
+   id="rect341"
+   class="st4"
+   height="462.19601"
+   width="180.313"
+   y="329.80399"
+   x="0" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="68"
+   transform="rotate(-90,-153.057,511.827)"
+   id="group68-187">
+			<v:custProps>
+				<v:cp
+   v:val="VT4(Air)"
+   v:langID="1033"
+   v:format="Air;Magnetic;Magnetic with Gap"
+   v:type="1"
+   v:prompt="Specify the type of core."
+   v:lbl="Core"
+   v:nameU="Core" />
+				<v:cp
+   v:val="VT4(Fixed)"
+   v:langID="1033"
+   v:format="Fixed;Adjustable;Continuously Adjustable"
+   v:type="1"
+   v:prompt="Specify the type of adjustability."
+   v:lbl="Adjustability"
+   v:nameU="Adjustability" />
+				<v:cp
+   v:val="VT4(0)"
+   v:langID="1033"
+   v:format="0;1;2;3"
+   v:type="1"
+   v:prompt="Specify the number of taps."
+   v:lbl="Taps"
+   v:nameU="Taps" />
+				<v:cp
+   v:val="VT0(0):26"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format=""
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device value."
+   v:lbl="Value"
+   v:nameU="Value" />
+			</v:custProps>
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Core" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Adjustability" />
+				<v:ud
+   v:val="VT0(5):26"
+   v:nameU="CH" />
+			</v:userDefs>
+			<title
+   id="title344">Inductor.3108</title>
+			<g
+   v:groupContext="shape"
+   v:mID="69"
+   id="shape69-188">
+				<title
+   id="title346">Sheet.69</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path348"
+   class="st5"
+   d="m 0,792 a 7.23944,6.95566 0 1 1 14.47,0 7.23944,6.95566 0 1 1 14.46,0 7.23944,6.95566 0 1 1 14.47,0 7.23944,6.95566 0 1 1 14.47,0" />
+			</g>
+			<g
+   transform="translate(27.8948,8.13787)"
+   v:groupContext="shape"
+   v:mID="70"
+   id="shape70-191">
+				<title
+   id="title351">Sheet.70</title>
+			</g>
+			<g
+   transform="rotate(-45,24.327926,786.52404)"
+   v:groupContext="shape"
+   v:mID="71"
+   id="shape71-193">
+				<title
+   id="title354">Sheet.71</title>
+			</g>
+		</g>
+		<g
+   transform="translate(215.505,-597.446)"
+   v:groupContext="shape"
+   v:mID="73"
+   id="shape73-195">
+			<title
+   id="title358">All text this size.3145</title>
+			<desc
+   id="desc360">VBUS</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect362"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text364"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />VBUS</text>		</g>
+		<g
+   transform="translate(221.883,-514.882)"
+   v:groupContext="shape"
+   v:mID="74"
+   id="shape74-198">
+			<title
+   id="title367">All text this size.3146</title>
+			<desc
+   id="desc369">SW1</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="34.51"
+   cy="777.533"
+   cx="17.25" />
+			<rect
+   id="rect371"
+   class="st6"
+   height="28.934601"
+   width="34.5"
+   y="763.065"
+   x="0" />
+			<text
+   id="text373"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />SW1</text>		</g>
+		<g
+   transform="translate(311.133,-466.946)"
+   v:groupContext="shape"
+   v:mID="75"
+   id="shape75-201">
+			<title
+   id="title376">Sheet.75</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path378"
+   class="st8"
+   d="M 0,792 H 156.01" />
+		</g>
+		<g
+   transform="translate(316.264,-463.111)"
+   v:groupContext="shape"
+   v:mID="76"
+   id="shape76-208">
+			<title
+   id="title381">All text this size.3148</title>
+			<desc
+   id="desc383">SYS</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect385"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text387"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="29.860001"><v:paragraph
+   v:horizAlign="2" /><v:tabList />SYS</text>		</g>
+		<g
+   transform="translate(315.948,-343.075)"
+   v:groupContext="shape"
+   v:mID="77"
+   id="shape77-211">
+			<title
+   id="title390">All text this size.3149</title>
+			<desc
+   id="desc392">BAT</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect394"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text396"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="30.639999"><v:paragraph
+   v:horizAlign="2" /><v:tabList />BAT</text>		</g>
+		<g
+   transform="translate(240.878,-239.099)"
+   v:groupContext="shape"
+   v:mID="78"
+   id="shape78-214">
+			<title
+   id="title399">All text this size.3152</title>
+			<desc
+   id="desc401">BQ25798</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="108.51"
+   cy="777.533"
+   cx="54.2525" />
+			<rect
+   id="rect403"
+   class="st6"
+   height="28.934601"
+   width="108.505"
+   y="763.065"
+   x="0" />
+			<text
+   id="text407"
+   v:langID="1033"
+   class="st10"
+   y="784.72998"
+   x="3.55"><v:paragraph
+   v:horizAlign="1" /><v:tabList />BQ<tspan
+   id="tspan405"
+   v:langID="2052"
+   class="st11">2579</tspan>8</text>		</g>
+		<g
+   v:groupContext="group"
+   v:mID="79"
+   transform="translate(461.231,-188.643)"
+   id="group79-218">
+			<title
+   id="title410">Multi-cell.3153</title>
+			<g
+   transform="rotate(90,43.402,763.065)"
+   v:groupContext="shape"
+   v:mID="80"
+   id="shape80-219">
+				<title
+   id="title412">Sheet.80</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path414"
+   class="st1"
+   d="M 0,792 H 28.93" />
+			</g>
+			<g
+   transform="translate(0,-43.402)"
+   v:groupContext="shape"
+   v:mID="81"
+   id="shape81-222">
+				<title
+   id="title417">Sheet.81</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path419"
+   class="st1"
+   d="M 0,792 H 28.93" />
+			</g>
+			<g
+   transform="translate(5.42525,-36.1683)"
+   v:groupContext="shape"
+   v:mID="82"
+   id="shape82-225">
+				<title
+   id="title422">Sheet.82</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path424"
+   class="st1"
+   d="M 0,792 H 18.08" />
+			</g>
+			<g
+   transform="rotate(90,18.084,788.383)"
+   v:groupContext="shape"
+   v:mID="83"
+   id="shape83-228">
+				<title
+   id="title427">Sheet.83</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path429"
+   class="st1"
+   d="M 0,792 H 21.7" />
+			</g>
+			<g
+   transform="translate(0,-28.9346)"
+   v:groupContext="shape"
+   v:mID="84"
+   id="shape84-231">
+				<title
+   id="title432">Sheet.84</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path434"
+   class="st1"
+   d="M 0,792 H 28.93" />
+			</g>
+			<g
+   transform="translate(5.42525,-21.701)"
+   v:groupContext="shape"
+   v:mID="85"
+   id="shape85-234">
+				<title
+   id="title437">Sheet.85</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path439"
+   class="st1"
+   d="M 0,792 H 18.08" />
+			</g>
+		</g>
+		<g
+   transform="translate(446.764,-181.409)"
+   v:groupContext="shape"
+   v:mID="86"
+   id="shape86-237">
+			<title
+   id="title443">Package outline.3160</title>
+			<rect
+   id="rect445"
+   class="st12"
+   height="79.570297"
+   width="57.869301"
+   y="712.42999"
+   x="0" />
+		</g>
+		<g
+   transform="translate(267.014,-185.415)"
+   v:groupContext="shape"
+   v:mID="87"
+   id="shape87-239">
+			<title
+   id="title448">All text this size.3161</title>
+			<desc
+   id="desc450">GND</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect452"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text454"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="13.38"><v:paragraph
+   v:horizAlign="1" /><v:tabList />GND</text>		</g>
+		<g
+   transform="translate(72.614,-182.849)"
+   v:groupContext="shape"
+   v:mID="88"
+   id="shape88-242">
+			<title
+   id="title457">Boundary.3162</title>
+			<desc
+   id="desc459">Host</desc>
+			<v:textBlock
+   v:margins="rect(4,4,4,4)" />
+			<v:textRect
+   height="163.123"
+   width="47.02"
+   cy="710.439"
+   cx="23.5094" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path461"
+   class="st13"
+   d="M 0,792 H 47.02 V 628.88 H 0 Z" />
+			<text
+   id="text463"
+   v:langID="1033"
+   class="st7"
+   y="714.64001"
+   x="9.1199999"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Host</text>		</g>
+		<g
+   transform="translate(130.483,-208.533)"
+   v:groupContext="shape"
+   v:mID="89"
+   id="shape89-245">
+			<title
+   id="title466">All text this size.3163</title>
+			<desc
+   id="desc468">Host Control</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect470"
+   class="st14"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text474"
+   v:langID="1033"
+   class="st7"
+   y="773.33002"
+   x="14.54"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Host <tspan
+   id="tspan472"
+   class="st11"
+   dy="1.2em"
+   x="6.3699999">Control</tspan></text>		</g>
+		<g
+   transform="translate(132.292,-285.029)"
+   v:groupContext="shape"
+   v:mID="90"
+   id="shape90-249">
+			<title
+   id="title477">All text this size.3164</title>
+			<desc
+   id="desc479">I2C Bus</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect481"
+   class="st14"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text483"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="4.04"><v:paragraph
+   v:horizAlign="1" /><v:tabList />I2C Bus</text>		</g>
+		<g
+   transform="translate(133.497,-317.761)"
+   v:groupContext="shape"
+   v:mID="91"
+   id="shape91-252">
+			<title
+   id="title486">Sheet.91</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path488"
+   class="st15"
+   d="M 0,792 H 55.46" />
+		</g>
+		<g
+   transform="translate(119.633,-284.486)"
+   v:groupContext="shape"
+   v:mID="92"
+   id="shape92-255">
+			<title
+   id="title491">Sheet.92</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path493"
+   class="st15"
+   d="M 69.32,758.73 83.19,775.36 69.32,792 H 13.86 L 0,775.36 13.86,758.73" />
+		</g>
+		<g
+   transform="translate(119.633,-204.916)"
+   v:groupContext="shape"
+   v:mID="93"
+   id="shape93-258">
+			<title
+   id="title496">Sheet.93</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path498"
+   class="st15"
+   d="M 69.32,754.57 83.19,773.28 69.32,792 H 13.86 L 0,773.28 13.86,754.57" />
+		</g>
+		<g
+   transform="translate(133.497,-242.35)"
+   v:groupContext="shape"
+   v:mID="94"
+   id="shape94-261">
+			<title
+   id="title501">Sheet.94</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path503"
+   class="st15"
+   d="M 0,792 H 55.06" />
+		</g>
+		<g
+   transform="rotate(-0.0251292,-1367163.4,-431878.69)"
+   v:groupContext="shape"
+   v:mID="95"
+   id="shape95-264">
+			<title
+   id="title506">Sheet.95</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path508"
+   class="st1"
+   d="M 0,792 H 78.52" />
+		</g>
+		<g
+   transform="rotate(180,126.2025,530.855)"
+   v:groupContext="shape"
+   v:mID="96"
+   id="shape96-267">
+			<title
+   id="title511">Sheet.96</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path513"
+   class="st1"
+   d="M 0,792 H 125.54" />
+		</g>
+		<g
+   transform="translate(126.866,-398.589)"
+   v:groupContext="shape"
+   v:mID="97"
+   id="shape97-270">
+			<title
+   id="title516">Sheet.97</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path518"
+   class="st1"
+   d="M 0,792 H 125.54" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="98"
+   transform="matrix(0,-1,-1,0,1193.13,364.839)"
+   id="group98-273">
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Form" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Type" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="LimitCH" />
+				<v:ud
+   v:val="VT0(0.0625):1"
+   v:nameU="CHMin" />
+			</v:userDefs>
+			<title
+   id="title521">Capacitor.3174</title>
+			<g
+   transform="rotate(45,18.109579,777.18223)"
+   v:groupContext="shape"
+   v:mID="99"
+   id="shape99-274">
+				<title
+   id="title523">Sheet.99</title>
+			</g>
+			<g
+   v:groupContext="shape"
+   v:mID="100"
+   id="shape100-276">
+				<title
+   id="title526">Sheet.100</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path528"
+   class="st5"
+   d="M 4.5,792 V 774" />
+				<path
+   inkscape:connector-curvature="0"
+   id="path530"
+   class="st5"
+   d="M 9,792 V 774" />
+			</g>
+			<g
+   transform="translate(0,-9)"
+   v:groupContext="shape"
+   v:mID="101"
+   id="shape101-280">
+				<title
+   id="title533">Sheet.101</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path535"
+   class="st5"
+   d="M 0,792 H 4.5" />
+				<path
+   inkscape:connector-curvature="0"
+   id="path537"
+   class="st5"
+   d="M 9,792 H 36.17" />
+			</g>
+		</g>
+		<g
+   transform="rotate(-90,13.1865,380.5865)"
+   v:groupContext="shape"
+   v:mID="103"
+   id="shape103-284">
+			<title
+   id="title541">GND.3179</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path543"
+   class="st16"
+   d="M 14.47,792 V 763.07 L 0,777.53 Z" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path545"
+   class="st5"
+   d="M 14.47,792 V 763.07 L 0,777.53 14.47,792" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path547"
+   class="st5"
+   d="M 28.93,777.53 H 14.47" />
+		</g>
+		<g
+   transform="rotate(-90,-26.5985,355.2685)"
+   v:groupContext="shape"
+   v:mID="104"
+   id="shape104-288">
+			<title
+   id="title550">Sheet.104</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path552"
+   class="st1"
+   d="M 0,792 H 3.62" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="105"
+   transform="matrix(0,-1,-1,0,1193.13,466.404)"
+   id="group105-291">
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Form" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Type" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="LimitCH" />
+				<v:ud
+   v:val="VT0(0.0625):1"
+   v:nameU="CHMin" />
+			</v:userDefs>
+			<title
+   id="title555">Capacitor.3181</title>
+			<g
+   transform="rotate(45,18.109579,777.18223)"
+   v:groupContext="shape"
+   v:mID="106"
+   id="shape106-292">
+				<title
+   id="title557">Sheet.106</title>
+			</g>
+			<g
+   v:groupContext="shape"
+   v:mID="107"
+   id="shape107-294">
+				<title
+   id="title560">Sheet.107</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path562"
+   class="st5"
+   d="M 4.5,792 V 774" />
+				<path
+   inkscape:connector-curvature="0"
+   id="path564"
+   class="st5"
+   d="M 9,792 V 774" />
+			</g>
+			<g
+   transform="translate(0,-9)"
+   v:groupContext="shape"
+   v:mID="108"
+   id="shape108-298">
+				<title
+   id="title567">Sheet.108</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path569"
+   class="st5"
+   d="M 0,792 H 4.5" />
+				<path
+   inkscape:connector-curvature="0"
+   id="path571"
+   class="st5"
+   d="M 9,792 H 36.17" />
+			</g>
+		</g>
+		<g
+   transform="rotate(-90,63.9695,431.3695)"
+   v:groupContext="shape"
+   v:mID="110"
+   id="shape110-302">
+			<title
+   id="title575">GND.3186</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path577"
+   class="st16"
+   d="M 14.47,792 V 763.07 L 0,777.53 Z" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path579"
+   class="st5"
+   d="M 14.47,792 V 763.07 L 0,777.53 14.47,792" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path581"
+   class="st5"
+   d="M 28.93,777.53 H 14.47" />
+		</g>
+		<g
+   transform="rotate(-90,24.1845,406.0515)"
+   v:groupContext="shape"
+   v:mID="111"
+   id="shape111-306">
+			<title
+   id="title584">Sheet.111</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path586"
+   class="st1"
+   d="M 0,792 H 12.62" />
+		</g>
+		<g
+   transform="translate(410.133,-374.381)"
+   v:groupContext="shape"
+   v:mID="112"
+   id="shape112-309">
+			<title
+   id="title589">Junction2.3188</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path591"
+   class="st17"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(340.155,-599.696)"
+   v:groupContext="shape"
+   v:mID="113"
+   id="shape113-311">
+			<title
+   id="title594">Sheet.113</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path596"
+   class="st1"
+   d="M 0,792 H 69.98" />
+		</g>
+		<g
+   transform="rotate(-90,82.9365,565.0635)"
+   v:groupContext="shape"
+   v:mID="114"
+   id="shape114-314">
+			<title
+   id="title599">GND.3191</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path601"
+   class="st16"
+   d="M 14.47,792 V 763.07 L 0,777.53 Z" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path603"
+   class="st5"
+   d="M 14.47,792 V 763.07 L 0,777.53 14.47,792" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path605"
+   class="st5"
+   d="M 28.93,777.53 H 14.47" />
+		</g>
+		<g
+   transform="translate(295.405,-168.762)"
+   v:groupContext="shape"
+   v:mID="115"
+   id="shape115-318">
+			<title
+   id="title608">Junction2.3192</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path610"
+   class="st17"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(461.231,-260.98)"
+   v:groupContext="shape"
+   v:mID="116"
+   id="shape116-320">
+			<title
+   id="title613">Package outline.3198</title>
+			<rect
+   id="rect615"
+   class="st12"
+   height="10.8505"
+   width="28.934601"
+   y="781.15002"
+   x="0" />
+		</g>
+		<g
+   transform="translate(216.136,-395.914)"
+   v:groupContext="shape"
+   v:mID="117"
+   id="shape117-322">
+			<title
+   id="title618">All text this size.3199</title>
+			<desc
+   id="desc620">SW2</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect622"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text624"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />SW2</text>		</g>
+		<g
+   transform="translate(387.258,-210.344)"
+   v:groupContext="shape"
+   v:mID="118"
+   id="shape118-325">
+			<title
+   id="title627">All text this size.3200</title>
+			<desc
+   id="desc629">1S to 4S Battery</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect631"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text637"
+   v:langID="1033"
+   class="st7"
+   y="773.33002"
+   x="2.0799999"><v:paragraph
+   v:horizAlign="1" /><v:tabList />1S to <tspan
+   id="tspan633"
+   v:langID="2052"
+   class="st11">4</tspan>S<v:lf /><tspan
+   id="tspan635"
+   v:langID="2052"
+   class="st11"
+   dy="1.2em"
+   x="6.7600002">Battery</tspan></text>		</g>
+		<g
+   transform="translate(195.705,-592.496)"
+   v:groupContext="shape"
+   v:mID="119"
+   id="shape119-330">
+			<title
+   id="title640">Sheet.119</title>
+			<rect
+   id="rect642"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(195.705,-514.944)"
+   v:groupContext="shape"
+   v:mID="120"
+   id="shape120-332">
+			<title
+   id="title645">Sheet.120</title>
+			<rect
+   id="rect647"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(236.186,-522.29)"
+   v:groupContext="shape"
+   v:mID="121"
+   id="shape121-334">
+			<title
+   id="title650">Junction2.3203</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path652"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(344.883,-466.946)"
+   v:groupContext="shape"
+   v:mID="122"
+   id="shape122-336">
+			<title
+   id="title655">Junction2.3204</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path657"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(338.133,-599.099)"
+   v:groupContext="shape"
+   v:mID="123"
+   id="shape123-338">
+			<title
+   id="title660">Junction2.3205</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path662"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="rotate(90,379.24,648.95)"
+   v:groupContext="shape"
+   v:mID="124"
+   id="shape124-340">
+			<title
+   id="title665">Sheet.124</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path667"
+   class="st1"
+   d="M 0,792 H 18" />
+		</g>
+		<g
+   transform="rotate(-90,-85.351,455.996)"
+   v:groupContext="shape"
+   v:mID="125"
+   id="shape125-343">
+			<title
+   id="title670">GND.3207</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path672"
+   class="st16"
+   d="M 14.47,792 V 763.07 L 0,777.53 Z" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path674"
+   class="st5"
+   d="M 14.47,792 V 763.07 L 0,777.53 14.47,792" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path676"
+   class="st5"
+   d="M 28.93,777.53 H 14.47" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="126"
+   transform="matrix(-1,0,0,1,259.476,-330.542)"
+   id="group126-347">
+			<title
+   id="title679"> Power N-channel.3208</title>
+			<g
+   transform="rotate(90,40.5,787.5)"
+   v:groupContext="shape"
+   v:mID="127"
+   id="shape127-348">
+				<title
+   id="title681">Sheet.127</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path683"
+   class="st1"
+   d="M 0,792 H 36" />
+			</g>
+			<g
+   transform="translate(32.0625,-31.5)"
+   v:groupContext="shape"
+   v:mID="128"
+   id="shape128-351">
+				<title
+   id="title686">Sheet.128</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path688"
+   class="st1"
+   d="M 0,792 H 7.5" />
+			</g>
+			<g
+   transform="rotate(-90,-7.875,761.625)"
+   v:groupContext="shape"
+   v:mID="129"
+   id="shape129-354">
+				<title
+   id="title691">Sheet.129</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path693"
+   class="st1"
+   d="M 0,792 H 15.75" />
+			</g>
+			<g
+   transform="rotate(-90,-13.219,766.969)"
+   v:groupContext="shape"
+   v:mID="130"
+   id="shape130-357">
+				<title
+   id="title696">Sheet.130</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path698"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(13.5,-28.125)"
+   v:groupContext="shape"
+   v:mID="131"
+   id="shape131-360">
+				<title
+   id="title701">Sheet.131</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path703"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="translate(18.9,-28.125)"
+   v:groupContext="shape"
+   v:mID="132"
+   id="shape132-363">
+				<title
+   id="title706">Sheet.132</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path708"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(90,25.3125,789.1875)"
+   v:groupContext="shape"
+   v:mID="133"
+   id="shape133-366">
+				<title
+   id="title711">Sheet.133</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path713"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="rotate(-90,-8.1565,772.0315)"
+   v:groupContext="shape"
+   v:mID="134"
+   id="shape134-369">
+				<title
+   id="title716">Sheet.134</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path718"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(-90,11.25,780.75)"
+   v:groupContext="shape"
+   v:mID="135"
+   id="shape135-372">
+				<title
+   id="title721">Sheet.135</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path723"
+   class="st1"
+   d="M 0,792 H 28.12" />
+			</g>
+			<g
+   transform="rotate(180,11.25,777.94)"
+   v:groupContext="shape"
+   v:mID="136"
+   id="shape136-375">
+				<title
+   id="title726">Sheet.136</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path728"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(180,9.45,777.94)"
+   v:groupContext="shape"
+   v:mID="137"
+   id="shape137-378">
+				<title
+   id="title731">Sheet.137</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path733"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="rotate(180,6.75,777.94)"
+   v:groupContext="shape"
+   v:mID="138"
+   id="shape138-381">
+				<title
+   id="title736">Sheet.138</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path738"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-3.094,777.094)"
+   v:groupContext="shape"
+   v:mID="139"
+   id="shape139-384">
+				<title
+   id="title741">Sheet.139</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path743"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(180,4.21875,783)"
+   v:groupContext="shape"
+   v:mID="140"
+   id="shape140-387">
+				<title
+   id="title746">Sheet.140</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path748"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(-90,-4.781,778.781)"
+   v:groupContext="shape"
+   v:mID="141"
+   id="shape141-390">
+				<title
+   id="title751">Sheet.141</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path753"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(180,11.25,772.875)"
+   v:groupContext="shape"
+   v:mID="142"
+   id="shape142-393">
+				<title
+   id="title756">Sheet.142</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path758"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(0,-18)"
+   v:groupContext="shape"
+   v:mID="143"
+   id="shape143-396">
+				<title
+   id="title761">Sheet.143</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path763"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(90,23.9065,776.5315)"
+   v:groupContext="shape"
+   v:mID="144"
+   id="shape144-399">
+				<title
+   id="title766">Sheet.144</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path768"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(-90,-1.4065,778.7815)"
+   v:groupContext="shape"
+   v:mID="145"
+   id="shape145-402">
+				<title
+   id="title771">Sheet.145</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path773"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="146"
+   id="shape146-405">
+				<title
+   id="title776">Sheet.146</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path778"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="rotate(-90,-6.469,773.719)"
+   v:groupContext="shape"
+   v:mID="147"
+   id="shape147-408">
+				<title
+   id="title781">Sheet.147</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path783"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-28.125)"
+   v:groupContext="shape"
+   v:mID="148"
+   id="shape148-411">
+				<title
+   id="title786">Sheet.148</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path788"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-11.5315,768.6565)"
+   v:groupContext="shape"
+   v:mID="149"
+   id="shape149-414">
+				<title
+   id="title791">Sheet.149</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path793"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-38.25)"
+   v:groupContext="shape"
+   v:mID="150"
+   id="shape150-417">
+				<title
+   id="title796">Sheet.150</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path798"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(14.0625,-25.3125)"
+   v:groupContext="shape"
+   v:mID="151"
+   id="shape151-420">
+				<title
+   id="title801">Sheet.151</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path803"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="matrix(0,1,1,0,-753.188,760.5)"
+   v:groupContext="shape"
+   v:mID="152"
+   id="shape152-422">
+				<title
+   id="title806">Sheet.152</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path808"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="153"
+   id="shape153-424">
+				<title
+   id="title811">Sheet.153</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path813"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="translate(12.375,-18)"
+   v:groupContext="shape"
+   v:mID="154"
+   id="shape154-427">
+				<title
+   id="title816">Sheet.154</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path818"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="translate(22.5,-18)"
+   v:groupContext="shape"
+   v:mID="155"
+   id="shape155-430">
+				<title
+   id="title821">Junction.20</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path823"
+   class="st3"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="156"
+   id="shape156-432">
+				<title
+   id="title826">Junction.243</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path828"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="157"
+   id="shape157-434">
+				<title
+   id="title831">Junction.223</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path833"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+		</g>
+		<g
+   transform="translate(236.976,-398.488)"
+   v:groupContext="shape"
+   v:mID="158"
+   id="shape158-436">
+			<title
+   id="title837">Junction2.3240</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path839"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="rotate(90,317.734,711.246)"
+   v:groupContext="shape"
+   v:mID="159"
+   id="shape159-438">
+			<title
+   id="title842">Sheet.159</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path844"
+   class="st1"
+   d="M 0,792 H 13.95" />
+		</g>
+		<g
+   transform="rotate(-90,-25.0815,515.4745)"
+   v:groupContext="shape"
+   v:mID="160"
+   id="shape160-441">
+			<title
+   id="title847">GND.3242</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path849"
+   class="st16"
+   d="M 14.47,792 V 763.07 L 0,777.53 Z" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path851"
+   class="st5"
+   d="M 14.47,792 V 763.07 L 0,777.53 14.47,792" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path853"
+   class="st5"
+   d="M 28.93,777.53 H 14.47" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="161"
+   transform="matrix(0,-1,-1,0,1044.4,415.911)"
+   id="group161-445">
+			<title
+   id="title856"> Power N-channel.3243</title>
+			<g
+   transform="rotate(90,40.5,787.5)"
+   v:groupContext="shape"
+   v:mID="162"
+   id="shape162-446">
+				<title
+   id="title858">Sheet.162</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path860"
+   class="st1"
+   d="M 0,792 H 36" />
+			</g>
+			<g
+   transform="translate(32.0625,-31.5)"
+   v:groupContext="shape"
+   v:mID="163"
+   id="shape163-449">
+				<title
+   id="title863">Sheet.163</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path865"
+   class="st1"
+   d="M 0,792 H 7.5" />
+			</g>
+			<g
+   transform="rotate(-90,-7.875,761.625)"
+   v:groupContext="shape"
+   v:mID="164"
+   id="shape164-452">
+				<title
+   id="title868">Sheet.164</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path870"
+   class="st1"
+   d="M 0,792 H 15.75" />
+			</g>
+			<g
+   transform="rotate(-90,-13.219,766.969)"
+   v:groupContext="shape"
+   v:mID="165"
+   id="shape165-455">
+				<title
+   id="title873">Sheet.165</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path875"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(13.5,-28.125)"
+   v:groupContext="shape"
+   v:mID="166"
+   id="shape166-458">
+				<title
+   id="title878">Sheet.166</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path880"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="translate(18.9,-28.125)"
+   v:groupContext="shape"
+   v:mID="167"
+   id="shape167-461">
+				<title
+   id="title883">Sheet.167</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path885"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(90,25.3125,789.1875)"
+   v:groupContext="shape"
+   v:mID="168"
+   id="shape168-464">
+				<title
+   id="title888">Sheet.168</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path890"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="rotate(-90,-8.1565,772.0315)"
+   v:groupContext="shape"
+   v:mID="169"
+   id="shape169-467">
+				<title
+   id="title893">Sheet.169</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path895"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(-90,11.25,780.75)"
+   v:groupContext="shape"
+   v:mID="170"
+   id="shape170-470">
+				<title
+   id="title898">Sheet.170</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path900"
+   class="st1"
+   d="M 0,792 H 28.12" />
+			</g>
+			<g
+   transform="rotate(180,11.25,777.94)"
+   v:groupContext="shape"
+   v:mID="171"
+   id="shape171-473">
+				<title
+   id="title903">Sheet.171</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path905"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(180,9.45,777.94)"
+   v:groupContext="shape"
+   v:mID="172"
+   id="shape172-476">
+				<title
+   id="title908">Sheet.172</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path910"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="rotate(180,6.75,777.94)"
+   v:groupContext="shape"
+   v:mID="173"
+   id="shape173-479">
+				<title
+   id="title913">Sheet.173</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path915"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-3.094,777.094)"
+   v:groupContext="shape"
+   v:mID="174"
+   id="shape174-482">
+				<title
+   id="title918">Sheet.174</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path920"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(180,4.21875,783)"
+   v:groupContext="shape"
+   v:mID="175"
+   id="shape175-485">
+				<title
+   id="title923">Sheet.175</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path925"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(-90,-4.781,778.781)"
+   v:groupContext="shape"
+   v:mID="176"
+   id="shape176-488">
+				<title
+   id="title928">Sheet.176</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path930"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(180,11.25,772.875)"
+   v:groupContext="shape"
+   v:mID="177"
+   id="shape177-491">
+				<title
+   id="title933">Sheet.177</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path935"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(0,-18)"
+   v:groupContext="shape"
+   v:mID="178"
+   id="shape178-494">
+				<title
+   id="title938">Sheet.178</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path940"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(90,23.9065,776.5315)"
+   v:groupContext="shape"
+   v:mID="179"
+   id="shape179-497">
+				<title
+   id="title943">Sheet.179</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path945"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(-90,-1.4065,778.7815)"
+   v:groupContext="shape"
+   v:mID="180"
+   id="shape180-500">
+				<title
+   id="title948">Sheet.180</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path950"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="181"
+   id="shape181-503">
+				<title
+   id="title953">Sheet.181</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path955"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="rotate(-90,-6.469,773.719)"
+   v:groupContext="shape"
+   v:mID="182"
+   id="shape182-506">
+				<title
+   id="title958">Sheet.182</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path960"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-28.125)"
+   v:groupContext="shape"
+   v:mID="183"
+   id="shape183-509">
+				<title
+   id="title963">Sheet.183</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path965"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-11.5315,768.6565)"
+   v:groupContext="shape"
+   v:mID="184"
+   id="shape184-512">
+				<title
+   id="title968">Sheet.184</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path970"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-38.25)"
+   v:groupContext="shape"
+   v:mID="185"
+   id="shape185-515">
+				<title
+   id="title973">Sheet.185</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path975"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(14.0625,-25.3125)"
+   v:groupContext="shape"
+   v:mID="186"
+   id="shape186-518">
+				<title
+   id="title978">Sheet.186</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path980"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="matrix(0,1,1,0,-753.188,760.5)"
+   v:groupContext="shape"
+   v:mID="187"
+   id="shape187-520">
+				<title
+   id="title983">Sheet.187</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path985"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="188"
+   id="shape188-522">
+				<title
+   id="title988">Sheet.188</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path990"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="translate(12.375,-18)"
+   v:groupContext="shape"
+   v:mID="189"
+   id="shape189-525">
+				<title
+   id="title993">Sheet.189</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path995"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="translate(22.5,-18)"
+   v:groupContext="shape"
+   v:mID="190"
+   id="shape190-528">
+				<title
+   id="title998">Junction.20</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1000"
+   class="st3"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="191"
+   id="shape191-530">
+				<title
+   id="title1003">Junction.243</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1005"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="192"
+   id="shape192-532">
+				<title
+   id="title1008">Junction.223</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1010"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+		</g>
+		<g
+   transform="translate(195.705,-391.24)"
+   v:groupContext="shape"
+   v:mID="193"
+   id="shape193-534">
+			<title
+   id="title1014">Sheet.193</title>
+			<rect
+   id="rect1016"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(306.405,-398.589)"
+   v:groupContext="shape"
+   v:mID="194"
+   id="shape194-536">
+			<title
+   id="title1019">Sheet.194</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1021"
+   class="st1"
+   d="M 0,792 H 4.73" />
+		</g>
+		<g
+   transform="rotate(90,389.038,714.092)"
+   v:groupContext="shape"
+   v:mID="195"
+   id="shape195-539">
+			<title
+   id="title1024">Sheet.195</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1026"
+   class="st1"
+   d="M 0,792 H 68.36" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="196"
+   transform="translate(321.706,-387.881)"
+   id="group196-542">
+			<title
+   id="title1029"> Power N-channel.3278</title>
+			<g
+   transform="rotate(90,40.5,787.5)"
+   v:groupContext="shape"
+   v:mID="197"
+   id="shape197-543">
+				<title
+   id="title1031">Sheet.197</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1033"
+   class="st1"
+   d="M 0,792 H 36" />
+			</g>
+			<g
+   transform="translate(32.0625,-31.5)"
+   v:groupContext="shape"
+   v:mID="198"
+   id="shape198-546">
+				<title
+   id="title1036">Sheet.198</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1038"
+   class="st1"
+   d="M 0,792 H 7.5" />
+			</g>
+			<g
+   transform="rotate(-90,-7.875,761.625)"
+   v:groupContext="shape"
+   v:mID="199"
+   id="shape199-549">
+				<title
+   id="title1041">Sheet.199</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1043"
+   class="st1"
+   d="M 0,792 H 15.75" />
+			</g>
+			<g
+   transform="rotate(-90,-13.219,766.969)"
+   v:groupContext="shape"
+   v:mID="200"
+   id="shape200-552">
+				<title
+   id="title1046">Sheet.200</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1048"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(13.5,-28.125)"
+   v:groupContext="shape"
+   v:mID="201"
+   id="shape201-555">
+				<title
+   id="title1051">Sheet.201</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1053"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="translate(18.9,-28.125)"
+   v:groupContext="shape"
+   v:mID="202"
+   id="shape202-558">
+				<title
+   id="title1056">Sheet.202</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1058"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(90,25.3125,789.1875)"
+   v:groupContext="shape"
+   v:mID="203"
+   id="shape203-561">
+				<title
+   id="title1061">Sheet.203</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1063"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="rotate(-90,-8.1565,772.0315)"
+   v:groupContext="shape"
+   v:mID="204"
+   id="shape204-564">
+				<title
+   id="title1066">Sheet.204</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1068"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(-90,11.25,780.75)"
+   v:groupContext="shape"
+   v:mID="205"
+   id="shape205-567">
+				<title
+   id="title1071">Sheet.205</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1073"
+   class="st1"
+   d="M 0,792 H 28.12" />
+			</g>
+			<g
+   transform="rotate(180,11.25,777.94)"
+   v:groupContext="shape"
+   v:mID="206"
+   id="shape206-570">
+				<title
+   id="title1076">Sheet.206</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1078"
+   class="st1"
+   d="M 0,792 H 3.6" />
+			</g>
+			<g
+   transform="rotate(180,9.45,777.94)"
+   v:groupContext="shape"
+   v:mID="207"
+   id="shape207-573">
+				<title
+   id="title1081">Sheet.207</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1083"
+   class="st1"
+   d="M 0,792 H 5.4" />
+			</g>
+			<g
+   transform="rotate(180,6.75,777.94)"
+   v:groupContext="shape"
+   v:mID="208"
+   id="shape208-576">
+				<title
+   id="title1086">Sheet.208</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1088"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-3.094,777.094)"
+   v:groupContext="shape"
+   v:mID="209"
+   id="shape209-579">
+				<title
+   id="title1091">Sheet.209</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1093"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="rotate(180,4.21875,783)"
+   v:groupContext="shape"
+   v:mID="210"
+   id="shape210-582">
+				<title
+   id="title1096">Sheet.210</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1098"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(-90,-4.781,778.781)"
+   v:groupContext="shape"
+   v:mID="211"
+   id="shape211-585">
+				<title
+   id="title1101">Sheet.211</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1103"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(180,11.25,772.875)"
+   v:groupContext="shape"
+   v:mID="212"
+   id="shape212-588">
+				<title
+   id="title1106">Sheet.212</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1108"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(0,-18)"
+   v:groupContext="shape"
+   v:mID="213"
+   id="shape213-591">
+				<title
+   id="title1111">Sheet.213</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1113"
+   class="st1"
+   d="M 0,792 H 8.44" />
+			</g>
+			<g
+   transform="rotate(90,23.9065,776.5315)"
+   v:groupContext="shape"
+   v:mID="214"
+   id="shape214-594">
+				<title
+   id="title1116">Sheet.214</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1118"
+   class="st1"
+   d="M 0,792 H 21.37" />
+			</g>
+			<g
+   transform="rotate(-90,-1.4065,778.7815)"
+   v:groupContext="shape"
+   v:mID="215"
+   id="shape215-597">
+				<title
+   id="title1121">Sheet.215</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1123"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="216"
+   id="shape216-600">
+				<title
+   id="title1126">Sheet.216</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1128"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="rotate(-90,-6.469,773.719)"
+   v:groupContext="shape"
+   v:mID="217"
+   id="shape217-603">
+				<title
+   id="title1131">Sheet.217</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1133"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-28.125)"
+   v:groupContext="shape"
+   v:mID="218"
+   id="shape218-606">
+				<title
+   id="title1136">Sheet.218</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1138"
+   class="st1"
+   d="M 0,792 H 1.69" />
+			</g>
+			<g
+   transform="rotate(-90,-11.5315,768.6565)"
+   v:groupContext="shape"
+   v:mID="219"
+   id="shape219-609">
+				<title
+   id="title1141">Sheet.219</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1143"
+   class="st1"
+   d="M 0,792 H 3.37" />
+			</g>
+			<g
+   transform="translate(11.8125,-38.25)"
+   v:groupContext="shape"
+   v:mID="220"
+   id="shape220-612">
+				<title
+   id="title1146">Sheet.220</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1148"
+   class="st1"
+   d="M 0,792 H 10.69" />
+			</g>
+			<g
+   transform="translate(14.0625,-25.3125)"
+   v:groupContext="shape"
+   v:mID="221"
+   id="shape221-615">
+				<title
+   id="title1151">Sheet.221</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1153"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="matrix(0,1,1,0,-753.188,760.5)"
+   v:groupContext="shape"
+   v:mID="222"
+   id="shape222-617">
+				<title
+   id="title1156">Sheet.222</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1158"
+   class="st2"
+   d="m 0,789.19 5.62,-2.82 V 792 Z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="223"
+   id="shape223-619">
+				<title
+   id="title1161">Sheet.223</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1163"
+   class="st1"
+   d="M 0,792 H 13.5" />
+			</g>
+			<g
+   transform="translate(12.375,-18)"
+   v:groupContext="shape"
+   v:mID="224"
+   id="shape224-622">
+				<title
+   id="title1166">Sheet.224</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1168"
+   class="st1"
+   d="M 0,792 H 10.12" />
+			</g>
+			<g
+   transform="translate(22.5,-18)"
+   v:groupContext="shape"
+   v:mID="225"
+   id="shape225-625">
+				<title
+   id="title1171">Junction.20</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1173"
+   class="st3"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-9)"
+   v:groupContext="shape"
+   v:mID="226"
+   id="shape226-627">
+				<title
+   id="title1176">Junction.243</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1178"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+			<g
+   transform="translate(22.5,-45)"
+   v:groupContext="shape"
+   v:mID="227"
+   id="shape227-629">
+				<title
+   id="title1181">Junction.223</title>
+				<v:custProps>
+					<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+				</v:custProps>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1183"
+   class="st2"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+			</g>
+		</g>
+		<g
+   transform="rotate(90,405.578,730.632)"
+   v:groupContext="shape"
+   v:mID="228"
+   id="shape228-631">
+			<title
+   id="title1187">Sheet.228</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1189"
+   class="st1"
+   d="M 0,792 H 25.07" />
+		</g>
+		<g
+   transform="rotate(90,366.0455,770.1645)"
+   v:groupContext="shape"
+   v:mID="229"
+   id="shape229-634">
+			<title
+   id="title1192">Sheet.229</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1194"
+   class="st1"
+   d="M 0,792 H 13.5" />
+		</g>
+		<g
+   transform="translate(344.883,-374.381)"
+   v:groupContext="shape"
+   v:mID="230"
+   id="shape230-637">
+			<title
+   id="title1197">Sheet.230</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1199"
+   class="st1"
+   d="M 0,792 H 130.75" />
+		</g>
+		<g
+   transform="rotate(90,425.0055,842.6245)"
+   v:groupContext="shape"
+   v:mID="231"
+   id="shape231-640">
+			<title
+   id="title1202">Sheet.231</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1204"
+   class="st1"
+   d="M 0,792 H 102.55" />
+		</g>
+		<g
+   transform="translate(375.933,-459.631)"
+   v:groupContext="shape"
+   v:mID="232"
+   id="shape232-643">
+			<title
+   id="title1207">Sheet.232</title>
+			<rect
+   id="rect1209"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(375.933,-367.181)"
+   v:groupContext="shape"
+   v:mID="233"
+   id="shape233-645">
+			<title
+   id="title1212">Sheet.233</title>
+			<rect
+   id="rect1214"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(288.205,-175.799)"
+   v:groupContext="shape"
+   v:mID="234"
+   id="shape234-647">
+			<title
+   id="title1217">Sheet.234</title>
+			<rect
+   id="rect1219"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(375.933,-592.556)"
+   v:groupContext="shape"
+   v:mID="235"
+   id="shape235-649">
+			<title
+   id="title1222">Sheet.235</title>
+			<rect
+   id="rect1224"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(306.405,-522.599)"
+   v:groupContext="shape"
+   v:mID="236"
+   id="shape236-651">
+			<title
+   id="title1227">Sheet.236</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1229"
+   class="st1"
+   d="M 0,792 H 31.73" />
+		</g>
+		<g
+   transform="rotate(-90,-92.233,361.634)"
+   v:groupContext="shape"
+   v:mID="237"
+   id="shape237-654">
+			<title
+   id="title1232">Sheet.237</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1234"
+   class="st1"
+   d="M 0,792 H 77.1" />
+		</g>
+		<g
+   transform="translate(316.264,-597.446)"
+   v:groupContext="shape"
+   v:mID="238"
+   id="shape238-657">
+			<title
+   id="title1237">All text this size.3355</title>
+			<desc
+   id="desc1239">PMID</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1241"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1243"
+   v:langID="2052"
+   class="st7"
+   y="781.72998"
+   x="22.870001"><v:paragraph
+   v:horizAlign="2" /><v:tabList />PMID</text>		</g>
+		<g
+   v:groupContext="group"
+   v:mID="239"
+   transform="matrix(0,-1,-1,0,1193.13,232.154)"
+   id="group239-660">
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Form" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="Type" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="LimitCH" />
+				<v:ud
+   v:val="VT0(0.0625):1"
+   v:nameU="CHMin" />
+			</v:userDefs>
+			<title
+   id="title1246">Capacitor.3389</title>
+			<g
+   transform="rotate(45,18.109579,777.18223)"
+   v:groupContext="shape"
+   v:mID="240"
+   id="shape240-661">
+				<title
+   id="title1248">Sheet.240</title>
+			</g>
+			<g
+   v:groupContext="shape"
+   v:mID="241"
+   id="shape241-663">
+				<title
+   id="title1251">Sheet.241</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1253"
+   class="st5"
+   d="M 4.5,792 V 774" />
+				<path
+   inkscape:connector-curvature="0"
+   id="path1255"
+   class="st5"
+   d="M 9,792 V 774" />
+			</g>
+			<g
+   transform="translate(0,-9)"
+   v:groupContext="shape"
+   v:mID="242"
+   id="shape242-667">
+				<title
+   id="title1258">Sheet.242</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1260"
+   class="st5"
+   d="M 0,792 H 4.5" />
+				<path
+   inkscape:connector-curvature="0"
+   id="path1262"
+   class="st5"
+   d="M 9,792 H 36.17" />
+			</g>
+		</g>
+		<g
+   transform="rotate(-90,-53.1555,314.2445)"
+   v:groupContext="shape"
+   v:mID="244"
+   id="shape244-671">
+			<title
+   id="title1266">GND.3394</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1268"
+   class="st16"
+   d="M 14.47,792 V 763.07 L 0,777.53 Z" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path1270"
+   class="st5"
+   d="M 14.47,792 V 763.07 L 0,777.53 14.47,792" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path1272"
+   class="st5"
+   d="M 28.93,777.53 H 14.47" />
+		</g>
+		<g
+   transform="rotate(-90,-92.9405,288.9265)"
+   v:groupContext="shape"
+   v:mID="245"
+   id="shape245-675">
+			<title
+   id="title1275">Sheet.245</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1277"
+   class="st1"
+   d="M 0,792 H 3.68" />
+		</g>
+		<g
+   v:groupContext="group"
+   v:mID="246"
+   transform="translate(268.155,-590.696)"
+   id="group246-678">
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(1):26"
+   v:nameU="Form" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="SubType" />
+				<v:ud
+   v:val="VT0(0):26"
+   v:nameU="LimitCH" />
+				<v:ud
+   v:val="VT0(0.15625):1"
+   v:nameU="CHMin" />
+				<v:ud
+   v:val="VT0(0.3125):1"
+   v:prompt=""
+   v:nameU="CHMin" />
+			</v:userDefs>
+			<title
+   id="title1280">Resistor</title>
+			<g
+   transform="translate(24.7484,12.0006)"
+   v:groupContext="shape"
+   v:mID="247"
+   id="shape247-679">
+				<title
+   id="title1282">Sheet.247</title>
+			</g>
+			<g
+   v:groupContext="shape"
+   v:mID="248"
+   id="shape248-681">
+				<title
+   id="title1285">Sheet.248</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1287"
+   class="st5"
+   d="m 0,783 3.75,-9 7.5,18 7.5,-18 7.5,18 7.5,-18 7.5,18 3.75,-9" />
+			</g>
+			<g
+   transform="rotate(-45,15.515676,792.2572)"
+   v:groupContext="shape"
+   v:mID="249"
+   id="shape249-684">
+				<title
+   id="title1290">Sheet.249</title>
+			</g>
+			<g
+   transform="translate(0,-9)"
+   v:groupContext="shape"
+   v:mID="250"
+   id="shape250-686">
+				<title
+   id="title1293">Sheet.250</title>
+				<path
+   inkscape:connector-curvature="0"
+   id="path1295"
+   class="st5"
+   d="M 45,792 H 72" />
+			</g>
+		</g>
+		<g
+   transform="rotate(90,332.1715,935.5285)"
+   v:groupContext="shape"
+   v:mID="252"
+   id="shape252-689">
+			<title
+   id="title1299">Sheet.252</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1301"
+   class="st1"
+   d="M 0,792 H 19.88" />
+		</g>
+		<g
+   transform="translate(295.405,-168.762)"
+   v:groupContext="shape"
+   v:mID="253"
+   id="shape253-692">
+			<title
+   id="title1304">Sheet.253</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1306"
+   class="st1"
+   d="M 0,792 H 180.29" />
+		</g>
+		<g
+   transform="translate(375.483,-277.034)"
+   v:groupContext="shape"
+   v:mID="254"
+   id="shape254-695">
+			<title
+   id="title1309">Sheet.254</title>
+			<rect
+   id="rect1311"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(475.383,-284.099)"
+   v:groupContext="shape"
+   v:mID="255"
+   id="shape255-697">
+			<title
+   id="title1314">Junction2.268</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1316"
+   class="st17"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(314.239,-270.442)"
+   v:groupContext="shape"
+   v:mID="256"
+   id="shape256-699">
+			<title
+   id="title1319">All text this size.121</title>
+			<desc
+   id="desc1321">BATP</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1323"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1325"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="21.299999"><v:paragraph
+   v:horizAlign="2" /><v:tabList />BATP</text>		</g>
+		<g
+   transform="translate(410.177,-466.831)"
+   v:groupContext="shape"
+   v:mID="257"
+   id="shape257-702">
+			<title
+   id="title1328">Junction2.122</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1330"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(385.383,-472.132)"
+   v:groupContext="shape"
+   v:mID="258"
+   id="shape258-704">
+			<title
+   id="title1333">All text.260</title>
+			<desc
+   id="desc1335">System Load 1</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="41.4673"
+   width="100.94"
+   cy="771.266"
+   cx="50.4673" />
+			<rect
+   id="rect1337"
+   class="st6"
+   height="41.4673"
+   width="100.935"
+   y="750.53302"
+   x="0" />
+			<text
+   id="text1339"
+   v:langID="1033"
+   class="st7"
+   y="776.52002"
+   x="3.77"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1.5" /><v:tabList />System Load 1</text>		</g>
+		<g
+   transform="translate(59.1328,-637.349)"
+   v:groupContext="shape"
+   v:mID="259"
+   id="shape259-707">
+			<title
+   id="title1342">All text this size.518</title>
+			<desc
+   id="desc1344">3.6-24V</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1346"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1348"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />3.6-24V</text>		</g>
+		<g
+   transform="translate(395.81,-460.998)"
+   v:groupContext="shape"
+   v:mID="260"
+   id="shape260-710">
+			<title
+   id="title1351">All text this size.519</title>
+			<desc
+   id="desc1353">2.5-19.4V</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="71.09"
+   cy="777.533"
+   cx="35.5402" />
+			<rect
+   id="rect1355"
+   class="st6"
+   height="28.934601"
+   width="71.080498"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1357"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />2.5-19.4V</text>		</g>
+		<g
+   transform="translate(417.198,-368.632)"
+   v:groupContext="shape"
+   v:mID="261"
+   id="shape261-713">
+			<title
+   id="title1360">All text this size.520</title>
+			<desc
+   id="desc1362">0-18.8V</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1364"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1366"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />0-18.8V</text>		</g>
+		<g
+   transform="translate(395.014,-592.349)"
+   v:groupContext="shape"
+   v:mID="262"
+   id="shape262-716">
+			<title
+   id="title1369">All text this size.522</title>
+			<desc
+   id="desc1371">2.8-24V</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1373"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1375"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />2.8-24V</text>		</g>
+		<g
+   transform="translate(410.133,-599.696)"
+   v:groupContext="shape"
+   v:mID="263"
+   id="shape263-719">
+			<title
+   id="title1378">Sheet.263</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1380"
+   class="st8"
+   d="M 0,792 H 57.01" />
+		</g>
+		<g
+   transform="translate(410.133,-599.099)"
+   v:groupContext="shape"
+   v:mID="264"
+   id="shape264-724">
+			<title
+   id="title1383">Junction2.269</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1385"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(385.652,-620.985)"
+   v:groupContext="shape"
+   v:mID="265"
+   id="shape265-726">
+			<title
+   id="title1388">All text this size.265</title>
+			<desc
+   id="desc1390">Optional Uninterrupted System Load 2</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="41.4673"
+   width="100.94"
+   cy="771.266"
+   cx="50.4673" />
+			<rect
+   id="rect1392"
+   class="st6"
+   height="41.4673"
+   width="100.935"
+   y="750.53302"
+   x="0" />
+			<text
+   id="text1398"
+   v:langID="1033"
+   class="st7"
+   y="760.77002"
+   x="24.4"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-1" /><v:tabList />Optional <tspan
+   id="tspan1394"
+   class="st11"
+   dy="1em"
+   x="8.0500002">Uninterrupted<v:newlineChar /></tspan><tspan
+   id="tspan1396"
+   class="st11"
+   dy="1em"
+   x="3.77">System Load 2</tspan></text>		</g>
+		<g
+   transform="translate(195.933,-540.599)"
+   v:groupContext="shape"
+   v:mID="266"
+   id="shape266-731">
+			<title
+   id="title1401">Sheet.266</title>
+			<rect
+   id="rect1403"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(112.817,-575.474)"
+   v:groupContext="shape"
+   v:mID="267"
+   id="shape267-733">
+			<title
+   id="title1406">Line, Horiz.283</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1408"
+   class="st1"
+   d="M 0,792 H 9.95" />
+		</g>
+		<g
+   transform="translate(153.633,-547.349)"
+   v:groupContext="shape"
+   v:mID="268"
+   id="shape268-736">
+			<title
+   id="title1411">Line, Horiz.305</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1413"
+   class="st1"
+   d="M 0,792 H 42.3" />
+		</g>
+		<g
+   transform="rotate(-90,-196.858,441.509)"
+   v:groupContext="shape"
+   v:mID="269"
+   id="shape269-739">
+			<title
+   id="title1416">Line, Vert.284</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1418"
+   class="st1"
+   d="M 0,792 H 7.22" />
+		</g>
+		<g
+   transform="translate(210.198,-547.349)"
+   v:groupContext="shape"
+   v:mID="270"
+   id="shape270-742">
+			<title
+   id="title1421">All text this size.307</title>
+			<desc
+   id="desc1423">ACDRV2</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1425"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1427"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />ACDRV2</text>		</g>
+		<g
+   transform="translate(506.531,-521.896)"
+   v:groupContext="shape"
+   v:mID="271"
+   id="shape271-745">
+			<title
+   id="title1430">All text this size (7-pt).287</title>
+			<desc
+   id="desc1432">MPPT Application</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="10.4062"
+   width="51.47"
+   cy="786.797"
+   cx="25.7344" />
+			<rect
+   id="rect1434"
+   class="st6"
+   height="10.4062"
+   width="51.4688"
+   y="781.59399"
+   x="0" />
+			<text
+   id="text1438"
+   v:langID="1033"
+   class="st20"
+   y="783.79999"
+   x="11.84"><v:paragraph
+   v:horizAlign="1" /><v:tabList />MPPT <tspan
+   id="tspan1436"
+   class="st11"
+   dy="1.2em"
+   x="1.27">Application</tspan></text>		</g>
+		<g
+   transform="translate(506.531,-549.599)"
+   v:groupContext="shape"
+   v:mID="272"
+   id="shape272-749">
+			<title
+   id="title1441">All text this size (7-pt).322</title>
+			<desc
+   id="desc1443">Back Up Application</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="10.4062"
+   width="51.47"
+   cy="786.797"
+   cx="25.7344" />
+			<rect
+   id="rect1445"
+   class="st6"
+   height="10.4062"
+   width="51.4688"
+   y="781.59399"
+   x="0" />
+			<text
+   id="text1449"
+   v:langID="1033"
+   class="st20"
+   y="783.79999"
+   x="6.8400002"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Back Up <tspan
+   id="tspan1447"
+   class="st11"
+   dy="1.2em"
+   x="1.27">Application</tspan></text>		</g>
+		<g
+   transform="translate(482.766,-569.146)"
+   v:groupContext="shape"
+   v:mID="273"
+   id="shape273-753">
+			<title
+   id="title1452">All text this size (7-pt).323</title>
+			<desc
+   id="desc1454">Legend</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="10.4062"
+   width="54"
+   cy="786.797"
+   cx="27" />
+			<rect
+   id="rect1456"
+   class="st6"
+   height="10.4062"
+   width="54"
+   y="781.59399"
+   x="0" />
+			<text
+   id="text1458"
+   v:langID="1033"
+   class="st7"
+   y="791"
+   x="3.6400001"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Legend</text>		</g>
+		<g
+   transform="rotate(-90.4592,-180.03132,483.39935)"
+   v:groupContext="shape"
+   v:mID="274"
+   id="shape274-756">
+			<title
+   id="title1461">Sheet.274</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1463"
+   class="st1"
+   d="M 0,792 H 31.19" />
+		</g>
+		<g
+   transform="rotate(-89.5865,-137.30444,528.81324)"
+   v:groupContext="shape"
+   v:mID="275"
+   id="shape275-759">
+			<title
+   id="title1466">Sheet.275</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1468"
+   class="st1"
+   d="M 0,792 H 34.64" />
+		</g>
+		<g
+   transform="rotate(90,394.6005,587.0325)"
+   v:groupContext="shape"
+   v:mID="276"
+   id="shape276-762">
+			<title
+   id="title1471">Sheet.276</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1473"
+   class="st1"
+   d="M 0,792 H 23.53" />
+		</g>
+		<g
+   transform="translate(189.633,-599.662)"
+   v:groupContext="shape"
+   v:mID="277"
+   id="shape277-765">
+			<title
+   id="title1476">Junction2.395</title>
+			<v:custProps>
+				<v:cp
+   v:val="VT4()"
+   v:langID="1033"
+   v:ask="false"
+   v:invis="false"
+   v:sortKey=""
+   v:format="@"
+   v:type="0"
+   v:prompt="Enter device label."
+   v:lbl="Label"
+   v:nameU="Label" />
+			</v:custProps>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1478"
+   class="st19"
+   d="m -1.8,792 a 1.8,1.8 0 0 1 3.6,0 1.8,1.8 0 1 1 -3.6,0 z" />
+		</g>
+		<g
+   transform="translate(185.268,-576.037)"
+   v:groupContext="shape"
+   v:mID="278"
+   id="shape278-767">
+			<title
+   id="title1481">Line, Horiz.396</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1483"
+   class="st1"
+   d="M 0,792 H 4.36" />
+		</g>
+		<g
+   transform="matrix(0,-1,-1,0,981.633,191.682)"
+   v:groupContext="shape"
+   v:mID="279"
+   id="shape279-770">
+			<title
+   id="title1486">Sheet.279</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1488"
+   class="st1"
+   d="M 0,792 H 23.53" />
+		</g>
+		<g
+   transform="matrix(1,0,0,-1,184.808,960.151)"
+   v:groupContext="shape"
+   v:mID="280"
+   id="shape280-773">
+			<title
+   id="title1491">Line, Horiz.398</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1493"
+   class="st1"
+   d="M 0,792 H 4.83" />
+		</g>
+		<g
+   transform="translate(54.9482,-604.314)"
+   v:groupContext="shape"
+   v:mID="281"
+   id="shape281-776">
+			<title
+   id="title1496">Boundary.399</title>
+			<desc
+   id="desc1498">Adapter</desc>
+			<v:textBlock
+   v:margins="rect(4,4,4,4)" />
+			<v:textRect
+   height="39.7851"
+   width="57.87"
+   cy="772.107"
+   cx="28.9346" />
+			<rect
+   id="rect1500"
+   class="st21"
+   height="39.785099"
+   width="57.869301"
+   y="752.21503"
+   x="0" />
+			<text
+   id="text1502"
+   v:langID="1033"
+   class="st7"
+   y="776.31"
+   x="4.4200001"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Adapter</text>		</g>
+		<g
+   transform="rotate(6.89891e-5,518109650,93696210)"
+   v:groupContext="shape"
+   v:mID="282"
+   id="shape282-779">
+			<title
+   id="title1505">Line, Horiz.400</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1507"
+   class="st1"
+   d="M 0,792 H 9.32" />
+		</g>
+		<g
+   transform="translate(240.933,-637.349)"
+   v:groupContext="shape"
+   v:mID="283"
+   id="shape283-782">
+			<title
+   id="title1510">Sheet.283</title>
+			<rect
+   id="rect1512"
+   class="st18"
+   height="14.4"
+   width="14.4"
+   y="777.59998"
+   x="0" />
+		</g>
+		<g
+   transform="translate(257.133,-617.415)"
+   v:groupContext="shape"
+   v:mID="284"
+   id="shape284-784">
+			<title
+   id="title1515">All text this size.402</title>
+			<desc
+   id="desc1517">ACDRV1</desc>
+			<v:textBlock
+   v:margins="rect(0,0,0,0)" />
+			<v:textRect
+   height="28.9346"
+   width="57.87"
+   cy="777.533"
+   cx="28.9346" />
+			<rect
+   id="rect1519"
+   class="st6"
+   height="28.934601"
+   width="57.869301"
+   y="763.065"
+   x="0" />
+			<text
+   id="text1521"
+   v:langID="1033"
+   class="st7"
+   y="781.72998"
+   x="0"><v:paragraph /><v:tabList />ACDRV1</text>		</g>
+		<g
+   transform="matrix(1,0,0,-1,153.633,924.151)"
+   v:groupContext="shape"
+   v:mID="285"
+   id="shape285-787">
+			<title
+   id="title1524">Line, Horiz.403</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1526"
+   class="st1"
+   d="M 0,792 H 94.5" />
+		</g>
+		<g
+   transform="matrix(0,1,1,0,-638.367,132.151)"
+   v:groupContext="shape"
+   v:mID="286"
+   id="shape286-790">
+			<title
+   id="title1529">Line, Vert.404</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1531"
+   class="st1"
+   d="M 0,792 H 15.75" />
+		</g>
+		<g
+   transform="rotate(-90,-201.808,342.059)"
+   v:groupContext="shape"
+   v:mID="287"
+   id="shape287-793">
+			<title
+   id="title1534">Line, Vert.405</title>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1536"
+   class="st1"
+   d="M 0,792 H 8.1" />
+		</g>
+		<g
+   transform="translate(122.383,-604.724)"
+   v:groupContext="shape"
+   v:mID="288"
+   id="shape288-796">
+			<title
+   id="title1539">Circle.288</title>
+			<desc
+   id="desc1541">Back-to-Back NFET</desc>
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+			</v:userDefs>
+			<v:textBlock
+   v:margins="rect(4,4,4,4)" />
+			<v:textRect
+   height="39.375"
+   width="62.44"
+   cy="772.313"
+   cx="31.2188" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path1543"
+   class="st22"
+   d="m 0,772.31 a 31.22,19.688257 0 0 1 62.44,0 31.22,19.688257 0 0 1 -62.44,0 z" />
+			<text
+   id="text1547"
+   v:langID="1033"
+   class="st23"
+   y="769.46997"
+   x="4.46"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Back-to-Back <tspan
+   id="tspan1545"
+   class="st11"
+   dy="1.223em"
+   x="19.469999">NFET</tspan></text>		</g>
+		<g
+   transform="translate(122.945,-554.662)"
+   v:groupContext="shape"
+   v:mID="289"
+   id="shape289-800">
+			<title
+   id="title1550">Circle.408</title>
+			<desc
+   id="desc1552">Back-to-Back NFET</desc>
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+			</v:userDefs>
+			<v:textBlock
+   v:margins="rect(4,4,4,4)" />
+			<v:textRect
+   height="39.375"
+   width="62.44"
+   cy="772.313"
+   cx="31.2188" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path1554"
+   class="st22"
+   d="m 0,772.31 a 31.22,19.688257 0 0 1 62.44,0 31.22,19.688257 0 0 1 -62.44,0 z" />
+			<text
+   id="text1558"
+   v:langID="1033"
+   class="st23"
+   y="769.46997"
+   x="4.46"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Back-to-Back <tspan
+   id="tspan1556"
+   class="st11"
+   dy="1.223em"
+   x="19.469999">NFET</tspan></text>		</g>
+		<g
+   transform="translate(54.8828,-555.224)"
+   v:groupContext="shape"
+   v:mID="290"
+   id="shape290-804">
+			<title
+   id="title1561">Diamond</title>
+			<desc
+   id="desc1563">PV Panel</desc>
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+			</v:userDefs>
+			<v:textBlock
+   v:margins="rect(4,4,4,4)" />
+			<v:textRect
+   height="20.25"
+   width="43.04"
+   cy="771.75"
+   cx="28.6875" />
+			<path
+   inkscape:connector-curvature="0"
+   id="path1565"
+   class="st22"
+   d="M 0,771.75 28.69,751.5 57.37,771.75 28.69,792 Z" />
+			<text
+   id="text1569"
+   v:langID="1033"
+   class="st24"
+   y="768.95001"
+   x="21.1"><v:paragraph
+   v:horizAlign="1"
+   v:spLine="-0.8" /><v:tabList />PV <tspan
+   id="tspan1567"
+   class="st11"
+   dy="0.80000001em"
+   x="12.95">Panel</tspan></text>		</g>
+		<g
+   transform="translate(475.652,-545.099)"
+   v:groupContext="shape"
+   v:mID="291"
+   id="shape291-808">
+			<title
+   id="title1572">Circle.293</title>
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+			</v:userDefs>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1574"
+   class="st25"
+   d="M 0,783 A 14.6156,9 0 1 1 29.23,783 14.6156,9 0 1 1 0,783 Z" />
+		</g>
+		<g
+   transform="translate(482.329,-518.099)"
+   v:groupContext="shape"
+   v:mID="292"
+   id="shape292-810">
+			<title
+   id="title1577">Diamond.294</title>
+			<v:userDefs>
+				<v:ud
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
+			</v:userDefs>
+			<path
+   inkscape:connector-curvature="0"
+   id="path1579"
+   class="st25"
+   d="m 0,783 9,-9 9,9 -9,9 z" />
+		</g>
+	</g>
+</svg>

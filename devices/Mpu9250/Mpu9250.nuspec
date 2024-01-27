@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Mpu9250</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Mpu9250</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -16,18 +15,18 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Mpu9250 for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Mpu9250 assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mpu9250</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Mpu9250, Iot.Device.Mpu6500 and Iot.Device.Mpu6050 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Mpu9250, Mpu6500 and Mpu6050 assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mpu9250 Iot.Device.Mpu6500 Iot.Device.Mpu6050</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Numerics" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.0.3" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="4.141.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.418" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.423" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.43.0" />
     </dependencies>
   </metadata>
   <files>

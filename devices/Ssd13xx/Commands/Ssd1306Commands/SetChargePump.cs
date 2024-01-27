@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetChargePump command
+    /// Represents SetChargePump command.
     /// </summary>
     public class SetChargePump : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetChargePump" /> class.
         /// This command controls the switching capacitor regulator circuit.
         /// </summary>
         /// <param name="enableChargePump">Determines if charge pump is enabled while the display is on.</param>
@@ -23,7 +24,7 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
         public byte Id => 0x8D;
 
         /// <summary>
-        /// Determines if charge pump is enabled while the display is on.
+        /// Gets a value indicating whether charge pump is enabled while the display is on.
         /// </summary>
         public bool EnableChargePump { get; }
 

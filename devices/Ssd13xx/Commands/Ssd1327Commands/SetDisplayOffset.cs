@@ -6,11 +6,12 @@ using System;
 namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
 {
     /// <summary>
-    /// Represents SetDisplayOffset command
+    /// Represents SetDisplayOffset command.
     /// </summary>
     public class SetDisplayOffset : ISsd1327Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetDisplayOffset" /> class.
         /// This command specifies the mapping of the display start line to one of COM0-COM127
         /// (assuming that COM0 is the display start line then the display start line register is equal to 0).
         /// </summary>
@@ -26,12 +27,12 @@ namespace Iot.Device.Ssd13xx.Commands.Ssd1327Commands
         }
 
         /// <summary>
-        /// The value that represents the command.
+        /// Gets the value that represents the command.
         /// </summary>
         public byte Id => 0xA2;
 
         /// <summary>
-        /// Display offset with a range of 0-127.
+        /// Gets display offset with a range of 0-127.
         /// </summary>
         public byte DisplayOffset { get; }
 

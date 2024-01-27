@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.Charlieplex</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.Charlieplex</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -20,13 +19,13 @@
     <summary>Iot.Device.Charlieplex assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Charlieplex</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.1.113.2032" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.1.113.2032" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.0.4" />
-      <dependency id="nanoFramework.System.Threading" version="1.0.4" />
-      <dependency id="nanoFramework.System.Math" version="1.4.4" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.423" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.418" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.38" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.32" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
     </dependencies>
   </metadata>
   <files>

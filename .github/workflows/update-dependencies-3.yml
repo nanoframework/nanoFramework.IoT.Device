@@ -7,33 +7,21 @@ name: Update dependencies (round 3)
 
 on:
   schedule:
-    # At 00:30 UTC every day.
-    # Set 30 min apart from round 2 to allow enough time for any changes to propagate.
-    - cron:  '30 00 * * *'
+    # At 00:30 UTC .
+    # Set 15 min apart from previous round to allow enough time for any changes to propagate.
+    - cron:  '30 00 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: pwsh
-
 jobs:
   update-nuget-dependencies:
-    name: Update .NET nanoFramework dependencies
-    timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
-    runs-on: windows-latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Update dependencies
-        uses: nanoframework/nanodu@v1
-        with:
-          solutionsToCheck: '*.sln'
-          workingDirectory: '${{ github.workspace }}/devices'
-          exclusionList: 'Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper'
-          branchToPr: 'develop'
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
+    with:
+      timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+      workingDirectory: devices
+      branchToPr: 'develop'      
+      solutionsToCheck: |
+        CharacterLcd.sln

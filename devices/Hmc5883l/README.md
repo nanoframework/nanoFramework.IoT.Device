@@ -6,7 +6,7 @@ HMC5883L is a surface-mount, multi-chip module designed for low-field magnetic s
 
 - HMC5883L [datasheet](https://cdn.datasheetspdf.com/pdf-down/H/M/C/HMC5883L-Honeywell.pdf)
 
-![sensor](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hmc5883l/sensor.jpg)
+![sensor](./sensor.jpg)
 
 ## Usage
 
@@ -65,7 +65,7 @@ using (Hmc5883l sensor = new Hmc5883l(device))
 
 ### Circuit
 
-![circuit](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hmc5883l/HMC5883L_circuit_bb.png)
+![circuit](./HMC5883L_circuit_bb.png)
 
 - SCL - SCL
 - SDA - SDA
@@ -74,4 +74,4 @@ using (Hmc5883l sensor = new Hmc5883l(device))
 
 ### Result
 
-![running result](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Hmc5883l/RunningResult.jpg)
+![running result](./RunningResult.jpg)

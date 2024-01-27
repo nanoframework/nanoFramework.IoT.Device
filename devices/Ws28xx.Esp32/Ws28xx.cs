@@ -19,22 +19,22 @@ namespace Iot.Device.Ws28xx.Esp32
         /// <summary>
         /// Gets or sets the One pulse command.
         /// </summary>
-        internal RmtCommand OnePulse { get; set; }
+        public RmtCommand OnePulse { get; set; }
 
         /// <summary>
         /// Gets or sets the zero pulse command.
         /// </summary>
-        internal RmtCommand ZeroPulse { get; set; }
+        public RmtCommand ZeroPulse { get; set; }
 
         /// <summary>
         /// Gets or sets the reset command.
         /// </summary>
-        internal RmtCommand ResetCommand { get; set; }
+        public RmtCommand ResetCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the clock divider.
         /// </summary>
-        internal byte ClockDivider { get; set; } = 2;
+        public byte ClockDivider { get; set; } = 2;
 
         /// <summary>
         /// Gets backing image to be updated on the driver.
@@ -62,12 +62,16 @@ namespace Iot.Device.Ws28xx.Esp32
         /// </summary>
         public void Update()
         {
-            var transmitter = new TransmitterChannel(GpioPin);
-            transmitter.CarrierEnabled = false;
+            var transmitterSettings = new TransmitChannelSettings(pinNumber: GpioPin)
+            {
+                EnableCarrierWave = false,
+                IdleLevel = false,
 
-            // this value for the clock divider considers a clock source of 80MHz which is what we have fixed in native
-            transmitter.ClockDivider = ClockDivider;
-            transmitter.IdleLevel = false;
+                // this value for the clock divider considers a clock source of 80MHz which is what we have fixed in native
+                ClockDivider = this.ClockDivider,
+            };
+            var transmitter = new TransmitterChannel(transmitterSettings);
+
             for (int i = 0; i < Image.Data.Length; i++)
             {
                 SerializeColor(Image.Data[i], transmitter);

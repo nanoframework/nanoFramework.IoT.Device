@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands
 {
     /// <summary>
-    /// Represents SetInverseDisplay command
+    /// Represents SetInverseDisplay command.
     /// </summary>
     public class SetInverseDisplay : ISharedCommand
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetInverseDisplay" /> class.
         /// This command sets the display to be inverse.  Displays a RAM data of 0 indicates an ON pixel.
         /// </summary>
         public SetInverseDisplay()

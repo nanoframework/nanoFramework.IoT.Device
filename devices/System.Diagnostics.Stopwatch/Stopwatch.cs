@@ -24,12 +24,6 @@ namespace System.Diagnostics
         public static readonly bool IsHighResolution = false;
 
         /// <summary>
-        /// Initializes a new instance of the System.Diagnostics.Stopwatch class.
-        /// </summary>
-        public Stopwatch()
-        { }
-
-        /// <summary>
         /// Gets the total elapsed time measured by the current instance.
         /// </summary>
         public TimeSpan Elapsed => TimeSpan.FromTicks(ElapsedTicks);
@@ -52,7 +46,7 @@ namespace System.Diagnostics
         /// <summary>
         /// Gets the current number of ticks in the timer mechanism.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Number of ticks.</returns>
         public static long GetTimestamp() => Environment.TickCount64 * TimeSpan.TicksPerMillisecond;
 
         /// <summary>

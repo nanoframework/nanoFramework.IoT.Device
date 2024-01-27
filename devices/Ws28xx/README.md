@@ -1,4 +1,4 @@
-﻿# Ws28xx LED drivers
+﻿# Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel using SPI - LED drivers
 
 This binding allows you to update the RGB LEDs on Ws28xx and based strips and matrices.
 
@@ -17,7 +17,7 @@ To see how to use the binding in code, see the [sample](samples/Program.cs).
 
 ### WS2812B
 
-![image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/W228xx/WS2812B.png)
+![image](./WS2812B.png)
 
 
 

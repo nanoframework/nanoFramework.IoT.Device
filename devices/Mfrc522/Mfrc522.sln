@@ -2,52 +2,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Card", "..\Card\Card.nfproj", "{7E99A789-283C-AFEF-CCEF-50A40E38813F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mifare", "..\Card\Mifare\Mifare.nfproj", "{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultralight", "..\Card\Ultralight\Ultralight.nfproj", "{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ndef", "..\Card\Ndef\Ndef.nfproj", "{150CED27-7CF0-4671-9370-B330D2D49066}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Card Projects", "Card Projects", "{E039A720-3B6F-405D-A6E3-256E21501AA0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mfrc522", "Mfrc522.nfproj", "{4BA8E406-DEF9-921A-8AC2-DBFDC60132D1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{4B393DB9-C4B6-424C-B985-82A2FEA51513}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Stopwatch", "..\..\src\Stopwatch\Stopwatch.shproj", "{875D133B-033B-4D11-B1A2-DEF898349AD5}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BinaryPrimitives", "..\..\src\BinaryPrimitives\BinaryPrimitives.shproj", "{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mfrc522.samples", "samples\Mfrc522.samples.nfproj", "{73D02D0B-9BF3-4036-9F0C-4613A9E3E3D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95900601-8B4F-4BDF-AACA-5E1DB27D09DC}"
+	ProjectSection(SolutionItems) = preProject
+		Mfrc522.nuspec = Mfrc522.nuspec
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\src\BinaryPrimitives\BinaryPrimitives.projitems*{3f28b003-6318-4e21-a9b6-6c0dbd0bdbfd}*SharedItemsImports = 13
-		..\..\src\Stopwatch\Stopwatch.projitems*{875d133b-033b-4d11-b1a2-def898349ad5}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E99A789-283C-AFEF-CCEF-50A40E38813F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{150CED27-7CF0-4671-9370-B330D2D49066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{150CED27-7CF0-4671-9370-B330D2D49066}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4BA8E406-DEF9-921A-8AC2-DBFDC60132D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4BA8E406-DEF9-921A-8AC2-DBFDC60132D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BA8E406-DEF9-921A-8AC2-DBFDC60132D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,14 +30,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{7E99A789-283C-AFEF-CCEF-50A40E38813F} = {E039A720-3B6F-405D-A6E3-256E21501AA0}
-		{D1F84C93-3A17-46FA-9761-CF4AAC3EF2D7} = {E039A720-3B6F-405D-A6E3-256E21501AA0}
-		{DC2A68E1-21C5-4C4E-BA99-222F116EC4B2} = {E039A720-3B6F-405D-A6E3-256E21501AA0}
-		{150CED27-7CF0-4671-9370-B330D2D49066} = {E039A720-3B6F-405D-A6E3-256E21501AA0}
-		{875D133B-033B-4D11-B1A2-DEF898349AD5} = {4B393DB9-C4B6-424C-B985-82A2FEA51513}
-		{3F28B003-6318-4E21-A9B6-6C0DBD0BDBFD} = {4B393DB9-C4B6-424C-B985-82A2FEA51513}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B96E4DBE-0783-4379-AE43-2E3148A6034F}

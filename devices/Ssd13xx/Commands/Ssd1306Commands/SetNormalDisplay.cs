@@ -4,11 +4,12 @@
 namespace Iot.Device.Ssd13xx.Commands.Ssd1306Commands
 {
     /// <summary>
-    /// Represents SetNormalDisplay command
+    /// Represents SetNormalDisplay command.
     /// </summary>
     public class SetNormalDisplay : ISsd1306Command
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SetNormalDisplay" /> class.
         /// This command sets the display to be normal.  Displays a RAM data of 1 indicates an ON pixel.
         /// </summary>
         public SetNormalDisplay()

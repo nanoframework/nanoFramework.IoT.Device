@@ -20,7 +20,7 @@ You need to create a ```Tm1637``` class with 2 pins, the clock one and the data 
 Tm1637 tm1637 = new Tm1637(4, 0);
 ```
 
-![tm1637](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Tm1637/tm1637_fritzing.png)
+![tm1637](./tm1637_fritzing.png)
 
 ### Screen on, off, brightness
 

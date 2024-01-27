@@ -9,16 +9,16 @@ using Ssd1327Cmnds = Iot.Device.Ssd13xx.Commands.Ssd1327Commands;
 namespace Iot.Device.Ssd13xx
 {
     /// <summary>
-    /// Represents SSD1327 OLED display
+    /// Represents SSD1327 OLED display.
     /// </summary>
     public class Ssd1327 : Ssd13xx
     {
-        private const byte Command_Mode = 0x80;
-        private const byte Data_Mode = 0x40;
+        private const byte CommandMode = 0x80;
+        private const byte DataMode = 0x40;
         private const int CleaningBufferSize = 48 * 96;
 
         /// <summary>
-        /// Initializes new instance of Ssd1327 device that will communicate using I2C bus.
+        /// Initializes a new instance of the <see cref="Ssd1327" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         public Ssd1327(I2cDevice i2cDevice)
@@ -27,21 +27,21 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
-        /// Sets column address
+        /// Sets column address.
         /// </summary>
-        /// <param name="startAddress">Start address</param>
-        /// <param name="endAddress">End address</param>
+        /// <param name="startAddress">Start address.</param>
+        /// <param name="endAddress">End address.</param>
         public void SetColumnAddress(byte startAddress = 0x08, byte endAddress = 0x37) => SendCommand(new Ssd1327Cmnds.SetColumnAddress(startAddress, endAddress));
 
         /// <summary>
-        /// Sets row address
+        /// Sets row address.
         /// </summary>
-        /// <param name="startAddress">Start address</param>
-        /// <param name="endAddress">End address</param>
+        /// <param name="startAddress">Start address.</param>
+        /// <param name="endAddress">End address.</param>
         public void SetRowAddress(byte startAddress = 0x00, byte endAddress = 0x5f) => SendCommand(new Ssd1327Cmnds.SetRowAddress(startAddress, endAddress));
 
         /// <summary>
-        /// Clears the display
+        /// Clears the display.
         /// </summary>
         public void ClearDisplay()
         {
@@ -59,21 +59,21 @@ namespace Iot.Device.Ssd13xx
         /// <param name="command">The command to send to the display controller.</param>
         public void SendCommand(byte command)
         {
-            SpanByte writeBuffer = new byte[] { Command_Mode, command };
+            SpanByte writeBuffer = new byte[] { CommandMode, command };
 
             _i2cDevice.Write(writeBuffer);
         }
 
         /// <summary>
-        /// Sends command to the device
+        /// Sends command to the device.
         /// </summary>
-        /// <param name="command">Command being send</param>
+        /// <param name="command">Command being send.</param>
         public void SendCommand(ISsd1327Command command) => SendCommand((ICommand)command);
 
         /// <summary>
-        /// Sends command to the device
+        /// Sends command to the device.
         /// </summary>
-        /// <param name="command">Command being send</param>
+        /// <param name="command">Command being send.</param>
         public override void SendCommand(ISharedCommand command) => SendCommand(command);
 
         /// <summary>
@@ -82,16 +82,16 @@ namespace Iot.Device.Ssd13xx
         /// <param name="data">The data to send to the display controller.</param>
         public void SendData(byte data)
         {
-            SpanByte writeBuffer = new byte[] { Data_Mode, data };
+            SpanByte writeBuffer = new byte[] { DataMode, data };
 
             _i2cDevice.Write(writeBuffer);
         }
 
         private void SendCommand(ICommand command)
         {
-            byte[]? commandBytes = command?.GetBytes();
+            byte[] commandBytes = command.GetBytes();
 
-            if (commandBytes is not { Length: >0 })
+            if (commandBytes.Length == 0)
             {
                 throw new ArgumentException(nameof(command), "Argument is either null or there were no bytes to send.");
             }

@@ -18,6 +18,10 @@ trigger:
       - LICENSE.md
       - README.md
       - tips-trick.md
+      - assets/*
+      - config/*
+      - .github/*
+      - StyleCop/*
 
 # PR always trigger build
 pr:
@@ -35,9 +39,13 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  DOTNET_NOLOGO: true
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  - group: sign-client-credentials
+  - name: DOTNET_NOLOGO
+    value: true  
+  - name: buildPlatform
+    value: 'Any CPU'  
+  - name: buildConfiguration
+    value: 'Release'
 
 steps:
 
@@ -54,6 +62,13 @@ steps:
   displayName: Setup git identity
 
 - template: azure-pipelines-templates/install-nuget.yml@templates
+- task: Cache@2
+  displayName: Cache NuGet packages
+  condition: succeeded()
+  continueOnError: true
+  inputs:
+    key: 'nuget | **/packages.lock.json'
+    path: $(UserProfile)/.nuget/packages
 
 - task: DotNetCoreCLI@2  
   displayName: Install nanovc tool
@@ -63,7 +78,7 @@ steps:
     custom: tool
     arguments: install -g nanovc --add-source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json
 
-- task: InstallnFBuildComponents@1
+- task: InstallNanoMSBuildComponents@1
   condition: succeeded()
   displayName: Install nanoFramework MSBuild components
   env:
@@ -105,7 +120,7 @@ steps:
       echo "##vso[task.setvariable variable=NUGET_COUNT;isOutput=true]$count"
 
 - task: DotNetCoreCLI@2
-  displayName: Install SignTool tool
+  displayName: Install Sign Client CLI
   condition: >-
     and(
       succeeded(),
@@ -115,19 +130,22 @@ steps:
   inputs:
     command: custom
     custom: tool
-    arguments: install --tool-path . SignClient
+    arguments: install --tool-path . sign --version 0.9.1-beta.23530.1
 
 - pwsh: |
-    .\SignClient "Sign" `
-    --baseDirectory "$(Build.ArtifactStagingDirectory)" `
-    --input "**/*.nupkg" `
-    --config "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\SignClient.json" `
-    --filelist "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
-    --user "$(SignClientUser)" `
-    --secret '$(SignClientSecret)' `
-    --name "IoT.Device" `
+    .\sign code azure-key-vault `
+    "**/*.nupkg" `
+    --base-directory "$(Build.ArtifactStagingDirectory)" `
+    --file-list "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
+    --publisher-name ".NET nanoFramework" `
     --description "IoT.Device" `
-    --descriptionUrl "https://github.com/$env:Build_Repository_Name"
+    --description-url "https://github.com/$env:Build_Repository_Name" `
+    --azure-key-vault-tenant-id "$(SignTenantId)" `
+    --azure-key-vault-client-id "$(SignClientId)" `
+    --azure-key-vault-client-secret "$(SignClientSecret)" `
+    --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
+    --azure-key-vault-url "$(SignKeyVaultUrl)" `
+    --timestamp-url http://timestamp.digicert.com
   displayName: Sign packages
   continueOnError: true
   condition: >-
@@ -163,16 +181,21 @@ steps:
   displayName: Push NuGet packages to NuGet
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
-- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
-  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+- task: NuGetCommand@2
   condition: >-
     and(
       succeeded(),
       gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
-  continueOnError: false
+  continueOnError: true
   displayName: Push NuGet packages to NuGet
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs
@@ -204,6 +227,19 @@ steps:
       git config user.email 'nanoframework@outlook.com'
       git config user.name 'nfbot'
 
+      # check if anything was changed
+      $repoStatus = "$(git status --short --porcelain)"
+
+      if ($repoStatus -ne "")
+      {
+          Write-Host "There are changes in README files, changes will be pushed to GitHub"
+      }
+      else
+      {
+          Write-Host "Repository is clean, no changes to push to GitHub"
+          exit 0
+      }
+
       git add README.md
       git add devices/README.md
       git commit -m "Update device lists" -m"***NO_CI***"
@@ -212,7 +248,7 @@ steps:
 
       # compute authorization header in format "AUTHORIZATION: basic 'encoded token'"
       # 'encoded token' is the Base64 of the string "nfbot:personal-token"
-      $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:$(GitHubToken)"))))"
+      $auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:$(GitHubToken)")))"
       git -c http.extraheader="AUTHORIZATION: $auth" push origin "HEAD:$(Build.SourceBranchName)"
 
 # step from template @ nf-tools repo

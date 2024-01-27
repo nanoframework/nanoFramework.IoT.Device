@@ -4,23 +4,23 @@
 namespace System.Device.Model
 {
     /// <summary>
-    /// Telemetry of the interface
+    /// Telemetry of the interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class TelemetryAttribute : Attribute
     {
         /// <summary>
-        /// Name of the telemetry in the interface
+        /// Gets name of the telemetry in the interface.
         /// </summary>
         public string? Name { get; }
 
         /// <summary>
-        /// Display name of the telemetry
+        /// Gets display name of the telemetry.
         /// </summary>
         public string? DisplayName { get; }
 
         /// <summary>
-        /// Constructs TelemetryAttribute
+        /// Initializes a new instance of the <see cref="TelemetryAttribute" /> class.
         /// </summary>
         /// <param name="name">Name of the telemetry. If not provided property name will be used.</param>
         /// <param name="displayName">Optional display name of the telemetry. If not provided it may be infered from the type.</param>
@@ -32,7 +32,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs TelemetryAttribute
+        /// Initializes a new instance of the <see cref="TelemetryAttribute" /> class.
         /// </summary>
         /// <param name="name">Name of the telemetry. If not provided property name will be used.</param>
         /// <remarks>When put on methods name should always be provided.</remarks>
@@ -42,7 +42,7 @@ namespace System.Device.Model
         }
 
         /// <summary>
-        /// Constructs TelemetryAttribute
+        /// Initializes a new instance of the <see cref="TelemetryAttribute" /> class.
         /// </summary>
         /// <remarks>When put on methods name should always be provided.</remarks>
         public TelemetryAttribute()

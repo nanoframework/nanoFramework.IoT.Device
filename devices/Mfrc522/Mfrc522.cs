@@ -273,7 +273,7 @@ namespace Iot.Device.Mfrc522
             }
             while (true);
 
-            card.Atqa = BinaryPrimitives.ReadUInt16BigEndian(atqa);
+            card.Atqa = BinaryPrimitives.ReadUInt16LittleEndian(atqa);
             var status = Select(out byte[]? nfcId, out byte sak);
             if (status != Status.Ok)
             {
@@ -449,7 +449,7 @@ namespace Iot.Device.Mfrc522
         }
 
         /// <summary>
-        /// Sand and Receive Data.
+        /// Send and Receive Data.
         /// </summary>
         /// <param name="command">The MFRC522 command.</param>
         /// <param name="sendData">The data to send.</param>
@@ -876,6 +876,8 @@ namespace Iot.Device.Mfrc522
             // Use built in functions for authentication in case of classic Mifare cards
             if ((dataToSend[0] == (byte)MifareCardCommand.AuthenticationA) || (dataToSend[0] == (byte)MifareCardCommand.AuthenticationB))
             {
+                // UltralightCommand.GetVersion has the same command code as MifareCardCommand.AuthenticationA
+                // GetVersion returns data; AuthenticationA does not
                 if (dataFromCard.Length == 0)
                 {
                     status = SendAndReceiveData(MfrcCommand.MifareAuthenticate, dataToSend.ToArray(), null);
@@ -883,15 +885,14 @@ namespace Iot.Device.Mfrc522
                 else
                 {
                     return SendWithCrc(dataToSend, dataFromCard);
-
                 }
 
                 return status == Status.Ok ? 0 : -1;
             }
             else if ((dataToSend[0] == (byte)MifareCardCommand.Incrementation) || (dataToSend[0] == (byte)MifareCardCommand.Decrementation)
-                || (dataToSend[0] == (byte)MifareCardCommand.Restore))
+                || (dataToSend[0] == (byte)MifareCardCommand.Restore) || (dataToSend[0] == (byte)MifareCardCommand.Write16Bytes))
             {
-                return TwoStepsIncDecRestore(dataToSend, dataFromCard);
+                return TwoStepsWrite16IncDecRestore(dataToSend);
             }
             else if (Helper.IsDefined((UltralightCommand)dataToSend[0]))
             {
@@ -953,7 +954,7 @@ namespace Iot.Device.Mfrc522
             return 0;
         }
 
-        private int TwoStepsIncDecRestore(SpanByte dataToSend, SpanByte dataFromCard)
+        private int TwoStepsWrite16IncDecRestore(SpanByte dataToSend)
         {
             Status status;
             SpanByte toSendFirst = new byte[4];
@@ -964,18 +965,19 @@ namespace Iot.Device.Mfrc522
             if (status != Status.Ok)
             {
 #if DEBUG
-                _logger.LogWarning($"{nameof(TwoStepsIncDecRestore)} - Error {(MfrcCommand)dataToSend[0]}");
+                _logger.LogWarning($"{nameof(TwoStepsWrite16IncDecRestore)} - Error {(MfrcCommand)dataToSend[0]}");
 #endif
                 return -1;
             }
 
             SpanByte toSendSecond = new byte[dataToSend.Length];
+            int dataLength = toSendSecond.Length - 2;
             dataToSend.Slice(2).CopyTo(toSendSecond);
-            CalculateCrc(toSendSecond.Slice(0, 2), toSendSecond.Slice(2, 2));
+            CalculateCrc(toSendSecond.Slice(0, dataLength), toSendSecond.Slice(dataLength, 2));
 
-            status = SendAndReceiveData(MfrcCommand.Transceive, toSendSecond.ToArray(), dataFromCard);
+            status = SendAndReceiveData(MfrcCommand.Transceive, toSendSecond.ToArray(), SpanByte.Empty);
 
-            return status == Status.Ok ? dataFromCard.Length : -1;
+            return status == Status.Ok ? 0 : -1;
         }
 
         /// <inheritdoc/>

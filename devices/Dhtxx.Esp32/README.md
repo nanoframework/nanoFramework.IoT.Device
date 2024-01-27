@@ -1,4 +1,4 @@
-# DHTxx.Esp32 - Digital-Output Relative Humidity & Temperature Sensor Module
+# DHT10/DHT11/DHT12/DHT21/DHT22 for Esp32 using RMT - Digital-Output Relative Humidity & Temperature Sensor Module
 
 > **IMPORTANT** This implementation will only work on with ESP32. Don't use this implementation for those MCU.
 > This implementation requires 2 pins. One is used to write to the sensor and the other is used to read the data using RMT.
@@ -9,7 +9,7 @@ The DHT temperature and humidity sensors are very popular. This projects support
 
 |  | DHT10 | DHT11 | DHT12 | DHT21 | DHT22 |
 | :------: | :------: | :------: | :------: | :------: | :------: |
-| Image | ![dht10](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/imgs/dht10.jpg) | ![dht11](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/imgs/dht11.jpg) | ![dht12](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/imgs/dht12.jpg) | ![dht21](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/imgs/dht21.jpg) | ![dht22](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/imgs/dht22.jpg) |
+| Image | ![dht10](./imgs/dht10.jpg) | ![dht11](./imgs/dht11.jpg) | ![dht12](./imgs/dht12.jpg) | ![dht21](./imgs/dht21.jpg) | ![dht22](./imgs/dht22.jpg) |
 | Temperature Range | -40 ~ 80 ℃ | 0 ~ 60 ℃ | -20 ~ 60 ℃ | -40 ~ 80 ℃ | -40 ~ 80 ℃ |
 | Humidity Range | 0 ~ 99.9 % | 2 ~ 95 % | 20 ~ 95 % | 0 ~ 99.9 % | 0 ~ 99.9 % |
 | Temperature Accuracy | ±0.5 ℃ | ±2 ℃ | ±0.5 ℃ | ±0.5 ℃ | ±0.5 ℃ |
@@ -150,13 +150,13 @@ if (dht.IsLastReadSuccessful)
 
 Simply connect your DHTxx data pin to GPIO12 and GPIO14, the ground to the ground and the VCC to +3.3V.
 
-![schema](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/dht22.png)
+![schema](./dht22.png)
 
 Some sensors are already sold with the 10K resistor. Connect the both GPIO12 and GPIO14 to the *data* pin, its position can vary depending on the integrator.
 
 #### I2C Protocol Circuit
 
-![schematics](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/DHT12_circuit_bb.png)
+![schematics](./DHT12_circuit_bb.png)
 
 * SCL - SCL
 * SDA - SDA
@@ -218,6 +218,6 @@ Please note that the few first measurements won't be correct, that's totally nor
 
 ### Result
 
-![dht22 output](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Dhtxx.Esp32/dht22ex.jpg)
+![dht22 output](./dht22ex.jpg)
 
 Note: reading this sensor is sensitive, if you can't read anything, make sure you have it correctly cabled. Also note you'll get better results when running in ```Release``` mode.

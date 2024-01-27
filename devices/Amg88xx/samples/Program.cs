@@ -7,6 +7,7 @@ using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Amg88xx;
+using nanoFramework.UI;
 using UnitsNet;
 
 //////////////////////////////////////////////////////////////////////

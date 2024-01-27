@@ -15,13 +15,13 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET nanoFramework binding Iot.Device.Ws28xx.Esp32 for .NET nanoFramework C# projects.</description>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ws28xx.Esp32</tags>
+    <description>This package includes the .NET nanoFramework binding Ws28xx (specific for ESP32 devices) for .NET nanoFramework C# projects.</description>
+    <tags>nanoFramework C# csharp netmf netnf esp32 iot ws28xx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="1.2.3.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
-      <dependency id="nanoFramework.System.Drawing" version="1.1.113.2032" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="2.0.7" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.Graphics.Core" version="1.2.4" />
     </dependencies>
   </metadata>
   <files>

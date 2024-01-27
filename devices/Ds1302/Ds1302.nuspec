@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Ds1302</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Ds1302</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Ds1302 for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Ds1302 assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ds1302</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.Iot.Device.Common.NumberHelper" version="1.2.418" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
+      <dependency id="nanoFramework.System.Runtime.Native" version="1.5.4" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.38" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.418" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Ds1302.dll" target="lib\Iot.Device.Ds1302.dll" />
+    <file src="bin\Release\Iot.Device.Ds1302.pdb" target="lib\Iot.Device.Ds1302.pdb" />
+    <file src="bin\Release\Iot.Device.Ds1302.pdbx" target="lib\Iot.Device.Ds1302.pdbx" />
+    <file src="bin\Release\Iot.Device.Ds1302.pe" target="lib\Iot.Device.Ds1302.pe" />
+    <file src="bin\Release\Iot.Device.Ds1302.xml" target="lib\Iot.Device.Ds1302.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

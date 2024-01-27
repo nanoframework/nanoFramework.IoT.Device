@@ -54,7 +54,8 @@ string[] categoriesToDisplay = new string[]
     "system",
     "lidar",
     "reader",
-    "satellite"
+    "satellite",
+    "particulatematter",
 };
 
 Dictionary<string, string?> categoriesDescriptions = new()
@@ -119,6 +120,7 @@ Dictionary<string, string?> categoriesDescriptions = new()
     { "lidar", "Lidar" },
     { "reader", "Readers" },
     { "satellite", " modules" },
+    { "particulatematter", "Particulate Matter Sensor" },
 };
 
 HashSet<string> ignoredDeviceDirectories = new()
@@ -287,7 +289,8 @@ string CreateMarkdownLinkFromPath(string path, string parentPath)
             throw new Exception($"No common path between `{path}` and `{parentPath}`");
         }
 
-        var relativePath = path.Substring(parentPath.Length + 1); // Removing this code for now to allow the docs to build properly, experience is still very good on GitHub: .Replace("\\README.md", "");
+        // Removing this code for now to allow the docs to build properly, experience is still very good on GitHub: .Replace("\\README.md", "");
+        var relativePath = path.Substring(parentPath.Length + 1).Replace("\\README.md", "");
         UriBuilder uriBuilder = new UriBuilder() { Path = relativePath };
 
         return uriBuilder.Path;

@@ -1,4 +1,4 @@
-# TCS3472x Sensors
+# TCS3472x/TCS34721/TCS34723/TCS34725/TCS34727 Sensors
 
 TCS3472x sensors are color I2C sensors.
 
@@ -12,10 +12,9 @@ You will find this device as  ["RGB Color Sensor with IR filter and White LED - 
 
 Note: TCS34721 and TCS34723 have a default I2C address which is 0x39 while TCS34725 and TCS34727 have 0x29.
 
-
 ## Board
 
-![image](https://raw.githubusercontent.com/nanoframework/nanoFramework.IoT.Device/develop/devices/Tcs3472x/Tcs34725Fitzing.png)
+![image](./Tcs34725Fitzing.png)
 
 ## Usage
 

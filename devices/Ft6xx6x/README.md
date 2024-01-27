@@ -1,4 +1,4 @@
-# Ft6xx6x - Touch screen controller
+# Ft6xx6x/Ft6336GU - Touch screen controller
 
 The FT6xx6x are touch screens controllers. [M5Core2](https://github.com/nanoframework/nanoFramework.M5Stack) has a FT6336U. This driver supports the variants FT6236G, FT6336G , FT6336U and FT6426. The sample has been built and tested with a [M5Core2](https://github.com/nanoframework/nanoFramework.M5Stack).
 

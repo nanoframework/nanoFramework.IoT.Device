@@ -9,12 +9,12 @@ namespace Iot.Device.RadioReceiver
     public enum FrequencyRange
     {
         /// <summary>
-        /// 76MHz - 90MHz
+        /// 76MHz - 90MHz.
         /// </summary>
         Japan,
 
         /// <summary>
-        /// 87MHz - 108MHz
+        /// 87MHz - 108MHz.
         /// </summary>
         Other
     }
