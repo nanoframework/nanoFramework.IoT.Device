@@ -5,7 +5,6 @@ using System;
 using System.Drawing;
 
 using Iot.Device.EPaper.Enums;
-using nanoFramework.UI;
 
 namespace Iot.Device.EPaper.Buffers
 {
@@ -134,13 +133,13 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer)
         {
-            WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), Point.Zero);
+            WriteBuffer(buffer, new Point(0, 0), new Point(buffer.Width, buffer.Height), new Point(0, 0));
         }
 
         /// <inheritdoc/>>
         public void WriteBuffer(IFrameBuffer buffer, Point destinationStart)
         {
-            WriteBuffer(buffer, Point.Zero, new Point(buffer.Width, buffer.Height), destinationStart);
+            WriteBuffer(buffer, new Point(0, 0), new Point(buffer.Width, buffer.Height), destinationStart);
         }
 
         /// <inheritdoc/>>
@@ -152,7 +151,7 @@ namespace Iot.Device.EPaper.Buffers
         /// <inheritdoc/>>
         public void Fill(Color color)
         {
-            Fill(Point.Zero, Width, Height, color);
+            Fill(new Point(0, 0), Width, Height, color);
         }
 
         /// <inheritdoc/>>

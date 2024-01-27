@@ -39,9 +39,13 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  DOTNET_NOLOGO: true
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  - group: sign-client-credentials
+  - name: DOTNET_NOLOGO
+    value: true  
+  - name: buildPlatform
+    value: 'Any CPU'  
+  - name: buildConfiguration
+    value: 'Release'
 
 steps:
 
@@ -116,7 +120,7 @@ steps:
       echo "##vso[task.setvariable variable=NUGET_COUNT;isOutput=true]$count"
 
 - task: DotNetCoreCLI@2
-  displayName: Install SignTool tool
+  displayName: Install Sign Client CLI
   condition: >-
     and(
       succeeded(),
@@ -126,19 +130,22 @@ steps:
   inputs:
     command: custom
     custom: tool
-    arguments: install --tool-path . SignClient
+    arguments: install --tool-path . sign --version 0.9.1-beta.23530.1
 
 - pwsh: |
-    .\SignClient "Sign" `
-    --baseDirectory "$(Build.ArtifactStagingDirectory)" `
-    --input "**/*.nupkg" `
-    --config "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\SignClient.json" `
-    --filelist "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
-    --user "$(SignClientUser)" `
-    --secret '$(SignClientSecret)' `
-    --name "IoT.Device" `
+    .\sign code azure-key-vault `
+    "**/*.nupkg" `
+    --base-directory "$(Build.ArtifactStagingDirectory)" `
+    --file-list "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
+    --publisher-name ".NET nanoFramework" `
     --description "IoT.Device" `
-    --descriptionUrl "https://github.com/$env:Build_Repository_Name"
+    --description-url "https://github.com/$env:Build_Repository_Name" `
+    --azure-key-vault-tenant-id "$(SignTenantId)" `
+    --azure-key-vault-client-id "$(SignClientId)" `
+    --azure-key-vault-client-secret "$(SignClientSecret)" `
+    --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
+    --azure-key-vault-url "$(SignKeyVaultUrl)" `
+    --timestamp-url http://timestamp.digicert.com
   displayName: Sign packages
   continueOnError: true
   condition: >-
@@ -174,16 +181,21 @@ steps:
   displayName: Push NuGet packages to NuGet
 
 # push NuGet class lib package to NuGet (always happens except on PR builds)
-- script: nuget push -ApiKey $(NUGETAPIKEY) -Source https://api.nuget.org/v3/index.json *.nupkg -NonInteractive -SkipDuplicate -NoSymbols
-  workingDirectory: '$(Build.ArtifactStagingDirectory)'
+- task: NuGetCommand@2
   condition: >-
     and(
       succeeded(),
       gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
       eq(variables['System.PullRequest.PullRequestId'], '')
     )
-  continueOnError: false
+  continueOnError: true
   displayName: Push NuGet packages to NuGet
+  inputs:
+    command: push
+    nuGetFeedType: external
+    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'NuGet-$(System.TeamProject)'
 
 - task: DotNetCoreCLI@2
   displayName: Adjust READMEs

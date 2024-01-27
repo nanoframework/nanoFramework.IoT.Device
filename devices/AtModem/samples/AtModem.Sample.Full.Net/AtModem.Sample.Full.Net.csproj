@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../Program.cs" />
+    <Compile Include="IMqttClient.cs" />
+    <Compile Include="MqttMsgPublishedEventArgs.cs" />
+    <Compile Include="MqttMsgPublishEventArgs.cs" />
+    <Compile Include="MqttMsgSubscribedEventArgs.cs" />
+    <Compile Include="MqttMsgSubscribeEventArgs.cs" />
+    <Compile Include="MqttMsgUnsubscribedEventArgs.cs" />
+    <Compile Include="MqttMsgUnsubscribeEventArgs.cs" />
+    <Compile Include="MqttQoSLevel.cs" />
+    <Compile Include="MqttReasonCode.cs" />
+    <Compile Include="MqttSslProtocols.cs" />
+    <Compile Include="SpanByte.cs" />
+    <Compile Include="UserProperty.cs" />
+    <Compile Include="../../AtParser/*.cs" />
+    <Compile Include="../../CodingSchemes/*.cs" />
+    <Compile Include="../../DTOs/*.cs" />
+    <Compile Include="../../Modem/*.cs" />
+    <Compile Include="../../PDU/*.cs" />
+    <Compile Include="../../FileStorage/*.cs" />
+    <Compile Include="../../Events/*.cs" />
+    <Compile Include="../../Mqtt/*.cs" />
+    <Compile Include="../../Network/*.cs" />
+    <Compile Include="../../Sms/*.cs" />
+    <Compile Include="../../Call/*.cs" />
+    <Compile Include="../../Http/*.cs" />
+	<Compile Include="../../Http/Http/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
+    <PackageReference Include="UnitsNet" Version="5.34.0" />
+  </ItemGroup>
+
+</Project>

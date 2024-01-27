@@ -4,7 +4,6 @@
 using System.Drawing;
 
 using Iot.Device.EPaper.Enums;
-using nanoFramework.UI;
 
 namespace Iot.Device.EPaper.Buffers
 {

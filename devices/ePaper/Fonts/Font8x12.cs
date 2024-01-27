@@ -111,7 +111,7 @@ namespace Iot.Device.EPaper.Fonts
         };
 
         /// <inheritdoc/>
-        public new int Width
+        public override byte Width
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Iot.Device.EPaper.Fonts
         }
 
         /// <inheritdoc/>
-        public new int Height
+        public override byte Height
         {
             get
             {

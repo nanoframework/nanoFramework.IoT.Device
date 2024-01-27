@@ -18,11 +18,11 @@
     <description>This package includes the .NET IoT Core binding Iot.Device.Hdc1080 for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hdc1080</tags>
     <dependencies>
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.325" />
-      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.11" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.34.0" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.34.0" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.43.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.43.0" />
     </dependencies>
   </metadata>
   <files>
