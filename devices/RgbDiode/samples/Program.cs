@@ -4,14 +4,14 @@
 using Iot.Device.RgbDiode;
 using System.Drawing;
 
-const byte redGpioPin = 17;
-const byte greenGpioPin = 18;
-const byte blueGpioPin = 19;
+const byte redGpioPin = 25;
+const byte greenGpioPin = 26;
+const byte blueGpioPin = 27;
 
 // Uncomment for ESP32
-nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(redGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM1);
-nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(greenGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM2);
-nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(blueGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM3);
+// nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(redGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM1);
+// nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(greenGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM2);
+// nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(blueGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM3);
 
 var pwm = new RgbDiode(redGpioPin, greenGpioPin, blueGpioPin, true);
 pwm.SetColor(255, 0, 0); // Should display red
