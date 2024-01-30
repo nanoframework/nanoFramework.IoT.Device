@@ -18,5 +18,9 @@ pwm.SetColor(255, 0, 0); // Should display red
 pwm.SetColor(0, 255, 0); // Should display green
 pwm.SetColor(0, 0, 255); // Should display blue
 
+pwm.SetColor(Color.LawnGreen);
+pwm.SetColor(Color.OrangeRed);
+pwm.SetColor(Color.Teal);
+
 pwm.Transition(Color.FromArgb(0, 255, 0)); // Will fade blue to green
 pwm.Transition(Color.FromArgb(255, 0, 0)); // Will fade green to red
