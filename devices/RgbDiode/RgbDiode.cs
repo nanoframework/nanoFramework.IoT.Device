@@ -16,7 +16,7 @@ namespace Iot.Device.RgbDiode
     {
         private const int DefaultSteps = 100;
         private const int DefaultDelay = 10;
-        private const ushort Frequency = 5000;
+        private const ushort Frequency = 500;
         private readonly PwmChannel _rChannel;
         private readonly PwmChannel _gChannel;
         private readonly PwmChannel _bChannel;
@@ -54,7 +54,12 @@ namespace Iot.Device.RgbDiode
             _rFactor = rFactor;
             _gFactor = gFactor;
             _bFactor = bFactor;
-            CurrentColor = new Color();
+
+            SetColor(0, 0, 0);
+
+            _rChannel.Start();
+            _gChannel.Start();
+            _bChannel.Start();
         }
 
         /// <summary>
@@ -77,9 +82,9 @@ namespace Iot.Device.RgbDiode
         /// <param name="color">The color to set.</param>
         public void SetColor(Color color)
         {
-            SetValue(_rChannel, color.R * _rFactor);
-            SetValue(_gChannel, color.G * _gFactor);
-            SetValue(_bChannel, color.B * _bFactor);
+            SetValue(_rChannel, color.R * _rFactor, _inverse);
+            SetValue(_gChannel, color.G * _gFactor, _inverse);
+            SetValue(_bChannel, color.B * _bFactor, _inverse);
             CurrentColor = color;
         }
         
@@ -177,7 +182,20 @@ namespace Iot.Device.RgbDiode
                 }
             }
         }
-        
+
+        private static void SetValue(PwmChannel channel, double value, bool inverse)
+        {
+            var dc = value / 255;
+            if (inverse)
+            {
+                channel.DutyCycle = 1 - dc;
+            }
+            else
+            {
+                channel.DutyCycle = dc;
+            }
+        }
+
         private void TransitionInternal(CancellationToken cancellationToken, int steps, int delay, byte dr, byte dg, byte db)
         {
             var cr = CurrentColor.R;
@@ -193,12 +211,6 @@ namespace Iot.Device.RgbDiode
                 SetColor(Color.FromArgb(cr, cg, cb));
                 cancellationToken.WaitHandle.WaitOne(delay, false);
             }
-        }
-
-        private void SetValue(PwmChannel channel, double value)
-        {
-            var dc = value / 255;
-            channel.DutyCycle = _inverse ? 1 - dc : dc;
         }
     }
 }
