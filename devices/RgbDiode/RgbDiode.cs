@@ -82,9 +82,20 @@ namespace Iot.Device.RgbDiode
         /// <param name="color">The color to set.</param>
         public void SetColor(Color color)
         {
+            // There is a bug in ADC handling, settings channels two times resolves it
+            // For example
+            // Set red to 255 the red color is on
+            // Then set green to 255 - red and green are on
+            // Then again set green to 255 - only green is on
             SetValue(_rChannel, color.R * _rFactor, _inverse);
+            SetValue(_rChannel, color.R * _rFactor, _inverse);
+
             SetValue(_gChannel, color.G * _gFactor, _inverse);
+            SetValue(_gChannel, color.G * _gFactor, _inverse);
+
             SetValue(_bChannel, color.B * _bFactor, _inverse);
+            SetValue(_bChannel, color.B * _bFactor, _inverse);
+
             CurrentColor = color;
         }
         
