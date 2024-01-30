@@ -13,7 +13,7 @@ const byte blueGpioPin = 26;
 // nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(greenGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM2);
 // nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(blueGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM3);
 
-var pwm = new RgbDiode(redGpioPin, greenGpioPin, blueGpioPin, true);
+var pwm = new RgbDiode(redGpioPin, greenGpioPin, blueGpioPin);
 pwm.SetColor(255, 0, 0); // Should display red
 pwm.SetColor(0, 255, 0); // Should display green
 pwm.SetColor(0, 0, 255); // Should display blue
