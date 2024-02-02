@@ -88,12 +88,7 @@ namespace Iot.Device.RgbDiode
             // Then set green to 255 - red and green are on
             // Then again set green to 255 - only green is on
             SetValue(_rChannel, color.R * _rFactor, _ledType);
-            SetValue(_rChannel, color.R * _rFactor, _ledType);
-
             SetValue(_gChannel, color.G * _gFactor, _ledType);
-            SetValue(_gChannel, color.G * _gFactor, _ledType);
-
-            SetValue(_bChannel, color.B * _bFactor, _ledType);
             SetValue(_bChannel, color.B * _bFactor, _ledType);
 
             CurrentColor = color;
