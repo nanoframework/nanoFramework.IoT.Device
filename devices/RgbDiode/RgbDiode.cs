@@ -20,7 +20,7 @@ namespace Iot.Device.RgbDiode
         private readonly PwmChannel _rChannel;
         private readonly PwmChannel _gChannel;
         private readonly PwmChannel _bChannel;
-        private readonly bool _inverse;
+        private readonly LedType _ledType;
         private readonly double _rFactor;
         private readonly double _gFactor;
         private readonly double _bFactor;
@@ -37,15 +37,15 @@ namespace Iot.Device.RgbDiode
         /// <param name="rPin">Pin number for red color channel.</param>
         /// <param name="gPin">Pin number for green color channel.</param>
         /// <param name="bPin">Pin number for blue color channel.</param>
-        /// <param name="inverse">Indicates if the PWM signal should be inverted.</param>
+        /// <param name="ledType">The type of LED diode.</param>
         /// <param name="rFactor">Factor to adjust intensity of red color. Default is 1.</param>
         /// <param name="gFactor">Factor to adjust intensity of green color. Default is 1.</param>
         /// <param name="bFactor">Factor to adjust intensity of blue color. Default is 1.</param>
-        public RgbDiode(byte rPin, byte gPin, byte bPin, bool inverse = false, double rFactor = 1, double gFactor = 1, double bFactor = 1)
+        public RgbDiode(byte rPin, byte gPin, byte bPin, LedType ledType = LedType.CommonCathode, double rFactor = 1, double gFactor = 1, double bFactor = 1)
         {
             GuardFactor(rFactor, gFactor, bFactor);
 
-            _inverse = inverse;
+            _ledType = ledType;
 
             _rChannel = PwmChannel.CreateFromPin(rPin, Frequency);
             _gChannel = PwmChannel.CreateFromPin(gPin, Frequency);
@@ -87,14 +87,9 @@ namespace Iot.Device.RgbDiode
             // Set red to 255 the red color is on
             // Then set green to 255 - red and green are on
             // Then again set green to 255 - only green is on
-            SetValue(_rChannel, color.R * _rFactor, _inverse);
-            SetValue(_rChannel, color.R * _rFactor, _inverse);
-
-            SetValue(_gChannel, color.G * _gFactor, _inverse);
-            SetValue(_gChannel, color.G * _gFactor, _inverse);
-
-            SetValue(_bChannel, color.B * _bFactor, _inverse);
-            SetValue(_bChannel, color.B * _bFactor, _inverse);
+            SetValue(_rChannel, color.R * _rFactor, _ledType);
+            SetValue(_gChannel, color.G * _gFactor, _ledType);
+            SetValue(_bChannel, color.B * _bFactor, _ledType);
 
             CurrentColor = color;
         }
@@ -194,10 +189,10 @@ namespace Iot.Device.RgbDiode
             }
         }
 
-        private static void SetValue(PwmChannel channel, double value, bool inverse)
+        private static void SetValue(PwmChannel channel, double value, LedType ledType)
         {
             var dc = value / 255;
-            if (inverse)
+            if (ledType == LedType.CommonAnode)
             {
                 channel.DutyCycle = 1 - dc;
             }
