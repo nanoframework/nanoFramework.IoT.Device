@@ -5,6 +5,7 @@ using Iot.Device.AtModem;
 using Iot.Device.AtModem.DTOs;
 using Iot.Device.AtModem.Events;
 using Iot.Device.AtModem.Modem;
+using nanoFramework.M2Mqtt.Messages;
 #if (NANOFRAMEWORK_1_0)
 using nanoFramework.Hardware.Esp32;
 #endif
@@ -14,22 +15,25 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Threading;
+using nanoFramework.M2Mqtt;
 
-Console.WriteLine("Hello SIM7080!");
+Console.WriteLine("Hello SIM AT Modems!");
 
 SerialPort _serialPort;
 #if (NANOFRAMEWORK_1_0)
 OpenSerialPort("COM3");
 #else
-OpenSerialPort("COM10");
+OpenSerialPort("COM4");
 #endif
 
 _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
 int retries = 10;
-Sim7080 modem = new(atChannel);
+Sim7672 modem = new(atChannel);
 
 // If you want to use a different modem, you can use the following:
 // Sim800 modem = new(atChannel);
@@ -55,8 +59,8 @@ else
 }
 
 // To test the different storage, we don't need connection
-TestBinaryStorage();
-TestStorage();
+//TestBinaryStorage();
+//TestStorage();
 
 RetryConnect:
 var pinStatus = modem.GetSimStatus();
@@ -138,11 +142,16 @@ while (true)
     Thread.Sleep(1000);
 }
 
-//ConnectToNetwork();
+ConnectToNetwork();
 //GetNetworkOperators();
 //TestStorageSmsAndCharSet();
 //TestSms();
 //TestHttp();
+//TestMqtt();
+TestMqtts();
+
+modem.Dispose();
+CloseSerialPort();
 
 void TestHttp()
 {
@@ -174,8 +183,107 @@ void TestHttp()
     Console.WriteLine();
 }
 
-modem.Dispose();
-CloseSerialPort();
+void TestMqtt()
+{
+    // STEP 2: connect to MQTT broker
+    // Warning: test.mosquitto.org is very slow and congested, and is only suitable for very basic validation testing.
+    // Change it to your local broker as soon as possible.
+    var client = modem.MqttClient;
+    client.Init("test.mosquitto.org", 1883, false, null, null, MqttSslProtocols.None);
+    var clientId = Guid.NewGuid().ToString();
+    client.Connect(clientId, null, null, false, MqttQoSLevel.AtMostOnce, false, string.Empty, string.Empty, true, 60);
+
+    // STEP 3: subscribe to topics you want
+    client.Subscribe(new[] { "nf-mqtt/basic-demo/binary", "nf-mqtt/basic-demo", "nf-mqtt/basic-demo/very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long" }, new[] { MqttQoSLevel.AtLeastOnce, MqttQoSLevel.AtLeastOnce, MqttQoSLevel.AtLeastOnce });
+    client.MqttMsgPublishReceived += HandleIncomingMessage;
+
+    // STEP 4: publish something and watch it coming back
+    for (int i = 0; i < 5; i++)
+    {
+        client.Publish("nf-mqtt/basic-demo", Encoding.UTF8.GetBytes("===== Hello MQTT! ====="), null, null, MqttQoSLevel.AtLeastOnce, false);
+        Thread.Sleep(5000);
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        client.Publish("nf-mqtt/basic-demo/very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long", Encoding.UTF8.GetBytes("===== Hello MQTT! ====="), null, null, MqttQoSLevel.AtLeastOnce, false);
+        Thread.Sleep(5000);
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        client.Publish("nf-mqtt/basic-demo", Encoding.UTF8.GetBytes("===== Hello MQTT! =====\r\n===== Hello MQTT line 2! =====\r\n===== Hello MQTT line 3! ====="), null, null, MqttQoSLevel.AtLeastOnce, false);
+        Thread.Sleep(5000);
+    }
+
+    // Binary test! And, yes you shoudl receive those 3 bytes in the event message
+    client.Publish("nf-mqtt/basic-demo/binary", new byte[] { 0x01, 0x02, 0x03 }, null, null, MqttQoSLevel.AtLeastOnce, false);
+
+    // STEP 5: disconnecting
+    client.Disconnect();
+}
+
+void TestMqtts()
+{
+    string certificate =
+@"-----BEGIN CERTIFICATE-----
+MIIEAzCCAuugAwIBAgIUBY1hlCGvdj4NhBXkZ/uLUZNILAwwDQYJKoZIhvcNAQEL
+BQAwgZAxCzAJBgNVBAYTAkdCMRcwFQYDVQQIDA5Vbml0ZWQgS2luZ2RvbTEOMAwG
+A1UEBwwFRGVyYnkxEjAQBgNVBAoMCU1vc3F1aXR0bzELMAkGA1UECwwCQ0ExFjAU
+BgNVBAMMDW1vc3F1aXR0by5vcmcxHzAdBgkqhkiG9w0BCQEWEHJvZ2VyQGF0Y2hv
+by5vcmcwHhcNMjAwNjA5MTEwNjM5WhcNMzAwNjA3MTEwNjM5WjCBkDELMAkGA1UE
+BhMCR0IxFzAVBgNVBAgMDlVuaXRlZCBLaW5nZG9tMQ4wDAYDVQQHDAVEZXJieTES
+MBAGA1UECgwJTW9zcXVpdHRvMQswCQYDVQQLDAJDQTEWMBQGA1UEAwwNbW9zcXVp
+dHRvLm9yZzEfMB0GCSqGSIb3DQEJARYQcm9nZXJAYXRjaG9vLm9yZzCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAME0HKmIzfTOwkKLT3THHe+ObdizamPg
+UZmD64Tf3zJdNeYGYn4CEXbyP6fy3tWc8S2boW6dzrH8SdFf9uo320GJA9B7U1FW
+Te3xda/Lm3JFfaHjkWw7jBwcauQZjpGINHapHRlpiCZsquAthOgxW9SgDgYlGzEA
+s06pkEFiMw+qDfLo/sxFKB6vQlFekMeCymjLCbNwPJyqyhFmPWwio/PDMruBTzPH
+3cioBnrJWKXc3OjXdLGFJOfj7pP0j/dr2LH72eSvv3PQQFl90CZPFhrCUcRHSSxo
+E6yjGOdnz7f6PveLIB574kQORwt8ePn0yidrTC1ictikED3nHYhMUOUCAwEAAaNT
+MFEwHQYDVR0OBBYEFPVV6xBUFPiGKDyo5V3+Hbh4N9YSMB8GA1UdIwQYMBaAFPVV
+6xBUFPiGKDyo5V3+Hbh4N9YSMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+BQADggEBAGa9kS21N70ThM6/Hj9D7mbVxKLBjVWe2TPsGfbl3rEDfZ+OKRZ2j6AC
+6r7jb4TZO3dzF2p6dgbrlU71Y/4K0TdzIjRj3cQ3KSm41JvUQ0hZ/c04iGDg/xWf
++pp58nfPAYwuerruPNWmlStWAXf0UTqRtg4hQDWBuUFDJTuWuuBvEXudz74eh/wK
+sMwfu1HFvjy5Z0iMDU8PUDepjVolOCue9ashlS4EB5IECdSR2TItnAIiIwimx839
+LdUdRudafMu5T5Xma182OC0/u/xRlEm+tvKGGmfFcN0piqVl8OrSPBgIlb+1IKJE
+m/XriWr/Cq4h/JfB7NTsezVslgkBaoU=
+-----END CERTIFICATE-----";
+
+    // We'll use test.mosquitto.org certificate, which you can download here: http://test.mosquitto.org/
+    // Warning: test.mosquitto.org is very slow and congested, and is only suitable for very basic validation testing.
+    // Change it to your local broker as soon as possible. Keep in mind that in such case,
+    // you'll have to setup your own certificates. Refer to mosquitto manuals of how to do that.
+    var client = modem.MqttClient;
+    client.Init("test.mosquitto.org", 8883, true, Encoding.UTF8.GetBytes(certificate), null, MqttSslProtocols.TLSv1_2);
+    var clientId = Guid.NewGuid().ToString();
+    client.Connect(clientId, null, null, false, MqttQoSLevel.AtMostOnce, false, string.Empty, string.Empty, true, 60);
+
+    // STEP 3: subscribe to topics you want
+    client.Subscribe(new[] { "nf-mqtt/basic-demo" }, new[] { MqttQoSLevel.AtLeastOnce });
+    client.MqttMsgPublishReceived += HandleIncomingMessage;
+
+    // STEP 4: publish something and watch it coming back
+    for (int i = 0; i < 5; i++)
+    {
+        client.Publish("nf-mqtt/basic-demo", Encoding.UTF8.GetBytes("===== Hello MQTT! ====="), null, null, MqttQoSLevel.AtLeastOnce, false);
+        Thread.Sleep(5000);
+    }
+
+}
+
+void HandleIncomingMessage(object sender, MqttMsgPublishEventArgs e)
+{
+    if (e.Topic == "nf-mqtt/basic-demo/binary")
+    {
+        Console.WriteLine($"Message received on topic '{e.Topic}': {BitConverter.ToString(e.Message)}");
+    }
+    else
+    {
+        Console.WriteLine($"Message received on topic '{e.Topic}': {Encoding.UTF8.GetString(e.Message, 0, e.Message.Length)}");
+    }
+}
 
 void OpenSerialPort(
     string port = "COM3",
@@ -224,8 +332,8 @@ void CloseSerialPort()
 void ConnectToNetwork()
 {
     var network = modem.Network;
-    ////var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
-    var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
+    var connectRes = network.Connect(new PersonalIdentificationNumber("1234"), new AccessPointConfiguration("free"));
+    ////var connectRes = network.Connect(apn: new AccessPointConfiguration("orange"));
     if (connectRes)
     {
         Console.WriteLine($"Connected to network.");
@@ -462,7 +570,7 @@ void TestStorage()
     // Check if we have the support for directory, if yes, we test it
     if (modem.FileStorage.HasDirectorySupport)
     {
-        const string DirectoryName = "test";
+        const string DirectoryName = "Toto";
         // Create a directory
         var respCreateDir = modem.FileStorage.CreateDirectory(DirectoryName);
         Console.WriteLine($"Create directory: {(respCreateDir ? "success" : "failure")}");

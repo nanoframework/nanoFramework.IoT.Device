@@ -123,10 +123,9 @@ namespace Iot.Device.AtModem.Mqtt
                 int hash = HashHelper.ComputeHash(clientCert);
 
                 // Check first if the file exists already
-                _caCertName = hash + CaCertName;
-                var preivousStorage = ((Sim7080FileStorage)_modem.FileStorage).Storage;
-                ((Sim7080FileStorage)_modem.FileStorage).Storage = Sim7080FileStorage.StorageDirectory.Customer;
                 _clCertName = hash + ClientCertName;
+                var preivousStorage = ((Sim7080FileStorage)_modem.FileStorage).Storage;
+                ((Sim7080FileStorage)_modem.FileStorage).Storage = Sim7080FileStorage.StorageDirectory.Customer;                
                 if (_modem.FileStorage.GetFileSize(_clCertName) > 0)
                 {
                     _modem.FileStorage.DeleteFile(_clCertName);

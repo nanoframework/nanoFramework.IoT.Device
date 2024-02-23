@@ -70,6 +70,11 @@ namespace Iot.Device.AtModem.Modem
             {
                 ErrorReceived?.Invoke(this, new Iot.Device.AtModem.Events.ErrorEventArgs(error.ToString()));
             }
+            else if (e.Line1 == "QCRDY")
+            {
+                // Modem has rebooted or is ready
+                ModemRebootedOrReady?.Invoke(this, new ModemRebootedOrReadyArgs());
+            }
             else
             {
                 GenericEvent?.Invoke(this, new GenericEventArgs(e.Line1));
@@ -123,6 +128,18 @@ namespace Iot.Device.AtModem.Modem
         /// Occurs when the network connection changes.
         /// </summary>
         public event NetworkConnectionHandler NetworkConnectionChanged;
+
+        /// <summary>
+        /// Represents the method that will handle network connection events.
+        /// </summary>
+        /// <param name="sender">The source of the Network Connection event.</param>
+        /// <param name="e">An instance of the NetworkConnectionEventArgs event data.</param>
+        public delegate void ModemRebootedOrReadyHandler(object sender, ModemRebootedOrReadyArgs e);
+
+        /// <summary>
+        /// Occurs when the network connection changes.
+        /// </summary>
+        public event ModemRebootedOrReadyHandler ModemRebootedOrReady;
 
         #endregion
 
