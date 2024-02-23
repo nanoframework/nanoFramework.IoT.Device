@@ -4,7 +4,7 @@
     <id>nanoFramework.Iot.Device.RgbDiode</id>
     <version>$version$</version>
     <title>nanoFramework.Iot.Device.RgbDiode</title>
-    <authors>nanoFramework</authors>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -15,13 +15,14 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Uln2003 for .NET nanoFramework C# projects.</description>
+    <description>This package includes the .NET nanoFramework binding Iot.Device.RgbDiode for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.RgbDiode assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.RgbDiode</tags>
+    <tags>nanoFramework C# csharp netmf netnf RgbDiode</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.System.Device.Pwm" version="1.1.10" />
       <dependency id="nanoFramework.Graphics.Core" version="1.2.4" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.32" />
     </dependencies>
   </metadata>
   <files>

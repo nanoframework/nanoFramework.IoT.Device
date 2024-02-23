@@ -11,6 +11,11 @@ namespace Iot.Device.Dac63004
     public enum Mode : byte
     {
         /// <summary>
+        /// Disable the channel.
+        /// </summary>
+        Disable,
+
+        /// <summary>
         /// Voltage-Output Mode.
         /// </summary>
         VoltageOutput,

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Max1704x</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Max1704x</title>
+    <authors>nanoFramework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Max1704x for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.MAX1704x assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Max1704x Max1704x Max17043 Max17044 Max17048 Max17049</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="UnitsNet.nanoFramework.Ratio" version="5.43.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.43.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Max1704x.dll" target="lib\Iot.Device.Max1704x.dll" />
+    <file src="bin\Release\Iot.Device.Max1704x.pdb" target="lib\Iot.Device.Max1704x.pdb" />
+    <file src="bin\Release\Iot.Device.Max1704x.pdbx" target="lib\Iot.Device.Max1704x.pdbx" />
+    <file src="bin\Release\Iot.Device.Max1704x.pe" target="lib\Iot.Device.Max1704x.pe" />
+    <file src="bin\Release\Iot.Device.Max1704x.xml" target="lib\Iot.Device.Max1704x.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

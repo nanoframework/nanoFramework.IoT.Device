@@ -3,7 +3,7 @@
 
 using System;
 using System.Drawing;
-
+using System.Threading;
 using Iot.Device.EPaper.Buffers;
 using nanoFramework.UI;
 
@@ -55,12 +55,14 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Initiates the full refresh sequence on the display.
         /// </summary>
-        void PerformFullRefresh();
+        /// <returns>True if the screen sucessfully refresh. False otherwise (still busy after a predefined waiting time).</returns>
+        bool PerformFullRefresh();
 
         /// <summary>
         /// Initiates the partial refresh sequence on the display if the panel supports it.
         /// </summary>
-        void PerformPartialRefresh();
+        /// <returns>True if the screen sucessfully refresh. False otherwise (still busy after a predefined waiting time).</returns>
+        bool PerformPartialRefresh();
 
         /// <summary>
         /// Sets the drawing position on the display.
@@ -92,7 +94,11 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Blocks the current thread until the display is in idle mode again.
         /// </summary>
-        void WaitReady();
+        /// <param name="waitingTime">The maximum time to wait in ms before exiting the method. -1 to wait infinitely.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationTokenSource"/> to be able to cancel the waiting time.</param>
+        /// <returns>True if it returns before the <see cref="CancellationTokenSource"/> expires, false otherwise.</returns>
+        /// <remarks>If _waitingTime_ is set to -1, _cancellationToken_ could not be null, and a exception will be throw.</remarks>
+        bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken);
 
         /// <summary>
         /// Begins a frame draw operation with frame paging support.
@@ -109,7 +115,7 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Moves the current buffers to the next frame page and returns true if successful.
         /// </summary>
-        /// <returns>True if the next frame page is available and the internal buffers have moved to it, otherwise; false.</returns>
+        /// <returns>True if the next frame page is available and the internal buffers have moved to it, false otherwise.</returns>
         bool NextFramePage();
 
         /// <summary>

@@ -58,27 +58,27 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Card, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.444\lib\Iot.Device.Card.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.485\lib\Iot.Device.Card.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Mifare, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.444\lib\Iot.Device.Mifare.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.485\lib\Iot.Device.Mifare.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Ndef, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.444\lib\Iot.Device.Ndef.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.485\lib\Iot.Device.Ndef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Ultralight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.444\lib\Iot.Device.Ultralight.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.485\lib\Iot.Device.Ultralight.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Logging, Version=1.1.76.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Logging.1.1.76\lib\nanoFramework.Logging.dll</HintPath>
+    <Reference Include="nanoFramework.Logging, Version=1.1.81.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Logging.1.1.81\lib\nanoFramework.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">

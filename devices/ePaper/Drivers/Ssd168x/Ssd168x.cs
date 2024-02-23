@@ -9,7 +9,6 @@ using System.Threading;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
-using nanoFramework.UI;
 
 namespace Iot.Device.EPaper.Drivers.Ssd168x
 {
@@ -18,13 +17,14 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
     /// </summary>
     public abstract class Ssd168x : IEPaperDisplay
     {
+        private readonly int _maxWaitingTime = 500;
+        private readonly bool _shouldDispose;
         private SpiDevice _spiDevice;
         private GpioController _gpioController;
         private GpioPin _resetPin;
         private GpioPin _busyPin;
         private GpioPin _dataCommandPin;
 
-        private bool _shouldDispose;
         private bool _disposed;
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             CurrentFrameBufferStartXPosition = GetXPositionFromFrameBufferIndex(CurrentFrameBufferPageLowerBound);
             CurrentFrameBufferStartYPosition = GetYPositionFromFrameBufferIndex(CurrentFrameBufferPageLowerBound);
 
-            FrameBuffer.StartPoint = new System.Drawing.Point(CurrentFrameBufferStartXPosition, CurrentFrameBufferStartYPosition);
+            FrameBuffer.StartPoint = new Point(CurrentFrameBufferStartXPosition, CurrentFrameBufferStartYPosition);
             FrameBuffer.CurrentFramePage = CurrentFrameBufferPage;
         }
 
@@ -498,7 +498,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public virtual void PerformFullRefresh()
+        public virtual bool PerformFullRefresh()
         {
             SendCommand((byte)Command.BoosterSoftStartControl);
             SendData(0x8b, 0x9c, 0x96, 0x0f);
@@ -507,11 +507,11 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.FullRefresh); // Display Mode 1 (Full Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            WaitReady();
+            return WaitReady(_maxWaitingTime);
         }
 
         /// <inheritdoc/>
-        public virtual void PerformPartialRefresh()
+        public virtual bool PerformPartialRefresh()
         {
             SendCommand((byte)Command.BoosterSoftStartControl);
             SendData(0x8b, 0x9c, 0x96, 0x0f);
@@ -520,7 +520,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.PartialRefresh); // Display Mode 2 (Partial Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            WaitReady();
+            return WaitReady(_maxWaitingTime);
         }
 
         /// <summary>
@@ -613,7 +613,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         {
             SendCommand((byte)Command.SoftwareReset);
 
-            WaitReady();
+            WaitReady(_maxWaitingTime);
             WaitMs(10);
         }
 
@@ -627,12 +627,24 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public virtual void WaitReady()
+        public virtual bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken = default)
         {
-            while (_busyPin.Read() == PinValue.High)
+            if (cancellationToken == default)
             {
-                WaitMs(5);
+                if (waitingTime < 0)
+                {
+                    throw new ArgumentNullException(nameof(cancellationToken), $"{nameof(cancellationToken)} cannot be null with {nameof(waitingTime)} < 0");
+                }
+
+                cancellationToken = new CancellationTokenSource(waitingTime);
             }
+
+            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.High)
+            {
+                cancellationToken.Token.WaitHandle.WaitOne(5, true);
+            }
+
+            return !cancellationToken.IsCancellationRequested;
         }
 
         #region IDisposable

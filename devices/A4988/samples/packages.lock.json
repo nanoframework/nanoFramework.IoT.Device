@@ -28,9 +28,9 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.42.0, 5.42.0]",
-        "resolved": "5.42.0",
-        "contentHash": "zPfUjClWnLB5MUp8qdEfBeXwA8kvaczCiQFhm4Mi/mkvGKwmNxQTmU8/b4ec5te5GGD5zebpzZX9ucDTOKQcTg=="
+        "requested": "[5.43.0, 5.43.0]",
+        "resolved": "5.43.0",
+        "contentHash": "FW3U7olKltMhuZrULth2vHYfdmehdxVhL/dK7UuxRA+NTSZzN4JIdrdaMvWECoEiNkMJLFN7TUJPq4kpFnYGmQ=="
       }
     }
   }
