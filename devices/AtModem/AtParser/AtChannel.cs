@@ -5,9 +5,9 @@ using System;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
-using IoT.Device.AtModem.Events;
+using Iot.Device.AtModem.Events;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Represents an AT channel for communication with a SIM7080 module.

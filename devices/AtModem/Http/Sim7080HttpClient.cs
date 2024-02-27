@@ -8,11 +8,11 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
 
-namespace IoT.Device.AtModem.Http
+namespace Iot.Device.AtModem.Http
 {
     internal class Sim7080HttpClient : HttpClient
     {

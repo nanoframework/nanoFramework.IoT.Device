@@ -6,9 +6,9 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
-using IoT.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.CodingSchemes;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Represents an AT command reader that reads AT command responses from a stream.

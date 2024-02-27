@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System;
 
-namespace IoT.Device.AtModem.Events
+namespace Iot.Device.AtModem.Events
 {
     /// <summary>
     /// Provides event arguments containing a DateTime value.

@@ -3,11 +3,11 @@
 
 using System.Diagnostics;
 using System.Net.Http;
-using IoT.Device.AtModem.FileStorage;
-using IoT.Device.AtModem.Http;
-using IoT.Device.AtModem.Network;
+using Iot.Device.AtModem.FileStorage;
+using Iot.Device.AtModem.Http;
+using Iot.Device.AtModem.Network;
 
-namespace IoT.Device.AtModem.Modem
+namespace Iot.Device.AtModem.Modem
 {
     /// <summary>
     /// Represents a SIM800 modem.

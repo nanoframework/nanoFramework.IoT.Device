@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using IoT.Device.AtModem.DTOs;
+using Iot.Device.AtModem.DTOs;
 
-namespace IoT.Device.AtModem.Events
+namespace Iot.Device.AtModem.Events
 {
     /// <summary>
     /// Network connection event arguments.

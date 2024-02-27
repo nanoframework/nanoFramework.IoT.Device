@@ -7,7 +7,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Threading;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Represents an AT command writer that write AT command to a stream.

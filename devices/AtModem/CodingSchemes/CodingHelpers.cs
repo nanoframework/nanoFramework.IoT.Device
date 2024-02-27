@@ -3,7 +3,7 @@
 
 using System;
 
-namespace IoT.Device.AtModem.CodingSchemes
+namespace Iot.Device.AtModem.CodingSchemes
 {
     /// <summary>
     /// Internal helpers to convert HEX strings to byte arrays.

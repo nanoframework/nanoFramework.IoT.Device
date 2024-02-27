@@ -3,7 +3,7 @@
 
 using System;
 
-namespace IoT.Device.AtModem.DTOs
+namespace Iot.Device.AtModem.DTOs
 {
     /// <summary>
     /// Represents a Personal Identification Number (PIN).

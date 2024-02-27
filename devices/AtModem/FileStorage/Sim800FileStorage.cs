@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.Modem;
 
-namespace IoT.Device.AtModem.FileStorage
+namespace Iot.Device.AtModem.FileStorage
 {
     /// <summary>
     /// Represents the file storage of SIM800.

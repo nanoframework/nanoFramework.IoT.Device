@@ -3,7 +3,7 @@
 
 using UnitsNet;
 
-namespace IoT.Device.AtModem.DTOs
+namespace Iot.Device.AtModem.DTOs
 {
     /// <summary>
     /// Represents the battery status.

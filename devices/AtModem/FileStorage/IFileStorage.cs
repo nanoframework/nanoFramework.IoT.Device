@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using IoT.Device.AtModem.FileStorage;
+using Iot.Device.AtModem.FileStorage;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Interface for use internal flash storage space.

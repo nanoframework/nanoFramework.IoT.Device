@@ -3,7 +3,7 @@
 
 using System.Collections;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Class to hold the AT response.

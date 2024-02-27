@@ -3,12 +3,12 @@
 
 using System;
 using System.Threading;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.DTOs;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
 using UnitsNet;
 
-namespace IoT.Device.AtModem.Network
+namespace Iot.Device.AtModem.Network
 {
     /// <summary>
     /// A network interface for SIM7080.

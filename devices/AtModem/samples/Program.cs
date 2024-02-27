@@ -1,10 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using IoT.Device.AtModem;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem;
+using Iot.Device.AtModem.DTOs;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
 #if (NANOFRAMEWORK_1_0)
 using nanoFramework.Hardware.Esp32;
 #endif
@@ -375,7 +375,7 @@ void TestSms()
         Console.WriteLine($"SMS sent failed: {respSmsSend.ErrorMessage}");
     }
 
-    respSmsSend = modem.SmsProvider.SendSmsInPduFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework pdu", IoT.Device.AtModem.CodingSchemes.CodingScheme.Gsm7, true);
+    respSmsSend = modem.SmsProvider.SendSmsInPduFormat(new PhoneNumber("+33664404676"), "Hello from nanoFramework pdu", Iot.Device.AtModem.CodingSchemes.CodingScheme.Gsm7, true);
     if (respSmsSend.IsSuccess)
     {
         Console.WriteLine($"SMS sent successfully: {respSmsSend.Result}");

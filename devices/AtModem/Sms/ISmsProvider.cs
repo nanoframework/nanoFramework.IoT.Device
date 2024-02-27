@@ -1,13 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.DTOs;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
 using System.Collections;
 
-namespace IoT.Device.AtModem.Sms
+namespace Iot.Device.AtModem.Sms
 {
     /// <summary>
     /// Interface for SMS providers.

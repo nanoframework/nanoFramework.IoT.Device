@@ -3,7 +3,7 @@
 
 using System.Threading;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Represents a reader for reading AT command responses.

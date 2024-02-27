@@ -7,14 +7,14 @@ using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.FileStorage;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.FileStorage;
+using Iot.Device.AtModem.Modem;
 using nanoFramework.M2Mqtt;
 using nanoFramework.M2Mqtt.Messages;
 
-namespace IoT.Device.AtModem.Mqtt
+namespace Iot.Device.AtModem.Mqtt
 {
     /// <summary>
     /// MQTT Client for SIM7080.
