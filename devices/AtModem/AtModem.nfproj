@@ -94,6 +94,7 @@
     <Compile Include="Events\GenericEventArgs.cs" />
     <Compile Include="Events\IncomingCallEventArgs.cs" />
     <Compile Include="Events\MissedCallEventArgs.cs" />
+    <Compile Include="Events\ModemRebootedOrReadyArgs.cs" />
     <Compile Include="Events\NetworkConnectionEventArgs.cs" />
     <Compile Include="Events\SmsReceivedEventArgs.cs" />
     <Compile Include="Events\UnsolicitedEventArgs.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="FileStorage\CreateMode.cs" />
     <Compile Include="FileStorage\IFileStorage.cs" />
     <Compile Include="FileStorage\Sim7080FileStorage.cs" />
+    <Compile Include="FileStorage\Sim7672FileStorage.cs" />
     <Compile Include="FileStorage\Sim800FileStorage.cs" />
     <Compile Include="Http\Http\ByteArrayContent.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
@@ -175,6 +177,7 @@
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Http\Http\X509Certificate2.cs" />
+    <Compile Include="Http\Sim7672HttpClient.cs" />
     <Compile Include="Http\Sim7080HttpClient.cs" />
     <Compile Include="Http\Sim800HttpClient.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
@@ -202,11 +205,14 @@
     <Compile Include="Modem\Sim7070.cs" />
     <Compile Include="Modem\Sim7080.cs" />
     <Compile Include="Modem\Sim7090.cs" />
+    <Compile Include="Modem\Sim7672.cs" />
     <Compile Include="Modem\Sim800.cs" />
+    <Compile Include="Mqtt\Sim7672MqttClient.cs" />
     <Compile Include="Mqtt\Sim7080MqttClient.cs" />
     <Compile Include="Network\INetwork.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Network\Sim7672Network.cs" />
     <Compile Include="Network\Sim7080Network.cs" />
     <Compile Include="Network\Sim800Network.cs" />
     <Compile Include="Http\Http\X509Certificate.cs" />
@@ -265,9 +271,8 @@
       <HintPath>packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Threading, Version=1.1.32.63105, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+    <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.32\lib\System.Threading.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential, Version=5.43.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.5.43.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
