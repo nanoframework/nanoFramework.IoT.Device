@@ -29,6 +29,12 @@
     <Reference Include="System.Device.I2c, Version=1.1.16.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
     </Reference>
+    <Reference Include="System.Math">
+      <HintPath>..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>..\packages\nanoFramework.System.Numerics.1.2.423\lib\System.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="UnitsNet.MagneticField">
       <HintPath>..\packages\UnitsNet.nanoFramework.MagneticField.5.48.0\lib\UnitsNet.MagneticField.dll</HintPath>
     </Reference>

@@ -48,7 +48,7 @@ while (true)
 
 I2cDevice CreateI2cDevice()
 {
-    I2cConnectionSettings settings = new(1, Lis2Mdl.I2cAddress);
+    I2cConnectionSettings settings = new(1, Lis2Mdl.DefaultI2cAddress);
     return I2cDevice.Create(settings);
 }
 

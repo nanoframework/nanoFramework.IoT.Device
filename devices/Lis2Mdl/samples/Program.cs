@@ -20,9 +20,9 @@ while (true)
     var magFieldValue = lis2mdlDevice.MagneticField;
 
     Debug.WriteLine($"Temperature: {tempValue.DegreesCelsius:F1}\u00B0C");
-    Debug.WriteLine($"Mag. field X: {magFieldValue[0].Milligausses:F3}mG");
-    Debug.WriteLine($"Mag. field Y: {magFieldValue[1].Milligausses:F3}mG");
-    Debug.WriteLine($"Mag. field Z: {magFieldValue[2].Milligausses:F3}mG");
+    Debug.WriteLine($"Mag. field X: {UnitsNet.MagneticField.FromMilligausses(magFieldValue.X).Milligausses:F3}mG");
+    Debug.WriteLine($"Mag. field Y: {UnitsNet.MagneticField.FromMilligausses(magFieldValue.Y).Milligausses:F3}mG");
+    Debug.WriteLine($"Mag. field Z: {UnitsNet.MagneticField.FromMilligausses(magFieldValue.Z).Milligausses:F3}mG");
 
     Thread.Sleep(1000);
 }

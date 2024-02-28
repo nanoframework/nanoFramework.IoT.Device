@@ -5,6 +5,7 @@ using System;
 using System.Buffers.Binary;
 using System.Device.I2c;
 using System.Device.Model;
+using System.Numerics;
 using UnitsNet;
 
 namespace Iot.Device.Lis2Mdl
@@ -28,7 +29,7 @@ namespace Iot.Device.Lis2Mdl
         /// <summary>
         /// Device ID when reading the WHO_AM_I register.
         /// </summary>
-        private const byte DeviceID = 0x40;
+        private const byte DefaultI2cAddress = 0x40;
 
         private I2cDevice _i2c;
 
@@ -55,7 +56,7 @@ namespace Iot.Device.Lis2Mdl
 
             // check if the device is present
             var id = Read(Register.WhoAmI);
-            if (id != DeviceID)
+            if (id != DefaultI2cAddress)
             {
                 throw new Exception("Device not found");
             }
@@ -113,18 +114,19 @@ namespace Iot.Device.Lis2Mdl
 
         /// <summary>
         /// Gets the magnetic field reading for all axes.
+        /// Values are in milligauss.
         /// </summary>
-        public MagneticField[] MagneticField
+        public Vector3 MagneticField
         {
             get
             {
                 GetMagneticField();
 
-                return new MagneticField[]
+                return new Vector3
                 {
-                    UnitsNet.MagneticField.FromMilligausses(_magneticFieldReadings[0]),
-                    UnitsNet.MagneticField.FromMilligausses(_magneticFieldReadings[1]),
-                    UnitsNet.MagneticField.FromMilligausses(_magneticFieldReadings[2])
+                    X = _magneticFieldReadings[0],
+                    Y = _magneticFieldReadings[1],
+                    Z = _magneticFieldReadings[2]
                 };
             }
         }
@@ -163,8 +165,6 @@ namespace Iot.Device.Lis2Mdl
         {
             // read the 2 raw data registers into data array      
             var tempRaw = ReadInt16(Register.TemperatureLow);
-
-            // TwosComplement(tempRaw);
 
             // from data sheet: 8 LSB /�C in 12bit resolution
             return (tempRaw / 16.0f / 8.0f) + 25.0f;
