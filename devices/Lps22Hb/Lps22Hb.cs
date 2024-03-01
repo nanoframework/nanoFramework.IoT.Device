@@ -26,23 +26,18 @@ namespace Iot.Device.Lps22Hb
         /// <summary>
         /// Device ID when reading the WHO_AM_I register.
         /// </summary>
-        public const byte DefaultI2cAddress = 0x5C;
+        public const byte DeviceId = 0xB1;
 
         // storage for raw data
         private readonly byte[] _dataRaw;
 
+        // backing field for the I2C device
         private I2cDevice _i2c;
-
-        /// <summary>
-        /// This holds the magnetic field reading from the sensor.
-        /// Elements index is 0 for X, 1 for Y and 2 for Z.
-        /// </summary>
-        private float[] _magneticFieldReadings = new float[3];
 
         /// <summary>
         /// Device I2C Address.
         /// </summary>
-        public const byte I2cAddress = 0x1E;
+        public const byte DefaultI2cAddress = 0x2E;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Lps22Hb" /> class.
@@ -59,7 +54,7 @@ namespace Iot.Device.Lps22Hb
 
             // check if the device is present
             var id = Read(Register.WhoAmI);
-            if (id != DefaultI2cAddress)
+            if (id != DeviceId)
             {
                 throw new Exception("Device not found");
             }
@@ -163,7 +158,7 @@ namespace Iot.Device.Lps22Hb
 
                     break;
 
-                case FifoMode.FIFO:
+                case FifoMode.Fifo:
                 case FifoMode.Stream:
                 case FifoMode.StreamToFifo:
                 case FifoMode.BypassToStream:

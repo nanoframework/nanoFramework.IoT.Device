@@ -16,7 +16,7 @@ namespace Iot.Device.Lps22Hb
         /// <summary>
         /// FIFO mode.
         /// </summary>
-        FIFO = 1,
+        Fifo = 1,
 
         /// <summary>
         /// Stream mode.

@@ -46,12 +46,6 @@ while (true)
 
 I2cDevice CreateI2cDevice()
 {
-    I2cConnectionSettings settings = new(1, Lps22Hb.I2cAddress);
-    return I2cDevice.Create(settings);
-}
-
-I2cDevice CreateI2cDevice()
-{
     I2cConnectionSettings settings = new(1, Lps22Hb.DefaultI2cAddress);
     return I2cDevice.Create(settings);
 }

@@ -27,6 +27,7 @@ while (true)
 
 I2cDevice CreateI2cDevice()
 {
-    I2cConnectionSettings settings = new(1, Lps22Hb.I2cAddress);
+    // using address 0x5C (from MXChip AZ3166 board)
+    I2cConnectionSettings settings = new(1, 0b1011100);
     return I2cDevice.Create(settings);
 }
