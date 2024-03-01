@@ -29,7 +29,7 @@ namespace Iot.Device.Lis2Mdl
         /// <summary>
         /// Device ID when reading the WHO_AM_I register.
         /// </summary>
-        private const byte DefaultI2cAddress = 0x40;
+        private const byte DeviceId = 0x40;
 
         private I2cDevice _i2c;
 
@@ -42,7 +42,7 @@ namespace Iot.Device.Lis2Mdl
         /// <summary>
         /// Device I2C Address.
         /// </summary>
-        public const byte I2cAddress = 0x1E;
+        public const byte DefaultI2cAddress = 0x1E;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Lis2Mdl" /> class.
@@ -56,7 +56,7 @@ namespace Iot.Device.Lis2Mdl
 
             // check if the device is present
             var id = Read(Register.WhoAmI);
-            if (id != DefaultI2cAddress)
+            if (id != DeviceId)
             {
                 throw new Exception("Device not found");
             }
