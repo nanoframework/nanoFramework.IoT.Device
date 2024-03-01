@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETnanoFramework,Version=v1.0": {
+      "nanoFramework.CoreLibrary": {
+        "type": "Direct",
+        "requested": "[1.15.5, 1.15.5]",
+        "resolved": "1.15.5",
+        "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
+      },
+      "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
+        "type": "Direct",
+        "requested": "[1.2.418, 1.2.418]",
+        "resolved": "1.2.418",
+        "contentHash": "JAi+u3N/MGXoyEvZN4WGABYlF4s8JNML/gjPNvHC6csvpsPMC4YHh/+Jc/k/UpOnTkXKKg5VfOJA6ptX6IlGzw=="
+      },
+      "nanoFramework.System.Device.I2c": {
+        "type": "Direct",
+        "requested": "[1.1.16, 1.1.16]",
+        "resolved": "1.1.16",
+        "contentHash": "33YPnlZVjFwx0mOhdKTOggx+TvbjTD3WZ6rkSB33ytF9fHoqfvS1AYr4+ScUHW4z2yE7vxVWBol5mI7iEg4Aiw=="
+      },
+      "nanoFramework.System.Device.Model": {
+        "type": "Direct",
+        "requested": "[1.2.418, 1.2.418]",
+        "resolved": "1.2.418",
+        "contentHash": "Pnl/YJzaQXlls0Cmg4E9r27mpW5+/paVrn1mYYEe0/CqWLOOfJ63FPVJ0eOxN3DRixA2RkNa5wDZjD3r9ARuKw=="
+      },
+      "Nerdbank.GitVersioning": {
+        "type": "Direct",
+        "requested": "[3.6.133, 3.6.133]",
+        "resolved": "3.6.133",
+        "contentHash": "VZWMd5YAeDxpjWjAP/X6bAxnRMiEf6tES/ITN0X5CHJgkWLLeHGmEALivmTAfYM6P+P/3Szy6VCITUAkqjcHVw=="
+      },
+      "StyleCop.MSBuild": {
+        "type": "Direct",
+        "requested": "[6.2.0, 6.2.0]",
+        "resolved": "6.2.0",
+        "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
+      },
+      "UnitsNet.nanoFramework.Pressure": {
+        "type": "Direct",
+        "requested": "[5.48.0, 5.48.0]",
+        "resolved": "5.48.0",
+        "contentHash": "HjuIMv6duccxbaL8w/9wTgxlc7ImLsdFAsWldI2FiP86wD83ZdOGf20WTSIJB7Tv1oxeAK43JFq98e+ENxR2KA=="
+      },
+      "UnitsNet.nanoFramework.Temperature": {
+        "type": "Direct",
+        "requested": "[5.48.0, 5.48.0]",
+        "resolved": "5.48.0",
+        "contentHash": "1F6GBNIjVTStDzXM2S0lB3lVyT25CV0xMhgws0u2lVmcrhrI7m7E/cAH5kQixl/5oA7hHJw+ZUZcnw4f5iawwQ=="
+      }
+    }
+  }
+}
