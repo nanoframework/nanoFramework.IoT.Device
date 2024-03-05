@@ -14,13 +14,19 @@ const byte blueGpioPin = 26;
 // nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(blueGpioPin, nanoFramework.Hardware.Esp32.DeviceFunction.PWM3);
 
 var pwm = new RgbDiode(redGpioPin, greenGpioPin, blueGpioPin);
-pwm.SetColor(255, 0, 0); // Should display red
-pwm.SetColor(0, 255, 0); // Should display green
-pwm.SetColor(0, 0, 255); // Should display blue
+
+// Should display red
+pwm.SetColor(255, 0, 0);
+// Should display green
+pwm.SetColor(0, 255, 0);
+// Should display blue
+pwm.SetColor(0, 0, 255);
 
 pwm.SetColor(Color.LawnGreen);
 pwm.SetColor(Color.OrangeRed);
 pwm.SetColor(Color.Teal);
 
-pwm.Transition(Color.FromArgb(0, 255, 0)); // Will fade blue to green
-pwm.Transition(Color.FromArgb(255, 0, 0)); // Will fade green to red
+// Will fade blue to green
+pwm.Transition(Color.FromArgb(0, 255, 0));
+// Will fade green to red
+pwm.Transition(Color.FromArgb(255, 0, 0));
