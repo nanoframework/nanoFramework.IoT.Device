@@ -89,7 +89,6 @@ namespace Iot.Device.Rtc
         protected override void Dispose(bool disposing)
         {
             _i2cDevice?.Dispose();
-            ////_i2cDevice = null!;
 
             base.Dispose(disposing);
         }
