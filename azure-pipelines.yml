@@ -165,7 +165,7 @@ steps:
     ArtifactType: Container
 
 # push NuGet class lib package to Azure Artifacts (always happens except on PR builds)
-- task: NuGetAuthenticate@0
+- task: NuGetAuthenticate@1
   inputs:
     nuGetServiceConnections: 'AzureArtifacts-$(System.TeamProject)'
 
