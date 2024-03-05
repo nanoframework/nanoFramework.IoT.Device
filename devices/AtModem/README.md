@@ -12,21 +12,24 @@ This project is officially supported by [SIMCom](https://www.simcom.com/).
 
 * [SIM7080 Product details](https://www.simcom.com/index.php/product/SIM7080G.html)
 * [SIM800 Product details](https://www.simcom.com/product/SIM800C.html)
+* [SIM7672 Product details](https://www.simcom.com/product/SIM7672.html)
 
 Supported features for the different modems are the following:
 
-| Feature | SIM800 | SIM7080 |
-| --- | --- | --- |
-|SMS|✅|✅|
-|Call|✅|✅|
-|Storage|✅|✅|
-|HTTP and HTTPS|✅|✅|
-|MQTT and MQTTS|❌|✅|
-|IP Network connection|✅|✅|
+| Feature | SIM800 | SIM7080 | SIM767XX Series |
+| --- | --- | --- | --- |
+|SMS|✅|✅|✅|
+|Call|✅|✅|✅|
+|Storage|✅|✅|✅|
+|HTTP and HTTPS|✅|✅|✅|
+|MQTT and MQTTS|❌|✅|✅|
+|IP Network connection|✅|✅|✅|
 
 Most modems supports other features like MMS, Sockets with TCP/UDP, FTP, email, GNSS and more. So far, those features are not implemented. They can be added later. All the mechanism is present to add them and described in the documentation bellow especially regarding the [Channel property](#the-channel-property).
 
 Note that a more complete implementation for the SIM800H is available in [Eclo Solutions github repository](https://github.com/Eclo/nanoFramework.SIM800H).
+
+You should also check the specificities of each modem. Some like the SIM7672 has support for folders but only on a SD Card. All have limitation regarding the size of the MQTT topics and messages. Those can be limitations for your application. The SIM767XX series will work fine. You have to use the SIM7672 class for all the family.
 
 ## Usage
 

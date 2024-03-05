@@ -3,7 +3,7 @@
 
 using System;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Represents an AT command.

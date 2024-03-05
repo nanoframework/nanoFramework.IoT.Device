@@ -5,15 +5,15 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
-using IoT.Device.AtModem.Call;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Network;
-using IoT.Device.AtModem.Sms;
+using Iot.Device.AtModem.Call;
+using Iot.Device.AtModem.DTOs;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Network;
+using Iot.Device.AtModem.Sms;
 using nanoFramework.M2Mqtt;
 using UnitsNet;
 
-namespace IoT.Device.AtModem.Modem
+namespace Iot.Device.AtModem.Modem
 {
     /// <summary>
     /// Represents a basic modem. All other modems should implement this class.
@@ -68,7 +68,12 @@ namespace IoT.Device.AtModem.Modem
             }
             else if (AtErrorParsers.TryGetError(e.Line1, out Error error))
             {
-                ErrorReceived?.Invoke(this, new IoT.Device.AtModem.Events.ErrorEventArgs(error.ToString()));
+                ErrorReceived?.Invoke(this, new Iot.Device.AtModem.Events.ErrorEventArgs(error.ToString()));
+            }
+            else if (e.Line1 == "QCRDY")
+            {
+                // Modem has rebooted or is ready
+                ModemRebootedOrReady?.Invoke(this, new ModemRebootedOrReadyArgs());
             }
             else
             {
@@ -81,7 +86,7 @@ namespace IoT.Device.AtModem.Modem
         /// </summary>
         /// <param name="sender">The source of the error event.</param>
         /// <param name="e">An instance of ErrorEventArgs containing error information.</param>
-        public delegate void ErrorEventHandler(object sender, IoT.Device.AtModem.Events.ErrorEventArgs e);
+        public delegate void ErrorEventHandler(object sender, Iot.Device.AtModem.Events.ErrorEventArgs e);
 
         /// <summary>
         /// Occurs when an error is received.
@@ -123,6 +128,18 @@ namespace IoT.Device.AtModem.Modem
         /// Occurs when the network connection changes.
         /// </summary>
         public event NetworkConnectionHandler NetworkConnectionChanged;
+
+        /// <summary>
+        /// Represents the method that will handle network connection events.
+        /// </summary>
+        /// <param name="sender">The source of the Network Connection event.</param>
+        /// <param name="e">An instance of the NetworkConnectionEventArgs event data.</param>
+        public delegate void ModemRebootedOrReadyHandler(object sender, ModemRebootedOrReadyArgs e);
+
+        /// <summary>
+        /// Occurs when the network connection changes.
+        /// </summary>
+        public event ModemRebootedOrReadyHandler ModemRebootedOrReady;
 
         #endregion
 

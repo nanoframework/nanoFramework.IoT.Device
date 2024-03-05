@@ -3,7 +3,7 @@
 
 using System;
 
-namespace IoT.Device.AtModem.CodingSchemes
+namespace Iot.Device.AtModem.CodingSchemes
 {
     /// <summary>
     /// Encode / decode UCS2 strings

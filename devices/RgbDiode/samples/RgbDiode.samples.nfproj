@@ -20,7 +20,6 @@
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Core, Version=1.2.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731, processorArchitecture=MSIL">
       <HintPath>..\packages\nanoFramework.Graphics.Core.1.2.4\lib\nanoFramework.Graphics.Core.dll</HintPath>

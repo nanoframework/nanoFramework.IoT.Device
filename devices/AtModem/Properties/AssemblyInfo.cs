@@ -4,7 +4,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("IoT.Device.AtModem")]
+[assembly: AssemblyTitle("Iot.Device.AtModem")]
 [assembly: AssemblyCompany("nanoFramework Contributors")]
 [assembly: AssemblyCopyright("Copyright © nanoFramework Contributors 2023")]
 

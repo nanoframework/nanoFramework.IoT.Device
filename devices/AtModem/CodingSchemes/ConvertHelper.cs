@@ -3,7 +3,7 @@
 
 using System.Collections;
 
-namespace IoT.Device.AtModem.CodingSchemes
+namespace Iot.Device.AtModem.CodingSchemes
 {
     internal class ConvertHelper
     {

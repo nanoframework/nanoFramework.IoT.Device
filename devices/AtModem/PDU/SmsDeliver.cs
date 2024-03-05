@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using IoT.Device.AtModem.DTOs;
+using Iot.Device.AtModem.DTOs;
 
-namespace IoT.Device.AtModem.PDU
+namespace Iot.Device.AtModem.PDU
 {
     /// <summary>
     /// Represents an SMS deliver message received from the service center.

@@ -16,15 +16,34 @@ namespace Iot.Device.Hts221
     public class Hts221 : IDisposable
     {
         private const byte ReadMask = 0x80;
+
+        /// <summary>
+        /// Device ID when reading the WHO_AM_I register.
+        /// </summary>
+        private const byte DeviceId = 0xBC;
+
         private I2cDevice _i2c;
+
+        /// <summary>
+        /// Device I2C Address.
+        /// </summary>
+        public const byte DefaultI2cAddress = 0x5F;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Hts221" /> class. Temperature and humidity sensor.
         /// </summary>
         /// <param name="i2cDevice">I2C device.</param>
+        /// <exception cref="SystemException">If the device is not found.</exception>
         public Hts221(I2cDevice i2cDevice)
         {
             _i2c = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+
+            // check if the device is present
+            var id = Read(Register.WhoAmI);
+            if (id != DeviceId)
+            {
+                throw new SystemException();
+            }
 
             // Highest resolution for both temperature and humidity sensor:
             // 0.007 DegreesCelsius and 0.03 percentage of relative humidity respectively

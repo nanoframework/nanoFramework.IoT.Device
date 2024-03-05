@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace IoT.Device.AtModem.CodingSchemes
+namespace Iot.Device.AtModem.CodingSchemes
 {
     /// <summary>
     /// Encode / decode GSM 7-bit strings.

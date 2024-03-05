@@ -31,6 +31,9 @@
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.12\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nanoFramework.M2Mqtt.Core">
+      <HintPath>..\packages\nanoFramework.M2Mqtt.Core.5.1.116\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.15\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
@@ -51,16 +54,15 @@
       <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.52\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net, Version=1.10.70.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Net.1.10.70\lib\System.Net.dll</HintPath>
+    <Reference Include="System.Net, Version=1.10.72.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Net.1.10.72\lib\System.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Threading, Version=1.1.32.63105, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+    <Reference Include="System.Threading">
       <HintPath>..\packages\nanoFramework.System.Threading.1.1.32\lib\System.Threading.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential, Version=5.43.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.43.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotential, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.48.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

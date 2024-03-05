@@ -31,6 +31,7 @@ These Modules can be cascaded to get a bigger matrix.
 The MCU has support for SPI. 
 
 ```csharp
+// Note: the ChipSelect pin should be adjusted to your device, here 42
 var connectionSettings = new SpiConnectionSettings(1, 42)
 {
     ClockFrequency = 10_000_000,

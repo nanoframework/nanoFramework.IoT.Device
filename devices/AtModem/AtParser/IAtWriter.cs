@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace IoT.Device.AtModem
+namespace Iot.Device.AtModem
 {
     /// <summary>
     /// Represents a writer for sending AT commands.

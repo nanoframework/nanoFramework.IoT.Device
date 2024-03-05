@@ -3,7 +3,7 @@
 
 using System;
 
-namespace IoT.Device.AtModem.Events
+namespace Iot.Device.AtModem.Events
 {
     /// <summary>
     /// Provides event data for the call ended event.

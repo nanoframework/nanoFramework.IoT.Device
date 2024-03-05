@@ -3,14 +3,14 @@
 
 using System.Diagnostics;
 using System.Net.Http;
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Http;
-using IoT.Device.AtModem.Mqtt;
-using IoT.Device.AtModem.Network;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.DTOs;
+using Iot.Device.AtModem.Http;
+using Iot.Device.AtModem.Mqtt;
+using Iot.Device.AtModem.Network;
 using nanoFramework.M2Mqtt;
 
-namespace IoT.Device.AtModem.Modem
+namespace Iot.Device.AtModem.Modem
 {
     /// <summary>
     /// Represents a SIM7080 modem.

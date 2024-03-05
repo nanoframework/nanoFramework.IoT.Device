@@ -3,7 +3,7 @@
 
 using System;
 
-namespace IoT.Device.AtModem.PDU
+namespace Iot.Device.AtModem.PDU
 {
     internal static class ReadOnlySpanExtensions
     {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Lps22Hb</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Lps22Hb</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Lps22Hb for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Lps22Hb assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Lps22Hb</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.418" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.48.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="5.48.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Lps22Hb.dll" target="lib\Iot.Device.Lps22Hb.dll" />
+    <file src="bin\Release\Iot.Device.Lps22Hb.pdb" target="lib\Iot.Device.Lps22Hb.pdb" />
+    <file src="bin\Release\Iot.Device.Lps22Hb.pdbx" target="lib\Iot.Device.Lps22Hb.pdbx" />
+    <file src="bin\Release\Iot.Device.Lps22Hb.pe" target="lib\Iot.Device.Lps22Hb.pe" />
+    <file src="bin\Release\Iot.Device.Lps22Hb.xml" target="lib\Iot.Device.Lps22Hb.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

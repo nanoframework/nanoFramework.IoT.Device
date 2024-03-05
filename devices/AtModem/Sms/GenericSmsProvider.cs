@@ -4,14 +4,14 @@
 using System;
 using System.Collections;
 using System.Text;
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.DTOs;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
-using IoT.Device.AtModem.PDU;
-using static IoT.Device.AtModem.Sms.ISmsProvider;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.DTOs;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
+using Iot.Device.AtModem.PDU;
+using static Iot.Device.AtModem.Sms.ISmsProvider;
 
-namespace IoT.Device.AtModem.Sms
+namespace Iot.Device.AtModem.Sms
 {
     internal class GenericSmsProvider : ISmsProvider
     {

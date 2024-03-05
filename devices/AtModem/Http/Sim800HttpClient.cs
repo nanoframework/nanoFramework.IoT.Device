@@ -1,9 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
-namespace IoT.Device.AtModem.Http
+namespace Iot.Device.AtModem.Http
 {
     /// <summary>
     /// Initializes a new instance of the HttpClient class for SIM800.

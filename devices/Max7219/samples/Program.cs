@@ -17,7 +17,8 @@ Debug.WriteLine(message);
 //Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
 //Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
 //Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
-// Make sure as well you are using the right chip select
+
+//  Note: the ChipSelect pin should be adjusted to your device, here 42
 SpiConnectionSettings connectionSettings = new(1, 42)
 {
     ClockFrequency = Iot.Device.Max7219.Max7219.SpiClockFrequency,

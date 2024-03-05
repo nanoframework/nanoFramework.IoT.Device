@@ -4,10 +4,10 @@
 using System;
 using System.Text;
 using System.Threading;
-using IoT.Device.AtModem.Events;
-using IoT.Device.AtModem.Modem;
+using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Modem;
 
-namespace IoT.Device.AtModem.FileStorage
+namespace Iot.Device.AtModem.FileStorage
 {
     /// <summary>
     /// Represents a <see cref="Sim7080"/> file storage.

@@ -3,10 +3,10 @@
 
 using System;
 using System.Text;
-using IoT.Device.AtModem.CodingSchemes;
-using IoT.Device.AtModem.DTOs;
+using Iot.Device.AtModem.CodingSchemes;
+using Iot.Device.AtModem.DTOs;
 
-namespace IoT.Device.AtModem.PDU
+namespace Iot.Device.AtModem.PDU
 {
     /// <summary>
     /// Provides methods to encode and decode SMS Protocol Data Unit (PDU) messages.

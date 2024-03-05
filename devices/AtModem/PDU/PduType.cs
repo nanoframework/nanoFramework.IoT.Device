@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace IoT.Device.AtModem.PDU
+namespace Iot.Device.AtModem.PDU
 {
     /// <summary>
     /// Specifies the type of PDU (Protocol Data Unit) used in SMS (Short Message Service) communication.
