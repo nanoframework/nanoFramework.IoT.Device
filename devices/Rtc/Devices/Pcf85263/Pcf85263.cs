@@ -3,7 +3,6 @@
 
 using System;
 using System.Device.I2c;
-////using System.Diagnostics;
 using Iot.Device.Common;
 
 namespace Iot.Device.Rtc
@@ -27,7 +26,7 @@ namespace Iot.Device.Rtc
         /// Initializes a new instance of the <see cref="Pcf85263"/> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
-        public Pcf85263(I2cDevice i2cDevice) // TODO: ensure default parameters!
+        public Pcf85263(I2cDevice i2cDevice)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
         }
