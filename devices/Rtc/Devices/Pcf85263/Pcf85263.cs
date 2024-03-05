@@ -119,6 +119,5 @@ namespace Iot.Device.Rtc
         {
             throw new NotImplementedException();
         }
-
     }
 }
