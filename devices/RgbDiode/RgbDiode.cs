@@ -93,7 +93,7 @@ namespace Iot.Device.RgbDiode
 
             CurrentColor = color;
         }
-        
+
         /// <summary>
         /// Transitions the pixel to new color in a separate thread.
         /// </summary>
@@ -102,18 +102,37 @@ namespace Iot.Device.RgbDiode
         /// <param name="steps">Number of transition steps.</param>
         /// <param name="delay">Delay between each transition step.</param>
         /// <returns>The new Thread or null if color is the same as current color.</returns>
-        public Thread TransitionAsync(Color color, CancellationToken cancellationToken = default, int steps = DefaultSteps, int delay = DefaultDelay)
+        public Thread TransitionAsync(
+            Color color,
+            CancellationToken cancellationToken = default,
+            int steps = DefaultSteps,
+            int delay = DefaultDelay)
         {
             if (Equals(color, CurrentColor))
             {
                 return null;
             }
 
-            var dr = (byte)((color.R - CurrentColor.R) / (double)steps);
-            var dg = (byte)((color.G - CurrentColor.G) / (double)steps);
-            var db = (byte)((color.B - CurrentColor.B) / (double)steps);
+            var dr = ComputeSteps(
+                CurrentColor.R,
+                color.R,
+                steps);
+            var dg = ComputeSteps(
+                CurrentColor.G,
+                color.G,
+                steps);
+            var db = ComputeSteps(
+                CurrentColor.B,
+                color.B,
+                steps);
 
-            var thread = new Thread(() => TransitionInternal(cancellationToken, steps, delay, dr, dg, db));
+            var thread = new Thread(() => TransitionInternal(
+                cancellationToken,
+                steps,
+                delay,
+                dr,
+                dg,
+                db));
 
             thread.Start();
 
@@ -126,18 +145,36 @@ namespace Iot.Device.RgbDiode
         /// <param name="color">The new color.</param>
         /// <param name="steps">Number of transition steps.</param>
         /// <param name="delay">Delay between each transition step.</param>
-        public void Transition(Color color, int steps = DefaultSteps, int delay = DefaultDelay)
+        public void Transition(
+            Color color,
+            int steps = DefaultSteps,
+            int delay = DefaultDelay)
         {
             if (Equals(color, CurrentColor))
             {
                 return;
-            } 
+            }
 
-            var dr = (byte)((color.R - CurrentColor.R) / (double)steps);
-            var dg = (byte)((color.G - CurrentColor.G) / (double)steps);
-            var db = (byte)((color.B - CurrentColor.B) / (double)steps);
+            var dr = ComputeSteps(
+                CurrentColor.R,
+                color.R,
+                steps);
+            var dg = ComputeSteps(
+                CurrentColor.G,
+                color.G,
+                steps);
+            var db = ComputeSteps(
+                CurrentColor.B,
+                color.B,
+                steps);
 
-            TransitionInternal(new CancellationToken(), steps, delay, dr, dg, db);
+            TransitionInternal(
+                new CancellationToken(),
+                steps,
+                delay,
+                dr,
+                dg,
+                db);
         }
 
         /// <summary>
@@ -202,11 +239,17 @@ namespace Iot.Device.RgbDiode
             }
         }
 
-        private void TransitionInternal(CancellationToken cancellationToken, int steps, int delay, byte dr, byte dg, byte db)
+        private void TransitionInternal(
+            CancellationToken cancellationToken,
+            int steps,
+            int delay,
+            int dr,
+            int dg,
+            int db)
         {
-            var cr = CurrentColor.R;
-            var cg = CurrentColor.G;
-            var cb = CurrentColor.B;
+            int cr = CurrentColor.R;
+            int cg = CurrentColor.G;
+            int cb = CurrentColor.B;
 
             for (var i = 0; i < steps && !cancellationToken.IsCancellationRequested; i++)
             {
@@ -214,8 +257,32 @@ namespace Iot.Device.RgbDiode
                 cg += dg;
                 cb += db;
 
+                // make sure the RGB values are within the 0-255 range
+                cr = (int)Math.Clamp(cr, 0, 255);
+                cg = (int)Math.Clamp(cg, 0, 255);
+                cb = (int)Math.Clamp(cb, 0, 255);
+
                 SetColor(Color.FromArgb(cr, cg, cb));
+
                 cancellationToken.WaitHandle.WaitOne(delay, false);
+            }
+        }
+
+        private int ComputeSteps(
+            byte startValue,
+            byte endValue,
+            int steps)
+        {
+            var requiredSteps = (endValue - startValue) / (double)steps;
+
+            // round to the nearest integer so that the color transition ends at or above the end value
+            if (requiredSteps > 0)
+            {
+                return (int)Math.Ceiling(requiredSteps);
+            }
+            else
+            {
+                return (int)Math.Floor(requiredSteps);
             }
         }
     }
