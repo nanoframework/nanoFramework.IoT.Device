@@ -63,6 +63,12 @@
     <Compile Include="Devices\Ds3231\Ds3231Register.cs" />
     <Compile Include="Devices\Pcf8563\Pcf8563.cs" />
     <Compile Include="Devices\Pcf8563\Pcf8563Register.cs" />
+    <Compile Include="Devices\Pcf85263\BitHelper.cs" />
+    <Compile Include="Devices\Pcf85263\NumberHelperExtra.cs" />
+    <Compile Include="Devices\Pcf85263\Pcf85263.cs" />
+    <Compile Include="Devices\Pcf85263\Pcf85263ControlRegisters.cs" />
+    <Compile Include="Devices\Pcf85263\Pcf85263RtcRegisters.cs" />
+    <Compile Include="Devices\Pcf85263\Pcf85263StopwatchRegisters.cs" />
     <Compile Include="RtcBase.cs" />
   </ItemGroup>
   <ItemGroup>
