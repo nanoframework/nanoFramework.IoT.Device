@@ -92,6 +92,7 @@
     <Compile Include="Events\DateTimeEventArgs.cs" />
     <Compile Include="Events\ErrorEventArgs.cs" />
     <Compile Include="Events\GenericEventArgs.cs" />
+    <Compile Include="Events\GnssPositionArgs.cs" />
     <Compile Include="Events\IncomingCallEventArgs.cs" />
     <Compile Include="Events\MissedCallEventArgs.cs" />
     <Compile Include="Events\ModemRebootedOrReadyArgs.cs" />
@@ -104,6 +105,11 @@
     <Compile Include="FileStorage\Sim7080FileStorage.cs" />
     <Compile Include="FileStorage\Sim7672FileStorage.cs" />
     <Compile Include="FileStorage\Sim800FileStorage.cs" />
+    <Compile Include="Gnss\GnssMode.cs" />
+    <Compile Include="Gnss\GnssPosition.cs" />
+    <Compile Include="Gnss\GnssBase.cs" />
+    <Compile Include="Gnss\GnssSim7672.cs" />
+    <Compile Include="Gnss\GnssStartMode.cs" />
     <Compile Include="Http\Http\ByteArrayContent.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
@@ -273,6 +279,9 @@
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.32\lib\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Angle">
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.48.0\lib\UnitsNet.Angle.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.5.48.0\lib\UnitsNet.ElectricPotential.dll</HintPath>

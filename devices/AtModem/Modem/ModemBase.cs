@@ -8,6 +8,7 @@ using System.Threading;
 using Iot.Device.AtModem.Call;
 using Iot.Device.AtModem.DTOs;
 using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Gnss;
 using Iot.Device.AtModem.Network;
 using Iot.Device.AtModem.Sms;
 using nanoFramework.M2Mqtt;
@@ -38,6 +39,8 @@ namespace Iot.Device.AtModem.Modem
         internal bool IsHttpClientInstancieted { get; set; } = false;
 
         internal bool IsMqttClientInstancieted { get; set; } = false;
+
+        internal bool IsGnssIntancieted { get; set; } = false;
 
         /// <summary>
         /// Initializes a new instance of the ModemBase class with the specified AT channel.
@@ -172,6 +175,11 @@ namespace Iot.Device.AtModem.Modem
         /// Gets a <see cref="HttpClient"/> object used to communicate with the network.
         /// </summary>
         public virtual HttpClient HttpClient { get => throw new NotImplementedException(); }
+
+        /// <summary>
+        /// Gets a <see cref="GnssBase"/> object used to communicate with the network.
+        /// </summary>
+        public virtual GnssBase Gnss { get => throw new NotImplementedException(); }
 
         /// <summary>
         /// Gets a <see cref="ISmsProvider"/> object used to send and receive SMS messages and mget access to the SMS storage.

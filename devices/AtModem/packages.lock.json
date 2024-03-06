@@ -74,6 +74,12 @@
         "resolved": "6.2.0",
         "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
       },
+      "UnitsNet.nanoFramework.Angle": {
+        "type": "Direct",
+        "requested": "[5.48.0, 5.48.0]",
+        "resolved": "5.48.0",
+        "contentHash": "pRqffrmScHhk0/6Zcqt7hO1U0Rn7SR+TAxWOhELX24trvg2ezR+N6jU1NK5O//bGQ2EVRvMbmy/2veMBdQVT0A=="
+      },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
         "requested": "[5.48.0, 5.48.0]",

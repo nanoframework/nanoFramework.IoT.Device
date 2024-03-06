@@ -26,6 +26,7 @@
     <Compile Include="../../CodingSchemes/*.cs" />
     <Compile Include="../../DTOs/*.cs" />
     <Compile Include="../../Modem/*.cs" />
+	<Compile Include="../../Gnss/*.cs" />
     <Compile Include="../../PDU/*.cs" />
     <Compile Include="../../FileStorage/*.cs" />
     <Compile Include="../../Events/*.cs" />

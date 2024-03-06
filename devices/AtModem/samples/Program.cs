@@ -19,14 +19,16 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using nanoFramework.M2Mqtt;
+using Iot.Device.AtModem.Gnss;
 
 Console.WriteLine("Hello SIM AT Modems!");
 
 SerialPort _serialPort;
 #if (NANOFRAMEWORK_1_0)
-OpenSerialPort("COM3");
+OpenSerialPort("COM2");
 #else
-OpenSerialPort("COM4");
+OpenSerialPort("COM24");
+Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 #endif
 
 _serialPort.NewLine = "\r\n";
@@ -43,6 +45,9 @@ Sim7672 modem = new(atChannel);
 // keyPin.Write(PinValue.High);
 // Thred.Sleep(1000);
 // keyPin.Write(PinValue.Low);
+
+// Depending on the device, you can test GNSS, some may require network enabled.
+TestGnss();
 
 modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
 modem.Network.AutoReconnect = true;
@@ -143,6 +148,8 @@ while (true)
 }
 
 ConnectToNetwork();
+// Depending on the device, you can test GNSS, some may require network enabled.
+//TestGnss();
 //GetNetworkOperators();
 //TestStorageSmsAndCharSet();
 //TestSms();
@@ -152,6 +159,72 @@ TestMqtts();
 
 modem.Dispose();
 CloseSerialPort();
+
+void TestGnss()
+{
+    var gnss = modem.Gnss;
+    Console.WriteLine($"Is GNSS running? {gnss.IsRunning}");
+    var started = gnss.Start();
+    Console.WriteLine($"GNSS started: {started}");
+
+    // Gets the modes
+    var modes = gnss.GnssMode;
+    Console.WriteLine($"Modes: {modes}");
+
+    // Chaning mode to GPS only
+    gnss.GnssMode = GnssMode.Gps;
+    Console.WriteLine($"Modes: {gnss.GnssMode}");
+
+    gnss.GnssMode = modes;
+
+    for (int i = 0; i < 5; i++)
+    {
+        // Get a position one time
+        var pos = gnss.GetPosition();
+        DisplayPosition(pos);
+
+        Thread.Sleep(2000);
+    }
+
+    gnss.GnssPositionUpdate += GnssPositionUpdate;
+    gnss.AutomaticUpdate = TimeSpan.FromSeconds(10);
+
+    Thread.Sleep(60000);
+    gnss.AutomaticUpdate = TimeSpan.Zero;
+
+    started = gnss.Stop();
+    Console.WriteLine($"GNSS stopped: {started}");
+}
+
+void GnssPositionUpdate(object sender, GnssPositionArgs e)
+{
+    DisplayPosition(e.Position);
+}
+
+void DisplayPosition(GnssPosition pos)
+{
+    if (pos != null)
+    {
+        Console.WriteLine($"Mode: {pos.Mode}");
+        Console.WriteLine($"GpsNumberVisibleSatellites: {pos.GpsNumberVisibleSatellites}");
+        Console.WriteLine($"GlonassNumberVisibleSatellites: {pos.GlonassNumberVisibleSatellites}");
+        Console.WriteLine($"GalileoNumberVisibleSatellites: {pos.GalileoNumberVisibleSatellites}");
+        Console.WriteLine($"Latitude: {pos.Latitude}");
+        Console.WriteLine($"Longitude: {pos.Longitude}");
+        Console.WriteLine($"DateTime: {pos.DateTime}");
+        Console.WriteLine($"Altitude: {pos.Altitude}");
+        Console.WriteLine($"Speed: {pos.Speed}");
+        Console.WriteLine($"Course: {pos.Course.Degrees}");
+        Console.WriteLine($"PositionDilutionOfPrecision: {pos.PositionDilutionOfPrecision}");
+        Console.WriteLine($"HorizontalDilutionOfPrecision: {pos.HorizontalDilutionOfPrecision}");
+        Console.WriteLine($"VerticalDilutionOfPrecision: {pos.VerticalDilutionOfPrecision}");
+        Console.WriteLine($"TotalNumberOfSatellitesUsed: {pos.TotalNumberOfSatellitesUsed}");
+    }
+    else
+    {
+        Console.WriteLine("No position");
+    }
+}
 
 void TestHttp()
 {
