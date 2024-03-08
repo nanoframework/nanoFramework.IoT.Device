@@ -58,9 +58,9 @@
       },
       "nanoFramework.Iot.Device.Rtc": {
         "type": "Direct",
-        "requested": "[1.2.494, 1.2.494]",
-        "resolved": "1.2.494",
-        "contentHash": "X5e0DcOysLWjxs06SHPO3GjPgLlqw25YSEAgYXYCmpGQRMv9Q2z8DFDTlv4enLVccSDP1jylcjhD5zXB7h3VzQ=="
+        "requested": "[1.2.506, 1.2.506]",
+        "resolved": "1.2.506",
+        "contentHash": "uoIETsQzsw1pSQL3g1jHCoyLrQ0M9ZKKQLdorsvcOMtnIX3r9GmMo1e3RVOGxIv5GLLkgi9OsCorUiM+BYLAyg=="
       },
       "nanoFramework.M5Core2": {
         "type": "Direct",
