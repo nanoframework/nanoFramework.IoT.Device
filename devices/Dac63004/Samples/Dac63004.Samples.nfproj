@@ -25,14 +25,17 @@
     <Reference Include="System.Device.I2c">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.ElectricCurrent">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.5.36.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricCurrent, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.5.48.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotentialDc">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotentialDc.5.36.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotentialDc, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotentialDc.5.48.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.36.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.48.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
