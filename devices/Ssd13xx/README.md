@@ -132,3 +132,39 @@ Follows the output on the display:
 Fonts can be used following the [IFont](./IFont.cs) implementation.
 
 Sample fonts are provided both in the [sample directory](./samples/) and in the [additional font one](./Additionnal_Fonts/). A tool called `Bitmap2Font` is also provided helping to automatically generate the Font class. In short, it can take any black and white image of fixed size font and generate the Font class. More [information here](./Bitmap2Font/).
+
+## IotByteFont: .NET Dot Matrix Font Creator Tool
+
+IotByteFont is a .NET dot matrix font creation tool. It can load your favorite font files and generate custom dot matrix font code.
+
+### Installation
+
+You can install the IotByteFont tool with the following command:
+
+```bash
+dotnet tool install -g IotByteFont
+```
+
+### Usage
+
+Here are the command-line options for the IotByteFont tool:
+
+| Option | Default Value | Description |
+| ------ | ------------- | ----------- |
+| -f, --font | Microsoft YaHei UI | Font file path or font name. |
+| -c, --char | chars.txt | Char file path or char string. |
+| -s, --size | 16 | Font size. |
+| -w, --width | 0 | Font width. 0 means same as font size. |
+| -y, --yoffset | 0.75 | Font y offset. size * y. Not recommended to adjust. Adjust with debug mode. |
+| -t, --threshold | 128 | Threshold for binarization. |
+| -n, --name | IotByteFont | Output class name. |
+| -d, --debug | false | Debug mode. Print debug info and bitmap. |
+
+### Example
+
+When creating a font, you need to specify the font file or font name, the characters to include in the font, and the size of the font. You can also specify the width of the font, the y offset, and the name of the output class. Turning on debug mode can print debug information and the final font bitmap.
+
+```bash
+IotByteFont --char "abcde功夫＄" --size 8
+IotByteFont --font ms.ttf --char chars.txt --yoffset 0.6 --name MyFont --debug
+```
