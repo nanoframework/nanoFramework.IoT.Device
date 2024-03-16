@@ -135,7 +135,7 @@ Sample fonts are provided both in the [sample directory](./samples/) and in the 
 
 ## IotByteFont: .NET Dot Matrix Font Creator Tool
 
-IotByteFont is a .NET dot matrix font creation tool. It can load your favorite font files and generate custom dot matrix font code.
+[IotByteFont](https://github.com/sangyuxiaowu/IotByteFont) is a .NET dot matrix font creation tool. It can load your favorite font files and generate custom dot matrix font code.
 
 ### Installation
 
