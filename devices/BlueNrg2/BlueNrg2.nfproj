@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>4f82e43a-e146-4dcf-899d-f0ddedce942f</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Iot.Device.BlueNrg2</RootNamespace>
+    <AssemblyName>Iot.Device.BlueNrg2</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Bh1750fvi.xml</DocumentationFile>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.12.0\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nanoFramework.Logging">
+      <HintPath>packages\nanoFramework.Logging.1.1.2\lib\nanoFramework.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.10.0\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.0.4\lib\System.Device.Gpio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device.Spi">
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.3.4\lib\System.Device.Spi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Compile Include="Aci\AccessPermissions.cs" />
+    <Compile Include="Aci\AddressType.cs" />
+    <Compile Include="Aci\AdvertisingReportContainer.cs" />
+    <Compile Include="Aci\AdvertisingType.cs" />
+    <Compile Include="Aci\Att.cs" />
+    <Compile Include="Aci\AttErrorCode.cs" />
+    <Compile Include="Aci\AttributeGroupHandlePair.cs" />
+    <Compile Include="Aci\BleStackConfiguration.cs" />
+    <Compile Include="Aci\CharacteristicEventMask.cs" />
+    <Compile Include="Aci\CharacteristicProperties.cs" />
+    <Compile Include="Aci\ClockAccuracy.cs" />
+    <Compile Include="Aci\CrashType.cs" />
+    <Compile Include="Aci\DeviceAddressEntry.cs" />
+    <Compile Include="Aci\DeviceRole.cs" />
+    <Compile Include="Aci\DirectAdvertisingReportContainer.cs" />
+    <Compile Include="Aci\Events\AdvertisingReportEventArgs.cs" />
+    <Compile Include="Aci\Events\AttExchangeMtuResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttExecuteWriteResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttFindByTypeValueResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttFindInfoResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttPrepareWriteResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttReadBlobResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttReadByGroupTypeResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttReadByTypeResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttReadMultipleResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\AttReadResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\BlueCrashInfoEventArgs.cs" />
+    <Compile Include="Aci\Events\BlueEventsLostEventArgs.cs" />
+    <Compile Include="Aci\Events\BlueInitializedEventArgs.cs" />
+    <Compile Include="Aci\Events\ConnectionCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\ConnectionUpdateCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\DataBufferOverflowEventArgs.cs" />
+    <Compile Include="Aci\Events\DataLengthChangeEventArgs.cs" />
+    <Compile Include="Aci\Events\DirectAdvertisingReportEventArgs.cs" />
+    <Compile Include="Aci\Events\DisconnectionCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\EncryptionChangeEventArgs.cs" />
+    <Compile Include="Aci\Events\EncryptionKeyRefreshCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\EnhancedConnectionCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\EventProcessor.cs" />
+    <Compile Include="Aci\Events\GapAddressNotResolvedEventArgs.cs" />
+    <Compile Include="Aci\Events\GapAuthorizationRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\GapBondLostEventArgs.cs" />
+    <Compile Include="Aci\Events\GapKeypressNotificationEventArgs.cs" />
+    <Compile Include="Aci\Events\GapLimitedDiscoverableEventArgs.cs" />
+    <Compile Include="Aci\Events\GapNumericComparisonValueEventArgs.cs" />
+    <Compile Include="Aci\Events\GapPairingCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\GapPassKeyRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\GapProcessCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\GapSlaveSecurityInitiatedEventArgs.cs" />
+    <Compile Include="Aci\Events\GattAttributeModifiedEventArgs.cs" />
+    <Compile Include="Aci\Events\GattDiscoverReadCharacteristicByUuidResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\GattErrorResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\GattIndicationEventArgs.cs" />
+    <Compile Include="Aci\Events\GattNotificationEventArgs.cs" />
+    <Compile Include="Aci\Events\GattPrepareWritePermitRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\GattProcessCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\GattProcessTimeoutEventArgs.cs" />
+    <Compile Include="Aci\Events\GattReadMultiPermitRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\GattReadPermitRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\GattServerConfirmationEventArgs.cs" />
+    <Compile Include="Aci\Events\GattTxPoolAvailableEventArgs.cs" />
+    <Compile Include="Aci\Events\GattWritePermitRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\GenerateDhKeyCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\HalEndOfRadioActivityEventArgs.cs" />
+    <Compile Include="Aci\Events\HalFirmwareErrorEventArgs.cs" />
+    <Compile Include="Aci\Events\HalScanRequestReportEventArgs.cs" />
+    <Compile Include="Aci\Events\HardwareErrorEventArgs.cs" />
+    <Compile Include="Aci\Events\L2CapCommandRejectEventArgs.cs" />
+    <Compile Include="Aci\Events\L2CapConnectionUpdateRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\L2CapConnectionUpdateResponseEventArgs.cs" />
+    <Compile Include="Aci\Events\L2CapProcessTimeoutEventArgs.cs" />
+    <Compile Include="Aci\Events\LongTermKeyRequestEventArgs.cs" />
+    <Compile Include="Aci\Events\NumberOfCompletePacketsEventArgs.cs" />
+    <Compile Include="Aci\Events\ReadLocalP256PublicKeyCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\ReadRemoteUsedFeaturesCompleteEventArgs.cs" />
+    <Compile Include="Aci\Events\ReadRemoteVersionInformationCompleteEventArgs.cs" />
+    <Compile Include="Aci\FirmwareErrorType.cs" />
+    <Compile Include="Aci\FrequencyOffset.cs" />
+    <Compile Include="Aci\GapEventMask.cs" />
+    <Compile Include="Aci\GapPairingCompleteReason.cs" />
+    <Compile Include="Aci\GapPairingCompleteStatus.cs" />
+    <Compile Include="Aci\GattEventMask.cs" />
+    <Compile Include="Aci\HalEventMask.cs" />
+    <Compile Include="Aci\HandlePacketPair.cs" />
+    <Compile Include="Aci\IoCapability.cs" />
+    <Compile Include="Aci\KeyPressNotificationType.cs" />
+    <Compile Include="Aci\LinkType.cs" />
+    <Compile Include="Aci\LostEventBitmap.cs" />
+    <Compile Include="Aci\Offset.cs" />
+    <Compile Include="Aci\OobDataType.cs" />
+    <Compile Include="Aci\PacketPayloadType.cs" />
+    <Compile Include="Aci\ProcedureCode.cs" />
+    <Compile Include="Aci\RadioState.cs" />
+    <Compile Include="Aci\RadioStateMask.cs" />
+    <Compile Include="Aci\Reason.cs" />
+    <Compile Include="Aci\ReasonCode.cs" />
+    <Compile Include="Aci\Role.cs" />
+    <Compile Include="Aci\SecureConnectionSupport.cs" />
+    <Compile Include="Aci\SecurityPermissions.cs" />
+    <Compile Include="Aci\ServiceType.cs" />
+    <Compile Include="Aci\TransportLayerMode.cs" />
+    <Compile Include="Aci\UpdateType.cs" />
+    <Compile Include="Aci\UuidType.cs" />
+    <Compile Include="BleStatus.cs" />
+    <Compile Include="BlueNrg2.cs" />
+    <Compile Include="ChannelMap.cs" />
+    <Compile Include="Characteristic.cs" />
+    <Compile Include="Descriptor.cs" />
+    <Compile Include="Aci\Gap.cs" />
+    <Compile Include="Aci\Gatt.cs" />
+    <Compile Include="Aci\Hal.cs" />
+    <Compile Include="FilterPolicy.cs" />
+    <Compile Include="Hci.cs" />
+    <Compile Include="HciEventMask.cs" />
+    <Compile Include="IHardwareInterface.cs" />
+    <Compile Include="Aci\L2Cap.cs" />
+    <Compile Include="LeEventMask.cs" />
+    <Compile Include="ScanType.cs" />
+    <Compile Include="ServiceContext.cs" />
+    <Compile Include="TransmitPowerLevelType.cs" />
+    <Compile Include="Utils\List.cs" />
+    <Compile Include="Utils\Math.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpiInterface.cs" />
+    <Compile Include="TransportLayer.cs" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+  <Import Project="packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText> This project references NuGet package(s) that are missing on this computer.Enable NuGet Package Restore to download them.For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.5.107\build\Nerdbank.GitVersioning.targets'))" />
+  </Target>
+</Project>
