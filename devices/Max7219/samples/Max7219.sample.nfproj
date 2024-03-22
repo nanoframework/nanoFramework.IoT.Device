@@ -40,12 +40,12 @@
       <HintPath>..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Frequency, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.5.48.0\lib\UnitsNet.Frequency.dll</HintPath>
+    <Reference Include="UnitsNet.Frequency, Version=5.49.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.5.49.0\lib\UnitsNet.Frequency.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=5.48.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.48.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=5.49.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.49.0\lib\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
