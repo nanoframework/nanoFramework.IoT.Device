@@ -206,7 +206,7 @@ namespace Iot.Device.Modbus.Client
                 throw new ArgumentException(nameof(function));
             }
 
-            // We cannot use the new way of whicth like this becaquse of Style Cop:
+            // We cannot use the new way of using switch because of StyleCop
             ////ValidParameters(deviceId, startAddress, count, function switch
             ////{
             ////    FunctionCode.ReadCoils => Consts.MaxCoilCountRead,
@@ -358,7 +358,7 @@ namespace Iot.Device.Modbus.Client
 
             if (count > 0)
             {
-                // We can't use the new way of using switch because of StyleCop
+                // We cannot use the new way of using switch because of StyleCop
                 ////ValidParameters(deviceId, startAddress, count, function switch
                 ////{
                 ////    FunctionCode.ReadCoils => Consts.MaxCoilCountWrite,
