@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.364\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.442\lib\Iot.Device.CharacterLcd.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -90,12 +90,12 @@
       <HintPath>..\..\packages\nanoFramework.System.Drawing.1.2.418\lib\System.Drawing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.FileSystem, Version=1.1.32.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.1.1.32\lib\System.IO.FileSystem.dll</HintPath>
+    <Reference Include="System.IO.FileSystem, Version=1.1.36.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.1.1.36\lib\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.Streams, Version=1.1.52.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.52\lib\System.IO.Streams.dll</HintPath>
+    <Reference Include="System.IO.Streams, Version=1.1.59.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.59\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math, Version=1.5.43.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
