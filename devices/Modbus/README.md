@@ -55,3 +55,7 @@ This server implementation will allow you to act as a server. It can be extended
 When using Modbus with an RS485, you can for example use a MAX485 to make the interface between the traditional serial port and RS485:
 
 ![MAX485](MAX485.png)
+
+## Limitations
+
+**NOTE:** nanoFramework only (currently) supports the "Modbus-RTU" protocol.
