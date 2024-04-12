@@ -53,11 +53,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Ports, Version=1.1.84.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Ports.1.1.84\lib\System.IO.Ports.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.Ports.1.1.84\lib\System.IO.Ports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.59.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Streams.1.1.59\lib\System.IO.Streams.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.59\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
