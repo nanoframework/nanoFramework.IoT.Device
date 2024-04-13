@@ -128,7 +128,7 @@ foreach ($folder in $deviceFolders)
 {
     "" | Write-Host -ForegroundColor Yellow
     "***********************" | Write-Host -ForegroundColor Yellow
-    "Processing binding '$folder'..." | Write-Host -ForegroundColor Yellow
+    "##[debug] Processing binding '$folder'..." | Write-Host -ForegroundColor Yellow
     "***********************" | Write-Host -ForegroundColor Yellow
     "" | Write-Host -ForegroundColor Yellow
     
@@ -139,13 +139,13 @@ foreach ($folder in $deviceFolders)
     {
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
-        ">>>ERROR: Couldn't find any solution file!"  | Write-Host -ForegroundColor Red
+        "##[error] >>>ERROR: Couldn't find any solution files!"  | Write-Host -ForegroundColor Red
         throw "Couldn't find the solution for '$folder'..."
     }
     else
     {
         "" | Write-Host -ForegroundColor Yellow
-        "INFO: Processing '$solutionFile'" | Write-Host -ForegroundColor Yellow
+        "##[debug] INFO: Processing '$solutionFile'" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
     }
 
@@ -156,12 +156,12 @@ foreach ($folder in $deviceFolders)
     {
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
-        ">>>ERROR: Couldn't find the nuspec file!"  | Write-Host -ForegroundColor Red
+        "##[error] >>>ERROR: Couldn't find the nuspec file!"  | Write-Host -ForegroundColor Red
         throw "Couldn't find the nuspec for '$folder'..."
     }
     else
     {
-        "INFO: nuspec file is: '$nuspecFile'" | Write-Host -ForegroundColor Yellow
+        "##[debug] INFO: nuspec file is: '$nuspecFile'" | Write-Host -ForegroundColor Yellow
     }
 
     # need to restore NuGets first
@@ -170,7 +170,7 @@ foreach ($folder in $deviceFolders)
     { 
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
-        ">>>ERROR: Couldn't restore solution '$solutionFile'!"  | Write-Host -ForegroundColor Red
+        "##[error] >>>ERROR: Couldn't restore solution: '$solutionFile'!"  | Write-Host -ForegroundColor Red
         throw "Error restoring '$solutionFile'"
     }
 
@@ -200,7 +200,7 @@ foreach ($folder in $deviceFolders)
     {
         Clear-Variable LastExitCode
 
-        "INFO: Performing versions check..." | Write-Host 
+        "##[debug] INFO: Performing versions check..." | Write-Host 
 
         ########################
         # perform versions check
@@ -218,7 +218,7 @@ foreach ($folder in $deviceFolders)
         if($LASTEXITCODE -eq 0)
         {
             "" | Write-Host -ForegroundColor Yellow
-            "INFO: Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
+            "##[debug] INFO: Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
             "" | Write-Host -ForegroundColor Yellow
 
             #############
@@ -256,8 +256,10 @@ foreach ($folder in $deviceFolders)
         {
             "" | Write-Host -ForegroundColor Red
             "*****************************************" | Write-Host -ForegroundColor Red
-            ">>>ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
+            "##[error] >>>ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
             "*****************************************" | Write-Host -ForegroundColor Red
+            "" | Write-Host -ForegroundColor Red
+            "Exception was: $_" | Write-Host -ForegroundColor Red
             "" | Write-Host -ForegroundColor Red
 
             # set flag
@@ -268,12 +270,12 @@ foreach ($folder in $deviceFolders)
     {
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
-        ">>>ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
+        "##[error] >>>ERROR: build failed, check output <<<" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
         "" | Write-Host -ForegroundColor Red
 
         "" | Write-Host -ForegroundColor Red
-        "Eception was: $_" | Write-Host -ForegroundColor Red
+        "Exception was: $_" | Write-Host -ForegroundColor Red
         "" | Write-Host -ForegroundColor Red
 
         # set flag
@@ -284,7 +286,7 @@ foreach ($folder in $deviceFolders)
 if($buildFailed)
 {
     "********************************" | Write-Host -ForegroundColor Red
-    "Check >>>ERROR<<< messages above" | Write-Host -ForegroundColor Red
+    "##[error] Check >>>ERROR<<< messages above" | Write-Host -ForegroundColor Red
     "********************************" | Write-Host -ForegroundColor Red
 
     exit 1
