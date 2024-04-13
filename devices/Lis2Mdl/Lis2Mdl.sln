@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Lis2Mdl", "Lis2Mdl.nfproj", "{367d8324-d451-4892-89f5-0e32db3fdd4d}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Lis2Mdl.Samples", "samples\Lis2Mdl.Samples.nfproj", "{c577d4cc-cf8a-4c54-8273-5359224afa1c}"

@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RotaryEncoder", "RotaryEncoder.nfproj", "{1A2D1FE8-E714-4A23-A2C1-DD2F13AF1D57}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RotaryEncoder.Samples", "samples\RotaryEncoder.Samples.nfproj", "{3F30D3CC-267F-4B3C-B532-7A4E0D34E2CD}"
