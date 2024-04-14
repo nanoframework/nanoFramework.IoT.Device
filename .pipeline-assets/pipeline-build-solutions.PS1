@@ -28,7 +28,7 @@ if($env:DEVICE_TO_BUILD -eq "")
 
         do
         {
-            "INFO: iteration $pageCounter" | Write-Host
+            "##[debug] INFO: iteration $pageCounter" | Write-Host
 
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -61,7 +61,7 @@ if($env:DEVICE_TO_BUILD -eq "")
 
         do
         {
-            "INFO: iteration $pageCounter" | Write-Host
+            "##[debug] INFO: iteration $pageCounter" | Write-Host
 
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion`?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -124,11 +124,13 @@ else
 # flag for any build 'failure'
 $buildFailed = $false
 
+
+write-host "##[section] Processing devices..."
 foreach ($folder in $deviceFolders)
 {
     "" | Write-Host -ForegroundColor Yellow
     "***********************" | Write-Host -ForegroundColor Yellow
-    "##[debug] Processing binding '$folder'..." | Write-Host -ForegroundColor Yellow
+    "##[group] Processing binding '$folder'..." | Write-Host -ForegroundColor Yellow
     "***********************" | Write-Host -ForegroundColor Yellow
     "" | Write-Host -ForegroundColor Yellow
     
@@ -145,7 +147,7 @@ foreach ($folder in $deviceFolders)
     else
     {
         "" | Write-Host -ForegroundColor Yellow
-        "##[debug] INFO: Processing '$solutionFile'" | Write-Host -ForegroundColor Yellow
+        "##[command] INFO: Processing '$solutionFile'" | Write-Host -ForegroundColor Yellow
         "" | Write-Host -ForegroundColor Yellow
     }
 
@@ -161,7 +163,7 @@ foreach ($folder in $deviceFolders)
     }
     else
     {
-        "##[debug] INFO: nuspec file is: '$nuspecFile'" | Write-Host -ForegroundColor Yellow
+        "##[command] INFO: nuspec file is: '$nuspecFile'" | Write-Host -ForegroundColor Yellow
     }
 
     # need to restore NuGets first
@@ -200,7 +202,7 @@ foreach ($folder in $deviceFolders)
     {
         Clear-Variable LastExitCode
 
-        "##[debug] INFO: Performing versions check..." | Write-Host 
+        "##[command] INFO: Performing versions check..." | Write-Host 
 
         ########################
         # perform versions check
@@ -218,7 +220,7 @@ foreach ($folder in $deviceFolders)
         if($LASTEXITCODE -eq 0)
         {
             "" | Write-Host -ForegroundColor Yellow
-            "##[debug] INFO: Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
+            "##[command] INFO: Building '$solutionFile'" | Write-Host -ForegroundColor Yellow
             "" | Write-Host -ForegroundColor Yellow
 
             #############
@@ -275,12 +277,13 @@ foreach ($folder in $deviceFolders)
         "" | Write-Host -ForegroundColor Red
 
         "" | Write-Host -ForegroundColor Red
-        "Exception was: $_" | Write-Host -ForegroundColor Red
+        "##[error] Thown Exception was: $_" | Write-Host -ForegroundColor Red
         "" | Write-Host -ForegroundColor Red
 
         # set flag
         $buildFailed = $true
     }
+    write-host "##[endgroup]"
 }
 
 if($buildFailed)
