@@ -61,7 +61,7 @@ if($env:DEVICE_TO_BUILD -eq "")
 
         do
         {
-            "##[debug] INFO: iteration $pageCounter" | Write-Host
+            "##[command] Get API file change page: $pageCounter" | Write-Host
 
             $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion`?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
 
@@ -91,9 +91,9 @@ if($env:DEVICE_TO_BUILD -eq "")
         exit
     }
 
-    Write-host "Files changed:"
+    Write-host "##[group] Files changed:"
     $files1 | ForEach-Object { Write-host $_ }
-    Write-host ""
+    Write-host "##[endgroup]"
 
     # pattern to select device folder name
     $pattern = '(devices\/)(?<folder>[a-zA-Z0-9._]+)(?>\/)'
