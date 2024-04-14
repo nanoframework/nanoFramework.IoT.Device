@@ -213,10 +213,12 @@ foreach ($folder in $deviceFolders)
         if($null -ne $env:System_PullRequest_PullRequestId)
         {
             # this is a PR build, perform analysis on nuspec dependencies
+            write-host "##[command] Running nanovc for PR (analyse nuspec)."
             nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile --analyse-nuspec
         }
         else
         {
+            write-host "##[command] Running nanovc."
             nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
         }
 
@@ -244,16 +246,18 @@ foreach ($folder in $deviceFolders)
                 $MyNuGetVersion = $MyNuGetVersion+$alphaPrString
             }
         
-            Write-Host "NuGet build is: $MyNuGetVersion"
-            Write-Host "Assembly version is: "+$versionData.AssemblyVersion
+            Write-Host "##[debug] NuGet build is: $MyNuGetVersion"
+            Write-Host "##[debug] Assembly version is: "+$versionData.AssemblyVersion
 
             ################
             # build solution
+            write-host "##[command] Running msbuild."
             & "$msbuild" "$solutionFile" /verbosity:normal /p:Configuration=Release /p:Platform="Any CPU" /p:PublicRelease=true
             if (-not $?) { throw "Error building '$solutionFile'" }
 
             ###############
             # package NuGet
+            write-host "##[command] Running nuget pack."
             nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
             if (-not $?) { throw "Error packaging '$nuspecFile'" }
         }
