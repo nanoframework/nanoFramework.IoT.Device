@@ -167,13 +167,16 @@ foreach ($folder in $deviceFolders)
     }
 
     # need to restore NuGets first
+    write-host "##[command] Performing nuget restore for '$solutionFile'."
     nuget restore $solutionFile
     if (-not $?)
     { 
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
         "##[error] >>>ERROR: Couldn't restore solution: '$solutionFile'!"  | Write-Host -ForegroundColor Red
-        throw "Error restoring '$solutionFile'"
+        # throw "Error restoring '$solutionFile'"
+	# set flag
+        $buildFailed = $true    
     }
 
     #################################################################
