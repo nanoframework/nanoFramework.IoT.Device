@@ -174,7 +174,7 @@ foreach ($folder in $deviceFolders)
         "" | Write-Host -ForegroundColor Red
         "*****************************************" | Write-Host -ForegroundColor Red
         "##[error] >>>ERROR: Couldn't restore solution: '$solutionFile'!"  | Write-Host -ForegroundColor Red
-        # throw "Error restoring '$solutionFile'"
+        throw "Error restoring '$solutionFile'"
 	# set flag
         $buildFailed = $true    
     }
