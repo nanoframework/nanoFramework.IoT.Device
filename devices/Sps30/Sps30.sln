@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Sps30", "Sps30.nfproj", "{26E966ED-6530-4CB6-B1D1-6FD74F3F78B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C7E950C7-B19C-42A2-969E-71B1FA0BF47F}"
