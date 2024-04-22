@@ -22,13 +22,15 @@ namespace Iot.Device.Modbus.Client
         /// <param name="parity">The parity. Default is None.</param>
         /// <param name="dataBits">The number of data bits. Default is 8.</param>
         /// <param name="stopBits">The number of stop bits. Default is One.</param>
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
         public ModbusClient(
             string portName,
             int baudRate = 9600,
             Parity parity = Parity.None,
             int dataBits = 8,
-            StopBits stopBits = StopBits.One)
-            : base(portName, baudRate, parity, dataBits, stopBits)
+            StopBits stopBits = StopBits.One,
+            SerialMode mode = SerialMode.RS485)
+            : base(portName, baudRate, parity, dataBits, stopBits, mode: mode)
         {
         }
 
@@ -36,7 +38,8 @@ namespace Iot.Device.Modbus.Client
         /// Initializes a new instance of the <see cref="ModbusClient"/> class with the specified serial port.
         /// </summary>
         /// <param name="port">The serial port.</param>
-        public ModbusClient(SerialPort port) : base(port)
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
+        public ModbusClient(SerialPort port, SerialMode mode = SerialMode.RS485) : base(port, mode: mode)
         {
         }
 
