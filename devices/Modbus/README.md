@@ -61,7 +61,7 @@ When using Modbus with an RS485, you can for example use a MAX485 to make the in
 You can change the ```mode``` parameter in constructor to 0 (SerialMode.Normal) if you're using Modbus over RS232
 ```csharp
 // Modbus Client
-var client = new ModbusClient("COM3",0); //SerialMode.Normal=0 SerialMode.RS485=1
+var client = new ModbusClient("COM3",0); //SerialMode.Normal = 0, SerialMode.RS485 = 1
 // Modbus Server
 var server = new ModbusServer(new Device(1), "COM2",mode:0);
 ```
