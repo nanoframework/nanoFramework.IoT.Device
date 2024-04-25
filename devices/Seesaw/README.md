@@ -19,13 +19,11 @@ This binding was developed using the Adafruit Seesaw breakout board which uses t
 
 ## Usage
 
-These samples connect to a Raspberry Pi via the first I2C interface. Issues were noticed when using the out-of-the-box stiings and so the I2C bus has been slowed down by adding the following to the /boot/Config.txt file
-
- `dtparam=i2c1_baudrate=50000`
+These samples connect to an ESP32 via the first I2C interface.
 
 ### Connecting to a Seesaw breakout board via I2C
 
-This sample simply connects to an Adafruit Seesaw breakout board, reads and then displays the capabilities of the board firmware
+This sample simply connects to an Adafruit Seesaw breakout board, reads and then displays the capabilities of the board firmware.
 
 ```csharp
 const byte Adafruit_Seesaw_Breakout_I2cAddress = 0x49;
@@ -70,10 +68,10 @@ static string GetModuleAvailability(Seesaw ssDevice, Seesaw.SeesawModule module)
 
 ### Connecting to a Seesaw based soil mositure sensor
 
-This sample connects a Raspberry Pi to an Adafruit capacitive soil sensor
+This sample connects an ESP32 to a Adafruit capacitive soil sensor
 
 ```csharp
-    const byte Adafruit_Seesaw_SoilSensor_I2cAddress = 0x36;
+    const byte Adafruit_Seesaw_SoilSensor_I2cAddress = 0x49;
     const byte Adafruit_Seesaw_SoilSensor_I2cBus = 0x1;
 
     using (I2cDevice i2cDevice = I2cDevice.Create(new I2cConnectionSettings(Adafruit_Seesaw_SoilSensor_I2cBus, Adafruit_Seesaw_SoilSensor_I2cAddress)))
@@ -99,11 +97,7 @@ This sample duplicates the functionality of the rpi-more-blinking-lights sample 
 
 ## Binding Notes
 
-When using Seesaw devices with a Raspberry Pi it has been observed that errors sometimes happen on the I2C bus. The nature of this error may be the 'clock stretching' [bug](http://www.advamation.com/knowhow/raspberrypi/rpi-i2c-bug.html) or may just be that the breakout board cannot accommodate the default I2C speed.
-
-It has been found that the Raspberry Pi 4 works correctly with this binding when the I2C bus is slowed using the following command in the Config.txt file.
-
-`dtparam=i2c1_baudrate=50000`
+When using Seesaw devices with an ESP32 it has been observed that errors sometimes happen on the I2C bus. The nature of this error may be the 'clock stretching' [bug](http://www.advamation.com/knowhow/raspberrypi/rpi-i2c-bug.html) or may just be that the breakout board cannot accommodate the default I2C speed.
 
 In general the Seesaw technology allows user the embedding of the following types of modules into firmware and the modules ticked are the ones that have been covered by this binding.
 
