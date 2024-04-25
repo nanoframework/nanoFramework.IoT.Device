@@ -39,7 +39,6 @@
     <Compile Include="SeesawGpio.cs" />
     <Compile Include="SeesawModules.cs" />
     <Compile Include="SeesawTouch.cs" />
-    <Compile Include="SpanPinValuePair.cs" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
