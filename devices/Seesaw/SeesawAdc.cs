@@ -6,6 +6,9 @@ using System.Buffers.Binary;
 
 namespace Iot.Device.Seesaw
 {
+    /// <summary>
+    /// The Seesaw ADC class.
+    /// </summary>
     public partial class Seesaw : IDisposable
     {
         /// <summary>

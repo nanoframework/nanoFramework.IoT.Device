@@ -9,25 +9,24 @@ using System.Device.I2c;
 namespace Iot.Device.Seesaw
 {
     /// <summary>
-    /// Represents Seesaw device
+    /// Represents Seesaw device.
     /// </summary>
     public partial class Seesaw : IDisposable
     {
         private const byte SessawHardwareId = 0x55;
 
         /// <summary>
-        /// I2C device used for communication
+        /// Gets the I2C device used for communication.
         /// </summary>
-        /// <value></value>
         public I2cDevice I2cDevice { get; private set; }
 
         private uint _options;
 
         /// <summary>
-        /// Initializes new instance of Seesaw.
+        /// Initializes a new instance of the <see cref="Seesaw"/> class.
         /// </summary>
         /// <param name="i2cDevice">The I2cDevice to be used to communicate with the SeeSaw module. Note that the I2cDevice
-        /// will be disposed when the along with the SeeSaw device</param>
+        /// will be disposed when the along with the SeeSaw device.</param>
         public Seesaw(I2cDevice i2cDevice)
         {
             I2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
@@ -35,7 +34,7 @@ namespace Iot.Device.Seesaw
         }
 
         /// <summary>
-        /// Version of the SeeSaw module.
+        /// Gets the version of the SeeSaw module.
         /// </summary>
         public uint Version { get; private set; }
 
@@ -48,7 +47,7 @@ namespace Iot.Device.Seesaw
         /// <summary>
         /// Tests to see if a module has been compiled into the SeeSaw firmware.
         /// </summary>
-        /// <param name="moduleAddress">>An Seesaw_Module enum that represents the mdule to test for.</param>
+        /// <param name="moduleAddress">A Seesaw_Module enum that represents the mdule to test for.</param>
         /// <returns>Returns true if the functionality associated with the module is available.</returns>
         public bool HasModule(SeesawModule moduleAddress) => (_options & (1 << (byte)moduleAddress)) != 0;
 
@@ -62,6 +61,7 @@ namespace Iot.Device.Seesaw
         /// Initializes the Seesaw device.
         /// <param name="i2cDevice">The I2cDevice to initialize the Seesaw device with.</param>
         /// </summary>
+        /// <exception cref="NotSupportedException">If the connected device is not supported.</exception>
         protected void Initialize(I2cDevice i2cDevice)
         {
             SoftwareReset();
@@ -83,7 +83,7 @@ namespace Iot.Device.Seesaw
         protected uint GetVersion() => BinaryPrimitives.ReadUInt32BigEndian(Read(SeesawModule.Status, SeesawFunction.StatusVersion, 4));
 
         /// <summary>
-        /// Gets the options/modules present on the Seesaw board
+        /// Gets the options/modules present on the Seesaw board.
         /// </summary>
         /// <returns>Returns 32 bit integer where the bits represent the options/modules present on the Seesaw board.</returns>
         protected uint GetOptions() => BinaryPrimitives.ReadUInt32BigEndian(Read(SeesawModule.Status, SeesawFunction.StatusOptions, 4));
@@ -160,7 +160,7 @@ namespace Iot.Device.Seesaw
         public void Dispose()
         {
             I2cDevice?.Dispose();
-            I2cDevice = null!;
+            I2cDevice = null;
         }
     }
 }

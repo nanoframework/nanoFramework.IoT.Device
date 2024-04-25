@@ -5,6 +5,9 @@ using System;
 
 namespace Iot.Device.Seesaw
 {
+    /// <summary>
+    /// The Seesaw Modules Class.
+    /// </summary>
     public partial class Seesaw : IDisposable
     {
         /// <summary>

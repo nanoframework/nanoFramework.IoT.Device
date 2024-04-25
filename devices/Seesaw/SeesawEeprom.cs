@@ -6,6 +6,9 @@ using System.Device.I2c;
 
 namespace Iot.Device.Seesaw
 {
+    /// <summary>
+    /// The Seesaw EEPROM class.
+    /// </summary>
     public partial class Seesaw : IDisposable
     {
         /// <summary>
