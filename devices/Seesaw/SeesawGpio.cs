@@ -25,7 +25,7 @@ namespace Iot.Device.Seesaw
         }
 
         /// <summary>
-        /// Set the PinMode for a number of GPIO pins
+        /// Set the PinMode for a number of GPIO pins.
         /// </summary>
         /// <param name="pins">A 64bit integer containing 1 bit for each pin. If a bit is set to 1 then the pin mode is set for the associated pin.</param>
         /// <param name="mode">The pin mode to be set.</param>
@@ -65,7 +65,7 @@ namespace Iot.Device.Seesaw
         }
 
         /// <summary>
-        /// Write a value to GPIO pin
+        /// Write a value to GPIO pin.
         /// </summary>
         /// <param name="pin">The pin that has its value set.</param>
         /// <param name="value">The pin value to be set.</param>
@@ -80,7 +80,7 @@ namespace Iot.Device.Seesaw
         }
 
         /// <summary>
-        /// Write a value to a number of GPIO pins
+        /// Write a value to a number of GPIO pins.
         /// </summary>
         /// <param name="pins">A 64bit integer containing 1 bit for each pin. If a bit is set to 1 then the pin value is set for the associated pin.</param>
         /// <param name="value">The pin value to be set.</param>
@@ -160,7 +160,7 @@ namespace Iot.Device.Seesaw
         }
 
         /// <summary>
-        /// Takes an array of bytes read from the Seesaw device and converts to a 64bit value where each bit represents a pin
+        /// Takes an array of bytes read from the Seesaw device and converts to a 64bit value where each bit represents a pin.
         /// </summary>
         /// <remarks>
         /// Pin         22222233 11112222 00111111 00000000 55556666 44555555 44444444 33333333
@@ -170,12 +170,12 @@ namespace Iot.Device.Seesaw
         /// Byte Index  00000000 11111111 22222222 33333333 44444444 55555555 66666666 77777777
         /// Bit         01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567
         /// </remarks>
-        /// <param name="pinArray">A byte array read from a Seesaw device</param>
-        /// <returns>A ulong representing the 64 Gpio pins</returns>
+        /// <param name="pinArray">A byte array read from a Seesaw device.</param>
+        /// <returns>A ulong representing the 64 Gpio pins.</returns>
         private ulong PinArrayToPins(byte[] pinArray) => ((ulong)pinArray[4] << 56) | ((ulong)pinArray[5] << 48) | ((ulong)pinArray[6] << 40) | ((ulong)pinArray[7] << 32) | ((ulong)pinArray[0] << 24) | ((ulong)pinArray[1] << 16) | ((ulong)pinArray[2] << 8) | pinArray[3];
 
         /// <summary>
-        /// Taks a 64 bit value where each bit represents a pin and converts it to a byte array suitable for writing to a seesaw device
+        /// Takes a 64 bit value where each bit represents a pin and converts it to a byte array suitable for writing to a seesaw device.
         /// </summary>
         /// <remarks>
         /// Pin         22222233 11112222 00111111 00000000 55556666 44555555 44444444 33333333
@@ -185,8 +185,8 @@ namespace Iot.Device.Seesaw
         /// Byte Index  00000000 11111111 22222222 33333333 44444444 55555555 66666666 77777777
         /// Bit         01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567
         /// </remarks>
-        /// <param name="pins">A ulong representing the 64 Gpio pins</param>
-        /// <returns>A byte array to write to a Seesaw device</returns>
+        /// <param name="pins">A ulong representing the 64 Gpio pins.</param>
+        /// <returns>A byte array to write to a Seesaw device.</returns>
         private byte[] PinsToPinArray(ulong pins) => new byte[] { (byte)(pins >> 24), (byte)(pins >> 16), (byte)(pins >> 8), (byte)pins, (byte)(pins >> 56), (byte)(pins >> 48), (byte)(pins >> 40), (byte)(pins >> 32) };
     }
 }
