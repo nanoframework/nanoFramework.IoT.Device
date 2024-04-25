@@ -59,8 +59,8 @@ namespace Iot.Device.Seesaw
 
         /// <summary>
         /// Initializes the Seesaw device.
-        /// <param name="i2cDevice">The I2cDevice to initialize the Seesaw device with.</param>
         /// </summary>
+        /// <param name="i2cDevice">The I2cDevice to initialize the Seesaw device with.</param>
         /// <exception cref="NotSupportedException">If the connected device is not supported.</exception>
         protected void Initialize(I2cDevice i2cDevice)
         {

@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Seesaw.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
-    <StyleCopTreatErrorsAsWarnings>true</StyleCopTreatErrorsAsWarnings>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
   </PropertyGroup>
@@ -33,14 +33,10 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeesawAdc.cs" />
-    <Compile Include="SeesawBase.cs" />
-    <Compile Include="SeesawEeprom.cs" />
-    <Compile Include="SeesawGpio.cs" />
-    <Compile Include="SeesawModules.cs" />
-    <Compile Include="SeesawTouch.cs" />
+    <Compile Include="*.cs" />
     <None Include="packages.config" />
-    <None Include="README.md" />
+    <None Include="*.md" />
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
