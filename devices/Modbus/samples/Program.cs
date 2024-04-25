@@ -38,7 +38,7 @@ namespace Iot.Device.Modbus.Samples
             var client = new ModbusClient("COM3");
 
             // Modbus Client (RS232 mode)
-            // var client = new ModbusClient("COM3");
+            // var client = new ModbusClient("COM3",mode:SerialMode.Normal);
 
             client.ReadTimeout = client.WriteTimeout = 2000;
 
