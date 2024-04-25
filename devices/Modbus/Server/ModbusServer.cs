@@ -25,14 +25,16 @@ namespace Iot.Device.Modbus.Server
         /// <param name="parity">The parity.</param>
         /// <param name="dataBits">The number of data bits.</param>
         /// <param name="stopBits">The stop bits.</param>
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
         public ModbusServer(
             ModbusDevice device,
             string portName,
             int baudRate = 9600,
             Parity parity = Parity.None,
             int dataBits = 8,
-            StopBits stopBits = StopBits.One)
-            : base(portName, baudRate, parity, dataBits, stopBits, 6)
+            StopBits stopBits = StopBits.One,
+            SerialMode mode = SerialMode.RS485)
+            : base(portName, baudRate, parity, dataBits, stopBits, 6, mode: mode)
         {
             _device = device;
         }
@@ -42,7 +44,8 @@ namespace Iot.Device.Modbus.Server
         /// </summary>
         /// <param name="device">The Modbus device.</param>
         /// <param name="port">The serial port.</param>
-        public ModbusServer(ModbusDevice device, SerialPort port) : base(port, 6)
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
+        public ModbusServer(ModbusDevice device, SerialPort port, SerialMode mode = SerialMode.RS485) : base(port, 6, mode)
         {
             _device = device;
         }

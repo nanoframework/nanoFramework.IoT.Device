@@ -47,16 +47,18 @@ namespace Iot.Device.Modbus
         /// <param name="dataBits">The number of data bits.</param>
         /// <param name="stopBits">The number of stop bits.</param>
         /// <param name="receivedBytesThreshold">The number of bytes required before the DataReceived event is fired. Default is 1.</param>
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
         public Port(
             string portName,
             int baudRate,
             Parity parity,
             int dataBits,
             StopBits stopBits,
-            int receivedBytesThreshold = 1)
+            int receivedBytesThreshold = 1,
+            SerialMode mode = SerialMode.RS485)
         {
             _serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
-            _serialPort.Mode = SerialMode.RS485;
+            _serialPort.Mode = mode;
             _serialPort.Handshake = Handshake.RequestToSend;
             _serialPort.ReceivedBytesThreshold = receivedBytesThreshold;
         }
@@ -66,10 +68,11 @@ namespace Iot.Device.Modbus
         /// </summary>
         /// <param name="port">The serial port.</param>
         /// <param name="receivedBytesThreshold">The number of bytes required before the DataReceived event is fired. Default is 1.</param>
-        public Port(SerialPort port, int receivedBytesThreshold = 1)
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
+        public Port(SerialPort port, int receivedBytesThreshold = 1, SerialMode mode = SerialMode.RS485)
         {
             _serialPort = port;
-            _serialPort.Mode = SerialMode.RS485;
+            _serialPort.Mode = mode;
 
             if (receivedBytesThreshold != 1)
             {
@@ -178,7 +181,7 @@ namespace Iot.Device.Modbus
         /// </summary>
         /// <param name="bytesToRead">The number of bytes available to read.</param>
         protected virtual void DataReceived(int bytesToRead)
-        { 
+        {
         }
 
         /// <summary>

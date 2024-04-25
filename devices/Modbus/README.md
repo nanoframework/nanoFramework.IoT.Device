@@ -56,6 +56,16 @@ When using Modbus with an RS485, you can for example use a MAX485 to make the in
 
 ![MAX485](MAX485.png)
 
+## RS232 support
+
+You can change the ```mode``` parameter in constructor to 0 (SerialMode.Normal) if you're using Modbus over RS232
+```csharp
+// Modbus Client
+var client = new ModbusClient("COM3",SerialMode.Normal); 
+// Modbus Server
+var server = new ModbusServer(new Device(1), "COM2",mode:SerialMode.Normal);
+```
+
 ## Limitations
 
 **NOTE:** nanoFramework only (currently) supports the "Modbus-RTU" protocol.

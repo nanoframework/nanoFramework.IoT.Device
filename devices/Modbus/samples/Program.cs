@@ -5,6 +5,7 @@ using nanoFramework.Hardware.Esp32;
 
 using Iot.Device.Modbus.Client;
 using Iot.Device.Modbus.Server;
+using System.IO.Ports;
 
 namespace Iot.Device.Modbus.Samples
 {
@@ -24,13 +25,21 @@ namespace Iot.Device.Modbus.Samples
             Configuration.SetPinFunction(26, DeviceFunction.COM3_TX);
             Configuration.SetPinFunction(27, DeviceFunction.COM3_RTS);
 
-            // Modbus Server
+            // Modbus Server (RS485 mode)
             var server = new ModbusServer(new Device(1), "COM2");
+
+            // Modbus Server (RS232 mode)
+            // var server= new ModbusServer(new Device(1),"COM2",mode:SerialMode.Normal);
+
             server.ReadTimeout = server.WriteTimeout = 2000;
             server.StartListening();
 
-            // Modbus Client
+            // Modbus Client (RS485 mode)
             var client = new ModbusClient("COM3");
+
+            // Modbus Client (RS232 mode)
+            // var client = new ModbusClient("COM3",mode:SerialMode.Normal);
+
             client.ReadTimeout = client.WriteTimeout = 2000;
 
             client.WriteMultipleRegisters(2, 0x5, new ushort[] { 3, 5, 2, 3 });
