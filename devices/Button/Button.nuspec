@@ -19,7 +19,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Button</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.38" />
     </dependencies>
   </metadata>
