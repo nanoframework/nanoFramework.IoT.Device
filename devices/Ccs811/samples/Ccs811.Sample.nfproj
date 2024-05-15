@@ -25,24 +25,24 @@
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Logging, Version=1.1.94.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.1.1.94\lib\nanoFramework.Logging.dll</HintPath>
+    <Reference Include="nanoFramework.Logging, Version=1.1.100.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Logging.1.1.100\lib\nanoFramework.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Logging.Stream, Version=1.1.94.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.Stream.1.1.94\lib\nanoFramework.Logging.Stream.dll</HintPath>
+    <Reference Include="nanoFramework.Logging.Stream, Version=1.1.100.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Logging.Stream.1.1.100\lib\nanoFramework.Logging.Stream.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.15\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=1.6.12.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Native.1.6.12\lib\nanoFramework.Runtime.Native.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nanoFramework.System.Runtime, Version=1.0.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Runtime.1.0.6\lib\nanoFramework.System.Runtime.dll</HintPath>
+    <Reference Include="nanoFramework.System.Runtime, Version=1.0.27.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Runtime.1.0.27\lib\nanoFramework.System.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=1.2.54.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -61,8 +61,8 @@
       <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.418\lib\System.Diagnostics.Stopwatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.FileSystem, Version=1.1.41.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.1.41\lib\System.IO.FileSystem.dll</HintPath>
+    <Reference Include="System.IO.FileSystem, Version=1.1.47.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.1.47\lib\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.59.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
