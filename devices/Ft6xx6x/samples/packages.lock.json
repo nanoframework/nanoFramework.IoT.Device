@@ -22,21 +22,21 @@
       },
       "nanoFramework.Iot.Device.Axp192": {
         "type": "Direct",
-        "requested": "[1.2.536, 1.2.536]",
-        "resolved": "1.2.536",
-        "contentHash": "V9yegWF422LiPLZNPwR4OpFbWqlG28kmBSnp1qzcvbMQAWbb3GyVpxfochWbBjhYAWjS27fpCK19ifoKbK3t0w=="
+        "requested": "[1.2.548, 1.2.548]",
+        "resolved": "1.2.548",
+        "contentHash": "0Ki8grsNr8bhU3U+X0S0O7dc9QBu1kSI0Cngmgw7hCuxUd4oWR9DeBPw1Z7A0D4vg876l4SvsRQpjh/F6v8Mww=="
       },
       "nanoFramework.Iot.Device.Bmm150": {
         "type": "Direct",
-        "requested": "[1.2.536, 1.2.536]",
-        "resolved": "1.2.536",
-        "contentHash": "OELqlM40urlE85SbmCD5N/GWRZ/hINQkOFWLVzH1p9SQr7JMT4hwfgoH99eczPBnhiBA1rHC3sNm8TNxibn86A=="
+        "requested": "[1.2.552, 1.2.552]",
+        "resolved": "1.2.552",
+        "contentHash": "Rv1wzk2TvMx3XFz7ux00GVMbbtQtEZLBfARcr0hGOXT/vdYTuhuA9AwgBMN4qra+DGva0lPodK9zSwenVq3HXw=="
       },
       "nanoFramework.Iot.Device.Button": {
         "type": "Direct",
-        "requested": "[1.2.536, 1.2.536]",
-        "resolved": "1.2.536",
-        "contentHash": "dp8x6RlXugPmwLIMesBxJA6yOaLoGzFZBVBIkZ3WLxD8v9MSK3qLJVjJCq7kgyCnvhrQ8o6vCZ2YbdlOCJl4KA=="
+        "requested": "[1.2.552, 1.2.552]",
+        "resolved": "1.2.552",
+        "contentHash": "SnaPZ26QDV/bmWqf1koNVBaqFVVUXmZMyCTubf3oQU/D/Hx7pJv7/Iwf6pdu2HuX3xh0/FsXta5kDHaPRYqthg=="
       },
       "nanoFramework.Iot.Device.Common.NumberHelper": {
         "type": "Direct",
@@ -64,9 +64,9 @@
       },
       "nanoFramework.M5Core2": {
         "type": "Direct",
-        "requested": "[1.1.215, 1.1.215]",
-        "resolved": "1.1.215",
-        "contentHash": "G8I1tAK4/mAAB12qPuCH4RBwyvgsBQfd1r/S/gjRLhyTU4XuoBgVwufxwSLLWaQkHhSUzl4bZNieDR2AbY3GYw=="
+        "requested": "[1.1.217, 1.1.217]",
+        "resolved": "1.1.217",
+        "contentHash": "F78myVW3gcJBOvJ1U1Y9Uh2RBhM29TsyUx/zr5QNQwlipyVMRKNvFoiAzNTwGOkxCgJzKTKpFINpJ6r9+lRXag=="
       },
       "nanoFramework.ResourceManager": {
         "type": "Direct",
