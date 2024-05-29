@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.38, 1.1.38]",
-        "resolved": "1.1.38",
-        "contentHash": "t2em7yn9sZpWWj52Xh4f4JjzUQX8/UB7C+XMnMiSGileGhRg86IwszA5/0bGUgc/dKC/AYRSqraPiEB0Q6jhBA=="
+        "requested": "[1.1.41, 1.1.41]",
+        "resolved": "1.1.41",
+        "contentHash": "5QnpdfvjxOvka2S5IHSdKudWmkH+CDQ3TFFuXOGuNlgZJFsAx0/k5zuwgJYkxIyGbL8kdcjBWLyDNdihjA1pUg=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.TestFramework": {
         "type": "Direct",
-        "requested": "[2.1.102, 2.1.102]",
-        "resolved": "2.1.102",
-        "contentHash": "miXwPCSlVmUR2JhV8YLGmTVXmykXC4EULGaTvXndnmXzCHZlyE92Y+1mo3QlC7EA74WDBnl3FJY4FGoGJEoEsQ=="
+        "requested": "[2.1.104, 2.1.104]",
+        "resolved": "2.1.104",
+        "contentHash": "48Ahh7O86SAjdUO5h0osrqBQj6nL1o7Mr27J7bRvZtgwOQ2sTdCeGBEMuzjv6k0f1GL2xB9koxQo9EuZj0kB3w=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
