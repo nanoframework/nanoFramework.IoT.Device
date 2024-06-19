@@ -51,12 +51,12 @@
     <Reference Include="System.Numerics">
       <HintPath>packages\nanoFramework.System.Numerics.1.2.423\lib\System.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.MagneticField, Version=5.50.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.MagneticField.5.50.0\lib\UnitsNet.MagneticField.dll</HintPath>
+    <Reference Include="UnitsNet.MagneticField, Version=5.52.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.MagneticField.5.52.0\lib\UnitsNet.MagneticField.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=5.50.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.50.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=5.52.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.52.0\lib\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
