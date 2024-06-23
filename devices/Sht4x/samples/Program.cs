@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Threading;
 using Iot.Device.Common;
 using Iot.Device.Sht4x;
-using UnitsNet;
 
 //////////////////////////////////////////////////////////////////////
 // when connecting to an ESP32 device, need to configure the I2C GPIOs
@@ -13,20 +12,19 @@ using UnitsNet;
 //Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 //Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-I2cConnectionSettings settings = new(1, Sht4x.DefautAddess);
+I2cConnectionSettings settings = new(1, Sht4X.DefaultAddress);
 using I2cDevice device = I2cDevice.Create(settings);
-using Sht4x sensor = new(device);
+using Sht4X sensor = new(device);
 while (true)
 {
-    Temperature tempValue = sensor.Temperature;
-    RelativeHumidity humValue = sensor.Humidity;
+    var data = sensor.ReadData(MeasurementMode.NoHeaterHighPrecision);
 
-    Debug.WriteLine($"Temperature: {tempValue.DegreesCelsius:0.#}\u00B0C");
-    Debug.WriteLine($"Relative humidity: {humValue.Percent:0.#}%RH");
+    Debug.WriteLine($"Temperature: {data.Temperature.DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Relative humidity: {data.RelativeHumidity.Percent:0.#}%RH");
 
     // WeatherHelper supports more calculations, such as saturated vapor pressure, actual vapor pressure and absolute humidity.
-    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
-    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(tempValue, humValue).DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Heat index: {WeatherHelper.CalculateHeatIndex(data.Temperature, data.RelativeHumidity).DegreesCelsius:0.#}\u00B0C");
+    Debug.WriteLine($"Dew point: {WeatherHelper.CalculateDewPoint(data.Temperature, data.RelativeHumidity).DegreesCelsius:0.#}\u00B0C");
     Debug.WriteLine("");
 
     Thread.Sleep(1000);

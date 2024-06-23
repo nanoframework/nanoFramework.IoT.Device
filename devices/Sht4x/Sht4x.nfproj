@@ -49,8 +49,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sht4XSensorData.cs" />
     <None Include="packages.config" />
-    <Compile Include="Sht4x.cs" />
+    <Compile Include="InvalidCrcException.cs" />
+    <Compile Include="MeasurementMode.cs" />
+    <Compile Include="Sht4X.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
