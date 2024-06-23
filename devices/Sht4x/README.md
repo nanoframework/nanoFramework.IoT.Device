@@ -1,10 +1,9 @@
 # Sht4x/SHT40/SHT41/SHT45 - Temperature & Humidity Sensor with internal heater
-// TODO: FIX ALL
-Sht4x is the next generation of Sensirion's temperature and humidity sensors. This project supports SHT30, SHT31 and SHT35.
+Sht4x is the next generation of Sensirion's temperature and humidity sensors. This project supports SHT40, SHT41, SHT43 and SHT45.
 
 ## Documentation
 
-- SHT30 [datasheet](https://cdn.datasheetspdf.com/pdf-down/S/H/T/SHT30-DIS-Sensirion.pdf)
+- SHT4X [datasheet](https://sensirion.com/media/documents/33FD6951/662A593A/HT_DS_Datasheet_SHT4x.pdf)
 
 ## Usage
 
@@ -19,7 +18,6 @@ Sht4x is the next generation of Sensirion's temperature and humidity sensors. Th
 - SDA - SDA
 - VCC - 5V
 - GND - GND
-- ADR - GND
 
 ### Code
 
@@ -39,13 +37,9 @@ For other devices like STM32, please make sure you're using the preset pins for 
 I2cConnectionSettings settings = new I2cConnectionSettings(1, (byte)I2cAddress.AddrLow);
 I2cDevice device = I2cDevice.Create(settings);
 
-using (Sht4x sensor = new Sht4x(device))
-{
-    // read temperature (℃)
-    double temperature = sensor.Temperature.Celsius;
-    // read humidity (%)
-    double humidity = sensor.Humidity;
-    // open heater
-    sensor.Heater = true;
+using Sht4X sensor = new(device);
+var data = sensor.ReadData(MeasurementMode.NoHeaterHighPrecision);
+Debug.WriteLine($"Temperature: {data.Temperature.DegreesCelsius:0.#}\u00B0C");
+Debug.WriteLine($"Relative humidity: {data.RelativeHumidity.Percent:0.#}%RH");
 }
 ```
