@@ -70,6 +70,12 @@ namespace Iot.Device.Max1704x
                 var soc = Read16(Registers.Max17043Soc);
                 var percent = (float)((soc & 0xFF00) >> 8);
                 percent += (soc & 0x00FF) / 256.0f;
+
+                if (percent > 100)
+                {
+                    percent = 100;
+                }
+
                 return Ratio.FromPercent(percent);    
             }
         }
