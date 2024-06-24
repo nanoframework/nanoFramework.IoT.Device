@@ -29,7 +29,7 @@ namespace Iot.Device.Sht4x
         /// <summary>
         /// Heater on, high power, high precision. 1100MS delay.
         /// </summary>
-        HighHeat1S = 0x39,
+        HighHeat1S1 = 0x39,
 
         /// <summary>
         /// Heater on, high power, high precision. 100MS delay.
@@ -39,7 +39,7 @@ namespace Iot.Device.Sht4x
         /// <summary>
         /// Heater on, medium power, high precision. 1100MS delay.
         /// </summary>
-        MediumHeat1S = 0x2F,
+        MediumHeat1S1 = 0x2F,
 
         /// <summary>
         /// Heater on, medium power, high precision. 100MS delay.
@@ -49,7 +49,7 @@ namespace Iot.Device.Sht4x
         /// <summary>
         /// Heater on, low power, high precision. 1100MS delay.
         /// </summary>
-        LowHeat1S = 0x1E,
+        LowHeat1S1 = 0x1E,
 
         /// <summary>
         /// Heater on, low power, high precision. 100MS delay.

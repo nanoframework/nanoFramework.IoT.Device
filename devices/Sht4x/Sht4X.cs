@@ -16,7 +16,7 @@ namespace Iot.Device.Sht4x
         /// <summary>
         /// Default I2C address of the Sht4x sensor.
         /// </summary>
-        public const byte DefaultAddress = 0x44;
+        public const byte DefaultI2CAddress = 0x44;
 
         /// <summary>
         /// Represents an I2C device used for communication with the Sht4X sensor.
@@ -116,15 +116,15 @@ namespace Iot.Device.Sht4x
                     return 5;
                 case MeasurementMode.NoHeaterLowPrecision:
                     return 2;
-                case MeasurementMode.HighHeat1S:
+                case MeasurementMode.HighHeat1S1:
                     return 1100;
                 case MeasurementMode.HighHeat100Ms:
                     return 100;
-                case MeasurementMode.MediumHeat1S:
+                case MeasurementMode.MediumHeat1S1:
                     return 1100;
                 case MeasurementMode.MediumHeat100Ms:
                     return 100;
-                case MeasurementMode.LowHeat1S:
+                case MeasurementMode.LowHeat1S1:
                     return 1100;
                 case MeasurementMode.LowHeat100Ms:
                     return 100;

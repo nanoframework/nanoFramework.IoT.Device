@@ -8,11 +8,23 @@
         "resolved": "1.15.5",
         "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
       },
+      "nanoFramework.Hardware.Esp32": {
+        "type": "Direct",
+        "requested": "[1.6.15, 1.6.15]",
+        "resolved": "1.6.15",
+        "contentHash": "6rHNyfZ2mHEq5Kwwx4Xpf3IezTQxfSrI159CKiG4MxQZi8E0VPrRLbyUIXDrNBiz0/VCmeBAKpqv9foJmixCLA=="
+      },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
         "requested": "[1.2.571, 1.2.571]",
         "resolved": "1.2.571",
         "contentHash": "3/4bwDYxmfk5suvDzk77vkGIMw9S6RjShNJJAMVoXVgILqCVOmc0NsLBZJPrYY/O9obQl/vGtiHpRQQixmWJEw=="
+      },
+      "nanoFramework.Runtime.Events": {
+        "type": "Direct",
+        "requested": "[1.11.18, 1.11.18]",
+        "resolved": "1.11.18",
+        "contentHash": "t0XpUkdyBBBv/0S4oGx3yUJG1iPYWc38odvZW8mVoioSxZOJrRkRHpNfwYxTxtP4LIEyyesOPEH42d05FHfHzA=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
