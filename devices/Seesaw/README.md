@@ -64,8 +64,6 @@ static string GetModuleAvailability(Seesaw ssDevice, Seesaw.SeesawModule module)
 }
 ```
 
-![Seesaw capabilities](SeesawSampleCapabilities_bb.png)
-
 ### Connecting to a Seesaw based soil mositure sensor
 
 This sample connects an ESP32 to a Adafruit capacitive soil sensor
@@ -87,17 +85,7 @@ This sample connects an ESP32 to a Adafruit capacitive soil sensor
     }
 ```
 
-![Seesaw sample soil sensor](SeesawSampleSoilSensor_bb.png)
-
-### Blinking Lights sample
-
-This sample duplicates the functionality of the rpi-more-blinking-lights sample but instead of using the raspberry pi Gpio it uses the Seesaw breakout board for all inputs
-
-![eesaw Sample Blinking Lights](SeesawSampleBlinkingLights_bb.png)
-
 ## Binding Notes
-
-When using Seesaw devices with an ESP32 it has been observed that errors sometimes happen on the I2C bus. The nature of this error may be the 'clock stretching' [bug](http://www.advamation.com/knowhow/raspberrypi/rpi-i2c-bug.html) or may just be that the breakout board cannot accommodate the default I2C speed.
 
 In general the Seesaw technology allows user the embedding of the following types of modules into firmware and the modules ticked are the ones that have been covered by this binding.
 
