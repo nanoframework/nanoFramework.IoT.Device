@@ -16,7 +16,7 @@ namespace Iot.Device.Sht4x
         /// <summary>
         /// Default I2C address of the Sht4x sensor.
         /// </summary>
-        public const byte DefaultI2CAddress = 0x44;
+        public const byte I2cDefaultAddress = 0x44;
 
         /// <summary>
         /// Represents an I2C device used for communication with the Sht4X sensor.

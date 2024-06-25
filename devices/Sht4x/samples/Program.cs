@@ -13,7 +13,7 @@ using nanoFramework.Hardware.Esp32;
 Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-I2cConnectionSettings settings = new(1, Sht4X.DefaultI2CAddress);
+I2cConnectionSettings settings = new(1, Sht4X.I2cDefaultAddress);
 using I2cDevice device = I2cDevice.Create(settings);
 using Sht4X sensor = new(device);
 while (true)
