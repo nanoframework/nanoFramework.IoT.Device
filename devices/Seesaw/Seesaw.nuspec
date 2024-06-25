@@ -20,14 +20,14 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Seesaw</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
       <dependency id="nanoFramework.Runtime.Native" version="1.6.12" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.418" />
       <dependency id="nanoFramework.System.Collections" version="1.5.31" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.38" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.41" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.418" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.50.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.52.0" />
     </dependencies>
   </metadata>
   <files>
