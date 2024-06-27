@@ -7,6 +7,13 @@ using System.Device.Gpio;
 using System.Threading;
 using Iot.Device.Seesaw;
 
+//////////////////////////////////////////////////////////////////////
+// when connecting to an ESP32 device, need to configure the I2C GPIOs
+// used for the bus.
+// using nanoFramework.Hardware.Esp32;
+// Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
+// Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
+
 const byte AdafruitSeesawSoilSensorI2cAddress = 0x36;
 const byte AdafruitSeesawSoilSensorI2cBus = 0x1;
 
