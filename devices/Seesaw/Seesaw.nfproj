@@ -33,7 +33,13 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="*.cs" />
+    <Compile Include="SeesawAdc.cs" />
+    <Compile Include="SeesawBase.cs" />
+    <Compile Include="SeesawEeprom.cs" />
+    <Compile Include="SeesawGpio.cs" />
+    <Compile Include="SeesawModule.cs" />
+    <Compile Include="SeesawFunction.cs" />
+    <Compile Include="SeesawTouch.cs" />
     <None Include="packages.config" />
     <None Include="*.md" />
     <Content Include="packages.lock.json" />

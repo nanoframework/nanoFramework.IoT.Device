@@ -14,23 +14,23 @@ Console.WriteLine("");
 Console.WriteLine($"Seesaw Version: {ssDevice.Version}");
 Console.WriteLine("");
 
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Status));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Gpio));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Sercom0));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Timer));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Adc));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Dac));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Interrupt));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Dap));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Eeprom));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Neopixel));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Touch));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Keypad));
-Console.WriteLine(GetModuleAvailability(ssDevice, Seesaw.SeesawModule.Encoder));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Status));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Gpio));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Sercom0));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Timer));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Adc));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Dac));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Interrupt));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Dap));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Eeprom));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Neopixel));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Touch));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Keypad));
+Console.WriteLine(GetModuleAvailability(ssDevice, SeesawModule.Encoder));
 
 Console.WriteLine("");
 
-static string GetModuleAvailability(Seesaw ssDevice, Seesaw.SeesawModule module)
+static string GetModuleAvailability(Seesaw ssDevice, SeesawModule module)
 {
     var moduleAvailable = ssDevice.HasModule(module) ? "available" : "not-available";
     return $"Module: {module.ToString()} - {moduleAvailable}";
