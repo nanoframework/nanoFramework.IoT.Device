@@ -10,15 +10,15 @@
       },
       "nanoFramework.Graphics.Core": {
         "type": "Direct",
-        "requested": "[1.2.10, 1.2.10]",
-        "resolved": "1.2.10",
-        "contentHash": "2eaJQauTEGdBDw6HfSeFT/82lAmD1qC9Ch5XZmouQHrBRIRa02I/U8dTA/k6Z1NhouNcyYK35BD++4uDodcq0w=="
+        "requested": "[1.2.15, 1.2.15]",
+        "resolved": "1.2.15",
+        "contentHash": "JOZ5KYBg0CE+u07vNyTar6MokA1hPZaHzRsDfB9ao8xkzHewxvNtxQ9YGRa9bM7TyD7Z2OYJ0PRColrtkUsLQg=="
       },
       "nanoFramework.Iot.Device.CharacterLcd": {
         "type": "Direct",
-        "requested": "[1.1.478, 1.1.478]",
-        "resolved": "1.1.478",
-        "contentHash": "+dCIiMEAt6L241aDCsztHFLza/fZIEOyDL6bpK28svSjB8cLQ+fiakKL2ExCQio66FTEt82dy67uG+AZAwvA6g=="
+        "requested": "[1.1.498, 1.1.498]",
+        "resolved": "1.1.498",
+        "contentHash": "F6BTG6//PxG0PsZTRyvVwW8dgV9v5SC9uY8Yh7T85Web1tBH1gRWPASbdhcKVMAe3Fdd2yIq5ilk7NP+lcPwyQ=="
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",

@@ -10,9 +10,9 @@
       },
       "nanoFramework.Graphics": {
         "type": "Direct",
-        "requested": "[1.2.10, 1.2.10]",
-        "resolved": "1.2.10",
-        "contentHash": "RL8+pheJGi2qzAUHAKkbVbd/A7fthn0t75//4eBRd2FkK+M7g3AMarzxRafBRv0morJv3JQo4aq13ziS5vintw=="
+        "requested": "[1.2.15, 1.2.15]",
+        "resolved": "1.2.15",
+        "contentHash": "v5lX0Z3LIvUCuBevTJoVQqi+X5uMI3phAAvRuMZ0aRFnQcqwWvvUZ+M327gzADsFUzsgOOsP1L6vyJjI5yKwQw=="
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
@@ -64,9 +64,9 @@
       },
       "nanoFramework.M5Core2": {
         "type": "Direct",
-        "requested": "[1.1.223, 1.1.223]",
-        "resolved": "1.1.223",
-        "contentHash": "mlqGJQDg3IemdJKInxoL7+KFcT72/yfWBWyfAgLYgA8kLA+GU3xznJWLaTbGYHtcnRPGAbClsyFHDANua0dhNg=="
+        "requested": "[1.1.225, 1.1.225]",
+        "resolved": "1.1.225",
+        "contentHash": "NC7o3fw/nAVoJp+/oP9/O344bWK4BslRnsNWfv6BiqQM0DUzDN8tKl/QfJtZOHOVpq/ZHVlZASqHAkgLcnOoHA=="
       },
       "nanoFramework.ResourceManager": {
         "type": "Direct",
