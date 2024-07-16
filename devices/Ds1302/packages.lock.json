@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.NumberHelper": {
         "type": "Direct",
-        "requested": "[1.2.418, 1.2.418]",
-        "resolved": "1.2.418",
-        "contentHash": "5TOMt78stlBGnIyXI9Up66Dpww+lwJrGE1uAo1RMMsIKRRTP94Mhzq1kZdcHC8E+FqZCfdGRGQaY6dOPJ0j2aA=="
+        "requested": "[1.2.586, 1.2.586]",
+        "resolved": "1.2.586",
+        "contentHash": "OU18rn4+d2lwtL+zjYLz6jTsdJ8v+AfmOMartYTLs+rjIPOEJCdH3Bn20jHFX9EVy/DfdXK7LuYTIA9vpxTMaQ=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.418, 1.2.418]",
-        "resolved": "1.2.418",
-        "contentHash": "Pnl/YJzaQXlls0Cmg4E9r27mpW5+/paVrn1mYYEe0/CqWLOOfJ63FPVJ0eOxN3DRixA2RkNa5wDZjD3r9ARuKw=="
+        "requested": "[1.2.586, 1.2.586]",
+        "resolved": "1.2.586",
+        "contentHash": "lj4INIXKDe9UVgiyITVdBlZEiuuIRpKVlTKLQaJVbjWElXW7SiXLfDhRoytaXl5Hs7LoSVjrmhODoTVLbsAemw=="
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.418, 1.2.418]",
-        "resolved": "1.2.418",
-        "contentHash": "/DJV6Z1gF290fic5jujbLwzPlPnRiFVlDYO74l6tBcQrL43oX5VIVa09JLn/sBaXJjYL0rNVPYjFl+pO+5vWWQ=="
+        "requested": "[1.2.586, 1.2.586]",
+        "resolved": "1.2.586",
+        "contentHash": "Maan65aZyGWlLkpyR/h8uikFmbM01oitUy2abcj+UmywthkiicPbYQ3rRMYGaKcm0SecbMU1V9SiNhEKxvPbIQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
