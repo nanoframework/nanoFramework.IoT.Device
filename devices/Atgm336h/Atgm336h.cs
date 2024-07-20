@@ -88,7 +88,6 @@ namespace Iot.Device.Atgm336h
             _serialDevice.ReadBufferSize = 2048;
             _serialDevice.ReadTimeout = 2000;
             _serialDevice.WatchChar = '\r';
-            _serialDevice.DataReceived += SerialDevice_DataReceived;
             _shouldDispose = true;
         }
         
@@ -99,7 +98,6 @@ namespace Iot.Device.Atgm336h
         public Atgm336h(SerialPort serialPort)
         {
             _serialDevice = serialPort;
-            _serialDevice.DataReceived += SerialDevice_DataReceived;
             _shouldDispose = false;
         }
 
@@ -108,6 +106,12 @@ namespace Iot.Device.Atgm336h
         /// </summary>
         public void Start()
         {
+            if (_serialDevice.IsOpen)
+            {
+                return;
+            }
+            
+            _serialDevice.DataReceived += SerialDevice_DataReceived;
             _serialDevice.Open();
         }
 
@@ -116,6 +120,12 @@ namespace Iot.Device.Atgm336h
         /// </summary>
         public void Stop()
         {
+            if (!_serialDevice.IsOpen)
+            {
+                return;
+            }
+            
+            _serialDevice.DataReceived -= SerialDevice_DataReceived;
             _serialDevice.Close();
         }
         
@@ -224,8 +234,8 @@ namespace Iot.Device.Atgm336h
             
             if (_shouldDispose)
             {
-                _serialDevice.Dispose();
                 _serialDevice.DataReceived -= SerialDevice_DataReceived;
+                _serialDevice.Dispose();
                 _serialDevice = null;
             }
         }
