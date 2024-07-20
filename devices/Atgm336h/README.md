@@ -1,4 +1,5 @@
-# GPS Module
+# ATGM336H  - Serial GPS Module
+
 ATGM336H is a highly sensitive GPS module that provides high accuracy navigation and positioning features.
 
 ## Documentation
