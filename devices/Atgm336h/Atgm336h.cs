@@ -25,6 +25,12 @@ namespace Iot.Device.Atgm336h
         public delegate void ModeChangedHandler(Mode mode);
 
         /// <summary>
+        /// Delegate for the error handler when parsing the GPS data.
+        /// </summary>
+        /// <param name="exception">The exception that occurred during parsing.</param>
+        public delegate void ParsingErrorHandler(Exception exception);
+
+        /// <summary>
         /// Delegate type to handle the event when the GPS module location changes.
         /// </summary>
         /// <param name="latitude">The new latitude.</param>
@@ -63,6 +69,11 @@ namespace Iot.Device.Atgm336h
         /// Event that occurs when the location changes.
         /// </summary>
         public event LocationChangeHandler LocationChanged;
+
+        /// <summary>
+        /// Event handler for parsing errors that occur during data processing of the ATGM336H GPS module.
+        /// </summary>
+        public event ParsingErrorHandler ParsingError;
 
         /// <summary>
         /// Represents the event that is raised when the mode of the GPS module is changed.
@@ -188,36 +199,43 @@ namespace Iot.Device.Atgm336h
             var commands = stringBuffer.Split(serialDevice.WatchChar);
             foreach (var command in commands)
             {
-                var commandTrimmed = command.StartsWith("\n") ? command.Substring(1) : command;
-                if (commandTrimmed.StartsWith("$GNGSA"))
+                try
                 {
-                    var data = commandTrimmed.Split(',');
-                    var mode = ConvertToMode(data[1]);
-                    var fix = ConvertToFix(data[2]);
-
-                    if (fix != Fix)
+                    var commandTrimmed = command.StartsWith("\n") ? command.Substring(1) : command;
+                    if (commandTrimmed.StartsWith("$GNGSA"))
                     {
-                        Fix = fix;
-                        FixChanged?.Invoke(fix);
+                        var data = commandTrimmed.Split(',');
+                        var mode = ConvertToMode(data[1]);
+                        var fix = ConvertToFix(data[2]);
+
+                        if (fix != Fix)
+                        {
+                            Fix = fix;
+                            FixChanged?.Invoke(fix);
+                        }
+
+                        if (mode != Mode)
+                        {
+                            Mode = mode;
+                            ModeChanged?.Invoke(mode);
+                        }
                     }
 
-                    if (mode != Mode)
+                    if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GNGLL"))
                     {
-                        Mode = mode;
-                        ModeChanged?.Invoke(mode);
+                        var data = commandTrimmed.Split(',');
+                        var lat = data[1];
+                        var latDir = data[2];
+                        var lon = data[3];
+                        var lonDir = data[4];
+                        Latitude = ConvertToGeoLocation(lat, latDir);
+                        Longitude = ConvertToGeoLocation(lon, lonDir);
+                        LocationChanged?.Invoke(Latitude, Longitude);
                     }
                 }
-
-                if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GNGLL"))
+                catch (Exception exception)
                 {
-                    var data = commandTrimmed.Split(',');
-                    var lat = data[1];
-                    var latDir = data[2];
-                    var lon = data[3];
-                    var lonDir = data[4];
-                    Latitude = ConvertToGeoLocation(lat, latDir);
-                    Longitude = ConvertToGeoLocation(lon, lonDir);
-                    LocationChanged?.Invoke(Latitude, Longitude);
+                    ParsingError?.Invoke(exception);
                 }
             }
         }
