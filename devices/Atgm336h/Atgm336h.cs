@@ -7,11 +7,12 @@ using System.Text;
 
 namespace Iot.Device.Atgm336h
 {
-    /// <summary>
-    /// Class for controlling Atgm336h GPS module.
-    /// </summary>
-    public class Atgm336h : IDisposable
+    public abstract class GpsDevice
     {
+        private Fix _fix = Fix.NoFix;
+        private Mode _mode = Mode.Unknown;
+        private GeoPosition _location;
+
         /// <summary>
         /// Delegate type to handle the event when the GPS module fix status changes.
         /// </summary>
@@ -23,24 +24,30 @@ namespace Iot.Device.Atgm336h
         /// </summary>
         /// <param name="mode">The new GPS module mode.</param>
         public delegate void ModeChangedHandler(Mode mode);
-
-        /// <summary>
-        /// Delegate for the error handler when parsing the GPS data.
-        /// </summary>
-        /// <param name="exception">The exception that occurred during parsing.</param>
-        public delegate void ParsingErrorHandler(Exception exception);
-
+        
         /// <summary>
         /// Delegate type to handle the event when the GPS module location changes.
         /// </summary>
-        /// <param name="latitude">The new latitude.</param>
-        /// <param name="longitude">The new longitude.</param>
-        public delegate void LocationChangeHandler(double latitude, double longitude);
-        
+        /// <param name="position">The new position.</param>
+        public delegate void LocationChangeHandler(GeoPosition position);
+
         /// <summary>
         /// Gets the fix status of the GPS module.
         /// </summary>
-        public Fix Fix { get; private set; } = Fix.NoFix;
+        public Fix Fix
+        {
+            get => _fix;
+            protected set
+            {
+                if (_fix == value)
+                {
+                    return;
+                }
+                
+                _fix = value;
+                FixChanged?.Invoke(value);
+            }
+        }
 
         /// <summary>
         /// Gets the mode of the GPS module.
@@ -48,17 +55,33 @@ namespace Iot.Device.Atgm336h
         /// <value>
         /// The mode of the GPS module.
         /// </value>
-        public Mode Mode { get; private set; } = Mode.Unknown;
+        public Mode Mode
+        {
+            get => _mode;
+            protected set
+            {
+                if (value == _mode)
+                {
+                    return;
+                }
+
+                _mode = value;
+                ModeChanged?.Invoke(_mode);
+            }
+        }
 
         /// <summary>
-        /// Gets the latitude value.
+        /// Gets the last known location.
         /// </summary>
-        public double Latitude { get; private set; }
-
-        /// <summary>
-        /// Gets the longitude value.
-        /// </summary>
-        public double Longitude { get; private set; }
+        public GeoPosition Location
+        {
+            get => _location;
+            protected set
+            {
+                _location = value;
+                LocationChanged.Invoke(_location);
+            }
+        }
 
         /// <summary>
         /// Represents the event handler for when the fix status of the GPS module changes.
@@ -71,14 +94,26 @@ namespace Iot.Device.Atgm336h
         public event LocationChangeHandler LocationChanged;
 
         /// <summary>
-        /// Event handler for parsing errors that occur during data processing of the ATGM336H GPS module.
-        /// </summary>
-        public event ParsingErrorHandler ParsingError;
-
-        /// <summary>
         /// Represents the event that is raised when the mode of the GPS module is changed.
         /// </summary>
         public event ModeChangedHandler ModeChanged;
+    }
+    
+    /// <summary>
+    /// Class for controlling Atgm336h GPS module.
+    /// </summary>
+    public class Atgm336h : GpsDevice, IDisposable
+    {
+        /// <summary>
+        /// Delegate for the error handler when parsing the GPS data.
+        /// </summary>
+        /// <param name="exception">The exception that occurred during parsing.</param>
+        public delegate void ParsingErrorHandler(Exception exception);
+
+        /// <summary>
+        /// Event handler for parsing errors that occur during data processing of the ATGM336H GPS module.
+        /// </summary>
+        public event ParsingErrorHandler ParsingError;
         
         private readonly bool _shouldDispose;
         
@@ -140,51 +175,6 @@ namespace Iot.Device.Atgm336h
             _serialDevice.Close();
         }
         
-        private static double ConvertToGeoLocation(string data, string direction)
-        {
-            var degreesLength = data.Length > 10 ? 3 : 2;
-
-            var degrees = double.Parse(data.Substring(0, degreesLength));
-            var minutes = double.Parse(data.Substring(degreesLength));
-
-            var result = degrees + (minutes / 60);
-
-            if (direction == "S" || direction == "W")
-            {
-                return -result;
-            }
-
-            return result;
-        }
-
-        private static Mode ConvertToMode(string data)
-        {
-            switch (data)
-            {
-                case "M":
-                    return Mode.Manual;
-                case "A":
-                    return Mode.Auto;
-            }
-
-            throw new Exception();
-        }
-
-        private static Fix ConvertToFix(string data)
-        {
-            switch (data)
-            {
-                case "1":
-                    return Fix.NoFix;
-                case "2":
-                    return Fix.Fix2D;
-                case "3":
-                    return Fix.Fix3D;
-            }
-
-            throw new Exception();
-        }
-        
         private void SerialDevice_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             var serialDevice = (SerialPort)sender;
@@ -204,33 +194,15 @@ namespace Iot.Device.Atgm336h
                     var commandTrimmed = command.StartsWith("\n") ? command.Substring(1) : command;
                     if (commandTrimmed.StartsWith("$GNGSA"))
                     {
-                        var data = commandTrimmed.Split(',');
-                        var mode = ConvertToMode(data[1]);
-                        var fix = ConvertToFix(data[2]);
-
-                        if (fix != Fix)
-                        {
-                            Fix = fix;
-                            FixChanged?.Invoke(fix);
-                        }
-
-                        if (mode != Mode)
-                        {
-                            Mode = mode;
-                            ModeChanged?.Invoke(mode);
-                        }
+                        var data = NMEA0183Parser.ParseGngsa(commandTrimmed);
+                        Fix = data.Fix;
+                        Mode = data.Mode;
                     }
 
                     if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GNGLL"))
                     {
-                        var data = commandTrimmed.Split(',');
-                        var lat = data[1];
-                        var latDir = data[2];
-                        var lon = data[3];
-                        var lonDir = data[4];
-                        Latitude = ConvertToGeoLocation(lat, latDir);
-                        Longitude = ConvertToGeoLocation(lon, lonDir);
-                        LocationChanged?.Invoke(Latitude, Longitude);
+                        var data = NMEA0183Parser.ParaseGngll(commandTrimmed);
+                        Location = data.Location;
                     }
                 }
                 catch (Exception exception)

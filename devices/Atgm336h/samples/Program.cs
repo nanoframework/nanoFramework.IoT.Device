@@ -29,7 +29,7 @@ void GpsModuleOnModeChanged(Mode mode)
     Console.WriteLine($"Mode changed to: {mode}");
 }
 
-void GpsModuleOnLocationChanged(double latitude, double longitude)
+void GpsModuleOnLocationChanged(GeoPosition position)
 {
-    Console.WriteLine($"Position: {latitude},{longitude}");
+    Console.WriteLine($"Position: {position.Latitude},{position.Longitude}");
 }
