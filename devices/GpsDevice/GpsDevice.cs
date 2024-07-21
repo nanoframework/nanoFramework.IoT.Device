@@ -1,5 +1,11 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 namespace Iot.Device.Common.GpsDevice
 {
+    /// <summary>
+    /// Base class for all GPS devices.
+    /// </summary>
     public abstract class GpsDevice
     {
         private Fix _fix = Fix.NoFix;
@@ -25,7 +31,7 @@ namespace Iot.Device.Common.GpsDevice
         public delegate void LocationChangeHandler(GeoPosition position);
 
         /// <summary>
-        /// Gets the fix status of the GPS module.
+        /// Gets or sets the fix status of the GPS module.
         /// </summary>
         public Fix Fix
         {
@@ -43,7 +49,7 @@ namespace Iot.Device.Common.GpsDevice
         }
 
         /// <summary>
-        /// Gets the mode of the GPS module.
+        /// Gets or sets the mode of the GPS module.
         /// </summary>
         /// <value>
         /// The mode of the GPS module.
@@ -64,7 +70,7 @@ namespace Iot.Device.Common.GpsDevice
         }
 
         /// <summary>
-        /// Gets the last known location.
+        /// Gets or sets the last known location.
         /// </summary>
         public GeoPosition Location
         {

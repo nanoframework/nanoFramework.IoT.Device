@@ -5,9 +5,16 @@ using System;
 
 namespace Iot.Device.Common.GpsDevice
 {
-    // TODO: Basic tests
+    /// <summary>
+    /// Provides methods for parsing NMEA0183 data from a GPS device.
+    /// </summary>
     public static class NMEA0183Parser
     {
+        /// <summary>
+        /// Parses the GNGLL NMEA0183 data from a GPS device.
+        /// </summary>
+        /// <param name="inputData">The valid GNGLL data string starting with $GNGLL.</param>
+        /// <returns>The parsed GngllData object.</returns>
         public static GngllData ParaseGngll(string inputData)
         {
             var data = inputData.Split(',');
@@ -21,6 +28,11 @@ namespace Iot.Device.Common.GpsDevice
             return new GngllData(GeoPosition.FromDecimalDegrees(latitude, longitude));
         }
 
+        /// <summary>
+        /// Parses the GNGSA NMEA0183 data from a GPS device.
+        /// </summary>
+        /// <param name="inputData">The valid GNGSA data string starting with $GNGSA.</param>
+        /// <returns>The parsed GngsaData object.</returns>
         public static GngsaData ParseGngsa(string inputData)
         {
             var data = inputData.Split(',');
