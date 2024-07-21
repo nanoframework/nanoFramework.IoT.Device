@@ -43,6 +43,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GpsDevice\GpsDevice.nfproj">
+      <Project>{d3085490-46b6-488a-96f1-ef820e67acc0}</Project>
+      <Name>GpsDevice</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Atgm336h.nfproj" />
   </ItemGroup>
   <ItemGroup>

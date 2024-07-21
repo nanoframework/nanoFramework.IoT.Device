@@ -4,6 +4,7 @@
 using Iot.Device.Atgm336h;
 using System;
 using System.Threading;
+using Iot.Device.Common.GpsDevice;
 using nanoFramework.Hardware.Esp32;
 
 var rxPin = 21;

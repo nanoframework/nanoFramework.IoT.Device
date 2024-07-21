@@ -4,6 +4,7 @@
 using System;
 using System.IO.Ports;
 using System.Text;
+using Iot.Device.Common.GpsDevice;
 
 namespace Iot.Device.Atgm336h
 {

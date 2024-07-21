@@ -28,6 +28,11 @@ using Iot.Device.Atgm336h;
 using System;
 using System.Threading;
 using nanoFramework.Hardware.Esp32;
+using Iot.Device.Atgm336h;
+using System;
+using System.Threading;
+using Iot.Device.Common.GpsDevice;
+using nanoFramework.Hardware.Esp32;
 
 var rxPin = 21;
 var txPin = 19;
@@ -52,8 +57,8 @@ void GpsModuleOnModeChanged(Mode mode)
     Console.WriteLine($"Mode changed to: {mode}");
 }
 
-void GpsModuleOnLocationChanged(double latitude, double longitude)
+void GpsModuleOnLocationChanged(GeoPosition position)
 {
-    Console.WriteLine($"Position: {latitude},{longitude}");
+    Console.WriteLine($"Position: {position.Latitude},{position.Longitude}");
 }
 ```
