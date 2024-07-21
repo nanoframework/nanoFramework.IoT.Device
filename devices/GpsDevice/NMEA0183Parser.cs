@@ -3,8 +3,9 @@
 
 using System;
 
-namespace Iot.Device.Atgm336h
+namespace Iot.Device.Common.GpsDevice
 {
+    // TODO: Basic tests
     public static class NMEA0183Parser
     {
         public static GngllData ParaseGngll(string inputData)

@@ -1,4 +1,4 @@
-namespace Iot.Device.Atgm336h
+namespace Iot.Device.Common.GpsDevice
 {
     public abstract class GpsDevice
     {
@@ -72,7 +72,7 @@ namespace Iot.Device.Atgm336h
             protected set
             {
                 _location = value;
-                LocationChanged.Invoke(_location);
+                LocationChanged?.Invoke(_location);
             }
         }
 
