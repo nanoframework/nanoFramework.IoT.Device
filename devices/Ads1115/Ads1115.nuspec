@@ -26,8 +26,8 @@
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.586" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.586" />
       <dependency id="nanoFramework.System.Math" version="1.5.43" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.54.0" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.54.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.55.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="5.55.0" />
     </dependencies>
   </metadata>
   <files>
