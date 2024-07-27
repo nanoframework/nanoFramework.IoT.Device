@@ -7,9 +7,9 @@ name: Update dependencies (round 4)
 
 on:
   schedule:
-    # At 00:45 UTC.
+    # At 01:45 UTC.
     # Set 15 min apart from previous round to allow enough time for any changes to propagate.
-    - cron:  '45 00 * * Wed,Fri'
+    - cron:  '45 01 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
@@ -24,4 +24,5 @@ jobs:
       solutionsToCheck: '*.sln'
       workingDirectory: devices
       branchToPr: 'develop'
-      exclusionList: 'Card,CharacterLcd,Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper,BoardLed,BuildHat,Common,Display,Ft232H,Ili9341,Pca9685,RGBLedMatrix,Scd4x,Seesaw,SensorHub,Sht4x,SocketCan,Ssd1351,StUsb4500,UFireIse'
+      # these projects are in other update rounds or in the works (genereted devices)
+      exclusionList: 'Card,CharacterLcd,Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper,BoardLed,BuildHat,Common,Display,Ft232H,Ili9341,Pca9685,RGBLedMatrix,Scd4x,SensorHub,SocketCan,Ssd1351,StUsb4500,UFireIse'

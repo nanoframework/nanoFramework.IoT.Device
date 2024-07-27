@@ -36,7 +36,8 @@ if (retData is null)
 
 // You need to remove the first element at it's the number of tags read
 // In, this case we will assume we are reading only 1 tag at a time
-var decrypted = pn532.TryDecode106kbpsTypeA(retData.AsSpan().Slice(1));
+var tagData = new SpanByte(retData, 1, retData.Length - 1);
+var decrypted = pn532.TryDecode106kbpsTypeA(tagData);
 ```
 
 Example pooling a 14443 type B card like a credit card:
@@ -66,7 +67,8 @@ Debug.WriteLine($"Num tags: {retData[0]}, Type: {(PollingType)retData[1]}");
 // In, this case we will assume we are reading only 1 tag at a time
 // The second element is the type of the card. In our case, because we are using a Credit Card, we already know it's a Type B card
 // The thrid element is the size of the data
-var decrypted = pn532.TryDecodeData106kbpsTypeB(retData.AsSpan().Slice(3));
+var tagData = new SpanByte(retData, 3, retData.Length - 3);
+var decrypted = pn532.TryDecodeData106kbpsTypeB(tagData);
 ```
 
 ## Reading or writing to cards

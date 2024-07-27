@@ -16,15 +16,15 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.6.15, 1.6.15]",
-        "resolved": "1.6.15",
-        "contentHash": "6rHNyfZ2mHEq5Kwwx4Xpf3IezTQxfSrI159CKiG4MxQZi8E0VPrRLbyUIXDrNBiz0/VCmeBAKpqv9foJmixCLA=="
+        "requested": "[1.6.19, 1.6.19]",
+        "resolved": "1.6.19",
+        "contentHash": "dvLEvudRQ/89GtX8i/flOwb81vCMVvI3PpQ+B07b/TUz4tAvpwA7iw6ye5224Z/8j3CQBhefiZtU/jv6K7HRyw=="
       },
       "nanoFramework.Hardware.Esp32.Rmt": {
         "type": "Direct",
-        "requested": "[2.0.10, 2.0.10]",
-        "resolved": "2.0.10",
-        "contentHash": "HRis64adM/jEp5/lh5r06KOq60okVFVPOE+t770umQ4rwKyDdJ0BiEVI87AJr3d//+BbJ+Fs/r55aooWTXDFpw=="
+        "requested": "[2.0.13, 2.0.13]",
+        "resolved": "2.0.13",
+        "contentHash": "JWVYJ+8SgySh/QXRk2YJ3q/ZfPSq7Q4PBd9qpRpBEQ8XjhrLOWiIc/jhAqVSs5BG73K/j0wot1tSNOOBh8mWIw=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
