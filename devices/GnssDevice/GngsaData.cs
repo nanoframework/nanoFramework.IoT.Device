@@ -6,7 +6,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the GNGSA data parsed from NMEA0183 sentences.
     /// </summary>
-    public class GngsaData
+    public class GngsaData : INmeaData
     {
         /// <summary>
         /// Gets the Gnss module mode.
@@ -18,6 +18,12 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         public Fix Fix { get; }
 
+        /// <inheritdoc/>
+        public string Name => "$GNGSA";
+
+        /// <inheritdoc/>
+        public GeoPosition Location => null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GngsaData" /> class.
         /// </summary>
@@ -27,6 +33,31 @@ namespace Iot.Device.Common.GnssDevice
         {
             Mode = mode;
             Fix = fix;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GngsaData" /> class.
+        /// </summary>
+        public GngsaData()
+        {
+        }
+
+        /// <inheritdoc/>
+        public INmeaData Parse(string inputData)
+        {
+            try
+            {
+                var data = inputData.Split(',');
+                var mode = Nmea0183Parser.ConvertToMode(data[1]);
+                var fix = Nmea0183Parser.ConvertToFix(data[2]);
+
+                return new GngsaData(mode, fix);
+            }
+            catch
+            {
+            }
+
+            return null;
         }
     }
 }

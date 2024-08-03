@@ -11,19 +11,23 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// A list of NMEA0183 data objects.
+        /// Gets or sets an array of parsable <see cref="MneaDatas"/> parsers.
         /// </summary>
-        public static NmeaData[] MneaDatas { get; set; }
+        public static INmeaData[] MneaDatas { get; set; } = new INmeaData[]
+        {
+            new GngllData(),
+            new GngsaData()
+        };
 
         /// <summary>
         /// PArses a string and return the parsed NmeaData object.
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static NmeaData Parse(string inputData)
+        public static INmeaData Parse(string inputData)
         {
             var data = inputData.Split(',');
-            foreach (NmeaData mnea in MneaDatas)
+            foreach (INmeaData mnea in MneaDatas)
             {
                 if (mnea.Name == data[0])
                 {
@@ -35,38 +39,12 @@ namespace Iot.Device.Common.GnssDevice
         }
 
         /// <summary>
-        /// Parses the GNGLL NMEA0183 data from a Gnss device.
+        /// Converts a string to a geographic location.
         /// </summary>
-        /// <param name="inputData">The valid GNGLL data string starting with $GNGLL.</param>
-        /// <returns>The parsed GngllData object.</returns>
-        public static GngllData ParaseGngll(string inputData)
-        {
-            var data = inputData.Split(',');
-            var lat = data[1];
-            var latDir = data[2];
-            var lon = data[3];
-            var lonDir = data[4];
-            var latitude = ConvertToGeoLocation(lat, latDir);
-            var longitude = ConvertToGeoLocation(lon, lonDir);
-
-            return new GngllData(GeoPosition.FromDecimalDegrees(latitude, longitude));
-        }
-
-        /// <summary>
-        /// Parses the GNGSA NMEA0183 data from a Gnss device.
-        /// </summary>
-        /// <param name="inputData">The valid GNGSA data string starting with $GNGSA.</param>
-        /// <returns>The parsed GngsaData object.</returns>
-        public static GngsaData ParseGngsa(string inputData)
-        {
-            var data = inputData.Split(',');
-            var mode = ConvertToMode(data[1]);
-            var fix = ConvertToFix(data[2]);
-
-            return new GngsaData(mode, fix);
-        }
-
-        private static double ConvertToGeoLocation(string data, string direction)
+        /// <param name="data">Valid input data.</param>
+        /// <param name="direction">The direction.</param>
+        /// <returns>A double representing an coordinate elements.</returns>
+        public static double ConvertToGeoLocation(string data, string direction)
         {
             var degreesLength = data.Length > 10 ? 3 : 2;
 
@@ -83,7 +61,13 @@ namespace Iot.Device.Common.GnssDevice
             return result;
         }
 
-        private static GnssOperation ConvertToMode(string data)
+        /// <summary>
+        /// Converts a string to a GnssOperation.
+        /// </summary>
+        /// <param name="data">A valid string.</param>
+        /// <returns>A <see cref="GnssOperation"/>.</returns>
+        /// <exception cref="Exception">Not a valid operation mode.</exception>
+        public static GnssOperation ConvertToMode(string data)
         {
             switch (data)
             {
@@ -96,7 +80,13 @@ namespace Iot.Device.Common.GnssDevice
             throw new Exception();
         }
 
-        private static Fix ConvertToFix(string data)
+        /// <summary>
+        /// Converts a string to a Fix.
+        /// </summary>
+        /// <param name="data">A valid string.</param>
+        /// <returns>A <see cref="Fix"/>.</returns>
+        /// <exception cref="Exception">Not a valid fix.</exception>
+        public static Fix ConvertToFix(string data)
         {
             switch (data)
             {

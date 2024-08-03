@@ -15,7 +15,7 @@ namespace GnssDevice.Tests
         public void ParseGngsa(string command, GnssOperation expectedMode, Fix expectedFix)
         {
             // Act
-            var result = Nmea0183Parser.ParseGngsa(command);
+            GngsaData result = (GngsaData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual(expectedMode, result.Mode);
@@ -27,7 +27,7 @@ namespace GnssDevice.Tests
         public void ParseGpgll(string command, double expectedLatitude, double expectedLongitude)
         {
             // Act
-            var result = Nmea0183Parser.ParaseGngll(command);
+            GngllData result = (GngllData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual(result.Location.Longitude, expectedLongitude);
