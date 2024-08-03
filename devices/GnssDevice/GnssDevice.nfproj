@@ -40,6 +40,7 @@
     <Compile Include="GnssMode.cs" />
     <Compile Include="GnssOperation.cs" />
     <Compile Include="Nmea0183Parser.cs" />
+    <Compile Include="NmeaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

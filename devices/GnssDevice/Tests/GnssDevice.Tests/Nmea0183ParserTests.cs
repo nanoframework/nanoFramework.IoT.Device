@@ -11,7 +11,7 @@ namespace GnssDevice.Tests
         [DataRow("$GNGSA,A,3,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Auto, Fix.Fix3D)]
         [DataRow("$GNGSA,A,2,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Auto, Fix.Fix2D)]
         [DataRow("$GNGSA,A,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Auto, Fix.NoFix)]
-        [DataRow("$GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Manual, Fix.Fix3D)]
+        [DataRow("$GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Manual, Fix.NoFix)]
         public void ParseGngsa(string command, GnssOperation expectedMode, Fix expectedFix)
         {
             // Act

@@ -47,6 +47,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Math, Version=1.5.43.0, Culture=neutral, PublicKeyToken=c07d481e9758c731, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Angle, Version=5.55.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Angle.5.55.0\lib\UnitsNet.Angle.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Nmea0183ParserTests.cs" />

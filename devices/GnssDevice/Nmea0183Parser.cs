@@ -11,6 +11,30 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
+        /// A list of NMEA0183 data objects.
+        /// </summary>
+        public static NmeaData[] MneaDatas { get; set; }
+
+        /// <summary>
+        /// PArses a string and return the parsed NmeaData object.
+        /// </summary>
+        /// <param name="inputData">A valid MNEA string.</param>
+        /// <returns>Parsed NmeaData object if any or null.</returns>
+        public static NmeaData Parse(string inputData)
+        {
+            var data = inputData.Split(',');
+            foreach (NmeaData mnea in MneaDatas)
+            {
+                if (mnea.Name == data[0])
+                {
+                    return mnea.Parse(inputData);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Parses the GNGLL NMEA0183 data from a Gnss device.
         /// </summary>
         /// <param name="inputData">The valid GNGLL data string starting with $GNGLL.</param>
@@ -41,7 +65,7 @@ namespace Iot.Device.Common.GnssDevice
 
             return new GngsaData(mode, fix);
         }
-        
+
         private static double ConvertToGeoLocation(string data, string direction)
         {
             var degreesLength = data.Length > 10 ? 3 : 2;
@@ -58,7 +82,7 @@ namespace Iot.Device.Common.GnssDevice
 
             return result;
         }
-        
+
         private static GnssOperation ConvertToMode(string data)
         {
             switch (data)
