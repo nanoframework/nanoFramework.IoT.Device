@@ -3,15 +3,15 @@
 
 using System;
 
-namespace Iot.Device.Common.GpsDevice
+namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
-    /// Provides methods for parsing NMEA0183 data from a GPS device.
+    /// Provides methods for parsing NMEA0183 data from a Gnss device.
     /// </summary>
-    public static class NMEA0183Parser
+    public static class Nmea0183Parser
     {
         /// <summary>
-        /// Parses the GNGLL NMEA0183 data from a GPS device.
+        /// Parses the GNGLL NMEA0183 data from a Gnss device.
         /// </summary>
         /// <param name="inputData">The valid GNGLL data string starting with $GNGLL.</param>
         /// <returns>The parsed GngllData object.</returns>
@@ -29,7 +29,7 @@ namespace Iot.Device.Common.GpsDevice
         }
 
         /// <summary>
-        /// Parses the GNGSA NMEA0183 data from a GPS device.
+        /// Parses the GNGSA NMEA0183 data from a Gnss device.
         /// </summary>
         /// <param name="inputData">The valid GNGSA data string starting with $GNGSA.</param>
         /// <returns>The parsed GngsaData object.</returns>
@@ -59,14 +59,14 @@ namespace Iot.Device.Common.GpsDevice
             return result;
         }
         
-        private static Mode ConvertToMode(string data)
+        private static GnssOperation ConvertToMode(string data)
         {
             switch (data)
             {
                 case "M":
-                    return Mode.Manual;
+                    return GnssOperation.Manual;
                 case "A":
-                    return Mode.Auto;
+                    return GnssOperation.Auto;
             }
 
             throw new Exception();

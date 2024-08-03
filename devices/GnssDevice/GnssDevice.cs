@@ -1,37 +1,39 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.Common.GpsDevice
+using Iot.Device.Common.Gnss;
+
+namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
-    /// Base class for all GPS devices.
+    /// Base class for all Gnss devices.
     /// </summary>
-    public abstract class GpsDevice
+    public abstract class GnssDevice
     {
         private Fix _fix = Fix.NoFix;
-        private Mode _mode = Mode.Unknown;
+        private GnssOperation _mode = GnssOperation.Unknown;
         private GeoPosition _location;
 
         /// <summary>
-        /// Delegate type to handle the event when the GPS module fix status changes.
+        /// Delegate type to handle the event when the Gnss module fix status changes.
         /// </summary>
         /// <param name="fix">The new fix status.</param>
         public delegate void FixChangedHandler(Fix fix);
 
         /// <summary>
-        /// Delegate type to handle the event when the GPS module mode changes.
+        /// Delegate type to handle the event when the Gnss module mode changes.
         /// </summary>
-        /// <param name="mode">The new GPS module mode.</param>
-        public delegate void ModeChangedHandler(Mode mode);
-        
+        /// <param name="mode">The new Gnss module mode.</param>
+        public delegate void ModeChangedHandler(GnssOperation mode);
+
         /// <summary>
-        /// Delegate type to handle the event when the GPS module location changes.
+        /// Delegate type to handle the event when the Gnss module location changes.
         /// </summary>
         /// <param name="position">The new position.</param>
         public delegate void LocationChangeHandler(GeoPosition position);
 
         /// <summary>
-        /// Gets or sets the fix status of the GPS module.
+        /// Gets or sets the fix status of the Gnss module.
         /// </summary>
         public Fix Fix
         {
@@ -42,19 +44,24 @@ namespace Iot.Device.Common.GpsDevice
                 {
                     return;
                 }
-                
+
                 _fix = value;
                 FixChanged?.Invoke(value);
             }
         }
 
         /// <summary>
-        /// Gets or sets the mode of the GPS module.
+        /// Gets or sets the mode of the GNSS device.
+        /// </summary>
+        public virtual GnssMode GnssMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the mode of the Gnss module.
         /// </summary>
         /// <value>
-        /// The mode of the GPS module.
+        /// The mode of the Gnss module.
         /// </value>
-        public Mode Mode
+        public GnssOperation GnssOperation
         {
             get => _mode;
             protected set
@@ -65,7 +72,7 @@ namespace Iot.Device.Common.GpsDevice
                 }
 
                 _mode = value;
-                ModeChanged?.Invoke(_mode);
+                OperationModeChanged?.Invoke(_mode);
             }
         }
 
@@ -83,7 +90,7 @@ namespace Iot.Device.Common.GpsDevice
         }
 
         /// <summary>
-        /// Represents the event handler for when the fix status of the GPS module changes.
+        /// Represents the event handler for when the fix status of the Gnss module changes.
         /// </summary>
         public event FixChangedHandler FixChanged;
 
@@ -93,8 +100,8 @@ namespace Iot.Device.Common.GpsDevice
         public event LocationChangeHandler LocationChanged;
 
         /// <summary>
-        /// Represents the event that is raised when the mode of the GPS module is changed.
+        /// Represents the event that is raised when the mode of the Gnss module is changed.
         /// </summary>
-        public event ModeChangedHandler ModeChanged;
+        public event ModeChangedHandler OperationModeChanged;
     }
 }

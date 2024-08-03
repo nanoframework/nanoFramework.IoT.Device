@@ -25,6 +25,12 @@
         "requested": "[6.2.0, 6.2.0]",
         "resolved": "6.2.0",
         "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
+      },
+      "UnitsNet.nanoFramework.Angle": {
+        "type": "Direct",
+        "requested": "[5.55.0, 5.55.0]",
+        "resolved": "5.55.0",
+        "contentHash": "8x2W/kkFpVpQ7HzhSAkeZ+VhfgFY86URwkGHTqHNOquscoF31CB+q/hQSq7QlZG8Vm1t2uSGtuLQC2IyRorUcQ=="
       }
     }
   }

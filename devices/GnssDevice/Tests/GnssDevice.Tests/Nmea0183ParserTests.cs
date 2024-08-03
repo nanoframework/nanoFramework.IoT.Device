@@ -1,21 +1,21 @@
-﻿using Iot.Device.Common.GpsDevice;
+﻿using Iot.Device.Common.GnssDevice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace GpsDevice.Tests
+namespace GnssDevice.Tests
 {
     [TestClass]
     public class NMEA0183ParserTests
     {
         [TestMethod]
-        [DataRow("$GNGSA,A,3,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", Mode.Auto, Fix.Fix3D)]
-        [DataRow("$GNGSA,A,2,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", Mode.Auto, Fix.Fix2D)]
-        [DataRow("$GNGSA,A,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", Mode.Auto, Fix.NoFix)]
-        [DataRow("$GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", Mode.Manual, Fix.Fix3D)]
-        public void ParseGngsa(string command, Mode expectedMode, Fix expectedFix)
+        [DataRow("$GNGSA,A,3,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Auto, Fix.Fix3D)]
+        [DataRow("$GNGSA,A,2,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Auto, Fix.Fix2D)]
+        [DataRow("$GNGSA,A,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Auto, Fix.NoFix)]
+        [DataRow("$GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", GnssOperation.Manual, Fix.Fix3D)]
+        public void ParseGngsa(string command, GnssOperation expectedMode, Fix expectedFix)
         {
             // Act
-            var result = NMEA0183Parser.ParseGngsa(command);
+            var result = Nmea0183Parser.ParseGngsa(command);
 
             // Assert
             Assert.AreEqual(expectedMode, result.Mode);
@@ -27,7 +27,7 @@ namespace GpsDevice.Tests
         public void ParseGpgll(string command, double expectedLatitude, double expectedLongitude)
         {
             // Act
-            var result = NMEA0183Parser.ParaseGngll(command);
+            var result = Nmea0183Parser.ParaseGngll(command);
 
             // Assert
             Assert.AreEqual(result.Location.Longitude, expectedLongitude);

@@ -13,10 +13,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Common.GpsDevice</RootNamespace>
-    <AssemblyName>Iot.Device.Common.GpsDevice</AssemblyName>
+    <RootNamespace>Iot.Device.Common.GnssDevice</RootNamespace>
+    <AssemblyName>Iot.Device.Common.GnssDevice</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Common.GpsDevice.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Common.GnssDevice.xml</DocumentationFile>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
@@ -36,9 +36,10 @@
     <Compile Include="GeoPosition.cs" />
     <Compile Include="GngllData.cs" />
     <Compile Include="GngsaData.cs" />
-    <Compile Include="GpsDevice.cs" />
-    <Compile Include="Mode.cs" />
-    <Compile Include="NMEA0183Parser.cs" />
+    <Compile Include="GnssDevice.cs" />
+    <Compile Include="GnssMode.cs" />
+    <Compile Include="GnssOperation.cs" />
+    <Compile Include="Nmea0183Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -48,9 +49,15 @@
     <Reference Include="System.Math, Version=1.5.43.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Angle">
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.55.0\lib\UnitsNet.Angle.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

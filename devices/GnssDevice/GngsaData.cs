@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.Common.GpsDevice
+namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
     /// Represents the GNGSA data parsed from NMEA0183 sentences.
@@ -9,21 +9,21 @@ namespace Iot.Device.Common.GpsDevice
     public class GngsaData
     {
         /// <summary>
-        /// Gets the GPS module mode.
+        /// Gets the Gnss module mode.
         /// </summary>
-        public Mode Mode { get; }
+        public GnssOperation Mode { get; }
 
         /// <summary>
-        /// Gets the GPS module fix status.
+        /// Gets the Gnss module fix status.
         /// </summary>
         public Fix Fix { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GngsaData" /> class.
         /// </summary>
-        /// <param name="mode">GPS mode.</param>
-        /// <param name="fix">GPS fix.</param>
-        public GngsaData(Mode mode, Fix fix)
+        /// <param name="mode">Gnss mode.</param>
+        /// <param name="fix">Gnss fix.</param>
+        public GngsaData(GnssOperation mode, Fix fix)
         {
             Mode = mode;
             Fix = fix;
