@@ -11,19 +11,19 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// A list of NMEA0183 data objects.
+        /// Gets or sets a list of NMEA0183 data objects.
         /// </summary>
-        public static NmeaData[] MneaDatas { get; set; }
+        public static INmeaData[] MneaDatas { get; set; }
 
         /// <summary>
         /// PArses a string and return the parsed NmeaData object.
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static NmeaData Parse(string inputData)
+        public static INmeaData Parse(string inputData)
         {
             var data = inputData.Split(',');
-            foreach (NmeaData mnea in MneaDatas)
+            foreach (INmeaData mnea in MneaDatas)
             {
                 if (mnea.Name == data[0])
                 {

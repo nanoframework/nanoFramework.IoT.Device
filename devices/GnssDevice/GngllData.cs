@@ -6,10 +6,10 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the GNGLL NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GngllData: NmeaData
+    public class GngllData : INmeaData
     {
         /// <summary>
-        /// The name of the data type, eg $GNGLL
+        /// The name of the data type, eg $GNGLL.
         /// </summary>
         public string Name => "$GNGLL";
 
@@ -18,7 +18,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="inputData">The valid GNGLL data string starting with $GNGLL.</param>
         /// <returns>The parsed GngllData object.</returns>
-        public NmeaData Parse(string inputData)
+        public INmeaData Parse(string inputData)
         {
             var data = inputData.Split(',');
             var lat = data[1];
