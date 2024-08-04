@@ -15,7 +15,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         public static INmeaData[] MneaDatas { get; set; } = new INmeaData[]
         {
-            new GngllData(),
+            new GpgllData(),
             new GngsaData()
         };
 

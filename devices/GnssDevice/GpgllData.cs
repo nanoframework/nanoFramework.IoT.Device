@@ -6,7 +6,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the GNGLL NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GngllData : INmeaData
+    public class GpgllData : INmeaData
     {
         /// <inheritdoc/>
         public string Name => "$GPGLL";
@@ -24,7 +24,7 @@ namespace Iot.Device.Common.GnssDevice
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir);
 
-                return new GngllData(GeoPosition.FromDecimalDegrees(latitude, longitude));
+                return new GpgllData(GeoPosition.FromDecimalDegrees(latitude, longitude));
             }
             catch
             {
@@ -37,18 +37,18 @@ namespace Iot.Device.Common.GnssDevice
         public GeoPosition Location { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GngllData" /> class.
+        /// Initializes a new instance of the <see cref="GpgllData" /> class.
         /// </summary>
         /// <param name="location">Location information.</param>
-        public GngllData(GeoPosition location)
+        public GpgllData(GeoPosition location)
         {
             Location = location;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GngllData" /> class.
+        /// Initializes a new instance of the <see cref="GpgllData" /> class.
         /// </summary>
-        public GngllData()
+        public GpgllData()
         {
         }
     }

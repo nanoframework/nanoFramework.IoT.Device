@@ -29,7 +29,7 @@ namespace GnssDevice.Tests
         public void ParseGpgll(string command, float expectedLatitude, float expectedLongitude)
         {
             // Act
-            GngllData result = (GngllData)Nmea0183Parser.Parse(command);
+            GpgllData result = (GpgllData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual((float)result.Location.Longitude, expectedLongitude);
