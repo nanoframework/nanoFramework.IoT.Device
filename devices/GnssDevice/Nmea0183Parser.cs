@@ -66,7 +66,6 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="GnssOperation"/>.</returns>
-        /// <exception cref="Exception">Not a valid operation mode.</exception>
         public static GnssOperation ConvertToMode(string data)
         {
             switch (data)
@@ -75,9 +74,9 @@ namespace Iot.Device.Common.GnssDevice
                     return GnssOperation.Manual;
                 case "A":
                     return GnssOperation.Auto;
+                default:
+                    return GnssOperation.Unknown;
             }
-
-            throw new Exception();
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Iot.Device.Common.GnssDevice
     public class GngllData : INmeaData
     {
         /// <inheritdoc/>
-        public string Name => "$GNGLL";
+        public string Name => "$GPGLL";
 
         /// <inheritdoc/>
         public INmeaData Parse(string inputData)
