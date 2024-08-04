@@ -1,6 +1,8 @@
-﻿using Iot.Device.Common.GnssDevice;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Common.GnssDevice;
+using nanoFramework.TestFramework;
 
 namespace GnssDevice.Tests
 {
