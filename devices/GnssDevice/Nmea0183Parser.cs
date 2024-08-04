@@ -13,9 +13,9 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// Gets or sets an array of parsable <see cref="MneaDatas"/> parsers.
+        /// Gets an array of parsable <see cref="MneaDatas"/> parsers.
         /// </summary>
-        public static Hashtable MneaDatas { get; } = new()
+        public static Hashtable MneaDatas { get; } = new ()
         {
             { "$GPGLL", new GpgllData() },
             { "$GNGSA", new GngsaData() },

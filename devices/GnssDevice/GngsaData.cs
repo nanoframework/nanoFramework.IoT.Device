@@ -50,7 +50,7 @@ namespace Iot.Device.Common.GnssDevice
 
                 return new GngsaData(mode, fix);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
