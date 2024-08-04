@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Iot.Device.Common.Gnss
+namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
     /// The Global Navigation Satellite System mode.

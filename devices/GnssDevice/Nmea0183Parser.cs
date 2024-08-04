@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Collections;
+using System.Diagnostics;
 
 namespace Iot.Device.Common.GnssDevice
 {
@@ -13,30 +15,31 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets or sets an array of parsable <see cref="MneaDatas"/> parsers.
         /// </summary>
-        public static INmeaData[] MneaDatas { get; set; } = new INmeaData[]
+        public static Hashtable MneaDatas { get; } = new()
         {
-            new GpgllData(),
-            new GngsaData(),
-            new GpggaData(),
+            { "$GPGLL", new GpgllData() },
+            { "$GNGSA", new GngsaData() },
+            { "$GPGGA", new GpggaData() }
         };
 
         /// <summary>
-        /// PArses a string and return the parsed NmeaData object.
+        /// Parses a string and return the parsed NmeaData object.
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static INmeaData Parse(string inputData)
+        public static object Parse(string inputData)
         {
             var data = inputData.Split(',');
-            foreach (INmeaData mnea in MneaDatas)
+            var dataId = data[0];
+
+            var mnea = MneaDatas[dataId] as INmeaData;
+            if (mnea is null)
             {
-                if (mnea.Name == data[0])
-                {
-                    return mnea.Parse(inputData);
-                }
+                Debug.WriteLine($"Parser for {dataId} not found.");
+                return null;
             }
 
-            return null;
+            return mnea.Parse(inputData);
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="data">Valid input data.</param>
         /// <param name="direction">The direction.</param>
         /// <returns>A double representing an coordinate elements.</returns>
-        public static double ConvertToGeoLocation(string data, string direction)
+        internal static double ConvertToGeoLocation(string data, string direction)
         {
             var degreesLength = data.Length > 10 ? 3 : 2;
 
@@ -67,7 +70,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="GnssOperation"/>.</returns>
-        public static GnssOperation ConvertToMode(string data)
+        internal static GnssOperation ConvertToMode(string data)
         {
             switch (data)
             {
@@ -86,7 +89,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="Fix"/>.</returns>
         /// <exception cref="Exception">Not a valid fix.</exception>
-        public static Fix ConvertToFix(string data)
+        internal static Fix ConvertToFix(string data)
         {
             switch (data)
             {
