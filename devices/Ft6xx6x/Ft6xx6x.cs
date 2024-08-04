@@ -16,10 +16,19 @@ namespace Iot.Device.Ft6xx6x
         private byte[] _data = new byte[2];
         private byte[] _toReadPoint = new byte[6];
 
+        private readonly int _touchAreaWidth;
+        private readonly int _touchAreaHeight;
+
         /// <summary>
         /// Ft6xx6x I2C Address
         /// </summary>
         public const byte DefaultI2cAddress = 0x38;
+
+        /// <summary>
+        /// Gets or sets the touch area's coordinates rotation.
+        /// </summary>
+        /// <remarks>Applying a rotation requires the touch area's width and height to be known, use the appropriate constructor - <see cref="Ft6xx6x(I2cDevice, int, int, Rotation)"/>.</remarks>
+        public Rotation Rotation { get; set; } = Rotation.None;
 
         /// <summary>
         /// Gets or sets the consumption mode.
@@ -134,6 +143,20 @@ namespace Iot.Device.Ft6xx6x
         }
 
         /// <summary>
+        /// Creates a new instance of the Ft6xx6x with defined touch area width and height, which need to be known to support rotation (<see cref="Rotation"/>).
+        /// </summary>
+        /// <param name="i2cDevice">The I2C device used for communication.</param>
+        /// <param name="width">The touch area's width, in pixels, when in its default orientation.</param>
+        /// <param name="height">The touch area's height, in pixels, when in its default orientation.</param>
+        /// <param name="rotation">Rotate the touch area, which affects the X and Y coordinates returned by <see cref="GetPoint(bool)"/> and <see cref="GetDoublePoints"/>.</param>
+        public Ft6xx6x(I2cDevice i2cDevice, int width, int height, Rotation rotation) : this(i2cDevice)
+        {
+            _touchAreaWidth = width;
+            _touchAreaHeight = height;
+            Rotation = rotation;
+        }
+
+        /// <summary>
         /// Gets the library version.
         /// </summary>
         /// <returns>The library version.</returns>
@@ -186,16 +209,49 @@ namespace Iot.Device.Ft6xx6x
         /// </summary>
         /// <param name="first">True to get the first point.</param>
         /// <returns>The point.</returns>
+        /// <exception cref="NotImplementedException">An unexpected <see cref="Rotation"/> value was encountered.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="Rotation"/> is other than <see cref="Rotation.None"/>, but the touch area's default width and height are not set.</exception>
         public Point GetPoint(bool first)
         {
             Point pt = new Point();
             Read(first ? Register.P1_XH : Register.P2_XH, _toReadPoint);
-            pt.X = (_toReadPoint[0] << 8 | _toReadPoint[1]) & 0x0FFF;
-            pt.Y = (_toReadPoint[2] << 8 | _toReadPoint[3]) & 0x0FFF;
             pt.TouchId = (byte)(_toReadPoint[2] >> 4);
             pt.Weigth = _toReadPoint[4];
             pt.Miscelaneous = _toReadPoint[5];
             pt.Event = (Event)(_toReadPoint[0] >> 6);
+
+            int rawX = (_toReadPoint[0] << 8 | _toReadPoint[1]) & 0x0FFF;
+            int rawY = (_toReadPoint[2] << 8 | _toReadPoint[3]) & 0x0FFF;
+
+            if (Rotation == Rotation.None)
+            {
+                pt.X = rawX;
+                pt.Y = rawY;
+            }
+            else if (_touchAreaHeight == default || _touchAreaWidth == default)
+            {
+                throw new InvalidOperationException();
+            }
+            else if (Rotation == Rotation.Left)
+            {
+                pt.X = _touchAreaHeight - rawY;
+                pt.Y = rawX;
+            }
+            else if (Rotation == Rotation.Invert)
+            {
+                pt.X = _touchAreaWidth - rawX;
+                pt.Y = _touchAreaHeight - rawY;
+            }
+            else if (Rotation == Rotation.Right)
+            {
+                pt.X = rawY;
+                pt.Y = _touchAreaWidth - rawX;
+            }
+            else
+            {
+                throw new NotImplementedException(nameof(Rotation));
+            }
+
             return pt;
         }
 

@@ -35,6 +35,7 @@
     <Compile Include="DoublePoints.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="FactoryMode.cs" />
+    <Compile Include="Rotation.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="WorkingMode.cs" />
