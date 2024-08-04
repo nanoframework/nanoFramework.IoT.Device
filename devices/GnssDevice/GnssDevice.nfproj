@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="Fix.cs" />
     <Compile Include="GeoPosition.cs" />
+    <Compile Include="GpggaData.cs" />
     <Compile Include="GpgllData.cs" />
     <Compile Include="GngsaData.cs" />
     <Compile Include="GnssDevice.cs" />

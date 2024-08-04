@@ -35,5 +35,19 @@ namespace GnssDevice.Tests
             Assert.AreEqual((float)result.Location.Longitude, expectedLongitude);
             Assert.AreEqual((float)result.Location.Latitude, expectedLatitude);
         }
+
+        [TestMethod]
+        [DataRow("$GPGGA,002153.000,3342.6618,N,11751.3858,W,1,10,1.2,27.0,M,-34.2,M,,0000*5E", 33.7110291f, -23.5230961f, 27.0f, 1.2f)]
+        public void ParseGpgga(string command, float expectedLatitude, float expectedLongitude, float altitude, float accuracy)
+        {
+            // Act
+            GpggaData result = (GpggaData)Nmea0183Parser.Parse(command);
+
+            // Assert
+            Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
+            Assert.AreEqual(expectedLatitude, (float)result.Location.Latitude);
+            Assert.AreEqual(altitude, (float)result.Location.Altitude);
+            Assert.AreEqual(accuracy, (float)result.Location.Accuracy);
+        }
     }
 }
