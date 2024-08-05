@@ -32,8 +32,8 @@ namespace GnssDevice.Tests
             GpgllData result = (GpgllData)Nmea0183Parser.Parse(command);
 
             // Assert
-            Assert.AreEqual((float)result.Location.Longitude, expectedLongitude);
-            Assert.AreEqual((float)result.Location.Latitude, expectedLatitude);
+            Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
+            Assert.AreEqual(expectedLatitude, (float)result.Location.Latitude);
         }
 
         [TestMethod]

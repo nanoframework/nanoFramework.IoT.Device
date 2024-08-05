@@ -50,7 +50,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>A double representing an coordinate elements.</returns>
         internal static double ConvertToGeoLocation(string data, string direction)
         {
-            var degreesLength = data.Length > 10 ? 3 : 2;
+            var degreesLength = data.Length > 12 ? 3 : 2;
 
             var degrees = double.Parse(data.Substring(0, degreesLength));
             var minutes = double.Parse(data.Substring(degreesLength));
