@@ -10,11 +10,21 @@ namespace Iot.Device.Common.GnssDevice
     /// Implements the NMEA0183 data for GPGGA.
     /// </summary>
     public class GpggaData : INmeaData
-    {        
+    {
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
         public GeoPosition Location { get; internal set; }
+
+        /// <summary>
+        /// Gets the number of satellites in use.
+        /// </summary>
+        public int SatellitesInView { get; internal set; }
+
+        /// <summary>
+        /// Gets the geodetic separation.
+        /// </summary>
+        public double GeodidSeparation { get; internal set; }
 
         /// <inheritdoc/>
         public INmeaData Parse(string inputData)
@@ -36,7 +46,11 @@ namespace Iot.Device.Common.GnssDevice
                 position.Altitude = altitude;
                 position.Accuracy = hdop;
                 position.Timestamp = DateTime.UtcNow.Date.Add(time);
-                return new GpggaData(position);
+                return new GpggaData(position)
+                {
+                    SatellitesInView = int.Parse(data[7]),
+                    GeodidSeparation = double.Parse(data[11]),
+                };
             }
             catch (Exception ex)
             {

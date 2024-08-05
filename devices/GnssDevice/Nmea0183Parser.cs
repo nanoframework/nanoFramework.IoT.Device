@@ -19,7 +19,8 @@ namespace Iot.Device.Common.GnssDevice
         {
             { "$GPGLL", new GpgllData() },
             { "$GNGSA", new GngsaData() },
-            { "$GPGGA", new GpggaData() }
+            { "$GPGGA", new GpggaData() },
+            { "$GPGSA", new GpggaData() }
         };
 
         /// <summary>
@@ -118,6 +119,50 @@ namespace Iot.Device.Common.GnssDevice
                     return Fix.Fix2D;
                 case "3":
                     return Fix.Fix3D;
+            }
+
+            throw new Exception();
+        }
+
+        /// <summary>
+        /// Converts a string to a PositioningIndicator.
+        /// </summary>
+        /// <param name="data">A valid string.</param>
+        /// <returns>The proper <see cref="PositioningIndicator"/> mode.</returns>
+        /// <exception cref="Exception">Not a valid positioning.</exception>
+        internal static PositioningIndicator ConvertToPositioningIndicator(string data)
+        {
+            switch (data)
+            {
+                case "A":
+                    return PositioningIndicator.Autonomous;
+                case "D":
+                    return PositioningIndicator.Differential;
+                case "E":
+                    return PositioningIndicator.Estimated;
+                case "M":
+                    return PositioningIndicator.Manual;
+                case "N":
+                    return PositioningIndicator.NotValid;
+            }
+
+            throw new Exception();
+        }
+
+        /// <summary>
+        /// Converts a string to a Status.
+        /// </summary>
+        /// <param name="data">A valid string.</param>
+        /// <returns>The proper <see cref="Status"/>.</returns>
+        /// <exception cref="Exception">Not a valid status.</exception>
+        internal static Status ConvertToStatus(string data)
+        {
+            switch (data)
+            {
+                case "A":
+                    return Status.Valid;
+                case "V":
+                    return Status.NotValid;
             }
 
             throw new Exception();

@@ -14,12 +14,12 @@ namespace Iot.Device.Common.GnssDevice
         Unknown = 0,
 
         /// <summary>
-        /// Represents an automatic mode of operation for the Gnss module.
+        /// A for an automatic mode of operation for the Gnss module.
         /// </summary>
         Auto = 1,
 
         /// <summary>
-        /// Represents a manual mode of the Gnss module.
+        /// M for a manual mode of the Gnss module.
         /// </summary>
         Manual = 2
     }
