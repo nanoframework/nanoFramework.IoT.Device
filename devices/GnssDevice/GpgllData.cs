@@ -23,8 +23,11 @@ namespace Iot.Device.Common.GnssDevice
                 var lonDir = data[4];
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir);
+                var time = Nmea0183Parser.ConvertToTimeSpan(data[5]);
 
-                return new GpgllData(GeoPosition.FromDecimalDegrees(latitude, longitude));
+                var geo = GeoPosition.FromDecimalDegrees(latitude, longitude);
+                geo.Timestamp = DateTime.UtcNow.Date.Add(time);
+                return new GpgllData(geo);
             }
             catch (Exception ex)
             {

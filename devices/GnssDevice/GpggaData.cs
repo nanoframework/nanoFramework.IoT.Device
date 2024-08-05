@@ -30,9 +30,12 @@ namespace Iot.Device.Common.GnssDevice
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir);
                 var altitude = double.Parse(data[9]);
                 var hdop = double.Parse(data[8]);
+                var time = Nmea0183Parser.ConvertToTimeSpan(data[1]);
+
                 var position = GeoPosition.FromDecimalDegrees(latitude, longitude);
                 position.Altitude = altitude;
                 position.Accuracy = hdop;
+                position.Timestamp = DateTime.UtcNow.Date.Add(time);
                 return new GpggaData(position);
             }
             catch (Exception ex)

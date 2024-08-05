@@ -13,7 +13,7 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// Gets an array of parsable <see cref="MneaDatas"/> parsers.
+        /// Gets an array of parsable <see cref="INmeaData"/> parsers.
         /// </summary>
         public static Hashtable MneaDatas { get; } = new ()
         {
@@ -23,11 +23,30 @@ namespace Iot.Device.Common.GnssDevice
         };
 
         /// <summary>
+        /// Adds a parser to the list of available parsers.
+        /// </summary>
+        /// <param name="dataId">The data type to parse eg $GPGLL.</param>
+        /// <param name="parser">The parser class.</param>
+        public static void AddParser(string dataId, INmeaData parser)
+        {
+            MneaDatas.Add(dataId, parser);
+        }
+
+        /// <summary>
+        /// Removes a parser from the list of available parsers.
+        /// </summary>
+        /// <param name="dataId">The data type to parse eg $GPGLL.</param>
+        public static void RemoveParser(string dataId)
+        {
+            MneaDatas.Remove(dataId);
+        }
+
+        /// <summary>
         /// Parses a string and return the parsed NmeaData object.
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static object Parse(string inputData)
+        public static INmeaData Parse(string inputData)
         {
             var data = inputData.Split(',');
             var dataId = data[0];
@@ -102,6 +121,38 @@ namespace Iot.Device.Common.GnssDevice
             }
 
             throw new Exception();
+        }
+
+        /// <summary>
+        /// Converts a string date and time to a DateTime.
+        /// </summary>
+        /// <param name="date">The date string as YYMMDD.</param>
+        /// <param name="time">The time as HHMMSS.ss.</param>
+        /// <returns>A <see cref="DateTime"/> object.</returns>
+        internal static DateTime ConvertToUtcDateTime(string date, string time)
+        {
+            var timespan = ConvertToTimeSpan(time);
+
+            var day = int.Parse(date.Substring(0, 2));
+            var month = int.Parse(date.Substring(2, 2));
+            var year = int.Parse(date.Substring(4, 2)) + 2000;
+
+            return new DateTime(year, month, day).Add(timespan);
+        }
+
+        /// <summary>
+        /// Converts a string time to a TimeSpan.
+        /// </summary>
+        /// <param name="time">The time as HHMMSS.ss.</param>
+        /// <returns>A <see cref="TimeSpan"/> object.</returns>
+        internal static TimeSpan ConvertToTimeSpan(string time)
+        {
+            var hour = int.Parse(time.Substring(0, 2));
+            var minute = int.Parse(time.Substring(2, 2));
+            var second = int.Parse(time.Substring(4, 2));
+            var millec = int.Parse(time.Substring(7));
+
+            return new TimeSpan(0, hour, minute, second, millec);
         }
     }
 }
