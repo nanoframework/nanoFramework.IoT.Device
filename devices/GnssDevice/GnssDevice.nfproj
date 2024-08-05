@@ -40,9 +40,12 @@
     <Compile Include="GnssDevice.cs" />
     <Compile Include="GnssMode.cs" />
     <Compile Include="GnssOperation.cs" />
+    <Compile Include="GpgsaData.cs" />
     <Compile Include="Nmea0183Parser.cs" />
     <Compile Include="INmeaData.cs" />
+    <Compile Include="PositioningIndicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">

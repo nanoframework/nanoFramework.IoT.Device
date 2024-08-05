@@ -457,10 +457,14 @@ namespace Iot.Device.Modbus.Client
             try
             {
                 // read dummy byte (from specs: 3.5 chars time start marker, will never ever be read in a understandible manner)
-                _ = DataRead();
+                // Some Modbus Server do not use the start marker, so we need to read the first byte and see if it is the device ID we expect and if not assume its the startup marker.
+                id = DataRead();
 
                 // read device ID
-                id = DataRead();
+                if (id != request.DeviceId)
+                {
+                    id = DataRead();
+                }
 
                 // Function number
                 var fn = DataRead();

@@ -3,6 +3,7 @@
 
 using Iot.Device.Common.GnssDevice;
 using nanoFramework.TestFramework;
+using System;
 
 namespace GnssDevice.Tests
 {
@@ -18,7 +19,7 @@ namespace GnssDevice.Tests
         {
             // Act
             GngsaData result = (GngsaData)Nmea0183Parser.Parse(command);
-            OutputHelper.WriteLine($"{(result == null ? "result null": "result not null")}");
+            OutputHelper.WriteLine($"{(result == null ? "result null" : "result not null")}");
             // Assert
             Assert.AreEqual(expectedMode, (byte)result.Mode);
             Assert.AreEqual(expectedFix, (byte)result.Fix);
@@ -37,8 +38,8 @@ namespace GnssDevice.Tests
         }
 
         [TestMethod]
-        [DataRow("$GPGGA,002153.000,3342.6618,N,11751.3858,W,1,10,1.2,27.0,M,-34.2,M,,0000*5E", 33.7110291f, -23.5230961f, 27.0f, 1.2f)]
-        public void ParseGpgga(string command, float expectedLatitude, float expectedLongitude, float altitude, float accuracy)
+        [DataRow("$GPGGA,002153.000,3342.6618,N,11751.3858,W,1,10,1.2,27.0,M,-34.2,M,,0000*5E", 33.7110291f, -23.5230961f, 27.0f, 1.2f, 1313000d)]
+        public void ParseGpgga(string command, float expectedLatitude, float expectedLongitude, float altitude, float accuracy, double time)
         {
             // Act
             GpggaData result = (GpggaData)Nmea0183Parser.Parse(command);
@@ -48,6 +49,7 @@ namespace GnssDevice.Tests
             Assert.AreEqual(expectedLatitude, (float)result.Location.Latitude);
             Assert.AreEqual(altitude, (float)result.Location.Altitude);
             Assert.AreEqual(accuracy, (float)result.Location.Accuracy);
+            Assert.AreEqual(time, result.Location.Timestamp.TimeOfDay.TotalMilliseconds);
         }
     }
 }

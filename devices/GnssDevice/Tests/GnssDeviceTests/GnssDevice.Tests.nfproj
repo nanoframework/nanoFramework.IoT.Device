@@ -34,6 +34,9 @@
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.31\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.TestFramework">
       <HintPath>..\..\packages\nanoFramework.TestFramework.2.1.107\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>

@@ -13,21 +13,41 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// Gets an array of parsable <see cref="MneaDatas"/> parsers.
+        /// Gets an array of parsable <see cref="INmeaData"/> parsers.
         /// </summary>
         public static Hashtable MneaDatas { get; } = new ()
         {
             { "$GPGLL", new GpgllData() },
             { "$GNGSA", new GngsaData() },
-            { "$GPGGA", new GpggaData() }
+            { "$GPGGA", new GpggaData() },
+            { "$GPGSA", new GpggaData() }
         };
+
+        /// <summary>
+        /// Adds a parser to the list of available parsers.
+        /// </summary>
+        /// <param name="dataId">The data type to parse eg $GPGLL.</param>
+        /// <param name="parser">The parser class.</param>
+        public static void AddParser(string dataId, INmeaData parser)
+        {
+            MneaDatas.Add(dataId, parser);
+        }
+
+        /// <summary>
+        /// Removes a parser from the list of available parsers.
+        /// </summary>
+        /// <param name="dataId">The data type to parse eg $GPGLL.</param>
+        public static void RemoveParser(string dataId)
+        {
+            MneaDatas.Remove(dataId);
+        }
 
         /// <summary>
         /// Parses a string and return the parsed NmeaData object.
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static object Parse(string inputData)
+        public static INmeaData Parse(string inputData)
         {
             var data = inputData.Split(',');
             var dataId = data[0];
@@ -102,6 +122,82 @@ namespace Iot.Device.Common.GnssDevice
             }
 
             throw new Exception();
+        }
+
+        /// <summary>
+        /// Converts a string to a PositioningIndicator.
+        /// </summary>
+        /// <param name="data">A valid string.</param>
+        /// <returns>The proper <see cref="PositioningIndicator"/> mode.</returns>
+        /// <exception cref="Exception">Not a valid positioning.</exception>
+        internal static PositioningIndicator ConvertToPositioningIndicator(string data)
+        {
+            switch (data)
+            {
+                case "A":
+                    return PositioningIndicator.Autonomous;
+                case "D":
+                    return PositioningIndicator.Differential;
+                case "E":
+                    return PositioningIndicator.Estimated;
+                case "M":
+                    return PositioningIndicator.Manual;
+                case "N":
+                    return PositioningIndicator.NotValid;
+            }
+
+            throw new Exception();
+        }
+
+        /// <summary>
+        /// Converts a string to a Status.
+        /// </summary>
+        /// <param name="data">A valid string.</param>
+        /// <returns>The proper <see cref="Status"/>.</returns>
+        /// <exception cref="Exception">Not a valid status.</exception>
+        internal static Status ConvertToStatus(string data)
+        {
+            switch (data)
+            {
+                case "A":
+                    return Status.Valid;
+                case "V":
+                    return Status.NotValid;
+            }
+
+            throw new Exception();
+        }
+
+        /// <summary>
+        /// Converts a string date and time to a DateTime.
+        /// </summary>
+        /// <param name="date">The date string as YYMMDD.</param>
+        /// <param name="time">The time as HHMMSS.ss.</param>
+        /// <returns>A <see cref="DateTime"/> object.</returns>
+        internal static DateTime ConvertToUtcDateTime(string date, string time)
+        {
+            var timespan = ConvertToTimeSpan(time);
+
+            var day = int.Parse(date.Substring(0, 2));
+            var month = int.Parse(date.Substring(2, 2));
+            var year = int.Parse(date.Substring(4, 2)) + 2000;
+
+            return new DateTime(year, month, day).Add(timespan);
+        }
+
+        /// <summary>
+        /// Converts a string time to a TimeSpan.
+        /// </summary>
+        /// <param name="time">The time as HHMMSS.ss.</param>
+        /// <returns>A <see cref="TimeSpan"/> object.</returns>
+        internal static TimeSpan ConvertToTimeSpan(string time)
+        {
+            var hour = int.Parse(time.Substring(0, 2));
+            var minute = int.Parse(time.Substring(2, 2));
+            var second = int.Parse(time.Substring(4, 2));
+            var millec = int.Parse(time.Substring(7));
+
+            return new TimeSpan(0, hour, minute, second, millec);
         }
     }
 }
