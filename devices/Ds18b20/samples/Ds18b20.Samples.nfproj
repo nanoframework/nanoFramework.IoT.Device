@@ -26,8 +26,8 @@
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Device.OneWire, Version=1.4.14.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Device.OneWire.1.4.14\lib\nanoFramework.Device.OneWire.dll</HintPath>
+    <Reference Include="nanoFramework.Device.OneWire, Version=1.4.22.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Device.OneWire.1.4.22\lib\nanoFramework.Device.OneWire.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=1.6.19.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.19\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
