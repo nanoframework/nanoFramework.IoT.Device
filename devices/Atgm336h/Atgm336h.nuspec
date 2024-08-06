@@ -24,7 +24,8 @@
       <dependency id="nanoFramework.System.IO.Ports" version="1.1.86" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.59" />
       <dependency id="nanoFramework.System.Text" version="1.2.54" />
-    </dependencies>
+	  <dependency id="Iot.Device.Common.GnssDevice" version="1.0.1" />
+	</dependencies>
   </metadata>
   <files>
     <file src="bin\Release\Iot.Device.Atgm336h.dll" target="lib\Iot.Device.Atgm336h.dll" />
