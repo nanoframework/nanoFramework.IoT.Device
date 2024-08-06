@@ -108,7 +108,7 @@ namespace Iot.Device.Atgm336h
                         GnssOperation = data.Mode;
                     }
 
-                    if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GPGLL"))
+                    if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GNGLL"))
                     {
                         var data = (GpgllData)Nmea0183Parser.Parse(commandTrimmed);
                         Location = data.Location;
