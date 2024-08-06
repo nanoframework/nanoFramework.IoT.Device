@@ -4,14 +4,14 @@
 using System;
 using System.IO.Ports;
 using System.Text;
-using Iot.Device.Common.GpsDevice;
+using Iot.Device.Common.GnssDevice;
 
 namespace Iot.Device.Atgm336h
 {
     /// <summary>
     /// Class for controlling Atgm336h GPS module.
     /// </summary>
-    public class Atgm336h : GpsDevice, IDisposable
+    public class Atgm336h : GnssDevice, IDisposable
     {
         /// <summary>
         /// Delegate for the error handler when parsing the GPS data.
@@ -103,14 +103,14 @@ namespace Iot.Device.Atgm336h
                     var commandTrimmed = command.StartsWith("\n") ? command.Substring(1) : command;
                     if (commandTrimmed.StartsWith("$GNGSA"))
                     {
-                        var data = NMEA0183Parser.ParseGngsa(commandTrimmed);
+                        var data = (GngsaData)Nmea0183Parser.Parse(commandTrimmed);
                         Fix = data.Fix;
-                        Mode = data.Mode;
+                        GnssOperation = data.Mode;
                     }
 
-                    if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GNGLL"))
+                    if (Fix != Fix.NoFix && commandTrimmed.StartsWith("$GPGLL"))
                     {
-                        var data = NMEA0183Parser.ParaseGngll(commandTrimmed);
+                        var data = (GpgllData)Nmea0183Parser.Parse(commandTrimmed);
                         Location = data.Location;
                     }
                 }

@@ -34,11 +34,17 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Reference Include="Iot.Device.Common.GnssDevice">
+      <HintPath>packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.1\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731, processorArchitecture=MSIL">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>packages\nanoFramework.System.Collections.1.5.31\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=1.2.54.0, Culture=neutral, PublicKeyToken=c07d481e9758c731, processorArchitecture=MSIL">
       <HintPath>packages\nanoFramework.System.Text.1.2.54\lib\nanoFramework.System.Text.dll</HintPath>
@@ -48,6 +54,12 @@
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.59.0, Culture=neutral, PublicKeyToken=c07d481e9758c731, processorArchitecture=MSIL">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.59\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Angle">
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.55.0\lib\UnitsNet.Angle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -61,12 +73,6 @@
   <ItemGroup>
     <Content Include="Atgm336h.nuspec" />
     <Content Include="packages.lock.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GpsDevice\GpsDevice.nfproj">
-      <Project>{d3085490-46b6-488a-96f1-ef820e67acc0}</Project>
-      <Name>GpsDevice</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

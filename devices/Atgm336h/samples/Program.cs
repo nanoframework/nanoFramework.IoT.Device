@@ -4,8 +4,8 @@
 using Iot.Device.Atgm336h;
 using System;
 using System.Threading;
-using Iot.Device.Common.GpsDevice;
 using nanoFramework.Hardware.Esp32;
+using Iot.Device.Common.GnssDevice;
 
 var rxPin = 21;
 var txPin = 19;
@@ -15,7 +15,8 @@ Configuration.SetPinFunction(txPin, DeviceFunction.COM2_TX);
 var gpsModule = new Atgm336h(comPort);
 gpsModule.LocationChanged += GpsModuleOnLocationChanged;
 gpsModule.FixChanged += GpsModuleOnFixChanged;
-gpsModule.ModeChanged += GpsModuleOnModeChanged;
+gpsModule.OperationModeChanged += GpsModule_OperationModeChanged;
+
 gpsModule.Start();
 
 Thread.Sleep(Timeout.Infinite);
@@ -25,10 +26,10 @@ void GpsModuleOnFixChanged(Fix fix)
     Console.WriteLine($"Fix changed to: {fix}");
 }
 
-void GpsModuleOnModeChanged(Mode mode)
+void GpsModule_OperationModeChanged(GnssOperation mode)
 {
     Console.WriteLine($"Mode changed to: {mode}");
-}
+};
 
 void GpsModuleOnLocationChanged(GeoPosition position)
 {

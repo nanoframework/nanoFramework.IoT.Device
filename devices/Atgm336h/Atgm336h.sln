@@ -7,8 +7,6 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Atgm336h", "Atgm336h.nfproj
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Atgm336h.samples", "samples\Atgm336h.samples.nfproj", "{08827050-2F5F-45D5-A3B0-83CBB1E048DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpsDevice", "..\GpsDevice\GpsDevice.nfproj", "{D3085490-46B6-488A-96F1-EF820E67ACC0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{08827050-2F5F-45D5-A3B0-83CBB1E048DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08827050-2F5F-45D5-A3B0-83CBB1E048DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08827050-2F5F-45D5-A3B0-83CBB1E048DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{D3085490-46B6-488A-96F1-EF820E67ACC0}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{D3085490-46B6-488A-96F1-EF820E67ACC0}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{D3085490-46B6-488A-96F1-EF820E67ACC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3085490-46B6-488A-96F1-EF820E67ACC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
