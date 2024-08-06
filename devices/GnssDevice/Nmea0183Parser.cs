@@ -17,6 +17,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         public static Hashtable MneaDatas { get; } = new ()
         {
+            { "$GNGLL", new GpgllData() },
             { "$GPGLL", new GpgllData() },
             { "$GNGSA", new GngsaData() },
             { "$GPGGA", new GpggaData() },
