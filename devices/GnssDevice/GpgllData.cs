@@ -21,8 +21,8 @@ namespace Iot.Device.Common.GnssDevice
                 var latDir = data[2];
                 var lon = data[3];
                 var lonDir = data[4];
-                var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir);
-                var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir);
+                var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir, 2);
+                var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir, 3);
                 var time = Nmea0183Parser.ConvertToTimeSpan(data[5]);
 
                 var geo = GeoPosition.FromDecimalDegrees(latitude, longitude);
@@ -30,7 +30,6 @@ namespace Iot.Device.Common.GnssDevice
                 return new GpgllData(geo)
                 {
                     Status = Nmea0183Parser.ConvertToStatus(data[6]),
-                    Mode = Nmea0183Parser.ConvertToPositioningIndicator(data[7]),
                 };
             }
             catch (Exception ex)
@@ -45,11 +44,6 @@ namespace Iot.Device.Common.GnssDevice
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
         public GeoPosition Location { get; }
-
-        /// <summary>
-        /// Gets the positioning mode.
-        /// </summary>
-        public PositioningIndicator Mode { get; internal set; }
 
         /// <summary>
         /// Gets the data status.

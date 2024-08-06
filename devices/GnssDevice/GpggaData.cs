@@ -36,8 +36,8 @@ namespace Iot.Device.Common.GnssDevice
                 var latDir = data[3];
                 var lon = data[4];
                 var lonDir = data[5];
-                var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir);
-                var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir);
+                var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir, 2);
+                var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir, 3);
                 var altitude = double.Parse(data[9]);
                 var hdop = double.Parse(data[8]);
                 var time = Nmea0183Parser.ConvertToTimeSpan(data[1]);

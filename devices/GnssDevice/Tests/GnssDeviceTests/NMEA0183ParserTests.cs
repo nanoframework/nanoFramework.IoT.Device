@@ -26,7 +26,7 @@ namespace GnssDevice.Tests
         }
 
         [TestMethod]
-        [DataRow("$GPGLL,5109.0262317,N,11401.8407304,W,202725.00,A,D*79", 51.1504372f, -114.03067884f)]
+        [DataRow("$GPGLL,3723.2475,N,12158.3416,W,202725.00,A,D*79", 37.38745833333333f, -121.972359f)]
         public void ParseGpgll(string command, float expectedLatitude, float expectedLongitude)
         {
             // Act
@@ -38,7 +38,7 @@ namespace GnssDevice.Tests
         }
 
         [TestMethod]
-        [DataRow("$GPGGA,002153.000,3342.6618,N,11751.3858,W,1,10,1.2,27.0,M,-34.2,M,,0000*5E", 33.7110291f, -23.5230961f, 27.0f, 1.2f, 1313000d)]
+        [DataRow("$GPGGA,002153.000,3342.6618,N,11751.3858,W,1,10,1.2,27.0,M,-34.2,M,,0000*5E", 33.7110291f, -117.85643f, 27.0f, 1.2f, 1313000d)]
         public void ParseGpgga(string command, float expectedLatitude, float expectedLongitude, float altitude, float accuracy, double time)
         {
             // Act
@@ -50,6 +50,26 @@ namespace GnssDevice.Tests
             Assert.AreEqual(altitude, (float)result.Location.Altitude);
             Assert.AreEqual(accuracy, (float)result.Location.Accuracy);
             Assert.AreEqual(time, result.Location.Timestamp.TimeOfDay.TotalMilliseconds);
+        }
+
+        [TestMethod]
+        [DataRow("$GPRMC,161229.487,A,3723.2475,N,12258.3416,W,0.13,309.62,120598,,*10", 37.3874588f, -122.97236f, 0.13f, 309.62f, 2098, 05, 12, 16, 12, 29)]
+        public void ParseGprmc(string command, float expectedLatitude, float expectedLongitude, float speed, float course, int yy, int mm, int dd, int hh, int min, int sec)
+        {
+            // Act
+            GprmcData result = (GprmcData)Nmea0183Parser.Parse(command);
+
+            // Assert
+            Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
+            Assert.AreEqual(expectedLatitude, (float)result.Location.Latitude);
+            Assert.AreEqual(speed, (float)result.Location.Speed);
+            Assert.AreEqual(course, (float)result.Location.Course.Degrees);
+            Assert.AreEqual(yy, result.Location.Timestamp.Year);
+            Assert.AreEqual(mm, result.Location.Timestamp.Month);
+            Assert.AreEqual(dd, result.Location.Timestamp.Day);
+            Assert.AreEqual(hh, result.Location.Timestamp.Hour);
+            Assert.AreEqual(min, result.Location.Timestamp.Minute);
+            Assert.AreEqual(sec, result.Location.Timestamp.Second);
         }
     }
 }

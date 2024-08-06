@@ -41,6 +41,7 @@
     <Compile Include="GnssMode.cs" />
     <Compile Include="GnssOperation.cs" />
     <Compile Include="GpgsaData.cs" />
+    <Compile Include="GprmcData.cs" />
     <Compile Include="Nmea0183Parser.cs" />
     <Compile Include="INmeaData.cs" />
     <Compile Include="PositioningIndicator.cs" />

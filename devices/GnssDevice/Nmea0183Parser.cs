@@ -20,7 +20,8 @@ namespace Iot.Device.Common.GnssDevice
             { "$GPGLL", new GpgllData() },
             { "$GNGSA", new GngsaData() },
             { "$GPGGA", new GpggaData() },
-            { "$GPGSA", new GpggaData() }
+            { "$GPGSA", new GpggaData() },
+            { "$GPRMC", new GprmcData() }
         };
 
         /// <summary>
@@ -67,11 +68,10 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">Valid input data.</param>
         /// <param name="direction">The direction.</param>
+        /// <param name="degreesLength">Number of degrees digits.</param>
         /// <returns>A double representing an coordinate elements.</returns>
-        internal static double ConvertToGeoLocation(string data, string direction)
+        internal static double ConvertToGeoLocation(string data, string direction, int degreesLength)
         {
-            var degreesLength = data.Length > 12 ? 3 : 2;
-
             var degrees = double.Parse(data.Substring(0, degreesLength));
             var minutes = double.Parse(data.Substring(degreesLength));
 
