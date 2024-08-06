@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter", "RadioTransmitter.nfproj", "{6D36FDBB-3F18-4501-AB32-1287E7E8FB0B}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "RadioTransmitter.Samples", "samples\RadioTransmitter.Samples.nfproj", "{512F9E04-F12F-42B7-AE12-A2878D1BF1C6}"

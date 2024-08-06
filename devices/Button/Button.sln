@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Button", "Button.nfproj", "{954E94A7-75BA-4F8E-876F-E9C90BDCBEFE}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Samples", "samples\Samples.nfproj", "{0B4708C9-EBFE-4B43-A79A-A9F6E7D7C486}"

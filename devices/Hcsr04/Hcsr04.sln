@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Hcsr04", "Hcsr04.nfproj", "{F9DDFAC2-2FA3-4A6C-A9A4-D6C7238AB3F1}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Hcsr04.Samples", "samples\Hcsr04.Samples.nfproj", "{6058FB06-7991-42A2-B1B5-796BD2B522D9}"

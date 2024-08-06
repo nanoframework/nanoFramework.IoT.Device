@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Common.GnssDevice</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Common.GnssDevice</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs/README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Common.GnssDevice for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Common.GnssDevice assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Weather Helper</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+      <dependency id="nanoFramework.System.Math" version="1.5.43" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.31" />
+      <dependency id="UnitsNet.nanoFramework.Angle" version="5.55.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Common.GnssDevice.dll" target="lib\Iot.Device.Common.GnssDevice.dll" />
+    <file src="bin\Release\Iot.Device.Common.GnssDevice.pdb" target="lib\Iot.Device.Common.GnssDevice.pdb" />
+    <file src="bin\Release\Iot.Device.Common.GnssDevice.pdbx" target="lib\Iot.Device.Common.GnssDevice.pdbx" />
+    <file src="bin\Release\Iot.Device.Common.GnssDevice.pe" target="lib\Iot.Device.Common.GnssDevice.pe" />
+    <file src="bin\Release\Iot.Device.Common.GnssDevice.xml" target="lib\Iot.Device.Common.GnssDevice.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>

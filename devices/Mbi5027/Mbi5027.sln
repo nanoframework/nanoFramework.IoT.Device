@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027", "Mbi5027.nfproj", "{005EB10A-24CA-4827-AA45-12B00CD69408}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mbi5027-driver", "samples\Mbi5027-driver.nfproj", "{6F55AC20-2A48-447B-9891-2E8762A08283}"

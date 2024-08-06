@@ -22,13 +22,15 @@ namespace Iot.Device.Modbus.Client
         /// <param name="parity">The parity. Default is None.</param>
         /// <param name="dataBits">The number of data bits. Default is 8.</param>
         /// <param name="stopBits">The number of stop bits. Default is One.</param>
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
         public ModbusClient(
             string portName,
             int baudRate = 9600,
             Parity parity = Parity.None,
             int dataBits = 8,
-            StopBits stopBits = StopBits.One)
-            : base(portName, baudRate, parity, dataBits, stopBits)
+            StopBits stopBits = StopBits.One,
+            SerialMode mode = SerialMode.RS485)
+            : base(portName, baudRate, parity, dataBits, stopBits, mode: mode)
         {
         }
 
@@ -36,7 +38,8 @@ namespace Iot.Device.Modbus.Client
         /// Initializes a new instance of the <see cref="ModbusClient"/> class with the specified serial port.
         /// </summary>
         /// <param name="port">The serial port.</param>
-        public ModbusClient(SerialPort port) : base(port)
+        /// <param name="mode">The mode of serial port, default is RS485.</param>
+        public ModbusClient(SerialPort port, SerialMode mode = SerialMode.RS485) : base(port, mode: mode)
         {
         }
 
@@ -206,7 +209,7 @@ namespace Iot.Device.Modbus.Client
                 throw new ArgumentException(nameof(function));
             }
 
-            // We cannot use the new way of whicth like this becaquse of Style Cop:
+            // We cannot use the new way of using switch because of StyleCop
             ////ValidParameters(deviceId, startAddress, count, function switch
             ////{
             ////    FunctionCode.ReadCoils => Consts.MaxCoilCountRead,
@@ -358,7 +361,7 @@ namespace Iot.Device.Modbus.Client
 
             if (count > 0)
             {
-                // We can't use the new way of using switch because of StyleCop
+                // We cannot use the new way of using switch because of StyleCop
                 ////ValidParameters(deviceId, startAddress, count, function switch
                 ////{
                 ////    FunctionCode.ReadCoils => Consts.MaxCoilCountWrite,
@@ -454,10 +457,14 @@ namespace Iot.Device.Modbus.Client
             try
             {
                 // read dummy byte (from specs: 3.5 chars time start marker, will never ever be read in a understandible manner)
-                _ = DataRead();
+                // Some Modbus Server do not use the start marker, so we need to read the first byte and see if it is the device ID we expect and if not assume its the startup marker.
+                id = DataRead();
 
                 // read device ID
-                id = DataRead();
+                if (id != request.DeviceId)
+                {
+                    id = DataRead();
+                }
 
                 // Function number
                 var fn = DataRead();

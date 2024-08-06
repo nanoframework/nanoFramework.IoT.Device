@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3", "LidarLiteV3.nfproj", "{5178896A-04E3-4772-9AFC-2EC0BF34A035}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "LidarLiteV3.Sample", "samples\LidarLiteV3.Sample.nfproj", "{169114FE-33A5-41DA-AB06-75A378C6D03D}"

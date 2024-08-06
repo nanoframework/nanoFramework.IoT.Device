@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp3428", "Mcp3428.nfproj", "{468DD026-DBC2-4BE2-ACD6-361C4E7EECE4}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Mcp3428.Samples", "samples\Mcp3428.Samples.nfproj", "{02D8C6FA-0DE5-481E-8BE6-C893C6F02910}"
