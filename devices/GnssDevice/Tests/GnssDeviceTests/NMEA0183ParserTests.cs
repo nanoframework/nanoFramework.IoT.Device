@@ -62,7 +62,7 @@ namespace GnssDevice.Tests
             // Assert
             Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
             Assert.AreEqual(expectedLatitude, (float)result.Location.Latitude);
-            Assert.AreEqual(speed, (float)result.Location.Speed);
+            Assert.AreEqual(speed, (float)result.Location.Speed.Knots);
             Assert.AreEqual(course, (float)result.Location.Course.Degrees);
             Assert.AreEqual(yy, result.Location.Timestamp.Year);
             Assert.AreEqual(mm, result.Location.Timestamp.Month);
@@ -70,6 +70,29 @@ namespace GnssDevice.Tests
             Assert.AreEqual(hh, result.Location.Timestamp.Hour);
             Assert.AreEqual(min, result.Location.Timestamp.Minute);
             Assert.AreEqual(sec, result.Location.Timestamp.Second);
+        }
+
+        [TestMethod]
+        [DataRow("$GPVTG,054.7,T,034.4,M,005.5,N,010.2,K*48", 54.7f, 5.5f)]
+        public void ParseGpvtg(string command, float course, float speedKnots)
+        {
+            // Act
+            GpvtgData result = (GpvtgData)Nmea0183Parser.Parse(command);
+
+            // Assert
+            Assert.AreEqual(course, (float)result.Location.Course.Degrees);
+            Assert.AreEqual(speedKnots, (float)result.Location.Speed.Knots);
+        }
+
+        [TestMethod]
+        [DataRow("GPGSV,3,1,12,02,25,259,,07,06,279,,08,73,296,,10,61,090,", "70")]
+        public void ComputeChecksum(string command, string checksum)
+        {
+            // Act
+            string result = Nmea0183Parser.ComputeChecksum(command).ToString("X2");
+
+            // Assert
+            Assert.AreEqual(checksum, result);
         }
     }
 }

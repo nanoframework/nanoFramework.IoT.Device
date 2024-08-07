@@ -42,6 +42,7 @@
     <Compile Include="GnssOperation.cs" />
     <Compile Include="GpgsaData.cs" />
     <Compile Include="GprmcData.cs" />
+    <Compile Include="GpvtgData.cs" />
     <Compile Include="Nmea0183Parser.cs" />
     <Compile Include="INmeaData.cs" />
     <Compile Include="PositioningIndicator.cs" />
@@ -59,7 +60,10 @@
       <HintPath>packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Angle">
-      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.55.0\lib\UnitsNet.Angle.dll</HintPath>
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.56.0\lib\UnitsNet.Angle.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Speed">
+      <HintPath>packages\UnitsNet.nanoFramework.Speed.5.56.0\lib\UnitsNet.Speed.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

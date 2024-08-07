@@ -31,7 +31,7 @@ namespace Iot.Device.Common.GnssDevice
                 var datetime = Nmea0183Parser.ConvertToUtcDateTime(subfields[9], subfields[1]);
 
                 var position = GeoPosition.FromDecimalDegrees(latitude, longitude);
-                position.Speed = speed;
+                position.Speed = Speed.FromKnots(speed);
                 position.Course = Angle.FromDegrees(course);
                 position.Timestamp = datetime;
 

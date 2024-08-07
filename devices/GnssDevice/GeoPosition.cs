@@ -14,12 +14,12 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets the latitude of a geographic position.
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get; internal set; }
 
         /// <summary>
         /// Gets the longitude of a geographic position.
         /// </summary>
-        public double Longitude { get; private set; }
+        public double Longitude { get; internal set; }
 
         /// <summary>
         /// Gets or sets the altitude of the GNSS position.
@@ -29,7 +29,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets or sets the speed of the GNSS position.
         /// </summary>
-        public double Speed { get; set; }
+        public Speed Speed { get; set; }
 
         /// <summary>
         /// Gets or sets the course angle of the GNSS position.

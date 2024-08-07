@@ -4,12 +4,13 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
     /// Provides methods for parsing NMEA0183 data from a Gnss device.
-    /// </summary>
+    /// </summary>    
     public static class Nmea0183Parser
     {
         /// <summary>
@@ -21,7 +22,8 @@ namespace Iot.Device.Common.GnssDevice
             { "$GNGSA", new GngsaData() },
             { "$GPGGA", new GpggaData() },
             { "$GPGSA", new GpggaData() },
-            { "$GPRMC", new GprmcData() }
+            { "$GPRMC", new GprmcData() },
+            { "$GPVTG", new GpvtgData() },
         };
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="direction">The direction.</param>
         /// <param name="degreesLength">Number of degrees digits.</param>
         /// <returns>A double representing an coordinate elements.</returns>
-        internal static double ConvertToGeoLocation(string data, string direction, int degreesLength)
+        public static double ConvertToGeoLocation(string data, string direction, int degreesLength)
         {
             var degrees = double.Parse(data.Substring(0, degreesLength));
             var minutes = double.Parse(data.Substring(degreesLength));
@@ -90,7 +92,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="GnssOperation"/>.</returns>
-        internal static GnssOperation ConvertToMode(string data)
+        public static GnssOperation ConvertToMode(string data)
         {
             switch (data)
             {
@@ -109,7 +111,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="Fix"/>.</returns>
         /// <exception cref="Exception">Not a valid fix.</exception>
-        internal static Fix ConvertToFix(string data)
+        public static Fix ConvertToFix(string data)
         {
             switch (data)
             {
@@ -130,7 +132,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="data">A valid string.</param>
         /// <returns>The proper <see cref="PositioningIndicator"/> mode.</returns>
         /// <exception cref="Exception">Not a valid positioning.</exception>
-        internal static PositioningIndicator ConvertToPositioningIndicator(string data)
+        public static PositioningIndicator ConvertToPositioningIndicator(string data)
         {
             switch (data)
             {
@@ -155,7 +157,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="data">A valid string.</param>
         /// <returns>The proper <see cref="Status"/>.</returns>
         /// <exception cref="Exception">Not a valid status.</exception>
-        internal static Status ConvertToStatus(string data)
+        public static Status ConvertToStatus(string data)
         {
             switch (data)
             {
@@ -174,7 +176,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="date">The date string as YYMMDD.</param>
         /// <param name="time">The time as HHMMSS.ss.</param>
         /// <returns>A <see cref="DateTime"/> object.</returns>
-        internal static DateTime ConvertToUtcDateTime(string date, string time)
+        public static DateTime ConvertToUtcDateTime(string date, string time)
         {
             var timespan = ConvertToTimeSpan(time);
 
@@ -190,7 +192,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="time">The time as HHMMSS.ss.</param>
         /// <returns>A <see cref="TimeSpan"/> object.</returns>
-        internal static TimeSpan ConvertToTimeSpan(string time)
+        public static TimeSpan ConvertToTimeSpan(string time)
         {
             var hour = int.Parse(time.Substring(0, 2));
             var minute = int.Parse(time.Substring(2, 2));
@@ -198,6 +200,22 @@ namespace Iot.Device.Common.GnssDevice
             var millec = int.Parse(time.Substring(7));
 
             return new TimeSpan(0, hour, minute, second, millec);
+        }
+
+        /// <summary>
+        /// Computes the checksum of an NMEA1083 message.
+        /// </summary>
+        /// <param name="data">The string to compute.</param>
+        /// <returns>A byte array with the checksum.</returns>
+        public static byte ComputeChecksum(string data)
+        {
+            var checksum = 0;
+            foreach (char c in data)
+            {
+                checksum ^= c;
+            }
+
+            return (byte)checksum;
         }
     }
 }
