@@ -29,18 +29,24 @@ namespace Iot.Device.Common.GnssDevice
         /// <inheritdoc/>
         public INmeaData Parse(string inputData)
         {
-            try
+            var subfields = inputData.Split(',');
+
+            if (subfields[0] != "$GPGGA")
             {
-                var data = inputData.Split(',');
-                var lat = data[2];
-                var latDir = data[3];
-                var lon = data[4];
-                var lonDir = data[5];
+                throw new ArgumentException("GPGGA data is expected.");
+            }
+
+            try
+            {                
+                var lat = subfields[2];
+                var latDir = subfields[3];
+                var lon = subfields[4];
+                var lonDir = subfields[5];
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir, 2);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir, 3);
-                var altitude = double.Parse(data[9]);
-                var hdop = double.Parse(data[8]);
-                var time = Nmea0183Parser.ConvertToTimeSpan(data[1]);
+                var altitude = double.Parse(subfields[9]);
+                var hdop = double.Parse(subfields[8]);
+                var time = Nmea0183Parser.ConvertToTimeSpan(subfields[1]);
 
                 var position = GeoPosition.FromDecimalDegrees(latitude, longitude);
                 position.Altitude = altitude;
@@ -48,8 +54,8 @@ namespace Iot.Device.Common.GnssDevice
                 position.Timestamp = DateTime.UtcNow.Date.Add(time);
                 return new GpggaData(position)
                 {
-                    SatellitesInView = int.Parse(data[7]),
-                    GeodidSeparation = double.Parse(data[11]),
+                    SatellitesInView = int.Parse(subfields[7]),
+                    GeodidSeparation = double.Parse(subfields[11]),
                 };
             }
             catch (Exception ex)

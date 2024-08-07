@@ -20,11 +20,17 @@ namespace Iot.Device.Common.GnssDevice
         /// <inheritdoc/>
         public INmeaData Parse(string inputData)
         {
-            try
+            var subfields = inputData.Split(',');
+
+            if (subfields[0] != "$GPVTG")
             {
-                var data = inputData.Split(',');
-                var course = double.Parse(data[1]);
-                var speed = double.Parse(data[5]);
+                throw new ArgumentException("GPVTG data is expected.");
+            }
+
+            try
+            {                
+                var course = double.Parse(subfields[1]);
+                var speed = double.Parse(subfields[5]);
 
                 GeoPosition position = new GeoPosition()
                 {

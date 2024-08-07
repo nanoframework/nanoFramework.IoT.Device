@@ -16,6 +16,7 @@ namespace Iot.Device.Common.GnssDevice
         public INmeaData Parse(string inputData)
         {
             var subfields = inputData.Split(',');
+
             if (subfields[0] != "$GPRMC")
             {
                 throw new ArgumentException("GPRMC data is expected.");

@@ -42,11 +42,17 @@ namespace Iot.Device.Common.GnssDevice
         /// <inheritdoc/>
         public INmeaData Parse(string inputData)
         {
-            try
+            var subfields = inputData.Split(',');
+
+            if (subfields[0] != "$GNGSA")
             {
-                var data = inputData.Split(',');
-                var mode = Nmea0183Parser.ConvertToMode(data[1]);
-                var fix = Nmea0183Parser.ConvertToFix(data[2]);
+                throw new ArgumentException("GNGSA data is expected.");
+            }
+
+            try
+            {                
+                var mode = Nmea0183Parser.ConvertToMode(subfields[1]);
+                var fix = Nmea0183Parser.ConvertToFix(subfields[2]);
 
                 return new GngsaData(mode, fix);
             }

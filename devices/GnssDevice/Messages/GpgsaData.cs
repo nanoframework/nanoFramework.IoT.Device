@@ -56,6 +56,7 @@ namespace Iot.Device.Common.GnssDevice
         public INmeaData Parse(string inputData)
         {
             string[] subfields = inputData.Split(',');
+
             if (subfields[0] != "$GPGSA")
             {
                 throw new ArgumentException("GPGSA data is expected.");

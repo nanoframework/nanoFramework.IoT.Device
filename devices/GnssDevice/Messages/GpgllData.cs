@@ -14,22 +14,28 @@ namespace Iot.Device.Common.GnssDevice
         /// <inheritdoc/>
         public INmeaData Parse(string inputData)
         {
-            try
+            var subfields = inputData.Split(',');
+
+            if (subfields[0] != "$GPGLL")
             {
-                var data = inputData.Split(',');
-                var lat = data[1];
-                var latDir = data[2];
-                var lon = data[3];
-                var lonDir = data[4];
+                throw new ArgumentException("GPGLL data is expected.");
+            }
+
+            try
+            {                
+                var lat = subfields[1];
+                var latDir = subfields[2];
+                var lon = subfields[3];
+                var lonDir = subfields[4];
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir, 2);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir, 3);
-                var time = Nmea0183Parser.ConvertToTimeSpan(data[5]);
+                var time = Nmea0183Parser.ConvertToTimeSpan(subfields[5]);
 
                 var geo = GeoPosition.FromDecimalDegrees(latitude, longitude);
                 geo.Timestamp = DateTime.UtcNow.Date.Add(time);
                 return new GpgllData(geo)
                 {
-                    Status = Nmea0183Parser.ConvertToStatus(data[6]),
+                    Status = Nmea0183Parser.ConvertToStatus(subfields[6]),
                 };
             }
             catch (Exception ex)
