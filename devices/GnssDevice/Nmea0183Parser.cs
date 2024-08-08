@@ -16,24 +16,22 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets an array of parsable <see cref="INmeaData"/> parsers.
         /// </summary>
-        public static Hashtable MneaDatas { get; } = new ()
+        public static ArrayList MneaDatas { get; } = new ()
         {
-            { "$GPGLL", new GpgllData() },
-            { "$GNGSA", new GngsaData() },
-            { "$GPGGA", new GpggaData() },
-            { "$GPGSA", new GpggaData() },
-            { "$GPRMC", new GprmcData() },
-            { "$GPVTG", new GpvtgData() },
+            new GllData(),
+            new GsaData(),
+            new GgaData(),
+            new RmcData(),
+            new VtgData(),
         };
 
         /// <summary>
         /// Adds a parser to the list of available parsers.
         /// </summary>
-        /// <param name="dataId">The data type to parse eg $GPGLL.</param>
         /// <param name="parser">The parser class.</param>
-        public static void AddParser(string dataId, INmeaData parser)
+        public static void AddParser(INmeaData parser)
         {
-            MneaDatas.Add(dataId, parser);
+            MneaDatas.Add(parser);
         }
 
         /// <summary>
@@ -52,17 +50,16 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>Parsed NmeaData object if any or null.</returns>
         public static INmeaData Parse(string inputData)
         {
-            var data = inputData.Split(',');
-            var dataId = data[0];
-
-            var mnea = MneaDatas[dataId] as INmeaData;
-            if (mnea is null)
+            foreach (INmeaData parser in MneaDatas)
             {
-                Debug.WriteLine($"Parser for {dataId} not found.");
-                return null;
+                if (parser.IsMatch(inputData))
+                {
+                    return parser.Parse(inputData);
+                }
             }
 
-            return mnea.Parse(inputData);
+            Debug.WriteLine($"No parser found for: {inputData}");
+            return null;
         }
 
         /// <summary>

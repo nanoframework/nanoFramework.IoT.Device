@@ -34,15 +34,15 @@
   <ItemGroup>
     <Compile Include="Fix.cs" />
     <Compile Include="GeoPosition.cs" />
-    <Compile Include="Messages\GpggaData.cs" />
-    <Compile Include="Messages\GpgllData.cs" />
-    <Compile Include="Messages\GngsaData.cs" />
+    <Compile Include="Messages\GgaData.cs" />
+    <Compile Include="Messages\GllData.cs" />
+    <Compile Include="Messages\GsaDataOld.cs" />
     <Compile Include="GnssDevice.cs" />
     <Compile Include="GnssMode.cs" />
     <Compile Include="GnssOperation.cs" />
-    <Compile Include="Messages\GpgsaData.cs" />
-    <Compile Include="Messages\GprmcData.cs" />
-    <Compile Include="Messages\GpvtgData.cs" />
+    <Compile Include="Messages\GsaData.cs" />
+    <Compile Include="Messages\RmcData.cs" />
+    <Compile Include="Messages\VtgData.cs" />
     <Compile Include="Nmea0183Parser.cs" />
     <Compile Include="Messages\INmeaData.cs" />
     <Compile Include="PositioningIndicator.cs" />

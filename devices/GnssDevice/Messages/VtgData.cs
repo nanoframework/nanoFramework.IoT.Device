@@ -8,27 +8,45 @@ using UnitsNet;
 namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
-    /// Implements the NMEA0183 data for GPVTG.
+    /// Represents the VTG (Course Over Ground and Ground Speed) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GpvtgData : INmeaData
+    public class VtgData : INmeaData
     {
+        /// <inheritdoc/>
+        public override string MessageId => "VTG";
+
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
         public GeoPosition Location { get; internal set; }
 
-        /// <inheritdoc/>
-        public INmeaData Parse(string inputData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VtgData" /> class.
+        /// </summary>
+        public VtgData()
         {
-            var subfields = inputData.Split(',');
+        }
 
-            if (subfields[0] != "$GPVTG")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VtgData" /> class.
+        /// </summary>
+        /// <param name="location">A <see cref="GeoPosition"/> element.</param>
+        public VtgData(GeoPosition location)
+        {
+            Location = location;
+        }
+
+        /// <inheritdoc/>
+        public override INmeaData Parse(string inputData)
+        {
+            if (!IsMatch(inputData))
             {
-                throw new ArgumentException("GPVTG data is expected.");
+                throw new ArgumentException();
             }
 
             try
-            {                
+            {
+                var subfields = inputData.Split(',');
                 var course = double.Parse(subfields[1]);
                 var speed = double.Parse(subfields[5]);
 
@@ -38,7 +56,7 @@ namespace Iot.Device.Common.GnssDevice
                     Speed = Speed.FromKnots(speed),
                 };
 
-                return new GpvtgData(position);
+                return new VtgData(position);
             }
             catch (Exception ex)
             {
@@ -46,22 +64,6 @@ namespace Iot.Device.Common.GnssDevice
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GpvtgData" /> class.
-        /// </summary>
-        public GpvtgData()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GpvtgData" /> class.
-        /// </summary>
-        /// <param name="location">A <see cref="GeoPosition"/> element.</param>
-        public GpvtgData(GeoPosition location)
-        {
-            Location = location;
         }
     }
 }

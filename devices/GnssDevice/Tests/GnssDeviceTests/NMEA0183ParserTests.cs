@@ -18,10 +18,10 @@ namespace GnssDevice.Tests
         public void ParseGngsa(string command, byte expectedMode, byte expectedFix)
         {
             // Act
-            GngsaData result = (GngsaData)Nmea0183Parser.Parse(command);
+            GsaData result = (GsaData)Nmea0183Parser.Parse(command);
             OutputHelper.WriteLine($"{(result == null ? "result null" : "result not null")}");
             // Assert
-            Assert.AreEqual(expectedMode, (byte)result.Mode);
+            Assert.AreEqual(expectedMode, (byte)result.OperationMode);
             Assert.AreEqual(expectedFix, (byte)result.Fix);
         }
 
@@ -30,7 +30,7 @@ namespace GnssDevice.Tests
         public void ParseGpgll(string command, float expectedLatitude, float expectedLongitude)
         {
             // Act
-            GpgllData result = (GpgllData)Nmea0183Parser.Parse(command);
+            GllData result = (GllData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
@@ -42,7 +42,7 @@ namespace GnssDevice.Tests
         public void ParseGpgga(string command, float expectedLatitude, float expectedLongitude, float altitude, float accuracy, double time)
         {
             // Act
-            GpggaData result = (GpggaData)Nmea0183Parser.Parse(command);
+            GgaData result = (GgaData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
@@ -57,7 +57,7 @@ namespace GnssDevice.Tests
         public void ParseGprmc(string command, float expectedLatitude, float expectedLongitude, float speed, float course, int yy, int mm, int dd, int hh, int min, int sec)
         {
             // Act
-            GprmcData result = (GprmcData)Nmea0183Parser.Parse(command);
+            RmcData result = (RmcData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual(expectedLongitude, (float)result.Location.Longitude);
@@ -77,7 +77,7 @@ namespace GnssDevice.Tests
         public void ParseGpvtg(string command, float course, float speedKnots)
         {
             // Act
-            GpvtgData result = (GpvtgData)Nmea0183Parser.Parse(command);
+            VtgData result = (VtgData)Nmea0183Parser.Parse(command);
 
             // Assert
             Assert.AreEqual(course, (float)result.Location.Course.Degrees);

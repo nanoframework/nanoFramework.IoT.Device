@@ -7,10 +7,13 @@ using System.Diagnostics;
 namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
-    /// Implements the NMEA0183 data for GPGGA.
+    /// Represents the GGA (Global Positioning System Fix Data) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GpggaData : INmeaData
+    public class GgaData : INmeaData
     {
+        /// <inheritdoc/>
+        public override string MessageId => "GGA";
+
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
@@ -26,18 +29,33 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         public double GeodidSeparation { get; internal set; }
 
-        /// <inheritdoc/>
-        public INmeaData Parse(string inputData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GgaData" /> class.
+        /// </summary>
+        /// <param name="location">A <see cref="GeoPosition"/> item.</param>
+        public GgaData(GeoPosition location)
         {
-            var subfields = inputData.Split(',');
+            Location = location;
+        }
 
-            if (subfields[0] != "$GPGGA")
-            {
-                throw new ArgumentException("GPGGA data is expected.");
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GgaData" /> class.
+        /// </summary>
+        public GgaData()
+        {
+        }
+
+        /// <inheritdoc/>
+        public override INmeaData Parse(string inputData)
+        {
+            if (!IsMatch(inputData))
+            { 
+                throw new ArgumentException(); 
             }
 
             try
-            {                
+            {
+                var subfields = inputData.Split(',');
                 var lat = subfields[2];
                 var latDir = subfields[3];
                 var lon = subfields[4];
@@ -52,7 +70,7 @@ namespace Iot.Device.Common.GnssDevice
                 position.Altitude = altitude;
                 position.Accuracy = hdop;
                 position.Timestamp = DateTime.UtcNow.Date.Add(time);
-                return new GpggaData(position)
+                return new GgaData(position)
                 {
                     SatellitesInView = int.Parse(subfields[7]),
                     GeodidSeparation = double.Parse(subfields[11]),
@@ -64,22 +82,6 @@ namespace Iot.Device.Common.GnssDevice
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GpggaData" /> class.
-        /// </summary>
-        /// <param name="location">A <see cref="GeoPosition"/> item.</param>
-        public GpggaData(GeoPosition location)
-        {
-            Location = location;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GpggaData" /> class.
-        /// </summary>
-        public GpggaData()
-        {
         }
     }
 }
