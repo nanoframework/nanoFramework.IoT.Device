@@ -9,7 +9,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the GLL (Geographic Position - Latitude/Longitude) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GllData : INmeaData
+    public class GllData : NmeaData
     {
         /// <inheritdoc/>
         public override string MessageId => "GLL";
@@ -41,7 +41,7 @@ namespace Iot.Device.Common.GnssDevice
         }
 
         /// <inheritdoc/>
-        public override INmeaData Parse(string inputData)
+        public override NmeaData Parse(string inputData)
         {
             if (!IsMatch(inputData))
             {

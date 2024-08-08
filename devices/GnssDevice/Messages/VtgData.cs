@@ -10,7 +10,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the VTG (Course Over Ground and Ground Speed) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class VtgData : INmeaData
+    public class VtgData : NmeaData
     {
         /// <inheritdoc/>
         public override string MessageId => "VTG";
@@ -37,7 +37,7 @@ namespace Iot.Device.Common.GnssDevice
         }
 
         /// <inheritdoc/>
-        public override INmeaData Parse(string inputData)
+        public override NmeaData Parse(string inputData)
         {
             if (!IsMatch(inputData))
             {

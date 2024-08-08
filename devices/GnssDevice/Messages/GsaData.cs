@@ -9,7 +9,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the GSA (GNSS DOP and Active Satellites) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GsaData : INmeaData
+    public class GsaData : NmeaData
     {
         /// <inheritdoc/>
         public override string MessageId => "GSA";
@@ -61,7 +61,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="inputData">The input data string.</param>
         /// <returns>An NmeaData.</returns>
-        public override INmeaData Parse(string inputData)
+        public override NmeaData Parse(string inputData)
         {
             if (!IsMatch(inputData))
             {

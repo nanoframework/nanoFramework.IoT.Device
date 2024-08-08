@@ -10,7 +10,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the RMC (Recommended Minimum Specific GNSS Data) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class RmcData : INmeaData
+    public class RmcData : NmeaData
     {
         /// <inheritdoc/>
         public override string MessageId => "RMC";
@@ -42,7 +42,7 @@ namespace Iot.Device.Common.GnssDevice
         }
 
         /// <inheritdoc/>
-        public override INmeaData Parse(string inputData)
+        public override NmeaData Parse(string inputData)
         {
             if (!IsMatch(inputData))
             {

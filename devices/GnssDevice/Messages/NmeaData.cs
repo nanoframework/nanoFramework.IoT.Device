@@ -36,8 +36,8 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Validate the checksum.
         /// </summary>
-        /// <param name="inputData">A valid raw input</param>
-        /// <returns></returns>
+        /// <param name="inputData">A valid raw input.</param>
+        /// <returns>True if the checksum is correct.</returns>
         public bool ValidateChecksum(string inputData)
         {
             // Remove the start, remove the * and the checksum itself

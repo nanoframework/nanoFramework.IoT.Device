@@ -14,7 +14,7 @@ namespace Iot.Device.Common.GnssDevice
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// Gets an array of parsable <see cref="INmeaData"/> parsers.
+        /// Gets an array of parsable <see cref="NmeaData"/> parsers.
         /// </summary>
         public static ArrayList MneaDatas { get; } = new ()
         {
@@ -29,7 +29,7 @@ namespace Iot.Device.Common.GnssDevice
         /// Adds a parser to the list of available parsers.
         /// </summary>
         /// <param name="parser">The parser class.</param>
-        public static void AddParser(INmeaData parser)
+        public static void AddParser(NmeaData parser)
         {
             MneaDatas.Add(parser);
         }
@@ -48,9 +48,9 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static INmeaData Parse(string inputData)
+        public static NmeaData Parse(string inputData)
         {
-            foreach (INmeaData parser in MneaDatas)
+            foreach (NmeaData parser in MneaDatas)
             {
                 if (parser.IsMatch(inputData))
                 {

@@ -9,7 +9,7 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents the GGA (Global Positioning System Fix Data) NMEA0183 data from a Gnss device.
     /// </summary>
-    public class GgaData : INmeaData
+    public class GgaData : NmeaData
     {
         /// <inheritdoc/>
         public override string MessageId => "GGA";
@@ -46,7 +46,7 @@ namespace Iot.Device.Common.GnssDevice
         }
 
         /// <inheritdoc/>
-        public override INmeaData Parse(string inputData)
+        public override NmeaData Parse(string inputData)
         {
             if (!IsMatch(inputData))
             { 
