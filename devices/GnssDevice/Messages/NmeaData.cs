@@ -46,5 +46,39 @@ namespace Iot.Device.Common.GnssDevice
             var compute = Nmea0183Parser.ComputeChecksum(data);
             return compute.ToString("X2") == checksum;
         }
+
+        /// <summary>
+        /// Gets the <see cref="GnssMode"/> out of the message.
+        /// </summary>
+        /// <param name="inputData">A valid input.</param>
+        /// <returns>The <see cref="GnssMode"/>.</returns>
+        public GnssMode GetGnssMode(string inputData)
+        {
+            if (!IsMatch(inputData))
+            {
+                throw new ArgumentException();
+            }
+
+            var mode = inputData.Substring(1, 2);
+            switch (mode)
+            {
+                case "GP":
+                    return GnssMode.Gps;
+                case "GL":
+                    return GnssMode.Glonass;
+                case "GA":
+                    return GnssMode.Galileo;
+                case "BD":
+                    return GnssMode.BeiDou;
+                case "GI":
+                    return GnssMode.NavIC;
+                case "GN":
+                    return GnssMode.Gnss;
+                case "CQ":
+                    return GnssMode.Qzss;
+                default:
+                    return GnssMode.Other;
+            }
+        }
     }
 }

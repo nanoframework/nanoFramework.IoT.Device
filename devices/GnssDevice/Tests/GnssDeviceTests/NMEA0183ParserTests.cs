@@ -94,5 +94,39 @@ namespace GnssDevice.Tests
             // Assert
             Assert.AreEqual(checksum, result);
         }
+
+        [TestMethod]
+        [DataRow("$GNGSA,A,3,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", true)]
+        [DataRow("$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30", true)]
+        [DataRow("$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*29", false)]
+        public void ValidateChecksum(string command, bool expected)
+        {
+            // Act
+            GsaData data = new GsaData();
+            bool result = data.ValidateChecksum(command);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        [DataRow("$GNGSA,A,3,65", (int)GnssMode.Gnss)]
+        [DataRow("$GPGSA,A,3,65", (int)GnssMode.Gps)]
+        [DataRow("$BDGSA,A,3,65", (int)GnssMode.BeiDou)]
+        [DataRow("$GLGSA,A,3,65", (int)GnssMode.Glonass)]
+        [DataRow("$CQGSA,A,3,65", (int)GnssMode.Qzss)]
+        [DataRow("$GAGSA,A,3,65", (int)GnssMode.Galileo)]
+        [DataRow("$GIGSA,A,3,65", (int)GnssMode.NavIC)]
+        [DataRow("$XXGSA,A,3,65", (int)GnssMode.Other)]
+        public void TestGnssMode(string command, int gnssMode)
+        {
+            // Act
+            // Any MneaData will do as the gnss mode is in the abstract class
+            var data = new GsaData();
+            var gnss = data.GetGnssMode(command);
+
+            // Assert
+            Assert.AreEqual(gnssMode, (int)gnss);
+        }
     }
 }

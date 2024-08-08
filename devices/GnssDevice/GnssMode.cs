@@ -8,47 +8,61 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// The Global Navigation Satellite System mode.
     /// </summary>
-    [Flags]
     public enum GnssMode
     {
         /// <summary>
         /// No GNSS mode selected.
         /// </summary>
-        None = 0,
+        None,
 
         /// <summary>
-        /// Global Positioning System.
+        /// GP for Global Positioning System.
         /// </summary>
-        Gps = 0b0000_0001,
+        Gps,
 
         /// <summary>
-        /// BeiDou Navigation Satellite System.
+        /// BD for BeiDou Navigation Satellite System.
         /// </summary>
-        Bds = 0b0000_0010,
+        BeiDou,
 
         /// <summary>
-        /// Global Navigation Satellite System.
+        /// GL for Global Navigation Satellite System.
         /// </summary>
-        Glonass = 0b0000_0100,
+        Glonass,
 
         /// <summary>
-        /// Quasi-Zenith Satellite System.
+        /// GQ for Quasi-Zenith Satellite System.
         /// </summary>
-        Qzss = 0b0000_1000,
+        Qzss,
 
         /// <summary>
-        /// Galileo.
+        /// GA for Galileo.
         /// </summary>
-        Galileo = 0b0001_0000,
+        Galileo,
 
         /// <summary>
         /// Satellite-Based Augmentation Systems.
         /// </summary>
-        Sbas = 0b0010_0000,
+        Sbas,
 
         /// <summary>
         /// Wide Area Augmentation System.
         /// </summary>
-        Wass = 0b0100_0000,
+        Wass,
+
+        /// <summary>
+        /// GI for Navigation with Indian Constellation.
+        /// </summary>
+        NavIC,
+
+        /// <summary>
+        /// GN for Global Navigation Satellite System including multiple constellations.
+        /// </summary>
+        Gnss,
+
+        /// <summary>
+        /// Other system such as instrument-specific.
+        /// </summary>
+        Other,
     }
 }
