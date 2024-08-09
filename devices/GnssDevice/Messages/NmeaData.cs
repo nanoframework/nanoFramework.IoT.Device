@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Diagnostics;
 
 namespace Iot.Device.Common.GnssDevice
 {
@@ -41,8 +42,22 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>True if the message ID is a match.</returns>
         public bool IsMatch(string inputData)
         {
-            // Proper message is "$XXAAA,etc"
-            return (inputData[0] == '$') && inputData.Substring(3, MessageId.Length) == MessageId && inputData[3 + MessageId.Length] == ',';
+            if (inputData.Length < 6)
+            {
+                return false;
+            }
+
+            try
+            {
+                // Proper message is "$XXAAA,etc"
+                return (inputData[0] == '$') && inputData.Substring(3, MessageId.Length) == MessageId && inputData[3 + MessageId.Length] == ',';
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Excption in processing IsMatch with: {inputData}");
+            }
+
+            return false;
         }
 
         /// <summary>
