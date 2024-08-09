@@ -25,7 +25,7 @@
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.41" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.586" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.55.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.56.0" />
     </dependencies>
   </metadata>
   <files>

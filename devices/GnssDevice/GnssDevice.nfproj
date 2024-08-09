@@ -71,11 +71,10 @@
     <Reference Include="System.Math, Version=1.5.43.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Angle">
-      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.56.0\lib\UnitsNet.Angle.dll</HintPath>
-    </Reference>
     <Reference Include="UnitsNet.Speed">
       <HintPath>packages\UnitsNet.nanoFramework.Speed.5.56.0\lib\UnitsNet.Speed.dll</HintPath>
+    <Reference Include="UnitsNet.Angle, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.56.0\lib\UnitsNet.Angle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
