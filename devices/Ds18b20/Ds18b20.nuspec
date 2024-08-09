@@ -22,7 +22,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.Device.OneWire" version="1.4.22" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.586" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.55.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.56.0" />
     </dependencies>
   </metadata>
   <files>
