@@ -260,6 +260,12 @@ namespace Iot.Device.Common.GnssDevice
                                 RaiseLocationChanged(Location);
                             }
                         }
+                        else
+                        {
+                            // Pass any other processed NMEA message to the subscriber.
+                            // Usefull for heritage of this base class.
+                            RaiseParsedMessage(data);
+                        }
                     }
                 }
             }

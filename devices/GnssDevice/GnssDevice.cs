@@ -39,6 +39,12 @@ namespace Iot.Device.Common.GnssDevice
         public delegate void ParsingErrorHandler(Exception exception);
 
         /// <summary>
+        /// Delegate type to handle parsed message that is not processed by based class.
+        /// </summary>
+        /// <param name="data">A <see cref="NmeaData"/> element.</param>
+        public delegate void ParsedMessageHandler(NmeaData data);
+
+        /// <summary>
         /// Represents the event handler for when the fix status of the Gnss module changes.
         /// </summary>
         public event FixChangedHandler FixChanged;
@@ -57,6 +63,11 @@ namespace Iot.Device.Common.GnssDevice
         /// Event handler for parsing errors that occur during data processing of GNSS module.
         /// </summary>
         public event ParsingErrorHandler ParsingError;
+
+        /// <summary>
+        /// Event handle for parsed message not handled by the base class.
+        /// </summary>
+        public event ParsedMessageHandler ParsedMessage;
 
         /// <summary>
         /// Gets or sets the fix status of the Gnss module.
@@ -167,5 +178,7 @@ namespace Iot.Device.Common.GnssDevice
         internal void RaiseOperationModeChanged(GnssOperation mode) => OperationModeChanged?.Invoke(mode);
 
         internal void RaiseLocationChanged(GeoPosition position) => LocationChanged?.Invoke(position);
+
+        internal void RaiseParsedMessage(NmeaData data) => ParsedMessage?.Invoke(data);
     }
 }
