@@ -50,7 +50,7 @@ namespace Iot.Device.Common.GnssDevice
 
             try
             {
-                var subfields = inputData.Split(',');
+                var subfields = GetSubFields(inputData);
                 var lat = subfields[1];
                 var latDir = subfields[2];
                 var lon = subfields[3];

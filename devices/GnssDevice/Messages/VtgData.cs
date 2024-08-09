@@ -46,7 +46,7 @@ namespace Iot.Device.Common.GnssDevice
 
             try
             {
-                var subfields = inputData.Split(',');
+                var subfields = GetSubFields(inputData);
                 var course = double.Parse(subfields[1]);
                 var speed = double.Parse(subfields[5]);
 

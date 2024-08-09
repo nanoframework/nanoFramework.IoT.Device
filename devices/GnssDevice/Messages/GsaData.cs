@@ -70,8 +70,7 @@ namespace Iot.Device.Common.GnssDevice
 
             try
             {
-                var subfields = inputData.Split(',');
-                subfields[subfields.Length - 1] = subfields[subfields.Length - 1].Split('*')[0];
+                var subfields = GetSubFields(inputData);                
 
                 var sats = new int[12];
                 for (int i = 0; i < 12; i++)

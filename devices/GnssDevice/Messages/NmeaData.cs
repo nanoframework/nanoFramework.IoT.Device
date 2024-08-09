@@ -11,6 +11,18 @@ namespace Iot.Device.Common.GnssDevice
     public abstract class NmeaData
     {
         /// <summary>
+        /// Gets the sub fields without the *checksum.
+        /// </summary>
+        /// <param name="command">The NMEA message to split.</param>
+        /// <returns>All the NMEA subfields data.</returns>
+        public static string[] GetSubFields(string command)
+        {
+            var subfields = command.Split(',');
+            subfields[subfields.Length - 1] = subfields[subfields.Length - 1].Split('*')[0];
+            return subfields;
+        }
+
+        /// <summary>
         /// Parse for the specific data type.
         /// </summary>
         /// <param name="inputData">The input data string.</param>

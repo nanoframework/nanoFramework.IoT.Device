@@ -51,7 +51,7 @@ namespace Iot.Device.Common.GnssDevice
 
             try
             {
-                var subfields = inputData.Split(',');
+                var subfields = GetSubFields(inputData);
                 var status = Nmea0183Parser.ConvertToStatus(subfields[2]);
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(subfields[3], subfields[4], 2);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(subfields[5], subfields[6], 3);
