@@ -227,6 +227,11 @@ namespace Iot.Device.DHTxx.Esp32
                     IsLastReadSuccessful = false;
                 }
             }
+            else
+            {
+                IsLastReadSuccessful = false;
+                _readBuff = new byte[5];
+            }
         }
 
         /// <summary>
