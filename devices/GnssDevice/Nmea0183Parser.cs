@@ -71,6 +71,16 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>A double representing an coordinate elements.</returns>
         public static double ConvertToGeoLocation(string data, string direction, int degreesLength)
         {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            if (string.IsNullOrEmpty(direction))
+            {
+                return 0;
+            }
+
             var degrees = double.Parse(data.Substring(0, degreesLength));
             var minutes = double.Parse(data.Substring(degreesLength));
 
@@ -107,11 +117,11 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="Fix"/>.</returns>
-        /// <exception cref="Exception">Not a valid fix.</exception>
         public static Fix ConvertToFix(string data)
         {
             switch (data)
             {
+                default:
                 case "1":
                     return Fix.NoFix;
                 case "2":
@@ -119,8 +129,6 @@ namespace Iot.Device.Common.GnssDevice
                 case "3":
                     return Fix.Fix3D;
             }
-
-            throw new Exception();
         }
 
         /// <summary>
@@ -128,7 +136,6 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>The proper <see cref="PositioningIndicator"/> mode.</returns>
-        /// <exception cref="Exception">Not a valid positioning.</exception>
         public static PositioningIndicator ConvertToPositioningIndicator(string data)
         {
             switch (data)
@@ -141,11 +148,10 @@ namespace Iot.Device.Common.GnssDevice
                     return PositioningIndicator.Estimated;
                 case "M":
                     return PositioningIndicator.Manual;
+                default:
                 case "N":
                     return PositioningIndicator.NotValid;
             }
-
-            throw new Exception();
         }
 
         /// <summary>
@@ -153,18 +159,16 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>The proper <see cref="Status"/>.</returns>
-        /// <exception cref="Exception">Not a valid status.</exception>
         public static Status ConvertToStatus(string data)
         {
             switch (data)
             {
                 case "A":
                     return Status.Valid;
+                default:
                 case "V":
                     return Status.NotValid;
             }
-
-            throw new Exception();
         }
 
         /// <summary>
@@ -175,6 +179,11 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>A <see cref="DateTime"/> object.</returns>
         public static DateTime ConvertToUtcDateTime(string date, string time)
         {
+            if (string.IsNullOrEmpty(date) || string.IsNullOrEmpty(time))
+            {
+                return default;
+            }
+
             var timespan = ConvertToTimeSpan(time);
 
             var day = int.Parse(date.Substring(0, 2));
@@ -191,6 +200,11 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>A <see cref="TimeSpan"/> object.</returns>
         public static TimeSpan ConvertToTimeSpan(string time)
         {
+            if (string.IsNullOrEmpty(time))
+            {
+                return default;
+            }
+
             var hour = int.Parse(time.Substring(0, 2));
             var minute = int.Parse(time.Substring(2, 2));
             var second = int.Parse(time.Substring(4, 2));
@@ -213,6 +227,36 @@ namespace Iot.Device.Common.GnssDevice
             }
 
             return (byte)checksum;
+        }
+
+        /// <summary>
+        /// Converts a string to a double. Default to 0 if the string is empty.
+        /// </summary>
+        /// <param name="data">A string to convernt.</param>
+        /// <returns>A double.</returns>
+        public static double ConvertToDouble(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            return double.Parse(data);
+        }
+
+        /// <summary>
+        /// Converts a string to a int. Default to 0 if the string is empty.
+        /// </summary>
+        /// <param name="data">A string to convernt.</param>
+        /// <returns>An int.</returns>
+        public static int ConvertToInt(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            return int.Parse(data);
         }
     }
 }

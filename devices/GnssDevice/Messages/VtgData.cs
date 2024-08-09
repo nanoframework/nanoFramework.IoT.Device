@@ -47,8 +47,8 @@ namespace Iot.Device.Common.GnssDevice
             try
             {
                 var subfields = GetSubFields(inputData);
-                var course = double.Parse(subfields[1]);
-                var speed = double.Parse(subfields[5]);
+                var course = Nmea0183Parser.ConvertToDouble(subfields[1]);
+                var speed = Nmea0183Parser.ConvertToDouble(subfields[5]);
 
                 GeoPosition position = new GeoPosition()
                 {

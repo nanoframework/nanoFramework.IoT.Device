@@ -72,6 +72,6 @@ namespace Iot.Device.Common.GnssDevice
             }
 
             return null;
-        }    
+        }
     }
 }

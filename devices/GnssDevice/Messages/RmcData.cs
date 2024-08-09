@@ -55,8 +55,9 @@ namespace Iot.Device.Common.GnssDevice
                 var status = Nmea0183Parser.ConvertToStatus(subfields[2]);
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(subfields[3], subfields[4], 2);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(subfields[5], subfields[6], 3);
-                var speed = double.Parse(subfields[7]);
-                var course = double.Parse(subfields[8]);
+                var speed = Nmea0183Parser.ConvertToDouble(subfields[7]);
+                var course = Nmea0183Parser.ConvertToDouble(subfields[8]);
+
                 var datetime = Nmea0183Parser.ConvertToUtcDateTime(subfields[9], subfields[1]);
 
                 var position = GeoPosition.FromDecimalDegrees(latitude, longitude);

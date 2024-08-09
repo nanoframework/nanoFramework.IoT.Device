@@ -70,15 +70,12 @@ namespace Iot.Device.Common.GnssDevice
 
             try
             {
-                var subfields = GetSubFields(inputData);                
+                var subfields = GetSubFields(inputData);
 
                 var sats = new int[12];
                 for (int i = 0; i < 12; i++)
                 {
-                    if (subfields[i + 3] != string.Empty)
-                    {
-                        sats[i] = int.Parse(subfields[i + 3]);
-                    }
+                    sats[i] = Nmea0183Parser.ConvertToInt(subfields[i + 3]);
                 }
 
                 var gsa = new GsaData()
@@ -86,9 +83,9 @@ namespace Iot.Device.Common.GnssDevice
                     OperationMode = Nmea0183Parser.ConvertToMode(subfields[1]),
                     Fix = Nmea0183Parser.ConvertToFix(subfields[2]),
                     SatellitesInUse = sats,
-                    PositionDilutionOfPrecision = double.Parse(subfields[15]),
-                    HorizontalDilutionOfPrecision = double.Parse(subfields[16]),
-                    VerticalDilutionOfPrecision = double.Parse(subfields[17].Split('*')[0]),
+                    PositionDilutionOfPrecision = Nmea0183Parser.ConvertToDouble(subfields[15]),
+                    HorizontalDilutionOfPrecision = Nmea0183Parser.ConvertToDouble(subfields[16]),
+                    VerticalDilutionOfPrecision = Nmea0183Parser.ConvertToDouble(subfields[17]),
                 };
 
                 return gsa;

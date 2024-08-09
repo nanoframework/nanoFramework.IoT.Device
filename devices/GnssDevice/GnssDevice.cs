@@ -234,13 +234,13 @@ namespace Iot.Device.Common.GnssDevice
                 {
                     // VTG data has Course and Speed
                     bool changed = false;
-                    if (Location.Course.Degrees != vtgData.Location.Course.Degrees)
+                    if (Location.Course.Value != vtgData.Location.Course.Value)
                     {
                         Location.Course = vtgData.Location.Course;
                         changed = true;
                     }
 
-                    if (Location.Speed.Knots != vtgData.Location.Speed.Knots)
+                    if (Location.Speed.Value != vtgData.Location.Speed.Value)
                     {
                         Location.Speed = vtgData.Location.Speed;
                         changed = true;
@@ -267,13 +267,13 @@ namespace Iot.Device.Common.GnssDevice
                         changed = true;
                     }
 
-                    if (Location.Speed.Knots != rmcData.Location.Speed.Knots)
+                    if (Location.Speed.Value != rmcData.Location.Speed.Value)
                     {
                         Location.Speed = rmcData.Location.Speed;
                         changed = true;
                     }
 
-                    if (Location.Course.Degrees != rmcData.Location.Course.Degrees)
+                    if (Location.Course.Value != rmcData.Location.Course.Value)
                     {
                         Location.Course = rmcData.Location.Course;
                         changed = true;

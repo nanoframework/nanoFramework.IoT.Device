@@ -62,8 +62,8 @@ namespace Iot.Device.Common.GnssDevice
                 var lonDir = subfields[5];
                 var latitude = Nmea0183Parser.ConvertToGeoLocation(lat, latDir, 2);
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir, 3);
-                var altitude = double.Parse(subfields[9]);
-                var hdop = double.Parse(subfields[8]);
+                var altitude = Nmea0183Parser.ConvertToDouble(subfields[9]);
+                var hdop = Nmea0183Parser.ConvertToDouble(subfields[8]);
                 var time = Nmea0183Parser.ConvertToTimeSpan(subfields[1]);
 
                 var position = GeoPosition.FromDecimalDegrees(latitude, longitude);
@@ -72,8 +72,8 @@ namespace Iot.Device.Common.GnssDevice
                 position.Timestamp = DateTime.UtcNow.Date.Add(time);
                 return new GgaData(position)
                 {
-                    SatellitesInView = int.Parse(subfields[7]),
-                    GeodidSeparation = double.Parse(subfields[11]),
+                    SatellitesInView = Nmea0183Parser.ConvertToInt(subfields[7]),
+                    GeodidSeparation = Nmea0183Parser.ConvertToDouble(subfields[11]),
                 };
             }
             catch (Exception ex)
