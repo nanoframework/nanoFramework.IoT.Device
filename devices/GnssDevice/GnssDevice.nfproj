@@ -73,6 +73,7 @@
     </Reference>
     <Reference Include="UnitsNet.Speed">
       <HintPath>packages\UnitsNet.nanoFramework.Speed.5.56.0\lib\UnitsNet.Speed.dll</HintPath>
+    </Reference>
     <Reference Include="UnitsNet.Angle, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.Angle.5.56.0\lib\UnitsNet.Angle.dll</HintPath>
     </Reference>
