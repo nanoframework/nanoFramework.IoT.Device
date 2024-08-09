@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using nanoFramework.UI;
 using System;
 using System.Device.I2c;
 using System.IO;
@@ -25,10 +26,10 @@ namespace Iot.Device.Ft6xx6x
         public const byte DefaultI2cAddress = 0x38;
 
         /// <summary>
-        /// Gets or sets the touch area's coordinates rotation.
+        /// Gets or sets the display orientation.
         /// </summary>
-        /// <remarks>Applying a rotation requires the touch area's width and height to be known, use the appropriate constructor - <see cref="Ft6xx6x(I2cDevice, int, int, Rotation)"/>.</remarks>
-        public Rotation Rotation { get; set; } = Rotation.None;
+        /// <remarks>Changing the orientation requires the touch area's width and height to be set, use the appropriate constructor - <see cref="Ft6xx6x(I2cDevice, int, int, DisplayOrientation)"/>.</remarks>
+        public DisplayOrientation Orientation { get; set; } = DisplayOrientation.Portrait;
 
         /// <summary>
         /// Gets or sets the consumption mode.
@@ -143,17 +144,17 @@ namespace Iot.Device.Ft6xx6x
         }
 
         /// <summary>
-        /// Creates a new instance of the Ft6xx6x with defined touch area width and height, which need to be known to support rotation (<see cref="Rotation"/>).
+        /// Creates a new instance of the Ft6xx6x with defined touch area width and height, which need to be known to support orientation (<see cref="Orientation"/>).
         /// </summary>
         /// <param name="i2cDevice">The I2C device used for communication.</param>
         /// <param name="width">The touch area's width, in pixels, when in its default orientation.</param>
         /// <param name="height">The touch area's height, in pixels, when in its default orientation.</param>
-        /// <param name="rotation">Rotate the touch area, which affects the X and Y coordinates returned by <see cref="GetPoint(bool)"/> and <see cref="GetDoublePoints"/>.</param>
-        public Ft6xx6x(I2cDevice i2cDevice, int width, int height, Rotation rotation) : this(i2cDevice)
+        /// <param name="orientation">The display orientation, which affects the X and Y coordinates returned by <see cref="GetPoint(bool)"/> and <see cref="GetDoublePoints"/>.</param>
+        public Ft6xx6x(I2cDevice i2cDevice, int width, int height, DisplayOrientation orientation) : this(i2cDevice)
         {
             _touchAreaWidth = width;
             _touchAreaHeight = height;
-            Rotation = rotation;
+            Orientation = orientation;
         }
 
         /// <summary>
@@ -209,8 +210,8 @@ namespace Iot.Device.Ft6xx6x
         /// </summary>
         /// <param name="first">True to get the first point.</param>
         /// <returns>The point.</returns>
-        /// <exception cref="NotImplementedException">An unexpected <see cref="Rotation"/> value was encountered.</exception>
-        /// <exception cref="InvalidOperationException"><see cref="Rotation"/> is other than <see cref="Rotation.None"/>, but the touch area's default width and height are not set.</exception>
+        /// <exception cref="NotImplementedException">An unexpected <see cref="DisplayOrientation"/> value was encountered.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="Orientation"/> is not the default one, but the touch area's default width and height are not set.</exception>
         public Point GetPoint(bool first)
         {
             Point pt = new Point();
@@ -223,7 +224,7 @@ namespace Iot.Device.Ft6xx6x
             int rawX = (_toReadPoint[0] << 8 | _toReadPoint[1]) & 0x0FFF;
             int rawY = (_toReadPoint[2] << 8 | _toReadPoint[3]) & 0x0FFF;
 
-            if (Rotation == Rotation.None)
+            if (Orientation == DisplayOrientation.Portrait)
             {
                 pt.X = rawX;
                 pt.Y = rawY;
@@ -232,24 +233,24 @@ namespace Iot.Device.Ft6xx6x
             {
                 throw new InvalidOperationException();
             }
-            else if (Rotation == Rotation.Left)
-            {
-                pt.X = _touchAreaHeight - rawY;
-                pt.Y = rawX;
-            }
-            else if (Rotation == Rotation.Invert)
-            {
-                pt.X = _touchAreaWidth - rawX;
-                pt.Y = _touchAreaHeight - rawY;
-            }
-            else if (Rotation == Rotation.Right)
+            else if (Orientation == DisplayOrientation.Portrait180)
             {
                 pt.X = rawY;
                 pt.Y = _touchAreaWidth - rawX;
             }
+            else if (Orientation == DisplayOrientation.Landscape)
+            {
+                pt.X = _touchAreaHeight - rawY;
+                pt.Y = rawX;
+            }
+            else if (Orientation == DisplayOrientation.Landscape180)
+            {
+                pt.X = _touchAreaWidth - rawX;
+                pt.Y = _touchAreaHeight - rawY;
+            }
             else
             {
-                throw new NotImplementedException(nameof(Rotation));
+                throw new NotImplementedException(nameof(Orientation));
             }
 
             return pt;
