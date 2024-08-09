@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+
 namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
@@ -29,6 +31,32 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="position">The new position.</param>
         public delegate void LocationChangeHandler(GeoPosition position);
+
+        /// <summary>
+        /// Delegate for the error handler when parsing the GPS data.
+        /// </summary>
+        /// <param name="exception">The exception that occurred during parsing.</param>
+        public delegate void ParsingErrorHandler(Exception exception);
+
+        /// <summary>
+        /// Represents the event handler for when the fix status of the Gnss module changes.
+        /// </summary>
+        public event FixChangedHandler FixChanged;
+
+        /// <summary>
+        /// Event that occurs when the location changes.
+        /// </summary>
+        public event LocationChangeHandler LocationChanged;
+
+        /// <summary>
+        /// Represents the event that is raised when the mode of the Gnss module is changed.
+        /// </summary>
+        public event ModeChangedHandler OperationModeChanged;
+
+        /// <summary>
+        /// Event handler for parsing errors that occur during data processing of GNSS module.
+        /// </summary>
+        public event ParsingErrorHandler ParsingError;
 
         /// <summary>
         /// Gets or sets the fix status of the Gnss module.
@@ -82,24 +110,62 @@ namespace Iot.Device.Common.GnssDevice
             get => _location;
             protected set
             {
+                if (_location == value)
+                {
+                    return;
+                }
+
                 _location = value;
                 LocationChanged?.Invoke(_location);
             }
         }
 
         /// <summary>
-        /// Represents the event handler for when the fix status of the Gnss module changes.
+        /// Gets or sets the satellites in view.
         /// </summary>
-        public event FixChangedHandler FixChanged;
+        public int[] SatellitesInUse { get; protected set; }
 
         /// <summary>
-        /// Event that occurs when the location changes.
+        /// Starts the GNSS device.
         /// </summary>
-        public event LocationChangeHandler LocationChanged;
+        /// <returns>A value indicating whether the start was successful.</returns>
+        public virtual bool Start()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
-        /// Represents the event that is raised when the mode of the Gnss module is changed.
+        /// Stops the GNSS device.
         /// </summary>
-        public event ModeChangedHandler OperationModeChanged;
+        /// <returns>A value indicating whether the stop was successful.</returns>
+        public virtual bool Stop()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the GNSS device is running.
+        /// </summary>
+        public virtual bool IsRunning
+        {
+            get => throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the product details.
+        /// </summary>
+        /// <returns>A string representing the product details.</returns>
+        public virtual string GetProductDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void RaiseParsingError(Exception ex) => ParsingError?.Invoke(ex);
+
+        internal void RaiseFixChanged(Fix fix) => FixChanged?.Invoke(fix);
+
+        internal void RaiseOperationModeChanged(GnssOperation mode) => OperationModeChanged?.Invoke(mode);
+
+        internal void RaiseLocationChanged(GeoPosition position) => LocationChanged?.Invoke(position);
     }
 }
