@@ -12,9 +12,9 @@ namespace GnssDevice.Tests
     {
         [TestMethod]
         [DataRow("$GNGSA,A,3,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", (byte)GnssOperation.Auto, (byte)Fix.Fix3D)]
-        [DataRow("$GNGSA,A,2,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", (byte)GnssOperation.Auto, (byte)Fix.Fix2D)]
-        [DataRow("$GNGSA,A,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", (byte)GnssOperation.Auto, (byte)Fix.NoFix)]
-        [DataRow("$GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*20", (byte)GnssOperation.Manual, (byte)Fix.NoFix)]
+        [DataRow("$GNGSA,A,2,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*21", (byte)GnssOperation.Auto, (byte)Fix.Fix2D)]
+        [DataRow("$GNGSA,A,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*22", (byte)GnssOperation.Auto, (byte)Fix.NoFix)]
+        [DataRow("$GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0*2E", (byte)GnssOperation.Manual, (byte)Fix.NoFix)]
         public void ParseGngsa(string command, byte expectedMode, byte expectedFix)
         {
             // Act
@@ -26,7 +26,7 @@ namespace GnssDevice.Tests
         }
 
         [TestMethod]
-        [DataRow("$GPGLL,3723.2475,N,12158.3416,W,202725.00,A,D*79", 37.38745833333333f, -121.972359f)]
+        [DataRow("$GPGLL,3723.2475,N,12158.3416,W,202725.00,A,D*70", 37.38745833333333f, -121.972359f)]
         public void ParseGpgll(string command, float expectedLatitude, float expectedLongitude)
         {
             // Act
@@ -53,7 +53,7 @@ namespace GnssDevice.Tests
         }
 
         [TestMethod]
-        [DataRow("$GPRMC,161229.487,A,3723.2475,N,12258.3416,W,0.13,309.62,120598,,*10", 37.3874588f, -122.97236f, 0.13f, 309.62f, 2098, 05, 12, 16, 12, 29)]
+        [DataRow("$GPRMC,161229.487,A,3723.2475,N,12258.3416,W,0.13,309.62,120598,,*13", 37.3874588f, -122.97236f, 0.13f, 309.62f, 2098, 05, 12, 16, 12, 29)]
         public void ParseGprmc(string command, float expectedLatitude, float expectedLongitude, float speed, float course, int yy, int mm, int dd, int hh, int min, int sec)
         {
             // Act
@@ -86,6 +86,9 @@ namespace GnssDevice.Tests
 
         [TestMethod]
         [DataRow("GPGSV,3,1,12,02,25,259,,07,06,279,,08,73,296,,10,61,090,", "70")]
+        [DataRow("GNGSA,M,1,65,67,80,81,82,88,66,,,,,,1.2,0.7,1.0", "2E")]
+        [DataRow("GPGLL,3723.2475,N,12158.3416,W,202725.00,A,D", "70")]
+        [DataRow("GPRMC,161229.487,A,3723.2475,N,12258.3416,W,0.13,309.62,120598,,", "13")]
         public void ComputeChecksum(string command, string checksum)
         {
             // Act

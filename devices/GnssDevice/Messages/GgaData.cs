@@ -49,8 +49,13 @@ namespace Iot.Device.Common.GnssDevice
         public override NmeaData Parse(string inputData)
         {
             if (!IsMatch(inputData))
-            { 
-                throw new ArgumentException(); 
+            {
+                throw new ArgumentException();
+            }
+
+            if (!ValidateChecksum(inputData))
+            {
+                return null;
             }
 
             try

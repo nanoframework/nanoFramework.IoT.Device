@@ -44,6 +44,11 @@ namespace Iot.Device.Common.GnssDevice
                 throw new ArgumentException();
             }
 
+            if (!ValidateChecksum(inputData))
+            {
+                return null;
+            }
+
             try
             {
                 var subfields = GetSubFields(inputData);
