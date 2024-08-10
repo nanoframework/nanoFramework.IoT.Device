@@ -17,7 +17,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
-        public GeoPosition Location { get; }
+        public Location Location { get; }
 
         /// <summary>
         /// Gets the data status.
@@ -28,7 +28,7 @@ namespace Iot.Device.Common.GnssDevice
         /// Initializes a new instance of the <see cref="GllData" /> class.
         /// </summary>
         /// <param name="location">Location information.</param>
-        public GllData(GeoPosition location)
+        public GllData(Location location)
         {
             Location = location;
         }
@@ -59,7 +59,7 @@ namespace Iot.Device.Common.GnssDevice
                 var longitude = Nmea0183Parser.ConvertToGeoLocation(lon, lonDir, 3);
                 var time = Nmea0183Parser.ConvertToTimeSpan(subfields[5]);
 
-                var geo = GeoPosition.FromDecimalDegrees(latitude, longitude);
+                var geo = Location.FromDecimalDegrees(latitude, longitude);
                 geo.Timestamp = DateTime.UtcNow.Date.Add(time);
                 return new GllData(geo)
                 {

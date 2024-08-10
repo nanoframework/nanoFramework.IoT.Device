@@ -12,7 +12,7 @@ namespace Iot.Device.Common.GnssDevice
     {
         private Fix _fix = Fix.NoFix;
         private GnssOperation _mode = GnssOperation.Unknown;
-        private GeoPosition _location = new GeoPosition();
+        private Location _location = new Location();
 
         /// <summary>
         /// Delegate type to handle the event when the Gnss module fix status changes.
@@ -30,7 +30,7 @@ namespace Iot.Device.Common.GnssDevice
         /// Delegate type to handle the event when the Gnss module location changes.
         /// </summary>
         /// <param name="position">The new position.</param>
-        public delegate void LocationChangeHandler(GeoPosition position);
+        public delegate void LocationChangeHandler(Location position);
 
         /// <summary>
         /// Delegate for the error handler when parsing the GPS data.
@@ -116,7 +116,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets or sets the last known location.
         /// </summary>
-        public GeoPosition Location
+        public Location Location
         {
             get => _location;
             protected set
@@ -330,7 +330,7 @@ namespace Iot.Device.Common.GnssDevice
 
         internal void RaiseOperationModeChanged(GnssOperation mode) => OperationModeChanged?.Invoke(mode);
 
-        internal void RaiseLocationChanged(GeoPosition position) => LocationChanged?.Invoke(position);
+        internal void RaiseLocationChanged(Location position) => LocationChanged?.Invoke(position);
 
         internal void RaiseParsedMessage(NmeaData data) => ParsedMessage?.Invoke(data);
     }

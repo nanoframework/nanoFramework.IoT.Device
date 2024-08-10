@@ -55,7 +55,7 @@ namespace GnssDevice.Sample
             Console.WriteLine($"Received Operation Mode changed: {mode}");
         }
 
-        private static void LocationChanged(GeoPosition position)
+        private static void LocationChanged(Location position)
         {
             Console.WriteLine($"Received position changed: {position.Latitude},{position.Longitude}");
         }

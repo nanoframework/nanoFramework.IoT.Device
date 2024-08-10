@@ -18,7 +18,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
-        public GeoPosition Location { get; }
+        public Location Location { get; }
 
         /// <summary>
         /// Gets the data status.
@@ -28,8 +28,8 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Initializes a new instance of the <see cref="RmcData" /> class.
         /// </summary>
-        /// <param name="localisarion">A <see cref="GeoPosition"/> element.</param>
-        public RmcData(GeoPosition localisarion)
+        /// <param name="localisarion">A <see cref="Common.GnssDevice.Location"/> element.</param>
+        public RmcData(Location localisarion)
         {
             Location = localisarion;
         }
@@ -60,7 +60,7 @@ namespace Iot.Device.Common.GnssDevice
 
                 var datetime = Nmea0183Parser.ConvertToUtcDateTime(subfields[9], subfields[1]);
 
-                var position = GeoPosition.FromDecimalDegrees(latitude, longitude);
+                var position = Location.FromDecimalDegrees(latitude, longitude);
                 position.Speed = Speed.FromKnots(speed);
                 position.Course = Angle.FromDegrees(course);
                 position.Timestamp = datetime;

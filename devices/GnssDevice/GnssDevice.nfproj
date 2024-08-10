@@ -34,7 +34,7 @@
   <ItemGroup>
     <Compile Include="Fix.cs" />
     <Compile Include="GenericSerialGnssDevice.cs" />
-    <Compile Include="GeoPosition.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="Messages\GgaData.cs" />
     <Compile Include="Messages\GllData.cs" />
     <Compile Include="GnssDevice.cs" />

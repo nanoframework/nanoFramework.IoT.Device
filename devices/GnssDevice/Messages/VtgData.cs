@@ -18,7 +18,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
-        public GeoPosition Location { get; internal set; }
+        public Location Location { get; internal set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VtgData" /> class.
@@ -30,8 +30,8 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Initializes a new instance of the <see cref="VtgData" /> class.
         /// </summary>
-        /// <param name="location">A <see cref="GeoPosition"/> element.</param>
-        public VtgData(GeoPosition location)
+        /// <param name="location">A <see cref="Common.GnssDevice.Location"/> element.</param>
+        public VtgData(Location location)
         {
             Location = location;
         }
@@ -50,7 +50,7 @@ namespace Iot.Device.Common.GnssDevice
                 var course = Nmea0183Parser.ConvertToDouble(subfields[1]);
                 var speed = Nmea0183Parser.ConvertToDouble(subfields[5]);
 
-                GeoPosition position = new GeoPosition()
+                Location position = new Location()
                 {
                     Course = Angle.FromDegrees(course),
                     Speed = Speed.FromKnots(speed),

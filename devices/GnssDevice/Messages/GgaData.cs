@@ -17,7 +17,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets the location information in Global Navigation Satellite System (GNSS) coordinates.
         /// </summary>
-        public GeoPosition Location { get; internal set; }
+        public Location Location { get; internal set; }
 
         /// <summary>
         /// Gets the number of satellites in use.
@@ -32,8 +32,8 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Initializes a new instance of the <see cref="GgaData" /> class.
         /// </summary>
-        /// <param name="location">A <see cref="GeoPosition"/> item.</param>
-        public GgaData(GeoPosition location)
+        /// <param name="location">A <see cref="Common.GnssDevice.Location"/> item.</param>
+        public GgaData(Location location)
         {
             Location = location;
         }
@@ -66,7 +66,7 @@ namespace Iot.Device.Common.GnssDevice
                 var hdop = Nmea0183Parser.ConvertToDouble(subfields[8]);
                 var time = Nmea0183Parser.ConvertToTimeSpan(subfields[1]);
 
-                var position = GeoPosition.FromDecimalDegrees(latitude, longitude);
+                var position = Location.FromDecimalDegrees(latitude, longitude);
                 position.Altitude = altitude;
                 position.Accuracy = hdop;
                 position.Timestamp = DateTime.UtcNow.Date.Add(time);
