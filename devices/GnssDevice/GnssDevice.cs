@@ -45,6 +45,12 @@ namespace Iot.Device.Common.GnssDevice
         public delegate void ParsedMessageHandler(NmeaData data);
 
         /// <summary>
+        /// Delegate type to handle the event when the Gnss module receives an unparsed message.
+        /// </summary>
+        /// <param name="message">The unparsed message.</param>
+        public delegate void UnparsedMessageHangler(string message);
+
+        /// <summary>
         /// Represents the event handler for when the fix status of the Gnss module changes.
         /// </summary>
         public event FixChangedHandler FixChanged;
@@ -65,9 +71,14 @@ namespace Iot.Device.Common.GnssDevice
         public event ParsingErrorHandler ParsingError;
 
         /// <summary>
-        /// Event handle for parsed message not handled by the base class.
+        /// Event handler for parsed message not handled by the base class.
         /// </summary>
         public event ParsedMessageHandler ParsedMessage;
+
+        /// <summary>
+        /// Event handler for unparsed messages.
+        /// </summary>
+        public event UnparsedMessageHangler UnparsedMessage;
 
         /// <summary>
         /// Gets or sets the fix status of the Gnss module.
@@ -174,153 +185,157 @@ namespace Iot.Device.Common.GnssDevice
         internal void ProcessCommands(string command)
         {
             var data = Nmea0183Parser.Parse(command);
-            if (data != null)
+            if (data == null)
             {
-                if (data is GgaData ggaData)
+                // Here, we raised the unparsed event.
+                RaiseUnparsedMessage(command);
+                return;
+            }
+
+            if (data is GgaData ggaData)
+            {
+                // GGA data has Latitude, Longitude, Accuracy (HDOP), Altitude, and Timestamp
+                // So update our location accoringly and raise the event if any except timestamp changed and Accuracy.
+                bool changed = false;
+                if (Location.Latitude != ggaData.Location.Latitude)
                 {
-                    // GGA data has Latitude, Longitude, Accuracy (HDOP), Altitude, and Timestamp
-                    // So update our location accoringly and raise the event if any except timestamp changed and Accuracy.
-                    bool changed = false;
-                    if (Location.Latitude != ggaData.Location.Latitude)
-                    {
-                        Location.Latitude = ggaData.Location.Latitude;
-                        changed = true;
-                    }
-
-                    if (Location.Longitude != ggaData.Location.Longitude)
-                    {
-                        Location.Longitude = ggaData.Location.Longitude;
-                        changed = true;
-                    }
-
-                    if (Location.Altitude != ggaData.Location.Altitude)
-                    {
-                        Location.Altitude = ggaData.Location.Altitude;
-                        changed = true;
-                    }
-
-                    if (Location.Accuracy != ggaData.Location.Accuracy)
-                    {
-                        Location.Accuracy = ggaData.Location.Accuracy;
-                    }
-
-                    if (Location.Timestamp != ggaData.Location.Timestamp)
-                    {
-                        Location.Timestamp = ggaData.Location.Timestamp;
-                    }
-
-                    if (changed)
-                    {
-                        RaiseLocationChanged(Location);
-                    }
+                    Location.Latitude = ggaData.Location.Latitude;
+                    changed = true;
                 }
-                else if (data is GsaData gsaData)
+
+                if (Location.Longitude != ggaData.Location.Longitude)
                 {
-                    // GSA data has OperationMode, Fix, SatellitesInUse, PositionDilutionOfPrecision, HorizontalDilutionOfPrecision, VerticalDilutionOfPrecision
-                    GnssOperation = gsaData.OperationMode;
-                    Fix = gsaData.Fix;
-                    SatellitesInUse = gsaData.SatellitesInUse;
-                    if (Location.Accuracy != gsaData.PositionDilutionOfPrecision)
-                    {
-                        Location.Accuracy = gsaData.PositionDilutionOfPrecision;
-                    }
-
-                    if (Location.VerticalAccuracy != gsaData.VerticalDilutionOfPrecision)
-                    {
-                        Location.VerticalAccuracy = gsaData.VerticalDilutionOfPrecision;
-                    }
+                    Location.Longitude = ggaData.Location.Longitude;
+                    changed = true;
                 }
-                else if (data is VtgData vtgData)
+
+                if (Location.Altitude != ggaData.Location.Altitude)
                 {
-                    // VTG data has Course and Speed
-                    bool changed = false;
-                    if (Location.Course.Value != vtgData.Location.Course.Value)
-                    {
-                        Location.Course = vtgData.Location.Course;
-                        changed = true;
-                    }
-
-                    if (Location.Speed.Value != vtgData.Location.Speed.Value)
-                    {
-                        Location.Speed = vtgData.Location.Speed;
-                        changed = true;
-                    }
-
-                    if (changed)
-                    {
-                        RaiseLocationChanged(Location);
-                    }
+                    Location.Altitude = ggaData.Location.Altitude;
+                    changed = true;
                 }
-                else if (data is RmcData rmcData)
+
+                if (Location.Accuracy != ggaData.Location.Accuracy)
                 {
-                    // RMC data has Latitude, Longitude, Speed, Course, and Timestamp
-                    bool changed = false;
-                    if (Location.Latitude != rmcData.Location.Latitude)
-                    {
-                        Location.Latitude = rmcData.Location.Latitude;
-                        changed = true;
-                    }
-
-                    if (Location.Longitude != rmcData.Location.Longitude)
-                    {
-                        Location.Longitude = rmcData.Location.Longitude;
-                        changed = true;
-                    }
-
-                    if (Location.Speed.Value != rmcData.Location.Speed.Value)
-                    {
-                        Location.Speed = rmcData.Location.Speed;
-                        changed = true;
-                    }
-
-                    if (Location.Course.Value != rmcData.Location.Course.Value)
-                    {
-                        Location.Course = rmcData.Location.Course;
-                        changed = true;
-                    }
-
-                    if (Location.Timestamp != rmcData.Location.Timestamp)
-                    {
-                        Location.Timestamp = rmcData.Location.Timestamp;
-                    }
-
-                    if (changed)
-                    {
-                        RaiseLocationChanged(Location);
-                    }
+                    Location.Accuracy = ggaData.Location.Accuracy;
                 }
-                else if (data is GllData gllData)
+
+                if (Location.Timestamp != ggaData.Location.Timestamp)
                 {
-                    // GLL data has Latitude, Longitude, and Timestamp
-                    bool changed = false;
-                    if (Location.Latitude != gllData.Location.Latitude)
-                    {
-                        Location.Latitude = gllData.Location.Latitude;
-                        changed = true;
-                    }
-
-                    if (Location.Longitude != gllData.Location.Longitude)
-                    {
-                        Location.Longitude = gllData.Location.Longitude;
-                        changed = true;
-                    }
-
-                    if (Location.Timestamp != gllData.Location.Timestamp)
-                    {
-                        Location.Timestamp = gllData.Location.Timestamp;
-                    }
-
-                    if (changed)
-                    {
-                        RaiseLocationChanged(Location);
-                    }
+                    Location.Timestamp = ggaData.Location.Timestamp;
                 }
-                else
+
+                if (changed)
                 {
-                    // Pass any other processed NMEA message to the subscriber.
-                    // Usefull for heritage of this base class.
-                    RaiseParsedMessage(data);
+                    RaiseLocationChanged(Location);
                 }
+            }
+            else if (data is GsaData gsaData)
+            {
+                // GSA data has OperationMode, Fix, SatellitesInUse, PositionDilutionOfPrecision, HorizontalDilutionOfPrecision, VerticalDilutionOfPrecision
+                GnssOperation = gsaData.OperationMode;
+                Fix = gsaData.Fix;
+                SatellitesInUse = gsaData.SatellitesInUse;
+                if (Location.Accuracy != gsaData.PositionDilutionOfPrecision)
+                {
+                    Location.Accuracy = gsaData.PositionDilutionOfPrecision;
+                }
+
+                if (Location.VerticalAccuracy != gsaData.VerticalDilutionOfPrecision)
+                {
+                    Location.VerticalAccuracy = gsaData.VerticalDilutionOfPrecision;
+                }
+            }
+            else if (data is VtgData vtgData)
+            {
+                // VTG data has Course and Speed
+                bool changed = false;
+                if (Location.Course.Value != vtgData.Location.Course.Value)
+                {
+                    Location.Course = vtgData.Location.Course;
+                    changed = true;
+                }
+
+                if (Location.Speed.Value != vtgData.Location.Speed.Value)
+                {
+                    Location.Speed = vtgData.Location.Speed;
+                    changed = true;
+                }
+
+                if (changed)
+                {
+                    RaiseLocationChanged(Location);
+                }
+            }
+            else if (data is RmcData rmcData)
+            {
+                // RMC data has Latitude, Longitude, Speed, Course, and Timestamp
+                bool changed = false;
+                if (Location.Latitude != rmcData.Location.Latitude)
+                {
+                    Location.Latitude = rmcData.Location.Latitude;
+                    changed = true;
+                }
+
+                if (Location.Longitude != rmcData.Location.Longitude)
+                {
+                    Location.Longitude = rmcData.Location.Longitude;
+                    changed = true;
+                }
+
+                if (Location.Speed.Value != rmcData.Location.Speed.Value)
+                {
+                    Location.Speed = rmcData.Location.Speed;
+                    changed = true;
+                }
+
+                if (Location.Course.Value != rmcData.Location.Course.Value)
+                {
+                    Location.Course = rmcData.Location.Course;
+                    changed = true;
+                }
+
+                if (Location.Timestamp != rmcData.Location.Timestamp)
+                {
+                    Location.Timestamp = rmcData.Location.Timestamp;
+                }
+
+                if (changed)
+                {
+                    RaiseLocationChanged(Location);
+                }
+            }
+            else if (data is GllData gllData)
+            {
+                // GLL data has Latitude, Longitude, and Timestamp
+                bool changed = false;
+                if (Location.Latitude != gllData.Location.Latitude)
+                {
+                    Location.Latitude = gllData.Location.Latitude;
+                    changed = true;
+                }
+
+                if (Location.Longitude != gllData.Location.Longitude)
+                {
+                    Location.Longitude = gllData.Location.Longitude;
+                    changed = true;
+                }
+
+                if (Location.Timestamp != gllData.Location.Timestamp)
+                {
+                    Location.Timestamp = gllData.Location.Timestamp;
+                }
+
+                if (changed)
+                {
+                    RaiseLocationChanged(Location);
+                }
+            }
+            else
+            {
+                // Pass any other processed NMEA message to the subscriber.
+                // Usefull for heritage of this base class.
+                RaiseParsedMessage(data);
             }
         }
 
@@ -333,5 +348,7 @@ namespace Iot.Device.Common.GnssDevice
         internal void RaiseLocationChanged(Location position) => LocationChanged?.Invoke(position);
 
         internal void RaiseParsedMessage(NmeaData data) => ParsedMessage?.Invoke(data);
+
+        internal void RaiseUnparsedMessage(string message) => UnparsedMessage?.Invoke(message);
     }
 }

@@ -69,6 +69,8 @@ private static void FixChanged(Fix fix)
 
 ## Extensibility of the GenericSerialGnssDevice
 
+### Creating your own NmeaData parsers
+
 This class is extensible by using the `ParsedMessage` event and adding `NmeaData` elements to the `Nmea0183Parser`. The samples show how to to do this.
 
 Here is a simple example of a TXT message processing:
@@ -157,7 +159,7 @@ Once you have your own parser setup, you need to add it to the parsers:
 // Add the TXT parser in the NMEA Parser
 Nmea0183Parser.AddParser(new TxtData());
 
-// on the GNSS device, make sure you add the ParseMEssage event
+// on the GNSS device, make sure you add the ParsedMessage event
 gnssDevice = new GenericSerialGnssDevice("COM2");
 gnssDevice.ParsedMessage += ParsedMessage;
 ```
@@ -176,6 +178,25 @@ private static void ParsedMessage(NmeaData data)
 ```
 
 If you want to replace one of the existing parser by your own, you can remove it from the Nmea0183Parser and add your own using the same principle.
+
+### Handling yourself unparsed messages
+
+This can be done using the `UnparsedMessage` event. You just need to subscribe to the event and you'll be able to handle the message:
+
+```csharp
+// on the GNSS device, make sure you add the UnparsedMessage event
+gnssDevice = new GenericSerialGnssDevice("COM2");
+gnssDevice.UnparsedMessage += UnparsedMessage;
+```
+
+As a result, all the unparsed messages will be delivered for you to handle:
+
+```csharp
+private static void UnparsedMessage(string message)
+{
+    Console.WriteLine($"Received unparsed message: {message}");
+}
+```
 
 ## Extensibility with the GnssDevice
 

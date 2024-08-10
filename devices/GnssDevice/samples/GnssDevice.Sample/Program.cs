@@ -30,10 +30,16 @@ namespace GnssDevice.Sample
             _gnssDevice.OperationModeChanged += OperationModeChanged;
             _gnssDevice.ParsingError += ParsingError;
             _gnssDevice.ParsedMessage += ParsedMessage;
+            _gnssDevice.UnparsedMessage += UnparsedMessage;
 
             _gnssDevice.Start();
 
             Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void UnparsedMessage(string message)
+        {
+            Console.WriteLine($"Received unparsed message: {message}");
         }
 
         private static void ParsedMessage(NmeaData data)
