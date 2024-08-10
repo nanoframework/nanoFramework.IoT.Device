@@ -86,7 +86,7 @@ namespace Iot.Device.Common.GnssDevice
         {
             _isrunning = false;
             if (_serialPort == null)
-            {                
+            {
                 return false;
             }
 
@@ -118,7 +118,10 @@ namespace Iot.Device.Common.GnssDevice
                 var commands = stringBuffer.Split(serialDevice.WatchChar);
                 foreach (var command in commands)
                 {
-                    ProcessCommands(command);
+                    if (command.Length > 4)
+                    {
+                        ProcessCommands(command.TrimEnd('\r'));
+                    }
                 }
             }
             catch (Exception exception)

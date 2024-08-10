@@ -42,7 +42,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <returns>True if the message ID is a match.</returns>
         public bool IsMatch(string inputData)
         {
-            if (inputData.Length < 6)
+            if (inputData.Length < 3 + MessageId.Length)
             {
                 return false;
             }
