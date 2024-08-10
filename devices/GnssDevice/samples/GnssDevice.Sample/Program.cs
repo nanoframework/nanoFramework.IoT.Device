@@ -21,6 +21,9 @@ namespace GnssDevice.Sample
             Configuration.SetPinFunction(9, DeviceFunction.COM2_RX);
             Configuration.SetPinFunction(8, DeviceFunction.COM2_TX);
 
+            // Add the TXT parser in the NMEA Parser
+            Nmea0183Parser.AddParser(new TxtData());
+
             _gnssDevice = new GenericSerialGnssDevice("COM2");
             _gnssDevice.FixChanged += FixChanged;
             _gnssDevice.LocationChanged += LocationChanged;
@@ -35,7 +38,11 @@ namespace GnssDevice.Sample
 
         private static void ParsedMessage(NmeaData data)
         {
-            Console.WriteLine($"Received parsed message: {typeof(GgaData)}");
+            Console.WriteLine($"Received parsed message: {data.GetType()}");
+            if (data is TxtData txtData)
+            {
+                Console.WriteLine($"Received TXT message: {txtData.Text}, severity: {txtData.Severity}");
+            }
         }
 
         private static void ParsingError(Exception exception)

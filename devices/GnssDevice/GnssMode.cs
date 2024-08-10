@@ -7,6 +7,7 @@ namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
     /// The Global Navigation Satellite System mode.
+    /// More can be found at https://web.archive.org/web/20220902160821/https://www.nmea.org/Assets/NMEA%200183%20Talker%20Identifier%20Mnemonics.pdf.
     /// </summary>
     public enum GnssMode
     {
