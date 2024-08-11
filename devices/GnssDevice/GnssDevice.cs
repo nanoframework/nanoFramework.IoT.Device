@@ -151,36 +151,27 @@ namespace Iot.Device.Common.GnssDevice
         /// Starts the GNSS device.
         /// </summary>
         /// <returns>A value indicating whether the start was successful.</returns>
-        public virtual bool Start()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Start();
 
         /// <summary>
         /// Stops the GNSS device.
         /// </summary>
         /// <returns>A value indicating whether the stop was successful.</returns>
-        public virtual bool Stop()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Stop();
 
         /// <summary>
         /// Gets a value indicating whether the GNSS device is running.
         /// </summary>
-        public virtual bool IsRunning
+        public abstract bool IsRunning 
         {
-            get => throw new NotImplementedException();
+            get;
         }
 
         /// <summary>
         /// Gets the product details.
         /// </summary>
         /// <returns>A string representing the product details.</returns>
-        public virtual string GetProductDetails()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetProductDetails();
 
         internal void ProcessCommands(string command)
         {

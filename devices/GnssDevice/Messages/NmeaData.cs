@@ -28,7 +28,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="inputData">The input data string.</param>
         /// <returns>An NmeaData.</returns>
-        public virtual NmeaData Parse(string inputData) => throw new NotImplementedException();
+        public abstract NmeaData Parse(string inputData);
 
         /// <summary>
         /// Gets the NMEA message ID.
@@ -40,7 +40,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="inputData">A valid input.</param>
         /// <returns>True if the message ID is a match.</returns>
-        public bool IsMatch(string inputData)
+        public bool IsMatch(string inputData) 
         {
             if (inputData.Length < 3 + MessageId.Length)
             {
@@ -55,6 +55,7 @@ namespace Iot.Device.Common.GnssDevice
             catch (Exception ex)
             {
                 Debug.WriteLine($"Excption in processing IsMatch with: {inputData}");
+                Debug.WriteLine(ex.Message);
             }
 
             return false;
