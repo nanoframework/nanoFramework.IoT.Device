@@ -9,17 +9,17 @@ namespace Iot.Device.Common.GnssDevice
     /// <summary>
     /// Represents a geographic position with latitude and longitude coordinates.
     /// </summary>
-    public class GeoPosition
+    public class Location
     {
         /// <summary>
         /// Gets the latitude of a geographic position.
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get; internal set; }
 
         /// <summary>
         /// Gets the longitude of a geographic position.
         /// </summary>
-        public double Longitude { get; private set; }
+        public double Longitude { get; internal set; }
 
         /// <summary>
         /// Gets or sets the altitude of the GNSS position.
@@ -29,7 +29,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets or sets the speed of the GNSS position.
         /// </summary>
-        public double Speed { get; set; }
+        public Speed Speed { get; set; }
 
         /// <summary>
         /// Gets or sets the course angle of the GNSS position.
@@ -57,9 +57,9 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="latitude">The latitude coordinate in decimal degrees.</param>
         /// <param name="longitude">The longitude coordinate in decimal degrees.</param>
         /// <returns>A GeoPosition object with the specified latitude and longitude coordinates.</returns>
-        public static GeoPosition FromDecimalDegrees(double latitude, double longitude)
+        public static Location FromDecimalDegrees(double latitude, double longitude)
         {
-            return new GeoPosition()
+            return new Location()
             {
                 Latitude = latitude,
                 Longitude = longitude

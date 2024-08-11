@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{321E1274
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "GnssDevice.Tests", "Tests\GnssDeviceTests\GnssDevice.Tests.nfproj", "{A9B49F93-BF2A-41C7-84AE-770DD2388362}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{7D197EFF-9EFB-4F55-BB1F-3E09B8134F95}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "GnssDevice.Sample", "samples\GnssDevice.Sample\GnssDevice.Sample.nfproj", "{0219736C-3F0B-4D83-89BE-42CD94B9461C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,12 +31,19 @@ Global
 		{A9B49F93-BF2A-41C7-84AE-770DD2388362}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9B49F93-BF2A-41C7-84AE-770DD2388362}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9B49F93-BF2A-41C7-84AE-770DD2388362}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A9B49F93-BF2A-41C7-84AE-770DD2388362} = {321E1274-146C-4F3A-8C78-DE873A6DD1F0}
+		{0219736C-3F0B-4D83-89BE-42CD94B9461C} = {7D197EFF-9EFB-4F55-BB1F-3E09B8134F95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F63D93E7-29AF-4075-93F4-C6A55CA958C8}

@@ -4,33 +4,34 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Iot.Device.Common.GnssDevice
 {
     /// <summary>
     /// Provides methods for parsing NMEA0183 data from a Gnss device.
-    /// </summary>
+    /// </summary>    
     public static class Nmea0183Parser
     {
         /// <summary>
-        /// Gets an array of parsable <see cref="INmeaData"/> parsers.
+        /// Gets an array of parsable <see cref="NmeaData"/> parsers.
         /// </summary>
-        public static Hashtable MneaDatas { get; } = new ()
+        public static ArrayList MneaDatas { get; } = new ()
         {
-            { "$GPGLL", new GpgllData() },
-            { "$GNGSA", new GngsaData() },
-            { "$GPGGA", new GpggaData() },
-            { "$GPGSA", new GpggaData() }
+            new GllData(),
+            new GsaData(),
+            new GgaData(),
+            new RmcData(),
+            new VtgData(),
         };
 
         /// <summary>
         /// Adds a parser to the list of available parsers.
         /// </summary>
-        /// <param name="dataId">The data type to parse eg $GPGLL.</param>
         /// <param name="parser">The parser class.</param>
-        public static void AddParser(string dataId, INmeaData parser)
+        public static void AddParser(NmeaData parser)
         {
-            MneaDatas.Add(dataId, parser);
+            MneaDatas.Add(parser);
         }
 
         /// <summary>
@@ -47,19 +48,18 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="inputData">A valid MNEA string.</param>
         /// <returns>Parsed NmeaData object if any or null.</returns>
-        public static INmeaData Parse(string inputData)
+        public static NmeaData Parse(string inputData)
         {
-            var data = inputData.Split(',');
-            var dataId = data[0];
-
-            var mnea = MneaDatas[dataId] as INmeaData;
-            if (mnea is null)
+            foreach (NmeaData parser in MneaDatas)
             {
-                Debug.WriteLine($"Parser for {dataId} not found.");
-                return null;
+                if (parser.IsMatch(inputData))
+                {
+                    return parser.Parse(inputData);
+                }
             }
 
-            return mnea.Parse(inputData);
+            Debug.WriteLine($"No parser found for: {inputData}");
+            return null;
         }
 
         /// <summary>
@@ -67,10 +67,19 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">Valid input data.</param>
         /// <param name="direction">The direction.</param>
+        /// <param name="degreesLength">Number of degrees digits.</param>
         /// <returns>A double representing an coordinate elements.</returns>
-        internal static double ConvertToGeoLocation(string data, string direction)
+        public static double ConvertToGeoLocation(string data, string direction, int degreesLength)
         {
-            var degreesLength = data.Length > 12 ? 3 : 2;
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            if (string.IsNullOrEmpty(direction))
+            {
+                return 0;
+            }
 
             var degrees = double.Parse(data.Substring(0, degreesLength));
             var minutes = double.Parse(data.Substring(degreesLength));
@@ -90,7 +99,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="GnssOperation"/>.</returns>
-        internal static GnssOperation ConvertToMode(string data)
+        public static GnssOperation ConvertToMode(string data)
         {
             switch (data)
             {
@@ -108,11 +117,11 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>A <see cref="Fix"/>.</returns>
-        /// <exception cref="Exception">Not a valid fix.</exception>
-        internal static Fix ConvertToFix(string data)
+        public static Fix ConvertToFix(string data)
         {
             switch (data)
             {
+                default:
                 case "1":
                     return Fix.NoFix;
                 case "2":
@@ -120,8 +129,6 @@ namespace Iot.Device.Common.GnssDevice
                 case "3":
                     return Fix.Fix3D;
             }
-
-            throw new Exception();
         }
 
         /// <summary>
@@ -129,8 +136,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>The proper <see cref="PositioningIndicator"/> mode.</returns>
-        /// <exception cref="Exception">Not a valid positioning.</exception>
-        internal static PositioningIndicator ConvertToPositioningIndicator(string data)
+        public static PositioningIndicator ConvertToPositioningIndicator(string data)
         {
             switch (data)
             {
@@ -142,11 +148,10 @@ namespace Iot.Device.Common.GnssDevice
                     return PositioningIndicator.Estimated;
                 case "M":
                     return PositioningIndicator.Manual;
+                default:
                 case "N":
                     return PositioningIndicator.NotValid;
             }
-
-            throw new Exception();
         }
 
         /// <summary>
@@ -154,18 +159,16 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="data">A valid string.</param>
         /// <returns>The proper <see cref="Status"/>.</returns>
-        /// <exception cref="Exception">Not a valid status.</exception>
-        internal static Status ConvertToStatus(string data)
+        public static Status ConvertToStatus(string data)
         {
             switch (data)
             {
                 case "A":
                     return Status.Valid;
+                default:
                 case "V":
                     return Status.NotValid;
             }
-
-            throw new Exception();
         }
 
         /// <summary>
@@ -174,8 +177,13 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="date">The date string as YYMMDD.</param>
         /// <param name="time">The time as HHMMSS.ss.</param>
         /// <returns>A <see cref="DateTime"/> object.</returns>
-        internal static DateTime ConvertToUtcDateTime(string date, string time)
+        public static DateTime ConvertToUtcDateTime(string date, string time)
         {
+            if (string.IsNullOrEmpty(date) || string.IsNullOrEmpty(time))
+            {
+                return default;
+            }
+
             var timespan = ConvertToTimeSpan(time);
 
             var day = int.Parse(date.Substring(0, 2));
@@ -190,14 +198,65 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="time">The time as HHMMSS.ss.</param>
         /// <returns>A <see cref="TimeSpan"/> object.</returns>
-        internal static TimeSpan ConvertToTimeSpan(string time)
+        public static TimeSpan ConvertToTimeSpan(string time)
         {
+            if (string.IsNullOrEmpty(time))
+            {
+                return default;
+            }
+
             var hour = int.Parse(time.Substring(0, 2));
             var minute = int.Parse(time.Substring(2, 2));
             var second = int.Parse(time.Substring(4, 2));
             var millec = int.Parse(time.Substring(7));
 
             return new TimeSpan(0, hour, minute, second, millec);
+        }
+
+        /// <summary>
+        /// Computes the checksum of an NMEA1083 message.
+        /// </summary>
+        /// <param name="data">The string to compute.</param>
+        /// <returns>A byte array with the checksum.</returns>
+        public static byte ComputeChecksum(string data)
+        {
+            var checksum = 0;
+            foreach (char c in data)
+            {
+                checksum ^= c;
+            }
+
+            return (byte)checksum;
+        }
+
+        /// <summary>
+        /// Converts a string to a double. Default to 0 if the string is empty.
+        /// </summary>
+        /// <param name="data">A string to convernt.</param>
+        /// <returns>A double.</returns>
+        public static double ConvertToDouble(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            return double.Parse(data);
+        }
+
+        /// <summary>
+        /// Converts a string to a int. Default to 0 if the string is empty.
+        /// </summary>
+        /// <param name="data">A string to convernt.</param>
+        /// <returns>An int.</returns>
+        public static int ConvertToInt(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            return int.Parse(data);
         }
     }
 }
