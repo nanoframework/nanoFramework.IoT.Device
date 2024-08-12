@@ -65,6 +65,11 @@ namespace Iot.Device.Common.GnssDevice
         /// <inheritdoc/>
         public override bool Start()
         {
+            if (_isrunning)
+            {
+                return true;
+            }
+
             if (_serialPort == null)
             {
                 _isrunning = false;
@@ -84,6 +89,11 @@ namespace Iot.Device.Common.GnssDevice
         /// <inheritdoc/>
         public override bool Stop()
         {
+            if (!_isrunning)
+            {
+                return true;
+            }
+
             _isrunning = false;
             if (_serialPort == null)
             {

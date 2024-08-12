@@ -16,7 +16,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets an array of parsable <see cref="NmeaData"/> parsers.
         /// </summary>
-        public static ArrayList MneaDatas { get; } = new ()
+        private static ArrayList MneaDatas { get; } = new ()
         {
             new GllData(),
             new GsaData(),
@@ -40,7 +40,20 @@ namespace Iot.Device.Common.GnssDevice
         /// <param name="dataId">The data type to parse eg $GPGLL.</param>
         public static void RemoveParser(string dataId)
         {
-            MneaDatas.Remove(dataId);
+            var toRemove = default(NmeaData);
+            foreach (NmeaData item in MneaDatas)
+            {
+                if (item.MessageId == dataId)
+                {
+                    toRemove = item;
+                    break;
+                }
+            }
+
+            if (toRemove != null)
+            {
+                MneaDatas.Remove(toRemove);
+            }
         }
 
         /// <summary>
