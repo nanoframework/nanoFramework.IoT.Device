@@ -33,7 +33,7 @@ namespace Iot.Device.Common.GnssDevice
         /// </summary>
         /// <param name="portName">Serial port name.</param>
         /// <param name="baudRate">Baud rate, default to 9600.</param>
-        /// <param name="parity">PArity, default to None.</param>
+        /// <param name="parity">Parity, default to <see cref="Parity.None"/>.</param>
         /// <param name="dataBits">Data bits, default to 8.</param>
         /// <param name="stopBits">Stop bits, default to One.</param>
         public GenericSerialGnssDevice(string portName, int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
