@@ -1,6 +1,6 @@
 # Global Navigation Satellite System Device NMEA 0183 - Including Generic Serial Module with GPS, GNSS, BeiDou
 
-This bonding implement a base Global Navigation Satellite System (GNSS) device and a generic serial implementation. The device includes a generic serial module that supports multiple satellite navigation systems such as GPS, GNSS, and BeiDou. The Generic Serial GNSS Device is also extensible.
+This binding implements a base Global Navigation Satellite System (GNSS) device and a generic serial implementation. The device includes a generic serial module that supports multiple satellite navigation systems such as GPS, GNSS, and BeiDou. The Generic Serial GNSS Device is also extensible. Any serial modules like the NEO6-M, ATGM336H,Minewsemi and many many more are directly supported for the main NMEA0183 features.
 
 ## Documentation
 

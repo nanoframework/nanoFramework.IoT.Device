@@ -145,7 +145,7 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets or sets the satellites in view.
         /// </summary>
-        public int[] SatellitesInUse { get; protected set; }
+        public int[] SatellitesInView { get; protected set; }
 
         /// <summary>
         /// Starts the GNSS device.
@@ -226,7 +226,7 @@ namespace Iot.Device.Common.GnssDevice
                 // GSA data has OperationMode, Fix, SatellitesInUse, PositionDilutionOfPrecision, HorizontalDilutionOfPrecision, VerticalDilutionOfPrecision
                 GnssOperation = gsaData.OperationMode;
                 Fix = gsaData.Fix;
-                SatellitesInUse = gsaData.SatellitesInUse;
+                SatellitesInView = gsaData.SatellitesInUse;
                 if (Location.Accuracy != gsaData.PositionDilutionOfPrecision)
                 {
                     Location.Accuracy = gsaData.PositionDilutionOfPrecision;
