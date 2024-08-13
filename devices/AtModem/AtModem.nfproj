@@ -242,6 +242,9 @@
     <Compile Include="DTOs\SystemMode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Iot.Device.Common.GnssDevice">
+      <HintPath>packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.8\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
@@ -280,6 +283,9 @@
     </Reference>
     <Reference Include="UnitsNet.Ratio, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.56.0\lib\UnitsNet.Ratio.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Speed">
+      <HintPath>packages\UnitsNet.nanoFramework.Speed.5.56.0\lib\UnitsNet.Speed.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

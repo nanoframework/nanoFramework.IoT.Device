@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Iot.Device.AtModem.Modem;
+using Iot.Device.Common.GnssDevice;
 using UnitsNet;
 
 namespace Iot.Device.AtModem.Gnss
@@ -13,11 +14,11 @@ namespace Iot.Device.AtModem.Gnss
     /// <summary>
     /// Represents a <see cref="Sim7672"/> Global Navigation Satellite System class..
     /// </summary>
-    public class GnssSim7672 : GnssBase
+    public class GnssSim7672 : GnssDevice
     {
         private readonly ModemBase _modem;
         private GnssStartMode _startMode = GnssStartMode.Cold;
-        private GnssPosition _position;
+        private Sim7276Location _position;
         private CancellationTokenSource _cs;
 
         internal GnssSim7672(ModemBase modem)
@@ -41,10 +42,22 @@ namespace Iot.Device.AtModem.Gnss
                     try
                     {
                         var elements = message.Split(',');
-                        GnssPosition position = new GnssPosition();
+
+                        // <lat> Latitude of current position.Output format is dd.ddddd
+                        float lat = float.Parse(elements[5]);
+
+                        // <N/S> N/S Indicator, N=north or S=south.
+                        lat = elements[6] == "N" ? lat : -lat;
+
+                        // <log> Longitude of current position. Output format is ddd.ddddd
+                        float lon = float.Parse(elements[7]);
+
+                        // <E/W> E/W Indicator, E=east or W=west.
+                        lon = elements[8] == "E" ? lon : -plonos;
+                        Sim7276Location position = new Sim7276Location();
 
                         // <mode> Fix mode 2=2D fix 3=3D fix
-                        position.Mode = elements[0] == "2" ? GnssPosition.FixMode.Fix2d : GnssPosition.FixMode.Fix3d;
+                        Fix = elements[0] == "2" ? Fix.Fix2D : Fix.Fix3D;
 
                         // <GPS-SVs> GPS satellite visible numbers
                         int sat = int.Parse(elements[1]);
@@ -61,20 +74,6 @@ namespace Iot.Device.AtModem.Gnss
                         // <BEIDOU-SVs> BEIDOU satellite visible numbers
                         sat = int.Parse(elements[4]);
                         position.BeidouNumberVisibleSatellites = sat;
-
-                        // <lat> Latitude of current position.Output format is dd.ddddd
-                        float pos = float.Parse(elements[5]);
-                        position.Latitude = pos;
-
-                        // <N/S> N/S Indicator, N=north or S=south.
-                        position.Latitude = elements[6] == "N" ? pos : -pos;
-
-                        // <log> Longitude of current position. Output format is ddd.ddddd
-                        pos = float.Parse(elements[7]);
-                        position.Longitude = pos;
-
-                        // <E/W> E/W Indicator, E=east or W=west.
-                        position.Longitude = elements[8] == "E" ? pos : -pos;
 
                         // <date> Date. Output format is ddmmyy.
                         // <UTC-time> UTC Time. Output format is hhmmss.ss.
@@ -188,7 +187,7 @@ namespace Iot.Device.AtModem.Gnss
         }
 
         /// <inheritdoc/>
-        public override GnssPosition GetPosition()
+        public override GnssPosition GetLocation()
         {
             _cs = new CancellationTokenSource(2000);
             _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes("AT+CGNSSINFO\r\n"));

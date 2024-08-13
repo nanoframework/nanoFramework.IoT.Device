@@ -23,6 +23,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Iot.Device.Common.GnssDevice">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.8\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
@@ -37,6 +40,9 @@
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=1.6.12.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Native.1.6.12\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\packages\nanoFramework.System.Collections.1.5.31\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=1.2.54.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Text.1.2.54\lib\nanoFramework.System.Text.dll</HintPath>
@@ -61,6 +67,9 @@
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.56.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Speed">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Speed.5.56.0\lib\UnitsNet.Speed.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

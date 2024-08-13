@@ -3,6 +3,7 @@
 
 using System;
 using Iot.Device.AtModem.Events;
+using Iot.Device.Common.GnssDevice;
 
 namespace Iot.Device.AtModem.Gnss
 {
@@ -36,26 +37,20 @@ namespace Iot.Device.AtModem.Gnss
         /// Starts the GNSS device.
         /// </summary>
         /// <returns>A value indicating whether the start was successful.</returns>
-        public virtual bool Start()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Start();
 
         /// <summary>
         /// Stops the GNSS device.
         /// </summary>
         /// <returns>A value indicating whether the stop was successful.</returns>
-        public virtual bool Stop()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Stop();
 
         /// <summary>
         /// Gets a value indicating whether the GNSS device is running.
         /// </summary>
-        public virtual bool IsRunning
+        public abstract bool IsRunning
         {
-            get => throw new NotImplementedException();
+            get;
         }
 
         /// <summary>
@@ -72,19 +67,13 @@ namespace Iot.Device.AtModem.Gnss
         /// Gets the position of the GNSS device.
         /// </summary>
         /// <returns>A GNSS position or null if none.</returns>
-        public virtual GnssPosition GetPosition()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Location GetLocation();
 
         /// <summary>
         /// Gets the product details.
         /// </summary>
         /// <returns>A string representing the product details.</returns>
-        public virtual string GetProductDetails()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetProductDetails();
 
         /// <summary>
         /// Gets or sets the interval between wich the GNSS position is updated.

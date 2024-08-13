@@ -180,7 +180,7 @@ void TestGnss()
     for (int i = 0; i < 5; i++)
     {
         // Get a position one time
-        var pos = gnss.GetPosition();
+        var pos = gnss.GetLocation();
         DisplayPosition(pos);
 
         Thread.Sleep(2000);
