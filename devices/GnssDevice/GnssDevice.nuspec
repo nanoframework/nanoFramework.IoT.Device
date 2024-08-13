@@ -22,7 +22,9 @@
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.System.Math" version="1.5.43" />
       <dependency id="nanoFramework.System.Collections" version="1.5.31" />
-      <dependency id="UnitsNet.nanoFramework.Angle" version="5.55.0" />
+      <dependency id="UnitsNet.nanoFramework.Angle" version="5.56.0" />
+      <dependency id="UnitsNet.nanoFramework.Speed" version="5.56.0" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.86" />
     </dependencies>
   </metadata>
   <files>

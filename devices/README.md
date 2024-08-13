@@ -279,7 +279,7 @@
 
 ## Iot.Device helpers and common
 
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.GnssDevice.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.GnssDevice/) [Iot.Device.GnsssDevice](GnssDevice)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.GnssDevice.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.GnssDevice/) [Global Navigation Satellite System Device NMEA 0183 - Including Generic Serial Module with GPS, GNSS, BeiDou](GnssDevice)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Multiplexing.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Multiplexing/) [Iot.Device.Multiplexing](Multiplexing)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Common.NumberHelper.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Common.NumberHelper/) [Iot.Device.NumberHelper](NumberHelper)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Common.WeatherHelper.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Common.WeatherHelper/) [Iot.Device.WeatherHelper](WeatherHelper)
