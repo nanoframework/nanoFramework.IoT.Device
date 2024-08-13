@@ -53,8 +53,8 @@ namespace Iot.Device.AtModem.Gnss
                         float lon = float.Parse(elements[7]);
 
                         // <E/W> E/W Indicator, E=east or W=west.
-                        lon = elements[8] == "E" ? lon : -plonos;
-                        Sim7276Location position = new Sim7276Location();
+                        lon = elements[8] == "E" ? lon : -lon;
+                        Sim7276Location position = new Sim7276Location();                        
 
                         // <mode> Fix mode 2=2D fix 3=3D fix
                         Fix = elements[0] == "2" ? Fix.Fix2D : Fix.Fix3D;

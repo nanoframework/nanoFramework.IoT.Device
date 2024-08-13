@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="nanoFramework.Iot.Device.Common.GnssDevice" Version="1.0.8" />
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="UnitsNet" Version="5.34.0" />
   </ItemGroup>

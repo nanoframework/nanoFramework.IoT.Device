@@ -106,11 +106,10 @@
     <Compile Include="FileStorage\Sim7080FileStorage.cs" />
     <Compile Include="FileStorage\Sim7672FileStorage.cs" />
     <Compile Include="FileStorage\Sim800FileStorage.cs" />
-    <Compile Include="Gnss\GnssMode.cs" />
-    <Compile Include="Gnss\GnssPosition.cs" />
     <Compile Include="Gnss\GnssBase.cs" />
     <Compile Include="Gnss\GnssSim7672.cs" />
     <Compile Include="Gnss\GnssStartMode.cs" />
+    <Compile Include="Gnss\Sim7276Location.cs" />
     <Compile Include="Http\Http\ByteArrayContent.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
