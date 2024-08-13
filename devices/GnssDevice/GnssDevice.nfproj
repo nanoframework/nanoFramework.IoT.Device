@@ -43,6 +43,7 @@
     <Compile Include="Messages\GsaData.cs" />
     <Compile Include="Messages\RmcData.cs" />
     <Compile Include="Messages\VtgData.cs" />
+    <Compile Include="Messages\ZdaData.cs" />
     <Compile Include="Nmea0183Parser.cs" />
     <Compile Include="Messages\NmeaData.cs" />
     <Compile Include="PositioningIndicator.cs" />
