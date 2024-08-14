@@ -131,5 +131,21 @@ namespace GnssDevice.Tests
             // Assert
             Assert.AreEqual(gnssMode, (int)gnss);
         }
+
+        [TestMethod]
+        [DataRow("$GNZDA,105708.000,11,08,2024,00,00*4F", 2024, 8, 11, 10, 57, 08)]
+        public void TestZdaData(string command, int year, int month, int day, int hour, int minute, int second)
+        {
+            // Act
+            ZdaData result = (ZdaData)Nmea0183Parser.Parse(command);
+
+            // Assert
+            Assert.AreEqual(year, result.DateTime.Year);
+            Assert.AreEqual(month, result.DateTime.Month);
+            Assert.AreEqual(day, result.DateTime.Day);
+            Assert.AreEqual(hour, result.DateTime.Hour);
+            Assert.AreEqual(minute, result.DateTime.Minute);
+            Assert.AreEqual(second, result.DateTime.Second);
+        }
     }
 }

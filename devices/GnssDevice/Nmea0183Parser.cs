@@ -23,6 +23,7 @@ namespace Iot.Device.Common.GnssDevice
             new GgaData(),
             new RmcData(),
             new VtgData(),
+            new ZdaData(),
         };
 
         /// <summary>
