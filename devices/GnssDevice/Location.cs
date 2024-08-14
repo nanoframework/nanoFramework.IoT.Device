@@ -15,7 +15,7 @@ namespace Iot.Device.Common.GnssDevice
         /// Initializes a new instance of the <see cref="Location"/> class.
         /// </summary>
         public Location()
-        { 
+        {
         }
 
         /// <summary>
@@ -30,12 +30,12 @@ namespace Iot.Device.Common.GnssDevice
         }
 
         /// <summary>
-        /// Gets the latitude of a geographic position.
+        /// Gets or sets the latitude of a geographic position.
         /// </summary>
         public double Latitude { get; set; }
 
         /// <summary>
-        /// Gets the longitude of a geographic position.
+        /// Gets or sets the longitude of a geographic position.
         /// </summary>
         public double Longitude { get; set; }
 
