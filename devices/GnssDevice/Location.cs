@@ -32,12 +32,12 @@ namespace Iot.Device.Common.GnssDevice
         /// <summary>
         /// Gets the latitude of a geographic position.
         /// </summary>
-        public double Latitude { get; internal set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// Gets the longitude of a geographic position.
         /// </summary>
-        public double Longitude { get; internal set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// Gets or sets the altitude of the GNSS position.
