@@ -14,18 +14,29 @@ namespace Iot.Device.AtModem.Gnss
     /// <summary>
     /// Represents a <see cref="Sim7672"/> Global Navigation Satellite System class..
     /// </summary>
-    public class GnssSim7672 : GnssDevice
+    public class Sim7672Gnss : GnssDevice
     {
         private readonly ModemBase _modem;
         private GnssStartMode _startMode = GnssStartMode.Cold;
-        private Sim7276Location _position;
+        private Sim7672Location _position;
         private CancellationTokenSource _cs;
 
-        internal GnssSim7672(ModemBase modem)
+        internal Sim7672Gnss(ModemBase modem)
         {
             _modem = modem;
             _modem.GenericEvent += GenericEvent;
         }
+
+        /// <summary>
+        /// Delegate type to handle the event when the Gnss module location changes.
+        /// </summary>
+        /// <param name="position">The new position.</param>
+        public new delegate void LocationChangeHandler(Location position);
+
+        /// <summary>
+        /// Event that occurs when the location changes.
+        /// </summary>
+        public new event LocationChangeHandler LocationChanged;
 
         private void GenericEvent(object sender, Events.GenericEventArgs e)
         {
@@ -54,7 +65,7 @@ namespace Iot.Device.AtModem.Gnss
 
                         // <E/W> E/W Indicator, E=east or W=west.
                         lon = elements[8] == "E" ? lon : -lon;
-                        Sim7276Location position = new Sim7276Location();                        
+                        Sim7672Location position = new Sim7672Location(lat, lon);
 
                         // <mode> Fix mode 2=2D fix 3=3D fix
                         Fix = elements[0] == "2" ? Fix.Fix2D : Fix.Fix3D;
@@ -77,7 +88,7 @@ namespace Iot.Device.AtModem.Gnss
 
                         // <date> Date. Output format is ddmmyy.
                         // <UTC-time> UTC Time. Output format is hhmmss.ss.
-                        position.DateTime = new DateTime(
+                        position.Timestamp = new DateTime(
                             int.Parse(elements[9].Substring(4, 2)) + 2000,
                             int.Parse(elements[9].Substring(2, 2)),
                             int.Parse(elements[9].Substring(0, 2)),
@@ -87,12 +98,12 @@ namespace Iot.Device.AtModem.Gnss
                             int.Parse(elements[10].Substring(7, 2)));
 
                         // <alt> MSL Altitude. Unit is meters.
-                        pos = float.Parse(elements[11]);
+                        var pos = float.Parse(elements[11]);
                         position.Altitude = pos;
 
                         // <speed> Speed Over Ground. Unit is knots.
                         pos = float.Parse(elements[12]);
-                        position.Speed = pos;
+                        position.Speed = Speed.FromKnots(pos);
 
                         // <course> Course. Degrees.
                         pos += float.Parse(elements[13]);
@@ -100,15 +111,11 @@ namespace Iot.Device.AtModem.Gnss
 
                         // <PDOP> Position Dilution Of Precision.
                         pos = float.Parse(elements[14]);
-                        position.PositionDilutionOfPrecision = pos;
-
-                        // <HDOP> Horizontal Dilution Of Precision.
-                        pos = float.Parse(elements[15]);
-                        position.HorizontalDilutionOfPrecision = pos;
+                        position.Accuracy = pos;
 
                         // <VDOP> Vertical Dilution Of Precision.
                         pos = float.Parse(elements[16]);
-                        position.VerticalDilutionOfPrecision = pos;
+                        position.VerticalAccuracy = pos;
 
                         // <NoSV> Number of satellites involved
                         sat = int.Parse(elements[17]);
@@ -120,7 +127,7 @@ namespace Iot.Device.AtModem.Gnss
                             _cs.Cancel();
                         }
 
-                        OnGnssPositionUpdate(new Events.GnssPositionArgs(position));
+                        LocationChanged?.Invoke(position);
                     }
                     catch (Exception ex)
                     {
@@ -186,8 +193,11 @@ namespace Iot.Device.AtModem.Gnss
             return response.Success;
         }
 
-        /// <inheritdoc/>
-        public override GnssPosition GetLocation()
+        /// <summary>
+        /// Gets the position of the GNSS device.
+        /// </summary>
+        /// <returns>A GNSS position or null if none.</returns>
+        public Location GetLocation()
         {
             _cs = new CancellationTokenSource(2000);
             _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes("AT+CGNSSINFO\r\n"));
@@ -197,7 +207,7 @@ namespace Iot.Device.AtModem.Gnss
         }
 
         /// <inheritdoc/>
-        public override GnssStartMode StartMode
+        public GnssStartMode StartMode
         {
             // We don't have a way to check that value, assuming Cold is the default
             get => _startMode;
@@ -240,19 +250,11 @@ namespace Iot.Device.AtModem.Gnss
                                 gnssMode = GnssMode.Gps;
                                 break;
                             case "3":
-                                gnssMode = GnssMode.Gps | GnssMode.Glonass;
-                                break;
                             case "5":
-                                gnssMode = GnssMode.Gps | GnssMode.Galileo;
-                                break;
                             case "9":
-                                gnssMode = GnssMode.Gps | GnssMode.Bds;
-                                break;
                             case "13":
-                                gnssMode = GnssMode.Gps | GnssMode.Galileo | GnssMode.Bds;
-                                break;
                             case "15":
-                                gnssMode = GnssMode.Gps | GnssMode.Glonass | GnssMode.Galileo | GnssMode.Bds;
+                                gnssMode = GnssMode.Gnss;
                                 break;
                             default:
                                 break;
@@ -281,17 +283,25 @@ namespace Iot.Device.AtModem.Gnss
                     val |= 0b0000_0100;
                 }
 
-                if (value.HasFlag(GnssMode.Bds))
+                if (value.HasFlag(GnssMode.BeiDou))
                 {
                     val |= 0b0000_1000;
+                }
+
+                if (value.HasFlag(GnssMode.Gnss))
+                {
+                    val |= 0b0000_1111;
                 }
 
                 _modem.Channel.SendCommand($"AT+CGNSSMODE={val}");
             }
         }
 
-        /// <inheritdoc/>
-        public override TimeSpan AutomaticUpdate
+        /// <summary>
+        /// Gets or sets the interval between wich the GNSS position is updated.
+        /// An event is raised when a new valid position is received.
+        /// </summary>
+        public TimeSpan AutomaticUpdate
         {
             get
             {

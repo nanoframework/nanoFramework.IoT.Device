@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading;
 using nanoFramework.M2Mqtt;
 using Iot.Device.AtModem.Gnss;
+using Iot.Device.Common.GnssDevice;
 
 Console.WriteLine("Hello SIM AT Modems!");
 
@@ -149,13 +150,13 @@ while (true)
 
 ConnectToNetwork();
 // Depending on the device, you can test GNSS, some may require network enabled.
-//TestGnss();
+TestGnss();
 //GetNetworkOperators();
 //TestStorageSmsAndCharSet();
 //TestSms();
 //TestHttp();
 //TestMqtt();
-TestMqtts();
+//TestMqtts();
 
 modem.Dispose();
 CloseSerialPort();
@@ -180,45 +181,58 @@ void TestGnss()
     for (int i = 0; i < 5; i++)
     {
         // Get a position one time
-        var pos = gnss.GetLocation();
-        DisplayPosition(pos);
+        if (gnss is Sim7672Gnss)
+        {
+            var pos = ((Sim7672Gnss)gnss).GetLocation();
+        }
+
+        DisplayPosition(gnss.Location);
 
         Thread.Sleep(2000);
     }
 
-    gnss.GnssPositionUpdate += GnssPositionUpdate;
-    gnss.AutomaticUpdate = TimeSpan.FromSeconds(10);
+    gnss.LocationChanged += GnssLocationChanged;
+    if (gnss is Sim7672Gnss)
+    {
+        ((Sim7672Gnss)gnss).AutomaticUpdate = TimeSpan.FromSeconds(10);
+    }
 
     Thread.Sleep(60000);
-    gnss.AutomaticUpdate = TimeSpan.Zero;
+
+    if (gnss is Sim7672Gnss)
+    {
+        ((Sim7672Gnss)gnss).AutomaticUpdate = TimeSpan.Zero;
+    }
 
     started = gnss.Stop();
     Console.WriteLine($"GNSS stopped: {started}");
 }
 
-void GnssPositionUpdate(object sender, GnssPositionArgs e)
+void GnssLocationChanged(Location position)
 {
-    DisplayPosition(e.Position);
+    DisplayPosition(position);
 }
 
-void DisplayPosition(GnssPosition pos)
+void DisplayPosition(Location pos)
 {
     if (pos != null)
     {
-        Console.WriteLine($"Mode: {pos.Mode}");
-        Console.WriteLine($"GpsNumberVisibleSatellites: {pos.GpsNumberVisibleSatellites}");
-        Console.WriteLine($"GlonassNumberVisibleSatellites: {pos.GlonassNumberVisibleSatellites}");
-        Console.WriteLine($"GalileoNumberVisibleSatellites: {pos.GalileoNumberVisibleSatellites}");
+        if(pos is Sim7672Location simPos)
+        {
+            Console.WriteLine($"GpsNumberVisibleSatellites: {simPos.GpsNumberVisibleSatellites}");
+            Console.WriteLine($"GlonassNumberVisibleSatellites: {simPos.GlonassNumberVisibleSatellites}");
+            Console.WriteLine($"GalileoNumberVisibleSatellites: {simPos.GalileoNumberVisibleSatellites}");
+            Console.WriteLine($"TotalNumberOfSatellitesUsed: {simPos.TotalNumberOfSatellitesUsed}");
+        }
+
         Console.WriteLine($"Latitude: {pos.Latitude}");
         Console.WriteLine($"Longitude: {pos.Longitude}");
-        Console.WriteLine($"DateTime: {pos.DateTime}");
+        Console.WriteLine($"DateTime: {pos.Timestamp}");
         Console.WriteLine($"Altitude: {pos.Altitude}");
         Console.WriteLine($"Speed: {pos.Speed}");
         Console.WriteLine($"Course: {pos.Course.Degrees}");
-        Console.WriteLine($"PositionDilutionOfPrecision: {pos.PositionDilutionOfPrecision}");
-        Console.WriteLine($"HorizontalDilutionOfPrecision: {pos.HorizontalDilutionOfPrecision}");
-        Console.WriteLine($"VerticalDilutionOfPrecision: {pos.VerticalDilutionOfPrecision}");
-        Console.WriteLine($"TotalNumberOfSatellitesUsed: {pos.TotalNumberOfSatellitesUsed}");
+        Console.WriteLine($"PositionDilutionOfPrecision: {pos.Accuracy}");
+        Console.WriteLine($"VerticalDilutionOfPrecision: {pos.VerticalAccuracy}");
     }
     else
     {

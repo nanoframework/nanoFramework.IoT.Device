@@ -5,10 +5,20 @@ using Iot.Device.Common.GnssDevice;
 
 namespace Iot.Device.AtModem.Gnss
 {
-    public class Sim7276Location : Location
+    /// <summary>
+    /// Location information from a SIM7276 GNSS module.
+    /// </summary>
+    public class Sim7672Location : Location
     {
-        public Sim7276Location(float lat, float lon)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sim7672Location"/> class.
+        /// </summary>
+        /// <param name="lat">The latitude.</param>
+        /// <param name="lon">The longitude.</param>
+        public Sim7672Location(float lat, float lon)
         {
+            Latitude = lat;
+            Longitude = lon;
         }
 
         /// <summary>

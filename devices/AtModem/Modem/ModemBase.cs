@@ -11,6 +11,7 @@ using Iot.Device.AtModem.Events;
 using Iot.Device.AtModem.Gnss;
 using Iot.Device.AtModem.Network;
 using Iot.Device.AtModem.Sms;
+using Iot.Device.Common.GnssDevice;
 using nanoFramework.M2Mqtt;
 using UnitsNet;
 
@@ -177,9 +178,9 @@ namespace Iot.Device.AtModem.Modem
         public virtual HttpClient HttpClient { get => throw new NotImplementedException(); }
 
         /// <summary>
-        /// Gets a <see cref="GnssBase"/> object used to communicate with the network.
+        /// Gets a <see cref="GnssDevice"/> object used to communicate with the network.
         /// </summary>
-        public virtual GnssBase Gnss { get => throw new NotImplementedException(); }
+        public virtual GnssDevice Gnss { get => throw new NotImplementedException(); }
 
         /// <summary>
         /// Gets a <see cref="ISmsProvider"/> object used to send and receive SMS messages and mget access to the SMS storage.
