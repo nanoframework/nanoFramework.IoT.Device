@@ -41,9 +41,7 @@ namespace Iot.Device.Common.GnssDevice
             _serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
             _serialPort.ReadBufferSize = 2048;
             _serialPort.ReadTimeout = 2000;
-#if (NANOFRAMEWORK_1_0)
             _serialPort.WatchChar = '\n';
-#endif
             _shouldDispose = true;
         }
 
@@ -127,11 +125,7 @@ namespace Iot.Device.Common.GnssDevice
                 var buffer = new byte[serialDevice.BytesToRead];
                 var bytesRead = serialDevice.Read(buffer, 0, buffer.Length);
                 var stringBuffer = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-#if (NANOFRAMEWORK_1_0)
                 var commands = stringBuffer.Split(serialDevice.WatchChar);
-#else
-                var commands = stringBuffer.Split('\n');
-#endif
                 foreach (var command in commands)
                 {
                     if (command.Length > 4)
