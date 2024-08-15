@@ -2,7 +2,7 @@
 
 This binding is a generic AT Modem handler that can be extended for different usage. The first implementation is for the `Sim7080` which supports both `CAT-M` and `NB-IoT`. It can be controlled through AT command via a Serial/UART interface. There is as well a partial implementation of `SIM800`.
 
-> Note: The module is tested on a `Sim7080` but is also compatible with Sim7070 and Sim7090 and with a `SIM800H`.
+> Note: The module is tested on a `Sim7080` but is also compatible with Sim7070 and Sim7090 and with a `SIM800H`. It has also been tested on a `SIM8868`.
 
 This project is officially supported by [SIMCom](https://www.simcom.com/).
 
@@ -24,6 +24,7 @@ Supported features for the different modems are the following:
 |HTTP and HTTPS|✅|✅|✅|
 |MQTT and MQTTS|❌|✅|✅|
 |IP Network connection|✅|✅|✅|
+|Global Navigation Satellite System (GNSS)|✅| N/A |✅|
 
 Most modems supports other features like MMS, Sockets with TCP/UDP, FTP, email, GNSS and more. So far, those features are not implemented. They can be added later. All the mechanism is present to add them and described in the documentation bellow especially regarding the [Channel property](#the-channel-property).
 
@@ -582,6 +583,55 @@ The certificate validation for HTTPS secured connections happens only if you pro
 In the SIM7070/7080/7090, the only certificate format supported is DER, meaning, the binary representation of the certificate (usually with .crt extension) and not the PEM format (that is a base64 text encoded representation).
 
 > **Important**: A `X509Certificate` fully managed code implementation is available for convenience. It does **not** provide any property like getting the certificate validate time. It is just a wrapper to make code reuse simpler. It does **not** parse the certificate neither or transform it. If you pass a PEM certificate, getting the data will always be a PEM certificate, it is not going to transform it as a DER and vice versa.
+
+## Global Navigation Satellite System GNSS
+
+This is based on the `GnssDevice`. See the more complete [information here](../GnssDevice/README.md).
+Basic usage is the following:
+
+```csharp
+var gnss = modem.Gnss;
+Console.WriteLine($"Is GNSS running? {gnss.IsRunning}");
+var started = gnss.Start();
+Console.WriteLine($"GNSS started: {started}");
+// You can subscribe for any position change
+gnss.LocationChanged += GnssLocationChanged;
+// The position is not updated automatically, so you need to setup an update time span
+gnss.AutomaticUpdate = TimeSpan.FromSeconds(10);
+
+// You can as well request a new position on demand
+var pos = gnss.GetLocation();
+// The new position is also stored in the Location property
+DisplayPosition(gnss.Location);
+
+// The event function will receive the position update
+void GnssLocationChanged(Location pos)
+{
+    if (pos != null)
+{
+    if (pos is Sim7672Location simPos)
+    {
+        Console.WriteLine($"GpsNumberVisibleSatellites: {simPos.GpsNumberVisibleSatellites}");
+        Console.WriteLine($"GlonassNumberVisibleSatellites: {simPos.GlonassNumberVisibleSatellites}");
+        Console.WriteLine($"GalileoNumberVisibleSatellites: {simPos.GalileoNumberVisibleSatellites}");
+        Console.WriteLine($"TotalNumberOfSatellitesUsed: {simPos.TotalNumberOfSatellitesUsed}");
+    }
+
+    Console.WriteLine($"Latitude: {pos.Latitude}");
+    Console.WriteLine($"Longitude: {pos.Longitude}");
+    Console.WriteLine($"DateTime: {pos.Timestamp}");
+    Console.WriteLine($"Altitude: {pos.Altitude}");
+    Console.WriteLine($"Speed: {pos.Speed}");
+    Console.WriteLine($"Course: {pos.Course.Degrees}");
+    Console.WriteLine($"PositionDilutionOfPrecision: {pos.Accuracy}");
+    Console.WriteLine($"VerticalDilutionOfPrecision: {pos.VerticalAccuracy}");
+}
+else
+{
+    Console.WriteLine("No position");
+}
+}
+```
 
 ## Articles
 
