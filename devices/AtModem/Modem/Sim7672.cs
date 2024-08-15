@@ -141,7 +141,7 @@ namespace Iot.Device.AtModem.Modem
         }
 
         /// <inheritdoc/>
-        public override GnssDevice Gnss
+        public override GnssBase Gnss
         {
             get
             {

@@ -12,9 +12,9 @@ using UnitsNet;
 namespace Iot.Device.AtModem.Gnss
 {
     /// <summary>
-    /// Represents a <see cref="Sim7672"/> Global Navigation Satellite System class..
+    /// Represents a <see cref="Sim7672"/> Global Navigation Satellite System class.
     /// </summary>
-    public class Sim7672Gnss : GnssDevice
+    public class Sim7672Gnss : GnssBase
     {
         private readonly ModemBase _modem;
         private GnssStartMode _startMode = GnssStartMode.Cold;
@@ -26,17 +26,6 @@ namespace Iot.Device.AtModem.Gnss
             _modem = modem;
             _modem.GenericEvent += GenericEvent;
         }
-
-        /// <summary>
-        /// Delegate type to handle the event when the Gnss module location changes.
-        /// </summary>
-        /// <param name="position">The new position.</param>
-        public new delegate void LocationChangeHandler(Location position);
-
-        /// <summary>
-        /// Event that occurs when the location changes.
-        /// </summary>
-        public new event LocationChangeHandler LocationChanged;
 
         private void GenericEvent(object sender, Events.GenericEventArgs e)
         {
@@ -106,7 +95,7 @@ namespace Iot.Device.AtModem.Gnss
                         position.Speed = Speed.FromKnots(pos);
 
                         // <course> Course. Degrees.
-                        pos += float.Parse(elements[13]);
+                        pos = float.Parse(elements[13]);
                         position.Course = Angle.FromDegrees(pos);
 
                         // <PDOP> Position Dilution Of Precision.
@@ -127,7 +116,7 @@ namespace Iot.Device.AtModem.Gnss
                             _cs.Cancel();
                         }
 
-                        LocationChanged?.Invoke(position);
+                        Location = position;
                     }
                     catch (Exception ex)
                     {
@@ -197,7 +186,7 @@ namespace Iot.Device.AtModem.Gnss
         /// Gets the position of the GNSS device.
         /// </summary>
         /// <returns>A GNSS position or null if none.</returns>
-        public Location GetLocation()
+        public override Location GetLocation()
         {
             _cs = new CancellationTokenSource(2000);
             _modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes("AT+CGNSSINFO\r\n"));
@@ -297,11 +286,8 @@ namespace Iot.Device.AtModem.Gnss
             }
         }
 
-        /// <summary>
-        /// Gets or sets the interval between wich the GNSS position is updated.
-        /// An event is raised when a new valid position is received.
-        /// </summary>
-        public TimeSpan AutomaticUpdate
+        /// <inheritdoc/>
+        public override TimeSpan AutomaticUpdate
         {
             get
             {

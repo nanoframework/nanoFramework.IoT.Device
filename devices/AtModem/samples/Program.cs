@@ -28,7 +28,7 @@ SerialPort _serialPort;
 #if (NANOFRAMEWORK_1_0)
 OpenSerialPort("COM2");
 #else
-OpenSerialPort("COM24");
+OpenSerialPort("COM4");
 Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 #endif
 
@@ -36,7 +36,7 @@ _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
 int retries = 10;
-Sim7672 modem = new(atChannel);
+Sim800 modem = new(atChannel);
 
 // If you want to use a different modem, you can use the following:
 // Sim800 modem = new(atChannel);
@@ -150,7 +150,7 @@ while (true)
 
 ConnectToNetwork();
 // Depending on the device, you can test GNSS, some may require network enabled.
-TestGnss();
+//TestGnss();
 //GetNetworkOperators();
 //TestStorageSmsAndCharSet();
 //TestSms();
@@ -181,10 +181,7 @@ void TestGnss()
     for (int i = 0; i < 5; i++)
     {
         // Get a position one time
-        if (gnss is Sim7672Gnss)
-        {
-            var pos = ((Sim7672Gnss)gnss).GetLocation();
-        }
+        gnss.GetLocation();
 
         DisplayPosition(gnss.Location);
 
@@ -192,17 +189,13 @@ void TestGnss()
     }
 
     gnss.LocationChanged += GnssLocationChanged;
-    if (gnss is Sim7672Gnss)
-    {
-        ((Sim7672Gnss)gnss).AutomaticUpdate = TimeSpan.FromSeconds(10);
-    }
+
+    gnss.AutomaticUpdate = TimeSpan.FromSeconds(10);
 
     Thread.Sleep(60000);
 
-    if (gnss is Sim7672Gnss)
-    {
-        ((Sim7672Gnss)gnss).AutomaticUpdate = TimeSpan.Zero;
-    }
+    gnss.AutomaticUpdate = TimeSpan.Zero;
+
 
     started = gnss.Stop();
     Console.WriteLine($"GNSS stopped: {started}");
@@ -217,7 +210,7 @@ void DisplayPosition(Location pos)
 {
     if (pos != null)
     {
-        if(pos is Sim7672Location simPos)
+        if (pos is Sim7672Location simPos)
         {
             Console.WriteLine($"GpsNumberVisibleSatellites: {simPos.GpsNumberVisibleSatellites}");
             Console.WriteLine($"GlonassNumberVisibleSatellites: {simPos.GlonassNumberVisibleSatellites}");

@@ -180,7 +180,7 @@ namespace Iot.Device.AtModem.Modem
         /// <summary>
         /// Gets a <see cref="GnssDevice"/> object used to communicate with the network.
         /// </summary>
-        public virtual GnssDevice Gnss { get => throw new NotImplementedException(); }
+        public virtual GnssBase Gnss { get => throw new NotImplementedException(); }
 
         /// <summary>
         /// Gets a <see cref="ISmsProvider"/> object used to send and receive SMS messages and mget access to the SMS storage.
