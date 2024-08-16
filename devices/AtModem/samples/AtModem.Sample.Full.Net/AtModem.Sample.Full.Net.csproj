@@ -26,6 +26,7 @@
     <Compile Include="../../CodingSchemes/*.cs" />
     <Compile Include="../../DTOs/*.cs" />
     <Compile Include="../../Modem/*.cs" />
+	  <Compile Include="../../Gnss/*.cs" />
     <Compile Include="../../PDU/*.cs" />
     <Compile Include="../../FileStorage/*.cs" />
     <Compile Include="../../Events/*.cs" />
@@ -34,7 +35,9 @@
     <Compile Include="../../Sms/*.cs" />
     <Compile Include="../../Call/*.cs" />
     <Compile Include="../../Http/*.cs" />
-	<Compile Include="../../Http/Http/*.cs" />
+	  <Compile Include="../../Http/Http/*.cs" />
+    <Compile Include="../../../GnssDevice/*.cs" />
+    <Compile Include="../../../GnssDevice/Messages/*.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,8 +4,10 @@
 using System.Diagnostics;
 using System.Net.Http;
 using Iot.Device.AtModem.FileStorage;
+using Iot.Device.AtModem.Gnss;
 using Iot.Device.AtModem.Http;
 using Iot.Device.AtModem.Network;
+using Iot.Device.Common.GnssDevice;
 
 namespace Iot.Device.AtModem.Modem
 {
@@ -17,6 +19,7 @@ namespace Iot.Device.AtModem.Modem
         private INetwork _network = null;
         private Sim800FileStorage _fileStorage = null;
         private Sim800HttpClient _httpClient = null;
+        private Sim800Gnss _gnss = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sim800"/> class.
@@ -97,6 +100,21 @@ namespace Iot.Device.AtModem.Modem
                 }
 
                 return _httpClient;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override GnssBase Gnss
+        {
+            get
+            {
+                if (_gnss == null)
+                {
+                    _gnss = new Sim800Gnss(this);
+                    IsGnssIntancieted = true;
+                }
+
+                return _gnss;
             }
         }
     }

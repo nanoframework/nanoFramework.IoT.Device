@@ -105,6 +105,11 @@
     <Compile Include="FileStorage\Sim7080FileStorage.cs" />
     <Compile Include="FileStorage\Sim7672FileStorage.cs" />
     <Compile Include="FileStorage\Sim800FileStorage.cs" />
+    <Compile Include="Gnss\GnssBase.cs" />
+    <Compile Include="Gnss\Sim7672Gnss.cs" />
+    <Compile Include="Gnss\GnssStartMode.cs" />
+    <Compile Include="Gnss\Sim7672Location.cs" />
+    <Compile Include="Gnss\Sim800Gnss.cs" />
     <Compile Include="Http\Http\ByteArrayContent.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
@@ -236,6 +241,9 @@
     <Compile Include="DTOs\SystemMode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Iot.Device.Common.GnssDevice">
+      <HintPath>packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.17\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
@@ -266,11 +274,17 @@
     <Reference Include="System.Threading">
       <HintPath>packages\nanoFramework.System.Threading.1.1.32\lib\System.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.Angle">
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.56.0\lib\UnitsNet.Angle.dll</HintPath>
+    </Reference>
     <Reference Include="UnitsNet.ElectricPotential, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.5.56.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Ratio, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.Ratio.5.56.0\lib\UnitsNet.Ratio.dll</HintPath>
+    </Reference>
+    <Reference Include="UnitsNet.Speed">
+      <HintPath>packages\UnitsNet.nanoFramework.Speed.5.56.0\lib\UnitsNet.Speed.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

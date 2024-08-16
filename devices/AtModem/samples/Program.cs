@@ -19,21 +19,24 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using nanoFramework.M2Mqtt;
+using Iot.Device.AtModem.Gnss;
+using Iot.Device.Common.GnssDevice;
 
 Console.WriteLine("Hello SIM AT Modems!");
 
 SerialPort _serialPort;
 #if (NANOFRAMEWORK_1_0)
-OpenSerialPort("COM3");
+OpenSerialPort("COM2");
 #else
 OpenSerialPort("COM4");
+Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 #endif
 
 _serialPort.NewLine = "\r\n";
 AtChannel atChannel = AtChannel.Create(_serialPort);
 atChannel.DebugEnabled = true;
 int retries = 10;
-Sim7672 modem = new(atChannel);
+Sim800 modem = new(atChannel);
 
 // If you want to use a different modem, you can use the following:
 // Sim800 modem = new(atChannel);
@@ -43,6 +46,9 @@ Sim7672 modem = new(atChannel);
 // keyPin.Write(PinValue.High);
 // Thred.Sleep(1000);
 // keyPin.Write(PinValue.Low);
+
+// Depending on the device, you can test GNSS, some may require network enabled.
+TestGnss();
 
 modem.NetworkConnectionChanged += ModemNetworkConnectionChanged;
 modem.Network.AutoReconnect = true;
@@ -143,15 +149,89 @@ while (true)
 }
 
 ConnectToNetwork();
+// Depending on the device, you can test GNSS, some may require network enabled.
+//TestGnss();
 //GetNetworkOperators();
 //TestStorageSmsAndCharSet();
 //TestSms();
 //TestHttp();
 //TestMqtt();
-TestMqtts();
+//TestMqtts();
 
 modem.Dispose();
 CloseSerialPort();
+
+void TestGnss()
+{
+    var gnss = modem.Gnss;
+    Console.WriteLine($"Is GNSS running? {gnss.IsRunning}");
+    var started = gnss.Start();
+    Console.WriteLine($"GNSS started: {started}");
+
+    // Gets the modes
+    var modes = gnss.GnssMode;
+    Console.WriteLine($"Modes: {modes}");
+
+    // Chaning mode to GPS only
+    gnss.GnssMode = GnssMode.Gps;
+    Console.WriteLine($"Modes: {gnss.GnssMode}");
+
+    gnss.GnssMode = modes;
+
+    for (int i = 0; i < 5; i++)
+    {
+        // Get a position one time
+        gnss.GetLocation();
+
+        DisplayPosition(gnss.Location);
+
+        Thread.Sleep(2000);
+    }
+
+    gnss.LocationChanged += GnssLocationChanged;
+
+    gnss.AutomaticUpdate = TimeSpan.FromSeconds(10);
+
+    Thread.Sleep(60000);
+
+    gnss.AutomaticUpdate = TimeSpan.Zero;
+
+
+    started = gnss.Stop();
+    Console.WriteLine($"GNSS stopped: {started}");
+}
+
+void GnssLocationChanged(Location position)
+{
+    DisplayPosition(position);
+}
+
+void DisplayPosition(Location pos)
+{
+    if (pos != null)
+    {
+        if (pos is Sim7672Location simPos)
+        {
+            Console.WriteLine($"GpsNumberVisibleSatellites: {simPos.GpsNumberVisibleSatellites}");
+            Console.WriteLine($"GlonassNumberVisibleSatellites: {simPos.GlonassNumberVisibleSatellites}");
+            Console.WriteLine($"GalileoNumberVisibleSatellites: {simPos.GalileoNumberVisibleSatellites}");
+            Console.WriteLine($"TotalNumberOfSatellitesUsed: {simPos.TotalNumberOfSatellitesUsed}");
+        }
+
+        Console.WriteLine($"Latitude: {pos.Latitude}");
+        Console.WriteLine($"Longitude: {pos.Longitude}");
+        Console.WriteLine($"DateTime: {pos.Timestamp}");
+        Console.WriteLine($"Altitude: {pos.Altitude}");
+        Console.WriteLine($"Speed: {pos.Speed}");
+        Console.WriteLine($"Course: {pos.Course.Degrees}");
+        Console.WriteLine($"PositionDilutionOfPrecision: {pos.Accuracy}");
+        Console.WriteLine($"VerticalDilutionOfPrecision: {pos.VerticalAccuracy}");
+    }
+    else
+    {
+        Console.WriteLine("No position");
+    }
+}
 
 void TestHttp()
 {

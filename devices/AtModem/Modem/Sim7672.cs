@@ -7,9 +7,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using Iot.Device.AtModem.Events;
+using Iot.Device.AtModem.Gnss;
 using Iot.Device.AtModem.Http;
 using Iot.Device.AtModem.Mqtt;
 using Iot.Device.AtModem.Network;
+using Iot.Device.Common.GnssDevice;
 using nanoFramework.M2Mqtt;
 
 namespace Iot.Device.AtModem.Modem
@@ -23,6 +25,7 @@ namespace Iot.Device.AtModem.Modem
         private INetwork _network = null;
         private Sim7672HttpClient _httpClient = null;
         private IMqttClient _mqttClient = null;
+        private Sim7672Gnss _gnss = null;
         private CancellationTokenSource _promptArived = new CancellationTokenSource();
 
         /// <summary>
@@ -134,6 +137,21 @@ namespace Iot.Device.AtModem.Modem
                 }
 
                 return _mqttClient;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override GnssBase Gnss
+        {
+            get
+            {
+                if (_gnss == null)
+                {
+                    _gnss = new Sim7672Gnss(this);
+                    IsGnssIntancieted = true;
+                }
+
+                return _gnss;
             }
         }
 
