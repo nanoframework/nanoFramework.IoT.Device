@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Iot.Device.Sdc4x.Samples")]
+[assembly: AssemblyTitle("Iot.Device.Scd4x.Samples")]
 [assembly: AssemblyCompany("nanoFramework Contributors")]
 [assembly: AssemblyCopyright("Copyright(c).NET Foundation and Contributors")]
 

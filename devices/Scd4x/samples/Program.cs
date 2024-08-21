@@ -3,7 +3,7 @@
 using System;
 using System.Device.I2c;
 using System.Threading;
-using Iot.Device.Sdc4x;
+using Iot.Device.Scd4x;
 using nanoFramework.Hardware.Esp32;
 using UnitsNet;
 
@@ -13,9 +13,9 @@ using UnitsNet;
 Configuration.SetPinFunction(23, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
-I2cConnectionSettings settings = new(1, Sdc4x.I2cDefaultAddress);
+I2cConnectionSettings settings = new(1, Scd4x.I2cDefaultAddress);
 using I2cDevice device = I2cDevice.Create(settings);
-using Sdc4x sensor = new(device);
+using Scd4x sensor = new(device);
 sensor.StopPeriodicMeasurement();
 var serialNumber = sensor.GetSerialNumber();
 Console.WriteLine($"Serial number: {serialNumber}");

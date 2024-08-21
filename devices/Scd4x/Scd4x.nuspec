@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.Sdc4x</id>
+    <id>nanoFramework.Iot.Device.Scd4x</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.Sdc4x</title>
+    <title>nanoFramework.Iot.Device.Scd4x</title>
     <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
@@ -15,9 +15,9 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Sdc4x for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Sdc4x assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Sdc4x</tags>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Scd4x for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Scd4x assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Scd4x</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
@@ -26,11 +26,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Sdc4x.dll" target="lib\Iot.Device.Sdc4x.dll" />
-    <file src="bin\Release\Iot.Device.Sdc4x.pdb" target="lib\Iot.Device.Sdc4x.pdb" />
-    <file src="bin\Release\Iot.Device.Sdc4x.pdbx" target="lib\Iot.Device.Sdc4x.pdbx" />
-    <file src="bin\Release\Iot.Device.Sdc4x.pe" target="lib\Iot.Device.Sdc4x.pe" />
-    <file src="bin\Release\Iot.Device.Sdc4x.xml" target="lib\Iot.Device.Sdc4x.xml" />
+    <file src="bin\Release\Iot.Device.Scd4x.dll" target="lib\Iot.Device.Scd4x.dll" />
+    <file src="bin\Release\Iot.Device.Scd4x.pdb" target="lib\Iot.Device.Scd4x.pdb" />
+    <file src="bin\Release\Iot.Device.Scd4x.pdbx" target="lib\Iot.Device.Scd4x.pdbx" />
+    <file src="bin\Release\Iot.Device.Scd4x.pe" target="lib\Iot.Device.Scd4x.pe" />
+    <file src="bin\Release\Iot.Device.Scd4x.xml" target="lib\Iot.Device.Scd4x.xml" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

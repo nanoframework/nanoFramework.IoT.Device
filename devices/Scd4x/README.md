@@ -1,5 +1,5 @@
 # SCD4x - Temperature & Humidity & CO2 Sensor
-The SCD4x is Sensirion’s next generation miniature CO2 sensor. This sensor builds on the photoacoustic sensing principle and Sensirion’s patented PAsens® and CMOSens® technology to offer high accuracy at an unmatched price and smallest form factor.
+The SCD4x is Sensirionï¿½s next generation miniature CO2 sensor. This sensor builds on the photoacoustic sensing principle and Sensirionï¿½s patented PAsensï¿½ and CMOSensï¿½ technology to offer high accuracy at an unmatched price and smallest form factor.
 
 ## Documentation
 
@@ -34,9 +34,9 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 For other devices like STM32, please make sure you're using the preset pins for the I2C bus you want to use.
 
 ```csharp
-I2cConnectionSettings settings = new(1, Sdc4x.I2cDefaultAddress);
+I2cConnectionSettings settings = new(1, Scd4x.I2cDefaultAddress);
 using I2cDevice device = I2cDevice.Create(settings);
-using Sdc4x sensor = new(device);
+using Scd4x sensor = new(device);
 sensor.StopPeriodicMeasurement();
 var serialNumber = sensor.GetSerialNumber();
 Console.WriteLine($"Serial number: {serialNumber}");

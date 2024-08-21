@@ -12,10 +12,10 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Sdc4x.Samples</RootNamespace>
-    <AssemblyName>Iot.Device.Sdc4x.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.Scd4x.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.Scd4x.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Sdc4x.Samples.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Scd4x.Samples.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
@@ -61,7 +61,7 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sdc4x.nfproj" />
+    <ProjectReference Include="..\Scd4x.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.lock.json" />

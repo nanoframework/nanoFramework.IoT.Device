@@ -13,10 +13,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Sdc4x</RootNamespace>
-    <AssemblyName>Iot.Device.Sdc4x</AssemblyName>
+    <RootNamespace>Iot.Device.Scd4x</RootNamespace>
+    <AssemblyName>Iot.Device.Scd4x</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Sdc4x.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Scd4x.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
@@ -45,9 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sdc4xSensorData.cs" />
+    <Compile Include="Scd4xSensorData.cs" />
     <None Include="packages.config" />
-    <Compile Include="Sdc4x.cs" />
+    <Compile Include="Scd4x.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

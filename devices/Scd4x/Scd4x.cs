@@ -6,31 +6,31 @@ using System.Device.I2c;
 using System.Threading;
 using UnitsNet;
 
-namespace Iot.Device.Sdc4x
+namespace Iot.Device.Scd4x
 {
     /// <summary>
-    /// Humidity and Temperature Sensor Sdc4x.
+    /// Humidity and Temperature Sensor Scd4x.
     /// </summary>
-    public class Sdc4x : IDisposable
+    public class Scd4x : IDisposable
     {
         private const byte CRC8POLYNOMIAL = 0x31;
         private const byte CRC8INIT = 0xFF;
 
         /// <summary>
-        /// Default I2C address of the Sdc4x sensor.
+        /// Default I2C address of the Scd4x sensor.
         /// </summary>
         public const byte I2cDefaultAddress = 0x62;
 
         /// <summary>
-        /// Represents an I2C device used for communication with the Sdc4x sensor.
+        /// Represents an I2C device used for communication with the Scd4x sensor.
         /// </summary>
         private I2cDevice _i2CDevice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Sdc4x" /> class.
+        /// Initializes a new instance of the <see cref="Scd4x" /> class.
         /// </summary>
         /// <param name="i2CDevice">The I2C device used for communication.</param>
-        public Sdc4x(I2cDevice i2CDevice)
+        public Scd4x(I2cDevice i2CDevice)
         {
             _i2CDevice = i2CDevice ?? throw new ArgumentNullException();
         }
@@ -83,7 +83,7 @@ namespace Iot.Device.Sdc4x
         /// Reads the data. 
         /// </summary>
         /// <returns>Sensor data.</returns>
-        public Sdc4xSensorData ReadData()
+        public Scd4xSensorData ReadData()
         {
             var result = _i2CDevice.Write(new byte[] { 0xEC, 0x05 });
             if (result.Status != I2cTransferStatus.FullTransfer)
@@ -105,7 +105,7 @@ namespace Iot.Device.Sdc4x
 
             var temp = (tempRaw * 175.0 / 65535.0) - 45.0;
             var hum = humRaw * 100 / 65535.0;
-            return new Sdc4xSensorData(Temperature.FromDegreesCelsius(temp), RelativeHumidity.FromPercent(hum), co2);
+            return new Scd4xSensorData(Temperature.FromDegreesCelsius(temp), RelativeHumidity.FromPercent(hum), co2);
         }
 
         /// <summary>
