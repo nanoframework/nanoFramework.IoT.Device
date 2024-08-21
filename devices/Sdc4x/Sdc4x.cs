@@ -168,6 +168,30 @@ namespace Iot.Device.Sdc4x
             }
         }
 
+        /// <summary>
+        /// Gets the status of data.
+        /// </summary>
+        /// <returns>True if data is ready to read.</returns>
+        public bool IsDataReady()
+        {
+            var result = _i2CDevice.Write(new byte[] { 0xE4, 0xB8 });
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new Exception();
+            }
+
+            Thread.Sleep(1);
+            var buffer = new byte[3];
+            result = _i2CDevice.Read(buffer);
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new Exception();
+            }
+
+            var word = (ushort)((buffer[0] << 8) | buffer[1]);
+            return (word & 0x07FF) != 0;
+        }
+
         private static byte GenerateCRC(byte[] data)
         {
             byte crc = CRC8INIT;

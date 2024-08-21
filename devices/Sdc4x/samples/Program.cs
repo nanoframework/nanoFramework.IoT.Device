@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System;
 using System.Device.I2c;
-using System.Diagnostics;
 using System.Threading;
-using Iot.Device.Common;
 using Iot.Device.Sdc4x;
 using nanoFramework.Hardware.Esp32;
 using UnitsNet;
@@ -23,19 +21,21 @@ var serialNumber = sensor.GetSerialNumber();
 Console.WriteLine($"Serial number: {serialNumber}");
 var offset = sensor.GetTemperatureOffset();
 Console.WriteLine($"Temperature offset: {offset.DegreesCelsius}");
-sensor.SetTemperatureOffset(Temperature.FromDegreesCelsius(2));
-Thread.Sleep(1000);
+sensor.SetTemperatureOffset(Temperature.FromDegreesCelsius(4));
 offset = sensor.GetTemperatureOffset();
 Console.WriteLine($"New temperature offset: {offset.DegreesCelsius}");
 
 sensor.StartPeriodicMeasurement();
-Thread.Sleep(6000); // TODO: Move to Wait For read
-// TODO: Implement get and set of set_temperature_offset, get_temperature_offset
 while (true)
 {
+    if (!sensor.IsDataReady())
+    {
+        Thread.Sleep(1000);
+        continue;
+    }
+
     var data = sensor.ReadData();
     Console.WriteLine($"Temperature: {data.Temperature.DegreesCelsius} \u00B0C");
     Console.WriteLine($"Relative humidity: {data.RelativeHumidity.Percent} %RH");
     Console.WriteLine($"CO2: {data.CO2} PPM");
-    Thread.Sleep(6000);
 }
