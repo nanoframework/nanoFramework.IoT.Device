@@ -37,5 +37,5 @@ while (true)
     var data = sensor.ReadData();
     Console.WriteLine($"Temperature: {data.Temperature.DegreesCelsius} \u00B0C");
     Console.WriteLine($"Relative humidity: {data.RelativeHumidity.Percent} %RH");
-    Console.WriteLine($"CO2: {data.CO2} PPM");
+    Console.WriteLine($"CO2: {data.CO2.PartsPerMillion} PPM");
 }

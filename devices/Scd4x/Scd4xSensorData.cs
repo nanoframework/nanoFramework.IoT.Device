@@ -17,7 +17,7 @@ namespace Iot.Device.Scd4x
         /// <param name="temperature">Temperature measurement.</param>
         /// <param name="humidity">Humidity measurement.</param>
         /// <param name="co2">CO2 measurment.</param>
-        internal Scd4xSensorData(Temperature temperature, RelativeHumidity humidity, ushort co2)
+        internal Scd4xSensorData(Temperature temperature, RelativeHumidity humidity, VolumeConcentration co2)
         {
             Temperature = temperature;
             RelativeHumidity = humidity;
@@ -37,6 +37,6 @@ namespace Iot.Device.Scd4x
         /// <summary>
         /// Gets a CO2 measurment.
         /// </summary>
-        public ushort CO2 { get; }
+        public VolumeConcentration CO2 { get; }
     }
 }

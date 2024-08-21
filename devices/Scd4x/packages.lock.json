@@ -37,6 +37,12 @@
         "requested": "[5.56.0, 5.56.0]",
         "resolved": "5.56.0",
         "contentHash": "fD11Mg9Vbu60tCCkZ7tTSCL1+NkR9LQWXoUKMjRzNPuhG801s/0/7C1GuAKRVIWWlT0OIE1l4PnjxupKdu7H0g=="
+      },
+      "UnitsNet.nanoFramework.VolumeConcentration": {
+        "type": "Direct",
+        "requested": "[5.56.0, 5.56.0]",
+        "resolved": "5.56.0",
+        "contentHash": "K/iLFsJmB64PWgarsM1D9h7cIgoHg1iD9CAHdiB8osc0lTTYJw7e8I27BLsPJXKSSjqvacpZKlPTuvLcl1YnVw=="
       }
     }
   }

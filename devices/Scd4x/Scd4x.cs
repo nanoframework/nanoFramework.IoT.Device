@@ -105,7 +105,7 @@ namespace Iot.Device.Scd4x
 
             var temp = (tempRaw * 175.0 / 65535.0) - 45.0;
             var hum = humRaw * 100 / 65535.0;
-            return new Scd4xSensorData(Temperature.FromDegreesCelsius(temp), RelativeHumidity.FromPercent(hum), co2);
+            return new Scd4xSensorData(Temperature.FromDegreesCelsius(temp), RelativeHumidity.FromPercent(hum), VolumeConcentration.FromPartsPerMillion(co2));
         }
 
         /// <summary>

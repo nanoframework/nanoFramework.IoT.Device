@@ -43,6 +43,9 @@
     <Reference Include="UnitsNet.Temperature, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.56.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
+    <Reference Include="UnitsNet.VolumeConcentration">
+      <HintPath>packages\UnitsNet.nanoFramework.VolumeConcentration.5.56.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scd4xSensorData.cs" />
