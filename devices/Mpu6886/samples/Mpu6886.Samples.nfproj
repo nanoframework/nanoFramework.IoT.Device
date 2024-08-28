@@ -36,10 +36,10 @@
       <HintPath>..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Numerics.1.2.586\lib\System.Numerics.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Numerics.1.2.628\lib\System.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.56.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=5.57.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.57.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
