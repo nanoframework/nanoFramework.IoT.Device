@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.586, 1.2.586]",
-        "resolved": "1.2.586",
-        "contentHash": "lj4INIXKDe9UVgiyITVdBlZEiuuIRpKVlTKLQaJVbjWElXW7SiXLfDhRoytaXl5Hs7LoSVjrmhODoTVLbsAemw=="
+        "requested": "[1.2.628, 1.2.628]",
+        "resolved": "1.2.628",
+        "contentHash": "39q4OScnVtMHlGdz9ZleiwllJtE+G6OZE0Xd/qn3gEvrR4XmLCwYZ+JdVxtDU7bK5JLrJA984NKeq+l5ZW0X4A=="
       }
     }
   }
