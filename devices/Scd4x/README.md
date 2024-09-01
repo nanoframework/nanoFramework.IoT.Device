@@ -1,5 +1,6 @@
 # SCD4x - Temperature & Humidity & CO2 Sensor
-The SCD4x is Sensirion�s next generation miniature CO2 sensor. This sensor builds on the photoacoustic sensing principle and Sensirion�s patented PAsens� and CMOSens� technology to offer high accuracy at an unmatched price and smallest form factor.
+
+The SCD4x is Sensirion's next generation miniature CO2 sensor. This sensor builds on the photoacoustic sensing principle and Sensirion's patented PAsens(r) and CMOSens(r) technology to offer high accuracy at an unmatched price and smallest form factor.
 
 ## Documentation
 
