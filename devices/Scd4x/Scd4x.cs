@@ -13,8 +13,8 @@ namespace Iot.Device.Scd4x
     /// </summary>
     public class Scd4x : IDisposable
     {
-        private const byte CRC8POLYNOMIAL = 0x31;
-        private const byte CRC8INIT = 0xFF;
+        private const byte Crc8PolyNominal = 0x31;
+        private const byte Crc8 = 0xFF;
 
         /// <summary>
         /// Default I2C address of the Scd4x sensor.
@@ -49,17 +49,11 @@ namespace Iot.Device.Scd4x
         public string GetSerialNumber()
         {
             var result = _i2CDevice.Write(new byte[] { 0x36, 0x82 });
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             var buffer = new byte[9];
             result = _i2CDevice.Read(buffer);
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             var serial1 = (ushort)((buffer[0] << 8) | buffer[1]);
             var serial2 = (ushort)((buffer[2] << 8) | buffer[3]);
@@ -73,10 +67,7 @@ namespace Iot.Device.Scd4x
         public void StartPeriodicMeasurement()
         {
             var result = _i2CDevice.Write(new byte[] { 0x21, 0xB1 });
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
         }
 
         /// <summary>
@@ -86,18 +77,12 @@ namespace Iot.Device.Scd4x
         public Scd4xSensorData ReadData()
         {
             var result = _i2CDevice.Write(new byte[] { 0xEC, 0x05 });
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             Thread.Sleep(1);
             var buffer = new byte[9];
             result = _i2CDevice.Read(buffer);
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             var co2 = (ushort)((buffer[0] << 8) | buffer[1]);
             var tempRaw = (ushort)((buffer[3] << 8) | buffer[4]);
@@ -114,10 +99,7 @@ namespace Iot.Device.Scd4x
         public void StopPeriodicMeasurement()
         {
             var result = _i2CDevice.Write(new byte[] { 0x3F, 0x86 });
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
         }
 
         /// <summary>
@@ -127,18 +109,12 @@ namespace Iot.Device.Scd4x
         public Temperature GetTemperatureOffset()
         {
             var result = _i2CDevice.Write(new byte[] { 0x23, 0x18 });
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             Thread.Sleep(1);
             var buffer = new byte[3];
             result = _i2CDevice.Read(buffer);
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             var tempRaw = (ushort)((buffer[0] << 8) | buffer[1]);
             var temp = tempRaw * 175.0 / 65535.0;
@@ -157,15 +133,12 @@ namespace Iot.Device.Scd4x
             var buffer = new byte[5];
             buffer[0] = 0x24;
             buffer[1] = 0x1D;
-            buffer[2] = (byte)((tOffset & 0xFF00) >> 8);
+            buffer[2] = (byte)(tOffset >> 8);
             buffer[3] = (byte)(tOffset & 0x00FF);
             buffer[4] = crc;
 
             var result = _i2CDevice.Write(buffer);
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
         }
 
         /// <summary>
@@ -175,26 +148,20 @@ namespace Iot.Device.Scd4x
         public bool IsDataReady()
         {
             var result = _i2CDevice.Write(new byte[] { 0xE4, 0xB8 });
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
+            CheckI2cResultOrThrow(result);
 
             Thread.Sleep(1);
             var buffer = new byte[3];
             result = _i2CDevice.Read(buffer);
-            if (result.Status != I2cTransferStatus.FullTransfer)
-            {
-                throw new Exception();
-            }
-
+            CheckI2cResultOrThrow(result);
+            
             var word = (ushort)((buffer[0] << 8) | buffer[1]);
             return (word & 0x07FF) != 0;
         }
 
         private static byte GenerateCRC(byte[] data)
         {
-            byte crc = CRC8INIT;
+            byte crc = Crc8;
 
             foreach (var currentByte in data)
             {
@@ -203,7 +170,7 @@ namespace Iot.Device.Scd4x
                 {
                     if ((crc & 0x80) != 0)
                     {
-                        crc = (byte)((crc << 1) ^ CRC8POLYNOMIAL);
+                        crc = (byte)((crc << 1) ^ Crc8PolyNominal);
                     }
                     else
                     {
@@ -220,6 +187,14 @@ namespace Iot.Device.Scd4x
             var highByte = (byte)((data >> 8) & 0xFF);
             var lowByte = (byte)(data & 0xFF);
             return GenerateCRC(new byte[] { highByte, lowByte });
+        }
+
+        private void CheckI2cResultOrThrow(I2cTransferResult status)
+        {
+            if (status.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new Exception();
+            }
         }
     }
 }
