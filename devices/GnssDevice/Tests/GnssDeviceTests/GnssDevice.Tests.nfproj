@@ -46,11 +46,11 @@
     <Reference Include="System.Math">
       <HintPath>..\..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Angle, Version=5.57.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Angle.5.57.0\lib\UnitsNet.Angle.dll</HintPath>
+    <Reference Include="UnitsNet.Angle, Version=5.58.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Angle.5.58.0\lib\UnitsNet.Angle.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Speed, Version=5.57.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Speed.5.57.0\lib\UnitsNet.Speed.dll</HintPath>
+    <Reference Include="UnitsNet.Speed, Version=5.58.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Speed.5.58.0\lib\UnitsNet.Speed.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
