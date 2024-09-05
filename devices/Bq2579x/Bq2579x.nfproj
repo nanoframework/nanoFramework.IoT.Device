@@ -30,6 +30,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="BatteryDischargeCurrent.cs" />
     <Compile Include="ChargeCurrent.cs" />
     <Compile Include="ChargeVoltage.cs" />
     <Compile Include="AdcInitialAverage.cs" />
@@ -39,9 +40,13 @@
     <Compile Include="ChargerStatus0.cs" />
     <Compile Include="AdcConversioRate.cs" />
     <Compile Include="CompVoltageFallingThreshold.cs" />
+    <Compile Include="SwitchingFrequency.cs" />
     <Compile Include="OtgColdTempThreshold.cs" />
     <Compile Include="OtgHotTempThreshold.cs" />
     <Compile Include="IcoStatus.cs" />
+    <Compile Include="FastChargeTimerSetting.cs" />
+    <Compile Include="SFETControl.cs" />
+    <Compile Include="TopOffTimerControl.cs" />
     <Compile Include="ThermalShutdownThreshold.cs" />
     <Compile Include="ThermalRegulationThreshold.cs" />
     <Compile Include="CompVoltageRisingThreshold.cs" />
