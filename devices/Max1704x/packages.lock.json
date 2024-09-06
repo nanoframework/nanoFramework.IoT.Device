@@ -28,15 +28,15 @@
       },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.57.0, 5.57.0]",
-        "resolved": "5.57.0",
-        "contentHash": "vmi8f8y5U6FTavyJzvqfBzY1OfbWhv1V/LMIpqCMN95mg3f9jl5E2eFO/gF5xQwIgMYeUmyUfG/1493uq/Pfnw=="
+        "requested": "[5.58.0, 5.58.0]",
+        "resolved": "5.58.0",
+        "contentHash": "4vSEYcS+Y7WHhhz/fROG/VUBZHaKrcp8e++d9tGc7RGJtP7pWpwxbOm9SsXMvQv7Yr+7LpkBskdGTp+gVtUN7A=="
       },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
-        "requested": "[5.57.0, 5.57.0]",
-        "resolved": "5.57.0",
-        "contentHash": "OzGdeJgjg5WvoAbzABVQgasg6au8HX3qKFnE/i3w7EZQROkgoiIFJ5ZMXwEhTyzDrbJc4a9C95mbaI+62mmrgw=="
+        "requested": "[5.58.0, 5.58.0]",
+        "resolved": "5.58.0",
+        "contentHash": "GJTrVEmCW1Xnw2wOSHoQa29Is5Y4ercK5+FUAcmFiAvJFnntnVRpQCRB/vnitvsK+7nY7vm+v0ZuT9k4qkxOjA=="
       }
     }
   }
