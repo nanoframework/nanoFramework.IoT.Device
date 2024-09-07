@@ -58,15 +58,15 @@
       },
       "UnitsNet.nanoFramework.Duration": {
         "type": "Direct",
-        "requested": "[5.57.0, 5.57.0]",
-        "resolved": "5.57.0",
-        "contentHash": "Xl5QWsCIp0dWW9TnrEjRVGAg3Dyl8mQPigfUcFkyJmuOsLfvsNjcDXm42wRuyucwRIWxi/nJUD+iObbOjASxYw=="
+        "requested": "[5.58.0, 5.58.0]",
+        "resolved": "5.58.0",
+        "contentHash": "vhHS6dy5SF14Z455d1+3qVO334AUeajWNWqrJljyrwkkDSwxHXQlousHmAN5nZVridvilIzQ+Kcf9snqySzcxQ=="
       },
       "UnitsNet.nanoFramework.Mass": {
         "type": "Direct",
-        "requested": "[5.57.0, 5.57.0]",
-        "resolved": "5.57.0",
-        "contentHash": "GV+b0+bmG1U8IIc6dOYz8F0kyfszbWF27HwXMpiLsZEdFFzV3Mp3bHPGi5AaT6VwGJmX2GbyszPJ/l55JhNr7A=="
+        "requested": "[5.58.0, 5.58.0]",
+        "resolved": "5.58.0",
+        "contentHash": "U5oqNi0VLv19sIRp6h9hEHzhfInELbZt7FXtQ17AHFN8cb8kWvc/qeqriN8D1NxsepP6zF6enAha7uLyoLMooA=="
       }
     }
   }
