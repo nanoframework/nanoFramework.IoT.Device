@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Buffers.Binary;
 using System.Device.I2c;
 using System.Threading;
 using UnitsNet;
@@ -55,9 +56,9 @@ namespace Iot.Device.Scd4x
             result = _i2CDevice.Read(buffer);
             CheckI2cResultOrThrow(result);
 
-            var serial1 = (ushort)((buffer[0] << 8) | buffer[1]);
-            var serial2 = (ushort)((buffer[2] << 8) | buffer[3]);
-            var serial3 = (ushort)((buffer[4] << 8) | buffer[5]);
+            var serial1 = ReadUInt16BigEndian(buffer, 0);
+            var serial2 = ReadUInt16BigEndian(buffer, 2);
+            var serial3 = ReadUInt16BigEndian(buffer, 4);
             return $"0x{serial1:X4}{serial2:X4}{serial3:X4}";
         }
 
@@ -84,9 +85,9 @@ namespace Iot.Device.Scd4x
             result = _i2CDevice.Read(buffer);
             CheckI2cResultOrThrow(result);
 
-            var co2 = (ushort)((buffer[0] << 8) | buffer[1]);
-            var tempRaw = (ushort)((buffer[3] << 8) | buffer[4]);
-            var humRaw = (ushort)((buffer[6] << 8) | buffer[7]);
+            var co2 = ReadUInt16BigEndian(buffer, 0);
+            var tempRaw = ReadUInt16BigEndian(buffer, 3);
+            var humRaw = ReadUInt16BigEndian(buffer, 6);
 
             var temp = (tempRaw * 175.0 / 65535.0) - 45.0;
             var hum = humRaw * 100 / 65535.0;
@@ -116,7 +117,7 @@ namespace Iot.Device.Scd4x
             result = _i2CDevice.Read(buffer);
             CheckI2cResultOrThrow(result);
 
-            var tempRaw = (ushort)((buffer[0] << 8) | buffer[1]);
+            var tempRaw = ReadUInt16BigEndian(buffer, 0);
             var temp = tempRaw * 175.0 / 65535.0;
             return Temperature.FromDegreesCelsius(temp);
         }
@@ -155,7 +156,7 @@ namespace Iot.Device.Scd4x
             result = _i2CDevice.Read(buffer);
             CheckI2cResultOrThrow(result);
             
-            var word = (ushort)((buffer[0] << 8) | buffer[1]);
+            var word = ReadUInt16BigEndian(buffer, 0);
             return (word & 0x07FF) != 0;
         }
 
@@ -184,7 +185,7 @@ namespace Iot.Device.Scd4x
 
         private static byte GenerateCRC(ushort data)
         {
-            var highByte = (byte)((data >> 8) & 0xFF);
+            var highByte = (byte)(data >> 8);
             var lowByte = (byte)(data & 0xFF);
             return GenerateCRC(new byte[] { highByte, lowByte });
         }
@@ -195,6 +196,11 @@ namespace Iot.Device.Scd4x
             {
                 throw new Exception();
             }
+        }
+
+        private ushort ReadUInt16BigEndian(byte[] buffer, int startIndex)
+        {
+            return (ushort)((buffer[startIndex] << 8) | buffer[startIndex + 1]);
         }
     }
 }

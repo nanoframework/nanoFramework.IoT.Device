@@ -8,6 +8,12 @@
         "resolved": "1.15.5",
         "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
       },
+      "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
+        "type": "Direct",
+        "requested": "[1.2.628, 1.2.628]",
+        "resolved": "1.2.628",
+        "contentHash": "FY7gGpk+EtMIAXjz5t13lH0QUTY5tTL80xkVCMKSXB/B0y27cH9vpopYzm5Ll6yOYdkRpAm90tvlsX7wBw4+3w=="
+      },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
         "requested": "[1.1.16, 1.1.16]",
