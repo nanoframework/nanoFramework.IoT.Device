@@ -29,6 +29,8 @@ namespace Iot.Device.Bq2579x
         private const byte ChargerStatus1ChargeStatusMask = 0b1110_0000;
         private const byte ChargerStatus1VbusStatusMask = 0b0001_1110;
         private const byte ChargerStatus1Bc12DetectionMask = 0b0000_0001;
+        private const byte ChargerControl1OvpThresholdMask = 0b0011_0000;
+        private const byte ChargerControl1I2cResetyMask = 0b0000_1000;
         private const byte ChargerControl1WatchdogMask = 0b0000_0111;
         private const byte AdcControlEnableMask = 0b1000_0000;
         private const byte AdcControlConversionRateMask = 0b0100_0000;
@@ -161,6 +163,7 @@ namespace Iot.Device.Bq2579x
         private const int ChargeInputCurrentStep = 10;
         private const int InputVoltageStep = 100;
         private const float TdieStemp = 0.5f;
+        private const float TcAdcStep = 0.0976563f;
 
         private I2cDevice _i2cDevice;
         private Model _deviceModel;
@@ -359,6 +362,24 @@ namespace Iot.Device.Bq2579x
         /// Gets or sets the watchdog timer setting (in milliseconds).
         /// </summary>
         public WatchdogSetting WatchdogTimerSetting { get => GetWatchdogTimerSetting(); set => SetWatchdogTimerSetting(value); }
+
+        /// <summary>
+        /// Gets or sets the VAC OPV threshold.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 26V <see cref="VacOpvThreshold.Opv_26V"/>.
+        /// </remarks>
+        [Property]
+        public VacOpvThreshold OverVoltageProtectionThreshold { get => GetVacOpvThreshold(); set => SetVacOpvThreshold(value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the I2C watchdog is reset.
+        /// </summary>
+        /// <remarks>
+        /// This goes back to <see langword="false"/> after the timer resets.
+        /// </remarks>
+        [Property]
+        public bool ResetI2cWatchdog { get => GetI2CWatchdogReset(); set => SetI2CWatchdogReset(value); }
 
         /// <summary>
         /// Gets or sets Thermal regulation threshold.
@@ -1208,6 +1229,15 @@ namespace Iot.Device.Bq2579x
         /// <value><see langword="true"/> if the TS hot temperature (T5) is detected, otherwise <see langword="false"/>.</value>
         [Property]
         public bool TsHotDetected => GetTsHotFlag();
+
+        /// <summary>
+        /// Gets a value of the TS ADC reading (in percentage).
+        /// </summary>
+        /// <remarks>
+        /// Range is from 0% to 99.9023%.
+        /// </remarks>
+        [Property]
+        public float TcAdcReading => GetTCAdcReading();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bq2579x" /> class.
@@ -2092,6 +2122,53 @@ namespace Iot.Device.Bq2579x
         #endregion
 
         #region REG10_Charger_Control_1
+
+        // REG10_Charger_Control_1 Register
+        // |   7 6    |     5 4     |    3   |     2 1 0    |
+        // | RESERVED | VAC_OVP_1:0 | WD_RST | WATCHDOG_2:0 |
+        ////
+
+        private VacOpvThreshold GetVacOpvThreshold()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG10_Charger_Control_1, 1);
+
+            return (VacOpvThreshold)(buffer[0] & ChargerControl1OvpThresholdMask);
+        }
+
+        private void SetVacOpvThreshold(VacOpvThreshold value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG10_Charger_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~ChargerControl1OvpThresholdMask);
+
+            // set value
+            buffer[0] |= (byte)value;
+
+            WriteToRegister(Register.REG10_Charger_Control_1, buffer[0]);
+        }
+
+        private bool GetI2CWatchdogReset()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG10_Charger_Control_1, 1);
+
+            return (buffer[0] & ChargerControl1I2cResetyMask) == 1;
+        }
+
+        private void SetI2CWatchdogReset(bool value)
+        {
+            // read existing content
+            byte[] buffer = ReadFromRegister(Register.REG10_Charger_Control_1, 1);
+
+            // clear bits
+            buffer[0] = (byte)(buffer[0] & ~ChargerControl1I2cResetyMask);
+
+            // set value
+            buffer[0] |= (byte)(value ? ChargerControl1I2cResetyMask : 0b0000_0000);
+
+            WriteToRegister(Register.REG10_Charger_Control_1, buffer[0]);
+        }
 
         private WatchdogSetting GetWatchdogTimerSetting()
         {
@@ -3327,6 +3404,24 @@ namespace Iot.Device.Bq2579x
         }
 
         #endregion
+
+        #region REG3F_TS_ADC
+
+        // REG3F_TS_ADC Register
+        // | 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 |
+        // |             TS_ADC_15:0               |
+        ////
+        
+        private float GetTCAdcReading()
+        {
+            byte[] buffer = ReadFromRegister(Register.REG3F_TS_ADC, 2);
+
+            var adcReading = (buffer[0] << 8) | buffer[1];
+
+            return adcReading * TcAdcStep;
+        }
+
+        #endregion 
 
         #region REGxx_NN_ADCs
 

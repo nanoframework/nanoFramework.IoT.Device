@@ -39,6 +39,7 @@
     <Compile Include="ChargerStatus2.cs" />
     <Compile Include="ChargerStatus0.cs" />
     <Compile Include="AdcConversioRate.cs" />
+    <Compile Include="VacOpvThreshold.cs" />
     <Compile Include="CompVoltageFallingThreshold.cs" />
     <Compile Include="SwitchingFrequency.cs" />
     <Compile Include="OtgColdTempThreshold.cs" />

@@ -37,6 +37,7 @@ namespace Iot.Device.Bq2579x
         REG24_Charger_Flag_2 = 0x24,
         REG25_Charger_Flag_3 = 0x25,
         REG2E_ADC_Control = 0x2E,
+        REG3F_TS_ADC = 0x3F,
         REG35_VBUS_ADC = 0x35,
         REG37_VAC1_ADC = 0x37,
         REG39_VAC2_ADC = 0x39,
