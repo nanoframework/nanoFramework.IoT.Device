@@ -1,5 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+////
+// Copyright (c) .NET Foundation and Contributors
+// See LICENSE file in the project root for full license information.
+////
 
 using Iot.Device.Bq2579x;
 using System.Device.I2c;

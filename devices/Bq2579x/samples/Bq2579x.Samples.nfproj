@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.Si7021.Samples</RootNamespace>
-    <AssemblyName>Iot.Device.Si7021.Samples</AssemblyName>
+    <RootNamespace>Iot.Device.Bq2579x.Samples</RootNamespace>
+    <AssemblyName>Iot.Device.Bq2579x.Samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Si7021.Samples.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
