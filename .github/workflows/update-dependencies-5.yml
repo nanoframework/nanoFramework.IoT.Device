@@ -10,7 +10,7 @@ on:
   schedule:
     # At 03:30 UTC.
     # Set 3 hours apart from previous round to allow enough time for any changes to propagate.
-    - cron:  '30 03 * * Wed,Fri'
+    - cron:  '30 04 * * Wed,Fri'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
