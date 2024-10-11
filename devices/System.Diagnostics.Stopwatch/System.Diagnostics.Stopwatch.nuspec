@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf iot stopwatch</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.6.12" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.7.1" />
     </dependencies>
   </metadata>
   <files>
