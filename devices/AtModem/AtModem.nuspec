@@ -22,7 +22,7 @@ This nuget allows to use AT Modem for SMS, calls, network, internal storage, HTT
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.M2Mqtt.Core" version="5.1.145" />
-      <dependency id="nanoFramework.Runtime.Native" version="1.6.12" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.7.1" />
       <dependency id="nanoFramework.System.Collections" version="1.5.45" />
       <dependency id="nanoFramework.System.IO.Ports" version="1.1.86" />
       <dependency id="nanoFramework.System.Math" version="1.5.43" />
