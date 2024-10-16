@@ -34,8 +34,8 @@
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Graphics.Core, Version=1.2.21.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Graphics.Core.1.2.21\lib\nanoFramework.Graphics.Core.dll</HintPath>
+    <Reference Include="nanoFramework.Graphics.Core, Version=1.2.22.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Graphics.Core.1.2.22\lib\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
