@@ -40,9 +40,9 @@
       },
       "nanoFramework.TestFramework": {
         "type": "Direct",
-        "requested": "[2.1.112, 2.1.112]",
-        "resolved": "2.1.112",
-        "contentHash": "aiPyyGb7+yv96IQAxVGnXaQj8tTYf9Zj4zb6YM4kGJl+GptWlXqx8rS7lstWHYqM1UVyPEl1yT69uI6Go110qQ=="
+        "requested": "[2.1.113, 2.1.113]",
+        "resolved": "2.1.113",
+        "contentHash": "+aFNv9Kew1rxYL7boHO1WUdLRIFeqkUW23770dxQwynUquqob56nI1c5I4E4QAaCQg6TnZm+SLEIa2USHRuoRg=="
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",

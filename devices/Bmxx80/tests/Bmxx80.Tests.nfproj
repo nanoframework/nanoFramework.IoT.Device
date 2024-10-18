@@ -33,11 +33,11 @@
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.TestFramework, Version=2.1.112.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.TestFramework.2.1.112\lib\nanoFramework.TestFramework.dll</HintPath>
+    <Reference Include="nanoFramework.TestFramework, Version=2.1.113.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.TestFramework.2.1.113\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.TestFramework.2.1.112\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\packages\nanoFramework.TestFramework.2.1.113\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.628\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
