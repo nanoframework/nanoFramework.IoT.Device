@@ -28,9 +28,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.6.143, 3.6.143]",
-        "resolved": "3.6.143",
-        "contentHash": "N24MtdLq4PmdJ2woTQd9515q0I1jeO/DlimYCB/GoRd510Fc9dk9H6YaN8MPPrVF8RHrIalCUfWbWvcoarYeoQ=="
+        "requested": "[3.6.146, 3.6.146]",
+        "resolved": "3.6.146",
+        "contentHash": "W1eQ8hD9Y/cZ2+ilgxECl003xr1hybpN3fMxoTlMqg++BixETBMWzS4y9s08oHJKXgKtudsoxhITNOEf1OR66w=="
       },
       "StyleCop.MSBuild": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "G5Ft9lbcwpPcaEa9eeHDDhZVBiFdoZIthd/edfCVtFD0HLQHQqNeGC+r9Mru6XDKZsdXQ09ZDot39U7W3fO0Wg=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "t6kC5vPWsO7D62VLJmFOlISOFfmG76MSKB2RGj1gYwMtd57T5EUHgNKWlugPsykJd874lVuTGyWcATsLan3xBw=="
       }
     }
   }

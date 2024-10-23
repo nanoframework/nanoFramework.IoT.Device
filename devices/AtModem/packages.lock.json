@@ -70,9 +70,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.6.143, 3.6.143]",
-        "resolved": "3.6.143",
-        "contentHash": "N24MtdLq4PmdJ2woTQd9515q0I1jeO/DlimYCB/GoRd510Fc9dk9H6YaN8MPPrVF8RHrIalCUfWbWvcoarYeoQ=="
+        "requested": "[3.6.146, 3.6.146]",
+        "resolved": "3.6.146",
+        "contentHash": "W1eQ8hD9Y/cZ2+ilgxECl003xr1hybpN3fMxoTlMqg++BixETBMWzS4y9s08oHJKXgKtudsoxhITNOEf1OR66w=="
       },
       "StyleCop.MSBuild": {
         "type": "Direct",
@@ -82,27 +82,27 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "G5Ft9lbcwpPcaEa9eeHDDhZVBiFdoZIthd/edfCVtFD0HLQHQqNeGC+r9Mru6XDKZsdXQ09ZDot39U7W3fO0Wg=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "t6kC5vPWsO7D62VLJmFOlISOFfmG76MSKB2RGj1gYwMtd57T5EUHgNKWlugPsykJd874lVuTGyWcATsLan3xBw=="
       },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "IZIP9kOdvCw4pC3SBZKY+MjLjseAN+G4XSfKB4gLQWJz3TKw505+eXtthI3xDTVP8ta68XDeywJfaDXKcvWHqA=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "hGrUT3hOcUbk0UjM44A8j8NbwX9PePRyNjWgXiuThcT0SpKgc7XuD9M19iGE2+MY6mwpupGMlSUlEy0z2JzQfw=="
       },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "uGXuetnHf7hJ6+7n2JUO8Q7K1wAi2hq9+mfanyDTrWHyMeqA0jejMfNhPJ4jyJrEHaYBlYv1PZKbYHumfVtVqA=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "FKJ20sk2PHbqpQnsVPtif8ngu5EJzN3j3u3ZbpBmcD+n9qwV6EKFiPCeFhdEJCfVnsDHQPvuF3e+SvZCLKxuXw=="
       },
       "UnitsNet.nanoFramework.Speed": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "MmrwWVp0T7sHwSa8xqL00HxtemkaYbumCqxht3+Qet20sWpqTmGrhoIN0uMEMz1+2RPOE1CvxcHqyUe15eAKuA=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "E/5SZXmtDVIw0yDx/zk+w7OBXCHQQvcYQFvNIoEcfjA1rKL8ouUifqsXKhgaYU0KF4U1j/I2HQeN1ONd5h6sgA=="
       }
     }
   }

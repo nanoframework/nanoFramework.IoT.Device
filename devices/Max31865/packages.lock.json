@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.628, 1.2.628]",
-        "resolved": "1.2.628",
-        "contentHash": "FY7gGpk+EtMIAXjz5t13lH0QUTY5tTL80xkVCMKSXB/B0y27cH9vpopYzm5Ll6yOYdkRpAm90tvlsX7wBw4+3w=="
+        "requested": "[1.2.670, 1.2.670]",
+        "resolved": "1.2.670",
+        "contentHash": "1ABWKgTayq6D85yEkc0eq3ZMaCv8W3z6P3vOPPp455pkE52rTVGzW8iytdUfxkRw8loJERGsrGkQadjnjsqtKw=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
@@ -40,27 +40,27 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.6.143, 3.6.143]",
-        "resolved": "3.6.143",
-        "contentHash": "N24MtdLq4PmdJ2woTQd9515q0I1jeO/DlimYCB/GoRd510Fc9dk9H6YaN8MPPrVF8RHrIalCUfWbWvcoarYeoQ=="
+        "requested": "[3.6.146, 3.6.146]",
+        "resolved": "3.6.146",
+        "contentHash": "W1eQ8hD9Y/cZ2+ilgxECl003xr1hybpN3fMxoTlMqg++BixETBMWzS4y9s08oHJKXgKtudsoxhITNOEf1OR66w=="
       },
       "UnitsNet.nanoFramework.ElectricResistance": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "VX4Aa9s9tmLJjZ7GfCiHQmYBJMoL2kWfj+O5DwvX//jRhoZvYHEZZwRj3s9lu+t6eDAURrct3yRxf+3lSGnFGQ=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "pl+J8VM9GcOpzxuQqJ90/deiJuTf+vJ8Bsz6BdQvt2ZeDAao/xTLNWktTbzNhcR0AvNYLVH0o5ZeGxUmCy5uOQ=="
       },
       "UnitsNet.nanoFramework.Frequency": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "zqlqhLHCUL8B8i5N2s//k93cAJ4RLcQi46EaBBlqGJFHVvOequz+zO8HfnUHYQFBELNeLxkJNZWx/qczRdCAng=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "YlGG1l6+QwbldjiRU9ifBkO/UwUiZVXeoSPHN1SK+uGcVJY7q5RMX6K32gadIGRhjt+jqAy7ZSXwI4BHG+wNxA=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.59.0, 5.59.0]",
-        "resolved": "5.59.0",
-        "contentHash": "LDXMzn1y0OSSvXA+A+4iPI+P9co5QmlP/4AQdqxlNOvIZHVAN7j98HPUVSXzK8OfeUpF8lhwn41LqHDeeFNZtQ=="
+        "requested": "[5.60.0, 5.60.0]",
+        "resolved": "5.60.0",
+        "contentHash": "T4lfcJNMCzOpMgv9SOIL//RbYtm0KK87pgmyjAxy6LnipQ13fBhfh6FVeUdLGtYYCXWkQZYaOS+DWtLreGi0PQ=="
       }
     }
   }
