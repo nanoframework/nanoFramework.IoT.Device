@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Ws28xx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.665\lib\Iot.Device.Ws28xx.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.673\lib\Iot.Device.Ws28xx.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>

@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[1.0.48, 1.0.48]",
-        "resolved": "1.0.48",
-        "contentHash": "G9peEwyazOR+ajh7jBlwadmdkifm/I7ZjsyZOuJKxFU8VY7PsZZfWL2WB1ycN2xGrjQ40cZ18MZHO6kl3WmJWA=="
+        "requested": "[1.0.65, 1.0.65]",
+        "resolved": "1.0.65",
+        "contentHash": "n26zq8I/7inGVUiLdk4nUhseji9AHujtS/sryW0UZUnyaFg2QYhmFh9HSPjfsYSmebKe3V9ZH1U/LLbq/8XXGA=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
