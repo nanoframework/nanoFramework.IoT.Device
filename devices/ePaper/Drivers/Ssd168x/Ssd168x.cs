@@ -617,7 +617,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendCommand((byte)Command.SoftwareReset);
 
             WaitReady();
-            WaitMs(10);
         }
 
         /// <summary>
@@ -631,7 +630,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
 
         /// <inheritdoc/>
         public virtual bool WaitReady(CancellationToken cancellationToken = default)
-            => _busyPin.WaitUntilPinValueEquals(PinValue.High, cancellationToken);
+            => _busyPin.WaitUntilPinValueEquals(PinValue.Low, cancellationToken);
 
         #region IDisposable
 

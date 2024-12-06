@@ -607,7 +607,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
 
         /// <inheritdoc/>
         public virtual bool WaitReady(CancellationToken cancellationToken = default)
-            => _busyPin.WaitUntilPinValueEquals(PinValue.Low, cancellationToken);
+            => _busyPin.WaitUntilPinValueEquals(PinValue.High, cancellationToken);
 
         #region IDisposable
 

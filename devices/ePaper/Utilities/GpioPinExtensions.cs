@@ -21,7 +21,7 @@ namespace Iot.Device.EPaper.Utilities
             PinValue desiredValue,
             CancellationToken cancellationToken = default)
         {
-            while (!cancellationToken.IsCancellationRequested && pin.Read() == desiredValue)
+            while (!cancellationToken.IsCancellationRequested && pin.Read() != desiredValue)
             {
                 cancellationToken.WaitHandle.WaitOne(5, true);
             }
