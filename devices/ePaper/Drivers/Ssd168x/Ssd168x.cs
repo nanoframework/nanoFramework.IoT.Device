@@ -4,11 +4,13 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
+using Iot.Device.EPaper.Utilities;
 
 namespace Iot.Device.EPaper.Drivers.Ssd168x
 {
@@ -17,7 +19,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
     /// </summary>
     public abstract class Ssd168x : IEPaperDisplay
     {
-        private readonly int _maxWaitingTime = 500;
         private readonly bool _shouldDispose;
         private SpiDevice _spiDevice;
         private GpioController _gpioController;
@@ -77,6 +78,8 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             PagedFrameDrawEnabled = enableFramePaging;
 
             PowerState = PowerState.Unknown;
+
+            Debug.WriteLine($"Busy Pin Status: {_busyPin.Read().ToString()}");
 
             InitializeFrameBuffer(width, height, enableFramePaging);
             CalculateFrameBufferPageBounds();
@@ -507,7 +510,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.FullRefresh); // Display Mode 1 (Full Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            return WaitReady(_maxWaitingTime);
+            return WaitReady();
         }
 
         /// <inheritdoc/>
@@ -520,7 +523,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.PartialRefresh); // Display Mode 2 (Partial Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            return WaitReady(_maxWaitingTime);
+            return WaitReady();
         }
 
         /// <summary>
@@ -613,7 +616,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         {
             SendCommand((byte)Command.SoftwareReset);
 
-            WaitReady(_maxWaitingTime);
+            WaitReady();
             WaitMs(10);
         }
 
@@ -627,25 +630,8 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public virtual bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken = default)
-        {
-            if (cancellationToken == default)
-            {
-                if (waitingTime < 0)
-                {
-                    throw new ArgumentNullException(nameof(cancellationToken), $"{nameof(cancellationToken)} cannot be null with {nameof(waitingTime)} < 0");
-                }
-
-                cancellationToken = new CancellationTokenSource(waitingTime);
-            }
-
-            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.High)
-            {
-                cancellationToken.Token.WaitHandle.WaitOne(5, true);
-            }
-
-            return !cancellationToken.IsCancellationRequested;
-        }
+        public virtual bool WaitReady(CancellationToken cancellationToken = default)
+            => _busyPin.WaitUntilPinValueEquals(PinValue.High, cancellationToken);
 
         #region IDisposable
 

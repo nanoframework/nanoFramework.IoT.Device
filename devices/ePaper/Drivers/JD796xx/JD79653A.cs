@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Threading;
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
+using Iot.Device.EPaper.Utilities;
 
 namespace Iot.Device.EPaper.Drivers.Jd796xx
 {
@@ -16,7 +17,6 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
     /// </summary>
     public abstract class Jd79653A : IEPaperDisplay
     {
-        private readonly int _maxWaitingTime = 500;
         private readonly bool _shouldDispose;
         private readonly byte[] _whiteBuffer;
         private bool _disposed;
@@ -433,7 +433,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
 
             SendCommand((byte)Command.PowerOn);
 
-            if (WaitReady(_maxWaitingTime))
+            if (WaitReady())
             {
                 PowerState = PowerState.PoweredOn;
             }
@@ -480,7 +480,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
             // as per samples from screen manufacturer, refresh wait should be at least 200µs
             // using a spin wait of 5ms, any value should be ok
             // and use a large waiting time in case of something unexpected happens.
-            return WaitReady(_maxWaitingTime);
+            return WaitReady();
         }
 
         /// <inheritdoc/>
@@ -499,7 +499,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
             SendCommand((byte)Command.IntervalSetting);
             SendData(0x07);
             SendCommand((byte)Command.PowerOff);
-            WaitReady(_maxWaitingTime);
+            WaitReady();
 
             // as per samples from screen manufacturer, power off request a time delay of 1s before continue.
             WaitMs(1000);
@@ -531,7 +531,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
             SendData(0xd7);
             SendCommand((byte)Command.PowerOn);
 
-            if (WaitReady(_maxWaitingTime))
+            if (WaitReady())
             {
                 PowerState = PowerState.PoweredOn;
             }
@@ -592,7 +592,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
         {
             SendCommand(0x04);
 
-            WaitReady(_maxWaitingTime);
+            WaitReady();
             WaitMs(10);
         }
 
@@ -606,25 +606,8 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
         }
 
         /// <inheritdoc/>
-        public virtual bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken = default)
-        {
-            if (cancellationToken == default)
-            {
-                if (waitingTime < 0)
-                {
-                    throw new ArgumentNullException(nameof(cancellationToken), $"{nameof(cancellationToken)} cannot be null with {nameof(waitingTime)} < 0");
-                }
-
-                cancellationToken = new CancellationTokenSource(waitingTime);
-            }
-
-            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.Low)
-            {
-                cancellationToken.Token.WaitHandle.WaitOne(5, true);
-            }
-
-            return !cancellationToken.IsCancellationRequested;
-        }
+        public virtual bool WaitReady(CancellationToken cancellationToken = default)
+            => _busyPin.WaitUntilPinValueEquals(PinValue.Low, cancellationToken);
 
         #region IDisposable
 

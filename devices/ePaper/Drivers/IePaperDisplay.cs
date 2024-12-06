@@ -94,11 +94,10 @@ namespace Iot.Device.EPaper.Drivers
         /// <summary>
         /// Blocks the current thread until the display is in idle mode again.
         /// </summary>
-        /// <param name="waitingTime">The maximum time to wait in ms before exiting the method. -1 to wait infinitely.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationTokenSource"/> to be able to cancel the waiting time.</param>
-        /// <returns>True if it returns before the <see cref="CancellationTokenSource"/> expires, false otherwise.</returns>
-        /// <remarks>If _waitingTime_ is set to -1, _cancellationToken_ could not be null, and a exception will be throw.</remarks>
-        bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken);
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to be able to cancel the waiting time.</param>
+        /// <returns>True if it returns before the <see cref="CancellationToken"/> expires, false otherwise.</returns>
+        /// <remarks>If cancellationToken is null, this method will block until the busy pin is low.</remarks>
+        bool WaitReady(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Begins a frame draw operation with frame paging support.
