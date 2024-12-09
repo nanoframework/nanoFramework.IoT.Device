@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETnanoFramework,Version=v1.0": {
+      "nanoFramework.CoreLibrary": {
+        "type": "Direct",
+        "requested": "[1.15.5, 1.15.5]",
+        "resolved": "1.15.5",
+        "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
+      },
+      "nanoFramework.Runtime.Events": {
+        "type": "Direct",
+        "requested": "[1.11.18, 1.11.18]",
+        "resolved": "1.11.18",
+        "contentHash": "t0XpUkdyBBBv/0S4oGx3yUJG1iPYWc38odvZW8mVoioSxZOJrRkRHpNfwYxTxtP4LIEyyesOPEH42d05FHfHzA=="
+      },
+      "nanoFramework.System.IO.Streams": {
+        "type": "Direct",
+        "requested": "[1.1.59, 1.1.59]",
+        "resolved": "1.1.59",
+        "contentHash": "A8DSQ9ygUnhDltHsVuJjxs3aRrig9hmeEDZgAFfQ4roaaHpHS/IN1gwCEYcV+I6wfsnEnojn3FQJh43Iw07ukg=="
+      },
+      "nanoFramework.System.Net": {
+        "type": "Direct",
+        "requested": "[1.11.1, 1.11.1]",
+        "resolved": "1.11.1",
+        "contentHash": "TgHj3JFlGScw+0/l2Rix7uSLrb+pc/IFHJTQwcEogUlF4gtV18B52JUtrxYiLAR1KyFxwsGiA9txrTHPAZBvXQ=="
+      },
+      "nanoFramework.System.Net.Sockets.UdpClient": {
+        "type": "Direct",
+        "requested": "[1.1.65, 1.1.65]",
+        "resolved": "1.1.65",
+        "contentHash": "fbSMbkee9UjTr0YhPTq2TBU2rmL24AdfAOU8d0q5ynsOMl9vDAh4/WSX+Hu/J+nm3dhCWtaKcgGJ38c0s4juUw=="
+      },
+      "nanoFramework.System.Text": {
+        "type": "Direct",
+        "requested": "[1.2.54, 1.2.54]",
+        "resolved": "1.2.54",
+        "contentHash": "k3OutSNRMs9di42LQ+5GbpHBY07aMEZWGkaS3Mj3ZU4cWqJc4deFGzRd+LBFQl1mRGdQaM5sl/euTZdcg8R9Zg=="
+      },
+      "nanoFramework.System.Threading": {
+        "type": "Direct",
+        "requested": "[1.1.32, 1.1.32]",
+        "resolved": "1.1.32",
+        "contentHash": "6o7Y4gH15FLuo2FWGLecABiCD57V5QMf5g/hEneV64VmhoXI8Bk7r6BDBPTfAePs738xbc1ECpA5dJmbSmtilg=="
+      },
+      "Nerdbank.GitVersioning": {
+        "type": "Direct",
+        "requested": "[3.6.146, 3.6.146]",
+        "resolved": "3.6.146",
+        "contentHash": "W1eQ8hD9Y/cZ2+ilgxECl003xr1hybpN3fMxoTlMqg++BixETBMWzS4y9s08oHJKXgKtudsoxhITNOEf1OR66w=="
+      }
+    }
+  }
+}
