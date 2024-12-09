@@ -16,7 +16,7 @@
     <RootNamespace>Iot.Device.MulticastDNS</RootNamespace>
     <AssemblyName>Iot.Device.MulticastDNS</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.DhcpServer.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.MulticastDNS.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
