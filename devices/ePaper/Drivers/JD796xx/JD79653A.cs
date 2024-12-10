@@ -559,6 +559,18 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
             _dataCommandPin.Write(PinValue.Low);
         }
 
+        /// <inheritdoc/>
+        public virtual void SendData(params ushort[] data)
+        {
+            // set the data/command pin to high to indicate to the display we will be sending data
+            _dataCommandPin.Write(PinValue.High);
+
+            _spiDevice.Write(data);
+
+            // go back to low (command mode)
+            _dataCommandPin.Write(PinValue.Low);
+        }
+
         /// <summary>
         /// Sets the current active frame buffer page to the specified page index.
         /// Existing frame buffer is reused by clearing it first and page bounds are recalculated.

@@ -92,6 +92,12 @@ namespace Iot.Device.EPaper.Drivers
         void SendData(params byte[] data);
 
         /// <summary>
+        /// Send frame data to the display.
+        /// </summary>
+        /// <param name="data">The frame data to send.</param>
+        void SendData(params ushort[] data);
+
+        /// <summary>
         /// Blocks the current thread until the display is in idle mode again.
         /// </summary>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to be able to cancel the waiting time.</param>
