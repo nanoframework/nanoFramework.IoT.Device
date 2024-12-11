@@ -72,7 +72,7 @@ namespace Iot.Device.MulticastDNS.Package
             for (int i = 0; i < bytes; i++)
             {
                 buffer[endOffset - i] = unchecked((byte)(value & 0xff));
-                value = value >> 8;
+                value >>= 8;
             }
 
             return buffer;
@@ -102,7 +102,7 @@ namespace Iot.Device.MulticastDNS.Package
             for (int i = 0; i < bytes; i++)
             {
                 buffer[i] = unchecked((byte)(value & 0xff));
-                value = value >> 8;
+                value >>= 8;
             }
 
             return buffer;
@@ -111,13 +111,13 @@ namespace Iot.Device.MulticastDNS.Package
 
     internal abstract class EndianBitConverter : IBitConverter
     {
-        public static IBitConverter Big => s_big ?? (s_big = new BigEndianBitConverter());
+        public static IBitConverter Big => _big ??= new BigEndianBitConverter();
 
-        public static IBitConverter Little => s_little ?? (s_little = new LittleEndianBitConverter());
+        public static IBitConverter Little => _little ??= new LittleEndianBitConverter();
 
-        private static BigEndianBitConverter s_big;
+        private static BigEndianBitConverter _big;
 
-        private static LittleEndianBitConverter s_little;
+        private static LittleEndianBitConverter _little;
 
         public abstract bool IsLittleEndian { get; }
 

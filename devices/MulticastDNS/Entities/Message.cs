@@ -12,7 +12,7 @@ namespace Iot.Device.MulticastDNS.Entities
     /// </summary>
     public class Message
     {
-        private static readonly System.Random s_generator = new();
+        private static readonly System.Random _generator = new();
 
         private ushort _id;
         private ushort _flags = 0;
@@ -47,7 +47,7 @@ namespace Iot.Device.MulticastDNS.Entities
         /// <param name="flags">The flags to be added.</param>
         public Message(ushort flags)
         {
-            _id = (ushort)s_generator.Next(1 << 16);
+            _id = (ushort)_generator.Next(1 << 16);
             _flags |= flags;
         }
 

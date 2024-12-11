@@ -24,7 +24,7 @@ namespace MulticastDNS.Samples
         // The following string contains the domain we will query through a browser.
         const string DeviceDomain = "nanodevice.local";
 
-        private static string s_ipAddress;
+        private static string _ipAddress;
 
         public static void Main()
         {
@@ -45,7 +45,7 @@ namespace MulticastDNS.Samples
             webServer.CommandReceived += WebServer_CommandReceived;
 
             // Find the IP address of the device
-            s_ipAddress = FindMyIp();
+            _ipAddress = FindMyIp();
 
             // Start the MulticastDNSService
             multicastDNSService.Start();
@@ -77,7 +77,7 @@ namespace MulticastDNS.Samples
                     if (question.QueryType == DnsResourceType.A && question.Domain == DeviceDomain)
                     {
                         var response = new Response();
-                        response.AddAnswer(new ARecord(question.Domain, IPAddress.Parse(s_ipAddress)));
+                        response.AddAnswer(new ARecord(question.Domain, IPAddress.Parse(_ipAddress)));
                         e.Response = response;
                     }
                 }
