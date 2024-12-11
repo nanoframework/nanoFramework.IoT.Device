@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>Iot.Device.MulticastDNS</RootNamespace>
-    <AssemblyName>Iot.Device.MulticastDNS</AssemblyName>
+    <RootNamespace>Iot.Device.MulticastDns</RootNamespace>
+    <AssemblyName>Iot.Device.MulticastDns</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.MulticastDNS.xml</DocumentationFile>
   </PropertyGroup>
@@ -25,6 +25,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
+    <Name>MulticastDns</Name>
+  </PropertyGroup>
+  <PropertyGroup Label="nanoFramework">
+    <NF_GenerateStubsDirectory>C:\Users\klaus\source\repos\nanoFramework.IoT.Device\devices\MulticastDns\Stubs</NF_GenerateStubsDirectory>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>

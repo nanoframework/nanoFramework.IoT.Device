@@ -12,8 +12,8 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>MulticastDNS.samples</RootNamespace>
-    <AssemblyName>MulticastDNS.samples</AssemblyName>
+    <RootNamespace>MulticastDns.samples</RootNamespace>
+    <AssemblyName>MulticastDns.samples</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MulticastDNS.nfproj" />
+    <ProjectReference Include="..\MulticastDns.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.lock.json" />
