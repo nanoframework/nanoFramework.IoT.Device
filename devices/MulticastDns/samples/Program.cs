@@ -29,7 +29,8 @@ namespace MulticastDns.Samples
         public static void Main()
         {
             // Connect to the WiFi.
-            WifiNetworkHelper.ConnectDhcp(Ssid, Pwd);
+            bool result = WifiNetworkHelper.ConnectDhcp(Ssid, Pwd);
+            Debug.Assert(result, "Looks like connecting to the WiFi didn't quite work out...");
 
             // Instantiate the MulticastDnsService
             using MulticastDnsService multicastDnsService = new();
