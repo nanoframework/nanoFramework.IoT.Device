@@ -60,6 +60,7 @@ namespace MulticastDNS.Samples
         private static string FindMyIp()
         {
             NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+            // Interface 0 is the wifi interface in ESP32. Adjust for other platforms or if you are using Ethernet
             return interfaces[0].IPv4Address;
         }
 
