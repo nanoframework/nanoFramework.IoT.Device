@@ -17,7 +17,7 @@
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.MulticastDNS for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.MulticastDNS assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.MulticastDNS</tags>
+    <tags>nanoFramework C# csharp netmf netnf Iot Multicast DNS</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
