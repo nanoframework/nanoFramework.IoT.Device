@@ -159,7 +159,7 @@ namespace Iot.Device.MulticastDNS.Entities
         {
             string domain = packet.ReadDomain();
             ushort rrType = packet.ReadUShort();
-            ushort rrClass = packet.ReadUShort();
+            _ = packet.ReadUShort();
             int ttl = packet.ReadInt();
             ushort length = packet.ReadUShort();
 
@@ -177,15 +177,7 @@ namespace Iot.Device.MulticastDNS.Entities
             }
         }
 
-        private DnsResourceType GetResourType(ushort rrType) => rrType switch
-        {
-            1 => DnsResourceType.A,
-            5 => DnsResourceType.CNAME,
-            12 => DnsResourceType.PTR,
-            16 => DnsResourceType.TXT,
-            28 => DnsResourceType.AAAA,
-            33 => DnsResourceType.SRV,
-            _ => 0,
-        };
+        private DnsResourceType GetResourType(ushort rrType)
+            => (DnsResourceType)rrType;
     }
 }
