@@ -24,6 +24,13 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Mpu6886.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Mpu6886/) [Mpu6886 - accelerometer and gyroscope](Mpu6886)
 
+## Volatile Organic Compound sensors
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ags01db.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ags01db/) [AGS01DB - MEMS VOC Gas Sensor](Ags01db)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Bmxx80.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Bmxx80/) [BMP280/BME280/BME680 Device Family](Bmxx80)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ccs811.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ccs811/) [CCS811 Gas sensor](Ccs811)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Sen5x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Sen5x/) [Sensirion SEN5x series module](Sen5x)
+
 ## Gas sensors
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ags01db.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ags01db/) [AGS01DB - MEMS VOC Gas Sensor](Ags01db)
@@ -126,6 +133,11 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
 
+## Liquid Crystal Displays
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.CharacterLcd.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.CharacterLcd/) [Character LCD (Liquid Crystal Display)](CharacterLcd)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Pcd8544.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Pcd8544/) [PCD8544 - 48 × 84 pixels matrix LCD, famous Nokia 5110 screen](Pcd8544)
+
 ## Hygrometers
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ahtxx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ahtxx/) [AHT10/15/20 - Temperature and humidity sensor modules](Ahtxx)
@@ -143,13 +155,19 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Shtc3.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Shtc3/) [SHTC3 - Temperature & Humidity Sensor](Shtc3)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Si7021.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Si7021/) [Si7021 - Temperature & Humidity Sensor](Si7021)
 
+## Real Time Clocks
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ds1302.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ds1302/) [DS1302 - Realtime Clock](Ds1302)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Mcp7940xx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Mcp7940xx/) [Mcp7940xx/MCP79400/MCP79401/MCP79402 - I2C Real-Time Clock/Calendar with SRAM](Mcp7940xx)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Rtc.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Rtc/) [Realtime Clock](Rtc)
+
 ## Clocks
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ds1302.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ds1302/) [DS1302 - Realtime Clock](Ds1302)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Mcp7940xx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Mcp7940xx/) [Mcp7940xx/MCP79400/MCP79401/MCP79402 - I2C Real-Time Clock/Calendar with SRAM](Mcp7940xx)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Rtc.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Rtc/) [Realtime Clock](Rtc)
 
-## Sonars
+## Sonars and presence sensors
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Hcsr04.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Hcsr04/) [HC-SR04 - Ultrasonic Ranging Module](Hcsr04)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Hcsr04.Esp32.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Hcsr04.Esp32/) [HC-SR04 for ESP32 with RMT - Ultrasonic Ranging Module](Hcsr04.Esp32)
@@ -185,6 +203,10 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ws28xx.Esp32.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ws28xx.Esp32/) [Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel for ESP32 using RMT - LED drivers](Ws28xx.Esp32)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ws28xx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ws28xx/) [Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel using SPI - LED drivers](Ws28xx)
 
+## Segment displays
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Tm1637.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Tm1637/) [TM1637 - Segment Display](Tm1637)
+
 ## GPIO Expanders
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
@@ -216,6 +238,16 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.RadioReceiver.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.RadioReceiver/) [Radio Receiver](RadioReceiver)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.RadioTransmitter.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.RadioTransmitter/) [Radio Transmitter](RadioTransmitter)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.SwarmTile.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.SwarmTile/) [Swarm Tile](SwarmTile)
+
+## Radio modules
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.RadioReceiver.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.RadioReceiver/) [Radio Receiver](RadioReceiver)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.RadioTransmitter.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.RadioTransmitter/) [Radio Transmitter](RadioTransmitter)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.SwarmTile.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.SwarmTile/) [Swarm Tile](SwarmTile)
+
+## PWM libraries/modules
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
 
 ## Color sensors
 
@@ -257,12 +289,6 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.RotaryEncoder.Esp32.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.RotaryEncoder.Esp32/) [Quadrature Rotary Encoder (ESP32)](RotaryEncoder.Esp32)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Sn74hc595.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Sn74hc595/) [SN74HC595 -- 8-bit shift register](Sn74hc595)
 
-## Protocols providers/libraries
-
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.DhcpServer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.DhcpServer/) [DHCP Server](DhcpServer)
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Modbus.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Modbus/) [Modbus - Machine to machine communication protocol](Modbus)
-
 ## Power monitors and related devices
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
@@ -271,6 +297,27 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ina219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ina219/) [INA219 - Bidirectional Current/Power Monitor](Ina219)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Ip5306.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Ip5306/) [IP5306 - Power management](Ip5306)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Max1704x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Max1704x/) [MAX1704x/MAX17043/MAX17044/MAX17048/MAX17049 - Battery gauge](Max1704x)
+
+## Protocols providers/libraries
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.DhcpServer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.DhcpServer/) [DHCP Server](DhcpServer)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Modbus.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Modbus/) [Modbus - Machine to machine communication protocol](Modbus)
+
+## 
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.CharacterLcd.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.CharacterLcd/) [Character LCD (Liquid Crystal Display)](CharacterLcd)
+
+## 
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Buzzer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Buzzer/) [Buzzer - Piezo Buzzer Controller](Buzzer)
+
+## 
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Charlieplex.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Charlieplex/) [Charlieplex Segment binding](Charlieplex)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.ShiftRegister.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.ShiftRegister/) [Generic shift register](ShiftRegister)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Mbi5027.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Mbi5027/) [MBI5027 -- 16-bit shift register with error detection](Mbi5027)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Sn74hc595.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Sn74hc595/) [SN74HC595 -- 8-bit shift register](Sn74hc595)
 
 ## Digital/Analog converters
 
@@ -311,5 +358,13 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Sen5x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Sen5x/) [Sensirion SEN5x series module](Sen5x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Sps30.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Sps30/) [Sensirion SPS30 Particulate Matter Sensor](Sps30)
+
+## E-Paper
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.ePaper.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.ePaper/) [ePaper drivers for .NET nanoFramework](ePaper)
+
+## Positioning like GNSS, GPS
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.GnssDevice.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.GnssDevice/) [Global Navigation Satellite System Device NMEA 0183 - Including Generic Serial Module with GPS, GNSS, BeiDou - NEO6-M, NEO-M8P-2, NEO-M9N from u-blox, ATGM336H, Minewsemi, ZED-F9P, ZOE-M8Q, SAM-M8Q, SARA-R5 and many many more](GnssDevice)
 
 </categorizedDevices>
