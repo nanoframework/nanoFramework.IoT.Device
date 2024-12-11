@@ -12,6 +12,7 @@ The implementation is complete so any other DNS queries can be treated and any o
 ## Use cases
 
 The primary use case is obviously resolving a .local domain to the IP address of the nanoFramework device which facilitates:
+
 - A new IoT device lacking config starts in AP mode, mDNS allows to connect to it without knowing its IP address.
 - Once configured, a device typically gets its IP address from DHCP, mDNS again allows to connect to the device through a domain name which the user even could have chosen during configuration.
 - More exotic uses are also possible, think about P2P communication between IoT devices who are on the same local network. These devices can discover eachother through mDNS querying and monitoring without a need for internet, for a broker and even without configuring the devices.
