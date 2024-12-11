@@ -58,22 +58,22 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Card, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.671\lib\Iot.Device.Card.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.689\lib\Iot.Device.Card.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Mifare, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.671\lib\Iot.Device.Mifare.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.689\lib\Iot.Device.Mifare.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ndef, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.671\lib\Iot.Device.Ndef.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.689\lib\Iot.Device.Ndef.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ultralight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.671\lib\Iot.Device.Ultralight.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Card.1.2.689\lib\Iot.Device.Ultralight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Logging, Version=1.1.113.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Logging.1.1.113\lib\nanoFramework.Logging.dll</HintPath>
+    <Reference Include="nanoFramework.Logging, Version=1.1.120.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Logging.1.1.120\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
