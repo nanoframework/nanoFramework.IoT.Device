@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Iot.Device.MulticastDNS.Enum;
+
 namespace Iot.Device.MulticastDNS.Entities
 {
     /// <summary>
@@ -11,7 +13,7 @@ namespace Iot.Device.MulticastDNS.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="Response" /> class.
         /// </summary>
-        public Response() : base(0x8000)
+        public Response() : base(DnsHeaderFlags.Response)
         {
         }
 

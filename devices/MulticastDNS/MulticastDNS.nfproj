@@ -40,6 +40,7 @@
     <Compile Include="Entities\TxtRecord.cs" />
     <Compile Include="Entities\AaaaRecord.cs" />
     <Compile Include="Entities\TargetResource.cs" />
+    <Compile Include="Enum\DnsHeaderFlags.cs" />
     <Compile Include="Enum\DnsResourceType.cs" />
     <Compile Include="EventArgs\MessageReceivedEventArgs.cs" />
     <Compile Include="MulticastDnsService.cs" />

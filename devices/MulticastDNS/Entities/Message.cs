@@ -37,18 +37,18 @@ namespace Iot.Device.MulticastDNS.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="Message" /> class.
         /// </summary>
-        public Message() : this(0)
+        public Message() : this(DnsHeaderFlags.Query)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Message" /> class.
         /// </summary>
-        /// <param name="flags">The flags to be added.</param>
-        public Message(ushort flags)
+        /// <param name="flags">The header flags for this message.</param>
+        public Message(DnsHeaderFlags flags)
         {
             _id = (ushort)_generator.Next(1 << 16);
-            _flags |= flags;
+            _flags = (ushort)flags;
         }
 
         /// <summary>
