@@ -177,7 +177,7 @@ namespace Iot.Device.MulticastDNS.Entities
             }
         }
 
-        private DnsResourceType GetResourType(ushort rr_type) => rr_type switch
+        private DnsResourceType GetResourType(ushort rrType) => rrType switch
         {
             1 => DnsResourceType.A,
             5 => DnsResourceType.CNAME,
