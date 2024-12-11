@@ -27,9 +27,6 @@
     <DelaySign>false</DelaySign>
     <Name>MulticastDns</Name>
   </PropertyGroup>
-  <PropertyGroup Label="nanoFramework">
-    <NF_GenerateStubsDirectory>C:\Users\klaus\source\repos\nanoFramework.IoT.Device\devices\MulticastDns\Stubs</NF_GenerateStubsDirectory>
-  </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Entities\SrvRecord.cs" />
