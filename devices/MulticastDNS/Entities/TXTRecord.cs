@@ -10,18 +10,18 @@ namespace Iot.Device.MulticastDNS.Entities
     /// <summary>
     /// Represents a SRVRecord Resource (DNS Resource Type 16).
     /// </summary>
-    public class TXTRecord : Resource
+    public class TxtRecord : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TXTRecord" /> class.
+        /// Initializes a new instance of the <see cref="TxtRecord" /> class.
         /// </summary>
         /// <param name="domain">The domain this Record is about.</param>
         /// <param name="txt">The text this resource represents.</param>
         /// <param name="ttl">The TTL of this SRVRecord.</param>
-        public TXTRecord(string domain, string txt, int ttl = 2000) : base(domain, DnsResourceType.TXT, ttl)
+        public TxtRecord(string domain, string txt, int ttl = 2000) : base(domain, DnsResourceType.TXT, ttl)
             => Txt = txt;
 
-        internal TXTRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.TXT, ttl)
+        internal TxtRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.TXT, ttl)
             => Txt = packet.ReadString();
 
         /// <summary>

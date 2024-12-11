@@ -18,11 +18,11 @@ namespace MulticastDNS.Samples
     internal class Program
     {
         // Replace with your wifi ssid/pwd
-        private const string Ssid = "...";
-        private const string Pwd = "...";
+        const string Ssid = "...";
+        const string Pwd = "...";
 
         // The following string contains the domain we will query through a browser.
-        private const string DeviceDomain = "nanodevice.local";
+        const string DeviceDomain = "nanodevice.local";
 
         private static string s_ipAddress;
 
@@ -32,7 +32,7 @@ namespace MulticastDNS.Samples
             WifiNetworkHelper.ConnectDhcp(Ssid, Pwd);
 
             // Instantiate the MulticastDNSService
-            using MulticastDNSService multicastDNSService = new();
+            using MulticastDnsService multicastDNSService = new();
 
             // After resolving the domain, the IP address of the device is sent back to the browser
             // We'll serve some text back to show this is actually working
@@ -60,7 +60,6 @@ namespace MulticastDNS.Samples
         private static string FindMyIp()
         {
             NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
-            // Interface 0 is the wifi interface in ESP32. Adjust for other platforms or if you are using Ethernet
             return interfaces[0].IPv4Address;
         }
 

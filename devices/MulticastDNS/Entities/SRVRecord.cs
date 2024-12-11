@@ -9,10 +9,10 @@ namespace Iot.Device.MulticastDNS.Entities
     /// <summary>
     /// Represents a SRVRecord Resource (DNS Resource Type 33).
     /// </summary>
-    public class SRVRecord : TargetResource
+    public class SrvRecord : TargetResource
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SRVRecord" /> class.
+        /// Initializes a new instance of the <see cref="SrvRecord" /> class.
         /// </summary>
         /// <param name="domain">The domain this Record is about.</param>
         /// <param name="priority">The priority of this SRVRecord.</param>
@@ -20,7 +20,7 @@ namespace Iot.Device.MulticastDNS.Entities
         /// <param name="port">The port of this SRVRecord.</param>
         /// <param name="targetDomain">The targetDomain of this SRVRecord.</param>
         /// <param name="ttl">The TTL of this SRVRecord.</param>
-        public SRVRecord(string domain, ushort priority, ushort weight, ushort port, string targetDomain, int ttl = 2000) : base(domain, DnsResourceType.SRV, ttl)
+        public SrvRecord(string domain, ushort priority, ushort weight, ushort port, string targetDomain, int ttl = 2000) : base(domain, DnsResourceType.SRV, ttl)
         {
             Priority = priority;
             Weight = weight;
@@ -28,7 +28,7 @@ namespace Iot.Device.MulticastDNS.Entities
             Target = targetDomain;
         }
 
-        internal SRVRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.SRV, ttl)
+        internal SrvRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.SRV, ttl)
         {
             Priority = packet.ReadUShort();
             Weight = packet.ReadUShort();

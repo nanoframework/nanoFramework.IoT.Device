@@ -13,7 +13,7 @@ namespace Iot.Device.MulticastDNS
     /// <summary>
     /// Multicast DNS (mDNS) is a computer networking protocol that resolves hostnames to IP addresses within local networks.
     /// </summary>
-    public sealed class MulticastDNSService : IDisposable
+    public sealed class MulticastDnsService : IDisposable
     {
         private const string MulticastDnsAddress = "224.0.0.251";
         private const int MulticastDnsPort = 5353;
@@ -23,9 +23,9 @@ namespace Iot.Device.MulticastDNS
         private UdpClient _client;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MulticastDNSService" /> class.
+        /// Initializes a new instance of the <see cref="MulticastDnsService" /> class.
         /// </summary>
-        public MulticastDNSService()
+        public MulticastDnsService()
         {
             _multicastAddress = IPAddress.Parse(MulticastDnsAddress);
             _client = new(new IPEndPoint(IPAddress.Any, MulticastDnsPort));

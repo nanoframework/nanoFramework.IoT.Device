@@ -28,21 +28,21 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Entities\SRVRecord.cs" />
+    <Compile Include="Entities\SrvRecord.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\Response.cs" />
     <Compile Include="Entities\AddressResource.cs" />
     <Compile Include="Entities\ARecord.cs" />
-    <Compile Include="Entities\CNAMERecord.cs" />
-    <Compile Include="Entities\PTRRecord.cs" />
-    <Compile Include="Entities\TXTRecord.cs" />
-    <Compile Include="Entities\AAAARecord.cs" />
+    <Compile Include="Entities\CnameRecord.cs" />
+    <Compile Include="Entities\PtrRecord.cs" />
+    <Compile Include="Entities\TxtRecord.cs" />
+    <Compile Include="Entities\AaaaRecord.cs" />
     <Compile Include="Entities\TargetResource.cs" />
     <Compile Include="Enum\DnsResourceType.cs" />
     <Compile Include="EventArgs\MessageReceivedEventArgs.cs" />
-    <Compile Include="MulticastDNSService.cs" />
+    <Compile Include="MulticastDnsService.cs" />
     <Compile Include="Package\ArrayListUtility.cs" />
     <Compile Include="Package\EndianBitConverter.cs" />
     <Compile Include="Package\PacketBuilder.cs" />
@@ -92,6 +92,6 @@
     <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props'))" />
     <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
-    <Import Project="packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props')" />
-    <Import Project="packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets')" />
 </Project>

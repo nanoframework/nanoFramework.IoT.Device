@@ -166,18 +166,18 @@ namespace Iot.Device.MulticastDNS.Entities
             switch (rr_type)
             {
                 case 1: return new ARecord(packet, domain, ttl, length);
-                case 5: return new CNAMERecord(packet, domain, ttl);
-                case 12: return new PTRRecord(packet, domain, ttl);
-                case 16: return new TXTRecord(packet, domain, ttl);
-                case 28: return new AAAARecord(packet, domain, ttl, length);
-                case 33: return new SRVRecord(packet, domain, ttl);
+                case 5: return new CnameRecord(packet, domain, ttl);
+                case 12: return new PtrRecord(packet, domain, ttl);
+                case 16: return new TxtRecord(packet, domain, ttl);
+                case 28: return new AaaaRecord(packet, domain, ttl, length);
+                case 33: return new SrvRecord(packet, domain, ttl);
                 default:
                     packet.ReadBytes(length);
                     return new Resource(domain, ttl);
             }
         }
 
-        private DnsResourceType GetResourType(ushort rrType) => rrType switch
+        private DnsResourceType GetResourType(ushort rr_type) => rr_type switch
         {
             1 => DnsResourceType.A,
             5 => DnsResourceType.CNAME,
