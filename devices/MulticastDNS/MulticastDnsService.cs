@@ -7,6 +7,7 @@ using System.Threading;
 using System.Net.Sockets;
 using Iot.Device.MulticastDns.Entities;
 using Iot.Device.MulticastDns.EventArgs;
+using Iot.Device.MulticastDns.Enum;
 
 namespace Iot.Device.MulticastDns
 {
@@ -61,6 +62,18 @@ namespace Iot.Device.MulticastDns
         public event MessageReceivedEventHandler MessageReceived;
 
         /// <summary>
+        /// The delegate that will be invoked when the status of a Multicast DNS service is changed.
+        /// </summary>
+        /// <param name="sender">The MulticastDNSService instance that is reporting its status.</param>
+        /// <param name="e">The MulticastDnsStatusEventArgs containing the status and an optional message.</param>
+        public delegate void MulticastDnsStatusChangedEventHandler(object sender, MulticastDnsStatusEventArgs e);
+
+        /// <summary>
+        /// The event that is raised when the status of a Multicast DNS service is changed.
+        /// </summary>
+        public event MulticastDnsStatusChangedEventHandler StatusChanged;
+
+        /// <summary>
         /// Sends a Multicast DNS message.
         /// </summary>
         /// <param name="message">The message to be sent.</param>
@@ -68,37 +81,48 @@ namespace Iot.Device.MulticastDns
 
         private void Run()
         {
-            _client.JoinMulticastGroup(_multicastAddress);
-
-            IPEndPoint multicastEndpoint = new(_multicastAddress, MulticastDnsPort);
-            IPEndPoint remoteEndpoint = new(IPAddress.Any, 0);
-
-            byte[] buffer = new byte[2048];
-
-            while (_listening)
+            try
             {
-                int length = _client.Receive(buffer, ref remoteEndpoint);
-                if (length == 0)
+                _client.JoinMulticastGroup(_multicastAddress);
+
+                IPEndPoint multicastEndpoint = new(_multicastAddress, MulticastDnsPort);
+                IPEndPoint remoteEndpoint = new(IPAddress.Any, 0);
+
+                byte[] buffer = new byte[2048];
+
+                while (_listening)
                 {
-                    continue;
-                }
+                    StatusChanged?.Invoke(this, new MulticastDnsStatusEventArgs(MulticastDnsStatus.Running));
 
-                Message msg = new(buffer);
-
-                if (msg != null)
-                {
-                    MessageReceivedEventArgs eventArgs = new(msg);
-
-                    MessageReceived?.Invoke(this, eventArgs);
-
-                    if (eventArgs.Response != null)
+                    int length = _client.Receive(buffer, ref remoteEndpoint);
+                    if (length == 0)
                     {
-                        _client.Send(eventArgs.Response.GetBytes(), multicastEndpoint);
+                        continue;
+                    }
+
+                    Message msg = new(buffer);
+
+                    if (msg != null)
+                    {
+                        MessageReceivedEventArgs eventArgs = new(msg);
+
+                        MessageReceived?.Invoke(this, eventArgs);
+
+                        if (eventArgs.Response != null)
+                        {
+                            _client.Send(eventArgs.Response.GetBytes(), multicastEndpoint);
+                        }
                     }
                 }
+
+                _client.DropMulticastGroup(_multicastAddress);
+            }
+            catch(Exception ex)
+            {
+                StatusChanged?.Invoke(this, new MulticastDnsStatusEventArgs(MulticastDnsStatus.Error, ex.ToString()));
             }
 
-            _client.DropMulticastGroup(_multicastAddress);
+            StatusChanged?.Invoke(this, new MulticastDnsStatusEventArgs(MulticastDnsStatus.Stopped));
         }
 
         /// <summary>
