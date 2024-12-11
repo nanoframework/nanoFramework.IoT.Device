@@ -90,10 +90,10 @@ namespace Iot.Device.MulticastDns
 
                 byte[] buffer = new byte[2048];
 
+                StatusChanged?.Invoke(this, new MulticastDnsStatusEventArgs(MulticastDnsStatus.Running));
+
                 while (_listening)
                 {
-                    StatusChanged?.Invoke(this, new MulticastDnsStatusEventArgs(MulticastDnsStatus.Running));
-
                     int length = _client.Receive(buffer, ref remoteEndpoint);
                     if (length == 0)
                     {
