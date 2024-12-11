@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoFramework.Iot.Device.MulticastDNS</id>
+    <id>nanoFramework.Iot.Device.MulticastDns</id>
     <version>$version$</version>
-    <title>nanoFramework.Iot.Device.MulticastDNS</title>
+    <title>nanoFramework.Iot.Device.MulticastDns</title>
     <authors>Klaus Vancamelbeke,nanoFramework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
@@ -15,8 +15,8 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.MulticastDNS for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.MulticastDNS assembly for .NET nanoFramework C# projects</summary>
+    <description>This package includes the .NET IoT Core binding Iot.Device.MulticastDns for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.MulticastDns assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot Multicast DNS</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
@@ -29,11 +29,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.MulticastDNS.dll" target="lib\Iot.Device.MulticastDNS.dll" />
-    <file src="bin\Release\Iot.Device.MulticastDNS.pdb" target="lib\Iot.Device.MulticastDNS.pdb" />
-    <file src="bin\Release\Iot.Device.MulticastDNS.pdbx" target="lib\Iot.Device.MulticastDNS.pdbx" />
-    <file src="bin\Release\Iot.Device.MulticastDNS.pe" target="lib\Iot.Device.MulticastDNS.pe" />
-    <file src="bin\Release\Iot.Device.MulticastDNS.xml" target="lib\Iot.Device.MulticastDNS.xml" />
+    <file src="bin\Release\Iot.Device.MulticastDns.dll" target="lib\Iot.Device.MulticastDns.dll" />
+    <file src="bin\Release\Iot.Device.MulticastDns.pdb" target="lib\Iot.Device.MulticastDns.pdb" />
+    <file src="bin\Release\Iot.Device.MulticastDns.pdbx" target="lib\Iot.Device.MulticastDns.pdbx" />
+    <file src="bin\Release\Iot.Device.MulticastDns.pe" target="lib\Iot.Device.MulticastDns.pe" />
+    <file src="bin\Release\Iot.Device.MulticastDns.xml" target="lib\Iot.Device.MulticastDns.xml" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
