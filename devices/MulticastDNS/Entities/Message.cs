@@ -20,19 +20,19 @@ namespace Iot.Device.MulticastDNS.Entities
         /// <summary>
         /// The list of <see cref="Question">Questions</see> in the message.
         /// </summary>
-        protected ArrayList questions = new();
+        protected ArrayList _questions = new();
         /// <summary>
         /// The list of <see cref="Resource">Answers</see> in the message.
         /// </summary>
-        protected ArrayList answers = new();
+        protected ArrayList _answers = new();
         /// <summary>
         /// The list of <see cref="Resource">Servers</see> in the message.
         /// </summary>
-        protected ArrayList servers = new();
+        protected ArrayList _servers = new();
         /// <summary>
         /// The list of <see cref="Resource">Additional Resources</see> in the message.
         /// </summary>
-        protected ArrayList additionals = new();
+        protected ArrayList _additionals = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Message" /> class.
@@ -61,7 +61,7 @@ namespace Iot.Device.MulticastDNS.Entities
         /// Returns the <see cref="Question">Questions</see> in this message.
         /// </summary>
         /// <returns>An array of Questions.</returns>
-        public Question[] GetQuestions() => (Question[])questions.ToArray(typeof(Question));
+        public Question[] GetQuestions() => (Question[])_questions.ToArray(typeof(Question));
 
         /// <summary>
         /// Returns the <see cref="Resource">Resources</see> in this message.
@@ -70,9 +70,9 @@ namespace Iot.Device.MulticastDNS.Entities
         public Resource[] GetResources()
         {
             ArrayList resources = new();
-            resources.AddRange(answers);
-            resources.AddRange(servers);
-            resources.AddRange(additionals);
+            resources.AddRange(_answers);
+            resources.AddRange(_servers);
+            resources.AddRange(_additionals);
             return (Resource[])resources.ToArray(typeof(Resource));
         }
 
@@ -81,7 +81,7 @@ namespace Iot.Device.MulticastDNS.Entities
         /// </summary>
         /// <param name="question">The Question to add.</param>
         public void AddQuestion(Question question)
-            => questions.Add(question);
+            => _questions.Add(question);
 
         /// <summary>
         /// Returns a byte[] representation of this message.
@@ -92,27 +92,27 @@ namespace Iot.Device.MulticastDNS.Entities
             PacketBuilder packet = new();
             packet.Add(_id);
             packet.Add(_flags);
-            packet.Add((ushort)questions.Count);
-            packet.Add((ushort)answers.Count);
-            packet.Add((ushort)servers.Count);
-            packet.Add((ushort)additionals.Count);
+            packet.Add((ushort)_questions.Count);
+            packet.Add((ushort)_answers.Count);
+            packet.Add((ushort)_servers.Count);
+            packet.Add((ushort)_additionals.Count);
 
-            foreach (Question query in questions)
+            foreach (Question query in _questions)
             {
                 packet.Add(query.GetBytes());
             }
 
-            foreach (Resource resource in answers)
+            foreach (Resource resource in _answers)
             {
                 packet.Add(resource.GetBytes());
             }
 
-            foreach (Resource resource in servers)
+            foreach (Resource resource in _servers)
             {
                 packet.Add(resource.GetBytes());
             }
 
-            foreach (Resource resource in additionals)
+            foreach (Resource resource in _additionals)
             {
                 packet.Add(resource.GetBytes());
             }
@@ -136,22 +136,22 @@ namespace Iot.Device.MulticastDNS.Entities
                 string domain = packet.ReadDomain();
                 DnsResourceType rr_type = GetResourType(packet.ReadUShort());
                 ushort rr_class = packet.ReadUShort();
-                if (rr_type > 0) questions.Add(new Question(domain, rr_type, rr_class));
+                if (rr_type > 0) _questions.Add(new Question(domain, rr_type, rr_class));
             }
 
             for (int i = 0; i < answer_count; ++i)
             {
-                answers.Add(ParseResource(packet));
+                _answers.Add(ParseResource(packet));
             }
 
             for (int i = 0; i < server_count; ++i)
             {
-                servers.Add(ParseResource(packet));
+                _servers.Add(ParseResource(packet));
             }
 
             for (int i = 0; i < additional_count; ++i)
             {
-                additionals.Add(ParseResource(packet));
+                _additionals.Add(ParseResource(packet));
             }
         }
 

@@ -21,7 +21,7 @@ namespace Iot.Device.MulticastDNS.Entities
         /// <param name="resource">The answer resource to add.</param>
         public void AddAnswer(Resource resource)
         {
-            answers.Add(resource);
+            _answers.Add(resource);
         }
     }
 }
