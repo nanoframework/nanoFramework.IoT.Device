@@ -8,7 +8,7 @@ using Iot.Device.MulticastDNS.Package;
 namespace Iot.Device.MulticastDNS.Entities
 {
     /// <summary>
-    /// Represents a SRVRecord Resource (DNS Resource Type 16).
+    /// Represents a TXT Record Resource (DNS Resource Type 16).
     /// </summary>
     public class TxtRecord : Resource
     {

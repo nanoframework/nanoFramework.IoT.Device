@@ -7,7 +7,7 @@ using Iot.Device.MulticastDNS.Package;
 namespace Iot.Device.MulticastDNS.Entities
 {
     /// <summary>
-    /// Represents a CNAMERecord Resource (DNS Resource Type 5).
+    /// Represents a CNAME Record Resource (DNS Resource Type 5).
     /// </summary>
     public class CnameRecord : TargetResource
     {

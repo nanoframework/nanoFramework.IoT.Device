@@ -7,7 +7,7 @@ using Iot.Device.MulticastDNS.Package;
 namespace Iot.Device.MulticastDNS.Entities
 {
     /// <summary>
-    /// Represents a PTRRecord Resource (DNS Resource Type 12).
+    /// Represents a PTR Record Resource (DNS Resource Type 12).
     /// </summary>
     public class PtrRecord : TargetResource
     {

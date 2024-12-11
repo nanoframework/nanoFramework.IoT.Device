@@ -7,7 +7,7 @@ using Iot.Device.MulticastDNS.Package;
 namespace Iot.Device.MulticastDNS.Entities
 {
     /// <summary>
-    /// Represents a SRVRecord Resource (DNS Resource Type 33).
+    /// Represents a SRV Record Resource (DNS Resource Type 33).
     /// </summary>
     public class SrvRecord : TargetResource
     {

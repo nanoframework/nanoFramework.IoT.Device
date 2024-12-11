@@ -8,7 +8,7 @@ using Iot.Device.MulticastDNS.Package;
 namespace Iot.Device.MulticastDNS.Entities
 {
     /// <summary>
-    /// Represents an ARecord Resource (DNS Resource Type 1).
+    /// Represents an A Record Resource (DNS Resource Type 1).
     /// </summary>
     public class ARecord : AddressResource
     {
