@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Iot.Device.MulticastDNS.Enum
+namespace Iot.Device.MulticastDns.Enum
 {
     /// <summary>
     /// The type of a DNS Resource.

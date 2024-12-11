@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text;
-using Iot.Device.MulticastDNS.Enum;
-using Iot.Device.MulticastDNS.Package;
+using Iot.Device.MulticastDns.Enum;
+using Iot.Device.MulticastDns.Package;
 
-namespace Iot.Device.MulticastDNS.Entities
+namespace Iot.Device.MulticastDns.Entities
 {
     /// <summary>
     /// Represents a TXT Record Resource (DNS Resource Type 16).

@@ -6,14 +6,14 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
-using Iot.Device.MulticastDNS;
-using Iot.Device.MulticastDNS.Entities;
-using Iot.Device.MulticastDNS.Enum;
-using Iot.Device.MulticastDNS.EventArgs;
+using Iot.Device.MulticastDns;
+using Iot.Device.MulticastDns.Entities;
+using Iot.Device.MulticastDns.Enum;
+using Iot.Device.MulticastDns.EventArgs;
 using nanoFramework.Networking;
 using nanoFramework.WebServer;
 
-namespace MulticastDNS.Samples
+namespace MulticastDns.Samples
 {
     internal class Program
     {
@@ -31,15 +31,15 @@ namespace MulticastDNS.Samples
             // Connect to the WiFi.
             WifiNetworkHelper.ConnectDhcp(Ssid, Pwd);
 
-            // Instantiate the MulticastDNSService
-            using MulticastDnsService multicastDNSService = new();
+            // Instantiate the MulticastDnsService
+            using MulticastDnsService multicastDnsService = new();
 
             // After resolving the domain, the IP address of the device is sent back to the browser
             // We'll serve some text back to show this is actually working
             using WebServer webServer = new(80, HttpProtocol.Http);
 
             // Register the event handler that will receive mDNS messages
-            multicastDNSService.MessageReceived += MulticastDNSService_MessageReceived;
+            multicastDnsService.MessageReceived += MulticastDnsService_MessageReceived;
 
             // Register the event handler that will treat the HTTP requests
             webServer.CommandReceived += WebServer_CommandReceived;
@@ -47,8 +47,8 @@ namespace MulticastDNS.Samples
             // Find the IP address of the device
             _ipAddress = FindMyIp();
 
-            // Start the MulticastDNSService
-            multicastDNSService.Start();
+            // Start the MulticastDnsService
+            multicastDnsService.Start();
             // Start the webserver
             webServer.Start();
 
@@ -69,7 +69,7 @@ namespace MulticastDNS.Samples
             e.Context.Response.OutputStream.Write(bytes, 0, bytes.Length);
         }
 
-        private static void MulticastDNSService_MessageReceived(object sender, MessageReceivedEventArgs e)
+        private static void MulticastDnsService_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             if (e.Message != null)
                 foreach (Question question in e.Message.GetQuestions())

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Iot.Device.MulticastDNS.Enum
+namespace Iot.Device.MulticastDns.Enum
 {
     /// <summary>
     /// The DNS header flags are a 16 bit value according to RFC1035 section 4.1.1.

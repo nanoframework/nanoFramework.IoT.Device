@@ -5,10 +5,10 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Net.Sockets;
-using Iot.Device.MulticastDNS.Entities;
-using Iot.Device.MulticastDNS.EventArgs;
+using Iot.Device.MulticastDns.Entities;
+using Iot.Device.MulticastDns.EventArgs;
 
-namespace Iot.Device.MulticastDNS
+namespace Iot.Device.MulticastDns
 {
     /// <summary>
     /// Multicast DNS (mDNS) is a computer networking protocol that resolves hostnames to IP addresses within local networks.

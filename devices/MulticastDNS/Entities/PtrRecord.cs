@@ -1,10 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Iot.Device.MulticastDNS.Enum;
-using Iot.Device.MulticastDNS.Package;
+using Iot.Device.MulticastDns.Enum;
+using Iot.Device.MulticastDns.Package;
 
-namespace Iot.Device.MulticastDNS.Entities
+namespace Iot.Device.MulticastDns.Entities
 {
     /// <summary>
     /// Represents a PTR Record Resource (DNS Resource Type 12).

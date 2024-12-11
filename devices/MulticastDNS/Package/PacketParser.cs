@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Iot.Device.MulticastDNS.Package
+namespace Iot.Device.MulticastDns.Package
 {
     internal class PacketParser
     {

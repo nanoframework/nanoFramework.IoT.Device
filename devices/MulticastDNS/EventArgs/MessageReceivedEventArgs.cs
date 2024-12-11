@@ -1,9 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Iot.Device.MulticastDNS.Entities;
+using Iot.Device.MulticastDns.Entities;
 
-namespace Iot.Device.MulticastDNS.EventArgs
+namespace Iot.Device.MulticastDns.EventArgs
 {
     /// <summary>
     /// The EventArgs used to pass the information about a received message.
