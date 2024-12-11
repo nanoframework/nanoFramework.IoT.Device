@@ -134,9 +134,9 @@ namespace Iot.Device.MulticastDNS.Entities
             for (int i = 0; i < question_count; ++i)
             {
                 string domain = packet.ReadDomain();
-                DnsResourceType rr_type = GetResourType(packet.ReadUShort());
-                ushort rr_class = packet.ReadUShort();
-                if (rr_type > 0) _questions.Add(new Question(domain, rr_type, rr_class));
+                DnsResourceType rrType = GetResourType(packet.ReadUShort());
+                ushort rrClass = packet.ReadUShort();
+                if (rrType > 0) _questions.Add(new Question(domain, rrType, rrClass));
             }
 
             for (int i = 0; i < answer_count; ++i)
@@ -158,12 +158,12 @@ namespace Iot.Device.MulticastDNS.Entities
         private Resource ParseResource(PacketParser packet)
         {
             string domain = packet.ReadDomain();
-            ushort rr_type = packet.ReadUShort();
-            ushort rr_class = packet.ReadUShort();
+            ushort rrType = packet.ReadUShort();
+            ushort rrClass = packet.ReadUShort();
             int ttl = packet.ReadInt();
             ushort length = packet.ReadUShort();
 
-            switch (rr_type)
+            switch (rrType)
             {
                 case 1: return new ARecord(packet, domain, ttl, length);
                 case 5: return new CnameRecord(packet, domain, ttl);
@@ -177,7 +177,7 @@ namespace Iot.Device.MulticastDNS.Entities
             }
         }
 
-        private DnsResourceType GetResourType(ushort rr_type) => rr_type switch
+        private DnsResourceType GetResourType(ushort rrType) => rrType switch
         {
             1 => DnsResourceType.A,
             5 => DnsResourceType.CNAME,
