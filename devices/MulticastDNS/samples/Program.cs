@@ -22,7 +22,7 @@ namespace MulticastDNS.Samples
         private const string Pwd = "...";
 
         // The following string contains the domain we will query through a browser.
-        const string DeviceDomain = "nanodevice.local";
+        private const string DeviceDomain = "nanodevice.local";
 
         private static string s_ipAddress;
 
