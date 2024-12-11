@@ -19,7 +19,7 @@ namespace MulticastDNS.Samples
     {
         // Replace with your wifi ssid/pwd
         const string Ssid = "...";
-        const string Pwd = "...";
+        private const string Pwd = "...";
 
         // The following string contains the domain we will query through a browser.
         const string DeviceDomain = "nanodevice.local";
