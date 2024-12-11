@@ -20,7 +20,7 @@ namespace Iot.Device.MulticastDNS
 
         private bool _listening = false;
         private IPAddress _multicastAddress;
-        UdpClient _client;
+        private UdpClient _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MulticastDNSService" /> class.
