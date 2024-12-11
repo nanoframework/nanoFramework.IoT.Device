@@ -114,12 +114,28 @@ namespace Iot.Device.MulticastDns.Package
             }
 
             int length = _data[_position++];
+
+            // The length we found at this position has two possible meanings:
+            // - Either we have a range between 0 and 192 (0xc0) which indicates the length of the label.
+            //   which will follow in the next bytes.
+            // - Or we have a pointer to another section in the data, see following comment.
             if ((length & 0xc0) != 0xc0)
             {
                 return length;
             }
 
+            // If we get here we are dealing with a pointer to another section in the data.
+            // The pointer consists of 16 bits:
+            // - The first 8 bits are equal to the value over 192 (0xc0) in the first (previous) byte.
+            // - We shift these 8 bits to the left and add the value of the next (current) byte.
+            // - This gives us the index where we will find the length of the next label.
+            // Example:
+            // - First byte 0xc2, second byte 0x11
+            // - 0xc2 & 0x3f = 0x02
+            // - 0x02 << 8 = 0x0200
+            // - 0x0200 + 0x11 = 0x0211
             dot = ((length & 0x3f) << 8) + _data[_position++];
+
             return GetPointerLength(ref dot);
         }
 
@@ -144,12 +160,16 @@ namespace Iot.Device.MulticastDns.Package
             }
 
             int length = _data[dot++];
+
+            // Magic numbers got explained above
             if ((length & 0xc0) != 0xc0)
             {
                 return length;
             }
 
+            // Magic numbers got explained above
             dot = ((length & 0x3f) << 8) + _data[dot];
+
             return GetPointerLength(ref dot);
         }
     }
