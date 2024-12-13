@@ -48,7 +48,10 @@
     <Compile Include="EventArgs\MessageReceivedEventArgs.cs" />
     <Compile Include="MulticastDnsService.cs" />
     <Compile Include="Package\ArrayListUtility.cs" />
-    <Compile Include="Package\EndianBitConverter.cs" />
+    <Compile Include="Package\BitConverter\EndianBitConverter.cs" />
+    <Compile Include="Package\BitConverter\LittleEndianBitConverter.cs" />
+    <Compile Include="Package\BitConverter\BigEndianBitConverter.cs" />
+    <Compile Include="Package\BitConverter\IBitConverter.cs" />
     <Compile Include="Package\PacketBuilder.cs" />
     <Compile Include="Package\PacketParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +69,9 @@
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=1.2.54.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Text.1.2.54\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives">
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.670\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.59.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.59\lib\System.IO.Streams.dll</HintPath>
