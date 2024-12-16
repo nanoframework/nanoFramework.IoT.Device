@@ -255,6 +255,52 @@ namespace System.Buffers.Binary
         }
 
         /// <summary>
+        /// Reads a <see cref="double"/> from the beginning of a read-only span of bytes, as big endian.
+        /// </summary>
+        /// <param name="source">The read-only span to read.</param>
+        /// <returns>The big endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain a <see cref="double"/>.</exception>
+        public static double ReadDoubleBigEndian(SpanByte source)
+        {
+            if (source.Length < 8)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            long bits = ReadInt64BigEndian(source);
+            double dbl;
+            unsafe
+            {
+                dbl = *(double*)&bits;
+            }
+
+            return dbl;
+        }
+
+        /// <summary>
+        /// Reads a <see cref="double"/> from the beginning of a read-only span of bytes, as little endian.
+        /// </summary>
+        /// <param name="source">The read-only span to read.</param>
+        /// <returns>The little endian value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain a <see cref="double"/>.</exception>
+        public static double ReadDoubleLittleEndian(SpanByte source)
+        {
+            if (source.Length < 8)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            long bits = ReadInt64LittleEndian(source);
+            double dbl;
+            unsafe
+            {
+                dbl = *(double*)&bits;
+            }
+
+            return dbl;
+        }
+
+        /// <summary>
         /// Writes an System.Int16 into a span of bytes, as big endian.
         /// </summary>
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
@@ -536,6 +582,50 @@ namespace System.Buffers.Binary
             // This assignment is needed to prevent the CLR from throwing CLR_E_WRONG_TYPE when the next method performs the bitshifting.
             uint converted = ieee754_bits;
             WriteUInt32LittleEndian(destination, converted);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="double"/> into a span of bytes, as big endian.
+        /// </summary>
+        /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
+        /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Destination is too small to contain a <see cref="double"/>.</exception>
+        public static void WriteDoubleBigEndian(SpanByte destination, double value)
+        {
+            if (destination.Length < 8)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            long bits;
+            unsafe
+            {
+                bits = *(long*)&value;
+            }
+
+            WriteInt64BigEndian(destination, bits);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="double"/> into a span of bytes, as little endian.
+        /// </summary>
+        /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
+        /// <param name="value">The value to write into the span of bytes.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Destination is too small to contain a <see cref="double"/>.</exception>
+        public static void WriteDoubleLittleEndian(SpanByte destination, double value)
+        {
+            if (destination.Length < 8)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            long bits;
+            unsafe
+            {
+                bits = *(long*)&value;
+            }
+
+            WriteInt64LittleEndian(destination, bits);
         }
     }
 }
