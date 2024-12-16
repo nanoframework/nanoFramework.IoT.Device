@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.LiquidLevel</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.670" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.693" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.41" />
     </dependencies>
