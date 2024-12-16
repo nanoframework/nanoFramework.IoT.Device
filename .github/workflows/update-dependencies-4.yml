@@ -7,9 +7,9 @@ name: Update dependencies (round 4)
 
 on:
   schedule:
-    # At 01:45 UTC.
-    # Set 15 min apart from previous round to allow enough time for any changes to propagate.
-    - cron:  '45 01 * * Wed,Fri'
+    # At 02:45 UTC.
+    # Set 15 min apart from round three to allow enough time for any changes to propagate.
+    - cron:  '45 02 * * Mon,Wed'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
