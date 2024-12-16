@@ -16,15 +16,15 @@
       },
       "nanoFramework.Iot.Device.CharacterLcd": {
         "type": "Direct",
-        "requested": "[1.1.609, 1.1.609]",
-        "resolved": "1.1.609",
-        "contentHash": "fzLKfmh7O3GxeIcVS1Qt8faz0WPEL0frHlJ2FqfJIpiUkdqcPCxsXsw+3LzGk3FPhATB/4CWaDnAiAF+0MD13w=="
+        "requested": "[1.1.614, 1.1.614]",
+        "resolved": "1.1.614",
+        "contentHash": "iChOOvZI7yTTXvZ40HEkxMBe/saB6DBwEEZ+YjscCJDVUooQLRkH8JCNz2bPa7cprXPHoGzFdGvuAVwWuLO+6w=="
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",
-        "requested": "[1.2.670, 1.2.670]",
-        "resolved": "1.2.670",
-        "contentHash": "D5cjhT6+WoxskW0YoULKljOsrM0C4A+dTsxrC6Y/xTNKmJZ6uf+5RqazeMeSZF8SrkA6B6sGzlLwM4Rws8NG4w=="
+        "requested": "[1.2.693, 1.2.693]",
+        "resolved": "1.2.693",
+        "contentHash": "5UN7orpuQlUDNXi4nGutYZ5DXW8kW0oWCQ5yPxdi/0FPm0zZMRf5+vpjTA6inygfbAe5iFqLj/pk8dHYlw5IbQ=="
       },
       "nanoFramework.Iot.Device.ShiftRegister": {
         "type": "Direct",
@@ -82,15 +82,15 @@
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.670, 1.2.670]",
-        "resolved": "1.2.670",
-        "contentHash": "4ricLROKKGRjoePNDNYptJqaoFy9FfYpS3QQrDxdBx5PjmMd5BRN6WqZTmlj1xi0TgN2YGmbG76tA+PhYCPZ6g=="
+        "requested": "[1.2.693, 1.2.693]",
+        "resolved": "1.2.693",
+        "contentHash": "kQZz3IkEjNg5MokmA2Xy2ddZQ66QwWLUAi+kbCwzUmf8CrPfmbly88zZQsSv66Dr7Nipw9QLUhcLatrsNJg6XQ=="
       },
       "nanoFramework.System.Drawing": {
         "type": "Direct",
-        "requested": "[1.2.670, 1.2.670]",
-        "resolved": "1.2.670",
-        "contentHash": "bTjeaGzlN37ehXHsq/6ZbQlPMSICFEXmNazWSVS9IIKYte/wxihGtSdJoeJeW2zk3Kd48yijlO7GtzKfJUxx3g=="
+        "requested": "[1.2.693, 1.2.693]",
+        "resolved": "1.2.693",
+        "contentHash": "6Xu4H8L+DojgQgxFkflp0wq4CMF8kgXmFPMph6UI5/RqQ3+Kn1venICNYLa2vd1B3JU72opyA3pNpMTySViqIA=="
       },
       "nanoFramework.System.IO.FileSystem": {
         "type": "Direct",

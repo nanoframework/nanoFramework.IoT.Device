@@ -23,11 +23,11 @@
       <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.41" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.16" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.670" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.670" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.693" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.693" />
       <dependency id="nanoFramework.System.Math" version="1.5.43" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.60.0" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.60.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.61.0" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="5.61.0" />
     </dependencies>
   </metadata>
   <files>
