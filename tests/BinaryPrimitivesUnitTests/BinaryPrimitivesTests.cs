@@ -32,8 +32,8 @@ namespace BinaryPrimitivesUnitTests
             uint16res = BinaryPrimitives.ReadUInt16BigEndian(uint16byte);
 
             // Assert
-            CompareArray(int16byte, int16Res);
-            CompareArray(uint16byte, uint16Res);
+            CollectionAssert.AreEqual(int16byte, int16Res.ToArray());
+            CollectionAssert.AreEqual(uint16byte, uint16Res.ToArray());
             Assert.AreEqual(int16, int16res);
             Assert.AreEqual(uint16, uint16res);
         }
@@ -58,8 +58,8 @@ namespace BinaryPrimitivesUnitTests
             uint16res = BinaryPrimitives.ReadUInt16LittleEndian(uint16byte);
 
             // Assert
-            CompareArray(int16byte, int16Res);
-            CompareArray(uint16byte, uint16Res);
+            CollectionAssert.AreEqual(int16byte, int16Res.ToArray());
+            CollectionAssert.AreEqual(uint16byte, uint16Res.ToArray());
             Assert.AreEqual(int16, int16res);
             Assert.AreEqual(uint16, uint16res);
         }
@@ -84,8 +84,8 @@ namespace BinaryPrimitivesUnitTests
             uint32res = BinaryPrimitives.ReadUInt32BigEndian(uint32byte);
 
             // Assert
-            CompareArray(int32byte, intRes);
-            CompareArray(uint32byte, uint32Res);
+            CollectionAssert.AreEqual(int32byte, intRes.ToArray());
+            CollectionAssert.AreEqual(uint32byte, uint32Res.ToArray());
             Assert.AreEqual(int32, int32res);
             Assert.AreEqual(uint32, uint32res);
         }
@@ -110,8 +110,8 @@ namespace BinaryPrimitivesUnitTests
             uint32res = BinaryPrimitives.ReadUInt32LittleEndian(uint32byte);
 
             // Assert
-            CompareArray(int32byte, intRes);
-            CompareArray(uint32byte, uint32Res);
+            CollectionAssert.AreEqual(int32byte, intRes.ToArray());
+            CollectionAssert.AreEqual(uint32byte, uint32Res.ToArray());
             Assert.AreEqual(int32, int32res);
             Assert.AreEqual(uint32, uint32res);
         }
@@ -136,8 +136,8 @@ namespace BinaryPrimitivesUnitTests
             uint64res = BinaryPrimitives.ReadUInt64BigEndian(uint64byte);
 
             // Assert
-            CompareArray(int64byte, int64Res);
-            CompareArray(uint64byte, uint64Res);
+            CollectionAssert.AreEqual(int64byte, int64Res.ToArray());
+            CollectionAssert.AreEqual(uint64byte, uint64Res.ToArray());
             Assert.AreEqual(int64, int64res);
             Assert.AreEqual(uint64, uint64res);
         }
@@ -162,8 +162,8 @@ namespace BinaryPrimitivesUnitTests
             uint64res = BinaryPrimitives.ReadUInt64LittleEndian(uint64byte);
 
             // Assert
-            CompareArray(int64byte, int64Res);
-            CompareArray(uint64byte, uint64Res);
+            CollectionAssert.AreEqual(int64byte, int64Res.ToArray());
+            CollectionAssert.AreEqual(uint64byte, uint64Res.ToArray());
             Assert.AreEqual(int64, int64res);
             Assert.AreEqual(uint64, uint64res);
         }
@@ -202,7 +202,7 @@ namespace BinaryPrimitivesUnitTests
             floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(Reverse(floatValueInBe), 0) : BitConverter.ToSingle(floatValueInBe, 0);
 
             // Assert
-            CompareArray(floatValueInBe, floatToBytes);
+            CollectionAssert.AreEqual(floatValueInBe, floatToBytes.ToArray());
             Assert.AreEqual(floatValue, floatFromBytes);
             Assert.AreEqual(floatValue, floatValueFromBitConverter);
             Assert.AreEqual(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
@@ -226,7 +226,7 @@ namespace BinaryPrimitivesUnitTests
             floatValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToSingle(floatValueInLe, 0) : BitConverter.ToSingle(Reverse(floatValueInLe), 0);
 
             // Assert
-            CompareArray(floatValueInLe, floatToBytes);
+            CollectionAssert.AreEqual(floatValueInLe, floatToBytes.ToArray());
             Assert.AreEqual(floatValue, floatFromBytes);
             Assert.AreEqual(floatValue, floatValueFromBitConverter);
             Assert.AreEqual(floatValue, doubleFromBytes, "This assert fails when the CLR didn't properly convert the uint into a float");
@@ -248,7 +248,7 @@ namespace BinaryPrimitivesUnitTests
             doubleValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToDouble(Reverse(doubleValueInBe), 0) : BitConverter.ToDouble(doubleValueInBe, 0);
 
             // Assert
-            CompareArray(doubleValueInBe, doubleToBytes);
+            CollectionAssert.AreEqual(doubleValueInBe, doubleToBytes.ToArray());
             Assert.AreEqual(doubleValue, doubleFromBytes);
             Assert.AreEqual(doubleValue, doubleValueFromBitConverter);
         }
@@ -269,17 +269,9 @@ namespace BinaryPrimitivesUnitTests
             doubleValueFromBitConverter = BitConverter.IsLittleEndian ? BitConverter.ToDouble(doubleValueInLe, 0) : BitConverter.ToDouble(Reverse(doubleValueInLe), 0);
 
             // Assert
-            CompareArray(doubleValueInLe, doubleToBytes);
+            CollectionAssert.AreEqual(doubleValueInLe, doubleToBytes.ToArray());
             Assert.AreEqual(doubleValue, doubleFromBytes);
             Assert.AreEqual(doubleValue, doubleValueFromBitConverter);
-        }
-
-        private void CompareArray(SpanByte array1, SpanByte array2)
-        {
-            for (int i = 0; i < array1.Length; i++)
-            {
-                Assert.AreEqual(array1[i], array2[i]);
-            }
         }
 
         private byte[] Reverse(byte[] array)
