@@ -19,7 +19,7 @@ jobs:
     uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
     secrets: inherit
     with:
-      timeout-minutes: 15 # The next round will start after.
+      timeout-minutes: 15 # The next round will start after (taking into account PR merge and build branch).
       workingDirectory: devices
       branchToPr: 'develop'      
       solutionsToCheck: |

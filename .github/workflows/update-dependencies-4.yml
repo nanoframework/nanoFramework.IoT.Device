@@ -7,9 +7,9 @@ name: Update dependencies (round 4)
 
 on:
   schedule:
-    # At 02:45 UTC.
-    # Set 15 min apart from round three to allow enough time for any changes to propagate.
-    - cron:  '45 02 * * Mon,Wed'
+    # At 03:30 UTC.
+    # Set 30 min apart from round three to allow enough time for any changes to propagate.
+    - cron:  '30 03 * * Mon,Wed'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
     uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
     secrets: inherit
     with:
-      timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+      timeout-minutes: 120 # Non default as IoT devices has lots of solutions to update (taking into account PR merge and build branch)!
       solutionsToCheck: '*.sln'
       workingDirectory: devices
       branchToPr: 'develop'
