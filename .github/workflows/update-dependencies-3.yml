@@ -7,9 +7,9 @@ name: Update dependencies (round 3)
 
 on:
   schedule:
-    # At 03:00 UTC.
-    # Set 30 min offset from round two to allow enough time for any changes to propagate.
-    - cron:  '00 03 * * Mon,Wed'
+    # Round 3/5: Executes 30 minutes after round 2 (03:00 UTC) to allow enough time for any changes to propagate.
+    # (taking into account PR merge and build branch).
+    - cron: '00 03 * * Mon,Wed'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
     uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
     secrets: inherit
     with:
-      timeout-minutes: 15 # The next round will start after (taking into account PR merge and build branch).
+      timeout-minutes: 15
       workingDirectory: devices
       branchToPr: 'develop'      
       solutionsToCheck: |

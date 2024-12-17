@@ -7,8 +7,8 @@ name: Update dependencies (round 1)
 
 on:
   schedule:
-    # At 02:00 UTC.
-    - cron:  '00 02 * * Mon,Wed'
+    # Round 1/5: (02:00 UTC).
+    - cron: '00 02 * * Mon,Wed'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:

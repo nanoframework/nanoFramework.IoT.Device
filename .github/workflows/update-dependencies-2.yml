@@ -7,9 +7,9 @@ name: Update dependencies (round 2)
 
 on:
   schedule:
-    # At 02:30 UTC.
-    # Set 30 min offset from round one to allow enough time for any changes to propagate.
-    - cron:  '30 02 * * Mon,Wed'
+    # Round 2/5: Executes 30 minutes after round 1 (02:30 UTC) to allow enough time for any changes to propagate.
+    # (taking into account PR merge and build branch).
+    - cron: '30 02 * * Mon,Wed'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
