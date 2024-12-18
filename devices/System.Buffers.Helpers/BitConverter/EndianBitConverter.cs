@@ -25,7 +25,7 @@ namespace System.Buffers.Helpers.BitConverter
         }
 
         /// <summary>
-        /// Gets a static instance of a <see cref="LittleEndianBitConverter"/>
+        /// Gets a static instance of a <see cref="LittleEndianBitConverter"/>.
         /// </summary>
         public static IBitConverter Little
         {
@@ -50,7 +50,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract bool IsLittleEndian { get; }
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="bool"/>
+        /// Returns a byte[] representation of a <see cref="bool"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
@@ -60,70 +60,70 @@ namespace System.Buffers.Helpers.BitConverter
         }
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="char"/>
+        /// Returns a byte[] representation of a <see cref="char"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(char value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="short"/>
+        /// Returns a byte[] representation of a <see cref="short"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(short value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="int"/>
+        /// Returns a byte[] representation of a <see cref="int"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(int value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="long"/>
+        /// Returns a byte[] representation of a <see cref="long"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(long value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="ushort"/>
+        /// Returns a byte[] representation of a <see cref="ushort"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(ushort value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="uint"/>
+        /// Returns a byte[] representation of a <see cref="uint"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(uint value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="ulong"/>
+        /// Returns a byte[] representation of a <see cref="ulong"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(ulong value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="float"/>
+        /// Returns a byte[] representation of a <see cref="float"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(float value);
 
         /// <summary>
-        /// Returns a byte[] representation of a <see cref="double"/>
+        /// Returns a byte[] representation of a <see cref="double"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The byte[] with the converted value.</returns>
         public abstract byte[] GetBytes(double value);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="bool"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="bool"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -131,7 +131,7 @@ namespace System.Buffers.Helpers.BitConverter
         public bool ToBoolean(SpanByte value, int index = 0) => value[index] == 0x1;
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="char"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="char"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -139,7 +139,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract char ToChar(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="short"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="short"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -147,7 +147,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract short ToInt16(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="int"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="int"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -155,7 +155,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract int ToInt32(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="long"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="long"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -163,7 +163,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract long ToInt64(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="ushort"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="ushort"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -171,7 +171,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract ushort ToUInt16(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="uint"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="uint"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -179,7 +179,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract uint ToUInt32(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="ulong"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="ulong"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -187,7 +187,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract ulong ToUInt64(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="float"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="float"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
@@ -195,7 +195,7 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract float ToSingle(SpanByte value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="double"/>
+        /// Converts a <see cref="SpanByte"/> to a <see cref="double"/>.
         /// </summary>
         /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>

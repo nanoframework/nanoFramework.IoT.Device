@@ -7,7 +7,6 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Buffers.Helpers", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3206CCF4-1174-4647-8A2C-DDD7CDBB4E7B}"
 	ProjectSection(SolutionItems) = preProject
-		.runsettings = .runsettings
 		category.txt = category.txt
 		README.md = README.md
 		version.json = version.json
