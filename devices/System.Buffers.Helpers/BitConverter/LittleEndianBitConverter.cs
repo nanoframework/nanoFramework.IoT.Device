@@ -1,10 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using System.Buffers.Binary;
 
-namespace Iot.Device.MulticastDns.Package
+namespace System.Buffers.Helpers.BitConverter
 {
     /// <summary>
     /// The <see cref="LittleEndianBitConverter"/> class offers methods to convert to and from a byte[] in a Little Endian manner.

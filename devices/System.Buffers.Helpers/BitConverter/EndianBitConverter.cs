@@ -1,9 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-
-namespace Iot.Device.MulticastDns.Package
+namespace System.Buffers.Helpers.BitConverter
 {
     /// <summary>
     /// The <see cref="EndianBitConverter"/> class is the base class for Little and Big Endian Converters.

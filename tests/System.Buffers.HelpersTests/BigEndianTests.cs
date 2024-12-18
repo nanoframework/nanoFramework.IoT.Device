@@ -3,8 +3,8 @@
 // See LICENSE file in the project root for full license information.
 //
 
-using Iot.Device.MulticastDns.Package;
 using nanoFramework.TestFramework;
+using System.Buffers.Helpers.BitConverter;
 
 namespace BinaryPrimitivesUnitTests
 {
