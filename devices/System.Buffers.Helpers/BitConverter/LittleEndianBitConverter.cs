@@ -8,7 +8,7 @@ namespace System.Buffers.Helpers.BitConverter
     /// <summary>
     /// The <see cref="LittleEndianBitConverter"/> class offers methods to convert to and from a byte[] in a Little Endian manner.
     /// </summary>
-    public sealed class LittleEndianBitConverter : EndianBitConverter
+    public class LittleEndianBitConverter : EndianBitConverter
     {
         /// <summary>
         /// Indicates if this converter instance is Little Endian.

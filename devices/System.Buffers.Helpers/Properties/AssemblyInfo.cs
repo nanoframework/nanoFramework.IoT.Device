@@ -2,14 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("System.Buffers.Helpers")]
 [assembly: AssemblyCompany("nanoFramework Contributors")]
 [assembly: AssemblyCopyright("Copyright(c).NET Foundation and Contributors")]
-
-/////////////////////////////////////////////////////////////////
-// This attribute is mandatory when building Interop libraries //
-// update this whenever the native assembly signature changes  //
-[assembly: AssemblyNativeVersion("0.0.0.0")]
-/////////////////////////////////////////////////////////////////

@@ -8,7 +8,7 @@ namespace System.Buffers.Helpers.BitConverter
     /// <summary>
     /// The <see cref="BigEndianBitConverter"/> class offers methods to convert to and from a byte[] in a Big Endian manner.
     /// </summary>
-    public sealed class BigEndianBitConverter : EndianBitConverter
+    public class BigEndianBitConverter : EndianBitConverter
     {
         /// <summary>
         /// Indicates if this converter instance is Little Endian.
