@@ -21,7 +21,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.693" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.671" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.702" />
       <dependency id="nanoFramework.ResourceManager" version="1.2.19" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
       <dependency id="nanoFramework.Runtime.Native" version="1.7.1" />
