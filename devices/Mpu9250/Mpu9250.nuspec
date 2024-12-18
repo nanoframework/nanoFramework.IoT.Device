@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mpu9250 Iot.Device.Mpu6500 Iot.Device.Mpu6050</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.693" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.699" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.693" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.693" />
       <dependency id="nanoFramework.System.Numerics" version="1.2.693" />
