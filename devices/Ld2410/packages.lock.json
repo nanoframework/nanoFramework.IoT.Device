@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.670, 1.2.670]",
-        "resolved": "1.2.670",
-        "contentHash": "1ABWKgTayq6D85yEkc0eq3ZMaCv8W3z6P3vOPPp455pkE52rTVGzW8iytdUfxkRw8loJERGsrGkQadjnjsqtKw=="
+        "requested": "[1.2.699, 1.2.699]",
+        "resolved": "1.2.699",
+        "contentHash": "OhR1PNfnToj+1Gun1BA8Uk4mhJW6HWZeW2EKPhHozVlzSLUOUOkjVko2Vje5qCmvA2EuAi8AxKJec/vad9TV0g=="
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.6.146, 3.6.146]",
-        "resolved": "3.6.146",
-        "contentHash": "W1eQ8hD9Y/cZ2+ilgxECl003xr1hybpN3fMxoTlMqg++BixETBMWzS4y9s08oHJKXgKtudsoxhITNOEf1OR66w=="
+        "requested": "[3.7.112, 3.7.112]",
+        "resolved": "3.7.112",
+        "contentHash": "j0jcfnTjvhytRanVR34Gaj6RFKk8EDmVhRW7929nWjCo8tzBxsa3XmFmbSGDA6nWXGhfehTixWhPgGWAbz+NQA=="
       },
       "StyleCop.MSBuild": {
         "type": "Direct",
@@ -52,15 +52,15 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.60.0, 5.60.0]",
-        "resolved": "5.60.0",
-        "contentHash": "MK4sxj0dfjJY958j/xTW7FIi7dqDMC72ePC/TijnGGMSKABlwVAa39JYB20FqwOZVEBBir0oMRi76NIf45gvDQ=="
+        "requested": "[5.61.0, 5.61.0]",
+        "resolved": "5.61.0",
+        "contentHash": "IWw0yXZWHD+MdzGh5SahUmjxKluocWimdmO6i9sm8k8eUHDO6VbvM5IAEZFvt5caTUm7YZnY8gTvft24Ws7IKQ=="
       },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
-        "requested": "[5.60.0, 5.60.0]",
-        "resolved": "5.60.0",
-        "contentHash": "FKJ20sk2PHbqpQnsVPtif8ngu5EJzN3j3u3ZbpBmcD+n9qwV6EKFiPCeFhdEJCfVnsDHQPvuF3e+SvZCLKxuXw=="
+        "requested": "[5.61.0, 5.61.0]",
+        "resolved": "5.61.0",
+        "contentHash": "6JNrYbvHmYsZtpb/eVg9HqK5uMrCu2D1M12tK0jcrbAmLKeux4RZS6E9AEF6MbNXIsynCcDR7UfubGARR9FE/w=="
       }
     }
   }

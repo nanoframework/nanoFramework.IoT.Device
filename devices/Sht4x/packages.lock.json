@@ -16,9 +16,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.6.146, 3.6.146]",
-        "resolved": "3.6.146",
-        "contentHash": "W1eQ8hD9Y/cZ2+ilgxECl003xr1hybpN3fMxoTlMqg++BixETBMWzS4y9s08oHJKXgKtudsoxhITNOEf1OR66w=="
+        "requested": "[3.7.112, 3.7.112]",
+        "resolved": "3.7.112",
+        "contentHash": "j0jcfnTjvhytRanVR34Gaj6RFKk8EDmVhRW7929nWjCo8tzBxsa3XmFmbSGDA6nWXGhfehTixWhPgGWAbz+NQA=="
       },
       "StyleCop.MSBuild": {
         "type": "Direct",
@@ -28,15 +28,15 @@
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.60.0, 5.60.0]",
-        "resolved": "5.60.0",
-        "contentHash": "2wk4+viVGY0vL9XDC5XPhALoOrV5CUwL8yjBUDjXPQV1JKJ6h1w3c63RKfG0ceaY9cxm5MMPwein6Q+5s7F73w=="
+        "requested": "[5.61.0, 5.61.0]",
+        "resolved": "5.61.0",
+        "contentHash": "VcYQWGvXceNycOvTfcriULXIH69wnYHVTksqUW7RLO644n16I3SXecxyPFkVBrdLK1yVbyBoIXSThwhjr5OKMQ=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.60.0, 5.60.0]",
-        "resolved": "5.60.0",
-        "contentHash": "T4lfcJNMCzOpMgv9SOIL//RbYtm0KK87pgmyjAxy6LnipQ13fBhfh6FVeUdLGtYYCXWkQZYaOS+DWtLreGi0PQ=="
+        "requested": "[5.61.0, 5.61.0]",
+        "resolved": "5.61.0",
+        "contentHash": "LT3Buhdj5gNSoE4QwK93XJ2jFfvCL0lOUcoUmLl6An/0wWnTILWef2NT//IyuuXVn4oK7Aejv8/J3IYTbXADZg=="
       }
     }
   }

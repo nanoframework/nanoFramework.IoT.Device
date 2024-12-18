@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.props')" />
   <PropertyGroup Label="Globals">
     <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
     <Nullable>enable</Nullable>
@@ -30,13 +30,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.CharacterLcd.1.1.609\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.CharacterLcd.1.1.622\lib\Iot.Device.CharacterLcd.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.2.670\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.2.693\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.2.671\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.ShiftRegister.1.2.702\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
@@ -75,10 +75,10 @@
       <HintPath>packages\nanoFramework.System.Device.Spi.1.3.52\lib\System.Device.Spi.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.670\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.693\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Drawing.1.2.670\lib\System.Drawing.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Drawing.1.2.693\lib\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=1.1.66.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.FileSystem.1.1.66\lib\System.IO.FileSystem.dll</HintPath>
@@ -111,8 +111,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
-    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.props'))" />
-    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.props'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
-  <Import Project="packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.6.146\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.7.112\build\Nerdbank.GitVersioning.targets')" />
 </Project>

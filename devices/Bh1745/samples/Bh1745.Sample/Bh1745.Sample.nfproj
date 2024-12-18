@@ -29,7 +29,7 @@
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.670\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.699\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.1.41.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.Device.Gpio.1.1.41\lib\System.Device.Gpio.dll</HintPath>
@@ -38,7 +38,7 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.670\lib\System.Device.Model.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.693\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.Drawing.1.2.295\lib\System.Drawing.dll</HintPath>
