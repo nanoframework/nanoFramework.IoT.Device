@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.System.Buffers.Helpers</id>
+    <version>$version$</version>
+    <title>nanoFramework.System.Buffers.Helpers</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET System.Buffers.Helpers namespace for .NET nanoFramework C# projects.</description>
+    <summary>System.Buffers.Helpers assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf iot BitConverter</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\System.Buffers.Helpers.dll" target="lib\System.Buffers.Helpers.dll" />
+    <file src="bin\Release\System.Buffers.Helpers.pdb" target="lib\System.Buffers.Helpers.pdb" />
+    <file src="bin\Release\System.Buffers.Helpers.pdbx" target="lib\System.Buffers.Helpers.pdbx" />
+    <file src="bin\Release\System.Buffers.Helpers.pe" target="lib\System.Buffers.Helpers.pe" />
+    <file src="bin\Release\System.Buffers.Helpers.xml" target="lib\System.Buffers.Helpers.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
