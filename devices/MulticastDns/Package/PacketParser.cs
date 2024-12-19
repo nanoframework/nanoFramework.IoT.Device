@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Buffers.Helpers.BitConverter;
 using System.Text;
 
 namespace Iot.Device.MulticastDns.Package
