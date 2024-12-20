@@ -17,13 +17,13 @@
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>This package includes the .NET IoT Core binding Iot.Device.Common.GnssDevice for .NET nanoFramework C# projects.</description>
     <summary>Iot.Device.Common.GnssDevice assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Weather Helper</tags>
+    <tags>nanoFramework C# csharp netmf netnf iot GNSS GPS Galileo GLONASS BeiDuo</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
       <dependency id="nanoFramework.System.Math" version="1.5.43" />
       <dependency id="nanoFramework.System.Collections" version="1.5.45" />
-      <dependency id="UnitsNet.nanoFramework.Angle" version="5.60.0" />
-      <dependency id="UnitsNet.nanoFramework.Speed" version="5.60.0" />
+      <dependency id="UnitsNet.nanoFramework.Angle" version="5.61.0" />
+      <dependency id="UnitsNet.nanoFramework.Speed" version="5.61.0" />
       <dependency id="nanoFramework.System.IO.Ports" version="1.1.86" />
     </dependencies>
   </metadata>

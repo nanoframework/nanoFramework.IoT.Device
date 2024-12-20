@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+   <!-- Configurations that affect the Test Framework -->
+   <RunConfiguration>
+       <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
+       <TestSessionTimeout>120000</TestSessionTimeout><!-- Milliseconds -->
+       <TargetFrameworkVersion>net48</TargetFrameworkVersion>
+       <TargetPlatform>x64</TargetPlatform>
+   </RunConfiguration>
+   <nanoFrameworkAdapter>
+       <Logging>None</Logging> <!--Set to the desired level of logging for Unit Test execution. Possible values are: None, Detailed, Verbose, Error. -->
+       <IsRealHardware>False</IsRealHardware><!--Set to true to run tests on real hardware. -->
+       <RealHardwarePort>COM3</RealHardwarePort><!--Specify the COM port to use to connect to a nanoDevice. If none is specified, a device detection is performed and the 1st available one will be used. -->
+       <CLRVersion></CLRVersion><!--Specify the nanoCLR version to use. If not specified, the latest available will be used. -->
+       <PathToLocalCLRInstance></PathToLocalCLRInstance><!--Specify the path to a local nanoCLR instance. If not specified, the default one installed with nanoclr CLR witll be used. -->
+   </nanoFrameworkAdapter>
+</RunSettings>
