@@ -54,6 +54,7 @@
     <Compile Include="Fonts\Font8x12.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\GpioPinExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

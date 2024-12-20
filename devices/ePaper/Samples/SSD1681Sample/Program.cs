@@ -145,7 +145,7 @@ namespace SSD1681Sample
 
             // at this point, all frame pages have been pushed to the display
             // this will execute the refresh sequence and display the frame data
-            display.PerformFullRefresh();
+            display.PerformPartialRefresh();
 
             // Done! now put the display to sleep to reduce power consumption
             display.PowerDown(SleepMode.DeepSleepModeTwo);

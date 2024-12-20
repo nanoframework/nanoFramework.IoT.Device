@@ -4,11 +4,13 @@
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Enums;
+using Iot.Device.EPaper.Utilities;
 
 namespace Iot.Device.EPaper.Drivers.Ssd168x
 {
@@ -17,7 +19,6 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
     /// </summary>
     public abstract class Ssd168x : IEPaperDisplay
     {
-        private readonly int _maxWaitingTime = 500;
         private readonly bool _shouldDispose;
         private SpiDevice _spiDevice;
         private GpioController _gpioController;
@@ -437,7 +438,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendCommand((byte)Command.DriverOutputControl);
 
             // refer to the datasheet for a description of the parameters
-            SendData((byte)Height, 0x00, 0x00);
+            SendData((ushort)Height, 0x00);
 
             // Set data entry sequence
             SendCommand((byte)Command.DataEntryModeSetting);
@@ -455,7 +456,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendCommand((byte)Command.SetRAMAddressYStartEndPosition);
 
             // Param1 & 2: Start at 0 | Param3 & 4: End at display height converted to bytes
-            SendData(0x00, 0x00, (byte)(Height - 1), 0x00);
+            SendData(0, (ushort)Height);
 
             // Set Panel Border
             SendCommand((byte)Command.BorderWaveformControl);
@@ -507,7 +508,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.FullRefresh); // Display Mode 1 (Full Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            return WaitReady(_maxWaitingTime);
+            return WaitReady();
         }
 
         /// <inheritdoc/>
@@ -520,7 +521,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)RefreshMode.PartialRefresh); // Display Mode 2 (Partial Refresh)
 
             SendCommand((byte)Command.MasterActivation);
-            return WaitReady(_maxWaitingTime);
+            return WaitReady();
         }
 
         /// <summary>
@@ -574,6 +575,18 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             _dataCommandPin.Write(PinValue.Low);
         }
 
+        /// <inheritdoc/>
+        public virtual void SendData(params ushort[] data)
+        {
+            // set the data/command pin to high to indicate to the display we will be sending data
+            _dataCommandPin.Write(PinValue.High);
+
+            _spiDevice.Write(data);
+
+            // go back to low (command mode)
+            _dataCommandPin.Write(PinValue.Low);
+        }
+
         /// <summary>
         /// Sets the current active frame buffer page to the specified page index.
         /// Existing frame buffer is reused by clearing it first and page bounds are recalculated.
@@ -613,8 +626,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         {
             SendCommand((byte)Command.SoftwareReset);
 
-            WaitReady(_maxWaitingTime);
-            WaitMs(10);
+            WaitReady();
         }
 
         /// <summary>
@@ -627,25 +639,8 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
         }
 
         /// <inheritdoc/>
-        public virtual bool WaitReady(int waitingTime, CancellationTokenSource cancellationToken = default)
-        {
-            if (cancellationToken == default)
-            {
-                if (waitingTime < 0)
-                {
-                    throw new ArgumentNullException(nameof(cancellationToken), $"{nameof(cancellationToken)} cannot be null with {nameof(waitingTime)} < 0");
-                }
-
-                cancellationToken = new CancellationTokenSource(waitingTime);
-            }
-
-            while (!cancellationToken.IsCancellationRequested && _busyPin.Read() == PinValue.High)
-            {
-                cancellationToken.Token.WaitHandle.WaitOne(5, true);
-            }
-
-            return !cancellationToken.IsCancellationRequested;
-        }
+        public virtual bool WaitReady(CancellationToken cancellationToken = default)
+            => _busyPin.WaitUntilPinValueEquals(PinValue.Low, cancellationToken);
 
         #region IDisposable
 
