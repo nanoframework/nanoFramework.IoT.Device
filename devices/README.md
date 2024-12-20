@@ -303,6 +303,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.DhcpServer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.DhcpServer/) [DHCP Server](DhcpServer)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Modbus.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Modbus/) [Modbus - Machine to machine communication protocol](Modbus)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.MulticastDns.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.MulticastDns/) [Multicast DNS](MulticastDns)
 
 ## 
 
