@@ -38,14 +38,14 @@
     <Reference Include="System.Math, Version=1.5.43.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.ElectricResistance, Version=5.61.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricResistance.5.61.0\lib\UnitsNet.ElectricResistance.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricResistance, Version=5.65.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricResistance.5.65.0\lib\UnitsNet.ElectricResistance.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Frequency, Version=5.61.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.5.61.0\lib\UnitsNet.Frequency.dll</HintPath>
+    <Reference Include="UnitsNet.Frequency, Version=5.65.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.5.65.0\lib\UnitsNet.Frequency.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=5.61.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.61.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=5.65.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.65.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
