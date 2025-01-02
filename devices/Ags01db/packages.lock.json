@@ -52,15 +52,15 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.61.0, 5.61.0]",
-        "resolved": "5.61.0",
-        "contentHash": "IWw0yXZWHD+MdzGh5SahUmjxKluocWimdmO6i9sm8k8eUHDO6VbvM5IAEZFvt5caTUm7YZnY8gTvft24Ws7IKQ=="
+        "requested": "[5.65.0, 5.65.0]",
+        "resolved": "5.65.0",
+        "contentHash": "F2SvIsRvTWiKHUdg7KGZT/XHA2ZjKQFNkoDDFWW6rgvuBjcftMEvke0fDXz8WI4pacsIhvh8xVJkWy4Js+qi3g=="
       },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
-        "requested": "[5.61.0, 5.61.0]",
-        "resolved": "5.61.0",
-        "contentHash": "6JNrYbvHmYsZtpb/eVg9HqK5uMrCu2D1M12tK0jcrbAmLKeux4RZS6E9AEF6MbNXIsynCcDR7UfubGARR9FE/w=="
+        "requested": "[5.65.0, 5.65.0]",
+        "resolved": "5.65.0",
+        "contentHash": "GsjJkU3fOom7fN1aqHtuaVKFW7zR04/9i7wGQY+ONl35mktAuXqnrASJHpJ+QY3VtITTaGS7jEyV4Q7QAfO7Cg=="
       }
     }
   }
