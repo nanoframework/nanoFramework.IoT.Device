@@ -249,18 +249,18 @@ namespace Iot.Device.AtModem.Http
                     Modem.Channel.Start();
                 }
 
-                Modem.GenericEvent += ModemGenericEvent;
-                _httpActionArrived.Reset();
+                    Modem.GenericEvent += ModemGenericEvent;
+                    _httpActionArrived.Reset();
 
-                Modem.Channel.SendCommand($"AT+HTTPACTION={method}");
+                    Modem.Channel.SendCommand($"AT+HTTPACTION={method}");
 
-                // this is the timeout for the loop to complete, it has to depend on the content length, with a minimum of 15 seconds
-                int milisecondsTimeout = (int)(contentLength > 5000 ? contentLength * 1.6 : 15000);
-                _httpActionArrived.WaitOne(milisecondsTimeout, true);
+                    // this is the timeout for the loop to complete, it has to depend on the content length, with a minimum of 15 seconds
+                    int milisecondsTimeout = (int)(contentLength > 5000 ? contentLength * 1.6 : 15000);
+                    _httpActionArrived.WaitOne(milisecondsTimeout, true);
 
                 if (_httpActionResult != null)
                 {
-                    // Setup the manual mode for the channel and then send the raw commands and read the raw elements
+                        // Setup the manual mode for the channel and then send the raw commands and read the raw elements
                     Modem.Channel.Stop();
 
                     Modem.Channel.SendBytesWithoutAck(Encoding.UTF8.GetBytes($"AT+HTTPREAD=0,{_httpActionResult.DataLenght}\r\n"));
@@ -300,8 +300,12 @@ namespace Iot.Device.AtModem.Http
 
                             lengthRead += index;
                         }
+                        else if (line.Equals("ERROR"))
+                        {
+                            break;
+                        }
                     }
-                    while ((lengthRead < lengthToRead) || cts.IsCancellationRequested);
+                    while ((lengthRead < lengthToRead) && (!cts.IsCancellationRequested));
 
                     // Restart everything
                     Modem.Channel.Clear();
