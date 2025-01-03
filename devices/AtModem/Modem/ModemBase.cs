@@ -722,7 +722,7 @@ namespace Iot.Device.AtModem.Modem
 
                     // The first one is the notification level with proactive +CREG
                     ////int n = int.Parse(parts[0]);
-                    int stat = parts.Length >= 2 ? int.Parse(parts[1]) : 0;
+                    int stat = int.Parse(parts[1]);
                     return ModemResponse.ResultSuccess((NetworkRegistration)stat);
                 }
             }
