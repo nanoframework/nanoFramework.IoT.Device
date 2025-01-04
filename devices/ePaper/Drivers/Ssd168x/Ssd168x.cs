@@ -616,7 +616,7 @@ namespace Iot.Device.EPaper.Drivers.Ssd168x
             SendData((byte)(x / 8));
 
             SendCommand((byte)Command.SetRAMAddressCounterY);
-            SendData((byte)y);
+            SendData((ushort)y);
         }
 
         /// <summary>
