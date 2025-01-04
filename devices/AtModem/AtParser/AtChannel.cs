@@ -335,8 +335,11 @@ namespace Iot.Device.AtModem
             }
             finally
             {
-                _currentCommand = default;
-                _currentResponse = default;
+                lock (_lock)
+                {
+                    _currentCommand = default;
+                    _currentResponse = default;
+                }
             }
         }
 
