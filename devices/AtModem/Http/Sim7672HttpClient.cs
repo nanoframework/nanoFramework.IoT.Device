@@ -300,8 +300,12 @@ namespace Iot.Device.AtModem.Http
 
                             lengthRead += index;
                         }
+                        else if (line.Equals("ERROR"))
+                        {
+                            break;
+                        }
                     }
-                    while ((lengthRead < lengthToRead) || cts.IsCancellationRequested);
+                    while ((lengthRead < lengthToRead) && (!cts.IsCancellationRequested));
 
                     // Restart everything
                     Modem.Channel.Clear();
