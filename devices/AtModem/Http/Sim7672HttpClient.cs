@@ -99,7 +99,7 @@ namespace Iot.Device.AtModem.Http
                     if (retries-- > 0)
                     {
                         // Experience shows that 1 second is ok in most of the times
-                        Thread.Sleep(1000);
+                        Thread.Sleep(250);
                         Modem.Channel.SendCommand($"AT+HTTPTERM");
                         goto Retry;
                     }
