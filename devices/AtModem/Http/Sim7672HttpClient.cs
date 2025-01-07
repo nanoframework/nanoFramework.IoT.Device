@@ -90,15 +90,22 @@ namespace Iot.Device.AtModem.Http
                 int index;
                 int retries = 5;
 
+            Retry:
                 // We init, if already init, try to deiniti and reinit
                 response = Modem.Channel.SendCommand($"AT+HTTPINIT");
                 if (!response.Success)
                 {
-                    Modem.Channel.SendCommand($"AT+HTTPTERM");
-                    Modem.Channel.SendCommand($"AT+HTTPINIT");
+                    // Give it another try
+                    if (retries-- > 0)
+                    {
+                        Thread.Sleep(250);
+                        Modem.Channel.SendCommand($"AT+HTTPTERM");
+                        goto Retry;
+                    }
+
+                    return result;
                 }
 
-            Retry:
                 if (request.RequestUri.Scheme == "https")
                 {
                     // This is to read the current configuration, we don't need it now.
