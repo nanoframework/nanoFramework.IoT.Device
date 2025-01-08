@@ -409,7 +409,11 @@ namespace Iot.Device.AtModem
                 }
                 else
                 {
-                    ProcessMessage(line1);
+                    // lock access to _currentCommand & _currentResponse
+                    lock (_lock)
+                    {
+                        ProcessMessage(line1);
+                    }
                 }
             }
         }
