@@ -6,7 +6,6 @@ The Vl6180X sensor is a Time-to-Flight sensor measuring precisely distances. The
 
 **Vl6180X** [datasheet](https://www.st.com/resource/en/datasheet/vl6180x.pdf)
 
-
 ## Usage
 
 **Important**: make sure you properly setup the I2C pins especially for ESP32 before creating the `I2cDevice`, make sure you install the `nanoFramework.Hardware.ESP32 nuget`:
