@@ -16,7 +16,7 @@
     <RootNamespace>Iot.Device.Vl6180X</RootNamespace>
     <AssemblyName>Iot.Device.Vl6180X</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <DocumentationFile>bin\$(Configuration)\Iot.Device.Vl53L0X.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Vl6180X.xml</DocumentationFile>
     <LangVersion>9.0</LangVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
