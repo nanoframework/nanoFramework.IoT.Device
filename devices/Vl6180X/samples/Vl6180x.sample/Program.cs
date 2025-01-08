@@ -16,7 +16,7 @@ namespace Vl6180x.sample
             Configuration.SetPinFunction(11, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(10, DeviceFunction.I2C1_CLOCK);
 
-            using VL6180X sensor = new(I2cDevice.Create(new I2cConnectionSettings(1, VL6180X.DefaultI2cAddress)));
+            using Vl6180X sensor = new(I2cDevice.Create(new I2cConnectionSettings(1, Vl6180X.DefaultI2cAddress)));
             sensor.Init();
             while (true)
             {

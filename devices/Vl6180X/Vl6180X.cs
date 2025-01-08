@@ -10,9 +10,9 @@ using UnitsNet;
 namespace Iot.Device.VL6180X
 {
     /// <summary>
-    /// Represents VL6180X.
+    /// Represents Vl6180X sensor. Implemented based on https://github.com/pololu/vl6180x-arduino/blob/master/VL6180X.cpp.
     /// </summary>
-    public sealed class VL6180X : IDisposable
+    public sealed class Vl6180X : IDisposable
     {
         /// <summary>
         /// The default I2C Address.
@@ -23,11 +23,11 @@ namespace Iot.Device.VL6180X
         private I2cDevice _i2cDevice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VL6180X" /> class.
+        /// Initializes a new instance of the <see cref="Vl6180X" /> class.
         /// </summary>
         /// <param name="i2cDevice">The I2C Device.</param>
         /// <param name="shouldDispose">True to dispose the I2C Device at dispose.</param>
-        public VL6180X(I2cDevice i2cDevice, bool shouldDispose = true)
+        public Vl6180X(I2cDevice i2cDevice, bool shouldDispose = true)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
             _shouldDispose = shouldDispose;
@@ -112,7 +112,6 @@ namespace Iot.Device.VL6180X
             var buffer = new byte[3];
             BinaryPrimitives.WriteUInt16BigEndian(buffer, reg);
             buffer[2] = param;
-            Debug.WriteLine($"Writing to register 0x{reg:X4}: 0x{param:X2}");
 
             var result = _i2cDevice.Write(buffer);
             if (result.Status != I2cTransferStatus.FullTransfer)
@@ -126,7 +125,6 @@ namespace Iot.Device.VL6180X
             var writeBuffer = new byte[2];
             var readBuffer = new byte[1];
             BinaryPrimitives.WriteUInt16BigEndian(writeBuffer, (ushort)reg);
-            Debug.WriteLine($"Writing register address: 0x{writeBuffer[0]:X2} 0x{writeBuffer[1]:X2}");
 
             var result = _i2cDevice.WriteRead(writeBuffer, readBuffer);
             if (result.Status != I2cTransferStatus.FullTransfer)
@@ -134,7 +132,6 @@ namespace Iot.Device.VL6180X
                 throw new InvalidOperationException("I2C write failed while setting register address");
             }
 
-            Debug.WriteLine($"Read data from register 0x{reg:X4}: 0x{readBuffer[0]:X2}");
             return readBuffer[0];
         }
     }

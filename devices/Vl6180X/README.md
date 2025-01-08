@@ -24,3 +24,9 @@ while (true)
     Thread.Sleep(500);
 }
 ```
+
+## Not implemented
+- ALS (ambient light sensor
+- Range scaling
+- Range continuous measurement
+- I2C Address set
