@@ -26,6 +26,7 @@ while (true)
 ```
 
 ## Not implemented
+
 - ALS (ambient light sensor
 - Range scaling
 - Range continuous measurement
