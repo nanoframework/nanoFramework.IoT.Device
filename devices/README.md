@@ -180,6 +180,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.LidarLiteV3.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.LidarLiteV3/) [LidarLiteV3 - LIDAR Time of Flight Sensor](LidarLiteV3)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.QtrSensors.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.QtrSensors/) [QTR Sensors - Pololu QTR Reflectance Sensors](QtrSensors)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Vl53L0X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Vl53L0X/) [VL53L0X - distance sensor](Vl53L0X)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Vl6180X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Vl6180X/) [Vl6180X - distance sensor](Vl6180X)
 
 ## Passive InfraRed (motion) sensors
 
