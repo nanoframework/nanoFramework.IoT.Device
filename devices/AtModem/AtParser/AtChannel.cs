@@ -317,7 +317,7 @@ namespace Iot.Device.AtModem
             {
                 _currentCommand = command;
                 _currentResponse = new AtResponse();
-                _waitingForCommandResponse = new ManualResetEvent(false);
+                _waitingForCommandResponse.Reset();
 
                 if (_debugEnabled)
                 {
