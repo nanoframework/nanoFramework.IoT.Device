@@ -70,8 +70,8 @@
     <Reference Include="System.Buffers.Binary.BinaryPrimitives">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.699\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Buffers.Helpers">
-      <HintPath>packages\nanoFramework.System.Buffers.Helpers.1.0.1\lib\System.Buffers.Helpers.dll</HintPath>
+    <Reference Include="System.Buffers.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Buffers.Helpers.1.0.31\lib\System.Buffers.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.1.77.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.77\lib\System.IO.Streams.dll</HintPath>
