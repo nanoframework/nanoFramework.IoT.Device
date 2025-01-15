@@ -242,7 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Common.GnssDevice, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.121\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.129\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
