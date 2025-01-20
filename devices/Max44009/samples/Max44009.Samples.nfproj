@@ -29,8 +29,8 @@
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Model.1.2.693\lib\System.Device.Model.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Illuminance, Version=5.65.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.5.65.0\lib\UnitsNet.Illuminance.dll</HintPath>
+    <Reference Include="UnitsNet.Illuminance, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Illuminance.5.66.0\lib\UnitsNet.Illuminance.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
