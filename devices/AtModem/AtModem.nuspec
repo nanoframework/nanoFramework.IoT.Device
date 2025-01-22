@@ -27,7 +27,7 @@ This nuget allows to use AT Modem for SMS, calls, network, internal storage, HTT
       <dependency id="nanoFramework.System.IO.Ports" version="1.1.107" />
       <dependency id="nanoFramework.System.Math" version="1.5.43" />
       <dependency id="nanoFramework.System.Threading" version="1.1.32" />
-      <dependency id="nanoFramework.Iot.Device.Common.GnssDevice" version="1.0.129" />
+      <dependency id="nanoFramework.Iot.Device.Common.GnssDevice" version="1.0.135" />
       <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.66.0" />
       <dependency id="UnitsNet.nanoFramework.Ratio" version="5.66.0" />
     </dependencies>
