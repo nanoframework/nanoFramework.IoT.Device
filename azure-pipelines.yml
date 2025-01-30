@@ -19,7 +19,6 @@ trigger:
       - README.md
       - tips-trick.md
       - assets/*
-      - config/*
       - .github/*
       - StyleCop/*
 
