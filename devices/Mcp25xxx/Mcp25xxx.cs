@@ -451,5 +451,26 @@ namespace Iot.Device.Mcp25xxx
             _spiDevice?.Dispose();
             _spiDevice = null!;
         }
+
+        public byte[] ReadRegister(Address register, byte length = 1)
+        {
+            SpanByte writeBuffer = new byte[2 + length];
+            writeBuffer[0] = (byte)InstructionFormat.Read;
+            writeBuffer[1] = (byte)register;
+
+            SpanByte readBuffer = new byte[2 + length];
+            _spiDevice.TransferFullDuplex(writeBuffer, readBuffer);
+            return readBuffer.Slice(2).ToArray();
+
+            //Span<byte> tx = stackalloc byte[2 + length];
+            //Span<byte> rx = stackalloc byte[2 + length];
+
+            //tx[0] = (byte)Command.Read;
+            //tx[1] = (byte)register;
+
+            //SpiBus.Exchange(ChipSelect, tx, rx);
+
+            //return rx.Slice(2).ToArray();
+        }
     }
 }

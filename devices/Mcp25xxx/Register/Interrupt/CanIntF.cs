@@ -92,14 +92,14 @@ namespace Iot.Device.Mcp25xxx.Register.Interrupt
         /// True = Interrupt pending (must be cleared by MCU to reset interrupt condition).
         /// False = No interrupt pending.
         /// </summary>
-        public bool ReceiveBuffer0FullInterruptFlag { get; }
+        public bool ReceiveBuffer0FullInterruptFlag { get; set; }
 
         /// <summary>
         /// RX1IF: Receive Buffer 1 Full Interrupt Flag bit.
         /// True = Interrupt pending (must be cleared by MCU to reset interrupt condition).
         /// False = No interrupt pending.
         /// </summary>
-        public bool ReceiveBuffer1FullInterruptFlag { get; }
+        public bool ReceiveBuffer1FullInterruptFlag { get; set; }
 
         /// <summary>
         /// TX0IF: Transmit Buffer 0 Empty Interrupt Flag bit.

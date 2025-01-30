@@ -14,6 +14,7 @@ using Iot.Device.Mcp25xxx.Register.Interrupt;
 using Iot.Device.Mcp25xxx.Register.MessageReceive;
 using Iot.Device.Mcp25xxx.Register.MessageTransmit;
 using System.Diagnostics;
+using nanoFramework.Hardware.Esp32;
 
 Debug.WriteLine("Hello Mcp25xxx Sample!");
 
@@ -21,9 +22,9 @@ using Mcp25xxx mcp25xxx = GetMcp25xxxDevice();
 Reset(mcp25xxx);
 
 // ReadAllRegisters(mcp25xxx);
-ReadAllRegistersWithDetails(mcp25xxx);
+ ReadAllRegistersWithDetails(mcp25xxx);
 // ReadRxBuffer(mcp25xxx);
-// Write(mcp25xxx);
+//Write(mcp25xxx);
 // LoadTxBuffer(mcp25xxx);
 // RequestToSend(mcp25xxx);
 // ReadStatus(mcp25xxx);
@@ -38,13 +39,13 @@ Mcp25xxx GetMcp25xxxDevice()
     //////////////////////////////////////////////////////////////////////
     // when connecting to an ESP32 device, need to configure the SPI GPIOs
     // used for the bus
-    //Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
-    //Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
-    //Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
+    Configuration.SetPinFunction(25, DeviceFunction.SPI1_MOSI);     // GPIO25 = SI (MOSI)
+    Configuration.SetPinFunction(26, DeviceFunction.SPI1_MISO);     // GPIO26 = SO (MISO)
+    Configuration.SetPinFunction(33, DeviceFunction.SPI1_CLOCK);    // GPIO33 = SCK (Clock)
     // Make sure as well you are using the right chip select
-    SpiConnectionSettings spiConnectionSettings = new(1, 42);
+    SpiConnectionSettings spiConnectionSettings = new(1, 27);       // GPIO27 = CS (Chip Select)
     SpiDevice spiDevice = SpiDevice.Create(spiConnectionSettings);
-    return new Mcp25625(spiDevice);
+    return new Mcp2515(spiDevice);
 }
 
 void Reset(Mcp25xxx mcp25xxx)
@@ -73,13 +74,13 @@ void ReadAllRegistersWithDetails(Mcp25xxx mcp25xxx)
     Debug.WriteLine("Read All Registers");
     Debug.WriteLine("");
 
-    ReadAllMessageTransmitRegistersWithDetails(mcp25xxx);
+    // ReadAllMessageTransmitRegistersWithDetails(mcp25xxx);
     // ReadAllMessageReceiveRegistersWithDetails(mcp25xxx);
-    // ReadAllAcceptanceFilterRegistersWithDetails(mcp25xxx);
+     ReadAllAcceptanceFilterRegistersWithDetails(mcp25xxx);
     // ReadAllBitTimeConfigurationRegistersWithDetails(mcp25xxx);
     // ReadAllErrorDetectionRegistersWithDetails(mcp25xxx);
     // ReadAllInterruptRegistersWithDetails(mcp25xxx);
-    // ReadAllCanControlRegistersWithDetails(mcp25xxx);
+     ReadAllCanControlRegistersWithDetails(mcp25xxx);
 }
 
 byte ConsoleWriteRegisterAddressDetails(Mcp25xxx mcp25xxx, Address address)
@@ -327,6 +328,11 @@ void ReadAllCanControlRegistersWithDetails(Mcp25xxx mcp25xxx)
 
     ConsoleWriteRegisterItemDetails(new CanCtrl(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.CanCtrl)));
     ConsoleWriteRegisterItemDetails(new CanStat(ConsoleWriteRegisterAddressDetails(mcp25xxx, Address.CanStat)));
+
+    var canStat = new CanStat(mcp25xxx.Read(Address.CanStat));
+    Debug.WriteLine($"  OPMOD: {canStat.OperationMode}");
+    Debug.WriteLine($"  ICOD: {canStat.InterruptFlagCode}");
+
 }
 
 void ReadRxBuffer(Mcp25xxx mcp25xxx)
