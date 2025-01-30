@@ -647,7 +647,7 @@ namespace Iot.Device.AtModem.Modem
         }
 
         /// <summary>
-        /// Gets the date and time of the modem.
+        /// Gets the date and time of the modem. Make sure that auto sync is set via <see cref="EnableNetworkDateTimeSync"/> before getting data.
         /// </summary>
         /// <returns>A <see cref="ModemResponse"/> containing the date and time value.
         /// If success, Result will contain a <see cref="DateTime"/> class.</returns>
@@ -759,6 +759,20 @@ namespace Iot.Device.AtModem.Modem
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Enables DateTime synchronization from GSM operator. 
+        /// </summary>
+        public ModemResponse EnableNetworkDateTimeSync()
+        {
+            var response = Channel.SendCommand("AT+CTZU=1");
+            if (response.Success)
+            {
+                return ModemResponse.Success();
+            }
+
+            return ModemResponse.ResultError();
         }
 
         /// <summary>
