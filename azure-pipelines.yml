@@ -19,7 +19,6 @@ trigger:
       - README.md
       - tips-trick.md
       - assets/*
-      - config/*
       - .github/*
       - StyleCop/*
 
@@ -136,7 +135,6 @@ steps:
     .\sign code azure-key-vault `
     "**/*.nupkg" `
     --base-directory "$(Build.ArtifactStagingDirectory)" `
-    --file-list "$(Build.Repository.LocalPath)\nanoFramework.IoT.Device\config\filelist.txt" `
     --publisher-name ".NET nanoFramework" `
     --description "IoT.Device" `
     --description-url "https://github.com/$env:Build_Repository_Name" `

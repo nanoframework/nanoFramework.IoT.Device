@@ -19,10 +19,10 @@
     <summary>Iot.Device.DCMotor assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.DCMotor</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.18" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.41" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="1.1.10" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.16.1" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.26" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.52" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="1.1.19" />
     </dependencies>
   </metadata>
   <files>

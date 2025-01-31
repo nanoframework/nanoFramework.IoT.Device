@@ -19,11 +19,11 @@
     <summary>Iot.Device.Buzzer assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Buzzer</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.693" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="1.1.10" />
-      <dependency id="nanoFramework.System.Math" version="1.5.43" />
-      <dependency id="UnitsNet.nanoFramework.Frequency" version="5.66.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.16.1" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.751" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="1.1.19" />
+      <dependency id="nanoFramework.System.Math" version="1.5.86" />
+      <dependency id="UnitsNet.nanoFramework.Frequency" version="5.67.0" />
     </dependencies>
   </metadata>
   <files>
