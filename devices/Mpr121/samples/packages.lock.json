@@ -4,21 +4,21 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.15.5, 1.15.5]",
-        "resolved": "1.15.5",
-        "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
+        "requested": "[1.16.1, 1.16.1]",
+        "resolved": "1.16.1",
+        "contentHash": "pUQR6+CuheWC6UXkiIXhmknPkm50OYuKs6TcIBieV50D1R991QSJUFWjM1AixT/37REh8rzx2OAPgX6YDs06zA=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.699, 1.2.699]",
-        "resolved": "1.2.699",
-        "contentHash": "OhR1PNfnToj+1Gun1BA8Uk4mhJW6HWZeW2EKPhHozVlzSLUOUOkjVko2Vje5qCmvA2EuAi8AxKJec/vad9TV0g=="
+        "requested": "[1.2.751, 1.2.751]",
+        "resolved": "1.2.751",
+        "contentHash": "ymxtJ/+P3NjN5WGG713EJs1dbCbxC5mMQBJBd189LN2fjeeGwD9Y6EMA5RL1XMH/4KrghHANbzJpkQjKErGdLA=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[1.1.16, 1.1.16]",
-        "resolved": "1.1.16",
-        "contentHash": "33YPnlZVjFwx0mOhdKTOggx+TvbjTD3WZ6rkSB33ytF9fHoqfvS1AYr4+ScUHW4z2yE7vxVWBol5mI7iEg4Aiw=="
+        "requested": "[1.1.25, 1.1.25]",
+        "resolved": "1.1.25",
+        "contentHash": "takcZmIdaZzS9C8xGXL65tM6qE+sO5N8HgCF/dKq0LO4AXm6SZ2oArre6wZWocstoIeOgwa11a4xX+WeLluUzw=="
       }
     }
   }

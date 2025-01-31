@@ -4,15 +4,15 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.15.5, 1.15.5]",
-        "resolved": "1.15.5",
-        "contentHash": "u2+GvAp1uxLrGdILACAZy+EVKOs28EQ52j8Lz7599egXZ3GBGejjnR2ofhjMQwzrJLlgtyrsx8nSLngDfJNsAg=="
+        "requested": "[1.16.1, 1.16.1]",
+        "resolved": "1.16.1",
+        "contentHash": "pUQR6+CuheWC6UXkiIXhmknPkm50OYuKs6TcIBieV50D1R991QSJUFWjM1AixT/37REh8rzx2OAPgX6YDs06zA=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.18, 1.11.18]",
-        "resolved": "1.11.18",
-        "contentHash": "t0XpUkdyBBBv/0S4oGx3yUJG1iPYWc38odvZW8mVoioSxZOJrRkRHpNfwYxTxtP4LIEyyesOPEH42d05FHfHzA=="
+        "requested": "[1.11.26, 1.11.26]",
+        "resolved": "1.11.26",
+        "contentHash": "xFkgVKv2mnTEwXwNS3lqf2TH4b26TZhq1gqCWPCmLnA6tEpfNP6dpWkm9kwrQ7R2VIdDOtyi3CZhLNAB2bPARg=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.43, 1.5.43]",
-        "resolved": "1.5.43",
-        "contentHash": "JEOEGHoIpknJFwPjjz77sT5mej2PiT7JTv59jabzFf+d8XYy8Z4SH+NdX00Xc/yDS8LIPuWb7+C245XGUUx99A=="
+        "requested": "[1.5.86, 1.5.86]",
+        "resolved": "1.5.86",
+        "contentHash": "C2AKzDcu7bC7lZ+ZBsZRH4tP3dpUrd3auIWzuUCI+7E9f25snT+HoXChJfEykHeDWKcXF8RQePGRcIyHcphCNg=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.66.0, 5.66.0]",
-        "resolved": "5.66.0",
-        "contentHash": "BYhmn8FxTz54KWO3jeuVIY606lrKYqUh6VlGlbK+ietXRlBbBIueg0JJm8qOwRDoHHYR1kBR3sh2700dQPkQ4g=="
+        "requested": "[5.67.0, 5.67.0]",
+        "resolved": "5.67.0",
+        "contentHash": "LeSqXDDh+k/+jKtWDv0Fc2fTry64dXUyfVILfoep8PTRooa3yoB4NboikL3WHtK6bt+uh6aRHsdT+TQyeruPpw=="
       }
     }
   }
