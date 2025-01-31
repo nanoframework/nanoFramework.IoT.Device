@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.86, 1.2.86]",
-        "resolved": "1.2.86",
-        "contentHash": "JTtjVpApAJ2HVDDe1E3dyusf8IeHoFLkWMAwejPkFmfpnWNSrXqjJPQzDLemupAlMDXxHg6O9/Mv7acsz80Gmw=="
+        "requested": "[1.2.87, 1.2.87]",
+        "resolved": "1.2.87",
+        "contentHash": "06vjOEbHSMfRB8Loan+vd4iCOH/d4TfEg4HGkrEawGz1whvAFxceXJu8nZUtrYL+oxpnZWUD3om4tPS4CU6FRA=="
       }
     }
   }

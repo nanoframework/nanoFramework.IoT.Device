@@ -28,9 +28,9 @@
       },
       "nanoFramework.System.Device.Spi": {
         "type": "Direct",
-        "requested": "[1.3.70, 1.3.70]",
-        "resolved": "1.3.70",
-        "contentHash": "ifH38wf4Hs9zYzMo86j/LAgbhqOp1E691CJVTPpwc3zJ8R+u78d1dLoh6OxpHSzP1PwClAh1hHfWldGaWOHQdQ=="
+        "requested": "[1.3.71, 1.3.71]",
+        "resolved": "1.3.71",
+        "contentHash": "DjZ1lhuVASjd/hoaHpVKjp7plyov2W0uMF+mXRwYjsqOlf/AitoTQqlpu08k8disdN/XnKTS9G/QeP+6UTpYUQ=="
       }
     }
   }

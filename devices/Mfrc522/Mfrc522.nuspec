@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mfrc522</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.16.1" />
-      <dependency id="nanoFramework.Iot.Device.Card" version="1.2.752" />
+      <dependency id="nanoFramework.Iot.Device.Card" version="1.2.757" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.751" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.751" />
       <dependency id="nanoFramework.Logging" version="1.1.131" />
