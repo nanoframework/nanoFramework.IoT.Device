@@ -53,29 +53,29 @@
     <None Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.16.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.16.1\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.26.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.11.26\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.699\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c, Version=1.1.16.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="System.Device.I2c, Version=1.1.25.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.I2c.1.1.25\lib\System.Device.I2c.dll</HintPath>
     </Reference>
-    <Reference Include="System.Math, Version=1.5.43.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.1.5.43\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.86.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.5.86\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Numerics.1.2.693\lib\System.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Duration, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Duration.5.66.0\lib\UnitsNet.Duration.dll</HintPath>
+    <Reference Include="UnitsNet.Duration, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Duration.5.67.0\lib\UnitsNet.Duration.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Mass, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Mass.5.66.0\lib\UnitsNet.Mass.dll</HintPath>
+    <Reference Include="UnitsNet.Mass, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Mass.5.67.0\lib\UnitsNet.Mass.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

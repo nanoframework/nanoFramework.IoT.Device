@@ -21,53 +21,53 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.16.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.16.1\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Logging, Version=1.1.125.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.1.1.125\lib\nanoFramework.Logging.dll</HintPath>
+    <Reference Include="nanoFramework.Logging, Version=1.1.131.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Logging.1.1.131\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Logging.Stream, Version=1.1.125.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.Stream.1.1.125\lib\nanoFramework.Logging.Stream.dll</HintPath>
+    <Reference Include="nanoFramework.Logging.Stream, Version=1.1.131.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Logging.Stream.1.1.131\lib\nanoFramework.Logging.Stream.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.18.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.26.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.26\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Native, Version=1.7.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Native.1.7.1\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Native, Version=1.7.7.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Native.1.7.7\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.System.Runtime, Version=1.0.27.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Runtime.1.0.27\lib\nanoFramework.System.Runtime.dll</HintPath>
+    <Reference Include="nanoFramework.System.Runtime, Version=1.0.28.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Runtime.1.0.28\lib\nanoFramework.System.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.System.Text, Version=1.3.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Text.1.3.1\lib\nanoFramework.System.Text.dll</HintPath>
+    <Reference Include="nanoFramework.System.Text, Version=1.3.9.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Text.1.3.9\lib\nanoFramework.System.Text.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.699\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.751\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c, Version=1.1.16.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="System.Device.I2c, Version=1.1.25.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.25\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.693\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.751\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO.FileSystem, Version=1.1.69.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.1.69\lib\System.IO.FileSystem.dll</HintPath>
+    <Reference Include="System.IO.FileSystem, Version=1.1.74.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.1.74\lib\System.IO.FileSystem.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO.Streams, Version=1.1.77.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.77\lib\System.IO.Streams.dll</HintPath>
+    <Reference Include="System.IO.Streams, Version=1.1.82.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.82\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.ElectricCurrent, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.5.66.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricCurrent, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.5.67.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.66.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="UnitsNet.RelativeHumidity, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.67.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.66.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.5.67.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.VolumeConcentration, Version=5.66.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.VolumeConcentration.5.66.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+    <Reference Include="UnitsNet.VolumeConcentration, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.VolumeConcentration.5.67.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
