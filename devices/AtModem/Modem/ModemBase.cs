@@ -647,11 +647,13 @@ namespace Iot.Device.AtModem.Modem
         }
 
         /// <summary>
-        /// Gets the date and time of the modem. Make sure that auto sync is set via <see cref="EnableNetworkDateTimeSync"/> before getting data.
+        /// Gets the date and time of the modem in UTC format.
+        /// Make sure that auto sync is set via <see cref="EnableNetworkDateTimeSync"/> before getting data.
         /// </summary>
+        /// <param name="convertToUtc">Should response be converted to UTC. If not it will return local time from modem.</param>
         /// <returns>A <see cref="ModemResponse"/> containing the date and time value.
         /// If success, Result will contain a <see cref="DateTime"/> class.</returns>
-        public virtual ModemResponse GetDateTime()
+        public virtual ModemResponse GetDateTime(bool convertToUtc = true)
         {
             AtResponse response = Channel.SendCommandReadSingleLine("AT+CCLK?", "+CCLK:");
 
@@ -671,7 +673,12 @@ namespace Iot.Device.AtModem.Modem
                     int minute = int.Parse(times[1]);
                     int second = int.Parse(times[2].Substring(0, 2));
                     int zone = int.Parse(times[2].Substring(2, 3));
-                    DateTime time = new DateTime(2000 + year, month, day, hour, minute, second).Add(TimeSpan.FromMinutes(15 * zone));
+                    DateTime time = new DateTime(2000 + year, month, day, hour, minute, second);
+                    if (convertToUtc)
+                    {
+                        time = time.Add(TimeSpan.FromMinutes(-15 * zone));
+                    }
+
                     return ModemResponse.ResultSuccess(time);
                 }
             }
@@ -764,6 +771,7 @@ namespace Iot.Device.AtModem.Modem
         /// <summary>
         /// Enables DateTime synchronization from GSM operator. 
         /// </summary>
+        /// <returns>A <see cref="ModemResponse"/> indicating the success or failure of the operation.</returns>
         public ModemResponse EnableNetworkDateTimeSync()
         {
             var response = Channel.SendCommand("AT+CTZU=1");
