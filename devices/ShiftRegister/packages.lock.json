@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",
-        "requested": "[1.2.751, 1.2.751]",
-        "resolved": "1.2.751",
-        "contentHash": "mFozl++RxGfdUCN7QmEAHGEWwzAnRZy7Jz62/b8Dous52jUJ4apyFzZF0bx9k7kAcJOOkScTX197gNBhXxZr5g=="
+        "requested": "[1.2.760, 1.2.760]",
+        "resolved": "1.2.760",
+        "contentHash": "6YHZYqcbe9zYOADg/1Nu5F1BZNNN1QVYsamGmbxu2ejJei74hQ/5uoX2awXoJa47AQuY/861xRzuqCWuZy4fsg=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
