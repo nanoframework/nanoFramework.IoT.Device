@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.751, 1.2.751]",
-        "resolved": "1.2.751",
-        "contentHash": "9o3ChWA213pUpUq1kpyhmFfiapZVCIBumQgWRZ3yFVB6OdkYcG+2Niwwdk/S8a2FR5HZXZvRaSg4YeXwJ7Y2Fw=="
+        "requested": "[1.2.771, 1.2.771]",
+        "resolved": "1.2.771",
+        "contentHash": "zFUG1fsNIl0DqCrjMMfwJLXeIgb98q57qN5bpnMQgCCUXkGqn+skIeo2TW3LdzTvpXC2kZBUPgfRIOwVPvW4eQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

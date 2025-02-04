@@ -40,7 +40,7 @@
       <HintPath>..\packages\nanoFramework.Runtime.Native.1.7.8\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.751\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.771\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

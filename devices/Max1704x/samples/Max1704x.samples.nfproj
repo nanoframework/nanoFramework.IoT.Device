@@ -24,11 +24,11 @@
     <Reference Include="System.Device.I2c, Version=1.1.26.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.26\lib\System.Device.I2c.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.67.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotential, Version=5.69.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.5.69.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Ratio, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Ratio.5.67.0\lib\UnitsNet.Ratio.dll</HintPath>
+    <Reference Include="UnitsNet.Ratio, Version=5.69.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Ratio.5.69.0\lib\UnitsNet.Ratio.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

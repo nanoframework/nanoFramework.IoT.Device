@@ -10,9 +10,9 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.6.28, 1.6.28]",
-        "resolved": "1.6.28",
-        "contentHash": "qCSJwqE/77r95WOIUsqOi4w6Du4E80w5N6v8p+YLTt8RvJEgKsNxhMKw1eEixMWrM+QOcHWR4qTQASz/haGu2w=="
+        "requested": "[1.6.29, 1.6.29]",
+        "resolved": "1.6.29",
+        "contentHash": "T1iCv9sr+Ir0SOEX93wz/DoxIZGjGj5ywgG73y3Tk8C96EWdSFzxTFmr/f5MPbrXbYoWL0BUAqnV0Nq9j3jXzw=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.52, 1.1.52]",
-        "resolved": "1.1.52",
-        "contentHash": "XkgsWQ5JMPUeKC+4IpFHtgzYLtYPI9qP6BnN1Z//L90boarLJ88FY/dqb1OsYdJJaTwtpXm/unatOvkLYdYfZQ=="
+        "requested": "[1.1.53, 1.1.53]",
+        "resolved": "1.1.53",
+        "contentHash": "7Pd5iAeWPGdtKUB+OJ0vPjL+d9tQAK0s0JxV1dfjh6PZcU38wykdK64oMqNmCbDFA0aiZl0UyFmz3zXchn39nQ=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.Numerics": {
         "type": "Direct",
-        "requested": "[1.2.751, 1.2.751]",
-        "resolved": "1.2.751",
-        "contentHash": "+qVl8z7r2Fj1jcwVL7+udAlyzB2O46QLuLfIqnLfATH8wNiXwEFUoD17ayx+5MgpQi0ibfCAInsabcR07sW8gQ=="
+        "requested": "[1.2.771, 1.2.771]",
+        "resolved": "1.2.771",
+        "contentHash": "CR1uH8lp/VrKqy4Ugql2Dt7QhlDmYCTtDHMT46jpk7dZCrXPYyZvEoazEhI7b4XDU5CsZdNAH9E6JbLOfuDyUQ=="
       }
     }
   }

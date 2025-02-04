@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.751, 1.2.751]",
-        "resolved": "1.2.751",
-        "contentHash": "9o3ChWA213pUpUq1kpyhmFfiapZVCIBumQgWRZ3yFVB6OdkYcG+2Niwwdk/S8a2FR5HZXZvRaSg4YeXwJ7Y2Fw=="
+        "requested": "[1.2.771, 1.2.771]",
+        "resolved": "1.2.771",
+        "contentHash": "zFUG1fsNIl0DqCrjMMfwJLXeIgb98q57qN5bpnMQgCCUXkGqn+skIeo2TW3LdzTvpXC2kZBUPgfRIOwVPvW4eQ=="
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",
@@ -46,9 +46,9 @@
       },
       "UnitsNet.nanoFramework.VolumeConcentration": {
         "type": "Direct",
-        "requested": "[5.67.0, 5.67.0]",
-        "resolved": "5.67.0",
-        "contentHash": "Owz3BkPe4FNHpiAeAhJUYEaAeWn2NZILiCvpiZBXL5ct3wb7nSDkoTB0IpmC8j//5JZj9wg5Z9aD5GAT7An5bA=="
+        "requested": "[5.69.0, 5.69.0]",
+        "resolved": "5.69.0",
+        "contentHash": "u3D5fY7AWOLIgOxHTU4gRSNCp2E9xNcp5gJ1wWQ93PV07ZShg+fcRlEOv7XYXs1EqsV6M0HWiGV1fMYDEZm53g=="
       }
     }
   }

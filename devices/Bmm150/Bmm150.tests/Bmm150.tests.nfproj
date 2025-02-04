@@ -44,7 +44,7 @@
       <HintPath>..\packages\nanoFramework.System.Math.1.5.90\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Numerics.1.2.751\lib\System.Numerics.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Numerics.1.2.771\lib\System.Numerics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

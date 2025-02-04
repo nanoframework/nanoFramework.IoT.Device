@@ -10,9 +10,9 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.6.28, 1.6.28]",
-        "resolved": "1.6.28",
-        "contentHash": "qCSJwqE/77r95WOIUsqOi4w6Du4E80w5N6v8p+YLTt8RvJEgKsNxhMKw1eEixMWrM+QOcHWR4qTQASz/haGu2w=="
+        "requested": "[1.6.29, 1.6.29]",
+        "resolved": "1.6.29",
+        "contentHash": "T1iCv9sr+Ir0SOEX93wz/DoxIZGjGj5ywgG73y3Tk8C96EWdSFzxTFmr/f5MPbrXbYoWL0BUAqnV0Nq9j3jXzw=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",

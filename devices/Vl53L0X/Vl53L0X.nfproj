@@ -43,7 +43,7 @@
       <HintPath>packages\nanoFramework.Runtime.Native.1.7.8\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.751\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.771\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=1.1.53.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.53\lib\System.Device.Gpio.dll</HintPath>
@@ -52,7 +52,7 @@
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.26\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.751\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.771\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

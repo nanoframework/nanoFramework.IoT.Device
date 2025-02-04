@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.52, 1.1.52]",
-        "resolved": "1.1.52",
-        "contentHash": "XkgsWQ5JMPUeKC+4IpFHtgzYLtYPI9qP6BnN1Z//L90boarLJ88FY/dqb1OsYdJJaTwtpXm/unatOvkLYdYfZQ=="
+        "requested": "[1.1.53, 1.1.53]",
+        "resolved": "1.1.53",
+        "contentHash": "7Pd5iAeWPGdtKUB+OJ0vPjL+d9tQAK0s0JxV1dfjh6PZcU38wykdK64oMqNmCbDFA0aiZl0UyFmz3zXchn39nQ=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
@@ -28,9 +28,9 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.67.0, 5.67.0]",
-        "resolved": "5.67.0",
-        "contentHash": "LeSqXDDh+k/+jKtWDv0Fc2fTry64dXUyfVILfoep8PTRooa3yoB4NboikL3WHtK6bt+uh6aRHsdT+TQyeruPpw=="
+        "requested": "[5.69.0, 5.69.0]",
+        "resolved": "5.69.0",
+        "contentHash": "AZS0veXWhV2j/RxeMM7l4Z1oegqxHFNMStCW9bcpBUUiZE0WTdyM94q3e0YYx3JOsFEspy5BXfdKEIMqXkE2DQ=="
       }
     }
   }
