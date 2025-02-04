@@ -4,15 +4,15 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.16.1, 1.16.1]",
-        "resolved": "1.16.1",
-        "contentHash": "pUQR6+CuheWC6UXkiIXhmknPkm50OYuKs6TcIBieV50D1R991QSJUFWjM1AixT/37REh8rzx2OAPgX6YDs06zA=="
+        "requested": "[1.16.11, 1.16.11]",
+        "resolved": "1.16.11",
+        "contentHash": "2XW+Zn0lQ+lOcxDbB1l2ga2rNoj9Jv2IeJwXE4ka1r+swmxn5N/otlMJVEXJgK8trUeD/E8T7+J7dXjU8UReHw=="
       },
       "nanoFramework.Device.OneWire": {
         "type": "Direct",
-        "requested": "[1.4.31, 1.4.31]",
-        "resolved": "1.4.31",
-        "contentHash": "iv8La0Pqdf3WVT7SjaedatBVLTqOOiaCJf5AXt+uIOuwVbp5B2Rit1sAMDN+QyQnC0qJEP0afi1aqayJN5fg7A=="
+        "requested": "[1.4.32, 1.4.32]",
+        "resolved": "1.4.32",
+        "contentHash": "gWlmAe1YU4YJkEUMmW8Undp3fDDjSNhm/YTm4bHnPx5FGoRJD6eY45L6dQZ+36LS2Va1MwoRQwROK0bYSJ6nlg=="
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
