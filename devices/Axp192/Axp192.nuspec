@@ -21,12 +21,12 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.29" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.52" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.53" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.26" />
-      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.67.0" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.67.0" />
-      <dependency id="UnitsNet.nanoFramework.Power" version="5.67.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.67.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.69.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.69.0" />
+      <dependency id="UnitsNet.nanoFramework.Power" version="5.69.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.69.0" />
     </dependencies>
   </metadata>
   <files>

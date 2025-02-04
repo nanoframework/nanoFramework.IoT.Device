@@ -22,9 +22,9 @@
       },
       "UnitsNet.nanoFramework.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.67.0, 5.67.0]",
-        "resolved": "5.67.0",
-        "contentHash": "3cr6g4Kjqf9v5sk2m9e46RNVNEYKPqVZult3ymvQ9wsM/drgESALdWEzb7VeX9JKySnVK6PheRbYM7kpSPcVdQ=="
+        "requested": "[5.69.0, 5.69.0]",
+        "resolved": "5.69.0",
+        "contentHash": "rkpL9LypUoTzzwugNEbh2CXuOGv1A4p+bJgqlVMl21pqVBzwK2hzykb4AQGvAZ+xGKOX8Ck7RoZv7oyPsVpOoQ=="
       }
     }
   }

@@ -50,7 +50,7 @@
       <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.53\lib\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Model.1.2.751\lib\System.Device.Model.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Model.1.2.771\lib\System.Device.Model.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

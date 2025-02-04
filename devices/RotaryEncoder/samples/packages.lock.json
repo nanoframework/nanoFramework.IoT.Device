@@ -28,9 +28,9 @@
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.751, 1.2.751]",
-        "resolved": "1.2.751",
-        "contentHash": "Poh0BmEyUvOzeBiGVCdiTfIM5W4dXYdvRUe3P1C829VUbm/ICgLXR1HpMTRSo8SibF8gcT96ubHLnO9J3ZQZdw=="
+        "requested": "[1.2.771, 1.2.771]",
+        "resolved": "1.2.771",
+        "contentHash": "J8SvxUdqtoIx9b7BkYT9uw8EOL6fME7tZR42DbtzyTnH2sBd6fGy1aLiRL1rdjbQdpA3R7yuL8ge1aaDABWCcg=="
       }
     }
   }

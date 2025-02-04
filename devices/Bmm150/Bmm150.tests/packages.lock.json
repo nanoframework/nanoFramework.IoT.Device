@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Numerics": {
         "type": "Direct",
-        "requested": "[1.2.751, 1.2.751]",
-        "resolved": "1.2.751",
-        "contentHash": "+qVl8z7r2Fj1jcwVL7+udAlyzB2O46QLuLfIqnLfATH8wNiXwEFUoD17ayx+5MgpQi0ibfCAInsabcR07sW8gQ=="
+        "requested": "[1.2.771, 1.2.771]",
+        "resolved": "1.2.771",
+        "contentHash": "CR1uH8lp/VrKqy4Ugql2Dt7QhlDmYCTtDHMT46jpk7dZCrXPYyZvEoazEhI7b4XDU5CsZdNAH9E6JbLOfuDyUQ=="
       },
       "nanoFramework.TestFramework": {
         "type": "Direct",
