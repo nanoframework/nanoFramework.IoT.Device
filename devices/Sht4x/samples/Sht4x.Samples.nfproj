@@ -23,20 +23,20 @@
     <Reference Include="Iot.Device.Common.WeatherHelper, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.2.751\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
     </Reference>
-    <Reference Include="mscorlib, Version=1.16.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.1.16.1\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.16.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Hardware.Esp32, Version=1.6.28.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.28\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+    <Reference Include="nanoFramework.Hardware.Esp32, Version=1.6.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.29\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.26.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.26\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.29\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c, Version=1.1.25.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.25\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="System.Device.I2c, Version=1.1.26.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.26\lib\System.Device.I2c.dll</HintPath>
     </Reference>
-    <Reference Include="System.Math, Version=1.5.86.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Math.1.5.86\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.90.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Math.1.5.90\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Length, Version=5.67.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.67.0\lib\UnitsNet.Length.dll</HintPath>

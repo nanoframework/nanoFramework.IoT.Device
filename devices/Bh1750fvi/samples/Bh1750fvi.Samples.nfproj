@@ -20,14 +20,14 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.16.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.1.16.1\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.16.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.751\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c, Version=1.1.25.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.25\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="System.Device.I2c, Version=1.1.26.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.26\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Model.1.2.751\lib\System.Device.Model.dll</HintPath>
