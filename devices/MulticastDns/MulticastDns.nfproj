@@ -73,14 +73,14 @@
     <Reference Include="System.Buffers.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Buffers.Helpers.1.0.69\lib\System.Buffers.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO.Streams, Version=1.1.82.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Streams.1.1.82\lib\System.IO.Streams.dll</HintPath>
+    <Reference Include="System.IO.Streams, Version=1.1.86.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.IO.Streams.1.1.86\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net, Version=1.11.25.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.1.11.25\lib\System.Net.dll</HintPath>
+    <Reference Include="System.Net, Version=1.11.27.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Net.1.11.27\lib\System.Net.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.82.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.82\lib\System.Net.Sockets.UdpClient.dll</HintPath>
+    <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.84.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.84\lib\System.Net.Sockets.UdpClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=1.1.46.1709, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Threading.1.1.46\lib\System.Threading.dll</HintPath>
