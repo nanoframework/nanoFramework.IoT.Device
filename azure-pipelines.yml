@@ -162,22 +162,6 @@ steps:
     ArtifactName: deployables
     ArtifactType: Container
 
-# push NuGet class lib package to Azure Artifacts (always happens except on PR builds)
-- task: NuGetAuthenticate@1
-  inputs:
-    nuGetServiceConnections: 'AzureArtifacts-$(System.TeamProject)'
-
-- script: nuget push -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json *.nupkg -NonInteractive -SkipDuplicate
-  workingDirectory: '$(Build.ArtifactStagingDirectory)'
-  condition: >-
-    and(
-      succeeded(),
-      gt(variables['Count_Artifacts.NUGET_COUNT'], 0),
-      eq(variables['System.PullRequest.PullRequestId'], '')
-    )
-  continueOnError: false
-  displayName: Push NuGet packages to NuGet
-
 # push NuGet class lib package to NuGet (always happens except on PR builds)
 - task: NuGetCommand@2
   condition: >-
