@@ -45,6 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Can\CanController.cs" />
+    <Compile Include="Can\CanEnums.cs" />
+    <Compile Include="Can\CanMessage.cs" />
+    <Compile Include="Can\CanMessageFrameType.cs" />
+    <Compile Include="Can\CanMessageIdType.cs" />
+    <Compile Include="Can\ICanController.cs" />
     <Compile Include="InstructionFormat.cs" />
     <Compile Include="Mcp25xxx.cs" />
     <Compile Include="Mcp2515.cs" />
