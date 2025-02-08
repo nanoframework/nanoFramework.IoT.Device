@@ -34,16 +34,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+    <!-- INSERT FILE REFERENCES HERE -->
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="*.cs" />
     <None Include="*.md" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mcp25xxx.nfproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->
