@@ -33,9 +33,6 @@
     <Reference Include="mscorlib">
       <HintPath>packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
-    </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.29\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
@@ -47,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <Compile Include="Can\CanController.cs" />
     <Compile Include="Can\CanEnums.cs" />
     <Compile Include="Can\CanMessage.cs" />
@@ -62,15 +60,11 @@
     <Compile Include="RxStatusResponse.cs" />
     <Compile Include="TxBufferAddressPointer.cs" />
     <Compile Include="Register\**\*.cs" />
-    <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="*.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.lock.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <!-- INSERT IMPORTS HERE -->

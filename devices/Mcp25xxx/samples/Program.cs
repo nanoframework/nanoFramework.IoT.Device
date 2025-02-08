@@ -38,13 +38,13 @@ Mcp25xxx GetMcp25xxxDevice()
     //////////////////////////////////////////////////////////////////////
     // when connecting to an ESP32 device, need to configure the SPI GPIOs
     // used for the bus
-    //Configuration.SetPinFunction(25, DeviceFunction.SPI1_MOSI);
-    //Configuration.SetPinFunction(26, DeviceFunction.SPI1_MISO);
-    //Configuration.SetPinFunction(33, DeviceFunction.SPI1_CLOCK);
+    //Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
+    //Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
+    //Configuration.SetPinFunction(32, DeviceFunction.SPI1_CLOCK);
     // Make sure as well you are using the right chip select
-    SpiConnectionSettings spiConnectionSettings = new(1, 27);
+    SpiConnectionSettings spiConnectionSettings = new(1, 42);
     SpiDevice spiDevice = SpiDevice.Create(spiConnectionSettings);
-    return new Mcp2515(spiDevice);
+    return new Mcp25625(spiDevice);
 }
 
 void Reset(Mcp25xxx mcp25xxx)
