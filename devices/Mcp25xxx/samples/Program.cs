@@ -40,7 +40,7 @@ Mcp25xxx GetMcp25xxxDevice()
     // used for the bus
     //Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
     //Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
-    //Configuration.SetPinFunction(32, DeviceFunction.SPI1_CLOCK);
+    //Configuration.SetPinFunction(22, DeviceFunction.SPI1_CLOCK);
     // Make sure as well you are using the right chip select
     SpiConnectionSettings spiConnectionSettings = new(1, 42);
     SpiDevice spiDevice = SpiDevice.Create(spiConnectionSettings);
