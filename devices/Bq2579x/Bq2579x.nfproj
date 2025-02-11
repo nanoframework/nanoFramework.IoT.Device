@@ -31,6 +31,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="BatteryDischargeCurrent.cs" />
+    <Compile Include="Bq2579x.HelperMethods.cs" />
     <Compile Include="ChargeCurrent.cs" />
     <Compile Include="ChargeVoltage.cs" />
     <Compile Include="AdcInitialAverage.cs" />
