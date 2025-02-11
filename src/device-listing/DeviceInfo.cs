@@ -4,8 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading;
+using System.Linq;
 
 namespace Iot.Tools.DeviceListing
 {
@@ -17,6 +16,7 @@ namespace Iot.Tools.DeviceListing
         public HashSet<string> Categories { get; private set; } = new HashSet<string>();
         public string CategoriesFilePath { get; private set; }
         public bool CategoriesFileExists { get; private set; }
+        public string NuGetPackageId { get; private set; }
 
         public DeviceInfo(string readmePath, string categoriesFilePath)
         {
@@ -25,6 +25,7 @@ namespace Iot.Tools.DeviceListing
             Title = GetTitle(readmePath) ?? "Error";
             CategoriesFilePath = categoriesFilePath;
             CategoriesFileExists = File.Exists(categoriesFilePath);
+            NuGetPackageId = GetNugetPackageId(readmePath);
 
             ImportCategories();
         }
@@ -65,6 +66,35 @@ namespace Iot.Tools.DeviceListing
             }
 
             return null;
+        }
+
+        private string GetNugetPackageId(string readmePath)
+        {
+            // find nuspec file
+            var nuspecFiles = Directory.EnumerateFiles(Path.GetDirectoryName(readmePath)!, "*.nuspec");
+
+            // should have only one nuspec file
+            if (nuspecFiles is null || !nuspecFiles.Any())
+            {
+                Console.WriteLine($"Error: Can't find nuspec file for device {Name}");
+                return string.Empty;
+            }
+
+            // read nuspec file
+            string[] nuspecLines = File.ReadAllLines(nuspecFiles.First());
+
+            // find package id
+            foreach (string line in nuspecLines)
+            {
+                if (line.Contains("<id>") && line.Contains("</id>"))
+                {
+                    return line.Split(new[] { '<', '>' }, StringSplitOptions.None)[2];
+                }
+            }
+
+            // shouldn't reach here
+            Console.WriteLine($"Error: Can't find package id in nuspec file for device {Name}");
+            return string.Empty;
         }
     }
 }

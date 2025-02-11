@@ -111,25 +111,7 @@ string GetDeviceListing(string devicesPath, IEnumerable<DeviceInfo> devices)
     var deviceListing = new StringBuilder();
     foreach (DeviceInfo device in devices)
     {
-        if (device.Name.StartsWith("System"))
-        {
-            deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
-        }
-        else
-        {
-            if ((device.Name == "NumberHelper") || (device.Name == "WeatherHelper"))
-            {
-                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Common.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Common.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
-            }
-            else if (device.Name == "Card")
-            {
-                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.Card.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.Card/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
-            }
-            else
-            {
-                deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.IoT.Device.{device.Name}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.IoT.Device.{device.Name}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
-            }
-        }
+        deviceListing.AppendLine($"* [![NuGet](https://img.shields.io/nuget/v/{device.NuGetPackageId}.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/{device.NuGetPackageId}/) [{device.Title}]({CreateMarkdownLinkFromPath(device.ReadmePath, devicesPath)})");
     }
 
     return deviceListing.ToString();
