@@ -244,8 +244,8 @@
     <Reference Include="Iot.Device.Common.GnssDevice, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Iot.Device.Common.GnssDevice.1.0.182\lib\Iot.Device.Common.GnssDevice.dll</HintPath>
     </Reference>
-    <Reference Include="mscorlib, Version=1.16.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.17.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.M2Mqtt.Core, Version=5.1.176.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.M2Mqtt.Core.5.1.176\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
@@ -268,8 +268,8 @@
     <Reference Include="System.IO.Streams, Version=1.1.86.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.86\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="System.Math, Version=1.5.90.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.1.5.90\lib\System.Math.dll</HintPath>
+    <Reference Include="System.Math, Version=1.5.102.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.5.102\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=1.1.46.1709, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Threading.1.1.46\lib\System.Threading.dll</HintPath>
