@@ -20,7 +20,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
-      <dependency id="nanoFramework.Graphics.Core" version="1.2.35" />
+      <dependency id="nanoFramework.Graphics.Core" version="1.2.39" />
     </dependencies>
   </metadata>
   <files>
