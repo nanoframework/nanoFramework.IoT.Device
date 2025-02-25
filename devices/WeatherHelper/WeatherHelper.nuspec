@@ -19,8 +19,8 @@
     <summary>Iot.Device.Common.WeatherHelper assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Weather Helper</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
-      <dependency id="nanoFramework.System.Math" version="1.5.90" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
+      <dependency id="nanoFramework.System.Math" version="1.5.102" />
       <dependency id="UnitsNet.nanoFramework.Length" version="5.69.0" />
       <dependency id="UnitsNet.nanoFramework.Pressure" version="5.69.0" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.69.0" />
