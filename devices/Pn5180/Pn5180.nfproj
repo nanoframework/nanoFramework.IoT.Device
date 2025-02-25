@@ -61,29 +61,29 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.16.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.17.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Logging, Version=1.1.140.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Logging.1.1.140\lib\nanoFramework.Logging.dll</HintPath>
+    <Reference Include="nanoFramework.Logging, Version=1.1.142.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Logging.1.1.142\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Events.1.11.29\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events, Version=1.11.30.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Events.1.11.30\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Runtime.Native, Version=1.7.8.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Native.1.7.8\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Native, Version=1.7.9.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Runtime.Native.1.7.9\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.771\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.807\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.Gpio, Version=1.1.53.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.53\lib\System.Device.Gpio.dll</HintPath>
+    <Reference Include="System.Device.Gpio, Version=1.1.55.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.Gpio.1.1.55\lib\System.Device.Gpio.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.Spi, Version=1.3.73.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Spi.1.3.73\lib\System.Device.Spi.dll</HintPath>
+    <Reference Include="System.Device.Spi, Version=1.3.77.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.Spi.1.3.77\lib\System.Device.Spi.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.771\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.807\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
