@@ -19,12 +19,12 @@
     <summary>Iot.Device.SparkFunLcd assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot sparkfun lcd</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
       <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
       <dependency id="nanoFramework.Runtime.Native" version="1.7.8" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.26" />
-      <dependency id="nanoFramework.Graphics.Core" version="1.2.35" />
-      <dependency id="nanoFramework.System.Math" version="1.5.90" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
+      <dependency id="nanoFramework.Graphics.Core" version="1.2.39" />
+      <dependency id="nanoFramework.System.Math" version="1.5.102" />
     </dependencies>
   </metadata>
   <files>
