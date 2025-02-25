@@ -16,15 +16,15 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.6.29, 1.6.29]",
-        "resolved": "1.6.29",
-        "contentHash": "T1iCv9sr+Ir0SOEX93wz/DoxIZGjGj5ywgG73y3Tk8C96EWdSFzxTFmr/f5MPbrXbYoWL0BUAqnV0Nq9j3jXzw=="
+        "requested": "[1.6.30, 1.6.30]",
+        "resolved": "1.6.30",
+        "contentHash": "7auLpxj5Lyi12tqC2RJOuYQMIhP+zxgZuVrgeq2hSbdE8YaMV65yLWbxzQivxWjyUD3HeLxGHHOgYBPuHjbi2Q=="
       },
       "nanoFramework.Iot.Device.Multiplexing": {
         "type": "Direct",
-        "requested": "[1.2.771, 1.2.771]",
-        "resolved": "1.2.771",
-        "contentHash": "pk3gqI9G3YYXi3a8eQknl9P2Yt7oS7VCf2v/hp909O5bE5t23zcaoRJAMmEtAkrs91UzfYzQ0/aqPQxY5ZraxQ=="
+        "requested": "[1.2.807, 1.2.807]",
+        "resolved": "1.2.807",
+        "contentHash": "sut9gqUOvqeWMI4kaC9BgwDG2kqXxcnMmFZZUY09Q+GNV2HsVwRo23YQLe5SZVPYF68g4o5YGIwr5bfedpLvzw=="
       },
       "nanoFramework.Iot.Device.Pcx857x": {
         "type": "Direct",
@@ -76,9 +76,9 @@
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.771, 1.2.771]",
-        "resolved": "1.2.771",
-        "contentHash": "J8SvxUdqtoIx9b7BkYT9uw8EOL6fME7tZR42DbtzyTnH2sBd6fGy1aLiRL1rdjbQdpA3R7yuL8ge1aaDABWCcg=="
+        "requested": "[1.2.807, 1.2.807]",
+        "resolved": "1.2.807",
+        "contentHash": "fecFpSxRNKE6kHj2+BJ9cZtNTfrkQDqjUUGJUpuRWk9wow68hTYBBE1TyImzUZJEP2R6gSeeAn57x5IaDtWagw=="
       },
       "nanoFramework.System.IO.FileSystem": {
         "type": "Direct",
@@ -88,9 +88,9 @@
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
-        "requested": "[1.1.86, 1.1.86]",
-        "resolved": "1.1.86",
-        "contentHash": "Gyxka4hQVjT+oQFqE8wMcA39wZSZNKuOdtNJeIxsuJdjFi0+nnoAFrGtskqaIXVZdn2sSmTFKNahy4376YhPXQ=="
+        "requested": "[1.1.88, 1.1.88]",
+        "resolved": "1.1.88",
+        "contentHash": "rgtcjPuHZLGt4mEmGfCZNIiP+dwlNKoJRWRxjyFJG/W70djkBzRYgaXb3KEsLOHRwGu7+A0GfB5ERK5jELXATQ=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
