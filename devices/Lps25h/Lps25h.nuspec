@@ -19,12 +19,12 @@
     <summary>Iot.Device.Lps25h assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Lps25h</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.771" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.771" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.771" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.26" />
-      <dependency id="nanoFramework.System.Math" version="1.5.90" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.807" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.807" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.807" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
+      <dependency id="nanoFramework.System.Math" version="1.5.102" />
       <dependency id="UnitsNet.nanoFramework.Pressure" version="5.69.0" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="5.69.0" />
     </dependencies>

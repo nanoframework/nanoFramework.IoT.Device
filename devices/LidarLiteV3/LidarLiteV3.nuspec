@@ -19,12 +19,12 @@
     <summary>Iot.Device.LidarLiteV3 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.LidarLiteV3</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.771" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.771" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.807" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.807" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.29" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.53" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.26" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
       <dependency id="UnitsNet.nanoFramework.Length" version="5.69.0" />
     </dependencies>
   </metadata>
