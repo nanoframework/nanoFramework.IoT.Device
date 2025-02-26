@@ -52,9 +52,9 @@
       },
       "nanoFramework.Iot.Device.Ft6xx6x": {
         "type": "Direct",
-        "requested": "[1.2.782, 1.2.782]",
-        "resolved": "1.2.782",
-        "contentHash": "sPPcO3q3weHF7vMgD1o3aDI5p+AjrZRAPC6oGFbFbdjWTC/GGX2ygqgGQnPaPj7VbKEPT25u63eRCuzb17ZOHw=="
+        "requested": "[1.2.814, 1.2.814]",
+        "resolved": "1.2.814",
+        "contentHash": "R2nMcfTjxV6lsG9Wo74aArcPBQKx1ZfUaKp6e28/cqZpCoS+cOt418tJen2c7bmJLYApayZeEHROkT6JpgCwjw=="
       },
       "nanoFramework.Iot.Device.Mpu6886": {
         "type": "Direct",
@@ -88,9 +88,9 @@
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
-        "requested": "[1.7.8, 1.7.8]",
-        "resolved": "1.7.8",
-        "contentHash": "8wWz/dUDJ3BHTVHNZ9VqLjaWyfn9OB1DU2iJgY7WvV/DkVMF3mLw80/3g5I5BfAUUhNq1DgQo8Id5yt4QOZq+g=="
+        "requested": "[1.7.9, 1.7.9]",
+        "resolved": "1.7.9",
+        "contentHash": "ekjQ4lTNVZ5FNrgry6XV0e7ydOSvcDGuAnSaNQewiBQAfSbpTZx3njCwU5SU5wcO+tBqT4wP7K1LNtw7unaUkg=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
@@ -142,15 +142,15 @@
       },
       "nanoFramework.System.Device.Spi": {
         "type": "Direct",
-        "requested": "[1.3.76, 1.3.76]",
-        "resolved": "1.3.76",
-        "contentHash": "hG6MP3bysRfZqNHSxPlO/GlI2h1B+co85k2MKN2CFV4wzCsPWO3G+BQpp8+FzLzgN9ZY9NMWwMkHKnjUgf5g9Q=="
+        "requested": "[1.3.77, 1.3.77]",
+        "resolved": "1.3.77",
+        "contentHash": "ylxBR08EciQoGjZWIu6XXgqDeSh7GJccpmaoBMgKt1oWs6Omixx0iWhGvJstPPGhS3Y3Xlr1gDZgJ8xj5fgjew=="
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.807, 1.2.807]",
-        "resolved": "1.2.807",
-        "contentHash": "fecFpSxRNKE6kHj2+BJ9cZtNTfrkQDqjUUGJUpuRWk9wow68hTYBBE1TyImzUZJEP2R6gSeeAn57x5IaDtWagw=="
+        "requested": "[1.2.815, 1.2.815]",
+        "resolved": "1.2.815",
+        "contentHash": "tzJyaSZZ6qrO6lVuo6XwZ8gao57IK3tsVoBlYFNGvTqwsn6CQQzGMBw4GkFbJv71ldFlwh0mGMic2fDvYDZRjA=="
       },
       "nanoFramework.System.IO.FileSystem": {
         "type": "Direct",
