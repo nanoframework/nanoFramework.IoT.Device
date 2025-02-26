@@ -21,7 +21,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.30" />
-      <dependency id="nanoFramework.System.Buffers.Helpers" version="1.0.69" />
+      <dependency id="nanoFramework.System.Buffers.Helpers" version="1.0.116" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.88" />
       <dependency id="nanoFramework.System.Net" version="1.11.31" />
       <dependency id="nanoFramework.System.Net.Sockets.UdpClient" version="1.1.87" />
