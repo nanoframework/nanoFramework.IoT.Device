@@ -24,7 +24,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.813\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Pcx857x, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.772\lib\Iot.Device.Pcx857x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.822\lib\Iot.Device.Pcx857x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.817\lib\Iot.Device.ShiftRegister.dll</HintPath>
@@ -74,8 +74,8 @@
     <Reference Include="System.Math, Version=1.5.102.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Math.1.5.102\lib\System.Math.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading, Version=1.1.46.1709, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Threading.1.1.46\lib\System.Threading.dll</HintPath>
+    <Reference Include="System.Threading, Version=1.1.49.41415, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Threading.1.1.49\lib\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
