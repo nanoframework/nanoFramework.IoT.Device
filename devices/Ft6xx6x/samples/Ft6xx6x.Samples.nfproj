@@ -53,8 +53,8 @@
     <Reference Include="nanoFramework.Hardware.Esp32, Version=1.6.31.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.31\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.M5Core2, Version=1.1.269.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.M5Core2.1.1.269\lib\nanoFramework.M5Core2.dll</HintPath>
+    <Reference Include="nanoFramework.M5Core2, Version=1.1.270.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\nanoFramework.M5Core2.1.1.270\lib\nanoFramework.M5Core2.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager, Version=1.2.30.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.ResourceManager.1.2.30\lib\nanoFramework.ResourceManager.dll</HintPath>
@@ -116,8 +116,8 @@
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Numerics.1.2.807\lib\System.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading, Version=1.1.46.1709, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Threading.1.1.46\lib\System.Threading.dll</HintPath>
+    <Reference Include="System.Threading, Version=1.1.49.41415, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Threading.1.1.49\lib\System.Threading.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.ElectricCurrent, Version=5.70.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.5.70.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
