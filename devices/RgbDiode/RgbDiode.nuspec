@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.System.Device.Pwm" version="1.1.21" />
       <dependency id="nanoFramework.Graphics.Core" version="1.2.39" />
       <dependency id="nanoFramework.System.Math" version="1.5.102" />
-      <dependency id="nanoFramework.System.Threading" version="1.1.46" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.49" />
     </dependencies>
   </metadata>
   <files>
