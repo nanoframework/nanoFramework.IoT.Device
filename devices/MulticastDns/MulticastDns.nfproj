@@ -76,11 +76,11 @@
     <Reference Include="System.IO.Streams, Version=1.1.88.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.88\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net, Version=1.11.31.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.1.11.31\lib\System.Net.dll</HintPath>
+    <Reference Include="System.Net, Version=1.11.32.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Net.1.11.32\lib\System.Net.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.87.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.87\lib\System.Net.Sockets.UdpClient.dll</HintPath>
+    <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.89.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.89\lib\System.Net.Sockets.UdpClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=1.1.49.41415, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Threading.1.1.49\lib\System.Threading.dll</HintPath>

@@ -23,10 +23,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.738\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.1.1.747\lib\Iot.Device.CharacterLcd.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.813\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.826\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.817\lib\Iot.Device.ShiftRegister.dll</HintPath>

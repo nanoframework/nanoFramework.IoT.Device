@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[1.5.115, 1.5.115]",
-        "resolved": "1.5.115",
-        "contentHash": "1+xYNw9G/ir3vhTUh6mZuMFdp57hUzSRjr640d9x3qz/kxdK0Nqaa8HLPNvh6uCpSmpKExxag/23B6/L8SxVDA=="
+        "requested": "[1.5.123, 1.5.123]",
+        "resolved": "1.5.123",
+        "contentHash": "npsm+Ua94Oir6yUqnHKHVPouh8mgZRyo2h0havWx+QSt4ZdWbztGXNs27PK/oAc15PbuPkAiVNnmFWKJ155VYQ=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[1.11.31, 1.11.31]",
-        "resolved": "1.11.31",
-        "contentHash": "6BaH2cniPCAlW5v/nhY+PqqTB+nzzwjcnaWh96oY9oxk+I1loMVc4UBrbCWxOjuZhGRwWZnZThWK1n263nj7Bw=="
+        "requested": "[1.11.32, 1.11.32]",
+        "resolved": "1.11.32",
+        "contentHash": "9QEXL2lzZoi0/2Jr3+dHMVetn3NeOSqbr1OJtUMTGYuufwr289A2X83JEg8RiKTEA56Q2mBIdMKIiJZHKCSBpA=="
       },
       "nanoFramework.System.Net.Http.Server": {
         "type": "Direct",
-        "requested": "[1.5.181, 1.5.181]",
-        "resolved": "1.5.181",
-        "contentHash": "XCTVUg0Fi6LJxAi1Wt2GkRrLGaiW2197c1jv5P64aPeTurl9lllDOdzyHesexX0+4FlX909NyGaLfQMlVfd4WA=="
+        "requested": "[1.5.183, 1.5.183]",
+        "resolved": "1.5.183",
+        "contentHash": "Axg23DkxDolAHvAKr48JTYhMcAy8oZeAcuP4jb63Xm2SObQZ6BWr2fZA6COLlnKUDijFOtnlH8l43h1jHOA/uA=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.101, 1.2.101]",
-        "resolved": "1.2.101",
-        "contentHash": "Uh8wJzkakqoIW0Az7ewSpCHWhlVA4xF6h0/xjDIuQzfHyfyjqkpLZ/4OahONOXcJKIOlX9UgAkNOONJfu+BIbQ=="
+        "requested": "[1.2.105, 1.2.105]",
+        "resolved": "1.2.105",
+        "contentHash": "E9ujSwvtt3zaWY2zD+imXHG3fD4xDIObFIZWP1k5z2VB6R5C9RHshReaJSgFMGkM57Ey/3POn7KBTGpRGW2ZpQ=="
       }
     }
   }

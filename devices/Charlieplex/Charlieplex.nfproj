@@ -32,7 +32,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Multiplexing, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.2.813\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Multiplexing.1.2.826\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.17.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
