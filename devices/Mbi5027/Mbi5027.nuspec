@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mbi5027</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.813" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.826" />
       <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.817" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.30" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.55" />
