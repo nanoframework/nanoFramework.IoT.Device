@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf iot lcd</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.813" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.826" />
       <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.817" />
       <dependency id="nanoFramework.ResourceManager" version="1.2.30" />
       <dependency id="nanoFramework.System.Collections" version="1.5.62" />
