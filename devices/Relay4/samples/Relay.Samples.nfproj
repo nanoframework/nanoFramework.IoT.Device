@@ -36,7 +36,7 @@
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Relay.nfproj" />
+    <ProjectReference Include="..\Relay4.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
