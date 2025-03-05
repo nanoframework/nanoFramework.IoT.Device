@@ -26,16 +26,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Card, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.817\lib\Iot.Device.Card.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.840\lib\Iot.Device.Card.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Mifare, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.817\lib\Iot.Device.Mifare.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.840\lib\Iot.Device.Mifare.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ndef, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.817\lib\Iot.Device.Ndef.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.840\lib\Iot.Device.Ndef.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ultralight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.817\lib\Iot.Device.Ultralight.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Card.1.2.840\lib\Iot.Device.Ultralight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.17.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
@@ -43,8 +43,8 @@
     <Reference Include="nanoFramework.Hardware.Esp32, Version=1.6.31.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.31\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Logging, Version=1.1.146.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.1.1.146\lib\nanoFramework.Logging.dll</HintPath>
+    <Reference Include="nanoFramework.Logging, Version=1.1.147.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Logging.1.1.147\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.30.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.30\lib\nanoFramework.Runtime.Events.dll</HintPath>
