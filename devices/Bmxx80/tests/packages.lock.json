@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
-        "requested": "[1.2.821, 1.2.821]",
-        "resolved": "1.2.821",
-        "contentHash": "EX+r1eU++QMycilbJuHdR3UGxzyLTk8MeNg2M+GbaNHwLoQMK78oHyFdCBLVaRGQ1M8u+G8h9uqB8m4aoTdstg=="
+        "requested": "[1.2.845, 1.2.845]",
+        "resolved": "1.2.845",
+        "contentHash": "lQKAXsS+1c5Arh3c85+npvBIRkkzI2WMSOWiBQPgbeXcgdug6yhodeeVFEpwJBJFv2oXHeRbarbCFqmEly/fqQ=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
@@ -46,27 +46,27 @@
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.70.0, 5.70.0]",
-        "resolved": "5.70.0",
-        "contentHash": "bTlm5HeVfRXdAh3Gb7CReklFVFLC01dfSsamJt3Cwg5rfmo4IzsTreuNtUfUHPEP/ZqFMkjIevEHeanLN7JrZQ=="
+        "requested": "[5.71.0, 5.71.0]",
+        "resolved": "5.71.0",
+        "contentHash": "RJMVi6KTze/a64mRB/TER0dwcPI+T07+jlmIB4ch2KOlKo+HQmBGCTN08CTsSqICNLYrohDWRwKcNGGxavNJFg=="
       },
       "UnitsNet.nanoFramework.Pressure": {
         "type": "Direct",
-        "requested": "[5.70.0, 5.70.0]",
-        "resolved": "5.70.0",
-        "contentHash": "2xWIm/grP8/PtJz2ThccUwIfRMY0v0tG9kEFDvG9uZs4P6hXt6eVGXTbFpHy9L5RlzCKZtq8ETbFt1C23+Ru6w=="
+        "requested": "[5.71.0, 5.71.0]",
+        "resolved": "5.71.0",
+        "contentHash": "51wEN5VhCexmH/myaD3ca10VUfSAMPzdBWursLCn4qTvgS/aMB1JCNRi2uJTN7nP3UDbVik+uprsXwYqcMsnxA=="
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.70.0, 5.70.0]",
-        "resolved": "5.70.0",
-        "contentHash": "ZKVDGUcR84fKKXECPtb9/uCtSFw+jY+o8wh14uFSEi9oXSTGMGC+OXRJSQsJEXEsk4TqAG+7aNOAtDYrx22qQQ=="
+        "requested": "[5.71.0, 5.71.0]",
+        "resolved": "5.71.0",
+        "contentHash": "nCOZiKUfjtD/aJv+4HHPDf8IZLsx658Ci4PdN0d7CYgwrFR7CCsQMJB/C4dFA9V/nIBKJYNqfq4qHiBuOeDR1Q=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.70.0, 5.70.0]",
-        "resolved": "5.70.0",
-        "contentHash": "uTSq1yiWrUiZSkrD36tzBhWpP1B6llmCP5onmj9TdBZ7D5DLbWe3T0K/VpyFt067NIe5K/Tva8qkPKGp+V0itA=="
+        "requested": "[5.71.0, 5.71.0]",
+        "resolved": "5.71.0",
+        "contentHash": "0Rljuj/AlDMhlNsaR6nkx3oLZt1yWg1athFz5InsGy6gjZDHT7ptKPH5ujK+GR0C8bHDfZStMwVyZLjn8/s2+Q=="
       }
     }
   }

@@ -24,7 +24,7 @@
       <dependency id="nanoFramework.System.Device.Model" version="1.2.807" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
       <dependency id="nanoFramework.System.Math" version="1.5.102" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.70.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.71.0" />
     </dependencies>
   </metadata>
   <files>
