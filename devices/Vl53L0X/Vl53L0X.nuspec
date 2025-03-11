@@ -19,12 +19,12 @@
     <summary>Iot.Device.Vl53L0X assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Vl53L0X</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.807" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.815" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.55" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.30" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.7" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.848" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.848" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.56" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.31" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.28" />
     </dependencies>
   </metadata>
   <files>
