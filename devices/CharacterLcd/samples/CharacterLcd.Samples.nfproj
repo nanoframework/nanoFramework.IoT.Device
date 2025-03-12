@@ -24,10 +24,10 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.1.2.848\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Pcx857x, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.829\lib\Iot.Device.Pcx857x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.852\lib\Iot.Device.Pcx857x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.830\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.1.2.850\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.17.7.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.17.7\lib\mscorlib.dll</HintPath>
