@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Display.Pcd8544</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.7" />
-      <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="1.1.770" />
+      <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="1.1.772" />
       <dependency id="nanoFramework.System.Drawing" version="1.2.848" />
       <dependency id="nanoFramework.System.Collections" version="1.5.63" />
       <dependency id="nanoFramework.System.Device.Pwm" version="1.1.22" />
