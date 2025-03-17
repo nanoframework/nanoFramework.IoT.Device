@@ -33,7 +33,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.1.2.848\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ft6xx6x, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.1.2.814\lib\Iot.Device.Ft6xx6x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.1.2.855\lib\Iot.Device.Ft6xx6x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Mpu6886, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Mpu6886.1.2.852\lib\Iot.Device.Mpu6886.dll</HintPath>
@@ -53,8 +53,8 @@
     <Reference Include="nanoFramework.Hardware.Esp32, Version=1.6.33.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.1.6.33\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.M5Core2, Version=1.1.275.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\nanoFramework.M5Core2.1.1.275\lib\nanoFramework.M5Core2.dll</HintPath>
+    <Reference Include="nanoFramework.M5Core2, Version=1.1.276.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\nanoFramework.M5Core2.1.1.276\lib\nanoFramework.M5Core2.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager, Version=1.2.31.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.ResourceManager.1.2.31\lib\nanoFramework.ResourceManager.dll</HintPath>
