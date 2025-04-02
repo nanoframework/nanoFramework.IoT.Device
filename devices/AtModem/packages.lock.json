@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[1.0.244, 1.0.244]",
-        "resolved": "1.0.244",
-        "contentHash": "AMXJJcdPxvk8caWK5ekl16rzhE+msjRVSAR1F5zP6cujaf0Ek718nuIuShYPGYyVUgBzh68UjrUtZ6XhWsxiWA=="
+        "requested": "[1.0.256, 1.0.256]",
+        "resolved": "1.0.256",
+        "contentHash": "H1mHzCfTdPQwlbiLQyMQ2mkaLor4hSBFZwmFycg8GuY4p/EjmKdbHf+HQ7K7Jgrl7uw8xTgnQ3ONC3K2X6XxNg=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
@@ -82,27 +82,27 @@
       },
       "UnitsNet.nanoFramework.Angle": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "+8zvUQOjrVPinAfeURisaS5aphd/If+E5bRcx9MC2BRklTMMW4EgbL8/q+Li9VDmiozw5Y4C3nDt1BZ+lL8z8Q=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "Yi2v9tkjXe0pS9Ix5Gk9hF0D2xut96jjvdeQA2+00yhDpKqpwu+09jUUxqEW7SW8xCVuc2pEKn+CdW2mBx8BoQ=="
       },
       "UnitsNet.nanoFramework.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "3v+oJtilypdOrgIEExkOvTtf4hLuWH2rn1B9vdU7nSSgZ6P6mROheqvRZDClLH/+Q5hUi6UAt6/ki9yX8qoOIw=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "uyMaJVmGN/voud9iueg6tAQ9wUDMRpxHj8E1XfNh0P/wtRaCS66jBiT/fOA8AkvSfvRrE/Mhf0t2xWnTs+D9jQ=="
       },
       "UnitsNet.nanoFramework.Ratio": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "PUivmw9ErzjeXtosOQOlNesQfoHL7M3q4UD+bsBqCTw1Z/9RE30cdV1gHDt9jsPkNzYZYeUOPI/DhldhUttHAw=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "cLTSepKtWaImAWCnsHNzKkVCMu6K9yQ+DIqMP3bkiXxKTPvCjW7rLrkCb5RewXOnpENAhkXV+WCt/6o3mUlzfA=="
       },
       "UnitsNet.nanoFramework.Speed": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "xJ+72h8pVIPiZzQ/EutVU4dx1Lrv6SjUS3yBKv5JmUAWt9uNvimBO8vRbNRjRD7L3YSosZn67Zh4ZUqZsBtj3w=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "r2ZMxZzz8HlsBMnGucH+nExcBIiTctEeNijTGwCIsCcE8qAio0PnSei0RDxYL4F8zZ/6slJWtAfnQ/348nfWrw=="
       }
     }
   }

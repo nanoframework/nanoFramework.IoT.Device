@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Ws28xx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.852\lib\Iot.Device.Ws28xx.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ws28xx.1.2.864\lib\Iot.Device.Ws28xx.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.17.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
@@ -59,8 +59,8 @@
     <Reference Include="System.IO.Streams, Version=1.1.94.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.IO.Streams.1.1.94\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=5.73.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.73.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="UnitsNet.Length, Version=5.74.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.Length.5.74.0\lib\UnitsNet.Length.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

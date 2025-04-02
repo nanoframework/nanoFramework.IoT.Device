@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.848, 1.2.848]",
-        "resolved": "1.2.848",
-        "contentHash": "L/WVMqToL0iIQbsSNw++bQthEkEW3S/yDrXLDhsG4DVoJss8//8BGFJOdVZqC7hd0cqmw2ZMajuiXNmY+ddDHw=="
+        "requested": "[1.2.862, 1.2.862]",
+        "resolved": "1.2.862",
+        "contentHash": "O+jmbbw2h2cjCTShsvWCzjqn/kmRacJE4Ena9gJt5xF5D7XHyYh/uE/qbZ4LhlmlN6JCZjLRNiEfHyM1YUjyxg=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.848, 1.2.848]",
-        "resolved": "1.2.848",
-        "contentHash": "fRJ5pr54Ql2MeuNggPZF/7umJC50Tf5R5192lJDLZQec3Y+3vVJ3XMSEat67bbfSzFnIQKU6v0EWW3GY1iUstQ=="
+        "requested": "[1.2.862, 1.2.862]",
+        "resolved": "1.2.862",
+        "contentHash": "auNXXoJYOJ7mAxPvMPhbxFbDCtfKF/wSdsoBEQiRd8NaQWmLg12JL6YbNiKiNs+fBlxAL6duUorBdhSyPCdayg=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
@@ -64,33 +64,33 @@
       },
       "UnitsNet.nanoFramework.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "hXgYQR00s5Y7CRxl8AhJqLFQiexVRRfR0tnJypBzWslFSrItJ+61KhiDgDLpRkFR+yYSNsl6VrgeGpMcwQzPlg=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "tTX/vK1OPgaC1M9aGvnDjTAHEOFOzvKrehPHf/5V62G98FB9Xfd4SWjH8UvaA1/sFvYopxf3rRuU9qC7zzEP9g=="
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "QqjXZXQwl6AwAkGh816aBJTyklyHX8hk43UvqmGhj+nPAX/zDdI/Ni9RI0b0JYE3YSP3r9GFgKqQ1vMQ02r0IQ=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "cy+ojXAyRjTMEaco0HTvjWrNspJyBFas6KwiL3Jfs15oAtwRJM2WpWZAofCcelbzaR0AiYvQtGpcmb0u+rbjOw=="
       },
       "UnitsNet.nanoFramework.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "4D/DmrUBKcYxlJ+zKD9ad+C9SAG7YXhEgs4VkXSmQ+dNXKCD6w5VPdtlUFu79mvJ3ddY4ANPs2U1589hu0MC0g=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "/4J3CiK5B/SPTU3D8sX2p87HL2sjClmoYxIzUgnpryMDCUfNCZvi8rEDYlq6G+vtJxpafxv1F5osVfJ6x11swA=="
       },
       "UnitsNet.nanoFramework.Temperature": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "DtvAr+LAt1nyd4Gb/ltdqWMuVALgyWopQd0raON6MigqaZT+0aWNCd4tzmU9wEprzz1CKuiQBBt5+JKS5R0jBA=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "n7cACV4+tqlek4oG829XQD2yTlIpVeJnAUWvq1PGj9ywaTQb25W9pqncmsTwmn98bqLF+3Zs7hN13NUFBf5r6Q=="
       },
       "UnitsNet.nanoFramework.VolumeConcentration": {
         "type": "Direct",
-        "requested": "[5.73.0, 5.73.0]",
-        "resolved": "5.73.0",
-        "contentHash": "v0dW0t8w7v8f4RTUlurhrGfZ6khC95ktze+CJxjMJur78AgNmEyZHUVF88a4MZsgydUquhc6ZOfn0CaAJkdSEg=="
+        "requested": "[5.74.0, 5.74.0]",
+        "resolved": "5.74.0",
+        "contentHash": "vCkD/rDhHE8P/5elNn3+nSYS6LeFYA7KVky+Xsgc/UV/h370uXldQI5YWoD/PvxXSNjHFtJLtdXnufs6nEKgnQ=="
       }
     }
   }
