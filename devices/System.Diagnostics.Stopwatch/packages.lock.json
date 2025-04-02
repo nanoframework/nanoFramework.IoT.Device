@@ -4,15 +4,15 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.17.7, 1.17.7]",
-        "resolved": "1.17.7",
-        "contentHash": "LbP1JJXV5g9cSxb4TgWBIFHXtW6fpKHy/FcylOHAn8WAh/smkyWRrwzEj4784QvScNi/b07zn+A5/JpmDvLc1A=="
+        "requested": "[1.17.11, 1.17.11]",
+        "resolved": "1.17.11",
+        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
-        "requested": "[1.7.10, 1.7.10]",
-        "resolved": "1.7.10",
-        "contentHash": "ulqiOuGhly+zsWhpoegkAWGOGDzxK13e/3ML72JoTjznUv+1YvudadUP0YxHKB346lu3JxmCzgKvLigBUb6ALw=="
+        "requested": "[1.7.11, 1.7.11]",
+        "resolved": "1.7.11",
+        "contentHash": "XPSTltZ9KeBruogVmjQpCphi1nLoJH49mpyp2eGBs8BTjKuL5TkMO20MoI8r73F/PW5AppTq49HvIZZavU5nPQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
