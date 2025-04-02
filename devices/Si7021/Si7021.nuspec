@@ -19,11 +19,11 @@
     <summary>Iot.Device.Si7021 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Si7021</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.7" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.848" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.848" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.28" />
-      <dependency id="nanoFramework.System.Math" version="1.5.112" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
       <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.73.0" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="5.73.0" />
     </dependencies>

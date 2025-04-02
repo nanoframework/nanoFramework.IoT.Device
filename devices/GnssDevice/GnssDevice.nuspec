@@ -19,12 +19,12 @@
     <summary>Iot.Device.Common.GnssDevice assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot GNSS GPS Galileo GLONASS BeiDuo</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.7" />
-      <dependency id="nanoFramework.System.Math" version="1.5.112" />
-      <dependency id="nanoFramework.System.Collections" version="1.5.63" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.67" />
       <dependency id="UnitsNet.nanoFramework.Angle" version="5.73.0" />
       <dependency id="UnitsNet.nanoFramework.Speed" version="5.73.0" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.1.127" />
+      <dependency id="nanoFramework.System.IO.Ports" version="1.1.131" />
     </dependencies>
   </metadata>
   <files>
