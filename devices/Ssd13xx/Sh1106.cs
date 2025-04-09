@@ -18,7 +18,7 @@ namespace Iot.Device.Ssd13xx
         {
             0x00, 
             0xB0, 
-            0x00, 
+            0x02, 
             0x10
         };
 
