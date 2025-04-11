@@ -684,6 +684,16 @@ namespace Iot.Device.Ssd13xx
         }
 
         /// <summary>
+        /// Set custom page mode output command bytes.
+        /// <para></para>
+        /// </summary>
+        /// <param name="pageCmd">An array of bytes representing the custom page mode command.</param>
+        internal void SetPageCmd(byte[] pageCmd)
+        {
+            _pageCmd = pageCmd;
+        }
+
+        /// <summary>
         /// Page mode output command bytes.
         /// </summary>
         private byte[] _pageCmd = new byte[]

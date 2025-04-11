@@ -19,13 +19,13 @@
     <summary>Iot.Device.Sn74hc595 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Sn74hc595</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.771" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.780" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.29" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.53" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.3.73" />
-      <dependency id="nanoFramework.System.Threading" version="1.1.46" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="1.2.862" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="1.2.867" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.32" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.57" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.3.82" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.52" />
     </dependencies>
   </metadata>
   <files>

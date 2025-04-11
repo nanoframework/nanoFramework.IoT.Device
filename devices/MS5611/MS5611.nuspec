@@ -18,15 +18,15 @@
     <description>This package includes the .NET IoT Core binding Iot.Device.Ms5611 for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ms5611</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
-      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.771" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.771" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.26" />
-      <dependency id="nanoFramework.System.Math" version="1.5.90" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.69.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.69.0" />
-      <dependency id="UnitsNet.nanoFramework.Pressure" version="5.69.0" />
-      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.69.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.865" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
+      <dependency id="UnitsNet.nanoFramework.Length" version="5.74.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.74.0" />
+      <dependency id="UnitsNet.nanoFramework.Pressure" version="5.74.0" />
+      <dependency id="UnitsNet.nanoFramework.RelativeHumidity" version="5.74.0" />
     </dependencies>
   </metadata>
   <files>

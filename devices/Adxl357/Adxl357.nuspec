@@ -19,14 +19,14 @@
     <summary>Iot.Device.Adxl357 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Adxl357</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.771" />
-      <dependency id="nanoFramework.System.Numerics" version="1.2.771" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.53" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.29" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.26" />
-      <dependency id="nanoFramework.System.Math" version="1.5.90" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.69.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.57" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.32" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.74.0" />
     </dependencies>
   </metadata>
   <files>
