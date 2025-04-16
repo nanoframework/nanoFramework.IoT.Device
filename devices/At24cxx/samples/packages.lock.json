@@ -4,33 +4,33 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.17.1, 1.17.1]",
-        "resolved": "1.17.1",
-        "contentHash": "T/iPvP8AeZs/5UeZgVa2cZVbl79ioeRyBJLzx4qvKbE9RE+984AR5WPY4tjGIdXugs1AFUYYnydvuGCpy+P1ww=="
+        "requested": "[1.17.11, 1.17.11]",
+        "resolved": "1.17.11",
+        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[1.6.31, 1.6.31]",
-        "resolved": "1.6.31",
-        "contentHash": "JE0ZILxmYPl8u2mF7IB/ODoOCGbC876wW1+cAUUmLiYcEhg/Ed749kvy5lHBO37hIKr19A6VQ91eniZ+hLRDPg=="
+        "requested": "[1.6.34, 1.6.34]",
+        "resolved": "1.6.34",
+        "contentHash": "foKyzG0ZjHyZzzfLh/To5/2G+3EWeKqKFbkdpF310w2EE3RMcH+Rf9JM+GW8HEdmTRzIOcBQQm4S37VBJwP54Q=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.30, 1.11.30]",
-        "resolved": "1.11.30",
-        "contentHash": "uhLQLq/CRGCTvmJwbh2vXYVWyBl17jc1FBe3Fq1bKJM1+sO+GyhRRYCmezI7v72bRbQ7tpYZTcplJFs/qkAQSQ=="
+        "requested": "[1.11.32, 1.11.32]",
+        "resolved": "1.11.32",
+        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[1.1.27, 1.1.27]",
-        "resolved": "1.1.27",
-        "contentHash": "gyFoz1cABmcvplJcC7UiTYaC1GpYwnnuQxcypjddKiRqvhiEol7iezxIUsZ5E5v8G19HocpRqcMQV1oZrkXLTQ=="
+        "requested": "[1.1.29, 1.1.29]",
+        "resolved": "1.1.29",
+        "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
-        "requested": "[1.3.29, 1.3.29]",
-        "resolved": "1.3.29",
-        "contentHash": "h7Jbjd8vmNrro/co6s+Zth+OvStgvOiT3RQtlaqa2t6FmnLZGXkF7LAykjLqWeNfHTafGbBLkSMqHw2VHo4Dmg=="
+        "requested": "[1.3.42, 1.3.42]",
+        "resolved": "1.3.42",
+        "contentHash": "68HPjhersNpssbmEMUHdMw3073MHfGTfrkbRk9eILKbNPFfPFck7m4y9BlAi6DaguUJaeKxgyIojXF3SQrF8/A=="
       }
     }
   }

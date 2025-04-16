@@ -30,17 +30,17 @@
     <Compile Include="TemperatureResolution.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.17.1.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=1.17.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Device.OneWire, Version=1.4.33.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Device.OneWire.1.4.33\lib\nanoFramework.Device.OneWire.dll</HintPath>
+    <Reference Include="nanoFramework.Device.OneWire, Version=1.4.35.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.Device.OneWire.1.4.35\lib\nanoFramework.Device.OneWire.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Model.1.2.807\lib\System.Device.Model.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=5.70.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.70.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="UnitsNet.Temperature, Version=5.74.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.74.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

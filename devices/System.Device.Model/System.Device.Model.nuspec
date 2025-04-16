@@ -19,7 +19,7 @@
     <summary>System.Device.Model assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
     </dependencies>
   </metadata>
   <files>

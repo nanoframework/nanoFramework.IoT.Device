@@ -19,12 +19,12 @@
     <summary>Iot.Device.Bq25798 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Bq25798 Bq25792</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.807" />
-      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.70.0" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotentialDc" version="5.70.0" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.70.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.74.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotentialDc" version="5.74.0" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.74.0" />
     </dependencies>
   </metadata>
   <files>

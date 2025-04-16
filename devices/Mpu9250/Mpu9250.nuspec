@@ -19,14 +19,14 @@
     <summary>Iot.Device.Mpu9250, Mpu6500 and Mpu6050 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mpu9250 Iot.Device.Mpu6500 Iot.Device.Mpu6050</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.807" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.807" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.815" />
-      <dependency id="nanoFramework.System.Numerics" version="1.2.807" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.27" />
-      <dependency id="nanoFramework.System.Math" version="1.5.102" />
-      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.70.0" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.862" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
+      <dependency id="UnitsNet.nanoFramework.Temperature" version="5.74.0" />
     </dependencies>
   </metadata>
   <files>

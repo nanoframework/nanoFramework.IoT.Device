@@ -19,8 +19,8 @@
     <summary>System.Numerics assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot numerics</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.1" />
-      <dependency id="nanoFramework.System.Math" version="1.5.102" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
     </dependencies>
   </metadata>
   <files>
