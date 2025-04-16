@@ -19,8 +19,8 @@ namespace Iot.Device.AtModem.Http
     {
         private const string RootCaFileName = "crt";
 
-        // 1 is MQTT, so let's take 2 for HTTP
-        private const int IndexSSL = 2;
+        // 1 is MQTT, let's take 0 because that sets the correct SSL context ID (the default one). 
+        private const int IndexSSL = 0;
         private ManualResetEvent _httpActionArrived = new ManualResetEvent(false);
         private HttpActionResult _httpActionResult = null;
         private X509Certificate _certAuth;
