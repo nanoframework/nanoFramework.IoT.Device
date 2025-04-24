@@ -28,21 +28,21 @@
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
-        "requested": "[1.1.94, 1.1.94]",
-        "resolved": "1.1.94",
-        "contentHash": "vaG/5fgiezaWmXRTSw/6a/XOrWxIcYvEvbXHzGE/0NXwkcYle9KdaUGL2D8NQze60T7HHK0m6TIeVwkEH+ZHPw=="
+        "requested": "[1.1.96, 1.1.96]",
+        "resolved": "1.1.96",
+        "contentHash": "kJSy4EJwChO4Vq3vGWP9gNRPFDnTsDU5HxzeI7NDO+RjbDsx7B8EhKymoeTPLJCxQq8y/0P1KG2XCxGpggW+fw=="
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[1.11.42, 1.11.42]",
-        "resolved": "1.11.42",
-        "contentHash": "zl1DDJrvyDNCB/soGf74BuADIgehqMzeRzWVRF+RsCbMHTLNVx1vC4gSyf3L+Af3yPKzA+SZ2aUtaSPsZcI4UQ=="
+        "requested": "[1.11.43, 1.11.43]",
+        "resolved": "1.11.43",
+        "contentHash": "USwz59gxcNUzsiXfQohWSi8ANNwGDsp+qG4zBtHZU3rKMtvTsLI3rxdfMC77VehKqsCPn7aK3PU2oCRFo+1Rgg=="
       },
       "nanoFramework.System.Net.Sockets.UdpClient": {
         "type": "Direct",
-        "requested": "[1.1.94, 1.1.94]",
-        "resolved": "1.1.94",
-        "contentHash": "Rg9VXJLawtMjwj73MWd2DWvk1H+XGcSx+BYLbQG6tRfksoFFzvd8QULDYIdJu/aCkhbFto3PY78YDS3S7bEm2w=="
+        "requested": "[1.1.96, 1.1.96]",
+        "resolved": "1.1.96",
+        "contentHash": "9cv2lJgUjFlftrA2tTgngblLYOXM/tSk8vNk4rs6WCEIB5ul8WS5UCzryGeMOsNJSP2ghJpmsYzI9f8pb9r70w=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
