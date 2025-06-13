@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.XPT2046</id>
+    <version>0.0.2</version>
+    <title>nanoFramework.Iot.Device.XPT2046</title>
+    <authors>nanoFramework project contributors</authors>
+    <owners>nanoFramework project contributors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <iconUrl>https://github.com/nanoframework/Home/blob/main/resources/logo/nanoFramework-repo-logo.png</iconUrl>
+    <description>This package includes the nanoFramework.Iot.Device.XPT2046 assembly for .NET nanoFramework C# projects.
+
+XPT2046 - Touch screen controller
+
+The XPT2046 from XPTEK is a 4-wire resistive touch screen controller that incorporates a 12-bit 125 kHz successive approximation register type A/D converter. The XPT2046 can detect the pressed screen location by performing two A/D conversions. As well as the location, the XPT2046 also measures touch screen pressure.
+
+Communication is via the SPI bus which can communicate at maximum speed of 2Mhz and uses Mode 0 for the clock polarity/phase setting.</description>
+    <releaseNotes>
+Initial release of XPT2046 touch screen controller driver for nanoFramework.
+    </releaseNotes>
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <tags>nanoFramework C# csharp netmf netnf XPT2046 Touch Screen Controller SPI Resistive</tags>
+    <dependencies>
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+        <dependency id="nanoFramework.Runtime.Events" version="1.11.32" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="1.1.57" />
+        <dependency id="nanoFramework.System.Device.Spi" version="1.3.82" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.XPT2046.dll" target="lib\Iot.Device.XPT2046.dll" />
+    <file src="bin\Release\Iot.Device.XPT2046.pdb" target="lib\Iot.Device.XPT2046.pdb" />
+    <file src="bin\Release\Iot.Device.XPT2046.pdbx" target="lib\Iot.Device.XPT2046.pdbx" />
+    <file src="bin\Release\Iot.Device.XPT2046.pe" target="lib\Iot.Device.XPT2046.pe" />
+    <file src="bin\Release\Iot.Device.XPT2046.xml" target="lib\Iot.Device.XPT2046.xml" />
+    <file src="README.md" target="README.md" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
