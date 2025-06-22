@@ -260,3 +260,4 @@ paket-files/
 appsettings.Development.json
 .vscode/settings.json
 /devices/Sim7080/samples/secret
+devices/XPT2046/XPT2046-EN.pdf
