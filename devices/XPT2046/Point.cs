@@ -18,6 +18,6 @@ namespace Iot.Device.XPT2046
         /// <summary>
         /// Gets of sets the amount of pressure of the touch.
         /// </summary>
-        public byte Weight { get; set; }
+        public int Weight { get; set; }
     }
 }
