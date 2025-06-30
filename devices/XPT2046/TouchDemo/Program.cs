@@ -43,8 +43,6 @@ namespace TouchDemo
                 SpiConnectionSettings connectionSettings;
                 SpiConnectionSettings connectionSettings0;
 
-                var spiInfo = SpiDevice.GetBusInfo(0);
-
                 //Bus 0 and 1 are implemented.?? Or is it 1 and 2? 
                 connectionSettings0 = new SpiConnectionSettings(1, 15);
                 connectionSettings0.ClockFrequency = 1_000_000;      //Set clock speed to slowest device on bus
