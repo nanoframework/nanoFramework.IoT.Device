@@ -23,9 +23,9 @@
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
-      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.74.0" />
-      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.74.0" />
-      <dependency id="UnitsNet.nanoFramework.Power" version="5.74.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricPotential" version="5.75.0" />
+      <dependency id="UnitsNet.nanoFramework.ElectricCurrent" version="5.75.0" />
+      <dependency id="UnitsNet.nanoFramework.Power" version="5.75.0" />
       <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="1.2.862" />
     </dependencies>
   </metadata>
