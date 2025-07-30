@@ -19,7 +19,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ms5611</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.865" />
+      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.891" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
       <dependency id="nanoFramework.System.Math" version="1.5.116" />
