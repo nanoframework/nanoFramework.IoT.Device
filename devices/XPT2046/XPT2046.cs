@@ -58,7 +58,7 @@ namespace Iot.Device.XPT2046
         /// <summary>
         /// Creates an instance of an Xpt2046
         /// </summary>
-        /// <param name="spiBus">The SpiConfiguration connected to the touchscreen controller</param>
+        /// <param name="spiDevice">The spiDevice connected to the touchscreen controller</param>
         /// <param name="xMax">The X size of the screen</param>
         /// <param name="yMax">The Y size of the screen</param>
         public Xpt2046(SpiDevice spiDevice, int xMax = 320, int yMax = 240)
