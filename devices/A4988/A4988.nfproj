@@ -46,8 +46,8 @@
     <Reference Include="System.Math, Version=1.5.116.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Math.1.5.116\lib\System.Math.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Angle, Version=5.74.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.74.0\lib\UnitsNet.Angle.dll</HintPath>
+    <Reference Include="UnitsNet.Angle, Version=5.75.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\UnitsNet.nanoFramework.Angle.5.75.0\lib\UnitsNet.Angle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
