@@ -77,7 +77,7 @@ namespace Iot.Device.XPT2046
         /// </returns>
         public string GetVersion()
         {
-            return "0.2";
+            return "1.0";
         }
 
         /// <summary>
