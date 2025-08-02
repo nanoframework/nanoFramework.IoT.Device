@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/master/src/NerdBank.GitVersioning/version.schema.json",
-  "version": "0.1",
+  "version": "0.2",
   "semVer1NumericIdentifierPadding": 3,
-  "nuGetPackageVersion": {
-    "semVer": 0.1
+  "nugetPackageVersion": {
+    "semVer": "0.2"
   },
   "publicReleaseRefSpec": [
     "^refs/heads/develop$",

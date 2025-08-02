@@ -4,7 +4,7 @@ The XPT2046 from XPTEK is a 4-wire resistive touch screen controller that incorp
 
 The XPT2046 is common in a number of touch screen modules from suppliers like WaveShare and an number of ESP32 based display boards.
 
-Communication is via the SPI bus which can communicate at maximum speed of 2Mhz and uses Mode 0 for the clock polarity/phase setting. The host sends an 8 bit command and the chip responds with 16 bits of data althought the first bit and last three bits are not part of the conversion. XPT2046 needs 16 clock cycles to read a value, so this driver sends 8 bits and then 16 zeros whilst reading 24 bits. The hardware does support overlapped requests when a new conversion is requested whilst the prior one is being read. This does not seem to be possible with the current nanoFramework SPI implementation.
+Communication is via the SPI bus which can communicate at maximum speed of 2Mhz and uses Mode 0 for the clock polarity/phase setting. The host sends an 8 bit command and the chip responds with 16 bits of data althought the first bit and last three bits are not part of the conversion. XPT2046 needs 16 clock cycles to read a value, so this driver sends 8 bits and a padding byte between each command, and the device can be reading one result whilst sending the command for the next measurement. When reading we need to skip the first 8 bits.
 
 An additional interupt pin which is usually in a high state and goes low when a touch is detected. Note that communicating with the chip will interfere with the interupt.
 
@@ -19,6 +19,8 @@ The driver does a best of 3 average, thanks Paul Stoffregen for the suggestion v
 Datasheet - https://www.waveshare.com/wiki/File:XPT2046-EN.pdf
 
 ## Usage
+
+See TouchDemo for a complete example of usage based on the ESP32 and a cheap yellow display module.
 
 The driver also supports a maximum X and Y value so you can map the output to your screen size.
 
@@ -68,7 +70,7 @@ Debug.WriteLine($"ID: {point.TouchId}, X: {point.X}, Y: {point.Y}, Weight: {poin
 
 ```
 
-Use with an interupt pin. Note that interupts that happen during conversion are not reliable. Gence setting touchDetected after calling GetPoint();
+Use with an interupt pin. Note that interupts that happen during conversion are not reliable. Hence setting touchDetected after calling GetPoint();
 
 ```csharp
 bool touchDetected = false;

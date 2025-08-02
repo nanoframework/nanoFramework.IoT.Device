@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Iot.Device.XPT2046")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("XPT2046 Touch Screen Controller driver for .NET nanoFramework")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("nanoFramework Contributors")]
 [assembly: AssemblyProduct("Iot.Device.XPT2046")]
-[assembly: AssemblyCopyright("Copyright ©  2025")]
+[assembly: AssemblyCopyright("Copyright © .NET Foundation and Contributors")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,11 +29,11 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.1")]
-[assembly: AssemblyFileVersion("0.0.0.1")]
+[assembly: AssemblyVersion("0.0.0.2")]
+[assembly: AssemblyFileVersion("0.0.0.2")]
 
 /////////////////////////////////////////////////////////////////
 // This attribute is mandatory when building Interop libraries //
 // update this whenever the native assembly signature changes  //
-[assembly: AssemblyNativeVersion("0.0.0.1")]
+[assembly: AssemblyNativeVersion("0.0.0.2")]
 /////////////////////////////////////////////////////////////////

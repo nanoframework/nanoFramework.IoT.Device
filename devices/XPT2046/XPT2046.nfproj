@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Label="Globals">
+	<Import Project="packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.props')" />
+	<PropertyGroup Label="Globals">
     <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
@@ -13,12 +14,22 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Iot.Device.XPT2046</RootNamespace>
-    <AssemblyName>XPT2046</AssemblyName>
+    <AssemblyName>Iot.Device.XPT2046</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+	<DocumentationFile>bin\$(Configuration)\Iot.Device.XPT2046.xml</DocumentationFile>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+	  <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+	  <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+	  <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -28,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="XPT2046.nuspec" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

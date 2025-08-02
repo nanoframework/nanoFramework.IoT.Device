@@ -143,6 +143,7 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl6180X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl6180X/) [Vl6180X - distance sensor](devices/Vl6180X)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ws28xx.Esp32.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ws28xx.Esp32/) [Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel for ESP32 using RMT - LED drivers](devices/Ws28xx.Esp32)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ws28xx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ws28xx/) [Ws28xx/WS2812B/WS2815B/WS2808/SK6812/Neo pixel using SPI - LED drivers](devices/Ws28xx)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.XPT2046.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.XPT2046/) [XPT2046 - Resistive Touch Screen Controller](devices/XPT2046)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Yx5300.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Yx5300/) [YX5200/YX5300 - MP3 Player](devices/Yx5300)
 </devices>
 

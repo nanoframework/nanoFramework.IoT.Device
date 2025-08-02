@@ -1,4 +1,10 @@
-﻿using System;
+﻿//
+// Copyright (c) .NET Foundation and Contributors
+// Portions Copyright (c) Microsoft Corporation.  All rights reserved.
+// See LICENSE file in the project root for full license information.
+//
+
+using System;
 using System.Device.Spi;
 using System.Diagnostics;
 using System.IO;
@@ -49,9 +55,10 @@ namespace Iot.Device.XPT2046
 
         //See https://docs.nanoframework.net/content/getting-started-guides/spi-explained.html
 
+        /// <summary>
         /// Creates an instance of an Xpt2046
         /// </summary>
-        /// <param name="spiBus">The SpiConfiguration connected to the touchscreen controller</param>
+        /// <param name="spiDevice">The spiDevice connected to the touchscreen controller</param>
         /// <param name="xMax">The X size of the screen</param>
         /// <param name="yMax">The Y size of the screen</param>
         public Xpt2046(SpiDevice spiDevice, int xMax = 320, int yMax = 240)
@@ -61,11 +68,17 @@ namespace Iot.Device.XPT2046
             _yMax = yMax;
         }
 
+        /// <summary>
+        /// Returns the version of the Xpt2046 driver.
+        /// </summary>
         public string GetVersion()
         {
-            return "0.1";
+            return "0.2";
         }
 
+        /// <summary>
+        /// Gets the current point from the touchscreen controller.
+        /// </summary>
         public Point GetPoint()
         {
             // Get best of 3 samples
@@ -83,7 +96,7 @@ namespace Iot.Device.XPT2046
             };
         }
 
-        public int BestTwoOfThreeAverage(int i1, int i2, int i3)
+        private int BestTwoOfThreeAverage(int i1, int i2, int i3)
         {
             // If you want to use Math.Abs there's a separate nanoFramework.System.Math package for that.
             var diff12 = i1 > i2 ? (i1 - i2) : (i2 - i1);
@@ -107,45 +120,53 @@ namespace Iot.Device.XPT2046
 
         private Point read()
         {
-            // Some of the more sophisticated drivers get 3 samples and do a best 2 average (the 2 closest to each other)
-            SpanByte readBufferSpanByte = new byte[3];
+            // Overlapped buffer: control, 0, control, 0, control, 0, control, 0, 0
+            // Total 9 bytes: each control overlaps with previous read except the last
+            SpanByte writeBuffer = new byte[9];
+            SpanByte readBuffer = new byte[9];
 
-            byte controlByte = (byte)StartBit | (byte)MultiplexerChannel.Z1
+            // Prepare all control bytes for overlapped transaction
+            byte z1ControlByte = (byte)StartBit | (byte)MultiplexerChannel.Z1
+                                               | (byte)ConversionMode.Bits12
+                                               | (byte)ReferenceSelectMode.DoubleEnded
+                                               | (byte)PowerMode.RefOff_ADCOn_IntOff;
+
+            byte z2ControlByte = (byte)StartBit | (byte)MultiplexerChannel.Z2
+                                               | (byte)ConversionMode.Bits12
+                                               | (byte)ReferenceSelectMode.DoubleEnded
+                                               | (byte)PowerMode.RefOff_ADCOn_IntOff;
+
+            byte xControlByte = (byte)StartBit | (byte)MultiplexerChannel.X
                                               | (byte)ConversionMode.Bits12
                                               | (byte)ReferenceSelectMode.DoubleEnded
                                               | (byte)PowerMode.RefOff_ADCOn_IntOff;
 
-            writeRead("Z1", controlByte, ref readBufferSpanByte, ref readBufferSpanByte);
+            // Final Y measurement with PowerDown to re-enable interrupt
+            byte yControlByte = (byte)StartBit | (byte)MultiplexerChannel.Y
+                                              | (byte)ConversionMode.Bits12
+                                              | (byte)ReferenceSelectMode.DoubleEnded
+                                              | (byte)PowerMode.PowerDown;
 
-            var Z1 = ((int)readBufferSpanByte[1]) * 256 + readBufferSpanByte[2];
+            // Fill write buffer with overlapped pattern: control, 0, control, 0, control, 0, control, 0, 0
+            writeBuffer[0] = z1ControlByte;  // Z1 control
+            writeBuffer[1] = 0;              // padding
+            writeBuffer[2] = z2ControlByte;  // Z2 control (while reading Z1)
+            writeBuffer[3] = 0;              // padding
+            writeBuffer[4] = xControlByte;   // X control (while reading Z2)
+            writeBuffer[5] = 0;              // padding
+            writeBuffer[6] = yControlByte;   // Y control (while reading X)
+            writeBuffer[7] = 0;              // padding for Y read
+            writeBuffer[8] = 0;              // padding for Y read
 
-            controlByte = (byte)StartBit | (byte)MultiplexerChannel.Z2
-                                         | (byte)ConversionMode.Bits12
-                                         | (byte)ReferenceSelectMode.DoubleEnded
-                                         | (byte)PowerMode.RefOff_ADCOn_IntOff;
+            // Single SPI transaction for all overlapped measurements
+            _spiDevice.TransferFullDuplex(writeBuffer, readBuffer);
 
-            writeRead("Z2", controlByte, ref readBufferSpanByte, ref readBufferSpanByte);
-
-            var Z2 = ((int)readBufferSpanByte[1]) * 256 + readBufferSpanByte[2];
-
-            controlByte = (byte)StartBit | (byte)MultiplexerChannel.X
-                                         | (byte)ConversionMode.Bits12
-                                         | (byte)ReferenceSelectMode.DoubleEnded
-                                         | (byte)PowerMode.RefOff_ADCOn_IntOff;
-
-            writeRead("X", controlByte, ref readBufferSpanByte, ref readBufferSpanByte);
-            
-            var X = ((int)readBufferSpanByte[1]) * 256 + readBufferSpanByte[2];
-
-            //Finally set the mode back to power on so we can re-enable the interupt
-            controlByte = (byte)StartBit | (byte)MultiplexerChannel.Y
-                                         | (byte)ConversionMode.Bits12
-                                         | (byte)ReferenceSelectMode.DoubleEnded
-                                         | (byte)PowerMode.PowerDown;
-
-            writeRead("Y", controlByte, ref readBufferSpanByte, ref readBufferSpanByte);
-
-            var Y = ((int)readBufferSpanByte[1]) * 256 + readBufferSpanByte[2];
+            // Extract values from overlapped read buffer
+            // Skip first byte (dummy), then read pairs
+            var Z1 = ((int)readBuffer[1]) * 256 + readBuffer[2];  // skip[0], read[1,2]
+            var Z2 = ((int)readBuffer[3]) * 256 + readBuffer[4];  // skip[2], read[3,4] 
+            var X = ((int)readBuffer[5]) * 256 + readBuffer[6];   // skip[4], read[5,6]
+            var Y = ((int)readBuffer[7]) * 256 + readBuffer[8];   // skip[6], read[7,8]
 
             Z2 = Z2 == 0 ? 1 : Z2;
             //Got this from the datasheet but might not be correct
@@ -157,44 +178,6 @@ namespace Iot.Device.XPT2046
 
             return new Point() { Weight = weight, X = xScaled, Y = yScaled };
         }
-
-        private void writeRead(string label, byte control,ref SpanByte writeBuffer, ref SpanByte readBuffer)
-        {
-            writeBuffer[0] = control;
-            writeBuffer[1] = 0;
-            writeBuffer[2] = 0;
-
-            _spiDevice.TransferFullDuplex(writeBuffer, readBuffer);
-
-            /*
-            Debug.WriteLine($"{label}: {control}");
-            Debug.Write("Raw: ");
-            WriteByteInBinary(readBuffer[0]);
-            WriteByteInBinary(readBuffer[1]);
-            WriteByteInBinary(readBuffer[2]);
-            Debug.WriteLine();
-            */
-        }
-
-        private void WriteByteInBinary(byte b)
-        {
-            var travellingMask = 0b10000000;
-            for (var i=0; i < 8; i++)
-            {
-                if ((b & travellingMask) == travellingMask)
-                {
-                    Debug.Write("1");
-                }
-                else
-                {
-                    Debug.Write("0");
-                }
-                travellingMask >>= 1;
-            }
-
-            Debug.Write(" ");
-        }
-
 
         public void Dispose()
         {
