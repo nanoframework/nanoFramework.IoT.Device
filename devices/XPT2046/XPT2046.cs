@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) .NET Foundation and Contributors
+﻿// Copyright (c) .NET Foundation and Contributors
 // Portions Copyright (c) Microsoft Corporation.  All rights reserved.
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 using System.Device.Spi;
@@ -11,25 +9,28 @@ using System.IO;
 
 namespace Iot.Device.XPT2046
 {
+    /// <summary>
+    /// Class representing the XPT2046 device driver.
+    /// </summary>
     public class Xpt2046 : IDisposable
     {
+        private const byte StartBit = 0b10000000;
+        private const int MaxConversion = 0b111111111111;
+
         private readonly SpiDevice _spiDevice;
         private readonly int _xMax;
         private readonly int _yMax;
         private bool _disposedValue = false;
 
-        private const byte StartBit = 0b10000000;
-        private const int maxConversion = 0b111111111111;
-
-        enum PowerMode
+        private enum PowerMode
         {
-            PowerDown = 0,              //Power Down between conversions
-            RefOff_ADCOn_IntOff = 1,    //Reference is off and ADC is on. Interupt off (used for double ended conversion)
-            RefOn_ADCOff_IntOn = 2,     //Reference is on and ADC is off. Interupt on
-            AlwaysOn = 3                //Always on. Interupt is disabled
+            PowerDown = 0b00000000,              // Power Down between conversions
+            RefOff_ADCOn_IntOff = 0b00000001,    // Reference is off and ADC is on. Interupt off (used for double ended conversion)
+            RefOn_ADCOff_IntOn = 0b00000010,     // Reference is on and ADC is off. Interupt on
+            AlwaysOn = 0b00000011                // Always on. Interupt is disabled
         }
 
-        enum MultiplexerChannel : byte
+        private enum MultiplexerChannel : byte
         {
             Temperature0 = 0b00000000,
             Temperature1 = 0b01110000,
@@ -41,26 +42,26 @@ namespace Iot.Device.XPT2046
             Y = 0b01010000
         }
 
-        enum ConversionMode
+        private enum ConversionMode
         {
             Bits12 = 0b00000000,
             Bits8 = 0b00001000
         }
 
-        enum ReferenceSelectMode
+        private enum ReferenceSelectMode
         {
             DoubleEnded = 0b00000000,
             SingleEnded = 0b00000100
         }
 
-        //See https://docs.nanoframework.net/content/getting-started-guides/spi-explained.html
+        // See https://docs.nanoframework.net/content/getting-started-guides/spi-explained.html
 
         /// <summary>
-        /// Creates an instance of an Xpt2046
+        /// Initializes a new instance of the <see cref="Xpt2046" /> class.
         /// </summary>
-        /// <param name="spiDevice">The spiDevice connected to the touchscreen controller</param>
-        /// <param name="xMax">The X size of the screen</param>
-        /// <param name="yMax">The Y size of the screen</param>
+        /// <param name="spiDevice">The spiDevice connected to the touchscreen controller.</param>
+        /// <param name="xMax">The X size of the screen.</param>
+        /// <param name="yMax">The Y size of the screen.</param>
         public Xpt2046(SpiDevice spiDevice, int xMax = 320, int yMax = 240)
         {
             _spiDevice = spiDevice;
@@ -71,6 +72,9 @@ namespace Iot.Device.XPT2046
         /// <summary>
         /// Returns the version of the Xpt2046 driver.
         /// </summary>
+        /// <returns>
+        /// A string with the current driver version.
+        /// </returns>
         public string GetVersion()
         {
             return "0.2";
@@ -79,15 +83,18 @@ namespace Iot.Device.XPT2046
         /// <summary>
         /// Gets the current point from the touchscreen controller.
         /// </summary>
+        /// <returns>
+        /// A point representing the x,y and weight of the touch.
+        /// </returns>
         public Point GetPoint()
         {
             // Get best of 3 samples
             Point[] samples = new Point[3];
-            samples[0] = read();
-            samples[1] = read();
-            samples[2] = read();
+            samples[0] = Read();
+            samples[1] = Read();
+            samples[2] = Read();
 
-            // Get the average of the two closest samples
+            // Get the average of the two closest samples.
             return new Point
             {
                 X = BestTwoOfThreeAverage(samples[0].X, samples[1].X, samples[2].X),
@@ -117,8 +124,7 @@ namespace Iot.Device.XPT2046
             }
         }
 
-
-        private Point read()
+        private Point Read()
         {
             // Overlapped buffer: control, 0, control, 0, control, 0, control, 0, 0
             // Total 9 bytes: each control overlaps with previous read except the last
@@ -158,27 +164,30 @@ namespace Iot.Device.XPT2046
             writeBuffer[7] = 0;              // padding for Y read
             writeBuffer[8] = 0;              // padding for Y read
 
-            // Single SPI transaction for all overlapped measurements
+            // Single SPI transaction for all overlapped measurements is required as device
+            // resets when chip select is taken high
             _spiDevice.TransferFullDuplex(writeBuffer, readBuffer);
 
-            // Extract values from overlapped read buffer
             // Skip first byte (dummy), then read pairs
-            var Z1 = ((int)readBuffer[1]) * 256 + readBuffer[2];  // skip[0], read[1,2]
-            var Z2 = ((int)readBuffer[3]) * 256 + readBuffer[4];  // skip[2], read[3,4] 
-            var X = ((int)readBuffer[5]) * 256 + readBuffer[6];   // skip[4], read[5,6]
-            var Y = ((int)readBuffer[7]) * 256 + readBuffer[8];   // skip[6], read[7,8]
+            var z1 = (((int)readBuffer[1]) * 256) + readBuffer[2];  
+            var z2 = (((int)readBuffer[3]) * 256) + readBuffer[4];  
+            var x = (((int)readBuffer[5]) * 256) + readBuffer[6];   
+            var y = (((int)readBuffer[7]) * 256) + readBuffer[8];   
 
-            Z2 = Z2 == 0 ? 1 : Z2;
-            //Got this from the datasheet but might not be correct
-            var weight = (X / 4096) * ((Z1 / Z2) - 1);
+            // Adjust the weighting to a more usuable value, recommended by the datasheet.
+            z2 = z2 == 0 ? 1 : z2;
+            var weight = (x / 4096) * ((z1 / z2) - 1);
 
-            //Scale the X and Y values to the screen size
-            var xScaled = (((X >> 3) & maxConversion) * _xMax) / maxConversion;
-            var yScaled = (((Y >> 3) & maxConversion) * _yMax) / maxConversion;
+            // Scale the X and Y values to the screen size.
+            var xScaled = (((x >> 3) & MaxConversion) * _xMax) / MaxConversion;
+            var yScaled = (((y >> 3) & MaxConversion) * _yMax) / MaxConversion;
 
             return new Point() { Weight = weight, X = xScaled, Y = yScaled };
         }
 
+        /// <summary>
+        /// Called automatically by Using/IDisposable.
+        /// </summary>
         public void Dispose()
         {
             if (!_disposedValue)
@@ -189,6 +198,5 @@ namespace Iot.Device.XPT2046
 
             GC.SuppressFinalize(this);
         }
-
     }
 }

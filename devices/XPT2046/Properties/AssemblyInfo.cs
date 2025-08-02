@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿// Copyright (c) .NET Foundation and Contributors
+// Portions Copyright (c) Microsoft Corporation.  All rights reserved.
+// See LICENSE file in the project root for full license information.
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -19,21 +23,4 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.2")]
-[assembly: AssemblyFileVersion("0.0.0.2")]
-
-/////////////////////////////////////////////////////////////////
-// This attribute is mandatory when building Interop libraries //
-// update this whenever the native assembly signature changes  //
-[assembly: AssemblyNativeVersion("0.0.0.2")]
-/////////////////////////////////////////////////////////////////
+// Version information managed by Nerdbank.GitVersioning package.
