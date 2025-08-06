@@ -13,7 +13,7 @@ const int sleepDelayInMilliseconds = 100;
 const int delayPerRotationsInMilliseconds = 5000;
 Thread.Sleep(10000);
 
-using (var motor = new Drv8825(stepPin, dirPin, sleepPin, fullStepsPerRotation, m0Pin: 10))
+using (var motor = new Drv8825(stepPin, dirPin, sleepPin, fullStepsPerRotation))
 {
     var boolDirection = true;
     for(var i = 1; i <= 10; i++)

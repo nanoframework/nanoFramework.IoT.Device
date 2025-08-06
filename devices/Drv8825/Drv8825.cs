@@ -40,7 +40,7 @@ namespace Iot.Device.Drv8825
         /// <summary>
         /// Initializes a new instance of the <see cref="Drv8825" /> class.
         /// </summary>
-        /// <param name="stepPin">Microcontroller pin connected to STEP driver pin. Uset to set steps count.</param>
+        /// <param name="stepPin">Microcontroller pin connected to STEP driver pin. Used to set steps count.</param>
         /// <param name="dirPin">Microcontroller pin connected to DIR driver pin. Used to set rotation direction.</param>
         /// <param name="sleepPin">Microcontroller pin connected to SLP driver pin. Used to wake up and put the driver to sleep. Usually SLP need to connect with RST pin.</param>
         /// <param name="fullStepsPerRotation">How many steps your motor need to make full rotation. For example, Nema 17 takes 200 full steps to complete full rotation.</param>
