@@ -13,28 +13,45 @@ keeping track of the input step pulses.
 
 ## Documentation
 
-You can find the [Drv8825 documentation here](https://www.ti.com/lit/ds/symlink/drv8825.pdf).
+You can find the [DRV8825 chip](https://www.ti.com/lit/ds/symlink/drv8825.pdf) or
+[DRV8825 module](https://www.tme.eu/Document/1dd18faf1196df48619105e397146fdf/POLOLU-2133.pdf) datasheet here.
 
 ## Connections
 
-VMOT - connect to 8-35V (motor supply voltage)
+VMOT - connect to 8-35V (motor supply voltage).
 
-GND - connect to GND
+GND - connect to GND.
 
-1A, 1B, 2A, 2B - connect to the 4 coils of motor
+1A, 1B, 2A, 2B - connect to the 4 coils of motor.
 
-DIR - connect to microcontroller pin
+DIR - connect to microcontroller output pin to control direction of stepping. Internal pulldown.
 
-STEP - connect to microcontroller pin
+STEP - connect to microcontroller output pin to be able to perform the steps. Internal pulldown.
 
-RST — join with SLP and connect to microcontroller pin or to 3.3-5V
+RST — connect to microcontroller output pin or to 3.3-5V, active-low, reinitializes the indexer logic
+and disables H-bridge outputs. Internal pulldown.
 
-Logic power supply can be connected to FAULT pin, it will works, but it useless.
+SLP - can be joined with RST, connect it to microcontroller output pin or to 3.3-5V.
+Logic high to enable driver, logic low to enter low-power sleep mode. Internal pulldown.
+
+FAULT — can be connected to microcontroller input pin with pullup.
+Logic low when driver in fault condition(overtemp, overcurrent). Not necessary connection.
+
+M0, M1, M2 — can be connected to microcontroller output pins to use microsteps,
+it takes smoother movement of motor, but it not necessary connections.
+
+![circuit](./Drv8825_circuit_bb.jpeg)
+
+### Advices:
+
+If you have DRV8825 module(not only chip), it is pin-compatible A4988 carrier.
+It means for example that you can connect logic power supply to FAULT pin.
+It will works for DRV8825 module(not just chip!), but it useless. If possible, try to avoid it.
 
 If you have long wires (more that few centimeters), it is recommended using a minimum
 47uF electrolytic capacitor as close as possible to the VMOT and GND.
 
-![circuit](./Drv8825_circuit_bb.jpeg)
+Use a heat sink. The chip can get very hot before the temperature limiter kicks in.
 
 ## Usage
 
