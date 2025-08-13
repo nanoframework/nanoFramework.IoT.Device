@@ -24,7 +24,7 @@ namespace Iot.Device.Drv8825
         private GpioController? _gpioController;
 
         /// <summary>
-        /// Gets or sets the delay that allows the driver to recognize a step. By default, it is 5 MICROseconds.
+        /// Gets or sets the delay that allows the driver to recognize a step. By default, it is 5 microseconds.
         /// It is not recommended to set this delay less than 2 microseconds, 
         /// otherwise the motor will "miss"(skip) some steps.
         /// And it is not recommended to set this delay more than 50 microseconds,

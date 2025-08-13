@@ -52,7 +52,6 @@
     <Compile Include="MicrostepsController.cs" />
     <None Include="README.md" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="*.md" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

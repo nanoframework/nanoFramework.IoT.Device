@@ -44,9 +44,9 @@ it takes smoother movement of motor, but it not necessary connections.
 
 ### Advices:
 
-If you have DRV8825 module(not only chip), it is pin-compatible A4988 carrier.
+If you have DRV8825 module (not only chip), it is pin-compatible A4988 carrier.
 It means for example that you can connect logic power supply to FAULT pin.
-It will works for DRV8825 module(not just chip!), but it useless. If possible, try to avoid it.
+It will work for DRV8825 module (not just the chip!), but it is useless. If possible, try to avoid it.
 
 If you have long wires (more that few centimeters), it is recommended using a minimum
 47uF electrolytic capacitor as close as possible to the VMOT and GND.
