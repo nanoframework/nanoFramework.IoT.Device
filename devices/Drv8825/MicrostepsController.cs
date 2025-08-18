@@ -92,7 +92,7 @@ namespace Iot.Device.Drv8825
         /// <summary>
         /// Sets the value of M0.
         /// </summary>
-        /// <param name="value">Pin value(Low or High).</param>
+        /// <param name="value">Pin value (Low or High).</param>
         private void UpdateM0(PinValue value)
         {
             if (_m0Pin == null)
@@ -106,7 +106,7 @@ namespace Iot.Device.Drv8825
         /// <summary>
         /// Sets the value of M1.
         /// </summary>
-        /// <param name="value">Pin value(Low or High).</param>
+        /// <param name="value">Pin value (Low or High).</param>
         private void UpdateM1(PinValue value)
         {
             if (_m1Pin == null)
@@ -120,7 +120,7 @@ namespace Iot.Device.Drv8825
         /// <summary>
         /// Sets the value of M2.
         /// </summary>
-        /// <param name="value">Pin value(Low or High).</param>
+        /// <param name="value">Pin value (Low or High).</param>
         private void UpdateM2(PinValue value)
         {
             if (_m2Pin == null)

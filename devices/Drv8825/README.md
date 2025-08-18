@@ -42,7 +42,7 @@ it takes smoother movement of motor, but it not necessary connections.
 
 ![circuit](./Drv8825_circuit_bb.jpeg)
 
-### Advices:
+### Advices
 
 If you have DRV8825 module (not only chip), it is pin-compatible A4988 carrier.
 It means for example that you can connect logic power supply to FAULT pin.

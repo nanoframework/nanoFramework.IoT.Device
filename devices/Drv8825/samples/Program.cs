@@ -4,33 +4,33 @@
 using Iot.Device.Drv8825;
 using System.Threading;
 
-const byte stepPin = 26;
-const byte dirPin = 25;
-const byte sleepPin = 27;
-const ushort fullStepsPerRotation = 200;
-const int fullRotationDegree = 360;
-const int sleepDelayInMilliseconds = 100;
-const int delayPerRotationsInMilliseconds = 5000;
+const byte StepPin = 26;
+const byte DirPin = 25;
+const byte SleepPin = 27;
+const ushort FullStepsPerRotation = 200;
+const int FullRotationDegree = 360;
+const int SleepDelayInMilliseconds = 100;
+const int DelayPerRotationsInMilliseconds = 5000;
 Thread.Sleep(10000);
 
-using (var motor = new Drv8825(stepPin, dirPin, sleepPin, fullStepsPerRotation))
+using (var motor = new Drv8825(StepPin, DirPin, SleepPin, FullStepsPerRotation))
 {
     var boolDirection = true;
     for(var i = 1; i <= 10; i++)
     {
         motor.WakeUp();
-        var rotationDegree = (boolDirection ? 1 : -1) * (fullRotationDegree * i);
+        var rotationDegree = (boolDirection ? 1 : -1) * (FullRotationDegree * i);
         motor.Rotate(UnitsNet.Angle.FromDegrees(rotationDegree));
         boolDirection = !boolDirection;
-        motor.Sleep(sleepDelayInMilliseconds);
-        Thread.Sleep(delayPerRotationsInMilliseconds);
+        motor.Sleep(SleepDelayInMilliseconds);
+        Thread.Sleep(DelayPerRotationsInMilliseconds);
     }
 
-    Thread.Sleep(delayPerRotationsInMilliseconds);
+    Thread.Sleep(DelayPerRotationsInMilliseconds);
 
     var direction = Direction.Clockwise;
     motor.WakeUp();
-    for (var steps = 1; steps <= fullStepsPerRotation; steps++)
+    for (var steps = 1; steps <= FullStepsPerRotation; steps++)
     {
         motor.Rotate(steps, direction);
 
