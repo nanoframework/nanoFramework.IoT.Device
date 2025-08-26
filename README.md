@@ -16,6 +16,7 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Uln2003.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Uln2003/) [28BYJ-48 Stepper Motor 5V 4-Phase 5-Wire & ULN2003 Driver Board](devices/Uln2003)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.A4988.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.A4988/) [4-Wire stepper motor & A4988 driver board](devices/A4988)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Drv8825.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Drv8825/) [4-Wire stepper motor & Drv8825 driver board](devices/Drv8825)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.AD5328.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.AD5328/) [AD5328 - Digital to Analog Convertor](devices/AD5328)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](devices/Seesaw)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ads1115.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ads1115/) [ADS1115 - Analog to Digital Converter](devices/Ads1115)
