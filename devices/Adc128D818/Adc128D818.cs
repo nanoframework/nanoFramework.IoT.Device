@@ -42,7 +42,12 @@ namespace Iot.Device.Adc128D818
         /// Gets or sets ADC conversion rate.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// This register must only be programmed when the device is in shutdown mode.
+        /// </para>
+        /// <para>
+        /// Default is <see cref="ConversionRate.LowPower"/>.
+        /// </para>
         /// </remarks>
         public ConversionRate ConversionRate
         {
@@ -63,6 +68,9 @@ namespace Iot.Device.Adc128D818
         /// <summary>
         /// Gets or sets the ADC operating mode.
         /// </summary>
+        /// <remarks>
+        /// Default is <see cref="Mode.Mode0"/>.
+        /// </remarks>
         public Mode Mode
         {
             get => GetMode();
@@ -72,6 +80,9 @@ namespace Iot.Device.Adc128D818
         /// <summary>
         /// Gets or sets the ADC voltage reference.
         /// </summary>
+        /// <remarks>
+        /// Default is <see cref="VoltageReference.Internal2_56"/>.
+        /// </remarks>
         public VoltageReference VoltageReference
         {
             get => GetVoltageReferenceMode();
@@ -124,6 +135,9 @@ namespace Iot.Device.Adc128D818
         /// </summary>
         /// <param name="channel">The channel to read.</param>
         /// <exception cref="InvalidOperationException">Thrown when the channel is not valid for the current mode.</exception>
+        /// <remarks>
+        /// Default is all channels enabled.
+        /// </remarks>
         public void DisableChannel(Channel channel)
         {
             // computes the bit for the requested channel
