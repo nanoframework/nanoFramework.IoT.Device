@@ -59,21 +59,21 @@ namespace Iot.Device.Adc128D818
         /// <summary>
         /// Channel IN0+ amd Channel IN1-, differential reading.
         /// </summary>
-        In0_In1_Differential = 9,
+        In0In1Differential = 9,
 
         /// <summary>
         /// Channel IN3+ amd Channel IN2-, differential reading.
         /// </summary>
-        In3_In2_Differential = 10,
+        In3In2Differential = 10,
 
         /// <summary>
         /// Channel IN4+ amd Channel IN5-, differential reading.
         /// </summary>
-        In4_In5_Differential = 11,
+        In4In5Differential = 11,
 
         /// <summary>
         /// Channel IN7+ amd Channel IN6-, differential reading.
         /// </summary>
-        In7_In6_Differential = 12
+        In7In6Differential = 12
     }
 }

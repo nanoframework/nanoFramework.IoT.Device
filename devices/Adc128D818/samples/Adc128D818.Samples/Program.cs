@@ -17,7 +17,7 @@ Debug.WriteLine("Hello from nanoFramework!");
 
 // set I2C bus ID: 1
 // ADC128D818 A0 and A1 pins connected to GND
-I2cConnectionSettings settings = new I2cConnectionSettings(1, (int)I2cAddress.Low_Low);
+I2cConnectionSettings settings = new I2cConnectionSettings(1, (int)I2cAddress.LowLow);
 I2cDevice device = I2cDevice.Create(settings);
 
 // pass in I2cDevice

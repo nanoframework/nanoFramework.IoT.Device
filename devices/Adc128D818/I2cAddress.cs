@@ -16,46 +16,46 @@ namespace Iot.Device.Adc128D818
         /// <summary>
         /// A0 and A1 connect to GND.
         /// </summary>
-        Low_Low = 0x1D,
+        LowLow = 0x1D,
 
         /// <summary>
         /// A0 connects to GND and A1 connects to mid VDD.
         /// </summary>
-        Low_Mid = 0x1E,
+        LowMid = 0x1E,
 
         /// <summary>
         /// A0 connects to GND and A1 connects to VDD.
         /// </summary>
-        Low_High = 0x1F,
+        LowHigh = 0x1F,
 
         /// <summary>
         /// A0 connects to mid VDD and A1 connects to GND.
         /// </summary>
-        Mid_Low = 0x2D,
+        MidLow = 0x2D,
 
         /// <summary>
         /// A0 and A1 connect to mid VDD.
         /// </summary>
-        Mid_Mid = 0x2E,
+        MidMid = 0x2E,
 
         /// <summary>
         /// A0 connects to mid VDD and A1 connects to VDD.
         /// </summary>
-        Mid_High = 0x2F,
+        MidHigh = 0x2F,
 
         /// <summary>
         /// A0 connects to VDD and A1 connects to GND.
         /// </summary>
-        High_Low = 0x35,
+        HighLow = 0x35,
 
         /// <summary>
         /// A0 connects to VDD and A1 connects to mid VDD.
         /// </summary>
-        High_Mid = 0x36,
+        HighMid = 0x36,
 
         /// <summary>
         /// A0 and A1 connect to VDD.
         /// </summary>
-        High_High = 0x37
+        HighHigh = 0x37
     }
 }

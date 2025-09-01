@@ -388,20 +388,20 @@ namespace Iot.Device.Adc128D818
                 // Local temperature reading
                 return (byte)Channel.In7;
             }
-            else if ((channel == Channel.In0_In1_Differential || channel == Channel.In3_In2_Differential) && _adcMode == Mode.Mode2)
+            else if ((channel == Channel.In0In1Differential || channel == Channel.In3In2Differential) && _adcMode == Mode.Mode2)
             {
                 // IN0+ and IN3- differential reading
-                return channel - Channel.In0_In1_Differential;
+                return channel - Channel.In0In1Differential;
             }
-            else if ((channel == Channel.In4_In5_Differential || channel == Channel.In7_In6_Differential) && _adcMode == Mode.Mode2)
+            else if ((channel == Channel.In4In5Differential || channel == Channel.In7In6Differential) && _adcMode == Mode.Mode2)
             {
                 // IN4+ and IN7- differential reading
-                return (byte)(Channel.In2 + (channel - Channel.In4_In5_Differential));
+                return (byte)(Channel.In2 + (channel - Channel.In4In5Differential));
             }
-            else if ((channel == Channel.In4_In5_Differential || channel == Channel.In7_In6_Differential) && _adcMode == Mode.Mode3)
+            else if ((channel == Channel.In4In5Differential || channel == Channel.In7In6Differential) && _adcMode == Mode.Mode3)
             {
                 // IN4+ and IN7- differential reading
-                return (byte)(Channel.In4 + (channel - Channel.In4_In5_Differential));
+                return (byte)(Channel.In4 + (channel - Channel.In4In5Differential));
             }
             else
             {
