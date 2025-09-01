@@ -5,6 +5,7 @@
 ## Analog/Digital converters
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Adc128D818.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Adc128D818/) [ADC128D818 - Analog to Digital Converter](Adc128D818)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ads1115.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ads1115/) [ADS1115 - Analog to Digital Converter](Ads1115)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Hx711.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Hx711/) [Hx711 (M5Stack WEIGHT)](Hx711)
