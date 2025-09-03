@@ -7,7 +7,7 @@ using System.Device.Spi;
 using System.Diagnostics;
 using System.IO;
 
-namespace Iot.Device.XPT2046
+namespace Iot.Device.Xpt2046
 {
     /// <summary>
     /// Class representing the XPT2046 device driver.
