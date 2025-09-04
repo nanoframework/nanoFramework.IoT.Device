@@ -7,7 +7,7 @@ namespace Iot.Device.Xpt2046
     /// <summary>
     /// A touch point.
     /// </summary>
-    public struct Point
+    public struct TouchPoint
     {
         /// <summary>
         /// Gets or sets X.

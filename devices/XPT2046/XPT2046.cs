@@ -24,10 +24,17 @@ namespace Iot.Device.Xpt2046
 
         private enum PowerMode
         {
-            PowerDown = 0b00000000,              // Power Down between conversions
-            RefOff_ADCOn_IntOff = 0b00000001,    // Reference is off and ADC is on. Interupt off (used for double ended conversion)
-            RefOn_ADCOff_IntOn = 0b00000010,     // Reference is on and ADC is off. Interupt on
-            AlwaysOn = 0b00000011                // Always on. Interupt is disabled
+            // Power Down between conversions
+            PowerDown = 0b00000000,
+
+            // Reference is off and ADC is on. Interupt off (used for double ended conversion)
+            RefOff_ADCOn_IntOff = 0b00000001,
+
+            // Reference is on and ADC is off. Interupt on
+            RefOn_ADCOff_IntOn = 0b00000010,
+            
+            // Always on. Interupt is disabled
+            AlwaysOn = 0b00000011
         }
 
         private enum MultiplexerChannel : byte
@@ -86,16 +93,16 @@ namespace Iot.Device.Xpt2046
         /// <returns>
         /// A point representing the x,y and weight of the touch.
         /// </returns>
-        public Point GetPoint()
+        public TouchPoint GetPoint()
         {
             // Get best of 3 samples
-            Point[] samples = new Point[3];
+            TouchPoint[] samples = new TouchPoint[3];
             samples[0] = Read();
             samples[1] = Read();
             samples[2] = Read();
 
             // Get the average of the two closest samples.
-            return new Point
+            return new TouchPoint
             {
                 X = BestTwoOfThreeAverage(samples[0].X, samples[1].X, samples[2].X),
                 Y = BestTwoOfThreeAverage(samples[0].Y, samples[1].Y, samples[2].Y),
@@ -124,7 +131,7 @@ namespace Iot.Device.Xpt2046
             }
         }
 
-        private Point Read()
+        private TouchPoint Read()
         {
             // Overlapped buffer: control, 0, control, 0, control, 0, control, 0, 0
             // Total 9 bytes: each control overlaps with previous read except the last
@@ -182,7 +189,7 @@ namespace Iot.Device.Xpt2046
             var xScaled = (((x >> 3) & MaxConversion) * _xMax) / MaxConversion;
             var yScaled = (((y >> 3) & MaxConversion) * _yMax) / MaxConversion;
 
-            return new Point() { Weight = weight, X = xScaled, Y = yScaled };
+            return new TouchPoint() { Weight = weight, X = xScaled, Y = yScaled };
         }
 
         /// <summary>

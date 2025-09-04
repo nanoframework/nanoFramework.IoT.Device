@@ -18,8 +18,6 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-    <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
 	<DocumentationFile>bin\$(Configuration)\Iot.Device.XPT2046.xml</DocumentationFile>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>direct</NuGetAuditMode>
@@ -36,7 +34,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Point.cs" />
+    <Compile Include="TouchPoint.cs" />
     <Compile Include="XPT2046.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
