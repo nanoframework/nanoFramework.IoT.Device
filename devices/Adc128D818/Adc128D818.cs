@@ -395,7 +395,12 @@ namespace Iot.Device.Adc128D818
             else if (channel >= Channel.In4 && channel <= Channel.In6 && (_adcMode == Mode.Mode0 || _adcMode == Mode.Mode1))
             {
                 // IN4, IN5, IN6 single-ended readings
-                return (byte)((byte)channel - 4);
+                return (byte)channel;
+            }
+            else if (channel == Channel.In7 && _adcMode == Mode.Mode1)
+            {
+                // IN7 single-ended reading
+                return (byte)channel;
             }
             else if (channel == Channel.Temperature && (_adcMode == Mode.Mode0 || _adcMode == Mode.Mode2 || _adcMode == Mode.Mode3))
             {
