@@ -11,7 +11,12 @@ if ($msbuild)
     $msbuild = join-path $msbuild 'MSBuild\Current\Bin\amd64\MSBuild.exe'
 }
 
-$auth = "basic $([System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nfbot:${env:MY_GITHUBTOKEN}"))))"
+# prepare GitHub API headers using token auth
+$headers = @{
+    Authorization = "token $env:MY_GITHUBTOKEN"
+    'User-Agent'  = 'azure-pipelines'
+    Accept        = 'application/vnd.github+json'
+}
 
 if($env:DEVICE_TO_BUILD -eq "")
 {
@@ -30,7 +35,10 @@ if($env:DEVICE_TO_BUILD -eq "")
         {
             "##[debug] INFO: iteration $pageCounter" | Write-Host
 
-            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            $batch = Invoke-RestMethod `
+                        -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/pulls/$env:System_PullRequest_PullRequestNumber/files?per_page=100&page=$pageCounter" `
+                        -Headers $headers `
+                        -Method GET
 
             if($null -eq $commit)
             {
@@ -63,7 +71,10 @@ if($env:DEVICE_TO_BUILD -eq "")
         {
             "##[command] Get API file change page: $pageCounter" | Write-Host
 
-            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion`?per_page=100&page=$pageCounter" -Header @{"Authorization"="$auth"} -ContentType "application/json" -Method GET
+            $batch = Invoke-RestMethod `
+                        -Uri "https://api.github.com/repos/nanoframework/nanoFramework.IoT.Device/commits/$env:Build_SourceVersion`?per_page=100&page=$pageCounter" `
+                        -Headers $headers `
+                        -Method GET
 
             if($null -eq $commit)
             {

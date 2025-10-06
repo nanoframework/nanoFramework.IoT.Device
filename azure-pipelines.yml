@@ -80,8 +80,8 @@ steps:
 - task: InstallNanoMSBuildComponents@1
   condition: succeeded()
   displayName: Install nanoFramework MSBuild components
-  env:
-    GITHUB_TOKEN: $(GitHubToken)
+  inputs:
+    GitHubToken: $(GitHubToken)
 
 # build solutions that need to be build
 - task: PowerShell@2
