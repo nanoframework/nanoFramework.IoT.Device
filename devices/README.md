@@ -233,6 +233,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Chsc6540.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Chsc6540/) [CHSC6540 - Touch screen controller](Chsc6540)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ft6xx6x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ft6xx6x/) [Ft6xx6x/Ft6336GU - Touch screen controller](Ft6xx6x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpr121.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpr121/) [MPR121 - Proximity Capacitive Touch Sensor Controller](Mpr121)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.XPT2046.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.XPT2046/) [XPT2046 - Touch screen controller](XPT2046)
 
 ## Wireless communication modules
 
