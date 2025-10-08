@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup Label="Globals">
+  <Import Project="packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.props')" />
+  <PropertyGroup Label="Globals">
     <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
@@ -19,19 +20,19 @@
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
-	<DocumentationFile>bin\$(Configuration)\Iot.Device.XPT2046.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.XPT2046.xml</DocumentationFile>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
   </PropertyGroup>
   <PropertyGroup>
-	  <SignAssembly>true</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-	  <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-	  <DelaySign>false</DelaySign>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -73,8 +74,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
-    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.props'))" />
-    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.props'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
-  <Import Project="packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.7.115\build\Nerdbank.GitVersioning.targets')" />
+  <Import Project="packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.8.118\build\Nerdbank.GitVersioning.targets')" />
 </Project>
