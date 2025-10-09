@@ -301,24 +301,7 @@ namespace Iot.Device.DhcpServer
             return dhcpPacket;
         }
 
-        private byte[] BuildType(DhcpMessageType acktype, IPAddress cip, IPAddress mask, IPAddress sip, byte[] additionalOptions = null)
-        {
-            OperationCode = DhcpOperation.BootReply;
-            YourIPAddress = cip;
-            ResetOptions();
-            AddOption(DhcpOptionCode.DhcpMessageType, new byte[] { (byte)acktype });
-            if (acktype != DhcpMessageType.Nak)
-            {
-                AddOption(DhcpOptionCode.SubnetMask, mask.GetAddressBytes());
-                AddOption(DhcpOptionCode.DhcpAddress, sip.GetAddressBytes());
-            }
-
-            if (additionalOptions != null)
-            {
-                AddOptionRaw(ref additionalOptions);
-            }
-
-            return Build();
+            return dhcpPacket;
         }
 
         /// <summary>
@@ -360,27 +343,6 @@ namespace Iot.Device.DhcpServer
         /// <returns>A byte arry with the message.</returns>
         public byte[] Decline(IPAddress cip, IPAddress mask, IPAddress sip) => BuildType(DhcpMessageType.Decline, cip, mask, sip);
 
-        private int OptionsFindKey(DhcpOptionCode lookOpt)
-        {
-            int offset = 0;
-            if (Options[offset] != (byte)DhcpOptionCode.Pad)
-            {
-                while (Options[offset] != (byte)DhcpOptionCode.End)
-                {
-                    byte optcode = Options[offset++];
-                    int optlen = Options[offset++];
-                    if ((DhcpOptionCode)optcode == lookOpt)
-                    {
-                        return offset - 2;
-                    }
-
-                    offset += optlen;
-                }
-            }
-
-            return -1;
-        }
-
         /// <summary>
         /// Resets the options.
         /// </summary>
@@ -389,24 +351,6 @@ namespace Iot.Device.DhcpServer
             // 240 is where the options are starting, right after the magic cookie
             Options = new byte[DhcppacketSize - IndexToOptions];
             Options[0] = 0xff;
-        }
-
-        /// <summary>
-        /// Add an option. This will just add the option to the option list, you are responsible to use the proper code and encoding.
-        /// </summary>
-        /// <param name="optdata">The options to add.</param>
-        private void AddOptionRaw(ref byte[] optdata)
-        {
-            int offset = 0;
-            while (Options[offset] != 0xff)
-            {
-                byte optcode = Options[offset++];
-                int optlen = Options[offset++];
-                offset += optlen;
-            }
-
-            optdata.CopyTo(Options, offset);
-            Options[offset + optdata.Length] = (byte)DhcpOptionCode.End; // set end of options
         }
 
         /// <summary>
@@ -572,8 +516,67 @@ namespace Iot.Device.DhcpServer
             }
         }
 
+        /// <summary>
+        /// Add an option. This will just add the option to the option list, you are responsible to use the proper code and encoding.
+        /// </summary>
+        /// <param name="optdata">The options to add.</param>
+        private void AddOptionRaw(ref byte[] optdata)
+        {
+            int offset = 0;
+            while (Options[offset] != 0xff)
+            {
+                // drop option code from the count
+                offset++;
+
+                int optlen = Options[offset++];
+                offset += optlen;
+            }
+
+            optdata.CopyTo(Options, offset);
+            Options[offset + optdata.Length] = (byte)DhcpOptionCode.End; // set end of options
+        }
+
+        private byte[] BuildType(DhcpMessageType acktype, IPAddress cip, IPAddress mask, IPAddress sip, byte[] additionalOptions = null)
+        {
+            OperationCode = DhcpOperation.BootReply;
+            YourIPAddress = cip;
+            ResetOptions();
+            AddOption(DhcpOptionCode.DhcpMessageType, new byte[] { (byte)acktype });
+            if (acktype != DhcpMessageType.Nak)
+            {
+                AddOption(DhcpOptionCode.SubnetMask, mask.GetAddressBytes());
+                AddOption(DhcpOptionCode.DhcpAddress, sip.GetAddressBytes());
+            }
+
+            if (additionalOptions != null)
+            {
+                AddOptionRaw(ref additionalOptions);
+            }
+
+            return Build();
+        }
 
         private bool IsOptionsValid() => ((Options != null) && (Options.Length > 0));
 
+        private int OptionsFindKey(DhcpOptionCode lookOpt)
+        {
+            int offset = 0;
+            if (Options[offset] != (byte)DhcpOptionCode.Pad)
+            {
+                while (Options[offset] != (byte)DhcpOptionCode.End)
+                {
+                    byte optcode = Options[offset++];
+                    int optlen = Options[offset++];
+                    if ((DhcpOptionCode)optcode == lookOpt)
+                    {
+                        return offset - 2;
+                    }
+
+                    offset += optlen;
+                }
+            }
+
+            return -1;
+        }
     }
 }
