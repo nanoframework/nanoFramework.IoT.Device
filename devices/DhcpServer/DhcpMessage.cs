@@ -214,17 +214,50 @@ namespace Iot.Device.DhcpServer
             // check copy options array
             inc = IndexToOptions;
             int offset = inc;
-            if (dhcppacket[offset] != 0)
+
+            // Only process options if there's enough data
+            if (offset < dhcppacket.Length)
             {
-                while (dhcppacket[offset] != 0xff)
+                // Find the end of options section
+                while (offset < dhcppacket.Length && dhcppacket[offset] != (byte)DhcpOptionCode.End)
                 {
                     byte optcode = dhcppacket[offset++];
+
+                    // Skip pad options
+                    if (optcode == (byte)DhcpOptionCode.Pad)
+                    {
+                        continue;
+                    }
+
+                    // Check if we have enough bytes to read the length field
+                    if (offset >= dhcppacket.Length)
+                    {
+                        break;
+                    }
+
                     int optlen = dhcppacket[offset++];
+
+                    // Check if we have enough bytes to skip the option data
+                    if (offset + optlen > dhcppacket.Length)
+                    {
+                        break;
+                    }
+
                     offset += optlen;
                 }
 
-                Options = new byte[offset - inc + 1];
-                Array.Copy(dhcppacket, inc, Options, 0, Options.Length);
+                // Include the End marker if found
+                if (offset < dhcppacket.Length && dhcppacket[offset] == (byte)DhcpOptionCode.End)
+                {
+                    offset++;
+                }
+
+                // Copy options including the End marker if present
+                if (offset > inc)
+                {
+                    Options = new byte[offset - inc];
+                    Array.Copy(dhcppacket, inc, Options, 0, Options.Length);
+                }
             }
         }
 
