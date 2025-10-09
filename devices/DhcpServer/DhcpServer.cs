@@ -155,7 +155,9 @@ namespace Iot.Device.DhcpServer
                         // Debug.WriteLine(BitConverter.ToString(buffer, 0, bytes));
                         DhcpMessage dhcpReq = new DhcpMessage();
                         dhcpReq.Parse(ref buffer);
-                        string sname = dhcpReq.HostName;
+                        
+                        Debug.WriteLine(dhcpReq.ToString());
+
                         string macAddress = BitConverter.ToString(dhcpReq.ClientHardwareAddress, 0, dhcpReq.ClientHardwareAddress.Length);
                         switch (dhcpReq.DhcpMessageType)
                         {
@@ -189,7 +191,7 @@ namespace Iot.Device.DhcpServer
 
                                 // Uncomment to get debug information
                                 // Debug.WriteLine(BitConverter.ToString(offer, 0, offer.Length));
-                                Debug.WriteLine($"DHCP: Discover from host: {sname}");
+                                Debug.WriteLine($"DHCP: Discover from host: {dhcpReq.HostName}");
                                 dhcpReq.SecondsElapsed = _timeToLeave;
 
                                 var offer = dhcpReq.Offer(new IPAddress(yourIp), _mask, _ipAddress, GetAdditionalOptions());
@@ -206,9 +208,10 @@ namespace Iot.Device.DhcpServer
                                 }
 
                                 // Uncomment to get debug information
-                                Debug.WriteLine($"DHCP: Request from host: {sname}");
+                                Debug.WriteLine($"DHCP: Request from host: {dhcpReq.HostName}");
                                 Debug.WriteLine($"DHCP Request: Requested address {dhcpReq.RequestedIpAddress}");
                                 Debug.WriteLine($"DHCP Request: Server Identifier {dhcpReq.DhcpAddress}");
+                                
                                 if (!_dhcpIpList.Contains(dhcpReq.RequestedIpAddress))
                                 {
                                     _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
@@ -248,7 +251,7 @@ namespace Iot.Device.DhcpServer
                                 break;
 
                             default:
-                                Debug.WriteLine($"DHCP: not handled ({dhcpReq.DhcpMessageType}) from host: {sname}");
+                                Debug.WriteLine($"DHCP: not handled ({dhcpReq.DhcpMessageType}) from host: {dhcpReq.HostName}");
                                 break;
                         }
                     }
@@ -286,6 +289,9 @@ namespace Iot.Device.DhcpServer
             if (!string.IsNullOrEmpty(CaptivePortalUrl))
             {
                 var encoded = Encoding.UTF8.GetBytes(CaptivePortalUrl);
+                // Add the captive portal option
+                Debug.WriteLine($"DHCP: Adding Captive Portal option with URL {CaptivePortalUrl}");
+
                 additionalOptions = new byte[2 + encoded.Length];
                 additionalOptions[0] = (byte)DhcpOptionCode.CaptivePortal;
                 additionalOptions[1] = (byte)CaptivePortalUrl.Length;

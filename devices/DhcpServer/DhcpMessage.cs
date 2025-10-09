@@ -449,5 +449,129 @@ namespace Iot.Device.DhcpServer
         }
 
         private bool IsOptionsInvalid() => !((Options != null) && (Options.Length > 0));
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            // output the message in a readable format
+            StringBuilder messageOutput = new StringBuilder();
+            messageOutput.AppendLine("DHCP Message:");
+            messageOutput.AppendLine($"Operation: {OperationCode}, HwType: {HardwareType}, HwLen: {HardwareAddressLength}, Hops: {Hops}, XID: {TransactionId}, SECS: {SecondsElapsed}, FLAGS: {Flags}");
+            messageOutput.AppendLine($"CIADDR: {ClientIPAddress}, YIADDR: {YourIPAddress}, SIADDR: {ServerIPAddress}, GIADDR: {GatewayIPAddress}");
+            messageOutput.AppendLine($"CHADDR: {BitConverter.ToString(ClientHardwareAddress)}");
+            messageOutput.AppendLine($"Cookie: {BitConverter.ToString(Cookie)}");
+            messageOutput.AppendLine("Options:");
+
+            if (!IsOptionsValid())
+            {
+                messageOutput.AppendLine(" No options");
+            }
+            else
+            {
+                // list all options
+                int offset = 0;
+
+                while (offset < Options.Length && Options[offset] != (byte)DhcpOptionCode.End)
+                {
+                    byte optcode = Options[offset++];
+
+                    // Skip pad options
+                    if (optcode == (byte)DhcpOptionCode.Pad)
+                    {
+                        continue;
+                    }
+
+                    // Check if we have enough bytes to read the length field
+                    if (offset >= Options.Length)
+                    {
+                        break;
+                    }
+
+                    int optlen = Options[offset++];
+
+                    // Check if we have enough bytes to skip the option data
+                    if (offset + optlen > Options.Length)
+                    {
+                        break;
+                    }
+
+                    byte[] optVal = new byte[optlen];
+                    Array.Copy(Options, offset, optVal, 0, optlen);
+
+                    ComposeOptionOutput(
+                        (DhcpOptionCode)optcode,
+                        optlen,
+                        optVal,
+                        messageOutput);
+
+                    offset += optlen;
+                }
+            }
+
+            return messageOutput.ToString();
+        }
+
+        private static void ComposeOptionOutput(
+            DhcpOptionCode optionCode,
+            int length,
+            byte[] optionValue,
+            StringBuilder stringBuilder)
+        {
+            if (optionCode == DhcpOptionCode.DhcpMessageType && length == 1)
+            {
+                stringBuilder.AppendLine($"  DHCP Message Type: {((DhcpMessageType)optionValue[0]).AsString()}");
+            }
+            else if (optionCode == DhcpOptionCode.Hostname)
+            {
+                stringBuilder.AppendLine($"  Host Name: {Encoding.UTF8.GetString(optionValue, 0, length)}");
+            }
+            else if (optionCode == DhcpOptionCode.RequestedIpAddress && length == 4)
+            {
+                stringBuilder.AppendLine($"  Requested IP Address: {new IPAddress(optionValue)}");
+            }
+            else if (optionCode == DhcpOptionCode.DhcpAddress && length == 4)
+            {
+                stringBuilder.AppendLine($"  DHCP Server IP Address: {new IPAddress(optionValue)}");
+            }
+            else if (optionCode == DhcpOptionCode.DhcpMaxMessageSize && length == 2)
+            {
+                ushort maxSize = BitConverter.ToUInt16(optionValue, 0);
+                stringBuilder.AppendLine($"  DHCP Max Message Size: {maxSize} bytes");
+            }
+            else if (optionCode == DhcpOptionCode.ClassId && length > 0)
+            {
+                stringBuilder.AppendLine($"  Class ID: {Encoding.UTF8.GetString(optionValue, 0, length)}");
+            }
+            else if (optionCode == DhcpOptionCode.ClientId && length > 0)
+            {
+                stringBuilder.Append("  Client ID: ");
+                stringBuilder.Append(BitConverter.ToString(optionValue));
+            }
+            else if (optionCode == DhcpOptionCode.ParameterList && length > 0)
+            {
+                stringBuilder.Append("  Parameter List: ");
+                for (int i = 0; i < length; i++)
+                {
+                    if (i > 0)
+                    {
+                        stringBuilder.Append(", ");
+                    }
+
+                    DhcpOptionCode paramCode = (DhcpOptionCode)optionValue[i];
+                    stringBuilder.Append(paramCode.ToString());
+                }
+
+                stringBuilder.AppendLine();
+            }
+            else if (optionCode == DhcpOptionCode.CaptivePortal && length > 0)
+            {
+                stringBuilder.AppendLine($"  Captive Portal URL: {Encoding.UTF8.GetString(optionValue, 0, length)}");
+            }
+            else
+            {
+                // For other options, just show the raw value
+                stringBuilder.AppendLine($"  Option ({optionCode}) Value: {BitConverter.ToString(optionValue)}");
+            }
+        }
+
     }
 }
