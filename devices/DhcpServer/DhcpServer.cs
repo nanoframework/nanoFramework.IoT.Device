@@ -40,6 +40,11 @@ namespace Iot.Device.DhcpServer
         public string CaptivePortalUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the DNS server to be used by clients. If set to <see cref="IPAddress.Any"/>, this will be ignored.
+        /// </summary>
+        public IPAddress DnsServer { get; set; } = IPAddress.Any;
+
+        /// <summary>
         /// Starts the DHCP Server to start listning.
         /// </summary>
         /// <returns>Returns false in case of error.</returns>
@@ -203,7 +208,7 @@ namespace Iot.Device.DhcpServer
                                     // Not for us
                                     break;
                                 }
-                                
+
                                 if (!_dhcpIpList.Contains(dhcpReq.RequestedIpAddress))
                                 {
                                     _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
@@ -273,21 +278,59 @@ namespace Iot.Device.DhcpServer
 
         private byte[] GetAdditionalOptions()
         {
+            // this is the preamble for options: 
+            // 1 byte for option code
+            // 1 byte for length
+            const byte OptionPreamble = 2;
+            const byte IpAddressOptionLength = 4;
+
             byte[] additionalOptions = null;
+            byte[] encodedCaptivePortal = !string.IsNullOrEmpty(CaptivePortalUrl) ? Encoding.UTF8.GetBytes(CaptivePortalUrl) : new byte[0];
 
-            if (!string.IsNullOrEmpty(CaptivePortalUrl))
+            // compute length of additional options
+            int length = 0;
+            int optionsIndex = 0;
+
+            if (DnsServer != IPAddress.Any)
             {
-                // Add the captive portal option
-                Debug.WriteLine($"DHCP: Adding Captive Portal option with URL {CaptivePortalUrl}");
+                length += OptionPreamble;
+                length += IpAddressOptionLength;
+            }
 
-                byte[] encoded = Encoding.UTF8.GetBytes(CaptivePortalUrl);
-                
-                additionalOptions = new byte[2 + encoded.Length];
-                
-                additionalOptions[0] = (byte)DhcpOptionCode.CaptivePortal;
-                additionalOptions[1] = (byte)encoded.Length;
-                
-                encoded.CopyTo(additionalOptions, 2);
+            if (encodedCaptivePortal.Length > 0)
+            {
+                length += OptionPreamble;
+                length += encodedCaptivePortal.Length;
+            }
+
+            // if there are options to send, add the terminating option
+            if (length > 0)
+            {
+                // add 1 byte for the end option
+                length += 1;
+                additionalOptions = new byte[length];
+
+                if (DnsServer != IPAddress.Any)
+                {
+                    // add DNS server option
+                    additionalOptions[optionsIndex++] = (byte)DhcpOptionCode.DomainNameServer;
+                    additionalOptions[optionsIndex++] = IpAddressOptionLength;
+                    Array.Copy(DnsServer.GetAddressBytes(), 0, additionalOptions, optionsIndex, IpAddressOptionLength);
+
+                    optionsIndex += IpAddressOptionLength;
+                }
+
+                if (encodedCaptivePortal.Length > 0)
+                {
+                    // add Captive Portal option
+                    additionalOptions[optionsIndex++] = (byte)DhcpOptionCode.CaptivePortal;
+                    additionalOptions[optionsIndex++] = (byte)encodedCaptivePortal.Length;
+                    Array.Copy(encodedCaptivePortal, 0, additionalOptions, optionsIndex, encodedCaptivePortal.Length);
+                    optionsIndex += encodedCaptivePortal.Length;
+                }
+
+                // add end option
+                additionalOptions[optionsIndex] = (byte)DhcpOptionCode.End;
             }
 
             return additionalOptions;
