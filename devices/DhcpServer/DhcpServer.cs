@@ -306,8 +306,6 @@ namespace Iot.Device.DhcpServer
             // if there are options to send, add the terminating option
             if (length > 0)
             {
-                // add 1 byte for the end option
-                length += 1;
                 additionalOptions = new byte[length];
 
                 if (DnsServer != IPAddress.Any)
@@ -328,9 +326,6 @@ namespace Iot.Device.DhcpServer
                     Array.Copy(encodedCaptivePortal, 0, additionalOptions, optionsIndex, encodedCaptivePortal.Length);
                     optionsIndex += encodedCaptivePortal.Length;
                 }
-
-                // add end option
-                additionalOptions[optionsIndex] = (byte)DhcpOptionCode.End;
             }
 
             return additionalOptions;
