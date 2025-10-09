@@ -437,16 +437,17 @@ namespace Iot.Device.DhcpServer
             return optVal;
         }
 
+#if DEBUG
+
         /// <inheritdoc/>
         public override string ToString()
         {
             // output the message in a readable format
             StringBuilder messageOutput = new StringBuilder();
-            messageOutput.AppendLine($"Operation: {OperationCode}, HwType: {HardwareType}, HwLen: {HardwareAddressLength}, Hops: {Hops}, XID: {TransactionId}, SECS: {SecondsElapsed}, FLAGS: {Flags}");
             messageOutput.AppendLine($"DHCP Message {DhcpMessageType.AsString()}");
+            messageOutput.AppendLine($"Operation: {OperationCode.AsString()}, HwType: {HardwareType}, HwLen: {HardwareAddressLength}, Hops: {Hops}, XID: {TransactionId}, SECS: {SecondsElapsed}, FLAGS: {Flags}");
             messageOutput.AppendLine($"CIADDR: {ClientIPAddress}, YIADDR: {YourIPAddress}, SIADDR: {ServerIPAddress}, GIADDR: {GatewayIPAddress}");
             messageOutput.AppendLine($"CHADDR: {BitConverter.ToString(ClientHardwareAddress)}");
-            messageOutput.AppendLine($"Cookie: {BitConverter.ToString(Cookie)}");
             messageOutput.AppendLine("Options:");
 
             if (!IsOptionsValid())
@@ -504,11 +505,7 @@ namespace Iot.Device.DhcpServer
             byte[] optionValue,
             StringBuilder stringBuilder)
         {
-            if (optionCode == DhcpOptionCode.DhcpMessageType && length == 1)
-            {
-                stringBuilder.AppendLine($"  DHCP Message Type: {((DhcpMessageType)optionValue[0]).AsString()}");
-            }
-            else if (optionCode == DhcpOptionCode.Hostname)
+            if (optionCode == DhcpOptionCode.Hostname)
             {
                 stringBuilder.AppendLine($"  Host Name: {Encoding.UTF8.GetString(optionValue, 0, length)}");
             }
@@ -532,7 +529,7 @@ namespace Iot.Device.DhcpServer
             else if (optionCode == DhcpOptionCode.ClientId && length > 0)
             {
                 stringBuilder.Append("  Client ID: ");
-                stringBuilder.Append(BitConverter.ToString(optionValue));
+                stringBuilder.AppendLine(BitConverter.ToString(optionValue));
             }
             else if (optionCode == DhcpOptionCode.ParameterList && length > 0)
             {
@@ -554,12 +551,22 @@ namespace Iot.Device.DhcpServer
             {
                 stringBuilder.AppendLine($"  Captive Portal URL: {Encoding.UTF8.GetString(optionValue, 0, length)}");
             }
+            else if (optionCode == DhcpOptionCode.NamingAuthority)
+            {
+                stringBuilder.AppendLine($"  Naming Authority: {Encoding.UTF8.GetString(optionValue, 0, length)}");
+            }
+            else if (optionCode == DhcpOptionCode.DhcpMessageType)
+            {
+                // these options won't be added to the output as they are already shown in the header
+            }
             else
             {
                 // For other options, just show the raw value
                 stringBuilder.AppendLine($"  Option ({optionCode}) Value: {BitConverter.ToString(optionValue)}");
             }
         }
+
+#endif
 
         /// <summary>
         /// Add an option. This will just add the option to the option list, you are responsible to use the proper code and encoding.
