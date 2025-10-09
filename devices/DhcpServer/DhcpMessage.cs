@@ -82,6 +82,11 @@ namespace Iot.Device.DhcpServer
         public byte[] ClientHardwareAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets the client hardware address.
+        /// </summary>
+        public string ClientHardwareAddressAsString => BitConverter.ToString(ClientHardwareAddress);
+
+        /// <summary>
         /// Gets or sets the magic cookie.
         /// </summary>
         public byte[] Cookie { get; set; }
@@ -445,9 +450,9 @@ namespace Iot.Device.DhcpServer
             // output the message in a readable format
             StringBuilder messageOutput = new StringBuilder();
             messageOutput.AppendLine($"DHCP Message {DhcpMessageType.AsString()}");
-            messageOutput.AppendLine($"Operation: {OperationCode.AsString()}, HwType: {HardwareType}, HwLen: {HardwareAddressLength}, Hops: {Hops}, XID: {TransactionId}, SECS: {SecondsElapsed}, FLAGS: {Flags}");
+            messageOutput.AppendLine($"HwType: {HardwareType}, HwLen: {HardwareAddressLength}, Hops: {Hops}, XID: {TransactionId}, SECS: {SecondsElapsed}, FLAGS: {Flags}");
             messageOutput.AppendLine($"CIADDR: {ClientIPAddress}, YIADDR: {YourIPAddress}, SIADDR: {ServerIPAddress}, GIADDR: {GatewayIPAddress}");
-            messageOutput.AppendLine($"CHADDR: {BitConverter.ToString(ClientHardwareAddress)}");
+            messageOutput.AppendLine($"CHADDR: {ClientHardwareAddressAsString}");
             messageOutput.AppendLine("Options:");
 
             if (!IsOptionsValid())

@@ -146,19 +146,11 @@ namespace Iot.Device.DhcpServer
                     if (bytes > 0)
                     {
                         bytes = _dhcplistener.Receive(buffer);
-
-                        // Uncomment to get some debug information
-                        // Debug.WriteLine($"DHCP: Have {bytes} bytes");
-                        // Debug.WriteLine($"DHCP: <- Read {bytes} bytes from {(IPEndPoint)_dhcplistener.LocalEndPoint}");
-                        // we have data!
-                        // output as string for debug, uncomment below:
-                        // Debug.WriteLine(BitConverter.ToString(buffer, 0, bytes));
                         DhcpMessage dhcpReq = new DhcpMessage();
                         dhcpReq.Parse(ref buffer);
                         
                         Debug.WriteLine(dhcpReq.ToString());
 
-                        string macAddress = BitConverter.ToString(dhcpReq.ClientHardwareAddress, 0, dhcpReq.ClientHardwareAddress.Length);
 
                         switch (dhcpReq.DhcpMessageType)
                         {
@@ -190,9 +182,6 @@ namespace Iot.Device.DhcpServer
                                     yourIp = GetFirstAvailableIp();
                                 }
 
-                                // Uncomment to get debug information
-                                // Debug.WriteLine(BitConverter.ToString(offer, 0, offer.Length));
-                                Debug.WriteLine($"DHCP: Discover from host: {dhcpReq.HostName}");
                                 dhcpReq.SecondsElapsed = _timeToLeave;
 
                                 var offer = dhcpReq.Offer(new IPAddress(yourIp), _mask, _ipAddress, GetAdditionalOptions());
@@ -207,16 +196,11 @@ namespace Iot.Device.DhcpServer
                                     // Not for us
                                     break;
                                 }
-
-                                // Uncomment to get debug information
-                                Debug.WriteLine($"DHCP: Request from host: {dhcpReq.HostName}");
-                                Debug.WriteLine($"DHCP Request: Requested address {dhcpReq.RequestedIpAddress}");
-                                Debug.WriteLine($"DHCP Request: Server Identifier {dhcpReq.DhcpAddress}");
                                 
                                 if (!_dhcpIpList.Contains(dhcpReq.RequestedIpAddress))
                                 {
                                     _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
-                                    _dhcpHardwareAddressList.Add(macAddress);
+                                    _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
                                     _dhcpLastRequest.Add(DateTime.UtcNow);
                                 }
                                 else
@@ -232,7 +216,7 @@ namespace Iot.Device.DhcpServer
                                     }
 
                                     // Check if the hardware address is the same
-                                    if ((string)_dhcpHardwareAddressList[inc] == macAddress)
+                                    if ((string)_dhcpHardwareAddressList[inc] == dhcpReq.ClientHardwareAddressAsString)
                                     {
                                         _dhcpLastRequest[inc] = DateTime.UtcNow;
                                     }
@@ -246,13 +230,10 @@ namespace Iot.Device.DhcpServer
 
                                 // Finaly send the acknoledge
                                 _sender.Send(dhcpReq.Acknowledge(dhcpReq.RequestedIpAddress, _mask, _ipAddress, GetAdditionalOptions()));
-
-                                // Uncommment to see the buffer:
-                                // Debug.WriteLine(BitConverter.ToString(buffer, 0, bytes));
                                 break;
 
                             default:
-                                Debug.WriteLine($"DHCP: not handled ({dhcpReq.DhcpMessageType}) from host: {dhcpReq.HostName}");
+                                Debug.WriteLine($"DHCP: not handled ({dhcpReq.DhcpMessageType}), lenght is: {bytes}, from host: {dhcpReq.HostName}");
                                 break;
                         }
                     }
