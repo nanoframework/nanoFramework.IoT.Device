@@ -244,7 +244,7 @@ namespace Iot.Device.DhcpServer
                                 }
 
                                 // Finaly send the acknoledge
-                                _sender.Send(dhcpReq.Acknoledge(dhcpReq.RequestedIpAddress, _mask, _ipAddress, GetAdditionalOptions()));
+                                _sender.Send(dhcpReq.Acknowledge(dhcpReq.RequestedIpAddress, _mask, _ipAddress, GetAdditionalOptions()));
 
                                 // Uncommment to see the buffer:
                                 // Debug.WriteLine(BitConverter.ToString(buffer, 0, bytes));

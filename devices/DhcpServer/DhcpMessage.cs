@@ -332,14 +332,14 @@ namespace Iot.Device.DhcpServer
         public byte[] Offer(IPAddress cip, IPAddress mask, IPAddress sip, byte[] additionalOptions = null) => BuildType(DhcpMessageType.Offer, cip, mask, sip, additionalOptions);
 
         /// <summary>
-        /// Ackanoledge message.
+        /// Acknowledge message.
         /// </summary>
         /// <param name="cip">Client IP addres..</param>
         /// <param name="mask">Network mask.</param>
         /// <param name="sip">Server IP address.</param>
         /// <param name="additionalOptions">Additional options to send.</param>
         /// <returns>A byte arry with the message.</returns>
-        public byte[] Acknoledge(IPAddress cip, IPAddress mask, IPAddress sip, byte[] additionalOptions = null) => BuildType(DhcpMessageType.Ack, cip, mask, sip, additionalOptions);
+        public byte[] Acknowledge(IPAddress cip, IPAddress mask, IPAddress sip, byte[] additionalOptions = null) => BuildType(DhcpMessageType.Ack, cip, mask, sip, additionalOptions);
 
         /// <summary>
         /// Not Ackanoledge message.
