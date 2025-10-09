@@ -437,8 +437,8 @@ namespace Iot.Device.DhcpServer
         {
             // output the message in a readable format
             StringBuilder messageOutput = new StringBuilder();
-            messageOutput.AppendLine("DHCP Message:");
             messageOutput.AppendLine($"Operation: {OperationCode}, HwType: {HardwareType}, HwLen: {HardwareAddressLength}, Hops: {Hops}, XID: {TransactionId}, SECS: {SecondsElapsed}, FLAGS: {Flags}");
+            messageOutput.AppendLine($"DHCP Message {DhcpMessageType.AsString()}");
             messageOutput.AppendLine($"CIADDR: {ClientIPAddress}, YIADDR: {YourIPAddress}, SIADDR: {ServerIPAddress}, GIADDR: {GatewayIPAddress}");
             messageOutput.AppendLine($"CHADDR: {BitConverter.ToString(ClientHardwareAddress)}");
             messageOutput.AppendLine($"Cookie: {BitConverter.ToString(Cookie)}");
