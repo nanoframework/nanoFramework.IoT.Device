@@ -94,7 +94,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsInvalid())
+                if (IsOptionsValid())
                 {
                     return DhcpMessageType.Unknown;
                 }
@@ -116,7 +116,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsInvalid())
+                if (IsOptionsValid())
                 {
                     return string.Empty;
                 }
@@ -138,7 +138,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsInvalid())
+                if (IsOptionsValid())
                 {
                     return new IPAddress(0);
                 }
@@ -160,7 +160,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsInvalid())
+                if (IsOptionsValid())
                 {
                     return new IPAddress(0);
                 }
@@ -448,7 +448,6 @@ namespace Iot.Device.DhcpServer
             return optVal;
         }
 
-        private bool IsOptionsInvalid() => !((Options != null) && (Options.Length > 0));
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -572,6 +571,9 @@ namespace Iot.Device.DhcpServer
                 stringBuilder.AppendLine($"  Option ({optionCode}) Value: {BitConverter.ToString(optionValue)}");
             }
         }
+
+
+        private bool IsOptionsValid() => ((Options != null) && (Options.Length > 0));
 
     }
 }
