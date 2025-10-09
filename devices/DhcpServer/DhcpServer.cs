@@ -159,6 +159,7 @@ namespace Iot.Device.DhcpServer
                         Debug.WriteLine(dhcpReq.ToString());
 
                         string macAddress = BitConverter.ToString(dhcpReq.ClientHardwareAddress, 0, dhcpReq.ClientHardwareAddress.Length);
+
                         switch (dhcpReq.DhcpMessageType)
                         {
                             case DhcpMessageType.Discover:
@@ -288,13 +289,16 @@ namespace Iot.Device.DhcpServer
 
             if (!string.IsNullOrEmpty(CaptivePortalUrl))
             {
-                var encoded = Encoding.UTF8.GetBytes(CaptivePortalUrl);
                 // Add the captive portal option
                 Debug.WriteLine($"DHCP: Adding Captive Portal option with URL {CaptivePortalUrl}");
 
+                byte[] encoded = Encoding.UTF8.GetBytes(CaptivePortalUrl);
+                
                 additionalOptions = new byte[2 + encoded.Length];
+                
                 additionalOptions[0] = (byte)DhcpOptionCode.CaptivePortal;
-                additionalOptions[1] = (byte)CaptivePortalUrl.Length;
+                additionalOptions[1] = (byte)encoded.Length;
+                
                 encoded.CopyTo(additionalOptions, 2);
             }
 

@@ -270,36 +270,43 @@ namespace Iot.Device.DhcpServer
             const int LongSize = 4;
             int inc = 0;
             byte[] dhcpPacket = new byte[DhcppacketSize];
+
             dhcpPacket[0] = (byte)OperationCode;
             dhcpPacket[1] = (byte)HardwareType;
             dhcpPacket[2] = HardwareAddressLength;
             dhcpPacket[3] = Hops;
+
             inc += LongSize;
             BitConverter.GetBytes(TransactionId).CopyTo(dhcpPacket, inc);
+
             inc += LongSize;
             BitConverter.GetBytes(SecondsElapsed).CopyTo(dhcpPacket, inc);
 
             // Only 2 bytes for the previous one
             inc += 2;
             BitConverter.GetBytes(Flags).CopyTo(dhcpPacket, inc);
+
             inc += 2;
             ClientIPAddress.GetAddressBytes().CopyTo(dhcpPacket, inc);
+
             inc += LongSize;
             YourIPAddress.GetAddressBytes().CopyTo(dhcpPacket, inc);
+
             inc += LongSize;
             ServerIPAddress.GetAddressBytes().CopyTo(dhcpPacket, inc);
+
             inc += LongSize;
             GatewayIPAddress.GetAddressBytes().CopyTo(dhcpPacket, inc);
+
             inc += LongSize;
             ClientHardwareAddress.CopyTo(dhcpPacket, inc);
 
             // We directly jump to the Magic cookie
             inc = 236;
             Cookie.CopyTo(dhcpPacket, inc);
+
             inc += LongSize;
             Options.CopyTo(dhcpPacket, inc);
-            return dhcpPacket;
-        }
 
             return dhcpPacket;
         }
