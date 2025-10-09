@@ -98,7 +98,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsValid())
+                if (!IsOptionsValid())
                 {
                     return DhcpMessageType.Unknown;
                 }
@@ -120,7 +120,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsValid())
+                if (!IsOptionsValid())
                 {
                     return string.Empty;
                 }
@@ -142,7 +142,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsValid())
+                if (!IsOptionsValid())
                 {
                     return new IPAddress(0);
                 }
@@ -164,7 +164,7 @@ namespace Iot.Device.DhcpServer
         {
             get
             {
-                if (IsOptionsValid())
+                if (!IsOptionsValid())
                 {
                     return new IPAddress(0);
                 }
