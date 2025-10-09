@@ -140,17 +140,23 @@ namespace Iot.Device.DhcpServer
             {
                 try
                 {
-                    // check if socket have any bytes to read
-                    int bytes = _dhcplistener.Available;
+                    // wait for the next packet from the listener
+                    int bytes = _dhcplistener.Receive(buffer);
 
+                    // only parse the message in case we have bytes
                     if (bytes > 0)
                     {
-                        bytes = _dhcplistener.Receive(buffer);
                         DhcpMessage dhcpReq = new DhcpMessage();
                         dhcpReq.Parse(ref buffer);
-                        
+
+                        // debug information
                         Debug.WriteLine(dhcpReq.ToString());
 
+                        // we only respond to requests
+                        if (dhcpReq.OperationCode != DhcpOperation.BootRequest)
+                        {
+                            continue;
+                        }
 
                         switch (dhcpReq.DhcpMessageType)
                         {
@@ -186,6 +192,7 @@ namespace Iot.Device.DhcpServer
 
                                 var offer = dhcpReq.Offer(new IPAddress(yourIp), _mask, _ipAddress, GetAdditionalOptions());
                                 _sender.Send(offer);
+
                                 break;
 
                             case DhcpMessageType.Request:
