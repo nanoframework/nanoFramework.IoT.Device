@@ -16,11 +16,20 @@ You simply create a server, set the DHCP address and the mask.
 DhcpServer dhcpserver = new DhcpServer();
 // Give the captive portal URL. Note: this is experimental and as RFC is new, only works on a limited number of devices.
 dhcpserver.CaptivePortalUrl = "http://192.168.4.1";
-// Starts the serveur with the DHCP server address (should be the device address) and the mask.
+// Starts the server with the DHCP server address (should be the device address) and the mask.
 dhcpserver.Start(IPAddress.Parse(new IPAddress(new byte[] {192, 168, 4, 1}), new IPAddress(new byte[] { 255, 255, 255, 0 })));
 ```
 
 By default the time to leave is set to 1200 seconds, you adjust it.
+
+Optionally you can set the DNS and Gateway IP addresses using the respective properties. Like this:
+
+```csharp
+// DNS server
+dhcpserver.DnsServer = IPAddress.Parse("192.168.4.1");
+// Gateway (router)
+dhcpserver.Gateway = IPAddress.Parse("192.168.4.1");
+```
 
 Also note that the server will smartly manage the IP addresses and will give the preference to any device if it's available or if the device had it before. It will also clean the bails to make sure there is always enough space available.
 
