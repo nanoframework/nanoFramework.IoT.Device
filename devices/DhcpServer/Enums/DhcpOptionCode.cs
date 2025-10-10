@@ -251,7 +251,7 @@ namespace Iot.Device.DhcpServer.Enums
         AutoConfig = 0x74,
 
         /// <summary>Captive portal. See RFC8910.</summary>
-        CaptivePortal = 160,
+        CaptivePortal = 114,
 
         /// <summary>End.</summary>
         End = 0xFF
