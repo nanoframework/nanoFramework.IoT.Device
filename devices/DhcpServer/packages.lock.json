@@ -49,12 +49,6 @@
         "requested": "[3.8.118, 3.8.118]",
         "resolved": "3.8.118",
         "contentHash": "cRaG+ICcECG+CzbtQyUV2WftH7yl2B02AjYGGNScXx8TwYavZYwhCewBTiC0qTcsac7m6AzBUYna5xzBWmTGYw=="
-      },
-      "StyleCop.MSBuild": {
-        "type": "Direct",
-        "requested": "[6.2.0, 6.2.0]",
-        "resolved": "6.2.0",
-        "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
       }
     }
   }
