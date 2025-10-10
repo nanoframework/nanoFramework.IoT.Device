@@ -47,7 +47,7 @@ namespace Iot.Device.DhcpServer.Enums
         ResourceLocationServer = 11,
 
         /// <summary>Hostname.</summary>
-        Hostname = 12,
+        HostName = 12,
 
         /// <summary>Boot file size.</summary>
         BootFileSize = 13,
@@ -59,7 +59,7 @@ namespace Iot.Device.DhcpServer.Enums
         DomainNameSuffix = 15,
 
         /// <summary>Swap server.</summary>
-        WrapServer = 16,
+        SwapServer = 16,
 
         /// <summary>Root path.</summary>
         RootPath = 17,
@@ -161,13 +161,13 @@ namespace Iot.Device.DhcpServer.Enums
         RequestedIpAddress = 50,
 
         /// <summary>IP address lease time.</summary>
-        AddressTime = 51,
+        LeaseTime = 51,
 
         /// <summary>DHCP message type.</summary>
         DhcpMessageType = 53,
 
-        /// <summary>DHCP address.</summary>
-        DhcpAddress = 54,
+        /// <summary>The identifier is the IP address of the selected server.</summary>
+        ServerIdentifier = 54,
 
         /// <summary>Parameter list.</summary>
         ParameterList = 55,
@@ -179,10 +179,10 @@ namespace Iot.Device.DhcpServer.Enums
         DhcpMaxMessageSize = 57,
 
         /// <summary>Renewal (T1) time value.</summary>
-        RenewalT1 = 58,
+        RenewalTime = 58,
 
         /// <summary>Rebinding (T2) time value.</summary>
-        RebindingT2 = 59,
+        RebindingTime = 59,
 
         /// <summary>Class ID.</summary>
         ClassId = 60,
@@ -297,7 +297,7 @@ namespace Iot.Device.DhcpServer.Enums
                     return "Impress Server";
                 case DhcpOptionCode.ResourceLocationServer:
                     return "Resource Location Server";
-                case DhcpOptionCode.Hostname:
+                case DhcpOptionCode.HostName:
                     return "Host Name";
                 case DhcpOptionCode.BootFileSize:
                     return "Boot File Size";
@@ -305,7 +305,7 @@ namespace Iot.Device.DhcpServer.Enums
                     return "Merit Dump File";
                 case DhcpOptionCode.DomainNameSuffix:
                     return "Domain Name";
-                case DhcpOptionCode.WrapServer:
+                case DhcpOptionCode.SwapServer:
                     return "Swap Server";
                 case DhcpOptionCode.RootPath:
                     return "Root Path";
@@ -373,11 +373,11 @@ namespace Iot.Device.DhcpServer.Enums
                     return "X Window System Display Manager";
                 case DhcpOptionCode.RequestedIpAddress:
                     return "Requested IP Address";
-                case DhcpOptionCode.AddressTime:
+                case DhcpOptionCode.LeaseTime:
                     return "IP Address Lease Time";
                 case DhcpOptionCode.DhcpMessageType:
                     return "DHCP Message Type";
-                case DhcpOptionCode.DhcpAddress:
+                case DhcpOptionCode.ServerIdentifier:
                     return "DHCP Server Identifier";
                 case DhcpOptionCode.ParameterList:
                     return "Parameter Request List";
@@ -385,9 +385,9 @@ namespace Iot.Device.DhcpServer.Enums
                     return "DHCP Message";
                 case DhcpOptionCode.DhcpMaxMessageSize:
                     return "DHCP Maximum Message Size";
-                case DhcpOptionCode.RenewalT1:
+                case DhcpOptionCode.RenewalTime:
                     return "Renewal Time Value";
-                case DhcpOptionCode.RebindingT2:
+                case DhcpOptionCode.RebindingTime:
                     return "Rebinding Time Value";
                 case DhcpOptionCode.ClassId:
                     return "Class Identifier";

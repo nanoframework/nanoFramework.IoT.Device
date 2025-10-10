@@ -6,6 +6,13 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "DhcpServer", "DhcpServer.nf
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "DhcpServer.samples", "samples\DhcpServer.samples.nfproj", "{432FEE59-F4FD-43EC-9D51-125BD0F3A0DD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		DhcpServer.nuspec = DhcpServer.nuspec
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

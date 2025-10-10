@@ -1,14 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Iot.Device.DhcpServer.Enums;
+using Iot.Device.DhcpServer.Options;
 using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using Iot.Device.DhcpServer.Enums;
 
 namespace Iot.Device.DhcpServer
 {
@@ -24,6 +24,9 @@ namespace Iot.Device.DhcpServer
         private static Socket _dhcplistener;
         private static Socket _sender;
 
+
+        private readonly OptionCollection _options = new();
+
         private ArrayList _dhcpIpList;
         private ArrayList _dhcpHardwareAddressList;
         private ArrayList _dhcpLastRequest;
@@ -37,12 +40,70 @@ namespace Iot.Device.DhcpServer
         /// <summary>
         /// Gets or sets the captive portal URL. If null or empty, this will be ignored.
         /// </summary>
-        public string CaptivePortalUrl { get; set; }
+        public string CaptivePortalUrl
+        {
+            get => _options.GetOrDefault(DhcpOptionCode.CaptivePortal, string.Empty);
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _options.Remove(DhcpOptionCode.CaptivePortal);
+                }
+                else
+                {
+                    _options.Add(new StringOption(DhcpOptionCode.CaptivePortal, value!));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the DNS server to be used by clients. If set to <see cref="IPAddress.Any"/>, this will be ignored.
         /// </summary>
-        public IPAddress DnsServer { get; set; } = IPAddress.Any;
+        public IPAddress DnsServer
+        {
+            get
+            {
+                var dnsServer = _options.GetOrDefault(DhcpOptionCode.DomainNameServer, IPAddress.Any);
+                return !IPAddress.Any.Equals(dnsServer) ? dnsServer : null;
+            }
+
+            set
+            {
+                if (value is null || IPAddress.Any.Equals(value))
+                {
+                    _options.Remove(DhcpOptionCode.DomainNameServer);
+                }
+                else
+                {
+                    _options.Add(new IPAddressOption(DhcpOptionCode.DomainNameServer, value));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the gateway to be used by clients. If set to <see cref="IPAddress.Any"/>, this will be ignored.
+        /// </summary>
+        public IPAddress Gateway
+        {
+            get
+            {
+                var gateway = _options.GetOrDefault(DhcpOptionCode.Router, IPAddress.Any);
+                return !IPAddress.Any.Equals(gateway) ? gateway : null;
+            }
+
+            set
+            {
+                if (value is null || IPAddress.Any.Equals(value))
+                {
+                    _options.Remove(DhcpOptionCode.Router);
+                }
+                else
+                {
+                    _options.Add(new IPAddressOption(DhcpOptionCode.Router, value));
+                }
+            }
+        }
 
         /// <summary>
         /// Starts the DHCP Server to start listning.
@@ -151,8 +212,7 @@ namespace Iot.Device.DhcpServer
                     // only parse the message in case we have bytes
                     if (bytes > 0)
                     {
-                        DhcpMessage dhcpReq = new DhcpMessage();
-                        dhcpReq.Parse(ref buffer);
+                        DhcpMessage dhcpReq = MessageBuilder.Parse(buffer);
 
                         // debug information
                         Debug.WriteLine(dhcpReq.ToString());
@@ -166,6 +226,13 @@ namespace Iot.Device.DhcpServer
                         switch (dhcpReq.DhcpMessageType)
                         {
                             case DhcpMessageType.Discover:
+
+                                if (!dhcpReq.GatewayIPAddress.Equals(IPAddress.Any))
+                                {
+                                    // We only respond to requests on our subnet
+                                    return;
+                                }
+
                                 if (_dhcpIpList.Count > 254)
                                 {
                                     // No more available IP Address
@@ -195,53 +262,66 @@ namespace Iot.Device.DhcpServer
 
                                 dhcpReq.SecondsElapsed = _timeToLeave;
 
-                                var offer = dhcpReq.Offer(new IPAddress(yourIp), _mask, _ipAddress, GetAdditionalOptions());
-                                _sender.Send(offer);
+                                _sender.Send(MessageBuilder.CreateOffer(dhcpReq, _ipAddress, new IPAddress(yourIp), _mask, _options).GetBytes());
 
                                 break;
 
                             case DhcpMessageType.Request:
-                                // Check the request is for us
-                                var dhcpRequsted = dhcpReq.GetOption(DhcpOptionCode.DhcpAddress);
-                                if ((dhcpRequsted != null) && (dhcpRequsted.ToString() != _ipAddress.GetAddressBytes().ToString()))
-                                {
-                                    // Not for us
-                                    break;
-                                }
 
-                                if (!_dhcpIpList.Contains(dhcpReq.RequestedIpAddress))
+                                var serverIdentifier = dhcpReq.ServerIdentifier;
+
+                                if (serverIdentifier.Equals(IPAddress.Any))
                                 {
-                                    _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
-                                    _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
-                                    _dhcpLastRequest.Add(DateTime.UtcNow);
-                                }
-                                else
-                                {
-                                    // Find the requested address in the list
-                                    int inc;
-                                    for (inc = 0; inc < _dhcpIpList.Count; inc++)
+                                    if (dhcpReq.ClientIPAddress.Equals(IPAddress.Any))
                                     {
-                                        if (((IPAddress)_dhcpIpList[inc]).ToString() == dhcpReq.RequestedIpAddress.ToString())
+                                        Debug.WriteLine("Received REQUEST without ciaddr, client is INIT-REBOOT");
+
+                                        if (!_dhcpIpList.Contains(dhcpReq.RequestedIpAddress))
                                         {
-                                            break;
+                                            _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
+                                            _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
+                                            _dhcpLastRequest.Add(DateTime.UtcNow);
                                         }
-                                    }
 
-                                    // Check if the hardware address is the same
-                                    if ((string)_dhcpHardwareAddressList[inc] == dhcpReq.ClientHardwareAddressAsString)
-                                    {
-                                        _dhcpLastRequest[inc] = DateTime.UtcNow;
+                                        _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
                                     }
                                     else
                                     {
-                                        // In this case make a Nack
-                                        _sender.Send(dhcpReq.NotAcknoledge());
-                                        break;
+                                        Debug.WriteLine($"Received REQUEST with ciaddr, client is RENEWING or REBINDING");
+
+                                        // Find the requested address in the list
+                                        int inc;
+                                        for (inc = 0; inc < _dhcpIpList.Count; inc++)
+                                        {
+                                            if (((IPAddress)_dhcpIpList[inc]).ToString() == dhcpReq.RequestedIpAddress.ToString())
+                                            {
+                                                break;
+                                            }
+                                        }
+
+                                        // Check if the hardware address is the same
+                                        if ((string)_dhcpHardwareAddressList[inc] == dhcpReq.ClientHardwareAddressAsString)
+                                        {
+                                            _dhcpLastRequest[inc] = DateTime.UtcNow;
+                                        }
+                                        else
+                                        {
+                                            // In this case make a Nack
+                                            _sender.Send(MessageBuilder.CreateNak(dhcpReq, _ipAddress).GetBytes());
+                                            break;
+                                        }
+
+                                        _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
                                     }
+
+                                }
+                                else if (serverIdentifier.Equals(_ipAddress))
+                                {
+                                    Debug.WriteLine("Received REQUEST with server identifier, client is SELECTING");
+
+                                    _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
                                 }
 
-                                // Finaly send the acknoledge
-                                _sender.Send(dhcpReq.Acknowledge(dhcpReq.RequestedIpAddress, _mask, _ipAddress, GetAdditionalOptions()));
                                 break;
 
                             default:
@@ -274,61 +354,6 @@ namespace Iot.Device.DhcpServer
             _dhcplistener = null;
             _sender = null;
             Debug.WriteLine($"DHCP: stoped");
-        }
-
-        private byte[] GetAdditionalOptions()
-        {
-            // this is the preamble for options: 
-            // 1 byte for option code
-            // 1 byte for length
-            const byte OptionPreamble = 2;
-            const byte IpAddressOptionLength = 4;
-
-            byte[] additionalOptions = null;
-            byte[] encodedCaptivePortal = !string.IsNullOrEmpty(CaptivePortalUrl) ? Encoding.UTF8.GetBytes(CaptivePortalUrl) : new byte[0];
-
-            // compute length of additional options
-            int length = 0;
-            int optionsIndex = 0;
-
-            if (DnsServer != IPAddress.Any)
-            {
-                length += OptionPreamble;
-                length += IpAddressOptionLength;
-            }
-
-            if (encodedCaptivePortal.Length > 0)
-            {
-                length += OptionPreamble;
-                length += encodedCaptivePortal.Length;
-            }
-
-            // if there are options to send, add the terminating option
-            if (length > 0)
-            {
-                additionalOptions = new byte[length];
-
-                if (DnsServer != IPAddress.Any)
-                {
-                    // add DNS server option
-                    additionalOptions[optionsIndex++] = (byte)DhcpOptionCode.DomainNameServer;
-                    additionalOptions[optionsIndex++] = IpAddressOptionLength;
-                    Array.Copy(DnsServer.GetAddressBytes(), 0, additionalOptions, optionsIndex, IpAddressOptionLength);
-
-                    optionsIndex += IpAddressOptionLength;
-                }
-
-                if (encodedCaptivePortal.Length > 0)
-                {
-                    // add Captive Portal option
-                    additionalOptions[optionsIndex++] = (byte)DhcpOptionCode.CaptivePortal;
-                    additionalOptions[optionsIndex++] = (byte)encodedCaptivePortal.Length;
-                    Array.Copy(encodedCaptivePortal, 0, additionalOptions, optionsIndex, encodedCaptivePortal.Length);
-                    optionsIndex += encodedCaptivePortal.Length;
-                }
-            }
-
-            return additionalOptions;
         }
 
         private byte[] GetFirstAvailableIp()
