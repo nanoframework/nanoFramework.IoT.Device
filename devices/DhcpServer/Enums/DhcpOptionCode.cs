@@ -256,4 +256,191 @@ namespace Iot.Device.DhcpServer.Enums
         /// <summary>End.</summary>
         End = 0xFF
     }
+
+#if DEBUG
+
+    /// <summary>
+    /// Extensions for the <see cref="DhcpOptionCode"/> enumeration.
+    /// </summary>
+    public static class DhcpOptionCodeExtensions
+    {
+        /// <summary>
+        /// Converts the DHCP option code to a string.
+        /// </summary>
+        /// <param name="optionCode">The DHCP option code.</param>
+        /// <returns>The string representation of the DHCP option code.</returns>
+        public static string AsString(this DhcpOptionCode optionCode)
+        {
+            switch (optionCode)
+            {
+                case DhcpOptionCode.Pad:
+                    return "Pad";
+                case DhcpOptionCode.SubnetMask:
+                    return "Subnet Mask";
+                case DhcpOptionCode.TimeOffset:
+                    return "Time Offset";
+                case DhcpOptionCode.Router:
+                    return "Router";
+                case DhcpOptionCode.TimeServer:
+                    return "Time Server";
+                case DhcpOptionCode.NameServer:
+                    return "Name Server";
+                case DhcpOptionCode.DomainNameServer:
+                    return "Domain Name Server";
+                case DhcpOptionCode.LogServer:
+                    return "Log Server";
+                case DhcpOptionCode.CookieServer:
+                    return "Cookie Server";
+                case DhcpOptionCode.LinePrinterServer:
+                    return "Line Printer Server";
+                case DhcpOptionCode.ImpressServer:
+                    return "Impress Server";
+                case DhcpOptionCode.ResourceLocationServer:
+                    return "Resource Location Server";
+                case DhcpOptionCode.Hostname:
+                    return "Host Name";
+                case DhcpOptionCode.BootFileSize:
+                    return "Boot File Size";
+                case DhcpOptionCode.MeritDumpFile:
+                    return "Merit Dump File";
+                case DhcpOptionCode.DomainNameSuffix:
+                    return "Domain Name";
+                case DhcpOptionCode.WrapServer:
+                    return "Swap Server";
+                case DhcpOptionCode.RootPath:
+                    return "Root Path";
+                case DhcpOptionCode.ExtensionsPath:
+                    return "Extensions Path";
+                case DhcpOptionCode.IpForwarding:
+                    return "IP Forwarding";
+                case DhcpOptionCode.NonLocalSourceRouting:
+                    return "Non-Local Source Routing";
+                case DhcpOptionCode.PolicyFilter:
+                    return "Policy Filter";
+                case DhcpOptionCode.MaximumDatagramReassemblySize:
+                    return "Maximum Datagram Reassembly Size";
+                case DhcpOptionCode.DefaultIpTimeToLive:
+                    return "Default IP TTL";
+                case DhcpOptionCode.PathMtuAgingTimeout:
+                    return "Path MTU Aging Timeout";
+                case DhcpOptionCode.PathMtuPlateauTable:
+                    return "Path MTU Plateau Table";
+                case DhcpOptionCode.InterfaceMtu:
+                    return "Interface MTU";
+                case DhcpOptionCode.AllSubnetsAreLocal:
+                    return "All Subnets Are Local";
+                case DhcpOptionCode.BroadcastAddress:
+                    return "Broadcast Address";
+                case DhcpOptionCode.PerformMaskDiscovery:
+                    return "Perform Mask Discovery";
+                case DhcpOptionCode.MaskSupplier:
+                    return "Mask Supplier";
+                case DhcpOptionCode.PerformRouterDiscovery:
+                    return "Perform Router Discovery";
+                case DhcpOptionCode.RouteurSolicitationAddressOption:
+                    return "Router Solicitation Address";
+                case DhcpOptionCode.StaticRoute:
+                    return "Static Route";
+                case DhcpOptionCode.TailerEncapsulation:
+                    return "Trailer Encapsulation";
+                case DhcpOptionCode.ArpCacheTimeout:
+                    return "ARP Cache Timeout";
+                case DhcpOptionCode.EthernetEncapsulation:
+                    return "Ethernet Encapsulation";
+                case DhcpOptionCode.TcpDefaultTtl:
+                    return "TCP Default TTL";
+                case DhcpOptionCode.TcpKeepAliveInterval:
+                    return "TCP Keep-Alive Interval";
+                case DhcpOptionCode.TcpKeppAliveGarbage:
+                    return "TCP Keep-Alive Garbage";
+                case DhcpOptionCode.NetworkInformationServiceDomain:
+                    return "NIS Domain";
+                case DhcpOptionCode.NetworkInformationServers:
+                    return "NIS Servers";
+                case DhcpOptionCode.NetworkTimeProtocolServersOption:
+                    return "NTP Servers";
+                case DhcpOptionCode.NetBiosTcpNameServer:
+                    return "NetBIOS Name Server";
+                case DhcpOptionCode.NetBiosTcpDatagramDistributionServer:
+                    return "NetBIOS Datagram Distribution Server";
+                case DhcpOptionCode.NetBiosTcpNodeType:
+                    return "NetBIOS Node Type";
+                case DhcpOptionCode.NetBiosTcpScope:
+                    return "NetBIOS Scope";
+                case DhcpOptionCode.XWindowSystemFontServer:
+                    return "X Window System Font Server";
+                case DhcpOptionCode.XWindowSystemDisplayManager:
+                    return "X Window System Display Manager";
+                case DhcpOptionCode.RequestedIpAddress:
+                    return "Requested IP Address";
+                case DhcpOptionCode.AddressTime:
+                    return "IP Address Lease Time";
+                case DhcpOptionCode.DhcpMessageType:
+                    return "DHCP Message Type";
+                case DhcpOptionCode.DhcpAddress:
+                    return "DHCP Server Identifier";
+                case DhcpOptionCode.ParameterList:
+                    return "Parameter Request List";
+                case DhcpOptionCode.DhcpMessage:
+                    return "DHCP Message";
+                case DhcpOptionCode.DhcpMaxMessageSize:
+                    return "DHCP Maximum Message Size";
+                case DhcpOptionCode.RenewalT1:
+                    return "Renewal Time Value";
+                case DhcpOptionCode.RebindingT2:
+                    return "Rebinding Time Value";
+                case DhcpOptionCode.ClassId:
+                    return "Class Identifier";
+                case DhcpOptionCode.ClientId:
+                    return "Client Identifier";
+                case DhcpOptionCode.NetWareIpDomainName:
+                    return "NetWare/IP Domain Name";
+                case DhcpOptionCode.NetWareIp:
+                    return "NetWare/IP Information";
+                case DhcpOptionCode.NisDomainName:
+                    return "NIS+ Domain Name";
+                case DhcpOptionCode.NisServer:
+                    return "NIS+ Servers";
+                case DhcpOptionCode.ServerName:
+                    return "Server Name";
+                case DhcpOptionCode.BootFileName:
+                    return "Boot File Name";
+                case DhcpOptionCode.HomeAddress:
+                    return "Home Agent Addresses";
+                case DhcpOptionCode.SmtpServers:
+                    return "SMTP Server";
+                case DhcpOptionCode.Pop3Server:
+                    return "POP3 Server";
+                case DhcpOptionCode.NntpServer:
+                    return "NNTP Server";
+                case DhcpOptionCode.WwwServer:
+                    return "WWW Server";
+                case DhcpOptionCode.FingerServer:
+                    return "Finger Server";
+                case DhcpOptionCode.IrcServer:
+                    return "IRC Server";
+                case DhcpOptionCode.StreetTalkServer:
+                    return "StreetTalk Server";
+                case DhcpOptionCode.StdaServer:
+                    return "StreetTalk Directory Assistance Server";
+                case DhcpOptionCode.UserClass:
+                    return "User Class";
+                case DhcpOptionCode.DirectoryAgent:
+                    return "Directory Agent";
+                case DhcpOptionCode.ServiceScope:
+                    return "Service Scope";
+                case DhcpOptionCode.NamingAuthority:
+                    return "Naming Authority";
+                case DhcpOptionCode.AutoConfig:
+                    return "Auto Configuration";
+                case DhcpOptionCode.CaptivePortal:
+                    return "Captive Portal";
+
+                default:
+                    return ((byte)optionCode).ToString();
+            }
+        }
+    }
+
+#endif
 }

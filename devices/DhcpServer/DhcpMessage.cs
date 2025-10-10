@@ -547,7 +547,7 @@ namespace Iot.Device.DhcpServer
                     }
 
                     DhcpOptionCode paramCode = (DhcpOptionCode)optionValue[i];
-                    stringBuilder.Append(paramCode.ToString());
+                    stringBuilder.Append(paramCode.AsString());
                 }
 
                 stringBuilder.AppendLine();
