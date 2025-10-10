@@ -19,8 +19,7 @@ namespace Iot.Device.DhcpServer.Options
         /// </summary>
         public IPAddressOption(
             DhcpOptionCode code,
-            byte[] data) : base(code,
-                                data)
+            byte[] data) : base(code, data)
         {
             if (data.Length != 4)
             {
@@ -31,7 +30,9 @@ namespace Iot.Device.DhcpServer.Options
         /// <summary>
         /// Creates a new <see cref="IPAddressOption"/> with the specified <paramref name="code"/> and <paramref name="value"/>.
         /// </summary>
-        public IPAddressOption(DhcpOptionCode code, IPAddress value) : this(code, Converter.GetBytes(value))
+        public IPAddressOption(
+            DhcpOptionCode code,
+            IPAddress value) : this(code, Converter.GetBytes(value))
         {
             _value = value;
         }

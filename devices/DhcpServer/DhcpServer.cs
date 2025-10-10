@@ -24,7 +24,6 @@ namespace Iot.Device.DhcpServer
         private static Socket _dhcplistener;
         private static Socket _sender;
 
-
         private readonly OptionCollection _options = new();
 
         private ArrayList _dhcpIpList;

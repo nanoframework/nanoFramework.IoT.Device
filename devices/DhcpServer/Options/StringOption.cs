@@ -18,8 +18,7 @@ namespace Iot.Device.DhcpServer.Options
         /// </summary>
         public StringOption(
             DhcpOptionCode code,
-            byte[] data) : base(code,
-                                data)
+            byte[] data) : base(code, data)
         {
         }
 
@@ -28,8 +27,7 @@ namespace Iot.Device.DhcpServer.Options
         /// </summary>
         public StringOption(
             DhcpOptionCode code,
-            string value) : this(code,
-                                 Converter.GetBytes(value))
+            string value) : this(code, Converter.GetBytes(value))
         {
             _value = value;
         }

@@ -7,7 +7,9 @@ namespace Iot.Device.DhcpServer.Options
 {
     internal class UnknownOption : Option
     {
-        public UnknownOption(DhcpOptionCode code, byte[] data) : base(code, data)
+        public UnknownOption(
+            DhcpOptionCode code,
+            byte[] data) : base(code, data)
         {
         }
 

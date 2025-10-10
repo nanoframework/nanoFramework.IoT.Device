@@ -20,16 +20,14 @@ namespace Iot.Device.DhcpServer.Options
         /// </summary>
         public TimeSpanOption(
             DhcpOptionCode code,
-            byte[] data) : base(code,
-                                data) { }
+            byte[] data) : base(code, data) { }
 
         /// <summary>
         /// Creates a new <see cref="TimeSpanOption"/> with the specified <paramref name="code"/> and <paramref name="value"/>.
         /// </summary>
         public TimeSpanOption(
             DhcpOptionCode code,
-            TimeSpan value) : this(code,
-                                   Converter.GetBytes(value))
+            TimeSpan value) : this(code, Converter.GetBytes(value))
         {
             _deserialized = true;
             _value = value;
