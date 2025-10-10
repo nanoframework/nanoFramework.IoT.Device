@@ -14,6 +14,12 @@
         "resolved": "1.11.32",
         "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
       },
+      "nanoFramework.System.Collections": {
+        "type": "Direct",
+        "requested": "[1.5.67, 1.5.67]",
+        "resolved": "1.5.67",
+        "contentHash": "MjSipUB70vrxjqTm1KfKTUqqjd0wbweiNyYFXONi0XClrH6HXsuX2lhDqXM8NWuYnWyYOqx8y20sXbvsH+4brg=="
+      },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
         "requested": "[1.1.96, 1.1.96]",
@@ -43,12 +49,6 @@
         "requested": "[3.8.118, 3.8.118]",
         "resolved": "3.8.118",
         "contentHash": "cRaG+ICcECG+CzbtQyUV2WftH7yl2B02AjYGGNScXx8TwYavZYwhCewBTiC0qTcsac7m6AzBUYna5xzBWmTGYw=="
-      },
-      "StyleCop.MSBuild": {
-        "type": "Direct",
-        "requested": "[6.2.0, 6.2.0]",
-        "resolved": "6.2.0",
-        "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
       }
     }
   }
