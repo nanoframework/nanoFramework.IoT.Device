@@ -47,7 +47,6 @@ namespace Iot.Device.DnsServer
         /// </summary>
         public ushort Class { get; }
 
-
         /// <summary>
         /// Gets the offset of the question name in the DNS message.
         /// </summary>
@@ -110,17 +109,17 @@ namespace Iot.Device.DnsServer
 
             if (string.IsNullOrEmpty(name))
             {
-                Logger.Warning("Failed to parse DNS question name.");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "Failed to parse DNS question name.");
 
                 return false;
             }
 
-            Logger.Debug($"Parsed DNS question: Name={name}, Type={Type}, Class={Class} (name offset={QuestionOffset}, length={nameLength})");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"Parsed DNS question: Name={name}, Type={Type}, Class={Class} (name offset={QuestionOffset}, length={nameLength})");
 
             // For captive portal, we'll handle A record types
             if (Type != QuestionTypeA)
             {
-                Logger.Warning($"Unsupported DNS question type: {Type}. Only A (IPv4 address) records are supported.");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, $"Unsupported DNS question type: {Type}. Only A (IPv4 address) records are supported.");
 
                 return false;
             }
@@ -141,11 +140,11 @@ namespace Iot.Device.DnsServer
                     TTL = 300
                 };
 
-                Logger.Debug($"Generated DNS answer for name: {name}, Type: {Type}, Address: {ipAddress}, pointer offset: 0x{QuestionOffset:X4}");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"Generated DNS answer for name: {name}, Type: {Type}, Address: {ipAddress}, pointer offset: 0x{QuestionOffset:X4}");
             }
             else
             {
-                Logger.Warning($"No DNS entry found for name: {name}");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, $"No DNS entry found for name: {name}");
 
                 return false;
             }
@@ -157,9 +156,7 @@ namespace Iot.Device.DnsServer
         /// <summary>
         /// Parse a DNS name from the raw format to a regular dot-separated domain name.
         /// </summary>
-        /// <param name="data">The byte array containing the DNS message data.</param>
-        /// <param name="offset">The offset in the data array where the name starts.</param>
-        /// <param name="nameLength">The length of the name in the <paramref name="data"/> buffer, in bytes.</param>
+        /// <param name="nameLength">The length of the name in bytes.</param>
         /// <returns>The parsed domain name or empty string if parsing failed.</returns>
         private string ParseName(ref ushort nameLength)
         {
@@ -186,7 +183,7 @@ namespace Iot.Device.DnsServer
                     if ((labelLength & _DnsCompressionPointerFlag) == _DnsCompressionPointerFlag)
                     {
                         // This is a pointer (first two bits are set)
-                        Logger.Warning("DNS name compression (pointers) not supported in this simplified implementation");
+                        Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "DNS name compression (pointers) not supported in this simplified implementation");
 
                         nameLength = 0;
 
@@ -196,7 +193,7 @@ namespace Iot.Device.DnsServer
                     // Make sure we have enough bytes for this label
                     if (position + labelLength > Name.Length)
                     {
-                        Logger.Warning("DNS label exceeds packet boundary");
+                        Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "DNS label exceeds packet boundary");
 
                         nameLength = 0;
 
@@ -263,7 +260,7 @@ namespace Iot.Device.DnsServer
                     {
                         ipAddress = (IPAddress)dnsEntries[key];
 
-                        Logger.Debug($"Wildcard match: '{name}' matches pattern '{key}'");
+                        Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"Wildcard match: '{name}' matches pattern '{key}'");
 
                         return true;
                     }

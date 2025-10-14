@@ -70,7 +70,7 @@ namespace Iot.Device.DnsServer
             // Create proper compression pointer (0xC000 | offset)
             ushort compressionPointer = (ushort)(DnsCompressionPointerFlag | NameOffset);
 
-            Logger.Debug($"DNS Answer - Creating pointer 0x{compressionPointer:X4} (flag=0x{DnsCompressionPointerFlag:X2}, offset=0x{NameOffset:X4})");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Answer - Creating pointer 0x{compressionPointer:X4} (flag=0x{DnsCompressionPointerFlag:X2}, offset=0x{NameOffset:X4})");
 
             // Write each field in network byte order (big-endian)
             ByteHelper.WriteUInt16NetworkOrder(compressionPointer, result, position);
@@ -90,32 +90,7 @@ namespace Iot.Device.DnsServer
 
             Array.Copy(Address.GetAddressBytes(), 0, result, position, AddressLength);
 
-            // Log the first 10 bytes of the record for debugging
-            //Logger.Debug($"DNS Answer bytes: {BytesToHexString(result, 0, Math.Min(10, result.Length))}...");
-
             return result;
         }
-
-        ///// <summary>
-        ///// Converts a byte array to a hex string for debugging.
-        ///// </summary>
-        //private static string BytesToHexString(byte[] bytes, int offset, int length)
-        //{
-        //    if (bytes == null || bytes.Length == 0)
-        //        return string.Empty;
-
-        //    length = Math.Min(length, bytes.Length - offset);
-
-        //    System.Text.StringBuilder sb = new System.Text.StringBuilder(length * 3);
-        //    for (int i = 0; i < length; i++)
-        //    {
-        //        sb.Append(bytes[offset + i].ToString("X2"));
-
-        //        if (i < length - 1)
-        //            sb.Append(' ');
-        //    }
-
-        //    return sb.ToString();
-        //}
     }
 }

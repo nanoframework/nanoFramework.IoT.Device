@@ -173,6 +173,7 @@ namespace Iot.Device.DnsServer
             if (_dnsListener is not null && _dnsListener.IsAlive)
             {
                 _dnsListener.Join(1000);
+
                 if (_dnsListener.IsAlive)
                 {
                     _dnsListener.Abort();

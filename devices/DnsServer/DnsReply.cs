@@ -19,9 +19,9 @@ namespace Iot.Device.DnsServer
         /// <summary>
         /// Hashtable of DNS entries.
         /// </summary>
-        private Hashtable _dnsEntries;
+        private readonly Hashtable _dnsEntries;
 
-        private byte[] _requestData;
+        private readonly byte[] _requestData;
 
         /// <summary>
         /// Gets the DNS header.
@@ -39,6 +39,7 @@ namespace Iot.Device.DnsServer
         /// </summary>
         public DnsAnswer[] Answers { get; internal set; }
 
+        /// <summary>
         /// Creates a new instance of the <see cref="DnsReply"/> class with the specified DNS request data and DNS entries.
         /// </summary>
         /// <param name="requestData">The DNS request data as a byte array.</param>
@@ -57,24 +58,24 @@ namespace Iot.Device.DnsServer
             // parse DNS header
             Header = new DnsHeader(_requestData);
 
-            Logger.Debug($"DNS Header - ID: {Header.Id}, Flags: {Header.Flags}, QDCount: {Header.QDCount}");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Header - ID: {Header.Id}, Flags: {Header.Flags}, QDCount: {Header.QDCount}");
 
             // only process standard queries
             if ((Header.Flags & DnsHeader.DnsFlagOpCodeMask) != 0)
             {
-                Logger.Warning("Unsupported DNS operation code.");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "Unsupported DNS operation code.");
                 return false;
             }
 
             // only process requests with a single question
             if (Header.QDCount == 0)
             {
-                Logger.Warning("DNS request contains no questions.");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "DNS request contains no questions.");
                 return false;
             }
             else if (Header.QDCount > 1)
             {
-                Logger.Warning("DNS request contains multiple questions. Only single question requests are supported.");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "DNS request contains multiple questions. Only single question requests are supported.");
                 return false;
             }
 
@@ -89,7 +90,7 @@ namespace Iot.Device.DnsServer
 
             if (!DnsQuestions[0].TryParseQuestion(_dnsEntries, ref Answers[0]))
             {
-                Logger.Warning("Failed to parse DNS question.");
+                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "Failed to parse DNS question.");
 
                 return false;
             }
@@ -113,14 +114,14 @@ namespace Iot.Device.DnsServer
             // copy header with modified flags and answer count
             Array.Copy(Header.GetBytes(), 0, replyData, 0, DnsHeader.Length);
 
-            Logger.Debug($"DNS Reply - Header: ID={Header.Id}, Flags=0x{Header.Flags:X4}, QD={Header.QDCount}, AN={Header.ANCount}");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Reply - Header: ID={Header.Id}, Flags=0x{Header.Flags:X4}, QD={Header.QDCount}, AN={Header.ANCount}");
 
             int position = DnsHeader.Length;
 
             // copy questions section from the original request
             Array.Copy(DnsQuestions[0].GetBytes(), 0, replyData, position, DnsQuestions[0].Length);
 
-            Logger.Debug($"DNS Reply - Added questions section, {DnsQuestions.Length} bytes");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Reply - Added questions section, {DnsQuestions.Length} bytes");
 
             // move position forward
             position += DnsQuestions[0].Length;
@@ -128,40 +129,11 @@ namespace Iot.Device.DnsServer
             // copy answer
             Array.Copy(Answers[0].GetBytes(), 0, replyData, position, DnsAnswer.Length);
 
-            Logger.Debug($"DNS Reply - Added answer: Name ptr=0x{Answers[0].NameOffset:X4}, Type={Answers[0].Type}, IP={Answers[0].Address}");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Reply - Added answer: Name ptr=0x{Answers[0].NameOffset:X4}, Type={Answers[0].Type}, IP={Answers[0].Address}");
 
-            //// Dump the first few bytes of the reply for debugging
-            //if (replyData.Length >= 16)
-            //{
-            //    Logger.Debug($"DNS Reply first 16 bytes: {BytesToHexString(replyData, 0, 16)}");
-            //}
-
-            Logger.Debug($"DNS Reply total size: {replyData.Length} bytes");
+            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Reply total size: {replyData.Length} bytes");
 
             return replyData;
         }
-
-        ///// <summary>
-        ///// Converts a byte array to a hex string for debugging.
-        ///// </summary>
-        //private static string BytesToHexString(byte[] bytes, int offset, int length)
-        //{
-        //    if (bytes == null || bytes.Length == 0 || offset < 0 || length <= 0)
-        //        return string.Empty;
-
-        //    // Make sure we don't go beyond the array bounds
-        //    length = Math.Min(length, bytes.Length - offset);
-
-        //    StringBuilder sb = new StringBuilder(length * 3);
-        //    for (int i = 0; i < length; i++)
-        //    {
-        //        sb.Append(bytes[offset + i].ToString("X2"));
-
-        //        if (i < length - 1)
-        //            sb.Append(' ');
-        //    }
-
-        //    return sb.ToString();
-        //}
     }
 }
