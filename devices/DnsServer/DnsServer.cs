@@ -150,17 +150,19 @@ namespace Iot.Device.DnsServer
 
         public void Stop()
         {
+            // clear flag to stop the loop in the thread
+            _started = false;
+
             if (_listenerSocket is not null)
             {
                 try
                 {
-                    // clear flag to stop the thread
-                    _started = false;
-
-                    Thread.Sleep(200);
-
                     // close the socket
                     _listenerSocket.Close();
+
+                    // allow time for the socket to close and the thread to exit
+                    Thread.Sleep(200);
+
                     _listenerSocket = null;
                 }
                 catch (Exception ex)
