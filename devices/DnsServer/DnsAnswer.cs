@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 
@@ -70,7 +71,7 @@ namespace Iot.Device.DnsServer
             // Create proper compression pointer (0xC000 | offset)
             ushort compressionPointer = (ushort)(DnsCompressionPointerFlag | NameOffset);
 
-            Logger.Debug("DNS Answer - Creating pointer 0x{0:X4} (flag=0x{1:X2}, offset=0x{2:X4})", compressionPointer, DnsCompressionPointerFlag, NameOffset);
+            Logger.GlobalLogger.LogDebug("DNS Answer - Creating pointer 0x{0:X4} (flag=0x{1:X2}, offset=0x{2:X4})", compressionPointer, DnsCompressionPointerFlag, NameOffset);
 
             // Write each field in network byte order (big-endian)
             ByteHelper.WriteUInt16NetworkOrder(compressionPointer, result, position);

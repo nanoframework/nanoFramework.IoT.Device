@@ -8,6 +8,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+#if DEBUG
+using nanoFramework.Logging.Debug;
+#endif
+
 namespace Iot.Device.DnsServer
 {
     /// <summary>
@@ -87,15 +91,22 @@ namespace Iot.Device.DnsServer
                 throw new ArgumentNullException();
             }
 
-            ServerAddress = serverAddress;
-
-            ParseDnsEntries(dnsEntries);
-
             // Set the global logger if provided
             if (logger != null)
             {
                 Logger.GlobalLogger = logger;
             }
+#if DEBUG
+            else
+            {
+                Logger.GlobalLogger = new DebugLogger("[DNS Server]");
+                ((DebugLogger)Logger.GlobalLogger).MinLogLevel = LogLevel.Trace;
+            }
+#endif
+
+            ServerAddress = serverAddress;
+
+            ParseDnsEntries(dnsEntries);
         }
 
         /// <summary>
@@ -110,7 +121,7 @@ namespace Iot.Device.DnsServer
                 // check if we have entries
                 if (_dnsEntries.Count == 0)
                 {
-                    Logger.Warning("No DNS entries defined. The server will not respond to any queries.");
+                    Logger.GlobalLogger.LogWarning("No DNS entries defined. The server will not respond to any queries.");
 
                     throw new InvalidOperationException();
                 }
@@ -134,11 +145,11 @@ namespace Iot.Device.DnsServer
                 }
                 catch (SocketException ex)
                 {
-                    Logger.Error("Socket exception occurred. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
+                    Logger.GlobalLogger.LogError(ex, "Socket exception occurred. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception occurred. Message: {0}", ex.Message);
+                    Logger.GlobalLogger.LogError(ex, "Exception occurred. Message: {0}", ex.Message);
                 }
 
                 // reached here, something went wrong
@@ -167,7 +178,7 @@ namespace Iot.Device.DnsServer
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex, "Exception occurred while stopping the server");
+                    Logger.GlobalLogger.LogError(ex, "Exception occurred while stopping the server. Message: {0}", ex.Message);
                 }
             }
 
@@ -187,7 +198,7 @@ namespace Iot.Device.DnsServer
 
         private void DnsWorkerThread()
         {
-            Logger.Information("DNS server started.");
+            Logger.GlobalLogger.LogInformation("DNS server started.");
 
             byte[] buffer = new byte[MaxDnsUdpPacketSize];
 
@@ -220,22 +231,22 @@ namespace Iot.Device.DnsServer
                 }
                 catch (SocketException ex)
                 {
-                    Logger.Error("Socket exception in DNS worker thread. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
+                    Logger.GlobalLogger.LogError(ex, "Socket exception in DNS worker thread. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
 
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception in DNS worker thread. Message: {0}", ex.Message);
+                    Logger.GlobalLogger.LogError(ex, "Exception in DNS worker thread. Message: {0}", ex.Message);
                 }
             }
 
-            Logger.Information("DNS server stopped.");
+            Logger.GlobalLogger.LogInformation("DNS server stopped.");
         }
 
         private bool ProcessDnsRequest(byte[] requestData, ref DnsReply dnsReply)
         {
-            Logger.Debug("Received DNS request of length {0} bytes.", requestData.Length);
+            Logger.GlobalLogger.LogDebug("Received DNS request of length {0} bytes.", requestData.Length);
 
             // Create the DNS reply with the request data and DNS entries
             dnsReply = new DnsReply(requestData, DnsEntries);
@@ -243,14 +254,14 @@ namespace Iot.Device.DnsServer
             // Parse the request and generate answers
             if (!dnsReply.ParseRequest())
             {
-                Logger.Error("Failed to parse DNS request.");
+                Logger.GlobalLogger.LogError("Failed to parse DNS request.");
 
                 return false;
             }
 
             if (dnsReply.Answers.Length == 0)
             {
-                Logger.Warning("No DNS answers generated.");
+                Logger.GlobalLogger.LogWarning("No DNS answers generated.");
 
                 return false;
             }
@@ -292,7 +303,7 @@ namespace Iot.Device.DnsServer
             {
                 _dnsEntries.Add(entry.Name, entry.Address);
 
-                Logger.Debug("Added DNS entry: {0} -> {1}", entry.Name, entry.Address);
+                Logger.GlobalLogger.LogDebug("Added DNS entry: {0} -> {1}", entry.Name, entry.Address);
             }
         }
     }
