@@ -306,6 +306,7 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.DhcpServer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.DhcpServer/) [DHCP Server](DhcpServer)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.DnsServer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.DnsServer/) [DNS Server](DnsServer)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Modbus.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Modbus/) [Modbus - Machine to machine communication protocol](Modbus)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.MulticastDns.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.MulticastDns/) [Multicast DNS](MulticastDns)
 
