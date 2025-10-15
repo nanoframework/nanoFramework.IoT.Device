@@ -53,12 +53,13 @@ namespace Iot.Device.DnsServer
         /// </summary>
         public ushort QuestionOffset { get; }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="DnsQuestion"/> class by parsing the given byte array starting at the specified offset.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="offset"></param>
-        public DnsQuestion(byte[] data, int offset)
+		/// <summary>
+		/// Creates a new instance of the <see cref="DnsQuestion"/> class by parsing the given byte array starting at the specified offset.
+		/// </summary>
+		/// <param name="data">The byte array containing the DNS question data.</param>
+		/// <param name="offset">The offset in the byte array where the DNS question starts.</param>
+		/// <exception cref="ArgumentException">Thrown when the data is invalid or cannot be parsed.</exception>
+		public DnsQuestion(byte[] data, int offset)
         {
             int terminatorIndex = -1;
 
