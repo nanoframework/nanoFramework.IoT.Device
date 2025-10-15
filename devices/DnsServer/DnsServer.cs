@@ -159,6 +159,9 @@ namespace Iot.Device.DnsServer
             return _started;
         }
 
+        /// <summary>
+        /// Stops the DNS server.
+        /// </summary>
         public void Stop()
         {
             // clear flag to stop the loop in the thread
