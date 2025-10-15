@@ -134,11 +134,11 @@ namespace Iot.Device.DnsServer
                 }
                 catch (SocketException ex)
                 {
-                    Logger.Error($"Socket exception occurred. Code: {ex.ErrorCode} Message: {ex.Message}", ex);
+                    Logger.Error("Socket exception occurred. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Exception occurred. Message: {ex.Message}", ex);
+                    Logger.Error("Exception occurred. Message: {0}", ex.Message);
                 }
 
                 // reached here, something went wrong
@@ -165,7 +165,7 @@ namespace Iot.Device.DnsServer
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Exception occurred while stopping the server. Message: {ex.Message}", ex);
+                    Logger.Error(ex, "Exception occurred while stopping the server");
                 }
             }
 
@@ -218,13 +218,13 @@ namespace Iot.Device.DnsServer
                 }
                 catch (SocketException ex)
                 {
-                    Logger.Error($"Socket exception in DNS worker thread. Code: {ex.ErrorCode} Message: {ex.Message}", ex);
+                    Logger.Error("Socket exception in DNS worker thread. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
 
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Exception in DNS worker thread. Message: {ex.Message}", ex);
+                    Logger.Error("Exception in DNS worker thread. Message: {0}", ex.Message);
                 }
             }
 
@@ -233,7 +233,7 @@ namespace Iot.Device.DnsServer
 
         private bool ProcessDnsRequest(byte[] requestData, ref DnsReply dnsReply)
         {
-            Logger.Debug($"Received DNS request of length {requestData.Length} bytes.");
+            Logger.Debug("Received DNS request of length {0} bytes.", requestData.Length);
 
             // Create the DNS reply with the request data and DNS entries
             dnsReply = new DnsReply(requestData, DnsEntries);
@@ -290,7 +290,7 @@ namespace Iot.Device.DnsServer
             {
                 _dnsEntries.Add(entry.Name, entry.Address);
 
-                Logger.Debug($"Added DNS entry: {entry.Name} -> {entry.Address}");
+                Logger.Debug("Added DNS entry: {0} -> {1}", entry.Name, entry.Address);
             }
         }
     }

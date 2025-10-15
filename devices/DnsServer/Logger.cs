@@ -20,17 +20,21 @@ namespace Iot.Device.DnsServer
         /// Log a message with the specified log level.
         /// </summary>
         /// <param name="logLevel">The log level.</param>
-        /// <param name="message">The message to log.</param>
         /// <param name="exception">Optional exception to include in the log.</param>
-        /// <param name="component">Optional component name for log source identification.</param>
-        public static void Log(LogLevel logLevel, string message, Exception exception = null, string component = "DNS Server")
+        /// <param name="message">Optional message to log.</param>
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Log(
+            LogLevel logLevel,
+            Exception exception = null,
+            string message = null,
+            params object[] args)
         {
             if (string.IsNullOrEmpty(message))
             {
                 return;
             }
 
-            string formattedMessage = $"[{component}] {message}";
+            string formattedMessage = $"[DNS Server] {message}";
 
             if (GlobalLogger is null)
             {
@@ -45,49 +49,55 @@ namespace Iot.Device.DnsServer
                 return;
             }
 
-            GlobalLogger.Log(logLevel, exception, formattedMessage);
+            GlobalLogger.Log(
+                logLevel,
+                exception,
+                formattedMessage,
+                args);
         }
 
         /// <summary>
         /// Log a debug level message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        /// <param name="component">Optional component name for log source identification.</param>
-        public static void Debug(string message, string component = "DNS Server")
-        {
-            Log(LogLevel.Debug, message, null, component);
-        }
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Debug(string message, params object[] args) => Log(LogLevel.Debug, null, message, args);
 
         /// <summary>
         /// Log an information level message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        /// <param name="component">Optional component name for log source identification.</param>
-        public static void Information(string message, string component = "DNS Server")
-        {
-            Log(LogLevel.Information, message, null, component);
-        }
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Information(string message, params object[] args) => Log(LogLevel.Information, null, message, args);
 
         /// <summary>
         /// Log a warning level message.
         /// </summary>
         /// <param name="message">The message to log.</param>
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Warning(string message, params object[] args) => Log(LogLevel.Warning, null, message, args);
+
+        /// <summary>
+        /// Log a warning level message.
+        /// </summary>
         /// <param name="exception">Optional exception to include in the log.</param>
-        /// <param name="component">Optional component name for log source identification.</param>
-        public static void Warning(string message, Exception exception = null, string component = "DNS Server")
-        {
-            Log(LogLevel.Warning, message, exception, component);
-        }
+        /// <param name="message">The message to log.</param>
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Warning(Exception exception = null, string message = null, params object[] args) => Log(LogLevel.Warning, exception, message, args);
 
         /// <summary>
         /// Log an error level message.
         /// </summary>
         /// <param name="message">The message to log.</param>
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Error(string message, params object[] args) => Log(LogLevel.Error, null, message, args);
+
+        /// <summary>
+        /// Log an error level message.
+        /// </summary>
         /// <param name="exception">Optional exception to include in the log.</param>
-        /// <param name="component">Optional component name for log source identification.</param>
-        public static void Error(string message, Exception exception = null, string component = "DNS Server")
-        {
-            Log(LogLevel.Error, message, exception, component);
-        }
+        /// <param name="message">The message to log.</param>
+        /// <param name="args">Optional values for message formatting.</param>
+        public static void Error(Exception exception, string message = null, params object[] args) => Log(LogLevel.Error, exception, message, args);
     }
 }

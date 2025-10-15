@@ -109,17 +109,17 @@ namespace Iot.Device.DnsServer
 
             if (string.IsNullOrEmpty(name))
             {
-                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "Failed to parse DNS question name.");
+                Logger.Warning("Failed to parse DNS question name.");
 
                 return false;
             }
 
-            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"Parsed DNS question: Name={name}, Type={Type}, Class={Class} (name offset={QuestionOffset}, length={nameLength})");
+            Logger.Debug("Parsed DNS question: Name={0}, Type={1}, Class={2} (name offset={3}, length={4})", name, Type, Class, QuestionOffset, nameLength);
 
             // For captive portal, we'll handle A record types
             if (Type != QuestionTypeA)
             {
-                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, $"Unsupported DNS question type: {Type}. Only A (IPv4 address) records are supported.");
+                Logger.Warning("Unsupported DNS question type: {0}. Only A (IPv4 address) records are supported.", Type);
 
                 return false;
             }
@@ -140,11 +140,11 @@ namespace Iot.Device.DnsServer
                     TTL = 300
                 };
 
-                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"Generated DNS answer for name: {name}, Type: {Type}, Address: {ipAddress}, pointer offset: 0x{QuestionOffset:X4}");
+                Logger.Debug("Generated DNS answer for name: {0}, Type: {1}, Address: {2}, pointer offset: 0x{3:X4}", name, Type, ipAddress, QuestionOffset);
             }
             else
             {
-                Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, $"No DNS entry found for name: {name}");
+                Logger.Warning("No DNS entry found for name: {0}", name);
 
                 return false;
             }
@@ -183,7 +183,7 @@ namespace Iot.Device.DnsServer
                     if ((labelLength & _DnsCompressionPointerFlag) == _DnsCompressionPointerFlag)
                     {
                         // This is a pointer (first two bits are set)
-                        Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "DNS name compression (pointers) not supported in this simplified implementation");
+                        Logger.Warning("DNS name compression (pointers) not supported in this simplified implementation");
 
                         nameLength = 0;
 
@@ -193,7 +193,7 @@ namespace Iot.Device.DnsServer
                     // Make sure we have enough bytes for this label
                     if (position + labelLength > Name.Length)
                     {
-                        Logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, "DNS label exceeds packet boundary");
+                        Logger.Warning("DNS label exceeds packet boundary");
 
                         nameLength = 0;
 
@@ -217,7 +217,7 @@ namespace Iot.Device.DnsServer
             }
             catch (Exception ex)
             {
-                Logger.Error("Exception parsing DNS name: " + ex.Message, ex);
+                Logger.Error(ex, "Exception parsing DNS name");
 
                 nameLength = 0;
 
@@ -260,7 +260,7 @@ namespace Iot.Device.DnsServer
                     {
                         ipAddress = (IPAddress)dnsEntries[key];
 
-                        Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"Wildcard match: '{name}' matches pattern '{key}'");
+                        Logger.Debug("Wildcard match: '{0}' matches pattern '{1}'", name, key);
 
                         return true;
                     }

@@ -70,7 +70,7 @@ namespace Iot.Device.DnsServer
             // Create proper compression pointer (0xC000 | offset)
             ushort compressionPointer = (ushort)(DnsCompressionPointerFlag | NameOffset);
 
-            Logger.Log(Microsoft.Extensions.Logging.LogLevel.Debug, $"DNS Answer - Creating pointer 0x{compressionPointer:X4} (flag=0x{DnsCompressionPointerFlag:X2}, offset=0x{NameOffset:X4})");
+            Logger.Debug("DNS Answer - Creating pointer 0x{0:X4} (flag=0x{1:X2}, offset=0x{2:X4})", compressionPointer, DnsCompressionPointerFlag, NameOffset);
 
             // Write each field in network byte order (big-endian)
             ByteHelper.WriteUInt16NetworkOrder(compressionPointer, result, position);
