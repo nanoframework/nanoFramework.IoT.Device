@@ -110,7 +110,7 @@ namespace Iot.Device.DnsServer
                 // check if we have entries
                 if (_dnsEntries.Count == 0)
                 {
-                    Logger.GlobalLogger.LogWarning("No DNS entries defined. The server will not respond to any queries.");
+                    Logger.GlobalLogger?.LogWarning("No DNS entries defined. The server will not respond to any queries.");
 
                     throw new InvalidOperationException();
                 }
@@ -134,11 +134,11 @@ namespace Iot.Device.DnsServer
                 }
                 catch (SocketException ex)
                 {
-                    Logger.GlobalLogger.LogError(ex, "Socket exception occurred. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
+                    Logger.GlobalLogger?.LogError(ex, "Socket exception occurred. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    Logger.GlobalLogger.LogError(ex, "Exception occurred. Message: {0}", ex.Message);
+                    Logger.GlobalLogger?.LogError(ex, "Exception occurred. Message: {0}", ex.Message);
                 }
 
                 // reached here, something went wrong
@@ -170,7 +170,7 @@ namespace Iot.Device.DnsServer
                 }
                 catch (Exception ex)
                 {
-                    Logger.GlobalLogger.LogError(ex, "Exception occurred while stopping the server. Message: {0}", ex.Message);
+                    Logger.GlobalLogger?.LogError(ex, "Exception occurred while stopping the server. Message: {0}", ex.Message);
                 }
             }
 
@@ -190,7 +190,7 @@ namespace Iot.Device.DnsServer
 
         private void DnsWorkerThread()
         {
-            Logger.GlobalLogger.LogInformation("DNS server started.");
+            Logger.GlobalLogger?.LogInformation("DNS server started.");
 
             byte[] buffer = new byte[MaxDnsUdpPacketSize];
 
@@ -223,22 +223,22 @@ namespace Iot.Device.DnsServer
                 }
                 catch (SocketException ex)
                 {
-                    Logger.GlobalLogger.LogError(ex, "Socket exception in DNS worker thread. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
+                    Logger.GlobalLogger?.LogError(ex, "Socket exception in DNS worker thread. Code: {0} Message: {1}", ex.ErrorCode, ex.Message);
 
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Logger.GlobalLogger.LogError(ex, "Exception in DNS worker thread. Message: {0}", ex.Message);
+                    Logger.GlobalLogger?.LogError(ex, "Exception in DNS worker thread. Message: {0}", ex.Message);
                 }
             }
 
-            Logger.GlobalLogger.LogInformation("DNS server stopped.");
+            Logger.GlobalLogger?.LogInformation("DNS server stopped.");
         }
 
         private bool ProcessDnsRequest(byte[] requestData, ref DnsReply dnsReply)
         {
-            Logger.GlobalLogger.LogDebug("Received DNS request of length {0} bytes.", requestData.Length);
+            Logger.GlobalLogger?.LogDebug("Received DNS request of length {0} bytes.", requestData.Length);
 
             // Create the DNS reply with the request data and DNS entries
             dnsReply = new DnsReply(requestData, DnsEntries);
@@ -246,14 +246,14 @@ namespace Iot.Device.DnsServer
             // Parse the request and generate answers
             if (!dnsReply.ParseRequest())
             {
-                Logger.GlobalLogger.LogError("Failed to parse DNS request.");
+                Logger.GlobalLogger?.LogError("Failed to parse DNS request.");
 
                 return false;
             }
 
             if (dnsReply.Answers.Length == 0)
             {
-                Logger.GlobalLogger.LogWarning("No DNS answers generated.");
+                Logger.GlobalLogger?.LogWarning("No DNS answers generated.");
 
                 return false;
             }
@@ -297,7 +297,7 @@ namespace Iot.Device.DnsServer
             {
                 _dnsEntries.Add(entry.Name, entry.Address);
 
-                Logger.GlobalLogger.LogDebug("Added DNS entry: {0} -> {1}", entry.Name, entry.Address);
+                Logger.GlobalLogger?.LogDebug("Added DNS entry: {0} -> {1}", entry.Name, entry.Address);
             }
         }
     }
