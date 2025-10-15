@@ -291,7 +291,7 @@ namespace Iot.Device.DnsServer
         {
             _dnsEntries = new Hashtable();
 
-            foreach (var entry in dnsEntries)
+            foreach (DnsEntry entry in dnsEntries)
             {
                 _dnsEntries.Add(entry.Name, entry.Address);
 
