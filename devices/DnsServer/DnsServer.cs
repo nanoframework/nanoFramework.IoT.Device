@@ -265,6 +265,7 @@ namespace Iot.Device.DnsServer
 
         #region Dispose pattern
 
+        /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -278,6 +279,7 @@ namespace Iot.Device.DnsServer
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method

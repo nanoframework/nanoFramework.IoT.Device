@@ -231,6 +231,7 @@ namespace Iot.Device.DnsServer
         /// Tries to find a matching DNS entry for the given name.
         /// </summary>
         /// <param name="name">The domain name to look up.</param>
+        /// <param name="dnsEntries">The hashtable with the DNS entries.</param>
         /// <param name="ipAddress">The IP address if found.</param>
         /// <returns><see langword="true"/> if a match was found; otherwise, <see langword="false"/>.</returns>
         private bool TryFindDnsEntry(
@@ -271,9 +272,9 @@ namespace Iot.Device.DnsServer
             return false;
         }
 
+        /// <summary>
         /// Returns the byte array representation of this DNS question, suitable for network transmission.
         /// </summary>
-        /// <param name="none"></param>
         /// <returns>
         /// A <see cref="byte"/> array containing the DNS question in wire format.
         /// </returns>
