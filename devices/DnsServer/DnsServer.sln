@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "DnsServer", "DnsServer.nfproj", "{B8B5866F-8339-4B24-8320-176C6B48DE62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		DnsServer.nuspec = DnsServer.nuspec
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "DnsSample", "samples\DnsSample.nfproj", "{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8B5866F-8339-4B24-8320-176C6B48DE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B5866F-8339-4B24-8320-176C6B48DE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B5866F-8339-4B24-8320-176C6B48DE62}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B8B5866F-8339-4B24-8320-176C6B48DE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B5866F-8339-4B24-8320-176C6B48DE62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B5866F-8339-4B24-8320-176C6B48DE62}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AB99A5FE-26D2-49B5-9767-C7AE2A64D94D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {349C6DDD-8ED0-4BC8-A5A0-F4406D1C5BB7}
+	EndGlobalSection
+EndGlobal
