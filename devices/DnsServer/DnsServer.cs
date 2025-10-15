@@ -41,23 +41,12 @@ namespace Iot.Device.DnsServer
         private Hashtable _dnsEntries;
 
         /// <summary>
-        /// Gets or sets the list of DNS entries the server will use to respond to queries.
-        /// Cannot be modified while the server is running.
+        /// Gets the list of DNS entries the server will use to respond to queries. 
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown when attempting to modify entries while the server is running.</exception>
         public Hashtable DnsEntries
         {
             get => _dnsEntries;
-
-            set
-            {
-                if (_started)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                _dnsEntries = value;
-            }
         }
 
         /// <summary>
