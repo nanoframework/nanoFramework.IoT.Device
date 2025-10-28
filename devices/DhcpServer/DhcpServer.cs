@@ -167,22 +167,24 @@ namespace Iot.Device.DhcpServer
             return true;
         }
 
+        private readonly object _dhcpListLock = new object();
+
         private void CheckAndCleanList(object state)
         {
-            ArrayList toRemove = new ArrayList();
-            for (int i = 0; i < _dhcpLastRequest.Count; i++)
+            lock (_dhcpListLock)
             {
-                if ((DateTime)_dhcpLastRequest[i] < DateTime.UtcNow)
+                // Remove items in reverse order to maintain correct indices
+                for (int i = _dhcpLastRequest.Count - 1; i >= 0; i--)
                 {
-                    toRemove.Add(i);
-                }
-            }
+                    if ((DateTime)_dhcpLastRequest[i] < DateTime.UtcNow.AddSeconds(-_timeToLeave))
+                    {
+                        _dhcpIpList.RemoveAt(i);
+                        _dhcpHardwareAddressList.RemoveAt(i);
+                        _dhcpLastRequest.RemoveAt(i);
 
-            foreach (int val in toRemove)
-            {
-                _dhcpIpList.RemoveAt(val);
-                _dhcpHardwareAddressList.RemoveAt(val);
-                _dhcpLastRequest.RemoveAt(val);
+                        Debug.WriteLine($"Removing expired lease for IP {(IPAddress)_dhcpIpList[i]}");
+                    }
+                }
             }
         }
 
@@ -289,28 +291,43 @@ namespace Iot.Device.DhcpServer
                                         Debug.WriteLine($"Received REQUEST with ciaddr, client is RENEWING or REBINDING");
 
                                         // Find the requested address in the list
-                                        int inc;
-                                        for (inc = 0; inc < _dhcpIpList.Count; inc++)
+                                        lock (_dhcpListLock)
                                         {
-                                            if (((IPAddress)_dhcpIpList[inc]).ToString() == dhcpReq.RequestedIpAddress.ToString())
+                                            // Find the requested address in the list
+                                            int inc = -1;
+                                            for (int i = 0; i < _dhcpIpList.Count; i++)
                                             {
-                                                break;
+                                                if (((IPAddress)_dhcpIpList[i]).ToString() == dhcpReq.RequestedIpAddress.ToString())
+                                                {
+                                                    inc = i;
+                                                    break;
+                                                }
+                                            }
+
+                                            // Verify we found the IP and the hardware address matches
+                                            if (inc >= 0 && inc < _dhcpHardwareAddressList.Count)
+                                            {
+                                                if ((string)_dhcpHardwareAddressList[inc] == dhcpReq.ClientHardwareAddressAsString)
+                                                {
+                                                    _dhcpLastRequest[inc] = DateTime.UtcNow;
+                                                    _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
+                                                }
+                                                else
+                                                {
+                                                    // Hardware address mismatch - send NAK
+                                                    _sender.Send(MessageBuilder.CreateNak(dhcpReq, _ipAddress).GetBytes());
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // IP not found in our list - send NAK
+                                                Debug.WriteLine($"Received RENEW/REBIND for unknown IP {dhcpReq.RequestedIpAddress}");
+
+                                                _sender.Send(MessageBuilder.CreateNak(dhcpReq, _ipAddress).GetBytes());
                                             }
                                         }
 
-                                        // Check if the hardware address is the same
-                                        if ((string)_dhcpHardwareAddressList[inc] == dhcpReq.ClientHardwareAddressAsString)
-                                        {
-                                            _dhcpLastRequest[inc] = DateTime.UtcNow;
-                                        }
-                                        else
-                                        {
-                                            // In this case make a Nack
-                                            _sender.Send(MessageBuilder.CreateNak(dhcpReq, _ipAddress).GetBytes());
-                                            break;
-                                        }
-
-                                        _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
+                                        break;
                                     }
 
                                 }
