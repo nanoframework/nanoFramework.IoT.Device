@@ -19,10 +19,10 @@ namespace Iot.Device.Modbus.Client
         /// </summary>
         /// <param name="portName">The name of the serial port.</param>
         /// <param name="baudRate">The baud rate. Default is 9600.</param>
-        /// <param name="parity">The parity. Default is None.</param>
+        /// <param name="parity">The parity. Default is <see cref="Parity.None"/>.</param>
         /// <param name="dataBits">The number of data bits. Default is 8.</param>
-        /// <param name="stopBits">The number of stop bits. Default is One.</param>
-        /// <param name="mode">The mode of serial port, default is RS485.</param>
+        /// <param name="stopBits">The number of stop bits. Default is <see cref="StopBits.One"/>.</param>
+        /// <param name="mode">The mode of serial port, default is <see cref="SerialMode.RS485"/>.</param>
         public ModbusClient(
             string portName,
             int baudRate = 9600,
@@ -38,8 +38,11 @@ namespace Iot.Device.Modbus.Client
         /// Initializes a new instance of the <see cref="ModbusClient"/> class with the specified serial port.
         /// </summary>
         /// <param name="port">The serial port.</param>
-        /// <param name="mode">The mode of serial port, default is RS485.</param>
-        public ModbusClient(SerialPort port, SerialMode mode = SerialMode.RS485) : base(port, mode: mode)
+        /// <param name="mode">The mode of serial port, default is <see cref="SerialMode.RS485"/>.</param>
+        public ModbusClient(
+            SerialPort port,
+            SerialMode mode = SerialMode.RS485)
+            : base(port, mode: mode)
         {
         }
 
@@ -57,6 +60,7 @@ namespace Iot.Device.Modbus.Client
             if (data != null)
             {
                 var values = new bool[count];
+
                 for (int i = 0; i < count; i++)
                 {
                     int posByte = i / 8;
@@ -131,9 +135,11 @@ namespace Iot.Device.Modbus.Client
         public bool[] ReadCoils(byte deviceId, ushort startAddress, ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadCoils);
+
             if (data != null)
             {
                 var values = new bool[count];
+
                 for (int i = 0; i < count; i++)
                 {
                     int posByte = i / 8;
@@ -209,26 +215,18 @@ namespace Iot.Device.Modbus.Client
                 throw new ArgumentException(nameof(function));
             }
 
-            // We cannot use the new way of using switch because of StyleCop
-            ////ValidParameters(deviceId, startAddress, count, function switch
-            ////{
-            ////    FunctionCode.ReadCoils => Consts.MaxCoilCountRead,
-            ////    FunctionCode.ReadDiscreteInputs => Consts.MaxCoilCountRead,
-            ////    FunctionCode.ReadHoldingRegisters => Consts.MaxRegisterCountRead,
-            ////    FunctionCode.ReadInputRegisters => Consts.MaxRegisterCountRead,
-            ////    _ => ushort.MaxValue
-            ////});
-
             switch (function)
             {
                 case FunctionCode.ReadCoils:
                 case FunctionCode.ReadDiscreteInputs:
                     ValidParameters(deviceId, startAddress, count, Consts.MaxCoilCountRead);
                     break;
+
                 case FunctionCode.ReadHoldingRegisters:
                 case FunctionCode.ReadInputRegisters:
                     ValidParameters(deviceId, startAddress, count, Consts.MaxRegisterCountRead);
                     break;
+
                 default:
                     ValidParameters(deviceId, startAddress, count, ushort.MaxValue);
                     break;
@@ -245,6 +243,7 @@ namespace Iot.Device.Modbus.Client
             if (response.IsValid)
             {
                 ValidError(response);
+
                 return response.Data.Buffer;
             }
             else
@@ -252,16 +251,18 @@ namespace Iot.Device.Modbus.Client
                 return null;
             }
         }
+
         #endregion
 
         #region Write methods
+
         /// <summary>
         /// Writes a single coil value to the Modbus device.
         /// </summary>
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The address of the coil to write.</param>
         /// <param name="value">The value to write to the coil.</param>
-        /// <returns>True if the write operation is successful, false otherwise.</returns>
+        /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
         public bool WriteSingleCoil(byte deviceId, ushort startAddress, bool value)
         {
             var buffer = new DataBuffer(2);
@@ -276,7 +277,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The address of the register to write.</param>
         /// <param name="value">The value to write to the register.</param>
-        /// <returns>True if the write operation is successful, false otherwise.</returns>
+        /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
         public bool WriteSingleRegister(
             byte deviceId,
             ushort startAddress,
@@ -299,8 +300,11 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The starting address of the coils to write.</param>
         /// <param name="values">An array of boolean values representing the state of the coils to write.</param>
-        /// <returns>True if the write operation is successful, false otherwise.</returns>
-        public bool WriteMultipleCoils(byte deviceId, ushort startAddress, bool[] values)
+        /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
+        public bool WriteMultipleCoils(
+            byte deviceId,
+            ushort startAddress,
+            bool[] values)
         {
             if (values.Length == 0)
             {
@@ -309,6 +313,7 @@ namespace Iot.Device.Modbus.Client
 
             int numBytes = (int)Math.Ceiling(values.Length / 8.0);
             byte[] coilBytes = new byte[numBytes];
+
             for (int i = 0; i < values.Length; i++)
             {
                 if (values[i])
@@ -322,7 +327,13 @@ namespace Iot.Device.Modbus.Client
             }
 
             var buffer = new DataBuffer(coilBytes);
-            return Write(deviceId, startAddress, (ushort)values.Length, buffer, FunctionCode.WriteMultipleCoils);
+
+            return Write(
+                deviceId,
+                startAddress,
+                (ushort)values.Length,
+                buffer,
+                FunctionCode.WriteMultipleCoils);
         }
 
         /// <summary>
@@ -331,8 +342,11 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The starting address of the registers to write.</param>
         /// <param name="values">An array of ushort values representing the values to write to the registers.</param>
-        /// <returns>True if the write operation is successful, false otherwise.</returns>
-        public bool WriteMultipleRegisters(byte deviceId, ushort startAddress, ushort[] values)
+        /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
+        public bool WriteMultipleRegisters(
+            byte deviceId,
+            ushort startAddress,
+            ushort[] values)
         {
             if (values.Length == 0)
             {
@@ -340,16 +354,30 @@ namespace Iot.Device.Modbus.Client
             }
 
             var buffer = new DataBuffer((values.Length * 2) + 1);
-            buffer.Set(0, (byte)(values.Length * 2));
+
+            buffer.Set(
+                0,
+                (byte)(values.Length * 2));
+
             for (int i = 0; i < values.Length; i++)
             {
                 buffer.Set((i * 2) + 1, values[i]);
             }
 
-            return Write(deviceId, startAddress, (ushort)values.Length, buffer, FunctionCode.WriteMultipleRegisters);
+            return Write(
+                deviceId,
+                startAddress,
+                (ushort)values.Length,
+                buffer,
+                FunctionCode.WriteMultipleRegisters);
         }
 
-        private bool Write(byte deviceId, ushort startAddress, ushort count, DataBuffer buffer, FunctionCode function)
+        private bool Write(
+            byte deviceId,
+            ushort startAddress,
+            ushort count,
+            DataBuffer buffer,
+            FunctionCode function)
         {
             if (function != FunctionCode.WriteSingleCoil &&
                 function != FunctionCode.WriteSingleRegister &&
@@ -361,26 +389,18 @@ namespace Iot.Device.Modbus.Client
 
             if (count > 0)
             {
-                // We cannot use the new way of using switch because of StyleCop
-                ////ValidParameters(deviceId, startAddress, count, function switch
-                ////{
-                ////    FunctionCode.ReadCoils => Consts.MaxCoilCountWrite,
-                ////    FunctionCode.ReadDiscreteInputs => Consts.MaxCoilCountWrite,
-                ////    FunctionCode.ReadHoldingRegisters => Consts.MaxRegisterCountWrite,
-                ////    FunctionCode.ReadInputRegisters => Consts.MaxRegisterCountWrite,
-                ////    _ => ushort.MaxValue
-                ////});
-
                 switch (function)
                 {
                     case FunctionCode.ReadCoils:
                     case FunctionCode.ReadDiscreteInputs:
                         ValidParameters(deviceId, startAddress, count, Consts.MaxCoilCountWrite);
                         break;
+
                     case FunctionCode.ReadHoldingRegisters:
                     case FunctionCode.ReadInputRegisters:
                         ValidParameters(deviceId, startAddress, count, Consts.MaxRegisterCountWrite);
                         break;
+
                     default:
                         ValidParameters(deviceId, startAddress, count, ushort.MaxValue);
                         break;
@@ -409,6 +429,7 @@ namespace Iot.Device.Modbus.Client
                response.Function == function &&
                response.Address == startAddress;
         }
+
         #endregion
 
         #region Send Raw
@@ -441,6 +462,7 @@ namespace Iot.Device.Modbus.Client
                 return null;
             }
         }
+
         #endregion
 
         #region Private Methods

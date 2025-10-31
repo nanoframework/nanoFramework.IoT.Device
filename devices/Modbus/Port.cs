@@ -47,8 +47,8 @@ namespace Iot.Device.Modbus
         /// <param name="dataBits">The number of data bits.</param>
         /// <param name="stopBits">The number of stop bits.</param>
         /// <param name="receivedBytesThreshold">The number of bytes required before the DataReceived event is fired. Default is 1.</param>
-        /// <param name="mode">The mode of serial port, default is RS485.</param>
-        public Port(
+        /// <param name="mode">The mode of serial port, default is <see cref="SerialMode.RS485"/>.</param>
+        protected Port(
             string portName,
             int baudRate,
             Parity parity,
@@ -59,7 +59,7 @@ namespace Iot.Device.Modbus
         {
             _serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
             _serialPort.Mode = mode;
-            _serialPort.Handshake = Handshake.RequestToSend;
+            _serialPort.Handshake = Handshake.None;
             _serialPort.ReceivedBytesThreshold = receivedBytesThreshold;
         }
 
@@ -67,9 +67,12 @@ namespace Iot.Device.Modbus
         /// Initializes a new instance of the <see cref="Port"/> class with the specified serial port.
         /// </summary>
         /// <param name="port">The serial port.</param>
-        /// <param name="receivedBytesThreshold">The number of bytes required before the DataReceived event is fired. Default is 1.</param>
-        /// <param name="mode">The mode of serial port, default is RS485.</param>
-        public Port(SerialPort port, int receivedBytesThreshold = 1, SerialMode mode = SerialMode.RS485)
+        /// <param name="receivedBytesThreshold">The number of bytes required before the <see cref="DataReceived"/> event is fired. Default is 1.</param>
+        /// <param name="mode">The mode of serial port, default is <see cref="SerialMode.RS485"/>.</param>
+        protected Port(
+            SerialPort port,
+            int receivedBytesThreshold = 1,
+            SerialMode mode = SerialMode.RS485)
         {
             _serialPort = port;
             _serialPort.Mode = mode;
@@ -88,7 +91,7 @@ namespace Iot.Device.Modbus
         /// <summary>
         /// Gets a value indicating whether the serial port is open.
         /// </summary>
-        public bool IsOpen => _serialPort != null ? _serialPort.IsOpen : false;
+        public bool IsOpen => _serialPort != null && _serialPort.IsOpen;
 
         /// <summary>
         /// Gets or sets the read timeout in milliseconds.
@@ -96,6 +99,7 @@ namespace Iot.Device.Modbus
         public int ReadTimeout
         {
             get => _serialPort != null ? _serialPort.ReadTimeout : Timeout.Infinite;
+
             set
             {
                 if (_serialPort != null)
@@ -111,6 +115,7 @@ namespace Iot.Device.Modbus
         public int WriteTimeout
         {
             get => _serialPort != null ? _serialPort.WriteTimeout : Timeout.Infinite;
+
             set
             {
                 if (_serialPort != null)
@@ -126,6 +131,7 @@ namespace Iot.Device.Modbus
         public int ReadBufferSize
         {
             get => _serialPort != null ? _serialPort.ReadBufferSize : 0;
+
             set
             {
                 if (_serialPort != null)
@@ -141,6 +147,7 @@ namespace Iot.Device.Modbus
         public int WriteBufferSize
         {
             get => _serialPort != null ? _serialPort.WriteBufferSize : 0;
+
             set
             {
                 if (_serialPort != null)
@@ -153,7 +160,7 @@ namespace Iot.Device.Modbus
         /// <summary>
         /// Checks if the serial port is open and opens it if necessary.
         /// </summary>
-        /// <returns>True if the serial port is open, false otherwise.</returns>
+        /// <returns><see langword="true"/> if the serial port is open, <see langword="false"/> otherwise.</returns>
         protected bool CheckOpen()
         {
             if (_serialPort != null)
@@ -167,6 +174,7 @@ namespace Iot.Device.Modbus
                             DataReceived(_serialPort.BytesToRead);
                         }
                     };
+
                     _serialPort.Open();
                 }
 
@@ -208,11 +216,15 @@ namespace Iot.Device.Modbus
         protected byte[] DataRead(int length)
         {
             var buffer = new byte[length];
+
             if (CheckOpen())
             {
-                for (int offset = 0; offset < buffer.Length;)
+                int offset = 0;
+
+                while (offset < buffer.Length)
                 {
                     int count = _serialPort.Read(buffer, offset, buffer.Length - offset);
+
                     if (count < 1)
                     {
                         break;
@@ -255,20 +267,33 @@ namespace Iot.Device.Modbus
         }
 
         /// <summary>
+        /// Releases the unmanaged resources used by the serial port and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_serialPort != null)
+                {
+                    if (_serialPort.IsOpen)
+                    {
+                        _serialPort.Close();
+                    }
+
+                    _serialPort.Dispose();
+                    _serialPort = null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Releases the resources used by the serial port.
         /// </summary>
         public void Dispose()
         {
-            if (_serialPort != null)
-            {
-                if (_serialPort.IsOpen)
-                {
-                    _serialPort.Close();
-                }
-
-                _serialPort.Dispose();
-                _serialPort = null;
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
