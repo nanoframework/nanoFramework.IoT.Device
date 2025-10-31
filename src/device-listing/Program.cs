@@ -102,6 +102,9 @@ string alphabeticalDevicesIndex = Path.Combine(repoRoot, "README.md");
 string deviceListing = GetDeviceListing(repoRoot, devices);
 ReplacePlaceholder(alphabeticalDevicesIndex, "devices", deviceListing);
 
+string alphabeticalDevicesIndexChinese = Path.Combine(repoRoot, "README.zh-cn.md");
+ReplacePlaceholder(alphabeticalDevicesIndexChinese, "devices", deviceListing);
+
 string categorizedDeviceListing = GetCategorizedDeviceListing(devicesPath, devices);
 string devicesReadme = Path.Combine(devicesPath, "README.md");
 ReplacePlaceholder(devicesReadme, "categorizedDevices", categorizedDeviceListing);
@@ -169,7 +172,7 @@ string CreateMarkdownLinkFromPath(string path, string parentPath)
         }
 
         // Removing this code for now to allow the docs to build properly, experience is still very good on GitHub: .Replace("\\README.md", "");
-        var relativePath = path.Substring(parentPath.Length + 1).Replace("\\README.md", "");
+        var relativePath = path.Substring(parentPath.Length + 1).Replace("\\README.md", "").Replace("/README.md", "");
         UriBuilder uriBuilder = new UriBuilder() { Path = relativePath };
 
         return uriBuilder.Path;
