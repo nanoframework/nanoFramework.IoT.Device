@@ -1,3 +1,11 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Iot.Device.Modbus.Client;
+using Iot.Device.Modbus.Server;
+using Microsoft.Extensions.Logging;
+using nanoFramework.Hardware.Esp32;
+using nanoFramework.Logging.Debug;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -13,7 +21,7 @@ namespace Iot.Device.Modbus.Samples
     {
         public static void Main()
         {
-            Debug.WriteLine("Hello from nanoFramework!");            
+            Debug.WriteLine("Hello from nanoFramework!");
 
             // SerialPort COM2
             Configuration.SetPinFunction(16, DeviceFunction.COM2_RX);
@@ -26,16 +34,16 @@ namespace Iot.Device.Modbus.Samples
             Configuration.SetPinFunction(27, DeviceFunction.COM3_RTS);
 
             // Modbus Server (RS485 mode)
-            var server = new ModbusServer(new Device(1), "COM2");
+            //var server = new ModbusServer(new Device(1), "COM2");
 
             // Modbus Server (RS232 mode)
             // var server= new ModbusServer(new Device(1),"COM2",mode:SerialMode.Normal);
 
-            server.ReadTimeout = server.WriteTimeout = 2000;
-            server.StartListening();
+            //server.ReadTimeout = server.WriteTimeout = 2000;
+            //server.StartListening();
 
             // Modbus Client (RS485 mode)
-            var client = new ModbusClient("COM3");
+            var client = new ModbusClient("COM2");
 
             // Modbus Client (RS232 mode)
             // var client = new ModbusClient("COM3",mode:SerialMode.Normal);
@@ -55,7 +63,7 @@ namespace Iot.Device.Modbus.Samples
     class Device : ModbusDevice
     {
         public Device(byte id = 1) : base(id)
-        { 
+        {
         }
 
         /// <summary>

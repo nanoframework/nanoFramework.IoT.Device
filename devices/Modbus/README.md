@@ -26,13 +26,13 @@ To initialize and use a Modbus client, you can do the following:
 ```csharp
 // Modbus Client
 var client = new ModbusClient("COM3");
-client.ReadTimeout = client.WriteTimeout = 2000;
+client.ReadTimeout = client.WriteTimeout =2000;
 
-client.WriteMultipleRegisters(2, 0x5, new ushort[] { 3, 5, 2, 3 });
-client.Raw(2, FunctionCode.Diagnostics, new byte[] { 0x01, 0x01, 0x01, 0x01 });
+client.WriteMultipleRegisters(2,0x5, new ushort[] {3,5,2,3 });
+client.Raw(2, FunctionCode.Diagnostics, new byte[] {0x01,0x01,0x01,0x01 });
 
-var data1 = client.ReadHoldingRegisters(2, 0x7, 4);
-var data2 = client.ReadCoils(2, 0x23, 2);
+var data1 = client.ReadHoldingRegisters(2,0x7,4);
+var data2 = client.ReadCoils(2,0x23,2);
 ```
 
 As shown in the sample, you have the possibility to write multiple registers, use raw function and also ready multiple registers.
@@ -44,7 +44,7 @@ A server implementation is also available:
 ```csharp
 // Modbus Server
 var server = new ModbusServer(new Device(1), "COM2");
-server.ReadTimeout = server.WriteTimeout = 2000;
+server.ReadTimeout = server.WriteTimeout =2000;
 server.StartListening();
 ```
 
@@ -58,7 +58,7 @@ When using Modbus with an RS485, you can for example use a MAX485 to make the in
 
 ## RS232 support
 
-You can change the ```mode``` parameter in constructor to 0 (SerialMode.Normal) if you're using Modbus over RS232
+You can change the ```mode``` parameter in constructor to0 (SerialMode.Normal) if you're using Modbus over RS232
 ```csharp
 // Modbus Client
 var client = new ModbusClient("COM3",SerialMode.Normal); 
