@@ -48,13 +48,14 @@ namespace Iot.Device.Modbus.Client
         }
 
         #region Read methods
+
         /// <summary>
         /// Reads the values of discrete inputs from the Modbus device.
         /// </summary>
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The starting address of the inputs.</param>
         /// <param name="count">The number of inputs to read.</param>
-        /// <returns>An array of boolean values representing the state of the discrete inputs.</returns>
+        /// <returns>An array of boolean values representing the state of the discrete inputs or a <see langword="null"/> if the read operation fails.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
         public bool[] ReadDiscreteInputs(
             byte deviceId,
@@ -101,7 +102,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The starting address of the registers.</param>
         /// <param name="count">The number of registers to read.</param>
-        /// <returns>An array of ushort values representing the values of the input registers.</returns>
+        /// <returns>An array of <see cref="short"/> values representing the values of the holding registers or a <see langword="null"/> if the read operation fails.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
         public short[] ReadInputRegisters(
             byte deviceId,
@@ -144,7 +145,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The starting address of the coils.</param>
         /// <param name="count">The number of coils to read.</param>
-        /// <returns>An array of boolean values representing the state of the coils.</returns>
+        /// <returns>An array of boolean values representing the state of the coils or a <see langword="null"/> if the read operation fails.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
         public bool[] ReadCoils(
             byte deviceId,
@@ -187,7 +188,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="startAddress">The starting address of the registers.</param>
         /// <param name="count">The number of registers to read.</param>
-        /// <returns>An array of ushort values representing the values of the holding registers.</returns>
+        /// <returns>An array of <see cref="short"/> values representing the values of the holding registers or a <see langword="null"/> if the read operation fails.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
         public short[] ReadHoldingRegisters(
             byte deviceId,
@@ -478,7 +479,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="deviceId">The device ID.</param>
         /// <param name="function">The Modbus function code.</param>
         /// <param name="data">The raw data of the request.</param>
-        /// <returns>The raw data of the response.</returns>
+        /// <returns>The raw data of the response or a <see langword="null"/> if the operation fails.</returns>
         public byte[] Raw(
             byte deviceId,
             FunctionCode function,
@@ -511,78 +512,80 @@ namespace Iot.Device.Modbus.Client
 
         private Response SendRequest(Request request)
         {
+            Response response = new Response(new byte[0]);
+
             var buffer = request.Serialize();
 
-            DataWrite(buffer, 0, buffer.Length);
-
-            byte id = 0;
-
-            Response response;
-
-            try
+            if (DataWrite(buffer, 0, buffer.Length))
             {
-                // read dummy byte (from specs: 3.5 chars time start marker, will never ever be read in a understandible manner)
-                // Some Modbus Server do not use the start marker, so we need to read the first byte and see if it is the device ID we expect and if not assume its the startup marker.
-                id = DataRead();
+                byte id;
 
-                // read device ID
-                if (id != request.DeviceId)
+                try
                 {
+                    // read dummy byte (from specs: 3.5 chars time start marker, will never ever be read in a understandible manner)
+                    // Some Modbus Server do not use the start marker, so we need to read the first byte and see if it is the device ID we expect and if not assume its the startup marker.
                     id = DataRead();
-                }
 
-                // Function number
-                var fn = DataRead();
-
-                var responseBytes = new DataBuffer(new byte[] { id, fn });
-                byte expectedBytes = 1;
-
-                var hasError = (fn & Consts.ErrorMask) > 0;
-                if (!hasError)
-                {
-                    var function = (FunctionCode)fn;
-                    switch (function)
+                    // read device ID
+                    if (id != request.DeviceId)
                     {
-                        case FunctionCode.ReadCoils:
-                        case FunctionCode.ReadDiscreteInputs:
-                        case FunctionCode.ReadHoldingRegisters:
-                        case FunctionCode.ReadInputRegisters:
-                            expectedBytes = DataRead();
-                            responseBytes.Add(expectedBytes);
-                            break;
+                        id = DataRead();
+                    }
 
-                        case FunctionCode.WriteSingleCoil:
-                        case FunctionCode.WriteSingleRegister:
-                        case FunctionCode.WriteMultipleCoils:
-                        case FunctionCode.WriteMultipleRegisters:
-                            expectedBytes = 4;
-                            break;
+                    // Function number
+                    var fn = DataRead();
 
-                        default:
-                            if ((fn & Consts.ErrorMask) != 0)
-                            {
-                                expectedBytes = 1;
-                            }
+                    var responseBytes = new DataBuffer(new byte[] { id, fn });
+                    byte expectedBytes = 1;
 
-                            break;
+                    var hasError = (fn & Consts.ErrorMask) > 0;
+                    if (!hasError)
+                    {
+                        var function = (FunctionCode)fn;
+                        switch (function)
+                        {
+                            case FunctionCode.ReadCoils:
+                            case FunctionCode.ReadDiscreteInputs:
+                            case FunctionCode.ReadHoldingRegisters:
+                            case FunctionCode.ReadInputRegisters:
+                                expectedBytes = DataRead();
+                                responseBytes.Add(expectedBytes);
+                                break;
+
+                            case FunctionCode.WriteSingleCoil:
+                            case FunctionCode.WriteSingleRegister:
+                            case FunctionCode.WriteMultipleCoils:
+                            case FunctionCode.WriteMultipleRegisters:
+                                expectedBytes = 4;
+                                break;
+
+                            default:
+                                if ((fn & Consts.ErrorMask) != 0)
+                                {
+                                    expectedBytes = 1;
+                                }
+
+                                break;
+                        }
+                    }
+
+                    // CRC Check
+                    expectedBytes += 2;
+                    responseBytes.Add(DataRead(expectedBytes));
+
+                    Logger?.LogDebug("{0} RX ({1}): {2}", PortName, responseBytes.Length, Format(responseBytes.Buffer));
+
+                    response = new Response(responseBytes.Buffer);
+
+                    if (response.ErrorCode != ErrorCode.NoError)
+                    {
+                        Logger?.LogError("{0} RX (E): Modbus ErrorCode {1}", PortName, response.ErrorCode);
                     }
                 }
-
-                // CRC Check
-                expectedBytes += 2;
-                responseBytes.Add(DataRead(expectedBytes));
-
-                Logger?.LogDebug("{0} RX ({1}): {2}", PortName, responseBytes.Length, Format(responseBytes.Buffer));
-                response = new Response(responseBytes.Buffer);
-
-                if (response.ErrorCode != ErrorCode.NoError)
+                catch (Exception exception)
                 {
-                    Logger?.LogError("{0} RX (E): Modbus ErrorCode {1}", PortName, response.ErrorCode);
+                    Logger?.LogError(exception, "{0} Error sending request", PortName);
                 }
-            }
-            catch (TimeoutException)
-            {
-                response = new Response(new byte[0]);
             }
 
             return response;

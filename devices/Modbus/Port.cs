@@ -52,7 +52,7 @@ namespace Iot.Device.Modbus
         /// <param name="parity">The parity.</param>
         /// <param name="dataBits">The number of data bits.</param>
         /// <param name="stopBits">The number of stop bits.</param>
-        /// <param name="receivedBytesThreshold">The number of bytes required before the DataReceived event is fired. Default is 1.</param>
+        /// <param name="receivedBytesThreshold">The number of bytes required before the <see cref="DataReceived"/> event is fired. Default is 1.</param>
         /// <param name="mode">The mode of serial port, default is <see cref="SerialMode.RS485"/>.</param>
         protected Port(
             string portName,
@@ -173,13 +173,7 @@ namespace Iot.Device.Modbus
             {
                 if (!_serialPort.IsOpen)
                 {
-                    _serialPort.DataReceived += (sender, args) =>
-                    {
-                        if (_serialPort.BytesToRead > 0)
-                        {
-                            DataReceived(_serialPort.BytesToRead);
-                        }
-                    };
+                    _serialPort.DataReceived += DataReceivedHandler;
 
                     _serialPort.Open();
                 }
@@ -188,6 +182,19 @@ namespace Iot.Device.Modbus
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Event handler for the serial port <see cref="SerialPort.DataReceived"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The <see cref="SerialDataReceivedEventArgs"/> instance containing the event data.</param>
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs args)
+        {
+            if (_serialPort != null && _serialPort.BytesToRead > 0)
+            {
+                DataReceived(_serialPort.BytesToRead);
+            }
         }
 
         /// <summary>
@@ -206,16 +213,21 @@ namespace Iot.Device.Modbus
         {
             if (CheckOpen())
             {
-                int readCHar = _serialPort.ReadByte();
+                try
+                {
+                    int readCHar = _serialPort.ReadByte();
 
-                Logger?.LogDebug("{0} RX (1): {1:X2}", PortName, readCHar);
+                    Logger?.LogDebug("{0} RX (1): {1:X2}", PortName, readCHar);
 
-                return (byte)readCHar;
+                    return (byte)readCHar;
+                }
+                catch (TimeoutException)
+                {
+                    Logger?.LogError("{0} RX read timeout", PortName);
+                }
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
         }
 
         /// <summary>
@@ -269,14 +281,31 @@ namespace Iot.Device.Modbus
         /// <param name="buffer">The buffer that contains the data to write.</param>
         /// <param name="offset">The zero-based byte offset in the buffer at which to begin writing.</param>
         /// <param name="count">The number of bytes to write.</param>
-        protected void DataWrite(byte[] buffer, int offset, int count)
+        /// <returns><see langword="true"/> if the write operation was successful, <see langword="false"/> otherwise.</returns>
+        protected bool DataWrite(byte[] buffer, int offset, int count)
         {
             if (CheckOpen())
             {
                 Logger?.LogDebug("{0} TX ({1}): {2}", PortName, buffer.Length, Format(buffer));
 
-                _serialPort.Write(buffer, offset, count);
+                try
+                {
+                    _serialPort.Write(buffer, offset, count);
+
+                    return true;
+                }
+                catch (TimeoutException)
+                {
+                    Logger?.LogError("{0} TX write timeout", PortName);
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, "{0} TX Error", PortName);
+                    throw;
+                }
             }
+
+            return false;
         }
 
         /// <summary>
@@ -291,6 +320,8 @@ namespace Iot.Device.Modbus
                 {
                     _serialPort.Close();
                 }
+
+                _serialPort.DataReceived -= DataReceivedHandler;
 
                 _serialPort.Dispose();
                 _serialPort = null;
