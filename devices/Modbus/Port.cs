@@ -4,6 +4,7 @@
 using System;
 using System.IO.Ports;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace Iot.Device.Modbus
 {
@@ -13,6 +14,11 @@ namespace Iot.Device.Modbus
     public abstract class Port : IDisposable
     {
         private SerialPort _serialPort;
+
+        /// <summary>
+        /// Gets or sets the logger instance.
+        /// </summary>
+        public ILogger Logger { get; set; }
 
         /// <summary>
         /// Formats an array of bytes as a string.
@@ -200,7 +206,11 @@ namespace Iot.Device.Modbus
         {
             if (CheckOpen())
             {
-                return (byte)_serialPort.ReadByte();
+                int readCHar = _serialPort.ReadByte();
+
+                Logger?.LogDebug("{0} RX (1): {1:X2}", PortName, readCHar);
+
+                return (byte)readCHar;
             }
             else
             {
@@ -232,6 +242,8 @@ namespace Iot.Device.Modbus
 
                     offset += count;
                 }
+
+                Logger?.LogDebug("{0} RX ({1}): {2}", PortName, buffer.Length, Format(buffer));
             }
 
             return buffer;
@@ -245,6 +257,8 @@ namespace Iot.Device.Modbus
         {
             if (CheckOpen())
             {
+                Logger?.LogDebug("{0} TX (1): {1:X2}", PortName, value);
+
                 _serialPort.WriteByte(value);
             }
         }
@@ -259,10 +273,9 @@ namespace Iot.Device.Modbus
         {
             if (CheckOpen())
             {
+                Logger?.LogDebug("{0} TX ({1}): {2}", PortName, buffer.Length, Format(buffer));
+
                 _serialPort.Write(buffer, offset, count);
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine($"{PortName} TX ({buffer.Length}): {Format(buffer)}");
-#endif
             }
         }
 

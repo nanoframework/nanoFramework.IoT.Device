@@ -57,5 +57,5 @@ namespace Iot.Device.Modbus
         /// Tunnels service requests and method invocations (Fn 43). 封装接口(MEI).
         /// </summary>
         EncapsulatedInterface = 0x2B
-    }    
+    }
 }

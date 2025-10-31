@@ -9,11 +9,6 @@ using nanoFramework.Logging.Debug;
 using System;
 using System.Diagnostics;
 using System.Threading;
-using nanoFramework.Hardware.Esp32;
-
-using Iot.Device.Modbus.Client;
-using Iot.Device.Modbus.Server;
-using System.IO.Ports;
 
 namespace Iot.Device.Modbus.Samples
 {
@@ -49,6 +44,13 @@ namespace Iot.Device.Modbus.Samples
             // var client = new ModbusClient("COM3",mode:SerialMode.Normal);
 
             client.ReadTimeout = client.WriteTimeout = 2000;
+
+            // add logger for debugging purposes (optional)
+            DebugLogger logger = new("ModbusClient");
+            client.Logger = logger;
+
+            // set desired logging level
+            logger.MinLogLevel = LogLevel.Information;
 
             client.WriteMultipleRegisters(2, 0x5, new ushort[] { 3, 5, 2, 3 });
             client.Raw(2, FunctionCode.Diagnostics, new byte[] { 0x01, 0x01, 0x01, 0x01 });

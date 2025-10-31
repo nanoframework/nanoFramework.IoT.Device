@@ -37,6 +37,34 @@ var data2 = client.ReadCoils(2,0x23,2);
 
 As shown in the sample, you have the possibility to write multiple registers, use raw function and also ready multiple registers.
 
+### Support for logging
+
+This library uses `Microsoft.Extensions.Logging`. The `ModbusClient` exposes a `Logger` property you can assign with any `ILogger` implementation. When set, TX/RX frames and errors are logged. Function codes are rendered with readable names. Server-side logging is not implemented yet.
+
+Minimal example:
+
+```csharp
+using Iot.Device.Modbus.Client;
+using nanoFramework.Logging.Debug; // DebugLogger
+using Microsoft.Extensions.Logging;
+
+// Create client and attach a logger (use any ILogger implementation)
+var client = new ModbusClient("COM3");
+var logger = new DebugLogger("ModbusClient") { MinLogLevel = LogLevel.Debug };
+client.Logger = logger;
+
+// Operations now emit logs like:
+// Reading ReadHoldingRegisters from Device ID2, Start Address7, Count4
+// COM3 TX (1):02
+// COM3 TX (8):020300070004 C5 F9
+// COM3 RX (13):02030800000000000000003A C4
+// Errors (if any) look like:
+// COM3 RX (E): Modbus ErrorCode IllegalDataAddress
+client.ReadHoldingRegisters(2,0x7,4);
+```
+
+You can plug any logging provider compatible with `Microsoft.Extensions.Logging` (for example, [nanoFramework.Logging](https://www.nuget.org/packages/nanoFramework.Logging/)).
+
 ### Modbus server
 
 A server implementation is also available:

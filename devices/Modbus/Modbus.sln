@@ -8,6 +8,11 @@ EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Modbus.Samples", "samples\Modbus.Samples.nfproj", "{6A52BCEF-2C8C-41DD-93E8-F11DA385EC6F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D0AD3A3C-100A-481A-A4FB-284D61EA603D}"
+	ProjectSection(SolutionItems) = preProject
+		Modbus.nuspec = Modbus.nuspec
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
