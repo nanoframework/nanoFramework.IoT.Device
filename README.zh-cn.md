@@ -4,17 +4,17 @@
 
 -----
 
-### English | [中文](README.zh-cn.md)
+### [English](README.md) | 中文
 
 -----
 
-# Welcome to the **nanoFramework** IoT.Device Library repository!
+# 欢迎来到 **nanoFramework** IoT.Device 库仓库！
 
-This repository contains bindings which can be sensors, small screen and anything else that you can connect to your nanoFramework chip!
+此仓库包含可连接到 nanoFramework 芯片的传感器、小屏幕和其他设备的绑定！
 
-Most of the bindings have been migrated from [.NET IoT repository](https://github.com/dotnet/iot/tree/main/src/devices). Not all the bindings make sense to migrate to .NET nanoFramework, so the effort of migration has been placed into devices that can work with .NET nanoFramework. Please note as well that some devices have been migrated without been tested, so they main contain problems.
+大部分绑定已从 [.NET IoT 仓库](https://github.com/dotnet/iot/tree/main/src/devices) 迁移过来。并非所有绑定都适合迁移到 .NET nanoFramework，因此迁移工作主要集中在可以与 .NET nanoFramework 配合使用的设备上。另请注意，某些设备在迁移时未经测试，因此可能存在问题。
 
-## List of devices
+## 设备列表
 
 <devices>
 
@@ -154,23 +154,23 @@ Most of the bindings have been migrated from [.NET IoT repository](https://githu
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Yx5300.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Yx5300/) [YX5200/YX5300 - MP3 Player](devices/Yx5300/README.md)
 </devices>
 
-## Folder Structure
+## 文件夹结构
 
-[/devices/](./devices/) contains devices that were cleaned up and should be working out of the box.
+[/devices/](./devices/) 包含已清理且应该可以直接使用的设备。
 
-[/src/devices_generated/](./src/devices_generated/) contains devices that were automatically ported from [the NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices). They might not work or compile at this point, but are a good starting point if you need support for one of the devices contained here but missing from the [/devices/](./devices/) folder.
+[/src/devices_generated/](./src/devices_generated/) 包含从 [.NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices) 自动移植的设备。它们此时可能无法工作或编译，但如果您需要支持某个设备，而 [/devices/](./devices/) 文件夹中没有该设备，这些设备是一个很好的起点。
 
-[/src/nanoFramework.IoT.Device.CodeConverter](./src/nanoFramework.IoT.Device.CodeConverter) contains the tool used to generate the devices from [the NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices).
+[/src/nanoFramework.IoT.Device.CodeConverter](./src/nanoFramework.IoT.Device.CodeConverter) 包含用于从 [.NET Core IoT Libraries devices](https://github.com/dotnet/iot/tree/main/src/devices) 生成设备的工具。
 
-Other folders in [/src](./src) contain nanoFramework projects that you can reference when creating/updating devices with provide functionality such as a StopWatach, a DelayHelper, BinaryPrimitives or various System.Device.Model Attributes.
+[/src](./src) 中的其他文件夹包含 nanoFramework 项目，您可以在创建/更新设备时引用这些项目，它们提供诸如 StopWatch、DelayHelper、BinaryPrimitives 或各种 System.Device.Model 属性等功能。
 
-## Contributing
+## 贡献
 
-**Important:** If you plan to clean up the code in [/src/devices_generated/](./src/devices_generated/), please copy your work to the [/devices/](./devices/) folder as the content of [/src/devices_generated/](./src/devices_generated/) will be overwritten by the generator tool.
+**重要提示：** 如果您计划清理 [/src/devices_generated/](./src/devices_generated/) 中的代码，请将您的工作复制到 [/devices/](./devices/) 文件夹，因为 [/src/devices_generated/](./src/devices_generated/) 的内容将被生成器工具覆盖。
 
-Please check the [detail list of tips and tricks](./tips-trick.md) to facilitate the migration. The generator takes care of some heavy lifting but there is always some manual adjustments needed.
+请查看[详细的提示和技巧列表](./tips-trick.md)以促进迁移。生成器会处理一些繁重的工作，但总是需要一些手动调整。
 
-We are using the following structure for the bindings:
+我们为绑定使用以下结构：
 
 ```text
 /devices
@@ -190,33 +190,33 @@ We are using the following structure for the bindings:
     Readme.md
 ```
 
-## Using the Code Converter
+## 使用代码转换器
 
-The Code Converter allows to facilitate migration of .NET Core/.NET 5.0 code into .NET nanoFramework. More information and how to [customize and run it here](./src/nanoFramework.IoT.Device.CodeConverter/README.md).
+代码转换器有助于将 .NET Core/.NET 5.0 代码迁移到 .NET nanoFramework。更多信息以及如何[自定义和运行它请点击这里](./src/nanoFramework.IoT.Device.CodeConverter/README.md)。
 
-## Porting a .NET nanoFramework binding to .NET IoT
+## 将 .NET nanoFramework 绑定移植到 .NET IoT
 
-Did you know that with minimal efforts you can make a nanoFramework binding available for .NET IoT as well? More information and guidance on the steps to take, can be found in [this article](migrate-binding-to-dotnetiot.md).
+您知道吗，通过最小的努力，您可以使 nanoFramework 绑定也可用于 .NET IoT？有关要采取的步骤的更多信息和指导，请参阅[这篇文章](migrate-binding-to-dotnetiot.md)。
 
-## Feedback and documentation
+## 反馈和文档
 
-For documentation, providing feedback, issues and finding out how to contribute please refer to the [Home repo](https://github.com/nanoframework/Home).
+有关文档、提供反馈、问题以及如何贡献的信息，请参阅 [Home 仓库](https://github.com/nanoframework/Home)。
 
-Join our Discord community [here](https://discord.gg/gCyBu8T).
+在[这里](https://discord.gg/gCyBu8T)加入我们的 Discord 社区。
 
-## Credits
+## 致谢
 
-The list of contributors to this project can be found at [CONTRIBUTORS](https://github.com/nanoframework/Home/blob/main/CONTRIBUTORS.md).
+此项目的贡献者列表可以在 [CONTRIBUTORS](https://github.com/nanoframework/Home/blob/main/CONTRIBUTORS.md) 找到。
 
-## License
+## 许可证
 
-The **nanoFramework** Class Libraries are licensed under the [MIT license](LICENSE.md).
+**nanoFramework** 类库根据 [MIT 许可证](LICENSE.md) 授权。
 
-## Code of Conduct
+## 行为准则
 
-This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
-For more information see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
+本项目采用了贡献者公约定义的行为准则，以阐明我们社区中的预期行为。
+有关更多信息，请参阅 [.NET Foundation 行为准则](https://dotnetfoundation.org/code-of-conduct)。
 
 ### .NET Foundation
 
-This project is supported by the [.NET Foundation](https://dotnetfoundation.org).
+本项目由 [.NET Foundation](https://dotnetfoundation.org) 支持。

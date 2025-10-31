@@ -102,6 +102,9 @@ string alphabeticalDevicesIndex = Path.Combine(repoRoot, "README.md");
 string deviceListing = GetDeviceListing(repoRoot, devices);
 ReplacePlaceholder(alphabeticalDevicesIndex, "devices", deviceListing);
 
+string alphabeticalDevicesIndexChinese = Path.Combine(repoRoot, "README.zh-cn.md");
+ReplacePlaceholder(alphabeticalDevicesIndexChinese, "devices", deviceListing);
+
 string categorizedDeviceListing = GetCategorizedDeviceListing(devicesPath, devices);
 string devicesReadme = Path.Combine(devicesPath, "README.md");
 ReplacePlaceholder(devicesReadme, "categorizedDevices", categorizedDeviceListing);
