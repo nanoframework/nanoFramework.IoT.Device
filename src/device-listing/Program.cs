@@ -172,7 +172,7 @@ string CreateMarkdownLinkFromPath(string path, string parentPath)
         }
 
         // Removing this code for now to allow the docs to build properly, experience is still very good on GitHub: .Replace("\\README.md", "");
-        var relativePath = path.Substring(parentPath.Length + 1).Replace("\\README.md", "");
+        var relativePath = path.Substring(parentPath.Length + 1).Replace("\\README.md", "").Replace("/README.md", "");
         UriBuilder uriBuilder = new UriBuilder() { Path = relativePath };
 
         return uriBuilder.Path;
