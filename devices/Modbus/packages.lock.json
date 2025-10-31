@@ -8,6 +8,12 @@
         "resolved": "1.17.11",
         "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
       },
+      "nanoFramework.Logging": {
+        "type": "Direct",
+        "requested": "[1.1.157, 1.1.157]",
+        "resolved": "1.1.157",
+        "contentHash": "x+NjFgtfz9vFSuhkvSftvvZ4t6h82pUKZo/yAn8M1KSFKhOzy3x12wyRGqOoIzGdY9XobpnBO2V80Rv8huoj3Q=="
+      },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
         "requested": "[1.11.32, 1.11.32]",

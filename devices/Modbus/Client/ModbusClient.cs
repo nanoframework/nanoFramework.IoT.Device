@@ -6,6 +6,7 @@ using System.IO.Ports;
 using Iot.Device.Modbus.Protocol;
 using Iot.Device.Modbus.Structures;
 using Iot.Device.Modbus.Util;
+using Microsoft.Extensions.Logging;
 
 namespace Iot.Device.Modbus.Client
 {
@@ -54,9 +55,18 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the inputs.</param>
         /// <param name="count">The number of inputs to read.</param>
         /// <returns>An array of boolean values representing the state of the discrete inputs.</returns>
-        public bool[] ReadDiscreteInputs(byte deviceId, ushort startAddress, ushort count)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
+        public bool[] ReadDiscreteInputs(
+            byte deviceId,
+            ushort startAddress,
+            ushort count)
         {
-            var data = Read(deviceId, startAddress, count, FunctionCode.ReadDiscreteInputs);
+            var data = Read(
+                deviceId,
+                startAddress,
+                count,
+                FunctionCode.ReadDiscreteInputs);
+
             if (data != null)
             {
                 var values = new bool[count];
@@ -67,11 +77,13 @@ namespace Iot.Device.Modbus.Client
                     int posBit = i % 8;
 
                     int val = data[posByte] & (byte)Math.Pow(2, posBit);
+
                     var dinput = new DiscreteInput
                     {
                         Address = (ushort)(startAddress + i),
                         Value = val > 0
                     };
+
                     values[i] = dinput.Value;
                 }
 
@@ -90,6 +102,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the registers.</param>
         /// <param name="count">The number of registers to read.</param>
         /// <returns>An array of ushort values representing the values of the input registers.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
         public short[] ReadInputRegisters(
             byte deviceId,
             ushort startAddress,
@@ -132,7 +145,11 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the coils.</param>
         /// <param name="count">The number of coils to read.</param>
         /// <returns>An array of boolean values representing the state of the coils.</returns>
-        public bool[] ReadCoils(byte deviceId, ushort startAddress, ushort count)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
+        public bool[] ReadCoils(
+            byte deviceId,
+            ushort startAddress,
+            ushort count)
         {
             var data = Read(deviceId, startAddress, count, FunctionCode.ReadCoils);
 
@@ -146,6 +163,7 @@ namespace Iot.Device.Modbus.Client
                     int posBit = i % 8;
 
                     int val = data[posByte] & (byte)Math.Pow(2, posBit);
+
                     var coil = new Coil
                     {
                         Address = (ushort)(startAddress + i),
@@ -170,6 +188,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the registers.</param>
         /// <param name="count">The number of registers to read.</param>
         /// <returns>An array of ushort values representing the values of the holding registers.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/>, <paramref name="startAddress"/>, or <paramref name="count"/> is out of range.</exception>
         public short[] ReadHoldingRegisters(
             byte deviceId,
             ushort startAddress,
@@ -212,8 +231,16 @@ namespace Iot.Device.Modbus.Client
                 function != FunctionCode.ReadHoldingRegisters &&
                 function != FunctionCode.ReadInputRegisters)
             {
-                throw new ArgumentException(nameof(function));
+                Logger?.LogError("Invalid function for Read: {0}", function.ToNameString());
+                throw new ArgumentException();
             }
+
+            Logger?.LogDebug(
+                "Reading {0} from Device ID {1}, Start Address {2}, Count {3}",
+                function.ToNameString(),
+                deviceId,
+                startAddress,
+                count);
 
             switch (function)
             {
@@ -232,7 +259,7 @@ namespace Iot.Device.Modbus.Client
                     break;
             }
 
-            var response = this.SendRequest(new Request
+            var response = SendRequest(new Request
             {
                 DeviceId = deviceId,
                 Function = function,
@@ -263,7 +290,11 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The address of the coil to write.</param>
         /// <param name="value">The value to write to the coil.</param>
         /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
-        public bool WriteSingleCoil(byte deviceId, ushort startAddress, bool value)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/> or <paramref name="startAddress"/> is out of range.</exception>
+        public bool WriteSingleCoil(
+            byte deviceId,
+            ushort startAddress,
+            bool value)
         {
             var buffer = new DataBuffer(2);
             buffer.Set(0, (ushort)(value ? 0xFF00 : 0x0000));
@@ -278,6 +309,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The address of the register to write.</param>
         /// <param name="value">The value to write to the register.</param>
         /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/> or <paramref name="startAddress"/> is out of range.</exception>
         public bool WriteSingleRegister(
             byte deviceId,
             ushort startAddress,
@@ -301,6 +333,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the coils to write.</param>
         /// <param name="values">An array of boolean values representing the state of the coils to write.</param>
         /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/> or <paramref name="startAddress"/> is out of range, or the length of the <paramref name="values"/> array is zero.</exception>
         public bool WriteMultipleCoils(
             byte deviceId,
             ushort startAddress,
@@ -308,7 +341,8 @@ namespace Iot.Device.Modbus.Client
         {
             if (values.Length == 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(values));
+                Logger?.LogError("Invalid length: {0}", values.Length);
+                throw new ArgumentOutOfRangeException();
             }
 
             int numBytes = (int)Math.Ceiling(values.Length / 8.0);
@@ -343,6 +377,7 @@ namespace Iot.Device.Modbus.Client
         /// <param name="startAddress">The starting address of the registers to write.</param>
         /// <param name="values">An array of ushort values representing the values to write to the registers.</param>
         /// <returns><see langword="true"/> if the write operation is successful, <see langword="false"/> otherwise.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="deviceId"/> or <paramref name="startAddress"/> is out of range, or the length of the <paramref name="values"/> array is zero.</exception>
         public bool WriteMultipleRegisters(
             byte deviceId,
             ushort startAddress,
@@ -350,7 +385,8 @@ namespace Iot.Device.Modbus.Client
         {
             if (values.Length == 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(values));
+                Logger?.LogError("Invalid length: {0}", values.Length);
+                throw new ArgumentOutOfRangeException();
             }
 
             var buffer = new DataBuffer((values.Length * 2) + 1);
@@ -384,7 +420,8 @@ namespace Iot.Device.Modbus.Client
                 function != FunctionCode.WriteMultipleCoils &&
                 function != FunctionCode.WriteMultipleRegisters)
             {
-                throw new ArgumentException(nameof(function));
+                Logger?.LogError("Invalid function for Write: {0}", function.ToNameString());
+                throw new ArgumentException();
             }
 
             if (count > 0)
@@ -421,6 +458,7 @@ namespace Iot.Device.Modbus.Client
             };
 
             var response = SendRequest(request);
+
             ValidError(response);
 
             return
@@ -441,7 +479,10 @@ namespace Iot.Device.Modbus.Client
         /// <param name="function">The Modbus function code.</param>
         /// <param name="data">The raw data of the request.</param>
         /// <returns>The raw data of the response.</returns>
-        public byte[] Raw(byte deviceId, FunctionCode function, byte[] data)
+        public byte[] Raw(
+            byte deviceId,
+            FunctionCode function,
+            byte[] data)
         {
             var request = new Request
             {
@@ -451,6 +492,7 @@ namespace Iot.Device.Modbus.Client
             };
 
             var response = SendRequest(request);
+
             ValidError(response);
 
             if (response.IsValid)
@@ -470,6 +512,7 @@ namespace Iot.Device.Modbus.Client
         private Response SendRequest(Request request)
         {
             var buffer = request.Serialize();
+
             DataWrite(buffer, 0, buffer.Length);
 
             byte id = 0;
@@ -529,16 +572,13 @@ namespace Iot.Device.Modbus.Client
                 expectedBytes += 2;
                 responseBytes.Add(DataRead(expectedBytes));
 
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine($"{PortName} RX ({responseBytes.Length}): {Format(responseBytes.Buffer)}");
-#endif
+                Logger?.LogDebug("{0} RX ({1}): {2}", PortName, responseBytes.Length, Format(responseBytes.Buffer));
                 response = new Response(responseBytes.Buffer);
-#if DEBUG
+
                 if (response.ErrorCode != ErrorCode.NoError)
                 {
-                    System.Diagnostics.Debug.WriteLine($"{PortName} RX (E): Modbus ErrorCode {response.ErrorCode}");
+                    Logger?.LogError("{0} RX (E): Modbus ErrorCode {1}", PortName, response.ErrorCode);
                 }
-#endif
             }
             catch (TimeoutException)
             {
@@ -552,11 +592,13 @@ namespace Iot.Device.Modbus.Client
         {
             if (deviceId < Consts.MinDeviceId || Consts.MaxDeviceId < deviceId)
             {
+                Logger?.LogError("Invalid Device ID: {0}", deviceId);
                 throw new ArgumentOutOfRangeException(nameof(deviceId));
             }
 
             if (startAddress < Consts.MinAddress || Consts.MaxAddress < startAddress)
             {
+                Logger?.LogError("Invalid start address: {0}", startAddress);
                 throw new ArgumentOutOfRangeException(nameof(startAddress));
             }
         }
@@ -565,16 +607,19 @@ namespace Iot.Device.Modbus.Client
         {
             if (deviceId < Consts.MinDeviceId || Consts.MaxDeviceId < deviceId)
             {
+                Logger?.LogError("Invalid Device ID: {0}", deviceId);
                 throw new ArgumentOutOfRangeException(nameof(deviceId));
             }
 
             if (startAddress < Consts.MinAddress || Consts.MaxAddress < startAddress + count)
             {
+                Logger?.LogError("Invalid address range: start={0}, count={1}", startAddress, count);
                 throw new ArgumentOutOfRangeException(nameof(startAddress));
             }
 
             if (count < Consts.MinCount || maxReadWrite < count)
             {
+                Logger?.LogError("Invalid count: {0} (max allowed: {1})", count, maxReadWrite);
                 throw new ArgumentOutOfRangeException(nameof(count));
             }
         }
@@ -583,6 +628,8 @@ namespace Iot.Device.Modbus.Client
         {
             if (response.IsValid && response.ErrorCode != ErrorCode.NoError)
             {
+                Logger?.LogError("{0} RX (E): Modbus ErrorCode {1}", PortName, response.ErrorCode);
+
                 throw new Exception($"{PortName} RX: Modbus ErrorCode {response.ErrorCode}");
             }
         }
