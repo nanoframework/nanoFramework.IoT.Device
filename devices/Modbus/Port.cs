@@ -272,18 +272,15 @@ namespace Iot.Device.Modbus
         /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && _serialPort != null)
             {
-                if (_serialPort != null)
+                if (_serialPort.IsOpen)
                 {
-                    if (_serialPort.IsOpen)
-                    {
-                        _serialPort.Close();
-                    }
-
-                    _serialPort.Dispose();
-                    _serialPort = null;
+                    _serialPort.Close();
                 }
+
+                _serialPort.Dispose();
+                _serialPort = null;
             }
         }
 
