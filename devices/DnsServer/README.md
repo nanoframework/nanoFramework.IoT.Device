@@ -87,9 +87,10 @@ dnsServer.Start();
 
 ## Information on the sample
 
-The included [sample](devices/DnsServer/samples) demonstrates how to create a simple DNS server that redirects all DNS queries to a specified IP address. This is useful for scenarios like captive portals or local development environments.
+The included [sample](samples) demonstrates how to create a simple DNS server that redirects all DNS queries to a specified IP address. This is useful for scenarios like captive portals or local development environments.
 
 The sample:
+
 1. Creates a DNS server bound to a specific IP address
 2. Sets up a wildcard DNS entry that redirects all DNS requests to that address
 3. Starts the DNS server and keeps it running indefinitely
