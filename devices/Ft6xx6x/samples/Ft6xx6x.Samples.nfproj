@@ -21,13 +21,13 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Axp192, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Axp192.1.2.907\lib\Iot.Device.Axp192.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Axp192.1.2.931\lib\Iot.Device.Axp192.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Bmm150, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Bmm150.1.2.907\lib\Iot.Device.Bmm150.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Bmm150.1.2.931\lib\Iot.Device.Bmm150.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Button, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Button.1.2.907\lib\Iot.Device.Button.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Button.1.2.931\lib\Iot.Device.Button.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Common.NumberHelper, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.1.2.862\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
