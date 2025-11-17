@@ -20,9 +20,9 @@
     <tags>nanoFramework C# csharp netmf netnf DNS </tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.System.Net" version="1.11.43" />
-	  <dependency id="nanoFramework.System.Collections" version="1.5.67" />
-	  <dependency id="nanoFramework.Logging" version="1.1.157" />
+      <dependency id="nanoFramework.System.Net" version="1.11.46" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.67" />
+      <dependency id="nanoFramework.Logging" version="1.1.160" />
     </dependencies>
   </metadata>
   <files>

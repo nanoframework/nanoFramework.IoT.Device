@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[1.5.134, 1.5.134]",
-        "resolved": "1.5.134",
-        "contentHash": "X3PzWhOjt2ln3FiYuNB3uTuQbemoNBTHyBHh7ln/udZSNkJTyJYF2N3RdYKQWogBmUDcE0eK8ELHU8FkWJ6y8g=="
+        "requested": "[1.5.137, 1.5.137]",
+        "resolved": "1.5.137",
+        "contentHash": "E9NjGCHzutkdMskZ0UBTSKQsHUJl5f5lA3MTXJwcVqtliG/iNin+o1YNX9XuA2QqtfRkxno4b7p2HKmVQtafRw=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[1.11.43, 1.11.43]",
-        "resolved": "1.11.43",
-        "contentHash": "USwz59gxcNUzsiXfQohWSi8ANNwGDsp+qG4zBtHZU3rKMtvTsLI3rxdfMC77VehKqsCPn7aK3PU2oCRFo+1Rgg=="
+        "requested": "[1.11.46, 1.11.46]",
+        "resolved": "1.11.46",
+        "contentHash": "cowzYj1VZHdo2Ey+AmIt3u8+rXQHu+q7KuQq1C46SKhSZoVW5PTMaLOvOZ2sXN1ySiHTLqSebRJEKomcA+XnxA=="
       },
       "nanoFramework.System.Net.Http.Server": {
         "type": "Direct",
-        "requested": "[1.5.196, 1.5.196]",
-        "resolved": "1.5.196",
-        "contentHash": "cjr5Rj39duOjGcyvo/LMFdoeTeLg0zpFgFB7wJUXw0+65EiENEnJwqqR1CfbJEvBBpBMJdH/yLkK/8DU8Jk3XQ=="
+        "requested": "[1.5.199, 1.5.199]",
+        "resolved": "1.5.199",
+        "contentHash": "3dRbhusNMA6LWMozTdYY6S9IFnZitIQprmsgcSKNAv3nV1FvBZxFnen5nYs8VzxnoNjsRKM6vPu5YZiudTwJVg=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.131, 1.2.131]",
-        "resolved": "1.2.131",
-        "contentHash": "p23t4FL6JIQ5KU+fJXDQkXzZq0ti/LM3KGUN3avyQW8TF5QOmgPSZ4TvHeGGFoQXkyLvnDRj2lhO043kGurRcA=="
+        "requested": "[1.2.133, 1.2.133]",
+        "resolved": "1.2.133",
+        "contentHash": "Di+ff8Om/QMiZGoMs3p62WCEJbc6hLF/gERLozMKT7XuConCru2kcCX0uz1sFl7cGqE4r17rbip5HsWFXQh+4Q=="
       }
     }
   }
