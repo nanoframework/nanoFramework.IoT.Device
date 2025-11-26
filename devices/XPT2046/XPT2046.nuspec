@@ -4,8 +4,7 @@
     <id>nanoFramework.Iot.Device.XPT2046</id>
     <version>0.0.2</version>
     <title>nanoFramework.Iot.Device.XPT2046</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoFramework project contributors</owners>
+    <authors>nanoFramework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
