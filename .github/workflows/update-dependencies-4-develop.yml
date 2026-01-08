@@ -1,0 +1,29 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
+# This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
+
+name: Update dependencies develop (round 4)
+
+on:
+  schedule:
+    # Round 4/5: Executes 30 minutes after round 3 (03:30 UTC) to allow enough time for any changes to propagate.
+    # (taking into account PR merge and build branch).
+    - cron: '45 03 * * Mon,Wed'
+  repository_dispatch:
+    types: update-dependencies-develop
+  workflow_dispatch:
+
+jobs:
+  update-nuget-dependencies:
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
+    with:
+      timeout-minutes: 120 # It takes a long time as IoT devices has lots of solutions to update!
+      solutionsToCheck: '*.sln'
+      workingDirectory: devices
+      branchToPr: 'develop'
+      previewPackages: true
+      # these projects are in other update rounds or in the works (generated devices)
+      exclusionList: 'Card,CharacterLcd,Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper,BoardLed,BuildHat,Common,Display,Ft232H,Ili9341,Pca9685,RGBLedMatrix,Scd4x,SensorHub,SocketCan,Ssd1351,StUsb4500,UFireIse,nanoFramework.IoT.Device.CodeConverter,GenerateDocFxStructure,device-listing'

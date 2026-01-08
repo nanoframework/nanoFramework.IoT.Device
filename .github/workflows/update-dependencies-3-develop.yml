@@ -1,0 +1,28 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
+# This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
+
+name: Update dependencies develop (round 3)
+
+on:
+  schedule:
+    # Round 3/5: Executes 30 minutes after round 2 (03:00 UTC) to allow enough time for any changes to propagate.
+    # (taking into account PR merge and build branch).
+    - cron: '30 03 * * Mon,Wed'
+  repository_dispatch:
+    types: update-dependencies-develop
+  workflow_dispatch:
+
+jobs:
+  update-nuget-dependencies:
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
+    with:
+      timeout-minutes: 15
+      workingDirectory: devices
+      branchToPr: 'develop'
+      previewPackages: true
+      solutionsToCheck: |
+        CharacterLcd.sln
