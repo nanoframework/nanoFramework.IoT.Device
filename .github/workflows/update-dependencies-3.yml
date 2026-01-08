@@ -22,6 +22,6 @@ jobs:
     with:
       timeout-minutes: 15
       workingDirectory: devices
-      branchToPr: 'develop'      
+      branchToPr: 'main'      
       solutionsToCheck: |
         CharacterLcd.sln

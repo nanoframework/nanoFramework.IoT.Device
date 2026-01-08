@@ -21,7 +21,7 @@ jobs:
     with:
       timeout-minutes: 15 # The next round will start after (taking into account PR merge and build branch).
       workingDirectory: devices
-      branchToPr: 'develop'      
+      branchToPr: 'main'      
       solutionsToCheck: |
         NumberHelper.sln
         System.Buffers.Binary.BinaryPrimitives.sln

@@ -22,6 +22,6 @@ jobs:
     with:
       timeout-minutes: 15 # It should not take longer!
       workingDirectory: devices
-      branchToPr: 'develop'      
+      branchToPr: 'main'      
       solutionsToCheck: |
         Ft6xx6x.sln

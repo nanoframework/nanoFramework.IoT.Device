@@ -23,6 +23,6 @@ jobs:
       timeout-minutes: 120 # It takes a long time as IoT devices has lots of solutions to update!
       solutionsToCheck: '*.sln'
       workingDirectory: devices
-      branchToPr: 'develop'
+      branchToPr: 'main'
       # these projects are in other update rounds or in the works (generated devices)
       exclusionList: 'Card,CharacterLcd,Ft6xx6x,ShiftRegister,NumberHelper,System.Buffers.Binary.BinaryPrimitives,Multiplexing,System.Device.Model,System.Diagnostics.Stopwatch,System.Drawing,System.Numerics,WeatherHelper,BoardLed,BuildHat,Common,Display,Ft232H,Ili9341,Pca9685,RGBLedMatrix,Scd4x,SensorHub,SocketCan,Ssd1351,StUsb4500,UFireIse,nanoFramework.IoT.Device.CodeConverter,GenerateDocFxStructure,device-listing'

@@ -75,7 +75,7 @@ steps:
   inputs:
     command: custom
     custom: tool
-    arguments: install -g nanovc --add-source https://pkgs.dev.azure.com/nanoframework/feed/_packaging/sandbox/nuget/v3/index.json
+    arguments: install -g nanovc
 
 - task: InstallNanoMSBuildComponents@1
   condition: succeeded()
