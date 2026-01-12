@@ -4,9 +4,9 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.17.11, 1.17.11]",
-        "resolved": "1.17.11",
-        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
+        "requested": "[2.0.0-preview.33, 2.0.0-preview.33]",
+        "resolved": "2.0.0-preview.33",
+        "contentHash": "VVr+TmThdBt9zzXFzFewB5GUsNm2BE8+/3OtaCiJVg76v0Wr87A0Mi6R74hm78otfIhPJ66aPaRd+fA23dmJjQ=="
       },
       "nanoFramework.Graphics.Core": {
         "type": "Direct",
@@ -16,21 +16,21 @@
       },
       "nanoFramework.System.Device.Pwm": {
         "type": "Direct",
-        "requested": "[1.1.23, 1.1.23]",
-        "resolved": "1.1.23",
-        "contentHash": "Z0jRgHqnEKI8k7jGFiYCsMcXv2r0vHV0MY0tqTAUIxIEwQ5BbnUf0Gyr481Wh25bAkwJ9p/PwfhPJbjPAY65Bw=="
+        "requested": "[2.0.0-preview.5, 2.0.0-preview.5]",
+        "resolved": "2.0.0-preview.5",
+        "contentHash": "nzJDT/3zIHzxszQa042xKAFZ2w886xW0UOkSO2Hz4EfZEcxwHNXSnBkJroaKJSka7QD3qfRiIUxh58UTWgn4AQ=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.116, 1.5.116]",
-        "resolved": "1.5.116",
-        "contentHash": "0S05UKcoI9Ukz9cMNPC9huFW9vSL42/4gIh4fw8ou8HkcFmTYb0OL8VF2Ah94hEDW5mqcYAVr0ipuGWPzIRqaA=="
+        "requested": "[2.0.0-preview.5, 2.0.0-preview.5]",
+        "resolved": "2.0.0-preview.5",
+        "contentHash": "Esjk1CzSjlGEK/rRsj/D/F1EQ0DttT1HC9IKJgN/45G+O0yocd7sfso05eVqhi2sIREMZKbBOli5YyqUffi58Q=="
       },
       "nanoFramework.System.Threading": {
         "type": "Direct",
-        "requested": "[1.1.52, 1.1.52]",
-        "resolved": "1.1.52",
-        "contentHash": "kv+US/+7QKV1iT/snxBh032vwZ+3krJ4vujlSsvmS2nNj/nK64R3bq/ST3bCFquxHDD0mog8irtCBCsFazr4kA=="
+        "requested": "[2.0.0-preview.5, 2.0.0-preview.5]",
+        "resolved": "2.0.0-preview.5",
+        "contentHash": "7PqyD+h8Odd5czvXX9eATQJET8XH/rgjPSePiPqztR3gqJM7TnDwGOkNJJ7lLfrHg0lbASxQy5heviKWexttaA=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

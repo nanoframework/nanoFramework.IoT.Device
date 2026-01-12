@@ -19,11 +19,11 @@
     <summary>Iot.Device.Hcsr04.Esp32 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Hcsr04.Esp32</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.33" />
       <dependency id="UnitsNet.nanoFramework.Length" version="5.75.0" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.32" />
+      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.7" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="2.0.35" />
+      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.6" />
     </dependencies>
   </metadata>
   <files>
