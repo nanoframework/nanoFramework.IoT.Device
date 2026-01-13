@@ -14,7 +14,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static short ReadInt16BigEndian(SpanByte source)
+        public static short ReadInt16BigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 2)
             {
@@ -30,7 +30,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static short ReadInt16LittleEndian(SpanByte source)
+        public static short ReadInt16LittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 2)
             {
@@ -46,7 +46,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static int ReadInt32BigEndian(SpanByte source)
+        public static int ReadInt32BigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 4)
             {
@@ -62,7 +62,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static int ReadInt32LittleEndian(SpanByte source)
+        public static int ReadInt32LittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 4)
             {
@@ -78,7 +78,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static long ReadInt64BigEndian(SpanByte source)
+        public static long ReadInt64BigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 8)
             {
@@ -95,7 +95,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static long ReadInt64LittleEndian(SpanByte source)
+        public static long ReadInt64LittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 8)
             {
@@ -112,7 +112,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static ushort ReadUInt16BigEndian(SpanByte source)
+        public static ushort ReadUInt16BigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 2)
             {
@@ -128,7 +128,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static ushort ReadUInt16LittleEndian(SpanByte source)
+        public static ushort ReadUInt16LittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 2)
             {
@@ -144,7 +144,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns> The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static uint ReadUInt32BigEndian(SpanByte source)
+        public static uint ReadUInt32BigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 4)
             {
@@ -160,7 +160,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span of bytes to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static uint ReadUInt32LittleEndian(SpanByte source)
+        public static uint ReadUInt32LittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 4)
             {
@@ -176,7 +176,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span of bytes to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static ulong ReadUInt64BigEndian(SpanByte source)
+        public static ulong ReadUInt64BigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 8)
             {
@@ -193,7 +193,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span of bytes to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static ulong ReadUInt64LittleEndian(SpanByte source)
+        public static ulong ReadUInt64LittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 8)
             {
@@ -210,7 +210,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain a <see cref="float"/>.</exception>
-        public static float ReadSingleBigEndian(SpanByte source)
+        public static float ReadSingleBigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 4)
             {
@@ -235,7 +235,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain a <see cref="float"/>.</exception>
-        public static float ReadSingleLittleEndian(SpanByte source)
+        public static float ReadSingleLittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 4)
             {
@@ -260,7 +260,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The big endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain a <see cref="double"/>.</exception>
-        public static double ReadDoubleBigEndian(SpanByte source)
+        public static double ReadDoubleBigEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 8)
             {
@@ -283,7 +283,7 @@ namespace System.Buffers.Binary
         /// <param name="source">The read-only span to read.</param>
         /// <returns>The little endian value.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain a <see cref="double"/>.</exception>
-        public static double ReadDoubleLittleEndian(SpanByte source)
+        public static double ReadDoubleLittleEndian(ReadOnlySpan<byte> source)
         {
             if (source.Length < 8)
             {
@@ -306,7 +306,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static void WriteInt16BigEndian(SpanByte destination, short value)
+        public static void WriteInt16BigEndian(Span<byte> destination, short value)
         {
             if (destination.Length < 2)
             {
@@ -323,7 +323,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static void WriteInt16LittleEndian(SpanByte destination, short value)
+        public static void WriteInt16LittleEndian(Span<byte> destination, short value)
         {
             if (destination.Length < 2)
             {
@@ -340,7 +340,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static void WriteInt32BigEndian(SpanByte destination, int value)
+        public static void WriteInt32BigEndian(Span<byte> destination, int value)
         {
             if (destination.Length < 4)
             {
@@ -359,7 +359,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static void WriteInt32LittleEndian(SpanByte destination, int value)
+        public static void WriteInt32LittleEndian(Span<byte> destination, int value)
         {
             if (destination.Length < 4)
             {
@@ -378,7 +378,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static void WriteInt64BigEndian(SpanByte destination, long value)
+        public static void WriteInt64BigEndian(Span<byte> destination, long value)
         {
             if (destination.Length < 8)
             {
@@ -401,7 +401,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static void WriteInt64LittleEndian(SpanByte destination, long value)
+        public static void WriteInt64LittleEndian(Span<byte> destination, long value)
         {
             if (destination.Length < 8)
             {
@@ -424,7 +424,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static void WriteUInt16BigEndian(SpanByte destination, ushort value)
+        public static void WriteUInt16BigEndian(Span<byte> destination, ushort value)
         {
             if (destination.Length < 2)
             {
@@ -441,7 +441,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int16.</exception>
-        public static void WriteUInt16LittleEndian(SpanByte destination, ushort value)
+        public static void WriteUInt16LittleEndian(Span<byte> destination, ushort value)
         {
             if (destination.Length < 2)
             {
@@ -458,7 +458,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static void WriteUInt32BigEndian(SpanByte destination, uint value)
+        public static void WriteUInt32BigEndian(Span<byte> destination, uint value)
         {
             if (destination.Length < 4)
             {
@@ -477,7 +477,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int32.</exception>
-        public static void WriteUInt32LittleEndian(SpanByte destination, uint value)
+        public static void WriteUInt32LittleEndian(Span<byte> destination, uint value)
         {
             if (destination.Length < 4)
             {
@@ -496,7 +496,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static void WriteUInt64BigEndian(SpanByte destination, ulong value)
+        public static void WriteUInt64BigEndian(Span<byte> destination, ulong value)
         {
             if (destination.Length < 8)
             {
@@ -519,7 +519,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Source is too small to contain an System.Int64.</exception>
-        public static void WriteUInt64LittleEndian(SpanByte destination, ulong value)
+        public static void WriteUInt64LittleEndian(Span<byte> destination, ulong value)
         {
             if (destination.Length < 8)
             {
@@ -542,7 +542,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Destination is too small to contain a <see cref="float"/>.</exception>
-        public static void WriteSingleBigEndian(SpanByte destination, float value)
+        public static void WriteSingleBigEndian(Span<byte> destination, float value)
         {
             if (destination.Length < 4)
             {
@@ -566,7 +566,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Destination is too small to contain a <see cref="float"/>.</exception>
-        public static void WriteSingleLittleEndian(SpanByte destination, float value)
+        public static void WriteSingleLittleEndian(Span<byte> destination, float value)
         {
             if (destination.Length < 4)
             {
@@ -590,7 +590,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as big endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Destination is too small to contain a <see cref="double"/>.</exception>
-        public static void WriteDoubleBigEndian(SpanByte destination, double value)
+        public static void WriteDoubleBigEndian(Span<byte> destination, double value)
         {
             if (destination.Length < 8)
             {
@@ -612,7 +612,7 @@ namespace System.Buffers.Binary
         /// <param name="destination">The span of bytes where the value is to be written, as little endian.</param>
         /// <param name="value">The value to write into the span of bytes.</param>
         /// <exception cref="ArgumentOutOfRangeException">Destination is too small to contain a <see cref="double"/>.</exception>
-        public static void WriteDoubleLittleEndian(SpanByte destination, double value)
+        public static void WriteDoubleLittleEndian(Span<byte> destination, double value)
         {
             if (destination.Length < 8)
             {

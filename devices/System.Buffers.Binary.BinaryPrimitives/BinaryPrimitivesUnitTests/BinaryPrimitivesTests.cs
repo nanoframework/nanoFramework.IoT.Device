@@ -22,8 +22,8 @@ namespace BinaryPrimitivesUnitTests
             short int16res;
             byte[] uint16byte = new byte[] { 0x98, 0x76 };
             byte[] int16byte = new byte[] { 0x3A, 0xB6 };
-            SpanByte uint16Res = new byte[2];
-            SpanByte int16Res = new byte[2];
+            Span<byte> uint16Res = new Span<byte>(new byte[2]);
+            Span<byte> int16Res = new Span<byte>(new byte[2]);
 
             // Act
             BinaryPrimitives.WriteInt16BigEndian(int16Res, int16);
@@ -48,8 +48,8 @@ namespace BinaryPrimitivesUnitTests
             short int16res;
             byte[] uint16byte = new byte[] { 0x76, 0x98 };
             byte[] int16byte = new byte[] { 0xB6, 0x3A };
-            SpanByte uint16Res = new byte[2];
-            SpanByte int16Res = new byte[2];
+            Span<byte> uint16Res = new Span<byte>(new byte[2]);
+            Span<byte> int16Res = new Span<byte>(new byte[2]);
 
             // Act
             BinaryPrimitives.WriteInt16LittleEndian(int16Res, int16);
@@ -74,8 +74,8 @@ namespace BinaryPrimitivesUnitTests
             int int32res;
             byte[] uint32byte = new byte[] { 0x98, 0x76, 0x54, 0x32 };
             byte[] int32byte = new byte[] { 0x3A, 0xB6, 0x7A, 0xBC };
-            SpanByte uint32Res = new byte[4];
-            SpanByte intRes = new byte[4];
+            Span<byte> uint32Res = new Span<byte>(new byte[4]);
+            Span<byte> intRes = new Span<byte>(new byte[4]);
 
             // Act
             BinaryPrimitives.WriteInt32BigEndian(intRes, int32);
@@ -100,8 +100,8 @@ namespace BinaryPrimitivesUnitTests
             int int32res;
             byte[] uint32byte = new byte[] { 0x32, 0x54, 0x76, 0x98 };
             byte[] int32byte = new byte[] { 0xBC, 0x7A, 0xB6, 0x3A };
-            SpanByte uint32Res = new byte[4];
-            SpanByte intRes = new byte[4];
+            Span<byte> uint32Res = new Span<byte>(new byte[4]);
+            Span<byte> intRes = new Span<byte>(new byte[4]);
 
             // Act
             BinaryPrimitives.WriteInt32LittleEndian(intRes, int32);
@@ -126,8 +126,8 @@ namespace BinaryPrimitivesUnitTests
             long int64res;
             byte[] uint64byte = new byte[] { 0x98, 0x76, 0x54, 0x32, 0x10, 0xAB, 0xCD, 0xEF };
             byte[] int64byte = new byte[] { 0x3A, 0xB6, 0x7A, 0xBC, 0x98, 0x74, 0xCA, 0xFE };
-            SpanByte uint64Res = new byte[8];
-            SpanByte int64Res = new byte[8];
+            Span<byte> uint64Res = new Span<byte>(new byte[8]);
+            Span<byte> int64Res = new Span<byte>(new byte[8]);
 
             // Act
             BinaryPrimitives.WriteInt64BigEndian(int64Res, int64);
@@ -152,8 +152,8 @@ namespace BinaryPrimitivesUnitTests
             long int64res;
             byte[] uint64byte = new byte[] { 0xEF, 0xCD, 0xAB, 0x10, 0x32, 0x54, 0x76, 0x98 };
             byte[] int64byte = new byte[] { 0xFE, 0xCA, 0x74, 0x98, 0xBC, 0x7A, 0xB6, 0x3A };
-            SpanByte uint64Res = new byte[8];
-            SpanByte int64Res = new byte[8];
+            Span<byte> uint64Res = new Span<byte>(new byte[8]);
+            Span<byte> int64Res = new Span<byte>(new byte[8]);
 
             // Act
             BinaryPrimitives.WriteInt64LittleEndian(int64Res, int64);
@@ -173,13 +173,13 @@ namespace BinaryPrimitivesUnitTests
         {
             Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
             {
-                SpanByte toosmall = new byte[3];
+                Span<byte> toosmall = new Span<byte>(new byte[3]);
                 BinaryPrimitives.WriteInt32LittleEndian(toosmall, 42);
             });
 
             Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
             {
-                SpanByte toosmall = new byte[1];
+                Span<byte> toosmall = new Span<byte>(new byte[1]);
                 BinaryPrimitives.WriteInt16LittleEndian(toosmall, 42);
             });
         }
@@ -193,7 +193,7 @@ namespace BinaryPrimitivesUnitTests
             float floatFromBytes;
             double doubleFromBytes;
             float floatValueFromBitConverter;
-            SpanByte floatToBytes = new byte[4];
+            Span<byte> floatToBytes = new Span<byte>(new byte[4]);
 
             // Act
             floatFromBytes = BinaryPrimitives.ReadSingleBigEndian(floatValueInBe);
@@ -217,7 +217,7 @@ namespace BinaryPrimitivesUnitTests
             float floatFromBytes;
             double doubleFromBytes;
             float floatValueFromBitConverter;
-            SpanByte floatToBytes = new byte[4];
+            Span<byte> floatToBytes = new Span<byte>(new byte[4]);
 
             // Act
             floatFromBytes = BinaryPrimitives.ReadSingleLittleEndian(floatValueInLe);
@@ -240,7 +240,7 @@ namespace BinaryPrimitivesUnitTests
             byte[] doubleValueInBe = new byte[] { 0x40, 0x09, 0x21, 0xFB, 0x54, 0x44, 0x2D, 0x18 };
             double doubleFromBytes;
             double doubleValueFromBitConverter;
-            SpanByte doubleToBytes = new byte[8];
+            Span<byte> doubleToBytes = new Span<byte>(new byte[8]);
 
             // Act
             doubleFromBytes = BinaryPrimitives.ReadDoubleBigEndian(doubleValueInBe);
@@ -261,7 +261,7 @@ namespace BinaryPrimitivesUnitTests
             byte[] doubleValueInLe = new byte[] { 0x18, 0x2D, 0x44, 0x54, 0xFB, 0x21, 0x09, 0x40 };
             double doubleFromBytes;
             double doubleValueFromBitConverter;
-            SpanByte doubleToBytes = new byte[8];
+            Span<byte> doubleToBytes = new Span<byte>(new byte[8]);
 
             // Act
             doubleFromBytes = BinaryPrimitives.ReadDoubleLittleEndian(doubleValueInLe);

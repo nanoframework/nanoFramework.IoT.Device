@@ -8,18 +8,6 @@
         "resolved": "2.0.0-preview.33",
         "contentHash": "VVr+TmThdBt9zzXFzFewB5GUsNm2BE8+/3OtaCiJVg76v0Wr87A0Mi6R74hm78otfIhPJ66aPaRd+fA23dmJjQ=="
       },
-      "nanoFramework.Runtime.Events": {
-        "type": "Direct",
-        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
-        "resolved": "2.0.0-preview.7",
-        "contentHash": "123GBb10MKevBBPzcXbjsADXx9yC9mATZhUVbGPAuLn6ZpfEmSGhbo9K0K8GX5zigzE9VNUUlTDa/94WyxIkaQ=="
-      },
-      "nanoFramework.System.Device.Gpio": {
-        "type": "Direct",
-        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
-        "resolved": "2.0.0-preview.7",
-        "contentHash": "2aVoAcVQGw+JujuId7eCgG56x/rWDIOcpCD/Tt4cJPC5/q2/6dwie3vBpy42rr8LDjiO/c157yHvyULFjTw+HQ=="
-      },
       "nanoFramework.TestFramework": {
         "type": "Direct",
         "requested": "[4.0.0-preview.47, 4.0.0-preview.47]",

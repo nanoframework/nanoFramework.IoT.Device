@@ -55,32 +55,30 @@ namespace Iot.Device.Multiplexing.Utility
         /// Does not display output.
         /// </summary>
         public void Write(byte value)
-        {
-            // Write to 8 right-most segment values
-            int offset = _length - 8;
-            WriteByteAsValues(value, offset);
-        }
+            => WriteByteAsValues(value, 0);
+
 
         /// <summary>
         /// Writes discrete underlying bits to a virtual output.
         /// Writes each byte, left to right. Least significant bit will written to index 0.
         /// Does not display output.
         /// </summary>
-        public void Write(SpanByte value)
+        /// <param name="value">The span of bytes to write.</param>
+        public void Write(ReadOnlySpan<byte> value)
         {
             // Scenarios
-            // values can be shorter than byteLength
-            // values can be longer than byteLength
-            // values can be same as byteLength
-            int offset = (value.Length * 8) - _length;
-            if (offset < 0)
+            // values can be shorter than byteLength e.g. (1 * 8) - 16 = -8 < 0
+            // values can be longer than byteLength e.g. (3 * 8) - 16 = 8 > 0
+            // values can be same as byteLength e.g. (2 * 8) - 16 = 0
+            if (value.Length * 8 > _length)
             {
-                throw new Exception($"The bytes provided exceed the length of the {nameof(IOutputSegment)}.");
+                throw new ArgumentException();
             }
 
             for (int i = 0; i < value.Length; i++)
             {
-                WriteByteAsValues(value[i], offset + (i * 8));
+                int offset = i * 8;
+                WriteByteAsValues(value[i], offset);
             }
         }
 

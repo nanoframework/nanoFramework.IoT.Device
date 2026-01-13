@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "System.Buffers.Binary.BinaryPrimitives", "System.Buffers.Binary.BinaryPrimitives.nfproj", "{40E8B868-73EF-4BEA-A75F-8B5585B9D70F}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "BinaryPrimitivesUnitTests", "..\..\tests\BinaryPrimitivesUnitTests\BinaryPrimitivesUnitTests.nfproj", "{B195FAF3-7089-4061-9D2C-D8C1C131B8D0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3206CCF4-1174-4647-8A2C-DDD7CDBB4E7B}"
 	ProjectSection(SolutionItems) = preProject
 		.runsettings = .runsettings
@@ -14,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		version.json = version.json
 	EndProjectSection
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "BinaryPrimitivesUnitTests", "BinaryPrimitivesUnitTests\BinaryPrimitivesUnitTests.nfproj", "{B195FAF3-7089-4061-9D2C-D8C1C131B8D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
