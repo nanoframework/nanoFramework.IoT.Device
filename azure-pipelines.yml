@@ -82,6 +82,7 @@ steps:
   displayName: Install nanoFramework MSBuild components
   inputs:
     GitHubToken: $(GitHubToken)
+    usePreview: 'true'
 
 # build solutions that need to be build
 - task: PowerShell@2
