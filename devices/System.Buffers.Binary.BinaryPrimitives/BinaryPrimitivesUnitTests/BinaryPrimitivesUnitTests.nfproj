@@ -11,36 +11,33 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-	  <ProjectGuid>b195faf3-7089-4061-9d2c-d8c1c131b8d0</ProjectGuid>
-	  <OutputType>Library</OutputType>
+    <ProjectGuid>b195faf3-7089-4061-9d2c-d8c1c131b8d0</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-	  <RootNamespace>BinaryPrimitivesUnitTests</RootNamespace>
-	  <AssemblyName>NFUnitTest</AssemblyName>
+    <RootNamespace>BinaryPrimitivesUnitTests</RootNamespace>
+    <AssemblyName>NFUnitTest</AssemblyName>
     <IsCodedUITest>False</IsCodedUITest>
     <IsTestProject>true</IsTestProject>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-	<RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
-  <PropertyGroup>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)\nano.runsettings</RunSettingsFilePath>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="BinaryPrimitivesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.33\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.TestFramework">
-      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.113\lib\nanoFramework.TestFramework.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.TestFramework.4.0.0-preview.47\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher">
-      <HintPath>..\..\devices\System.Buffers.Binary.BinaryPrimitives\packages\nanoFramework.TestFramework.2.1.113\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\packages\nanoFramework.TestFramework.4.0.0-preview.47\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -51,7 +48,7 @@
     <Content Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
-  <ProjectReference Include="..\..\devices\System.Buffers.Binary.BinaryPrimitives\System.Buffers.Binary.BinaryPrimitives.nfproj" />
+    <ProjectReference Include="..\System.Buffers.Binary.BinaryPrimitives.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
 </Project>
