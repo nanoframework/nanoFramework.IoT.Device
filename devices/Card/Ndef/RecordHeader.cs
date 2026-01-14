@@ -135,7 +135,7 @@ namespace Iot.Device.Ndef
         /// Create a header from a span of bytes
         /// </summary>
         /// <param name="recordToDecode">A span of bytes</param>
-        public RecordHeader(SpanByte recordToDecode)
+        public RecordHeader(Span<byte> recordToDecode)
         {
             int idxRecord = 0;
             // First byte is the Message flag and type name format
@@ -198,7 +198,7 @@ namespace Iot.Device.Ndef
         /// Serialize the header
         /// </summary>
         /// <param name="header">Serialized byte span</param>
-        public void Serialize(SpanByte header)
+        public void Serialize(Span<byte> header)
         {
             if (header.Length < Length)
             {
@@ -228,13 +228,13 @@ namespace Iot.Device.Ndef
             if (PayloadTypeLength > 0)
             {
                 
-                new SpanByte(PayloadType).CopyTo(header.Slice(idxRecord, PayloadTypeLength));
+                new Span<byte>(PayloadType).CopyTo(header.Slice(idxRecord, PayloadTypeLength));
                 idxRecord += PayloadTypeLength;
             }
 
             if (IsComposedMessage)
             {
-                new SpanByte(PayloadId).CopyTo(header.Slice(idxRecord));
+                new Span<byte>(PayloadId).CopyTo(header.Slice(idxRecord));
             }
         }
     }

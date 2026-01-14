@@ -18,7 +18,7 @@ namespace Iot.Device.Imu
         /// <param name="data">A byte to write</param>
         public override void WriteRegister(I2cDevice i2cDevice, byte reg, byte data)
         {
-            SpanByte dataout = new byte[2]
+            Span<byte> dataout = new byte[2]
             {
                 (byte)Register.I2C_SLV0_ADDR, Magnetometer.Ak8963.DefaultI2cAddress
             };
@@ -42,7 +42,7 @@ namespace Iot.Device.Imu
         /// <returns>The register value</returns>
         public override byte ReadByte(I2cDevice i2cDevice, byte reg)
         {
-            SpanByte read = new byte[1]
+            Span<byte> read = new byte[1]
             {
                 0
             };
@@ -56,9 +56,9 @@ namespace Iot.Device.Imu
         /// <param name="i2cDevice">>An I2C device</param>
         /// <param name="reg">The register to read</param>
         /// <param name="readBytes">A span of bytes with the read values</param>
-        public override void ReadBytes(I2cDevice i2cDevice, byte reg, SpanByte readBytes)
+        public override void ReadBytes(I2cDevice i2cDevice, byte reg, Span<byte> readBytes)
         {
-            SpanByte dataout = new byte[2]
+            Span<byte> dataout = new byte[2]
             {
                 (byte)Register.I2C_SLV0_ADDR, Magnetometer.Ak8963.DefaultI2cAddress | 0x80
             };

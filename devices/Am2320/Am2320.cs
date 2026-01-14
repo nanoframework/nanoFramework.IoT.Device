@@ -84,7 +84,7 @@ namespace Iot.Device.Am2320
         {
             get
             {
-                SpanByte buff = new byte[11];
+                Span<byte> buff = new byte[11];
 
                 // 32 bit device ID
                 // Forces the sensor to wake up and wait 10 ms according to documentation
@@ -160,9 +160,9 @@ namespace Iot.Device.Am2320
             IsLastReadSuccessful = true;
         }
 
-        private bool IsValidReadBuffer(SpanByte buff, byte expected) => (buff[0] == 0x03) && (buff[1] == expected);
+        private bool IsValidReadBuffer(Span<byte> buff, byte expected) => (buff[0] == 0x03) && (buff[1] == expected);
 
-        private bool IsCrcValid(SpanByte buff)
+        private bool IsCrcValid(Span<byte> buff)
         {
             var crc = Crc16(buff.Slice(0, buff.Length - 2));
             return (crc >> 8 == buff[buff.Length - 1]) && ((crc & 0xFF) == buff[buff.Length - 2]);
@@ -170,17 +170,17 @@ namespace Iot.Device.Am2320
 
         private Temperature GetTemperature()
         {
-            short temp = BinaryPrimitives.ReadInt16BigEndian((new SpanByte(_readBuff)).Slice(4));
+            short temp = BinaryPrimitives.ReadInt16BigEndian((new Span<byte>(_readBuff)).Slice(4));
             return Temperature.FromDegreesCelsius(temp / 10.0);
         }
 
         private RelativeHumidity GetHumidity()
         {
-            short hum = BinaryPrimitives.ReadInt16BigEndian((new SpanByte(_readBuff)).Slice(2));
+            short hum = BinaryPrimitives.ReadInt16BigEndian((new Span<byte>(_readBuff)).Slice(2));
             return RelativeHumidity.FromPercent(hum / 10.0);
         }
 
-        private ushort Crc16(SpanByte ptr)
+        private ushort Crc16(Span<byte> ptr)
         {
             ushort crc = 0xFFFF;
             byte i;

@@ -122,7 +122,7 @@ namespace Iot.Device.Display
         /// Converts a span of bytes to their corresponding hexadecimal digits' font representation
         /// </summary>
         /// <param name="digits">list of hexadecimal digits (will be converted in place!)</param>
-        public static void ConvertHexDigits(SpanByte digits)
+        public static void ConvertHexDigits(Span<byte> digits)
         {
             for (int i = 0, l = digits.Length; i < l; i++)
             {
@@ -135,7 +135,7 @@ namespace Iot.Device.Display
         /// </summary>
         /// <param name="digits">list of hexadecimal digits (will be converted in place!)</param>
         /// <returns>list of corresponding digit fonts</returns>
-        public static Font[] GetHexDigits(SpanByte digits)
+        public static Font[] GetHexDigits(Span<byte> digits)
         {
             var fonts = new Font[digits.Length];
             if (digits.Length > 0)
@@ -174,7 +174,7 @@ namespace Iot.Device.Display
         /// </summary>
         /// <param name="input">input string</param>
         /// <param name="output">list of corresponding character fonts</param>
-        public static void ConvertString(SpanChar input, SpanFont output)
+        public static void ConvertString(Span<char> input, SpanFont output)
         {
             if (input.Length != output.Length)
             {

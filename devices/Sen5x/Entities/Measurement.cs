@@ -18,7 +18,7 @@ namespace Iot.Device.Sen5x.Entities
 
         internal override int ByteCount => 24;
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(Span<byte> data)
         {
             Pm1_0 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(data) / 10.0);
             Pm2_5 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(data.Slice(3)) / 10.0);

@@ -290,7 +290,7 @@ namespace Iot.Device.Ft6xx6x
             _i2cDevice.Write(_data);
         }
 
-        private void Read(Register reg, SpanByte data)
+        private void Read(Register reg, Span<byte> data)
         {
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(data);

@@ -243,14 +243,14 @@ namespace Iot.Device.Ssd13xx
         /// Send data to the display controller.
         /// </summary>
         /// <param name="data">The data to send to the display controller.</param>
-        public virtual void SendData(SpanByte data)
+        public virtual void SendData(Span<byte> data)
         {
             if (data.IsEmpty)
             {
                 throw new ArgumentNullException(nameof(data));
             }
 
-            SpanByte writeBuffer = SliceGenericBuffer(data.Length + 1);
+            Span<byte> writeBuffer = SliceGenericBuffer(data.Length + 1);
 
             writeBuffer[0] = 0x40; // Control byte.
             data.CopyTo(writeBuffer.Slice(1));
@@ -263,7 +263,7 @@ namespace Iot.Device.Ssd13xx
         /// </summary>
         /// <param name="length">Requested length.</param>
         /// <returns>Span of bytes pointing to the command buffer.</returns>
-        protected SpanByte SliceGenericBuffer(int length) => SliceGenericBuffer(0, length);
+        protected Span<byte> SliceGenericBuffer(int length) => SliceGenericBuffer(0, length);
 
         /// <summary>
         /// Acquires span of specific length at specific position in command buffer.
@@ -272,7 +272,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="start">Start index of the requested span.</param>
         /// <param name="length">Requested length.</param>
         /// <returns>Span of bytes pointing to the command buffer.</returns>
-        protected SpanByte SliceGenericBuffer(int start, int length)
+        protected Span<byte> SliceGenericBuffer(int start, int length)
         {
             if (_genericBuffer.Length < length)
             {

@@ -19,6 +19,6 @@ namespace Iot.Device.Sen5x.Entities
         /// be skipped. The checksum is already verified when this method is called and therefor not needed anymore.
         /// </summary>
         /// <param name="data">The data received from the I2C exchange.</param>
-        internal abstract void FromSpanByte(SpanByte data);
+        internal abstract void FromSpanByte(Span<byte> data);
     }
 }

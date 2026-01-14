@@ -431,7 +431,7 @@ namespace Iot.Device.Adc128D818
 
         private byte[] ReadFromRegister(Register register, int readByteCount)
         {
-            SpanByte writeBuff = new byte[1] { (byte)register };
+            Span<byte> writeBuff = new byte[1] { (byte)register };
 
             byte[] readBuffer = new byte[readByteCount];
 

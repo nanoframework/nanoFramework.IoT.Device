@@ -82,7 +82,7 @@ namespace Iot.Device.Hts221
 
         private void WriteByte(Register register, byte data)
         {
-            SpanByte buff = new byte[2]
+            Span<byte> buff = new byte[2]
             {
                 (byte)register,
                 data
@@ -93,12 +93,12 @@ namespace Iot.Device.Hts221
 
         private short ReadInt16(Register register)
         {
-            SpanByte val = new byte[2];
+            Span<byte> val = new byte[2];
             Read(register, val);
             return BinaryPrimitives.ReadInt16LittleEndian(val);
         }
 
-        private void Read(Register register, SpanByte buffer)
+        private void Read(Register register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)((byte)register | ReadMask));
             _i2c.Read(buffer);
@@ -139,7 +139,7 @@ namespace Iot.Device.Hts221
         // Original code: private (ushort T0x8, ushort T1x8) GetTemperatureCalibrationPointsCelsius()
         private TuppleUshortUshort GetTemperatureCalibrationPointsCelsius()
         {
-            SpanByte t0t1Lsb = new byte[2];
+            Span<byte> t0t1Lsb = new byte[2];
             Read(Register.Temperature0LsbDegCx8, t0t1Lsb);
             byte t0t1Msb = Read(Register.Temperature0And1MsbDegCx8);
 
@@ -151,7 +151,7 @@ namespace Iot.Device.Hts221
         // Original code: private (short T0, short T1) GetTemperatureCalibrationPointsRaw()
         private TuppleShortShort GetTemperatureCalibrationPointsRaw()
         {
-            SpanByte t0t1 = new byte[4];
+            Span<byte> t0t1 = new byte[4];
             Read(Register.Temperature0Raw, t0t1);
             short t0 = BinaryPrimitives.ReadInt16LittleEndian(t0t1.Slice(0, 2));
             short t1 = BinaryPrimitives.ReadInt16LittleEndian(t0t1.Slice(2, 2));
@@ -161,7 +161,7 @@ namespace Iot.Device.Hts221
         // Original code: private (byte H0, byte H1) GetHumidityCalibrationPointsRH()
         private TuppleByteByte GetHumidityCalibrationPointsRH()
         {
-            SpanByte h0h1 = new byte[2];
+            Span<byte> h0h1 = new byte[2];
             Read(Register.Humidity0rHx2, h0h1);
             return new TuppleByteByte(h0h1[0], h0h1[1]);
         }

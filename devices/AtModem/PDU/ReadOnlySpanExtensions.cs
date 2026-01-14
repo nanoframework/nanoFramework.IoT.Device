@@ -7,7 +7,7 @@ namespace Iot.Device.AtModem.PDU
 {
     internal static class ReadOnlySpanExtensions
     {
-        public static SpanChar SliceOnIndex(this SpanChar span, int start, int end)
+        public static Span<char> SliceOnIndex(this Span<char> span, int start, int end)
         {
             return span.Slice(start, end - start);
         }

@@ -167,7 +167,7 @@ namespace Iot.Device
             _enabled = true;
 
             // Extended function, contrast to 0x30, temperature to coef 0, bias to 4, Screen to normal display power on, display to normal mode
-            SpanByte toSend = new byte[] { (byte)(FunctionSet.PowerOn | FunctionSet.ExtendedMode), (byte)(0x80 | _contrast), (byte)ScreenTemperature.Coefficient0, (byte)(0x10 | _bias), (byte)FunctionSet.PowerOn, (byte)PcdDisplayControl.NormalMode };
+            Span<byte> toSend = new byte[] { (byte)(FunctionSet.PowerOn | FunctionSet.ExtendedMode), (byte)(0x80 | _contrast), (byte)ScreenTemperature.Coefficient0, (byte)(0x10 | _bias), (byte)FunctionSet.PowerOn, (byte)PcdDisplayControl.NormalMode };
             SpiWrite(false, toSend);
             Clear();
             Draw();
@@ -185,7 +185,7 @@ namespace Iot.Device
             {
                 _enabled = value;
                 byte enab = (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff);
-                SpanByte toSend = new byte[] { enab };
+                Span<byte> toSend = new byte[] { enab };
                 SpiWrite(false, toSend);
             }
         }
@@ -224,7 +224,7 @@ namespace Iot.Device
             set
             {
                 _bias = value < 8 ? value : throw new ArgumentOutOfRangeException();
-                SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)(0x10 | _bias) };
+                Span<byte> toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)(0x10 | _bias) };
                 SpiWrite(false, toSend);
             }
         }
@@ -238,7 +238,7 @@ namespace Iot.Device
             set
             {
                 _invd = value;
-                SpanByte toSend = _invd ? new byte[] { (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff), (byte)PcdDisplayControl.InverseVideoMode } : new byte[] { (byte)FunctionSet.PowerOn, (byte)PcdDisplayControl.NormalMode };
+                Span<byte> toSend = _invd ? new byte[] { (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff), (byte)PcdDisplayControl.InverseVideoMode } : new byte[] { (byte)FunctionSet.PowerOn, (byte)PcdDisplayControl.NormalMode };
                 SpiWrite(false, toSend);
             }
         }
@@ -253,7 +253,7 @@ namespace Iot.Device
             set
             {
                 _contrast = value >= 0 && value <= 127 ? value : throw new ArgumentOutOfRangeException();
-                SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)(0x80 | _contrast) };
+                Span<byte> toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)(0x80 | _contrast) };
                 SpiWrite(false, toSend);
             }
         }
@@ -266,7 +266,7 @@ namespace Iot.Device
             get => _temperature;
             set
             {
-                SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)value };
+                Span<byte> toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn | FunctionSet.ExtendedMode : FunctionSet.PowerOff | FunctionSet.ExtendedMode), (byte)value };
                 SpiWrite(false, toSend);
             }
         }
@@ -316,7 +316,7 @@ namespace Iot.Device
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="location"/> must be smaller than <see cref="NumberOfCustomCharactersSupported"/></exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="characterMap"/> must be either a 5-byte or an 8-byte array.</exception>
-        public void CreateCustomCharacter(int location, SpanByte characterMap)
+        public void CreateCustomCharacter(int location, Span<byte> characterMap)
         {
             if (location >= NumberOfCustomCharactersSupported)
             {
@@ -351,7 +351,7 @@ namespace Iot.Device
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern.</param>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
-            CreateCustomCharacter(location, new SpanByte(characterMap));
+            CreateCustomCharacter(location, new Span<byte>(characterMap));
         }
 
         #endregion
@@ -382,7 +382,7 @@ namespace Iot.Device
         /// </summary>
         /// <param name="byteMap">A 504 sized byte representing the full image.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="byteMap"/> length must be equal to <see cref="ScreenBufferByteSize"/></exception>
-        public void SetByteMap(SpanByte byteMap)
+        public void SetByteMap(Span<byte> byteMap)
         {
             if (byteMap.Length != ScreenBufferByteSize)
             {
@@ -424,7 +424,7 @@ namespace Iot.Device
         /// Used if character translation already took place.
         /// </summary>
         /// <param name="text">Text to print.</param>
-        public void Write(SpanChar text)
+        public void Write(Span<char> text)
         {
             for (var i = 0; i < text.Length; i++)
             {
@@ -457,7 +457,7 @@ namespace Iot.Device
 
         private void WriteChar(char c)
         {
-            SpanByte letter = new byte[CharacterWidth];
+            Span<byte> letter = new byte[CharacterWidth];
             bool isChar = _font.Contains(c);
             if (isChar)
             {
@@ -474,7 +474,7 @@ namespace Iot.Device
 
                 if (_position < _byteMap.Length)
                 {
-                    letter.CopyTo(new SpanByte(_byteMap, _position, _byteMap.Length - _position));
+                    letter.CopyTo(new Span<byte>(_byteMap, _position, _byteMap.Length - _position));
                 }
 
                 SpiWrite(true, letter);
@@ -495,7 +495,7 @@ namespace Iot.Device
 
                 if (_position < _byteMap.Length)
                 {
-                    letter.CopyTo(new SpanByte(_byteMap, _position, _byteMap.Length - _position));
+                    letter.CopyTo(new Span<byte>(_byteMap, _position, _byteMap.Length - _position));
                 }
 
                 SetPosition(_position);
@@ -525,7 +525,7 @@ namespace Iot.Device
                 return;
             }
 
-            SpanByte letter = new byte[CharacterWidth];
+            Span<byte> letter = new byte[CharacterWidth];
             for (int i = 0; i < CharacterWidth - 1; i++)
             {
                 _byteMap[_position + i] = (byte)((_byteMap[_position + i] & 0x80) == 0x80 ? _byteMap[_position + i] & 0x7F : _byteMap[_position + i] | 0x80);
@@ -564,7 +564,7 @@ namespace Iot.Device
 
         private void SetPosition(int left, int top)
         {
-            SpanByte toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff), (byte)((byte)SetAddress.XAddress | left), (byte)((byte)SetAddress.YAddress | top) };
+            Span<byte> toSend = new byte[] { (byte)(_enabled ? FunctionSet.PowerOn : FunctionSet.PowerOff), (byte)((byte)SetAddress.XAddress | left), (byte)((byte)SetAddress.YAddress | top) };
             SpiWrite(false, toSend);
         }
 
@@ -735,7 +735,7 @@ namespace Iot.Device
 
         #endregion
 
-        private void SpiWrite(bool isData, SpanByte toSend)
+        private void SpiWrite(bool isData, Span<byte> toSend)
         {
             _controller.Write(_dataCommandPin, isData ? PinValue.High : PinValue.Low);
             _spiDevice.Write(toSend);

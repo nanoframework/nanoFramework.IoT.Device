@@ -57,7 +57,7 @@ namespace Iot.Device.Ssd1351
         /// </summary>
         /// <param name="bm">The bitmap to be sent to the display controller note that only Pixel Format Format32bppArgb is supported.</param>
         /// <param name="sourceRect">A rectangle that defines where in the bitmap data is to be converted from.</param>
-        public SpanByte GetBitmapPixelData(Bitmap bm, Rectangle sourceRect)
+        public Span<byte> GetBitmapPixelData(Bitmap bm, Rectangle sourceRect)
         {
             BitmapData bmd;
             byte[] bitmapData; // array that takes the raw bytes of the bitmap
@@ -108,7 +108,7 @@ namespace Iot.Device.Ssd1351
         /// </summary>
         /// <param name="pixelData">The data to be sent to the display.</param>
         /// <param name="destinationRect">A rectangle that defines where in the display the data is to be written.</param>
-        public void SendBitmapPixelData(SpanByte pixelData, Rectangle destinationRect)
+        public void SendBitmapPixelData(Span<byte> pixelData, Rectangle destinationRect)
         {
             // specifiy a location for the rows and columns on the display where the data is to be written
             SetColumnAddress((byte)destinationRect.X, (byte)(destinationRect.Right - 1));

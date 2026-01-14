@@ -35,7 +35,7 @@ namespace Iot.Device.SocketCan
         /// <param name="data">Data to write (at most 8 bytes)</param>
         /// <param name="id">Recipient identifier</param>
         /// <remarks><paramref name="id"/> can be ignored by recipient - anyone connected to the bus can read or write any frames</remarks>
-        public void WriteFrame(SpanByte data, CanId id)
+        public void WriteFrame(Span<byte> data, CanId id)
         {
             if (!id.IsValid)
             {
@@ -54,7 +54,7 @@ namespace Iot.Device.SocketCan
 
             unsafe
             {
-                SpanByte frameData = new SpanByte(frame.Data, data.Length);
+                Span<byte> frameData = new Span<byte>(frame.Data, data.Length);
                 data.CopyTo(frameData);
 
                 byte* buff = (byte*)&frame;
@@ -69,7 +69,7 @@ namespace Iot.Device.SocketCan
         /// <param name="frameLength">Length of the data read</param>
         /// <param name="id">Recipient identifier</param>
         /// <returns></returns>
-        public bool TryReadFrame(SpanByte data, out int frameLength, out CanId id)
+        public bool TryReadFrame(Span<byte> data, out int frameLength, out CanId id)
         {
             if (data.Length < CanFrame.MaxLength)
             {
@@ -110,7 +110,7 @@ namespace Iot.Device.SocketCan
                 // - we still need to read the remaining bytes to read the full frame
                 // Considering there are at most 8 bytes to read it is cheaper
                 // to copy rather than doing multiple syscalls.
-                SpanByte frameData = new SpanByte(frame.Data, frame.Length);
+                Span<byte> frameData = new Span<byte>(frame.Data, frame.Length);
                 frameData.CopyTo(data);
             }
 

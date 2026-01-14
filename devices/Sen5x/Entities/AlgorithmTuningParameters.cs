@@ -12,7 +12,7 @@ namespace Iot.Device.Sen5x.Entities
     {
         internal override int ByteCount => 18;
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(Span<byte> data)
         {
             IndexOffset = BinaryPrimitives.ReadInt16BigEndian(data);
             LearningTimeOffset = TimeSpan.FromHours(BinaryPrimitives.ReadInt16BigEndian(data.Slice(3)));
@@ -22,7 +22,7 @@ namespace Iot.Device.Sen5x.Entities
             GainFactor = BinaryPrimitives.ReadInt16BigEndian(data.Slice(15));
         }
 
-        internal override void ToSpanByte(SpanByte data)
+        internal override void ToSpanByte(Span<byte> data)
         {
             BinaryPrimitives.WriteInt16BigEndian(data, IndexOffset);
             BinaryPrimitives.WriteInt16BigEndian(data.Slice(3), (short)LearningTimeOffset.TotalHours);

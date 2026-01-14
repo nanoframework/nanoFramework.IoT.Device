@@ -494,7 +494,7 @@ namespace Iot.Device.Yx5300
         }
 
         // Low level code
-        private ushort CalcCheckSum(SpanByte data, int len)
+        private ushort CalcCheckSum(Span<byte> data, int len)
         {
             ushort sum = 0;
 
@@ -512,7 +512,7 @@ namespace Iot.Device.Yx5300
             msg[5] = dataHi;
             msg[6] = dataLo;
 
-            var data = new SpanByte(msg, 1, msg.Length - 1);
+            var data = new Span<byte>(msg, 1, msg.Length - 1);
             ushort chk = CalcCheckSum(data, msg[2]);
 
             msg[7] = (byte)(chk >> 8);
@@ -540,7 +540,7 @@ namespace Iot.Device.Yx5300
         {
             _waitResponse = false;    // definitely no longer waiting
 
-            SpanByte data = new SpanByte(_bufRx, 1, _bufRx.Length - 1);
+            Span<byte> data = new Span<byte>(_bufRx, 1, _bufRx.Length - 1);
             ushort chk = CalcCheckSum(data, _bufRx[2]);
             ushort chkRcv = (ushort)((_bufRx[7] << 8) + _bufRx[8]);
 

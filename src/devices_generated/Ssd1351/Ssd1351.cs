@@ -107,8 +107,8 @@ namespace Iot.Device.Ssd1351
         /// <param name="h">The height of the rectangle in pixels (1..127 for the Ssd1351).</param>
         public void FillRect(Color color, byte x, byte y, byte w, byte h)
         {
-            SpanByte colourBytes = new byte[_colorDepth == ColorDepth.ColourDepth65K ? 2 : 3]; // create a short span that holds the colour data to be sent to the display
-            SpanByte displayBytes = new byte[w * h * (_colorDepth == ColorDepth.ColourDepth65K ? 2 : 3)]; // span used to form the data to be written out to the SPI interface
+            Span<byte> colourBytes = new byte[_colorDepth == ColorDepth.ColourDepth65K ? 2 : 3]; // create a short span that holds the colour data to be sent to the display
+            Span<byte> displayBytes = new byte[w * h * (_colorDepth == ColorDepth.ColourDepth65K ? 2 : 3)]; // span used to form the data to be written out to the SPI interface
 
             // set the colourbyte array to represent the fill colour
             if (_colorDepth == ColorDepth.ColourDepth65K)
@@ -191,7 +191,7 @@ namespace Iot.Device.Ssd1351
         /// <param name="commandParameters">parameteters for the command to be sent</param>
         private void SendCommand(Ssd1351Command command, params byte[] commandParameters)
         {
-            SpanByte paramSpan = new byte[commandParameters.Length];
+            Span<byte> paramSpan = new byte[commandParameters.Length];
             for (int i = 0; i < commandParameters.Length; paramSpan[i] = commandParameters[i], i++)
             {
             }
@@ -204,9 +204,9 @@ namespace Iot.Device.Ssd1351
         /// </summary>
         /// <param name="command">Command to send.</param>
         /// <param name="data">Span to send as parameters for the command.</param>
-        private void SendCommand(Ssd1351Command command, SpanByte data)
+        private void SendCommand(Ssd1351Command command, Span<byte> data)
         {
-            SpanByte commandSpan = new byte[]
+            Span<byte> commandSpan = new byte[]
             {
                 (byte)command
             };
@@ -234,7 +234,7 @@ namespace Iot.Device.Ssd1351
         /// Send data to the display controller.
         /// </summary>
         /// <param name="data">The data to send to the display controller.</param>
-        public void SendData(SpanByte data)
+        public void SendData(Span<byte> data)
         {
             if (data == null)
             {
@@ -242,7 +242,7 @@ namespace Iot.Device.Ssd1351
             }
 
             // create a buffer to contain the data plus pseudo command to indicate data.
-            SpanByte buffer = new byte[data.Length + 1];
+            Span<byte> buffer = new byte[data.Length + 1];
 
             buffer[0] = 0x40; // Control byte indicating that the following bytes are data and not command parameters.
             data.CopyTo(buffer.Slice(1));
@@ -254,7 +254,7 @@ namespace Iot.Device.Ssd1351
         /// </summary>
         /// <param name="data">The data to be sent to the SPI device</param>
         /// <param name="blnIsCommand">A flag indicating that the data is really a command when true or data when false.</param>
-        private void SendSPI(SpanByte data, bool blnIsCommand = false)
+        private void SendSPI(Span<byte> data, bool blnIsCommand = false)
         {
             int index = 0;
             int len;

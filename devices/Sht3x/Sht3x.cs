@@ -125,11 +125,11 @@ namespace Iot.Device.Sht3x
         /// </summary>
         private void ReadTempAndHumidity()
         {
-            SpanByte writeBuff = new byte[]
+            Span<byte> writeBuff = new byte[]
             {
                 (byte)Register.SHT_MEAS, (byte)Resolution
             };
-            SpanByte readBuff = new byte[6];
+            Span<byte> readBuff = new byte[6];
 
             _i2cDevice.Write(writeBuff);
 
@@ -160,7 +160,7 @@ namespace Iot.Device.Sht3x
         /// <param name="data">Raw Data.</param>
         /// <param name="crc8">Raw CRC8.</param>
         /// <returns>Checksum is true or false.</returns>
-        private bool CheckCrc8(SpanByte data, byte crc8)
+        private bool CheckCrc8(Span<byte> data, byte crc8)
         {
             // Details in the Datasheet P13
             byte crc = CrcInit;
@@ -189,7 +189,7 @@ namespace Iot.Device.Sht3x
             byte msb = (byte)((short)register >> 8);
             byte lsb = (byte)((short)register & 0xFF);
 
-            SpanByte writeBuff = new byte[]
+            Span<byte> writeBuff = new byte[]
             {
                 msb, lsb
             };

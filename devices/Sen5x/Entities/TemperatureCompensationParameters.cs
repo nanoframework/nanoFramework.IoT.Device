@@ -13,14 +13,14 @@ namespace Iot.Device.Sen5x.Entities
     {
         internal override int ByteCount => 9;
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(Span<byte> data)
         {
             TemperatureOffset = Temperature.FromDegreesCelsius(BinaryPrimitives.ReadInt16BigEndian(data) / 200.0);
             NormalizedTemperatureOffsetSlope = BinaryPrimitives.ReadInt16BigEndian(data.Slice(3)) / 10000.0;
             TimeConstant = TimeSpan.FromSeconds(BinaryPrimitives.ReadUInt16BigEndian(data.Slice(6)));
         }
 
-        internal override void ToSpanByte(SpanByte data)
+        internal override void ToSpanByte(Span<byte> data)
         {
             BinaryPrimitives.WriteInt16BigEndian(data, (short)(TemperatureOffset.DegreesCelsius * 200.0));
             BinaryPrimitives.WriteInt16BigEndian(data.Slice(3), (short)(NormalizedTemperatureOffsetSlope * 10000.0));

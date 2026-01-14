@@ -167,7 +167,7 @@ namespace Iot.Device.Mcp9808
         internal ushort Read16(Register8 reg)
         {
             _i2cDevice.WriteByte((byte)reg);
-            SpanByte buf = new byte[2];
+            Span<byte> buf = new byte[2];
             _i2cDevice.Read(buf);
 
             return (ushort)(buf[0] << 8 | buf[1]);

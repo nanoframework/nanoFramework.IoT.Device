@@ -95,7 +95,7 @@ namespace Iot.Device.Si7021
             SerialNumber = new byte[SerialNumberLenght];
 
             // setup reading of 1st byte
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Command.SI_READ_Electronic_ID_1_1, (byte)Command.SI_READ_Electronic_ID_1_2
             };
@@ -103,7 +103,7 @@ namespace Iot.Device.Si7021
             _i2cDevice.Write(writeBuff);
 
             // read 1st half and store in the initial half of the array
-            _ = _i2cDevice.Read(new SpanByte(SerialNumber, 0, 4));
+            _ = _i2cDevice.Read(new Span<byte>(SerialNumber, 0, 4));
 
             writeBuff = new byte[2]
             {
@@ -113,7 +113,7 @@ namespace Iot.Device.Si7021
             _i2cDevice.Write(writeBuff);
 
             // read 2nd half and store in the respective half of the array
-            _ = _i2cDevice.Read(new SpanByte(SerialNumber, 3, 4));
+            _ = _i2cDevice.Read(new Span<byte>(SerialNumber, 3, 4));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Iot.Device.Si7021
         /// <returns>Temperature [°C].</returns>
         private double GetTemperature()
         {
-            SpanByte readbuff = new byte[2];
+            Span<byte> readbuff = new byte[2];
 
             // Send temperature command, read back two bytes
             _ = _i2cDevice.WriteByte((byte)Command.SI_TEMP);
@@ -145,7 +145,7 @@ namespace Iot.Device.Si7021
         /// <returns>Relative Humidity (%).</returns>
         private RelativeHumidity GetHumidity()
         {
-            SpanByte readbuff = new byte[2];
+            Span<byte> readbuff = new byte[2];
 
             // Send humidity read command, read back two bytes
             _ = _i2cDevice.WriteByte((byte)Command.SI_HUMI);
@@ -168,7 +168,7 @@ namespace Iot.Device.Si7021
         /// <returns>The FirmwareRevision.</returns>
         private Version GetRevision()
         {
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Command.SI_REVISION_MSB, (byte)Command.SI_REVISION_LSB
             };
@@ -202,7 +202,7 @@ namespace Iot.Device.Si7021
             // Details in the Datasheet P25
             reg1 = (byte)(reg1 | ((byte)resolution & 0b01) | (((byte)resolution & 0b10) >> 1 << 7));
 
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Command.SI_USER_REG1_WRITE, reg1
             };
@@ -241,7 +241,7 @@ namespace Iot.Device.Si7021
                 reg1 &= 0b1111_1011;
             }
 
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Command.SI_USER_REG1_WRITE, reg1
             };

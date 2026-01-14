@@ -119,7 +119,7 @@ namespace Iot.Device.Pn5180
         /// <returns>A tuple with the Product, Firmware and EEPROM versions</returns>
         public TripletVersion GetVersions()
         {
-            SpanByte versionAnswer = new byte[6];
+            Span<byte> versionAnswer = new byte[6];
 
             var ret = ReadEeprom(EepromAddress.ProductVersion, versionAnswer);
             if (!ret)
@@ -138,7 +138,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="outputIdentifier">A 16 byte buffer</param>
         /// <returns>True if success</returns>
-        public bool GetIdentifier(SpanByte outputIdentifier)
+        public bool GetIdentifier(Span<byte> outputIdentifier)
         {
             if (outputIdentifier.Length != 16)
             {
@@ -153,7 +153,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="eeprom">At 255 bytes buffer</param>
         /// <returns>True if success</returns>
-        public bool ReadAllEeprom(SpanByte eeprom)
+        public bool ReadAllEeprom(Span<byte> eeprom)
         {
             if (eeprom.Length != 255)
             {
@@ -168,7 +168,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="eeprom">A 255 bytes buffer</param>
         /// <returns>True if success</returns>
-        public bool WriteAllEeprom(SpanByte eeprom)
+        public bool WriteAllEeprom(Span<byte> eeprom)
         {
             if (eeprom.Length != 255)
             {
@@ -184,14 +184,14 @@ namespace Iot.Device.Pn5180
         /// <param name="address">The EEPROM address</param>
         /// <param name="eeprom">A span of byte to read the EEPROM</param>
         /// <returns>True if success</returns>
-        public bool ReadEeprom(EepromAddress address, SpanByte eeprom)
+        public bool ReadEeprom(EepromAddress address, Span<byte> eeprom)
         {
             if ((byte)address + eeprom.Length > 255)
             {
                 throw new ArgumentException(nameof(eeprom), "Size of EEPROM is 255 bytes. Value must 255 bytes or less.");
             }
 
-            SpanByte dumpEeprom = new byte[3];
+            Span<byte> dumpEeprom = new byte[3];
             dumpEeprom[0] = (byte)Command.READ_EEPROM;
             dumpEeprom[1] = (byte)address;
             dumpEeprom[2] = (byte)eeprom.Length;
@@ -222,14 +222,14 @@ namespace Iot.Device.Pn5180
         /// <param name="address">The EEPROM address</param>
         /// <param name="eeprom">A span of byte to write the EEPROM</param>
         /// <returns>True if success</returns>
-        public bool WriteEeprom(EepromAddress address, SpanByte eeprom)
+        public bool WriteEeprom(EepromAddress address, Span<byte> eeprom)
         {
             if ((byte)address + eeprom.Length > 255)
             {
                 throw new ArgumentException(nameof(eeprom), "Size of EEPROM is 255 bytes. Value must 255 bytes or less.");
             }
 
-            SpanByte dumpEeprom = new byte[2 + eeprom.Length];
+            Span<byte> dumpEeprom = new byte[2 + eeprom.Length];
             bool ret;
             dumpEeprom[0] = (byte)Command.WRITE_EEPROM;
             dumpEeprom[1] = (byte)address;
@@ -245,7 +245,7 @@ namespace Iot.Device.Pn5180
                 _logger.LogDebug($"{nameof(WriteEeprom)}, {nameof(dumpEeprom)}: {BitConverter.ToString(dumpEeprom.ToArray())}");
 #endif
 
-                SpanByte irqStatus = new byte[4];
+                Span<byte> irqStatus = new byte[4];
                 ret = GetIrqStatus(irqStatus);
                 ret &= !((irqStatus[2] & 0b0000_0010) == 0b0000_0010);
                 // Clear IRQ
@@ -276,7 +276,7 @@ namespace Iot.Device.Pn5180
         /// <remarks>Using this function you'll have to manage yourself the possible low level communication protocol.
         /// This function write directly to the card all the bytes. Please make sure you'll first load specific radio frequence settings,
         /// detect a card, select it and then send data</remarks>
-        public bool SendDataToCard(SpanByte toSend, int numberValidBitsLastByte = 8)
+        public bool SendDataToCard(Span<byte> toSend, int numberValidBitsLastByte = 8)
         {
             if (toSend.Length > 260)
             {
@@ -288,7 +288,7 @@ namespace Iot.Device.Pn5180
                 throw new ArgumentException(nameof(numberValidBitsLastByte), "Number of valid bits in last byte can only be between 1 and 8");
             }
 
-            SpanByte sendData = new byte[2 + toSend.Length];
+            Span<byte> sendData = new byte[2 + toSend.Length];
             sendData[0] = (byte)Command.SEND_DATA;
             sendData[1] = (byte)(numberValidBitsLastByte == 8 ? 0 : numberValidBitsLastByte);
             toSend.CopyTo(sendData.Slice(2));
@@ -319,14 +319,14 @@ namespace Iot.Device.Pn5180
         /// <remarks>Using this function you'll have to manage yourself the possible low level communication protocol.
         /// This function write directly to the card all the bytes. Please make sure you'll first load specific radio frequence settings,
         /// detect a card, select it and then send data</remarks>
-        public bool ReadDataFromCard(SpanByte toRead)
+        public bool ReadDataFromCard(Span<byte> toRead)
         {
             if (toRead.Length > 508)
             {
                 throw new ArgumentException(nameof(toRead), "Data to read can't be larger than 508 bytes");
             }
 
-            SpanByte sendData = new byte[2];
+            Span<byte> sendData = new byte[2];
             sendData[0] = (byte)Command.READ_DATA;
             sendData[1] = 0x00;
 #if DEBUG
@@ -360,7 +360,7 @@ namespace Iot.Device.Pn5180
         /// <remarks>Using this function you'll have to manage yourself the possible low level communication protocol.
         /// This function write directly to the card all the bytes. Please make sure you'll first load specific radio frequence settings,
         /// detect a card, select it and then send data</remarks>
-        private bool ReadDataFromCard(SpanByte toRead, int expectedToRead)
+        private bool ReadDataFromCard(Span<byte> toRead, int expectedToRead)
         {
             var ret = GetNumberOfBytesReceivedAndValidBits();
             int numBytes = ret.Bytes;
@@ -394,7 +394,7 @@ namespace Iot.Device.Pn5180
         /// <remarks>Using this function you'll have to manage yourself the possible low level communication protocol.
         /// This function write directly to the card all the bytes. Please make sure you'll first load specific radio frequence settings,
         /// detect a card, select it and then send data</remarks>
-        public bool ReadDataFromCard(SpanByte toRead, out int bytesRead)
+        public bool ReadDataFromCard(Span<byte> toRead, out int bytesRead)
         {
 #if DEBUG
             _logger.LogDebug($"{nameof(ReadDataFromCard)}: ");
@@ -427,7 +427,7 @@ namespace Iot.Device.Pn5180
         {
             try
             {
-                SpanByte status = new byte[4];
+                Span<byte> status = new byte[4];
                 SpiReadRegister(Register.RX_STATUS, status);
                 // from NXP documentation PN5180AXX-C3.pdf, Page 98
                 return new Doublet((status[0] + ((status[1] & 0x01) << 8)), (status[1] & 0b1110_0000) >> 5);
@@ -442,7 +442,7 @@ namespace Iot.Device.Pn5180
         }
 
         /// <inheritdoc/>
-        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, Span<byte> dataToSend, Span<byte> dataFromCard)
         {
             // Check if we have a Mifare Card authentication request
             // Only valid for Type A card so with a target number equal to 0
@@ -491,7 +491,7 @@ namespace Iot.Device.Pn5180
             }
         }
 
-        private int TransceiveClassic(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
+        private int TransceiveClassic(byte targetNumber, Span<byte> dataToSend, Span<byte> dataFromCard)
         {
             // type B card have a tag number which is always more than 1
             if (targetNumber == 0)
@@ -519,8 +519,8 @@ namespace Iot.Device.Pn5180
                     throw new ArgumentException(nameof(targetNumber), $"Device with target number {targetNumber} is not part of the list of selected devices. Card may have been removed.");
                 }
 
-                SpanByte toSend = new byte[dataToSend.Length + 2];
-                SpanByte toReceive = new byte[dataFromCard.Length + 2];
+                Span<byte> toSend = new byte[dataToSend.Length + 2];
+                Span<byte> toReceive = new byte[dataFromCard.Length + 2];
                 int maxTries = 0;
                 int maxTriesTimeout = 0;
 
@@ -541,7 +541,7 @@ namespace Iot.Device.Pn5180
                 if (numBytes == 0)
                 {
                     // That means timeout so sending an non acknowledged
-                    SpanByte rBlock = new byte[2] { (byte)(0b1010_1010 | (card.LastBlockMark ? 1 : 0)), targetNumber };
+                    Span<byte> rBlock = new byte[2] { (byte)(0b1010_1010 | (card.LastBlockMark ? 1 : 0)), targetNumber };
                     var ret = SendDataToCard(rBlock);
                     if (!ret)
                     {
@@ -586,7 +586,7 @@ namespace Iot.Device.Pn5180
                         toReceive.Slice(2, numBytes - 2).CopyTo(dataFromCard);
                         // Send Ack with the right mark
                         card.LastBlockMark = !card.LastBlockMark;
-                        SpanByte rBlockChain = new byte[2] { (byte)(0b1010_1010 | (card.LastBlockMark ? 1 : 0)), targetNumber };
+                        Span<byte> rBlockChain = new byte[2] { (byte)(0b1010_1010 | (card.LastBlockMark ? 1 : 0)), targetNumber };
                         var numBytes2 = TransceiveTypeB(card, rBlockChain, toReceive);
 
                         if (numBytes2 >= 2)
@@ -612,7 +612,7 @@ namespace Iot.Device.Pn5180
                     if (toReceive[0] == 0b1111_1010)
                     {
                         // Agree and send the same
-                        SpanByte sBlock = new byte[] { 0b1111_1010, card.Card.TargetNumber, toReceive[2] };
+                        Span<byte> sBlock = new byte[] { 0b1111_1010, card.Card.TargetNumber, toReceive[2] };
                         var ret = SendDataToCard(sBlock);
                         if (maxTries++ == MaxTries)
                         {
@@ -628,7 +628,7 @@ namespace Iot.Device.Pn5180
             }
         }
 
-        private int TransceiveTypeB(SelectedPiccInformation card, SpanByte dataToSend, SpanByte dataFromCard)
+        private int TransceiveTypeB(SelectedPiccInformation card, Span<byte> dataToSend, Span<byte> dataFromCard)
         {
             var ret = SendDataToCard(dataToSend.ToArray());
             if (!ret)
@@ -639,7 +639,7 @@ namespace Iot.Device.Pn5180
             return ReadWithTimeout(dataFromCard, (int)(card.Card.FrameWaitingTime / 1000));
         }
 
-        private int ReadWithTimeout(SpanByte dataFromCard, int timeoutMilliseconds)
+        private int ReadWithTimeout(Span<byte> dataFromCard, int timeoutMilliseconds)
         {
             int numBytes = 0;
             int numBytesPrevious = 0;
@@ -683,7 +683,7 @@ namespace Iot.Device.Pn5180
             return numBytes;
         }
 
-        private int TransceiveBuffer(SpanByte dataToSend, SpanByte dataFromCard)
+        private int TransceiveBuffer(Span<byte> dataToSend, Span<byte> dataFromCard)
         {
             var ret = SendDataToCard(dataToSend.ToArray());
             if (!ret)
@@ -702,7 +702,7 @@ namespace Iot.Device.Pn5180
                 throw new ArgumentException(nameof(blockNumber), "Value can be only 0 or 1.");
             }
 
-            SpanByte rBlock = new byte[2] { (byte)(0b1010_1010 | (byte)ack | blockNumber), targetNumber };
+            Span<byte> rBlock = new byte[2] { (byte)(0b1010_1010 | (byte)ack | blockNumber), targetNumber };
             var ret = SendDataToCard(rBlock);
             var num = GetNumberOfBytesReceivedAndValidBits();
             int numBytes = num.Bytes;
@@ -727,7 +727,7 @@ namespace Iot.Device.Pn5180
         /// <param name="blockAddress">The block address to authenticate</param>
         /// <param name="cardUid">The 4 bytes UUID of the card</param>
         /// <returns>True if success</returns>
-        public bool MifareAuthenticate(SpanByte key, MifareCardCommand mifareCommand, byte blockAddress, SpanByte cardUid)
+        public bool MifareAuthenticate(Span<byte> key, MifareCardCommand mifareCommand, byte blockAddress, Span<byte> cardUid)
         {
 #if DEBUG
             _logger.LogDebug($"{nameof(MifareAuthenticate)}: ");
@@ -747,8 +747,8 @@ namespace Iot.Device.Pn5180
                 throw new ArgumentException(nameof(mifareCommand), $"{nameof(MifareCardCommand.AuthenticationA)} and {nameof(MifareCardCommand.AuthenticationB)} are the only supported commands");
             }
 
-            SpanByte toAuthenticate = new byte[13];
-            SpanByte response = new byte[1];
+            Span<byte> toAuthenticate = new byte[13];
+            Span<byte> response = new byte[1];
             toAuthenticate[0] = (byte)Command.MIFARE_AUTHENTICATE;
             key.CopyTo(toAuthenticate.Slice(1));
             // Page 32 documentation PN5180A0XX-C3
@@ -790,7 +790,7 @@ namespace Iot.Device.Pn5180
         /// <returns>True if success</returns>
         public bool LoadRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration transmitter, ReceiverRadioFrequencyConfiguration receiver)
         {
-            SpanByte rfConfig = new byte[3];
+            Span<byte> rfConfig = new byte[3];
             rfConfig[0] = (byte)Command.LOAD_RF_CONFIG;
             rfConfig[1] = (byte)transmitter;
             rfConfig[2] = (byte)receiver;
@@ -823,8 +823,8 @@ namespace Iot.Device.Pn5180
 
         private int GetRadioFrequencyConfigSize(byte config)
         {
-            SpanByte rfConfig = new byte[2];
-            SpanByte response = new byte[1];
+            Span<byte> rfConfig = new byte[2];
+            Span<byte> response = new byte[1];
             rfConfig[0] = (byte)Command.RETRIEVE_RF_CONFIG_SIZE;
             rfConfig[1] = config;
 
@@ -846,7 +846,7 @@ namespace Iot.Device.Pn5180
         /// <param name="transmitter">The transmitter configuration</param>
         /// <param name="configuration">A span of bytes for the configuration. Should be a multiple of 5 with the size of <see ref="GetRadioFrequenceConfigSize"/></param>
         /// <returns>True if success</returns>
-        public bool RetrieveRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration transmitter, SpanByte configuration) => RetrieveRadioFrequencyConfiguration((byte)transmitter, configuration);
+        public bool RetrieveRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration transmitter, Span<byte> configuration) => RetrieveRadioFrequencyConfiguration((byte)transmitter, configuration);
 
         /// <summary>
         /// Retrieve the radio frequency configuration
@@ -854,9 +854,9 @@ namespace Iot.Device.Pn5180
         /// <param name="receiver">The receiver configuration</param>
         /// <param name="configuration">A span of bytes for the configuration. Should be a multiple of 5 with the size of <see ref="GetRadioFrequenceConfigSize"/></param>
         /// <returns>True if success</returns>
-        public bool RetrieveRadioFrequencyConfiguration(ReceiverRadioFrequencyConfiguration receiver, SpanByte configuration) => RetrieveRadioFrequencyConfiguration((byte)receiver, configuration);
+        public bool RetrieveRadioFrequencyConfiguration(ReceiverRadioFrequencyConfiguration receiver, Span<byte> configuration) => RetrieveRadioFrequencyConfiguration((byte)receiver, configuration);
 
-        private bool RetrieveRadioFrequencyConfiguration(byte config, SpanByte configuration)
+        private bool RetrieveRadioFrequencyConfiguration(byte config, Span<byte> configuration)
         {
             // Page 41 documentation PN5180A0XX-C3.pdf
             if ((configuration.Length > 195) || (configuration.Length % 5 != 0) || (configuration.Length == 0))
@@ -864,7 +864,7 @@ namespace Iot.Device.Pn5180
                 throw new ArgumentException(nameof(configuration), "Value must be a positive multiple of 5 and no larger than 195 bytes.");
             }
 
-            SpanByte rfConfig = new byte[2];
+            Span<byte> rfConfig = new byte[2];
             rfConfig[0] = (byte)Command.RETRIEVE_RF_CONFIG;
             rfConfig[1] = (byte)config;
 
@@ -886,7 +886,7 @@ namespace Iot.Device.Pn5180
         /// <param name="transmitter">The transmitter configuration</param>
         /// <param name="configuration">A span of bytes for the configuration. Should be a multiple of 5 with the size of <see ref="GetRadioFrequenceConfigSize"/></param>
         /// <returns>True if success</returns>
-        public bool UpdateRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration transmitter, SpanByte configuration) => UpdateRadioFrequenceConfiguration((byte)transmitter, configuration);
+        public bool UpdateRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration transmitter, Span<byte> configuration) => UpdateRadioFrequenceConfiguration((byte)transmitter, configuration);
 
         /// <summary>
         /// Update the radio frequency configuration
@@ -894,9 +894,9 @@ namespace Iot.Device.Pn5180
         /// <param name="receiver">The receiver configuration</param>
         /// <param name="configuration">A span of bytes for the configuration. Should be a multiple of 5 with the size of <see ref="GetRadioFrequenceConfigSize"/></param>
         /// <returns>True if success</returns>
-        public bool UpdateRadioFrequencyConfiguration(ReceiverRadioFrequencyConfiguration receiver, SpanByte configuration) => UpdateRadioFrequenceConfiguration((byte)receiver, configuration);
+        public bool UpdateRadioFrequencyConfiguration(ReceiverRadioFrequencyConfiguration receiver, Span<byte> configuration) => UpdateRadioFrequenceConfiguration((byte)receiver, configuration);
 
-        private bool UpdateRadioFrequenceConfiguration(byte config, SpanByte configuration)
+        private bool UpdateRadioFrequenceConfiguration(byte config, Span<byte> configuration)
         {
             // Page 41 documentation PN5180A0XX-C3.pdf
             if ((configuration.Length > 252) || (configuration.Length % 6 != 0) || (configuration.Length == 0))
@@ -904,7 +904,7 @@ namespace Iot.Device.Pn5180
                 throw new ArgumentException(nameof(configuration), "Value must be a positive multiple of 6 and no larger than 252 bytes.");
             }
 
-            SpanByte rfConfig = new byte[1 + configuration.Length];
+            Span<byte> rfConfig = new byte[1 + configuration.Length];
             rfConfig[0] = (byte)Command.UPDATE_RF_CONFIG;
             configuration.CopyTo(rfConfig.Slice(1));
 
@@ -933,7 +933,7 @@ namespace Iot.Device.Pn5180
         {
             get
             {
-                SpanByte status = new byte[4];
+                Span<byte> status = new byte[4];
                 try
                 {
                     SpiReadRegister(Register.RF_STATUS, status);
@@ -957,7 +957,7 @@ namespace Iot.Device.Pn5180
         /// <returns>The radio frequence status</returns>
         public RadioFrequencyStatus GetRadioFrequencyStatus()
         {
-            SpanByte status = new byte[4];
+            Span<byte> status = new byte[4];
             try
             {
                 SpiReadRegister(Register.RF_STATUS, status);
@@ -976,7 +976,7 @@ namespace Iot.Device.Pn5180
         /// <returns>True if active, false if not</returns>
         public bool IsRadioFrequencyFieldExternal()
         {
-            SpanByte status = new byte[4];
+            Span<byte> status = new byte[4];
             try
             {
                 SpiReadRegister(Register.RF_STATUS, status);
@@ -991,7 +991,7 @@ namespace Iot.Device.Pn5180
 
         private bool SetRadioFrequency(bool fieldOn)
         {
-            SpanByte rfConfig = new byte[2];
+            Span<byte> rfConfig = new byte[2];
             rfConfig[0] = (byte)(fieldOn ? Command.RF_ON : Command.RF_OFF);
             rfConfig[1] = (byte)RadioFrequencyCollision;
             try
@@ -1034,12 +1034,12 @@ namespace Iot.Device.Pn5180
             // Switch on the radio frequence field
             ret &= SetRadioFrequency(true);
 
-            SpanByte atqa = new byte[2];
-            SpanByte irqStatus = new byte[4];
-            SpanByte uidSak = new byte[7];
-            SpanByte uid = new byte[10];
-            SpanByte sak = new byte[1];
-            SpanByte sakInterm = new byte[5];
+            Span<byte> atqa = new byte[2];
+            Span<byte> irqStatus = new byte[4];
+            Span<byte> uidSak = new byte[7];
+            Span<byte> uid = new byte[10];
+            Span<byte> sak = new byte[1];
+            Span<byte> sakInterm = new byte[5];
             int numBytes;
             Doublet num;
 
@@ -1197,7 +1197,7 @@ namespace Iot.Device.Pn5180
             byte targetNumber = 0;
             // rNak is defined outside the loop due to:
             // error CA2014: Potential stack overflow. Move the new out of the loop.
-            SpanByte rNak = new byte[2];
+            Span<byte> rNak = new byte[2];
 
             foreach (SelectedPiccInformation potentialActive in _activeSelected)
             {
@@ -1268,14 +1268,14 @@ namespace Iot.Device.Pn5180
             // Prefix anticollision 0x05, AFI (Application Family Identifier) to 0x00 to get all type of cards
             // The parameter 0x08 to have 1 slot
             // then CRC, normal value for this buffer are already in it
-            SpanByte wupb = new byte[3]
+            Span<byte> wupb = new byte[3]
             {
                 0x05,
                 0x00,
                 0x08
             };
             // Will get the ATQB answer
-            SpanByte atqb = new byte[12];
+            Span<byte> atqb = new byte[12];
             // For this part, activate CRC
             CrcReceptionTransfer = true;
             int numBytes;
@@ -1347,12 +1347,12 @@ namespace Iot.Device.Pn5180
         private bool SelectCardTypeB(Data106kbpsTypeB card)
         {
             // Now we need to select the card
-            SpanByte attrib = new byte[9];
-            SpanByte attribResponse = new byte[1];
+            Span<byte> attrib = new byte[9];
+            Span<byte> attribResponse = new byte[1];
             // The command for attrib is 0x1D
             attrib[0] = 0x1D;
             // then the 4 uid needs to be copied
-            new SpanByte(card.NfcId).CopyTo(attrib.Slice(1));
+            new Span<byte>(card.NfcId).CopyTo(attrib.Slice(1));
             // We have then 4 params
             // Param 1
             attrib[5] = 0;
@@ -1387,7 +1387,7 @@ namespace Iot.Device.Pn5180
         public bool DeselectCardTypeB(Data106kbpsTypeB card)
         {
             // Sblock to deselect is 0b1100_1010 according to ISO 14443-4
-            SpanByte sBlock = new byte[2] { 0b1100_1010, card.TargetNumber };
+            Span<byte> sBlock = new byte[2] { 0b1100_1010, card.TargetNumber };
             var ret = SendDataToCard(sBlock);
             var num = GetNumberOfBytesReceivedAndValidBits();
             int numBytes = num.Bytes;
@@ -1409,7 +1409,7 @@ namespace Iot.Device.Pn5180
         {
             get
             {
-                SpanByte config = new byte[4];
+                Span<byte> config = new byte[4];
                 bool crc = true;
                 SpiReadRegister(Register.CRC_RX_CONFIG, config);
                 crc &= ((config[0] & 0x01) == 0x01);
@@ -1437,7 +1437,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="buffer">The buffer to process</param>
         /// <param name="crc">The CRC, Must be a 2 bytes buffer</param>
-        public void CalculateCrcB(SpanByte buffer, SpanByte crc)
+        public void CalculateCrcB(Span<byte> buffer, Span<byte> crc)
         {
             if (crc.Length != 2)
             {
@@ -1455,7 +1455,7 @@ namespace Iot.Device.Pn5180
         /// </summary>
         /// <param name="buffer">The buffer to process</param>
         /// <param name="crc">The CRC, Must be a 2 bytes buffer</param>
-        public void CalculateCrcA(SpanByte buffer, SpanByte crc)
+        public void CalculateCrcA(Span<byte> buffer, Span<byte> crc)
         {
             if (crc.Length != 2)
             {
@@ -1467,7 +1467,7 @@ namespace Iot.Device.Pn5180
             crc[1] = (byte)(crcRet >> 8);
         }
 
-        private ushort CalculateCrc(SpanByte buffer, ushort crcB)
+        private ushort CalculateCrc(Span<byte> buffer, ushort crcB)
         {
             // Page 42 of ISO14443-3.pdf
             for (int i = 0; i < buffer.Length; i++)
@@ -1481,7 +1481,7 @@ namespace Iot.Device.Pn5180
             return crcB;
         }
 
-        private bool GetRxStatus(SpanByte rxStatus)
+        private bool GetRxStatus(Span<byte> rxStatus)
         {
 #if DEBUG
             _logger.LogDebug($"{nameof(GetRxStatus)}");
@@ -1509,7 +1509,7 @@ namespace Iot.Device.Pn5180
             return true;
         }
 
-        private bool GetIrqStatus(SpanByte irqStatus)
+        private bool GetIrqStatus(Span<byte> irqStatus)
         {
 #if DEBUG
             _logger.LogDebug($"{nameof(GetIrqStatus)}");
@@ -1541,23 +1541,23 @@ namespace Iot.Device.Pn5180
 
 #region SPI primitives
 
-        private void SpiWriteRegister(Command command, Register register, SpanByte data)
+        private void SpiWriteRegister(Command command, Register register, Span<byte> data)
         {
             if (data.Length != 4)
             {
                 throw new ArgumentException(nameof(data), "Value must be 4 bytes.");
             }
 
-            SpanByte toSend = new byte[2 + data.Length];
+            Span<byte> toSend = new byte[2 + data.Length];
             toSend[0] = (byte)command;
             toSend[1] = (byte)register;
             data.CopyTo(toSend.Slice(2));
             SpiWrite(toSend);
         }
 
-        private void SpiReadRegister(Register register, SpanByte readBuffer)
+        private void SpiReadRegister(Register register, Span<byte> readBuffer)
         {
-            SpanByte toSend = new byte[2]
+            Span<byte> toSend = new byte[2]
             {
                 (byte)Command.READ_REGISTER,
                 (byte)register
@@ -1566,13 +1566,13 @@ namespace Iot.Device.Pn5180
             SpiRead(readBuffer);
         }
 
-        private void SpiWriteRead(SpanByte toSend, SpanByte toRead)
+        private void SpiWriteRead(Span<byte> toSend, Span<byte> toRead)
         {
             SpiWrite(toSend);
             SpiRead(toRead);
         }
 
-        private void SpiWrite(SpanByte toSend)
+        private void SpiWrite(Span<byte> toSend)
         {
             // Both primary and secondary devices must operate with the same timing.The primary device
             // always places data on the SDO line a half cycle before the clock edge SCK, in order for
@@ -1610,7 +1610,7 @@ namespace Iot.Device.Pn5180
             _gpioController.Write(_pinNss, PinValue.High);
         }
 
-        private void SpiRead(SpanByte toRead)
+        private void SpiRead(Span<byte> toRead)
         {
             // Both primary and secondary devices must operate with the same timing.The primary device
             // always places data on the SDI line a half cycle before the clock edge SCK, in order for
@@ -1638,7 +1638,7 @@ namespace Iot.Device.Pn5180
             // In order to write data to or read data from the PN5180, "dummy reads" shall be
             // performed.The Figure 8 and Figure 9 are illustrating the usage of this "dummy reads" on
             // the SPI interface.
-            SpanByte dummyRead = new byte[1];
+            Span<byte> dummyRead = new byte[1];
             dummyRead[0] = 0xFF;
 
             for (int i = 0; i < toRead.Length; i++)

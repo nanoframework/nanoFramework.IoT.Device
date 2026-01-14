@@ -97,7 +97,7 @@ namespace Iot.Device.Bmxx80
                 status = (byte)(status & 0b1110_0011);
                 status = (byte)(status | (byte)value << 2);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     ControlRegister, status
                 };
@@ -119,7 +119,7 @@ namespace Iot.Device.Bmxx80
                 status = (byte)(status & 0b0001_1111);
                 status = (byte)(status | (byte)value << 5);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     ControlRegister, status
                 };
@@ -155,7 +155,7 @@ namespace Iot.Device.Bmxx80
         public void Reset()
         {
             const byte ResetCommand = 0xB6;
-            SpanByte command = new[]
+            Span<byte> command = new[]
             {
                 (byte)Bmxx80Register.RESET, ResetCommand
             };
@@ -230,7 +230,7 @@ namespace Iot.Device.Bmxx80
         /// <returns>Value from register.</returns>
         protected internal ushort Read16BitsFromRegister(byte register, Endianness endianness = Endianness.LittleEndian)
         {
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
             switch (CommunicationProtocol1)
             {
                 case CommunicationProtocol.I2c:
@@ -260,7 +260,7 @@ namespace Iot.Device.Bmxx80
         /// <returns>Value from register.</returns>
         protected internal uint Read24BitsFromRegister(byte register, Endianness endianness = Endianness.LittleEndian)
         {
-            SpanByte bytes = new byte[4];
+            Span<byte> bytes = new byte[4];
             switch (CommunicationProtocol1)
             {
                 case CommunicationProtocol.I2c:

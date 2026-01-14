@@ -37,7 +37,7 @@ namespace Iot.Device.CharacterLcd
 
         /// <summary>
         /// Returns the number of custom characters for this display.
-        /// A custom character is one that can be user-defined and assigned to a slot using <see cref="CreateCustomCharacter(int,System.SpanByte)"/>
+        /// A custom character is one that can be user-defined and assigned to a slot using <see cref="CreateCustomCharacter(int,System.Span<byte>)"/>
         /// </summary>
         int NumberOfCustomCharactersSupported { get; }
 
@@ -87,11 +87,11 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         /// <param name="location">Should be between 0 and <see cref="NumberOfCustomCharactersSupported"/>.</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
-        void CreateCustomCharacter(int location, SpanByte characterMap);
+        void CreateCustomCharacter(int location, Span<byte> characterMap);
 
         /// <summary>
         /// Fill one of the 8 CGRAM locations (character codes 0 - 7) with custom characters.
-        /// See <see cref="CreateCustomCharacter(int,System.SpanByte)"/> for details.
+        /// See <see cref="CreateCustomCharacter(int,System.Span<byte>)"/> for details.
         /// </summary>
         /// <param name="location">Should be between 0 and <see cref="NumberOfCustomCharactersSupported"/>.</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
@@ -122,7 +122,7 @@ namespace Iot.Device.CharacterLcd
         /// Used if character translation already took place.
         /// </summary>
         /// <param name="text">Text to print</param>
-        void Write(SpanChar text);
+        void Write(Span<char> text);
 
         /// <summary>
         /// Write a raw byte stream to the display.

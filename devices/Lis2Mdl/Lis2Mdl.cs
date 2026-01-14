@@ -133,7 +133,7 @@ namespace Iot.Device.Lis2Mdl
 
         private void WriteByte(Register register, byte data)
         {
-            SpanByte buff = new byte[2]
+            Span<byte> buff = new byte[2]
             {
                 (byte)register,
                 data
@@ -144,12 +144,12 @@ namespace Iot.Device.Lis2Mdl
 
         private short ReadInt16(Register register)
         {
-            SpanByte val = new byte[2];
+            Span<byte> val = new byte[2];
             Read(register, val);
             return BinaryPrimitives.ReadInt16LittleEndian(val);
         }
 
-        private void Read(Register register, SpanByte buffer)
+        private void Read(Register register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)register);
             _i2c.Read(buffer);
@@ -193,7 +193,7 @@ namespace Iot.Device.Lis2Mdl
         {
             // read the output registers into data array
             // 3 registers for X, Y and Z, each 16bit
-            SpanByte magneticFieldRaw = new byte[3 * 2];
+            Span<byte> magneticFieldRaw = new byte[3 * 2];
             Read(Register.OutputXLow, magneticFieldRaw);
 
             _magneticFieldReadings[0] = BinaryPrimitives.ReadInt16LittleEndian(magneticFieldRaw.Slice(0, 2));

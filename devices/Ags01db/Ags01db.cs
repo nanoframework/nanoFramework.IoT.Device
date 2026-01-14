@@ -63,13 +63,13 @@ namespace Iot.Device.Ags01db
 
             // Details in the Datasheet P5
             // Write command MSB, LSB
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Register.ASG_DATA_MSB, (byte)Register.ASG_DATA_LSB
             };
 
             // Return data MSB, LSB, CRC checksum
-            SpanByte readBuff = new byte[3];
+            Span<byte> readBuff = new byte[3];
 
             _i2cDevice.Write(writeBuff);
             _i2cDevice.Read(readBuff);
@@ -95,13 +95,13 @@ namespace Iot.Device.Ags01db
         {
             // Details in the Datasheet P5
             // Write command MSB, LSB
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Register.ASG_VERSION_MSB, (byte)Register.ASG_VERSION_LSB
             };
 
             // Return version, CRC checksum
-            SpanByte readBuff = new byte[2];
+            Span<byte> readBuff = new byte[2];
 
             _i2cDevice.Write(writeBuff);
             _i2cDevice.Read(readBuff);
@@ -122,7 +122,7 @@ namespace Iot.Device.Ags01db
         /// <param name="length">Data Length.</param>
         /// <param name="crc8">Raw CRC8.</param>
         /// <returns>Checksum is true or false.</returns>
-        private bool CheckCrc8(SpanByte data, int length, byte crc8)
+        private bool CheckCrc8(Span<byte> data, int length, byte crc8)
         {
             // Details in the Datasheet P6
             byte crc = CrcInit;

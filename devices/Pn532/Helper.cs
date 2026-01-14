@@ -37,7 +37,7 @@ namespace Iot.Device.Pn532
         /// <param name="first">First array to compare</param>
         /// <param name="second">Second array to compare</param>
         /// <returns>True if all elements are equa</returns>
-        public static bool SequenceEqual(this SpanByte first, SpanByte second)
+        public static bool SequenceEqual(this Span<byte> first, Span<byte> second)
         {
             if (first.Length != second.Length)
             {

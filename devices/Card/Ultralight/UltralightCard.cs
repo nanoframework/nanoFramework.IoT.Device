@@ -345,22 +345,22 @@ namespace Iot.Device.Card.Ultralight
             // warning byte2 bit0, 1 and 2 are write once, once status changed, can't be changes again
             if ((page >= 0x3) && page <= 0x7)
             {
-                SpanByte toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 2 };
-                SpanByte dataOut = new byte[16];
+                Span<byte> toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 2 };
+                Span<byte> dataOut = new byte[16];
                 _rfid.Transceive(Target, toSend, dataOut);
                 return (dataOut[2] & (0b0000_0001 << page)) == (0b0000_0001 << page);
             }
             else if ((page >= 0x08) && (page <= 0x0F))
             {
-                SpanByte toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 2 };
-                SpanByte dataOut = new byte[16];
+                Span<byte> toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 2 };
+                Span<byte> dataOut = new byte[16];
                 _rfid.Transceive(Target, toSend, dataOut);
                 return (dataOut[3] & (0b0000_0001 << (page - 8))) == (0b0000_0001 << (page - 8));
             }
             else
             {
-                SpanByte toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 0x28 };
-                SpanByte dataOut = new byte[16];
+                Span<byte> toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 0x28 };
+                Span<byte> dataOut = new byte[16];
                 switch (UltralightCardType)
                 {
                     case UltralightCardType.UltralightNtag203:
@@ -492,7 +492,7 @@ namespace Iot.Device.Card.Ultralight
                 return false;
             }
 
-            SpanByte serializedMessage = new byte[message.Length + 2 + messageLengthBytes];
+            Span<byte> serializedMessage = new byte[message.Length + 2 + messageLengthBytes];
             message.Serialize(serializedMessage.Slice(1 + messageLengthBytes));
             serializedMessage[0] = 0x03;
             if (messageLengthBytes == 1)
@@ -572,7 +572,7 @@ namespace Iot.Device.Card.Ultralight
         /// </summary>
         /// <param name="authenticationKey">An authentication key if authentication is required.</param>
         /// <returns>True if success</returns>
-        public bool FormatNdef(SpanByte authenticationKey = default)
+        public bool FormatNdef(Span<byte> authenticationKey = default)
         {
             // NDEF formatting is starting on page 3:
             // E1 10 CP 00
@@ -653,7 +653,7 @@ namespace Iot.Device.Card.Ultralight
                 slice = 4;
             }
 
-            var doublet = NdefMessage.GetStartSizeNdef(new SpanByte(Data, slice, Data.Length - slice));
+            var doublet = NdefMessage.GetStartSizeNdef(new Span<byte>(Data, slice, Data.Length - slice));
             int start = doublet.Start;
             int size = doublet.Size;
 
@@ -671,8 +671,8 @@ namespace Iot.Device.Card.Ultralight
                 return false;
             }
 
-            SpanByte card = new byte[(blocksToRead + slice / 4) * BlockSize];
-            new SpanByte(Data, slice, Data.Length - slice).CopyTo(card);
+            Span<byte> card = new byte[(blocksToRead + slice / 4) * BlockSize];
+            new Span<byte>(Data, slice, Data.Length - slice).CopyTo(card);
 
             byte idxCard = 1;
             // Decrease by 1 block if we skip first page
@@ -687,7 +687,7 @@ namespace Iot.Device.Card.Ultralight
                     return false;
                 }
 
-                new SpanByte(Data).CopyTo(card.Slice(idxCard * BlockSize - slice));
+                new Span<byte>(Data).CopyTo(card.Slice(idxCard * BlockSize - slice));
                 idxCard++;
                 // Here, we read 4 blocks of 4, so 16 blocks
                 block += 4;
@@ -715,7 +715,7 @@ namespace Iot.Device.Card.Ultralight
         /// <param name="authenticationKkey">An authentication key</param>
         /// <returns>True if success</returns>
         /// <remarks>Depending on the type of authentication, the process will be done transparently</remarks>
-        public bool ProcessAuthentication(SpanByte authenticationKkey)
+        public bool ProcessAuthentication(Span<byte> authenticationKkey)
         {
             if (UltralightCardType == UltralightCardType.UltralightC)
             {
@@ -892,7 +892,7 @@ namespace Iot.Device.Card.Ultralight
             }
 
             Data = new byte[4];
-            new SpanByte(serialized, 0, 4).CopyTo(Data);
+            new Span<byte>(serialized, 0, 4).CopyTo(Data);
             Command = UltralightCommand.Write4Bytes;
             var ret = RunUltralightCommand();
             if (ret < 0)
@@ -901,7 +901,7 @@ namespace Iot.Device.Card.Ultralight
             }
 
             BlockNumber++;
-            new SpanByte(serialized, 4, 4).CopyTo(Data);
+            new Span<byte>(serialized, 4, 4).CopyTo(Data);
             Command = UltralightCommand.Write4Bytes;
             ret = RunUltralightCommand();
             if (ret < 0)
@@ -917,7 +917,7 @@ namespace Iot.Device.Card.Ultralight
         /// </summary>
         /// <param name="newAuthenticationKkey">The new authentication key</param>
         /// <returns>True if success</returns>
-        public bool SetPassword(SpanByte newAuthenticationKkey)
+        public bool SetPassword(Span<byte> newAuthenticationKkey)
         {
             if (_pack == null)
             {

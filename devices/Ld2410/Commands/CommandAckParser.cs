@@ -32,7 +32,7 @@ namespace Iot.Device.Ld2410.Commands
                 return false;
             }
 
-            var dataSpan = new SpanByte(data);
+            var dataSpan = new Span<byte>(data);
 
             // read the next 2 bytes to find the length of the payload
             var payloadSize = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(++index));
@@ -96,8 +96,8 @@ namespace Iot.Device.Ld2410.Commands
                         var motionRangeGate = data[++index];
                         var staticRangeGate = data[++index];
 
-                        var motionSensitivityLevelPerGate = new SpanByte(new byte[9]);
-                        var staticSensitivityLevelPerGate = new SpanByte(new byte[9]);
+                        var motionSensitivityLevelPerGate = new Span<byte>(new byte[9]);
+                        var staticSensitivityLevelPerGate = new Span<byte>(new byte[9]);
 
                         dataSpan.Slice(start: ++index, length: motionSensitivityLevelPerGate.Length)
                             .CopyTo(motionSensitivityLevelPerGate);

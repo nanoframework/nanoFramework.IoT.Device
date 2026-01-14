@@ -378,7 +378,7 @@ namespace Iot.Device.Ip5306
 
         private void I2cWrite(Register reg, byte data)
         {
-            SpanByte writeBuffer = new byte[2] { (byte)reg, data };
+            Span<byte> writeBuffer = new byte[2] { (byte)reg, data };
             _i2c.Write(writeBuffer);
         }
 

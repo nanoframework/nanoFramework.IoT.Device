@@ -19,10 +19,10 @@ namespace Iot.Device.NFUnitTest
         static I2cDevice _i2cDevice;
         static Mcp7940m _clock;
 
-        private SpanByte ReadAllBuffers()
+        private Span<byte> ReadAllBuffers()
         {
             // Read all Mcp7940m registers.
-            SpanByte readBuffer = new byte[23];
+            Span<byte> readBuffer = new byte[23];
 
             _i2cDevice.WriteByte((byte)Register.TimekeepingSecond);
             _i2cDevice.Read(readBuffer);
@@ -97,11 +97,11 @@ namespace Iot.Device.NFUnitTest
         [TestMethod]
         public void SetTime_Only_Changes_Relevant_Registers()
         {
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.SetTime(new DateTime(2099, 12, 31, 23, 59, 15));
 
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time registers have changed.
             TestHelper.AssertRegistersNotEqual(before, after, Register.TimekeepingSecond);
@@ -387,12 +387,12 @@ namespace Iot.Device.NFUnitTest
             Mcp7940m.Alarm alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full);
             _clock.SetAlarm1(alarm);
 
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full, 12, 31, 23, 33, 33, DayOfWeek.Thursday);
             _clock.SetAlarm1(alarm);
 
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -429,10 +429,10 @@ namespace Iot.Device.NFUnitTest
         public void Alarm1_EnableAlarm1_And_DisableAlarm1_Only_Changes_Relevant_Flag()
         {
             _clock.EnableAlarm1();
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.DisableAlarm1();
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -770,12 +770,12 @@ namespace Iot.Device.NFUnitTest
             Mcp7940m.Alarm alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full);
             _clock.SetAlarm2(alarm);
 
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             alarm = new Mcp7940m.Alarm(AlarmMatchMode.Full, 12, 31, 23, 33, 33, DayOfWeek.Thursday);
             _clock.SetAlarm2(alarm);
 
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -812,10 +812,10 @@ namespace Iot.Device.NFUnitTest
         public void Alarm2_EnableAlarm2_And_DisableAlarm2_Only_Changes_Relevant_Flag()
         {
             _clock.EnableAlarm2();
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.DisableAlarm2();
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -912,10 +912,10 @@ namespace Iot.Device.NFUnitTest
         public void AlarmInterruptPolarity_Property_Only_Changes_Relevant_Flag()
         {
             _clock.AlarmInterruptPolarity = PinValue.High;
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.AlarmInterruptPolarity = PinValue.Low;
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -980,10 +980,10 @@ namespace Iot.Device.NFUnitTest
         public void GeneralPurposeOutput_Property_Only_Changes_Relevant_Flag()
         {
             _clock.GeneralPurposeOutput = PinValue.High;
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.GeneralPurposeOutput = PinValue.Low;
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -1043,10 +1043,10 @@ namespace Iot.Device.NFUnitTest
         public void SquareWaveOutput_EnableSquareWaveOutput_And_DisableSquareWaveOutput_Only_Changes_Relevant_Flag()
         {
             _clock.EnableSquareWaveOutput();
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.DisableSquareWaveOutput();
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -1113,10 +1113,10 @@ namespace Iot.Device.NFUnitTest
         public void SquareWaveOutput_SquareWaveOutputFrequency_Property_Only_Changes_Relevant_Flag()
         {
             _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency1Hz;
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.SquareWaveOutputFrequency = SquareWaveFrequency.Frequency32kHz;
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);
@@ -1187,10 +1187,10 @@ namespace Iot.Device.NFUnitTest
         public void Clock_StartClock_And_Halt_Only_Changes_Relevant_Flag()
         {
             _clock.StartClock();
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.Halt();
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingMinute);

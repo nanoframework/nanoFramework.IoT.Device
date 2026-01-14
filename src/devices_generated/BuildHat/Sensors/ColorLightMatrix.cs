@@ -54,7 +54,7 @@ namespace Iot.Device.BuildHat.Sensors
         /// </summary>
         /// <param name="brightness">The brichtness from 0 (off) to 10 (full). Must be 9 elements.</param>
         /// <param name="colors">The color. Must be 9 elements.</param>
-        public void DisplayColorPerPixel(SpanByte brightness, SpanLedColor colors)
+        public void DisplayColorPerPixel(Span<byte> brightness, SpanLedColor colors)
         {
             if ((brightness.Length != 9) || (colors.Length != 9))
             {

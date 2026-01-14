@@ -105,7 +105,7 @@ namespace Iot.Device.Bmxx80
                 var status = Read8BitsFromRegister((byte)Bme680Register.CTRL_HUM);
                 status = (byte)((status & (byte)~Bme680Mask.HUMIDITY_SAMPLING) | (byte)value);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bme680Register.CTRL_HUM, status
                 };
@@ -146,7 +146,7 @@ namespace Iot.Device.Bmxx80
                         var heaterProfile = Read8BitsFromRegister((byte)Bme680Register.CTRL_GAS_1);
                         heaterProfile = (byte)((heaterProfile & (byte)~Bme680Mask.NB_CONV) | (byte)value);
 
-                        SpanByte command = new[]
+                        Span<byte> command = new[]
                         {
                             (byte)Bme680Register.CTRL_GAS_1, heaterProfile
                         };
@@ -182,7 +182,7 @@ namespace Iot.Device.Bmxx80
                 var filter = Read8BitsFromRegister((byte)Bme680Register.CONFIG);
                 filter = (byte)((filter & (byte)~Bme680Mask.FILTER_COEFFICIENT) | (byte)value << 2);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bme680Register.CONFIG, filter
                 };
@@ -203,7 +203,7 @@ namespace Iot.Device.Bmxx80
                 var heaterStatus = Read8BitsFromRegister((byte)Bme680Register.CTRL_GAS_0);
                 heaterStatus = (byte)((heaterStatus & (byte)~Bme680Mask.HEAT_OFF) | Convert.ToByte(!value) << 3);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bme680Register.CTRL_GAS_0, heaterStatus
                 };
@@ -224,7 +224,7 @@ namespace Iot.Device.Bmxx80
                 var gasConversion = Read8BitsFromRegister((byte)Bme680Register.CTRL_GAS_1);
                 gasConversion = (byte)((gasConversion & (byte)~Bme680Mask.RUN_GAS) | Convert.ToByte(value) << 4);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bme680Register.CTRL_GAS_1, gasConversion
                 };
@@ -297,7 +297,7 @@ namespace Iot.Device.Bmxx80
             var status = Read8BitsFromRegister((byte)Bme680Register.CTRL_MEAS);
             status = (byte)((status & (byte)~Bme680Mask.PWR_MODE) | (byte)powerMode);
 
-            SpanByte command = new[]
+            Span<byte> command = new[]
             {
                 (byte)Bme680Register.CTRL_MEAS, status
             };
@@ -332,11 +332,11 @@ namespace Iot.Device.Bmxx80
             var heaterResistance = CalculateHeaterResistance(targetTemperature, ambientTemperature);
             var heaterDuration = CalculateHeaterDuration(duration);
 
-            SpanByte resistanceCommand = new[]
+            Span<byte> resistanceCommand = new[]
             {
                 (byte)((byte)Bme680Register.RES_HEAT_0 + profile), heaterResistance
             };
-            SpanByte durationCommand = new[]
+            Span<byte> durationCommand = new[]
             {
                 (byte)((byte)Bme680Register.GAS_WAIT_0 + profile), heaterDuration
             };

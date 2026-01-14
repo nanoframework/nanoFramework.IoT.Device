@@ -15,6 +15,6 @@ namespace Iot.Device.Sen5x.Entities
         /// skipped by the implemented method.
         /// </summary>
         /// <param name="data">The data buffer that needs to be filled in by this entity.</param>
-        internal abstract void ToSpanByte(SpanByte data);
+        internal abstract void ToSpanByte(Span<byte> data);
     }
 }

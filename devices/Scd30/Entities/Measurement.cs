@@ -12,7 +12,7 @@ namespace Iot.Device.Scd30.Entities
     /// </summary>
     public class Measurement
     {
-        internal Measurement(SpanByte data)
+        internal Measurement(Span<byte> data)
         {
             Co2Concentration = VolumeConcentration.FromPartsPerMillion(BinaryPrimitives.ReadSingleBigEndian(data));
             Temperature = Temperature.FromDegreesCelsius(BinaryPrimitives.ReadSingleBigEndian(data.Slice(4)));

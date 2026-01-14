@@ -102,7 +102,7 @@ namespace Iot.Device.Ccs811
             // Initialization flow page 29
             // https://www.sciosense.com/wp-content/uploads/2020/01/CCS811-Application-Note-Programming-and-interfacing-guide.pdf
             // do a soft reset
-            SpanByte toReset = new byte[4]
+            Span<byte> toReset = new byte[4]
             {
                 0x11,
                 0xE5,
@@ -240,7 +240,7 @@ namespace Iot.Device.Ccs811
         {
             get
             {
-                SpanByte version = new byte[2];
+                Span<byte> version = new byte[2];
                 ReadRegister(Register.FW_App_Version, version);
                 return new Version(version[0] >> 4, version[0] & 0b0000_1111, version[1], 0);
             }
@@ -253,7 +253,7 @@ namespace Iot.Device.Ccs811
         {
             get
             {
-                SpanByte version = new byte[2];
+                Span<byte> version = new byte[2];
                 ReadRegister(Register.FW_Boot_Version, version);
                 return new Version(version[0] >> 4, version[0] & 0b0000_1111, version[1], 0);
             }
@@ -295,7 +295,7 @@ namespace Iot.Device.Ccs811
             int equivalentTotalVolatileOrganicCompoundInPpb = -1;
             int rawCurrent = -1;
             rawAdcReading = -1;
-            SpanByte toRead = new byte[8];
+            Span<byte> toRead = new byte[8];
             ReadRegister(Register.ALG_RESULT_DATA, toRead);
             if (toRead[5] != (byte)Error.NoError)
             {
@@ -340,14 +340,14 @@ namespace Iot.Device.Ccs811
         {
             get
             {
-                SpanByte baseline = new byte[2];
+                Span<byte> baseline = new byte[2];
                 ReadRegister(Register.BASELINE, baseline);
                 return BinaryPrimitives.ReadUInt16BigEndian(baseline);
             }
 
             set
             {
-                SpanByte baseline = new byte[2];
+                Span<byte> baseline = new byte[2];
                 BinaryPrimitives.WriteUInt16BigEndian(baseline, value);
                 WriteRegister(Register.BASELINE, baseline);
             }
@@ -366,7 +366,7 @@ namespace Iot.Device.Ccs811
                 throw new ArgumentException(nameof(humidity), "Humidity can only be between 0 and 100.");
             }
 
-            SpanByte environment = new byte[4];
+            Span<byte> environment = new byte[4];
 
             // Convert the humidity first
             ConvertForEnvironement(humidity.Percent, environment.Slice(0, 2));
@@ -380,7 +380,7 @@ namespace Iot.Device.Ccs811
             WriteRegister(Register.ENV_DATA, environment);
         }
 
-        private void ConvertForEnvironement(double toConvert, SpanByte converted)
+        private void ConvertForEnvironement(double toConvert, Span<byte> converted)
         {
             // Format is 7 bits for the integer part and 9 bits for the decimal one
             byte integerPart = (byte)toConvert;
@@ -431,7 +431,7 @@ namespace Iot.Device.Ccs811
                 throw new ArgumentException(nameof(lowEquivalentCO2), $"value of {nameof(highEquivalentCO2)}-{nameof(lowEquivalentCO2)} must be more than 50.");
             }
 
-            SpanByte toSend = new byte[4];
+            Span<byte> toSend = new byte[4];
             BinaryPrimitives.WriteUInt16BigEndian(toSend.Slice(0, 2), (ushort)lowEquivalentCO2.PartsPerMillion);
             BinaryPrimitives.WriteUInt16BigEndian(toSend.Slice(2, 2), (ushort)highEquivalentCO2.PartsPerMillion);
             WriteRegister(Register.THRESHOLDS, toSend);
@@ -522,7 +522,7 @@ namespace Iot.Device.Ccs811
 
         private void WriteRegister(Register register, byte data)
         {
-            SpanByte toSend = new byte[2]
+            Span<byte> toSend = new byte[2]
             {
                 (byte)register,
                 data
@@ -533,9 +533,9 @@ namespace Iot.Device.Ccs811
             SleepDownDevice();
         }
 
-        private void WriteRegister(Register register, SpanByte data)
+        private void WriteRegister(Register register, Span<byte> data)
         {
-            SpanByte toSend = new byte[data.Length + 1];
+            Span<byte> toSend = new byte[data.Length + 1];
             toSend[0] = (byte)register;
             WakeUpDevice();
             data.CopyTo(toSend.Slice(1));
@@ -552,7 +552,7 @@ namespace Iot.Device.Ccs811
             return ret;
         }
 
-        private void ReadRegister(Register register, SpanByte dataRead)
+        private void ReadRegister(Register register, Span<byte> dataRead)
         {
             WakeUpDevice();
             _i2cDevice.WriteByte((byte)register);

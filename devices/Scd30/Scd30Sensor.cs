@@ -323,7 +323,7 @@ namespace Iot.Device.Scd30
         {
             // Function 0x6 request is always 8 bytes
             var request = new byte[8];
-            var requestSpan = new SpanByte(request);
+            var requestSpan = new Span<byte>(request);
             request[0] = Scd30ModbusAddress;
             request[1] = 0x6;
             BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(2, 2), (ushort)register);
@@ -337,11 +337,11 @@ namespace Iot.Device.Scd30
             ModbusWriteAndRead(request, response);
         }
 
-        private SpanByte ModbusReadHoldingRegisters(ModbusRegister register, byte number)
+        private Span<byte> ModbusReadHoldingRegisters(ModbusRegister register, byte number)
         {
             // Function 0x3 request is always 8 bytes
             var request = new byte[8];
-            var requestSpan = new SpanByte(request);
+            var requestSpan = new Span<byte>(request);
             request[0] = Scd30ModbusAddress;
             request[1] = 0x3;
             BinaryPrimitives.WriteUInt16BigEndian(requestSpan.Slice(2, 2), (ushort)register);
@@ -355,7 +355,7 @@ namespace Iot.Device.Scd30
             ModbusWriteAndRead(request, response);
 
             // Return data from response
-            return new SpanByte(response, 3, number * 2);
+            return new Span<byte>(response, 3, number * 2);
         }
 
         private void ModbusWriteAndRead(byte[] request, byte[] response)
@@ -374,7 +374,7 @@ namespace Iot.Device.Scd30
             _serial.Read(response, 0, response.Length);
 
             // Verify the received message
-            var responseSpan = new SpanByte(response);
+            var responseSpan = new Span<byte>(response);
             var calculatedCrc = CalculateModbusRtuCrc16(responseSpan.Slice(0, response.Length - 2));
             var receivedCrc = BinaryPrimitives.ReadUInt16BigEndian(responseSpan.Slice(response.Length - 2));
             if (calculatedCrc != receivedCrc)
@@ -389,7 +389,7 @@ namespace Iot.Device.Scd30
             }
         }
 
-        private ushort CalculateModbusRtuCrc16(SpanByte data)
+        private ushort CalculateModbusRtuCrc16(Span<byte> data)
         {
             // Described in:
             //   https://sensirion.com/media/documents/D7CEEF4A/6165372F/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf

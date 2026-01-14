@@ -345,7 +345,7 @@ namespace Iot.Device.Pwm
         {
             _device.WriteByte((byte)register);
 
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
             _device.Read(bytes);
 
             return BinaryPrimitives.ReadUInt16LittleEndian(bytes);
@@ -353,7 +353,7 @@ namespace Iot.Device.Pwm
 
         private void WriteByte(Register register, byte data)
         {
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
             bytes[0] = (byte)register;
             bytes[1] = data;
             _device.Write(bytes);
@@ -364,7 +364,7 @@ namespace Iot.Device.Pwm
             WriteByte(register, (byte)value);
             WriteByte(register + 1, (byte)(value >> 8));
 
-            SpanByte bytes = new byte[3];
+            Span<byte> bytes = new byte[3];
             bytes[0] = (byte)register;
             BinaryPrimitives.WriteUInt16LittleEndian(bytes.Slice(1), value);
             _device.Write(bytes);

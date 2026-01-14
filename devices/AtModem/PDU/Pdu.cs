@@ -18,7 +18,7 @@ namespace Iot.Device.AtModem.PDU
         /// </summary>
         /// <param name="text">The character span representing the PDU message.</param>
         /// <returns>The PDU type.</returns>
-        public static PduType GetPduType(SpanChar text)
+        public static PduType GetPduType(Span<char> text)
         {
             int offset = 0;
 
@@ -96,7 +96,7 @@ namespace Iot.Device.AtModem.PDU
         /// <param name="text">The character span representing the PDU message.</param>
         /// <param name="timestampYearOffset">The offset to adjust the year in the timestamp.</param>
         /// <returns>The decoded SMS-DELIVER PDU message as a <see cref="SmsDeliver"/> instance.</returns>
-        public static SmsDeliver DecodeSmsDeliver(SpanChar text, int timestampYearOffset = 2000)
+        public static SmsDeliver DecodeSmsDeliver(Span<char> text, int timestampYearOffset = 2000)
         {
             int offset = 0;
 
@@ -131,11 +131,11 @@ namespace Iot.Device.AtModem.PDU
 
             byte tp_pid = HexToByte(text.SliceOnIndex(offset, offset += 2));
             byte tp_dcs = HexToByte(text.SliceOnIndex(offset, offset += 2));
-            SpanChar tp_scts = text.SliceOnIndex(offset, offset += 14);
+            Span<char> tp_scts = text.SliceOnIndex(offset, offset += 14);
             byte tp_udl = HexToByte(text.SliceOnIndex(offset, offset += 2));
             int udlBytes = (int)Math.Ceiling(tp_udl * 7 / 8.0);
 
-            SpanChar tp_ud = text.SliceOnIndex(offset, offset += udlBytes * 2);
+            Span<char> tp_ud = text.SliceOnIndex(offset, offset += udlBytes * 2);
             string message = null;
             switch (tp_dcs)
             {
@@ -156,7 +156,7 @@ namespace Iot.Device.AtModem.PDU
         /// <param name="text">The character span representing the PDU message.</param>
         /// <param name="timestampYearOffset">The offset to adjust the year in the timestamp.</param>
         /// <returns>The decoded SMS-SUBMIT PDU message as a <see cref="SmsSubmit"/> instance.</returns>
-        public static SmsSubmit DecodeSmsSubmit(SpanChar text, int timestampYearOffset = 2000)
+        public static SmsSubmit DecodeSmsSubmit(Span<char> text, int timestampYearOffset = 2000)
         {
             int offset = 0;
 
@@ -218,7 +218,7 @@ namespace Iot.Device.AtModem.PDU
             {
                 case 0x00:
                     int length = tp_udl % 8 == 0 ? (tp_udl * 7 / 8) : (tp_udl * 7 / 8) + 1;
-                    SpanChar tp_ud = text.SliceOnIndex(offset, offset += length * 2);
+                    Span<char> tp_ud = text.SliceOnIndex(offset, offset += length * 2);
                     message = Gsm7.Decode(new string(tp_ud.ToArray()));
                     break;
                 default:
@@ -228,7 +228,7 @@ namespace Iot.Device.AtModem.PDU
             return new SmsSubmit(serviceCenterNumber, oa, message);
         }
 
-        private static byte HexToByte(SpanChar text)
+        private static byte HexToByte(Span<char> text)
         {
             byte retVal = Convert.ToByte(new string(text.ToArray()), 16);
             return retVal;
@@ -263,7 +263,7 @@ namespace Iot.Device.AtModem.PDU
             return (byte)(0b1000_0000 + (byte)(phoneNumber.GetTypeOfNumber() == TypeOfNumber.International ? 0b0001_0001 : 0b0000_0001));
         }
 
-        private static PhoneNumber DecodePhoneNumber(SpanChar data)
+        private static PhoneNumber DecodePhoneNumber(Span<char> data)
         {
             if (data.Length < 4)
             {
@@ -281,7 +281,7 @@ namespace Iot.Device.AtModem.PDU
             return new PhoneNumber(number);
         }
 
-        private static DateTime DecodeTimestamp(SpanChar data, int timestampYearOffset = 2000)
+        private static DateTime DecodeTimestamp(Span<char> data, int timestampYearOffset = 2000)
         {
             char[] swappedData = new char[data.Length];
             for (int i = 0; i < swappedData.Length; i += 2)
@@ -290,7 +290,7 @@ namespace Iot.Device.AtModem.PDU
                 swappedData[i + 1] = data[i];
             }
 
-            SpanChar swappedSpan = swappedData;
+            Span<char> swappedSpan = swappedData;
 
             byte offset = DecimalToByte(swappedSpan.SliceOnIndex(12, 14));
             bool positive = (offset & (1 << 7)) == 0;
@@ -306,7 +306,7 @@ namespace Iot.Device.AtModem.PDU
             return timestamp;
         }
 
-        private static byte DecimalToByte(SpanChar text)
+        private static byte DecimalToByte(Span<char> text)
         {
             return Convert.ToByte(new string(text.ToArray()), 10);
         }

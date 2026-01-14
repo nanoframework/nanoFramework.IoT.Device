@@ -485,7 +485,7 @@ namespace Iot.Device.Vl53L0X
             _i2cDevice.WriteByte((byte)Registers.GLOBAL_CONFIG_SPAD_ENABLES_REF_0);
 
             // Allocate 1 more byte as it will be used to send back the configuration
-            SpanByte referenceSpadMap = new byte[7];
+            Span<byte> referenceSpadMap = new byte[7];
 
             // Skip the first byte for reading, it will be used for writing
             _i2cDevice.Read(referenceSpadMap.Slice(1));
@@ -1200,7 +1200,7 @@ namespace Iot.Device.Vl53L0X
 
         private short ReadInt16(byte reg)
         {
-            SpanByte outArray = new byte[2];
+            Span<byte> outArray = new byte[2];
             _i2cDevice.WriteByte(reg);
             _i2cDevice.Read(outArray);
             return BinaryPrimitives.ReadInt16BigEndian(outArray);
@@ -1208,7 +1208,7 @@ namespace Iot.Device.Vl53L0X
 
         private ushort ReadUInt16(byte reg)
         {
-            SpanByte outArray = new byte[2];
+            Span<byte> outArray = new byte[2];
             _i2cDevice.WriteByte(reg);
             _i2cDevice.Read(outArray);
             return BinaryPrimitives.ReadUInt16BigEndian(outArray);
@@ -1216,7 +1216,7 @@ namespace Iot.Device.Vl53L0X
 
         private uint ReadUIn32(byte reg)
         {
-            SpanByte outArray = new byte[4];
+            Span<byte> outArray = new byte[4];
             _i2cDevice.WriteByte(reg);
             _i2cDevice.Read(outArray);
             return BinaryPrimitives.ReadUInt32BigEndian(outArray);
@@ -1224,7 +1224,7 @@ namespace Iot.Device.Vl53L0X
 
         private void WriteInt16(byte reg, short data)
         {
-            SpanByte outArray = new byte[3];
+            Span<byte> outArray = new byte[3];
             outArray[0] = reg;
             BinaryPrimitives.WriteInt16BigEndian(outArray.Slice(1), data);
             _i2cDevice.Write(outArray);
@@ -1232,7 +1232,7 @@ namespace Iot.Device.Vl53L0X
 
         private void WriteUInt16(byte reg, ushort data)
         {
-            SpanByte outArray = new byte[3];
+            Span<byte> outArray = new byte[3];
             outArray[0] = reg;
             BinaryPrimitives.WriteUInt16BigEndian(outArray.Slice(1), data);
             _i2cDevice.Write(outArray);
@@ -1240,7 +1240,7 @@ namespace Iot.Device.Vl53L0X
 
         private void WriteInt32(byte reg, int data)
         {
-            SpanByte outArray = new byte[5];
+            Span<byte> outArray = new byte[5];
             outArray[0] = reg;
             BinaryPrimitives.WriteInt32BigEndian(outArray.Slice(1), data);
             _i2cDevice.Write(outArray);
@@ -1248,7 +1248,7 @@ namespace Iot.Device.Vl53L0X
 
         private void WriteUInt32(byte reg, uint data)
         {
-            SpanByte outArray = new byte[5];
+            Span<byte> outArray = new byte[5];
             outArray[0] = reg;
             BinaryPrimitives.WriteUInt32BigEndian(outArray.Slice(1), data);
             _i2cDevice.Write(outArray);

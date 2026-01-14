@@ -13,7 +13,7 @@ namespace Iot.Device.Common.Tests
         public void SpanTests()
         {
             string hello = "Hello!";
-            SpanChar helloSpan = hello.AsSpan();
+            Span<char> helloSpan = hello.AsSpan();
             Assert.True(helloSpan.StartsWith("He", StringComparison.OrdinalIgnoreCase));
             Assert.True(helloSpan.StartsWith("hello", StringComparison.OrdinalIgnoreCase));
             Assert.True(helloSpan.Contains("!".AsSpan(), StringComparison.Ordinal));
@@ -27,11 +27,11 @@ namespace Iot.Device.Common.Tests
             MemoryStream ms = new MemoryStream();
             byte[] data = new byte[10];
             data[0] = 10;
-            SpanByte helloSpan = data.AsSpan();
+            Span<byte> helloSpan = data.AsSpan();
             ms.Write(helloSpan);
             ms.Position = 0;
 
-            SpanByte reply = new byte[10];
+            Span<byte> reply = new byte[10];
             ms.Read(reply);
             Assert.Equal(data.ToList(), reply.ToArray());
         }

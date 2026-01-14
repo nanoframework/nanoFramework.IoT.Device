@@ -321,7 +321,7 @@ void DisplayMatrix3x3()
         Thread.Sleep(1000);
     }
 
-    SpanByte brg = new byte[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    Span<byte> brg = new byte[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     SpanLedColor col = new LedColor[9]
     {
         LedColor.White,

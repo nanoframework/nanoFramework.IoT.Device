@@ -35,7 +35,7 @@ namespace Iot.Device.Ld2410.Reporting
                 return false;
             }
 
-            var dataSpan = new SpanByte(data);
+            var dataSpan = new Span<byte>(data);
 
             // read the next 2 bytes to find the length of the payload
             var payloadSize = BinaryPrimitives.ReadUInt16LittleEndian(dataSpan.Slice(++index));
@@ -68,7 +68,7 @@ namespace Iot.Device.Ld2410.Reporting
             }
         }
 
-        private static BasicReportFrame CreateBasicReportFrame(SpanByte data)
+        private static BasicReportFrame CreateBasicReportFrame(Span<byte> data)
         {
             var index = 0;
 
@@ -89,7 +89,7 @@ namespace Iot.Device.Ld2410.Reporting
             };
         }
 
-        private static EngineeringModeReportFrame CreateEngineeringReportFrame(SpanByte data)
+        private static EngineeringModeReportFrame CreateEngineeringReportFrame(Span<byte> data)
         {
             var index = 0;
 

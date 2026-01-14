@@ -37,7 +37,7 @@ namespace Iot.Device.Rtc
         protected override DateTime ReadTime()
         {
             // Sec, Min, Hour, Date, Day, Month & Century, Year
-            SpanByte readBuffer = new byte[7];
+            Span<byte> readBuffer = new byte[7];
 
             _i2cDevice.WriteByte((byte)Rtc.PCF85263RtcRegisters.RTC_SECOND_ADDR);
             _i2cDevice.Read(readBuffer);
@@ -57,7 +57,7 @@ namespace Iot.Device.Rtc
         /// <param name="time">Time.</param>
         protected override void SetTime(DateTime time)
         {
-            SpanByte writeBuffer = new byte[8];
+            Span<byte> writeBuffer = new byte[8];
 
             writeBuffer[0] = (byte)Rtc.PCF85263RtcRegisters.RTC_SECOND_ADDR;
 

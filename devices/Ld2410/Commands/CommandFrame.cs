@@ -38,8 +38,8 @@ namespace Iot.Device.Ld2410.Commands
             * All in little-endian.
             */
 
-            var header = new SpanByte(Header);
-            var end = new SpanByte(End);
+            var header = new Span<byte>(Header);
+            var end = new Span<byte>(End);
 
             /*
             * The full frame length is: 4 (FRAME HEADER) + 2 (Data Length Segment) + 2 (COMMAND WORD) + X (COMMAND VALUE) + 4 (FRAME END)
@@ -50,7 +50,7 @@ namespace Iot.Device.Ld2410.Commands
                     Value.Length +
                     End.Length];
 
-            var serializedFrameSpan = new SpanByte(serializedFrame);
+            var serializedFrameSpan = new Span<byte>(serializedFrame);
 
             var serializedFrameCurrentPosition = 0;
 
@@ -78,7 +78,7 @@ namespace Iot.Device.Ld2410.Commands
             serializedFrameCurrentPosition += 2;
 
             // FRAME DATA: VALUE
-            var value = new SpanByte(Value);
+            var value = new Span<byte>(Value);
             value.CopyTo(serializedFrameSpan.Slice(serializedFrameCurrentPosition));
             serializedFrameCurrentPosition += value.Length;
 

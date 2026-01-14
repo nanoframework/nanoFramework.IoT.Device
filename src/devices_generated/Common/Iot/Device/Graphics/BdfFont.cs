@@ -80,7 +80,7 @@ namespace Iot.Device.Graphics
             BdfFont font = new BdfFont();
             while (!sr.EndOfStream)
             {
-                SpanChar span = sr.ReadLine().AsSpan().Trim();
+                Span<char> span = sr.ReadLine().AsSpan().Trim();
                 if (span.StartsWith(FontBoundingBoxString, StringComparison.Ordinal))
                 {
                     span = span.Slice(FontBoundingBoxString.Length).Trim();
@@ -120,7 +120,7 @@ namespace Iot.Device.Graphics
             return font;
         }
 
-        private static int ReadNextDecimalNumber(ref SpanChar span)
+        private static int ReadNextDecimalNumber(ref Span<char> span)
         {
             span = span.Trim();
 
@@ -141,7 +141,7 @@ namespace Iot.Device.Graphics
             return number * sign;
         }
 
-        private static int ReadNextHexaDecimalNumber(ref SpanChar span)
+        private static int ReadNextHexaDecimalNumber(ref Span<char> span)
         {
             span = span.Trim();
 
@@ -261,7 +261,7 @@ namespace Iot.Device.Graphics
             int index = 0;
             for (int i = 0; i < CharsCount; i++)
             {
-                SpanChar span = sr.ReadLine().AsSpan().Trim();
+                Span<char> span = sr.ReadLine().AsSpan().Trim();
                 if (!span.StartsWith(StartCharString, StringComparison.Ordinal))
                 {
                     throw new InvalidDataException(

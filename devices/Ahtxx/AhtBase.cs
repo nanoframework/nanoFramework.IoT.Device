@@ -76,7 +76,7 @@ namespace Iot.Device.Ahtxx
         /// </summary>
         private void Measure()
         {
-            SpanByte buffer = new byte[3]
+            Span<byte> buffer = new byte[3]
             {
                 // command parameters c.f. datasheet, version 1.1, ch. 5.4
                 (byte)CommonCommand.Measure,
@@ -126,7 +126,7 @@ namespace Iot.Device.Ahtxx
         /// </summary>
         private void Initialize()
         {
-            SpanByte buffer = new byte[3]
+            Span<byte> buffer = new byte[3]
             {
                 _initCommand,
                 0x08, // command parameters c.f. datasheet, version 1.1, ch. 5.4

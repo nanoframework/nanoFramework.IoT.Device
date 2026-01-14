@@ -18,14 +18,14 @@ namespace Iot.Device.Mcp23xxx
             /// </summary>
             /// <param name="registerAddress">Register address</param>
             /// <param name="buffer">Bytes to be read from the register</param>
-            public abstract void Read(byte registerAddress, SpanByte buffer);
+            public abstract void Read(byte registerAddress, Span<byte> buffer);
 
             /// <summary>
             /// Writes bytes to the device register
             /// </summary>
             /// <param name="registerAddress">Register address</param>
             /// <param name="data">Bytes to be written to the register</param>
-            public abstract void Write(byte registerAddress, SpanByte data);
+            public abstract void Write(byte registerAddress, Span<byte> data);
 
             /// <inheritdoc/>
             public abstract void Dispose();

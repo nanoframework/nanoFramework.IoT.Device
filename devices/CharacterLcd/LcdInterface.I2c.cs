@@ -66,7 +66,7 @@ namespace Iot.Device.CharacterLcd
 
             public override void SendCommand(byte command)
             {
-                SpanByte buffer = new byte[]
+                Span<byte> buffer = new byte[]
                 {
                     0x00,
                     command
@@ -74,7 +74,7 @@ namespace Iot.Device.CharacterLcd
                 _device.Write(buffer);
             }
 
-            public override void SendCommands(SpanByte commands)
+            public override void SendCommands(Span<byte> commands)
             {
                 // There is a limit to how much data the controller can accept at once. Haven't found documentation
                 // for this yet, can probably iterate a bit more on this to find a true "max". Not adding additional
@@ -84,7 +84,7 @@ namespace Iot.Device.CharacterLcd
                     throw new ArgumentOutOfRangeException(nameof(commands), "Too many commands in one request.");
                 }
 
-                SpanByte buffer = new byte[commands.Length + 1];
+                Span<byte> buffer = new byte[commands.Length + 1];
                 buffer[0] = 0x00;
                 commands.CopyTo(buffer.Slice(1));
                 _device.Write(buffer);
@@ -92,7 +92,7 @@ namespace Iot.Device.CharacterLcd
 
             public override void SendData(byte value)
             {
-                SpanByte buffer = new byte[]
+                Span<byte> buffer = new byte[]
                 {
                     (byte)ControlByteFlags.RegisterSelect,
                     value
@@ -100,38 +100,38 @@ namespace Iot.Device.CharacterLcd
                 _device.Write(buffer);
             }
 
-            public override void SendData(SpanByte values)
+            public override void SendData(Span<byte> values)
             {
                 // There is a limit to how much data the controller can accept at once. Haven't found documentation
                 // for this yet, can probably iterate a bit more on this to find a true "max". 40 was too much.
                 const int MaxCopy = 20;
-                SpanByte buffer = new byte[MaxCopy + 1];
+                Span<byte> buffer = new byte[MaxCopy + 1];
                 buffer[0] = (byte)ControlByteFlags.RegisterSelect;
-                SpanByte bufferData = buffer.Slice(1);
+                Span<byte> bufferData = buffer.Slice(1);
 
                 while (values.Length > 0)
                 {
-                    SpanByte currentValues = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
+                    Span<byte> currentValues = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
                     values = values.Slice(currentValues.Length);
                     currentValues.CopyTo(bufferData);
                     _device.Write(buffer.Slice(0, currentValues.Length + 1));
                 }
             }
 
-            public override void SendData(SpanChar values)
+            public override void SendData(Span<char> values)
             {
                 // There is a limit to how much data the controller can accept at once. Haven't found documentation
                 // for this yet, can probably iterate a bit more on this to find a true "max". 40 was too much.
                 const int MaxCopy = 20;
-                SpanByte buffer = new byte[MaxCopy + 1];
+                Span<byte> buffer = new byte[MaxCopy + 1];
                 buffer[0] = (byte)ControlByteFlags.RegisterSelect;
-                SpanByte bufferData = buffer.Slice(1);
+                Span<byte> bufferData = buffer.Slice(1);
 
                 while (values.Length > 0)
                 {
-                    SpanChar buff = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
+                    Span<char> buff = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
                     // As we are in a while loop, we can't use stackalloc
-                    SpanByte currentValues = new byte[buff.Length];
+                    Span<byte> currentValues = new byte[buff.Length];
                     for (int i = 0; i < buff.Length; i++)
                     {
                         currentValues[i] = (byte)buff[i];

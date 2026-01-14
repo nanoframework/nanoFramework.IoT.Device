@@ -23,31 +23,31 @@ namespace Iot.Device.Sps30.Entities
             {
                 // When we have 40 bytes of data, we assume Float was requested and will be parsed as such
                 Format = MeasurementOutputFormat.Float;
-                MassConcentrationPm10 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 0, 4)));
-                MassConcentrationPm25 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 4, 4)));
-                MassConcentrationPm40 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 8, 4)));
-                MassConcentrationPm100 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 12, 4)));
-                NumberConcentrationPm05 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 16, 4));
-                NumberConcentrationPm10 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 20, 4));
-                NumberConcentrationPm25 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 24, 4));
-                NumberConcentrationPm40 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 28, 4));
-                NumberConcentrationPm100 = BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 32, 4));
-                TypicalParticleSize = Length.FromMicrometers(BinaryPrimitives.ReadSingleBigEndian(new SpanByte(data, 36, 4)));
+                MassConcentrationPm10 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 0, 4)));
+                MassConcentrationPm25 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 4, 4)));
+                MassConcentrationPm40 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 8, 4)));
+                MassConcentrationPm100 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 12, 4)));
+                NumberConcentrationPm05 = BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 16, 4));
+                NumberConcentrationPm10 = BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 20, 4));
+                NumberConcentrationPm25 = BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 24, 4));
+                NumberConcentrationPm40 = BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 28, 4));
+                NumberConcentrationPm100 = BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 32, 4));
+                TypicalParticleSize = Length.FromMicrometers(BinaryPrimitives.ReadSingleBigEndian(new Span<byte>(data, 36, 4)));
             }
             else if (data.Length >= 20)
             {
                 // When we have 20 bytes of data, we assume UInt16 was requested and will be parsed as such
                 Format = MeasurementOutputFormat.UInt16;
-                MassConcentrationPm10 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 0, 2)));
-                MassConcentrationPm25 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 2, 2)));
-                MassConcentrationPm40 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 4, 2)));
-                MassConcentrationPm100 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 6, 2)));
-                NumberConcentrationPm05 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 8, 2));
-                NumberConcentrationPm10 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 10, 2));
-                NumberConcentrationPm25 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 12, 2));
-                NumberConcentrationPm40 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 14, 2));
-                NumberConcentrationPm100 = BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 16, 2));
-                TypicalParticleSize = Length.FromNanometers(BinaryPrimitives.ReadUInt16BigEndian(new SpanByte(data, 18, 2)));
+                MassConcentrationPm10 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 0, 2)));
+                MassConcentrationPm25 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 2, 2)));
+                MassConcentrationPm40 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 4, 2)));
+                MassConcentrationPm100 = MassConcentration.FromMicrogramsPerCubicMeter(BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 6, 2)));
+                NumberConcentrationPm05 = BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 8, 2));
+                NumberConcentrationPm10 = BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 10, 2));
+                NumberConcentrationPm25 = BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 12, 2));
+                NumberConcentrationPm40 = BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 14, 2));
+                NumberConcentrationPm100 = BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 16, 2));
+                TypicalParticleSize = Length.FromNanometers(BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(data, 18, 2)));
             }
             else
             {

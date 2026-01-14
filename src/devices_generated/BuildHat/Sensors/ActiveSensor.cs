@@ -141,7 +141,7 @@ namespace Iot.Device.BuildHat.Sensors
         /// </summary>
         /// <param name="data">The buffer to send.</param>
         /// <param name="singleHeader">True for single header byte.</param>
-        public void WriteBytes(SpanByte data, bool singleHeader) => Brick.WriteBytesToSensor(Port, data, singleHeader);
+        public void WriteBytes(Span<byte> data, bool singleHeader) => Brick.WriteBytesToSensor(Port, data, singleHeader);
 
         internal bool SetupModeAndRead(int mode, ref bool trigger, bool once = true)
         {

@@ -142,7 +142,7 @@ namespace Iot.Device.Display
         /// <remarks>Write clears dots, you'll have to reset them afterwards</remarks>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="startAddress"/></exception>
         /// <exception cref="ArgumentOutOfRangeException"><see cref="Large4Digit7SegmentDisplay"/> only supports <see cref="MaxNumberOfDigits"/> digits</exception>
-        public override void Write(SpanByte digits, int startAddress = 0)
+        public override void Write(Span<byte> digits, int startAddress = 0)
         {
             if (digits.Length == 0)
             {

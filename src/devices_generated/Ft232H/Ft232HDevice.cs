@@ -278,7 +278,7 @@ namespace Iot.Device.Ft232H
             SetupMpsseMode();
 
             // Now setup the clock and other elements
-            SpanByte toSend = new byte[13];
+            Span<byte> toSend = new byte[13];
             int idx = 0;
             // Disable clock divide by 5 for 60Mhz master clock
             toSend[idx++] = (byte)FtOpcode.DisableClockDivideBy5;
@@ -319,10 +319,10 @@ namespace Iot.Device.Ft232H
         {
             // Seems that we have to send a wrong command to get the MPSSE mode working
             // First with 0xAA
-            SpanByte toSend = new byte[1];
+            Span<byte> toSend = new byte[1];
             toSend[0] = 0xAA;
             Write(toSend);
-            SpanByte toRead = new byte[2];
+            Span<byte> toRead = new byte[2];
             Read(toRead);
             if (!((toRead[0] == 0xFA) && (toRead[1] == 0xAA)))
             {
@@ -346,7 +346,7 @@ namespace Iot.Device.Ft232H
             // SDA high, SCL high
             GpioLowData = (byte)(I2cDataSDAhiSCLhi | (GpioLowData & 0xF8));
             GpioLowDir = (byte)(I2cDirSDAoutSCLout | (GpioLowDir & 0xF8));
-            SpanByte toSend = new byte[NumberCycles * 3 * 3 + 3];
+            Span<byte> toSend = new byte[NumberCycles * 3 * 3 + 3];
             for (count = 0; count < NumberCycles; count++)
             {
                 toSend[idx++] = (byte)FtOpcode.SetDataBitsLowByte;
@@ -388,7 +388,7 @@ namespace Iot.Device.Ft232H
             // SDA low, SCL low
             GpioLowData = (byte)(I2cDataSDAloSCLlo | (GpioLowData & 0xF8));
             GpioLowDir = (byte)(I2cDirSDAoutSCLout | (GpioLowDir & 0xF8));
-            SpanByte toSend = new byte[NumberCycles * 3 * 3];
+            Span<byte> toSend = new byte[NumberCycles * 3 * 3];
             for (count = 0; count < NumberCycles; count++)
             {
                 toSend[idx++] = (byte)FtOpcode.SetDataBitsLowByte;
@@ -425,7 +425,7 @@ namespace Iot.Device.Ft232H
             // SDA low, SCL low
             GpioLowData = (byte)(I2cDataSDAhiSCLhi | (GpioLowData & 0xF8));
             GpioLowDir = (byte)(I2cDirSDAoutSCLout | (GpioLowDir & 0xF8));
-            SpanByte toSend = new byte[3];
+            Span<byte> toSend = new byte[3];
             toSend[idx++] = (byte)FtOpcode.SetDataBitsLowByte;
             toSend[idx++] = GpioLowData;
             toSend[idx++] = GpioLowDir;
@@ -436,8 +436,8 @@ namespace Iot.Device.Ft232H
         internal bool I2cSendByteAndCheckACK(byte data)
         {
             int idx = 0;
-            SpanByte toSend = new byte[10];
-            SpanByte toRead = new byte[1];
+            Span<byte> toSend = new byte[10];
+            Span<byte> toRead = new byte[1];
             // Just clock with one byte (0 = 1 byte)
             toSend[idx++] = (byte)FtOpcode.ClockDataBytesOutOnMinusVeClockMSBFirst;
             toSend[idx++] = 0;
@@ -475,8 +475,8 @@ namespace Iot.Device.Ft232H
         internal byte I2CReadByte(bool ack)
         {
             int idx = 0;
-            SpanByte toSend = new byte[10];
-            SpanByte toRead = new byte[1];
+            Span<byte> toSend = new byte[10];
+            Span<byte> toRead = new byte[1];
             // Read one byte
             toSend[idx++] = (byte)FtOpcode.ClockDataBytesInOnPlusVeClockMSBFirst;
             toSend[idx++] = 0;
@@ -526,8 +526,8 @@ namespace Iot.Device.Ft232H
 
         internal byte GetGpioValuesLow()
         {
-            SpanByte toSend = new byte[2];
-            SpanByte toRead = new byte[1];
+            Span<byte> toSend = new byte[2];
+            Span<byte> toRead = new byte[1];
             toSend[0] = (byte)FtOpcode.ReadDataBitsLowByte;
             toSend[1] = (byte)FtOpcode.SendImmediate;
             Write(toSend);
@@ -537,7 +537,7 @@ namespace Iot.Device.Ft232H
 
         internal void SetGpioValuesLow()
         {
-            SpanByte toSend = new byte[3];
+            Span<byte> toSend = new byte[3];
             toSend[0] = (byte)FtOpcode.SetDataBitsLowByte;
             toSend[1] = GpioLowData;
             toSend[2] = GpioLowDir;
@@ -546,8 +546,8 @@ namespace Iot.Device.Ft232H
 
         internal byte GetGpioValuesHigh()
         {
-            SpanByte toSend = new byte[2];
-            SpanByte toRead = new byte[1];
+            Span<byte> toSend = new byte[2];
+            Span<byte> toRead = new byte[1];
             toSend[0] = (byte)FtOpcode.ReadDataBitsHighByte;
             toSend[1] = (byte)FtOpcode.SendImmediate;
             Write(toSend);
@@ -557,7 +557,7 @@ namespace Iot.Device.Ft232H
 
         internal void SetGpioValuesHigh()
         {
-            SpanByte toSend = new byte[3];
+            Span<byte> toSend = new byte[3];
             toSend[0] = (byte)FtOpcode.SetDataBitsHighByte;
             toSend[1] = GpioHighData;
             toSend[2] = GpioHighDir;
@@ -599,7 +599,7 @@ namespace Iot.Device.Ft232H
             SetupMpsseMode();
 
             int idx = 0;
-            SpanByte toSend = new byte[10];
+            Span<byte> toSend = new byte[10];
             toSend[idx++] = (byte)FtOpcode.DisableClockDivideBy5;
             toSend[idx++] = (byte)FtOpcode.TurnOffAdaptativeClocking;
             toSend[idx++] = (byte)FtOpcode.Disable3PhaseDataClocking;
@@ -632,7 +632,7 @@ namespace Iot.Device.Ft232H
             }
         }
 
-        internal void SpiWrite(SpiConnectionSettings settings, SpanByte buffer)
+        internal void SpiWrite(SpiConnectionSettings settings, Span<byte> buffer)
         {
             if (buffer.Length > 65535)
             {
@@ -672,7 +672,7 @@ namespace Iot.Device.Ft232H
 
             SpiChipSelectEnable(settings.ChipSelectLine, settings.ChipSelectLineActiveState, true);
             int idx = 0;
-            SpanByte toSend = new byte[3 + buffer.Length];
+            Span<byte> toSend = new byte[3 + buffer.Length];
             toSend[idx++] = clock;
             toSend[idx++] = (byte)((buffer.Length - 1) & 0xFF);
             toSend[idx++] = (byte)((buffer.Length - 1) >> 8);
@@ -681,7 +681,7 @@ namespace Iot.Device.Ft232H
             SpiChipSelectEnable(settings.ChipSelectLine, settings.ChipSelectLineActiveState, false);
         }
 
-        internal void SpiRead(SpiConnectionSettings settings, SpanByte buffer)
+        internal void SpiRead(SpiConnectionSettings settings, Span<byte> buffer)
         {
             if (buffer.Length > 65535)
             {
@@ -720,7 +720,7 @@ namespace Iot.Device.Ft232H
 
             SpiChipSelectEnable((byte)settings.ChipSelectLine, settings.ChipSelectLineActiveState, true);
             int idx = 0;
-            SpanByte toSend = new byte[3];
+            Span<byte> toSend = new byte[3];
             toSend[idx++] = clock;
             toSend[idx++] = (byte)((buffer.Length - 1) & 0xFF);
             toSend[idx++] = (byte)((buffer.Length - 1) >> 8);
@@ -729,7 +729,7 @@ namespace Iot.Device.Ft232H
             SpiChipSelectEnable((byte)settings.ChipSelectLine, settings.ChipSelectLineActiveState, false);
         }
 
-        internal void SpiWriteRead(SpiConnectionSettings settings, SpanByte bufferWrite, SpanByte bufferRead)
+        internal void SpiWriteRead(SpiConnectionSettings settings, Span<byte> bufferWrite, Span<byte> bufferRead)
         {
             if ((bufferRead.Length > 65535) || (bufferWrite.Length > 65535))
             {
@@ -768,7 +768,7 @@ namespace Iot.Device.Ft232H
 
             SpiChipSelectEnable(settings.ChipSelectLine, settings.ChipSelectLineActiveState, true);
             int idx = 0;
-            SpanByte toSend = new byte[3 + bufferWrite.Length];
+            Span<byte> toSend = new byte[3 + bufferWrite.Length];
             toSend[idx++] = clock;
             toSend[idx++] = (byte)((bufferWrite.Length - 1) & 0xFF);
             toSend[idx++] = (byte)((bufferWrite.Length - 1) >> 8);
@@ -787,7 +787,7 @@ namespace Iot.Device.Ft232H
 
             var value = enable ? csPinValue : !csPinValue;
 
-            SpanByte toSend = new byte[NumberCycles * 3];
+            Span<byte> toSend = new byte[NumberCycles * 3];
             int idx = 0;
             if (chipSelect < 8)
             {
@@ -839,7 +839,7 @@ namespace Iot.Device.Ft232H
 
         #region Read Write
 
-        internal void Write(SpanByte buffer)
+        internal void Write(Span<byte> buffer)
         {
             uint numBytesWritten = 0;
             var ftStatus = FtFunction.FT_Write(_ftHandle, in MemoryMarshal.GetReference(buffer), (ushort)buffer.Length, ref numBytesWritten);
@@ -849,7 +849,7 @@ namespace Iot.Device.Ft232H
             }
         }
 
-        internal int Read(SpanByte buffer)
+        internal int Read(Span<byte> buffer)
         {
             CancellationToken token = new CancellationTokenSource(1000).Token;
             int totalBytesRead = 0;

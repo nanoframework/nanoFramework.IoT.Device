@@ -103,7 +103,7 @@ namespace Iot.Device.SocketCan
             where T : struct
         {
             int fd = (int)handle.DangerousGetHandle();
-            SpanByte buf = MemoryMarshal.AsBytes(data);
+            Span<byte> buf = MemoryMarshal.AsBytes(data);
             fixed (byte* pinned = buf)
             {
                 return SetSocketOpt(fd, level, (int)optName, pinned, buf.Length) == 0;

@@ -221,7 +221,7 @@ namespace Iot.Device.SparkFunLcd
         /// <param name="location">Character number 0 thru 7, 8 locations are available.</param>
         /// <param name="characterMap">Byte array for custom character refer to datasheet for specific information, or see https://www.quinapalus.com/hd44780udg.html.</param>
         /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
-        /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
+        /// <seealso cref="CreateCustomCharacter(int, Span<byte>)"/>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
             if (location < 0 || location > 7)
@@ -250,8 +250,8 @@ namespace Iot.Device.SparkFunLcd
         /// <param name="location">Character number 0 thru 7, 8 locations are available.</param>
         /// <param name="characterMap">Byte array for custom character refer to datasheet for specific information.</param>
         /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
-        /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
-        public void CreateCustomCharacter(int location, SpanByte characterMap)
+        /// <seealso cref="CreateCustomCharacter(int, Span<byte>)"/>
+        public void CreateCustomCharacter(int location, Span<byte> characterMap)
         {
             CreateCustomCharacter(location, characterMap.ToArray());
         }
@@ -270,7 +270,7 @@ namespace Iot.Device.SparkFunLcd
         /// Write a character buffer to the display.
         /// </summary>
         /// <param name="buffer">Buffer to write.</param>
-        public void Write(SpanChar buffer)
+        public void Write(Span<char> buffer)
         {
             Write(buffer.ToArray());
         }

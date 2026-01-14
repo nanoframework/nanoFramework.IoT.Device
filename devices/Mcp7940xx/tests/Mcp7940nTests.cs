@@ -17,10 +17,10 @@ namespace Iot.Device.NFUnitTest
         static I2cDevice _i2cDevice;
         static Mcp7940n _clock;
 
-        private SpanByte ReadAllBuffers()
+        private Span<byte> ReadAllBuffers()
         {
             // Read all Mcp7940n registers.
-            SpanByte readBuffer = new byte[31];
+            Span<byte> readBuffer = new byte[31];
 
             _i2cDevice.WriteByte((byte)Register.TimekeepingSecond);
             _i2cDevice.Read(readBuffer);
@@ -68,10 +68,10 @@ namespace Iot.Device.NFUnitTest
         public void ExternalBatteryBackup_EnableExternalBatteryBackup_And_DisableExternalBatteryBackup_Only_Changes_Relevant_Flag()
         {
             _clock.EnableExternalBatteryBackup();
-            SpanByte before = ReadAllBuffers();
+            Span<byte> before = ReadAllBuffers();
 
             _clock.DisableExternalBatteryBackup();
-            SpanByte after = ReadAllBuffers();
+            Span<byte> after = ReadAllBuffers();
 
             // Verify time keeping registers.
             TestHelper.AssertRegistersEqual(before, after, Register.TimekeepingSecond);

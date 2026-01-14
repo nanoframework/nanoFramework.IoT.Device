@@ -139,8 +139,8 @@ namespace Iot.Device.Ili9341
         /// <param name="h">The height of the rectangle in pixels.</param>
         public void FillRect(Color color, uint x, uint y, uint w, uint h)
         {
-            SpanByte colourBytes = new byte[2]; // create a short span that holds the colour data to be sent to the display
-            SpanByte displayBytes = new byte[(int)(w * h * 2)]; // span used to form the data to be written out to the SPI interface
+            Span<byte> colourBytes = new byte[2]; // create a short span that holds the colour data to be sent to the display
+            Span<byte> displayBytes = new byte[(int)(w * h * 2)]; // span used to form the data to be written out to the SPI interface
 
             // set the colourbyte array to represent the fill colour
             (colourBytes[0], colourBytes[1]) = Color565(color);
@@ -210,7 +210,7 @@ namespace Iot.Device.Ili9341
         private void SetWindow(uint x0 = 0, uint y0 = 0, uint x1 = ScreenWidthPx - 1, uint y1 = ScreenWidthPx - 1)
         {
             SendCommand(Ili9341Command.ColumnAddressSet);
-            SpanByte data = new byte[4]
+            Span<byte> data = new byte[4]
             {
                 (byte)(x0 >> 8),
                 (byte)x0,
@@ -219,7 +219,7 @@ namespace Iot.Device.Ili9341
             };
             SendData(data);
             SendCommand(Ili9341Command.PageAddressSet);
-            SpanByte data2 = new byte[4]
+            Span<byte> data2 = new byte[4]
             {
                 (byte)(y0 >> 8),
                 (byte)y0,
@@ -257,9 +257,9 @@ namespace Iot.Device.Ili9341
         /// </summary>
         /// <param name="command">Command to send.</param>
         /// <param name="data">Span to send as parameters for the command.</param>
-        private void SendCommand(Ili9341Command command, SpanByte data)
+        private void SendCommand(Ili9341Command command, Span<byte> data)
         {
-            SpanByte commandSpan = new byte[]
+            Span<byte> commandSpan = new byte[]
             {
                 (byte)command
             };
@@ -276,7 +276,7 @@ namespace Iot.Device.Ili9341
         /// Send data to the display controller.
         /// </summary>
         /// <param name="data">The data to send to the display controller.</param>
-        private void SendData(SpanByte data)
+        private void SendData(Span<byte> data)
         {
             SendSPI(data, blnIsCommand: false);
         }
@@ -286,7 +286,7 @@ namespace Iot.Device.Ili9341
         /// </summary>
         /// <param name="data">The data to be sent to the SPI device</param>
         /// <param name="blnIsCommand">A flag indicating that the data is really a command when true or data when false.</param>
-        private void SendSPI(SpanByte data, bool blnIsCommand = false)
+        private void SendSPI(Span<byte> data, bool blnIsCommand = false)
         {
             int index = 0;
             int len;

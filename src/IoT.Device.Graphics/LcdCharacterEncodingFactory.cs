@@ -911,7 +911,7 @@ namespace Iot.Device.Graphics
         /// </summary>
         /// <param name="font8">A span of bytes, must be 8 bytes length</param>
         /// <returns>A 5 bytes array containing the character</returns>
-        public static byte[] ConvertFont8to5bytes(SpanByte font8)
+        public static byte[] ConvertFont8to5bytes(Span<byte> font8)
         {
             if (font8.Length != 8)
             {
@@ -939,7 +939,7 @@ namespace Iot.Device.Graphics
         /// </summary>
         /// <param name="font5">A span of bytes, must be 5 bytes length</param>
         /// <returns>A 8 bytes array containing the character</returns>
-        public static byte[] ConvertFont5to8bytes(SpanByte font5)
+        public static byte[] ConvertFont5to8bytes(Span<byte> font5)
         {
             if (font5.Length != 5)
             {

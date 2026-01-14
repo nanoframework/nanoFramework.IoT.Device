@@ -92,7 +92,7 @@ namespace Iot.Device.Bh1750fvi
                 _i2cDevice.WriteByte((byte)Command.PowerOn);
             }
 
-            SpanByte readBuff = new byte[2];
+            Span<byte> readBuff = new byte[2];
 
             _i2cDevice.WriteByte((byte)MeasuringMode);
             _i2cDevice.Read(readBuff);

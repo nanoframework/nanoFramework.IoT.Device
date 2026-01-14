@@ -228,7 +228,7 @@ namespace Iot.Device.Pn532
         public bool RunSelfTest(DiagnoseMode diagnoseMode)
         {
             int ret = 0;
-            SpanByte singleParam = new byte[1]
+            Span<byte> singleParam = new byte[1]
             {
                 (byte)diagnoseMode
             };
@@ -243,7 +243,7 @@ namespace Iot.Device.Pn532
                     // − Parameter : Data,
                     // − Result Length : Same value of m + 1.
                     // OutParam consists of NumTst concatenate with InParam.
-                    SpanByte toTest = new byte[9]
+                    Span<byte> toTest = new byte[9]
                     {
                         (byte)DiagnoseMode.CommunicationLineTest,
                         0x11,
@@ -261,7 +261,7 @@ namespace Iot.Device.Pn532
                         return false;
                     }
 
-                    SpanByte resultTest = new byte[9];
+                    Span<byte> resultTest = new byte[9];
                     ret = ReadResponse(CommandSet.Diagnose, resultTest);
 #if DEBUG
                     _logger.LogDebug($"{diagnoseMode} received: {BitConverter.ToString(resultTest.ToArray())}, ret: {ret}");
@@ -282,7 +282,7 @@ namespace Iot.Device.Pn532
 
                     // Wait for the test to run
                     Thread.Sleep(1500);
-                    SpanByte romTest = new byte[1];
+                    Span<byte> romTest = new byte[1];
                     ret = ReadResponse(CommandSet.Diagnose, romTest);
 #if DEBUG
                     _logger.LogDebug($"{diagnoseMode} received: {BitConverter.ToString(romTest.ToArray())}, ret: {ret}");
@@ -309,7 +309,7 @@ namespace Iot.Device.Pn532
                     // Wait for the test to run
                     // TODO: find the right timing, this is empirical
                     Thread.Sleep(1500);
-                    SpanByte ramTest = new byte[1];
+                    Span<byte> ramTest = new byte[1];
                     ret = ReadResponse(CommandSet.Diagnose, ramTest);
 #if DEBUG
                     _logger.LogDebug($"{diagnoseMode} received: {BitConverter.ToString(ramTest.ToArray())}, ret: {ret}");
@@ -446,7 +446,7 @@ namespace Iot.Device.Pn532
         private bool SetSecurityAccessModule()
         {
             // Pass the SAM, the virtual card timeout and remove IRQ
-            SpanByte toSend = new byte[3]
+            Span<byte> toSend = new byte[3]
             {
                 (byte)_securityAccessModuleMode,
                 (byte)(_virtualCardTimeout),
@@ -462,7 +462,7 @@ namespace Iot.Device.Pn532
             }
 
             // We don't expect any result, just that the command went well
-            ret = ReadResponse(CommandSet.SAMConfiguration, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.SAMConfiguration, Span<byte>.Empty);
 #if DEBUG
             _logger.LogDebug($"{nameof(SetSecurityAccessModule)} read: {ret}");
 #endif
@@ -480,7 +480,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            SpanByte firmware = new byte[4];
+            Span<byte> firmware = new byte[4];
             ret = ReadResponse(CommandSet.GetFirmwareVersion, firmware);
             var ver = firmware.ToArray();
             if (ret >= 0)
@@ -514,7 +514,7 @@ namespace Iot.Device.Pn532
 
         private bool SetParameters(ParametersFlags parametersFlags)
         {
-            SpanByte toSend = new byte[1]
+            Span<byte> toSend = new byte[1]
             {
                 (byte)parametersFlags
             };
@@ -524,7 +524,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            ret = ReadResponse(CommandSet.SetParameters, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.SetParameters, Span<byte>.Empty);
 #if DEBUG
             _logger.LogDebug($"{nameof(SetParameters)}: {ret}");
 #endif
@@ -543,7 +543,7 @@ namespace Iot.Device.Pn532
         /// <returns>A raw byte array with the data of the targets if any has been identified</returns>
         public byte[] ListPassiveTarget(MaxTarget maxTarget, TargetBaudRate targetBaudRate)
         {
-            return ListPassiveTarget(maxTarget, targetBaudRate, SpanByte.Empty);
+            return ListPassiveTarget(maxTarget, targetBaudRate, Span<byte>.Empty);
         }
 
         /// <summary>
@@ -558,9 +558,9 @@ namespace Iot.Device.Pn532
         /// <param name="initiatorData">Specific initialization data</param>
         /// <returns>A raw byte array with the data of the targets if any has been identified</returns>
         public byte[] ListPassiveTarget(MaxTarget maxTarget, TargetBaudRate targetBaudRate,
-            SpanByte initiatorData)
+            Span<byte> initiatorData)
         {
-            SpanByte toSend = new byte[2 + initiatorData.Length];
+            Span<byte> toSend = new byte[2 + initiatorData.Length];
             toSend[0] = (byte)maxTarget;
             toSend[1] = (byte)targetBaudRate;
             if (initiatorData.Length > 0)
@@ -575,7 +575,7 @@ namespace Iot.Device.Pn532
             }
 
             // TODO: check what is the real maximum size
-            SpanByte listData = new byte[1024];
+            Span<byte> listData = new byte[1024];
             ret = ReadResponse(CommandSet.InListPassiveTarget, listData);
 #if DEBUG
             _logger.LogDebug($"{nameof(ListPassiveTarget)}: {ret}, number tags: {listData[0]}");
@@ -594,7 +594,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="toDecode">The raw byte array</param>
         /// <returns>A decoded card of null if it can't</returns>
-        public Data106kbpsTypeA TryDecode106kbpsTypeA(SpanByte toDecode)
+        public Data106kbpsTypeA TryDecode106kbpsTypeA(Span<byte> toDecode)
         {
             try
             {
@@ -636,7 +636,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="toDecode">The raw byte array</param>
         /// <returns>A decoded card of null if it can't</returns>
-        public Data106kbpsTypeB TryDecodeData106kbpsTypeB(SpanByte toDecode)
+        public Data106kbpsTypeB TryDecodeData106kbpsTypeB(Span<byte> toDecode)
         {
             try
             {
@@ -656,7 +656,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="toDecode">The raw byte array</param>
         /// <returns>A decoded card of null if it can't</returns>
-        public Data212_424kbps TryDecodeData212_424Kbps(SpanByte toDecode)
+        public Data212_424kbps TryDecodeData212_424Kbps(Span<byte> toDecode)
         {
             try
             {
@@ -697,7 +697,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="toDecode">The raw byte array</param>
         /// <returns>A decoded card of null if it can't</returns>
-        public Data106kbpsInnovisionJewel TryDecodeData106kbpsInnovisionJewel(SpanByte toDecode)
+        public Data106kbpsInnovisionJewel TryDecodeData106kbpsInnovisionJewel(Span<byte> toDecode)
         {
             try
             {
@@ -720,7 +720,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool DeselectTarget(byte targetNumber)
         {
-            SpanByte toSend = new byte[1]
+            Span<byte> toSend = new byte[1]
             {
                 targetNumber
             };
@@ -741,7 +741,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool SelectTarget(byte targetNumber)
         {
-            SpanByte toSend = new byte[1]
+            Span<byte> toSend = new byte[1]
             {
                 targetNumber
             };
@@ -762,7 +762,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool ReleaseTarget(byte targetNumber)
         {
-            SpanByte toSend = new byte[1]
+            Span<byte> toSend = new byte[1]
             {
                 targetNumber
             };
@@ -783,7 +783,7 @@ namespace Iot.Device.Pn532
         /// <param name="dataToSend">The data to write to the card</param>
         /// <param name="dataFromCard">The potential data to receive</param>
         /// <returns>The number of bytes read</returns>
-        public int WriteReadDirect(SpanByte dataToSend, SpanByte dataFromCard)
+        public int WriteReadDirect(Span<byte> dataToSend, Span<byte> dataFromCard)
         {
             var ret = WriteCommand(CommandSet.InCommunicateThru, dataToSend);
             if (ret < 0)
@@ -793,7 +793,7 @@ namespace Iot.Device.Pn532
 
             if (dataFromCard.Length > 0)
             {
-                SpanByte toReceive = new byte[1 + dataFromCard.Length];
+                Span<byte> toReceive = new byte[1 + dataFromCard.Length];
                 ret = ReadResponse(CommandSet.InCommunicateThru, toReceive);
                 toReceive.Slice(1).CopyTo(dataFromCard);
                 if ((toReceive[0] == (byte)ErrorCode.None) && (ret > 0))
@@ -816,7 +816,7 @@ namespace Iot.Device.Pn532
         /// <param name="dataToSend">The data to write to the card</param>
         /// <param name="dataFromCard">The potential data to receive</param>
         /// <returns>The number of bytes read</returns>
-        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, Span<byte> dataToSend, Span<byte> dataFromCard)
         {
             // We need to add some logic here to understand what the command is and the size of the needed buffer.
             // For Mifare card, the authentications needs to use the native part.
@@ -838,9 +838,9 @@ namespace Iot.Device.Pn532
         /// <param name="dataToSend">The data to write to the card</param>
         /// <param name="dataFromCard">The potential data to receive</param>
         /// <returns>The number of bytes read</returns>
-        public int TransceiveAdvance(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
+        public int TransceiveAdvance(byte targetNumber, Span<byte> dataToSend, Span<byte> dataFromCard)
         {
-            SpanByte toSend = new byte[1 + dataToSend.Length];
+            Span<byte> toSend = new byte[1 + dataToSend.Length];
             toSend[0] = targetNumber;
             if (dataToSend.Length > 0)
             {
@@ -853,7 +853,7 @@ namespace Iot.Device.Pn532
                 return -1;
             }
 
-            SpanByte toReceive = new byte[1 + dataFromCard.Length];
+            Span<byte> toReceive = new byte[1 + dataFromCard.Length];
             ret = ReadResponse(CommandSet.InDataExchange, toReceive);
             toReceive.Slice(1).CopyTo(dataFromCard);
             if ((toReceive[0] == (byte)ErrorCode.None) && (ret > 0))
@@ -887,7 +887,7 @@ namespace Iot.Device.Pn532
                 return null;
             }
 
-            SpanByte toSend = new byte[2 + pollingType.Length];
+            Span<byte> toSend = new byte[2 + pollingType.Length];
             toSend[0] = numberPolling;
             if ((periodMilliSecond / 150) > 0xFF)
             {
@@ -909,7 +909,7 @@ namespace Iot.Device.Pn532
                 return null;
             }
 
-            SpanByte receivedData = new byte[1024];
+            Span<byte> receivedData = new byte[1024];
             ret = ReadResponse(CommandSet.InAutoPoll, receivedData);
 #if DEBUG
             _logger.LogDebug($"{nameof(AutoPoll)}, success: {ret}");
@@ -961,7 +961,7 @@ namespace Iot.Device.Pn532
                 return new AsTargetInitialized(null, null);
             }
 
-            SpanByte receivedData = new byte[1024];
+            Span<byte> receivedData = new byte[1024];
             ret = ReadResponse(CommandSet.TgInitAsTarget, receivedData);
 #if DEBUG
             _logger.LogDebug($"{nameof(InitAsTarget)}, success: {ret}");
@@ -984,7 +984,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="receivedData">A Span byte array for the read data. Note the first byte contains the status</param>
         /// <returns>Number of byte read</returns>
-        public int ReadDataAsTarget(SpanByte receivedData)
+        public int ReadDataAsTarget(Span<byte> receivedData)
         {
             var ret = WriteCommand(CommandSet.TgGetData);
             if (ret < 0)
@@ -1008,7 +1008,7 @@ namespace Iot.Device.Pn532
         /// </summary>
         /// <param name="dataToSend">The data to send</param>
         /// <returns>True if success</returns>
-        public bool WriteDataAsTarget(SpanByte dataToSend)
+        public bool WriteDataAsTarget(Span<byte> dataToSend)
         {
             var ret = WriteCommand(CommandSet.TgSetData, dataToSend);
             if (ret < 0)
@@ -1016,7 +1016,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            SpanByte receivedData = new byte[1];
+            Span<byte> receivedData = new byte[1];
             ret = ReadResponse(CommandSet.TgSetData, receivedData);
 #if DEBUG
             _logger.LogDebug($"{nameof(InitAsTarget)}, success: {ret}");
@@ -1103,16 +1103,16 @@ namespace Iot.Device.Pn532
 
         private bool SetRfConfiguration(RfConfigurationMode rfConfigurationMode, byte[] configurationData)
         {
-            SpanByte toSend = new byte[configurationData.Length + 1];
+            Span<byte> toSend = new byte[configurationData.Length + 1];
             toSend[0] = (byte)rfConfigurationMode;
-            new SpanByte(configurationData).CopyTo(toSend.Slice(1));
+            new Span<byte>(configurationData).CopyTo(toSend.Slice(1));
             var ret = WriteCommand(CommandSet.RFConfiguration, toSend);
             if (ret < 0)
             {
                 return false;
             }
 
-            ret = ReadResponse(CommandSet.RFConfiguration, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.RFConfiguration, Span<byte>.Empty);
 #if DEBUG
             _logger.LogDebug($"{nameof(SetParameters)}: {ret}");
 #endif
@@ -1129,9 +1129,9 @@ namespace Iot.Device.Pn532
         /// <param name="registers">Array of register to read</param>
         /// <param name="registerValues">Register read values</param>
         /// <returns>True if success</returns>
-        public bool ReadRegisterSfr(SfrRegister[] registers, SpanByte registerValues)
+        public bool ReadRegisterSfr(SfrRegister[] registers, Span<byte> registerValues)
         {
-            SpanByte toSend = new byte[registers.Length * 2];
+            Span<byte> toSend = new byte[registers.Length * 2];
             for (int i = 0; i < registers.Length; i++)
             {
                 toSend[i * 2] = 0xFF;
@@ -1149,7 +1149,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool ReadRegister(ushort register, out byte registerValue)
         {
-            SpanByte toRead = new byte[1];
+            Span<byte> toRead = new byte[1];
             var ret = ReadRegister(new ushort[] { register }, toRead);
             registerValue = toRead[0];
             return ret;
@@ -1161,9 +1161,9 @@ namespace Iot.Device.Pn532
         /// <param name="registers">Array of register to read</param>
         /// <param name="registerValues">Register read values</param>
         /// <returns>True if success</returns>
-        public bool ReadRegister(ushort[] registers, SpanByte registerValues)
+        public bool ReadRegister(ushort[] registers, Span<byte> registerValues)
         {
-            SpanByte toSend = new byte[registers.Length * 2];
+            Span<byte> toSend = new byte[registers.Length * 2];
             for (int i = 0; i < registers.Length; i++)
             {
                 toSend[i * 2] = (byte)(registers[i] >> 8);
@@ -1173,7 +1173,7 @@ namespace Iot.Device.Pn532
             return ReadRegisterCore(toSend, registerValues);
         }
 
-        private bool ReadRegisterCore(SpanByte toSend, SpanByte registerValues)
+        private bool ReadRegisterCore(Span<byte> toSend, Span<byte> registerValues)
         {
             var ret = WriteCommand(CommandSet.ReadRegister, toSend);
             if (ret < 0)
@@ -1194,9 +1194,9 @@ namespace Iot.Device.Pn532
         /// <param name="registers">Array of register to write</param>
         /// <param name="registerValue">Register values to write</param>
         /// <returns>True if success</returns>
-        public bool WriteRegisterSfr(SfrRegister[] registers, SpanByte registerValue)
+        public bool WriteRegisterSfr(SfrRegister[] registers, Span<byte> registerValue)
         {
-            SpanByte toSend = new byte[registers.Length * 3];
+            Span<byte> toSend = new byte[registers.Length * 3];
             for (int i = 0; i < registers.Length; i++)
             {
                 toSend[i * 3] = 0xFF;
@@ -1222,9 +1222,9 @@ namespace Iot.Device.Pn532
         /// <param name="registers">Array of register to write</param>
         /// <param name="registerValue">Register values to write</param>
         /// <returns></returns>
-        public bool WriteRegister(ushort[] registers, SpanByte registerValue)
+        public bool WriteRegister(ushort[] registers, Span<byte> registerValue)
         {
-            SpanByte toSend = new byte[registers.Length * 3];
+            Span<byte> toSend = new byte[registers.Length * 3];
             for (int i = 0; i < registers.Length; i++)
             {
                 toSend[i * 2] = (byte)(registers[i] >> 8);
@@ -1235,7 +1235,7 @@ namespace Iot.Device.Pn532
             return WriteRegisterCore(toSend, registerValue);
         }
 
-        private bool WriteRegisterCore(SpanByte toSend, SpanByte registerValue)
+        private bool WriteRegisterCore(Span<byte> toSend, Span<byte> registerValue)
         {
             var ret = WriteCommand(CommandSet.ReadRegister, toSend);
             if (ret < 0)
@@ -1249,7 +1249,7 @@ namespace Iot.Device.Pn532
             // A register that will create an output
             // The maximum amount of data return if 260 but writing specific register can
             // Generate a larger amount
-            SpanByte returnVal = new byte[1024];
+            Span<byte> returnVal = new byte[1024];
             ret = ReadResponse(CommandSet.ReadRegister, returnVal);
 #if DEBUG
             _logger.LogDebug($"{nameof(WriteRegister)}: {ret}");
@@ -1280,7 +1280,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            SpanByte retGPIO = new byte[3];
+            Span<byte> retGPIO = new byte[3];
             ret = ReadResponse(CommandSet.ReadGPIO, retGPIO);
             p3 = (Port3)retGPIO[0];
             p7 = (Port7)retGPIO[1];
@@ -1296,7 +1296,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool WriteGpio(Port7 p7, Port3 p3)
         {
-            SpanByte toWrite = new byte[2]
+            Span<byte> toWrite = new byte[2]
             {
                 (byte)(0x80 | (byte)p3),
                 (byte)(0x80 | (byte)p7)
@@ -1307,7 +1307,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            ret = ReadResponse(CommandSet.WriteGPIO, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.WriteGPIO, Span<byte>.Empty);
             return ret >= 0;
         }
 
@@ -1318,7 +1318,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool WriteGpio(Port3 p3)
         {
-            SpanByte toWrite = new byte[2]
+            Span<byte> toWrite = new byte[2]
             {
                 (byte)(0x80 | (byte)p3),
                 (byte)(0x00)
@@ -1329,7 +1329,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            ret = ReadResponse(CommandSet.WriteGPIO, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.WriteGPIO, Span<byte>.Empty);
             return ret >= 0;
         }
 
@@ -1340,7 +1340,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool WriteGpio(Port7 p7)
         {
-            SpanByte toWrite = new byte[2]
+            Span<byte> toWrite = new byte[2]
             {
                 (byte)(0x00),
                 (byte)(0x80 | (byte)p7)
@@ -1351,7 +1351,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            ret = ReadResponse(CommandSet.WriteGPIO, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.WriteGPIO, Span<byte>.Empty);
             return ret >= 0;
         }
 
@@ -1366,7 +1366,7 @@ namespace Iot.Device.Pn532
         /// <returns>True if success</returns>
         public bool PowerDown(WakeUpEnable wakeUpEnable)
         {
-            SpanByte toSend = new byte[1]
+            Span<byte> toSend = new byte[1]
             {
                 (byte)wakeUpEnable
             };
@@ -1376,7 +1376,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            SpanByte status = new byte[1];
+            Span<byte> status = new byte[1];
             ret = ReadResponse(CommandSet.PowerDown, status);
 #if DEBUG
             _logger.LogDebug($"{nameof(PowerDown)}: {ret}, Status {status[0]}");
@@ -1489,7 +1489,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            SpanByte toSend = new byte[1]
+            Span<byte> toSend = new byte[1]
             {
                 (byte)baudRate
             };
@@ -1499,7 +1499,7 @@ namespace Iot.Device.Pn532
                 return false;
             }
 
-            ret = ReadResponse(CommandSet.SetSerialBaudRate, SpanByte.Empty);
+            ret = ReadResponse(CommandSet.SetSerialBaudRate, Span<byte>.Empty);
             // Need to send an acknowledge
             _serialPort.Write(_ackBuffer, 0, _ackBuffer.Length);
             _serialPort.Close();
@@ -1568,10 +1568,10 @@ namespace Iot.Device.Pn532
 
         private int WriteCommand(CommandSet commandSet)
         {
-            return WriteCommand(commandSet, SpanByte.Empty);
+            return WriteCommand(commandSet, Span<byte>.Empty);
         }
 
-        private int WriteCommand(CommandSet commandSet, SpanByte writeData)
+        private int WriteCommand(CommandSet commandSet, Span<byte> writeData)
         {
 #if DEBUG
             _logger.LogDebug($"{nameof(WriteCommand)}: {nameof(CommandSet)} {commandSet} Bytes to send: {BitConverter.ToString(writeData.ToArray())}");
@@ -1628,7 +1628,7 @@ namespace Iot.Device.Pn532
         /// <param name="commandSet">The command to use</param>
         /// <param name="writeData">The additional data to send</param>
         /// <returns></returns>
-        private byte[] CreateWriteMessage(CommandSet commandSet, SpanByte writeData)
+        private byte[] CreateWriteMessage(CommandSet commandSet, Span<byte> writeData)
         {
             // 7 bytes + writeData length + 2 bytes if preamble
             int correctionPreamble = 2;
@@ -1640,7 +1640,7 @@ namespace Iot.Device.Pn532
                 correctionIndex = 1;
             }
 
-            SpanByte buff = new byte[7 + writeData.Length + correctionPreamble + correctionLArgeSizeBuffer];
+            Span<byte> buff = new byte[7 + writeData.Length + correctionPreamble + correctionLArgeSizeBuffer];
             if (correctionPreamble != 0)
             {
                 buff[0] = Preamble;
@@ -1693,7 +1693,7 @@ namespace Iot.Device.Pn532
             return buff.ToArray();
         }
 
-        private int WriteCommandSerial(CommandSet commandSet, SpanByte writeData)
+        private int WriteCommandSerial(CommandSet commandSet, Span<byte> writeData)
         {
             if (_serialPort is null)
             {
@@ -1724,7 +1724,7 @@ namespace Iot.Device.Pn532
             return -1;
         }
 
-        private int WriteCommandI2C(CommandSet commandSet, SpanByte writeData)
+        private int WriteCommandI2C(CommandSet commandSet, Span<byte> writeData)
         {
             if (_i2cDevice is null)
             {
@@ -1762,7 +1762,7 @@ namespace Iot.Device.Pn532
             return -1;
         }
 
-        private int WriteCommandSPI(CommandSet commandSet, SpanByte writeData)
+        private int WriteCommandSPI(CommandSet commandSet, Span<byte> writeData)
         {
             if (_spiDevice is null)
             {
@@ -1775,9 +1775,9 @@ namespace Iot.Device.Pn532
             }
 
             var message = CreateWriteMessage(commandSet, writeData);
-            SpanByte buff = new byte[message.Length + 1];
+            Span<byte> buff = new byte[message.Length + 1];
             buff[0] = WriteData;
-            new SpanByte(message).CopyTo(buff.Slice(1));
+            new Span<byte>(message).CopyTo(buff.Slice(1));
             _controller.Write(_pin, PinValue.Low);
             Thread.Sleep(2);
             _spiDevice.Write(buff);
@@ -1803,7 +1803,7 @@ namespace Iot.Device.Pn532
             return -1;
         }
 
-        private int ReadResponse(CommandSet commandSet, SpanByte readData)
+        private int ReadResponse(CommandSet commandSet, Span<byte> readData)
         {
             if (_spiDevice is object && _controller is object)
             {
@@ -1823,7 +1823,7 @@ namespace Iot.Device.Pn532
             return -1;
         }
 
-        private int ReadResponseSerial(CommandSet commandSet, SpanByte readData)
+        private int ReadResponseSerial(CommandSet commandSet, Span<byte> readData)
         {
             if (_serialPort is null)
             {
@@ -1903,7 +1903,7 @@ namespace Iot.Device.Pn532
             {
                 var buff = new byte[length - 2];
                 _serialPort.Read(buff, 0, buff.Length);
-                new SpanByte(buff).CopyTo(readData);
+                new Span<byte>(buff).CopyTo(readData);
             }
 
             // Almost finished, we need to calculate the checksum
@@ -1930,7 +1930,7 @@ namespace Iot.Device.Pn532
             return length - 2;
         }
 
-        private int ReadResponseSPI(CommandSet commandSet, SpanByte readData)
+        private int ReadResponseSPI(CommandSet commandSet, Span<byte> readData)
         {
             if (_spiDevice is null)
             {
@@ -2018,7 +2018,7 @@ namespace Iot.Device.Pn532
             {
                 var buff = new byte[length - 2];
                 _spiDevice.Read(buff);
-                new SpanByte(buff).CopyTo(readData);
+                new Span<byte>(buff).CopyTo(readData);
 
             }
 
@@ -2046,7 +2046,7 @@ namespace Iot.Device.Pn532
             return length - 2;
         }
 
-        private int ReadResponseI2C(CommandSet commandSet, SpanByte readData)
+        private int ReadResponseI2C(CommandSet commandSet, Span<byte> readData)
         {
             if (_i2cDevice is null)
             {
@@ -2135,7 +2135,7 @@ namespace Iot.Device.Pn532
             // Finally, we can read the data
             if (length - 2 > 0)
             {
-                new SpanByte(preamb, idxPreamb, length - 2).CopyTo(readData);
+                new Span<byte>(preamb, idxPreamb, length - 2).CopyTo(readData);
                 idxPreamb += length - 2;
             }
 
@@ -2165,7 +2165,7 @@ namespace Iot.Device.Pn532
 
         private bool CheckAckFrame()
         {
-            SpanByte ackReceived = new byte[6]
+            Span<byte> ackReceived = new byte[6]
             {
                 0x00,
                 0x00,
@@ -2184,7 +2184,7 @@ namespace Iot.Device.Pn532
             }
             else if (_i2cDevice is object)
             {
-                SpanByte i2cackReceived = new byte[7];
+                Span<byte> i2cackReceived = new byte[7];
                 _i2cDevice.Read(i2cackReceived);
                 i2cackReceived.Slice(1).CopyTo(ackReceived);
             }
@@ -2194,7 +2194,7 @@ namespace Iot.Device.Pn532
                 {
                     var buff = ackReceived.ToArray();
                     _serialPort.Read(buff, 0, buff.Length);
-                    new SpanByte(buff).CopyTo(ackReceived);
+                    new Span<byte>(buff).CopyTo(ackReceived);
 
                 }
                 catch (Exception ex)

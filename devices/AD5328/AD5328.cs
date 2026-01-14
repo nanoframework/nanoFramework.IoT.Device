@@ -57,7 +57,7 @@ namespace Iot.Device.DAC
             var temp = (ushort)((channel << 12) | dacvalue);
 
             // Swap bytes, MSB should go out first
-            SpanByte tempBytes = new byte[2];
+            Span<byte> tempBytes = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(tempBytes, temp);
             _spiDevice.Write(tempBytes);
         }

@@ -90,7 +90,7 @@ namespace Iot.Device.BuildHat.Sensors
         /// Adjust the brightness of the eyes.
         /// </summary>
         /// <param name="eyes">The brighness percentage for each of the 4 leds from 0 to 100.</param>
-        public void AdjustEyesBrightness(SpanByte eyes)
+        public void AdjustEyesBrightness(Span<byte> eyes)
         {
             if (eyes.Length != 4)
             {

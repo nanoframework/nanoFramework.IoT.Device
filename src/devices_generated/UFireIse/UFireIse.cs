@@ -289,7 +289,7 @@ namespace Iot.Device.UFire
 
         private void SendCommand(byte data)
         {
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
             bytes[0] = (byte)Register.ISE_TASK_REGISTER;
             bytes[1] = data;
             _device.Write(bytes);
@@ -300,7 +300,7 @@ namespace Iot.Device.UFire
         {
             ChangeRegister(register);
 
-            SpanByte data = new byte[4];
+            Span<byte> data = new byte[4];
 
             _device.Read(data);
 
@@ -316,7 +316,7 @@ namespace Iot.Device.UFire
             _device.Write(bytes);
             DelayHelper.DelayMilliseconds(IseCommunicationDelay, allowThreadYield: true);
 #else
-            SpanByte bytes = new byte[4]
+            Span<byte> bytes = new byte[4]
              {
                 0,
                 0,

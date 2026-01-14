@@ -338,7 +338,7 @@ namespace Iot.Device.Tsl256x
 
         private ushort ReadWord(Register reg)
         {
-            SpanByte toRead = new byte[2];
+            Span<byte> toRead = new byte[2];
             _i2cDevice.WriteByte((byte)(Register.CMD | Register.WORD | reg));
             _i2cDevice.Read(toRead);
             return BinaryPrimitives.ReadUInt16LittleEndian(toRead);
@@ -346,7 +346,7 @@ namespace Iot.Device.Tsl256x
 
         private void WriteByte(Register reg, byte toWrite)
         {
-            SpanByte toSend = new byte[2]
+            Span<byte> toSend = new byte[2]
             {
                 (byte)(Register.CMD | reg),
                 toWrite

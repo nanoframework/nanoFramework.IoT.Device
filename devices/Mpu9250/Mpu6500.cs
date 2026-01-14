@@ -157,7 +157,7 @@ namespace Iot.Device.Imu
 
         private Vector3 GetRawAccelerometer()
         {
-            SpanByte rawData = new byte[6]
+            Span<byte> rawData = new byte[6]
             {
                 0, 0, 0, 0, 0, 0
             };
@@ -300,7 +300,7 @@ namespace Iot.Device.Imu
 
         private Vector3 GetRawGyroscope()
         {
-            SpanByte rawData = new byte[6]
+            Span<byte> rawData = new byte[6]
             {
                 0, 0, 0, 0, 0, 0
             };
@@ -322,7 +322,7 @@ namespace Iot.Device.Imu
         [Telemetry("Temperature")]
         public Temperature GetTemperature()
         {
-            SpanByte rawData = new byte[2]
+            Span<byte> rawData = new byte[2]
             {
                 0, 0
             };
@@ -440,7 +440,7 @@ namespace Iot.Device.Imu
         {
             get
             {
-                SpanByte rawData = new byte[2]
+                Span<byte> rawData = new byte[2]
                 {
                     0, 0
                 };
@@ -492,7 +492,7 @@ namespace Iot.Device.Imu
         /// EXT_SENS_DATA_00 to EXT_SENS_DATA_24
         /// </summary>
         /// <param name="readData">Data which will be read</param>
-        public void ReadFifo(SpanByte readData) => ReadBytes(Register.FIFO_R_W, readData);
+        public void ReadFifo(Span<byte> readData) => ReadBytes(Register.FIFO_R_W, readData);
 
         #endregion
 
@@ -515,7 +515,7 @@ namespace Iot.Device.Imu
             byte i2cMaster;
             byte userControls;
 
-            SpanByte rawData = new byte[12];
+            Span<byte> rawData = new byte[12];
 
             Vector3 gyroBias = new Vector3();
             Vector3 acceBias = new Vector3();
@@ -616,7 +616,7 @@ namespace Iot.Device.Imu
 
             // A place to hold the factory accelerometer trim biases
             Vector3 accel_bias_reg = new Vector3();
-            SpanByte accData = new byte[2];
+            Span<byte> accData = new byte[2];
             // Read factory accelerometer trim values
             ReadBytes(Register.XA_OFFSET_H, accData);
             accel_bias_reg.X = BinaryPrimitives.ReadInt16BigEndian(accData);
@@ -629,7 +629,7 @@ namespace Iot.Device.Imu
             // accelerometer bias registers
             uint mask = 0x01;
             // Define array to hold mask bit for each accelerometer bias axis
-            SpanByte mask_bit = new byte[3];
+            Span<byte> mask_bit = new byte[3];
 
             // If temperature compensation bit is set, record that fact in mask_bit
             mask_bit[0] = (((uint)accel_bias_reg.X & mask) == mask) ? (byte)0x01 : (byte)0x00;
@@ -855,7 +855,7 @@ namespace Iot.Device.Imu
         {
             // I2C_SLVx_ADDR += 3 * i2cChannel
             byte slvAddress = (byte)((byte)Register.I2C_SLV0_ADDR + 3 * (byte)i2cChannel);
-            SpanByte dataout = new byte[2]
+            Span<byte> dataout = new byte[2]
             {
                 slvAddress, address
             };
@@ -883,7 +883,7 @@ namespace Iot.Device.Imu
         /// <param name="address">The I2C address of the slave I2C element</param>
         /// <param name="register">The register to read from the slave I2C element</param>
         /// <param name="readBytes">The read data</param>
-        public void ReadByteFromSlaveDevice(I2cChannel i2cChannel, byte address, byte register, SpanByte readBytes)
+        public void ReadByteFromSlaveDevice(I2cChannel i2cChannel, byte address, byte register, Span<byte> readBytes)
         {
             if (readBytes.Length > 24)
             {
@@ -891,7 +891,7 @@ namespace Iot.Device.Imu
             }
 
             byte slvAddress = (byte)((byte)Register.I2C_SLV0_ADDR + 3 * (byte)i2cChannel);
-            SpanByte dataout = new byte[2]
+            Span<byte> dataout = new byte[2]
             {
                 slvAddress, (byte)(address | 0x80)
             };
@@ -911,7 +911,7 @@ namespace Iot.Device.Imu
 
         internal void WriteRegister(Register reg, byte data)
         {
-            SpanByte dataout = new byte[]
+            Span<byte> dataout = new byte[]
             {
                 (byte)reg, data
             };
@@ -924,7 +924,7 @@ namespace Iot.Device.Imu
             return _i2cDevice.ReadByte();
         }
 
-        internal void ReadBytes(Register reg, SpanByte readBytes)
+        internal void ReadBytes(Register reg, Span<byte> readBytes)
         {
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(readBytes);

@@ -214,7 +214,7 @@ namespace Iot.Device.Tm1637
         /// </remarks>
         /// </summary>
         /// <param name="rawData">The raw data array to display, size of the array has to be 6 maximum.</param>
-        private void Display(SpanByte rawData)
+        private void Display(Span<byte> rawData)
         {
             if (rawData.Length > MaxCharacters)
             {
@@ -273,7 +273,7 @@ namespace Iot.Device.Tm1637
                 byteArray[j] = (byte)rawData[j];
             }
 
-            Display(new SpanByte(byteArray));
+            Display(new Span<byte>(byteArray));
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Iot.Device.Tm1637
         public void ClearDisplay()
         {
             // 6 segments with nothing/space displayed
-            SpanByte clearDisplay = new byte[]
+            Span<byte> clearDisplay = new byte[]
             {
                 (byte)Character.Nothing,
                 (byte)Character.Nothing,

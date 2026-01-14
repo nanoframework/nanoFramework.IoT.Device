@@ -661,7 +661,7 @@ namespace Iot.Device.BuildHat
         /// <param name="port">The port.</param>
         /// <param name="data">The buffer to send.</param>
         /// <param name="singleHeader">True for single header byte.</param>
-        public void WriteBytesToSensor(SensorPort port, SpanByte data, bool singleHeader)
+        public void WriteBytesToSensor(SensorPort port, Span<byte> data, bool singleHeader)
         {
             StringBuilder command = new StringBuilder();
             command.Append(singleHeader ? "write1 " : "write2 ");

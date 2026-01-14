@@ -30,11 +30,11 @@ namespace Iot.Device.Scd4x
         /// </summary>
         public static TimeSpan MeasurementPeriod => TimeSpan.FromTicks(TimeSpan.TicksPerMillisecond * MeasurementPeriodMs);
 
-        private static SpanByte StartPeriodicMeasurementBytes => new byte[] { 0x21, 0xB1 };
-        private static SpanByte CheckDataReadyStatusBytes => new byte[] { 0xE4, 0xB8 };
-        private static SpanByte ReadPeriodicMeasurementBytes => new byte[] { 0xEC, 0x05 };
-        private static SpanByte StopPeriodicMeasurementBytes => new byte[] { 0x3F, 0x86 };
-        private static SpanByte ReInitBytes => new byte[] { 0x36, 0x46 };
+        private static Span<byte> StartPeriodicMeasurementBytes => new byte[] { 0x21, 0xB1 };
+        private static Span<byte> CheckDataReadyStatusBytes => new byte[] { 0xE4, 0xB8 };
+        private static Span<byte> ReadPeriodicMeasurementBytes => new byte[] { 0xEC, 0x05 };
+        private static Span<byte> StopPeriodicMeasurementBytes => new byte[] { 0x3F, 0x86 };
+        private static Span<byte> ReInitBytes => new byte[] { 0x36, 0x46 };
 
         private readonly I2cDevice _device;
         private VolumeConcentration _lastCo2;
@@ -148,7 +148,7 @@ namespace Iot.Device.Scd4x
 
         private int SetPressureCalibrationImpl(Pressure pressure)
         {
-            SpanByte buffer = new byte[5];
+            Span<byte> buffer = new byte[5];
 
             BinaryPrimitives.WriteUInt16BigEndian(buffer, 0xE000);
             Sensirion.WriteUInt16BigEndianAndCRC8(buffer.Slice(2), (ushort)(Math.Max(0.0, Math.Min(pressure.Pascals, 1.0)) * (1.0 / 100.0)));
@@ -263,7 +263,7 @@ namespace Iot.Device.Scd4x
 
         private bool EndCheckDataReady()
         {
-            SpanByte buffer = new byte[3];
+            Span<byte> buffer = new byte[3];
             _device.Read(buffer);
 
             return Sensirion.ReadUInt16BigEndianAndCRC8(buffer) is ushort response && (response & 0x7FF) != 0;
@@ -274,7 +274,7 @@ namespace Iot.Device.Scd4x
 
         private (VolumeConcentration? CarbonDioxide, RelativeHumidity? RelativeHumidity, Temperature? Temperature) EndReadPeriodicMeasurement()
         {
-            SpanByte buffer = new byte[9];
+            Span<byte> buffer = new byte[9];
             _device.Read(buffer);
 
             VolumeConcentration? co2 = Sensirion.ReadUInt16BigEndianAndCRC8(buffer) switch

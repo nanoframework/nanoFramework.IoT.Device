@@ -65,7 +65,7 @@ namespace Iot.Device.Mcp7940xx
                 }
 
                 // Read minute, hour, day, and month registers for the power down event.
-                SpanByte readBuffer = new byte[4];
+                Span<byte> readBuffer = new byte[4];
 
                 i2cDevice.WriteByte((byte)eventRegister);
                 i2cDevice.Read(readBuffer);

@@ -16,32 +16,32 @@ namespace Iot.Device
 #endif
     static class FrameworkCompatibilityExtensions
     {
-        public static bool StartsWith(this SpanChar span, string value)
+        public static bool StartsWith(this Span<char> span, string value)
         {
-            return span.StartsWith(new SpanChar(value.ToCharArray()));
+            return span.StartsWith(new Span<char>(value.ToCharArray()));
         }
 
-        public static bool StartsWith(this SpanChar span, string value, StringComparison comparison)
-        {
-            return span.ToString().StartsWith(value, comparison);
-        }
-
-        public static bool StartsWith(this SpanChar span, string value, StringComparison comparison)
+        public static bool StartsWith(this Span<char> span, string value, StringComparison comparison)
         {
             return span.ToString().StartsWith(value, comparison);
         }
 
-        public static int CompareTo(this SpanChar span, string value, StringComparison comparison)
+        public static bool StartsWith(this Span<char> span, string value, StringComparison comparison)
+        {
+            return span.ToString().StartsWith(value, comparison);
+        }
+
+        public static int CompareTo(this Span<char> span, string value, StringComparison comparison)
         {
             return string.Compare(span.ToString(), value, comparison);
         }
 
-        public static string GetString(this Encoding encoding, SpanByte input)
+        public static string GetString(this Encoding encoding, Span<byte> input)
         {
             return encoding.GetString(input.ToArray());
         }
 
-        public static void NextBytes(this Random random, SpanByte buffer)
+        public static void NextBytes(this Random random, Span<byte> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -49,12 +49,12 @@ namespace Iot.Device
             }
         }
 
-        public static void Write(this Stream stream, SpanByte data)
+        public static void Write(this Stream stream, Span<byte> data)
         {
             stream.Write(data.ToArray(), 0, data.Length);
         }
 
-        public static int Read(this Stream stream, SpanByte data)
+        public static int Read(this Stream stream, Span<byte> data)
         {
             byte[] rawData = new byte[data.Length];
             int result = stream.Read(rawData, 0, rawData.Length);
