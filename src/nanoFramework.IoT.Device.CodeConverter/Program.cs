@@ -494,7 +494,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
         /// <summary>
         /// This is a complex operation that:
         /// 1. Finds all generics of a given type in the source file;
-        /// 2. Generates non-generic classes that simulate behaviour of these generics (such as Span<byte> -> Span<byte>);
+        /// 2. Generates non-generic classes that simulate behaviour of these generics (such as List<int> -> ListInt);
         /// 3. Writes these new classes to the files in the given folder;
         /// 4. Returns the replacements one has to do in the source file so that it uses the new classes instead of generics.
         /// </summary>
@@ -509,7 +509,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
         /// </param>
         /// <param name="alreadyExistingContainers">
         /// Containers that don't need to be created from the template because they already exist in the visible scope.
-        /// E.g. Span<byte> exists in mscorlib, and there's no need to generate Span<byte>.cs. 
+        /// E.g. ArrayList exists in mscorlib, and there's no need to generate ArrayList.cs. 
         /// </param>
         /// <param name="outputDirectory">Where to put the generated replacements for the generics.</param>
         /// <returns>
