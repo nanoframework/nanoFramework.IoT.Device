@@ -79,7 +79,7 @@ pn532.Dispose();
 void DumpAllRegisters(Pn532 pn532)
 {
     const int MaxRead = 16;
-    SpanByte span = new byte[MaxRead];
+    Span<byte> span = new byte[MaxRead];
     for (int i = 0; i < 0xFFFF; i += MaxRead)
     {
         ushort[] reg = new ushort[MaxRead];
@@ -129,7 +129,7 @@ void ReadMiFare(Pn532 pn532)
 
     Debug.WriteLine("");
 
-    var decrypted = pn532.TryDecode106kbpsTypeA(new SpanByte(retData, 1, retData.Length - 1));
+    var decrypted = pn532.TryDecode106kbpsTypeA(new Span<byte>(retData, 1, retData.Length - 1));
     if (decrypted is object)
     {
         Debug.WriteLine(
@@ -238,7 +238,7 @@ void RunTests(Pn532 pn532)
     {
         SfrRegister.HSU_CNT, SfrRegister.HSU_CTR, SfrRegister.HSU_PRE, SfrRegister.HSU_STA
     };
-    SpanByte redSfrs = new byte[regs.Length];
+    Span<byte> redSfrs = new byte[regs.Length];
     var ret = pn532.ReadRegisterSfr(regs, redSfrs);
     for (int i = 0; i < regs.Length; i++)
     {
@@ -248,7 +248,7 @@ void RunTests(Pn532 pn532)
 
     // This should give the same result as
     ushort[] regus = new ushort[] { 0xFFAE, 0xFFAC, 0xFFAD, 0xFFAB };
-    SpanByte redSfrus = new byte[regus.Length];
+    Span<byte> redSfrus = new byte[regus.Length];
     ret = pn532.ReadRegister(regus, redSfrus);
     for (int i = 0; i < regus.Length; i++)
     {
@@ -291,7 +291,7 @@ void ProcessUltralight(Pn532 pn532)
 
     Debug.WriteLine("");
 
-    var card = pn532.TryDecode106kbpsTypeA(new SpanByte(retData, 1, retData.Length - 1));
+    var card = pn532.TryDecode106kbpsTypeA(new Span<byte>(retData, 1, retData.Length - 1));
     if (card is not object)
     {
         Debug.WriteLine("Not a valid card, please try again.");

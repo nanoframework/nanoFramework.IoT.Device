@@ -222,7 +222,7 @@ namespace Iot.Device.Mcp3428
                 }
             }
 
-            var value = BinaryPrimitives.ReadInt16BigEndian(new SpanByte(_readBuffer).Slice(0, 2));
+            var value = BinaryPrimitives.ReadInt16BigEndian(new Span<byte>(_readBuffer).Slice(0, 2));
             LastConversion = new ConversionResult(_lastChannel, value, Resolution);
 
             return LastConversion.Voltage;

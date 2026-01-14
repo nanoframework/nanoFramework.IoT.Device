@@ -46,7 +46,7 @@ namespace Iot.Device.Rtc
         protected override DateTime ReadTime()
         {
             // Sec, Min, Hour, Day, Date, Month & Century, Year
-            SpanByte rawData = new byte[7];
+            Span<byte> rawData = new byte[7];
 
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_SEC_REG_ADDR);
             _i2cDevice.Read(rawData);
@@ -67,7 +67,7 @@ namespace Iot.Device.Rtc
         /// <param name="time">Time.</param>
         protected override void SetTime(DateTime time)
         {
-            SpanByte setData = new byte[8];
+            Span<byte> setData = new byte[8];
 
             setData[0] = (byte)Ds3231Register.RTC_SEC_REG_ADDR;
 
@@ -96,7 +96,7 @@ namespace Iot.Device.Rtc
         /// <returns>Temperature.</returns>
         protected double ReadTemperature()
         {
-            SpanByte data = new byte[2];
+            Span<byte> data = new byte[2];
 
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_TEMP_MSB_REG_ADDR);
             _i2cDevice.Read(data);
@@ -111,7 +111,7 @@ namespace Iot.Device.Rtc
         /// <returns>Alarm 1.</returns>
         public Ds3231AlarmOne ReadAlarmOne()
         {
-            SpanByte rawData = new byte[4];
+            Span<byte> rawData = new byte[4];
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_ALM1_SEC_REG_ADDR);
             _i2cDevice.Read(rawData);
 
@@ -154,7 +154,7 @@ namespace Iot.Device.Rtc
                 }
             }
 
-            SpanByte setData = new byte[5];
+            Span<byte> setData = new byte[5];
             setData[0] = (byte)Ds3231Register.RTC_ALM1_SEC_REG_ADDR;
 
             setData[1] = NumberHelper.Dec2Bcd(alarm.AlarmTime.Seconds);
@@ -177,7 +177,7 @@ namespace Iot.Device.Rtc
         /// <returns>Alarm 1.</returns>
         public Ds3231AlarmTwo ReadAlarmTwo()
         {
-            SpanByte rawData = new byte[3];
+            Span<byte> rawData = new byte[3];
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_ALM2_MIN_REG_ADDR);
             _i2cDevice.Read(rawData);
 
@@ -219,7 +219,7 @@ namespace Iot.Device.Rtc
                 }
             }
 
-            SpanByte setData = new byte[4];
+            Span<byte> setData = new byte[4];
             setData[0] = (byte)Ds3231Register.RTC_ALM2_MIN_REG_ADDR;
 
             setData[1] = NumberHelper.Dec2Bcd(alarm.AlarmTime.Minutes);
@@ -240,7 +240,7 @@ namespace Iot.Device.Rtc
         /// <returns>The enabled alarm.</returns>
         protected Ds3231Alarm ReadEnabledAlarm()
         {
-            SpanByte getData = new byte[1];
+            Span<byte> getData = new byte[1];
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_CTRL_REG_ADDR);
             _i2cDevice.Read(getData);
 
@@ -267,11 +267,11 @@ namespace Iot.Device.Rtc
         /// <param name="alarmMode">Alarm to enable.</param>
         protected void SetEnabledAlarm(Ds3231Alarm alarmMode)
         {
-            SpanByte getData = new byte[1];
+            Span<byte> getData = new byte[1];
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_CTRL_REG_ADDR);
             _i2cDevice.Read(getData);
 
-            SpanByte setData = new byte[2];
+            Span<byte> setData = new byte[2];
             setData[0] = (byte)Ds3231Register.RTC_CTRL_REG_ADDR;
 
             setData[1] = getData[0];
@@ -296,11 +296,11 @@ namespace Iot.Device.Rtc
         /// </summary>
         public void ResetAlarmTriggeredStates()
         {
-            SpanByte getData = new byte[1];
+            Span<byte> getData = new byte[1];
             _i2cDevice.WriteByte((byte)Ds3231Register.RTC_STAT_REG_ADDR);
             _i2cDevice.Read(getData);
 
-            SpanByte setData = new byte[2];
+            Span<byte> setData = new byte[2];
             setData[0] = (byte)Ds3231Register.RTC_STAT_REG_ADDR;
 
             setData[1] = getData[0];

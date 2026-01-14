@@ -82,7 +82,7 @@ namespace Iot.Device.Graphics
             BdfFont font = new BdfFont();
             while (!sr.EndOfStream)
             {
-                SpanChar span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                Span<char> span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 if (span.StartsWith(FontBoundingBoxString))
                 {
                     span = span.Slice(FontBoundingBoxString.Length); // Original: .Trim();
@@ -122,7 +122,7 @@ namespace Iot.Device.Graphics
             return font;
         }
 
-        private static int ReadNextDecimalNumber(ref SpanChar span)
+        private static int ReadNextDecimalNumber(ref Span<char> span)
         {
             // Original code: span = span.Trim();
             // Note: we won't do it
@@ -144,7 +144,7 @@ namespace Iot.Device.Graphics
             return number * sign;
         }
 
-        private static int ReadNextHexaDecimalNumber(ref SpanChar span)
+        private static int ReadNextHexaDecimalNumber(ref Span<char> span)
         {
             // Original code: span = span.Trim();
             // Note: we won't do it
@@ -266,14 +266,14 @@ namespace Iot.Device.Graphics
             int index = 0;
             for (int i = 0; i < CharsCount; i++)
             {
-                SpanChar span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                Span<char> span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 if (!span.StartsWith(StartCharString))
                 {
                     throw new Exception(
                         "The font data is not well formed. expected STARTCHAR tag in the beginning of glyoh data.");
                 }
 
-                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 if (!span.StartsWith(EncodingString))
                 {
                     throw new Exception("The font data is not well formed. expected ENCODING tag.");
@@ -285,7 +285,7 @@ namespace Iot.Device.Graphics
 
                 do
                 {
-                    span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                    span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 }
                 while (!span.StartsWith(BbxString));
 
@@ -299,13 +299,13 @@ namespace Iot.Device.Graphics
                         "We don't support fonts have BBX values different than FONTBOUNDINGBOX values.");
                 }
 
-                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 if (span.CompareTo(BitmapString) != 0)
                 {
                     throw new Exception("The font data is not well formed. expected BITMAP tag.");
                 }
 
-                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 int heightData = 0;
                 while (heightData < Height)
                 {
@@ -319,11 +319,11 @@ namespace Iot.Device.Graphics
                     }
                     else
                     {
-                        span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                        span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                     }
                 }
 
-                span = new SpanChar(sr.ReadLine().Trim().ToCharArray());
+                span = new Span<char>(sr.ReadLine().Trim().ToCharArray());
                 if (!span.StartsWith(EndCharString))
                 {
                     throw new Exception(

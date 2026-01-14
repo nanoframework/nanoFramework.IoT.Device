@@ -982,7 +982,7 @@ namespace Iot.Device.Axp192
         /// AXP192 have a 6 byte storage, when the power is still valid, the data will not be lost.
         /// </summary>
         /// <param name="buffer">A 6 bytes buffer.</param>
-        public void Read6BytesStorage(SpanByte buffer)
+        public void Read6BytesStorage(Span<byte> buffer)
         {
             if (buffer.Length != 6)
             {
@@ -998,7 +998,7 @@ namespace Iot.Device.Axp192
         /// AXP192 have a 6 byte storage, when the power is still valid, the data will not be lost.
         /// </summary>
         /// <param name="buffer">A 6 bytes buffer.</param>
-        public void Write6BytesStorage(SpanByte buffer)
+        public void Write6BytesStorage(Span<byte> buffer)
         {
             if (buffer.Length != 6)
             {
@@ -1027,7 +1027,7 @@ namespace Iot.Device.Axp192
             return _i2c.ReadByte();
         }
 
-        private void I2cRead(Register command, SpanByte buffer)
+        private void I2cRead(Register command, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)command);
             _i2c.Read(buffer);
@@ -1035,7 +1035,7 @@ namespace Iot.Device.Axp192
 
         private uint I2cRead32(Register command)
         {
-            SpanByte buffer = new byte[4];
+            Span<byte> buffer = new byte[4];
             _i2c.WriteByte((byte)command);
             _i2c.Read(buffer);
             return (uint)(buffer[0] << 24 | buffer[1] << 16 | buffer[2] << 8 | buffer[1]);

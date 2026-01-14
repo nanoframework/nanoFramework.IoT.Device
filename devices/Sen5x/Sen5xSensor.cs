@@ -312,7 +312,7 @@ namespace Iot.Device.Sen5x
 
         private AbstractReadEntity Read(Command cmd, TimeSpan commandExecutionTime, AbstractReadEntity entity = null)
         {
-            SpanByte data = new byte[2];
+            Span<byte> data = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(data, (ushort)cmd);
             var result = _i2c.Write(data);
             if (result.Status != I2cTransferStatus.FullTransfer)
@@ -323,7 +323,7 @@ namespace Iot.Device.Sen5x
             Thread.Sleep(commandExecutionTime);
             if (entity != null)
             {
-                SpanByte response = new byte[entity.ByteCount];
+                Span<byte> response = new byte[entity.ByteCount];
                 result = _i2c.Read(response);
                 if (result.Status != I2cTransferStatus.FullTransfer)
                 {
@@ -337,9 +337,9 @@ namespace Iot.Device.Sen5x
             return entity;
         }
 
-        private SpanByte Read(Command cmd, TimeSpan commandExecutionTime, SpanByte response)
+        private Span<byte> Read(Command cmd, TimeSpan commandExecutionTime, Span<byte> response)
         {
-            SpanByte data = new byte[2];
+            Span<byte> data = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(data, (ushort)cmd);
             var result = _i2c.Write(data);
             if (result.Status != I2cTransferStatus.FullTransfer)
@@ -364,9 +364,9 @@ namespace Iot.Device.Sen5x
 
         private void Write(Command cmd, TimeSpan commandExecutionTime, AbstractReadWriteEntity entity)
         {
-            SpanByte data = new byte[2 + entity.ByteCount];
+            Span<byte> data = new byte[2 + entity.ByteCount];
             BinaryPrimitives.WriteUInt16BigEndian(data, (ushort)cmd);
-            SpanByte entityPart = data.Slice(2);
+            Span<byte> entityPart = data.Slice(2);
             entity.ToSpanByte(entityPart);
             entityPart.UpdateCrc();
             var result = _i2c.Write(data);

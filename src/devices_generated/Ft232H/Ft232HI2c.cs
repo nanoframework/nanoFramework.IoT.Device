@@ -26,7 +26,7 @@ namespace Iot.Device.Ft232H
         public override I2cConnectionSettings ConnectionSettings => _settings;
 
         /// <inheritdoc/>
-        public override void Read(SpanByte buffer)
+        public override void Read(Span<byte> buffer)
         {
             _i2cBus.Read(_deviceAddress, buffer);
         }
@@ -34,13 +34,13 @@ namespace Iot.Device.Ft232H
         /// <inheritdoc/>
         public override byte ReadByte()
         {
-            SpanByte toRead = new byte[1];
+            Span<byte> toRead = new byte[1];
             Read(toRead);
             return toRead[0];
         }
 
         /// <inheritdoc/>
-        public override void Write(SpanByte buffer)
+        public override void Write(Span<byte> buffer)
         {
             _i2cBus.Write(_deviceAddress, buffer);
         }
@@ -48,7 +48,7 @@ namespace Iot.Device.Ft232H
         /// <inheritdoc/>
         public override void WriteByte(byte value)
         {
-            SpanByte toWrite = new byte[1]
+            Span<byte> toWrite = new byte[1]
             {
                 value
             };
@@ -56,7 +56,7 @@ namespace Iot.Device.Ft232H
         }
 
         /// <inheritdoc/>
-        public override void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
+        public override void WriteRead(Span<byte> writeBuffer, Span<byte> readBuffer)
         {
             _i2cBus.Write(_deviceAddress, writeBuffer);
             _i2cBus.Read(_deviceAddress, readBuffer);

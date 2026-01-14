@@ -51,7 +51,7 @@ namespace Iot.Device.Usb
         /// <summary>Performs a USB PD software reset.</summary>
         public void PerformUsbPdSoftwareReset()
         {
-            SpanByte buffer = new byte[]
+            Span<byte> buffer = new byte[]
                 {
                     (byte)StUsb4500Register.TX_HEADER_LOW, StUsb4500Constants.SOFT_RESET
                 };
@@ -109,7 +109,7 @@ namespace Iot.Device.Usb
             byte status = _i2cDevice.ReadByte();
             int localPdoCount = status & 0x03;
 
-            SpanByte buffer = new byte[localPdoCount * 4];
+            Span<byte> buffer = new byte[localPdoCount * 4];
             uint[] pdoConfigurations = new uint[localPdoCount];
             _i2cDevice.WriteByte((byte)StUsb4500Register.DPM_SNK_PDO1_0);
             _i2cDevice.Read(buffer);
@@ -132,7 +132,7 @@ namespace Iot.Device.Usb
             }
 
             // first byte is the address + 4 byte for each PDO
-            SpanByte buffer = new byte[1 + (objects.Length * 4)];
+            Span<byte> buffer = new byte[1 + (objects.Length * 4)];
             buffer[0] = (byte)StUsb4500Register.DPM_SNK_PDO1_0;
             for (int i = 0; i < objects.Length; ++i)
             {
@@ -184,21 +184,21 @@ namespace Iot.Device.Usb
             int objectCount;
             UsbPdDataMessageType messageType;
 
-            SpanByte prtStatusBuffer = new byte[]
+            Span<byte> prtStatusBuffer = new byte[]
                 {
                     (byte)StUsb4500Register.PRT_STATUS
                 };
-            SpanByte rxHeaderBuffer = new byte[]
+            Span<byte> rxHeaderBuffer = new byte[]
                 {
                     (byte)StUsb4500Register.RX_HEADER_LOW
                 };
-            SpanByte rxDataBuffer = new byte[]
+            Span<byte> rxDataBuffer = new byte[]
                 {
                     (byte)StUsb4500Register.RX_DATA_OBJ1_0
                 };
 
-            SpanByte statusBuffer = new byte[1];
-            SpanByte headerBuffer = new byte[2];
+            Span<byte> statusBuffer = new byte[1];
+            Span<byte> headerBuffer = new byte[2];
 
             // to avoid endless-loop
             var cts = new CancellationTokenSource(500);
@@ -233,7 +233,7 @@ namespace Iot.Device.Usb
 
             // Warning: Short Timing
             // There is ~3 ms time-frame to read the source capabilities, before the next Message ("Accept") arrives and overwrites the first bytes of RX_DATA_OBJ register
-            SpanByte dataBuffer = new byte[objectCount * 4];
+            Span<byte> dataBuffer = new byte[objectCount * 4];
             _i2cDevice.WriteRead(rxDataBuffer, dataBuffer);
 
             uint[] pdoConfigurations = new uint[objectCount];
@@ -250,7 +250,7 @@ namespace Iot.Device.Usb
         /// <returns>The current RDO.</returns>
         private RequestDataObject ReadRdo()
         {
-            SpanByte buffer = new byte[4];
+            Span<byte> buffer = new byte[4];
             _i2cDevice.WriteByte((byte)StUsb4500Register.RDO_REG_STATUS_0);
             _i2cDevice.Read(buffer);
             return new RequestDataObject((uint)(buffer[0] + (buffer[1] << 8) + (buffer[2] << 16) + (buffer[3] << 24)));
@@ -272,7 +272,7 @@ namespace Iot.Device.Usb
             EnterNvmReadMode();
 
             byte[] nvmData = new byte[40];
-            SpanByte dataSpan = nvmData.AsSpan();
+            Span<byte> dataSpan = nvmData.AsSpan();
             ReadNvmSector(0, dataSpan.Slice(0, 8));
             ReadNvmSector(1, dataSpan.Slice(8, 8));
             ReadNvmSector(2, dataSpan.Slice(16, 8));
@@ -287,7 +287,7 @@ namespace Iot.Device.Usb
         private void EnterNvmReadMode()
         {
             // set password
-            SpanByte buffer = new byte[]
+            Span<byte> buffer = new byte[]
                 {
                     (byte)StUsb4500Register.FTP_CUST_PASSWORD_REG,
                     StUsb4500Constants.FTP_CUST_PASSWORD
@@ -308,7 +308,7 @@ namespace Iot.Device.Usb
         /// <summary>Reads a NVM sector.</summary>
         /// <param name="sectorNumber">The sector number. This must be a value between 0 - 4.</param>
         /// <param name="sectorDataBuffer">The sector data buffer.</param>
-        private void ReadNvmSector(byte sectorNumber, SpanByte sectorDataBuffer)
+        private void ReadNvmSector(byte sectorNumber, Span<byte> sectorDataBuffer)
         {
             if (sectorNumber > 4)
             {
@@ -316,7 +316,7 @@ namespace Iot.Device.Usb
             }
 
             // Set PWR and RST_N bits
-            SpanByte buffer = new byte[]
+            Span<byte> buffer = new byte[]
                 {
                     (byte)StUsb4500Register.FTP_CTRL_0,
                     StUsb4500Constants.FTP_CUST_PWR | StUsb4500Constants.FTP_CUST_RST_N
@@ -338,7 +338,7 @@ namespace Iot.Device.Usb
                 {
                     (byte)StUsb4500Register.FTP_CTRL_0
                 };
-            SpanByte readBuffer = new byte[1];
+            Span<byte> readBuffer = new byte[1];
             do
             {
                 _i2cDevice.WriteRead(buffer, readBuffer);
@@ -369,7 +369,7 @@ namespace Iot.Device.Usb
 
             EnterNvmWriteMode(StUsb4500Constants.SECTOR_0 | StUsb4500Constants.SECTOR_1 | StUsb4500Constants.SECTOR_2 | StUsb4500Constants.SECTOR_3 | StUsb4500Constants.SECTOR_4);
 
-            SpanByte dataSpan = nvmData.AsSpan();
+            Span<byte> dataSpan = nvmData.AsSpan();
             WriteNvmSector(0, dataSpan.Slice(0, 8));
             WriteNvmSector(1, dataSpan.Slice(8, 8));
             WriteNvmSector(2, dataSpan.Slice(16, 8));
@@ -383,7 +383,7 @@ namespace Iot.Device.Usb
         private void EnterNvmWriteMode(byte erasedSectors)
         {
             // set password
-            SpanByte buffer = new byte[]
+            Span<byte> buffer = new byte[]
                 {
                     (byte)StUsb4500Register.FTP_CUST_PASSWORD_REG,
                     StUsb4500Constants.FTP_CUST_PASSWORD
@@ -419,7 +419,7 @@ namespace Iot.Device.Usb
                 {
                     (byte)StUsb4500Register.FTP_CTRL_0
                 };
-            SpanByte readBuffer = new byte[1];
+            Span<byte> readBuffer = new byte[1];
             do
             {
                 _i2cDevice.WriteRead(buffer, readBuffer);
@@ -478,10 +478,10 @@ namespace Iot.Device.Usb
         /// <summary>Writes a NVM sector.</summary>
         /// <param name="sectorNumber">The sector.</param>
         /// <param name="data">The data.</param>
-        private void WriteNvmSector(byte sectorNumber, SpanByte data)
+        private void WriteNvmSector(byte sectorNumber, Span<byte> data)
         {
             // Write the 64-bit data to be written in the sector
-            SpanByte buffer = new byte[]
+            Span<byte> buffer = new byte[]
                 {
                     (byte)StUsb4500Register.RW_BUFFER,
                     data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
@@ -511,7 +511,7 @@ namespace Iot.Device.Usb
                 {
                     (byte)StUsb4500Register.FTP_CTRL_0
                 };
-            SpanByte readBuffer = new byte[1];
+            Span<byte> readBuffer = new byte[1];
             do
             {
                 _i2cDevice.WriteRead(buffer, readBuffer);
@@ -547,7 +547,7 @@ namespace Iot.Device.Usb
         private void ExitNvmMode()
         {
             // clear register
-            SpanByte buffer = new byte[]
+            Span<byte> buffer = new byte[]
                 {
                     (byte)StUsb4500Register.FTP_CTRL_0,
                     StUsb4500Constants.FTP_CUST_RST_N, 0x00

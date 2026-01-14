@@ -76,7 +76,7 @@ void ReceiveAllExample()
     {
         if (can.TryReadFrame(buffer, out int frameLength, out CanId id))
         {
-            SpanByte data = new SpanByte(buffer, 0, frameLength);
+            Span<byte> data = new Span<byte>(buffer, 0, frameLength);
             string type = id.ExtendedFrameFormat ? "EFF" : "SFF";
             string dataAsHex = string.Join(string.Empty, data.ToArray().Select((x) => x.ToString("X2")));
             Debug.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
@@ -84,7 +84,7 @@ void ReceiveAllExample()
         else
         {
             Debug.WriteLine($"Invalid frame received!");
-            SpanByte data = new SpanByte(buffer, 0, frameLength);
+            Span<byte> data = new Span<byte>(buffer, 0, frameLength);
             string type = id.ExtendedFrameFormat ? "EFF" : "SFF";
             string dataAsHex = string.Join(string.Empty, data.ToArray().Select((x) => x.ToString("X2")));
             Debug.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");
@@ -104,7 +104,7 @@ void ReceiveOnAddressExample()
     {
         if (can.TryReadFrame(buffer, out int frameLength, out CanId id))
         {
-            SpanByte data = new SpanByte(buffer, 0, frameLength);
+            Span<byte> data = new Span<byte>(buffer, 0, frameLength);
             string type = id.ExtendedFrameFormat ? "EFF" : "SFF";
             string dataAsHex = string.Join(string.Empty, data.ToArray().Select((x) => x.ToString("X2")));
             Debug.WriteLine($"Id: 0x{id.Value:X2} [{type}]: {dataAsHex}");

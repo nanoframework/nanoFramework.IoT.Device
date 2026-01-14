@@ -379,7 +379,7 @@ namespace Iot.Device.RadioTransmitter
 
         private void WriteByte(Register register, byte value)
         {
-            SpanByte writeBuffer = new byte[]
+            Span<byte> writeBuffer = new byte[]
             {
                 (byte)register, value
             };
@@ -389,11 +389,11 @@ namespace Iot.Device.RadioTransmitter
 
         private byte ReadByte(Register register)
         {
-            SpanByte writeBuffer = new byte[]
+            Span<byte> writeBuffer = new byte[]
             {
                 (byte)register
             };
-            SpanByte readBuffer = new byte[1];
+            Span<byte> readBuffer = new byte[1];
 
             _i2cDevice.WriteRead(writeBuffer, readBuffer);
 

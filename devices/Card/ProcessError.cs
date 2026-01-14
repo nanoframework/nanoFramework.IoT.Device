@@ -24,7 +24,7 @@ namespace Iot.Device.Card
         /// Constructor to process the error
         /// </summary>
         /// <param name="errorToProcess">A span of byte</param>
-        public ProcessError(SpanByte errorToProcess)
+        public ProcessError(Span<byte> errorToProcess)
         {
             // EMV 4.3 Book 3 page 60
             if (errorToProcess.Length < 2)

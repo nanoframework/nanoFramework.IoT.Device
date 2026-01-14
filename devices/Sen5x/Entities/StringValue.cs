@@ -19,7 +19,7 @@ namespace Iot.Device.Sen5x.Entities
 
         internal override int ByteCount => _maxLength / 2 * 3; // To account for checksum bytes.
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(Span<byte> data)
         {
             // We don't use Encoding.UTF8.GetString(), because:
             // - We need to skip every 3rd byte, which is a checksum byte, so we'd need to make a

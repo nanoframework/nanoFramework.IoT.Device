@@ -114,7 +114,7 @@ namespace Iot.Device.Mcp23xxx
         /// <param name="register">The register to read from.</param>
         /// <param name="buffer">The buffer to read bytes into.</param>
         /// <param name="port">The I/O port used with the register.</param>
-        protected void InternalRead(Register register, SpanByte buffer, Port port)
+        protected void InternalRead(Register register, Span<byte> buffer, Port port)
         {
             if (_disabled)
             {
@@ -130,7 +130,7 @@ namespace Iot.Device.Mcp23xxx
         /// <param name="register">The register address to write to.</param>
         /// <param name="data">The data to write to the registers.</param>
         /// <param name="port">The I/O port used with the registers.</param>
-        protected void InternalWrite(Register register, SpanByte data, Port port)
+        protected void InternalWrite(Register register, Span<byte> data, Port port)
         {
             if (_disabled)
             {
@@ -152,7 +152,7 @@ namespace Iot.Device.Mcp23xxx
         /// <returns>Byte read from the device register</returns>
         protected byte InternalReadByte(Register register, Port port)
         {
-            SpanByte buffer = new byte[1];
+            Span<byte> buffer = new byte[1];
             InternalRead(register, buffer, port);
             return buffer[0];
         }
@@ -165,7 +165,7 @@ namespace Iot.Device.Mcp23xxx
         /// <param name="port">Port related with the <paramref name="register"/></param>
         protected void InternalWriteByte(Register register, byte value, Port port)
         {
-            SpanByte buffer = new byte[1];
+            Span<byte> buffer = new byte[1];
             buffer[0] = value;
             InternalWrite(register, buffer, port);
         }
@@ -193,7 +193,7 @@ namespace Iot.Device.Mcp23xxx
         /// <returns>16-bit unsigned integer read from the device</returns>
         protected ushort InternalReadUInt16(Register register)
         {
-            SpanByte buffer = new byte[2];
+            Span<byte> buffer = new byte[2];
             if (_increments)
             {
                 // Can read both bytes at the same time
@@ -216,7 +216,7 @@ namespace Iot.Device.Mcp23xxx
         /// <param name="value">16-bit unsigned integer to write to the <paramref name="register"/></param>
         protected void InternalWriteUInt16(Register register, ushort value)
         {
-            SpanByte buffer = new byte[2];
+            Span<byte> buffer = new byte[2];
             buffer[0] = (byte)value;
             buffer[1] = (byte)(value >> 8);
 

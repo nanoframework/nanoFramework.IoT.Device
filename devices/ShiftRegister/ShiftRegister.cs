@@ -268,7 +268,7 @@ namespace Iot.Device.Multiplexing
         /// Does not display output.
         /// </summary>
         /// <param name="value">Value to write.</param>
-        public void Write(SpanByte value)
+        public void Write(Span<byte> value)
         {
             _segment.Write(value);
         }

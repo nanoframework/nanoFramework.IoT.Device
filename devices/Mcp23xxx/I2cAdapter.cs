@@ -26,19 +26,19 @@ namespace Iot.Device.Mcp23xxx
             public override void Dispose() => _device?.Dispose();
 
             /// <inheritdoc/>
-            public override void Read(byte registerAddress, SpanByte buffer)
+            public override void Read(byte registerAddress, Span<byte> buffer)
             {
                 // Set address to register first.
-                Write(registerAddress, SpanByte.Empty);
+                Write(registerAddress, Span<byte>.Empty);
                 _device.Read(buffer);
             }
 
             /// <inheritdoc/>
-            public override void Write(byte registerAddress, SpanByte data)
+            public override void Write(byte registerAddress, Span<byte> data)
             {
-                SpanByte output = new byte[data.Length + 1];
+                Span<byte> output = new byte[data.Length + 1];
                 output[0] = registerAddress;
-                // SpanByte slice method is different to Span<Byte> slice method in case that index argument (here 1) is equal to size of slice
+                // Span<byte> slice method is different to Span<Byte> slice method in case that index argument (here 1) is equal to size of slice
                 if (data.Length > 0)
                 {
                     // do not override output[0]

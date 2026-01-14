@@ -50,7 +50,7 @@ namespace Iot.Device.Ft232H
             }
         }
 
-        internal void Read(int deviceAddress, SpanByte buffer)
+        internal void Read(int deviceAddress, Span<byte> buffer)
         {
             DeviceInformation.I2cStart();
             var ack = DeviceInformation.I2cSendDeviceAddrAndCheckACK((byte)deviceAddress, true);
@@ -73,7 +73,7 @@ namespace Iot.Device.Ft232H
             DeviceInformation.I2cStop();
         }
 
-        internal void Write(int deviceAddress, SpanByte buffer)
+        internal void Write(int deviceAddress, Span<byte> buffer)
         {
             DeviceInformation.I2cStart();
             var ack = DeviceInformation.I2cSendDeviceAddrAndCheckACK((byte)deviceAddress, false);

@@ -408,7 +408,7 @@ namespace Iot.Device.LEDMatrix
                 int pos = 3 * ((y < 0 ? Math.Abs(y) * bitmap.Width : 0) + (x < 0 ? Math.Abs(x) : 0));
                 int stride = (bitmapData.Stride - 3 * bitmap.Width) + 3 * (bitmap.Width - partialBitmap.Width);
 
-                SpanByte span = new SpanByte((void*)bitmapData.Scan0,
+                Span<byte> span = new Span<byte>((void*)bitmapData.Scan0,
                     fullImageRectangle.Width * fullImageRectangle.Height * 3);
 
                 for (int j = 0; j < partialBitmap.Height; j++)
@@ -468,7 +468,7 @@ namespace Iot.Device.LEDMatrix
                 int pos = 3 * (bitmapY * bitmap.Width + bitmapX);
                 int stride = (bitmapData.Stride - 3 * bitmap.Width) + 3 * (bitmap.Width - bitmapWidth);
 
-                SpanByte span = new SpanByte((void*)bitmapData.Scan0, bitmapData.Stride * bitmap.Height);
+                Span<byte> span = new Span<byte>((void*)bitmapData.Scan0, bitmapData.Stride * bitmap.Height);
 
                 for (int j = 0; j < bitmapHeight; j++)
                 {
@@ -509,7 +509,7 @@ namespace Iot.Device.LEDMatrix
         /// <param name="bkG">Green channel of the text background</param>
         /// <param name="bkB">Blue channel of the text background</param>
         /// <param name="backBuffer">Set to true if drawing on the backing buffer. Defaults to false.</param>
-        public void DrawText(int x, int y, SpanChar text, BdfFont font, byte textR, byte textG, byte textB,
+        public void DrawText(int x, int y, Span<char> text, BdfFont font, byte textR, byte textG, byte textB,
             byte bkR, byte bkG, byte bkB, bool backBuffer = false)
         {
             int charWidth = font.Width;

@@ -89,7 +89,7 @@ namespace Iot.Device.Shtc3
         /// <param name="data">Raw Data.</param>
         /// <param name="crc8">Raw CRC8.</param>
         /// <returns>Checksum is true or false.</returns>
-        private static bool CheckCrc8(SpanByte data, byte crc8)
+        private static bool CheckCrc8(Span<byte> data, byte crc8)
         {
             // Details in the Datasheet table 16 P9
             byte crc = CrcInit;
@@ -147,7 +147,7 @@ namespace Iot.Device.Shtc3
         {
             Write(cmd);
 
-            SpanByte readBuff = new byte[6];
+            Span<byte> readBuff = new byte[6];
 
             _i2cDevice.Read(readBuff);
 
@@ -219,7 +219,7 @@ namespace Iot.Device.Shtc3
 
             Write(Register.SHTC3_ID);
 
-            SpanByte readBuff = new byte[3];
+            Span<byte> readBuff = new byte[3];
 
             _i2cDevice.Read(readBuff);
 
@@ -242,7 +242,7 @@ namespace Iot.Device.Shtc3
 
         private void Write(Register register)
         {
-            SpanByte writeBuff = new byte[2];
+            Span<byte> writeBuff = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(writeBuff, (ushort)register);
 
             _i2cDevice.Write(writeBuff);

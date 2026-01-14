@@ -101,7 +101,7 @@ namespace Iot.Device.Max7219
         /// <remarks>
         /// The size of the data should be 2 * cascaded devices.
         /// </remarks>
-        private void Write(SpanByte data) => _spiDevice.Write(data);
+        private void Write(Span<byte> data) => _spiDevice.Write(data);
 
         /// <summary>
         /// Sets the brightness of all cascaded devices to the same intensity level.

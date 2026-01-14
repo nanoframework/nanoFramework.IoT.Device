@@ -53,7 +53,7 @@ namespace Iot.Device.Common
                 throw new ArgumentNullException();
             }
 
-            SpanByte writeBuffer = new byte[] { register, value };
+            Span<byte> writeBuffer = new byte[] { register, value };
 
             i2cDevice.Write(writeBuffer);
         }

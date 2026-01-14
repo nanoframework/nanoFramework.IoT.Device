@@ -74,12 +74,12 @@ namespace Iot.Device.Max31856
         /// </remarks>
         private void Initialize()
         {
-            SpanByte configurationSetting0 = new byte[]
+            Span<byte> configurationSetting0 = new byte[]
             {
                 (byte)Register.WRITE_CR0,
                 (byte)Register.ONESHOT_FAULT_SETTING
             };
-            SpanByte configurationSetting1 = new byte[]
+            Span<byte> configurationSetting1 = new byte[]
             {
                 (byte)Register.WRITE_CR1,
                 _thermocoupleType
@@ -133,7 +133,7 @@ namespace Iot.Device.Max31856
         /// <param name="spiOutputData">Spidata read from the device as 16 bytes</param>
         private double ConvertspiOutputDataTempColdJunction(byte[] spiOutputData)
         {
-            SpanByte reading = new SpanByte(spiOutputData, 11, 2);
+            Span<byte> reading = new Span<byte>(spiOutputData, 11, 2);
             reading[0] = (byte)(spiOutputData[11] & 0x7F);
             short tempRaw = BinaryPrimitives.ReadInt16BigEndian(reading);
             if ((spiOutputData[11] & 0x80) == 0x80) // checks if the temp is negative
@@ -155,7 +155,7 @@ namespace Iot.Device.Max31856
         /// Takes the data input byte and writes it to the spi device
         /// </remarks>
         /// <param name="data">Data to write to the device</param>
-        private void Write(SpanByte data) => _spiDevice.Write(data);
+        private void Write(Span<byte> data) => _spiDevice.Write(data);
 
         /// <summary>
         /// Full Duplex Read of the Data on the Device
@@ -167,8 +167,8 @@ namespace Iot.Device.Max31856
         /// /// <param name="readbytesize">Number of bytes being read</param>
         private byte[] WriteRead(Register register, int readbytesize)
         {
-            SpanByte readBuf = new byte[readbytesize + 1];
-            SpanByte regAddrBuf = new byte[1 + readbytesize];
+            Span<byte> readBuf = new byte[readbytesize + 1];
+            Span<byte> regAddrBuf = new byte[1 + readbytesize];
 
             regAddrBuf[0] = (byte)(register);
             _spiDevice.TransferFullDuplex(regAddrBuf, readBuf);

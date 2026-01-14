@@ -17,7 +17,7 @@ namespace Iot.Device.Ld2410.Commands
                 throw new ArgumentOutOfRangeException();
             }
 
-            var valueSpan = new SpanByte(Value = new byte[18]);
+            var valueSpan = new Span<byte>(Value = new byte[18]);
 
             // set gate number
             // the first 2 bytes represent the distance gate word (0x0000)

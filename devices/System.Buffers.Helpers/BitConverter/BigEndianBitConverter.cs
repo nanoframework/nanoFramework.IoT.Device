@@ -124,100 +124,100 @@ namespace System.Buffers.Helpers.BitConverter
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="char"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="char"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override char ToChar(SpanByte value, int index = 0)
+        public override char ToChar(Span<byte> value, int index = 0)
         {
             return unchecked((char)BinaryPrimitives.ReadInt16BigEndian(value.Slice(index, 2)));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="short"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="short"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override short ToInt16(SpanByte value, int index = 0)
+        public override short ToInt16(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadInt16BigEndian(value.Slice(index, 2));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="int"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="int"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override int ToInt32(SpanByte value, int index = 0)
+        public override int ToInt32(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadInt32BigEndian(value.Slice(index, 4));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="long"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="long"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override long ToInt64(SpanByte value, int index = 0)
+        public override long ToInt64(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadInt64BigEndian(value.Slice(index, 8));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="ushort"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="ushort"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override ushort ToUInt16(SpanByte value, int index = 0)
+        public override ushort ToUInt16(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadUInt16BigEndian(value.Slice(index, 2));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="uint"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="uint"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override uint ToUInt32(SpanByte value, int index = 0)
+        public override uint ToUInt32(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadUInt32BigEndian(value.Slice(index, 4));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="ulong"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="ulong"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override ulong ToUInt64(SpanByte value, int index = 0)
+        public override ulong ToUInt64(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadUInt64BigEndian(value.Slice(index, 8));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="float"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="float"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override float ToSingle(SpanByte value, int index = 0)
+        public override float ToSingle(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadSingleBigEndian(value.Slice(index, 4));
         }
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="double"/>.
+        /// Converts a <see cref="Span<byte>"/> to a <see cref="double"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="Span<byte>"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public override double ToDouble(SpanByte value, int index = 0)
+        public override double ToDouble(Span<byte> value, int index = 0)
         {
             return BinaryPrimitives.ReadDoubleBigEndian(value.Slice(index, 8));
         }

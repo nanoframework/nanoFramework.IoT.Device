@@ -22,7 +22,7 @@ namespace Iot.Device.Ndef
         /// </summary>
         /// <param name="toExtract">The byte array where the message is</param>
         /// <returns>The start and end position</returns>
-        public static Doublet GetStartSizeNdef(SpanByte toExtract)
+        public static Doublet GetStartSizeNdef(Span<byte> toExtract)
         {
             int idx = 0;
             // Check if we have 0x03 so it's a possible, NDEF Entry
@@ -64,7 +64,7 @@ namespace Iot.Device.Ndef
         /// </summary>
         /// <param name="toExtract">The byte array where the message is</param>
         /// <returns>A byte array containing the message itself</returns>
-        public static byte[]? ExtractMessage(SpanByte toExtract)
+        public static byte[]? ExtractMessage(Span<byte> toExtract)
         {
             var doublet = GetStartSizeNdef(toExtract);
             int idx = doublet.Start;
@@ -99,7 +99,7 @@ namespace Iot.Device.Ndef
         /// Create NDEF Message from a span of bytes
         /// </summary>
         /// <param name="message">the message in span of bytes</param>
-        public NdefMessage(SpanByte message)
+        public NdefMessage(Span<byte> message)
         {
             int idxMessage = 0;
             while (idxMessage < message.Length)
@@ -132,7 +132,7 @@ namespace Iot.Device.Ndef
         /// Serialize the message in a span of bytes
         /// </summary>
         /// <param name="messageSerialized">Span of bytes for the serialized message</param>
-        public void Serialize(SpanByte messageSerialized)
+        public void Serialize(Span<byte> messageSerialized)
         {
             if (messageSerialized.Length < Length)
             {

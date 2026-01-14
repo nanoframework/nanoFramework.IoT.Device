@@ -126,7 +126,7 @@ namespace Iot.Device.Adxl357
 
         private double GetTemperature()
         {
-            SpanByte data = new byte[2] { 0, 0 };
+            Span<byte> data = new byte[2] { 0, 0 };
 
             ReadBytes(Register.TEMPERATURE_REG_ADDR, data);
 
@@ -149,7 +149,7 @@ namespace Iot.Device.Adxl357
 
         private Vector3 GetRawAccelerometer()
         {
-            SpanByte data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            Span<byte> data = new byte[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             var ace = new Vector3();
 
@@ -184,7 +184,7 @@ namespace Iot.Device.Adxl357
 
         private void WriteRegister(Register register, byte data)
         {
-            SpanByte dataout = new byte[]
+            Span<byte> dataout = new byte[]
             {
                 (byte)register, data
             };
@@ -198,7 +198,7 @@ namespace Iot.Device.Adxl357
             return _i2CDevice.ReadByte();
         }
 
-        private void ReadBytes(Register register, SpanByte readBytes)
+        private void ReadBytes(Register register, Span<byte> readBytes)
         {
             _i2CDevice.WriteByte((byte)register);
             _i2CDevice.Read(readBytes);

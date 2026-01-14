@@ -356,7 +356,7 @@ namespace Iot.Device.Bh1745
 
         private ushort Read16BitsFromRegister(byte register)
         {
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
 
             _i2cDevice.WriteByte(register);
             _i2cDevice.Read(bytes);
@@ -393,7 +393,7 @@ namespace Iot.Device.Bh1745
 
         private void Write8BitsToRegister(byte register, byte data)
         {
-            SpanByte command = new[]
+            Span<byte> command = new[]
             {
                 register, data
             };

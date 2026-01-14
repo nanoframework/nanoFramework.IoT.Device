@@ -320,7 +320,7 @@ namespace Iot.Device.Adc
         /// <returns>Am unsiged short integer representing the regsiter contents.</returns>
         private ushort ReadRegister(Ina219Register register, int delayMicroSeconds = 0)
         {
-            SpanByte buffer = new byte[2];
+            Span<byte> buffer = new byte[2];
 
             // set a value in the buffer representing the register that we want to read and send it to the INA219
             buffer[0] = (byte)register;
@@ -346,7 +346,7 @@ namespace Iot.Device.Adc
         /// <param name="value">The value to be writtent to the register.</param>
         private void WriteRegister(Ina219Register register, ushort value)
         {
-            SpanByte buffer = new byte[3];
+            Span<byte> buffer = new byte[3];
 
             // set the first byte of the buffer to the register to be writtent
             buffer[0] = (byte)register;

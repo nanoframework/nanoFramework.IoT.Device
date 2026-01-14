@@ -34,7 +34,7 @@ namespace Iot.Device.Rtc
         /// <returns>DS1307 Time.</returns>
         protected override DateTime ReadTime()
         {
-            SpanByte readBuffer = new byte[7];
+            Span<byte> readBuffer = new byte[7];
 
             // Read all registers at the same time
             _i2cDevice.WriteByte((byte)Ds1307Register.RTC_SEC_REG_ADDR);
@@ -57,7 +57,7 @@ namespace Iot.Device.Rtc
         /// <param name="time">Time.</param>
         protected override void SetTime(DateTime time)
         {
-            SpanByte writeBuffer = new byte[8];
+            Span<byte> writeBuffer = new byte[8];
 
             writeBuffer[0] = (byte)Ds1307Register.RTC_SEC_REG_ADDR;
 

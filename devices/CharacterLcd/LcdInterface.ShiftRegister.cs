@@ -140,7 +140,7 @@ namespace Iot.Device.CharacterLcd
                 }
             }
 
-            public override void SendCommands(SpanByte commands)
+            public override void SendCommands(Span<byte> commands)
             {
                 for (int i = 0; i < commands.Length; i++)
                 {
@@ -161,7 +161,7 @@ namespace Iot.Device.CharacterLcd
                 }
             }
 
-            public override void SendData(SpanByte values)
+            public override void SendData(Span<byte> values)
             {
                 for (int i = 0; i < values.Length; i++)
                 {
@@ -169,7 +169,7 @@ namespace Iot.Device.CharacterLcd
                 }
             }
 
-            public override void SendData(SpanChar values)
+            public override void SendData(Span<char> values)
             {
                 for (int i = 0; i < values.Length; i++)
                 {

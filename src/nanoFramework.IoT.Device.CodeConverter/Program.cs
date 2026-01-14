@@ -115,8 +115,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                 {
                     Dictionary<string, string> replacements = new () {
                         { "stackalloc", "new" },
-                        { "ReadOnlySpan<byte>", "SpanByte" },
-                        { "Span<byte>", "SpanByte" },
+                        { "ReadOnlySpan<byte>", "Span<byte>" },
                         { "DateTime.Now", "DateTime.UtcNow" },
                         { ".AsSpan(start, length)", string.Empty },
                         { "Console.WriteLine(", "Debug.WriteLine(" },
@@ -149,7 +148,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
                         containerType: "Span",
                         outputDirectory: genericsOutputDirectory,
                         containerTypeSynonyms: new [] {"ReadOnlySpan"},
-                        alreadyExistingContainers: new [] {"SpanByte"});
+                        alreadyExistingContainers: new [] {"Span<byte>"});
                     
                     foreach (var (key, value) in listReplacements.Concat(spanReplacements))
                     {
@@ -495,7 +494,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
         /// <summary>
         /// This is a complex operation that:
         /// 1. Finds all generics of a given type in the source file;
-        /// 2. Generates non-generic classes that simulate behaviour of these generics (such as Span<byte> -> SpanByte);
+        /// 2. Generates non-generic classes that simulate behaviour of these generics (such as List<int> -> ListInt);
         /// 3. Writes these new classes to the files in the given folder;
         /// 4. Returns the replacements one has to do in the source file so that it uses the new classes instead of generics.
         /// </summary>
@@ -510,7 +509,7 @@ namespace nanoFramework.IoT.Device.CodeConverter
         /// </param>
         /// <param name="alreadyExistingContainers">
         /// Containers that don't need to be created from the template because they already exist in the visible scope.
-        /// E.g. SpanByte exists in mscorlib, and there's no need to generate SpanByte.cs. 
+        /// E.g. ArrayList exists in mscorlib, and there's no need to generate ArrayList.cs. 
         /// </param>
         /// <param name="outputDirectory">Where to put the generated replacements for the generics.</param>
         /// <returns>
@@ -584,8 +583,8 @@ namespace nanoFramework.IoT.Device.CodeConverter
             if (alreadyExistingContainers.Contains(newContainerType))
             {
                 // Don't create a container if a container with the same name is visible in the scope of this project.
-                // E.g. a container SpanByte from mscorlib is globally visible, and we want to replace
-                // Span<byte> and ReadOnlySpan<byte> with SpanByte, but we don't want to generate our own SpanByte.cs.
+                // E.g. a container Span<byte> from mscorlib is globally visible, and we want to replace
+                // Span<byte> and ReadOnlySpan<byte> with Span<byte>, but we don't want to generate our own Span<byte>.cs.
                 return newContainerType;
             }
 

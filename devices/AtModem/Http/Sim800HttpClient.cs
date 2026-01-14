@@ -199,7 +199,7 @@ namespace Iot.Device.AtModem.Http
                     index = 0;
                     const int chunkSize = 64;
                     int bytesToSend;
-                    SpanByte toSend = request.Content.ReadAsByteArray();
+                    Span<byte> toSend = request.Content.ReadAsByteArray();
                     while (index < contentLength)
                     {
                         bytesToSend = (int)(contentLength - index);

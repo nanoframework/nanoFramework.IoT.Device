@@ -89,7 +89,7 @@ namespace Iot.Device.Ndef
         /// Create a Uri Record from a span of bytes
         /// </summary>
         /// <param name="record">Record as a span of byte</param>
-        public UriRecord(SpanByte record)
+        public UriRecord(Span<byte> record)
             : base(record)
         {
             ExtractAll();

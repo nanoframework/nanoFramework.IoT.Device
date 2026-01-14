@@ -191,7 +191,7 @@ namespace Iot.Device.AtModem.Sms
                             int statusCode = int.Parse(line1.Substring(7).Split(',')[0]);
                             SmsStatus status = SmsStatusHelpers.ToSmsStatus(statusCode);
 
-                            var pdu = new SpanChar(line2.ToCharArray());
+                            var pdu = new Span<char>(line2.ToCharArray());
                             var pduType = Pdu.GetPduType(pdu);
                             PhoneNumber sender = null;
                             DateTime received = default;
@@ -355,7 +355,7 @@ namespace Iot.Device.AtModem.Sms
                                 index = int.Parse(match[0]);
                                 status = SmsStatusHelpers.ToSmsStatus(int.Parse(match[1]));
                                 AdvanceIterator();
-                                var pdu = new SpanChar(line.ToCharArray());
+                                var pdu = new Span<char>(line.ToCharArray());
                                 var pduType = Pdu.GetPduType(pdu);
                                 if (pduType == PduType.SMS_SUBMIT)
                                 {

@@ -72,7 +72,7 @@ namespace Iot.Device.Relay
 
         internal void Write(Register reg, byte val)
         {
-            SpanByte span = new byte[2] { (byte)reg, val };
+            Span<byte> span = new byte[2] { (byte)reg, val };
             _i2cDevice.Write(span);
         }
     }

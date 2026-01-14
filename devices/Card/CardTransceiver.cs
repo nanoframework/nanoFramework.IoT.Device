@@ -18,7 +18,7 @@ namespace Iot.Device.Card
         /// <param name="dataToSend">A standardized raw buffer with the command at the position 0 in the array</param>
         /// <param name="dataFromCard">If any data are read from the card, they will be put into this array</param>
         /// <returns>-1 in case of error, otherwise the number of bytes read and copied into the <paramref name="dataFromCard"/> array</returns>
-        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard);
+        public abstract int Transceive(byte targetNumber, Span<byte> dataToSend, Span<byte> dataFromCard);
 
         /// <summary>
         /// Once you have an authentication operation failing with Mifare cards or a read/write, the card stop.

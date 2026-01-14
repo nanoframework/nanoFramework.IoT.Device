@@ -79,7 +79,7 @@ namespace Iot.Device.Lps22Hb
 
         private void WriteByte(Register register, byte data)
         {
-            SpanByte buff = new byte[2]
+            Span<byte> buff = new byte[2]
             {
                 (byte)register,
                 data
@@ -90,12 +90,12 @@ namespace Iot.Device.Lps22Hb
 
         private short ReadInt16(Register register)
         {
-            SpanByte val = new byte[2];
+            Span<byte> val = new byte[2];
             Read(register, val);
             return BinaryPrimitives.ReadInt16LittleEndian(val);
         }
 
-        private void Read(Register register, SpanByte buffer)
+        private void Read(Register register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)register);
             _i2c.Read(buffer);

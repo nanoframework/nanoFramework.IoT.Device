@@ -237,7 +237,7 @@ namespace Iot.Device.Tcs3472x
         private ushort I2cRead16(Registers reg)
         {
             _i2cDevice.WriteByte((byte)(Registers.COMMAND_BIT | reg));
-            SpanByte outArray = new byte[2]
+            Span<byte> outArray = new byte[2]
             {
                 0, 0
             };

@@ -15,10 +15,10 @@ namespace Iot.Device.Graphics
         /// <summary>
         /// Checks if it Starts With
         /// </summary>
-        /// <param name="spanChar">The SpanChar</param>
+        /// <param name="spanChar">The Span<char></param>
         /// <param name="toSearch">The string to search</param>
         /// <returns>True or False</returns>
-        internal static bool StartsWith(this SpanChar spanChar, string toSearch)
+        internal static bool StartsWith(this Span<char> spanChar, string toSearch)
         {
             bool found = true;
             for (int i = 0; i < toSearch.Length; i++)
@@ -33,7 +33,7 @@ namespace Iot.Device.Graphics
             return found;
         }
 
-        internal static int CompareTo(this SpanChar spanChar, string toSearch)
+        internal static int CompareTo(this Span<char> spanChar, string toSearch)
         {
             if (spanChar.StartsWith(toSearch) && spanChar.Length == toSearch.Length)
             {

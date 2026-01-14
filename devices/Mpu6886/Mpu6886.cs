@@ -41,7 +41,7 @@ namespace Iot.Device.Mpu6886
         {
             _i2c = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
-            SpanByte readBuffer = new byte[1];
+            Span<byte> readBuffer = new byte[1];
 
             _i2c.WriteByte((byte)Mpu6886.Register.WhoAmI);
             _i2c.Read(readBuffer);
@@ -52,54 +52,54 @@ namespace Iot.Device.Mpu6886
 
             // Initialization sequence
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0000 }));
             Thread.Sleep(10);
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0100_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0100_0000 }));
             Thread.Sleep(10);
 
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0001 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0001 }));
             Thread.Sleep(10);
 
             AccelerometerScale = AccelerometerScale.Scale8G;
             GyroscopeScale = GyroscopeScale.Scale2000dps;
 
             // CONFIG(0x1a) 1khz output
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.Configuration, 0b0000_0001 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.Configuration, 0b0000_0001 }));
             Thread.Sleep(1);
 
             SampleRateDivider = 0b0000_0001;
             AccelerometerInterruptEnabled = InterruptEnable.None;
 
             // ACCEL_CONFIG 2(0x1d)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, 0b0000_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, 0b0000_0000 }));
             Thread.Sleep(1);
 
             // USER_CTRL(0x6a)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.UserControl, 0b0000_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.UserControl, 0b0000_0000 }));
             Thread.Sleep(1);
 
             // FIFO_EN(0x23)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.FifoEnable, 0b0000_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.FifoEnable, 0b0000_0000 }));
             Thread.Sleep(1);
 
             // INT_PIN_CFG(0x37)
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.IntPinBypassEnabled, 0b0010_0010 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.IntPinBypassEnabled, 0b0010_0010 }));
             Thread.Sleep(1);
 
             // INT_ENABLE(0x38), "Data ready interrupt enable" bit
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, 0b0000_0001 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.InteruptEnable, 0b0000_0001 }));
             Thread.Sleep(100);
 
             //To avoid limiting sensor output to less than 0x7F7F, set this bit to 1. This should be done every time the MPU-6886 is powered up.
             //Datasheet page 46
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerIntelligenceControl, 0b0000_0010 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.AccelerometerIntelligenceControl, 0b0000_0010 }));
             Thread.Sleep(10);
         }
 
         private Vector3 GetRawAccelerometer()
         {
-            SpanByte vec = new byte[6];
+            Span<byte> vec = new byte[6];
             Read(Mpu6886.Register.AccelerometerMeasurementXHighByte, vec);
 
             short x = (short)(vec[0] << 8 | vec[1]);
@@ -111,7 +111,7 @@ namespace Iot.Device.Mpu6886
 
         private Vector3 GetRawGyroscope()
         {
-            SpanByte vec = new byte[6];
+            Span<byte> vec = new byte[6];
             Read(Mpu6886.Register.GyropscopeMeasurementXHighByte, vec);
 
             short x = (short)(vec[0] << 8 | vec[1]);
@@ -123,7 +123,7 @@ namespace Iot.Device.Mpu6886
 
         private short GetRawInternalTemperature()
         {
-            SpanByte vec = new byte[2];
+            Span<byte> vec = new byte[2];
             Read(Mpu6886.Register.TemperatureMeasurementHighByte, vec);
 
             return (short)(vec[0] << 8 | vec[1]); ;
@@ -155,7 +155,7 @@ namespace Iot.Device.Mpu6886
 
         private void WriteByte(Register register, byte data)
         {
-            SpanByte buff = new byte[2]
+            Span<byte> buff = new byte[2]
             {
                 (byte)register,
                 data
@@ -166,12 +166,12 @@ namespace Iot.Device.Mpu6886
 
         private short ReadInt16(Register register)
         {
-            SpanByte val = new byte[2];
+            Span<byte> val = new byte[2];
             Read(register, val);
             return BinaryPrimitives.ReadInt16LittleEndian(val);
         }
 
-        private void Read(Register register, SpanByte buffer)
+        private void Read(Register register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)((byte)register));
             _i2c.Read(buffer);
@@ -222,7 +222,7 @@ namespace Iot.Device.Mpu6886
         {
             get
             {
-                SpanByte vec = new byte[6];
+                Span<byte> vec = new byte[6];
                 Read(Mpu6886.Register.GyroscopeOffsetAdjustmentXHighByte, vec);
 
                 Vector3 v = new Vector3();
@@ -235,8 +235,8 @@ namespace Iot.Device.Mpu6886
 
             set
             {
-                SpanByte registerAndOffset = new byte[7];
-                SpanByte offsetbyte = new byte[2];
+                Span<byte> registerAndOffset = new byte[7];
+                Span<byte> offsetbyte = new byte[2];
 
                 registerAndOffset[0] = (byte)Mpu6886.Register.GyroscopeOffsetAdjustmentXHighByte;
 
@@ -261,7 +261,7 @@ namespace Iot.Device.Mpu6886
         /// </summary>
         public void Reset()
         {
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b1000_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b1000_0000 }));
             Thread.Sleep(10);
         }
 
@@ -270,7 +270,7 @@ namespace Iot.Device.Mpu6886
         /// </summary>
         public void Sleep()
         {
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0100_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0100_0000 }));
             Thread.Sleep(10);
         }
 
@@ -279,7 +279,7 @@ namespace Iot.Device.Mpu6886
         /// </summary>
         public void WakeUp()
         {
-            _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0000 }));
+            _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement1, 0b0000_0000 }));
             Thread.Sleep(10);
         }
 
@@ -290,7 +290,7 @@ namespace Iot.Device.Mpu6886
         {
             get
             {
-                SpanByte buffer = new byte[1];
+                Span<byte> buffer = new byte[1];
                 Read(Mpu6886.Register.AccelerometerConfiguration1, buffer);
                 return (AccelerometerScale)(buffer[0] & 0b0001_1000);
             }
@@ -298,14 +298,14 @@ namespace Iot.Device.Mpu6886
             set
             {
                 // First read the current register values
-                SpanByte currentRegisterValues = new byte[1];
+                Span<byte> currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration1);
                 _i2c.Read(currentRegisterValues);
 
                 byte newvalue = (byte)((currentRegisterValues[0] & 0b1110_0111) | (byte)value); // apply the new scale, we leave all bits except bit 3 and 4 untouched with mask 0b1110_0111
                 
                 // write the new register value
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, newvalue }));
+                _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration1, newvalue }));
 
                 Thread.Sleep(1);
             }
@@ -318,7 +318,7 @@ namespace Iot.Device.Mpu6886
         {
             get
             {
-                SpanByte buffer = new byte[1];
+                Span<byte> buffer = new byte[1];
                 Read(Mpu6886.Register.GyroscopeConfiguration, buffer);
                 return (GyroscopeScale)(buffer[0] & 0b0001_1000);
             }
@@ -326,14 +326,14 @@ namespace Iot.Device.Mpu6886
             set
             {
                 // First read the current register values
-                SpanByte currentRegisterValues = new byte[1];
+                Span<byte> currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.GyroscopeConfiguration);
                 _i2c.Read(currentRegisterValues);
                 
                 byte newvalue = (byte)((currentRegisterValues[0] & 0b1110_0111) | (byte)value); // apply the new scale, we leave all bits except bit 3 and 4 untouched with this mask 0b1110_0111
 
                 // write the new register value
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, newvalue }));
+                _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.GyroscopeConfiguration, newvalue }));
 
                 Thread.Sleep(1);
             }
@@ -347,7 +347,7 @@ namespace Iot.Device.Mpu6886
         {
             get
             {
-                SpanByte readBuffer = new byte[1];
+                Span<byte> readBuffer = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.PowerManagement2);
                 _i2c.Read(readBuffer);
 
@@ -358,7 +358,7 @@ namespace Iot.Device.Mpu6886
             set
             {
                 // First read the current register values
-                SpanByte currentRegisterValues = new byte[1];
+                Span<byte> currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.PowerManagement2);
                 _i2c.Read(currentRegisterValues);
 
@@ -366,7 +366,7 @@ namespace Iot.Device.Mpu6886
 
                 // write the new register value
                 // bit 1 in the register means disabled, so using bitwise not to flip bits.
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.PowerManagement2, (byte)~newvalue }));
+                _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.PowerManagement2, (byte)~newvalue }));
 
                 Thread.Sleep(1);
             }
@@ -378,7 +378,7 @@ namespace Iot.Device.Mpu6886
         public AccelerometerLowPowerMode AccelerometerLowPowerMode
         {
             get {
-                SpanByte currentRegisterValues = new byte[1];
+                Span<byte> currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
                 _i2c.Read(currentRegisterValues);
 
@@ -390,14 +390,14 @@ namespace Iot.Device.Mpu6886
             set
             {
                 // First read the current register values
-                SpanByte currentRegisterValues = new byte[1];
+                Span<byte> currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.AccelerometerConfiguration2);
                 _i2c.Read(currentRegisterValues);
 
                 byte newvalue = (byte)((currentRegisterValues[0] & 0b1100_1111) | (byte)value); // apply the new enabled axes, we leave all bits except bit 4 and 5 untouched with mask 0b1100_1111
 
                 // write the new register value
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, newvalue }));
+                _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.AccelerometerConfiguration2, newvalue }));
                 Thread.Sleep(2);
             }
         }
@@ -410,7 +410,7 @@ namespace Iot.Device.Mpu6886
         {
             get
             {
-                SpanByte readbuffer = new byte[1];
+                Span<byte> readbuffer = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.SampleRateDevider);
                 _i2c.Read(readbuffer);
                 return readbuffer[0];
@@ -418,7 +418,7 @@ namespace Iot.Device.Mpu6886
 
             set
             {
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.SampleRateDevider, value }));
+                _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.SampleRateDevider, value }));
                 Thread.Sleep(1);
             }
         }
@@ -430,7 +430,7 @@ namespace Iot.Device.Mpu6886
         {
             get
             {
-                SpanByte readbuffer = new byte[1];
+                Span<byte> readbuffer = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.InteruptEnable);
                 _i2c.Read(readbuffer);
                 return (InterruptEnable)(readbuffer[0] & 0b1110_0000);
@@ -439,14 +439,14 @@ namespace Iot.Device.Mpu6886
             set
             {
                 // First read the current register values
-                SpanByte currentRegisterValues = new byte[1];
+                Span<byte> currentRegisterValues = new byte[1];
                 _i2c.WriteByte((byte)Mpu6886.Register.InteruptEnable);
                 _i2c.Read(currentRegisterValues);
 
                 byte newvalue = (byte)((currentRegisterValues[0] & 0b0011_1111) | (byte)value); // apply the new enabled axes, we leave all bits except bit 4 and 5 untouched with mask 0b0011_1111
 
                 // write the new register value
-                _i2c.Write(new SpanByte(new byte[] { (byte)Mpu6886.Register.InteruptEnable, newvalue }));
+                _i2c.Write(new Span<byte>(new byte[] { (byte)Mpu6886.Register.InteruptEnable, newvalue }));
                 Thread.Sleep(2);
 
             }

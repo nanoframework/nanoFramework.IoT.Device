@@ -42,7 +42,7 @@ namespace Iot.Device.Ft232H
         }
 
         /// <inheritdoc/>
-        public override void Read(SpanByte buffer)
+        public override void Read(Span<byte> buffer)
         {
             DeviceInformation.SpiRead(_settings, buffer);
         }
@@ -50,19 +50,19 @@ namespace Iot.Device.Ft232H
         /// <inheritdoc/>
         public override byte ReadByte()
         {
-            SpanByte buffer = new byte[1];
+            Span<byte> buffer = new byte[1];
             DeviceInformation.SpiRead(_settings, buffer);
             return buffer[0];
         }
 
         /// <inheritdoc/>
-        public override void TransferFullDuplex(SpanByte writeBuffer, SpanByte readBuffer)
+        public override void TransferFullDuplex(Span<byte> writeBuffer, Span<byte> readBuffer)
         {
             DeviceInformation.SpiWriteRead(_settings, writeBuffer, readBuffer);
         }
 
         /// <inheritdoc/>
-        public override void Write(SpanByte buffer)
+        public override void Write(Span<byte> buffer)
         {
             DeviceInformation.SpiWrite(_settings, buffer);
         }

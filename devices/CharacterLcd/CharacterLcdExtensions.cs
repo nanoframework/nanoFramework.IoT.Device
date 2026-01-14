@@ -10,7 +10,7 @@ namespace Iot.Device.CharacterLcd
     public static class CharacterLcdExtensions
     {
         /// <summary>
-        /// Creates a custom character for standard displays with 8-pixel-per-row characters. See <see cref="ICharacterLcd.CreateCustomCharacter(int,System.SpanByte)"/> for details.
+        /// Creates a custom character for standard displays with 8-pixel-per-row characters. See <see cref="ICharacterLcd.CreateCustomCharacter(int,System.Span<byte>)"/> for details.
         /// </summary>
         /// <param name="self">Instance of ICharacterLcd. This method can be called as extension method on this instance</param>
         /// <param name="location">Index of the character to create in the hardware character table</param>
@@ -25,7 +25,7 @@ namespace Iot.Device.CharacterLcd
         public static void CreateCustomCharacter(this ICharacterLcd self, byte location, byte b0, byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7)
         {
             byte[] array = { b0, b1, b2, b3, b4, b5, b6, b7 };
-            SpanByte bytes = new SpanByte(array);// ReadOnlySpan<byte> bytes = new ReadOnlySpan<byte>(array);
+            Span<byte> bytes = new Span<byte>(array);// ReadOnlySpan<byte> bytes = new ReadOnlySpan<byte>(array);
             self.CreateCustomCharacter(location, bytes);
         }
     }

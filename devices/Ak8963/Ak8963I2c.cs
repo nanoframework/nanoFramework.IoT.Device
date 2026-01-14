@@ -29,7 +29,7 @@ namespace Iot.Device.Magnetometer
         /// <param name="i2cDevice">An I2C device.</param>
         /// <param name="reg">The register to read.</param>
         /// <param name="readBytes">A span of bytes with the read values.</param>
-        public override void ReadBytes(I2cDevice i2cDevice, byte reg, SpanByte readBytes)
+        public override void ReadBytes(I2cDevice i2cDevice, byte reg, Span<byte> readBytes)
         {
             i2cDevice.WriteByte(reg);
             i2cDevice.Read(readBytes);
@@ -43,7 +43,7 @@ namespace Iot.Device.Magnetometer
         /// <param name="data">A byte to write.</param>
         public override void WriteRegister(I2cDevice i2cDevice, byte reg, byte data)
         {
-            SpanByte dataout = new byte[]
+            Span<byte> dataout = new byte[]
             {
                 reg,
                 data

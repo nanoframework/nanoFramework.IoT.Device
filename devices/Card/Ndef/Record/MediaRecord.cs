@@ -79,7 +79,7 @@ namespace Iot.Device.Ndef
         /// </summary>
         /// <param name="payloadType">The payload type</param>
         /// <param name="payload">The byte payload</param>
-        public MediaRecord(string payloadType, SpanByte payload)
+        public MediaRecord(string payloadType, Span<byte> payload)
             : base()
         {
             Header.TypeNameFormat = TypeNameFormat.MediaType;

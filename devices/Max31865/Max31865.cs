@@ -91,7 +91,7 @@ namespace Iot.Device.Max31865
         {
             get
             {
-                SpanByte readBuffer = new byte[2];
+                Span<byte> readBuffer = new byte[2];
                 WriteRead(Register.FaultStatus, readBuffer);
 
                 return new FaultStatus(
@@ -112,7 +112,7 @@ namespace Iot.Device.Max31865
         /// </remarks>
         private void Initialize()
         {
-            SpanByte configurationSetting = new byte[]
+            Span<byte> configurationSetting = new byte[]
             {
                 (byte)Register.ConfigurationWrite,
                 (byte)((byte)(_rtdWires == ResistanceTemperatureDetectorWires.ThreeWire ? Configuration.ThreeWire : Configuration.TwoFourWire) | (byte)(_filterMode == ConversionFilterMode.Filter50Hz ? Configuration.Filter50HZ : Configuration.Filter60HZ))
@@ -126,7 +126,7 @@ namespace Iot.Device.Max31865
         /// </summary>
         private void ClearFaults()
         {
-            SpanByte configuration = new byte[2];
+            Span<byte> configuration = new byte[2];
             WriteRead(Register.ConfigurationRead, configuration);
 
             // Page 14 (Fault Status Clear (D1)) of the technical documentation
@@ -142,7 +142,7 @@ namespace Iot.Device.Max31865
         /// </summary>
         private void EnableBias(bool enable)
         {
-            SpanByte configuration = new byte[2];
+            Span<byte> configuration = new byte[2];
             WriteRead(Register.ConfigurationRead, configuration);
 
             configuration[1] = enable ? (byte)(configuration[1] | (byte)Configuration.Bias) : (byte)(configuration[1] & ~(byte)Configuration.Bias);
@@ -156,7 +156,7 @@ namespace Iot.Device.Max31865
         /// </summary>
         private void EnableOneShot(bool enable)
         {
-            SpanByte configuration = new byte[2];
+            Span<byte> configuration = new byte[2];
             WriteRead(Register.ConfigurationRead, configuration);
 
             configuration[1] = enable ? (byte)(configuration[1] | (byte)Configuration.OneShot) : (byte)(configuration[1] & ~(byte)Configuration.OneShot);
@@ -241,7 +241,7 @@ namespace Iot.Device.Max31865
             // Page 3 (Temperature Conversion Time) of the technical documentation
             Thread.Sleep((short)_filterMode);
 
-            SpanByte readBuffer = new byte[3];
+            Span<byte> readBuffer = new byte[3];
             WriteRead(Register.RTDMSB, readBuffer);
 
             EnableBias(false); // Disable Bias current again to reduce selfheating.
@@ -256,7 +256,7 @@ namespace Iot.Device.Max31865
         /// Takes the data input byte and writes it to the spi device
         /// </remarks>
         /// <param name="data">Data to write to the device</param>
-        private void Write(SpanByte data) => _spiDevice.Write(data);
+        private void Write(Span<byte> data) => _spiDevice.Write(data);
 
         /// <summary>
         /// Full Duplex Read of the Data on the Spi Device
@@ -266,9 +266,9 @@ namespace Iot.Device.Max31865
         /// </remarks>
         /// <param name="register">Register location to write to which starts the device reading</param>
         /// <param name="readBuffer">Number of bytes being read</param>
-        private void WriteRead(Register register, SpanByte readBuffer)
+        private void WriteRead(Register register, Span<byte> readBuffer)
         {
-            SpanByte regAddrBuf = new byte[readBuffer.Length];
+            Span<byte> regAddrBuf = new byte[readBuffer.Length];
 
             regAddrBuf[0] = (byte)(register);
             _spiDevice.TransferFullDuplex(regAddrBuf, readBuffer);

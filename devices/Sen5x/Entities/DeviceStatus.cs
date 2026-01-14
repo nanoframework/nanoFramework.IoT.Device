@@ -17,9 +17,9 @@ namespace Iot.Device.Sen5x.Entities
 
         internal override int ByteCount => 6;
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(Span<byte> data)
         {
-            SpanByte status = new byte[4];
+            Span<byte> status = new byte[4];
             status[0] = data[0];
             status[1] = data[1];
             status[2] = data[3];

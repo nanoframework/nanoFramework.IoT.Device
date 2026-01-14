@@ -91,7 +91,7 @@ namespace Iot.Device.Amg88xx
                     throw new ArgumentOutOfRangeException(nameof(pt.Y));
                 }
 
-                SpanByte buffer = _imageData;
+                Span<byte> buffer = _imageData;
                 return Amg88xxUtils.ConvertToTemperature(buffer.Slice(BytesPerPixel * ((Width * pt.Y) + pt.X), BytesPerPixel));
             }
         }
@@ -138,7 +138,7 @@ namespace Iot.Device.Amg88xx
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                SpanByte buffer = _imageData;
+                Span<byte> buffer = _imageData;
                 return BinaryPrimitives.ReadInt16LittleEndian(buffer.Slice(n * BytesPerPixel, BytesPerPixel));
             }
         }
@@ -473,7 +473,7 @@ namespace Iot.Device.Amg88xx
 
         private void SetRegister(Register register, byte value)
         {
-            SpanByte buffer = new byte[2]
+            Span<byte> buffer = new byte[2]
             {
                 (byte)register,
                 value

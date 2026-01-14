@@ -244,7 +244,7 @@ namespace Iot.Device.Ads1115
                             ((byte)_comparatorLatching << 2) |
                             (byte)_comparatorQueue);
 
-            SpanByte writeBuff = new byte[3]
+            Span<byte> writeBuff = new byte[3]
             {
                 (byte)Register.ADC_CONFIG_REG_ADDR,
                 configHi,
@@ -278,7 +278,7 @@ namespace Iot.Device.Ads1115
             SetConfig();
 
             // Reset to defaults
-            SpanByte writeBuff = new byte[3]
+            Span<byte> writeBuff = new byte[3]
             {
                 (byte)Register.ADC_CONFIG_REG_LO_THRESH, 0x80, 0
             };
@@ -302,7 +302,7 @@ namespace Iot.Device.Ads1115
         /// <param name="hiThreshold">Low threshold value (unsigned short).</param>
         private void WriteComparatorRegisters(short loThreshold, short hiThreshold)
         {
-            SpanByte writeBuff = new byte[3]
+            Span<byte> writeBuff = new byte[3]
             {
                 (byte)Register.ADC_CONFIG_REG_LO_THRESH, (byte)(loThreshold >> 8), (byte)(loThreshold & 0xFF)
             };
@@ -429,8 +429,8 @@ namespace Iot.Device.Ads1115
 
         private ushort ReadConfigRegister()
         {
-            SpanByte retBuf = new byte[2];
-            SpanByte request = new byte[1]
+            Span<byte> retBuf = new byte[2];
+            Span<byte> request = new byte[1]
             {
                 (byte)Register.ADC_CONFIG_REG_ADDR
             };
@@ -483,7 +483,7 @@ namespace Iot.Device.Ads1115
         private short ReadRawInternal()
         {
             short val;
-            SpanByte readBuff = new byte[2];
+            Span<byte> readBuff = new byte[2];
 
             _i2cDevice.WriteByte((byte)Register.ADC_CONVERSION_REG_ADDR);
             _i2cDevice.Read(readBuff);

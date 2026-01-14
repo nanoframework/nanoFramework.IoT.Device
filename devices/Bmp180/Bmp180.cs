@@ -144,7 +144,7 @@ namespace Iot.Device.Bmp180
         private short ReadRawTemperature()
         {
             // Reads the raw (uncompensated) temperature from the sensor
-            SpanByte command = new byte[]
+            Span<byte> command = new byte[]
             {
                 (byte)Register.CONTROL, (byte)Register.READTEMPCMD
             };
@@ -227,7 +227,7 @@ namespace Iot.Device.Bmp180
         /// </returns>
         internal ushort Read16BitsFromRegister(byte register)
         {
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
             _i2cDevice.WriteByte(register);
             _i2cDevice.Read(bytes);
 
@@ -241,7 +241,7 @@ namespace Iot.Device.Bmp180
         /// <returns> Value (BigEndian) from register.</returns>
         internal ushort Read16BitsFromRegisterBE(byte register)
         {
-            SpanByte bytes = new byte[2];
+            Span<byte> bytes = new byte[2];
             _i2cDevice.WriteByte(register);
             _i2cDevice.Read(bytes);
 

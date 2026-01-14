@@ -94,7 +94,7 @@ namespace Iot.Device.SensorHub
             pressure = Pressure.MaxValue;
             if (ReadRegister(Register.BMP280_STATUS).Equals(NO_ERROR))
             {
-                SpanByte bytes = new byte[4]
+                Span<byte> bytes = new byte[4]
                 {
                     0,
                     ReadRegister(Register.BMP280_PRESSURE_REG_H),
@@ -126,7 +126,7 @@ namespace Iot.Device.SensorHub
                 return false;
             }
 
-            SpanByte bytes = new byte[2]
+            Span<byte> bytes = new byte[2]
             {
                 ReadRegister(Register.LIGHT_REG_H),
                 ReadRegister(Register.LIGHT_REG_L)

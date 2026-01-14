@@ -98,7 +98,7 @@ namespace Iot.Device.Ndef
         /// Create a Text Record from a span of bytes
         /// </summary>
         /// <param name="record">The record as a span of bytes</param>
-        public TextRecord(SpanByte record)
+        public TextRecord(Span<byte> record)
             : base(record)
         {
             ExtractAll();

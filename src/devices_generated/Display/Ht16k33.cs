@@ -206,7 +206,7 @@ namespace Iot.Device.Display
         /// </summary>
         /// <param name="data">Array of bytes to write to the display</param>
         /// <param name="startAddress">Address to start writing from</param>
-        public abstract void Write(SpanByte data, int startAddress = 0);
+        public abstract void Write(Span<byte> data, int startAddress = 0);
 
         /// <summary>
         /// Clear display buffer

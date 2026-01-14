@@ -12,9 +12,9 @@ namespace Iot.Device.Sen5x.Entities
     {
         internal override int ByteCount => 6;
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(Span<byte> data)
         {
-            SpanByte buf = new byte[4];
+            Span<byte> buf = new byte[4];
             buf[0] = data[0];
             buf[1] = data[1];
             buf[2] = data[3];
@@ -22,9 +22,9 @@ namespace Iot.Device.Sen5x.Entities
             AutoCleaningInterval = TimeSpan.FromSeconds(BinaryPrimitives.ReadInt32BigEndian(buf));
         }
 
-        internal override void ToSpanByte(SpanByte data)
+        internal override void ToSpanByte(Span<byte> data)
         {
-            SpanByte buf = new byte[4];
+            Span<byte> buf = new byte[4];
             BinaryPrimitives.WriteInt32BigEndian(buf, (int)AutoCleaningInterval.TotalSeconds);
             data[0] = buf[0];
             data[1] = buf[1];
