@@ -31,11 +31,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Reference Include="mscorlib, Version=1.17.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.33\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.Pwm, Version=1.1.23.36628, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Pwm.1.1.23\lib\System.Device.Pwm.dll</HintPath>
+    <Reference Include="System.Device.Pwm, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Device.Pwm.2.0.0-preview.6\lib\System.Device.Pwm.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

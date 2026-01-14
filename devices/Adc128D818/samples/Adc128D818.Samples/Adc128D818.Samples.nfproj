@@ -22,11 +22,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
+    <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.2.0.0-preview.33\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c">
-      <HintPath>..\..\packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="System.Device.I2c, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.System.Device.I2c.2.0.0-preview.6\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
       <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.75.0\lib\UnitsNet.Temperature.dll</HintPath>

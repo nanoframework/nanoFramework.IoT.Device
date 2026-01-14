@@ -4,9 +4,9 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.17.11, 1.17.11]",
-        "resolved": "1.17.11",
-        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
+        "requested": "[2.0.0-preview.33, 2.0.0-preview.33]",
+        "resolved": "2.0.0-preview.33",
+        "contentHash": "VVr+TmThdBt9zzXFzFewB5GUsNm2BE8+/3OtaCiJVg76v0Wr87A0Mi6R74hm78otfIhPJ66aPaRd+fA23dmJjQ=="
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
@@ -22,51 +22,51 @@
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.32, 1.11.32]",
-        "resolved": "1.11.32",
-        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
+        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
+        "resolved": "2.0.0-preview.7",
+        "contentHash": "123GBb10MKevBBPzcXbjsADXx9yC9mATZhUVbGPAuLn6ZpfEmSGhbo9K0K8GX5zigzE9VNUUlTDa/94WyxIkaQ=="
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
-        "requested": "[1.7.11, 1.7.11]",
-        "resolved": "1.7.11",
-        "contentHash": "XPSTltZ9KeBruogVmjQpCphi1nLoJH49mpyp2eGBs8BTjKuL5TkMO20MoI8r73F/PW5AppTq49HvIZZavU5nPQ=="
+        "requested": "[2.0.0-preview.19, 2.0.0-preview.19]",
+        "resolved": "2.0.0-preview.19",
+        "contentHash": "bLcWZHMCMVpNG/2s9FOjaofznAqJzko/No8mJpcAjoFuj6r0Ovr78My+e+nitm7HTGWYUMRK64h90bZ/3oAP0Q=="
       },
       "nanoFramework.System.Collections": {
         "type": "Direct",
-        "requested": "[1.5.67, 1.5.67]",
-        "resolved": "1.5.67",
-        "contentHash": "MjSipUB70vrxjqTm1KfKTUqqjd0wbweiNyYFXONi0XClrH6HXsuX2lhDqXM8NWuYnWyYOqx8y20sXbvsH+4brg=="
+        "requested": "[2.0.0-preview.6, 2.0.0-preview.6]",
+        "resolved": "2.0.0-preview.6",
+        "contentHash": "3A1BTu/8db8vlmu/TflJ/TtToyyL0M3fiAHxFNYX02lmOr9XQ3YkYESa9m7yRb9nIBoUZbOhtgf5ufbvdPt5ug=="
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",
-        "requested": "[1.1.132, 1.1.132]",
-        "resolved": "1.1.132",
-        "contentHash": "EHWkSGOWPShgbAelNOGSIKHo5bmAlvVile7NGfhEzI7oH3D063+IAp/ufaY/TthTjb/saf5bAjbwqynijCNSUw=="
+        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
+        "resolved": "2.0.0-preview.7",
+        "contentHash": "Iq190rhLba6vBNowEED1zNEl9/PippkD9WZo5A+MJdJMwiHFJnEHRItiXOYYizwVUpHDPPVvU/ALKxeEd54kWg=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
-        "requested": "[1.1.96, 1.1.96]",
-        "resolved": "1.1.96",
-        "contentHash": "kJSy4EJwChO4Vq3vGWP9gNRPFDnTsDU5HxzeI7NDO+RjbDsx7B8EhKymoeTPLJCxQq8y/0P1KG2XCxGpggW+fw=="
+        "requested": "[2.0.0-preview.8, 2.0.0-preview.8]",
+        "resolved": "2.0.0-preview.8",
+        "contentHash": "i66iVOaicFGTGUc7vyzjs0AfWYmLhFJmoMTZItB63O4PoZL9Hz5/ASTIie+aAp15IKyhLBRtiAEPbJGL7+pLRA=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.116, 1.5.116]",
-        "resolved": "1.5.116",
-        "contentHash": "0S05UKcoI9Ukz9cMNPC9huFW9vSL42/4gIh4fw8ou8HkcFmTYb0OL8VF2Ah94hEDW5mqcYAVr0ipuGWPzIRqaA=="
+        "requested": "[2.0.0-preview.5, 2.0.0-preview.5]",
+        "resolved": "2.0.0-preview.5",
+        "contentHash": "Esjk1CzSjlGEK/rRsj/D/F1EQ0DttT1HC9IKJgN/45G+O0yocd7sfso05eVqhi2sIREMZKbBOli5YyqUffi58Q=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
-        "requested": "[1.3.42, 1.3.42]",
-        "resolved": "1.3.42",
-        "contentHash": "68HPjhersNpssbmEMUHdMw3073MHfGTfrkbRk9eILKbNPFfPFck7m4y9BlAi6DaguUJaeKxgyIojXF3SQrF8/A=="
+        "requested": "[2.0.0-preview.6, 2.0.0-preview.6]",
+        "resolved": "2.0.0-preview.6",
+        "contentHash": "/A9M9sGW8rsAg6YF81quWV9MvQseKWZodf+pK6lp3Bw12NkXwgwiAo1+9geJQFwDsqi2L9BcLb3IIs/BerGTbQ=="
       },
       "nanoFramework.System.Threading": {
         "type": "Direct",
-        "requested": "[1.1.52, 1.1.52]",
-        "resolved": "1.1.52",
-        "contentHash": "kv+US/+7QKV1iT/snxBh032vwZ+3krJ4vujlSsvmS2nNj/nK64R3bq/ST3bCFquxHDD0mog8irtCBCsFazr4kA=="
+        "requested": "[2.0.0-preview.5, 2.0.0-preview.5]",
+        "resolved": "2.0.0-preview.5",
+        "contentHash": "7PqyD+h8Odd5czvXX9eATQJET8XH/rgjPSePiPqztR3gqJM7TnDwGOkNJJ7lLfrHg0lbASxQy5heviKWexttaA=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

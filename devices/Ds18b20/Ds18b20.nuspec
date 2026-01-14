@@ -19,9 +19,9 @@
     <summary>Iot.Device.Ds18b20 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ds18b20</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.Device.OneWire" version="1.4.35" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.33" />
+      <dependency id="nanoFramework.Device.OneWire" version="2.0.0-preview.4" />
+      <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.3" />
       <dependency id="UnitsNet.nanoFramework.Temperature" version="5.75.0" />
     </dependencies>
   </metadata>
