@@ -116,7 +116,6 @@ namespace nanoFramework.IoT.Device.CodeConverter
                     Dictionary<string, string> replacements = new () {
                         { "stackalloc", "new" },
                         { "ReadOnlySpan<byte>", "Span<byte>" },
-                        { "Span<byte>", "Span<byte>" },
                         { "DateTime.Now", "DateTime.UtcNow" },
                         { ".AsSpan(start, length)", string.Empty },
                         { "Console.WriteLine(", "Debug.WriteLine(" },
