@@ -4,39 +4,39 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.17.11, 1.17.11]",
-        "resolved": "1.17.11",
-        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
+        "requested": "[2.0.0-preview.35, 2.0.0-preview.35]",
+        "resolved": "2.0.0-preview.35",
+        "contentHash": "l3LZs5zLeYKP+21DmVykOBWQvcLWOzgOls2JU6R2mRb2cz1+SitRCaEC5bTEJHs888JdHi3xWMVe3GkRzZ/2Lg=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.32, 1.11.32]",
-        "resolved": "1.11.32",
-        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
+        "requested": "[2.0.0-preview.8, 2.0.0-preview.8]",
+        "resolved": "2.0.0-preview.8",
+        "contentHash": "+ELISV4zHeqzHrYirnx47zsAA7MPbBMWJQudbQv5almh22bTviDzFbOML3Dim8lCZZeaARnJers1gPmJ4ODT7Q=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.862, 1.2.862]",
-        "resolved": "1.2.862",
-        "contentHash": "O+jmbbw2h2cjCTShsvWCzjqn/kmRacJE4Ena9gJt5xF5D7XHyYh/uE/qbZ4LhlmlN6JCZjLRNiEfHyM1YUjyxg=="
+        "requested": "[2.0.0-preview.4, 2.0.0-preview.4]",
+        "resolved": "2.0.0-preview.4",
+        "contentHash": "7HC+DChBJi78aZKj1FbO8ygodZEPDGt5TLUMfb2wUkBrhm27M1mDC7ydr4zjkZB3D/lErixGYcGUMWwwDobkQA=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.57, 1.1.57]",
-        "resolved": "1.1.57",
-        "contentHash": "Es7jHRrT/+0Ty9uJNzJUcTn+aCpjkxXnmsaM+g9HXvLZ8k4SDCCqmO9pT317nX+9ehmgGo2JKrtmkekgbOp+Pw=="
+        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
+        "resolved": "2.0.0-preview.9",
+        "contentHash": "mEgi50mgW3R8aZF/mjXaXMf288OqqNmQmLS3Zm3US7aGiCqksKBZGHctxUh/2AdwYHKRjTGlJRLmsjxoAqje4g=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[1.1.29, 1.1.29]",
-        "resolved": "1.1.29",
-        "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
+        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
+        "resolved": "2.0.0-preview.7",
+        "contentHash": "YZFwnHg5+e3r6tE/vXXa3Ydrn1urSbzB9Dz/E18g4EyOm5ULwJuLVeVgc9AaBeTbuaavANgQ35BQCwK2r7J84w=="
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",
-        "requested": "[1.2.862, 1.2.862]",
-        "resolved": "1.2.862",
-        "contentHash": "dARhyb8BHkje2P+7VphJpRLynVhMkC0U4pFNecLs6jw8DHRMMJyszcbgo/N0ALeYjilNk9hea+wzBLFrgZpsUQ=="
+        "requested": "[2.0.0-preview.4, 2.0.0-preview.4]",
+        "resolved": "2.0.0-preview.4",
+        "contentHash": "jlySm2fI5TIgE6aOj2HiQoOL6eZB14qnwA5Br0IOE0GF/zmyuaHq4s18QpKS/QCvSV8QUikR0vmd5LY9TLZ7SQ=="
       },
       "UnitsNet.nanoFramework.Length": {
         "type": "Direct",
