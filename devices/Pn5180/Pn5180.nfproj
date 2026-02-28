@@ -47,17 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="EepromAddress.cs" />
-    <Compile Include="ListSelectedPiccInformation.cs" />
-    <Compile Include="Pn5180.cs" />
-    <Compile Include="RadioFrequencyCollision.cs" />
-    <Compile Include="RadioFrequencyStatus.cs" />
-    <Compile Include="RBlock.cs" />
-    <Compile Include="ReceiverRadioFrequencyConfiguration.cs" />
-    <Compile Include="Register.cs" />
-    <Compile Include="SelectedPiccInformation.cs" />
-    <Compile Include="TransmitterRadioFrequencyConfiguration.cs" />
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>

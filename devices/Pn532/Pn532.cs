@@ -821,6 +821,7 @@ namespace Iot.Device.Pn532
         /// <param name="targetNumber">The card target number</param>
         /// <param name="dataToSend">The data to write to the card</param>
         /// <param name="dataFromCard">The potential data to receive</param>
+        /// <param name="protocol">The NFC protocol to use for communication.</param>
         /// <returns>The number of bytes read</returns>
         public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol)
         {

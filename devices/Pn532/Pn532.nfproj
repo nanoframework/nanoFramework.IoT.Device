@@ -54,24 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BaudRate.cs" />
-    <Compile Include="CommandSet.cs" />
-    <Compile Include="DiagnoseMode.cs" />
-    <Compile Include="ErrorCode.cs" />
-    <Compile Include="FirmwareVersion.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="ListByte.cs" />
-    <Compile Include="OperatingMode.cs" />
-    <Compile Include="P3.cs" />
-    <Compile Include="P7.cs" />
-    <Compile Include="ParametersFlags.cs" />
-    <Compile Include="Pn532.cs" />
-    <Compile Include="RfConfigurationMode.cs" />
-    <Compile Include="RFConfigurationTimeout.cs" />
-    <Compile Include="SecurityAccessModuleMode.cs" />
-    <Compile Include="SfrRegister.cs" />
-    <Compile Include="VersionSupported.cs" />
-    <Compile Include="WakeUpEnable.cs" />
     <None Include="*.md" />
     <None Include="packages.config" />
   </ItemGroup>

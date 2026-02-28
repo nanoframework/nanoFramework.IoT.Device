@@ -15,8 +15,8 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the .NET IoT Core binding Iot.Device.Card, Mifare, Ultralight and NDEF for .NET nanoFramework C# projects.</description>
-    <summary>Iot.Device.Card, Mifare, Ultralight and NDEF assembly for .NET nanoFramework C# projects</summary>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Card, Mifare, Ultralight, NDEF and Icode (ISO 15693) for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Card, Mifare, Ultralight, NDEF and Icode assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Card</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
@@ -45,6 +45,11 @@
     <file src="Ultralight\bin\Release\Iot.Device.Ultralight.pdbx" target="lib\Iot.Device.Ultralight.pdbx" />
     <file src="Ultralight\bin\Release\Iot.Device.Ultralight.pe" target="lib\Iot.Device.Ultralight.pe" />
     <file src="Ultralight\bin\Release\Iot.Device.Ultralight.xml" target="lib\Iot.Device.Ultralight.xml" />
+    <file src="Icode\bin\Release\Iot.Device.Icode.dll" target="lib\Iot.Device.Icode.dll" />
+    <file src="Icode\bin\Release\Iot.Device.Icode.pdb" target="lib\Iot.Device.Icode.pdb" />
+    <file src="Icode\bin\Release\Iot.Device.Icode.pdbx" target="lib\Iot.Device.Icode.pdbx" />
+    <file src="Icode\bin\Release\Iot.Device.Icode.pe" target="lib\Iot.Device.Icode.pe" />
+    <file src="Icode\bin\Release\Iot.Device.Icode.xml" target="lib\Iot.Device.Icode.xml" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
