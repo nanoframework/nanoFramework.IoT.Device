@@ -11,14 +11,25 @@ namespace Iot.Device.Card
     public abstract class CardTransceiver
     {
         /// <summary>
+        /// Gets the maximum read size supported by this transceiver.
+        /// </summary>
+        public abstract uint MaximumReadSize { get; }
+
+        /// <summary>
+        /// Gets the maximum write size supported by this transceiver.
+        /// </summary>
+        public abstract uint MaximumWriteSize { get; }
+
+        /// <summary>
         /// This function has to be implemented by all NFC/RFID/Card readers. This function is used in exchange of data with
         /// the reader and the cards.
         /// </summary>
         /// <param name="targetNumber">Some readers have a notion of target number for the cards as they can read multiple ones</param>
         /// <param name="dataToSend">A standardized raw buffer with the command at the position 0 in the array</param>
         /// <param name="dataFromCard">If any data are read from the card, they will be put into this array</param>
+        /// <param name="protocol">The NFC protocol to use for this transceive operation</param>
         /// <returns>-1 in case of error, otherwise the number of bytes read and copied into the <paramref name="dataFromCard"/> array</returns>
-        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard);
+        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol);
 
         /// <summary>
         /// Once you have an authentication operation failing with Mifare cards or a read/write, the card stop.

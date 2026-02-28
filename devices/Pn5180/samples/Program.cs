@@ -2,12 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.Spi;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using Iot.Device.Card.Icode;
 using Iot.Device.Card.Mifare;
 using Iot.Device.Card.Ultralight;
 using Iot.Device.Ndef;
@@ -56,6 +58,12 @@ Debug.WriteLine($"Product: {versions.Product}, Firmware: {versions.Firmware}, EE
 
 // Pull ISO 14443 B cards, display information
 //PullTypeBCards();
+
+// Pull ISO 15693 cards, display information
+//PullIso15693Cards();
+
+// Detect and process an ICODE (ISO 15693) card
+//ProcessIcodeCard();
 
 // Dump Ultralight card and various tests
 ProcessUltralight();
@@ -232,6 +240,121 @@ void PullTypeBCards()
         Thread.Sleep(500);
     }
     while (true);
+}
+
+void PullIso15693Cards()
+{
+    do
+    {
+        if (pn5180.ListenToCardIso15693(
+            TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+            ReceiverRadioFrequencyConfiguration.Iso15693_26,
+            out ArrayList cards,
+            1000))
+        {
+            Debug.WriteLine($"ISO 15693 card(s) found: {cards.Count}");
+            foreach (Data26_53kbps card in cards)
+            {
+                Debug.WriteLine($"  Slot: {card.TargetNumber}");
+                Debug.WriteLine($"  UID: {BitConverter.ToString(card.NfcId)}");
+                Debug.WriteLine($"  DSFID: 0x{card.Dsfid:X2}");
+            }
+        }
+        else
+        {
+            Debug.WriteLine("No ISO 15693 card detected.");
+        }
+
+        Thread.Sleep(500);
+    }
+    while (true);
+}
+
+void ProcessIcodeCard()
+{
+    // First detect an ISO 15693 card
+    ArrayList detectedCards;
+    Data26_53kbps detectedCard;
+
+    do
+    {
+        if (pn5180.ListenToCardIso15693(
+            TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+            ReceiverRadioFrequencyConfiguration.Iso15693_26,
+            out detectedCards,
+            2000))
+        {
+            detectedCard = (Data26_53kbps)detectedCards[0];
+            Debug.WriteLine($"ISO 15693 card detected:");
+            Debug.WriteLine($"  UID: {BitConverter.ToString(detectedCard.NfcId)}");
+            Debug.WriteLine($"  DSFID: 0x{detectedCard.Dsfid:X2}");
+            break;
+        }
+        else
+        {
+            Debug.WriteLine("Waiting for ISO 15693 card...");
+        }
+    }
+    while (true);
+
+    // Reset the RF configuration for addressed-mode communication
+    pn5180.ResetPN5180Configuration(
+        TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+        ReceiverRadioFrequencyConfiguration.Iso15693_26);
+
+    // Create IcodeCard instance
+    var icodeCard = new IcodeCard(pn5180, detectedCard.TargetNumber)
+    {
+        Uid = detectedCard.NfcId,
+        Capacity = IcodeCardCapacity.Unknown
+    };
+
+    // Get system information
+    Debug.WriteLine("Getting system information...");
+    var sysRet = icodeCard.GetSystemInformation();
+    if (sysRet && icodeCard.Data != null && icodeCard.Data.Length > 0)
+    {
+        Debug.WriteLine($"  DSFID: 0x{icodeCard.Dsfid:X2}");
+        Debug.WriteLine($"  AFI: 0x{icodeCard.Afi:X2}");
+        Debug.WriteLine($"  System info data: {BitConverter.ToString(icodeCard.Data)}");
+    }
+    else
+    {
+        Debug.WriteLine("Error getting system information.");
+    }
+
+    // Read single block
+    Debug.WriteLine("Reading block 0...");
+    sysRet = icodeCard.ReadSingleBlock(0);
+    if (sysRet && icodeCard.Data != null)
+    {
+        Debug.WriteLine($"  Block 0 data: {BitConverter.ToString(icodeCard.Data)}");
+    }
+    else
+    {
+        Debug.WriteLine("Error reading block 0.");
+    }
+
+    // Read multiple blocks
+    Debug.WriteLine("Reading blocks 0-3...");
+    sysRet = icodeCard.ReadMultipleBlocks(0, 4);
+    if (sysRet && icodeCard.Data != null)
+    {
+        Debug.WriteLine($"  Blocks 0-3 data: {BitConverter.ToString(icodeCard.Data)}");
+    }
+    else
+    {
+        Debug.WriteLine("Error reading blocks 0-3.");
+    }
+
+    // Stay quiet and reset
+    Debug.WriteLine("Sending StayQuiet...");
+    sysRet = icodeCard.StayQuiet();
+    Debug.WriteLine(sysRet ? "  Card is now quiet." : "  Error sending StayQuiet.");
+
+    Debug.WriteLine("Sending ResetToReady...");
+    sysRet = icodeCard.ResetToReady();
+    Debug.WriteLine(sysRet ? "  Card is ready again." : "  Error sending ResetToReady.");
 }
 
 void ProcessUltralight()

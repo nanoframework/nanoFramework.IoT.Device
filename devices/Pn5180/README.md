@@ -129,6 +129,90 @@ Specific for type B cards, they have a target number. This target number is need
 
 You should deselect the Type B card at the end to release the target number. If not done, during the next poll, this implementation will test if the card is still present, keep it in this case.
 
+## ISO 15693 (Vicinity Cards)
+
+The PN5180 supports ISO 15693 (NFC-V) cards such as NXP ICODE SLIX, SLIX2, DNA, and ICODE 3. These cards operate at 13.56 MHz with a longer read range than ISO 14443 proximity cards.
+
+### Detecting ISO 15693 cards
+
+Use `ListenToCardIso15693` to perform a 16-slot inventory and detect one or more ISO 15693 cards:
+
+```csharp
+ArrayList cards;
+do
+{
+    if (pn5180.ListenToCardIso15693(
+        TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+        ReceiverRadioFrequencyConfiguration.Iso15693_26,
+        out cards,
+        1000))
+    {
+        foreach (Data26_53kbps card in cards)
+        {
+            Debug.WriteLine($"ISO 15693 card found:");
+            Debug.WriteLine($"  UID: {BitConverter.ToString(card.NfcId)}");
+            Debug.WriteLine($"  DSFID: 0x{card.Dsfid:X2}");
+        }
+    }
+    else
+    {
+        Thread.Sleep(300);
+    }
+}
+while (true);
+```
+
+### Reading and writing ICODE cards
+
+Once a card is detected, create an `IcodeCard` instance to perform read/write operations:
+
+```csharp
+// Assuming detectedCard is a Data26_53kbps from ListenToCardIso15693
+pn5180.ResetPN5180Configuration(
+    TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+    ReceiverRadioFrequencyConfiguration.Iso15693_26);
+
+var icodeCard = new IcodeCard(pn5180, detectedCard.TargetNumber)
+{
+    Uid = detectedCard.NfcId,
+    Capacity = IcodeCardCapacity.Unknown
+};
+
+// Get system information
+icodeCard.GetSystemInformation();
+
+// Read a single block
+icodeCard.ReadSingleBlock(0);
+Debug.WriteLine($"Block 0: {BitConverter.ToString(icodeCard.Data)}");
+
+// Write a single block
+icodeCard.Data = new byte[] { 0x01, 0x02, 0x03, 0x04 };
+icodeCard.WriteSingleBlock(0);
+
+// Read multiple blocks at once
+icodeCard.ReadMultipleBlocks(0, 4);
+```
+
+### Switching between ISO 14443 and ISO 15693
+
+When switching between ISO 14443 (Type A/B) and ISO 15693 cards, use `ResetPN5180Configuration` to reload the appropriate RF configuration:
+
+```csharp
+// Switch to ISO 15693 mode
+pn5180.ResetPN5180Configuration(
+    TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+    ReceiverRadioFrequencyConfiguration.Iso15693_26);
+
+// ... do ISO 15693 operations ...
+
+// Switch back to ISO 14443 Type A mode
+pn5180.ResetPN5180Configuration(
+    TransmitterRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106,
+    ReceiverRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106);
+```
+
+See the [Icode card documentation](../Card/Icode/README.md) for more details on the supported ISO 15693 commands.
+
 ## EEPROM
 
 You can fully access the PN5180 EEPROM. Here is an example on how to do it:
@@ -283,38 +367,42 @@ The [example](./samples/Program.cs) contains as well an implementation to fully 
 ## Current implementation
 
 Communication support:
+
 - [X] Hardware SPI Controller fully supported
 - [X] GPIO Controller fully supported
 
-Miscellaneous
+Miscellaneous:
+
 - [X] Read fully EEPROM
 - [X] Write fully EEPROM
 - [X] Read any part of EEPROM
 - [X] Write any part of EEPROM
 - [X] Get product, hardware and firmware versions
-- [X] CardTransceive support to reuse existing [Mifare](../Card/Mifare/README.md) and [Credit Card](../Card/CreditCard/README.md), ISO 14443 support Type A or Type B protocol
+- [X] CardTransceive support to reuse existing [Mifare](../Card/Mifare/README.md), [Icode (ISO 15693)](../Card/Icode/README.md) and [Credit Card](../Card/CreditCard/README.md), ISO 14443 support Type A or Type B protocol, ISO 15693 support
 - [ ] Secure firmware update
 - [ ] Own board GPIO access
 
 RF communication commands:
+
 - [X] Load a specific configuration
 - [X] Read a specific configuration
 - [X] Write a specific configuration
 
 PN5180 as an initiator (reader) commands:
+
 - [X] Auto poll ISO 14443 type A cards
 - [X] Auto poll ISO 14443 type B cards
 - [X] Deselect ISO 14443 type B cards
 - [X] Multi card support at the same time: partial, depending on the card, CID mandatory in all 14443 type B communications
 - [X] ISO 14443-4 communication protocol
-- [ ] Auto poll ISO/IEC 18000-3 cards
-- [ ] Communication support for ISO/IEC 18000-3 cards
+- [X] Auto poll ISO 15693 (NFC-V / Vicinity) cards
+- [X] Communication support for ISO 15693 cards (ICODE SLIX, SLIX2, DNA, ICODE 3)
 - [ ] Low power card detection
 - [X] Mifare specific authentication
 - [ ] Fast 212, 424, 848 kbtis communication: partial
 
-PN5180 as a Target (acting like a card)
+PN5180 as a Target (acting like a card):
+
 - [ ] Initialization as target
 - [ ] Handling communication with another reader as a target
 - [ ] Support for transceive data
-

@@ -304,7 +304,7 @@ namespace Iot.Device.Card.Ultralight
                 dataOut = new byte[3];
             }
 
-            var ret = _rfid.Transceive(Target, Serialize(), dataOut);
+            var ret = _rfid.Transceive(Target, Serialize(), dataOut, NfcProtocol.Mifare);
 #if DEBUG
             _logger.LogDebug($"{nameof(UltralightCommand)}: {Command}, Target: {Target}, Data: {BitConverter.ToString(Serialize())}, Success: {ret}, Dataout: {BitConverter.ToString(dataOut)}");
 #endif
@@ -347,14 +347,14 @@ namespace Iot.Device.Card.Ultralight
             {
                 SpanByte toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 2 };
                 SpanByte dataOut = new byte[16];
-                _rfid.Transceive(Target, toSend, dataOut);
+                _rfid.Transceive(Target, toSend, dataOut, NfcProtocol.Mifare);
                 return (dataOut[2] & (0b0000_0001 << page)) == (0b0000_0001 << page);
             }
             else if ((page >= 0x08) && (page <= 0x0F))
             {
                 SpanByte toSend = new byte[2] { (byte)UltralightCommand.Read16Bytes, 2 };
                 SpanByte dataOut = new byte[16];
-                _rfid.Transceive(Target, toSend, dataOut);
+                _rfid.Transceive(Target, toSend, dataOut, NfcProtocol.Mifare);
                 return (dataOut[3] & (0b0000_0001 << (page - 8))) == (0b0000_0001 << (page - 8));
             }
             else
@@ -366,7 +366,7 @@ namespace Iot.Device.Card.Ultralight
                     case UltralightCardType.UltralightNtag203:
                         // Read 0x24
                         toSend[1] = 0x24;
-                        _rfid.Transceive(Target, toSend, dataOut);
+                        _rfid.Transceive(Target, toSend, dataOut, NfcProtocol.Mifare);
                         // byte 0, 1 and 2 are used , 2 pages lock with specific cases
                         if ((page >= 16) && (page <= 31))
                         {
@@ -385,7 +385,7 @@ namespace Iot.Device.Card.Ultralight
                     case UltralightCardType.UltralightNtag213F:
                     case UltralightCardType.UltralightNtag212:
                         // Read 0x28
-                        _rfid.Transceive(Target, toSend, dataOut);
+                        _rfid.Transceive(Target, toSend, dataOut, NfcProtocol.Mifare);
                         // byte 0, 1 and 2 are used , 2 pages lock with specific cases
                         if ((page >= 16) && (page <= 31))
                         {
@@ -402,7 +402,7 @@ namespace Iot.Device.Card.Ultralight
                     case UltralightCardType.UltralightNtag215:
                         // Read 0x82
                         toSend[1] = 0x82;
-                        _rfid.Transceive(Target, toSend, dataOut);
+                        _rfid.Transceive(Target, toSend, dataOut, NfcProtocol.Mifare);
                         // byte 0 and 16 pages blocks
                         if ((page >= 16) && (page <= 129))
                         {
@@ -417,7 +417,7 @@ namespace Iot.Device.Card.Ultralight
                     case UltralightCardType.UltralightNtagI2cNT3H1101W0:
                         // Read 0xE2
                         toSend[1] = 0xE2;
-                        _rfid.Transceive(Target, toSend, dataOut);
+                        _rfid.Transceive(Target, toSend, dataOut, NfcProtocol.Mifare);
                         // byte 0 and 1 for 16 pages blocks
                         if ((page >= 16) && (page <= 143))
                         {

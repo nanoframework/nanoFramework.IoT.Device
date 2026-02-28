@@ -40,6 +40,12 @@ namespace Iot.Device.Pn5180
         private ILogger _logger;
 #endif
 
+        /// <inheritdoc/>
+        public override uint MaximumReadSize => 508;
+
+        /// <inheritdoc/>
+        public override uint MaximumWriteSize => 260;
+
         /// <summary>
         /// A radio Frequency configuration element size is 5 bytes
         /// Byte 1 = Register Address
@@ -442,8 +448,21 @@ namespace Iot.Device.Pn5180
         }
 
         /// <inheritdoc/>
-        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol)
         {
+            if (protocol == NfcProtocol.Iso15693)
+            {
+                var ret = SendDataToCard(dataToSend);
+                if (!ret)
+                {
+                    return -1;
+                }
+
+                // ISO/IEC 15693-3:2001 page 25
+                // waiting time: (302µs) * number of bytes + eof(320.9µs) + 20ms
+                return ReadWithTimeout(dataFromCard, 1 + dataToSend.Length * 3 / 10 + 20);
+            }
+
             // Check if we have a Mifare Card authentication request
             // Only valid for Type A card so with a target number equal to 0
             if (((targetNumber == 0) && ((dataToSend[0] == (byte)MifareCardCommand.AuthenticationA) || (dataToSend[0] == (byte)MifareCardCommand.AuthenticationB))) && (dataFromCard.Length == 0))
@@ -1399,6 +1418,106 @@ namespace Iot.Device.Pn5180
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Listen to 15693 cards with 16 slots.
+        /// </summary>
+        /// <param name="transmitter">The transmitter configuration, should be compatible with 15693 card.</param>
+        /// <param name="receiver">The receiver configuration, should be compatible with 15693 card.</param>
+        /// <param name="cards">An ArrayList of <see cref="Data26_53kbps"/> once detected.</param>
+        /// <param name="timeoutPollingMilliseconds">The time to poll the card in milliseconds. Card detection will stop once the detection time will be over.</param>
+        /// <returns>True if a 15693 card has been detected.</returns>
+        public bool ListenToCardIso15693(TransmitterRadioFrequencyConfiguration transmitter, ReceiverRadioFrequencyConfiguration receiver,
+            out ArrayList cards, int timeoutPollingMilliseconds)
+        {
+            cards = new ArrayList();
+            var ret = LoadRadioFrequencyConfiguration(transmitter, receiver);
+            // Switch on the radio frequency field and check it
+            ret &= SetRadioFrequency(true);
+
+            SpanByte inventoryResponse = new byte[10];
+            int numBytes = 0;
+
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutPollingMilliseconds);
+
+            try
+            {
+                // Clears all interrupt
+                SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                // Sets the PN5180 into IDLE state
+                SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+                // Activates TRANSCEIVE routine
+                SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+                // Sends an inventory command with 16 slots
+                // Flags: 0x06 = high data rate + inventory flag, Command: 0x01 = inventory, Mask length: 0x00
+                ret = SendDataToCard(new byte[] { 0x06, 0x01, 0x00 });
+                if (dtTimeout < DateTime.UtcNow)
+                {
+                    return false;
+                }
+
+                for (byte slotCounter = 0; slotCounter < 16; slotCounter++)
+                {
+                    var num = GetNumberOfBytesReceivedAndValidBits();
+                    numBytes = num.Bytes;
+                    if (numBytes > 0)
+                    {
+                        ret &= ReadDataFromCard(inventoryResponse, inventoryResponse.Length);
+                        if (ret)
+                        {
+                            // Response: flags(1) + DSFID(1) + UID(8)
+                            byte[] uidBytes = inventoryResponse.Slice(2, 8).ToArray();
+                            cards.Add(new Data26_53kbps(slotCounter, 0, 0, inventoryResponse[1], uidBytes));
+                        }
+                    }
+
+                    // Send only EOF (End of Frame) without data at the next RF communication
+                    SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.TX_CONFIG, new byte[] { 0x3F, 0xFB, 0xFF, 0xFF });
+                    // Sets the PN5180 into IDLE state
+                    SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+                    // Activates TRANSCEIVE routine
+                    SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+                    // Clears the interrupt register IRQ_STATUS
+                    SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                    // Send EOF
+                    SendDataToCard(new byte[0]);
+                }
+
+                if (cards.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (TimeoutException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Reset PN5180 RF Configuration and some registers.
+        /// Useful when switching between different card protocols (e.g., ISO 14443 and ISO 15693).
+        /// </summary>
+        /// <param name="transmitter">The transmitter configuration.</param>
+        /// <param name="receiver">The receiver configuration.</param>
+        /// <returns>True if success.</returns>
+        public bool ResetPN5180Configuration(TransmitterRadioFrequencyConfiguration transmitter, ReceiverRadioFrequencyConfiguration receiver)
+        {
+            var ret = LoadRadioFrequencyConfiguration(transmitter, receiver);
+            // Switch on the radio frequency field and check it
+            ret &= SetRadioFrequency(true);
+            // Clears all interrupt
+            SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+            // Sets the PN5180 into IDLE state
+            SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+            // Activates TRANSCEIVE routine
+            SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+            return ret;
         }
 
         /// <summary>

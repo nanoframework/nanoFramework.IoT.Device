@@ -31,12 +31,19 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="*.cs" />
-    <Compile Include="Rfid\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="CardTransceiver.cs" />
+    <Compile Include="ErrorType.cs" />
+    <Compile Include="NfcProtocol.cs" />
+    <Compile Include="ProcessError.cs" />
+    <Compile Include="VersionSupported.cs" />
+    <Compile Include="Rfid\ApplicationType.cs" />
+    <Compile Include="Rfid\Data106kbpsInnovisionJewel.cs" />
+    <Compile Include="Rfid\Data106kbpsTypeA.cs" />
+    <Compile Include="Rfid\Data106kbpsTypeB.cs" />
+    <Compile Include="Rfid\Data212_424kbps.cs" />
+    <Compile Include="Rfid\Data26_53kbps.cs" />
+    <Compile Include="Rfid\MaxFrameSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="*.cs" />
     <None Include="*.md" />
   </ItemGroup>
   <ItemGroup>

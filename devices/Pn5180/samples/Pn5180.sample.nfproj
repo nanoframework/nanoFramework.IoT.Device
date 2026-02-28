@@ -57,6 +57,7 @@
     <ProjectReference Include="..\..\Card\Card.nfproj" />
     <ProjectReference Include="..\..\Card\Mifare\Mifare.nfproj" />
     <ProjectReference Include="..\..\Card\Ndef\Ndef.nfproj" />
+    <ProjectReference Include="..\..\Card\Icode\Icode.nfproj" />
     <ProjectReference Include="..\..\Card\Ultralight\Ultralight.nfproj" />
     <ProjectReference Include="..\Pn5180.nfproj" />
   </ItemGroup>

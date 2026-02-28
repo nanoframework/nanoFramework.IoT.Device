@@ -2,7 +2,7 @@
 
 Common elements of all RFID and NFC readers like the type of cards 14443 Type A, Type B, Innovision Jewel. 
 
-This contains as well an abstract class that has to be implemented by readers to have a transparent way of managing Mifare, Ultralight cards and other high level cards.
+This contains as well an abstract class that has to be implemented by readers to have a transparent way of managing Mifare, Ultralight, Icode (ISO 15693) cards and other high level cards.
 
 ```csharp
 namespace Iot.Device.Card
@@ -22,8 +22,9 @@ namespace Iot.Device.Card
         /// <param name="targetNumber">Some readers have a notion of target number for the cards as they can read multiple ones</param>
         /// <param name="dataToSend">A standardized raw buffer with the command at the position 0 in the array</param>
         /// <param name="dataFromCard">If any data are read from the card, they will be put into this array</param>
+        /// <param name="protocol">The NFC protocol to use for timing and framing. Defaults to Mifare.</param>
         /// <returns>-1 in case of error, otherwise the number of bytes read and copied into the <paramref name="dataFromCard"/> array</returns>
-        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard);
+        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol = NfcProtocol.Mifare);
 
         /// <summary>
         /// Once you have an authentication operation failing with Mifare cards or a read/write, the card stop.

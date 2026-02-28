@@ -158,7 +158,7 @@ namespace Iot.Device.Card.Mifare
                 dataOut = new byte[16];
             }
 
-            var ret = _rfid.Transceive(Target, Serialize(), dataOut);
+            var ret = _rfid.Transceive(Target, Serialize(), dataOut, NfcProtocol.Mifare);
 #if DEBUG
             _logger.LogDebug($"{nameof(RunMifareCardCommand)}: {Command}, Target: {Target}, Data: {BitConverter.ToString(Serialize())}, Success: {ret}, Dataout: {BitConverter.ToString(dataOut)}");
 #endif

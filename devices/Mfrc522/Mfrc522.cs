@@ -36,6 +36,12 @@ namespace Iot.Device.Mfrc522
         /// </summary>
         public const SpiMode DefaultSpiMode = SpiMode.Mode0;
 
+        /// <inheritdoc/>
+        public override uint MaximumReadSize => 62;
+
+        /// <inheritdoc/>
+        public override uint MaximumWriteSize => 62;
+
         private readonly int _pinReset;
 #if DEBUG
         private readonly ILogger _logger;
@@ -867,7 +873,7 @@ namespace Iot.Device.Mfrc522
         }
 
         /// <inheritdoc/>
-        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard)
+        public override int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol)
         {
             // targetNumber is not used here as only 1 card can be selected at a time so will be ignored
             // The dataToSend buffer contains anyway the unique of the card
