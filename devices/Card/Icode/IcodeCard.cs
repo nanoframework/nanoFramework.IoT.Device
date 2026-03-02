@@ -207,11 +207,24 @@ namespace Iot.Device.Card.Icode
 
                 case IcodeCardCommand.WriteMultipleBlocks:
                     // Flags(1 byte), Command code(1 byte), UID(8 byte), FirstBlockNumber(1 byte), NumBlocks(1 byte), Data
+                    if (Data is null)
+                    {
+                        throw new ArgumentNullException(nameof(Data));
+                    }
+
+                    if (Data.Length == 0 || (Data.Length % BytesPerBlock) != 0)
+                    {
+                        throw new ArgumentException("Data length must be a positive multiple of the block size.", nameof(Data));
+                    }
+
+                    int blockCount = Data.Length / BytesPerBlock;
+
                     ser = new byte[2 + 8 + 2 + Data.Length];
                     ser[0] = AddressedModeFlags;
                     ser[1] = (byte)_command;
                     ser[10] = BlockNumber;
-                    ser[11] = (byte)(Data.Length / BytesPerBlock);
+                    // ISO/IEC 15693 WriteMultipleBlocks encodes number of blocks as (N - 1)
+                    ser[11] = (byte)(blockCount - 1);
                     Uid?.CopyTo(ser, 2);
                     Data.CopyTo(ser, 12);
                     _responseSize = 2;
