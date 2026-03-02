@@ -11,7 +11,7 @@ namespace Iot.Device.Rfid
         /// <summary>
         /// Creates a 26/53 kbps ISO 15693 card data structure.
         /// </summary>
-        /// <param name="targetNumber">The target number, should be 1 or 2 with PN532.</param>
+        /// <param name="targetNumber">Reader-specific target identifier. For PN532 this is 1 or 2; for PN5180 ISO 15693 16-slot inventory this is the slot index (0-15).</param>
         /// <param name="afi">Application Family Identifier.</param>
         /// <param name="eas">Electronic Article Surveillance status.</param>
         /// <param name="dsfid">Data Storage Format Identifier.</param>
@@ -26,7 +26,8 @@ namespace Iot.Device.Rfid
         }
 
         /// <summary>
-        /// The target number, should be 1 or 2 with PN532.
+        /// Reader-specific target identifier.
+        /// For PN532 this is 1 or 2; for PN5180 ISO 15693 16-slot inventory this is the slot index (0-15).
         /// </summary>
         public byte TargetNumber { get; set; }
 

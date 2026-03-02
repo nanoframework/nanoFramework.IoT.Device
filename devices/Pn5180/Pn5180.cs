@@ -460,7 +460,10 @@ namespace Iot.Device.Pn5180
 
                 // ISO/IEC 15693-3:2001 page 25
                 // waiting time: (302µs) * number of bytes + eof(320.9µs) + 20ms
-                return ReadWithTimeout(dataFromCard, 1 + dataToSend.Length * 3 / 10 + 20);
+                // Use the expected response length (dataFromCard.Length) when available,
+                // falling back to the request length to preserve previous behavior.
+                int expectedBytes = dataFromCard.Length > 0 ? dataFromCard.Length : dataToSend.Length;
+                return ReadWithTimeout(dataFromCard, 1 + expectedBytes * 3 / 10 + 20);
             }
 
             // Check if we have a Mifare Card authentication request

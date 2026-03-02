@@ -29,7 +29,7 @@ namespace Iot.Device.Card
         /// <param name="dataFromCard">If any data are read from the card, they will be put into this array</param>
         /// <param name="protocol">The NFC protocol to use for this transceive operation</param>
         /// <returns>-1 in case of error, otherwise the number of bytes read and copied into the <paramref name="dataFromCard"/> array</returns>
-        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol);
+        public abstract int Transceive(byte targetNumber, SpanByte dataToSend, SpanByte dataFromCard, NfcProtocol protocol = NfcProtocol.Mifare);
 
         /// <summary>
         /// Once you have an authentication operation failing with Mifare cards or a read/write, the card stop.

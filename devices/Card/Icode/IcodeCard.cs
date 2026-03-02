@@ -140,13 +140,39 @@ namespace Iot.Device.Card.Icode
             byte[] requestData = Serialize();
             byte[] dataOut = new byte[_responseSize];
 
+            if (requestData.Length > _rfid.MaximumWriteSize)
+            {
+#if DEBUG
+                _logger.LogDebug($"{nameof(RunIcodeCardCommand)}: Request size {requestData.Length} exceeds transceiver MaximumWriteSize {_rfid.MaximumWriteSize}.");
+#endif
+                return -1;
+            }
+
+            if (_responseSize > _rfid.MaximumReadSize)
+            {
+#if DEBUG
+                _logger.LogDebug($"{nameof(RunIcodeCardCommand)}: Expected response size {_responseSize} exceeds transceiver MaximumReadSize {_rfid.MaximumReadSize}.");
+#endif
+                return -1;
+            }
+
             var ret = _rfid.Transceive(Target, requestData, dataOut, NfcProtocol.Iso15693);
 #if DEBUG
             _logger.LogDebug($"{nameof(RunIcodeCardCommand)}: {_command}, Target: {Target}, Data: {BitConverter.ToString(requestData)}, Success: {ret}, Dataout: {BitConverter.ToString(dataOut)}");
 #endif
             if (ret > 0)
             {
-                Data = dataOut;
+                if (ret < dataOut.Length)
+                {
+                    // Trim to actual received length to avoid trailing zeros
+                    byte[] trimmed = new byte[ret];
+                    Array.Copy(dataOut, 0, trimmed, 0, ret);
+                    Data = trimmed;
+                }
+                else
+                {
+                    Data = dataOut;
+                }
             }
 
             return ret;
@@ -195,14 +221,15 @@ namespace Iot.Device.Card.Icode
                     return ser;
 
                 case IcodeCardCommand.ReadMultipleBlocks:
-                    // Flags(1 byte), Command code(1 byte), UID(8 byte), FirstBlockNumber(1 byte), NumBlocks(1 byte)
+                    // Flags(1 byte), Command code(1 byte), UID(8 byte), FirstBlockNumber(1 byte), NumBlocks(1 byte, encoded as N-1)
                     ser = new byte[2 + 8 + 2];
                     ser[0] = AddressedModeFlags;
                     ser[1] = (byte)_command;
                     ser[10] = BlockNumber;
-                    ser[11] = BlockCount;
+                    // ISO/IEC 15693 encodes "number of blocks" as (N - 1), where N is the number of blocks to read
+                    ser[11] = (byte)(BlockCount - 1);
                     Uid?.CopyTo(ser, 2);
-                    _responseSize = (ushort)(1 + ((BlockCount + 1) * BytesPerBlock)); // flags(1) + blocks
+                    _responseSize = (ushort)(1 + (BlockCount * BytesPerBlock)); // flags(1) + blocks
                     return ser;
 
                 case IcodeCardCommand.WriteMultipleBlocks:
@@ -358,10 +385,10 @@ namespace Iot.Device.Card.Icode
         /// <returns>True if success. This only means whether the communication between VCD and VICC is successful or not.</returns>
         public bool WriteMultipleBlocks(byte block)
         {
-            if (Data.Length < 1)
+            if (Data.Length < 1 || (Data.Length % BytesPerBlock) != 0)
             {
 #if DEBUG
-                _logger.LogDebug("Length of data must be larger than zero.");
+                _logger.LogDebug("Length of data must be larger than zero and a multiple of 4 bytes (block size).");
 #endif
                 return false;
             }
