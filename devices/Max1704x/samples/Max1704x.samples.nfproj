@@ -25,10 +25,10 @@
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricPotential, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Ratio, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Ratio.5.76.10\lib\netnano1.0\UnitsNet.Ratio.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.Ratio.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Ratio.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

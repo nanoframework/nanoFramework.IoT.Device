@@ -56,7 +56,7 @@
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Length, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

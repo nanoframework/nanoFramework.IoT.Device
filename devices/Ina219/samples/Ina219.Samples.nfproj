@@ -39,13 +39,13 @@
       <HintPath>..\packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricCurrent, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.10\lib\netnano1.0\UnitsNet.ElectricCurrent.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricPotential, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Power, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Power.5.76.10\lib\netnano1.0\UnitsNet.Power.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.Power.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Power.dll</HintPath>
     </Reference>
     <!-- INSERT NEW REFERENCES HERE -->
   </ItemGroup>

@@ -49,7 +49,7 @@
       <HintPath>packages\nanoFramework.System.Math.1.5.116\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Illuminance, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Illuminance.5.76.10\lib\netnano1.0\UnitsNet.Illuminance.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Illuminance.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Illuminance.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

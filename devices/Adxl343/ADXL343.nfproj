@@ -72,10 +72,10 @@
       <HintPath>packages\nanoFramework.System.Numerics.1.2.862\lib\System.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Duration, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.76.10\lib\netnano1.0\UnitsNet.Duration.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Mass, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Mass.5.76.10\lib\netnano1.0\UnitsNet.Mass.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Mass.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Mass.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
