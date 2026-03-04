@@ -21,10 +21,10 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
       <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
-      <dependency id="UnitsNet.nanoFramework.Length" version="5.75.0" />
-      <dependency id="nanoFramework.UnitsNet.Pressure" version="5.76.10" />
-      <dependency id="nanoFramework.UnitsNet.RelativeHumidity" version="5.76.10" />
-      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.76.10" />
+      <dependency id="nanoFramework.UnitsNet.Length" version="5.76.15" />
+      <dependency id="nanoFramework.UnitsNet.Pressure" version="5.76.15" />
+      <dependency id="nanoFramework.UnitsNet.RelativeHumidity" version="5.76.15" />
+      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.76.15" />
     </dependencies>
   </metadata>
   <files>
