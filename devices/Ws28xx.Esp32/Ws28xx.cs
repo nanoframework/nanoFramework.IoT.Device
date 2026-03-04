@@ -51,7 +51,7 @@ namespace Iot.Device.Ws28xx.Esp32
         /// </summary>
         /// <param name="gpioPin">The GPIO pin used for communication with the LED driver.</param>
         /// <param name="image">The bitmap that represents the screen or led strip.</param>
-        /// <param name="rmtChannel">The RMT channel number to use. Valid value range is 0 to 7 (inclusive).</param>
+        /// <param name="rmtChannel">The RMT channel number to use. Valid values are 0 to 7 (inclusive), or -1 to auto-select a channel.</param>
         public Ws28xx(int gpioPin, BitmapImage image, int rmtChannel = -1)
         {
             if (gpioPin < 0)
