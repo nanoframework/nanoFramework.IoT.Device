@@ -20,29 +20,29 @@
         "resolved": "1.11.32",
         "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
       },
-      "nanoFramework.System.Device.I2c": {
+      "nanoFramework.System.IO.Ports": {
         "type": "Direct",
-        "requested": "[1.1.29, 1.1.29]",
-        "resolved": "1.1.29",
-        "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
+        "requested": "[1.1.132, 1.1.132]",
+        "resolved": "1.1.132",
+        "contentHash": "EHWkSGOWPShgbAelNOGSIKHo5bmAlvVile7NGfhEzI7oH3D063+IAp/ufaY/TthTjb/saf5bAjbwqynijCNSUw=="
       },
-      "nanoFramework.UnitsNet.MassConcentration": {
+      "nanoFramework.System.IO.Streams": {
+        "type": "Direct",
+        "requested": "[1.1.96, 1.1.96]",
+        "resolved": "1.1.96",
+        "contentHash": "kJSy4EJwChO4Vq3vGWP9gNRPFDnTsDU5HxzeI7NDO+RjbDsx7B8EhKymoeTPLJCxQq8y/0P1KG2XCxGpggW+fw=="
+      },
+      "nanoFramework.System.Text": {
+        "type": "Direct",
+        "requested": "[1.3.42, 1.3.42]",
+        "resolved": "1.3.42",
+        "contentHash": "68HPjhersNpssbmEMUHdMw3073MHfGTfrkbRk9eILKbNPFfPFck7m4y9BlAi6DaguUJaeKxgyIojXF3SQrF8/A=="
+      },
+      "nanoFramework.UnitsNet.Length": {
         "type": "Direct",
         "requested": "[5.76.0, 5.76.0]",
         "resolved": "5.76.0",
-        "contentHash": "3vGOMS9eY7qpVG0/ONsIXoAj7piSmrnMtZ/ncCiQLdCjOvYKmeUxgO+WqYIV0Wj1fQIuSPIP/isDYC/aY3qe8A=="
-      },
-      "nanoFramework.UnitsNet.RelativeHumidity": {
-        "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
-        "contentHash": "B/WFXKbXKIoLOEQn+6qfmuRUuEZvq1PNb94FQGs6m8futce3roe3eeLaQuXTFlc+YRV+xmRv5plIKYiAHdhuFw=="
-      },
-      "nanoFramework.UnitsNet.Temperature": {
-        "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
-        "contentHash": "vuuvzcydLzRFaNDgEF1il0R89EzCZyivn5NbsvFjf/SLWI2P1ySJAR1i6Xnn/ubL4UcUpCozAizu80aIrxCu3g=="
+        "contentHash": "FVJKohoxKCYtytTVhIA1JjnNmcaJM+Db/KHmK+xD3QaBhG2AmOGoSzeLScuz7B24bSDefSk2dooqrOirrcaVtw=="
       }
     }
   }

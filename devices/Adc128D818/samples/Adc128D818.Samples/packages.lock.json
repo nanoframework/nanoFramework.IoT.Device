@@ -14,12 +14,6 @@
         "resolved": "1.1.29",
         "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
       },
-      "nanoFramework.System.Device.Model": {
-        "type": "Direct",
-        "requested": "[1.2.862, 1.2.862]",
-        "resolved": "1.2.862",
-        "contentHash": "dARhyb8BHkje2P+7VphJpRLynVhMkC0U4pFNecLs6jw8DHRMMJyszcbgo/N0ALeYjilNk9hea+wzBLFrgZpsUQ=="
-      },
       "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",
         "requested": "[5.76.0, 5.76.0]",

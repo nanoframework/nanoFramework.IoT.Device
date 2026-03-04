@@ -32,17 +32,17 @@
         "resolved": "1.2.862",
         "contentHash": "YdYhLCoj5i77e4f0qw1a45GxDAFYR2F7zLlrUDdUE12JGweBR0kruURKrGJMl4uYWkORfO18PxyqNOXvSqKKCg=="
       },
-      "UnitsNet.nanoFramework.MagneticField": {
+      "nanoFramework.UnitsNet.MagneticField": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "MYQnNbaGjI4v6HBqhIfAlzZCAFY9FwEfJ6TAZCQa0uzrH9deoTk1/Q0n3U0B1mG7ciJjU8ARyOtpiFfg3Y8Jdw=="
+        "requested": "[5.76.0, 5.76.0]",
+        "resolved": "5.76.0",
+        "contentHash": "znnZbUp72gEuc3iXmhF1G8BNQGpnJkot3GVpg3+c5gDkio43a6wMnTLeyACWRFqmMIKy9CS3CO5GrkZYHRqmBA=="
       },
-      "UnitsNet.nanoFramework.Temperature": {
+      "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "SpA9Z7T1sNaR7YBCYp+L9/ei1bjDkqi8PyPfOWVBjkWInuPSOQaPG9Y7UttIpJ0M2y1GTrCG1kmRCUewGiSFAg=="
+        "requested": "[5.76.0, 5.76.0]",
+        "resolved": "5.76.0",
+        "contentHash": "vuuvzcydLzRFaNDgEF1il0R89EzCZyivn5NbsvFjf/SLWI2P1ySJAR1i6Xnn/ubL4UcUpCozAizu80aIrxCu3g=="
       }
     }
   }

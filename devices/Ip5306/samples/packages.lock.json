@@ -26,11 +26,11 @@
         "resolved": "1.1.29",
         "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
       },
-      "UnitsNet.nanoFramework.ElectricCurrent": {
+      "nanoFramework.UnitsNet.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "DRtUvygEgcwb/gT8pVESz99UT4AsPucVBlIO2fDvAAbHCMXqOLXroijA0IIgFUm3e24K3G0D9XFOYQpUmsQSCg=="
+        "requested": "[5.76.0, 5.76.0]",
+        "resolved": "5.76.0",
+        "contentHash": "x3+OQoFyLC/ALD5nznONMf8GvUju8QTQwfwQ7pI+N7+sxAm4Gg9mkqGQI6wuU36nGgCSzw/Z8D4/H2ph3LZe3A=="
       }
     }
   }
