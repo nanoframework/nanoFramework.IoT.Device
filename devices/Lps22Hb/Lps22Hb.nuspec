@@ -23,8 +23,8 @@
       <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
-      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.76.10" />
-      <dependency id="nanoFramework.UnitsNet.Pressure" version="5.76.10" />
+      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.76.15" />
+      <dependency id="nanoFramework.UnitsNet.Pressure" version="5.76.15" />
     </dependencies>
   </metadata>
   <files>

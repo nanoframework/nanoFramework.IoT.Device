@@ -21,7 +21,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Common.WeatherHelper, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.2.891\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.2.950\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.17.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
@@ -32,23 +32,23 @@
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.32.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.32\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Length, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Length.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Pressure, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Pressure.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+    </Reference>
     <Reference Include="System.Device.I2c, Version=1.1.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=1.5.116.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Math.1.5.116\lib\System.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Length, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Pressure, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Pressure.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.10.0">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

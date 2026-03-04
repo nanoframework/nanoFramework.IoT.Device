@@ -32,6 +32,18 @@
         "resolved": "1.2.862",
         "contentHash": "dARhyb8BHkje2P+7VphJpRLynVhMkC0U4pFNecLs6jw8DHRMMJyszcbgo/N0ALeYjilNk9hea+wzBLFrgZpsUQ=="
       },
+      "nanoFramework.UnitsNet.RelativeHumidity": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "JBhgil9Lr3xKoRCmCLIeeSDHzWQa75i51YOUbIp0xRkBxqSXgOMaM4XpwCGpxsVGbl7DeJh8UkGvYwOi4qNrOA=="
+      },
+      "nanoFramework.UnitsNet.Temperature": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "rmgtqp2kdwd1LkWCHy/iabt4HFHPgTSllCc8ex8M1xJ/2n3CH+Udng7M/wbtMP5II2yF5zMqxowzQ2iKOaoX/g=="
+      },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
         "requested": "[3.9.50, 3.9.50]",
@@ -43,18 +55,6 @@
         "requested": "[6.2.0, 6.2.0]",
         "resolved": "6.2.0",
         "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
-      },
-      "nanoFramework.UnitsNet.RelativeHumidity": {
-        "type": "Direct",
-        "requested": "[5.76.10, 5.76.10]",
-        "resolved": "5.76.10",
-        "contentHash": "Rky3QwgddHgTccWmYwbydU8OHuAfxtta/CRPo0+9OK/aiHm4HTzj4INaLuH9uT898DSSAQ7mkq+S1S4SqplbpQ=="
-      },
-      "nanoFramework.UnitsNet.Temperature": {
-        "type": "Direct",
-        "requested": "[5.76.10, 5.76.10]",
-        "resolved": "5.76.10",
-        "contentHash": "3qCzNK3v38UFQVX+0k7F88f04Vm938ddEjyDIJHQ7/8ygE+gxbgfNvHVwyWqKiGpnlG8OAMNF+yMEQ+XHqj3Pg=="
       }
     }
   }

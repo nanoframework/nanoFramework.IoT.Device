@@ -36,6 +36,12 @@
     <Reference Include="mscorlib, Version=1.17.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
@@ -44,12 +50,6 @@
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

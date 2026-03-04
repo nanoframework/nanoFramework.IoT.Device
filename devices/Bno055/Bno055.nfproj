@@ -60,6 +60,9 @@
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.32.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.32\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
@@ -77,9 +80,6 @@
     </Reference>
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Numerics.1.2.862\lib\System.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

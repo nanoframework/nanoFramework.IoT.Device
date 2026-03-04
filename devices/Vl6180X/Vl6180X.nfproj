@@ -46,6 +46,9 @@
     <Reference Include="nanoFramework.Runtime.Native, Version=1.7.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Native.1.7.11\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Length, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
@@ -54,9 +57,6 @@
     </Reference>
     <Reference Include="System.Device.I2c, Version=1.1.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Length, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

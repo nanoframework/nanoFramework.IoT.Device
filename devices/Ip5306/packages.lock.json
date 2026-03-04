@@ -14,17 +14,17 @@
         "resolved": "1.1.29",
         "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
       },
+      "nanoFramework.UnitsNet.ElectricCurrent": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "PRxOzidaTpezxg947ugHCiwsGR8A0Y+O+T8OOG4yfiUcALWEiUQ/XWLd33dXbfrJqZfSqkHPmaMF55fiUEJM2g=="
+      },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
         "requested": "[3.9.50, 3.9.50]",
         "resolved": "3.9.50",
         "contentHash": "HtOgGF6jZ+WYbXnCUCYPT8Y2d6mIJo9ozjK/FINTRsXdm4Zgv9GehUMa7EFoGQkqrMcDJNOIDwCmENnvXg4UbA=="
-      },
-      "nanoFramework.UnitsNet.ElectricCurrent": {
-        "type": "Direct",
-        "requested": "[5.76.10, 5.76.10]",
-        "resolved": "5.76.10",
-        "contentHash": "OtOh1trKcXy6iEdcXrTMKvxQ2dJ17fBbRmSyGt+B7cgH1MhDhnxnXrvpoQXVv3Zdrel3I2KL+S3vcnHlYGG0yw=="
       }
     }
   }
