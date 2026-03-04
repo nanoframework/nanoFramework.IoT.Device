@@ -64,11 +64,11 @@ using (Bq25798 charger = new Bq25798(device))
     Debug.WriteLine($"BQ25798 connected to I2C{device.ConnectionSettings.BusId}");
     Debug.WriteLine("");
 
-    Debug.WriteLine($"Minimum System Voltage is config @ {charger.MinimalSystemVoltage.VoltsDc:N3}V");
+    Debug.WriteLine($"Minimum System Voltage is config @ {charger.MinimalSystemVoltage.Volts:N3}V");
 
     while (true)
     {
-        Debug.WriteLine($"Current Vbus: {charger.Vbus.VoltsDc:N3}V");
+        Debug.WriteLine($"Current Vbus: {charger.Vbus.Volts:N3}V");
 
         Debug.WriteLine("");
 

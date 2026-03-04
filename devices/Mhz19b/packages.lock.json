@@ -44,11 +44,11 @@
         "resolved": "3.9.50",
         "contentHash": "HtOgGF6jZ+WYbXnCUCYPT8Y2d6mIJo9ozjK/FINTRsXdm4Zgv9GehUMa7EFoGQkqrMcDJNOIDwCmENnvXg4UbA=="
       },
-      "UnitsNet.nanoFramework.VolumeConcentration": {
+      "nanoFramework.UnitsNet.VolumeConcentration": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "TG2XZO2vnIXyFTj0eoybVgqXzcT9HlBf01C38YSCrNb4LrvKOlA8uABUWtl1wKvTxYfSssbtje+otejUJvQiWQ=="
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
+        "contentHash": "AF1AF3nMKccOkwKScjQK/dOFEL8xKCz7N8epjipwtWl8RD5WDBoQpAarZV4J2CeHcmx0oGBDY01MMn+Xl29mPQ=="
       }
     }
   }

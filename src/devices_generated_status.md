@@ -97,7 +97,7 @@ Count Name
     7  CS0246: The type or namespace name 'UnitsNet' could not be found (are you missing a using directive or an assembly reference?)
     7  CS0246: The type or namespace name 'CardTransceiver' could not be found (are you missing a using directive or an assembly reference?)
     7  CS0246: The type or namespace name 'NotNullWhenAttribute' could not be found (are you missing a using directive or an assembly reference?)
-    7  CS0246: The type or namespace name 'ElectricPotentialDc' could not be found (are you missing a using directive or an assembly reference?)
+    7  CS0246: The type or namespace name 'ElectricPotential' could not be found (are you missing a using directive or an assembly reference?)
     7  CS0246: The type or namespace name 'NotNullWhen' could not be found (are you missing a using directive or an assembly reference?)
     7  CS0246: The type or namespace name 'GpioDriver' could not be found (are you missing a using directive or an assembly reference?)
     6  CS8179: Predefined type 'System.ValueTuple`3' is not defined or imported

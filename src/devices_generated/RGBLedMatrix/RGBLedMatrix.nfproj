@@ -32,16 +32,16 @@
       <HintPath>packages\nanoFramework.Runtime.Events.1.9.0-preview.26\lib\nanoFramework.Runtime.Events.dll</HintPath>
       <Private>True</Private>
     </Reference> 
-    <Reference Include="UnitsNet.Length">
-      <HintPath>packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Length">
+      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Frequency">
-      <HintPath>packages\UnitsNet.nanoFramework.Frequency.4.92.0\lib\UnitsNet.Frequency.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Frequency">
+      <HintPath>packages\nanoFramework.UnitsNet.Frequency.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Frequency.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Duration">
-      <HintPath>packages\UnitsNet.nanoFramework.Duration.4.92.0\lib\UnitsNet.Duration.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Duration">
+      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">

@@ -40,20 +40,16 @@
       <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.ElectricPotential">
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Length">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricCurrent">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricCurrent.4.92.0\lib\UnitsNet.ElectricCurrent.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UnitsNet.ElectricPotentialDc">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotentialDc.4.92.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.ElectricCurrent">
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

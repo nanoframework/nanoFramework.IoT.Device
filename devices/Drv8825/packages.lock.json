@@ -38,11 +38,11 @@
         "resolved": "6.2.0",
         "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
       },
-      "UnitsNet.nanoFramework.Angle": {
+      "nanoFramework.UnitsNet.Angle": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "AGKmNhDJNB16zlwPbPeMzVd/kbG2a4Pgxukm4mDdPV/oRNVPNc+V3lelurEFYFE5wyy3Kpu1F7JYQv6cq9jMsQ=="
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
+        "contentHash": "ceO4IzGyfgxeyj2IQMtSt/SCPfT1HB2KF0V07cEcrOgxOxebwtAj1K2lJQqWzybp+/PkKENwC1aC9BjFR2MFZw=="
       }
     }
   }

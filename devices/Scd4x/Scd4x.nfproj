@@ -40,14 +40,14 @@
     <Reference Include="System.Device.I2c, Version=1.1.16.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.RelativeHumidity.5.56.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.76.10.0">
+      <HintPath>packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=5.56.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.5.56.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.10.0">
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.VolumeConcentration">
-      <HintPath>packages\UnitsNet.nanoFramework.VolumeConcentration.5.56.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.VolumeConcentration">
+      <HintPath>packages\nanoFramework.UnitsNet.VolumeConcentration.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.VolumeConcentration.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

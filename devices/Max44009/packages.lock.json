@@ -32,11 +32,11 @@
         "resolved": "3.9.50",
         "contentHash": "HtOgGF6jZ+WYbXnCUCYPT8Y2d6mIJo9ozjK/FINTRsXdm4Zgv9GehUMa7EFoGQkqrMcDJNOIDwCmENnvXg4UbA=="
       },
-      "UnitsNet.nanoFramework.Illuminance": {
+      "nanoFramework.UnitsNet.Illuminance": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "SqtObkYtcBrGSEzOv/ffNhISAP+NcazwYFdBYqF7L+ZaLao2tuId+94TjdyYh8FuSBgee/w/mgrz6F8CpbSn3w=="
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
+        "contentHash": "62ni6Q9BXheQtwWUQjkbRP/RGVj6I7cMZQNS+26hpELA+LbeK6tQQkMP27kpTM1EQ3u7q5Qr0+eFnUccsvEJFg=="
       }
     }
   }

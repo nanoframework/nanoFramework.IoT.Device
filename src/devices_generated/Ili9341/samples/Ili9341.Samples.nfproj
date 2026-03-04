@@ -36,8 +36,8 @@
       <HintPath>..\packages\nanoFramework.System.Device.Spi.1.0.0-preview.38\lib\System.Device.Spi.dll</HintPath>
       <Private>True</Private>
     </Reference> 
-    <Reference Include="UnitsNet.Frequency">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Frequency.4.92.0\lib\UnitsNet.Frequency.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Frequency">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Frequency.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Frequency.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

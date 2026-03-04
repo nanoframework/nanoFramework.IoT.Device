@@ -55,35 +55,35 @@
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Length.4.148.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Length">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Length, Version=4.101.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Length.4.101.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Length, Version=5.76.10.0">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.Pressure">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Pressure.4.148.0\lib\UnitsNet.Pressure.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Pressure">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.Pressure.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Pressure, Version=4.101.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Pressure.4.101.0\lib\UnitsNet.Pressure.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Pressure, Version=5.76.10.0">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.Pressure.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.RelativeHumidity.4.148.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity, Version=4.101.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.RelativeHumidity.4.101.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.76.10.0">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
-    <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Temperature.4.148.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Temperature">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature, Version=4.101.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\src\Iot.Device.Common\packages\UnitsNet.nanoFramework.Temperature.4.101.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.10.0">
+      <HintPath>..\..\src\Iot.Device.Common\packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>

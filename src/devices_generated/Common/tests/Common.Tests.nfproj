@@ -39,24 +39,24 @@
       <HintPath>..\packages\nanoFramework.TestFramework.1.0.117\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity">
+      <HintPath>..\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Temperature">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Pressure">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Pressure.4.92.0\lib\UnitsNet.Pressure.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Pressure">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Pressure.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Length.4.92.0\lib\UnitsNet.Length.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Length">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Density">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Density.4.92.0\lib\UnitsNet.Density.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Density">
+      <HintPath>..\packages\nanoFramework.UnitsNet.Density.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Density.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">

@@ -28,12 +28,12 @@
       <HintPath>packages\nanoFramework.System.Device.I2c.1.0.1-preview.33\lib\System.Device.I2c.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Temperature">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Temperature">
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.ElectricPotential">
+      <HintPath>packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">
