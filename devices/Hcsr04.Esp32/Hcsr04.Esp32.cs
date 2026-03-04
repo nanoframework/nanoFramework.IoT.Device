@@ -34,8 +34,8 @@ namespace Iot.Device.Hcsr04.Esp32
         /// </summary>
         /// <param name="trigger">GPIO pin number for trigger pin</param>
         /// <param name="echo">GPIO pin number of echo pin</param>
-        /// <param name="rmtTriggerChannel">The RMT channel number to use for trigger. Valid value range is 0 to 7 (inclusive).</param>
-        /// <param name="rmtEchoChannel">The RMT channel number to use for echo. Valid value range is 0 to 7 (inclusive).</param>
+        /// <param name="rmtTriggerChannel">The RMT channel number to use for trigger. Use -1 (default) to automatically select a free channel, or 0 to 7 (inclusive) to specify a channel explicitly.</param>
+        /// <param name="rmtEchoChannel">The RMT channel number to use for echo. Use -1 (default) to automatically select a free channel, or 0 to 7 (inclusive) to specify a channel explicitly.</param>
         public Hcsr04(int trigger, int echo, int rmtTriggerChannel = -1, int rmtEchoChannel = -1)
         {
             // Set-up TX & RX channels
