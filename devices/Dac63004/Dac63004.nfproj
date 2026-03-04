@@ -49,20 +49,20 @@
     <Reference Include="mscorlib, Version=1.17.11.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.ElectricCurrent, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.ElectricPotential, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.ElectricPotential.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+    </Reference>
     <Reference Include="System.Device.I2c, Version=1.1.29.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.ElectricCurrent, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.ElectricPotential, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.ElectricPotential.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

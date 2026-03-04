@@ -59,6 +59,12 @@
     <Reference Include="nanoFramework.Runtime.Events, Version=1.11.32.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.1.11.32\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Duration, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Mass, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Mass.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Mass.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
@@ -70,12 +76,6 @@
     </Reference>
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Numerics.1.2.862\lib\System.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Duration, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.UnitsNet.Mass, Version=5.76.10.0">
-      <HintPath>packages\nanoFramework.UnitsNet.Mass.5.76.10\lib\netnano1.0\nanoFramework.UnitsNet.Mass.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
