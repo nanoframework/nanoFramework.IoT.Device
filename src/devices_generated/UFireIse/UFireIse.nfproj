@@ -29,11 +29,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.0\lib\netnano1.0\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.ElectricPotential">
-      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.ElectricPotential.5.76.0\lib\netnano1.0\UnitsNet.ElectricPotential.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Math">

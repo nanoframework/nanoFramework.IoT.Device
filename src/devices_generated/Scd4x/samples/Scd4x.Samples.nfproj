@@ -29,15 +29,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>..\packages\UnitsNet.nanoFramework.RelativeHumidity.4.92.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.0\lib\netnano1.0\UnitsNet.RelativeHumidity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.92.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.76.0\lib\netnano1.0\UnitsNet.Temperature.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UnitsNet.VolumeConcentration">
-      <HintPath>..\packages\UnitsNet.nanoFramework.VolumeConcentration.4.92.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.VolumeConcentration.5.76.0\lib\netnano1.0\UnitsNet.VolumeConcentration.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
