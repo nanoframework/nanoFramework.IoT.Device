@@ -29,8 +29,8 @@
     <Reference Include="UnitsNet.ElectricCurrent, Version=5.76.0.0">
       <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.0\lib\netnano1.0\UnitsNet.ElectricCurrent.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotentialDc, Version=5.75.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotentialDc.5.75.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
+    <Reference Include="UnitsNet.ElectricPotential, Version=5.76.0.0">
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.76.0\lib\netnano1.0\UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=5.76.0.0">
       <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.76.0\lib\netnano1.0\UnitsNet.Temperature.dll</HintPath>

@@ -52,10 +52,6 @@
       <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.0\lib\netnano1.0\UnitsNet.ElectricCurrent.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.ElectricPotentialDc">
-      <HintPath>..\packages\UnitsNet.nanoFramework.ElectricPotentialDc.4.92.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
