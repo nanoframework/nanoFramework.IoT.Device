@@ -76,8 +76,8 @@
       },
       "nanoFramework.UnitsNet.Length": {
         "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
         "contentHash": "FVJKohoxKCYtytTVhIA1JjnNmcaJM+Db/KHmK+xD3QaBhG2AmOGoSzeLScuz7B24bSDefSk2dooqrOirrcaVtw=="
       }
     }

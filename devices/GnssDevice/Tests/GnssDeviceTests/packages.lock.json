@@ -28,14 +28,14 @@
       },
       "nanoFramework.UnitsNet.Angle": {
         "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
         "contentHash": "4xfxwT1DOB0gtktbUrt0fEnp3anc/ZVN2n2bZfymnLjwSKNzggNVfMK5CuodC/WhEIQ5kNJrGclRzxb085p/Kw=="
       },
       "nanoFramework.UnitsNet.Speed": {
         "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
         "contentHash": "NeZi3f+V//5AwzIkt31rAOkXwU+85z6Ya4ldRoEZaIov5G8J1LZcDBqXRZBeGfYX6KyHH+jEZkzzFG3GrWHqPw=="
       }
     }

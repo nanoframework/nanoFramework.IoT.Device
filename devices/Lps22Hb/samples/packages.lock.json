@@ -28,14 +28,14 @@
       },
       "nanoFramework.UnitsNet.Pressure": {
         "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
         "contentHash": "B689ggMg3D2lQc0C+o82Hlv7GCVE1+O3NTqO7rWD9ROzM1/Ph6L3D8SLI9oCt2UWWZfioHXSvtkbkRdJfFSB0w=="
       },
       "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
         "contentHash": "vuuvzcydLzRFaNDgEF1il0R89EzCZyivn5NbsvFjf/SLWI2P1ySJAR1i6Xnn/ubL4UcUpCozAizu80aIrxCu3g=="
       }
     }

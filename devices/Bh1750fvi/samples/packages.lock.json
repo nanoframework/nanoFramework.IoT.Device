@@ -28,8 +28,8 @@
       },
       "nanoFramework.UnitsNet.Illuminance": {
         "type": "Direct",
-        "requested": "[5.76.0, 5.76.0]",
-        "resolved": "5.76.0",
+        "requested": "[5.76.10, 5.76.10]",
+        "resolved": "5.76.10",
         "contentHash": "I/gKKtaODWtTCvqRv/UVFNxmb5MSKAYd+mNy4MhdmmXYjInhGU2Lvz32do4kbeKbKbUFkQ/F3xOC0bJl0bBrtA=="
       }
     }

@@ -24,8 +24,8 @@
       <HintPath>packages\nanoFramework.CoreLibrary.1.10.4-preview.11\lib\mscorlib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UnitsNet.Length">
-      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.0\lib\netnano1.0\UnitsNet.Length.dll</HintPath>
+    <Reference Include="nanoFramework.UnitsNet.Length">
+      <HintPath>packages\nanoFramework.UnitsNet.Length.5.76.10\lib\netnano1.0\UnitsNet.Length.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
