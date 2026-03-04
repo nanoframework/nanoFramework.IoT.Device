@@ -20,7 +20,7 @@ namespace Iot.Device.DHTxx.Esp32
         /// <summary>
         /// Create a DHT12 sensor
         /// </summary>
-        /// <param name="rmtChannel">The RMT channel number to use. Valid value range is 0 to 7 (inclusive).</param>
+        /// <param name="rmtChannel">The RMT channel number to use. Valid value range is 0 to 7 (inclusive); use -1 to automatically select a channel (default).</param>
         /// <param name="pinEcho">The pin number which is used as echo (GPIO number)</param>
         /// <param name="pinTrigger">The pin number which is used as trigger (GPIO number)</param>
         /// <param name="pinNumberingScheme">The GPIO pin numbering scheme</param>
