@@ -29,17 +29,17 @@ charger.WatchdogTimerSetting = WatchdogSetting.Disable;
 // enable ADC
 charger.AdcEnable = true;
 
-Debug.WriteLine($"Minimum System Voltage is config @ {charger.MinimalSystemVoltage.VoltsDc:N3}V");
+Debug.WriteLine($"Minimum System Voltage is config @ {charger.MinimalSystemVoltage.Volts:N3}V");
 
 while (true)
 {
     Debug.WriteLine($"Vbus status is {charger.VbusStatus}");
     
-    Debug.WriteLine($"Current Vbus: {charger.Vbus.VoltsDc:N3}V");
-    Debug.WriteLine($"Current Vac1: {charger.Vac1.VoltsDc:N3}V");
-    Debug.WriteLine($"Current Vac2: {charger.Vac2.VoltsDc:N3}V");
-    Debug.WriteLine($"Current Vbat: {charger.Vbat.VoltsDc:N3}V");
-    Debug.WriteLine($"Current Vsys: {charger.Vsys.VoltsDc:N3}V");
+    Debug.WriteLine($"Current Vbus: {charger.Vbus.Volts:N3}V");
+    Debug.WriteLine($"Current Vac1: {charger.Vac1.Volts:N3}V");
+    Debug.WriteLine($"Current Vac2: {charger.Vac2.Volts:N3}V");
+    Debug.WriteLine($"Current Vbat: {charger.Vbat.Volts:N3}V");
+    Debug.WriteLine($"Current Vsys: {charger.Vsys.Volts:N3}V");
 
     Debug.WriteLine($"Die Temp: {charger.DieTemperature.DegreesCelsius:N1}°C");
 

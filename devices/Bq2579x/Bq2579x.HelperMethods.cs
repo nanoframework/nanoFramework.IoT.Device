@@ -429,20 +429,20 @@ namespace Iot.Device.Bq2579x
         // | RESERVED | VSYSMIN_5:0 |
         ////
 
-        public ElectricPotentialDc GetMinimalSystemVoltage()
+        public ElectricPotential GetMinimalSystemVoltage()
         {
             byte[] buffer = ReadFromRegister(Register.REG00_Minimal_System_Voltage, 1);
 
-            return new ElectricPotentialDc(
+            return new ElectricPotential(
                 (buffer[0] * StepMinimalSystemVoltage) + FixedOffsetMinimalSystemVoltage,
-                UnitsNet.Units.ElectricPotentialDcUnit.MillivoltDc);
+                UnitsNet.Units.ElectricPotentialUnit.Millivolt);
         }
 
-        public void SetMinimalSystemVoltage(ElectricPotentialDc value)
+        public void SetMinimalSystemVoltage(ElectricPotential value)
         {
             // sanity check
-            if (value.MillivoltsDc < FixedOffsetMinimalSystemVoltage
-                || value.MillivoltsDc > MaxValueMinimalSystemVoltage)
+            if (value.Millivolts < FixedOffsetMinimalSystemVoltage
+                || value.Millivolts > MaxValueMinimalSystemVoltage)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -451,7 +451,7 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = ReadFromRegister(Register.REG00_Minimal_System_Voltage, 1);
 
             // divide by step value, as the register takes the value as 240mV steps
-            var newValue = value.MillivoltsDc / StepMinimalSystemVoltage;
+            var newValue = value.Millivolts / StepMinimalSystemVoltage;
 
             // process value to replace VSYSMIN_5:0
             // no need to mask as the value has to be already 6 bits wide
@@ -469,28 +469,28 @@ namespace Iot.Device.Bq2579x
         // |    RESERVED    |        VREG_10:0         |
         ////
 
-        public ElectricPotentialDc GetChargeVoltageLimit()
+        public ElectricPotential GetChargeVoltageLimit()
         {
             byte[] buffer = ReadFromRegister(Register.REG01_Charge_Voltage_Limit, 2);
 
             var vbus = (buffer[0] << 8) | buffer[1];
 
-            return new ElectricPotentialDc(
+            return new ElectricPotential(
                 vbus * ChargeVoltageStep,
-                UnitsNet.Units.ElectricPotentialDcUnit.MillivoltDc);
+                UnitsNet.Units.ElectricPotentialUnit.Millivolt);
         }
 
-        public void SetChargeVoltageLimit(ElectricPotentialDc value)
+        public void SetChargeVoltageLimit(ElectricPotential value)
         {
             // sanity check
-            if (value.MillivoltsDc < FixedOffsetMinimalChargeVoltageLimit
-                || value.MillivoltsDc > MaxValueChargeVoltageLimit)
+            if (value.Millivolts < FixedOffsetMinimalChargeVoltageLimit
+                || value.Millivolts > MaxValueChargeVoltageLimit)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             // divide by step value, as the register takes the value as 10mV steps
-            var newValue = value.MillivoltsDc / ChargeVoltageStep;
+            var newValue = value.Millivolts / ChargeVoltageStep;
 
             byte[] buffer = new byte[2];
 
@@ -551,26 +551,26 @@ namespace Iot.Device.Bq2579x
         // |   VINDPM_7:0    |
         ////
 
-        public ElectricPotentialDc GetInputVoltageLimit()
+        public ElectricPotential GetInputVoltageLimit()
         {
             byte[] buffer = ReadFromRegister(Register.REG05_Input_Voltage_Limit, 1);
 
-            return new ElectricPotentialDc(
+            return new ElectricPotential(
                 buffer[0] * InputVoltageStep,
-                UnitsNet.Units.ElectricPotentialDcUnit.MillivoltDc);
+                UnitsNet.Units.ElectricPotentialUnit.Millivolt);
         }
 
-        public void SetInputVoltageLimit(ElectricPotentialDc value)
+        public void SetInputVoltageLimit(ElectricPotential value)
         {
             // sanity check
-            if (value.MillivoltsDc < MinValueInputVoltageLimit
-                || value.MillivoltsDc > MaxValueInputVoltageLimit)
+            if (value.Millivolts < MinValueInputVoltageLimit
+                || value.Millivolts > MaxValueInputVoltageLimit)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             // divide by step value, as the register takes the value as 100mV steps
-            var newValue = value.MillivoltsDc / InputVoltageStep;
+            var newValue = value.Millivolts / InputVoltageStep;
 
             WriteToRegister(Register.REG05_Input_Voltage_Limit, (byte)newValue);
         }
@@ -2310,15 +2310,15 @@ namespace Iot.Device.Bq2579x
         // |                Vnnn_ADC_15:0            |
         ////
 
-        public ElectricPotentialDc GetAdcVoltage(Register register)
+        public ElectricPotential GetAdcVoltage(Register register)
         {
             byte[] buffer = ReadFromRegister(register, 2);
 
             var vbus = (buffer[0] << 8) | buffer[1];
 
-            return new ElectricPotentialDc(
+            return new ElectricPotential(
                 vbus * VbusAdcStep,
-                UnitsNet.Units.ElectricPotentialDcUnit.MillivoltDc);
+                UnitsNet.Units.ElectricPotentialUnit.Millivolt);
         }
 
         #endregion

@@ -119,10 +119,10 @@
                                 PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricResistance"" version=""4.92.0"" targetFramework=""netnano1.0"" />"
                             },
                             new NugetPackages {
-                                Namespace="ElectricPotentialDc",
+                                Namespace="ElectricPotential",
                                 OldProjectReferenceString= @"--NA--",
-                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricPotentialDc"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotentialDc.4.92.0\lib\UnitsNet.ElectricPotentialDc.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
-                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricPotentialDc"" version=""4.92.0"" targetFramework=""netnano1.0"" />"
+                                NewProjectReferenceString = @"<Reference Include=""UnitsNet.ElectricPotential"">$LF$      <HintPath>packages\UnitsNet.nanoFramework.ElectricPotential.4.92.0\lib\UnitsNet.ElectricPotential.dll</HintPath>$LF$      <Private>True</Private>$LF$    </Reference>",
+                                PackageConfigReferenceString = @"  <package id=""UnitsNet.nanoFramework.ElectricPotential"" version=""4.92.0"" targetFramework=""netnano1.0"" />"
                             },
                             new NugetPackages {
                                 Namespace="System.Math",
