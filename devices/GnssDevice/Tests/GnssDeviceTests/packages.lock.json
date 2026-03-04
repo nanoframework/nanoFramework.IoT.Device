@@ -30,13 +30,13 @@
         "type": "Direct",
         "requested": "[5.76.10, 5.76.10]",
         "resolved": "5.76.10",
-        "contentHash": "4xfxwT1DOB0gtktbUrt0fEnp3anc/ZVN2n2bZfymnLjwSKNzggNVfMK5CuodC/WhEIQ5kNJrGclRzxb085p/Kw=="
+        "contentHash": "ceO4IzGyfgxeyj2IQMtSt/SCPfT1HB2KF0V07cEcrOgxOxebwtAj1K2lJQqWzybp+/PkKENwC1aC9BjFR2MFZw=="
       },
       "nanoFramework.UnitsNet.Speed": {
         "type": "Direct",
         "requested": "[5.76.10, 5.76.10]",
         "resolved": "5.76.10",
-        "contentHash": "NeZi3f+V//5AwzIkt31rAOkXwU+85z6Ya4ldRoEZaIov5G8J1LZcDBqXRZBeGfYX6KyHH+jEZkzzFG3GrWHqPw=="
+        "contentHash": "8QGxiCkOwmDXsQQ+NGKfUYw0lLtoiTuukyo8Bkk8VuFlFh0YGxs4JaTVyKwQDnL0M0aWxF82ky8jP1BcZVS9BQ=="
       }
     }
   }

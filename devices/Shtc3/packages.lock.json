@@ -54,13 +54,13 @@
         "type": "Direct",
         "requested": "[5.76.10, 5.76.10]",
         "resolved": "5.76.10",
-        "contentHash": "B/WFXKbXKIoLOEQn+6qfmuRUuEZvq1PNb94FQGs6m8futce3roe3eeLaQuXTFlc+YRV+xmRv5plIKYiAHdhuFw=="
+        "contentHash": "Rky3QwgddHgTccWmYwbydU8OHuAfxtta/CRPo0+9OK/aiHm4HTzj4INaLuH9uT898DSSAQ7mkq+S1S4SqplbpQ=="
       },
       "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",
         "requested": "[5.76.10, 5.76.10]",
         "resolved": "5.76.10",
-        "contentHash": "vuuvzcydLzRFaNDgEF1il0R89EzCZyivn5NbsvFjf/SLWI2P1ySJAR1i6Xnn/ubL4UcUpCozAizu80aIrxCu3g=="
+        "contentHash": "3qCzNK3v38UFQVX+0k7F88f04Vm938ddEjyDIJHQ7/8ygE+gxbgfNvHVwyWqKiGpnlG8OAMNF+yMEQ+XHqj3Pg=="
       }
     }
   }
