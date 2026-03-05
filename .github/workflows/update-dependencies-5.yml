@@ -25,3 +25,4 @@ jobs:
       branchToPr: 'main'      
       solutionsToCheck: |
         Ft6xx6x.sln
+        AtModem.sln
