@@ -39,7 +39,7 @@ namespace Iot.Device.Multiplexing
         /// <param name="bitLength">Bit length of register, including chained registers.</param>
         /// <param name="gpioController">The GPIO Controller used for interrupt handling.</param>
         /// <param name="shouldDispose">True (the default) if the GPIO controller shall be disposed when disposing this instance.</param>
-        public ShiftRegister(ShiftRegisterPinMapping pinMapping, int bitLength, GpioController? gpioController = null,  bool shouldDispose = true)
+        public ShiftRegister(ShiftRegisterPinMapping pinMapping, int bitLength, GpioController? gpioController = null, bool shouldDispose = true)
         {
             _shouldDispose = shouldDispose || gpioController is null;
             _controller = gpioController ?? new GpioController();
@@ -268,7 +268,7 @@ namespace Iot.Device.Multiplexing
         /// Does not display output.
         /// </summary>
         /// <param name="value">Value to write.</param>
-        public void Write(SpanByte value)
+        public void Write(ReadOnlySpan<byte> value)
         {
             _segment.Write(value);
         }
