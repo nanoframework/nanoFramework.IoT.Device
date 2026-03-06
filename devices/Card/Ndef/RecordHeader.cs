@@ -201,7 +201,7 @@ namespace Iot.Device.Ndef
         /// Serialize the header
         /// </summary>
         /// <param name="header">Serialized byte span</param>
-        public void Serialize(SpanByte header)
+        public void Serialize(Span<byte> header)
         {
             if (header.Length < Length)
             {

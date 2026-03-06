@@ -75,7 +75,7 @@ namespace Iot.Device.Ndef
         /// Create a Geo Record from a span of bytes
         /// </summary>
         /// <param name="record">A raw span of byte containing the Geo Record</param>
-        public GeoRecord(SpanByte record)
+        public GeoRecord(Span<byte> record)
             : base(record)
         {
             ExtractAll();
