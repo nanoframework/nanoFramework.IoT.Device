@@ -49,12 +49,12 @@ namespace Iot.Device.Ndef
         /// <summary>
         /// Id Length
         /// </summary>
-        public byte IdLength { get; internal set; }
+        public byte? IdLength { get; internal set; }
 
         /// <summary>
         /// Payload Type
         /// </summary>
-        public byte[] PayloadType
+        public byte[]? PayloadType
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Iot.Device.Ndef
             }
             set
             {
-                if (value.Length > 255)
+                if (value?.Length > 255)
                 {
                     throw new ArgumentException($"{nameof(PayloadType)} length can only be less than 255 bytes.");
                 }
@@ -83,7 +83,7 @@ namespace Iot.Device.Ndef
             }
             set
             {
-                if (value.Length > 255)
+                if (value?.Length > 255)
                 {
                     throw new ArgumentException($"{nameof(PayloadId)} length can only be less than 255 bytes.");
                 }
@@ -91,7 +91,7 @@ namespace Iot.Device.Ndef
                 _payloadId = value;
                 if (_payloadId == null)
                 {
-                    IdLength = 0;
+                    IdLength = null;
                     MessageFlag &= ~MessageFlag.IdLength;
 
                 }
@@ -122,7 +122,7 @@ namespace Iot.Device.Ndef
         /// The Length of the Header
         /// </summary>
         // TNF+Flags (1), Type Length (1), Payload Length (1 or 4), ID Length (0 or 1), Payload Type (0+), Payload Id (0+)
-        public int Length => 2 + (MessageFlag.HasFlag(MessageFlag.ShortRecord) ? 1 : 4) + (MessageFlag.HasFlag(MessageFlag.IdLength) ? 1 : 0) + PayloadTypeLength + (IdLength > 0 ? IdLength : 0);
+        public int Length => 2 + (MessageFlag.HasFlag(MessageFlag.ShortRecord) ? 1 : 4) + (MessageFlag.HasFlag(MessageFlag.IdLength) ? 1 : 0) + PayloadTypeLength + (IdLength != null ? IdLength.Value : 0);
 
         /// <summary>
         /// Create a full empty Record Header
@@ -135,7 +135,7 @@ namespace Iot.Device.Ndef
         /// Create a header from a span of bytes
         /// </summary>
         /// <param name="recordToDecode">A span of bytes</param>
-        public RecordHeader(SpanByte recordToDecode)
+        public RecordHeader(ReadOnlySpan<byte> recordToDecode)
         {
             int idxRecord = 0;
             // First byte is the Message flag and type name format
@@ -167,10 +167,13 @@ namespace Iot.Device.Ndef
                 idxRecord += PayloadTypeLength;
             }
 
-            if (IdLength > 0)
+            if (IdLength != null)
             {
-                PayloadId = new byte[IdLength];
-                recordToDecode.Slice(idxRecord, IdLength).CopyTo(PayloadId);
+                if (IdLength.Value > 0)
+                {
+                    PayloadId = new byte[IdLength.Value];
+                    recordToDecode.Slice(idxRecord, IdLength.Value).CopyTo(PayloadId);
+                }
             }
         }
 
@@ -222,19 +225,18 @@ namespace Iot.Device.Ndef
 
             if (MessageFlag.HasFlag(MessageFlag.IdLength))
             {
-                header[idxRecord++] = IdLength;
+                header[idxRecord++] = IdLength!.Value;
             }
 
             if (PayloadTypeLength > 0)
             {
-                
-                new SpanByte(PayloadType).CopyTo(header.Slice(idxRecord, PayloadTypeLength));
+                PayloadType.CopyTo(header.Slice(idxRecord, PayloadTypeLength));
                 idxRecord += PayloadTypeLength;
             }
 
             if (IsComposedMessage)
             {
-                new SpanByte(PayloadId).CopyTo(header.Slice(idxRecord));
+                PayloadId.CopyTo(header.Slice(idxRecord));
             }
         }
     }

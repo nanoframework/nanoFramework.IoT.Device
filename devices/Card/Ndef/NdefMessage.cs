@@ -64,7 +64,7 @@ namespace Iot.Device.Ndef
         /// </summary>
         /// <param name="toExtract">The byte array where the message is</param>
         /// <returns>A byte array containing the message itself</returns>
-        public static byte[]? ExtractMessage(SpanByte toExtract)
+        public static Span<byte> ExtractMessage(Span<byte> toExtract)
         {
             var doublet = GetStartSizeNdef(toExtract);
             int idx = doublet.Start;
@@ -73,14 +73,11 @@ namespace Iot.Device.Ndef
             bool isRealEnd = toExtract[idx + size] == 0xFE;
             if (!isRealEnd)
             {
-                return new byte[0];
+                return Span<byte>.Empty;
             }
 
             // Now we have the real size and we can extract the real buffer
-            byte[] toReturn = new byte[size];
-            toExtract.Slice(idx, size).CopyTo(toReturn);
-
-            return toReturn;
+            return toExtract.Slice(idx, size);
         }
 
         /// <summary>

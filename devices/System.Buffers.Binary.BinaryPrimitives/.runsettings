@@ -12,5 +12,6 @@
        <Logging>None</Logging>
        <IsRealHardware>False</IsRealHardware>
 	   <UsePreviewClr>True</UsePreviewClr>
+	   <PathToLocalCLRInstance>E:\GitHub\nf-interpreter\build\bin\Debug\nanoFramework.nanoCLR.dll</PathToLocalCLRInstance>
    </nanoFrameworkAdapter>
 </RunSettings>
