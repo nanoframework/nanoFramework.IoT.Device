@@ -42,25 +42,25 @@ namespace Iot.Device.Card.Mifare
         /// <summary>
         /// Default Key A
         /// </summary>
-        public static SpanByte DefaultKeyA => StaticDefaultKeyA;
+        public static Span<byte> DefaultKeyA => StaticDefaultKeyA;
 
         /// <summary>
         /// Default Key B
         /// </summary>
-        public static SpanByte DefaultKeyB => StaticDefaultKeyB;
+        public static Span<byte> DefaultKeyB => StaticDefaultKeyB;
 
         /// <summary>
         /// Default Mifare Application Directory block Key A for NDEF card
         /// The MAD is in the first sector on all cards and also sector 16 on 2K and 4K cards
         /// </summary>
         /// <remarks>See https://www.nxp.com/docs/en/application-note/AN10787.pdf for more information</remarks>
-        public static SpanByte DefaultFirstBlockNdefKeyA => StaticDefaultFirstBlockNdefKeyA;
+        public static Span<byte> DefaultFirstBlockNdefKeyA => StaticDefaultFirstBlockNdefKeyA;
 
         /// <summary>
         /// Default block Key A for NDEF card
         /// </summary>
         /// <remarks>See https://www.nxp.com/docs/en/application-note/AN10787.pdf for more information</remarks>
-        public static SpanByte DefaultBlocksNdefKeyA => StaticDefaultBlocksNdefKeyA;
+        public static Span<byte> DefaultBlocksNdefKeyA => StaticDefaultBlocksNdefKeyA;
 
         /// <summary>
         /// The tag number detected by the reader, only 1 or 2
@@ -730,7 +730,7 @@ namespace Iot.Device.Card.Mifare
         /// <param name="resetAccessBytes">True to reset all the access bytes</param>
         /// <returns>True if success</returns>
         /// <remarks>Sector 0 can't be fully erase, only the blocks 1 and 2 will be erased</remarks>
-        public bool EraseSector(SpanByte newKeyA, SpanByte newKeyB, byte sector, bool authenticateWithKeyA, bool resetAccessBytes)
+        public bool EraseSector(Span<byte> newKeyA, Span<byte> newKeyB, byte sector, bool authenticateWithKeyA, bool resetAccessBytes)
         {
             int nbSectors = GetNumberSectors();
             if (sector >= nbSectors)
@@ -827,7 +827,7 @@ namespace Iot.Device.Card.Mifare
         /// <param name="keyB">The key B to be used for formatting, if empty, will use the default key B</param>
         /// <returns>True if success</returns>
         /// <remarks>All sectors are configured as NFC Forum sectors</remarks>
-        public bool FormatNdef(SpanByte keyB = default)
+        public bool FormatNdef(Span<byte> keyB = default)
         {
             if (Capacity is not MifareCardCapacity.Mifare1K or MifareCardCapacity.Mifare2K or MifareCardCapacity.Mifare4K)
             {
@@ -935,7 +935,7 @@ namespace Iot.Device.Card.Mifare
 
             // We need to add 0x03 then the length on 1 or 2 bytes then the trailer 0xFE
             int messageLengthBytes = message.Length > 254 ? 3 : 1;
-            SpanByte serializedMessage = new byte[message.Length + 2 + messageLengthBytes];
+            Span<byte> serializedMessage = new byte[message.Length + 2 + messageLengthBytes];
             message.Serialize(serializedMessage.Slice(1 + messageLengthBytes));
             serializedMessage[0] = 0x03;
             if (messageLengthBytes == 1)
@@ -1232,8 +1232,8 @@ namespace Iot.Device.Card.Mifare
                 return false;
             }
 
-            SpanByte card = new byte[blocksToRead * BlockSize];
-            new SpanByte(Data).CopyTo(card);
+            Span<byte> card = new byte[blocksToRead * BlockSize];
+            new Span<byte>(Data).CopyTo(card);
 
             byte idxCard = 1;
             int block = 5;
@@ -1265,7 +1265,7 @@ namespace Iot.Device.Card.Mifare
                     return false;
                 }
 
-                new SpanByte(Data).CopyTo(card.Slice(idxCard * BlockSize));
+                new Span<byte>(Data).CopyTo(card.Slice(idxCard * BlockSize));
                 idxCard++;
                 block++;
             }
