@@ -19,11 +19,11 @@
     <summary>Iot.Device.Bmp180 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Bmp180</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="1.2.950" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
-      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
-      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
+      <dependency id="nanoFramework.Iot.Device.Common.WeatherHelper" version="2.0.0-preview.10" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.4" />
+      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.7" />
     </dependencies>
   </metadata>
   <files>

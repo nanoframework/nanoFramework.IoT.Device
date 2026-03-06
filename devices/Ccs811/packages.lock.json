@@ -4,81 +4,81 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[1.17.11, 1.17.11]",
-        "resolved": "1.17.11",
-        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
+        "requested": "[2.0.0-preview.35, 2.0.0-preview.35]",
+        "resolved": "2.0.0-preview.35",
+        "contentHash": "l3LZs5zLeYKP+21DmVykOBWQvcLWOzgOls2JU6R2mRb2cz1+SitRCaEC5bTEJHs888JdHi3xWMVe3GkRzZ/2Lg=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.32, 1.11.32]",
-        "resolved": "1.11.32",
-        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
+        "requested": "[2.0.0-preview.8, 2.0.0-preview.8]",
+        "resolved": "2.0.0-preview.8",
+        "contentHash": "+ELISV4zHeqzHrYirnx47zsAA7MPbBMWJQudbQv5almh22bTviDzFbOML3Dim8lCZZeaARnJers1gPmJ4ODT7Q=="
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
-        "requested": "[1.7.11, 1.7.11]",
-        "resolved": "1.7.11",
-        "contentHash": "XPSTltZ9KeBruogVmjQpCphi1nLoJH49mpyp2eGBs8BTjKuL5TkMO20MoI8r73F/PW5AppTq49HvIZZavU5nPQ=="
+        "requested": "[2.0.0-preview.20, 2.0.0-preview.20]",
+        "resolved": "2.0.0-preview.20",
+        "contentHash": "TwNeWN8eYZ0qtMkQ5UPPaYsq6l963SUBSKerOgoWE13DEk3drQPZqF+uI7VuWLmvoSFgQ4FYiwDFpexC1p8m3A=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[1.2.862, 1.2.862]",
-        "resolved": "1.2.862",
-        "contentHash": "O+jmbbw2h2cjCTShsvWCzjqn/kmRacJE4Ena9gJt5xF5D7XHyYh/uE/qbZ4LhlmlN6JCZjLRNiEfHyM1YUjyxg=="
+        "requested": "[2.0.0-preview.11, 2.0.0-preview.11]",
+        "resolved": "2.0.0-preview.11",
+        "contentHash": "7hdCQXZfiEVaHIO7W/4JWH9tieh22RwfISVQ/5cktEh+FsTWAz6WPz0KHn8gUTWI9aFD6VesJkVyufVyNqvCxw=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
-        "requested": "[1.1.57, 1.1.57]",
-        "resolved": "1.1.57",
-        "contentHash": "Es7jHRrT/+0Ty9uJNzJUcTn+aCpjkxXnmsaM+g9HXvLZ8k4SDCCqmO9pT317nX+9ehmgGo2JKrtmkekgbOp+Pw=="
+        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
+        "resolved": "2.0.0-preview.9",
+        "contentHash": "mEgi50mgW3R8aZF/mjXaXMf288OqqNmQmLS3Zm3US7aGiCqksKBZGHctxUh/2AdwYHKRjTGlJRLmsjxoAqje4g=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[1.1.29, 1.1.29]",
-        "resolved": "1.1.29",
-        "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
+        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
+        "resolved": "2.0.0-preview.7",
+        "contentHash": "YZFwnHg5+e3r6tE/vXXa3Ydrn1urSbzB9Dz/E18g4EyOm5ULwJuLVeVgc9AaBeTbuaavANgQ35BQCwK2r7J84w=="
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[1.2.862, 1.2.862]",
-        "resolved": "1.2.862",
-        "contentHash": "auNXXoJYOJ7mAxPvMPhbxFbDCtfKF/wSdsoBEQiRd8NaQWmLg12JL6YbNiKiNs+fBlxAL6duUorBdhSyPCdayg=="
+        "requested": "[2.0.0-preview.4, 2.0.0-preview.4]",
+        "resolved": "2.0.0-preview.4",
+        "contentHash": "jeP7YdYQq7DVtlE5vqZgRq2n/96HZFZUwEfZWXjSuFJ1Apqpl+lidB+AJ/6DN6P7VEwT6CXYTlHBv0vfCKbNNQ=="
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[1.5.116, 1.5.116]",
-        "resolved": "1.5.116",
-        "contentHash": "0S05UKcoI9Ukz9cMNPC9huFW9vSL42/4gIh4fw8ou8HkcFmTYb0OL8VF2Ah94hEDW5mqcYAVr0ipuGWPzIRqaA=="
+        "requested": "[2.0.0-preview.6, 2.0.0-preview.6]",
+        "resolved": "2.0.0-preview.6",
+        "contentHash": "u9gbWgQxkdvomvyWOj0aUTKdNAiyYNeiIZEzZHbuUyzbowCXfl8WI1TjeHEvQndlqa1aimDr4K2BBJvZUnVjwQ=="
       },
       "nanoFramework.UnitsNet.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "PRxOzidaTpezxg947ugHCiwsGR8A0Y+O+T8OOG4yfiUcALWEiUQ/XWLd33dXbfrJqZfSqkHPmaMF55fiUEJM2g=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "4pJWdDDb8vIwnB8KlIdOk1at7duNAhpoRbJJeDcDViLPO1X2QRZOReKzNPRETukrB4fNrUq9xcOPwngix3IX+w=="
       },
       "nanoFramework.UnitsNet.Length": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "OjqiJPhNIHoLAyQHYyaTKWITkI5EwkJu3288txcPkaEi0wWIKC111XS4wrDiHyIOK6nYSH536/RfHnX3b8iOrw=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "khhGue9geEANLvohhkHPVwbi0VDp5LgLY4VYCbo2QSFoOR9+93PQ5N9T4U678GhY9isdPq1KLROu7dwLARO/4g=="
       },
       "nanoFramework.UnitsNet.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "JBhgil9Lr3xKoRCmCLIeeSDHzWQa75i51YOUbIp0xRkBxqSXgOMaM4XpwCGpxsVGbl7DeJh8UkGvYwOi4qNrOA=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "+KHNErOEMy22+uajiWeir+Uta0XmTtqugyl2+TKIVCJxuwaUcz3UwKa2CClGUwl28pBqVNRoM3o/2x9JhF2SPQ=="
       },
       "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "rmgtqp2kdwd1LkWCHy/iabt4HFHPgTSllCc8ex8M1xJ/2n3CH+Udng7M/wbtMP5II2yF5zMqxowzQ2iKOaoX/g=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "7La0NGv514zYU4pu9XBAEURZoYYP5q+umPY3Jy6QKBbBrSeJS9LwF6VP/GUSk3ieMSpKQoB/AAnXKM6m8D700g=="
       },
       "nanoFramework.UnitsNet.VolumeConcentration": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "4TY3IAoiKozr1Tjt4mHV6eh+8vMSr5wpG7OEXapjvwHGsbUguchWQwYPzd4QIjyee9BdOq+C7Fm4+CQLRjMAwQ=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "Z0Bfv5+Mm42gpLm5x89fHJuQ6gbbBKAfri+rsOdKdai+gbiDiPsDUj+U7XFJaZHKvicku8D5dqD2Gy1Rwqtadw=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
