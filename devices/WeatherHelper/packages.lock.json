@@ -16,27 +16,27 @@
       },
       "nanoFramework.UnitsNet.Length": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "OjqiJPhNIHoLAyQHYyaTKWITkI5EwkJu3288txcPkaEi0wWIKC111XS4wrDiHyIOK6nYSH536/RfHnX3b8iOrw=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "khhGue9geEANLvohhkHPVwbi0VDp5LgLY4VYCbo2QSFoOR9+93PQ5N9T4U678GhY9isdPq1KLROu7dwLARO/4g=="
       },
       "nanoFramework.UnitsNet.Pressure": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "/0XYSHgCwhyoVfu4phf4Px0yC7zCPwtZ2CGo2icMHvb0Dl9zIA1fYg+DFWYxiCc0qF8AXxuQRO2wUzV9N8dlfA=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "0kSjFSgOAdC0H88pK8ZAzNLq+piFZ2irodoEFPi2CkSJlbypdl+BMgCddXF7A2jLJX88K68JW67PF5VDRErkhw=="
       },
       "nanoFramework.UnitsNet.RelativeHumidity": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "JBhgil9Lr3xKoRCmCLIeeSDHzWQa75i51YOUbIp0xRkBxqSXgOMaM4XpwCGpxsVGbl7DeJh8UkGvYwOi4qNrOA=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "+KHNErOEMy22+uajiWeir+Uta0XmTtqugyl2+TKIVCJxuwaUcz3UwKa2CClGUwl28pBqVNRoM3o/2x9JhF2SPQ=="
       },
       "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",
-        "requested": "[5.76.15, 5.76.15]",
-        "resolved": "5.76.15",
-        "contentHash": "rmgtqp2kdwd1LkWCHy/iabt4HFHPgTSllCc8ex8M1xJ/2n3CH+Udng7M/wbtMP5II2yF5zMqxowzQ2iKOaoX/g=="
+        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
+        "resolved": "5.77.0-preview.5",
+        "contentHash": "7La0NGv514zYU4pu9XBAEURZoYYP5q+umPY3Jy6QKBbBrSeJS9LwF6VP/GUSk3ieMSpKQoB/AAnXKM6m8D700g=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
