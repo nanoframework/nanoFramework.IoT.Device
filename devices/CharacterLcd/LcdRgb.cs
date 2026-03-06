@@ -68,7 +68,7 @@ namespace Iot.Device.CharacterLcd
         /// <param name="value">The register value.</param>
         private void SetRgbRegister(RgbRegisters addr, byte value)
         {
-            SpanByte dataToSend = new byte[]
+            Span<byte> dataToSend = new byte[]
             {
                 (byte)addr, value
             };

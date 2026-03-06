@@ -31,7 +31,7 @@ namespace Iot.Device.Graphics
         /// <summary>
         /// Data related to the image (derived class defines a specific format)
         /// </summary>
-        public SpanByte Data => _data;
+        public Span<byte> Data => _data;
 
         /// <summary>
         /// Width of the image

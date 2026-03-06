@@ -82,7 +82,7 @@ namespace Iot.Device.CharacterLcd
 
         /// <summary>
         /// Returns the number of custom characters for this display.
-        /// A custom character is one that can be user-defined and assigned to a slot using <see cref="CreateCustomCharacter(int,System.SpanByte)"/>
+        /// A custom character is one that can be user-defined and assigned to a slot using <see cref="CreateCustomCharacter(int,System.ReadOnlySpan{byte})"/>
         /// </summary>
         public virtual int NumberOfCustomCharactersSupported => 8;
 
@@ -144,7 +144,7 @@ namespace Iot.Device.CharacterLcd
         /// Sends data to the device
         /// </summary>
         /// <param name="values">Data to be send to the device</param>
-        protected void SendData(SpanByte values) => _lcdInterface.SendData(values);
+        protected void SendData(ReadOnlySpan<byte> values) => _lcdInterface.SendData(values);
 
         /// <summary>
         /// Sends data to the device
@@ -156,7 +156,7 @@ namespace Iot.Device.CharacterLcd
         /// Send commands to the device
         /// </summary>
         /// <param name="commands">Each byte represents command being sent to the device</param>
-        protected void SendCommands(SpanByte commands) => _lcdInterface.SendCommands(commands);
+        protected void SendCommands(ReadOnlySpan<byte> commands) => _lcdInterface.SendCommands(commands);
 
         /// <summary>
         /// Determines if the device should use two line mode
@@ -366,7 +366,7 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         /// <param name="location">Should be between 0 and 7</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
-        public void CreateCustomCharacter(int location, SpanByte characterMap)
+        public void CreateCustomCharacter(int location, ReadOnlySpan<byte> characterMap)
         {
             if (location >= NumberOfCustomCharactersSupported)
             {
@@ -385,13 +385,13 @@ namespace Iot.Device.CharacterLcd
 
         /// <summary>
         /// Fill one of the 8 CGRAM locations (character codes 0 - 7) with custom characters.
-        /// See <see cref="CreateCustomCharacter(int,System.SpanByte)"/> for details.
+        /// See <see cref="CreateCustomCharacter(int,System.ReadOnlySpan{byte})"/> for details.
         /// </summary>
         /// <param name="location">Should be between 0 and 7</param>
         /// <param name="characterMap">Provide an array of 8 bytes containing the pattern</param>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
-            CreateCustomCharacter(location, new SpanByte(characterMap));
+            CreateCustomCharacter(location, new ReadOnlySpan<byte>(characterMap));
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Iot.Device.CharacterLcd
         /// </remarks>
         public void Write(string text)
         {
-            SpanByte buffer = new byte[text.Length];
+            Span<byte> buffer = new byte[text.Length];
             for (int i = 0; i < text.Length; ++i)
             {
                 buffer[i] = (byte)text[i];
