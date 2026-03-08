@@ -377,29 +377,80 @@ void ProcessIcodeCard()
             Debug.WriteLine("Error getting system information.");
         }
 
-        // Read single block
-        Debug.WriteLine("Reading block 0...");
-        sysRet = icodeCard.ReadSingleBlock(0);
-        if (sysRet && icodeCard.Data != null)
+        // Parse memory capacity from system info response.
+        // Response: flags(1) + info_flags(1) + UID(8) + DSFID(1) + AFI(1) + numBlocks(1, 0-based) + blockSize(1, 0-based) + IC_ref(1)
+        // Data already has flags stripped by RunIcodeCardCommand trimming, so raw offsets apply on the full response.
+        // After trimming, Data starts at the first byte received: flags byte.
+        // Full response layout (from VICC): [0]=flags, [1]=info_flags, [2..9]=UID, [10]=DSFID, [11]=AFI, [12]=numBlocks(0-based), [13]=blockSize(0-based), [14]=IC_ref
+        int totalBlocks = 28;  // default for ICODE SLIX (28 blocks x 4 bytes = 112 bytes = 896 bits)
+        int blockSize = 4;
+
+        if (icodeCard.Data != null && icodeCard.Data.Length >= 14)
         {
-            Debug.WriteLine($"  Block 0 data: {BitConverter.ToString(icodeCard.Data)}");
+            // numBlocks is 0-based in the response: value 0x1B means 28 blocks
+            totalBlocks = icodeCard.Data[12] + 1;
+            blockSize = (icodeCard.Data[13] & 0x1F) + 1;
+            Debug.WriteLine($"  Memory: {totalBlocks} blocks x {blockSize} bytes = {totalBlocks * blockSize} bytes ({totalBlocks * blockSize * 8} bits)");
         }
         else
         {
-            Debug.WriteLine("Error reading block 0.");
+            Debug.WriteLine($"  Could not parse memory info, using default: {totalBlocks} blocks x {blockSize} bytes");
         }
 
-        // Read multiple blocks
-        Debug.WriteLine("Reading blocks 0-3...");
-        sysRet = icodeCard.ReadMultipleBlocks(0, 4);
-        if (sysRet && icodeCard.Data != null)
+        // Dump full memory
+        Debug.WriteLine($"--- Full memory dump ({totalBlocks} blocks) ---");
+
+        // Read in chunks to stay within transceiver limits.
+        // ReadMultipleBlocks count parameter is the actual number of blocks to read.
+        const int maxBlocksPerRead = 16;
+        for (int startBlock = 0; startBlock < totalBlocks; startBlock += maxBlocksPerRead)
         {
-            Debug.WriteLine($"  Blocks 0-3 data: {BitConverter.ToString(icodeCard.Data)}");
+            int remaining = totalBlocks - startBlock;
+            int chunkSize = remaining > maxBlocksPerRead ? maxBlocksPerRead : remaining;
+
+            sysRet = icodeCard.ReadMultipleBlocks((byte)startBlock, (byte)chunkSize);
+            if (sysRet && icodeCard.Data != null && icodeCard.Data.Length > 0)
+            {
+                // Skip the first byte (flags) if present, then print block-by-block
+                // Data from ReadMultipleBlocks: flags(1) + blockData(chunkSize * blockSize)
+                int dataOffset = 0;
+                byte[] blockData = icodeCard.Data;
+
+                // Check if first byte is a flags byte (0x00 = no error)
+                if (blockData.Length > chunkSize * blockSize)
+                {
+                    dataOffset = 1;
+                }
+
+                for (int b = 0; b < chunkSize; b++)
+                {
+                    int offset = dataOffset + (b * blockSize);
+                    if (offset + blockSize <= blockData.Length)
+                    {
+                        byte[] oneBlock = new byte[blockSize];
+                        Array.Copy(blockData, offset, oneBlock, 0, blockSize);
+
+                        // Build ASCII representation
+                        string ascii = string.Empty;
+                        for (int c = 0; c < oneBlock.Length; c++)
+                        {
+                            ascii += (oneBlock[c] >= 0x20 && oneBlock[c] <= 0x7E)
+                                ? (char)oneBlock[c]
+                                : '.';
+                        }
+
+                        Debug.WriteLine($"  Block {(startBlock + b):D3}: {BitConverter.ToString(oneBlock)}  |{ascii}|");
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"  Error reading blocks {startBlock}-{startBlock + chunkSize - 1}");
+                break;
+            }
         }
-        else
-        {
-            Debug.WriteLine("Error reading blocks 0-3.");
-        }
+
+        Debug.WriteLine("--- End of memory dump ---");
 
         // Turn off the RF field to power-reset the card before the next inventory
         pn5180.RadioFrequencyField = false;
