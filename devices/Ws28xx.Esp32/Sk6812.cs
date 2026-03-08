@@ -17,8 +17,9 @@ namespace Iot.Device.Ws28xx.Esp32
         /// <param name="gpioPin">The GPIO pin used for communication with the LED driver.</param>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public Sk6812(int gpioPin, int width, int height = 1)
-            : base(gpioPin, new BitmapImageWs2808Grb(width, height))
+        /// <param name="rmtChannel">The RMT channel number to use. Valid values are 0 to 7 (inclusive); use -1 to automatically select an available channel.</param>
+        public Sk6812(int gpioPin, int width, int height = 1, int rmtChannel = -1)
+            : base(gpioPin, new BitmapImageWs2808Grb(width, height), rmtChannel)
         {
             ClockDivider = 4;
             OnePulse = new RmtCommand(14, true, 12, false);

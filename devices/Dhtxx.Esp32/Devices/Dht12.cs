@@ -20,13 +20,14 @@ namespace Iot.Device.DHTxx.Esp32
         /// <summary>
         /// Create a DHT12 sensor
         /// </summary>
+        /// <param name="rmtChannel">The RMT channel number to use. Valid value range is 0 to 7 (inclusive); use -1 to automatically select a channel (default).</param>
         /// <param name="pinEcho">The pin number which is used as echo (GPIO number)</param>
         /// <param name="pinTrigger">The pin number which is used as trigger (GPIO number)</param>
         /// <param name="pinNumberingScheme">The GPIO pin numbering scheme</param>
         /// <param name="gpioController"><see cref="GpioController"/> related with operations on pins</param>
         /// <param name="shouldDispose"><see langword="true"/> to dispose the <see cref="GpioController"/></param>
-        public Dht12(int pinEcho, int pinTrigger, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical, GpioController? gpioController = null, bool shouldDispose = true)
-            : base(pinEcho, pinTrigger, pinNumberingScheme, gpioController, shouldDispose)
+        public Dht12(int pinEcho, int pinTrigger, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical, GpioController? gpioController = null, bool shouldDispose = true, int rmtChannel = -1)
+            : base(pinEcho, pinTrigger, pinNumberingScheme, gpioController, shouldDispose, rmtChannel)
         {
         }
 

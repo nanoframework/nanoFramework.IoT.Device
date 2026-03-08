@@ -26,3 +26,4 @@ jobs:
       previewPackages: true
       solutionsToCheck: |
         Ft6xx6x.sln
+        AtModem.sln

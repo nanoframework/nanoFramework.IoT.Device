@@ -99,14 +99,15 @@ namespace Iot.Device.DHTxx.Esp32
         /// <param name="pinNumberingScheme">The GPIO pin numbering scheme</param>
         /// <param name="gpioController"><see cref="GpioController"/> related with operations on pins</param>
         /// <param name="shouldDispose"><see langword="true"/> to dispose the <see cref="GpioController"/></param>
-        public DhtBase(int pinEcho, int pinTrigger, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical, GpioController? gpioController = null, bool shouldDispose = true)
+        /// <param name="rmtChannel">The RMT channel number to use. Use -1 to auto-select a free channel; otherwise valid explicit values are 0 to 7 (inclusive).</param>
+        public DhtBase(int pinEcho, int pinTrigger, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical, GpioController? gpioController = null, bool shouldDispose = true, int rmtChannel = -1)
         {
             _protocol = CommunicationProtocol.OneWire;
             _shouldDispose = shouldDispose || gpioController is null;
             _controller = gpioController ?? new GpioController(pinNumberingScheme);
             _pin = pinTrigger;
 
-            var rxChannelSettings = new ReceiverChannelSettings(pinNumber: pinEcho)
+            var rxChannelSettings = new ReceiverChannelSettings(channel: rmtChannel, pinNumber: pinEcho)
             {
                 // 1us clock ( 80Mhz / 80 ) = 1Mhz
                 ClockDivider = 80,

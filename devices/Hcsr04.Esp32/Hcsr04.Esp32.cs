@@ -34,11 +34,13 @@ namespace Iot.Device.Hcsr04.Esp32
         /// </summary>
         /// <param name="trigger">GPIO pin number for trigger pin</param>
         /// <param name="echo">GPIO pin number of echo pin</param>
-        public Hcsr04(int trigger, int echo)
+        /// <param name="rmtTriggerChannel">The RMT channel number to use for trigger. Use -1 (default) to automatically select a free channel, or 0 to 7 (inclusive) to specify a channel explicitly.</param>
+        /// <param name="rmtEchoChannel">The RMT channel number to use for echo. Use -1 (default) to automatically select a free channel, or 0 to 7 (inclusive) to specify a channel explicitly.</param>
+        public Hcsr04(int trigger, int echo, int rmtTriggerChannel = -1, int rmtEchoChannel = -1)
         {
             // Set-up TX & RX channels
             // We need to send a 10us pulse to initiate measurement
-            var txChannelSettings = new TransmitChannelSettings(pinNumber: trigger)
+            var txChannelSettings = new TransmitChannelSettings(channel: rmtTriggerChannel, pinNumber: trigger)
             {
                 // 1us clock ( 80Mhz / 80 ) = 1Mhz
                 ClockDivider = 80,
@@ -52,7 +54,7 @@ namespace Iot.Device.Hcsr04.Esp32
 
             // The received echo pulse width represents the distance to obstacle
             // 150us to 38ms
-            var rxChannelSettings = new ReceiverChannelSettings(pinNumber: echo)
+            var rxChannelSettings = new ReceiverChannelSettings(channel: rmtEchoChannel, pinNumber: echo)
             {
                 // 1us clock ( 80Mhz / 80 ) = 1Mhz
                 ClockDivider = 80,

@@ -17,8 +17,9 @@ namespace Iot.Device.Ws28xx.Esp32
         /// <param name="gpioPin">The GPIO pin used for communication with the LED driver.</param>
         /// <param name="width">Width of the screen or LED strip.</param>
         /// <param name="height">Height of the screen or LED strip. Defaults to 1 (LED strip).</param>
-        public Ws2815b(int gpioPin, int width, int height = 1)
-            : base(gpioPin, new BitmapImageNeo3Rgb(width, height))
+        /// <param name="rmtChannel">The RMT channel number to use. Valid values are 0 to 7 (inclusive), or -1 to auto-select a channel.</param>
+        public Ws2815b(int gpioPin, int width, int height = 1, int rmtChannel = -1)
+            : base(gpioPin, new BitmapImageNeo3Rgb(width, height), rmtChannel)
         {
             ClockDivider = 2;
             OnePulse = new RmtCommand(52, true, 52, false);

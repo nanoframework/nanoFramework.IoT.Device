@@ -42,7 +42,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
-    <PackageReference Include="UnitsNet" Version="5.34.0" />
+    <PackageReference Include="UnitsNet" Version="5.75.0" />
   </ItemGroup>
 
 </Project>

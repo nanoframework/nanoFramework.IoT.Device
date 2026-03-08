@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[1.0.323, 1.0.323]",
-        "resolved": "1.0.323",
-        "contentHash": "S5ImQ3s9IWYNsFP5cZ2ZTA9OJ1vINzOGexzsLnRUGb0UEVEC5rqzHniFa8yv/ahPo3OtN2TnOvjUfZY5ivc96w=="
+        "requested": "[1.0.344, 1.0.344]",
+        "resolved": "1.0.344",
+        "contentHash": "7LrLfqiw6qWLHBx6Jdv+hBmuVp/M4H3/6lnoYO8UzOeRHX09smzvAccCJB0HXXeT3C6VaRUmNCl+QbEJ98qOsw=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
@@ -68,6 +68,30 @@
         "resolved": "1.1.52",
         "contentHash": "kv+US/+7QKV1iT/snxBh032vwZ+3krJ4vujlSsvmS2nNj/nK64R3bq/ST3bCFquxHDD0mog8irtCBCsFazr4kA=="
       },
+      "nanoFramework.UnitsNet.Angle": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "jev2jBYW8vqBdN5LkL0Uif3aOTTYf1dqA+JqFUkGchwOjBJmx0TW8ZDdN0GYSHWqWeuvCZQA0SYdaqSgTgjt4A=="
+      },
+      "nanoFramework.UnitsNet.ElectricPotential": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "amhs/PAWNx7+g5JEaG1V3wB/324NJ93RdY8MztR38yXvDppk/qFx+y2Ncno+8GwVRy4GHYskIbMMSHsHqOf9VQ=="
+      },
+      "nanoFramework.UnitsNet.Ratio": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "L0cfTGRU+8fjriorD0hvANATgAob0ubg2xIhkt3jrzhyokCNfXc5xz6O6kdPGutYIwmLkaF5UK7AHHzjS22gXQ=="
+      },
+      "nanoFramework.UnitsNet.Speed": {
+        "type": "Direct",
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "1bH3svt6CX6jZzL2rCjwU+zSaFMr4Tqevtq6jzwdYt7TH6mZb83NcjENUOyQR2puJDHjjbZD4w+lYgAh4ec0gQ=="
+      },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
         "requested": "[3.9.50, 3.9.50]",
@@ -79,30 +103,6 @@
         "requested": "[6.2.0, 6.2.0]",
         "resolved": "6.2.0",
         "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
-      },
-      "UnitsNet.nanoFramework.Angle": {
-        "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "AGKmNhDJNB16zlwPbPeMzVd/kbG2a4Pgxukm4mDdPV/oRNVPNc+V3lelurEFYFE5wyy3Kpu1F7JYQv6cq9jMsQ=="
-      },
-      "UnitsNet.nanoFramework.ElectricPotential": {
-        "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "0NJGHETR1eguTA2zdsMHjkNOZ0EAMx7PQi8WZ2+z8IKv4OI7hcYhzbv78sSnnjJAzziGom++dRlIrUvpTP6vgg=="
-      },
-      "UnitsNet.nanoFramework.Ratio": {
-        "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "5dLR0TZIJJWcJn2sH/E55ZR5hyHt2JeoxIcXiL3SDxGhOfsnYYB+BDoG9cCPU7Ex9I9HpfGYBauDsyvlPxxirA=="
-      },
-      "UnitsNet.nanoFramework.Speed": {
-        "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "dZ/9ggXzRnRKBjKTHHPIO8Fhu1/+XCuTHXeoClhd8/xOLG1EHANXM9Yn2MMLPegbPn7AQaHoMybcbLW3HeRW7Q=="
       }
     }
   }

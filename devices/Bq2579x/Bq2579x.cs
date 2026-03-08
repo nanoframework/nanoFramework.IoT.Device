@@ -95,7 +95,7 @@ namespace Iot.Device.Bq2579x
         /// </para>
         /// </remarks>
         [Property]
-        public ElectricPotentialDc MinimalSystemVoltage { get => _helpers.GetMinimalSystemVoltage(); set => _helpers.SetMinimalSystemVoltage(value); }
+        public ElectricPotential MinimalSystemVoltage { get => _helpers.GetMinimalSystemVoltage(); set => _helpers.SetMinimalSystemVoltage(value); }
 
         /// <summary>
         /// Gets or sets Battery Voltage Limit.
@@ -109,7 +109,7 @@ namespace Iot.Device.Bq2579x
         /// Range: 3000mV-18800mV.
         /// </para>
         /// </remarks>
-        public ElectricPotentialDc ChargeVoltageLimit { get => _helpers.GetChargeVoltageLimit(); set => _helpers.SetChargeVoltageLimit(value); }
+        public ElectricPotential ChargeVoltageLimit { get => _helpers.GetChargeVoltageLimit(); set => _helpers.SetChargeVoltageLimit(value); }
 
         /// <summary>
         /// Gets or sets Charge Current Limit.
@@ -137,7 +137,7 @@ namespace Iot.Device.Bq2579x
         /// Range: 3600mV-22000mV.
         /// </para>
         /// </remarks>
-        public ElectricPotentialDc InputVoltageLimit { get => _helpers.GetInputVoltageLimit(); set => _helpers.SetInputVoltageLimit(value); }
+        public ElectricPotential InputVoltageLimit { get => _helpers.GetInputVoltageLimit(); set => _helpers.SetInputVoltageLimit(value); }
 
         /// <summary>
         /// Gets or sets Input Current Limit.
@@ -185,36 +185,36 @@ namespace Iot.Device.Bq2579x
         /// Gets VBUS.
         /// </summary>
         /// <remarks>Range: 0mV-30000mV.</remarks>
-        public ElectricPotentialDc Vbus => _helpers.GetAdcVoltage(Register.REG35_VBUS_ADC);
+        public ElectricPotential Vbus => _helpers.GetAdcVoltage(Register.REG35_VBUS_ADC);
 
         /// <summary>
         /// Gets VAC1.
         /// </summary>
         /// <remarks>Range: 0mV-30000mV.</remarks>
-        public ElectricPotentialDc Vac1 => _helpers.GetAdcVoltage(Register.REG37_VAC1_ADC);
+        public ElectricPotential Vac1 => _helpers.GetAdcVoltage(Register.REG37_VAC1_ADC);
 
         /// <summary>
         /// Gets VAC2.
         /// </summary>
         /// <remarks>Range: 0mV-30000mV.</remarks>
-        public ElectricPotentialDc Vac2 => _helpers.GetAdcVoltage(Register.REG39_VAC2_ADC);
+        public ElectricPotential Vac2 => _helpers.GetAdcVoltage(Register.REG39_VAC2_ADC);
 
         /// <summary>
         /// Gets VBAT.
         /// </summary>
         /// <remarks>Range: 0mV-20000mV.</remarks>
-        public ElectricPotentialDc Vbat => _helpers.GetAdcVoltage(Register.REG3B_VBAT_ADC);
+        public ElectricPotential Vbat => _helpers.GetAdcVoltage(Register.REG3B_VBAT_ADC);
 
         /// <summary>
         /// Gets VSYS.
         /// </summary>
         /// <remarks>Range: 0mV-24000mV.</remarks>
-        public ElectricPotentialDc Vsys => _helpers.GetAdcVoltage(Register.REG3D_VSYS_ADC);
+        public ElectricPotential Vsys => _helpers.GetAdcVoltage(Register.REG3D_VSYS_ADC);
 
         /// <summary>
         /// Gets die temperature.
         /// </summary>
-        /// <remarks>Range: -40°C -150°C.</remarks>
+        /// <remarks>Range: -40ï¿½C -150ï¿½C.</remarks>
         public Temperature DieTemperature => _helpers.GetDieTemperature();
 
         /// <summary>

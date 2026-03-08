@@ -12,6 +12,11 @@ namespace Iot.Device.Ws28xx.Esp32
     public class Ws28xx
     {
         /// <summary>
+        /// The RMT channel number to use. Valid value range is 0 to 7 (inclusive).
+        /// </summary>
+        protected readonly int RmtChannel;
+
+        /// <summary>
         /// SPI device used for communication with the LED driver.
         /// </summary>
         protected readonly int GpioPin;
@@ -46,7 +51,8 @@ namespace Iot.Device.Ws28xx.Esp32
         /// </summary>
         /// <param name="gpioPin">The GPIO pin used for communication with the LED driver.</param>
         /// <param name="image">The bitmap that represents the screen or led strip.</param>
-        public Ws28xx(int gpioPin, BitmapImage image)
+        /// <param name="rmtChannel">The RMT channel number to use. Valid values are 0 to 7 (inclusive), or -1 to auto-select a channel.</param>
+        public Ws28xx(int gpioPin, BitmapImage image, int rmtChannel = -1)
         {
             if (gpioPin < 0)
             {
@@ -55,6 +61,7 @@ namespace Iot.Device.Ws28xx.Esp32
 
             GpioPin = gpioPin;
             Image = image;
+            RmtChannel = rmtChannel;
         }
 
         /// <summary>
@@ -62,7 +69,7 @@ namespace Iot.Device.Ws28xx.Esp32
         /// </summary>
         public void Update()
         {
-            var transmitterSettings = new TransmitChannelSettings(pinNumber: GpioPin)
+            var transmitterSettings = new TransmitChannelSettings(channel: RmtChannel, pinNumber: GpioPin)
             {
                 EnableCarrierWave = false,
                 IdleLevel = false,

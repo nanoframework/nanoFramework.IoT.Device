@@ -20,11 +20,11 @@
         "resolved": "1.2.862",
         "contentHash": "dARhyb8BHkje2P+7VphJpRLynVhMkC0U4pFNecLs6jw8DHRMMJyszcbgo/N0ALeYjilNk9hea+wzBLFrgZpsUQ=="
       },
-      "UnitsNet.nanoFramework.Illuminance": {
+      "nanoFramework.UnitsNet.Illuminance": {
         "type": "Direct",
-        "requested": "[5.75.0, 5.75.0]",
-        "resolved": "5.75.0",
-        "contentHash": "SqtObkYtcBrGSEzOv/ffNhISAP+NcazwYFdBYqF7L+ZaLao2tuId+94TjdyYh8FuSBgee/w/mgrz6F8CpbSn3w=="
+        "requested": "[5.76.15, 5.76.15]",
+        "resolved": "5.76.15",
+        "contentHash": "NsVdyZQYddtEjA3e4aRnHwCFRkEWr9mBf/xpJeiM1ElaLD/zy/VypG4/CDymxIKmdCErIvaiZl8ModPvx//F8w=="
       }
     }
   }
