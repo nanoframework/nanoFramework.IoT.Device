@@ -10,7 +10,14 @@ Application note on how to operate PN5180 without a [library](https://www.nxp.co
 
 ## Board
 
-You will find different implementation of this board. All boards should have full SPI pins plus the reset and busy ones and additionally 5V and or 3.3V plus ground. 
+You will find different implementation of this board. All boards should have full SPI pins plus the reset and busy ones and additionally 5V and or 3.3V plus ground.
+
+**Important**: The PN5180 board requires **both** 3.3V and 5V power supplies to be connected:
+
+- **3.3V** powers the PN5180 IC itself (digital logic and SPI interface).
+- **5V** powers the RF transmitter output stage (antenna driver).
+
+Without 5V connected, SPI communication will work (EEPROM reads, firmware version queries), but the antenna will not generate a strong enough RF field to power or communicate with cards.
 
 ## Usage
 

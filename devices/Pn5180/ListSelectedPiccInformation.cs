@@ -169,7 +169,7 @@ namespace System.Collections.Generic
             /// <param name="collection"></param>
             public Enumerator(ListSelectedPiccInformation collection)
             {
-                _index = -10;
+                _index = -1;
                 _collection = collection;
             }
 

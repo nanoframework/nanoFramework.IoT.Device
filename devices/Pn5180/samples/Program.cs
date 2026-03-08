@@ -15,34 +15,72 @@ using Iot.Device.Card.Ultralight;
 using Iot.Device.Ndef;
 using Iot.Device.Pn5180;
 using Iot.Device.Rfid;
+using nanoFramework.Hardware.Esp32;
+using nanoFramework.Logging;
+using nanoFramework.Logging.Debug;
 
 Debug.WriteLine("Hello Pn5180!");
+
+// This program has been tested for a EXP32-C3 super mini board
+// For any other board, make sure to adjust the SPI GPIOs and the reset pin accordingly in the code below
+// For anything else than ESP32, remove the ESP32 specific nuget and code below
 
 // Statically register our factory. Note that this must be done before instantiation of any class that wants to use logging.
 // LogDispatcher.LoggerFactory = new DebugLoggerFactory();
 //////////////////////////////////////////////////////////////////////
 // when connecting to an ESP32 device, need to configure the SPI GPIOs
 // used for the bus
-//Configuration.SetPinFunction(21, DeviceFunction.SPI1_MOSI);
-//Configuration.SetPinFunction(22, DeviceFunction.SPI1_MISO);
-//Configuration.SetPinFunction(23, DeviceFunction.SPI1_CLOCK);
+nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(5, DeviceFunction.SPI1_MOSI);
+nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(6, DeviceFunction.SPI1_MISO);
+nanoFramework.Hardware.Esp32.Configuration.SetPinFunction(4, DeviceFunction.SPI1_CLOCK);
 // Make sure as well you are using the right chip select
-SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(1, 12) { ClockFrequency = Pn5180.MaximumSpiClockFrequency, Mode = Pn5180.DefaultSpiMode, DataFlow = DataFlow.MsbFirst });
+SpiDevice spi = SpiDevice.Create(new SpiConnectionSettings(1, 10) { ClockFrequency = Pn5180.MaximumSpiClockFrequency, Mode = Pn5180.DefaultSpiMode, DataFlow = DataFlow.MsbFirst });
 
 // Reset the device
 using GpioController gpioController = new();
-gpioController.OpenPin(22, PinMode.Output);
-gpioController.Write(22, PinValue.Low);
+gpioController.OpenPin(3, PinMode.Output);
+gpioController.Write(3, PinValue.Low);
 Thread.Sleep(10);
-gpioController.Write(22, PinValue.High);
+gpioController.Write(3, PinValue.High);
 Thread.Sleep(10);
 
 // Adjust the IO
-Pn5180 pn5180 = new Pn5180(spi, 27, 18, null, true);
+Pn5180 pn5180 = new Pn5180(spi, 1, 2, null, true);
 
 
 var versions = pn5180.GetVersions();
 Debug.WriteLine($"Product: {versions.Product}, Firmware: {versions.Firmware}, EEPROM: {versions.Eeprom}");
+
+// === RF / Antenna diagnostic ===
+SpanByte rawStatus = new byte[4];
+
+// Check after reset
+pn5180.GetRawRfStatus(rawStatus);
+Debug.WriteLine($"[After reset] RF_STATUS raw: {BitConverter.ToString(rawStatus.ToArray())}");
+Debug.WriteLine($"  RF field on: {pn5180.RadioFrequencyField}, Status: {pn5180.GetRadioFrequencyStatus()}, External: {pn5180.IsRadioFrequencyFieldExternal()}");
+
+// Load 14443A config and turn on field
+pn5180.LoadRadioFrequencyConfiguration(
+    TransmitterRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106,
+    ReceiverRadioFrequencyConfiguration.Iso14443A_Nfc_PI_106_106);
+pn5180.RadioFrequencyField = true;
+Thread.Sleep(50);
+pn5180.GetRawRfStatus(rawStatus);
+Debug.WriteLine($"[14443A RF_ON] RF_STATUS raw: {BitConverter.ToString(rawStatus.ToArray())}");
+Debug.WriteLine($"  RF field on: {pn5180.RadioFrequencyField}, Status: {pn5180.GetRadioFrequencyStatus()}, External: {pn5180.IsRadioFrequencyFieldExternal()}");
+pn5180.RadioFrequencyField = false;
+Thread.Sleep(50);
+
+// Load 15693 config and turn on field
+pn5180.LoadRadioFrequencyConfiguration(
+    TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+    ReceiverRadioFrequencyConfiguration.Iso15693_26);
+pn5180.RadioFrequencyField = true;
+Thread.Sleep(50);
+pn5180.GetRawRfStatus(rawStatus);
+Debug.WriteLine($"[15693 RF_ON] RF_STATUS raw: {BitConverter.ToString(rawStatus.ToArray())}");
+Debug.WriteLine($"  RF field on: {pn5180.RadioFrequencyField}, Status: {pn5180.GetRadioFrequencyStatus()}, External: {pn5180.IsRadioFrequencyFieldExternal()}");
+pn5180.RadioFrequencyField = false;
 
 // Dump a Mifare ISO 14443 type A
 //TypeA();
@@ -63,10 +101,12 @@ Debug.WriteLine($"Product: {versions.Product}, Firmware: {versions.Firmware}, EE
 //PullIso15693Cards();
 
 // Detect and process an ICODE (ISO 15693) card
-//ProcessIcodeCard();
+ProcessIcodeCard();
 
 // Dump Ultralight card and various tests
-ProcessUltralight();
+//ProcessUltralight();
+
+Thread.Sleep(Timeout.Infinite);
 
 void Eeprom()
 {
@@ -208,6 +248,9 @@ void PullDifferentCards()
         {
             Debug.WriteLine($"{nameof(card)} is not configured correctly.");
         }
+
+        // Wait a bit to avoid watchdog reset
+        Thread.Sleep(500);
     }
     while (true);
 }
@@ -272,89 +315,97 @@ void PullIso15693Cards()
 
 void ProcessIcodeCard()
 {
-    // First detect an ISO 15693 card
-    ArrayList detectedCards;
-    Data26_53kbps detectedCard;
+    string lastUid = string.Empty;
+    int scanCount = 0;
 
     do
     {
-        if (pn5180.ListenToCardIso15693(
+        scanCount++;
+        // Detect an ISO 15693 card
+        ArrayList detectedCards;
+        Data26_53kbps detectedCard;
+
+        Debug.WriteLine($"--- Scan #{scanCount} ---");
+        if (!pn5180.ListenToCardIso15693(
             TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
             ReceiverRadioFrequencyConfiguration.Iso15693_26,
             out detectedCards,
             2000))
         {
-            detectedCard = (Data26_53kbps)detectedCards[0];
-            Debug.WriteLine($"ISO 15693 card detected:");
-            Debug.WriteLine($"  UID: {BitConverter.ToString(detectedCard.NfcId)}");
-            Debug.WriteLine($"  DSFID: 0x{detectedCard.Dsfid:X2}");
-            break;
+            Debug.WriteLine("Waiting for ISO 15693 card...");
+            continue;
+        }
+
+        Debug.WriteLine($"  Detected {detectedCards.Count} card(s)");
+        detectedCard = (Data26_53kbps)detectedCards[0];
+        string currentUid = BitConverter.ToString(detectedCard.NfcId);
+        Debug.WriteLine($"ISO 15693 card detected:");
+        Debug.WriteLine($"  UID: {currentUid}");
+        Debug.WriteLine($"  DSFID: 0x{detectedCard.Dsfid:X2}");
+        Debug.WriteLine($"  Slot: {detectedCard.TargetNumber}");
+
+        if (lastUid != string.Empty && lastUid != currentUid)
+        {
+            Debug.WriteLine($"  *** Card changed! Previous UID: {lastUid} ***");
+        }
+
+        lastUid = currentUid;
+
+        // Reset the RF configuration for addressed-mode communication
+        pn5180.ResetPN5180Configuration(
+            TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
+            ReceiverRadioFrequencyConfiguration.Iso15693_26);
+
+        // Create IcodeCard instance
+        var icodeCard = new IcodeCard(pn5180, detectedCard.TargetNumber)
+        {
+            Uid = detectedCard.NfcId,
+            Capacity = IcodeCardCapacity.Unknown
+        };
+
+        // Get system information
+        Debug.WriteLine("Getting system information...");
+        var sysRet = icodeCard.GetSystemInformation();
+        if (sysRet && icodeCard.Data != null && icodeCard.Data.Length > 0)
+        {
+            Debug.WriteLine($"  DSFID: 0x{icodeCard.Dsfid:X2}");
+            Debug.WriteLine($"  AFI: 0x{icodeCard.Afi:X2}");
+            Debug.WriteLine($"  System info data: {BitConverter.ToString(icodeCard.Data)}");
         }
         else
         {
-            Debug.WriteLine("Waiting for ISO 15693 card...");
+            Debug.WriteLine("Error getting system information.");
         }
+
+        // Read single block
+        Debug.WriteLine("Reading block 0...");
+        sysRet = icodeCard.ReadSingleBlock(0);
+        if (sysRet && icodeCard.Data != null)
+        {
+            Debug.WriteLine($"  Block 0 data: {BitConverter.ToString(icodeCard.Data)}");
+        }
+        else
+        {
+            Debug.WriteLine("Error reading block 0.");
+        }
+
+        // Read multiple blocks
+        Debug.WriteLine("Reading blocks 0-3...");
+        sysRet = icodeCard.ReadMultipleBlocks(0, 4);
+        if (sysRet && icodeCard.Data != null)
+        {
+            Debug.WriteLine($"  Blocks 0-3 data: {BitConverter.ToString(icodeCard.Data)}");
+        }
+        else
+        {
+            Debug.WriteLine("Error reading blocks 0-3.");
+        }
+
+        // Turn off the RF field to power-reset the card before the next inventory
+        pn5180.RadioFrequencyField = false;
+        Thread.Sleep(500);
     }
     while (true);
-
-    // Reset the RF configuration for addressed-mode communication
-    pn5180.ResetPN5180Configuration(
-        TransmitterRadioFrequencyConfiguration.Iso15693_ASK100_26,
-        ReceiverRadioFrequencyConfiguration.Iso15693_26);
-
-    // Create IcodeCard instance
-    var icodeCard = new IcodeCard(pn5180, detectedCard.TargetNumber)
-    {
-        Uid = detectedCard.NfcId,
-        Capacity = IcodeCardCapacity.Unknown
-    };
-
-    // Get system information
-    Debug.WriteLine("Getting system information...");
-    var sysRet = icodeCard.GetSystemInformation();
-    if (sysRet && icodeCard.Data != null && icodeCard.Data.Length > 0)
-    {
-        Debug.WriteLine($"  DSFID: 0x{icodeCard.Dsfid:X2}");
-        Debug.WriteLine($"  AFI: 0x{icodeCard.Afi:X2}");
-        Debug.WriteLine($"  System info data: {BitConverter.ToString(icodeCard.Data)}");
-    }
-    else
-    {
-        Debug.WriteLine("Error getting system information.");
-    }
-
-    // Read single block
-    Debug.WriteLine("Reading block 0...");
-    sysRet = icodeCard.ReadSingleBlock(0);
-    if (sysRet && icodeCard.Data != null)
-    {
-        Debug.WriteLine($"  Block 0 data: {BitConverter.ToString(icodeCard.Data)}");
-    }
-    else
-    {
-        Debug.WriteLine("Error reading block 0.");
-    }
-
-    // Read multiple blocks
-    Debug.WriteLine("Reading blocks 0-3...");
-    sysRet = icodeCard.ReadMultipleBlocks(0, 4);
-    if (sysRet && icodeCard.Data != null)
-    {
-        Debug.WriteLine($"  Blocks 0-3 data: {BitConverter.ToString(icodeCard.Data)}");
-    }
-    else
-    {
-        Debug.WriteLine("Error reading blocks 0-3.");
-    }
-
-    // Stay quiet and reset
-    Debug.WriteLine("Sending StayQuiet...");
-    sysRet = icodeCard.StayQuiet();
-    Debug.WriteLine(sysRet ? "  Card is now quiet." : "  Error sending StayQuiet.");
-
-    Debug.WriteLine("Sending ResetToReady...");
-    sysRet = icodeCard.ResetToReady();
-    Debug.WriteLine(sysRet ? "  Card is ready again." : "  Error sending ResetToReady.");
 }
 
 void ProcessUltralight()
@@ -452,7 +503,7 @@ void ProcessUltralight()
 
     Debug.WriteLine("Configuration of the card");
     // Get the Configuration
-    var res = ultralight.TryGetConfiguration(out Configuration configuration);
+    var res = ultralight.TryGetConfiguration(out Iot.Device.Card.Ultralight.Configuration configuration);
     if (res)
     {
         Debug.WriteLine("  Mirror:");

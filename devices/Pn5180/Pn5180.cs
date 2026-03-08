@@ -949,6 +949,30 @@ namespace Iot.Device.Pn5180
         public RadioFrequencyCollision RadioFrequencyCollision { get; set; } = RadioFrequencyCollision.Normal;
 
         /// <summary>
+        /// Get the raw RF_STATUS register bytes for diagnostic purposes.
+        /// The PN5180 returns 4 bytes (LSByte first) from register 0x1D.
+        /// </summary>
+        /// <param name="status">A 4-byte buffer to receive the raw register value.</param>
+        /// <returns>True if the register was read successfully.</returns>
+        public bool GetRawRfStatus(SpanByte status)
+        {
+            if (status.Length < 4)
+            {
+                throw new ArgumentException("Value must be at least 4 bytes.", nameof(status));
+            }
+
+            try
+            {
+                SpiReadRegister(Register.RF_STATUS, status);
+                return true;
+            }
+            catch (TimeoutException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Get or set the radio frequency field. True for on, false for off
         /// </summary>
         public bool RadioFrequencyField
@@ -965,7 +989,8 @@ namespace Iot.Device.Pn5180
                     return false;
                 }
 
-                return (status[2] & 0b1000_0000) == 0b1000_0000;
+                // TX_RF_STATUS is at register bit 17 → byte[2] bit 1
+                return (status[2] & 0b0000_0010) == 0b0000_0010;
             }
             set
             {
@@ -989,7 +1014,8 @@ namespace Iot.Device.Pn5180
                 return RadioFrequencyStatus.Error;
             }
 
-            return (RadioFrequencyStatus)((status[2] >> 1) & 0x07);
+            // TRANSCEIVE_STATE is at register bits [13:11] → byte[1] bits [5:3]
+            return (RadioFrequencyStatus)((status[1] >> 3) & 0x07);
         }
 
         /// <summary>
@@ -1008,7 +1034,8 @@ namespace Iot.Device.Pn5180
                 return false;
             }
 
-            return (status[2] & 0b0000_0100) == 0b0000_0100;
+            // RF_DET_STATUS is at register bit 12 → byte[1] bit 4
+            return (status[1] & 0b0001_0000) == 0b0001_0000;
         }
 
         private bool SetRadioFrequency(bool fieldOn)
@@ -1439,62 +1466,73 @@ namespace Iot.Device.Pn5180
             // Switch on the radio frequency field and check it
             ret &= SetRadioFrequency(true);
 
-            SpanByte inventoryResponse = new byte[10];
+            // Allow the RF field to stabilize and nearby cards to power up.
+            // ISO 15693 cards need several milliseconds of continuous field before
+            // they can respond to an inventory command.
+            Thread.Sleep(10);
+
+            // Use a larger buffer to accommodate responses that may include CRC
+            SpanByte inventoryResponse = new byte[14];
             int numBytes = 0;
 
             DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutPollingMilliseconds);
 
             try
             {
-                // Clears all interrupt
-                SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
-                // Sets the PN5180 into IDLE state
-                SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
-                // Activates TRANSCEIVE routine
-                SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
-                // Sends an inventory command with 16 slots
-                // Flags: 0x06 = high data rate + inventory flag, Command: 0x01 = inventory, Mask length: 0x00
-                ret = SendDataToCard(new byte[] { 0x06, 0x01, 0x00 });
-                if (dtTimeout < DateTime.UtcNow)
+                // Retry the 16-slot inventory until a card is found or the timeout expires.
+                // This mirrors the polling loop used by ListenToCardIso14443TypeA and ensures
+                // cards that need extra time to power up from the RF field are detected.
+                do
                 {
-                    return false;
-                }
+                    // Reload RF configuration on each attempt so that any TX_CONFIG bits
+                    // cleared during the previous EOF sequence are restored.
+                    LoadRadioFrequencyConfiguration(transmitter, receiver);
 
-                for (byte slotCounter = 0; slotCounter < 16; slotCounter++)
-                {
-                    var num = GetNumberOfBytesReceivedAndValidBits();
-                    numBytes = num.Bytes;
-                    if (numBytes > 0)
+                    // Clears all interrupt
+                    SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                    // Sets the PN5180 into IDLE state
+                    SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+                    // Activates TRANSCEIVE routine
+                    SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+                    // Sends an inventory command with 16 slots
+                    // Flags: 0x06 = high data rate + inventory flag, Command: 0x01 = inventory, Mask length: 0x00
+                    ret = SendDataToCard(new byte[] { 0x06, 0x01, 0x00 });
+
+                    for (byte slotCounter = 0; slotCounter < 16; slotCounter++)
                     {
-                        ret &= ReadDataFromCard(inventoryResponse, inventoryResponse.Length);
-                        if (ret)
+                        // Use ReadWithTimeout to poll until the byte count stabilises
+                        // or times out.  At 26.48 kbps the card response delay (t1) can
+                        // be up to ~5 ms and the 10-byte response takes ~3.6 ms, so a
+                        // 15 ms timeout covers the worst case while keeping the scan fast.
+                        numBytes = ReadWithTimeout(inventoryResponse, 15);
+
+                        if (numBytes >= 10)
                         {
                             // Response: flags(1) + DSFID(1) + UID(8)
                             byte[] uidBytes = inventoryResponse.Slice(2, 8).ToArray();
                             cards.Add(new Data26_53kbps(slotCounter, 0, 0, inventoryResponse[1], uidBytes));
                         }
+
+                        // Send only EOF (End of Frame) without data at the next RF communication
+                        SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.TX_CONFIG, new byte[] { 0x3F, 0xFB, 0xFF, 0xFF });
+                        // Sets the PN5180 into IDLE state
+                        SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+                        // Activates TRANSCEIVE routine
+                        SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+                        // Clears the interrupt register IRQ_STATUS
+                        SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                        // Send EOF
+                        SendDataToCard(new byte[0]);
                     }
 
-                    // Send only EOF (End of Frame) without data at the next RF communication
-                    SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.TX_CONFIG, new byte[] { 0x3F, 0xFB, 0xFF, 0xFF });
-                    // Sets the PN5180 into IDLE state
-                    SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
-                    // Activates TRANSCEIVE routine
-                    SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
-                    // Clears the interrupt register IRQ_STATUS
-                    SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
-                    // Send EOF
-                    SendDataToCard(new byte[0]);
+                    if (cards.Count > 0)
+                    {
+                        return true;
+                    }
                 }
+                while (dtTimeout > DateTime.UtcNow);
 
-                if (cards.Count > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             catch (TimeoutException)
             {
