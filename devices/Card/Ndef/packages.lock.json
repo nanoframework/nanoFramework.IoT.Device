@@ -10,9 +10,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.4, 2.0.0-preview.4]",
-        "resolved": "2.0.0-preview.4",
-        "contentHash": "7HC+DChBJi78aZKj1FbO8ygodZEPDGt5TLUMfb2wUkBrhm27M1mDC7ydr4zjkZB3D/lErixGYcGUMWwwDobkQA=="
+        "requested": "[2.0.0-preview.11, 2.0.0-preview.11]",
+        "resolved": "2.0.0-preview.11",
+        "contentHash": "7hdCQXZfiEVaHIO7W/4JWH9tieh22RwfISVQ/5cktEh+FsTWAz6WPz0KHn8gUTWI9aFD6VesJkVyufVyNqvCxw=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
