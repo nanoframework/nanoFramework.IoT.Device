@@ -221,7 +221,7 @@ namespace Iot.Device.SparkFunLcd
         /// <param name="location">Character number 0 thru 7, 8 locations are available.</param>
         /// <param name="characterMap">Byte array for custom character refer to datasheet for specific information, or see https://www.quinapalus.com/hd44780udg.html.</param>
         /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
-        /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
+        /// <seealso cref="CreateCustomCharacter(int, ReadOnlySpan{byte})"/>
         public void CreateCustomCharacter(int location, byte[] characterMap)
         {
             if (location < 0 || location > 7)
@@ -250,8 +250,8 @@ namespace Iot.Device.SparkFunLcd
         /// <param name="location">Character number 0 thru 7, 8 locations are available.</param>
         /// <param name="characterMap">Byte array for custom character refer to datasheet for specific information.</param>
         /// <seealso cref="CreateCustomCharacter(int, byte[])"/>
-        /// <seealso cref="CreateCustomCharacter(int, SpanByte)"/>
-        public void CreateCustomCharacter(int location, SpanByte characterMap)
+        /// <seealso cref="CreateCustomCharacter(int, ReadOnlySpan{byte})"/>
+        public void CreateCustomCharacter(int location, ReadOnlySpan<byte> characterMap)
         {
             CreateCustomCharacter(location, characterMap.ToArray());
         }

@@ -59,7 +59,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="command">The command to send to the display controller.</param>
         public void SendCommand(byte command)
         {
-            SpanByte writeBuffer = new byte[] { CommandMode, command };
+            Span<byte> writeBuffer = new byte[] { CommandMode, command };
 
             _i2cDevice.Write(writeBuffer);
         }
@@ -82,7 +82,7 @@ namespace Iot.Device.Ssd13xx
         /// <param name="data">The data to send to the display controller.</param>
         public void SendData(byte data)
         {
-            SpanByte writeBuffer = new byte[] { DataMode, data };
+            Span<byte> writeBuffer = new byte[] { DataMode, data };
 
             _i2cDevice.Write(writeBuffer);
         }

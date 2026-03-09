@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Buffers.Helpers.BitConverter
@@ -123,83 +123,83 @@ namespace System.Buffers.Helpers.BitConverter
         public abstract byte[] GetBytes(double value);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="bool"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="bool"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public bool ToBoolean(SpanByte value, int index = 0) => value[index] == 0x1;
+        public bool ToBoolean(ReadOnlySpan<byte> value, int index = 0) => value[index] == 0x1;
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="char"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="char"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract char ToChar(SpanByte value, int index = 0);
+        public abstract char ToChar(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="short"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="short"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract short ToInt16(SpanByte value, int index = 0);
+        public abstract short ToInt16(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="int"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="int"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract int ToInt32(SpanByte value, int index = 0);
+        public abstract int ToInt32(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="long"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="long"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract long ToInt64(SpanByte value, int index = 0);
+        public abstract long ToInt64(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="ushort"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="ushort"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract ushort ToUInt16(SpanByte value, int index = 0);
+        public abstract ushort ToUInt16(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="uint"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="uint"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract uint ToUInt32(SpanByte value, int index = 0);
+        public abstract uint ToUInt32(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="ulong"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="ulong"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract ulong ToUInt64(SpanByte value, int index = 0);
+        public abstract ulong ToUInt64(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="float"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="float"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract float ToSingle(SpanByte value, int index = 0);
+        public abstract float ToSingle(ReadOnlySpan<byte> value, int index = 0);
 
         /// <summary>
-        /// Converts a <see cref="SpanByte"/> to a <see cref="double"/>.
+        /// Converts a <see cref="ReadOnlySpan{byte}"/> to a <see cref="double"/>.
         /// </summary>
-        /// <param name="value">The <see cref="SpanByte"/> that points to the data to convert.</param>
+        /// <param name="value">The <see cref="ReadOnlySpan{byte}"/> that points to the data to convert.</param>
         /// <param name="index">The index where the data can be found.</param>
         /// <returns>The converted data.</returns>
-        public abstract double ToDouble(SpanByte value, int index = 0);
+        public abstract double ToDouble(ReadOnlySpan<byte> value, int index = 0);
     }
 }

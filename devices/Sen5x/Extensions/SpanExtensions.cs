@@ -4,7 +4,7 @@ using System;
 
 namespace Iot.Device.Sen5x.Extensions
 {
-    internal static class SpanByteExtensions
+    internal static class SpanExtensions
     {
         /// <summary>
         /// A convenient method that verifies all pairs within a data span. The data must be a multiple of 3 bytes (2 bytes data, 1 byte crc).
@@ -12,7 +12,7 @@ namespace Iot.Device.Sen5x.Extensions
         /// <param name="data">The data to be verified.</param>
         /// <exception cref="ArgumentException">When the byte lenght is not a multiple of 3.</exception>
         /// <exception cref="IndexOutOfRangeException">When the CRC fails.</exception>
-        internal static void VerifyCrc(this SpanByte data)
+        internal static void VerifyCrc(this Span<byte> data)
         {
             if (data.Length % 3 != 0)
             {
@@ -34,7 +34,7 @@ namespace Iot.Device.Sen5x.Extensions
         /// </summary>
         /// <param name="data">The span in which the CRC must be calculated per pair.</param>
         /// <exception cref="ArgumentException">When the number of bytes is not a multiple of 3.</exception>
-        internal static void UpdateCrc(this SpanByte data)
+        internal static void UpdateCrc(this Span<byte> data)
         {
             if (data.Length % 3 != 0)
             {
@@ -52,7 +52,7 @@ namespace Iot.Device.Sen5x.Extensions
         /// </summary>
         /// <param name="data">The data to be CRC'ed. For SEN5x this should only be pairs of 2 bytes.</param>
         /// <returns>The calculated CRC value.</returns>
-        private static byte CalculateCrc(this SpanByte data)
+        private static byte CalculateCrc(this Span<byte> data)
         {
             byte crc = 0xFF;
             for (int i = 0; i < data.Length; i++)

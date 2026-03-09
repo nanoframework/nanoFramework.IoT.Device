@@ -12,12 +12,12 @@ namespace Iot.Device.Sen5x.Entities
     {
         internal override int ByteCount => 3;
 
-        internal override void FromSpanByte(SpanByte data)
+        internal override void FromSpanByte(ReadOnlySpan<byte> data)
         {
             WarmStartBehavior = BinaryPrimitives.ReadUInt16BigEndian(data);
         }
 
-        internal override void ToSpanByte(SpanByte data)
+        internal override void ToSpanByte(Span<byte> data)
         {
             BinaryPrimitives.WriteUInt16BigEndian(data, WarmStartBehavior);
         }
