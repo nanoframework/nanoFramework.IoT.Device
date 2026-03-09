@@ -27,7 +27,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.1.2.907\lib\Iot.Device.Pcx857x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.11\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.13\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.35\lib\netnano1.0\mscorlib.dll</HintPath>
