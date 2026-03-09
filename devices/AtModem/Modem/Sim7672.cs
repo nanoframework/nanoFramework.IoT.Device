@@ -192,7 +192,7 @@ namespace Iot.Device.AtModem.Modem
                 int index = 0;
                 const int ChunkSize = 64;
                 int bytesToSend;
-                SpanByte toSend = bytes;
+                Span<byte> toSend = bytes;
                 while (index < bytes.Length)
                 {
                     bytesToSend = (int)(bytes.Length - index);
