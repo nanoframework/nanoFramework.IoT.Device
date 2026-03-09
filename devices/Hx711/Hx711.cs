@@ -156,10 +156,10 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Reading sample.");
 
             // setup buffer to drive PD_SCK
-            SpanByte clkTrain = new SpanByte(_readSamplePulseTrain);
+            Span<byte> clkTrain = new Span<byte>(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
-            SpanByte readBuffer = new SpanByte(_readSampleBuffer);
+            Span<byte> readBuffer = new Span<byte>(_readSampleBuffer);
 
             // setup array to hold readings for averaging
             int[] values = new int[SampleAveraging];
@@ -184,8 +184,8 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Setup sampling to detect that a sample is ready");
 
             // send it in full duplex mode to be platform independent to not let spi send FF's by default
-            SpanByte clkWaitDoutBuffer = new SpanByte(_clkWaitDoutBuffer);
-            SpanByte doutWaitBuffer = new SpanByte(_doutWaitBuffer);
+            Span<byte> clkWaitDoutBuffer = new Span<byte>(_clkWaitDoutBuffer);
+            Span<byte> doutWaitBuffer = new Span<byte>(_doutWaitBuffer);
             _spiDevice.TransferFullDuplex(clkWaitDoutBuffer, doutWaitBuffer);
             var currentDout = doutWaitBuffer[0];
 
@@ -206,10 +206,10 @@ namespace Iot.Device.Hx711
             Debug.WriteLine("INFO: Setting channel and gain.");
 
             // setup buffer to drive PD_SCK
-            SpanByte clkTrain = new SpanByte(_readSamplePulseTrain);
+            Span<byte> clkTrain = new Span<byte>(_readSamplePulseTrain);
 
             // setup buffer to hold data read from DOUT
-            SpanByte readBuffer = new SpanByte(_readSampleBuffer);
+            Span<byte> readBuffer = new Span<byte>(_readSampleBuffer);
 
             if (WaitForConversion())
             {
@@ -218,7 +218,7 @@ namespace Iot.Device.Hx711
             }
         }
 
-        private int ParseRawData(SpanByte readBuffer)
+        private int ParseRawData(Span<byte> readBuffer)
         {
             uint value24bit = 0;
             int rotationFactor = 20;

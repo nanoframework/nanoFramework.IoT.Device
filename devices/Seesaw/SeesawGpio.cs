@@ -139,7 +139,7 @@ namespace Iot.Device.Seesaw
                 throw new InvalidOperationException($"The hardware on I2C Bus {I2cDevice.ConnectionSettings.BusId}, Address 0x{I2cDevice.ConnectionSettings.DeviceAddress:X2} does not support Adafruit SeeSaw GPIO functionality");
             }
 
-            SpanByte buffer = new byte[4];
+            Span<byte> buffer = new byte[4];
 
             BinaryPrimitives.WriteUInt32BigEndian(buffer, pins);
 

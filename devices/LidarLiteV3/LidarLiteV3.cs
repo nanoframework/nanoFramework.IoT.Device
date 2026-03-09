@@ -182,7 +182,7 @@ namespace Iot.Device.DistanceSensor
             }
 
             // Read in the unit's serial number.
-            SpanByte rawData = new byte[2];
+            Span<byte> rawData = new byte[2];
 
             ReadBytes(Register.UNIT_ID, rawData);
 
@@ -209,7 +209,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[2];
+                Span<byte> rawData = new byte[2];
                 ReadBytes(Register.FULL_DELAY, rawData);
                 return Length.FromCentimeters(BinaryPrimitives.ReadUInt16BigEndian(rawData));
             }
@@ -224,7 +224,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[1];
+                Span<byte> rawData = new byte[1];
                 ReadBytes(Register.VELOCITY, rawData);
                 return Length.FromCentimeters((int)(sbyte)rawData[0]);
             }
@@ -237,7 +237,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[1];
+                Span<byte> rawData = new byte[1];
                 ReadBytes(Register.ACQ_CONFIG_REG, rawData);
                 return (AcquisitionSettings)rawData[0];
             }
@@ -259,7 +259,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[1];
+                Span<byte> rawData = new byte[1];
                 ReadBytes(Register.SIG_COUNT_VAL, rawData);
                 return rawData[0];
             }
@@ -280,7 +280,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[1];
+                Span<byte> rawData = new byte[1];
                 ReadBytes(Register.THRESHOLD_BYPASS, rawData);
                 return rawData[0];
             }
@@ -297,7 +297,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[1];
+                Span<byte> rawData = new byte[1];
                 ReadBytes(Register.POWER_CONTROL, rawData);
                 return (PowerMode)rawData[0];
             }
@@ -315,7 +315,7 @@ namespace Iot.Device.DistanceSensor
         {
             get
             {
-                SpanByte rawData = new byte[1];
+                Span<byte> rawData = new byte[1];
                 ReadBytes(Register.STATUS, rawData);
                 return (SystemStatus)rawData[0];
             }
@@ -327,7 +327,7 @@ namespace Iot.Device.DistanceSensor
 
         private void WriteRegister(Register reg, byte data)
         {
-            SpanByte dataout = new byte[]
+            Span<byte> dataout = new byte[]
             {
                 (byte)reg,
                 data
@@ -341,7 +341,7 @@ namespace Iot.Device.DistanceSensor
             return _i2cDevice.ReadByte();
         }
 
-        private void ReadBytes(Register reg, SpanByte readBytes)
+        private void ReadBytes(Register reg, Span<byte> readBytes)
         {
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(readBytes);

@@ -253,7 +253,7 @@ namespace Iot.Device.RadioReceiver
 
         private byte[] ReadRegisters()
         {
-            SpanByte readBuffer = new byte[4];
+            Span<byte> readBuffer = new byte[4];
 
             _i2cDevice.Read(readBuffer);
 
