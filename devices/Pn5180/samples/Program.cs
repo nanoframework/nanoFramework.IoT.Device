@@ -62,7 +62,7 @@ ProcessUltralight();
 
 void Eeprom()
 {
-    SpanByte eeprom = new byte[255];
+    Span<byte> eeprom = new byte[255];
     var ret = pn5180.ReadAllEeprom(eeprom);
     Debug.WriteLine($"EEPROM dump: success: {ret}, Data: {BitConverter.ToString(eeprom.ToArray())}");
     ret = pn5180.ReadEeprom(EepromAddress.DieIdentifier, eeprom.Slice(0, 16));
@@ -86,7 +86,7 @@ void Eeprom()
 void RfConfiguration()
 {
     var sizeConfig = pn5180.GetRadioFrequencyConfigSize(TransmitterRadioFrequencyConfiguration.Iso14443B_106);
-    SpanByte configBuff = new byte[Pn5180.RadioFrequencyConfigurationSize * sizeConfig];
+    Span<byte> configBuff = new byte[Pn5180.RadioFrequencyConfigurationSize * sizeConfig];
     pn5180.RetrieveRadioFrequencyConfiguration(TransmitterRadioFrequencyConfiguration.Iso14443B_106, configBuff);
     for (int i = 0; i < sizeConfig; i++)
     {
