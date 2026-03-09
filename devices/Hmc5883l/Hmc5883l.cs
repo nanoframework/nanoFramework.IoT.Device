@@ -81,15 +81,15 @@ namespace Iot.Device.Hmc5883l
             byte configA = (byte)(_samplesAmount | (_outputRate << 2) | _measurementConfig);
             byte configB = (byte)(_gain << 5);
 
-            SpanByte commandA = new byte[]
+            Span<byte> commandA = new byte[]
             {
                 (byte)Register.HMC_CONFIG_REG_A_ADDR, configA
             };
-            SpanByte commandB = new byte[]
+            Span<byte> commandB = new byte[]
             {
                 (byte)Register.HMC_CONFIG_REG_B_ADDR, configB
             };
-            SpanByte commandMode = new byte[]
+            Span<byte> commandMode = new byte[]
             {
                 (byte)Register.HMC_MODE_REG_ADDR, _measuringMode
             };
@@ -105,9 +105,9 @@ namespace Iot.Device.Hmc5883l
         /// <returns>Raw Data</returns>
         private Vector3 ReadDirectionVector()
         {
-            SpanByte xRead = new byte[2];
-            SpanByte yRead = new byte[2];
-            SpanByte zRead = new byte[2];
+            Span<byte> xRead = new byte[2];
+            Span<byte> yRead = new byte[2];
+            Span<byte> zRead = new byte[2];
 
             _i2cDevice.WriteByte((byte)Register.HMC_X_MSB_REG_ADDR);
             _i2cDevice.Read(xRead);

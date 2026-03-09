@@ -10,9 +10,9 @@
       },
       "nanoFramework.Graphics.Core": {
         "type": "Direct",
-        "requested": "[1.2.45, 1.2.45]",
-        "resolved": "1.2.45",
-        "contentHash": "Lq18/cYOJnpd8dX/V6cAi9dNJ6d9vjOaUTdAJTS2iwMcUVph0SM3fTLux4wkpPXY5iheQd6VxHwqLlMRTM7mFw=="
+        "requested": "[2.0.0-preview.13, 2.0.0-preview.13]",
+        "resolved": "2.0.0-preview.13",
+        "contentHash": "SRY0aKjysutmj4hn6FSznuvyhZA2qR/oYD6Yk6zKNEnGvpySQfCyflH/sYKnRJ1en9vzsNUevkpWFIuj9BNI9g=="
       },
       "nanoFramework.Iot.Device.CharacterLcd": {
         "type": "Direct",
