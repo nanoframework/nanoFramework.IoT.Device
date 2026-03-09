@@ -130,8 +130,8 @@ namespace Iot.Device.Adc
             // calculate the buffer size... If there is a start bit in the range b16 -> b23 then the size of the buffer is 3 bytes otherwise 2 bytes
             bufferSize = (adcRequest & 0x00FF0000) != 0 ? 3 : 2;
 
-            SpanByte requestBuffer = new byte[bufferSize];
-            SpanByte responseBuffer = new byte[bufferSize];
+            Span<byte> requestBuffer = new byte[bufferSize];
+            Span<byte> responseBuffer = new byte[bufferSize];
 
             // take the resuest and put it in a byte array
             for (int i = 0; i < bufferSize; i++)

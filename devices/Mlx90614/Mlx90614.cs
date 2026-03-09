@@ -52,11 +52,11 @@ namespace Iot.Device.Mlx90614
         /// <returns>Temperature in celsius</returns>
         private double ReadTemperature(byte register)
         {
-            SpanByte writeBuffer = new byte[]
+            Span<byte> writeBuffer = new byte[]
             {
                 register
             };
-            SpanByte readBuffer = new byte[2];
+            Span<byte> readBuffer = new byte[2];
 
             _i2cDevice.WriteRead(writeBuffer, readBuffer);
 

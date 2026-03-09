@@ -82,7 +82,7 @@ namespace Iot.Device.Pcx857x
         /// <returns>16-bit unsigned integer read from the device</returns>
         protected ushort InternalReadUInt16()
         {
-            SpanByte buffer = new byte[2];
+            Span<byte> buffer = new byte[2];
             Device.Read(buffer);
             return (ushort)(buffer[0] | buffer[1] << 8);
         }
@@ -93,7 +93,7 @@ namespace Iot.Device.Pcx857x
         /// <param name="value">16-vit unsigned integer to be written to the device</param>
         protected void InternalWriteUInt16(ushort value)
         {
-            SpanByte buffer = new byte[2];
+            Span<byte> buffer = new byte[2];
             buffer[0] = (byte)value;
             buffer[1] = (byte)(value >> 8);
             Device.Write(buffer);

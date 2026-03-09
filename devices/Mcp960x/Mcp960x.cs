@@ -29,7 +29,7 @@ namespace Iot.Device.Mcp960x
         /// </remarks>
         public Temperature GetTemperature()
         {
-            SpanByte data = new byte[2] { 0, 0 };
+            Span<byte> data = new byte[2] { 0, 0 };
             ReadBytes(Register.READ_TH, data);
 
             return CalcTemperaturFromRegisterData(data, 0x7F);
@@ -43,7 +43,7 @@ namespace Iot.Device.Mcp960x
         /// </remarks>
         public Temperature GetHotJunctionTemperature()
         {
-            SpanByte data = new byte[2] { 0, 0 };
+            Span<byte> data = new byte[2] { 0, 0 };
             ReadBytes(Register.READ_TDELTA, data);
 
             return CalcTemperaturFromRegisterData(data, 0x7F);
@@ -57,7 +57,7 @@ namespace Iot.Device.Mcp960x
         /// </remarks>
         public Temperature GetColdJunctionTemperature()
         {
-            SpanByte data = new byte[2] { 0, 0 };
+            Span<byte> data = new byte[2] { 0, 0 };
             ReadBytes(Register.READ_TC, data);
 
             return CalcTemperaturFromRegisterData(data, 0x0F);
@@ -71,7 +71,7 @@ namespace Iot.Device.Mcp960x
         /// <param name="revisionMinor">Returns the revision minor.</param>
         public void ReadDeviceID(out DeviceIDType deviceID, out byte revisionMajor, out byte revisionMinor)
         {
-            SpanByte data = new byte[2] { 0, 0 };
+            Span<byte> data = new byte[2] { 0, 0 };
             ReadBytes(Register.READ_DEVICE_ID, data);
 
             deviceID = (DeviceIDType)data[0];
@@ -212,7 +212,7 @@ namespace Iot.Device.Mcp960x
         ///
         /// So Bit 7 of UpperByte can always be used to determin the sign of the value.
         /// </remarks>
-        private Temperature CalcTemperaturFromRegisterData(SpanByte data, byte valueBitPattern)
+        private Temperature CalcTemperaturFromRegisterData(Span<byte> data, byte valueBitPattern)
         {
             if (data.Length != 2)
             {
@@ -243,7 +243,7 @@ namespace Iot.Device.Mcp960x
         /// <param name="data">Data to write to the device</param>
         private void WriteRegister(Register register, byte data)
         {
-            SpanByte dataout = new byte[]
+            Span<byte> dataout = new byte[]
             {
                 (byte)register,
                 data
@@ -260,9 +260,9 @@ namespace Iot.Device.Mcp960x
         /// </remarks>
         /// <param name="register">Register location to write to which starts the device reading</param>
         /// <param name="data">Data to write to the device</param>
-        private void WriteRegister(Register register, SpanByte data)
+        private void WriteRegister(Register register, Span<byte> data)
         {
-            SpanByte toSend = new byte[data.Length + 1];
+            Span<byte> toSend = new byte[data.Length + 1];
             toSend[0] = (byte)register;
             data.CopyTo(toSend.Slice(1));
             _i2cDevice.Write(toSend);
@@ -289,7 +289,7 @@ namespace Iot.Device.Mcp960x
         /// </remarks>
         /// <param name="register">Register location to write to which starts the device reading</param>
         /// <param name="readBytes">bytes being read</param>
-        private void ReadBytes(Register register, SpanByte readBytes)
+        private void ReadBytes(Register register, Span<byte> readBytes)
         {
             _i2cDevice.WriteByte((byte)register);
             _i2cDevice.Read(readBytes);

@@ -57,7 +57,7 @@ namespace Iot.Device.Lsm9Ds1
 
         private Vector3 ReadVector3(RegisterAG register)
         {
-            SpanByte vec = new byte[6];
+            Span<byte> vec = new byte[6];
             Read(register, vec);
 
             short x = BinaryPrimitives.ReadInt16LittleEndian(vec.Slice(0, 2));
@@ -68,7 +68,7 @@ namespace Iot.Device.Lsm9Ds1
 
         private void WriteByte(RegisterAG register, byte data)
         {
-            SpanByte buff = new byte[2]
+            Span<byte> buff = new byte[2]
             {
                 (byte)register,
                 data
@@ -79,12 +79,12 @@ namespace Iot.Device.Lsm9Ds1
 
         private short ReadInt16(RegisterAG register)
         {
-            SpanByte val = new byte[2];
+            Span<byte> val = new byte[2];
             Read(register, val);
             return BinaryPrimitives.ReadInt16LittleEndian(val);
         }
 
-        private void Read(RegisterAG register, SpanByte buffer)
+        private void Read(RegisterAG register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)((byte)register | ReadMask));
             _i2c.Read(buffer);

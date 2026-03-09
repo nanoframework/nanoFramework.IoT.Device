@@ -23,7 +23,8 @@ namespace Iot.Device.Ld2410.Commands
                 throw new ArgumentOutOfRangeException();
             }
 
-            var valueSpan = new SpanByte(Value = new byte[18]);
+            Value = new byte[18];
+            Span<byte> valueSpan = Value;
 
             // the first 2 bytes represent the max moving distance gate word (0x0000)
             // we don't have to set those as the array is initialized with 0x00

@@ -54,12 +54,12 @@ namespace Iot.Device.Lps25h
         [Telemetry]
         public Pressure Pressure => Pressure.FromHectopascals(ReadInt24(Register.Pressure) / 4096.0);
 
-        private static int ReadInt24LittleEndian(SpanByte buff)
+        private static int ReadInt24LittleEndian(Span<byte> buff)
         {
             Debug.Assert(buff.Length == 3, "Buffer must be 3 bytes long");
 
             byte mostSignificantByte = buff[2];
-            SpanByte b = new byte[4]
+            Span<byte> b = new byte[4]
             {
                 buff[0],
                 buff[1],
@@ -72,7 +72,7 @@ namespace Iot.Device.Lps25h
 
         private void WriteByte(Register register, byte data)
         {
-            SpanByte buff = new byte[2]
+            Span<byte> buff = new byte[2]
             {
                 (byte)register,
                 data
@@ -83,19 +83,19 @@ namespace Iot.Device.Lps25h
 
         private int ReadInt24(Register register)
         {
-            SpanByte val = new byte[3];
+            Span<byte> val = new byte[3];
             Read(register, val);
             return ReadInt24LittleEndian(val);
         }
 
         private short ReadInt16(Register register)
         {
-            SpanByte val = new byte[2];
+            Span<byte> val = new byte[2];
             Read(register, val);
             return BinaryPrimitives.ReadInt16LittleEndian(val);
         }
 
-        private void Read(Register register, SpanByte buffer)
+        private void Read(Register register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)((byte)register | ReadMask));
             _i2c.Read(buffer);

@@ -52,10 +52,10 @@ namespace Iot.Device.MulticastDns.Entities
         public int Ttl { get; set; } = 2000;
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        public byte[] GetBytes()
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        public Span<byte> GetBytes()
         {
             PacketBuilder packet = new PacketBuilder();
             packet.Add(Domain);
@@ -72,9 +72,9 @@ namespace Iot.Device.MulticastDns.Entities
         }
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        protected virtual byte[] GetBytesInternal() => new byte[0]; 
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        protected virtual Span<byte> GetBytesInternal() => new byte[0]; 
     }
 }

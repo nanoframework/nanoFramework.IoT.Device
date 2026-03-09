@@ -27,9 +27,9 @@ namespace Iot.Device.MulticastDns.Entities
         public IPAddress Address { get; set; }
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        protected override byte[] GetBytesInternal() => Address.GetAddressBytes();
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        protected override Span<byte> GetBytesInternal() => Address.GetAddressBytes();
     }
 }

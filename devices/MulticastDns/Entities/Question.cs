@@ -40,10 +40,10 @@ namespace Iot.Device.MulticastDns.Entities
         public ushort QueryClass { get; }
 
         /// <summary>
-        /// Returns a byte[] representation of this Question.
+        /// Returns a <see cref="Span{T}"/> representation of this Question.
         /// </summary>
-        /// <returns>A byte[] representation of this Question.</returns>
-        public byte[] GetBytes()
+        /// <returns>A <see cref="Span{T}"/> representation of this Question.</returns>
+        public Span<byte> GetBytes()
         {
             PacketBuilder packet = new PacketBuilder();
             packet.Add(Domain);

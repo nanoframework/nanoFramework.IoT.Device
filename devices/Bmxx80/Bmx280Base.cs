@@ -63,7 +63,7 @@ namespace Iot.Device.Bmxx80
                 byte current = Read8BitsFromRegister((byte)Bmx280Register.CONFIG);
                 current = (byte)((current & 0b1110_0011) | (byte)value << 2);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bmx280Register.CONFIG, current
                 };
@@ -85,7 +85,7 @@ namespace Iot.Device.Bmxx80
                 byte current = Read8BitsFromRegister((byte)Bmx280Register.CONFIG);
                 current = (byte)((current & 0b0001_1111) | (byte)value << 5);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bmx280Register.CONFIG, current
                 };
@@ -215,7 +215,7 @@ namespace Iot.Device.Bmxx80
             // Clear last 2 bits.
             var cleared = (byte)(read & 0b1111_1100);
 
-            SpanByte command = new[]
+            Span<byte> command = new[]
             {
                 ControlRegister, (byte)(cleared | (byte)powerMode)
             };

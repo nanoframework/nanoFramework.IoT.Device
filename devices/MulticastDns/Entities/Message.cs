@@ -84,10 +84,10 @@ namespace Iot.Device.MulticastDns.Entities
             => _questions.Add(question);
 
         /// <summary>
-        /// Returns a byte[] representation of this message.
+        /// Returns a <see cref="Span{T}"/> representation of this message.
         /// </summary>
-        /// <returns>A byte[] representation of this message.</returns>
-        public byte[] GetBytes()
+        /// <returns>A <see cref="Span{T}"/> representation of this message.</returns>
+        public Span<byte> GetBytes()
         {
             PacketBuilder packet = new();
             packet.Add(_id);

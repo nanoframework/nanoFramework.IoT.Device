@@ -76,11 +76,11 @@ namespace Iot.Device.Adxl345
         /// </summary>
         private void Initialize()
         {
-            SpanByte dataFormat = new byte[]
+            Span<byte> dataFormat = new byte[]
             {
                 (byte)Register.ADLX_DATA_FORMAT, _gravityRangeByte
             };
-            SpanByte powerControl = new byte[]
+            Span<byte> powerControl = new byte[]
             {
                 (byte)Register.ADLX_POWER_CTL, 0x08
             };
@@ -97,12 +97,12 @@ namespace Iot.Device.Adxl345
         {
             int units = Resolution / _range;
 
-            SpanByte readBuf = new byte[6 + 1];
-            SpanByte regAddrBuf = new byte[1 + 6];
+            Span<byte> readBuf = new byte[6 + 1];
+            Span<byte> regAddrBuf = new byte[1 + 6];
 
             regAddrBuf[0] = (byte)(Register.ADLX_X0 | Register.ADLX_SPI_RW_BIT | Register.ADLX_SPI_MB_BIT);
             _sensor.TransferFullDuplex(regAddrBuf, readBuf);
-            SpanByte readData = readBuf.Slice(1);
+            Span<byte> readData = readBuf.Slice(1);
 
             short accelerationX = BinaryPrimitives.ReadInt16LittleEndian(readData.Slice(0, 2));
             short accelerationY = BinaryPrimitives.ReadInt16LittleEndian(readData.Slice(2, 2));

@@ -112,7 +112,7 @@ namespace Iot.Device.Magnetometer
         public Vector3 CalibrateMagnetometer(int numberOfMeasurements = 1000)
         {
             Vector3 calib = new Vector3();
-            SpanByte rawData = new byte[3];
+            Span<byte> rawData = new byte[3];
 
             var oldPower = MeasurementMode;
 
@@ -226,7 +226,7 @@ namespace Iot.Device.Magnetometer
         /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
-            SpanByte rawData = new byte[6];
+            Span<byte> rawData = new byte[6];
 
             // Wait for a data to be present
             if (waitForData)
@@ -377,7 +377,7 @@ namespace Iot.Device.Magnetometer
 
         private byte ReadByte(Register reg) => _ak8963Interface.ReadByte(_i2cDevice, (byte)reg);
 
-        private void ReadBytes(Register reg, SpanByte readBytes) => _ak8963Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
+        private void ReadBytes(Register reg, Span<byte> readBytes) => _ak8963Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
 
         /// <summary>
         /// Cleanup everything.

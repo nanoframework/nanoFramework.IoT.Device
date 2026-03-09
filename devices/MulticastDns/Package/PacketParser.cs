@@ -45,7 +45,7 @@ namespace Iot.Device.MulticastDns.Package
             return value;
         }
 
-        public byte[] ReadBytes(int count)
+        public Span<byte> ReadBytes(int count)
         {
             byte[] value = new byte[count];
             System.Array.Copy(_data, _position, value, 0, count);

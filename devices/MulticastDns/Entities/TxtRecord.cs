@@ -30,9 +30,9 @@ namespace Iot.Device.MulticastDns.Entities
         public string Txt { get; }
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        protected override byte[] GetBytesInternal() => Encoding.UTF8.GetBytes(Txt);
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        protected override Span<byte> GetBytesInternal() => Encoding.UTF8.GetBytes(Txt);
     }
 }

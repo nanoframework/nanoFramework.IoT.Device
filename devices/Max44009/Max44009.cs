@@ -35,7 +35,7 @@ namespace Iot.Device.Max44009
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
             // Details in the Datasheet P8
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Register.MAX_CONFIG, 0b_0000_0000
             };
@@ -53,7 +53,7 @@ namespace Iot.Device.Max44009
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 
             // Details in the Datasheet P8
-            SpanByte writeBuff = new byte[2]
+            Span<byte> writeBuff = new byte[2]
             {
                 (byte)Register.MAX_CONFIG, (byte)(0b_1100_0000 | (byte)integrationTime)
             };
@@ -76,7 +76,7 @@ namespace Iot.Device.Max44009
         /// <returns>Illuminance (Lux)</returns>
         private double GetIlluminance()
         {
-            SpanByte readBuff = new byte[2];
+            Span<byte> readBuff = new byte[2];
 
             _i2cDevice.WriteByte((byte)Register.MAX_LUX_HIGH);
             _i2cDevice.Read(readBuff);
