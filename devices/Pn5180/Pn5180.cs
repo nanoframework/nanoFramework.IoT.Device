@@ -351,14 +351,19 @@ namespace Iot.Device.Pn5180
         /// Set the FeliCa Polling Response used during Autocoll card emulation
         /// when NFC-F collision resolution is enabled.
         /// </summary>
-        /// <param name="responseData">Up to 10 bytes containing IDm (8 bytes) +
-        /// PMm (8 bytes) + RD (2 bytes) or a subset. Must be between 1 and 10 bytes.</param>
+        /// <param name="responseData">Up to 10 bytes of FeliCa polling response
+        /// configuration data. The EEPROM area at 0x46 holds the PAD0, PAD1,
+        /// MRTI_check, MRTI_update, PAD2 and RD fields (see PN5180A0XX-C3.pdf
+        /// EEPROM map). The full SENSF_RES IDm/NFCID2 (8 bytes) and PMm
+        /// (8 bytes) are managed separately by the PN5180 firmware.
+        /// Must be between 1 and 10 bytes.</param>
         /// <returns>True if the EEPROM write succeeded.</returns>
         /// <remarks>
         /// Writes to EEPROM starting at address 0x46 (FELICA_POLLING_RESPONSE).
-        /// The PN5180 returns this data in response to a SENSF_REQ polling
-        /// command from an external reader when Autocoll is configured for
-        /// NFC-F (212 or 424 kbps).
+        /// The PN5180 uses these bytes together with the internally managed
+        /// NFCID2 to construct the SENSF_RES sent in response to a SENSF_REQ
+        /// polling command from an external reader when Autocoll is configured
+        /// for NFC-F (212 or 424 kbps).
         /// See PN5180A0XX-C3.pdf EEPROM map.
         /// </remarks>
         public bool SetFelicaPollingResponse(byte[] responseData)
@@ -2040,10 +2045,13 @@ namespace Iot.Device.Pn5180
                         _logger.LogDebug($"{nameof(WaitForActivation)}: CARD_ACTIVATED_IRQ detected");
 #endif
                         // Determine which technology was activated from
-                        // RF_STATUS register bits [16:14] → byte[2] bits [0:2]
+                        // RF_STATUS register bits [16:14].
+                        // These 3 bits straddle byte[1] and byte[2]:
+                        //   bit 14 = byte[1] bit 6,  bit 15 = byte[1] bit 7,
+                        //   bit 16 = byte[2] bit 0.
                         SpanByte rfStatus = new byte[4];
                         SpiReadRegister(Register.RF_STATUS, rfStatus);
-                        int techBits = (rfStatus[2] >> 0) & 0x07;
+                        int techBits = ((rfStatus[1] >> 6) & 0x03) | ((rfStatus[2] & 0x01) << 2);
 
                         // Bits [16:14] encoding (from PN5180 datasheet):
                         //   Bit 14 set (0x01) = NFC-A passive target
