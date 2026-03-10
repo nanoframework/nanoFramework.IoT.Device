@@ -276,7 +276,7 @@ namespace Iot.Device.Pn5180
         /// <remarks>Using this function you'll have to manage yourself the possible low level communication protocol.
         /// This function write directly to the card all the bytes. Please make sure you'll first load specific radio frequence settings,
         /// detect a card, select it and then send data</remarks>
-        public bool SendDataToCard(Span<byte> toSend, int numberValidBitsLastByte = 8)
+        public bool SendDataToCard(ReadOnlySpan<byte> toSend, int numberValidBitsLastByte = 8)
         {
             if (toSend.Length > 260)
             {
@@ -1352,7 +1352,7 @@ namespace Iot.Device.Pn5180
             // The command for attrib is 0x1D
             attrib[0] = 0x1D;
             // then the 4 uid needs to be copied
-            card.NfcId.AsSpan().CopyTo(attrib.Slice(1));
+            new Span<byte>(card.NfcId).CopyTo(attrib.Slice(1));
             // We have then 4 params
             // Param 1
             attrib[5] = 0;
