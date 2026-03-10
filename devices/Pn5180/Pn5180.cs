@@ -2394,6 +2394,78 @@ namespace Iot.Device.Pn5180
             return true;
         }
 
+        /// <summary>
+        /// Wait for one or more IRQ bits to become set in the IRQ_STATUS
+        /// register.
+        /// </summary>
+        /// <param name="irqMask">Bitmask of the IRQ bits to wait for.
+        /// The method returns as soon as <em>any</em> of the specified
+        /// bits is set.</param>
+        /// <param name="timeoutMilliseconds">Maximum time to wait, in
+        /// milliseconds.</param>
+        /// <returns>The full 32-bit IRQ_STATUS register value when at
+        /// least one requested bit is set, or 0 on timeout.</returns>
+        /// <remarks>
+        /// <para>
+        /// When an IRQ pin was provided in the constructor this method
+        /// first waits for the pin to go HIGH (IRQ asserted) before
+        /// reading the SPI register, significantly reducing bus traffic.
+        /// Without an IRQ pin the register is polled directly.
+        /// </para>
+        /// <para>
+        /// This helper centralises IRQ waiting for both reader and
+        /// card-emulation (target) modes.
+        /// </para>
+        /// </remarks>
+        public int WaitForIrq(int irqMask, int timeoutMilliseconds)
+        {
+            SpanByte irqStatus = new byte[4];
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutMilliseconds);
+
+            do
+            {
+                // If an IRQ pin is available, wait for it to go HIGH before
+                // reading the register – this avoids hammering the SPI bus.
+                if (_pinIrq >= 0)
+                {
+                    // Spin-wait for the IRQ pin assertion, checking timeout.
+                    while (_gpioController.Read(_pinIrq) == PinValue.Low)
+                    {
+                        if (DateTime.UtcNow > dtTimeout)
+                        {
+                            return 0;
+                        }
+
+                        Thread.Sleep(1);
+                    }
+                }
+
+                SpiReadRegister(Register.IRQ_STATUS, irqStatus);
+
+                // Reconstruct the 32-bit value (little-endian register)
+                int status = irqStatus[0]
+                           | (irqStatus[1] << 8)
+                           | (irqStatus[2] << 16)
+                           | (irqStatus[3] << 24);
+
+                if ((status & irqMask) != 0)
+                {
+#if DEBUG
+                    _logger.LogDebug($"{nameof(WaitForIrq)}: matched mask 0x{irqMask:X8}, status=0x{status:X8}");
+#endif
+                    return status;
+                }
+
+                Thread.Sleep(1);
+            }
+            while (DateTime.UtcNow < dtTimeout);
+
+#if DEBUG
+            _logger.LogDebug($"{nameof(WaitForIrq)}: timeout waiting for mask 0x{irqMask:X8}");
+#endif
+            return 0;
+        }
+
 #endregion
 
     }
