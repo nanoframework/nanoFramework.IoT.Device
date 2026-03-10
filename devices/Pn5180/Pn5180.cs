@@ -36,6 +36,7 @@ namespace Iot.Device.Pn5180
         private bool _shouldDispose;
         private int _pinBusy;
         private int _pinNss;
+        private int _pinIrq;
 #if DEBUG
         private ILogger _logger;
 #endif
@@ -71,7 +72,8 @@ namespace Iot.Device.Pn5180
         /// <param name="pinNss">The pin for the SPI select line. This has to be handle differently than thru the normal process as PN5180 has a specific way of working</param>
         /// <param name="gpioController">A GPIO controller, null will use a default one</param>
         /// <param name="shouldDispose">Dispose the SPI and the GPIO controller at the end if true</param>
-        public Pn5180(SpiDevice spiDevice, int pinBusy, int pinNss, GpioController? gpioController = null, bool shouldDispose = true)
+        /// <param name="pinIrq">Optional pin connected to the PN5180 IRQ line. When >= 0 the pin is opened as input and <see cref="WaitForIrq"/> can use it to detect IRQ assertion without continuous SPI polling. Pass -1 (default) to use register-polling only.</param>
+        public Pn5180(SpiDevice spiDevice, int pinBusy, int pinNss, GpioController? gpioController = null, bool shouldDispose = true, int pinIrq = -1)
         {
             if (pinBusy < 0)
             {
@@ -92,8 +94,17 @@ namespace Iot.Device.Pn5180
             _shouldDispose = shouldDispose || gpioController is null;
             _pinBusy = pinBusy;
             _pinNss = pinNss;
+            _pinIrq = pinIrq;
             _gpioController.OpenPin(_pinBusy, PinMode.Input);
             _gpioController.OpenPin(_pinNss, PinMode.Output);
+
+            if (_pinIrq >= 0)
+            {
+                _gpioController.OpenPin(_pinIrq, PinMode.Input);
+#if DEBUG
+                _logger.LogDebug($"IRQ pin {_pinIrq} opened as input");
+#endif
+            }
 
             // Check the version
             var versions = GetVersions();
@@ -114,6 +125,14 @@ namespace Iot.Device.Pn5180
             {
                 _spiDevice?.Dispose();
                 _gpioController?.Dispose();
+            }
+            else
+            {
+                // Close pins we opened, even when we don't own the controller
+                if (_pinIrq >= 0 && _gpioController.IsPinOpen(_pinIrq))
+                {
+                    _gpioController.ClosePin(_pinIrq);
+                }
             }
         }
 
@@ -266,6 +285,90 @@ namespace Iot.Device.Pn5180
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Set the SENS_RES (ATQA) value used during Autocoll card emulation.
+        /// </summary>
+        /// <param name="byte0">First byte of SENS_RES (e.g. 0x44 for NTAG-like, 0x04 for generic).</param>
+        /// <param name="byte1">Second byte of SENS_RES (e.g. 0x00).</param>
+        /// <returns>True if the EEPROM write succeeded.</returns>
+        /// <remarks>
+        /// Writes 2 bytes to EEPROM address 0x40 (SENS_RES).
+        /// The PN5180 sends this value in response to SENS_REQ / ALL_REQ
+        /// from an external reader during Autocoll mode.
+        /// See PN5180A0XX-C3.pdf EEPROM map and ISO 14443-3A.
+        /// </remarks>
+        public bool SetSensRes(byte byte0, byte byte1)
+        {
+            SpanByte sensRes = new byte[2] { byte0, byte1 };
+            return WriteEeprom(EepromAddress.SENS_RES, sensRes);
+        }
+
+        /// <summary>
+        /// Set the NFCID1 (UID) bytes used during Autocoll card emulation.
+        /// </summary>
+        /// <param name="nfcId">Exactly 3 bytes. During Autocoll the PN5180 uses these
+        /// as the last 3 bytes of the single-size (4-byte) UID.</param>
+        /// <returns>True if the EEPROM write succeeded.</returns>
+        /// <remarks>
+        /// Writes 3 bytes to EEPROM address 0x42 (NFCID1).
+        /// The first byte of the 4-byte UID is fixed at 0x08 by the PN5180
+        /// (NXP manufacturer code) unless random UID is enabled.
+        /// See PN5180A0XX-C3.pdf EEPROM map.
+        /// </remarks>
+        public bool SetNfcId1(byte[] nfcId)
+        {
+            if (nfcId == null || nfcId.Length != 3)
+            {
+                throw new ArgumentException(nameof(nfcId), "Value must be exactly 3 bytes.");
+            }
+
+            return WriteEeprom(EepromAddress.NFCID1, nfcId);
+        }
+
+        /// <summary>
+        /// Set the SEL_RES (SAK) byte used during Autocoll card emulation.
+        /// </summary>
+        /// <param name="selRes">The SAK value. Common values:
+        /// 0x20 = ISO 14443-4 compliant (ISO-DEP),
+        /// 0x40 = ISO 18092 (NFC-DEP),
+        /// 0x60 = Both ISO-DEP and NFC-DEP.</param>
+        /// <returns>True if the EEPROM write succeeded.</returns>
+        /// <remarks>
+        /// Writes 1 byte to EEPROM address 0x45 (SEL_RES).
+        /// The reader uses this value to determine which protocol layers
+        /// the target supports after anti-collision.
+        /// See PN5180A0XX-C3.pdf EEPROM map and ISO 14443-3A §6.5.
+        /// </remarks>
+        public bool SetSelRes(byte selRes)
+        {
+            SpanByte data = new byte[1] { selRes };
+            return WriteEeprom(EepromAddress.SEL_RES, data);
+        }
+
+        /// <summary>
+        /// Set the FeliCa Polling Response used during Autocoll card emulation
+        /// when NFC-F collision resolution is enabled.
+        /// </summary>
+        /// <param name="responseData">Up to 10 bytes containing IDm (8 bytes) +
+        /// PMm (8 bytes) + RD (2 bytes) or a subset. Must be between 1 and 10 bytes.</param>
+        /// <returns>True if the EEPROM write succeeded.</returns>
+        /// <remarks>
+        /// Writes to EEPROM starting at address 0x46 (FELICA_POLLING_RESPONSE).
+        /// The PN5180 returns this data in response to a SENSF_REQ polling
+        /// command from an external reader when Autocoll is configured for
+        /// NFC-F (212 or 424 kbps).
+        /// See PN5180A0XX-C3.pdf EEPROM map.
+        /// </remarks>
+        public bool SetFelicaPollingResponse(byte[] responseData)
+        {
+            if (responseData == null || responseData.Length == 0 || responseData.Length > 10)
+            {
+                throw new ArgumentException(nameof(responseData), "Value must be between 1 and 10 bytes.");
+            }
+
+            return WriteEeprom(EepromAddress.FELICA_POLLING_RESPONSE, responseData);
         }
 
 #endregion
@@ -1819,5 +1922,471 @@ namespace Iot.Device.Pn5180
         }
 
 #endregion
+
+#region Card Emulation
+
+        /// <summary>
+        /// Switch the PN5180 into Autocoll (card emulation / target) mode.
+        /// </summary>
+        /// <param name="mode">The NFC technologies to listen for. Can be a
+        /// combination of <see cref="AutocollMode"/> flags.</param>
+        /// <returns>True if the SWITCH_MODE command was sent successfully.</returns>
+        /// <remarks>
+        /// <para>
+        /// Before calling this method, configure the emulated card identity
+        /// using <see cref="SetSensRes"/>, <see cref="SetNfcId1"/> and
+        /// <see cref="SetSelRes"/> (for NFC-A), or
+        /// <see cref="SetFelicaPollingResponse"/> (for NFC-F).
+        /// </para>
+        /// <para>
+        /// This method turns OFF the PN5180's own RF field, clears all
+        /// pending IRQs, then sends the SWITCH_MODE command with sub-mode
+        /// 0x02 (Autocoll). After this call the PN5180 passively waits for
+        /// an external RF field and autonomously handles anti-collision.
+        /// </para>
+        /// <para>
+        /// Use <see cref="WaitForActivation"/> to poll for activation by an
+        /// external reader.
+        /// </para>
+        /// <para>
+        /// See PN5180A0XX-C3.pdf §11.4.4 "SWITCH_MODE" and §7.1 "Autocoll".
+        /// </para>
+        /// </remarks>
+        public bool SwitchToAutocoll(AutocollMode mode)
+        {
+#if DEBUG
+            _logger.LogDebug($"{nameof(SwitchToAutocoll)}: mode={mode}");
+#endif
+            // Step 1: Turn off the RF field – the PN5180 must not drive its
+            // own field when operating as a passive target.
+            SetRadioFrequency(false);
+
+            // Step 2: Clear all pending IRQs.
+            SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+
+            // Step 3: Send SWITCH_MODE command.
+            //   Byte 0 = 0x0B (SWITCH_MODE)
+            //   Byte 1 = 0x02 (Autocoll sub-mode)
+            //   Byte 2 = technology flags from AutocollMode
+            SpanByte switchMode = new byte[3];
+            switchMode[0] = (byte)Command.SWITCH_MODE;
+            switchMode[1] = 0x02;
+            switchMode[2] = (byte)mode;
+
+            try
+            {
+                SpiWrite(switchMode);
+#if DEBUG
+                _logger.LogDebug($"{nameof(SwitchToAutocoll)}: SWITCH_MODE sent successfully");
+#endif
+            }
+            catch (TimeoutException tx)
+            {
+#if DEBUG
+                _logger.LogError(tx, $"{nameof(SwitchToAutocoll)}: {nameof(TimeoutException)} during {nameof(SpiWrite)}");
+#endif
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Wait for an external reader to activate the PN5180 after
+        /// <see cref="SwitchToAutocoll"/> has been called.
+        /// </summary>
+        /// <param name="timeoutMilliseconds">Maximum time to wait for
+        /// activation, in milliseconds.</param>
+        /// <returns>A <see cref="CardEmulationData"/> with the activated
+        /// protocol and any initial data received from the reader, or
+        /// <c>null</c> if activation did not occur within the timeout or
+        /// an error was detected.</returns>
+        /// <remarks>
+        /// <para>
+        /// This method polls the IRQ_STATUS register for
+        /// CARD_ACTIVATED_IRQ (bit 13). If AUTOCOLL_ERR_IRQ (bit 11) is
+        /// detected instead, it means the Autocoll process failed
+        /// (e.g. RF field lost or protocol error) and <c>null</c> is returned.
+        /// </para>
+        /// <para>
+        /// On successful activation the method reads RF_STATUS bits [16:14]
+        /// to determine whether NFC-A or NFC-F was used, reads any data
+        /// already received from the reader (e.g. RATS or ATR_REQ), clears
+        /// the IRQs, and returns the result.
+        /// </para>
+        /// <para>
+        /// See PN5180A0XX-C3.pdf Table 22 (IRQ_STATUS) and Table 28
+        /// (RF_STATUS).
+        /// </para>
+        /// </remarks>
+        public CardEmulationData WaitForActivation(int timeoutMilliseconds)
+        {
+#if DEBUG
+            _logger.LogDebug($"{nameof(WaitForActivation)}: waiting up to {timeoutMilliseconds} ms");
+#endif
+            SpanByte irqStatus = new byte[4];
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutMilliseconds);
+
+            try
+            {
+                do
+                {
+                    SpiReadRegister(Register.IRQ_STATUS, irqStatus);
+
+                    // CARD_ACTIVATED_IRQ is bit 13 → byte[1] bit 5 (0x20)
+                    if ((irqStatus[1] & 0x20) == 0x20)
+                    {
+#if DEBUG
+                        _logger.LogDebug($"{nameof(WaitForActivation)}: CARD_ACTIVATED_IRQ detected");
+#endif
+                        // Determine which technology was activated from
+                        // RF_STATUS register bits [16:14] → byte[2] bits [0:2]
+                        SpanByte rfStatus = new byte[4];
+                        SpiReadRegister(Register.RF_STATUS, rfStatus);
+                        int techBits = (rfStatus[2] >> 0) & 0x07;
+
+                        // Bits [16:14] encoding (from PN5180 datasheet):
+                        //   Bit 14 set (0x01) = NFC-A passive target
+                        //   Bit 15 set (0x02) = NFC-F 212 passive target
+                        //   Bit 16 set (0x04) = NFC-F 424 passive target
+                        // Map to our TargetProtocol enum which uses the
+                        // same numeric values for A=1, F212=2, F424=3.
+                        // If multiple bits set or none, pick the first match.
+                        TargetProtocol protocol;
+                        if ((techBits & 0x01) != 0)
+                        {
+                            protocol = TargetProtocol.NfcA;
+                        }
+                        else if ((techBits & 0x02) != 0)
+                        {
+                            protocol = TargetProtocol.NfcF_212;
+                        }
+                        else if ((techBits & 0x04) != 0)
+                        {
+                            protocol = TargetProtocol.NfcF_424;
+                        }
+                        else
+                        {
+                            protocol = TargetProtocol.None;
+                        }
+
+                        // Read any data already received from the reader
+                        byte[] rxData = null;
+                        var num = GetNumberOfBytesReceivedAndValidBits();
+                        if (num.Bytes > 0)
+                        {
+                            rxData = new byte[num.Bytes];
+                            ReadDataFromCard(rxData);
+#if DEBUG
+                            _logger.LogDebug($"{nameof(WaitForActivation)}: received {num.Bytes} bytes: {BitConverter.ToString(rxData)}");
+#endif
+                        }
+
+                        // Clear all IRQs
+                        SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+
+                        return new CardEmulationData(protocol, rxData);
+                    }
+
+                    // AUTOCOLL_ERR_IRQ is bit 11 → byte[1] bit 3 (0x08)
+                    if ((irqStatus[1] & 0x08) == 0x08)
+                    {
+#if DEBUG
+                        _logger.LogDebug($"{nameof(WaitForActivation)}: AUTOCOLL_ERR_IRQ detected, aborting");
+#endif
+                        // Clear all IRQs
+                        SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                        return null;
+                    }
+
+                    Thread.Sleep(1);
+                }
+                while (dtTimeout > DateTime.UtcNow);
+            }
+            catch (TimeoutException tx)
+            {
+#if DEBUG
+                _logger.LogError(tx, $"{nameof(WaitForActivation)}: {nameof(TimeoutException)} during IRQ polling");
+#endif
+                return null;
+            }
+
+#if DEBUG
+            _logger.LogDebug($"{nameof(WaitForActivation)}: timeout, no activation");
+#endif
+            return null;
+        }
+
+        /// <summary>
+        /// Send a response frame to the external reader while in card
+        /// emulation (target) mode.
+        /// </summary>
+        /// <param name="data">The response data to transmit. Must not
+        /// exceed <see cref="MaximumWriteSize"/> bytes.</param>
+        /// <returns>True if the data was transmitted successfully.</returns>
+        /// <remarks>
+        /// <para>
+        /// Call this after receiving a command from the reader (via
+        /// <see cref="ReceiveCommandFromReader"/> or the initial data in
+        /// <see cref="CardEmulationData.RxData"/>).
+        /// </para>
+        /// <para>
+        /// CRC is appended automatically by the PN5180 hardware when
+        /// <see cref="CrcReceptionTransfer"/> is <c>true</c> (the default
+        /// after Autocoll activation for NFC-A ISO-DEP). Adjust CRC
+        /// settings before calling if your protocol requires it.
+        /// </para>
+        /// <para>
+        /// The method sets the PN5180 into IDLE, activates TRANSCEIVE,
+        /// sends the data, then polls for TX_IRQ (bit 1) to confirm
+        /// transmission.
+        /// </para>
+        /// </remarks>
+        public bool SendResponseToReader(SpanByte data)
+        {
+#if DEBUG
+            _logger.LogDebug($"{nameof(SendResponseToReader)}: sending {data.Length} bytes");
+#endif
+            // Clear all IRQs
+            SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+
+            // Set PN5180 into IDLE state
+            SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+
+            // Activate TRANSCEIVE routine
+            SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+
+            // Send the response data
+            var ret = SendDataToCard(data);
+            if (!ret)
+            {
+#if DEBUG
+                _logger.LogDebug($"{nameof(SendResponseToReader)}: SendDataToCard failed");
+#endif
+                return false;
+            }
+
+            // Poll IRQ_STATUS for TX_IRQ (bit 1) to confirm transmission
+            SpanByte irqStatus = new byte[4];
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(TimeoutWaitingMilliseconds);
+            try
+            {
+                do
+                {
+                    SpiReadRegister(Register.IRQ_STATUS, irqStatus);
+
+                    // TX_IRQ is bit 1 → byte[0] bit 1 (0x02)
+                    if ((irqStatus[0] & 0x02) == 0x02)
+                    {
+#if DEBUG
+                        _logger.LogDebug($"{nameof(SendResponseToReader)}: TX_IRQ confirmed");
+#endif
+                        // Clear all IRQs
+                        SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                        return true;
+                    }
+
+                    Thread.Sleep(1);
+                }
+                while (dtTimeout > DateTime.UtcNow);
+            }
+            catch (TimeoutException tx)
+            {
+#if DEBUG
+                _logger.LogError(tx, $"{nameof(SendResponseToReader)}: {nameof(TimeoutException)} during TX_IRQ polling");
+#endif
+                return false;
+            }
+
+#if DEBUG
+            _logger.LogDebug($"{nameof(SendResponseToReader)}: TX_IRQ timeout");
+#endif
+            return false;
+        }
+
+        /// <summary>
+        /// Wait for and receive the next command frame from the external
+        /// reader while in card emulation (target) mode.
+        /// </summary>
+        /// <param name="buffer">Buffer to receive the command data.</param>
+        /// <param name="timeoutMilliseconds">Maximum time to wait for a
+        /// command, in milliseconds.</param>
+        /// <returns>The number of bytes received, or -1 on timeout or
+        /// error.</returns>
+        /// <remarks>
+        /// <para>
+        /// The method sets the PN5180 into IDLE, activates TRANSCEIVE to
+        /// listen for the next reader frame, then polls IRQ_STATUS for
+        /// RX_IRQ (bit 2). On reception it reads the data into
+        /// <paramref name="buffer"/>.
+        /// </para>
+        /// <para>
+        /// If the external RF field is lost (RF_ACTIVE_ERROR_IRQ, bit 8),
+        /// the method returns -1.
+        /// </para>
+        /// </remarks>
+        public int ReceiveCommandFromReader(SpanByte buffer, int timeoutMilliseconds)
+        {
+#if DEBUG
+            _logger.LogDebug($"{nameof(ReceiveCommandFromReader)}: waiting up to {timeoutMilliseconds} ms");
+#endif
+            // Clear all IRQs
+            SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+
+            // Set PN5180 into IDLE state
+            SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+
+            // Activate TRANSCEIVE routine (listen mode)
+            SpiWriteRegister(Command.WRITE_REGISTER_OR_MASK, Register.SYSTEM_CONFIG, new byte[] { 0x03, 0x00, 0x00, 0x00 });
+
+            SpanByte irqStatus = new byte[4];
+            DateTime dtTimeout = DateTime.UtcNow.AddMilliseconds(timeoutMilliseconds);
+
+            try
+            {
+                do
+                {
+                    SpiReadRegister(Register.IRQ_STATUS, irqStatus);
+
+                    // RX_IRQ is bit 2 → byte[0] bit 2 (0x04)
+                    if ((irqStatus[0] & 0x04) == 0x04)
+                    {
+                        var num = GetNumberOfBytesReceivedAndValidBits();
+                        if (num.Bytes <= 0)
+                        {
+#if DEBUG
+                            _logger.LogDebug($"{nameof(ReceiveCommandFromReader)}: RX_IRQ but 0 bytes");
+#endif
+                            return -1;
+                        }
+
+                        int bytesToRead = num.Bytes > buffer.Length ? buffer.Length : num.Bytes;
+                        var ret = ReadDataFromCard(buffer.Slice(0, bytesToRead));
+                        if (!ret)
+                        {
+                            return -1;
+                        }
+
+#if DEBUG
+                        _logger.LogDebug($"{nameof(ReceiveCommandFromReader)}: received {bytesToRead} bytes");
+#endif
+                        // Clear all IRQs
+                        SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                        return bytesToRead;
+                    }
+
+                    // RF_ACTIVE_ERROR_IRQ is bit 8 → byte[1] bit 0 (0x01)
+                    // Indicates the external RF field has been lost
+                    if ((irqStatus[1] & 0x01) == 0x01)
+                    {
+#if DEBUG
+                        _logger.LogDebug($"{nameof(ReceiveCommandFromReader)}: RF field lost (RF_ACTIVE_ERROR_IRQ)");
+#endif
+                        SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+                        return -1;
+                    }
+
+                    Thread.Sleep(1);
+                }
+                while (dtTimeout > DateTime.UtcNow);
+            }
+            catch (TimeoutException tx)
+            {
+#if DEBUG
+                _logger.LogError(tx, $"{nameof(ReceiveCommandFromReader)}: {nameof(TimeoutException)} during RX_IRQ polling");
+#endif
+                return -1;
+            }
+
+#if DEBUG
+            _logger.LogDebug($"{nameof(ReceiveCommandFromReader)}: timeout, no command received");
+#endif
+            return -1;
+        }
+
+        /// <summary>
+        /// Send a response to the reader and then wait for the reader's
+        /// next command, in a single call.
+        /// </summary>
+        /// <param name="response">The response data to send to the reader.</param>
+        /// <param name="nextCommand">Buffer to receive the reader's next
+        /// command frame.</param>
+        /// <param name="timeoutMilliseconds">Maximum time to wait for the
+        /// next command after sending the response.</param>
+        /// <returns>The number of bytes received in the next command, or
+        /// -1 on error or timeout.</returns>
+        /// <remarks>
+        /// This is a convenience wrapper that calls
+        /// <see cref="SendResponseToReader"/> followed by
+        /// <see cref="ReceiveCommandFromReader"/>.
+        /// </remarks>
+        public int TransceiveTargetMode(SpanByte response, SpanByte nextCommand, int timeoutMilliseconds)
+        {
+            var ret = SendResponseToReader(response);
+            if (!ret)
+            {
+                return -1;
+            }
+
+            return ReceiveCommandFromReader(nextCommand, timeoutMilliseconds);
+        }
+
+        /// <summary>
+        /// Exit card emulation (Autocoll / target) mode and return the
+        /// PN5180 to normal (initiator / reader) mode.
+        /// </summary>
+        /// <returns>True if the PN5180 was successfully returned to
+        /// normal mode.</returns>
+        /// <remarks>
+        /// <para>
+        /// Sends SWITCH_MODE with sub-mode 0x00 (NormalMode) to leave
+        /// Autocoll. If the command times out (which can happen on some
+        /// firmware versions), the PN5180 is not automatically reset;
+        /// the caller should perform a hardware reset if needed.
+        /// </para>
+        /// <para>
+        /// After exiting, all IRQs are cleared and the PN5180 is ready
+        /// to be used in reader/initiator mode again (e.g. calling
+        /// <see cref="ListenToCardIso14443TypeA"/> or
+        /// <see cref="ListenToCardIso14443TypeB"/>).
+        /// </para>
+        /// </remarks>
+        public bool ExitCardEmulationMode()
+        {
+#if DEBUG
+            _logger.LogDebug($"{nameof(ExitCardEmulationMode)}: switching back to NormalMode");
+#endif
+            // Send SWITCH_MODE to NormalMode (sub-mode 0x00)
+            SpanByte switchMode = new byte[3];
+            switchMode[0] = (byte)Command.SWITCH_MODE;
+            switchMode[1] = 0x00; // NormalMode
+            switchMode[2] = 0x00;
+
+            try
+            {
+                SpiWrite(switchMode);
+            }
+            catch (TimeoutException tx)
+            {
+#if DEBUG
+                _logger.LogError(tx, $"{nameof(ExitCardEmulationMode)}: {nameof(TimeoutException)} during SWITCH_MODE. A hardware reset may be required.");
+#endif
+                return false;
+            }
+
+            // Clear all IRQs
+            SpiWriteRegister(Command.WRITE_REGISTER, Register.IRQ_CLEAR, new byte[] { 0xFF, 0xFF, 0x0F, 0x00 });
+
+            // Set PN5180 into IDLE state
+            SpiWriteRegister(Command.WRITE_REGISTER_AND_MASK, Register.SYSTEM_CONFIG, new byte[] { 0xF8, 0xFF, 0xFF, 0xFF });
+
+#if DEBUG
+            _logger.LogDebug($"{nameof(ExitCardEmulationMode)}: back in NormalMode");
+#endif
+            return true;
+        }
+
+#endregion
+
     }
 }

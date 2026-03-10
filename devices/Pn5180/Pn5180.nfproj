@@ -30,7 +30,10 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="AutocollMode.cs" />
+    <Compile Include="CardEmulationData.cs" />
     <Compile Include="Doublet.cs" />
+    <Compile Include="TargetProtocol.cs" />
     <Compile Include="TripletVersion.cs" />
     <None Include="packages.config" />
     <Compile Include="Command.cs" />

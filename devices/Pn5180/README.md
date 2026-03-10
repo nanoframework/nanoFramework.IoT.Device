@@ -298,6 +298,65 @@ Every configuration has the size of 5 bytes, first byte is the register number, 
 
 Once the card is selected properly, you can use the CardTranscive class to exchange data with the card. See [Mifare](../Card/Mifare/README.md) and [Ultralight](../Card/Ultralight/README.md) for detailed examples.
 
+## Card Emulation Mode
+
+The PN5180 can operate as a passive NFC target (card emulation) using its built-in **Autocoll** engine. In this mode an external reader powers the PN5180 via its RF field and the chip automatically handles anti-collision, making it appear as an ISO 14443-A (or NFC-F) card.
+
+### EEPROM identity fields
+
+Before entering Autocoll the emulated card identity must be written to EEPROM:
+
+| Field | EEPROM address | Size | Helper method | Description |
+| --- | --- | --- | --- | --- |
+| SENS_RES (ATQA) | 0x40 | 2 bytes | `SetSensRes(byte, byte)` | Anticollision / technology descriptor |
+| NFCID1 (UID) | 0x42 | 3 bytes | `SetNfcId1(byte[])` | UID bytes 1–3; byte 0 is fixed to 0x08 |
+| SEL_RES (SAK) | 0x45 | 1 byte | `SetSelRes(byte)` | Selection acknowledge (0x20 = ISO 14443-4) |
+| FeliCa Polling Resp | 0x46 | ≤10 bytes | `SetFelicaPollingResponse(byte[])` | Only needed for NFC-F emulation |
+
+### Minimal example
+
+```csharp
+// 1. Configure emulated card identity
+pn5180.SetSensRes(0x44, 0x00);                    // ATQA
+pn5180.SetNfcId1(new byte[] { 0xCA, 0xFE, 0x01 }); // UID bytes 1-3
+pn5180.SetSelRes(0x20);                            // SAK (ISO 14443-4)
+
+// 2. Enter Autocoll – listen for NFC-A readers
+pn5180.SwitchToAutocoll(AutocollMode.CollisionResolutionNfcA);
+
+// 3. Wait for a reader to activate us (30 s timeout)
+var activation = pn5180.WaitForActivation(30_000);
+if (activation != null)
+{
+    Debug.WriteLine($"Activated via {activation.ActivatedProtocol}");
+
+    // 4. Respond to RATS with a minimal ATS
+    byte[] ats = new byte[] { 0x05, 0x70, 0x80, 0x80, 0x00 };
+    SpanByte rx = new byte[256];
+    int len = pn5180.TransceiveTargetMode(new SpanByte(ats), rx, 5_000);
+
+    // 5. Exchange frames until the reader leaves
+    while (len > 0)
+    {
+        // Echo received data back (replace with real APDU handling)
+        len = pn5180.TransceiveTargetMode(rx.Slice(0, len), rx, 5_000);
+    }
+}
+
+// 6. Return to normal reader mode
+pn5180.ExitCardEmulationMode();
+```
+
+See [samples/Program.cs](./samples/Program.cs) for a complete working example (`CardEmulation()` method).
+
+### Limitations
+
+- **Single-size UID only** – Autocoll supports a 4-byte UID (single size). Double- or triple-size UIDs are not available in this mode.
+- **Low-level activation only** – The PN5180 handles REQA/WUPA, anticollision and selection automatically; higher-layer protocols (ISO-DEP T=CL, NDEF, HCE APDU routing) must be implemented in user code.
+- **No Mifare Classic emulation** – The PN5180 cannot perform Crypto1 authentication as a target.
+- **Optional IRQ pin** – Pass `pinIrq` to the `Pn5180` constructor if your board wires the PN5180 IRQ line. This enables `WaitForIrq()` to detect interrupts via GPIO instead of continuous SPI polling.
+
+
 This shows how to dump a Mifare (ISO 14443 type A) card fully:
 
 ```csharp
@@ -410,6 +469,6 @@ PN5180 as an initiator (reader) commands:
 
 PN5180 as a Target (acting like a card):
 
-- [ ] Initialization as target
-- [ ] Handling communication with another reader as a target
-- [ ] Support for transceive data
+- [X] Initialization as target
+- [X] Handling communication with another reader as a target
+- [X] Support for transceive data

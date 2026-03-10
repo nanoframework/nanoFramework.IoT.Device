@@ -106,6 +106,9 @@ ProcessIcodeCard();
 // Dump Ultralight card and various tests
 //ProcessUltralight();
 
+// Card emulation (target) mode – emulate an ISO 14443-A card
+//CardEmulation();
+
 Thread.Sleep(Timeout.Infinite);
 
 void Eeprom()
@@ -624,4 +627,104 @@ void ProcessUltralight()
     {
         Debug.WriteLine("Error writing NDEF data on card");
     }
+}
+
+/// <summary>
+/// Demonstrates PN5180 card emulation (target / passive) mode.
+/// The PN5180 will appear as an ISO 14443-A card to any external reader.
+/// </summary>
+void CardEmulation()
+{
+    Debug.WriteLine("=== Card Emulation Mode ===");
+
+    // ---------------------------------------------------------------
+    // 1. Configure the emulated card identity in EEPROM.
+    //    These values are used by the PN5180 Autocoll engine to
+    //    respond to REQA/WUPA and anticollision automatically.
+    // ---------------------------------------------------------------
+
+    // SENS_RES (ATQA): 0x44, 0x00 → indicates single-size UID, ISO 14443-4 compliant
+    pn5180.SetSensRes(0x44, 0x00);
+
+    // NFCID1 (UID bytes 1-3; byte 0 is always 0x08 per NXP convention)
+    pn5180.SetNfcId1(new byte[] { 0xCA, 0xFE, 0x01 });
+
+    // SEL_RES (SAK): 0x20 → ISO 14443-4 capable, not a Mifare Classic
+    pn5180.SetSelRes(0x20);
+
+    Debug.WriteLine("Identity configured: ATQA=44 00, UID=08:CA:FE:01, SAK=20");
+
+    // ---------------------------------------------------------------
+    // 2. Enter Autocoll mode – listen for NFC-A readers.
+    // ---------------------------------------------------------------
+    bool ok = pn5180.SwitchToAutocoll(AutocollMode.CollisionResolutionNfcA);
+    if (!ok)
+    {
+        Debug.WriteLine("SwitchToAutocoll failed.");
+        return;
+    }
+
+    Debug.WriteLine("Autocoll active – waiting for an external reader...");
+
+    // ---------------------------------------------------------------
+    // 3. Wait for activation (reader selects our card).
+    // ---------------------------------------------------------------
+    CardEmulationData activation = pn5180.WaitForActivation(30_000);
+    if (activation == null)
+    {
+        Debug.WriteLine("No reader detected within timeout.");
+        pn5180.ExitCardEmulationMode();
+        return;
+    }
+
+    Debug.WriteLine($"Activated! Protocol: {activation.ActivatedProtocol}");
+    if (activation.RxData != null)
+    {
+        Debug.WriteLine($"Initial data from reader ({activation.RxData.Length} bytes): {BitConverter.ToString(activation.RxData)}");
+    }
+
+    // ---------------------------------------------------------------
+    // 4. Communication loop – exchange frames with the reader.
+    //    In a real application you would implement ISO-DEP (T=CL)
+    //    framing here.  This example handles RATS → ATS and then
+    //    echoes any subsequent command back to the reader.
+    // ---------------------------------------------------------------
+    SpanByte rxBuffer = new byte[256];
+    int rxLen;
+
+    // Check if the initial data is a RATS command (0xE0)
+    byte[] firstCommand = activation.RxData;
+    if (firstCommand != null && firstCommand.Length >= 2 && firstCommand[0] == 0xE0)
+    {
+        // RATS received – respond with a minimal ATS
+        // TL=05, T0=70 (TA/TB/TC present, FSCI=0 → 16 bytes),
+        // TA=80 (only 106 kbps), TB=80 (FWI/SFGI default), TC=00
+        byte[] ats = new byte[] { 0x05, 0x70, 0x80, 0x80, 0x00 };
+        Debug.WriteLine($"RATS received, sending ATS: {BitConverter.ToString(ats)}");
+        rxLen = pn5180.TransceiveTargetMode(new SpanByte(ats), rxBuffer, 5_000);
+    }
+    else
+    {
+        // No RATS – just wait for the first real command
+        rxLen = pn5180.ReceiveCommandFromReader(rxBuffer, 5_000);
+    }
+
+    // Echo loop: send back whatever the reader sends
+    int exchangeCount = 0;
+    while (rxLen > 0)
+    {
+        exchangeCount++;
+        Debug.WriteLine($"[{exchangeCount}] Received {rxLen} bytes: {BitConverter.ToString(rxBuffer.Slice(0, rxLen).ToArray())}");
+
+        // Echo the received data back as our response
+        rxLen = pn5180.TransceiveTargetMode(rxBuffer.Slice(0, rxLen), rxBuffer, 5_000);
+    }
+
+    Debug.WriteLine($"Communication ended after {exchangeCount} exchange(s).");
+
+    // ---------------------------------------------------------------
+    // 5. Exit card emulation mode.
+    // ---------------------------------------------------------------
+    pn5180.ExitCardEmulationMode();
+    Debug.WriteLine("Back in normal (reader) mode.");
 }
