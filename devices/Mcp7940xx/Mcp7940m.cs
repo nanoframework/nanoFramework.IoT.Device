@@ -72,7 +72,7 @@ namespace Iot.Device.Mcp7940xx
         public DateTime GetTime()
         {
             // Read second, minute, hour, day-of-week, day, month and year registers.
-            SpanByte readBuffer = new byte[7];
+            Span<byte> readBuffer = new byte[7];
 
             _i2cDevice.WriteByte((byte)Register.TimekeepingSecond);
             _i2cDevice.Read(readBuffer);
@@ -101,7 +101,7 @@ namespace Iot.Device.Mcp7940xx
                 Halt(true);
             }
 
-            SpanByte writeBuffer = new byte[8];
+            Span<byte> writeBuffer = new byte[8];
 
             writeBuffer[0] = (byte)Register.TimekeepingSecond;
             writeBuffer[1] = NumberHelper.Dec2Bcd(time.Second);

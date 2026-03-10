@@ -22,6 +22,6 @@ namespace Iot.Device.MulticastDns.Entities
             => Address = address;
 
         internal ARecord(PacketParser packet, string domain, int ttl, int length) : base(domain, DnsResourceType.A, ttl)
-            => Address = new IPAddress(packet.ReadBytes(length));
+            => Address = new IPAddress(packet.ReadBytes(length).ToArray());
     }
 }

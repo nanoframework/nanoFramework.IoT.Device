@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net6.0": {
+    "net9.0": {
       "SixLabors.ImageSharp": {
         "type": "Direct",
         "requested": "[3.1.5, )",

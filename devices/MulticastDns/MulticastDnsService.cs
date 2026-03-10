@@ -77,7 +77,7 @@ namespace Iot.Device.MulticastDns
         /// Sends a Multicast DNS message.
         /// </summary>
         /// <param name="message">The message to be sent.</param>
-        public void Send(Message message) => _client.Send(message.GetBytes(), new(_multicastAddress, MulticastDnsPort));
+        public void Send(Message message) => _client.Send(message.GetBytes().ToArray(), new(_multicastAddress, MulticastDnsPort));
 
         private void Run()
         {
@@ -110,7 +110,7 @@ namespace Iot.Device.MulticastDns
 
                         if (eventArgs.Response != null)
                         {
-                            _client.Send(eventArgs.Response.GetBytes(), multicastEndpoint);
+                            _client.Send(eventArgs.Response.GetBytes().ToArray(), multicastEndpoint);
                         }
                     }
                 }

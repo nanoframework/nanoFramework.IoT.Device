@@ -58,7 +58,7 @@ namespace Iot.Device.Max7219
                     end--;
                 }
 
-                return new ListByte(new SpanByte(_data, start, end - start).ToArray());
+                return new ListByte(new Span<byte>(_data, start, end - start).ToArray());
             }
         }
     }

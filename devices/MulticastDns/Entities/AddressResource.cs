@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Net;
 using Iot.Device.MulticastDns.Enum;
 
@@ -27,9 +28,9 @@ namespace Iot.Device.MulticastDns.Entities
         public IPAddress Address { get; set; }
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        protected override byte[] GetBytesInternal() => Address.GetAddressBytes();
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        protected override Span<byte> GetBytesInternal() => Address.GetAddressBytes();
     }
 }

@@ -38,12 +38,12 @@ namespace Iot.Device.NFUnitTest
             }
         }
 
-        static internal void AssertRegistersEqual(SpanByte registerBankA, SpanByte registerB, Register register)
+        static internal void AssertRegistersEqual(Span<byte> registerBankA, Span<byte> registerB, Register register)
         {
             Assert.Equal(registerBankA[(byte)register], registerB[(byte)register], message: GetRegisterName(register));
         }
 
-        static internal void AssertRegistersNotEqual(SpanByte registerA, SpanByte registerB, Register register)
+        static internal void AssertRegistersNotEqual(Span<byte> registerA, Span<byte> registerB, Register register)
         {
             Assert.NotEqual(registerA[(byte)register], registerB[(byte)register], message: GetRegisterName(register));
         }
@@ -53,7 +53,7 @@ namespace Iot.Device.NFUnitTest
             Assert.Equal(registerA & bitMask, registerB & bitMask);
         }
 
-        static internal void AssertMaskedRegistersEqual(SpanByte registerA, SpanByte registerB, Register register, byte bitMask)
+        static internal void AssertMaskedRegistersEqual(Span<byte> registerA, Span<byte> registerB, Register register, byte bitMask)
         {
             Assert.Equal(registerA[(byte)register] & bitMask, registerB[(byte)register] & bitMask, message: GetRegisterName(register));
         }
@@ -63,7 +63,7 @@ namespace Iot.Device.NFUnitTest
             Assert.NotEqual(registerA & bitMask, registerB & bitMask);
         }
 
-        static internal void AssertMaskedRegistersNotEqual(SpanByte registerA, SpanByte registerB, Register register, byte bitMask)
+        static internal void AssertMaskedRegistersNotEqual(Span<byte> registerA, Span<byte> registerB, Register register, byte bitMask)
         {
             Assert.NotEqual(registerA[(byte)register] & bitMask, registerB[(byte)register] & bitMask, message: GetRegisterName(register));
         }

@@ -270,7 +270,7 @@ namespace Iot.Device.Bno055
         public void SetAccelerometerCalibrationData(Vector4 calibrationData)
         {
             SetConfigMode(true);
-            SpanByte outArray = new byte[7];
+            Span<byte> outArray = new byte[7];
             outArray[0] = (byte)Registers.ACCEL_OFFSET_X_LSB;
             BinaryPrimitives.WriteInt16LittleEndian(outArray.Slice(1), (short)calibrationData.X);
             BinaryPrimitives.WriteInt16LittleEndian(outArray.Slice(3), (short)calibrationData.Y);
@@ -304,7 +304,7 @@ namespace Iot.Device.Bno055
         public void SetMagnetometerCalibrationData(Vector4 calibrationData)
         {
             SetConfigMode(true);
-            SpanByte outArray = new byte[7];
+            Span<byte> outArray = new byte[7];
             outArray[0] = (byte)Registers.MAG_OFFSET_X_LSB;
             BinaryPrimitives.WriteInt16LittleEndian(outArray.Slice(1), (short)calibrationData.X);
             BinaryPrimitives.WriteInt16LittleEndian(outArray.Slice(3), (short)calibrationData.Y);
@@ -337,7 +337,7 @@ namespace Iot.Device.Bno055
         public void SetGyroscopeCalibrationData(Vector3 calibrationData)
         {
             SetConfigMode(true);
-            SpanByte outArray = new byte[7];
+            Span<byte> outArray = new byte[7];
             outArray[0] = (byte)Registers.GYRO_OFFSET_X_LSB;
             BinaryPrimitives.WriteInt16LittleEndian(outArray.Slice(1), (short)calibrationData.X);
             BinaryPrimitives.WriteInt16LittleEndian(outArray.Slice(3), (short)calibrationData.Y);
@@ -541,7 +541,7 @@ namespace Iot.Device.Bno055
 
         private Vector3 GetVectorData(Registers reg)
         {
-            SpanByte retArray = new byte[6];
+            Span<byte> retArray = new byte[6];
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(retArray);
             var x = BinaryPrimitives.ReadInt16LittleEndian(retArray);
@@ -585,7 +585,7 @@ namespace Iot.Device.Bno055
 
         private short ReadInt16(Registers reg)
         {
-            SpanByte retArray = new byte[2];
+            Span<byte> retArray = new byte[2];
             _i2cDevice.WriteByte((byte)reg);
             _i2cDevice.Read(retArray);
             return BinaryPrimitives.ReadInt16LittleEndian(retArray);

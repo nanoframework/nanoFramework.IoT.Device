@@ -15,7 +15,7 @@ namespace Iot.Device.Apa102
         /// <summary>
         /// Gets colors of LEDs.
         /// </summary>
-        public SpanColor Pixels { get => _pixels; }
+        public Color[] Pixels { get => _pixels; }
 
         private SpiDevice _spiDevice;
         private Color[] _pixels;
@@ -52,12 +52,11 @@ namespace Iot.Device.Apa102
         {
             for (var i = 0; i < _pixels.Length; i++)
             {
-                SpanByte pixel = _buffer;
-                pixel = pixel.Slice((i + 1) * 4);
-                pixel[0] = (byte)((_pixels[i].A >> 3) | 0b11100000); // global brightness (alpha)
-                pixel[1] = _pixels[i].B; // blue
-                pixel[2] = _pixels[i].G; // green
-                pixel[3] = _pixels[i].R; // red
+                int offset = (i + 1) * 4;
+                _buffer[offset] = (byte)((_pixels[i].A >> 3) | 0b11100000); // global brightness (alpha)
+                _buffer[offset + 1] = _pixels[i].B; // blue
+                _buffer[offset + 2] = _pixels[i].G; // green
+                _buffer[offset + 3] = _pixels[i].R; // red
             }
 
             _spiDevice.Write(_buffer);

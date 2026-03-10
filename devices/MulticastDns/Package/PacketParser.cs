@@ -2,14 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Buffers.Helpers.BitConverter;
+using System.Buffers.Binary;
 using System.Text;
 
 namespace Iot.Device.MulticastDns.Package
 {
     internal class PacketParser
     {
-        private readonly IBitConverter _converter = EndianBitConverter.Big;
         private readonly Encoding _encoding = Encoding.UTF8;
         private readonly byte[] _data;
         private int _position = 0;
@@ -33,19 +32,19 @@ namespace Iot.Device.MulticastDns.Package
 
         public ushort ReadUShort()
         {
-            ushort value = _converter.ToUInt16(_data, _position);
+            ushort value = BinaryPrimitives.ReadUInt16BigEndian(new Span<byte>(_data, _position, 2));
             MovePosition(2);
             return value;
         }
 
         public int ReadInt()
         {
-            int value = _converter.ToInt32(_data, _position);
+            int value = BinaryPrimitives.ReadInt32BigEndian(new Span<byte>(_data, _position, 4));
             MovePosition(4);
             return value;
         }
 
-        public byte[] ReadBytes(int count)
+        public Span<byte> ReadBytes(int count)
         {
             byte[] value = new byte[count];
             System.Array.Copy(_data, _position, value, 0, count);

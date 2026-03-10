@@ -66,7 +66,7 @@ namespace Iot.Device.Bmxx80
                 status = (byte)(status & 0b1111_1000);
                 status = (byte)(status | (byte)value);
 
-                SpanByte command = new[]
+                Span<byte> command = new[]
                 {
                     (byte)Bme280Register.CTRL_HUM, status
                 };

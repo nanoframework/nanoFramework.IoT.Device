@@ -36,6 +36,6 @@ namespace Iot.Device.Magnetometer
         /// <param name="i2CDevice">I2C device.</param>
         /// <param name="reg">The register to read.</param>
         /// <param name="readBytes">Span of byte to store the data read.</param>
-        public abstract void ReadBytes(I2cDevice i2CDevice, byte reg, SpanByte readBytes);
+        public abstract void ReadBytes(I2cDevice i2CDevice, byte reg, Span<byte> readBytes);
     }
 }

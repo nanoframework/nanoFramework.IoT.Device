@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using Iot.Device.MulticastDns.Enum;
 using Iot.Device.MulticastDns.Package;
 
@@ -52,10 +53,10 @@ namespace Iot.Device.MulticastDns.Entities
         public ushort Weight { get; set; }
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        protected override byte[] GetBytesInternal()
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        protected override Span<byte> GetBytesInternal()
         {
             var packetBuilder = new PacketBuilder();
             packetBuilder.Add(Priority);

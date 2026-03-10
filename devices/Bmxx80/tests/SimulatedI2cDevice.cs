@@ -3,7 +3,6 @@
 
 using System;
 using System.Device.I2c;
-using Iot.Device.Bmxx80.Tests;
 
 namespace Iot.Device.Imu.Tests
 {
@@ -17,7 +16,6 @@ namespace Iot.Device.Imu.Tests
         {
             _registers = new byte[256];
             _currentRegister = 0;
-            ConnectionSettings = connectionSettings;
         }
 
         public SimulatedI2cDevice()
@@ -25,14 +23,12 @@ namespace Iot.Device.Imu.Tests
         {
         }
 
-        public new I2cConnectionSettings ConnectionSettings { get; }
-
         public new byte ReadByte()
         {
             return _registers[_currentRegister];
         }
 
-        public new void Read(SpanByte buffer)
+        public new void Read(Span<byte> buffer)
         {
             int idx = _currentRegister;
             for (int i = 0; i < buffer.Length; i++)
@@ -47,7 +43,7 @@ namespace Iot.Device.Imu.Tests
             _currentRegister = value;
         }
 
-        public new void Write(SpanByte buffer)
+        public new void Write(ReadOnlySpan<byte> buffer)
         {
             _currentRegister = buffer[0];
             int idx = _currentRegister;
@@ -59,7 +55,7 @@ namespace Iot.Device.Imu.Tests
             }
         }
 
-        public new void WriteRead(SpanByte writeBuffer, SpanByte readBuffer)
+        public new void WriteRead(ReadOnlySpan<byte> writeBuffer, Span<byte> readBuffer)
         {
             Write(writeBuffer);
             Read(readBuffer);

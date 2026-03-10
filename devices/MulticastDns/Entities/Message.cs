@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using Iot.Device.MulticastDns.Enum;
 using Iot.Device.MulticastDns.Package;
 using System.Collections;
@@ -84,10 +85,10 @@ namespace Iot.Device.MulticastDns.Entities
             => _questions.Add(question);
 
         /// <summary>
-        /// Returns a byte[] representation of this message.
+        /// Returns a <see cref="Span{T}"/> representation of this message.
         /// </summary>
-        /// <returns>A byte[] representation of this message.</returns>
-        public byte[] GetBytes()
+        /// <returns>A <see cref="Span{T}"/> representation of this message.</returns>
+        public Span<byte> GetBytes()
         {
             PacketBuilder packet = new();
             packet.Add(_id);

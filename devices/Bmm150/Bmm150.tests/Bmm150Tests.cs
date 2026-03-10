@@ -20,11 +20,11 @@ namespace Bmm150.tests
             // Arrange
 
             // DigX1 = 0, DigY1 = 0
-            SpanByte trimX1y1Data = new byte[] { 0x00, 0x00 };
+            Span<byte> trimX1y1Data = new byte[] { 0x00, 0x00 };
             // DigX2 = 26, DigY2 = 26, DigZ4 = 0
-            SpanByte trimXyzData = new byte[] { 0x00, 0x00, 0x1A, 0x1A };
+            Span<byte> trimXyzData = new byte[] { 0x00, 0x00, 0x1A, 0x1A };
             // DigZ1 = 24747, DigZ2 = 763, DigZ3 = 0, DigXy1 = 29, DigXy2 = -3, DigXyz1 = 7053
-            SpanByte trimXy1Xy2Data = new byte[] { 0xFB, 0x02, 0xAB, 0x60, 0x8D, 0x1B, 0x00, 0x00, 0xFD, 0x1D };
+            Span<byte> trimXy1Xy2Data = new byte[] { 0xFB, 0x02, 0xAB, 0x60, 0x8D, 0x1B, 0x00, 0x00, 0xFD, 0x1D };
 
             // Act
             Bmm150TrimRegisterData trimRegisterData = new Bmm150TrimRegisterData(trimX1y1Data, trimXyzData, trimXy1Xy2Data);

@@ -71,7 +71,7 @@ namespace Iot.Device.Magnetometer
         /// <param name="trimX1y1Data">TrimX1y1Data bytes.</param>
         /// <param name="trimXyzData">TrimXyzData bytes.</param>
         /// <param name="trimXy1Xy2Data">TrimXy1Xy2Data bytes.</param>
-        public Bmm150TrimRegisterData(SpanByte trimX1y1Data, SpanByte trimXyzData, SpanByte trimXy1Xy2Data)
+        public Bmm150TrimRegisterData(Span<byte> trimX1y1Data, Span<byte> trimXyzData, Span<byte> trimXy1Xy2Data)
         {
             DigX1 = (byte)trimX1y1Data[0];
             DigY1 = (byte)trimX1y1Data[1];

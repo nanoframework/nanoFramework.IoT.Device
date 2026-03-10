@@ -63,7 +63,7 @@ namespace Iot.Device.Lm75
         /// <returns>Temperature</returns>
         private double GetTemperature()
         {
-            SpanByte readBuff = new byte[2];
+            Span<byte> readBuff = new byte[2];
 
             _i2cDevice.WriteByte((byte)Register.LM_TEMP);
             _i2cDevice.Read(readBuff);
@@ -104,7 +104,7 @@ namespace Iot.Device.Lm75
                 config |= 0x01;
             }
 
-            SpanByte writeBuff = new byte[]
+            Span<byte> writeBuff = new byte[]
             {
                 (byte)Register.LM_CONFIG, config
             };

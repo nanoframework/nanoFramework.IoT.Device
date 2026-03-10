@@ -188,7 +188,7 @@ namespace Iot.Device.Mpr121
             var periodRefresh = PeriodRefresh;
             PeriodRefresh = 0;
 
-            SpanByte buffer = new byte[2];
+            Span<byte> buffer = new byte[2];
             _i2cDevice.Read(buffer);
 
             short rawStatus = BinaryPrimitives.ReadInt16LittleEndian(buffer);
@@ -214,7 +214,7 @@ namespace Iot.Device.Mpr121
 
         private void SetRegister(Registers register, byte value)
         {
-            SpanByte data = new byte[]
+            Span<byte> data = new byte[]
             {
                 (byte)register, value
             };

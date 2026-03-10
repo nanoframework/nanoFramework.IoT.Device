@@ -135,8 +135,8 @@ namespace Iot.Device.Xpt2046
         {
             // Overlapped buffer: control, 0, control, 0, control, 0, control, 0, 0
             // Total 9 bytes: each control overlaps with previous read except the last
-            SpanByte writeBuffer = new byte[9];
-            SpanByte readBuffer = new byte[9];
+            Span<byte> writeBuffer = new byte[9];
+            Span<byte> readBuffer = new byte[9];
 
             // Prepare all control bytes for overlapped transaction
             byte z1ControlByte = (byte)StartBit | (byte)MultiplexerChannel.Z1

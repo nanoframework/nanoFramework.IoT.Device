@@ -176,7 +176,7 @@ namespace Iot.Device.Mcp7940xx
                 }
 
                 // Read the second, minute, hour, day-of-week, day, and month registers for the desired alarm.
-                SpanByte readBuffer = new byte[6];
+                Span<byte> readBuffer = new byte[6];
 
                 i2cDevice.WriteByte((byte)alarmRegister);
                 i2cDevice.Read(readBuffer);
@@ -221,7 +221,7 @@ namespace Iot.Device.Mcp7940xx
                     weekdayRegister |= (byte)RegisterMask.AlarmInterruptPolarityMask;
                 }
 
-                SpanByte writeBuffer = new byte[7];
+                Span<byte> writeBuffer = new byte[7];
 
                 writeBuffer[0] = (byte)alarmRegister;
                 writeBuffer[1] = NumberHelper.Dec2Bcd(Second);

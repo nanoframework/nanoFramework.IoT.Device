@@ -76,7 +76,7 @@ namespace Iot.Device.Ahtxx
         /// </summary>
         private void Measure()
         {
-            SpanByte buffer = new byte[3]
+            Span<byte> buffer = new byte[3]
             {
                 // command parameters c.f. datasheet, version 1.1, ch. 5.4
                 (byte)CommonCommand.Measure,
@@ -93,15 +93,15 @@ namespace Iot.Device.Ahtxx
                 Thread.Sleep(10);
             }
 
-            buffer = new byte[6];
-            _i2cDevice.Read(buffer);
+            Span<byte> buffer2 = new byte[6];
+            _i2cDevice.Read(buffer2);
 
             // data format: 20 bit humidity, 20 bit temperature
             // 7               0 7              0 7             4           0 7          0 7         0
             // [humidity 19..12] [humidity 11..4] [humidity 3..0|temp 19..16] [temp 15..8] [temp 7..0]
             // c.f. datasheet ch. 5.4.5
-            int rawHumidity = (buffer[1] << 12) | (buffer[2] << 4) | (buffer[3] >> 4);
-            int rawTemperature = ((buffer[3] & 0xF) << 16) | (buffer[4] << 8) | buffer[5];
+            int rawHumidity = (buffer2[1] << 12) | (buffer2[2] << 4) | (buffer2[3] >> 4);
+            int rawTemperature = ((buffer2[3] & 0xF) << 16) | (buffer2[4] << 8) | buffer2[5];
 
             // RH[%] = Hraw / 2^20 * 100%, c.f. datasheet ch. 6.1
             _humidity = (rawHumidity * 100.0) / 0x100000;
@@ -126,7 +126,7 @@ namespace Iot.Device.Ahtxx
         /// </summary>
         private void Initialize()
         {
-            SpanByte buffer = new byte[3]
+            Span<byte> buffer = new byte[3]
             {
                 _initCommand,
                 0x08, // command parameters c.f. datasheet, version 1.1, ch. 5.4

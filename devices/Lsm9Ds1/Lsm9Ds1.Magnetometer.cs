@@ -44,7 +44,7 @@ namespace Iot.Device.Lsm9Ds1
             byte operativeModeForZAxis = 0b11; // ultra-high performance mode
             byte bigEndianEnabled = 0; // little endian
 
-            SpanByte buff = new byte[5]
+            Span<byte> buff = new byte[5]
             {
                 (byte)((temperatureCompensation << 7)
                         | (operativeMode << 5)
@@ -72,7 +72,7 @@ namespace Iot.Device.Lsm9Ds1
 
         private Vector3 ReadVector3(RegisterM register)
         {
-            SpanByte vec = new byte[6];
+            Span<byte> vec = new byte[6];
             Read(register, vec);
 
             short x = BinaryPrimitives.ReadInt16LittleEndian(vec.Slice(0, 2));
@@ -81,16 +81,16 @@ namespace Iot.Device.Lsm9Ds1
             return new Vector3(x, y, z);
         }
 
-        private void Write(RegisterM register, SpanByte data)
+        private void Write(RegisterM register, Span<byte> data)
         {
-            SpanByte buff = new byte[data.Length + 1];
+            Span<byte> buff = new byte[data.Length + 1];
             buff[0] = (byte)register;
             data.CopyTo(buff.Slice(1));
 
             _i2c.Write(buff);
         }
 
-        private void Read(RegisterM register, SpanByte buffer)
+        private void Read(RegisterM register, Span<byte> buffer)
         {
             _i2c.WriteByte((byte)((byte)register | ReadMask));
             _i2c.Read(buffer);

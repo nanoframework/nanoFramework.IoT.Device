@@ -101,9 +101,9 @@ namespace Iot.Device.Magnetometer
         /// <returns>Trim registers value.</returns>
         private Bmm150TrimRegisterData ReadTrimRegisters()
         {
-            SpanByte trimX1y1Data = new byte[2];
-            SpanByte trimXyzData = new byte[4];
-            SpanByte trimXy1xy2Data = new byte[10];
+            Span<byte> trimX1y1Data = new byte[2];
+            Span<byte> trimXyzData = new byte[4];
+            Span<byte> trimXy1xy2Data = new byte[10];
 
             // Read trim extended registers
             ReadBytes(Register.BMM150_DIG_X1, trimX1y1Data);
@@ -220,7 +220,7 @@ namespace Iot.Device.Magnetometer
         /// <returns>The data from the magnetometer.</returns>
         public Vector3 ReadMagnetometerWithoutCorrection(bool waitForData, TimeSpan timeout)
         {
-            SpanByte rawData = new byte[8];
+            Span<byte> rawData = new byte[8];
 
             // Wait for a data to be present
             if (waitForData)
@@ -297,7 +297,7 @@ namespace Iot.Device.Magnetometer
 
         private byte ReadByte(Register reg) => _bmm150Interface.ReadByte(_i2cDevice, (byte)reg);
 
-        private void ReadBytes(Register reg, SpanByte readBytes) => _bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
+        private void ReadBytes(Register reg, Span<byte> readBytes) => _bmm150Interface.ReadBytes(_i2cDevice, (byte)reg, readBytes);
 
         private void Wait(int milisecondsTimeout)
         {

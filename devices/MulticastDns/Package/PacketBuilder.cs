@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Buffers.Helpers.BitConverter;
 using System.Collections;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Iot.Device.MulticastDns.Package
 
         public void Add(int value) => _list.AddRange(_converter.GetBytes(value));
 
-        public void Add(byte[] bytes) => _list.AddRange(bytes);
+        public void Add(Span<byte> bytes) => _list.AddRange(bytes.ToArray());
 
         public void Add(string domain)
         {
@@ -37,7 +38,7 @@ namespace Iot.Device.MulticastDns.Package
             Add(label.GetBytes());
         }
 
-        public byte[] GetBytes()
+        public Span<byte> GetBytes()
         {
             byte[] bytes = new byte[_list.Count];
             _list.CopyTo(bytes);
@@ -52,7 +53,7 @@ namespace Iot.Device.MulticastDns.Package
 
             public byte Length => (byte)_label.Length;
 
-            public byte[] GetBytes() => Encoding.UTF8.GetBytes(_label);
+            public Span<byte> GetBytes() => Encoding.UTF8.GetBytes(_label);
         }
     }
 }

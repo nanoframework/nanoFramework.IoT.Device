@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using Iot.Device.MulticastDns.Enum;
 using Iot.Device.MulticastDns.Package;
 
@@ -52,10 +53,10 @@ namespace Iot.Device.MulticastDns.Entities
         public int Ttl { get; set; } = 2000;
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        public byte[] GetBytes()
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        public Span<byte> GetBytes()
         {
             PacketBuilder packet = new PacketBuilder();
             packet.Add(Domain);
@@ -72,9 +73,9 @@ namespace Iot.Device.MulticastDns.Entities
         }
 
         /// <summary>
-        /// Returns a byte[] representation of this Resource.
+        /// Returns a <see cref="Span{T}"/> representation of this Resource.
         /// </summary>
-        /// <returns>A byte[] representation of this Resource.</returns>
-        protected virtual byte[] GetBytesInternal() => new byte[0]; 
+        /// <returns>A <see cref="Span{T}"/> representation of this Resource.</returns>
+        protected virtual Span<byte> GetBytesInternal() => new byte[0]; 
     }
 }

@@ -71,8 +71,8 @@ namespace Iot.Device.Tlc1543
                 throw new ArgumentOutOfRangeException(nameof(channelToCharge));
             }
 
-            SpanByte readBuffer = new byte[2];
-            SpanByte writeBuffer = new byte[2];
+            Span<byte> readBuffer = new byte[2];
+            Span<byte> writeBuffer = new byte[2];
 
             writeBuffer[0] = (byte)((int)channelToCharge << 1);
             _spiDevice.TransferFullDuplex(writeBuffer, readBuffer);

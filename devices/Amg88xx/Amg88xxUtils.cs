@@ -21,7 +21,7 @@ namespace Iot.Device.Amg88xx
         /// </summary>
         /// <param name="twosComplement">Reading in two's complement little endian representation.</param>
         /// <returns>Temperature reading.</returns>
-        public static Temperature ConvertToTemperature(SpanByte twosComplement) => ConvertToTemperature(twosComplement[0], twosComplement[1]);
+        public static Temperature ConvertToTemperature(Span<byte> twosComplement) => ConvertToTemperature(twosComplement[0], twosComplement[1]);
 
         /// <summary>
         /// Converts a temperature from two's complements representation into a floating-point reading.

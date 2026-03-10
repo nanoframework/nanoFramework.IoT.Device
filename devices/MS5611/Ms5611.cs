@@ -134,7 +134,7 @@ namespace Iot.Device.Ms5611
         {
             _i2cDevice.WriteByte((byte)address);
             var readData = new byte[2];
-            _i2cDevice.Read(new SpanByte(readData));
+            _i2cDevice.Read(new Span<byte>(readData));
             int rawData = readData[0] << 8 | readData[1];
             return rawData;
         }
@@ -145,7 +145,7 @@ namespace Iot.Device.Ms5611
             Thread.Sleep(_delayForSampling);
             _i2cDevice.WriteByte((byte)CommandAddress.AdcRead);
             var readData = new byte[3];
-            _i2cDevice.Read(new SpanByte(readData));
+            _i2cDevice.Read(new Span<byte>(readData));
             long rawData = readData[0] << 16 | readData[1] << 8 | readData[2];
             return rawData;
         }
