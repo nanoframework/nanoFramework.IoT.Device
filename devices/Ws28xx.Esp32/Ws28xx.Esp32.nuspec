@@ -21,7 +21,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
       <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.8" />
       <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.8" />
-      <dependency id="nanoFramework.Graphics.Core" version="1.2.45" />
+      <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.13" />
     </dependencies>
   </metadata>
   <files>
