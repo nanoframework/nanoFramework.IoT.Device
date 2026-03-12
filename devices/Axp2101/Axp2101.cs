@@ -1251,12 +1251,12 @@ namespace Iot.Device.Axp2101
         public ChargeLedMode GetChargeLedMode()
         {
             byte val = I2cRead(Register.ChgledSetCtrl);
-            val >>= 1;
-            if ((val & 0x02) == 0x02)
+
+            // Check if manual control mode is enabled (bit 2, consistent with SetChargeLedMode)
+            if ((val & 0x04) == 0x04)
             {
-                // Manual mode
-                val >>= 4;
-                return (ChargeLedMode)(val & 0x03);
+                // Manual mode: decode mode from bits 5:4 (encoded as mode << 4)
+                return (ChargeLedMode)((val >> 4) & 0x03);
             }
 
             return ChargeLedMode.ControlledByCharger;
