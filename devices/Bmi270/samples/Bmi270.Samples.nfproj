@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bmi270.nfproj" />
-    <ProjectReference Include="..\..\Bmm150\Bmm150.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

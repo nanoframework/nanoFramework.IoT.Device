@@ -55,6 +55,12 @@
         "requested": "[6.2.0, 6.2.0]",
         "resolved": "6.2.0",
         "contentHash": "6J51Kt5X+Os+Ckp20SFP1SlLu3tZl+3qBhCMtJUJqGDgwSr4oHT+eg545hXCdp07tRB/8nZfXTOBDdA1XXvjUw=="
+      },
+      "nanoFramework.Iot.Device.Bmm150": {
+        "type": "Direct",
+        "requested": "[1.2.931, 1.2.931]",
+        "resolved": "1.2.931",
+        "contentHash": "8LTUe5P0piIyDYtAvXc/4Otla+IuwbgdhzhysUcl/x0v3nWP3uWGzXE5EQSj2WMzgqgfnf8F+0EmlJxDBTYzIQ=="
       }
     }
   }

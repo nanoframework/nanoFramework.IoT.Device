@@ -19,7 +19,6 @@ namespace Iot.Device.Bmi270
     /// </remarks>
     public class Bmm150I2cBmi270 : Bmm150I2cBase
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Bmm150I2cBmi270"/> class.
         /// </summary>
