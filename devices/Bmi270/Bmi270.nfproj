@@ -55,7 +55,7 @@
     <Reference Include="System.Numerics, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Numerics.1.2.862\lib\System.Numerics.dll</HintPath>
     </Reference>
-  </ItemGroup>
+</ItemGroup>
   <ItemGroup>
     <None Include="Bmi270.nuspec" />
     <None Include="packages.config" />
@@ -79,9 +79,6 @@
   <ItemGroup>
     <Content Include="category.txt" />
     <Content Include="version.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bmm150\Bmm150.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
