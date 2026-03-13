@@ -236,6 +236,11 @@ namespace Iot.Device.Bmi270
         /// <returns>The calculated offset vector.</returns>
         public Vector3 Calibrate(int iterations)
         {
+            if (iterations <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(iterations), "iterations must be greater than 0.");
+            }
+
             var gyrSum = new double[3];
 
             for (int i = 0; i < iterations; i++)
@@ -309,6 +314,13 @@ namespace Iot.Device.Bmi270
         /// </param>
         public void EnableAuxiliaryI2c(byte auxiliaryDeviceAddress, bool manualMode = true)
         {
+            if (auxiliaryDeviceAddress < 0x08 || auxiliaryDeviceAddress > 0x77)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(auxiliaryDeviceAddress),
+                    "Auxiliary I2C device address must be a 7-bit address in the range 0x08 to 0x77.");
+            }
+
             // Enable auxiliary power in PWR_CTRL (bit 0 = aux_en)
             byte pwrCtrl = ReadByte(Register.PowerControl);
             WriteByte(Register.PowerControl, (byte)(pwrCtrl | 0x01));
@@ -499,6 +511,11 @@ namespace Iot.Device.Bmi270
         /// <param name="openDrain">True for open-drain, false for push-pull.</param>
         public void ConfigureInterruptPin(int pinNumber, bool outputEnable = true, bool activeHigh = true, bool openDrain = false)
         {
+            if (pinNumber != 1 && pinNumber != 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pinNumber), "pinNumber must be 1 (INT1) or 2 (INT2).");
+            }
+
             // INT1_IO_CTRL (0x53) / INT2_IO_CTRL (0x54):
             // Bit 3 = output_en, Bit 2 = od (open drain), Bit 1 = lvl (active high), Bit 0 = edge
             Register reg = pinNumber == 1 ? Register.Int1IoControl : Register.Int2IoControl;

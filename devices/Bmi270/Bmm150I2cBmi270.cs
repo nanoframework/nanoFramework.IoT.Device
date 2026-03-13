@@ -19,7 +19,6 @@ namespace Iot.Device.Bmi270
     /// </remarks>
     public class Bmm150I2cBmi270 : Bmm150I2cBase
     {
-        private readonly byte _auxDeviceAddress;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bmm150I2cBmi270"/> class.
@@ -29,7 +28,12 @@ namespace Iot.Device.Bmi270
         /// </param>
         public Bmm150I2cBmi270(byte auxDeviceAddress)
         {
-            _auxDeviceAddress = auxDeviceAddress;
+            if (auxDeviceAddress != 0x10)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(auxDeviceAddress),
+                    "BMM150 on the BMI270 auxiliary bus is expected to use address 0x10.");
+            }
         }
 
         /// <inheritdoc/>
@@ -65,31 +69,41 @@ namespace Iot.Device.Bmi270
         public override void ReadBytes(I2cDevice i2cDevice, byte reg, SpanByte readBytes)
         {
             // BMI270 manual-access read sequence:
+            // For each chunk:
             // 1. Set AUX_RD_ADDR (0x4D) to the target register on the BMM150.
             // 2. Wait for the BMI270 to perform the read on the aux bus.
-            // 3. Read back from AUX_DATA registers (0x04-0x0B, up to 8 bytes).
-            SpanByte buff = new byte[2];
-            buff[0] = (byte)Register.AuxReadAddress;
-            buff[1] = reg;
-            i2cDevice.Write(buff);
+            // 3. Read back from AUX_DATA registers (0x04-0x0B, up to 8 bytes per transaction).
+            int remaining = readBytes.Length;
+            int destOffset = 0;
+            byte currentReg = reg;
 
-            // Allow time for the auxiliary read to complete
-            Thread.Sleep(2);
-
-            // Read data from the AUX_DATA registers (0x04)
-            int length = readBytes.Length;
-            if (length > 8)
+            while (remaining > 0)
             {
-                length = 8;
-            }
+                int chunkLength = remaining > 8 ? 8 : remaining;
 
-            SpanByte auxData = new byte[length];
-            i2cDevice.WriteByte((byte)Register.AuxData0);
-            i2cDevice.Read(auxData);
+                SpanByte buff = new byte[2];
+                buff[0] = (byte)Register.AuxReadAddress;
+                buff[1] = currentReg;
+                i2cDevice.Write(buff);
 
-            for (int i = 0; i < length; i++)
-            {
-                readBytes[i] = auxData[i];
+                // Allow time for the auxiliary read to complete
+                Thread.Sleep(2);
+
+                SpanByte auxData = new byte[chunkLength];
+                i2cDevice.WriteByte((byte)Register.AuxData0);
+                i2cDevice.Read(auxData);
+
+                for (int i = 0; i < chunkLength; i++)
+                {
+                    readBytes[destOffset + i] = auxData[i];
+                }
+
+                remaining -= chunkLength;
+                destOffset += chunkLength;
+                unchecked
+                {
+                    currentReg += (byte)chunkLength;
+                }
             }
         }
     }
