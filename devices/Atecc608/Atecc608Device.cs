@@ -22,12 +22,23 @@ namespace Iot.Device.Atecc608
             /// </summary>
             public byte Status { get; }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Atecc608StatusException"/> class.
+            /// </summary>
+            /// <param name="message">The error message.</param>
+            /// <param name="status">The raw status byte returned by the device.</param>
             public Atecc608StatusException(string message, byte status)
                 : base(message)
             {
                 Status = status;
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Atecc608StatusException"/> class with an inner exception.
+            /// </summary>
+            /// <param name="message">The error message.</param>
+            /// <param name="status">The raw status byte returned by the device.</param>
+            /// <param name="innerException">The inner exception.</param>
             public Atecc608StatusException(string message, byte status, Exception innerException)
                 : base(message, innerException)
             {
