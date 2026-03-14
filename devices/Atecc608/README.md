@@ -17,7 +17,7 @@ The [ATECC608](https://www.microchip.com/en-us/product/atecc608b) is a Microchip
 - Hardware-accelerated ECDSA sign/verify (NIST P256)
 - ECDH key agreement
 - SHA-256, HMAC-SHA256 computation
-- AES-128 encrypt/decrypt with GCM support
+- AES-128 single-block encrypt/decrypt (ECB mode)
 - Secure key storage for up to 16 keys/certificates
 - Internal NIST-compliant random number generator (RNG)
 - Two monotonic counters

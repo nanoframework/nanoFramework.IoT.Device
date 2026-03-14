@@ -13,6 +13,29 @@ namespace Iot.Device.Atecc608
     public class Atecc608Device : IDisposable
     {
         /// <summary>
+        /// Exception type that represents an error status returned by the ATECC608 device.
+        /// </summary>
+        public sealed class Atecc608StatusException : InvalidOperationException
+        {
+            /// <summary>
+            /// Gets the raw status byte returned by the device.
+            /// </summary>
+            public byte Status { get; }
+
+            public Atecc608StatusException(string message, byte status)
+                : base(message)
+            {
+                Status = status;
+            }
+
+            public Atecc608StatusException(string message, byte status, Exception innerException)
+                : base(message, innerException)
+            {
+                Status = status;
+            }
+        }
+
+        /// <summary>
         /// Default I2C address (7-bit: 0x60, factory default for unconfigured devices).
         /// </summary>
         public const byte DefaultI2cAddress = 0x60;
@@ -21,6 +44,9 @@ namespace Iot.Device.Atecc608
         /// I2C address used on M5Stack Core2 for AWS IoT EduKit (7-bit: 0x35).
         /// </summary>
         public const byte M5StackI2cAddress = 0x35;
+
+        // Maximum expected response size from the ATECC608 device (including count and CRC).
+        private const int MaxResponseSize = 75;
 
         // Word address bytes for I2C write operations.
         private const byte WordAddressReset = 0x00;
@@ -258,7 +284,7 @@ namespace Iot.Device.Atecc608
             int remaining = data.Length;
 
             // SHA Update: process full 64-byte blocks.
-            while (remaining > ShaBlockSize)
+            while (remaining >= ShaBlockSize)
             {
                 byte[] block = new byte[ShaBlockSize];
                 Array.Copy(data, offset, block, 0, ShaBlockSize);
@@ -530,7 +556,7 @@ namespace Iot.Device.Atecc608
                 ExecuteCommand(Atecc608Command.Verify, VerifyModeExternal, 0x0004, verifyData, 115);
                 return true;
             }
-            catch (InvalidOperationException)
+            catch (Atecc608StatusException ex) when (ex.Status == 0x01)
             {
                 // Status 0x01 (CheckmacVerifyMiscompare) means signature is invalid.
                 return false;
@@ -851,25 +877,19 @@ namespace Iot.Device.Atecc608
             Thread.Sleep(executionTimeMs);
 
             // Read the response. First read count byte.
-            byte[] countBuf = new byte[1];
-            _i2cDevice.Read(countBuf);
-            int responseCount = countBuf[0];
+            // Read the maximum possible response in a single I2C transaction.
+            byte[] rawResponse = new byte[MaxResponseSize];
+            _i2cDevice.Read(rawResponse);
+            int responseCount = rawResponse[0];
 
-            if (responseCount < 4)
+            if (responseCount < 4 || responseCount > MaxResponseSize)
             {
                 throw new InvalidOperationException("ATECC608 returned an invalid response length.");
             }
 
-            // Read remaining response bytes.
+            // Copy the actual response bytes (as indicated by responseCount).
             byte[] responseFull = new byte[responseCount];
-            responseFull[0] = countBuf[0];
-
-            if (responseCount > 1)
-            {
-                byte[] remaining = new byte[responseCount - 1];
-                _i2cDevice.Read(remaining);
-                Array.Copy(remaining, 0, responseFull, 1, responseCount - 1);
-            }
+            Array.Copy(rawResponse, 0, responseFull, 0, responseCount);
 
             // Verify CRC.
             ushort responseCrc = ComputeCrc(responseFull, 0, responseCount - 2);

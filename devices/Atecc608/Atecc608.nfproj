@@ -16,6 +16,7 @@
     <RootNamespace>Iot.Device.Atecc608</RootNamespace>
     <AssemblyName>Iot.Device.Atecc608</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Atecc608.xml</DocumentationFile>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
