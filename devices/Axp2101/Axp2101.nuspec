@@ -19,7 +19,7 @@
     <summary>Iot.Device.Axp2101 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Axp2101</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.12" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
       <dependency id="nanoFramework.System.Device.Gpio" version="1.1.57" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
       <dependency id="nanoFramework.UnitsNet.ElectricCurrent" version="5.76.15" />
