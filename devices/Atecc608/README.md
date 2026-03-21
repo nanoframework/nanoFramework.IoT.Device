@@ -43,6 +43,11 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 For other devices like STM32, use the preset pins for the I2C bus you want to use.
 
+> **I2C Bus Speed**: The I2C bus **must** be configured at **100 kHz** for reliable wake-up.
+> The ATECC608 wake sequence requires SDA to be held LOW for at least 60 microseconds (tWLO).
+> At 100 kHz, an I2C write to the General Call address produces ~90 us of SDA LOW, which
+> satisfies this requirement. At 400 kHz the SDA-low duration is only ~22 us and wake will fail.
+
 ### Basic Setup
 
 ```csharp
@@ -51,6 +56,16 @@ For other devices like STM32, use the preset pins for the I2C bus you want to us
 I2cConnectionSettings settings = new(1, Atecc608Device.M5StackI2cAddress);
 I2cDevice i2c = I2cDevice.Create(settings);
 Atecc608Device atecc = new(i2c);
+```
+
+The constructor automatically creates an internal I2C device at the General Call address (0x00)
+on the same bus for the wake pulse. If you need to supply your own wake device (e.g., for
+shared-bus scenarios), use the two-parameter constructor:
+
+```csharp
+I2cConnectionSettings wakeSettings = new(1, 0x00);
+I2cDevice wakeI2c = I2cDevice.Create(wakeSettings);
+Atecc608Device atecc = new(i2c, wakeI2c);
 ```
 
 ### Wake, Read Info, Sleep
@@ -246,6 +261,7 @@ The [M5Stack Core2 ESP32 IoT Development Kit for AWS](https://shop.m5stack.com/p
 
 ## Known Limitations
 
+- **I2C bus speed must be 100 kHz** for reliable wake-up. Higher speeds may cause the wake pulse to be too short.
 - **Lock operations are irreversible.** Once a configuration or data zone is locked, it cannot be unlocked.
 - **Counter increments are irreversible.** Each counter has a maximum value of 2,097,151.
 - Trust&GO variants come pre-provisioned and pre-locked. Configuration zone modification is not available on these devices.

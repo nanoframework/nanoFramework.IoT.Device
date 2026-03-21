@@ -116,49 +116,152 @@ namespace Iot.Device.Atecc608
         // Expected wake response: count=0x04, status=0x11, CRC=0x33 0x43.
         private static readonly byte[] WakeResponse = new byte[] { 0x04, 0x11, 0x33, 0x43 };
 
+        // Self-test failure wake response: count=0x04, status=0x07, CRC=0xC4 0x40.
+        private static readonly byte[] SelfTestFailResponse = new byte[] { 0x04, 0x07, 0xC4, 0x40 };
+
+        // Default number of wake retry attempts.
+        private const int DefaultWakeRetries = 3;
+
+        // I2C General Call address used for the wake pulse.
+        private const byte WakeI2cAddress = 0x00;
+
         private readonly I2cDevice _i2cDevice;
+        private readonly I2cDevice _wakeDevice;
+        private readonly bool _ownsWakeDevice;
         private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Atecc608Device"/> class.
+        /// A second I2C device at address 0x00 (General Call) is created internally on the same bus
+        /// to generate the correct SDA-low wake pulse required by the ATECC608 datasheet.
         /// </summary>
         /// <param name="i2cDevice">The I2C device to communicate with the ATECC608.</param>
+        /// <remarks>
+        /// The I2C bus should be configured at 100 kHz for reliable wake-up.
+        /// At higher speeds the SDA-low duration may be too short to meet the
+        /// minimum tWLO requirement of 60 microseconds.
+        /// </remarks>
         public Atecc608Device(I2cDevice i2cDevice)
+            : this(i2cDevice, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Atecc608Device"/> class with an explicit wake device.
+        /// </summary>
+        /// <param name="i2cDevice">The I2C device to communicate with the ATECC608.</param>
+        /// <param name="wakeDevice">
+        /// An I2C device at address 0x00 (General Call) on the same bus, used to generate
+        /// the SDA-low wake pulse. When <c>null</c>, one is created automatically from the
+        /// same bus as <paramref name="i2cDevice"/>.
+        /// </param>
+        public Atecc608Device(I2cDevice i2cDevice, I2cDevice wakeDevice)
         {
             _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+
+            if (wakeDevice != null)
+            {
+                _wakeDevice = wakeDevice;
+                _ownsWakeDevice = false;
+            }
+            else
+            {
+                // Create a wake device at General Call address 0x00 on the same bus.
+                I2cConnectionSettings wakeSettings = new(i2cDevice.ConnectionSettings.BusId, WakeI2cAddress);
+                _wakeDevice = I2cDevice.Create(wakeSettings);
+                _ownsWakeDevice = true;
+            }
         }
 
         /// <summary>
         /// Wakes the device from sleep mode.
         /// </summary>
-        /// <exception cref="InvalidOperationException">Thrown when the device does not respond to the wake sequence.</exception>
+        /// <remarks>
+        /// <para>
+        /// The wake sequence drives SDA low via an I2C write to the General Call address (0x00).
+        /// This satisfies the ATECC608 tWLO requirement (SDA low for at least 60 us).
+        /// The I2C bus must be running at 100 kHz or lower for the SDA-low duration to meet
+        /// the datasheet timing specification.
+        /// </para>
+        /// <para>
+        /// The method retries up to 3 times to account for the device performing
+        /// its power-on self-test (POST) or transient communication failures.
+        /// </para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">Thrown when the device does not respond after all retries.</exception>
+        /// <exception cref="Atecc608StatusException">Thrown when the device responds with a self-test failure.</exception>
         public void Wake()
         {
-            // The ATECC608 wake sequence: write 0x00 to generate SDA low condition.
-            // The device detects this as a wake pulse.
-            try
+            Exception lastException = null;
+
+            for (int retry = 0; retry < DefaultWakeRetries; retry++)
             {
-                _i2cDevice.WriteByte(WordAddressReset);
-            }
-            catch
-            {
-                // A NACK is expected during wake; this is normal.
+                try
+                {
+                    // Drive SDA low by writing to the General Call address (0x00).
+                    // The ATECC608 detects SDA held low for >= tWLO (60 us) as a wake pulse.
+                    // At 100 kHz a zero-address write produces ~90 us of SDA low.
+                    // A NACK is expected; the device is asleep and will not acknowledge.
+                    try
+                    {
+                        _wakeDevice.WriteByte(WordAddressReset);
+                    }
+                    catch
+                    {
+                        // A NACK is expected during wake; this is normal.
+                    }
+
+                    // Wait for the device to wake up (tWHI = 1500 us).
+                    Thread.Sleep(2);
+
+                    // Read the 4-byte wake response from the actual device address.
+                    byte[] response = new byte[4];
+                    _i2cDevice.Read(response);
+
+                    // Check for self-test failure response.
+                    if (response[0] == SelfTestFailResponse[0] &&
+                        response[1] == SelfTestFailResponse[1] &&
+                        response[2] == SelfTestFailResponse[2] &&
+                        response[3] == SelfTestFailResponse[3])
+                    {
+                        throw new Atecc608StatusException(
+                            "ATECC608 wake failed: device reported power-on self-test failure.",
+                            (byte)Atecc608Status.SelfTestError);
+                    }
+
+                    // Check for successful wake response.
+                    if (response[0] == WakeResponse[0] &&
+                        response[1] == WakeResponse[1] &&
+                        response[2] == WakeResponse[2] &&
+                        response[3] == WakeResponse[3])
+                    {
+                        return;
+                    }
+
+                    lastException = new InvalidOperationException(
+                        $"ATECC608 wake failed: unexpected response 0x{response[0]:X2} 0x{response[1]:X2} 0x{response[2]:X2} 0x{response[3]:X2}.");
+                }
+                catch (Atecc608StatusException)
+                {
+                    // Self-test failure is not retryable.
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    lastException = ex;
+                }
+
+                // Wait before retrying. The device may be performing its POST.
+                Thread.Sleep(2);
             }
 
-            // Wait for the device to wake up (tWHI = 1500 us).
-            Thread.Sleep(2);
-
-            // Read the 4-byte wake response.
-            byte[] response = new byte[4];
-            _i2cDevice.Read(response);
-
-            if (response[0] != WakeResponse[0] ||
-                response[1] != WakeResponse[1] ||
-                response[2] != WakeResponse[2] ||
-                response[3] != WakeResponse[3])
+            if (lastException != null)
             {
-                throw new InvalidOperationException("ATECC608 wake failed: unexpected response.");
+                throw new InvalidOperationException(
+                    "ATECC608 wake failed after all retries.", lastException);
             }
+
+            throw new InvalidOperationException("ATECC608 wake failed after all retries.");
         }
 
         /// <summary>
@@ -966,6 +1069,12 @@ namespace Iot.Device.Atecc608
             if (!_disposed)
             {
                 _i2cDevice?.Dispose();
+
+                if (_ownsWakeDevice)
+                {
+                    _wakeDevice?.Dispose();
+                }
+
                 _disposed = true;
             }
         }
