@@ -19,8 +19,13 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 // Use the M5Stack Core2 for AWS address (0x35).
 // For other boards, use Atecc608Device.DefaultI2cAddress (0x60).
+// IMPORTANT: The I2C bus must run at 100 kHz for reliable wake-up.
+// At higher speeds the SDA-low wake pulse may be too short (tWLO >= 60 us required).
 I2cConnectionSettings settings = new(1, Atecc608Device.M5StackI2cAddress);
 using I2cDevice i2c = I2cDevice.Create(settings);
+
+// The constructor automatically creates an internal I2C device at address 0x00
+// (General Call) on the same bus to generate the correct wake pulse.
 using Atecc608Device atecc = new(i2c);
 
 // Wake the device.
