@@ -113,17 +113,17 @@ namespace Iot.Device.Atecc608
         // SelfTest mode: run all tests (RNG, ECC, AES, SHA).
         private const byte SelfTestModeAll = 0x3B;
 
-        // Expected wake response: count=0x04, status=0x11, CRC=0x33 0x43.
-        private static readonly byte[] WakeResponse = new byte[] { 0x04, 0x11, 0x33, 0x43 };
-
-        // Self-test failure wake response: count=0x04, status=0x07, CRC=0xC4 0x40.
-        private static readonly byte[] SelfTestFailResponse = new byte[] { 0x04, 0x07, 0xC4, 0x40 };
-
         // Default number of wake retry attempts.
         private const int DefaultWakeRetries = 3;
 
         // I2C General Call address used for the wake pulse.
         private const byte WakeI2cAddress = 0x00;
+
+        // Expected wake response: count=0x04, status=0x11, CRC=0x33 0x43.
+        private static readonly byte[] WakeResponse = new byte[] { 0x04, 0x11, 0x33, 0x43 };
+
+        // Self-test failure wake response: count=0x04, status=0x07, CRC=0xC4 0x40.
+        private static readonly byte[] SelfTestFailResponse = new byte[] { 0x04, 0x07, 0xC4, 0x40 };
 
         private readonly I2cDevice _i2cDevice;
         private readonly I2cDevice _wakeDevice;
@@ -167,7 +167,7 @@ namespace Iot.Device.Atecc608
             else
             {
                 // Create a wake device at General Call address 0x00 on the same bus.
-                I2cConnectionSettings wakeSettings = new(i2cDevice.ConnectionSettings.BusId, WakeI2cAddress);
+                I2cConnectionSettings wakeSettings = new I2cConnectionSettings(i2cDevice.ConnectionSettings.BusId, WakeI2cAddress);
                 _wakeDevice = I2cDevice.Create(wakeSettings);
                 _ownsWakeDevice = true;
             }
