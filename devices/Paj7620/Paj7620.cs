@@ -14,19 +14,19 @@ namespace Iot.Device.Paj7620
     /// <summary>
     /// Gestures recognized by the PAJ7620 sensor.
     /// </summary>
+    [Flags]
     public enum Gesture
     {
-        /// <summary>No gesture detected.</summary>
         None = 0,
-        Up,
-        Down,
-        Left,
-        Right,
-        Forward,
-        Backward,
-        Clockwise,
-        CounterClockwise,
-        Wave,
+        Up = 0x01,
+        Down = 0x02,
+        Left = 0x04,
+        Right = 0x08,
+        Forward = 0x10,
+        Backward = 0x20,
+        Clockwise = 0x40,
+        CounterClockwise = 0x80,
+        Wave = 0x100,
     }
 
     /// <summary>
@@ -58,17 +58,6 @@ namespace Iot.Device.Paj7620
         private const byte ExpectedPartIdLow = 0x20;
         private const byte ExpectedPartIdHigh = 0x76;
 
-        // Gesture bit masks from PAJ7620 gesture result registers.
-        private const byte GestureUpFlag = 0x01;
-        private const byte GestureDownFlag = 0x02;
-        private const byte GestureLeftFlag = 0x04;
-        private const byte GestureRightFlag = 0x08;
-        private const byte GestureForwardFlag = 0x10;
-        private const byte GestureBackwardFlag = 0x20;
-        private const byte GestureClockwiseFlag = 0x40;
-        private const byte GestureCounterClockwiseFlag = 0x80;
-        private const byte GestureWaveFlag = 0x01; // from register 0x44
-
         private readonly I2cDevice _i2C;
         private int _gestureDebounceMilliseconds = DefaultGestureDebounceMilliseconds;
         private bool _initialized;
@@ -77,6 +66,9 @@ namespace Iot.Device.Paj7620
         /// Gets or sets the debounce interval, in milliseconds, applied after a detected gesture.
         /// </summary>
         /// <remarks>Set to 0 to disable debounce.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Gesture debounce must be greater than or equal to 0.
+        /// </exception>
         public int GestureDebounceMilliseconds
         {
             get => _gestureDebounceMilliseconds;
@@ -84,7 +76,7 @@ namespace Iot.Device.Paj7620
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Gesture debounce must be greater than or equal to 0.");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _gestureDebounceMilliseconds = value;
@@ -162,6 +154,9 @@ namespace Iot.Device.Paj7620
         /// Creates a new PAJ7620U2 gesture sensor instance.
         /// </summary>
         /// <param name="i2CDevice">I2C device.</param>
+        /// <exception cref="ArgumentNullException">
+        /// PAJ7620 requires a non-null I2C device instance.
+        /// </exception>
         public Paj7620(I2cDevice i2CDevice)
         {
             _i2C = i2CDevice ?? throw new ArgumentNullException(nameof(i2CDevice));
@@ -264,22 +259,15 @@ namespace Iot.Device.Paj7620
 
         private static Gesture DecodeGesture(byte result0, byte result1)
         {
+            Gesture gesture = (Gesture)result0;
+
             // Wave flag is in result register 1.
-            if ((result1 & GestureWaveFlag) != 0)
+            if ((result1 & 0x01) != 0)
             {
-                return Gesture.Wave;
+                gesture |= Gesture.Wave;
             }
 
-            if ((result0 & GestureUpFlag) != 0) return Gesture.Up;
-            if ((result0 & GestureDownFlag) != 0) return Gesture.Down;
-            if ((result0 & GestureLeftFlag) != 0) return Gesture.Left;
-            if ((result0 & GestureRightFlag) != 0) return Gesture.Right;
-            if ((result0 & GestureForwardFlag) != 0) return Gesture.Forward;
-            if ((result0 & GestureBackwardFlag) != 0) return Gesture.Backward;
-            if ((result0 & GestureClockwiseFlag) != 0) return Gesture.Clockwise;
-            if ((result0 & GestureCounterClockwiseFlag) != 0) return Gesture.CounterClockwise;
-
-            return Gesture.None;
+            return gesture;
         }
 
         private void EnsureInitialized()
