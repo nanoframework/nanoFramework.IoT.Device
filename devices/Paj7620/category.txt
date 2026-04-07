@@ -1,3 +1,4 @@
-gesture
+motion
 proximity
-human-interface
+infrared
+i2c
