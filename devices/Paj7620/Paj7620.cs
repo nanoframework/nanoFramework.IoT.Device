@@ -197,36 +197,29 @@ namespace Iot.Device.Paj7620
         {
             EnsureInitialized();
 
-            try
+            byte result0 = ReadByteWithRetry(RegisterGestureResult0);
+            byte result1 = ReadByteWithRetry(RegisterGestureResult1);
+
+            // Clear latched flags by reading again.
+            _ = ReadByteWithRetry(RegisterGestureResult0);
+            _ = ReadByteWithRetry(RegisterGestureResult1);
+
+            gesture = DecodeGesture(result0, result1);
+
+            if (gesture != Gesture.None)
             {
-                byte result0 = ReadByteWithRetry(RegisterGestureResult0);
-                byte result1 = ReadByteWithRetry(RegisterGestureResult1);
-
-                // Clear latched flags by reading again.
-                _ = ReadByteWithRetry(RegisterGestureResult0);
-                _ = ReadByteWithRetry(RegisterGestureResult1);
-
-                gesture = DecodeGesture(result0, result1);
-
-                if (gesture != Gesture.None)
+                if (GestureDebounceMilliseconds > 0)
                 {
-                    if (GestureDebounceMilliseconds > 0)
-                    {
-                        Thread.Sleep(GestureDebounceMilliseconds);
-                    }
-
-                    // Clear any follow-up movement flags after debounce window.
-                    _ = ReadByteWithRetry(RegisterGestureResult0);
-                    _ = ReadByteWithRetry(RegisterGestureResult1);
+                    Thread.Sleep(GestureDebounceMilliseconds);
                 }
 
-                return gesture != Gesture.None;
+                // Clear any follow-up movement flags after debounce window.
+                _ = ReadByteWithRetry(RegisterGestureResult0);
+                _ = ReadByteWithRetry(RegisterGestureResult1);
             }
-            catch (IOException)
-            {
-                gesture = Gesture.None;
-                return false;
-            }
+
+            return gesture != Gesture.None;
+        }
         }
 
         private static Gesture DecodeGesture(byte result0, byte result1)
