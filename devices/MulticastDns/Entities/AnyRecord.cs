@@ -14,17 +14,19 @@ namespace Iot.Device.MulticastDns.Entities
     public class AnyRecord : Resource
     {
         internal AnyRecord(PacketParser packet, string domain, int ttl, int length) : base(domain, DnsResourceType.ANY, ttl)
-            => Data = packet.ReadBytes(length);
+            => _data = packet.ReadBytes(length);
+
+        private readonly byte[] _data;
 
         /// <summary>
         /// Gets the raw data bytes of this record.
         /// </summary>
-        public byte[] Data { get; }
+        public byte[] Data => (byte[])_data.Clone();
 
         /// <summary>
         /// Returns a byte[] representation of this Resource.
         /// </summary>
         /// <returns>A byte[] representation of this Resource.</returns>
-        protected override byte[] GetBytesInternal() => Data;
+        protected override byte[] GetBytesInternal() => _data;
     }
 }
