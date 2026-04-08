@@ -171,6 +171,7 @@ namespace Iot.Device.MulticastDns.Entities
                 case DnsResourceType.TXT: return new TxtRecord(packet, domain, ttl);
                 case DnsResourceType.AAAA: return new AaaaRecord(packet, domain, ttl, length);
                 case DnsResourceType.SRV: return new SrvRecord(packet, domain, ttl);
+                case DnsResourceType.ANY: return new AnyRecord(packet, domain, ttl, length);
                 default:
                     packet.ReadBytes(length);
                     return new Resource(domain, ttl);
