@@ -18,6 +18,15 @@ namespace Iot.Device.MulticastDns.Entities
         }
 
         /// <summary>
+        /// Adds an additional resource to the Response message.
+        /// </summary>
+        /// <param name="resource">The additional resource to add.</param>
+        public void AddAdditional(Resource resource)
+        {
+            _additionals.Add(resource);
+        }
+
+        /// <summary>
         /// Adds an answer to the Response message.
         /// </summary>
         /// <param name="resource">The answer resource to add.</param>
