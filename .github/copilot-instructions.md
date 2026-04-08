@@ -74,7 +74,7 @@ When writing or modifying code, always apply these rules:
   Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);   // SDA
   Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);  // SCL
   ```
-  GPIO 21 (SDA) and GPIO 22 (SCL) are the default ESP32 I2C1 pins used in all samples.
+  GPIO 21 (SDA) and GPIO 22 (SCL) are the conventional ESP32 I2C1 pins used in most samples (often shown commented out as a reminder, not always required).
 - SPI and other buses follow similar ESP32 pin configuration patterns.
 
 ---
