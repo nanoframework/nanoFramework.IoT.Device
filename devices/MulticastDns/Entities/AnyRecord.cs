@@ -21,7 +21,15 @@ namespace Iot.Device.MulticastDns.Entities
         /// <summary>
         /// Gets the raw data bytes of this record.
         /// </summary>
-        public byte[] Data => (byte[])_data.Clone();
+        public byte[] Data
+        {
+            get
+            {
+                byte[] copy = new byte[_data.Length];
+                Array.Copy(_data, copy, _data.Length);
+                return copy;
+            }
+        }
 
         /// <summary>
         /// Returns a byte[] representation of this Resource.
