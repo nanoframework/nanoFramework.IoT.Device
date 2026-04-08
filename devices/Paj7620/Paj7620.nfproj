@@ -44,6 +44,7 @@
   <ItemGroup>
     <None Include="Paj7620.nuspec" />
     <None Include="packages.config" />
+    <Compile Include="Gesture.cs" />
     <Compile Include="Paj7620.cs" />
     <None Include="README.md" />
   </ItemGroup>

@@ -12,24 +12,6 @@ using System.Threading;
 namespace Iot.Device.Paj7620
 {
     /// <summary>
-    /// Gestures recognized by the PAJ7620 sensor.
-    /// </summary>
-    [Flags]
-    public enum Gesture
-    {
-        None = 0,
-        Up = 0x01,
-        Down = 0x02,
-        Left = 0x04,
-        Right = 0x08,
-        Forward = 0x10,
-        Backward = 0x20,
-        Clockwise = 0x40,
-        CounterClockwise = 0x80,
-        Wave = 0x100,
-    }
-
-    /// <summary>
     /// PAJ7620/PAJ7620U2 gesture sensor binding.
     /// </summary>
     [Interface("PAJ7620U2 gesture sensor")]
