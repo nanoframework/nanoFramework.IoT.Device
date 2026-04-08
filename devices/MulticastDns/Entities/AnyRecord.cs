@@ -13,14 +13,6 @@ namespace Iot.Device.MulticastDns.Entities
     /// </summary>
     public class AnyRecord : Resource
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyRecord" /> class.
-        /// </summary>
-        /// <param name="domain">The domain this Record is about.</param>
-        /// <param name="ttl">The TTL of this resource.</param>
-        public AnyRecord(string domain, int ttl = 2000) : base(domain, DnsResourceType.ANY, ttl)
-            => Data = new byte[0];
-
         internal AnyRecord(PacketParser packet, string domain, int ttl, int length) : base(domain, DnsResourceType.ANY, ttl)
             => Data = packet.ReadBytes(length);
 
