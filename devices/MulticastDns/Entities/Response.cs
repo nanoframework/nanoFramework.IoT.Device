@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using Iot.Device.MulticastDns.Enum;
 
 namespace Iot.Device.MulticastDns.Entities
@@ -23,6 +24,8 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="resource">The additional resource to add.</param>
         public void AddAdditional(Resource resource)
         {
+            ArgumentNullException.ThrowIfNull(resource);
+            
             _additionals.Add(resource);
         }
 
@@ -32,6 +35,8 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="resource">The answer resource to add.</param>
         public void AddAnswer(Resource resource)
         {
+            ArgumentNullException.ThrowIfNull(resource);
+
             _answers.Add(resource);
         }
     }
