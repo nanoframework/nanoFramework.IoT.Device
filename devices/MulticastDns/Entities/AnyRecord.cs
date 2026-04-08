@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.MulticastDns.Enum;
@@ -7,8 +7,9 @@ using Iot.Device.MulticastDns.Package;
 namespace Iot.Device.MulticastDns.Entities
 {
     /// <summary>
-    /// Represents an ANY Record Resource (DNS Resource Type 255).
-    /// Used as a wildcard query type to request all available records for a domain.
+    /// Represents a DNS resource record with type ANY (255).
+    /// Since RR type 255 does not define a structured RDATA format, this implementation
+    /// preserves the record data as raw bytes and returns it unchanged when serialized.
     /// </summary>
     public class AnyRecord : Resource
     {
