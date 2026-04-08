@@ -176,12 +176,12 @@ namespace Iot.Device.Paj7620
             }
             catch (Exception ex)
             {
-                throw new IOException("PAJ7620 not responding on I2C bus.", ex);
+                throw new IOException(ex.Message);
             }
 
             if (idHigh != ExpectedPartIdHigh || idLow != ExpectedPartIdLow)
             {
-                throw new IOException($"PAJ7620 error. Expected 0x7620, but got: 0x{idHigh:X2}{idLow:X2}");
+                throw new IOException($"PAJ7620 error. PartID: 0x{idHigh:X2}{idLow:X2} (Expected: 0x7620)");
             }
 
             WriteRegisterPairs(InitRegisterPairs);
@@ -199,7 +199,6 @@ namespace Iot.Device.Paj7620
         /// <returns>True if a valid gesture is available, otherwise false.</returns>
         public bool TryReadGesture(out Gesture gesture)
         {
-            gesture = Gesture.None;
             EnsureInitialized();
 
             try
@@ -232,11 +231,6 @@ namespace Iot.Device.Paj7620
                 gesture = Gesture.None;
                 return false;
             }
-            catch (Exception)
-            {
-                gesture = Gesture.None;
-                return false;
-            }
         }
 
         private static Gesture DecodeGesture(byte result0, byte result1)
@@ -252,14 +246,20 @@ namespace Iot.Device.Paj7620
             return gesture;
         }
 
+        /// <exception cref="InvalidOperationException">
+        /// PAJ7620 is not initialized. Call Initialize() before reading gestures.
+        /// </exception>
         private void EnsureInitialized()
         {
             if (!_initialized)
             {
-                throw new InvalidOperationException("PAJ7620 is not initialized. Call Initialize() before reading gestures.");
+                throw new InvalidOperationException();
             }
         }
 
+        /// <exception cref="InvalidOperationException">
+        /// Initialization data must contain register/value pairs.
+        /// </exception>
         private void WriteRegisterPairs(byte[] registerValuePairs)
         {
             if (registerValuePairs == null || registerValuePairs.Length == 0)
@@ -269,7 +269,7 @@ namespace Iot.Device.Paj7620
 
             if ((registerValuePairs.Length & 0x01) != 0)
             {
-                throw new InvalidOperationException("Initialization data must contain register/value pairs.");
+                throw new InvalidOperationException();
             }
 
             for (int i = 0; i < registerValuePairs.Length; i += 2)
@@ -278,6 +278,9 @@ namespace Iot.Device.Paj7620
             }
         }
 
+        /// <exception cref="IOException">
+        /// PAJ7620 I2C write failed after retries.
+        /// </exception>
         private void WriteByteWithRetry(byte register, byte value)
         {
             SpanByte buffer = new byte[2];
@@ -291,11 +294,11 @@ namespace Iot.Device.Paj7620
                     _i2C.Write(buffer);
                     return;
                 }
-                catch (Exception ex)
+                catch
                 {
                     if (attempt == IoRetries - 1)
                     {
-                        throw new IOException("PAJ7620 I2C write failed after retries.", ex);
+                        throw new IOException();
                     }
 
                     Thread.Sleep(RetryDelayMilliseconds);
@@ -303,6 +306,9 @@ namespace Iot.Device.Paj7620
             }
         }
 
+        /// <exception cref="IOException">
+        /// PAJ7620 I2C read failed after retries.
+        /// </exception>
         private byte ReadByteWithRetry(byte register)
         {
             SpanByte writeBuffer = new byte[] { register };
@@ -315,15 +321,15 @@ namespace Iot.Device.Paj7620
                     _i2C.WriteRead(writeBuffer, readBuffer);
                     return readBuffer[0];
                 }
-                catch (Exception ex)
+                catch
                 {
                     if (attempt == IoRetries - 1)
-                        throw new IOException("PAJ7620 I2C read failed after retries.", ex);
+                        throw new IOException();
 
                     Thread.Sleep(RetryDelayMilliseconds);
                 }
             }
-            throw new IOException("PAJ7620 I2C read failed after retries.");
+            throw new IOException();
         }
 
         /// <inheritdoc/>
