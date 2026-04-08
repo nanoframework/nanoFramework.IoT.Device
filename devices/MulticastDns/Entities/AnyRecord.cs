@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using Iot.Device.MulticastDns.Enum;
 using Iot.Device.MulticastDns.Package;
 
@@ -14,7 +15,25 @@ namespace Iot.Device.MulticastDns.Entities
     public class AnyRecord : Resource
     {
         internal AnyRecord(PacketParser packet, string domain, int ttl, int length) : base(domain, DnsResourceType.ANY, ttl)
-            => _data = packet.ReadBytes(length);
+        {
+            if (length < 0)
+            {
+                throw new FormatException($"Invalid ANY record length: {length}");
+            }
+
+            try
+            {
+                _data = packet.ReadBytes(length);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new FormatException($"Malformed ANY record for '{domain}' (length={length})", ex);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new FormatException($"Truncated ANY record for '{domain}' (length={length})", ex);
+            }
+        }
 
         private readonly byte[] _data;
 
