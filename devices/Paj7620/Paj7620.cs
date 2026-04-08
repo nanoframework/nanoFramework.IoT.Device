@@ -1,7 +1,5 @@
-//
 // Copyright (c) 2017 The nanoFramework project contributors
 // See LICENSE file in the project root for full license information.
-//
 
 using System;
 using System.Device.I2c;
@@ -30,7 +28,6 @@ namespace Iot.Device.Paj7620
         private const int IoRetries = 3;
         private const int RetryDelayMilliseconds = 2;
 
-
         private const byte RegisterBankSelect = 0xEF;
         private const byte RegisterPartIdLow = 0x00;
         private const byte RegisterPartIdHigh = 0x01;
@@ -39,32 +36,6 @@ namespace Iot.Device.Paj7620
 
         private const byte ExpectedPartIdLow = 0x20;
         private const byte ExpectedPartIdHigh = 0x76;
-
-        private readonly I2cDevice _i2C;
-        private int _gestureDebounceMilliseconds = DefaultGestureDebounceMilliseconds;
-        private bool _initialized;
-
-        /// <summary>
-        /// Gets or sets the debounce interval, in milliseconds, applied after a detected gesture.
-        /// </summary>
-        /// <remarks>Set to 0 to disable debounce.</remarks>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Gesture debounce must be greater than or equal to 0.
-        /// </exception>
-        public int GestureDebounceMilliseconds
-        {
-            get => _gestureDebounceMilliseconds;
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
-
-                _gestureDebounceMilliseconds = value;
-            }
-        }
-
 
         // Init sequence adapted from RevEng_PAJ7620/Seeed reference:
         // flat [register, value] pairs for memory efficiency on MCUs.
@@ -132,8 +103,33 @@ namespace Iot.Device.Paj7620
             0x42, 0x01,
         };
 
+        private readonly I2cDevice _i2C;
+        private int _gestureDebounceMilliseconds = DefaultGestureDebounceMilliseconds;
+        private bool _initialized;
+
         /// <summary>
-        /// Creates a new PAJ7620U2 gesture sensor instance.
+        /// Gets or sets the debounce interval, in milliseconds, applied after a detected gesture.
+        /// </summary>
+        /// <remarks>Set to 0 to disable debounce.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Gesture debounce must be greater than or equal to 0.
+        /// </exception>
+        public int GestureDebounceMilliseconds
+        {
+            get => _gestureDebounceMilliseconds;
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                _gestureDebounceMilliseconds = value;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Paj7620"/> class.
         /// </summary>
         /// <param name="i2CDevice">I2C device.</param>
         /// <exception cref="ArgumentNullException">
@@ -151,7 +147,7 @@ namespace Iot.Device.Paj7620
         {
             Thread.Sleep(500);
 
-            //Wake up call
+            // Wake up call
             try
             {
                 _i2C.WriteByte(0x00);
@@ -160,7 +156,6 @@ namespace Iot.Device.Paj7620
             {
                 // Ignore. Errors will be caught during ID read. 
             }
-
 
             Thread.Sleep(10);
 
@@ -246,6 +241,9 @@ namespace Iot.Device.Paj7620
             return gesture;
         }
 
+        /// <summary>
+        /// Validates that the sensor has been initialized.
+        /// </summary>
         /// <exception cref="InvalidOperationException">
         /// PAJ7620 is not initialized. Call Initialize() before reading gestures.
         /// </exception>
@@ -257,6 +255,10 @@ namespace Iot.Device.Paj7620
             }
         }
 
+        /// <summary>
+        /// Writes register/value pairs to the sensor.
+        /// </summary>
+        /// <param name="registerValuePairs">Flat register/value byte pairs to write.</param>
         /// <exception cref="InvalidOperationException">
         /// Initialization data must contain register/value pairs.
         /// </exception>
@@ -278,6 +280,11 @@ namespace Iot.Device.Paj7620
             }
         }
 
+        /// <summary>
+        /// Writes a byte value to the specified register with retry logic.
+        /// </summary>
+        /// <param name="register">Register address to write.</param>
+        /// <param name="value">Byte value to write.</param>
         /// <exception cref="IOException">
         /// PAJ7620 I2C write failed after retries.
         /// </exception>
@@ -306,6 +313,11 @@ namespace Iot.Device.Paj7620
             }
         }
 
+        /// <summary>
+        /// Reads a byte value from the specified register with retry logic.
+        /// </summary>
+        /// <param name="register">Register address to read.</param>
+        /// <returns>The byte value read from the register.</returns>
         /// <exception cref="IOException">
         /// PAJ7620 I2C read failed after retries.
         /// </exception>
@@ -324,11 +336,14 @@ namespace Iot.Device.Paj7620
                 catch
                 {
                     if (attempt == IoRetries - 1)
+                    {
                         throw new IOException();
+                    }
 
                     Thread.Sleep(RetryDelayMilliseconds);
                 }
             }
+
             throw new IOException();
         }
 
