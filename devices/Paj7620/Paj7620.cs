@@ -105,6 +105,9 @@ namespace Iot.Device.Paj7620
         };
 
         private readonly I2cDevice _i2C;
+        private readonly byte[] _writePairBuffer = new byte[2];
+        private readonly byte[] _readRegisterBuffer = new byte[1];
+        private readonly byte[] _readValueBuffer = new byte[1];
         private int _gestureDebounceMilliseconds = DefaultGestureDebounceMilliseconds;
         private bool _initialized;
 
@@ -220,7 +223,6 @@ namespace Iot.Device.Paj7620
 
             return gesture != Gesture.None;
         }
-        }
 
         private static Gesture DecodeGesture(byte result0, byte result1)
         {
@@ -284,15 +286,14 @@ namespace Iot.Device.Paj7620
         /// </exception>
         private void WriteByteWithRetry(byte register, byte value)
         {
-            SpanByte buffer = new byte[2];
-            buffer[0] = register;
-            buffer[1] = value;
+            _writePairBuffer[0] = register;
+            _writePairBuffer[1] = value;
 
             for (int attempt = 0; attempt < IoRetries; attempt++)
             {
                 try
                 {
-                    _i2C.Write(buffer);
+                    _i2C.Write(_writePairBuffer);
                     return;
                 }
                 catch
@@ -317,15 +318,14 @@ namespace Iot.Device.Paj7620
         /// </exception>
         private byte ReadByteWithRetry(byte register)
         {
-            SpanByte writeBuffer = new byte[] { register };
-            SpanByte readBuffer = new byte[1];
+            _readRegisterBuffer[0] = register;
 
             for (int attempt = 0; attempt < IoRetries; attempt++)
             {
                 try
                 {
-                    _i2C.WriteRead(writeBuffer, readBuffer);
-                    return readBuffer[0];
+                    _i2C.WriteRead(_readRegisterBuffer, _readValueBuffer);
+                    return _readValueBuffer[0];
                 }
                 catch
                 {
