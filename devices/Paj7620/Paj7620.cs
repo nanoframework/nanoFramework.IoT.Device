@@ -37,7 +37,7 @@ namespace Iot.Device.Paj7620
         private const byte ExpectedPartIdLow = 0x20;
         private const byte ExpectedPartIdHigh = 0x76;
 
-        // Init sequence adapted from RevEng_PAJ7620/Seeed reference: https://github.com/Seeed-Studio/Grove_Gesture/tree/master
+        // Init sequence inspired by Seeed reference: https://github.com/Seeed-Studio/Grove_Gesture/tree/master
         // Datasheet: https://files.seeedstudio.com/wiki/Grove_Gesture_V_1.0/res/PAJ7620U2_DS_v1.5_05012022_Confidential.pdf
         // flat [register, value] pairs for memory efficiency on MCUs.
         private static readonly byte[] InitRegisterPairs = new byte[]
