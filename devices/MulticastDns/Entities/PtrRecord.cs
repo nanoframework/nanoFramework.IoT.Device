@@ -17,7 +17,7 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="domain">The domain this Record is about.</param>
         /// <param name="targetDomain">The targetDomain which points to the domain.</param>
         /// <param name="ttl">The TTL of this resource.</param>
-        public PtrRecord(string domain, string targetDomain, int ttl = 2000) : base(domain, DnsResourceType.PTR, ttl)
+        public PtrRecord(string domain, string targetDomain, int ttl = 2000) : base(domain, DnsResourceType.PTR, ttl, ClassInternet)
             => Target = targetDomain;
 
         internal PtrRecord(PacketParser packet, string domain, int ttl, ushort rrClass) : base(domain, DnsResourceType.PTR, ttl, rrClass)
