@@ -12,10 +12,8 @@ namespace Iot.Device.MulticastDns.Entities
     /// </summary>
     public class Message
     {
-        private static readonly System.Random _generator = new();
-
         private ushort _id;
-        private ushort _flags = 0;
+        private ushort _flags;
 
         /// <summary>
         /// The list of <see cref="Question">Questions</see> in the message.
@@ -47,7 +45,7 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="flags">The header flags for this message.</param>
         public Message(DnsHeaderFlags flags)
         {
-            _id = (ushort)_generator.Next(1 << 16);
+            _id = 0; // mDNS MUST use ID=0 per RFC 6762 §18.1
             _flags = (ushort)flags;
         }
 
