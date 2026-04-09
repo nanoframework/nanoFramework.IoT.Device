@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.MulticastDns.Enum;
@@ -12,12 +12,23 @@ namespace Iot.Device.MulticastDns.Entities
     public class Resource
     {
         /// <summary>
+        /// Internet class with the cache-flush bit set (RFC 6762 §11.3). Default for outgoing mDNS records.
+        /// </summary>
+        public const ushort ClassInternetCacheFlush = 0x8001;
+
+        /// <summary>
+        /// Internet class (IN). Standard DNS class for internet records.
+        /// </summary>
+        public const ushort ClassInternet = 0x0001;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Resource" /> class.
         /// </summary>
         /// <param name="domain">The domain this resource is about.</param>
         /// <param name="type">The type of this resource.</param>
         /// <param name="ttl">The TTL of this resource.</param>
-        public Resource(string domain, DnsResourceType type, int ttl) : this(domain, ttl)
+        /// <param name="resourceClass">The DNS class of this resource.</param>
+        public Resource(string domain, DnsResourceType type, int ttl, ushort resourceClass = ClassInternetCacheFlush) : this(domain, ttl, resourceClass)
             => ResourceType = type;
 
         /// <summary>
@@ -25,10 +36,12 @@ namespace Iot.Device.MulticastDns.Entities
         /// </summary>
         /// <param name="domain">The domain this resource is about.</param>
         /// <param name="ttl">The TTL of this resource.</param>
-        public Resource(string domain, int ttl)
+        /// <param name="resourceClass">The DNS class of this resource.</param>
+        public Resource(string domain, int ttl, ushort resourceClass = ClassInternetCacheFlush)
         {
             Domain = domain;
             Ttl = ttl;
+            ResourceClass = resourceClass;
         }
 
         /// <summary>
@@ -44,7 +57,7 @@ namespace Iot.Device.MulticastDns.Entities
         /// <summary>
         /// Gets The class of this resource.
         /// </summary>
-        public ushort ResourceClass { get; } = 1; // IN
+        public ushort ResourceClass { get; }
 
         /// <summary>
         /// Gets or sets The TTL of this resource.
@@ -75,6 +88,6 @@ namespace Iot.Device.MulticastDns.Entities
         /// Returns a byte[] representation of this Resource.
         /// </summary>
         /// <returns>A byte[] representation of this Resource.</returns>
-        protected virtual byte[] GetBytesInternal() => new byte[0]; 
+        protected virtual byte[] GetBytesInternal() => new byte[0];
     }
 }

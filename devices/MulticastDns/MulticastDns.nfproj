@@ -41,6 +41,7 @@
     <Compile Include="Entities\PtrRecord.cs" />
     <Compile Include="Entities\TxtRecord.cs" />
     <Compile Include="Entities\AaaaRecord.cs" />
+    <Compile Include="Entities\AnyRecord.cs" />
     <Compile Include="Entities\TargetResource.cs" />
     <Compile Include="Enum\MulticastDnsStatus.cs" />
     <Compile Include="Enum\DnsHeaderFlags.cs" />
@@ -76,11 +77,11 @@
     <Reference Include="System.IO.Streams, Version=1.1.96.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.Streams.1.1.96\lib\System.IO.Streams.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net, Version=1.11.47.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.1.11.47\lib\System.Net.dll</HintPath>
+    <Reference Include="System.Net, Version=1.11.50.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Net.1.11.50\lib\System.Net.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.100.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.100\lib\System.Net.Sockets.UdpClient.dll</HintPath>
+    <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.101.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.101\lib\System.Net.Sockets.UdpClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=1.1.52.34401, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Threading.1.1.52\lib\System.Threading.dll</HintPath>

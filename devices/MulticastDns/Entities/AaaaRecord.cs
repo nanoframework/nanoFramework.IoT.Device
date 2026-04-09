@@ -21,7 +21,7 @@ namespace Iot.Device.MulticastDns.Entities
         public AaaaRecord(string domain, IPAddress address, int ttl = 2000) : base(domain, DnsResourceType.AAAA, ttl)
             => Address = address;
 
-        internal AaaaRecord(PacketParser packet, string domain, int ttl, int length) : base(domain, DnsResourceType.AAAA, ttl)
+        internal AaaaRecord(PacketParser packet, string domain, int ttl, int length, ushort rrClass) : base(domain, DnsResourceType.AAAA, ttl, rrClass)
             => Address = new IPAddress(packet.ReadBytes(length));
     }
 }

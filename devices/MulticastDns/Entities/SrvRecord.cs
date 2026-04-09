@@ -28,7 +28,7 @@ namespace Iot.Device.MulticastDns.Entities
             Target = targetDomain;
         }
 
-        internal SrvRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.SRV, ttl)
+        internal SrvRecord(PacketParser packet, string domain, int ttl, ushort rrClass) : base(domain, DnsResourceType.SRV, ttl, rrClass)
         {
             Priority = packet.ReadUShort();
             Weight = packet.ReadUShort();
