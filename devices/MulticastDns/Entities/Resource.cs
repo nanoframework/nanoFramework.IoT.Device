@@ -44,7 +44,7 @@ namespace Iot.Device.MulticastDns.Entities
         /// <summary>
         /// Gets The class of this resource.
         /// </summary>
-        public ushort ResourceClass { get; } = 1; // IN
+        public ushort ResourceClass { get; } = 0x8001; // IN + cache-flush (RFC 6762 §11.3)
 
         /// <summary>
         /// Gets or sets The TTL of this resource.

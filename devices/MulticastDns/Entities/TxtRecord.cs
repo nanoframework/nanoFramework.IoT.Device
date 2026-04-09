@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Text;
 using Iot.Device.MulticastDns.Enum;
 using Iot.Device.MulticastDns.Package;
@@ -33,6 +34,13 @@ namespace Iot.Device.MulticastDns.Entities
         /// Returns a byte[] representation of this Resource.
         /// </summary>
         /// <returns>A byte[] representation of this Resource.</returns>
-        protected override byte[] GetBytesInternal() => Encoding.UTF8.GetBytes(Txt);
+        protected override byte[] GetBytesInternal()
+        {
+            var txtBytes = Encoding.UTF8.GetBytes(Txt);
+            var result = new byte[1 + txtBytes.Length];
+            result[0] = (byte)txtBytes.Length;
+            Array.Copy(txtBytes, 0, result, 1, txtBytes.Length);
+            return result;
+        }
     }
 }
