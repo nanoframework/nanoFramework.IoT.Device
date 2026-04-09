@@ -29,7 +29,7 @@ namespace Iot.Device.MulticastDns.Entities
             Txt = txt;
         }
 
-        internal TxtRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.TXT, ttl)
+        internal TxtRecord(PacketParser packet, string domain, int ttl, ushort rrClass) : base(domain, DnsResourceType.TXT, ttl, rrClass)
             => Txt = packet.ReadString();
 
         /// <summary>

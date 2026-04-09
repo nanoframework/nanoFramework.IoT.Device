@@ -20,7 +20,7 @@ namespace Iot.Device.MulticastDns.Entities
         public PtrRecord(string domain, string targetDomain, int ttl = 2000) : base(domain, DnsResourceType.PTR, ttl)
             => Target = targetDomain;
 
-        internal PtrRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.PTR, ttl)
+        internal PtrRecord(PacketParser packet, string domain, int ttl, ushort rrClass) : base(domain, DnsResourceType.PTR, ttl, rrClass)
             => Target = packet.ReadDomain();
     }
 }

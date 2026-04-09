@@ -14,7 +14,7 @@ namespace Iot.Device.MulticastDns.Entities
     /// </summary>
     public class AnyRecord : Resource
     {
-        internal AnyRecord(PacketParser packet, string domain, int ttl, int length) : base(domain, DnsResourceType.ANY, ttl)
+        internal AnyRecord(PacketParser packet, string domain, int ttl, int length, ushort rrClass) : base(domain, DnsResourceType.ANY, ttl, rrClass)
         {
             if (length < 0)
             {

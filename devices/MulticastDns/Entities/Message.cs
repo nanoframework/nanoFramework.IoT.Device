@@ -159,22 +159,22 @@ namespace Iot.Device.MulticastDns.Entities
         {
             string domain = packet.ReadDomain();
             ushort rrType = packet.ReadUShort();
-            _ = packet.ReadUShort();
+            ushort rrClass = packet.ReadUShort();
             int ttl = packet.ReadInt();
             ushort length = packet.ReadUShort();
 
             switch (GetResourceType(rrType))
             {
-                case DnsResourceType.A: return new ARecord(packet, domain, ttl, length);
-                case DnsResourceType.CNAME: return new CnameRecord(packet, domain, ttl);
-                case DnsResourceType.PTR: return new PtrRecord(packet, domain, ttl);
-                case DnsResourceType.TXT: return new TxtRecord(packet, domain, ttl);
-                case DnsResourceType.AAAA: return new AaaaRecord(packet, domain, ttl, length);
-                case DnsResourceType.SRV: return new SrvRecord(packet, domain, ttl);
-                case DnsResourceType.ANY: return new AnyRecord(packet, domain, ttl, length);
+                case DnsResourceType.A: return new ARecord(packet, domain, ttl, length, rrClass);
+                case DnsResourceType.CNAME: return new CnameRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.PTR: return new PtrRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.TXT: return new TxtRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.AAAA: return new AaaaRecord(packet, domain, ttl, length, rrClass);
+                case DnsResourceType.SRV: return new SrvRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.ANY: return new AnyRecord(packet, domain, ttl, length, rrClass);
                 default:
                     packet.ReadBytes(length);
-                    return new Resource(domain, ttl);
+                    return new Resource(domain, ttl, rrClass);
             }
         }
 
