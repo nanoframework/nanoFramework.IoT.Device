@@ -20,7 +20,14 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="txt">The text this resource represents.</param>
         /// <param name="ttl">The TTL of this SRVRecord.</param>
         public TxtRecord(string domain, string txt, int ttl = 2000) : base(domain, DnsResourceType.TXT, ttl)
-            => Txt = txt;
+        {
+            if (Encoding.UTF8.GetBytes(txt).Length > 255)
+            {
+                throw new ArgumentException($"TXT record value exceeds maximum encoded length of 255 bytes.", nameof(txt));
+            }
+
+            Txt = txt;
+        }
 
         internal TxtRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.TXT, ttl)
             => Txt = packet.ReadString();
