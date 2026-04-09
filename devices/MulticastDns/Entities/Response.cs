@@ -14,7 +14,7 @@ namespace Iot.Device.MulticastDns.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="Response" /> class.
         /// </summary>
-        public Response() : base(DnsHeaderFlags.Response)
+        public Response() : base(DnsHeaderFlags.Response | DnsHeaderFlags.AuthoritativeAnswer)
         {
         }
 
