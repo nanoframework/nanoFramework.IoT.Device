@@ -8,6 +8,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Adc128D818.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Adc128D818/) [ADC128D818 - Analog to Digital Converter](Adc128D818)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ads1115.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ads1115/) [ADS1115 - Analog to Digital Converter](Ads1115)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp2101.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp2101/) [AXP2101 - Enhanced Single Cell Li-Battery and Power System Management IC](Axp2101)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Hx711.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Hx711/) [Hx711 (M5Stack WEIGHT)](Hx711)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ina219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ina219/) [INA219 - Bidirectional Current/Power Monitor](Ina219)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Max31856.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Max31856/) [Max31856 - cold-junction compensated thermocouple to digital converter](Max31856)
@@ -282,6 +283,7 @@
 ## GPIO or bit operating devices
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp2101.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp2101/) [AXP2101 - Enhanced Single Cell Li-Battery and Power System Management IC](Axp2101)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Button.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Button/) [Button](Button)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Charlieplex.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Charlieplex/) [Charlieplex Segment binding](Charlieplex)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.LiquidLevel.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.LiquidLevel/) [Digital liquid level switch](LiquidLevel)
@@ -296,6 +298,7 @@
 ## Power monitors and related devices
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp2101.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp2101/) [AXP2101 - Enhanced Single Cell Li-Battery and Power System Management IC](Axp2101)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bq2579x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bq2579x/) [BQ2579x/BQ25792/BQ25798 - Buck-boost battery charger](Bq2579x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Dac63004.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Dac63004/) [DAC63004/DAC63004W - Ultra-low-power quad-channel 12-bit smart DAC with I²C, SPI and PWM](Dac63004)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ina219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ina219/) [INA219 - Bidirectional Current/Power Monitor](Ina219)
