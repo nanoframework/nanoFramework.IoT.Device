@@ -10,40 +10,20 @@ namespace Iot.Device.Mcp25xxx.Can
     /// </summary>
     public class CanMessage
     {
-        private uint _id;
-
-        private CanMessageIdType _identifierType;
-
-        private CanMessageFrameType _frameType;
-
-        private byte[] _message;
-
         /// <summary>
         /// Message ID (SID or EID format, depending on <see cref="IdentifierType"/>).
         /// </summary>
-        public uint Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+        public uint Id;
 
         /// <summary>
         /// Message identifier type.
         /// </summary>
-        public CanMessageIdType IdentifierType
-        {
-            get { return _identifierType; }
-            set { _identifierType = value; }
-        }
+        public CanMessageIdType IdentifierType;
 
         /// <summary>
         /// Message frame type.
         /// </summary>
-        public CanMessageFrameType FrameType
-        {
-            get { return _frameType; }
-            set { _frameType = value; }
-        }
+        public CanMessageFrameType FrameType;
 
         /// <summary>
         /// Message data.
@@ -52,22 +32,17 @@ namespace Iot.Device.Mcp25xxx.Can
         /// Maximum lenght of data buffer is 8.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the message buffer exceeds the maximum allowed lenght.</exception>
-        public byte[] Message
-        {
-            get { return _message; }
-            set { _message = value; }
-        }
+        public byte[] Message;
 
         /// <summary>
         /// Creates a CAN message.
         /// </summary>
         public CanMessage(uint id, CanMessageIdType identifierType, CanMessageFrameType frameType, byte[] message)
         {
-            _id = id;
-            _identifierType = identifierType;
-            _frameType = frameType;
-            _message = message;
+            Id = id;
+            IdentifierType = identifierType;
+            FrameType = frameType;
+            Message = message;
         }
     }
-
 }

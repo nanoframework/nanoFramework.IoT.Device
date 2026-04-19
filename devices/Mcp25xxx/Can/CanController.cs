@@ -27,51 +27,50 @@ namespace Iot.Device.Mcp25xxx.Can
         private Mcp25xxx _mcp25xxx;
 
         /// <summary>
-        /// 
+        /// private class to hold the baud rate and frequency configuration. Used in the "SetBitRate" method.
         /// </summary>
-        /// <param name="mcp25xxx"></param>
+        private class BaudAndFrequencyConfig
+        {
+            public long ClockFrequency { get; set; }
+            public long BaudRate { get; set; }
+            public byte[] Cnf { get; set; }
+        }
+
+        /// <inheritdoc/>>
         public void Initialize(Mcp25xxx mcp25xxx)
         {
             _mcp25xxx = mcp25xxx;
         }
 
-        /// <summary>
-        /// Write message to CAN Bus.
-        /// </summary>
-        /// <param name="message">CAN mesage to write in CAN Bus.</param>
+        /// <inheritdoc/>>
         public void WriteMessage(CanMessage message)
         {
-
+            // This method will be implemented in a future PR
         }
 
-        /// <summary>
-        /// Get next <see cref="CanMessage"/> available in the _<see cref="CanController"/> internal buffer.
-        /// If there are no more messages available null will be returned.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="CanMessage"/> or null if there are no more messages available.
-        /// </returns>
+        /// <inheritdoc/>>
         public CanMessage GetMessage()
         {
             var status = _mcp25xxx.ReadStatus();
 
             if (status.HasFlag(ReadStatusResponse.Rx0If))
-            { // message in buffer 0
+            {
+                // message in buffer 0
                 return ReadDataMessage(0);
             }
             else if (status.HasFlag(ReadStatusResponse.Rx1If))
-            { // message in buffer 1
+            {
+                // message in buffer 1
                 return ReadDataMessage(1);
             }
             else
-            { // no messages available
+            {
+                // no messages available
                 return null;
             }
         }
 
-        /// <summary>
-        /// Clear all receive buffers.
-        /// </summary>
+        /// <inheritdoc/>
         public void Reset()
         {
             Debug.WriteLine("Reset Instruction");
@@ -94,7 +93,7 @@ namespace Iot.Device.Mcp25xxx.Can
             // receives all valid messages using either Standard or Extended Identifiers that
             // meet filter criteria. RXF0 is applied for RXB0, RXF1 is applied for RXB1
             _mcp25xxx.BitModify(Address.RxB0Ctrl,
-                0x60 | 0x04 | 0x07,     // moet die laatste niet 0x03 zijn? Geprobeerd maar doet niets..
+                0x60 | 0x04 | 0x07,
                 0x00 | 0x04 | 0x00);
             _mcp25xxx.BitModify(Address.RxB1Ctrl,
                 0x60 | 0x07,
@@ -113,18 +112,16 @@ namespace Iot.Device.Mcp25xxx.Can
 
         private CanMessage ReadDataMessage(int bufferNumber)
         {
-            var sidh_reg = bufferNumber == 0 ? Address.RxB0Sidh : Address.RxB1Sidh;
-            var sidl_reg = bufferNumber == 0 ? Address.RxB0Sidl : Address.RxB1Sidl;
+            var sidhReg = bufferNumber == 0 ? Address.RxB0Sidh : Address.RxB1Sidh;
+            var sidlReg = bufferNumber == 0 ? Address.RxB0Sidl : Address.RxB1Sidl;
+            var dlcReg = bufferNumber == 0 ? Address.RxB0Dlc : Address.RxB1Dlc;
 
-            var dlc_reg = bufferNumber == 0 ? Address.RxB0Dlc : Address.RxB1Dlc;
-
-
-            var ctrl_reg = bufferNumber == 0 ? Address.RxB0Ctrl : Address.RxB1Ctrl;
-            var data_reg = bufferNumber == 0 ? Address.RxB0D0 : Address.RxB1D0; //.RXB0DATA    RXB1DATA
-            var int_flag = bufferNumber == 0 ? ReadStatusResponse.Rx0If : ReadStatusResponse.Rx1If;
+            var ctrlReg = bufferNumber == 0 ? Address.RxB0Ctrl : Address.RxB1Ctrl;
+            var dataReg = bufferNumber == 0 ? Address.RxB0D0 : Address.RxB1D0; //.RXB0DATA    RXB1DATA
+            var intFlag = bufferNumber == 0 ? ReadStatusResponse.Rx0If : ReadStatusResponse.Rx1If;
 
             // read 5 bytes
-            var buffer = _mcp25xxx.Read(sidh_reg, 5);
+            var buffer = _mcp25xxx.Read(sidhReg, 5);
 
             int id = (buffer[MCP_SIDH] << 3) + (buffer[MCP_SIDL] >> 5);
 
@@ -144,7 +141,7 @@ namespace Iot.Device.Mcp25xxx.Can
 
             // see if it's a remote transmission request
             //var isRemoteTransmitRequest = false;
-            //var ctrl = ReadRegister(ctrl_reg)[0];
+            //var ctrl = ReadRegister(ctrlReg)[0];
             //if ((ctrl & RXBnCTRL_RTR) == RXBnCTRL_RTR)
             //{
             //    isRemoteTransmitRequest = true;
@@ -167,7 +164,7 @@ namespace Iot.Device.Mcp25xxx.Can
                 frame = new CanMessage((uint)id,
                                         CanMessageIdType.EID,
                                         CanMessageFrameType.Data,
-                                        _mcp25xxx.Read(data_reg, dataLengthCode));
+                                        _mcp25xxx.Read(dataReg, dataLengthCode));
 
                 //}
             }
@@ -185,7 +182,7 @@ namespace Iot.Device.Mcp25xxx.Can
                 frame = new CanMessage((uint)id,
                                         CanMessageIdType.SID,
                                         CanMessageFrameType.Data,
-                                        _mcp25xxx.Read(data_reg, dataLengthCode));
+                                        _mcp25xxx.Read(dataReg, dataLengthCode));
 
                 // read the frame data
                 //}
@@ -196,13 +193,13 @@ namespace Iot.Device.Mcp25xxx.Can
             // clear the interrupt flag
             //if (InterruptPort != null)
             //{
-            //ClearInterrupt(int_flag);
-            ClearInterrupt(bufferNumber);   // int_flag);
+            //ClearInterrupt(intFlag);
+            ClearInterrupt(bufferNumber);   // intFlag);
 
             return frame;
         }
 
-        private void ClearInterrupt(int bufferNumber) 
+        private void ClearInterrupt(int bufferNumber)
         {
             var canIntf = new CanIntF(_mcp25xxx.Read(Address.CanIntF));
             if (bufferNumber == 0)
@@ -218,27 +215,16 @@ namespace Iot.Device.Mcp25xxx.Can
             _mcp25xxx.WriteByte(canIntf);
         }
 
-        class Config
-        {
-            public long ClockFrequency { get; set; }
-            public long BaudRate { get; set; }
-            public byte[] Cnf { get; set; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="baudRate">CAN baudrate. For example 250.000</param>
-        /// <param name="clockFrequency">mcp2515 clock frequency. For example 8.000.000</param>
+        /// <inheritdoc/>
         public void SetBitRate(int baudRate, int clockFrequency)
         {
             var mode = GetOperationMode();
-            if(mode != OperationMode.Configuration)
+            if (mode != OperationMode.Configuration)
             {
                 SetOperationMode(OperationMode.Configuration);
             }
 
-            var CNF_MAPPER = new Config[]
+            var CnfMapper = new BaudAndFrequencyConfig[]
             {
                 new() { ClockFrequency = 8_000_000L, BaudRate = 1_000_000L, Cnf = new byte[] { 0x00, 0x80, 0x00 } },
                 new() { ClockFrequency = 8_000_000L, BaudRate = 666_666L,   Cnf = new byte[] { 0xC0, 0xB8, 0x01 } },
@@ -270,7 +256,7 @@ namespace Iot.Device.Mcp25xxx.Can
 
             byte[] cnf = null;
 
-            foreach (var mapper in CNF_MAPPER)
+            foreach (var mapper in CnfMapper)
             {
                 if (mapper.ClockFrequency == clockFrequency && mapper.BaudRate == baudRate)
                 {
@@ -291,6 +277,7 @@ namespace Iot.Device.Mcp25xxx.Can
             SetOperationMode(OperationMode.NormalOperation);
         }
 
+        /// <inheritdoc/>
         public bool SetFilter(RXF num, bool ext, uint ulData)
         {
             var mode = GetOperationMode();
@@ -300,12 +287,24 @@ namespace Iot.Device.Mcp25xxx.Can
 
             switch (num)
             {
-                case RXF.RXF0: reg = Address.RxF0Sidh; break;
-                case RXF.RXF1: reg = Address.RxF1Sidh; break;
-                case RXF.RXF2: reg = Address.RxF2Sidh; break;
-                case RXF.RXF3: reg = Address.RxF3Sidh; break;
-                case RXF.RXF4: reg = Address.RxF4Sidh; break;
-                case RXF.RXF5: reg = Address.RxF5Sidh; break;
+                case RXF.RXF0:
+                    reg = Address.RxF0Sidh;
+                    break;
+                case RXF.RXF1:
+                    reg = Address.RxF1Sidh;
+                    break;
+                case RXF.RXF2:
+                    reg = Address.RxF2Sidh;
+                    break;
+                case RXF.RXF3:
+                    reg = Address.RxF3Sidh;
+                    break;
+                case RXF.RXF4:
+                    reg = Address.RxF4Sidh;
+                    break;
+                case RXF.RXF5:
+                    reg = Address.RxF5Sidh;
+                    break;
                 default:
                     return false;
             }
@@ -319,7 +318,7 @@ namespace Iot.Device.Mcp25xxx.Can
             return true;
         }
 
-        void PrepareId(SpanByte buffer, bool ext, uint id)
+        private void PrepareId(SpanByte buffer, bool ext, uint id)
         {
             ushort canid = (ushort)(id & 0x0FFFF);
 
@@ -353,8 +352,12 @@ namespace Iot.Device.Mcp25xxx.Can
             Address reg;
             switch (mask)
             {
-                case MASK.MASK0: reg = Address.RxM0Sidh; break;
-                case MASK.MASK1: reg = Address.RxM1Sidh; break;
+                case MASK.MASK0:
+                    reg = Address.RxM0Sidh;
+                    break;
+                case MASK.MASK1:
+                    reg = Address.RxM1Sidh;
+                    break;
                 default:
                     return false;
             }
@@ -364,6 +367,7 @@ namespace Iot.Device.Mcp25xxx.Can
             SetOperationMode(mode);
             return true;
         }
+
         private OperationMode GetOperationMode()
         {
             byte value = _mcp25xxx.Read(Address.CanStat);
@@ -374,7 +378,6 @@ namespace Iot.Device.Mcp25xxx.Can
         /// <summary>
         /// Sets the operation mode of the MCP25xxx device.
         /// </summary>
-        /// <param name="mcp25xxx">The MCP25xxx device instance.</param>
         /// <param name="mode">The desired operation mode.</param>
         private void SetOperationMode(OperationMode mode)
         {
