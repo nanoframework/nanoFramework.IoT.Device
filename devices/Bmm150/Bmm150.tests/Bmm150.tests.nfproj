@@ -32,8 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.35\lib\netnano1.0\mscorlib.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.TestFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.TestFramework.4.0.0-preview.47\lib\nanoFramework.TestFramework.dll</HintPath>
@@ -45,7 +44,7 @@
       <HintPath>..\packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Numerics.2.0.0-preview.4\lib\System.Numerics.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Numerics.2.0.0-preview.29\lib\System.Numerics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

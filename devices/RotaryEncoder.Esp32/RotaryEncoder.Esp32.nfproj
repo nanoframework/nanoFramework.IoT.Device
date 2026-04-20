@@ -44,13 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.35\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Hardware.Esp32.2.0.0-preview.7\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Events.2.0.0-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Events.2.0.0-preview.10\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Native.2.0.0-preview.20\lib\nanoFramework.Runtime.Native.dll</HintPath>
@@ -59,7 +59,7 @@
       <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Threading.2.0.0-preview.6\lib\System.Threading.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Threading.2.0.0-preview.8\lib\netnano1.0\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -19,8 +19,8 @@
     <summary>Iot.Device.MAX1704x assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Max1704x Max1704x Max17043 Max17044 Max17048 Max17049</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.7" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
+      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.9" />
       <dependency id="nanoFramework.UnitsNet.Ratio" version="5.77.0-preview.5" />
       <dependency id="nanoFramework.UnitsNet.ElectricPotential" version="5.77.0-preview.5" />
     </dependencies>

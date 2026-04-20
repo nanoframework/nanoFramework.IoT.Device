@@ -42,22 +42,22 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.35\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Events.2.0.0-preview.8\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Events.2.0.0-preview.10\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Collections.2.0.0-preview.8\lib\nanoFramework.System.Collections.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Collections.2.0.0-preview.11\lib\netnano1.0\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Text.2.0.0-preview.8\lib\nanoFramework.System.Text.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Text.2.0.0-preview.13\lib\netnano1.0\nanoFramework.System.Text.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Ports, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Ports.2.0.0-preview.9\lib\System.IO.Ports.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.IO.Ports.2.0.0-preview.14\lib\netnano1.0\System.IO.Ports.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.IO.Streams.2.0.0-preview.10\lib\System.IO.Streams.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.IO.Streams.2.0.0-preview.13\lib\netnano1.0\System.IO.Streams.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

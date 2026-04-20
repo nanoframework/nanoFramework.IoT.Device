@@ -19,8 +19,8 @@
     <summary>Iot.Device.Swarm assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Swarm</tags>
     <dependencies>
-      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.8" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
     </dependencies>
   </metadata>
   <files>
