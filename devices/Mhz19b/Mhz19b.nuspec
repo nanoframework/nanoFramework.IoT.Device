@@ -18,9 +18,9 @@
     <description>This package includes the .NET IoT Core binding Iot.Device.Mhz19b for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mhz19b</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
-      <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.4" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
+      <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.29" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.UnitsNet.VolumeConcentration" version="5.77.0-preview.5" />
     </dependencies>
   </metadata>

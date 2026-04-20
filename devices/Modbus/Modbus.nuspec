@@ -19,9 +19,9 @@
     <summary>Iot.Device.Modbus assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Modbus</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
-      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.8" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
+      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
       <dependency id="nanoFramework.Logging" version="2.0.0-preview.3" />
     </dependencies>
