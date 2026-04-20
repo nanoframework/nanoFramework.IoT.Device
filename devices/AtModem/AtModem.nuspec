@@ -20,11 +20,11 @@ This nuget allows to use AT Modem for SMS, calls, network, internal storage, HTT
     <summary>Iot.Device.AtModem assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.AtModem</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
       <dependency id="nanoFramework.M2Mqtt.Core" version="5.1.212" />
       <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.20" />
-      <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.Iot.Device.Common.GnssDevice" version="2.0.0-preview.16" />
+      <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.8" />
+      <dependency id="nanoFramework.Iot.Device.Common.GnssDevice" version="2.0.0-preview.32" />
       <dependency id="nanoFramework.UnitsNet.ElectricPotential" version="5.77.0-preview.5" />
       <dependency id="nanoFramework.UnitsNet.Ratio" version="5.77.0-preview.5" />
     </dependencies>
