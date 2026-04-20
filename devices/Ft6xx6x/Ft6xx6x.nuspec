@@ -18,9 +18,9 @@
     <description>This package includes the .NET IoT Core binding FT6xx6x for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf iot ft6xx6x</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.35" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.7" />
-      <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.13" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
+      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.15" />
     </dependencies>
   </metadata>
   <files>
