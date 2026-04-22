@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ws28xx</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.12" />
       <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
       <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.15" />
     </dependencies>

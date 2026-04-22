@@ -21,7 +21,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
       <dependency id="nanoFramework.Iot.Device.Multiplexing" version="2.0.0-preview.29" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.29" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.34" />
       <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
       <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.8" />

@@ -22,7 +22,7 @@
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
       <dependency id="nanoFramework.UnitsNet.Length" version="5.77.0-preview.5" />
       <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.29" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.8" />
+      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.12" />
     </dependencies>
   </metadata>
   <files>
