@@ -33,7 +33,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.2.0.0-preview.29\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ft6xx6x, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.2.0.0-preview.19\lib\Iot.Device.Ft6xx6x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.2.0.0-preview.33\lib\Iot.Device.Ft6xx6x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Mpu6886, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Mpu6886.2.0.0-preview.32\lib\Iot.Device.Mpu6886.dll</HintPath>
@@ -51,7 +51,7 @@
       <HintPath>..\packages\nanoFramework.Graphics.Core.2.0.0-preview.15\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Hardware.Esp32.2.0.0-preview.7\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Hardware.Esp32.2.0.0-preview.9\lib\netnano1.0\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.M5Core2">
       <HintPath>..\packages\nanoFramework.M5Core2.1.1.291\lib\nanoFramework.M5Core2.dll</HintPath>
@@ -63,7 +63,7 @@
       <HintPath>..\packages\nanoFramework.Runtime.Events.2.0.0-preview.10\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Native.2.0.0-preview.20\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Runtime.Native.2.0.0-preview.22\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Collections.2.0.0-preview.11\lib\netnano1.0\nanoFramework.System.Collections.dll</HintPath>
@@ -105,16 +105,16 @@
       <HintPath>..\packages\nanoFramework.System.Device.Model.2.0.0-preview.29\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Pwm, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Pwm.2.0.0-preview.7\lib\System.Device.Pwm.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Pwm.2.0.0-preview.9\lib\netnano1.0\System.Device.Pwm.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Spi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Spi.2.0.0-preview.11\lib\netnano1.0\System.Device.Spi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Spi.2.0.0-preview.12\lib\netnano1.0\System.Device.Spi.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.29\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.34\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.2.0.0-preview.9\lib\netnano1.0\System.IO.FileSystem.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.2.0.0-preview.10\lib\netnano1.0\System.IO.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Ports, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.IO.Ports.2.0.0-preview.14\lib\netnano1.0\System.IO.Ports.dll</HintPath>
