@@ -61,7 +61,7 @@
       <HintPath>packages\nanoFramework.Graphics.Core.2.0.0-preview.15\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Native.2.0.0-preview.20\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Native.2.0.0-preview.22\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.I2c.2.0.0-preview.9\lib\netnano1.0\System.Device.I2c.dll</HintPath>

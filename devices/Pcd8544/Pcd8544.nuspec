@@ -20,11 +20,11 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Display.Pcd8544</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="2.0.0-preview.31" />
+      <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="2.0.0-preview.36" />
       <dependency id="nanoFramework.System.Drawing" version="2.0.0-preview.29" />
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.7" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.12" />
     </dependencies>
   </metadata>
   <files>

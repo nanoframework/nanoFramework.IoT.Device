@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Vl6180X</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.20" />
+      <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.22" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.29" />
       <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
       <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.9" />

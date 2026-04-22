@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.11" />
       <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.3" />
+      <dependency id="nanoFramework.Logging" version="2.0.0-preview.5" />
     </dependencies>
   </metadata>
   <files>

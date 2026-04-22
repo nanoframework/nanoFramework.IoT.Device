@@ -23,13 +23,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.2.0.0-preview.31\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.2.0.0-preview.36\lib\Iot.Device.CharacterLcd.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.29\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.30\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.35\lib\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
@@ -44,7 +44,7 @@
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.2.0.0-preview.10\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Runtime.Native.2.0.0-preview.20\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Runtime.Native.2.0.0-preview.22\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.Collections.2.0.0-preview.11\lib\netnano1.0\nanoFramework.System.Collections.dll</HintPath>
@@ -59,19 +59,19 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.I2c.2.0.0-preview.9\lib\netnano1.0\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Pwm, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.2.0.0-preview.7\lib\System.Device.Pwm.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.2.0.0-preview.9\lib\netnano1.0\System.Device.Pwm.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Spi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Spi.2.0.0-preview.11\lib\netnano1.0\System.Device.Spi.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Spi.2.0.0-preview.12\lib\netnano1.0\System.Device.Spi.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.29\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.34\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.Drawing.2.0.0-preview.29\lib\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.2.0.0-preview.9\lib\netnano1.0\System.IO.FileSystem.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.2.0.0-preview.10\lib\netnano1.0\System.IO.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.IO.Streams.2.0.0-preview.13\lib\netnano1.0\System.IO.Streams.dll</HintPath>

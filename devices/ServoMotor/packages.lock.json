@@ -10,9 +10,9 @@
       },
       "nanoFramework.System.Device.Pwm": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
-        "resolved": "2.0.0-preview.7",
-        "contentHash": "yDhK6jwZcaGgBqzhpuaZxtZq9cplqZFpSGuofKc7U5iwYMNAGsS7iARhhj3TJ8LGYw0noE0rxN0IF4sSSRtAcA=="
+        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
+        "resolved": "2.0.0-preview.9",
+        "contentHash": "/+r7ZoeVCURb0/crk0pJ0QUWRZSrJmY3UYf+pM1Ase5h0d97OcNPg8eGdxyAHWtYD5Zb8tjj/KzdNdjg5vlwoA=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

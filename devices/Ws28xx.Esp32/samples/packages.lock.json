@@ -16,15 +16,15 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
-        "resolved": "2.0.0-preview.7",
-        "contentHash": "BT9zyKMyVjrTS3kbtPcZdVnjD8lvcWOKmPP5iwcBBt4OLn6ggCEi81pfz24Lj/qmV15kgE88CwkffpZwxm/EhA=="
+        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
+        "resolved": "2.0.0-preview.9",
+        "contentHash": "L+VG/7iwuxvyNsKf5sTgA9dFNNge0a+kol+KX+VMgDpbc7Sz4lxL4cJ06qDRgcg4Aje5qk6FGJRdVYJz68mj/Q=="
       },
       "nanoFramework.Hardware.Esp32.Rmt": {
         "type": "Direct",
-        "requested": "[3.0.0-preview.8, 3.0.0-preview.8]",
-        "resolved": "3.0.0-preview.8",
-        "contentHash": "w0FTl5OxyCB9u6ZRkkTaHhkDRTa6gXV0s63/Eim6zB9Zues6Kef3YHz5x2nhKHmC9b1C4PCTOjOhhX0r6yarIQ=="
+        "requested": "[3.0.0-preview.12, 3.0.0-preview.12]",
+        "resolved": "3.0.0-preview.12",
+        "contentHash": "KMuvb7OUBYu1et/l7Lw/KJmFIrlJwBNeQc0JSza0+1ulHFXrTIeE2b78FFHAz18gqEwfsOiAt8FJ9h2X/uWd3A=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.20, 2.0.0-preview.20]",
-        "resolved": "2.0.0-preview.20",
-        "contentHash": "TwNeWN8eYZ0qtMkQ5UPPaYsq6l963SUBSKerOgoWE13DEk3drQPZqF+uI7VuWLmvoSFgQ4FYiwDFpexC1p8m3A=="
+        "requested": "[2.0.0-preview.22, 2.0.0-preview.22]",
+        "resolved": "2.0.0-preview.22",
+        "contentHash": "nOOiiosvFhMDl1/HZd0rdHqfDCyWWFBt5AzyeCowlP0nV9KVu9ZyIPtbVLERsIOXw8z8CNIN9xhI+p3pzjpwJg=="
       },
       "nanoFramework.System.Diagnostics.Stopwatch": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.29, 2.0.0-preview.29]",
-        "resolved": "2.0.0-preview.29",
-        "contentHash": "xrfbnOMII95UhZWuRWnWct9qizrk6G82pN7HGi/h5AzdVPU8KebbqgMtH168DJmfVDgFVrZz5loA4cN3r0lnqg=="
+        "requested": "[2.0.0-preview.34, 2.0.0-preview.34]",
+        "resolved": "2.0.0-preview.34",
+        "contentHash": "wOO2mS6Jle7KS5rg6+LRQBUNVSHWVCmvXDIaVQ3C5XH/qPUyyWwsg6oDql8wNJQUsit3N15ogt8ffX08hsa82g=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

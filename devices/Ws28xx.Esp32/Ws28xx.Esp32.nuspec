@@ -19,7 +19,7 @@
     <tags>nanoFramework C# csharp netmf netnf esp32 iot ws28xx</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.8" />
+      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.12" />
       <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.15" />
     </dependencies>
