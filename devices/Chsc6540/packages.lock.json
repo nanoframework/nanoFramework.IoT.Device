@@ -10,9 +10,9 @@
       },
       "nanoFramework.Graphics.Core": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.15, 2.0.0-preview.15]",
-        "resolved": "2.0.0-preview.15",
-        "contentHash": "oDLLFKxeoIuUOZt0IHV/4JkYbfFLrr4OUDvTsh3LlpwW0EV6NbCtNHbPw/25YBBdzV11OAV2/S913oTtiq8rnA=="
+        "requested": "[2.0.0-preview.16, 2.0.0-preview.16]",
+        "resolved": "2.0.0-preview.16",
+        "contentHash": "pr1efiHonrlQxxBkvj/A2V0LtD+3ePh8Q8Hcs1+WoqEC3lwvmJ3YH+ChQcvAPEqhtHXGb13quADouf2hbBmWVg=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
