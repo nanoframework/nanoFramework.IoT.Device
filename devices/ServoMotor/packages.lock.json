@@ -4,15 +4,15 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.39, 2.0.0-preview.39]",
-        "resolved": "2.0.0-preview.39",
-        "contentHash": "rkXOwaEq6GIm+dKZ7ICMrG23mln482vRXyDtaNfAeBpgGcgiuFJrbw7w0TTZ2DNhw1CUWlCWZZbXi6+/NHdpLg=="
+        "requested": "[2.0.0-preview.43, 2.0.0-preview.43]",
+        "resolved": "2.0.0-preview.43",
+        "contentHash": "ijOdswxNI+zhN7MrRMjJPe7pAVhqARvpEOFKUKH6D18NUS3CCQ9+IoyVs3zJhmmBk53YmAErFAdCnAWLVxUu8Q=="
       },
       "nanoFramework.System.Device.Pwm": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
-        "resolved": "2.0.0-preview.9",
-        "contentHash": "/+r7ZoeVCURb0/crk0pJ0QUWRZSrJmY3UYf+pM1Ase5h0d97OcNPg8eGdxyAHWtYD5Zb8tjj/KzdNdjg5vlwoA=="
+        "requested": "[2.0.0-preview.10, 2.0.0-preview.10]",
+        "resolved": "2.0.0-preview.10",
+        "contentHash": "QEouPH9h/gGK56uVxWE9YEGrPuXFRkoPhdPSp0e+SVP0vd+UWICfCvT2tQktoaRBZqAoCJVHcLbW3IRW1FCI9w=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

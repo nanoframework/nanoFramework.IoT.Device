@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.43\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Hardware.Esp32.2.0.0-preview.9\lib\netnano1.0\nanoFramework.Hardware.Esp32.dll</HintPath>
@@ -59,7 +59,7 @@
       <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Threading.2.0.0-preview.8\lib\netnano1.0\System.Threading.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Threading.2.0.0-preview.9\lib\netnano1.0\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

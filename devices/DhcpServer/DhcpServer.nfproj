@@ -57,13 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.43\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.2.0.0-preview.10\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Collections.2.0.0-preview.11\lib\netnano1.0\nanoFramework.System.Collections.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Collections.2.0.0-preview.13\lib\netnano1.0\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Text, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Text.2.0.0-preview.13\lib\netnano1.0\nanoFramework.System.Text.dll</HintPath>
@@ -75,7 +75,7 @@
       <HintPath>packages\nanoFramework.System.Net.2.0.0-preview.6\lib\netnano1.0\System.Net.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Threading.2.0.0-preview.8\lib\netnano1.0\System.Threading.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Threading.2.0.0-preview.9\lib\netnano1.0\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

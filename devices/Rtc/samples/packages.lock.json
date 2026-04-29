@@ -4,21 +4,21 @@
     ".NETnanoFramework,Version=v1.0": {
       "nanoFramework.CoreLibrary": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.39, 2.0.0-preview.39]",
-        "resolved": "2.0.0-preview.39",
-        "contentHash": "rkXOwaEq6GIm+dKZ7ICMrG23mln482vRXyDtaNfAeBpgGcgiuFJrbw7w0TTZ2DNhw1CUWlCWZZbXi6+/NHdpLg=="
+        "requested": "[2.0.0-preview.43, 2.0.0-preview.43]",
+        "resolved": "2.0.0-preview.43",
+        "contentHash": "ijOdswxNI+zhN7MrRMjJPe7pAVhqARvpEOFKUKH6D18NUS3CCQ9+IoyVs3zJhmmBk53YmAErFAdCnAWLVxUu8Q=="
       },
       "nanoFramework.Iot.Device.Common.NumberHelper": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.29, 2.0.0-preview.29]",
-        "resolved": "2.0.0-preview.29",
-        "contentHash": "UNobp9b4oMrecByPjQo5R6Iz4PRsJ7XIzo+P51Y5BhG5lm7Nba0Oq1qgtwIl1M6bFXDPgIWUvR4R/0PuCpLMtw=="
+        "requested": "[2.0.0-preview.42, 2.0.0-preview.42]",
+        "resolved": "2.0.0-preview.42",
+        "contentHash": "dTi2Nf0gqDqahUeeqvqhhN6qjTWZ4RXk3N0drcN5KXRqewWSaBkC1jZOIoKpA2E8Rwzw4Ja2sgPgwUKW25026A=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
-        "resolved": "2.0.0-preview.9",
-        "contentHash": "IbrxYRlyneBnkZDorE3dGC76P/fLAXwlPPY1ndFa/4sPm54qyZC+fFHZXqrFEKU1TKr5f7OJT/qYbD7PzRN7AA=="
+        "requested": "[2.0.0-preview.10, 2.0.0-preview.10]",
+        "resolved": "2.0.0-preview.10",
+        "contentHash": "q2EBF7dvA8agT8OtMR9zCiY4SARKlyCBCWVVwHxMcoBBIKVRhRHsBD8FSAYtWbpqZbK+Ls0G88Q6jfsVxxzmBg=="
       },
       "nanoFramework.UnitsNet.Temperature": {
         "type": "Direct",

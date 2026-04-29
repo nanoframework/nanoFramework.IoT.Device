@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.43\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32.Rmt, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Hardware.Esp32.Rmt.3.0.0-preview.12\lib\netnano1.0\nanoFramework.Hardware.Esp32.Rmt.dll</HintPath>
@@ -61,13 +61,13 @@
       <HintPath>packages\nanoFramework.System.Device.Gpio.2.0.0-preview.12\lib\netnano1.0\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.I2c.2.0.0-preview.9\lib\netnano1.0\System.Device.I2c.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.I2c.2.0.0-preview.10\lib\netnano1.0\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Model.2.0.0-preview.29\lib\System.Device.Model.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Model.2.0.0-preview.42\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Stopwatch, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.34\lib\System.Diagnostics.Stopwatch.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.42\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>

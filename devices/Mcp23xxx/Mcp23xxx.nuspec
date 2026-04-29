@@ -19,8 +19,8 @@
     <summary>Iot.Device.Mcp23xxx assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mcp23xxx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
+      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
     </dependencies>

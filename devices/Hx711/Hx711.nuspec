@@ -18,8 +18,8 @@
     <description>This package includes the .NET IoT Core binding for M5Stack WEIGTH module for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf m5stack weight loadcell adc</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.12" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
+      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.13" />
     </dependencies>
   </metadata>
   <files>

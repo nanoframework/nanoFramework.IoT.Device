@@ -21,7 +21,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.2.0.0-preview.43\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.2.0.0-preview.10\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
@@ -30,7 +30,7 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.Gpio.2.0.0-preview.12\lib\netnano1.0\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Model.2.0.0-preview.29\lib\System.Device.Model.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Model.2.0.0-preview.42\lib\System.Device.Model.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

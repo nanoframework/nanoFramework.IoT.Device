@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.39\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.43\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.TestFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.TestFramework.4.0.0-preview.47\lib\nanoFramework.TestFramework.dll</HintPath>
