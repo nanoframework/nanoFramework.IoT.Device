@@ -19,8 +19,8 @@
     <summary>System.Buffers.Helpers assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot BitConverter</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.29" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.42" />
     </dependencies>
   </metadata>
   <files>

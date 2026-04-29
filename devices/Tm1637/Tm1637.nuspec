@@ -19,7 +19,7 @@
     <summary>Iot.Device.Tm1637 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Tm1637</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
       <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.22" />
       <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />

@@ -19,10 +19,10 @@
     <summary>Iot.Device.DnsServer assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf DNS </tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.39" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
       <dependency id="nanoFramework.System.Net" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.5" />
+      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.13" />
+      <dependency id="nanoFramework.Logging" version="2.0.0-preview.6" />
     </dependencies>
   </metadata>
   <files>
