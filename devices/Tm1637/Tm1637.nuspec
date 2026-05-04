@@ -20,9 +20,9 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Tm1637</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
-      <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.22" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
+      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.23" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.14" />
       <dependency id="Nerdbank.GitVersioning" version="3.9.50" />
     </dependencies>
   </metadata>

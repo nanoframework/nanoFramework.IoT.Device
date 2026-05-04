@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Drv8825 Drv8825</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.UnitsNet.Angle" version="5.77.0-preview.5" />
     </dependencies>
   </metadata>

@@ -23,7 +23,7 @@
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.13" />
       <dependency id="nanoFramework.UnitsNet.Angle" version="5.77.0-preview.5" />
       <dependency id="nanoFramework.UnitsNet.Speed" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.18" />
     </dependencies>
   </metadata>
   <files>

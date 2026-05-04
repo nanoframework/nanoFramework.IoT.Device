@@ -20,10 +20,10 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.DhcpServer</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
-      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.13" />
-      <dependency id="nanoFramework.System.Net" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.13" />
+      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.15" />
+      <dependency id="nanoFramework.System.Net" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.15" />
       <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.9" />
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.13" />
     </dependencies>
