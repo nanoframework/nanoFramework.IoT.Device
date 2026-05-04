@@ -21,9 +21,9 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.13" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
-      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.13" />
-      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.13" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.18" />
+      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.15" />
+      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.15" />
     </dependencies>
   </metadata>
   <files>

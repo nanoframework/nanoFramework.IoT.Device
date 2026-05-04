@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Swarm</tags>
     <dependencies>
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.13" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.14" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.18" />
     </dependencies>
   </metadata>
   <files>

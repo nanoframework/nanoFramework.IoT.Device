@@ -20,9 +20,9 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.RotaryEncoder</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.42" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.10" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.12" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.46" />
+      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
     </dependencies>
   </metadata>

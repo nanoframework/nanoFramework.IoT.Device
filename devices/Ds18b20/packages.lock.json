@@ -10,9 +10,9 @@
       },
       "nanoFramework.Device.OneWire": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
-        "resolved": "2.0.0-preview.7",
-        "contentHash": "q+VAM+S4CYnDG2AyD1SgRQthUYoY92GtbjLQeJNaoVRffFvBkRq3a/dz6FgnxVbveGAYD22cK7EMj4xWzMlISg=="
+        "requested": "[2.0.0-preview.8, 2.0.0-preview.8]",
+        "resolved": "2.0.0-preview.8",
+        "contentHash": "1gwSbKb+8lYmjkr0vrgV4XJErnYJ+/EJr8XQN62NwU+DWSUJRTl7zYf+vDGBVLdJpUBYO89iKiubfF4P76UKzQ=="
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",

@@ -38,7 +38,7 @@
       <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.43\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Graphics.Core.2.0.0-preview.17\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
+      <HintPath>packages\nanoFramework.Graphics.Core.2.0.0-preview.19\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Pwm, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Pwm.2.0.0-preview.10\lib\netnano1.0\System.Device.Pwm.dll</HintPath>
