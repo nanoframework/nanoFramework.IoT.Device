@@ -33,7 +33,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.2.0.0-preview.42\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ft6xx6x, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.2.0.0-preview.41\lib\Iot.Device.Ft6xx6x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.2.0.0-preview.50\lib\Iot.Device.Ft6xx6x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Mpu6886, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Mpu6886.2.0.0-preview.45\lib\Iot.Device.Mpu6886.dll</HintPath>
