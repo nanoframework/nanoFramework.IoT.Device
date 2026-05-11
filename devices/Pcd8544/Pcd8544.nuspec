@@ -19,10 +19,10 @@
     <summary>Iot.Device.Pcd8544 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Display.Pcd8544</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="2.0.0-preview.48" />
-      <dependency id="nanoFramework.System.Drawing" version="2.0.0-preview.42" />
-      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.13" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+      <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="2.0.0-preview.56" />
+      <dependency id="nanoFramework.System.Drawing" version="2.0.0-preview.54" />
+      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.14" />
     </dependencies>

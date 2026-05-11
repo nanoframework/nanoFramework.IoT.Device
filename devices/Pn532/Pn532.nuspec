@@ -19,16 +19,16 @@
     <summary>Iot.Device.Pn532 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Pn532</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.42" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.12" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.14" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
+      <dependency id="nanoFramework.Logging" version="2.0.0-preview.18" />
+      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
       <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.10" />
       <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.14" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.18" />
-      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.15" />
-      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.15" />
+      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.23" />
+      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
+      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.18" />
     </dependencies>
   </metadata>
   <files>
