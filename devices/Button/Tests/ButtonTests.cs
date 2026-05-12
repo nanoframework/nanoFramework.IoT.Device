@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -41,9 +41,9 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -76,9 +76,9 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -109,9 +109,9 @@ namespace Tests
             // Wait longer than default holding threshold milliseconds, for the click to be recognized as a holding event.
             button.PressThenReleaseButton(TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds + 100));
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, true);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, true);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -146,9 +146,9 @@ namespace Tests
             // Wait longer than default holding threshold milliseconds, for the click to be recognized as a holding event.
             button.PressThenReleaseButton(TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds + 100));
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, true);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, true);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -179,9 +179,9 @@ namespace Tests
             // Wait longer than default holding threshold milliseconds, for the press to be recognized as a holding event.
             button.PressThenReleaseButton(TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds + 100));
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -216,9 +216,9 @@ namespace Tests
             // Wait longer than default holding threshold milliseconds, for the press to be recognized as a holding event.
             button.PressThenReleaseButton(TimeSpan.FromMilliseconds(DefaultHoldingMilliseconds + 100));
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -253,9 +253,9 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, true);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, true);
         }
 
         [TestMethod]
@@ -295,9 +295,9 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, true);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, true);
         }
 
         [TestMethod]
@@ -333,9 +333,9 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -375,9 +375,9 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, true);
-            Assert.Equal(Holding, false);
-            Assert.Equal(DoublePressed, false);
+            Assert.AreEqual(Pressed, true);
+            Assert.AreEqual(Holding, false);
+            Assert.AreEqual(DoublePressed, false);
         }
 
         [TestMethod]
@@ -400,7 +400,7 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, false);
+            Assert.AreEqual(Pressed, false);
         }
 
         [TestMethod]
@@ -428,7 +428,7 @@ namespace Tests
 
             button.PressThenReleaseButton();
 
-            Assert.Equal(Pressed, false);
+            Assert.AreEqual(Pressed, false);
         }
 
         [TestMethod]
@@ -444,7 +444,7 @@ namespace Tests
             Type exceptionType = typeof(ArgumentException);
 
             // Act & Assert
-            Assert.Throws(exceptionType, instantiation);
+            Assert.ThrowsException(exceptionType, instantiation);
         }
 
         [TestMethod]
@@ -472,7 +472,7 @@ namespace Tests
             button.PressThenReleaseButton();
 
             // Assert
-            Assert.Equal(actualPressCount, expectedPressCount);
+            Assert.AreEqual(actualPressCount, expectedPressCount);
         }
 
         [TestMethod]
@@ -500,7 +500,7 @@ namespace Tests
             button.PressThenReleaseButton();
 
             // Assert
-            Assert.Equal(actualPressCount, expectedPressCount);
+            Assert.AreEqual(actualPressCount, expectedPressCount);
         }
     }
 }

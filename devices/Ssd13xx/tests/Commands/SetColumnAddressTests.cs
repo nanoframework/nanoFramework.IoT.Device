@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -16,7 +16,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetColumnAddress setColumnAddress = new SetColumnAddress();
             byte[] actualBytes = setColumnAddress.GetBytes();
-            Assert.Equal(new byte[] { 0x21, 0x00, 0x7F }, actualBytes);
+            Assert.AreEqual(new byte[] { 0x21, 0x00, 0x7F }, actualBytes);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetColumnAddress setColumnAddress = new SetColumnAddress(startAddress, endAddress);
             byte[] actualBytes = setColumnAddress.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace Iot.Device.Ssd13xx.Tests
         //[InlineData(0xFF, 0xFF)]
         public void Invalid_Addresses(byte startAddress, byte endAddress)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
             {
                 SetColumnAddress setColumnAddress = new SetColumnAddress(startAddress, endAddress);
             });

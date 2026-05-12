@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -16,7 +16,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetVerticalScrollArea setVerticalScrollArea = new SetVerticalScrollArea();
             byte[] actualBytes = setVerticalScrollArea.GetBytes();
-            Assert.Equal(new byte[] { 0xA3, 0x00, 0x40 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xA3, 0x00, 0x40 }, actualBytes);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetVerticalScrollArea setVerticalScrollArea = new SetVerticalScrollArea(topFixedAreaRows, scrollAreaRows);
             byte[] actualBytes = setVerticalScrollArea.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace Iot.Device.Ssd13xx.Tests
         //[InlineData(0xAA, 0x99)]
         public void Invalid_HorizontalScrollSetup(byte topFixedAreaRows, byte scrollAreaRows)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
             {
                 SetVerticalScrollArea setVerticalScrollArea = new SetVerticalScrollArea(topFixedAreaRows, scrollAreaRows);
             });

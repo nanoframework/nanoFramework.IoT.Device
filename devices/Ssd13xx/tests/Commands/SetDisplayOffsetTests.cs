@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -16,7 +16,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetDisplayOffset setDisplayOffset = new SetDisplayOffset();
             byte[] actualBytes = setDisplayOffset.GetBytes();
-            Assert.Equal(new byte[] { 0xD3, 0x00 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xD3, 0x00 }, actualBytes);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetDisplayOffset setDisplayOffset = new SetDisplayOffset(displayOffset);
             byte[] actualBytes = setDisplayOffset.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace Iot.Device.Ssd13xx.Tests
         //[InlineData(0xFF)]
         public void Invalid_DisplayOffset(byte displayOffset)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
              {
                  SetDisplayOffset setDisplayOffset = new SetDisplayOffset(displayOffset);
              });

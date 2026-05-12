@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -17,7 +17,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetMemoryAddressingMode setMemoryAddressingMode = new SetMemoryAddressingMode();
             byte[] actualBytes = setMemoryAddressingMode.GetBytes();
-            Assert.Equal(new byte[] { 0x20, 0x02 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0x20, 0x02 }, actualBytes);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetMemoryAddressingMode setMemoryAddressingMode = new SetMemoryAddressingMode(memoryAddressingMode);
             byte[] actualBytes = setMemoryAddressingMode.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
     }
 }

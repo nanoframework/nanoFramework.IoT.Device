@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ssd13xx.Commands;
@@ -90,7 +90,7 @@ namespace Iot.Device.Ssd13xx.Tests
                 endPageAddress,
                 verticalScrollingOffset);
             byte[] actualBytes = continuousVerticalAndHorizontalScrollSetup.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
         
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -17,7 +17,7 @@ namespace Iot.Device.Ssd13xx.Tests
             SetHigherColumnStartAddressForPageAddressingMode setHigherColumnStartAddressForPageAddressingMode =
                 new SetHigherColumnStartAddressForPageAddressingMode();
             byte[] actualBytes = setHigherColumnStartAddressForPageAddressingMode.GetBytes();
-            Assert.Equal(new byte[] { 0x10 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0x10 }, actualBytes);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Iot.Device.Ssd13xx.Tests
             SetHigherColumnStartAddressForPageAddressingMode setHigherColumnStartAddressForPageAddressingMode =
                 new SetHigherColumnStartAddressForPageAddressingMode(higherColumnStartAddress);
             byte[] actualBytes = setHigherColumnStartAddressForPageAddressingMode.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace Iot.Device.Ssd13xx.Tests
         //[InlineData(0xFF)]
         public void Invalid_HigherColumnStartAddress(byte higherColumnStartAddress)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
              {
                  SetHigherColumnStartAddressForPageAddressingMode setHigherColumnStartAddressForPageAddressingMode =
                  new SetHigherColumnStartAddressForPageAddressingMode(higherColumnStartAddress);

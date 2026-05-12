@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Common;
@@ -44,8 +44,8 @@ namespace Iot.Device.NFUnitTest
         [TestMethod]
         public void Constructor_Cannot_Create_With_Null_I2C_Device()
         {
-            Assert.Throws(typeof(ArgumentNullException), () => new Ds1621.Ds1621(null));
-            Assert.Throws(typeof(ArgumentNullException), () => new Ds1621.Ds1621(null, MeasurementMode.Single));
+            Assert.ThrowsException(typeof(ArgumentNullException), () => new Ds1621.Ds1621(null));
+            Assert.ThrowsException(typeof(ArgumentNullException), () => new Ds1621.Ds1621(null, MeasurementMode.Single));
         }
 
         #region Temperature Conversion
@@ -59,38 +59,38 @@ namespace Iot.Device.NFUnitTest
 
             temperature = Temperature.FromDegreesCelsius(125);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0x7D, packResult[0]);
-            Assert.Equal((byte)0x00, packResult[1]);
+            Assert.AreEqual((byte)0x7D, packResult[0]);
+            Assert.AreEqual((byte)0x00, packResult[1]);
 
             temperature = Temperature.FromDegreesCelsius(25);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0x19, packResult[0]);
-            Assert.Equal((byte)0x00, packResult[1]);
+            Assert.AreEqual((byte)0x19, packResult[0]);
+            Assert.AreEqual((byte)0x00, packResult[1]);
 
             temperature = Temperature.FromDegreesCelsius(0.5);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0x00, packResult[0]);
-            Assert.Equal((byte)0x80, packResult[1]);
+            Assert.AreEqual((byte)0x00, packResult[0]);
+            Assert.AreEqual((byte)0x80, packResult[1]);
 
             temperature = Temperature.FromDegreesCelsius(0);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0x00, packResult[0]);
-            Assert.Equal((byte)0x00, packResult[1]);
+            Assert.AreEqual((byte)0x00, packResult[0]);
+            Assert.AreEqual((byte)0x00, packResult[1]);
 
             temperature = Temperature.FromDegreesCelsius(-0.5);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0xFF, packResult[0]);
-            Assert.Equal((byte)0x80, packResult[1]);
+            Assert.AreEqual((byte)0xFF, packResult[0]);
+            Assert.AreEqual((byte)0x80, packResult[1]);
 
             temperature = Temperature.FromDegreesCelsius(-25);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0xE7, packResult[0]);
-            Assert.Equal((byte)0x00, packResult[1]);
+            Assert.AreEqual((byte)0xE7, packResult[0]);
+            Assert.AreEqual((byte)0x00, packResult[1]);
 
             temperature = Temperature.FromDegreesCelsius(-55);
             packResult = Ds1621.Ds1621.PackTemperature(temperature);
-            Assert.Equal((byte)0xC9, packResult[0]);
-            Assert.Equal((byte)0x00, packResult[1]);
+            Assert.AreEqual((byte)0xC9, packResult[0]);
+            Assert.AreEqual((byte)0x00, packResult[1]);
         }
 
         // Check UnpackTemperature against the example data provided in the datasheet.
@@ -104,37 +104,37 @@ namespace Iot.Device.NFUnitTest
             temperatureMSB = 0x7D;
             temperatureLSB = 0x00;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(125, unpackResult.DegreesCelsius);
+            Assert.AreEqual(125, unpackResult.DegreesCelsius);
 
             temperatureMSB = 0x19;
             temperatureLSB = 0x00;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(25, unpackResult.DegreesCelsius);
+            Assert.AreEqual(25, unpackResult.DegreesCelsius);
 
             temperatureMSB = 0x00;
             temperatureLSB = 0x80;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(0.5, unpackResult.DegreesCelsius);
+            Assert.AreEqual(0.5, unpackResult.DegreesCelsius);
 
             temperatureMSB = 0x00;
             temperatureLSB = 0x00;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(0, unpackResult.DegreesCelsius);
+            Assert.AreEqual(0, unpackResult.DegreesCelsius);
 
             temperatureMSB = 0xFF;
             temperatureLSB = 0x80;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(-0.5, unpackResult.DegreesCelsius);
+            Assert.AreEqual(-0.5, unpackResult.DegreesCelsius);
 
             temperatureMSB = 0xE7;
             temperatureLSB = 0x00;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(-25, unpackResult.DegreesCelsius);
+            Assert.AreEqual(-25, unpackResult.DegreesCelsius);
 
             temperatureMSB = 0xC9;
             temperatureLSB = 0x00;
             unpackResult = Ds1621.Ds1621.UnpackTemperature(temperatureMSB, temperatureLSB);
-            Assert.Equal(-55, unpackResult.DegreesCelsius);
+            Assert.AreEqual(-55, unpackResult.DegreesCelsius);
         }
 
         [TestMethod]
@@ -188,7 +188,7 @@ namespace Iot.Device.NFUnitTest
                     }
                 }
 
-                Assert.Equal(expectedTemperature, outputTemperature.DegreesCelsius);
+                Assert.AreEqual(expectedTemperature, outputTemperature.DegreesCelsius);
             }
         }
 
@@ -200,25 +200,25 @@ namespace Iot.Device.NFUnitTest
         public void Get_And_Set_LowTemperatureAlarm_Property()
         {
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(-55);
-            Assert.Equal(-55, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(-55, _thermometer.LowTemperatureAlarm.DegreesCelsius);
 
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(-25);
-            Assert.Equal(-25, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(-25, _thermometer.LowTemperatureAlarm.DegreesCelsius);
 
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(-0.5);
-            Assert.Equal(-0.5, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(-0.5, _thermometer.LowTemperatureAlarm.DegreesCelsius);
 
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(0);
-            Assert.Equal(0, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(0, _thermometer.LowTemperatureAlarm.DegreesCelsius);
 
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(0.5);
-            Assert.Equal(0.5, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(0.5, _thermometer.LowTemperatureAlarm.DegreesCelsius);
 
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(25);
-            Assert.Equal(25, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(25, _thermometer.LowTemperatureAlarm.DegreesCelsius);
 
             _thermometer.LowTemperatureAlarm = Temperature.FromDegreesCelsius(125);
-            Assert.Equal(125, _thermometer.LowTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(125, _thermometer.LowTemperatureAlarm.DegreesCelsius);
         }
 
         #endregion
@@ -229,25 +229,25 @@ namespace Iot.Device.NFUnitTest
         public void Get_And_Set_HighTemperatureAlarm_Property()
         {
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(-55);
-            Assert.Equal(-55, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(-55, _thermometer.HighTemperatureAlarm.DegreesCelsius);
 
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(-25);
-            Assert.Equal(-25, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(-25, _thermometer.HighTemperatureAlarm.DegreesCelsius);
 
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(-0.5);
-            Assert.Equal(-0.5, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(-0.5, _thermometer.HighTemperatureAlarm.DegreesCelsius);
 
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(0);
-            Assert.Equal(0, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(0, _thermometer.HighTemperatureAlarm.DegreesCelsius);
 
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(0.5);
-            Assert.Equal(0.5, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(0.5, _thermometer.HighTemperatureAlarm.DegreesCelsius);
 
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(25);
-            Assert.Equal(25, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(25, _thermometer.HighTemperatureAlarm.DegreesCelsius);
 
             _thermometer.HighTemperatureAlarm = Temperature.FromDegreesCelsius(125);
-            Assert.Equal(125, _thermometer.HighTemperatureAlarm.DegreesCelsius);
+            Assert.AreEqual(125, _thermometer.HighTemperatureAlarm.DegreesCelsius);
         }
 
         #endregion
@@ -275,15 +275,15 @@ namespace Iot.Device.NFUnitTest
 
             // Verify flag matches function return.
             PinValue pinValue = _thermometer.OutputPolarity;
-            Assert.True(pinValue == PinValue.High);
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask));
+            Assert.IsTrue(pinValue == PinValue.High);
+            Assert.IsTrue(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask));
 
             _thermometer.OutputPolarity = PinValue.Low;
 
             // Verify flag matches function return.
             pinValue = _thermometer.OutputPolarity;
-            Assert.True(pinValue == PinValue.Low);
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask));
+            Assert.IsTrue(pinValue == PinValue.Low);
+            Assert.IsFalse(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OutputPolarityMask));
         }
 
         #endregion
@@ -311,15 +311,15 @@ namespace Iot.Device.NFUnitTest
 
             // Verify flag matches function return.
             MeasurementMode mode = _thermometer.MeasurementMode;
-            Assert.True(mode == MeasurementMode.Single);
-            Assert.True(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask));
+            Assert.IsTrue(mode == MeasurementMode.Single);
+            Assert.IsTrue(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask));
 
             _thermometer.MeasurementMode = MeasurementMode.Continuous;
 
             // Verify flag matches function return.
             mode = _thermometer.MeasurementMode;
-            Assert.True(mode == MeasurementMode.Continuous);
-            Assert.False(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask));
+            Assert.IsTrue(mode == MeasurementMode.Continuous);
+            Assert.IsFalse(RegisterHelper.RegisterBitIsSet(_i2cDevice, (byte)Register.Configuration, (byte)RegisterMask.OneShotConversionModeMask));
         }
 
         #endregion
