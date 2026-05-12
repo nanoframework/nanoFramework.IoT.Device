@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -15,7 +15,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetMultiplexRatio setMultiplexRatio = new SetMultiplexRatio();
             byte[] actualBytes = setMultiplexRatio.GetBytes();
-            Assert.Equal(new byte[] { 0xA8, 0x3F }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xA8, 0x3F }, actualBytes);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetMultiplexRatio setMultiplexRatio = new SetMultiplexRatio(multiplexRatio);
             byte[] actualBytes = setMultiplexRatio.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         //[Theory]
@@ -40,7 +40,7 @@ namespace Iot.Device.Ssd13xx.Tests
         [TestMethod]
         public void Invalid_MultiplexRatio()
         {
-            Assert.Throws(typeof(ArgumentException), () =>
+            Assert.ThrowsException(typeof(ArgumentException), () =>
             {
                 SetMultiplexRatio setMultiplexRatio = new SetMultiplexRatio(0x0E);
             });

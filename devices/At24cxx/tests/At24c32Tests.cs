@@ -51,15 +51,15 @@ namespace Iot.Device.NFUnitTest
         [TestMethod]
         public void Constructor_Throws_Exception_When_Null_I2C_Device_Is_Passed_As_Parameter()
         {
-            Assert.Throws(typeof(ArgumentNullException), () => new At24c32(null));
+            Assert.ThrowsException(typeof(ArgumentNullException), () => new At24c32(null));
         }
 
         [TestMethod]
         public void Constructor_Has_Correct_Device_Metrics()
         {
-            Assert.Equal(_expectedSize, _eeprom.Size);
-            Assert.Equal(_expectedPageSize, _eeprom.PageSize);
-            Assert.Equal(_expectedPageCount, _eeprom.PageCount);
+            Assert.AreEqual(_expectedSize, _eeprom.Size);
+            Assert.AreEqual(_expectedPageSize, _eeprom.PageSize);
+            Assert.AreEqual(_expectedPageCount, _eeprom.PageCount);
         }
 
         #region Write Byte
@@ -82,24 +82,24 @@ namespace Iot.Device.NFUnitTest
 
                 // Verify write byte returns the expected number of bytes written.
                 uint bytesWritten = _eeprom.WriteByte(address[i], randomValue);
-                Assert.Equal(1, bytesWritten, $"WriteByte reports writing {bytesWritten} byte(s) to address 0x{address[i]:X2}, expected 1 byte to be written.");
+                Assert.AreEqual(1, bytesWritten, $"WriteByte reports writing {bytesWritten} byte(s) to address 0x{address[i]:X2}, expected 1 byte to be written.");
 
                 // Validate data was correctly written.
                 byte valueRead = _eeprom.ReadByte(address[i]);
-                Assert.Equal(randomValue, valueRead, $"ReadByte reports reading {valueRead} from address 0x{address[i]:X2}, expected {randomValue}.");
+                Assert.AreEqual(randomValue, valueRead, $"ReadByte reports reading {valueRead} from address 0x{address[i]:X2}, expected {randomValue}.");
             }
         }
 
         [TestMethod]
         public void WriteByte_Throws_Exception_When_Address_Less_Than_Zero()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.WriteByte(-1, 0));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.WriteByte(-1, 0));
         }
 
         [TestMethod]
         public void WriteByte_Throws_Exception_When_Address_Greater_Than_Eeprom_Size()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.WriteByte(_eeprom.Size + 1, 0));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.WriteByte(_eeprom.Size + 1, 0));
         }
 
         #endregion
@@ -121,14 +121,14 @@ namespace Iot.Device.NFUnitTest
 
             // Verify write returns the expected number of bytes written.
             uint bytesWritten = _eeprom.Write(address, randomData);
-            Assert.Equal(randomData.Length, bytesWritten, $"WriteByte reports writing {bytesWritten} byte(s) at address 0x{address:X2}, expected {randomData.Length} byte(s) to be written.");
+            Assert.AreEqual(randomData.Length, bytesWritten, $"WriteByte reports writing {bytesWritten} byte(s) at address 0x{address:X2}, expected {randomData.Length} byte(s) to be written.");
 
             // Validate data was correctly written.
             byte[] dataRead = _eeprom.Read(address, randomData.Length);
 
             for (int k = 0; k < dataRead.Length; k++)
             {
-                Assert.Equal(randomData[k], dataRead[k], $"{k}");
+                Assert.AreEqual(randomData[k], dataRead[k], $"{k}");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Iot.Device.NFUnitTest
         {
             byte[] data = new byte[16];
 
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Write(-1, data));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Write(-1, data));
         }
 
         [TestMethod]
@@ -145,7 +145,7 @@ namespace Iot.Device.NFUnitTest
         {
             byte[] data = new byte[16];
 
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Write(_eeprom.Size + 1, data));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Write(_eeprom.Size + 1, data));
         }
 
         [TestMethod]
@@ -153,7 +153,7 @@ namespace Iot.Device.NFUnitTest
         {
             byte[] data = new byte[_eeprom.PageSize + 1];
 
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Write(0, data));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Write(0, data));
         }
 
         #endregion
@@ -163,13 +163,13 @@ namespace Iot.Device.NFUnitTest
         [TestMethod]
         public void ReadByte_Throws_Exception_When_Address_Less_Than_Zero()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.ReadByte(-1));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.ReadByte(-1));
         }
 
         [TestMethod]
         public void ReadByte_Throws_Exception_When_Address_Greater_Than_Eeprom_Size()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.ReadByte(_eeprom.Size + 1));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.ReadByte(_eeprom.Size + 1));
         }
 
         #endregion
@@ -179,31 +179,31 @@ namespace Iot.Device.NFUnitTest
         [TestMethod]
         public void Read_Throws_Exception_When_Address_Less_Than_Zero()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(-1, 1));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(-1, 1));
         }
 
         [TestMethod]
         public void Read_Throws_Exception_When_Address_Greater_Than_Eeprom_Size()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(_eeprom.Size + 1, 1));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(_eeprom.Size + 1, 1));
         }
 
         [TestMethod]
         public void Read_Throws_Exception_When_Length_Is_Zero()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(0, 0));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(0, 0));
         }
 
         [TestMethod]
         public void Read_Throws_Exception_When_Length_Is_Less_Than_Zero()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(0, -1));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(0, -1));
         }
 
         [TestMethod]
         public void Read_Throws_Exception_When_Length_Causes_Read_To_Exceed_Addressable_Range()
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(0, _eeprom.Size + 1));
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () => _eeprom.Read(0, _eeprom.Size + 1));
         }
 
         #endregion

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ssd13xx.Commands;
@@ -15,7 +15,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetComOutputScanDirection setComOutputScanDirection = new SetComOutputScanDirection();
             byte[] actualBytes = setComOutputScanDirection.GetBytes();
-            Assert.Equal(new byte[] { 0xC0 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xC0 }, actualBytes);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetComOutputScanDirection setComOutputScanDirection = new SetComOutputScanDirection(normalMode);
             byte[] actualBytes = setComOutputScanDirection.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
     }
 }

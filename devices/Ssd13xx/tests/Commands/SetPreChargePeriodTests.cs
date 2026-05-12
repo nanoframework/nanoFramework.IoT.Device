@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -16,7 +16,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetPreChargePeriod setPreChargePeriod = new SetPreChargePeriod();
             byte[] actualBytes = setPreChargePeriod.GetBytes();
-            Assert.Equal(new byte[] { 0xD9, 0x22 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xD9, 0x22 }, actualBytes);
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetPreChargePeriod setPreChargePeriod = new SetPreChargePeriod(phase1Period, phase2Period);
             byte[] actualBytes = setPreChargePeriod.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace Iot.Device.Ssd13xx.Tests
         //[InlineData(0x10, 0x10)]
         public void Invalid_LowerColumnStartAddress(byte phase1Period, byte phase2Period)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
             {
                 SetPreChargePeriod setPreChargePeriod = new SetPreChargePeriod(phase1Period, phase2Period);
             });

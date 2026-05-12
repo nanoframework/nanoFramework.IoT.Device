@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -16,7 +16,7 @@ namespace Iot
         {
             SetDisplayStartLine setDisplayStartLine = new SetDisplayStartLine();
             byte[] actualBytes = setDisplayStartLine.GetBytes();
-            Assert.Equal(new byte[] { 0x40 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0x40 }, actualBytes);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace Iot
         {
             SetDisplayStartLine setDisplayStartLine = new SetDisplayStartLine(displayStartLine);
             byte[] actualBytes = setDisplayStartLine.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         public void Invalid_DisplayStartLine()
@@ -47,7 +47,7 @@ namespace Iot
         //[InlineData(0xFF)]
         public void Invalid_DisplayStartLine(byte displayStartLine)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
              {
                  SetDisplayStartLine setDisplayStartLine = new SetDisplayStartLine(displayStartLine);
              });

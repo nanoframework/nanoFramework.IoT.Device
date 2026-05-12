@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ssd13xx.Commands;
@@ -14,7 +14,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetContrastControlForBank0 setContrastControlForBank0 = new SetContrastControlForBank0();
             byte[] actualBytes = setContrastControlForBank0.GetBytes();
-            Assert.Equal(new byte[] { 0x81, 0x7F }, actualBytes);
+            Assert.AreEqual(new byte[] { 0x81, 0x7F }, actualBytes);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetContrastControlForBank0 setContrastControlForBank0 = new SetContrastControlForBank0(contrastSetting);
             byte[] actualBytes = setContrastControlForBank0.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
     }
 }

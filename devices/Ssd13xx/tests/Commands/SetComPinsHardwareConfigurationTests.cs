@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Iot.Device.Ssd13xx.Commands;
@@ -15,7 +15,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetComPinsHardwareConfiguration setComPinsHardwareConfiguration = new SetComPinsHardwareConfiguration();
             byte[] actualBytes = setComPinsHardwareConfiguration.GetBytes();
-            Assert.Equal(new byte[] { 0xDA, 0x12 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xDA, 0x12 }, actualBytes);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace Iot.Device.Ssd13xx.Tests
         {
             SetComPinsHardwareConfiguration setComPinsHardwareConfiguration = new SetComPinsHardwareConfiguration(alternativeComPinConfiguration, enableLeftRightRemap);
             byte[] actualBytes = setComPinsHardwareConfiguration.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
     }
 }

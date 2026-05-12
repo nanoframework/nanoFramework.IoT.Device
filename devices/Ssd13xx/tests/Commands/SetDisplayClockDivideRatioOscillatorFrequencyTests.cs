@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -17,7 +17,7 @@ namespace Iot.Device.Ssd13xx.Tests
             SetDisplayClockDivideRatioOscillatorFrequency setDisplayClockDivideRatioOscillatorFrequency =
                 new SetDisplayClockDivideRatioOscillatorFrequency();
             byte[] actualBytes = setDisplayClockDivideRatioOscillatorFrequency.GetBytes();
-            Assert.Equal(new byte[] { 0xD5, 0x80 }, actualBytes);
+            Assert.AreEqual(new byte[] { 0xD5, 0x80 }, actualBytes);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace Iot.Device.Ssd13xx.Tests
             SetDisplayClockDivideRatioOscillatorFrequency setDisplayClockDivideRatioOscillatorFrequency =
                 new SetDisplayClockDivideRatioOscillatorFrequency(displayClockDivideRatio, oscillatorFrequency);
             byte[] actualBytes = setDisplayClockDivideRatioOscillatorFrequency.GetBytes();
-            Assert.Equal(expectedBytes, actualBytes);
+            Assert.AreEqual(expectedBytes, actualBytes);
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace Iot.Device.Ssd13xx.Tests
         //[InlineData(0xFF, 0xFF)]
         public void Invalid_DisplayClockDivideRatioOscillatorFrequency(byte displayClockDivideRatio, byte oscillatorFrequency)
         {
-            Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+            Assert.ThrowsException(typeof(ArgumentOutOfRangeException), () =>
              {
                  SetDisplayClockDivideRatioOscillatorFrequency setDisplayClockDivideRatioOscillatorFrequency =
                      new SetDisplayClockDivideRatioOscillatorFrequency(displayClockDivideRatio, oscillatorFrequency);
