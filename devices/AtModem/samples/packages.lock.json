@@ -10,15 +10,15 @@
       },
       "nanoFramework.Hardware.Esp32": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.10, 2.0.0-preview.10]",
-        "resolved": "2.0.0-preview.10",
-        "contentHash": "Qcn+HKC+4lYkhbldmdHgvCWA10Dp8Q8OAotf7ZGTFR2EiRgJCdl/45E7J0eKC6LGVgrFAP9+cNRGKzda54QWAA=="
+        "requested": "[2.0.0-preview.11, 2.0.0-preview.11]",
+        "resolved": "2.0.0-preview.11",
+        "contentHash": "fmVLjUp9A1lUkGCcbZ4Ava0X1lecefwQv6ji+QQ5vv776hQBv2w4zrNbQIzDNILck6x4sf62mCP7i5ZiWRJ82w=="
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.49, 2.0.0-preview.49]",
-        "resolved": "2.0.0-preview.49",
-        "contentHash": "LRIXFdK3Kbfi5kSDg2MlvLOlTbQowLrVpDUEpsNsL47PXY0patWyUzetXO6K+Q85Wmx/I4df4TUDVE4jkI1Llg=="
+        "requested": "[2.0.0-preview.62, 2.0.0-preview.62]",
+        "resolved": "2.0.0-preview.62",
+        "contentHash": "bBF1HGWtK2/pLWYBalNotSNxQugSMlZQoXZor0guH3lPinT5t/lc+7EypzrhOW64HjC357kcKzSCB5A/KefvMQ=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.23, 2.0.0-preview.23]",
-        "resolved": "2.0.0-preview.23",
-        "contentHash": "4PKEsjDZEoLehT4ikBXm018bn1HG0fwZAkIgTWf9RNZKQevLRP/O1SEtWANqVR9BwjqR6nj5ufDpouiaKKTWtQ=="
+        "requested": "[2.0.0-preview.24, 2.0.0-preview.24]",
+        "resolved": "2.0.0-preview.24",
+        "contentHash": "Now6efyS5UCQUBVO2bIcJin8m/gzH7W3/0NVwn++m9U3lh8JFr0G894Uz/FbjAPrRPckyNlrdDmXmlYau3uw4Q=="
       },
       "nanoFramework.System.Collections": {
         "type": "Direct",
@@ -76,9 +76,9 @@
       },
       "nanoFramework.System.Threading": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
-        "resolved": "2.0.0-preview.9",
-        "contentHash": "5bn3gYlNFhufVyypUUoBbmVZm3l502UikPvS4JbHJZXeEzWpUVBLUlcMOP9s9zFtinZ8F8KJixYFJaDKvvn5UQ=="
+        "requested": "[2.0.0-preview.11, 2.0.0-preview.11]",
+        "resolved": "2.0.0-preview.11",
+        "contentHash": "2o1p17pjNoV2DNZEaO2EKu8L9tR2CSwE558iVxyCUa8EZ4T4C98E9YyZmryXTlTB/wzEfLzB0I5GAVsQGHWKeg=="
       },
       "nanoFramework.UnitsNet.Angle": {
         "type": "Direct",

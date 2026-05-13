@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.10, 2.0.0-preview.10]",
-        "resolved": "2.0.0-preview.10",
-        "contentHash": "q2EBF7dvA8agT8OtMR9zCiY4SARKlyCBCWVVwHxMcoBBIKVRhRHsBD8FSAYtWbpqZbK+Ls0G88Q6jfsVxxzmBg=="
+        "requested": "[2.0.0-preview.11, 2.0.0-preview.11]",
+        "resolved": "2.0.0-preview.11",
+        "contentHash": "bRJzm6P3oDwK78hO8cNncRTfw56c5piXfLWiT+fJBjfegVsfbuvOfXqy3/2odvY2mRZpbDNGjnHTXTsNJk5j+g=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
