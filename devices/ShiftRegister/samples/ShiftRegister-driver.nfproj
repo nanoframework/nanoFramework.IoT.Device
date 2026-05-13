@@ -21,7 +21,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Multiplexing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.54\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.59\lib\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.49\lib\netnano1.0\mscorlib.dll</HintPath>
@@ -33,10 +33,10 @@
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.2.0.0-preview.16\lib\netnano1.0\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Spi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Spi.2.0.0-preview.14\lib\netnano1.0\System.Device.Spi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Spi.2.0.0-preview.16\lib\netnano1.0\System.Device.Spi.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Threading.2.0.0-preview.9\lib\netnano1.0\System.Threading.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Threading.2.0.0-preview.11\lib\netnano1.0\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

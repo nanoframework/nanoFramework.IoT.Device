@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Card</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.18" />
+      <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
       <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
     </dependencies>
   </metadata>
