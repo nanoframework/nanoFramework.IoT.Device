@@ -19,8 +19,8 @@
     <summary>Iot.Device.ServoMotor assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot servo motor</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.43" />
-      <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.10" />
+      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+      <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.11" />
     </dependencies>
   </metadata>
   <files>
