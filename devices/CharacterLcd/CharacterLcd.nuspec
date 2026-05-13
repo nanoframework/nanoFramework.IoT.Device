@@ -20,20 +20,20 @@
     <tags>nanoFramework C# csharp netmf netnf iot lcd</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="2.0.0-preview.54" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="2.0.0-preview.55" />
+      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="2.0.0-preview.59" />
+      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="2.0.0-preview.60" />
       <dependency id="nanoFramework.ResourceManager" version="2.0.0-preview.9" />
       <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
       <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.10" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.14" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.54" />
+      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
+      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
       <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
-      <dependency id="nanoFramework.System.IO.FileSystem" version="2.0.0-preview.15" />
+      <dependency id="nanoFramework.System.IO.FileSystem" version="2.0.0-preview.16" />
       <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.18" />
       <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
       <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
-      <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.9" />
+      <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.11" />
     </dependencies>
   </metadata>
   <files>
