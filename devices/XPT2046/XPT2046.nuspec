@@ -31,11 +31,7 @@ Initial release of XPT2046 touch screen controller driver for nanoFramework.
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.XPT2046.dll" target="lib\Iot.Device.XPT2046.dll" />
-    <file src="bin\Release\Iot.Device.XPT2046.pdb" target="lib\Iot.Device.XPT2046.pdb" />
-    <file src="bin\Release\Iot.Device.XPT2046.pdbx" target="lib\Iot.Device.XPT2046.pdbx" />
-    <file src="bin\Release\Iot.Device.XPT2046.pe" target="lib\Iot.Device.XPT2046.pe" />
-    <file src="bin\Release\Iot.Device.XPT2046.xml" target="lib\Iot.Device.XPT2046.xml" />
+    <file src="bin\Release\Iot.Device.XPT2046.*" target="lib\netnano1.0" />
     <file src="README.md" target="README.md" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

@@ -19,16 +19,14 @@
     <summary>System.Numerics assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot numerics</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\System.Numerics.dll" target="lib\System.Numerics.dll" />
-    <file src="bin\Release\System.Numerics.pdb" target="lib\System.Numerics.pdb" />
-    <file src="bin\Release\System.Numerics.pdbx" target="lib\System.Numerics.pdbx" />
-    <file src="bin\Release\System.Numerics.pe" target="lib\System.Numerics.pe" />
-    <file src="bin\Release\System.Numerics.xml" target="lib\System.Numerics.xml" />
+    <file src="bin\Release\System.Numerics.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

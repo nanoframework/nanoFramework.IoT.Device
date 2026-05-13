@@ -19,25 +19,23 @@
     <summary>Iot.Device.Ccs811 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ccs811</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.UnitsNet.ElectricCurrent" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.Length" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.RelativeHumidity" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.VolumeConcentration" version="5.77.0-preview.5" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
+        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+        <dependency id="nanoFramework.UnitsNet.ElectricCurrent" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.Length" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.RelativeHumidity" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.VolumeConcentration" version="5.77.0-preview.5" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Ccs811.dll" target="lib\Iot.Device.Ccs811.dll" />
-    <file src="bin\Release\Iot.Device.Ccs811.pdb" target="lib\Iot.Device.Ccs811.pdb" />
-    <file src="bin\Release\Iot.Device.Ccs811.pdbx" target="lib\Iot.Device.Ccs811.pdbx" />
-    <file src="bin\Release\Iot.Device.Ccs811.pe" target="lib\Iot.Device.Ccs811.pe" />
-    <file src="bin\Release\Iot.Device.Ccs811.xml" target="lib\Iot.Device.Ccs811.xml" />
+    <file src="bin\Release\Iot.Device.Ccs811.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

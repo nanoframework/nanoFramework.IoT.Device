@@ -19,20 +19,18 @@
     <summary>Iot.Device.SparkFunLcd assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot sparkfun lcd</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
-      <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.24" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
-      <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.Runtime.Events" version="1.10.0" />
+        <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.24" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.SparkFunLcd.dll" target="lib\Iot.Device.SparkFunLcd.dll" />
-    <file src="bin\Release\Iot.Device.SparkFunLcd.pdb" target="lib\Iot.Device.SparkFunLcd.pdb" />
-    <file src="bin\Release\Iot.Device.SparkFunLcd.pdbx" target="lib\Iot.Device.SparkFunLcd.pdbx" />
-    <file src="bin\Release\Iot.Device.SparkFunLcd.pe" target="lib\Iot.Device.SparkFunLcd.pe" />
-    <file src="bin\Release\Iot.Device.SparkFunLcd.xml" target="lib\Iot.Device.SparkFunLcd.xml" />
+    <file src="bin\Release\Iot.Device.SparkFunLcd.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

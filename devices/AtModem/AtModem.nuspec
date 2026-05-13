@@ -20,21 +20,19 @@ This nuget allows to use AT Modem for SMS, calls, network, internal storage, HTT
     <summary>Iot.Device.AtModem assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.AtModem</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.M2Mqtt.Core" version="5.1.212" />
-      <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.24" />
-      <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.Iot.Device.Common.GnssDevice" version="2.0.0-preview.62" />
-      <dependency id="nanoFramework.UnitsNet.ElectricPotential" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.Ratio" version="5.77.0-preview.5" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.M2Mqtt.Core" version="5.1.212" />
+        <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.24" />
+        <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.Iot.Device.Common.GnssDevice" version="2.0.0-preview.62" />
+        <dependency id="nanoFramework.UnitsNet.ElectricPotential" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.Ratio" version="5.77.0-preview.5" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.AtModem.dll" target="lib\Iot.Device.AtModem.dll" />
-    <file src="bin\Release\Iot.Device.AtModem.pdb" target="lib\Iot.Device.AtModem.pdb" />
-    <file src="bin\Release\Iot.Device.AtModem.pdbx" target="lib\Iot.Device.AtModem.pdbx" />
-    <file src="bin\Release\Iot.Device.AtModem.pe" target="lib\Iot.Device.AtModem.pe" />
-    <file src="bin\Release\Iot.Device.AtModem.xml" target="lib\Iot.Device.AtModem.xml" />
+    <file src="bin\Release\Iot.Device.AtModem.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

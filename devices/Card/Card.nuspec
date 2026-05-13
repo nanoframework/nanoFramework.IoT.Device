@@ -19,17 +19,15 @@
     <summary>Iot.Device.Card, Mifare, Ultralight and NDEF assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Card</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
-      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
+        <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Card.dll" target="lib\Iot.Device.Card.dll" />
-    <file src="bin\Release\Iot.Device.Card.pdb" target="lib\Iot.Device.Card.pdb" />
-    <file src="bin\Release\Iot.Device.Card.pdbx" target="lib\Iot.Device.Card.pdbx" />
-    <file src="bin\Release\Iot.Device.Card.pe" target="lib\Iot.Device.Card.pe" />
-    <file src="bin\Release\Iot.Device.Card.xml" target="lib\Iot.Device.Card.xml" />
+    <file src="bin\Release\Iot.Device.Card.*" target="lib\netnano1.0" />
     <file src="Mifare\bin\Release\Iot.Device.Mifare.dll" target="lib\Iot.Device.Mifare.dll" />
     <file src="Mifare\bin\Release\Iot.Device.Mifare.pdb" target="lib\Iot.Device.Mifare.pdb" />
     <file src="Mifare\bin\Release\Iot.Device.Mifare.pdbx" target="lib\Iot.Device.Mifare.pdbx" />

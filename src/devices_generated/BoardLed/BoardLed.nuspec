@@ -19,15 +19,13 @@
     <summary>Iot.Device.BoardLed assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.BoardLed</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.BoardLed.dll" target="lib\Iot.Device.BoardLed.dll" />
-    <file src="bin\Release\Iot.Device.BoardLed.pdb" target="lib\Iot.Device.BoardLed.pdb" />
-    <file src="bin\Release\Iot.Device.BoardLed.pdbx" target="lib\Iot.Device.BoardLed.pdbx" />
-    <file src="bin\Release\Iot.Device.BoardLed.pe" target="lib\Iot.Device.BoardLed.pe" />
-    <file src="bin\Release\Iot.Device.BoardLed.xml" target="lib\Iot.Device.BoardLed.xml" />
+    <file src="bin\Release\Iot.Device.BoardLed.*" target="lib\netnano1.0" />
 
     <file src="README.md" target="docs\" />
     <file src="..\assets\nf-logo.png" target="images" />
