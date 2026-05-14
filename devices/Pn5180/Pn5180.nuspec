@@ -19,22 +19,20 @@
     <summary>Iot.Device.Pn5180 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Pn5180</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
-      <dependency id="nanoFramework.System.IO.Ports" version="1.0.0" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
+        <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
+        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
+        <dependency id="nanoFramework.System.IO.Ports" version="1.0.0" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Pn5180.dll" target="lib\Iot.Device.Pn5180.dll" />
-    <file src="bin\Release\Iot.Device.Pn5180.pdb" target="lib\Iot.Device.Pn5180.pdb" />
-    <file src="bin\Release\Iot.Device.Pn5180.pdbx" target="lib\Iot.Device.Pn5180.pdbx" />
-    <file src="bin\Release\Iot.Device.Pn5180.pe" target="lib\Iot.Device.Pn5180.pe" />
-    <file src="bin\Release\Iot.Device.Pn5180.xml" target="lib\Iot.Device.Pn5180.xml" />
+    <file src="bin\Release\Iot.Device.Pn5180.*" target="lib\netnano1.0" />
     <file src="..\Card\bin\Release\Iot.Device.Card.dll" target="lib\Iot.Device.Card.dll" />
     <file src="..\Card\bin\Release\Iot.Device.Card.pdb" target="lib\Iot.Device.Card.pdb" />
     <file src="..\Card\bin\Release\Iot.Device.Card.pdbx" target="lib\Iot.Device.Card.pdbx" />

@@ -19,19 +19,17 @@
     <summary>Iot.Device.Modbus assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Modbus</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
-      <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.23" />
-      <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
+        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.23" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+        <dependency id="nanoFramework.Logging" version="2.0.0-preview.19" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Modbus.dll" target="lib\Iot.Device.Modbus.dll" />
-    <file src="bin\Release\Iot.Device.Modbus.pdb" target="lib\Iot.Device.Modbus.pdb" />
-    <file src="bin\Release\Iot.Device.Modbus.pdbx" target="lib\Iot.Device.Modbus.pdbx" />
-    <file src="bin\Release\Iot.Device.Modbus.pe" target="lib\Iot.Device.Modbus.pe" />
-    <file src="bin\Release\Iot.Device.Modbus.xml" target="lib\Iot.Device.Modbus.xml" />
+    <file src="bin\Release\Iot.Device.Modbus.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

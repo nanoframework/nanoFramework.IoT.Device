@@ -18,16 +18,14 @@
     <description>This package includes the .NET IoT Core binding for M5Stack WEIGTH module for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf m5stack weight loadcell adc</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Hx711.dll" target="lib\Iot.Device.Hx711.dll" />
-    <file src="bin\Release\Iot.Device.Hx711.pdb" target="lib\Iot.Device.Hx711.pdb" />
-    <file src="bin\Release\Iot.Device.Hx711.pdbx" target="lib\Iot.Device.Hx711.pdbx" />
-    <file src="bin\Release\Iot.Device.Hx711.pe" target="lib\Iot.Device.Hx711.pe" />
-    <file src="bin\Release\Iot.Device.Hx711.xml" target="lib\Iot.Device.Hx711.xml" />
+    <file src="bin\Release\Iot.Device.Hx711.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

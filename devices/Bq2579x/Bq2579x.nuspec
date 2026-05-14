@@ -19,20 +19,18 @@
     <summary>Iot.Device.Bq25798 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Bq25798 Bq25792</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.54" />
-      <dependency id="nanoFramework.UnitsNet.ElectricCurrent" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.ElectricPotential" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.5" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.54" />
+        <dependency id="nanoFramework.UnitsNet.ElectricCurrent" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.ElectricPotential" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.5" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Bq2579x.dll" target="lib\Iot.Device.Bq2579x.dll" />
-    <file src="bin\Release\Iot.Device.Bq2579x.pdb" target="lib\Iot.Device.Bq2579x.pdb" />
-    <file src="bin\Release\Iot.Device.Bq2579x.pdbx" target="lib\Iot.Device.Bq2579x.pdbx" />
-    <file src="bin\Release\Iot.Device.Bq2579x.pe" target="lib\Iot.Device.Bq2579x.pe" />
-    <file src="bin\Release\Iot.Device.Bq2579x.xml" target="lib\Iot.Device.Bq2579x.xml" />
+    <file src="bin\Release\Iot.Device.Bq2579x.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

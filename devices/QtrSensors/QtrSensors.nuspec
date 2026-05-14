@@ -19,18 +19,16 @@
     <summary>Iot.Device.QtrSensors assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.QtrSensors</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Device.Adc" version="2.0.0-preview.9" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Device.Adc" version="2.0.0-preview.9" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.QtrSensors.dll" target="lib\Iot.Device.QtrSensors.dll" />
-    <file src="bin\Release\Iot.Device.QtrSensors.pdb" target="lib\Iot.Device.QtrSensors.pdb" />
-    <file src="bin\Release\Iot.Device.QtrSensors.pdbx" target="lib\Iot.Device.QtrSensors.pdbx" />
-    <file src="bin\Release\Iot.Device.QtrSensors.pe" target="lib\Iot.Device.QtrSensors.pe" />
-    <file src="bin\Release\Iot.Device.QtrSensors.xml" target="lib\Iot.Device.QtrSensors.xml" />
+    <file src="bin\Release\Iot.Device.QtrSensors.*" target="lib\netnano1.0" />
     <file src="readme.md" target="" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />

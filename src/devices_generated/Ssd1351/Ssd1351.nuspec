@@ -19,15 +19,13 @@
     <summary>Iot.Device.Ssd1351 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ssd1351</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Ssd1351.dll" target="lib\Iot.Device.Ssd1351.dll" />
-    <file src="bin\Release\Iot.Device.Ssd1351.pdb" target="lib\Iot.Device.Ssd1351.pdb" />
-    <file src="bin\Release\Iot.Device.Ssd1351.pdbx" target="lib\Iot.Device.Ssd1351.pdbx" />
-    <file src="bin\Release\Iot.Device.Ssd1351.pe" target="lib\Iot.Device.Ssd1351.pe" />
-    <file src="bin\Release\Iot.Device.Ssd1351.xml" target="lib\Iot.Device.Ssd1351.xml" />
+    <file src="bin\Release\Iot.Device.Ssd1351.*" target="lib\netnano1.0" />
 
     <file src="README.md" target="docs\" />
     <file src="..\assets\nf-logo.png" target="images" />

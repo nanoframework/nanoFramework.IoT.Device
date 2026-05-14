@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.[[Assembly]]</id>
@@ -19,15 +19,13 @@
     <summary>[[Assembly]] assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf [[Assembly]]</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="1.10.4-preview.11" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\[[Assembly]].dll" target="lib\[[Assembly]].dll" />
-    <file src="bin\Release\[[Assembly]].pdb" target="lib\[[Assembly]].pdb" />
-    <file src="bin\Release\[[Assembly]].pdbx" target="lib\[[Assembly]].pdbx" />
-    <file src="bin\Release\[[Assembly]].pe" target="lib\[[Assembly]].pe" />
-    <file src="bin\Release\[[Assembly]].xml" target="lib\[[Assembly]].xml" />
+    <file src="bin\Release\[[Assembly]].*" target="lib\netnano1.0" />
 
     <file src="README.md" target="docs\" />
     <file src="..\assets\nf-logo.png" target="images" />

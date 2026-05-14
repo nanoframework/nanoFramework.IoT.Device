@@ -19,16 +19,14 @@
     <summary>Iot.Device.Relay assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot relay m5stack</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Relay.dll" target="lib\Iot.Device.Relay.dll" />
-    <file src="bin\Release\Iot.Device.Relay.pdb" target="lib\Iot.Device.Relay.pdb" />
-    <file src="bin\Release\Iot.Device.Relay.pdbx" target="lib\Iot.Device.Relay.pdbx" />
-    <file src="bin\Release\Iot.Device.Relay.pe" target="lib\Iot.Device.Relay.pe" />
-    <file src="bin\Release\Iot.Device.Relay.xml" target="lib\Iot.Device.Relay.xml" />
+    <file src="bin\Release\Iot.Device.Relay.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

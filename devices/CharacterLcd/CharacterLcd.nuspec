@@ -19,29 +19,27 @@
     <summary>Iot.Device.Ccs811 assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf iot lcd</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Iot.Device.Multiplexing" version="2.0.0-preview.59" />
-      <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="2.0.0-preview.60" />
-      <dependency id="nanoFramework.ResourceManager" version="2.0.0-preview.9" />
-      <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
-      <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
-      <dependency id="nanoFramework.System.IO.FileSystem" version="2.0.0-preview.16" />
-      <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.18" />
-      <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
-      <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
-      <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.11" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.Iot.Device.Multiplexing" version="2.0.0-preview.59" />
+        <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="2.0.0-preview.60" />
+        <dependency id="nanoFramework.ResourceManager" version="2.0.0-preview.9" />
+        <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
+        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
+        <dependency id="nanoFramework.System.IO.FileSystem" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.18" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+        <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
+        <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.11" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.CharacterLcd.dll" target="lib\Iot.Device.CharacterLcd.dll" />
-    <file src="bin\Release\Iot.Device.CharacterLcd.pdb" target="lib\Iot.Device.CharacterLcd.pdb" />
-    <file src="bin\Release\Iot.Device.CharacterLcd.pdbx" target="lib\Iot.Device.CharacterLcd.pdbx" />
-    <file src="bin\Release\Iot.Device.CharacterLcd.pe" target="lib\Iot.Device.CharacterLcd.pe" />
-    <file src="bin\Release\Iot.Device.CharacterLcd.xml" target="lib\Iot.Device.CharacterLcd.xml" />
+    <file src="bin\Release\Iot.Device.CharacterLcd.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

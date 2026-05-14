@@ -18,18 +18,16 @@
     <description>This package includes the .NET nanoFramework binding Ws28xx (specific for ESP32 devices) for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf esp32 iot ws28xx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.17" />
-      <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
-      <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.17" />
+        <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
+        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.23" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Ws28xx.Esp32.dll" target="lib\Iot.Device.Ws28xx.Esp32.dll" />
-    <file src="bin\Release\Iot.Device.Ws28xx.Esp32.pdb" target="lib\Iot.Device.Ws28xx.Esp32.pdb" />
-    <file src="bin\Release\Iot.Device.Ws28xx.Esp32.pdbx" target="lib\Iot.Device.Ws28xx.Esp32.pdbx" />
-    <file src="bin\Release\Iot.Device.Ws28xx.Esp32.pe" target="lib\Iot.Device.Ws28xx.Esp32.pe" />
-    <file src="bin\Release\Iot.Device.Ws28xx.Esp32.xml" target="lib\Iot.Device.Ws28xx.Esp32.xml" />
+    <file src="bin\Release\Iot.Device.Ws28xx.Esp32.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

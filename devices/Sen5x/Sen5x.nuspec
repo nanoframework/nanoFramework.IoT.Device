@@ -18,20 +18,18 @@
     <description>This package contains a driver to communicate with the Sen5x via the UART interface.</description>
     <tags>nanoFramework C# csharp netnf Sen5x</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
-      <dependency id="nanoFramework.UnitsNet.MassConcentration" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.RelativeHumidity" version="5.77.0-preview.5" />
-      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.5" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.54" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.UnitsNet.MassConcentration" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.RelativeHumidity" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.5" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.Sen5x.dll" target="lib\Iot.Device.Sen5x.dll" />
-    <file src="bin\Release\Iot.Device.Sen5x.pdb" target="lib\Iot.Device.Sen5x.pdb" />
-    <file src="bin\Release\Iot.Device.Sen5x.pdbx" target="lib\Iot.Device.Sen5x.pdbx" />
-    <file src="bin\Release\Iot.Device.Sen5x.pe" target="lib\Iot.Device.Sen5x.pe" />
-    <file src="bin\Release\Iot.Device.Sen5x.xml" target="lib\Iot.Device.Sen5x.xml" />
+    <file src="bin\Release\Iot.Device.Sen5x.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />

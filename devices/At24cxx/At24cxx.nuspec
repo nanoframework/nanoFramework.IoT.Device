@@ -19,16 +19,14 @@
     <summary>Iot.Device.At24cxx assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.At24cxx</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-      <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+      <group targetFramework=".NETnanoFramework1.0">
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Iot.Device.At24cxx.dll" target="lib\Iot.Device.At24cxx.dll" />
-    <file src="bin\Release\Iot.Device.At24cxx.pdb" target="lib\Iot.Device.At24cxx.pdb" />
-    <file src="bin\Release\Iot.Device.At24cxx.pdbx" target="lib\Iot.Device.At24cxx.pdbx" />
-    <file src="bin\Release\Iot.Device.At24cxx.pe" target="lib\Iot.Device.At24cxx.pe" />
-    <file src="bin\Release\Iot.Device.At24cxx.xml" target="lib\Iot.Device.At24cxx.xml" />
+    <file src="bin\Release\Iot.Device.At24cxx.*" target="lib\netnano1.0" />
     <file src="README.md" target="docs\" />
     <file src="..\..\assets\nf-logo.png" target="images" />
     <file src="..\..\LICENSE.md" target="" />
