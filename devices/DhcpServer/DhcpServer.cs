@@ -240,23 +240,17 @@ namespace Iot.Device.DhcpServer
                                     break;
                                 }
 
-                                byte[] yourIp;
+                                byte[] yourIp = null;
 
                                 // Do we have an option asking for a specific IP address?
                                 var reqIp = dhcpReq.RequestedIpAddress;
-                                if (reqIp != new IPAddress(0))
+                                if (reqIp != new IPAddress(0) && _dhcpIpList.Contains(reqIp))
                                 {
-                                    // We do have a request for an IP, maybe it was connected before
-                                    if (_dhcpIpList.Contains(reqIp))
-                                    {
-                                        yourIp = reqIp.GetAddressBytes();
-                                    }
-                                    else
-                                    {
-                                        yourIp = GetFirstAvailableIp();
-                                    }
+                                    // Client was connected before and still holds a valid lease
+                                    yourIp = reqIp.GetAddressBytes();
                                 }
-                                else
+
+                                if (yourIp == null)
                                 {
                                     yourIp = GetFirstAvailableIp();
                                 }
@@ -277,11 +271,22 @@ namespace Iot.Device.DhcpServer
                                     {
                                         Debug.WriteLine("Received REQUEST without ciaddr, client is INIT-REBOOT");
 
-                                        if (!_dhcpIpList.Contains(dhcpReq.RequestedIpAddress))
+                                        lock (_dhcpListLock)
                                         {
-                                            _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
-                                            _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
-                                            _dhcpLastRequest.Add(DateTime.UtcNow);
+                                            int existingIdx = _dhcpIpList.IndexOf(dhcpReq.RequestedIpAddress);
+
+                                            if (existingIdx >= 0)
+                                            {
+                                                // Refresh the lease timestamp so the client's reboot does
+                                                // not cause the lease to expire prematurely
+                                                _dhcpLastRequest[existingIdx] = DateTime.UtcNow;
+                                            }
+                                            else
+                                            {
+                                                _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
+                                                _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
+                                                _dhcpLastRequest.Add(DateTime.UtcNow);
+                                            }
                                         }
 
                                         _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
@@ -334,6 +339,24 @@ namespace Iot.Device.DhcpServer
                                 else if (serverIdentifier.Equals(_ipAddress))
                                 {
                                     Debug.WriteLine("Received REQUEST with server identifier, client is SELECTING");
+
+                                    // Track the confirmed lease so INIT-REBOOT and RENEW can find it.
+                                    // This must be done here; DISCOVER only offers an IP without committing.
+                                    lock (_dhcpListLock)
+                                    {
+                                        int existingIdx = _dhcpIpList.IndexOf(dhcpReq.RequestedIpAddress);
+
+                                        if (existingIdx >= 0)
+                                        {
+                                            _dhcpLastRequest[existingIdx] = DateTime.UtcNow;
+                                        }
+                                        else
+                                        {
+                                            _dhcpIpList.Add(dhcpReq.RequestedIpAddress);
+                                            _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
+                                            _dhcpLastRequest.Add(DateTime.UtcNow);
+                                        }
+                                    }
 
                                     _sender.Send(MessageBuilder.CreateAck(dhcpReq, _ipAddress, dhcpReq.RequestedIpAddress, _mask, _options).GetBytes());
                                 }
