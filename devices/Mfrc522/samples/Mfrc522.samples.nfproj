@@ -22,6 +22,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Card\Mifare\Mifare.nfproj" />
+    <ProjectReference Include="..\..\Card\Ndef\Ndef.nfproj" />
+    <ProjectReference Include="..\..\Card\Ultralight\Ultralight.nfproj" />
     <ProjectReference Include="..\Mfrc522.nfproj" />
   </ItemGroup>
   <ItemGroup>

@@ -100,6 +100,10 @@
   <ItemGroup>
     <Content Include="packages.lock.json" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Card\Mifare\Mifare.nfproj" />
+    <ProjectReference Include="..\Card\Ultralight\Ultralight.nfproj" />
+  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>
