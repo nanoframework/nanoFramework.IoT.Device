@@ -23,19 +23,19 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.2.0.0-preview.61\lib\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.2.0.0-preview.67\lib\netnano1.0\Iot.Device.CharacterLcd.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.59\lib\Iot.Device.Multiplexing.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.65\lib\netnano1.0\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.60\lib\Iot.Device.ShiftRegister.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.66\lib\netnano1.0\Iot.Device.ShiftRegister.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.2.0.0-preview.49\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Graphics.Core.2.0.0-preview.23\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Graphics.Core.2.0.0-preview.24\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.ResourceManager.2.0.0-preview.9\lib\netnano1.0\nanoFramework.ResourceManager.dll</HintPath>
@@ -77,7 +77,7 @@
       <HintPath>..\..\packages\nanoFramework.System.IO.Streams.2.0.0-preview.18\lib\netnano1.0\System.IO.Streams.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Math.2.0.0-preview.13\lib\netnano1.0\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.Threading.2.0.0-preview.11\lib\netnano1.0\System.Threading.dll</HintPath>

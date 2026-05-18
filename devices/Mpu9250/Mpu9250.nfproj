@@ -40,7 +40,7 @@
       <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.54\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.65\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.I2c.2.0.0-preview.11\lib\netnano1.0\System.Device.I2c.dll</HintPath>
@@ -52,10 +52,10 @@
       <HintPath>packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.59\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.13\lib\netnano1.0\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Numerics.2.0.0-preview.54\lib\System.Numerics.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Numerics.2.0.0-preview.65\lib\netnano1.0\System.Numerics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

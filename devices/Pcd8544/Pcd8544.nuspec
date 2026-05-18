@@ -21,7 +21,7 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-        <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="2.0.0-preview.61" />
+        <dependency id="nanoFramework.Iot.Device.CharacterLcd" version="2.0.0-preview.67" />
         <dependency id="nanoFramework.System.Drawing" version="2.0.0-preview.54" />
         <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
         <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.11" />

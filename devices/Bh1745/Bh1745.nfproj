@@ -36,7 +36,7 @@
       <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.49\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Graphics.Core.2.0.0-preview.23\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
+      <HintPath>packages\nanoFramework.Graphics.Core.2.0.0-preview.24\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.Runtime.Events.2.0.0-preview.12\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
@@ -45,7 +45,7 @@
       <HintPath>packages\nanoFramework.UnitsNet.Length.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.54\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.65\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.2.0.0-preview.16\lib\netnano1.0\System.Device.Gpio.dll</HintPath>
@@ -60,7 +60,7 @@
       <HintPath>packages\nanoFramework.System.Drawing.1.2.295\lib\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.6\lib\System.Math.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Math.2.0.0-preview.13\lib\netnano1.0\System.Math.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Common.WeatherHelper": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.54, 2.0.0-preview.54]",
-        "resolved": "2.0.0-preview.54",
-        "contentHash": "kAR30Z/htuRT9YqMkWkHinsmpnnzWVCI1UVwLXrIyvY8cqiZmz88qYAwORevVJ374nadvUjajPMHzwWrmBckYg=="
+        "requested": "[2.0.0-preview.65, 2.0.0-preview.65]",
+        "resolved": "2.0.0-preview.65",
+        "contentHash": "9lCkN/+exY8kN1xzLOof+R3eg3lYeajQ8sldPpwTGlG5+35iIDXwJurZfA98jN5FxPmM7Lj2jJ8z/gLhjRRdOw=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
@@ -28,9 +28,9 @@
       },
       "nanoFramework.System.Math": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.6, 2.0.0-preview.6]",
-        "resolved": "2.0.0-preview.6",
-        "contentHash": "u9gbWgQxkdvomvyWOj0aUTKdNAiyYNeiIZEzZHbuUyzbowCXfl8WI1TjeHEvQndlqa1aimDr4K2BBJvZUnVjwQ=="
+        "requested": "[2.0.0-preview.13, 2.0.0-preview.13]",
+        "resolved": "2.0.0-preview.13",
+        "contentHash": "P2AmU71dut8LWyA3/jNiqUhsCmg4ltysuU4JFOFb7xuah4CLaq7LZfRlAIAUmiIxNZEghjp6sXoZUeZRLi61Sw=="
       },
       "nanoFramework.UnitsNet.Length": {
         "type": "Direct",
