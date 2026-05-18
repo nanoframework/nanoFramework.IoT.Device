@@ -244,15 +244,23 @@ namespace Iot.Device.DhcpServer
 
                                 // Do we have an option asking for a specific IP address?
                                 var reqIp = dhcpReq.RequestedIpAddress;
-                                if (reqIp != new IPAddress(0) && _dhcpIpList.Contains(reqIp))
+                                lock (_dhcpListLock)
                                 {
-                                    // Client was connected before and still holds a valid lease
-                                    yourIp = reqIp.GetAddressBytes();
-                                }
+                                    if (reqIp != new IPAddress(0))
+                                    {
+                                        int existingIdx = FindLeaseIndex(reqIp);
+                                        if (existingIdx >= 0 && (string)_dhcpHardwareAddressList[existingIdx] == dhcpReq.ClientHardwareAddressAsString)
+                                        {
+                                            // Client was connected before and still holds a valid lease
+                                            yourIp = reqIp.GetAddressBytes();
+                                        }
+                                        // else: IP exists but belongs to a different MAC, fall through to GetFirstAvailableIp()
+                                    }
 
-                                if (yourIp == null)
-                                {
-                                    yourIp = GetFirstAvailableIp();
+                                    if (yourIp == null)
+                                    {
+                                        yourIp = GetFirstAvailableIp();
+                                    }
                                 }
 
                                 dhcpReq.SecondsElapsed = _timeToLeave;
@@ -365,14 +373,14 @@ namespace Iot.Device.DhcpServer
                                                 sendNak = true;
                                             }
                                         }
-                                        else if (!requestedIp.Equals(IPAddress.Any) && !requestedIp.Equals(_ipAddress))
+                                        else if (!requestedIp.Equals(IPAddress.Any) && !requestedIp.Equals(_ipAddress) && IsInSubnet(requestedIp))
                                         {
                                             _dhcpIpList.Add(requestedIp);
                                             _dhcpHardwareAddressList.Add(dhcpReq.ClientHardwareAddressAsString);
                                             _dhcpLastRequest.Add(DateTime.UtcNow);
                                             sendAck = true;
                                         }
-                                        // else: invalid IP, ignore
+                                        // else: invalid or off-subnet IP, ignore
                                     }
 
                                     if (sendAck)
