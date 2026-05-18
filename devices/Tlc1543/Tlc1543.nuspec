@@ -26,7 +26,7 @@
         <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
         <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
         <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
-        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.6" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.13" />
       </group>
     </dependencies>
   </metadata>
