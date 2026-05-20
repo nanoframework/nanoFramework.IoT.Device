@@ -28,9 +28,9 @@
       },
       "nanoFramework.UnitsNet.Illuminance": {
         "type": "Direct",
-        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
-        "resolved": "5.77.0-preview.5",
-        "contentHash": "GCWH4UC38Kyzu8Ho4IMNfTGmV57NVRHOwDfUWirEVZIazxR+Iu9oH9qhIR0lxKddg+pRQI3lvsHJIz73ONUFHg=="
+        "requested": "[5.77.0-preview.14, 5.77.0-preview.14]",
+        "resolved": "5.77.0-preview.14",
+        "contentHash": "10J9G00zMIvHwm+SVj8zeyKrySYgxOz0AMTyXN7wH/XLa5JUKm/3ZvS55+B+G6yzgx2pjJBE4WREg5xrx8fyvw=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",

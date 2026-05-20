@@ -40,10 +40,10 @@
       <HintPath>packages\nanoFramework.Runtime.Native.2.0.0-preview.24\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Length, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.Length.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Length.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.65\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.70\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Gpio.2.0.0-preview.16\lib\netnano1.0\System.Device.Gpio.dll</HintPath>

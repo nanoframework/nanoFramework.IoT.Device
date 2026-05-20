@@ -35,31 +35,31 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Common.WeatherHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Iot.Device.Common.WeatherHelper.2.0.0-preview.65\lib\netnano1.0\Iot.Device.Common.WeatherHelper.dll</HintPath>
+      <HintPath>packages\nanoFramework.Iot.Device.Common.WeatherHelper.2.0.0-preview.70\lib\netnano1.0\Iot.Device.Common.WeatherHelper.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.49\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Duration, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Duration.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricResistance, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.ElectricResistance.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.ElectricResistance.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.ElectricResistance.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.ElectricResistance.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Length, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.Length.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Length.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Pressure, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.Pressure.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Pressure.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.RelativeHumidity, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.RelativeHumidity.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.RelativeHumidity.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.65\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.70\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.I2c.2.0.0-preview.11\lib\netnano1.0\System.Device.I2c.dll</HintPath>

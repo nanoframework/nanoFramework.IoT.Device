@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.19, 2.0.0-preview.19]",
-        "resolved": "2.0.0-preview.19",
-        "contentHash": "9hV6JmqkE6ryjWP6RezOTMoNqmKPb8oYHU/zYEVCks47oPDNvVI+DDVlneuvcEEszUehsyy3Zlx8GEcCfNZjDg=="
+        "requested": "[2.0.0-preview.20, 2.0.0-preview.20]",
+        "resolved": "2.0.0-preview.20",
+        "contentHash": "mJSV9tNY+Cq7e3UMzGDLeNs1q9xZvZP4Ljuz4crn7O10S+d5crkaMJidpa/nYM2/31AgHGgl3+ZcDN7RwGfiQg=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.15, 2.0.0-preview.15]",
-        "resolved": "2.0.0-preview.15",
-        "contentHash": "+nSasz3rgL1VYnPeBK6pURco/0En2Ngv3nX+a1eE9cfIqkmKHcRicShDzYXzQRBdB1ncNRAHItIhuFP2Bg5rNQ=="
+        "requested": "[2.0.0-preview.17, 2.0.0-preview.17]",
+        "resolved": "2.0.0-preview.17",
+        "contentHash": "JW1hEmTZpjTZc0b9BuAss459xl9DyUP7+tpiWpiPHThiktE6y3NyKXGvB2IgGkHc6miyxZxtMfrmzClq2SDQQA=="
       },
       "nanoFramework.System.Net.Http.Server": {
         "type": "Direct",
-        "requested": "[1.5.206, 1.5.206]",
-        "resolved": "1.5.206",
-        "contentHash": "llDYvE2dBChhG96FzI47Q9FWffMlVPkd8b3MbY+YgCol9oaeUa2M0MlV4Beeyl0GwzSEjlSRNz4u73dPoGJcZQ=="
+        "requested": "[2.0.0-preview.7, 2.0.0-preview.7]",
+        "resolved": "2.0.0-preview.7",
+        "contentHash": "U6o/Ti+KARBKFufjmLz4P2Q2qYmE6WPKALt64/6aozh1/uu/k990lY4u1IsCObiqp+Ab+bUcvU0H0WfJwYuMvw=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.143, 1.2.143]",
-        "resolved": "1.2.143",
-        "contentHash": "L5SbjUJ8r0y+twZTS2+i1k67erXEiph3gQnE4+5MQAUwOY/eso68oWWRNH1BvSWB/QkPOtaXByan/RFS051XMQ=="
+        "requested": "[1.2.144, 1.2.144]",
+        "resolved": "1.2.144",
+        "contentHash": "ZjB5k7mAataKozGqgfzusZ2PqVr/ot5letYGxvHm8fclIpo9qYcrYSTL28VtWfHQndEmN7v7+ao4C4TBsd58HQ=="
       }
     }
   }

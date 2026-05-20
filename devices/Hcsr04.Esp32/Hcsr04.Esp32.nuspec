@@ -21,7 +21,7 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-        <dependency id="nanoFramework.UnitsNet.Length" version="5.77.0-preview.5" />
+        <dependency id="nanoFramework.UnitsNet.Length" version="5.77.0-preview.14" />
         <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.54" />
         <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.17" />
       </group>

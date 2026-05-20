@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.65, 2.0.0-preview.65]",
-        "resolved": "2.0.0-preview.65",
-        "contentHash": "Gn2BmswqOQ5ZzX7J7w/4aZt/5za4lFsGWTSKE0DERxFZwdZ+yEMmxtt4L27NdIJG5i7HC1E/q/q/xAK5yl/Qsw=="
+        "requested": "[2.0.0-preview.70, 2.0.0-preview.70]",
+        "resolved": "2.0.0-preview.70",
+        "contentHash": "4VoIe3UQ3Wcp68ko5rhr5UuB6bP/9/+c14FHT8xxrjh6rMoSoH0gk90DUKx4q+0XS/IpcKkqZQgKhJ9e6Ycl6A=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
@@ -40,21 +40,21 @@
       },
       "nanoFramework.UnitsNet.ElectricCurrent": {
         "type": "Direct",
-        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
-        "resolved": "5.77.0-preview.5",
-        "contentHash": "4pJWdDDb8vIwnB8KlIdOk1at7duNAhpoRbJJeDcDViLPO1X2QRZOReKzNPRETukrB4fNrUq9xcOPwngix3IX+w=="
+        "requested": "[5.77.0-preview.14, 5.77.0-preview.14]",
+        "resolved": "5.77.0-preview.14",
+        "contentHash": "cLTI8LJY8eXIRoYGcfl2XQ+1RqUAmR+r3WCmvnKBwn3el3dS3uMwm864QPgul7ykOFsKuEc80k7Uoay9VoxsuA=="
       },
       "nanoFramework.UnitsNet.ElectricPotential": {
         "type": "Direct",
-        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
-        "resolved": "5.77.0-preview.5",
-        "contentHash": "0lgm1onJnaj5F6xzQ/KMfqArUwuaj0kiehtyLS6nYQb2kCkuJx20FqIkz4K6a9O43hdvS8eK2OO88KWg9BHD+g=="
+        "requested": "[5.77.0-preview.14, 5.77.0-preview.14]",
+        "resolved": "5.77.0-preview.14",
+        "contentHash": "43KzSMrGtxGQRmXX3yNxdygx05GH3Y3exo4dKEgpAEkla4OMAN7ZpgKc9TgkBNmNg/15ajC0AxLGWInXIqw4Ww=="
       },
       "nanoFramework.UnitsNet.Power": {
         "type": "Direct",
-        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
-        "resolved": "5.77.0-preview.5",
-        "contentHash": "HUSdxTXAHtXAJgejgYqJGIRWYfeB9BtraF4e2TW9pk1ikfmJO5hVf1gggzDahcUrhsZ8hnXaSiG8aX8tpQ642w=="
+        "requested": "[5.77.0-preview.14, 5.77.0-preview.14]",
+        "resolved": "5.77.0-preview.14",
+        "contentHash": "H8StxLDlHYPgM2N/1T8T9HtiVcPkN2v1B9hBHzxVooFIJ9G5QB2JuBDUGZ2XF+zx0FH8r5a19Jo8Zl9Y5tSiNw=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
