@@ -21,25 +21,25 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="Iot.Device.Axp192, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Axp192.2.0.0-preview.62\lib\Iot.Device.Axp192.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Axp192.2.0.0-preview.73\lib\netnano1.0\Iot.Device.Axp192.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Bmm150, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Bmm150.2.0.0-preview.62\lib\Iot.Device.Bmm150.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Bmm150.2.0.0-preview.73\lib\netnano1.0\Iot.Device.Bmm150.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Button, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Button.2.0.0-preview.62\lib\Iot.Device.Button.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Button.2.0.0-preview.73\lib\netnano1.0\Iot.Device.Button.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Common.NumberHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.NumberHelper.2.0.0-preview.54\lib\Iot.Device.Common.NumberHelper.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Ft6xx6x, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.2.0.0-preview.63\lib\Iot.Device.Ft6xx6x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ft6xx6x.2.0.0-preview.68\lib\netnano1.0\Iot.Device.Ft6xx6x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Mpu6886, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Mpu6886.2.0.0-preview.62\lib\Iot.Device.Mpu6886.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Mpu6886.2.0.0-preview.73\lib\netnano1.0\Iot.Device.Mpu6886.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Rtc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Rtc.2.0.0-preview.62\lib\Iot.Device.Rtc.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Rtc.2.0.0-preview.73\lib\netnano1.0\Iot.Device.Rtc.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.49\lib\netnano1.0\mscorlib.dll</HintPath>
@@ -75,19 +75,19 @@
       <HintPath>..\packages\nanoFramework.System.Text.2.0.0-preview.18\lib\netnano1.0\nanoFramework.System.Text.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricCurrent, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricCurrent.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricPotential, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.ElectricPotential.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Power, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Power.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Power.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.Power.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Power.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.77.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.77.0-preview.5\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.UnitsNet.Temperature.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.65\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.70\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Adc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Adc.2.0.0-preview.9\lib\netnano1.0\System.Device.Adc.dll</HintPath>
