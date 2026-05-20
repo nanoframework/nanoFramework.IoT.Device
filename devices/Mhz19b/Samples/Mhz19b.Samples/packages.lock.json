@@ -40,9 +40,9 @@
       },
       "nanoFramework.UnitsNet.VolumeConcentration": {
         "type": "Direct",
-        "requested": "[5.77.0-preview.5, 5.77.0-preview.5]",
-        "resolved": "5.77.0-preview.5",
-        "contentHash": "Z0Bfv5+Mm42gpLm5x89fHJuQ6gbbBKAfri+rsOdKdai+gbiDiPsDUj+U7XFJaZHKvicku8D5dqD2Gy1Rwqtadw=="
+        "requested": "[5.77.0-preview.14, 5.77.0-preview.14]",
+        "resolved": "5.77.0-preview.14",
+        "contentHash": "rq3mpwpIBjj4fupqsE1duC3wwa0itGnTjOwYPiqEEX8wACa4jYkqYyzTazL3ZugmeZcLbWf19VxA+n1WJFvcGQ=="
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
