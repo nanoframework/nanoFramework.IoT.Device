@@ -20,17 +20,17 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Mfrc522</tags>
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
-        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-        <dependency id="nanoFramework.Iot.Device.Card" version="2.0.0-preview.75" />
-        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.70" />
-        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.59" />
-        <dependency id="nanoFramework.Logging" version="2.0.0-preview.21" />
-        <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.12" />
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
+        <dependency id="nanoFramework.Iot.Device.Card" version="2.0.0-preview.78" />
+        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.77" />
+        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.77" />
+        <dependency id="nanoFramework.Logging" version="2.0.0-preview.24" />
+        <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.13" />
         <dependency id="nanoFramework.Runtime.Native" version="2.0.0-preview.24" />
-        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
         <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
         <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
-        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.23" />
+        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.27" />
         <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
         <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.18" />
       </group>

@@ -19,8 +19,8 @@
     <tags>nanoFramework C# csharp netmf netnf m5stack qrcode</tags>
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
-        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.23" />
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
+        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.27" />
       </group>
     </dependencies>
   </metadata>

@@ -20,11 +20,11 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Modbus</tags>
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
-        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.14" />
-        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.23" />
+        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.27" />
         <dependency id="nanoFramework.System.Math" version="2.0.0-preview.13" />
-        <dependency id="nanoFramework.Logging" version="2.0.0-preview.21" />
+        <dependency id="nanoFramework.Logging" version="2.0.0-preview.24" />
       </group>
     </dependencies>
   </metadata>

@@ -20,12 +20,12 @@
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Amg88xx</tags>
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
-        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.49" />
-        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.70" />
-        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
+        <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="2.0.0-preview.77" />
+        <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
         <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
         <dependency id="nanoFramework.System.Math" version="2.0.0-preview.13" />
-        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.24" />
+        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.26" />
         <dependency id="nanoFramework.UnitsNet.Temperature" version="5.77.0-preview.14" />
       </group>
     </dependencies>
