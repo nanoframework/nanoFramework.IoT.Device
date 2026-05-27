@@ -24,19 +24,19 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Common.GnssDevice, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Common.GnssDevice.2.0.0-preview.73\lib\netnano1.0\Iot.Device.Common.GnssDevice.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Common.GnssDevice.2.0.0-preview.80\lib\netnano1.0\Iot.Device.Common.GnssDevice.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.49\lib\netnano1.0\mscorlib.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.52\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.2.0.0-preview.11\lib\netnano1.0\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.M2Mqtt.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.M2Mqtt.Core.6.0.0-preview.2\lib\netnano1.0\nanoFramework.M2Mqtt.Core.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.M2Mqtt.Core.6.0.0-preview.5\lib\netnano1.0\nanoFramework.M2Mqtt.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Runtime.Events.2.0.0-preview.12\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Runtime.Events.2.0.0-preview.13\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Native.2.0.0-preview.24\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
@@ -57,7 +57,7 @@
       <HintPath>..\packages\nanoFramework.UnitsNet.Speed.5.77.0-preview.14\lib\netnano1.0\nanoFramework.UnitsNet.Speed.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Ports, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.Ports.2.0.0-preview.23\lib\netnano1.0\System.IO.Ports.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.Ports.2.0.0-preview.27\lib\netnano1.0\System.IO.Ports.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.IO.Streams.2.0.0-preview.18\lib\netnano1.0\System.IO.Streams.dll</HintPath>
@@ -66,10 +66,10 @@
       <HintPath>..\packages\nanoFramework.System.Math.2.0.0-preview.13\lib\netnano1.0\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Net.2.0.0-preview.17\lib\netnano1.0\System.Net.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Net.2.0.0-preview.19\lib\netnano1.0\System.Net.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Threading.2.0.0-preview.11\lib\netnano1.0\System.Threading.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Threading.2.0.0-preview.14\lib\netnano1.0\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
