@@ -27,16 +27,16 @@
       <HintPath>..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.77\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.2.0.0-preview.11\lib\netnano1.0\System.Device.I2c.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.I2c.2.0.0-preview.12\lib\netnano1.0\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Device.Model.2.0.0-preview.77\lib\netnano1.0\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="System.Math, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Math.2.0.0-preview.13\lib\netnano1.0\System.Math.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Math.2.0.0-preview.19\lib\netnano1.0\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Numerics.2.0.0-preview.77\lib\netnano1.0\System.Numerics.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Numerics.2.0.0-preview.82\lib\netnano1.0\System.Numerics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

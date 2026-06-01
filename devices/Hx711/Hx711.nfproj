@@ -37,7 +37,7 @@
       <HintPath>packages\nanoFramework.System.Device.Gpio.2.0.0-preview.18\lib\netnano1.0\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Spi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Device.Spi.2.0.0-preview.16\lib\netnano1.0\System.Device.Spi.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Device.Spi.2.0.0-preview.19\lib\netnano1.0\System.Device.Spi.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

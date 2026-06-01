@@ -21,10 +21,10 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.77" />
+        <dependency id="nanoFramework.System.Diagnostics.Stopwatch" version="2.0.0-preview.82" />
         <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.13" />
         <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
-        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.13" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.19" />
       </group>
     </dependencies>
   </metadata>
