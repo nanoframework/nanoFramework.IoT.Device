@@ -16,9 +16,9 @@
       },
       "nanoFramework.System.Device.Adc": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.9, 2.0.0-preview.9]",
-        "resolved": "2.0.0-preview.9",
-        "contentHash": "cQAJSQJqvvkKVXEOaymSogYD34LHPy1XH7P/3bXXNq4XmHGoNzvvz3+dSInGZR/MfCyBazy/P0EkQW9+R2pF/g=="
+        "requested": "[2.0.0-preview.10, 2.0.0-preview.10]",
+        "resolved": "2.0.0-preview.10",
+        "contentHash": "DudatxXsJ0no8oR39FMyHLE8mJRWAKyTmxZ/u2RqHKcxevwzXIs7ZvJ8H03SGyhhUsWyQja9JRwz7ABui5GbTw=="
       },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",

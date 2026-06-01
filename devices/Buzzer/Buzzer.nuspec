@@ -23,7 +23,7 @@
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.System.Device.Model" version="2.0.0-preview.77" />
         <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.12" />
-        <dependency id="nanoFramework.UnitsNet.Frequency" version="5.77.0-preview.14" />
+        <dependency id="nanoFramework.UnitsNet.Frequency" version="5.77.0-preview.16" />
       </group>
     </dependencies>
   </metadata>

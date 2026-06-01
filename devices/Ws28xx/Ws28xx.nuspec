@@ -21,9 +21,9 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.System.Device.Spi" version="2.0.0-preview.19" />
         <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
-        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.26" />
+        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.27" />
       </group>
     </dependencies>
   </metadata>

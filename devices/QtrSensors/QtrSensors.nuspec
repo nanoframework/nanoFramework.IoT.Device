@@ -23,7 +23,7 @@
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.13" />
         <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
-        <dependency id="nanoFramework.System.Device.Adc" version="2.0.0-preview.9" />
+        <dependency id="nanoFramework.System.Device.Adc" version="2.0.0-preview.10" />
       </group>
     </dependencies>
   </metadata>

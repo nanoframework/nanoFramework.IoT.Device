@@ -21,7 +21,7 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.11" />
+        <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.12" />
       </group>
     </dependencies>
   </metadata>
