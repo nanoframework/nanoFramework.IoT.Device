@@ -21,8 +21,8 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.Logging" version="2.0.0-preview.24" />
-        <dependency id="nanoFramework.System.Text" version="2.0.0-preview.18" />
+        <dependency id="nanoFramework.Logging" version="2.0.0-preview.30" />
+        <dependency id="nanoFramework.System.Text" version="2.0.0-preview.23" />
       </group>
     </dependencies>
   </metadata>
