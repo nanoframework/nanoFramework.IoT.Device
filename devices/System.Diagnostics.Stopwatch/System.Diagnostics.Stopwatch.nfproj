@@ -42,7 +42,7 @@
       <HintPath>packages\nanoFramework.CoreLibrary.2.0.0-preview.52\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.Runtime.Native.2.0.0-preview.24\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
+      <HintPath>packages\nanoFramework.Runtime.Native.2.0.0-preview.25\lib\netnano1.0\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
