@@ -21,7 +21,7 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.13" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.19" />
       </group>
     </dependencies>
   </metadata>
