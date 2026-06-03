@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.CharacterLcd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.2.0.0-preview.84\lib\netnano1.0\Iot.Device.CharacterLcd.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.CharacterLcd.2.0.0-preview.88\lib\netnano1.0\Iot.Device.CharacterLcd.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Multiplexing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.77\lib\netnano1.0\Iot.Device.Multiplexing.dll</HintPath>
@@ -71,7 +71,7 @@
       <HintPath>..\..\packages\nanoFramework.System.Drawing.2.0.0-preview.77\lib\netnano1.0\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.2.0.0-preview.20\lib\netnano1.0\System.IO.FileSystem.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.2.0.0-preview.21\lib\netnano1.0\System.IO.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.System.IO.Streams.2.0.0-preview.22\lib\netnano1.0\System.IO.Streams.dll</HintPath>
