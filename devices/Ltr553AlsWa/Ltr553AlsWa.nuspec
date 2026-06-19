@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Ltr553AlsWa</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Ltr553AlsWa</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the .NET IoT Core binding Iot.Device.Ltr553AlsWa for .NET nanoFramework C# projects.</description>
+    <summary>Iot.Device.Ltr553AlsWa assembly for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Ltr553AlsWa</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.12" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Ltr553AlsWa.dll" target="lib\Iot.Device.Ltr553AlsWa.dll" />
+    <file src="bin\Release\Iot.Device.Ltr553AlsWa.pdb" target="lib\Iot.Device.Ltr553AlsWa.pdb" />
+    <file src="bin\Release\Iot.Device.Ltr553AlsWa.pdbx" target="lib\Iot.Device.Ltr553AlsWa.pdbx" />
+    <file src="bin\Release\Iot.Device.Ltr553AlsWa.pe" target="lib\Iot.Device.Ltr553AlsWa.pe" />
+    <file src="bin\Release\Iot.Device.Ltr553AlsWa.xml" target="lib\Iot.Device.Ltr553AlsWa.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
