@@ -84,22 +84,46 @@ namespace Iot.Device.Ltr553AlsWa
         /// <summary>
         /// Gets or sets the ALS integration time.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when setting an unsupported integration time value.</exception>
+        /// <exception cref="ArgumentException">Thrown when the integration time is greater than the current measurement rate.</exception>
         [Property]
         public AlsIntegrationTime AlsIntegrationTime
         {
             get => (AlsIntegrationTime)((ReadRegister(Register.AlsMeasRate) >> 3) & 0x07);
-            set => UpdateRegisterBits(Register.AlsMeasRate, 0x38, (byte)((byte)value << 3));
+            set
+            {
+                int integrationTimeMs = GetAlsIntegrationTimeMilliseconds(value);
+                int measurementRateMs = GetAlsMeasurementRateMilliseconds(AlsMeasurementRate);
+                if (measurementRateMs < integrationTimeMs)
+                {
+                    throw new ArgumentException();
+                }
+
+                UpdateRegisterBits(Register.AlsMeasRate, 0x38, (byte)((byte)value << 3));
+            }
         }
 
         /// <summary>
         /// Gets or sets the ALS measurement rate.
         /// Must be equal to or larger than the integration time.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when setting an unsupported measurement rate value.</exception>
+        /// <exception cref="ArgumentException">Thrown when the measurement rate is less than the current integration time.</exception>
         [Property]
         public AlsMeasurementRate AlsMeasurementRate
         {
             get => (AlsMeasurementRate)(ReadRegister(Register.AlsMeasRate) & 0x07);
-            set => UpdateRegisterBits(Register.AlsMeasRate, 0x07, (byte)value);
+            set
+            {
+                int measurementRateMs = GetAlsMeasurementRateMilliseconds(value);
+                int integrationTimeMs = GetAlsIntegrationTimeMilliseconds(AlsIntegrationTime);
+                if (measurementRateMs < integrationTimeMs)
+                {
+                    throw new ArgumentException("ALS measurement rate must be greater than or equal to ALS integration time.", nameof(value));
+                }
+
+                UpdateRegisterBits(Register.AlsMeasRate, 0x07, (byte)value);
+            }
         }
 
         /// <summary>
@@ -149,14 +173,19 @@ namespace Iot.Device.Ltr553AlsWa
         /// <summary>
         /// Gets or sets the number of PS LED pulses (1–15).
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when value is outside the valid range of 1 to 15.</exception>
         [Property]
         public byte LedPulseCount
         {
             get => (byte)(ReadRegister(Register.PsNPulses) & 0x0F);
             set
             {
-                byte val = (byte)(value & 0x0F);
-                WriteRegister(Register.PsNPulses, val);
+                if (value < 1 || value > 15)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                WriteRegister(Register.PsNPulses, value);
             }
         }
 
@@ -266,8 +295,25 @@ namespace Iot.Device.Ltr553AlsWa
         /// </summary>
         /// <param name="lower">Lower threshold (11-bit, 0–2047).</param>
         /// <param name="upper">Upper threshold (11-bit, 0–2047).</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when lower or upper is outside 0 to 2047.</exception>
+        /// <exception cref="ArgumentException">Thrown when lower is greater than upper.</exception>
         public void SetPsThreshold(ushort lower, ushort upper)
         {
+            if (lower > 2047)
+            {
+                throw new ArgumentOutOfRangeException(nameof(lower));
+            }
+
+            if (upper > 2047)
+            {
+                throw new ArgumentOutOfRangeException(nameof(upper));
+            }
+
+            if (lower > upper)
+            {
+                throw new ArgumentException("Lower threshold must be less than or equal to upper threshold.");
+            }
+
             WriteRegister(Register.PsThresholdUpLow, (byte)(upper & 0xFF));
             WriteRegister(Register.PsThresholdUpHigh, (byte)((upper >> 8) & 0x07));
             WriteRegister(Register.PsThresholdLowLow, (byte)(lower & 0xFF));
@@ -293,9 +339,20 @@ namespace Iot.Device.Ltr553AlsWa
         /// </summary>
         /// <param name="psCount">PS persistence count (0–15), stored in bits [7:4].</param>
         /// <param name="alsCount">ALS persistence count (0–15), stored in bits [3:0].</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when psCount or alsCount is outside the valid range of 0 to 15.</exception>
         public void SetInterruptPersistence(byte psCount, byte alsCount)
         {
-            byte value = (byte)(((psCount & 0x0F) << 4) | (alsCount & 0x0F));
+            if (psCount > 15)
+            {
+                throw new ArgumentOutOfRangeException(nameof(psCount));
+            }
+
+            if (alsCount > 15)
+            {
+                throw new ArgumentOutOfRangeException(nameof(alsCount));
+            }
+
+            byte value = (byte)((psCount << 4) | alsCount);
             WriteRegister(Register.InterruptPersist, value);
         }
 
@@ -339,10 +396,65 @@ namespace Iot.Device.Ltr553AlsWa
         {
             if (_i2cDevice != null)
             {
-                // Reset puts both subsystems into standby with defaults
-                Reset();
-                _i2cDevice?.Dispose();
-                _i2cDevice = null;
+                try
+                {
+                    // Best-effort reset: communication can fail if device is unpowered.
+                    Reset();
+                }
+                catch (InvalidOperationException)
+                {
+                }
+                finally
+                {
+                    _i2cDevice.Dispose();
+                    _i2cDevice = null;
+                }
+            }
+        }
+
+        private static int GetAlsIntegrationTimeMilliseconds(AlsIntegrationTime integrationTime)
+        {
+            switch (integrationTime)
+            {
+                case AlsIntegrationTime.Integration50Ms:
+                    return 50;
+                case AlsIntegrationTime.Integration100Ms:
+                    return 100;
+                case AlsIntegrationTime.Integration150Ms:
+                    return 150;
+                case AlsIntegrationTime.Integration200Ms:
+                    return 200;
+                case AlsIntegrationTime.Integration250Ms:
+                    return 250;
+                case AlsIntegrationTime.Integration300Ms:
+                    return 300;
+                case AlsIntegrationTime.Integration350Ms:
+                    return 350;
+                case AlsIntegrationTime.Integration400Ms:
+                    return 400;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(integrationTime));
+            }
+        }
+
+        private static int GetAlsMeasurementRateMilliseconds(AlsMeasurementRate measurementRate)
+        {
+            switch (measurementRate)
+            {
+                case AlsMeasurementRate.Rate50Ms:
+                    return 50;
+                case AlsMeasurementRate.Rate100Ms:
+                    return 100;
+                case AlsMeasurementRate.Rate200Ms:
+                    return 200;
+                case AlsMeasurementRate.Rate500Ms:
+                    return 500;
+                case AlsMeasurementRate.Rate1000Ms:
+                    return 1000;
+                case AlsMeasurementRate.Rate2000Ms:
+                    return 2000;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(measurementRate));
             }
         }
 

@@ -31,12 +31,65 @@ Debug.WriteLine($"Part ID: 0x{sensor.PartId:X2}, Manufacturer ID: 0x{sensor.Manu
 sensor.PsEnabled = true;
 sensor.AlsEnabled = true;
 
-// Read proximity (with saturation check) and ambient light
-ushort proximity = sensor.GetProximity(out bool saturated);
-sensor.GetAlsData(out ushort ch0, out ushort ch1);
-Debug.WriteLine($"Proximity: {proximity}{(saturated ? " [SATURATED]" : string.Empty)}");
-Debug.WriteLine($"ALS CH0 (visible+IR): {ch0}, ALS CH1 (IR): {ch1}");
+// Allow the sensor to take a first measurement after mode changes.
+Thread.Sleep(600);
+
+while (true)
+{
+    try
+    {
+        bool psReady = sensor.IsPsDataReady();
+        bool alsReady = sensor.IsAlsDataReady();
+
+        if (psReady && alsReady)
+        {
+            ushort proximity = sensor.GetProximity(out bool saturated);
+            sensor.GetAlsData(out ushort ch0, out ushort ch1);
+            Debug.WriteLine($"Proximity: {proximity}{(saturated ? " [SATURATED]" : string.Empty)}, ALS CH0 (visible+IR): {ch0}, ALS CH1 (IR): {ch1}");
+        }
+        else
+        {
+            Debug.WriteLine($"Waiting for fresh data... PS ready: {psReady}, ALS ready: {alsReady}");
+        }
+    }
+    catch (Exception ex)
+    {
+        Debug.WriteLine($"Exception: {ex.Message}");
+    }
+
+    Thread.Sleep(500);
+}
 ```
+
+Example of output including some debug low level reads:
+
+```text
+Hello LTR-553ALS-WA!
+CoreS3 internal bus power enabled: AW9523 BUS_EN + BOOST_EN.
+AXP2101 Chip ID: 0x4A (expected 0x4A)
+CoreS3 power rails enabled: ALDO1/2/3/4 + BLDO1/2.
+LTR553 low-level probe on I2C1 @ 0x23:
+  ALS_CONTR (0x80): status=1, bytesW=2, value=0x01
+  PS_CONTR (0x81): status=1, bytesW=2, value=0x02
+  PART_ID (0x86): status=1, bytesW=2, value=0x92
+  MANUFAC_ID (0x87): status=1, bytesW=2, value=0x05
+  ALS_PS_STATUS (0x8C): status=1, bytesW=2, value=0x05
+Part ID: 0x92, Manufacturer ID: 0x05
+Proximity: 5, ALS CH0 (visible+IR): 13, ALS CH1 (IR): 18
+Proximity: 0, ALS CH0 (visible+IR): 13, ALS CH1 (IR): 17
+Proximity: 0, ALS CH0 (visible+IR): 13, ALS CH1 (IR): 17
+Proximity: 2, ALS CH0 (visible+IR): 13, ALS CH1 (IR): 17
+Proximity: 1, ALS CH0 (visible+IR): 13, ALS CH1 (IR): 18
+Proximity: 145, ALS CH0 (visible+IR): 2, ALS CH1 (IR): 2
+Proximity: 408, ALS CH0 (visible+IR): 0, ALS CH1 (IR): 1
+Proximity: 432, ALS CH0 (visible+IR): 0, ALS CH1 (IR): 0
+Proximity: 436, ALS CH0 (visible+IR): 0, ALS CH1 (IR): 0
+Proximity: 442, ALS CH0 (visible+IR): 0, ALS CH1 (IR): 0
+Proximity: 441, ALS CH0 (visible+IR): 0, ALS CH1 (IR): 0
+Proximity: 0, ALS CH0 (visible+IR): 5, ALS CH1 (IR): 8
+```
+
+> [!Note] This sample contains specific code for the M5Stack CoreS3.
 
 ### Configuring ALS
 

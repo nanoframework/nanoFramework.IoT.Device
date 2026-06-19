@@ -26,12 +26,6 @@
         "resolved": "1.11.32",
         "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
       },
-      "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
-        "type": "Direct",
-        "requested": "[1.2.862, 1.2.862]",
-        "resolved": "1.2.862",
-        "contentHash": "O+jmbbw2h2cjCTShsvWCzjqn/kmRacJE4Ena9gJt5xF5D7XHyYh/uE/qbZ4LhlmlN6JCZjLRNiEfHyM1YUjyxg=="
-      },
       "nanoFramework.System.Device.Gpio": {
         "type": "Direct",
         "requested": "[1.1.57, 1.1.57]",

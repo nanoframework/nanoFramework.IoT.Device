@@ -1,1 +1,2 @@
-proximity light
+proximity
+light
