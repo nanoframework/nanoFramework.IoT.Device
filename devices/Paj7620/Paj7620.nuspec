@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Paj7620</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Paj7620</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>This package includes the PAJ7620U2 gesture sensor binding Iot.Device.Paj7620 for .NET nanoFramework C# projects.</description>
+    <summary>PAJ7620U2 gesture sensor binding for .NET nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Paj7620 paj7620 gesture sensor</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Paj7620.dll" target="lib\Iot.Device.Paj7620.dll" />
+    <file src="bin\Release\Iot.Device.Paj7620.pdb" target="lib\Iot.Device.Paj7620.pdb" />
+    <file src="bin\Release\Iot.Device.Paj7620.pdbx" target="lib\Iot.Device.Paj7620.pdbx" />
+    <file src="bin\Release\Iot.Device.Paj7620.pe" target="lib\Iot.Device.Paj7620.pe" />
+    <file src="bin\Release\Iot.Device.Paj7620.xml" target="lib\Iot.Device.Paj7620.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
