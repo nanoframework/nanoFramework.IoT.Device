@@ -348,8 +348,16 @@ namespace Iot.Device.Ltr553AlsWa
 
         private byte ReadRegister(Register register)
         {
-            _i2cDevice.WriteByte((byte)register);
-            return _i2cDevice.ReadByte();
+            SpanByte writeBuffer = new byte[1];
+            SpanByte readBuffer = new byte[1];
+            writeBuffer[0] = (byte)register;
+            var result = _i2cDevice.WriteRead(writeBuffer, readBuffer);
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new InvalidOperationException($"I2C read failed for register 0x{(byte)register:X2}. Status: {result.Status}.");
+            }
+
+            return readBuffer[0];
         }
 
         private void WriteRegister(Register register, byte value)
@@ -357,13 +365,22 @@ namespace Iot.Device.Ltr553AlsWa
             SpanByte buffer = new byte[2];
             buffer[0] = (byte)register;
             buffer[1] = value;
-            _i2cDevice.Write(buffer);
+            var result = _i2cDevice.Write(buffer);
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new InvalidOperationException($"I2C write failed for register 0x{(byte)register:X2}. Status: {result.Status}.");
+            }
         }
 
         private void ReadRegisterBlock(Register startRegister, SpanByte buffer)
         {
-            _i2cDevice.WriteByte((byte)startRegister);
-            _i2cDevice.Read(buffer);
+            SpanByte writeBuffer = new byte[1];
+            writeBuffer[0] = (byte)startRegister;
+            var result = _i2cDevice.WriteRead(writeBuffer, buffer);
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new InvalidOperationException($"I2C block read failed from register 0x{(byte)startRegister:X2}. Status: {result.Status}.");
+            }
         }
 
         private void UpdateRegisterBits(Register register, byte mask, byte value)
