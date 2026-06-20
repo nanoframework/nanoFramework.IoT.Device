@@ -4,7 +4,7 @@
 namespace Iot.Device.MulticastDns.Enum
 {
     /// <summary>
-    /// The type of a DNS Resource.
+    /// The type of DNS resource.
     /// </summary>
     public enum DnsResourceType
     {
@@ -36,6 +36,11 @@ namespace Iot.Device.MulticastDns.Enum
         /// <summary>
         /// DNS Resource Type SRV.
         /// </summary>
-        SRV = 33
+        SRV = 33,
+
+        /// <summary>
+        /// DNS Resource Type ANY.
+        /// </summary>
+        ANY = 255
     }
 }

@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[1.5.139, 1.5.139]",
-        "resolved": "1.5.139",
-        "contentHash": "UlqtYaj99lx0x/Iqi6V/QqDHWGG960vDd6//i7g91F31wKtrEU/KqXDrVkekU8aAZRFC5BwkDGLJ9X+KyJs49A=="
+        "requested": "[1.5.144, 1.5.144]",
+        "resolved": "1.5.144",
+        "contentHash": "kYC7ZgJokvBHPXq3RVQ7PvQJs8tpyOQQeOP5am0ipyn+fbCOrLY6lC2lKZRi599bwGrFvXUD05h6iuie+cnF5g=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[1.11.47, 1.11.47]",
-        "resolved": "1.11.47",
-        "contentHash": "fPjTPfaqDiirh9AysBLlEX5/KbaOliSxyspwpBTcM5OupCNjVXz0aZ9fOWex+BMjZei6GpG74kP8Z4ml912pcw=="
+        "requested": "[1.11.52, 1.11.52]",
+        "resolved": "1.11.52",
+        "contentHash": "dHArQQR4vt+cfFgrGIjl85OGhfUujAg2hHcjt6jMVQ9Q1z6oDAfpzxkaJd+FQ1yvJnpyIQR1+REHBKf7zuq19w=="
       },
       "nanoFramework.System.Net.Http.Server": {
         "type": "Direct",
-        "requested": "[1.5.200, 1.5.200]",
-        "resolved": "1.5.200",
-        "contentHash": "no7P7xTkZ7IVSPKeI4YMIBG11YdsHH76hjC4XRaZsohPdsUcLOZbsoonLaQ8VW9l89QLrliYSREgN4C2l6I1mw=="
+        "requested": "[1.5.207, 1.5.207]",
+        "resolved": "1.5.207",
+        "contentHash": "jSLu99b2fgk8eBw5pOgRZZGeI4ZbsHtSC6nWRXchG0KnWO7kxKi+o2t/S6I82nU3wv1OjIe0YFmW3oONh2xeFQ=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.134, 1.2.134]",
-        "resolved": "1.2.134",
-        "contentHash": "Cw9TtVvchLS+Snu7KCe00vQmXhaGxosLzMq3G+2jsL9hiICR2SV/pAYp01sO7hCJT5k86F6RposVQy/ByKIJtw=="
+        "requested": "[1.2.147, 1.2.147]",
+        "resolved": "1.2.147",
+        "contentHash": "MWrB8OhaVOa1y5RDX3CTySmxVMCiF6FWb/jkuT7I+PKMvxkEHusBqmzjXIgbgYpBKlTVH7Z4iTRZKWitJSBvQA=="
       }
     }
   }
