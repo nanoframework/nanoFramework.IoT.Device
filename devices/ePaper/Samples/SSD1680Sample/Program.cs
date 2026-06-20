@@ -81,7 +81,7 @@ namespace SSD1680Sample
             display.Clear(triggerPageRefresh: true);
 
             // initialize the graphics library
-            using var gfx = new Graphics(display)
+            using var gfx = new Graphics(display, disposeDisplay: false)
             {
                 DisplayRotation = Rotation.Default
             };

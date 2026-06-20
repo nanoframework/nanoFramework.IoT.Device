@@ -51,16 +51,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
         /// <param name="shouldDispose">True to dispose the Gpio Controller.</param>
         /// <exception cref="ArgumentNullException"><paramref name="spiDevice"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Display width and height can't be less than 0 or greater than 200.</exception>
-        protected Jd79653A(
-            SpiDevice spiDevice,
-            int resetPin,
-            int busyPin,
-            int dataCommandPin,
-            int width,
-            int height,
-            GpioController gpioController = null,
-            bool enableFramePaging = false,
-            bool shouldDispose = true)
+        protected Jd79653A(SpiDevice spiDevice, int resetPin, int busyPin, int dataCommandPin, int width, int height, GpioController gpioController = null, bool enableFramePaging = false, bool shouldDispose = true)
         {
             _spiDevice = spiDevice ?? throw new ArgumentNullException(nameof(spiDevice));
             _gpioController = gpioController ?? new GpioController();
@@ -75,7 +66,7 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
             Height = height;
             PagedFrameDrawEnabled = enableFramePaging;
 
-            _whiteBuffer = new byte[Width * Height];
+            _whiteBuffer = new byte[(Width * Height) / 8];
             for (int i = 0; i < _whiteBuffer.Length; i++)
             {
                 _whiteBuffer[i] = 0xff;
@@ -224,9 +215,6 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
             SendData(_whiteBuffer);
             SendCommand((byte)Command.DataStartTransmission2);
             SendData(buffer);
-            WaitMs(5);
-
-            PerformFullRefresh();
         }
 
         /// <summary>

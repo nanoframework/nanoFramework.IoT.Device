@@ -102,7 +102,9 @@ namespace Iot.Device.EPaper.Drivers
         /// </summary>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to be able to cancel the waiting time.</param>
         /// <returns>True if it returns before the <see cref="CancellationToken"/> expires, false otherwise.</returns>
-        /// <remarks>If cancellationToken is null, this method will block until the busy pin is low.</remarks>
+        /// <remarks>
+        /// Busy-pin polarity is controller-specific; implementations block until the device is ready for new commands.
+        /// </remarks>
         bool WaitReady(CancellationToken cancellationToken = default);
 
         /// <summary>

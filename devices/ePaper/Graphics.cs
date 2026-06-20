@@ -3,7 +3,6 @@
 
 using System;
 using System.Drawing;
-
 using Iot.Device.EPaper.Buffers;
 using Iot.Device.EPaper.Drivers;
 using Iot.Device.EPaper.Enums;
@@ -17,6 +16,7 @@ namespace Iot.Device.EPaper
     /// </summary>
     public sealed class Graphics : IDisposable
     {
+        private readonly bool _disposeDisplay;
         private bool _disposedValue;
 
         /// <summary>
@@ -31,13 +31,40 @@ namespace Iot.Device.EPaper
         public Rotation DisplayRotation { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether glyph rows are rendered mirrored horizontally.
+        /// </summary>
+        public bool FlipGlyphsHorizontally { get; set; }
+
+        /// <summary>
+        /// Gets the logical drawing width for the current rotation.
+        /// </summary>
+        public int Width =>
+            DisplayRotation == Rotation.Degrees90Clockwise || DisplayRotation == Rotation.Degrees270Clockwise
+                ? EPaperDisplay.Height
+                : EPaperDisplay.Width;
+
+        /// <summary>
+        /// Gets the logical drawing height for the current rotation.
+        /// </summary>
+        public int Height =>
+            DisplayRotation == Rotation.Degrees90Clockwise || DisplayRotation == Rotation.Degrees270Clockwise
+                ? EPaperDisplay.Width
+                : EPaperDisplay.Height;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Graphics"/> class.
         /// </summary>
         /// <param name="ePaperDisplay">The E-Paper display device to draw to.</param>
-        public Graphics(IEPaperDisplay ePaperDisplay)
+        /// <param name="disposeDisplay">
+        /// When <see langword="true"/>, <see cref="Dispose"/> also disposes <paramref name="ePaperDisplay"/>.
+        /// Pass <see langword="false"/> when the display lifetime is managed elsewhere (for example a <c>using</c> on the driver).
+        /// </param>
+        public Graphics(IEPaperDisplay ePaperDisplay, bool disposeDisplay = true)
         {
-            EPaperDisplay = ePaperDisplay;
+            EPaperDisplay = ePaperDisplay ?? throw new ArgumentNullException(nameof(ePaperDisplay));
+            _disposeDisplay = disposeDisplay;
             DisplayRotation = Rotation.Default;
+            FlipGlyphsHorizontally = false;
         }
 
         /// <summary>
@@ -50,22 +77,24 @@ namespace Iot.Device.EPaper
         /// <param name="color">The color of the line.</param>
         public void DrawLine(int startX, int startY, int endX, int endY, Color color)
         {
-            // This is a common line drawing algorithm. Read about it here:
-            // http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
             int sx = (startX < endX) ? 1 : -1;
             int sy = (startY < endY) ? 1 : -1;
 
             int dx = endX > startX ? endX - startX : startX - endX;
-            int dy = endY > startX ? endY - startY : startY - endY;
+            int dy = endY > startY ? endY - startY : startY - endY;
 
-            float err = dx - dy, e2;
+            int err = dx - dy;
 
-            // if there is an error with drawing a point or the line is finished get out of the loop!
-            while (!(startX == endX && startY == endY))
+            while (true)
             {
                 DrawPixel(startX, startY, color);
 
-                e2 = 2 * err;
+                if (startX == endX && startY == endY)
+                {
+                    break;
+                }
+
+                int e2 = 2 * err;
 
                 if (e2 > -dy)
                 {
@@ -84,11 +113,11 @@ namespace Iot.Device.EPaper
         /// <summary>
         /// Draws a circle defined by the specified center point and radius.
         /// </summary>
-        /// <param name="centerX">X position of the center point.</param>
-        /// <param name="centerY">Y position of the center point.</param>
-        /// <param name="radius">The circle's radius.</param>
-        /// <param name="color">The color to use when drawing the circle.</param>
-        /// <param name="fill">True to fill the circle, otherwise; draws only the outline.</param>
+        /// <param name="centerX">The X coordinate of the circle center.</param>
+        /// <param name="centerY">The Y coordinate of the circle center.</param>
+        /// <param name="radius">The radius of the circle in pixels.</param>
+        /// <param name="color">The color used to draw the circle.</param>
+        /// <param name="fill"><see langword="true"/> to fill the circle; otherwise, only the outline is drawn.</param>
         public void DrawCircle(int centerX, int centerY, int radius, Color color, bool fill)
         {
             if (fill)
@@ -104,15 +133,14 @@ namespace Iot.Device.EPaper
         /// <summary>
         /// Draws a rectangle defined by a starting point, width, and height.
         /// </summary>
-        /// <param name="startX">Top left point X position.</param>
-        /// <param name="startY">Top left point Y position.</param>
+        /// <param name="startX">The X coordinate of the rectangle's top-left corner.</param>
+        /// <param name="startY">The Y coordinate of the rectangle's top-left corner.</param>
         /// <param name="width">The width of the rectangle in pixels.</param>
         /// <param name="height">The height of the rectangle in pixels.</param>
-        /// <param name="color">The color to use when drawing the rectangle.</param>
-        /// <param name="fill">True to fill the rectangle, otherwise; draws only the outline.</param>
+        /// <param name="color">The color used to draw the rectangle.</param>
+        /// <param name="fill"><see langword="true"/> to fill the rectangle; otherwise, only the outline is drawn.</param>
         public void DrawRectangle(int startX, int startY, int width, int height, Color color, bool fill)
         {
-            // This will draw points
             int endX = startX + width;
             int endY = startY + height;
 
@@ -129,40 +157,51 @@ namespace Iot.Device.EPaper
         /// <summary>
         /// Writes text to the display.
         /// </summary>
-        /// <param name="text">The text to write.</param>
-        /// <param name="font">The font to use.</param>
-        /// <param name="x">Starting X point.</param>
-        /// <param name="y">Starting Y point.</param>
-        /// <param name="color">The font color.</param>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="font">The font used to render the text.</param>
+        /// <param name="x">The X coordinate of the text starting position.</param>
+        /// <param name="y">The Y coordinate of the text starting position.</param>
+        /// <param name="color">The color used to draw the text.</param>
         public void DrawText(string text, IFont font, int x, int y, Color color)
         {
-            var col = 0;
-            var line = 0;
+            int col = 0;
+            int line = 0;
 
             foreach (char character in text)
             {
-                if (col == EPaperDisplay.Width)
+                if (y + line + font.Height > Height)
+                {
+                    break;
+                }
+
+                if (x + col + font.Width > Width)
                 {
                     col = 0;
                     line += font.Height + 1;
+
+                    if (y + line + font.Height > Height)
+                    {
+                        break;
+                    }
                 }
 
                 var characterBitmap = font[character];
-                for (var i = 0; i < font.Height; i++)
+                for (int i = 0; i < font.Height; i++)
                 {
-                    var xPos = x + col;
-                    var yPos = y + line + i;
-                    var bitMask = 0x01;
-                    var b = characterBitmap[i];
+                    int xPos = x + col;
+                    int yPos = y + line + i;
+                    int bitMask = 0x80;
+                    byte b = characterBitmap[i];
 
-                    for (var pixel = 0; pixel < 8; pixel++)
+                    for (int pixel = 0; pixel < 8; pixel++)
                     {
-                        if ((b & bitMask) > 0)
+                        if ((b & bitMask) != 0)
                         {
-                            DrawPixel(xPos + pixel, yPos, color);
+                            int drawX = FlipGlyphsHorizontally ? xPos + (7 - pixel) : xPos + pixel;
+                            DrawPixel(drawX, yPos, color);
                         }
 
-                        bitMask <<= 1;
+                        bitMask >>= 1;
                     }
                 }
 
@@ -174,88 +213,47 @@ namespace Iot.Device.EPaper
         /// Draws the specified bitmap buffer to the display using the specified starting point.
         /// </summary>
         /// <param name="bitmap">The bitmap buffer to draw.</param>
-        /// <param name="start">The start point on the display to start drawing from.</param>
-        /// <param name="rotate"><see langword="true"/> to rotate the bitmap with the current <see cref="Rotation"/> specified. It might be slow.</param>
+        /// <param name="start">The starting position on the display where the bitmap will be drawn.</param>
+        /// <param name="rotate"><see langword="true"/> to rotate the bitmap using the current <see cref="DisplayRotation"/>; otherwise, the bitmap is drawn without additional rotation.</param>
         public void DrawBitmap(IFrameBuffer bitmap, System.Drawing.Point start, bool rotate = false)
         {
-            if (DisplayRotation == Rotation.Default)
+            if (!rotate || DisplayRotation == Rotation.Default)
             {
                 EPaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
                 return;
             }
 
-            if (!rotate)
+            for (int y = 0; y < bitmap.Height; y++)
             {
-                EPaperDisplay.FrameBuffer.WriteBuffer(bitmap, destinationStart: start);
-            }
-            else
-            {
-                // caller opted in to rotate (slow)
-                for (var y = 0; y < bitmap.Height; y++)
+                for (int x = 0; x < bitmap.Width; x++)
                 {
-                    for (var x = 0; x < bitmap.Width; x++)
-                    {
-                        var currentPoint = new System.Drawing.Point(x, y);
-
-                        EPaperDisplay
-                            .FrameBuffer
-                            .SetPixel(new System.Drawing.Point(start.X + currentPoint.X, start.Y + currentPoint.Y), bitmap.GetPixel(currentPoint));
-                    }
+                    DrawPixel(start.X + x, start.Y + y, bitmap.GetPixel(new System.Drawing.Point(x, y)));
                 }
             }
         }
 
         /// <summary>
-        /// Gets the real X Position of a given point after considering the current <see cref="Rotation"/> of the display.
+        /// Gets the real position of a point after applying the current <see cref="Rotation"/>.
         /// </summary>
-        /// <param name="x">The X Position in the current rotation.</param>
-        /// <param name="y">The Y Position in the current rotation.</param>
-        /// <returns>The real X position on the display.</returns>
-        private int GetRealXPosition(int x, int y)
-        {
-            switch (DisplayRotation)
-            {
-                case Rotation.Degrees90Clockwise:
-                    return EPaperDisplay.Width - y - 1;
-                case Rotation.Degrees180Clockwise:
-                    return EPaperDisplay.Width - x - 1;
-                case Rotation.Degrees270Clockwise:
-                    return y;
-                default:
-                    return x;
-            }
-        }
-
-        /// <summary>
-        /// Gets the real Y Position of a given point after considering the current <see cref="Rotation"/> of the display.
-        /// </summary>
-        /// <param name="x">The X Position in the current rotation.</param>
-        /// <param name="y">The Y Position in the current rotation.</param>
-        /// <returns>The real Y position on the display.</returns>
-        private int GetRealYPosition(int x, int y)
-        {
-            switch (DisplayRotation)
-            {
-                case Rotation.Degrees90Clockwise:
-                    return x;
-                case Rotation.Degrees180Clockwise:
-                    return EPaperDisplay.Height - y - 1;
-                case Rotation.Degrees270Clockwise:
-                    return EPaperDisplay.Height - x - 1;
-                default:
-                    return y;
-            }
-        }
-
-        /// <summary>
-        /// Gets the real Position of a given point after considering the current <see cref="Rotation"/> of the display.
-        /// </summary>
-        /// <param name="x">The X Position in the current rotation.</param>
-        /// <param name="y">The Y Position in the current rotation.</param>
-        /// <returns>The real position on the display.</returns>
+        /// <param name="x">The logical X coordinate.</param>
+        /// <param name="y">The logical Y coordinate.</param>
+        /// <returns>The transformed position on the display.</returns>
         public System.Drawing.Point GetRealPosition(int x, int y)
         {
-            return new System.Drawing.Point(GetRealXPosition(x, y), GetRealYPosition(x, y));
+            switch (DisplayRotation)
+            {
+                case Rotation.Degrees90Clockwise:
+                    return new System.Drawing.Point(EPaperDisplay.Width - y - 1, x);
+
+                case Rotation.Degrees180Clockwise:
+                    return new System.Drawing.Point(EPaperDisplay.Width - x - 1, EPaperDisplay.Height - y - 1);
+
+                case Rotation.Degrees270Clockwise:
+                    return new System.Drawing.Point(y, EPaperDisplay.Height - x - 1);
+
+                default:
+                    return new System.Drawing.Point(x, y);
+            }
         }
 
         private void DrawRectangleOutline(int startX, int startY, int endX, int endY, Color color)
@@ -297,86 +295,90 @@ namespace Iot.Device.EPaper
 
         private void DrawCircleOutline(int centerX, int centerY, int radius, Color color)
         {
-            // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
-            void drawCircle(int xc, int yc, int x, int y, Color color)
+            void DrawCirclePoints(int xc, int yc, int x1, int y1, Color pixelColor)
             {
-                DrawPixel(xc + x, yc + y, color);
-                DrawPixel(xc - x, yc + y, color);
-                DrawPixel(xc + x, yc - y, color);
-                DrawPixel(xc - x, yc - y, color);
-                DrawPixel(xc + y, yc + x, color);
-                DrawPixel(xc - y, yc + x, color);
-                DrawPixel(xc + y, yc - x, color);
-                DrawPixel(xc - y, yc - x, color);
+                DrawPixel(xc + x1, yc + y1, pixelColor);
+                DrawPixel(xc - x1, yc + y1, pixelColor);
+                DrawPixel(xc + x1, yc - y1, pixelColor);
+                DrawPixel(xc - x1, yc - y1, pixelColor);
+                DrawPixel(xc + y1, yc + x1, pixelColor);
+                DrawPixel(xc - y1, yc + x1, pixelColor);
+                DrawPixel(xc + y1, yc - x1, pixelColor);
+                DrawPixel(xc - y1, yc - x1, pixelColor);
             }
 
-            int x = 0, y = radius;
-
-            // This determines when to decrement y.
+            int x1 = 0;
+            int y1 = radius;
             int determinant = 3 - (2 * radius);
 
-            drawCircle(centerX, centerY, x, y, color);
+            DrawCirclePoints(centerX, centerY, x1, y1, color);
 
-            while (y >= x)
+            while (y1 >= x1)
             {
-                // for each pixel we will draw all eight pixels
-                x++;
+                x1++;
 
-                // check for decision parameter and correspondingly
-                // update d, x, y
                 if (determinant > 0)
                 {
-                    y--;
-                    determinant = ((determinant + 4) * (x - y)) + 10;
+                    y1--;
+                    determinant = determinant + (4 * (x1 - y1)) + 10;
                 }
                 else
                 {
-                    determinant = (determinant + 4) * (x + 6);
+                    determinant = determinant + (4 * x1) + 6;
                 }
 
-                drawCircle(centerX, centerY, x, y, color);
+                DrawCirclePoints(centerX, centerY, x1, y1, color);
             }
         }
 
         private void DrawCircleFilled(int centerX, int centerY, int radius, Color color)
         {
-            // Midpoint Circle Algorithm: https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
-            // C# Implementation: https://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm#C.23
-            int x = 0, y = radius;
+            int x1 = 0;
+            int y1 = radius;
+            int determinant = 3 - (2 * radius);
 
-            // This determines when to decrement y.
-            var determinant = 3 - (2 * radius);
-
-            while (x <= y)
+            while (x1 <= y1)
             {
-                DrawLine(centerX + x, centerY + y, centerX - x, centerY + y, color);
-                DrawLine(centerX + x, centerY - y, centerX - x, centerY - y, color);
-                DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, color);
-                DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, color);
+                DrawLine(centerX + x1, centerY + y1, centerX - x1, centerY + y1, color);
+                DrawLine(centerX + x1, centerY - y1, centerX - x1, centerY - y1, color);
+                DrawLine(centerX - y1, centerY + x1, centerX + y1, centerY + x1, color);
+                DrawLine(centerX - y1, centerY - x1, centerX + y1, centerY - x1, color);
 
                 if (determinant < 0)
                 {
-                    determinant += (2 * x) + 1;
+                    determinant += (2 * x1) + 1;
                 }
                 else
                 {
-                    determinant += (2 * (x - y)) + 1;
-                    y--;
+                    determinant += (2 * (x1 - y1)) + 1;
+                    y1--;
                 }
 
-                x++;
+                x1++;
             }
         }
 
         /// <summary>
         /// Draws a pixel on the display with respect to the current <see cref="DisplayRotation"/>.
         /// </summary>
-        /// <param name="x">The X position.</param>
-        /// <param name="y">The Y position.</param>
-        /// <param name="color">The color to use when drawing the pixel.</param>
+        /// <param name="x">The logical X coordinate of the pixel.</param>
+        /// <param name="y">The logical Y coordinate of the pixel.</param>
+        /// <param name="color">The color used to draw the pixel.</param>
         public void DrawPixel(int x, int y, Color color)
         {
-            EPaperDisplay.FrameBuffer.SetPixel(GetRealPosition(x, y), color);
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            {
+                return;
+            }
+
+            System.Drawing.Point point = GetRealPosition(x, y);
+
+            if (point.X < 0 || point.X >= EPaperDisplay.Width || point.Y < 0 || point.Y >= EPaperDisplay.Height)
+            {
+                return;
+            }
+
+            EPaperDisplay.DrawPixel(point.X, point.Y, color);
         }
 
         #region IDisposable
@@ -385,7 +387,7 @@ namespace Iot.Device.EPaper
         {
             if (!_disposedValue)
             {
-                if (disposing)
+                if (disposing && _disposeDisplay)
                 {
                     EPaperDisplay?.Dispose();
                 }
@@ -397,7 +399,6 @@ namespace Iot.Device.EPaper
         /// <inheritdoc/>
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

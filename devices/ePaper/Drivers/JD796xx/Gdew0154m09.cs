@@ -29,14 +29,8 @@ namespace Iot.Device.EPaper.Drivers.Jd796xx
         /// If you can't guarantee 5KB to be available to the driver then enable paging by setting <paramref name="enableFramePaging"/> to true.
         /// A page uses about 1KB (5KB / PagesPerFrame).
         /// </remarks>
-        public Gdew0154m09(
-            SpiDevice spiDevice,
-            int resetPin,
-            int busyPin,
-            int dataCommandPin,
-            GpioController gpioController = null,
-            bool enableFramePaging = false,
-            bool shouldDispose = true) : base(spiDevice, resetPin, busyPin, dataCommandPin, 200, 200, gpioController, enableFramePaging, shouldDispose)
+        public Gdew0154m09(SpiDevice spiDevice, int resetPin, int busyPin, int dataCommandPin, GpioController gpioController = null, bool enableFramePaging = false, bool shouldDispose = true)
+            : base(spiDevice, resetPin, busyPin, dataCommandPin, 200, 200, gpioController, enableFramePaging, shouldDispose)
         {
         }
 
