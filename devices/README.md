@@ -217,6 +217,7 @@
 ## GPIO Expanders
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Seesaw.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Seesaw/) [Adafruit Seesaw - extension board (ADC, PWM, GPIO expander)](Seesaw)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw9523x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw9523x/) [AW9523X - I2C GPIO and LED controller](Aw9523x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mcp23xxx.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mcp23xxx/) [Mcp23xxx/MCP23008/MCP23009/MCP23017/MCP23018 - I/O Expander device family](Mcp23xxx)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pca95x4.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pca95x4/) [Pca95x4/PCA9534/PCA9534A/PCA9554/PCA9554A - I2C GPIO Expander](Pca95x4)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pcx857x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pcx857x/) [PCx857x/PCF8574/PCF8575/PCA8574/PCA8575 - NXP/TI GPIO expansion](Pcx857x)
@@ -302,6 +303,7 @@
 
 ## Power monitors and related devices
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw9523x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw9523x/) [AW9523X - I2C GPIO and LED controller](Aw9523x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp2101.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp2101/) [AXP2101 - Enhanced Single Cell Li-Battery and Power System Management IC](Axp2101)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bq2579x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bq2579x/) [BQ2579x/BQ25792/BQ25798 - Buck-boost battery charger](Bq2579x)
