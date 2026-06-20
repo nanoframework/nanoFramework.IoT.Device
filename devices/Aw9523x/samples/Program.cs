@@ -13,13 +13,30 @@ Debug.WriteLine("AW9523X sample for M5Stack CoreS3");
 Configuration.SetPinFunction(12, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(11, DeviceFunction.I2C1_CLOCK);
 
-EnableCoreS3InternalBusPower();
+try
+{
+    EnableCoreS3InternalBusPower();
+}
+catch (Exception ex)
+{
+    Debug.WriteLine($"EnableCoreS3InternalBusPower failed: {ex.Message}");
+    EnterSafeIdle();
+}
+
 Thread.Sleep(20);
 
-if (!DiagnoseAw9523Link())
+try
 {
-    Debug.WriteLine("AW9523 did not ACK on I2C address 0x58. Aborting driver init.");
-    Debug.WriteLine("Check CoreS3 hardware and internal power rails.");
+    if (!DiagnoseAw9523Link())
+    {
+        Debug.WriteLine("AW9523 did not ACK on I2C address 0x58. Aborting driver init.");
+        Debug.WriteLine("Check CoreS3 hardware and internal power rails.");
+        EnterSafeIdle();
+    }
+}
+catch (Exception ex)
+{
+    Debug.WriteLine($"DiagnoseAw9523Link failed: {ex.Message}");
     EnterSafeIdle();
 }
 
