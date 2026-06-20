@@ -128,11 +128,11 @@ namespace Iot.Device.Bmi270
         /// <summary>Auxiliary read address.</summary>
         AuxReadAddress = 0x4D,
 
-        /// <summary>Auxiliary write data.</summary>
-        AuxWriteData = 0x4E,
-
         /// <summary>Auxiliary write address.</summary>
-        AuxWriteAddress = 0x4F,
+        AuxWriteAddress = 0x4E,
+
+        /// <summary>Auxiliary write data.</summary>
+        AuxWriteData = 0x4F,
 
         /// <summary>INT1 output pin configuration.</summary>
         Int1IoControl = 0x53,

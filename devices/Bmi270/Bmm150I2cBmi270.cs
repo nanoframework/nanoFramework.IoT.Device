@@ -3,6 +3,7 @@
 
 using System;
 using System.Device.I2c;
+using System.IO;
 using System.Threading;
 using Iot.Device.Magnetometer;
 
@@ -19,6 +20,14 @@ namespace Iot.Device.Bmi270
     /// </remarks>
     public class Bmm150I2cBmi270 : Bmm150I2cBase
     {
+        private const byte AuxBusyMask = 0x04;
+
+        private const int AuxBusyPollDelayMs = 10;
+
+        private const int AuxBusyPollRetries = 21;
+
+        private const int AuxTransactionDelayMs = 1;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Bmm150I2cBmi270"/> class.
         /// </summary>
@@ -39,21 +48,23 @@ namespace Iot.Device.Bmi270
         public override void WriteRegister(I2cDevice i2cDevice, byte reg, byte data)
         {
             // BMI270 manual-access write sequence:
-            // 1. Write the target register address to AUX_WR_ADDR (0x4F)
-            // 2. Write the data byte to AUX_WR_DATA (0x4E)
-            // The BMI270 executes the write on the auxiliary bus automatically.
+            // 1. Write data to AUX_WR_DATA (0x4F)
+            // 2. Wait until AUX is not busy
+            // 3. Write register address to AUX_WR_ADDR (0x4E) to trigger the aux write.
             SpanByte buff = new byte[2];
-
-            buff[0] = (byte)Register.AuxWriteAddress;
-            buff[1] = reg;
-            i2cDevice.Write(buff);
 
             buff[0] = (byte)Register.AuxWriteData;
             buff[1] = data;
             i2cDevice.Write(buff);
 
-            // Allow the aux transaction to complete
-            Thread.Sleep(2);
+            WaitForAuxNotBusy(i2cDevice);
+
+            buff[0] = (byte)Register.AuxWriteAddress;
+            buff[1] = reg;
+            i2cDevice.Write(buff);
+
+            // Ensure the triggered AUX write transaction has completed.
+            WaitForAuxNotBusy(i2cDevice);
         }
 
         /// <inheritdoc/>
@@ -68,42 +79,46 @@ namespace Iot.Device.Bmi270
         public override void ReadBytes(I2cDevice i2cDevice, byte reg, SpanByte readBytes)
         {
             // BMI270 manual-access read sequence:
-            // For each chunk:
-            // 1. Set AUX_RD_ADDR (0x4D) to the target register on the BMM150.
-            // 2. Wait for the BMI270 to perform the read on the aux bus.
-            // 3. Read back from AUX_DATA registers (0x04-0x0B, up to 8 bytes per transaction).
-            int remaining = readBytes.Length;
-            int destOffset = 0;
-            byte currentReg = reg;
-
-            while (remaining > 0)
+            // In M5Unified/CoreS3 manual mode, AUX_IF_CONF is configured for single-byte access.
+            // Read one byte per AUX transaction to avoid stale/invalid multi-byte AUX_DATA windows.
+            for (int i = 0; i < readBytes.Length; i++)
             {
-                int chunkLength = remaining > 8 ? 8 : remaining;
+                byte currentReg = (byte)(reg + i);
+
+                WaitForAuxNotBusy(i2cDevice);
 
                 SpanByte buff = new byte[2];
                 buff[0] = (byte)Register.AuxReadAddress;
                 buff[1] = currentReg;
                 i2cDevice.Write(buff);
 
-                // Allow time for the auxiliary read to complete
-                Thread.Sleep(2);
+                // Wait for AUX transaction completion after setting read address.
+                WaitForAuxNotBusy(i2cDevice);
 
-                SpanByte auxData = new byte[chunkLength];
+                // Bosch manual AUX read path waits briefly after setting AUX_RD_ADDR,
+                // then reads AUX_DATA without requiring DRDY_AUX polling.
+                Thread.Sleep(AuxTransactionDelayMs);
+
                 i2cDevice.WriteByte((byte)Register.AuxData0);
-                i2cDevice.Read(auxData);
-
-                for (int i = 0; i < chunkLength; i++)
-                {
-                    readBytes[destOffset + i] = auxData[i];
-                }
-
-                remaining -= chunkLength;
-                destOffset += chunkLength;
-                unchecked
-                {
-                    currentReg += (byte)chunkLength;
-                }
+                readBytes[i] = i2cDevice.ReadByte();
             }
+        }
+
+        private static void WaitForAuxNotBusy(I2cDevice i2cDevice)
+        {
+            for (int i = 0; i < AuxBusyPollRetries; i++)
+            {
+                i2cDevice.WriteByte((byte)Register.Status);
+                byte status = i2cDevice.ReadByte();
+                if ((status & AuxBusyMask) == 0)
+                {
+                    return;
+                }
+
+                Thread.Sleep(AuxBusyPollDelayMs);
+            }
+
+            throw new IOException("BMI270 AUX interface remained busy while accessing BMM150.");
         }
     }
 }

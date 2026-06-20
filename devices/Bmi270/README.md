@@ -24,10 +24,17 @@ Unlike simpler IMU sensors, the BMI270 **requires an 8 KB configuration file to 
 
 Create the `Bmi270AccelerometerGyroscope` class and pass the I2C device. The default I2C address is `0x68` (SDO=GND), and the secondary address is `0x69` (SDO=VDDIO). The M5Stack CoreS3 uses address `0x69`.
 
+The sample in this binding is adjusted for the M5Stack CoreS3. It follows M5Stack's documented CoreS3 configuration and the official M5Unified source by enabling the CoreS3 internal sensor bus through the AW9523B and then applying the AXP2101 rail profile before talking to the BMI270.
+
 ```csharp
-// I2C pins for the M5Stack CoreS3
+Debug.WriteLine("BMI270 sample adjusted for the M5Stack CoreS3.");
+
+// CoreS3 internal I2C bus: G12 SDA / G11 SCL.
 Configuration.SetPinFunction(12, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(11, DeviceFunction.I2C1_CLOCK);
+
+EnableCoreS3InternalBusPower();
+EnableCoreS3SensorPower();
 
 I2cConnectionSettings settings = new(1, Bmi270AccelerometerGyroscope.SecondaryI2cAddress);
 
@@ -174,9 +181,14 @@ imu.DisableFifo();
 
 On the M5Stack CoreS3, the BMM150 magnetometer is connected through the BMI270's auxiliary I2C interface. This binding provides a `Bmm150I2cBmi270` adapter that allows the existing `Bmm150` binding to communicate with the magnetometer through the BMI270.
 
+This sample is adjusted for the M5Stack CoreS3 board bring-up. Before creating the BMI270 instance, it enables `BUS_EN` and `BOOST_EN` on the AW9523B and configures the AXP2101 rails to match the official M5Stack CoreS3 initialization.
+
 ```csharp
 Configuration.SetPinFunction(12, DeviceFunction.I2C1_DATA);
 Configuration.SetPinFunction(11, DeviceFunction.I2C1_CLOCK);
+
+EnableCoreS3InternalBusPower();
+EnableCoreS3SensorPower();
 
 I2cConnectionSettings settings = new(1, Bmi270AccelerometerGyroscope.SecondaryI2cAddress);
 
@@ -205,9 +217,11 @@ using (Bmi270AccelerometerGyroscope imu = new(I2cDevice.Create(settings)))
 
 ## M5Stack CoreS3
 
-On the M5Stack CoreS3, the BMI270 is connected to the internal I2C bus at address `0x69`. The BMM150 magnetometer is also on the board, connected through the BMI270's auxiliary I2C interface at address `0x10`. See the [CoreS3 documentation](https://docs.m5stack.com/en/core/CoreS3) for the full pinout.
+On the M5Stack CoreS3, the BMI270 is connected to the internal I2C bus at address `0x69` on GPIO12/GPIO11. The BMM150 magnetometer is also on the board, connected through the BMI270's auxiliary I2C interface at address `0x10`. M5Stack's official documentation and M5Unified source also show that CoreS3 power routing depends on the AW9523B IO expander and the AXP2101 PMU, which is why the sample enables AW9523 `BUS_EN` and `BOOST_EN` and then applies the AXP2101 rail setup before sensor initialization.
 
 | Device | I2C Address |
 | ------ | ----------- |
 | BMI270 | 0x69 |
 | BMM150 | 0x10 (via BMI270 aux I2C) |
+| AXP2101 | 0x34 |
+| AW9523B | 0x58 |

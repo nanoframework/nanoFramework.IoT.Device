@@ -42,7 +42,9 @@ namespace Iot.Device.Bmi270
         /// <summary>
         /// Maximum burst write size for config upload (in bytes).
         /// </summary>
-        private const int ConfigBurstSize = 64;
+        private const int ConfigBurstSize = 16;
+
+        private const int ConfigBurstDelayMs = 1;
 
         /// <summary>
         /// Upper bits for ACC_CONF: filter_perf=1, bwp=normal(010) = 0xA0.
@@ -53,6 +55,16 @@ namespace Iot.Device.Bmi270
         /// Upper bits for GYR_CONF: filter_perf=1, noise_perf=0, bwp=normal(10) = 0xA0.
         /// </summary>
         private const byte GyroscopeConfigBase = 0xA0;
+
+        private const int ConfigReadyTimeoutMs = 200;
+
+        private const int ConfigReadyPollDelayMs = 10;
+
+        private const byte AuxBusyMask = 0x04;
+
+        private const int AuxBusyPollDelayMs = 1;
+
+        private const int AuxBusyPollRetries = 50;
 
         private I2cDevice _i2c;
         private AccelerometerRange _accelerometerRange;
@@ -96,12 +108,19 @@ namespace Iot.Device.Bmi270
             // Step 4-6: Upload config file
             UploadConfigFile();
 
-            // Step 7: Verify initialization success
-            Thread.Sleep(20);
-            byte internalStatus = ReadByte(Register.InternalStatus);
-            if ((internalStatus & 0x01) != 0x01)
+            // Bosch's reference sequence re-enables advanced power save immediately
+            // after the config blob is committed and before INTERNAL_STATUS is checked.
+            WriteByte(Register.PowerConfig, 0x01);
+            Thread.Sleep(1);
+
+            // Step 7: Verify initialization success.
+            // Bosch's initialization sequence requires noticeably more time than a single short delay,
+            // especially after the 8 KB config file has been committed.
+            if (!WaitForInitialization())
             {
-                throw new IOException($"BMI270 initialization failed. INTERNAL_STATUS = 0x{internalStatus:X2}.");
+                byte internalStatus = ReadByte(Register.InternalStatus);
+                byte errorStatus = ReadByte(Register.Error);
+                throw new IOException($"BMI270 initialization failed. INTERNAL_STATUS = 0x{internalStatus:X2}, ERR_REG = 0x{errorStatus:X2}.");
             }
 
             // Step 8: Enable accelerometer, gyroscope and temperature sensor
@@ -321,31 +340,44 @@ namespace Iot.Device.Bmi270
                     "Auxiliary I2C device address must be a 7-bit address in the range 0x08 to 0x77.");
             }
 
-            // Enable auxiliary power in PWR_CTRL (bit 0 = aux_en)
+            // Match M5Unified CoreS3 AUX setup.
+            // IF_CONF bit 5 enables the AUX I2C interface path.
+            byte ifConf = ReadByte(Register.InterfaceConfig);
+            WriteByte(Register.InterfaceConfig, (byte)(ifConf | 0x20));
+            Thread.Sleep(1);
+
+            // Ensure advanced power save is disabled while configuring AUX.
+            WriteByte(Register.PowerConfig, 0x00);
+            Thread.Sleep(1);
+
+            // Keep AUX sensor disabled during setup, as in M5Unified.
             byte pwrCtrl = ReadByte(Register.PowerControl);
-            WriteByte(Register.PowerControl, (byte)(pwrCtrl | 0x01));
+            WriteByte(Register.PowerControl, (byte)(pwrCtrl & 0xFE));
             Thread.Sleep(1);
 
-            // Set auxiliary device I2C address (AUX_DEV_ID register 0x4B)
-            // Bits [7:1] = I2C address of the auxiliary device
+            // Set auxiliary device I2C address (AUX_DEV_ID register 0x4B).
+            // Bits [7:1] contain the 7-bit address.
+            WaitForAuxNotBusy();
             WriteByte(Register.AuxDeviceId, (byte)(auxiliaryDeviceAddress << 1));
-            Thread.Sleep(1);
-
-            // Configure auxiliary interface (AUX_IF_CONF register 0x4C)
-            // Bits [7:6] = aux_rd_burst: 00=1byte, 01=2bytes, 10=6bytes, 11=8bytes
-            // For BMM150 we typically read 8 bytes at a time
-            // Bits [3:1] = aux_odr: output data rate for auto mode (not used in manual)
-            // Bit 0 = reserved
-            byte auxIfConf = 0xC0; // burst=8 bytes (0b11 << 6)
-            WriteByte(Register.AuxInterfaceConfig, auxIfConf);
             Thread.Sleep(1);
 
             if (manualMode)
             {
-                // Set manual mode in IF_CONF register (0x6B)
-                // Bit 5 = aux_man_en (manual mode enable)
-                byte ifConf = ReadByte(Register.InterfaceConfig);
-                WriteByte(Register.InterfaceConfig, (byte)(ifConf | 0x20));
+                // Manual mode, burst length 1 (M5Unified uses 0x80 for aux register access).
+                WaitForAuxNotBusy();
+                WriteByte(Register.AuxInterfaceConfig, 0x80);
+                Thread.Sleep(1);
+            }
+            else
+            {
+                // Automatic mode with 8-byte burst for continuous AUX data reads.
+                WaitForAuxNotBusy();
+                WriteByte(Register.AuxInterfaceConfig, 0x4F);
+                Thread.Sleep(1);
+
+                // In automatic mode, enable AUX sensor power.
+                pwrCtrl = ReadByte(Register.PowerControl);
+                WriteByte(Register.PowerControl, (byte)(pwrCtrl | 0x01));
                 Thread.Sleep(1);
             }
         }
@@ -806,7 +838,7 @@ namespace Iot.Device.Bmi270
             byte[] configData = Bmi270Config.ConfigFile;
 
             // Prepare for config load
-            WriteByte(Register.InitControl, 0x00);
+            SetConfigLoad(false);
             Thread.Sleep(1);
 
             // Write config in bursts
@@ -819,10 +851,11 @@ namespace Iot.Device.Bmi270
                     burstLength = ConfigBurstSize;
                 }
 
-                // Set the burst address (word-addressed: offset / 2)
+                // Bosch encodes the 12-bit config address split across INIT_ADDR_0/1:
+                // low 4 bits in INIT_ADDR_0, upper 8 bits in INIT_ADDR_1.
                 int wordAddress = offset / 2;
-                WriteByte(Register.InitAddress0, (byte)(wordAddress & 0xFF));
-                WriteByte(Register.InitAddress1, (byte)((wordAddress >> 8) & 0xFF));
+                WriteByte(Register.InitAddress0, (byte)(wordAddress & 0x0F));
+                WriteByte(Register.InitAddress1, (byte)((wordAddress >> 4) & 0xFF));
 
                 // Write burst: register address + data
                 SpanByte burst = new byte[burstLength + 1];
@@ -833,10 +866,46 @@ namespace Iot.Device.Bmi270
                 }
 
                 _i2c.Write(burst);
+                Thread.Sleep(ConfigBurstDelayMs);
             }
 
             // Complete config load
-            WriteByte(Register.InitControl, 0x01);
+            SetConfigLoad(true);
+        }
+
+        private void SetConfigLoad(bool enable)
+        {
+            byte initControl = ReadByte(Register.InitControl);
+            initControl = enable ? (byte)(initControl | 0x01) : (byte)(initControl & 0xFE);
+            WriteByte(Register.InitControl, initControl);
+        }
+
+        private bool WaitForInitialization()
+        {
+            for (int elapsed = 0; elapsed < ConfigReadyTimeoutMs; elapsed += ConfigReadyPollDelayMs)
+            {
+                Thread.Sleep(ConfigReadyPollDelayMs);
+
+                if ((ReadByte(Register.InternalStatus) & 0x01) == 0x01)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void WaitForAuxNotBusy()
+        {
+            for (int i = 0; i < AuxBusyPollRetries; i++)
+            {
+                if ((ReadByte(Register.Status) & AuxBusyMask) == 0)
+                {
+                    return;
+                }
+
+                Thread.Sleep(AuxBusyPollDelayMs);
+            }
         }
 
         private void WriteByte(Register register, byte data)
