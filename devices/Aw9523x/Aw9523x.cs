@@ -144,15 +144,12 @@ namespace Iot.Device.Aw9523x
         /// <param name="openDrain">True for open-drain, false for push-pull.</param>
         public void SetPort0OpenDrain(bool openDrain)
         {
+            const byte Port0OpenDrainMask = 0x10;
+
             byte control = ReadRegister(Register.GlobalControl);
-            if (openDrain)
-            {
-                control |= 0x10;
-            }
-            else
-            {
-                control &= 0xEF;
-            }
+            control = openDrain
+                ? (byte)(control | Port0OpenDrainMask)
+                : (byte)(control & ~Port0OpenDrainMask);
 
             WriteRegister(Register.GlobalControl, control);
         }

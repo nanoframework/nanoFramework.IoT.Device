@@ -92,9 +92,9 @@ static void EnterSafeIdle()
 
 static void EnableCoreS3InternalBusPower()
 {
-    const int aw9523Address = 0x58;
-    const byte regPort0Output = 0x02;
-    const byte regPort1Output = 0x03;
+    const int aw9523Address = Aw9523x.DefaultI2cAddress;
+    const byte regPort0Output = (byte)Register.OutputPort0;
+    const byte regPort1Output = (byte)Register.OutputPort1;
     const byte busEnableMask = 0x02; // BUS_EN
     const byte boostEnableMask = 0x80; // BOOST_EN
 
