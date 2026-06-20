@@ -78,6 +78,14 @@ namespace Iot.Device.Bmi270
         /// <inheritdoc/>
         public override void ReadBytes(I2cDevice i2cDevice, byte reg, SpanByte readBytes)
         {
+            if (readBytes.Length > (0x100 - reg))
+            {
+                throw new ArgumentOutOfRangeException(nameof(readBytes));
+            }
+
+            SpanByte buff = new byte[2];
+            buff[0] = (byte)Register.AuxReadAddress;
+
             // BMI270 manual-access read sequence:
             // In M5Unified/CoreS3 manual mode, AUX_IF_CONF is configured for single-byte access.
             // Read one byte per AUX transaction to avoid stale/invalid multi-byte AUX_DATA windows.
@@ -87,8 +95,6 @@ namespace Iot.Device.Bmi270
 
                 WaitForAuxNotBusy(i2cDevice);
 
-                SpanByte buff = new byte[2];
-                buff[0] = (byte)Register.AuxReadAddress;
                 buff[1] = currentReg;
                 i2cDevice.Write(buff);
 

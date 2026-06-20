@@ -897,15 +897,20 @@ namespace Iot.Device.Bmi270
 
         private void WaitForAuxNotBusy()
         {
+            byte status = 0;
+
             for (int i = 0; i < AuxBusyPollRetries; i++)
             {
-                if ((ReadByte(Register.Status) & AuxBusyMask) == 0)
+                status = ReadByte(Register.Status);
+                if ((status & AuxBusyMask) == 0)
                 {
                     return;
                 }
 
                 Thread.Sleep(AuxBusyPollDelayMs);
             }
+
+            throw new IOException();
         }
 
         private void WriteByte(Register register, byte data)
