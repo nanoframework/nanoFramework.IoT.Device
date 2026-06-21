@@ -17,7 +17,8 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="domain">The domain this Record points to.</param>
         /// <param name="type">The type of this resource.</param>
         /// <param name="ttl">The TTL of this resource.</param>
-        public AddressResource(string domain, DnsResourceType type, int ttl) : base(domain, type, ttl)
+        /// <param name="resourceClass">The DNS class of this resource.</param>
+        protected AddressResource(string domain, DnsResourceType type, int ttl, ushort resourceClass = ClassInternetCacheFlush) : base(domain, type, ttl, resourceClass)
         {
         }
 

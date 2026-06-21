@@ -12,10 +12,8 @@ namespace Iot.Device.MulticastDns.Entities
     /// </summary>
     public class Message
     {
-        private static readonly System.Random _generator = new();
-
         private ushort _id;
-        private ushort _flags = 0;
+        private ushort _flags;
 
         /// <summary>
         /// The list of <see cref="Question">Questions</see> in the message.
@@ -47,7 +45,7 @@ namespace Iot.Device.MulticastDns.Entities
         /// <param name="flags">The header flags for this message.</param>
         public Message(DnsHeaderFlags flags)
         {
-            _id = (ushort)_generator.Next(1 << 16);
+            _id = 0; // mDNS MUST use ID=0 per RFC 6762 §18.1
             _flags = (ushort)flags;
         }
 
@@ -159,21 +157,22 @@ namespace Iot.Device.MulticastDns.Entities
         {
             string domain = packet.ReadDomain();
             ushort rrType = packet.ReadUShort();
-            _ = packet.ReadUShort();
+            ushort rrClass = packet.ReadUShort();
             int ttl = packet.ReadInt();
             ushort length = packet.ReadUShort();
 
             switch (GetResourceType(rrType))
             {
-                case DnsResourceType.A: return new ARecord(packet, domain, ttl, length);
-                case DnsResourceType.CNAME: return new CnameRecord(packet, domain, ttl);
-                case DnsResourceType.PTR: return new PtrRecord(packet, domain, ttl);
-                case DnsResourceType.TXT: return new TxtRecord(packet, domain, ttl);
-                case DnsResourceType.AAAA: return new AaaaRecord(packet, domain, ttl, length);
-                case DnsResourceType.SRV: return new SrvRecord(packet, domain, ttl);
+                case DnsResourceType.A: return new ARecord(packet, domain, ttl, length, rrClass);
+                case DnsResourceType.CNAME: return new CnameRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.PTR: return new PtrRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.TXT: return new TxtRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.AAAA: return new AaaaRecord(packet, domain, ttl, length, rrClass);
+                case DnsResourceType.SRV: return new SrvRecord(packet, domain, ttl, rrClass);
+                case DnsResourceType.ANY: return new AnyRecord(packet, domain, ttl, length, rrClass);
                 default:
                     packet.ReadBytes(length);
-                    return new Resource(domain, ttl);
+                    return new Resource(domain, ttl, rrClass);
             }
         }
 

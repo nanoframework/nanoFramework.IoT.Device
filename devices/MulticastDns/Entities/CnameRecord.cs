@@ -20,7 +20,7 @@ namespace Iot.Device.MulticastDns.Entities
         public CnameRecord(string domain, string targetDomain, int ttl = 2000) : base(domain, DnsResourceType.CNAME, ttl)
             => Target = targetDomain;
 
-        internal CnameRecord(PacketParser packet, string domain, int ttl) : base(domain, DnsResourceType.CNAME, ttl)
+        internal CnameRecord(PacketParser packet, string domain, int ttl, ushort rrClass) : base(domain, DnsResourceType.CNAME, ttl, rrClass)
             => Target = packet.ReadDomain();
     }
 }

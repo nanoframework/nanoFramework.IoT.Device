@@ -27,8 +27,13 @@ namespace Iot.Device.MulticastDns.Enum
         Query = 0x0,
 
         /// <summary>
-        /// Indicates a successful response
+        /// Indicates a DNS response (QR=1).
         /// </summary>
-        Response = 0x8000
+        Response = 0x8000,
+
+        /// <summary>
+        /// Indicates an authoritative answer (AA=1).
+        /// </summary>
+        AuthoritativeAnswer = 0x0400
     }
 }

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETnanoFramework,Version=v1.0": {
+      "nanoFramework.CoreLibrary": {
+        "type": "Direct",
+        "requested": "[1.17.11, 1.17.11]",
+        "resolved": "1.17.11",
+        "contentHash": "HezzAc0o2XrSGf85xSeD/6xsO6ohF9hX6/iMQ1IZS6Zw6umr4WfAN2Jv0BrPxkaYwzEegJxxZujkHoUIAqtOMw=="
+      },
+      "nanoFramework.Hardware.Esp32": {
+        "type": "Direct",
+        "requested": "[1.6.37, 1.6.37]",
+        "resolved": "1.6.37",
+        "contentHash": "vQ9wy4esiBGaxveLPIxwAoBXj3vB0BotHYdTJtFIfgdpkEjsD2synrcD8xTv3kCNoCdptcDO0eSabkqu5eGIAQ=="
+      },
+      "nanoFramework.Runtime.Events": {
+        "type": "Direct",
+        "requested": "[1.11.32, 1.11.32]",
+        "resolved": "1.11.32",
+        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
+      },
+      "nanoFramework.System.Device.I2c": {
+        "type": "Direct",
+        "requested": "[1.1.29, 1.1.29]",
+        "resolved": "1.1.29",
+        "contentHash": "q8duNVWeK3RCiTmTZiO1UWr7s9HMsLnKWm5utxy9OQWeQtlh00l5CoFKxjot42s1NY5zLmfq7p7oWM/fgNEtlA=="
+      }
+    }
+  }
+}

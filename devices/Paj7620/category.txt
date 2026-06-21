@@ -1,0 +1,4 @@
+motion
+proximity
+infrared
+i2c

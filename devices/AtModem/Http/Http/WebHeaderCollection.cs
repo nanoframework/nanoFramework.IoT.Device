@@ -427,7 +427,16 @@ namespace System.Net
             }
 
             string name = header.Substring(0, colpos);
-            string value = header.Substring(colpos + 1);
+            // Fix: Check bounds before Substring to prevent ArgumentOutOfRangeException
+            string value;
+            if (colpos + 1 >= header.Length)
+            {
+                value = string.Empty;
+            }
+            else
+            {
+                value = header.Substring(colpos + 1);
+            }
 
             name = CheckBadChars(name, false);
             ThrowOnRestrictedHeader(name);
