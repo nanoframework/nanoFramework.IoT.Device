@@ -22,7 +22,7 @@
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.Iot.Device.Multiplexing" version="2.0.0-preview.77" />
-        <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="2.0.0-preview.83" />
+        <dependency id="nanoFramework.Iot.Device.ShiftRegister" version="2.0.0-preview.92" />
         <dependency id="nanoFramework.ResourceManager" version="2.0.0-preview.10" />
         <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.15" />
         <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
