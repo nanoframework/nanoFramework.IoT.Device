@@ -65,7 +65,7 @@
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.2.0.0-preview.18\lib\netnano1.0\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Wifi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Device.Wifi.2.0.0-preview.28\lib\netnano1.0\System.Device.Wifi.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Device.Wifi.2.0.0-preview.30\lib\netnano1.0\System.Device.Wifi.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.IO.Streams.2.0.0-preview.22\lib\netnano1.0\System.IO.Streams.dll</HintPath>

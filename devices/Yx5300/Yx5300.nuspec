@@ -22,7 +22,7 @@
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.15" />
-        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.28" />
+        <dependency id="nanoFramework.System.IO.Ports" version="2.0.0-preview.29" />
         <dependency id="nanoFramework.System.Text" version="2.0.0-preview.23" />
         <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.22" />
       </group>
