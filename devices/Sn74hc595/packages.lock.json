@@ -16,9 +16,9 @@
       },
       "nanoFramework.Iot.Device.ShiftRegister": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.83, 2.0.0-preview.83]",
-        "resolved": "2.0.0-preview.83",
-        "contentHash": "K/Prz6U4+ESUtu8MevwWElSLF/DCahCzi6+W3MPAVlDhUGk9cGf+/N3YN6P5BfrKumFqOnpzS08KuPSb0i6i/Q=="
+        "requested": "[2.0.0-preview.92, 2.0.0-preview.92]",
+        "resolved": "2.0.0-preview.92",
+        "contentHash": "WJ5xmMoRRUxDbpXLNQLQucczESgKGplygDNWt071kP70D4vJVA/7AkD+oj9wUnw0FpvPuiaGh6H3pLcXjNSoLw=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -46,9 +46,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.9.50, 3.9.50]",
-        "resolved": "3.9.50",
-        "contentHash": "HtOgGF6jZ+WYbXnCUCYPT8Y2d6mIJo9ozjK/FINTRsXdm4Zgv9GehUMa7EFoGQkqrMcDJNOIDwCmENnvXg4UbA=="
+        "requested": "[3.10.85, 3.10.85]",
+        "resolved": "3.10.85",
+        "contentHash": "smhqiTAbnI/6NRn+k7m+a65qKY7nREbnFqFgqxiw3JS8kXiBUOxdCxIZFP9TOpCsoh46DbMlBlcd+dWQYAVVCA=="
       },
       "StyleCop.MSBuild": {
         "type": "Direct",

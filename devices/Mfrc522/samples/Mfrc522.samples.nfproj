@@ -29,7 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Card, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Card.2.0.0-preview.87\lib\netnano1.0\Iot.Device.Card.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Card.2.0.0-preview.92\lib\netnano1.0\Iot.Device.Card.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.52\lib\netnano1.0\mscorlib.dll</HintPath>
@@ -38,7 +38,7 @@
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.2.0.0-preview.12\lib\netnano1.0\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Logging.2.0.0-preview.31\lib\netnano1.0\nanoFramework.Logging.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Logging.2.0.0-preview.33\lib\netnano1.0\nanoFramework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Runtime.Events.2.0.0-preview.13\lib\netnano1.0\nanoFramework.Runtime.Events.dll</HintPath>
@@ -65,7 +65,7 @@
       <HintPath>..\packages\nanoFramework.System.Diagnostics.Stopwatch.2.0.0-preview.82\lib\netnano1.0\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Ports, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.Ports.2.0.0-preview.28\lib\netnano1.0\System.IO.Ports.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.Ports.2.0.0-preview.29\lib\netnano1.0\System.IO.Ports.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.IO.Streams.2.0.0-preview.22\lib\netnano1.0\System.IO.Streams.dll</HintPath>
