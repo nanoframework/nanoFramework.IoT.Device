@@ -10,15 +10,15 @@
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[1.0.383, 1.0.383]",
-        "resolved": "1.0.383",
-        "contentHash": "oA7pdlpcBPxt9qRfvnD3VqKFYHiHp3+3m2Idgn+KJWZVou0+7Hl0Ul7x77a5febTuZQVJV9WCrV0VIbU0hDeNw=="
+        "requested": "[1.0.386, 1.0.386]",
+        "resolved": "1.0.386",
+        "contentHash": "F7lGgemOh0F+qKejVoenofNBYg258nc6s4iWhkONC+DROLOjctJW++4AV2XJuOlPWyvMW1f5bzEXknF1YkvqTQ=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
-        "requested": "[5.1.215, 5.1.215]",
-        "resolved": "5.1.215",
-        "contentHash": "gNybBBk6BJ0hwt8aC/hq8g1aeWVknCD9SiZsMWJCPFLq1zEn5+2vwID4TGRYv5BcVTzAbKgVL8iHLK5SJDO31A=="
+        "requested": "[5.1.217, 5.1.217]",
+        "resolved": "5.1.217",
+        "contentHash": "LC7glpDQxJxz3jOUF/P8yiehAWPNe6k3UTD1+FVbLCB57/+yFOjyaAaRRAQslZkdiYE0cQ7kfRMkyVxvL9v67g=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "nanoFramework.System.Collections": {
         "type": "Direct",
-        "requested": "[1.5.67, 1.5.67]",
-        "resolved": "1.5.67",
-        "contentHash": "MjSipUB70vrxjqTm1KfKTUqqjd0wbweiNyYFXONi0XClrH6HXsuX2lhDqXM8NWuYnWyYOqx8y20sXbvsH+4brg=="
+        "requested": "[1.5.75, 1.5.75]",
+        "resolved": "1.5.75",
+        "contentHash": "OiMpKo8RWbjZq1594YjdRnOGNN2aT4nowa+ET7scK0frGCux0a8LGaPkG56mmSfBCKzLlVs13LIlla3XLhXaMA=="
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",
