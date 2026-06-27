@@ -349,13 +349,12 @@ namespace nanoFramework.HomeAssistant
                 StateTopic = stateTopic,
                 CommandTopic = commandTopic,
                 PayloadOn = payloadOn,
-                PayloadOff = payloadOff,
-                PreferFullDevice = _discoveryEntities.Count == 0
+                PayloadOff = payloadOff
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantSwitch(discovery, payloadOff, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -391,10 +390,10 @@ namespace nanoFramework.HomeAssistant
                 UnitOfMeasurement = unitOfMeasurement,
                 Mode = "box"
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantNumber(discovery, min, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -424,10 +423,10 @@ namespace nanoFramework.HomeAssistant
                 DeviceClass = deviceClass,
                 IncludeAvailability = true
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantNumber(discovery, "0", PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -459,10 +458,10 @@ namespace nanoFramework.HomeAssistant
                 CommandTopic = commandTopic,
                 ExtraProperties = new[] { optionsJson }
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantSelect(discovery, options[0], PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -489,10 +488,10 @@ namespace nanoFramework.HomeAssistant
                 StateTopic = stateTopic,
                 CommandTopic = commandTopic
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantTextItem(discovery, initialValue, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -519,10 +518,10 @@ namespace nanoFramework.HomeAssistant
                 StateTopic = stateTopic,
                 EntityCategory = HomeAssistantEntityCategory.Diagnostic
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantTextItem(discovery, initialValue, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -547,13 +546,12 @@ namespace nanoFramework.HomeAssistant
                 Name = name,
                 UniqueId = objectId,
                 CommandTopic = commandTopic,
-                PayloadPress = payloadPress,
-                PreferFullDevice = _discoveryEntities.Count == 0
+                PayloadPress = payloadPress
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantButton(discovery, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -583,13 +581,12 @@ namespace nanoFramework.HomeAssistant
                 StateTopic = stateTopic,
                 CommandTopic = commandTopic,
                 PayloadOn = payloadOn,
-                PayloadOff = payloadOff,
-                PreferFullDevice = _discoveryEntities.Count == 0
+                PayloadOff = payloadOff
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantLight(discovery, payloadOff, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -631,13 +628,12 @@ namespace nanoFramework.HomeAssistant
                 StateOpening = "opening",
                 StateClosed = "closed",
                 StateClosing = "closing",
-                StateStopped = "stopped",
-                PreferFullDevice = _discoveryEntities.Count == 0
+                StateStopped = "stopped"
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantCover(discovery, "closed", PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -686,14 +682,13 @@ namespace nanoFramework.HomeAssistant
                 MinTemp = minTemp,
                 MaxTemp = maxTemp,
                 TempStep = tempStep,
-                TemperatureUnit = temperatureUnit,
-                PreferFullDevice = _discoveryEntities.Count == 0
+                TemperatureUnit = temperatureUnit
             };
-            _discoveryEntities.Add(discovery);
+            RegisterDiscoveryEntity(discovery);
 
             string initialMode = modes.Length > 0 ? modes[0] : "off";
             var runtime = new HomeAssistantClimate(discovery, initialMode, PublishMessage);
-            _runtimeEntities.Add(runtime);
+            RegisterRuntimeEntity(runtime);
             return runtime;
         }
 
@@ -708,11 +703,12 @@ namespace nanoFramework.HomeAssistant
             lock (_mqttLock)
             {
                 string clientId = null;
+                MqttClient client = null;
                 try
                 {
                     Disconnect();
 
-                    MqttClient client = new MqttClient(_brokerAddress, _brokerPort, false, null, null, MqttSslProtocols.None);
+                    client = new MqttClient(_brokerAddress, _brokerPort, false, null, null, MqttSslProtocols.None);
                     client.ConnectionClosed += OnInternalMqttConnectionClosed;
                     client.MqttMsgPublishReceived += OnInternalMqttMessageReceived;
                     client.MqttMsgPublished += OnInternalMqttMessagePublished;
@@ -766,6 +762,32 @@ namespace nanoFramework.HomeAssistant
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        if (client != null)
+                        {
+                            client.ConnectionClosed -= OnInternalMqttConnectionClosed;
+                            client.MqttMsgPublishReceived -= OnInternalMqttMessageReceived;
+                            client.MqttMsgPublished -= OnInternalMqttMessagePublished;
+
+                            if (client.IsConnected)
+                            {
+                                client.Disconnect();
+                            }
+                        }
+                    }
+                    catch (Exception cleanupEx)
+                    {
+                        Debug.WriteLine("MQTT connect rollback failed. clientId=" + clientId + ", error=" + cleanupEx.Message);
+                    }
+                    finally
+                    {
+                        if (_mqttClient == client)
+                        {
+                            _mqttClient = null;
+                        }
+                    }
+
                     Debug.WriteLine("MQTT connect failed. broker=" + _brokerAddress + ":" + _brokerPort + ", clientId=" + clientId + ", error=" + ex.Message);
                     return false;
                 }
@@ -1135,6 +1157,113 @@ namespace nanoFramework.HomeAssistant
 
             json.Append("]");
             return json.ToString();
+        }
+
+        private void RegisterDiscoveryEntity(HomeAssistantDiscoveryEntity discovery)
+        {
+            if (discovery == null)
+            {
+                return;
+            }
+
+            if (_discoveryEntities.Count == 0)
+            {
+                discovery.PreferFullDevice = true;
+            }
+
+            _discoveryEntities.Add(discovery);
+
+            if (IsConnected)
+            {
+                PublishDiscoveryEntity(discovery);
+            }
+        }
+
+        private void RegisterRuntimeEntity(HomeAssistantRuntimeEntity runtime)
+        {
+            if (runtime == null)
+            {
+                return;
+            }
+
+            _runtimeEntities.Add(runtime);
+
+            if (IsConnected)
+            {
+                SubscribeEntityCommandTopics(runtime);
+            }
+        }
+
+        private void PublishDiscoveryEntity(HomeAssistantDiscoveryEntity entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            string deviceJson = null;
+            if (entity.IncludeDevice && _device != null)
+            {
+                deviceJson = entity.PreferFullDevice ? _device.ToFullJson() : _device.ToReferenceJson();
+            }
+
+            string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
+            string payload = entity.BuildConfigPayload(GenerateAvailabilityTopic(), deviceJson);
+            PublishRetained(topic, payload);
+        }
+
+        private void SubscribeEntityCommandTopics(HomeAssistantRuntimeEntity entity)
+        {
+            if (entity == null || entity.Discovery == null)
+            {
+                return;
+            }
+
+            string[] commandTopics = entity.Discovery.GetCommandTopics();
+            if (commandTopics == null || commandTopics.Length == 0)
+            {
+                return;
+            }
+
+            var filteredTopics = new ArrayList();
+            for (int i = 0; i < commandTopics.Length; i++)
+            {
+                string commandTopic = commandTopics[i];
+                if (string.IsNullOrEmpty(commandTopic))
+                {
+                    continue;
+                }
+
+                bool exists = false;
+                for (int j = 0; j < filteredTopics.Count; j++)
+                {
+                    if ((string)filteredTopics[j] == commandTopic)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists)
+                {
+                    filteredTopics.Add(commandTopic);
+                }
+            }
+
+            if (filteredTopics.Count == 0)
+            {
+                return;
+            }
+
+            string[] topics = new string[filteredTopics.Count];
+            MqttQoSLevel[] qos = new MqttQoSLevel[filteredTopics.Count];
+            for (int i = 0; i < filteredTopics.Count; i++)
+            {
+                topics[i] = (string)filteredTopics[i];
+                qos[i] = MqttQoSLevel.AtLeastOnce;
+            }
+
+            Subscribe(topics, qos);
         }
     }
 }

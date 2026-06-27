@@ -27,7 +27,7 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public bool IsOn
         {
-            get { return State == "ON"; }
+            get { return State == GetPayloadOn(); }
         }
 
         /// <summary>
@@ -35,7 +35,27 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void SetOn(bool on)
         {
-            PublishState(on ? "ON" : "OFF");
+            PublishState(on ? GetPayloadOn() : GetPayloadOff());
+        }
+
+        private string GetPayloadOn()
+        {
+            if (Discovery == null || string.IsNullOrEmpty(Discovery.PayloadOn))
+            {
+                return "ON";
+            }
+
+            return Discovery.PayloadOn;
+        }
+
+        private string GetPayloadOff()
+        {
+            if (Discovery == null || string.IsNullOrEmpty(Discovery.PayloadOff))
+            {
+                return "OFF";
+            }
+
+            return Discovery.PayloadOff;
         }
     }
 }

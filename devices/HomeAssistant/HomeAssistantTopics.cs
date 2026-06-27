@@ -32,7 +32,7 @@ namespace nanoFramework.HomeAssistant
         {
             if (string.IsNullOrEmpty(topicRoot))
             {
-                return "/availability";
+                throw new ArgumentException("Topic root cannot be null or empty.", nameof(topicRoot));
             }
 
             return topicRoot + "/availability";
