@@ -1098,7 +1098,8 @@ namespace nanoFramework.HomeAssistant
                     if (matched)
                     {
                         // Route message to this entity via its SetState method
-                        // SetState will trigger OnStateChange event and auto-publish to state topic
+                        // SetState triggers OnStateChange only.
+                        // The application should publish confirmed state after successful actuation.
                         string payload = Encoding.UTF8.GetString(e.Message, 0, e.Message.Length).Trim();
                         entity.SetState(payload);
                         break;

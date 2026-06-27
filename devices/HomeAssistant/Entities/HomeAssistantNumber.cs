@@ -43,7 +43,7 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void SetValue(int value)
         {
-            SetState(value.ToString());
+            PublishState(value.ToString());
         }
     }
 }

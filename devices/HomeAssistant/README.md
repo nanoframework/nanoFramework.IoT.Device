@@ -122,10 +122,16 @@ Use `PublishState` for application-originated changes (does not trigger `OnState
 temperature.PublishState("22.3");
 ```
 
-Use `SetState` when applying an externally received command (does trigger `OnStateChange`):
+Use `SetState` when receiving an external command and you need to run actuation logic (does trigger `OnStateChange`, does not publish):
 
 ```csharp
 lightSwitch.SetState("ON");
+```
+
+After successful actuation, publish the confirmed state:
+
+```csharp
+lightSwitch.PublishState("ON");
 ```
 
 ### 7. Handle Home Assistant restarts

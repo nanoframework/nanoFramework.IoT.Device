@@ -35,7 +35,7 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void SetOn(bool on)
         {
-            SetState(on ? "ON" : "OFF");
+            PublishState(on ? "ON" : "OFF");
         }
     }
 }

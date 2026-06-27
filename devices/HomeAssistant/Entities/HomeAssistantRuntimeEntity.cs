@@ -62,13 +62,13 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Sets the entity state from an external command and publishes to MQTT state topic.
+        /// Sets the entity state from an external command.
         /// Triggers OnStateChange event if state actually changed.
         /// </summary>
         /// <param name="newState">New state value.</param>
         public virtual void SetState(string newState)
         {
-            ApplyState(newState, true);
+            ApplyState(newState, true, false);
         }
 
         /// <summary>
@@ -78,10 +78,10 @@ namespace nanoFramework.HomeAssistant
         /// <param name="newState">State value to publish.</param>
         public void PublishState(string newState)
         {
-            ApplyState(newState, false);
+            ApplyState(newState, false, true);
         }
 
-        private void ApplyState(string newState, bool notifyListeners)
+        private void ApplyState(string newState, bool notifyListeners, bool publishToBroker)
         {
             if (newState == null)
             {
@@ -96,7 +96,7 @@ namespace nanoFramework.HomeAssistant
                 _state = newState;
             }
 
-            if (_publisher != null && _discovery != null && !string.IsNullOrEmpty(_discovery.StateTopic))
+            if (publishToBroker && _publisher != null && _discovery != null && !string.IsNullOrEmpty(_discovery.StateTopic))
             {
                 _publisher(_discovery.StateTopic, changed ? _state : newState, true);
             }
