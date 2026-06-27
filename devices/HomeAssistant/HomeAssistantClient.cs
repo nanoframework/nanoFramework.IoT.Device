@@ -13,7 +13,7 @@ namespace nanoFramework.HomeAssistant
     /// <summary>
     /// Unified Home Assistant MQTT discovery component combining entity management, MQTT connection lifecycle, and publishing.
     /// Manages the complete MQTT connection including discovery publishing, availability tracking, and message subscription.
-    /// Auto-generates topics based on entity names and implements entity-based event routing with push-on-change model.
+    /// Auto-generates topics based on entity object IDs and implements entity-based event routing with push-on-change model.
     /// </summary>
     public sealed class HomeAssistantClient
     {
@@ -323,11 +323,11 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Adds a switch entity with auto-generated topics based on entity name.
-        /// Topics are generated from the entity name normalized to lowercase with underscores.
+        /// Adds a switch entity with auto-generated topics based on object ID.
+        /// Topics are generated from the object ID normalized to lowercase with underscores.
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
-        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="name">Display name for the entity.</param>
         /// <param name="payloadOn">Payload for ON state (default "ON").</param>
         /// <param name="payloadOff">Payload for OFF state (default "OFF").</param>
         /// <returns>The created switch runtime entity.</returns>
@@ -337,8 +337,8 @@ namespace nanoFramework.HomeAssistant
             string payloadOn = "ON",
             string payloadOff = "OFF")
         {
-            string stateTopic = GenerateStateTopic(name);
-            string commandTopic = GenerateCommandTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -359,8 +359,8 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Adds a number entity with auto-generated topics based on entity name.
-        /// Topics are generated from the entity name normalized to lowercase with underscores.
+        /// Adds a number entity with auto-generated topics based on object ID.
+        /// Topics are generated from the object ID normalized to lowercase with underscores.
         /// </summary>
         /// <returns>The created number runtime entity.</returns>
         public HomeAssistantNumber AddNumber(
@@ -373,8 +373,8 @@ namespace nanoFramework.HomeAssistant
         {
             unitOfMeasurement = unitOfMeasurement ?? string.Empty;
 
-            string stateTopic = GenerateStateTopic(name);
-            string commandTopic = GenerateCommandTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -398,7 +398,7 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Adds a sensor entity with auto-generated topic based on entity name.
+        /// Adds a sensor entity with an auto-generated topic based on object ID.
         /// </summary>
         /// <returns>The created sensor runtime entity.</returns>
         public HomeAssistantNumber AddSensor(
@@ -410,7 +410,7 @@ namespace nanoFramework.HomeAssistant
             unitOfMeasurement = unitOfMeasurement ?? string.Empty;
             deviceClass = deviceClass ?? string.Empty;
 
-            string stateTopic = GenerateStateTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -431,7 +431,7 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Adds a select (enumeration) entity with auto-generated topics based on entity name.
+        /// Adds a select (enumeration) entity with auto-generated topics based on object ID.
         /// </summary>
         /// <returns>The created select runtime entity.</returns>
         public HomeAssistantSelect AddSelect(
@@ -444,8 +444,8 @@ namespace nanoFramework.HomeAssistant
                 throw new ArgumentException("Select options cannot be null or empty.", nameof(options));
             }
 
-            string stateTopic = GenerateStateTopic(name);
-            string commandTopic = GenerateCommandTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
             string optionsJson = BuildOptionsJson(options);
 
             var discovery = new HomeAssistantDiscoveryEntity
@@ -466,7 +466,7 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Adds a text input entity with auto-generated topics based on entity name.
+        /// Adds a text input entity with auto-generated topics based on object ID.
         /// </summary>
         /// <returns>The created text runtime entity.</returns>
         public HomeAssistantTextItem AddTextItem(
@@ -476,8 +476,8 @@ namespace nanoFramework.HomeAssistant
         {
             initialValue = initialValue ?? string.Empty;
 
-            string stateTopic = GenerateStateTopic(name);
-            string commandTopic = GenerateCommandTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -507,7 +507,7 @@ namespace nanoFramework.HomeAssistant
         {
             initialValue = initialValue ?? string.Empty;
 
-            string stateTopic = GenerateStateTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -526,10 +526,10 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Adds a button entity with auto-generated command topic based on entity name.
+        /// Adds a button entity with an auto-generated command topic based on object ID.
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
-        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="name">Display name for the entity.</param>
         /// <param name="payloadPress">Payload sent by Home Assistant when button is pressed.</param>
         /// <returns>The created button runtime entity.</returns>
         public HomeAssistantButton AddButton(
@@ -537,7 +537,7 @@ namespace nanoFramework.HomeAssistant
             string name,
             string payloadPress = "PRESS")
         {
-            string commandTopic = GenerateCommandTopic(name);
+            string commandTopic = GenerateCommandTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -559,7 +559,7 @@ namespace nanoFramework.HomeAssistant
         /// Adds a light entity using basic on/off MQTT light discovery fields.
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
-        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="name">Display name for the entity.</param>
         /// <param name="payloadOn">Payload for ON commands and state.</param>
         /// <param name="payloadOff">Payload for OFF commands and state.</param>
         /// <returns>The created light runtime entity.</returns>
@@ -569,8 +569,8 @@ namespace nanoFramework.HomeAssistant
             string payloadOn = "ON",
             string payloadOff = "OFF")
         {
-            string stateTopic = GenerateStateTopic(name);
-            string commandTopic = GenerateCommandTopic(name);
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -594,7 +594,7 @@ namespace nanoFramework.HomeAssistant
         /// Adds a cover entity with open/close/stop command support and state topic.
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
-        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="name">Display name for the entity.</param>
         /// <param name="payloadOpen">Payload used to open the cover.</param>
         /// <param name="payloadClose">Payload used to close the cover.</param>
         /// <param name="payloadStop">Payload used to stop the cover.</param>
@@ -606,10 +606,10 @@ namespace nanoFramework.HomeAssistant
             string payloadClose = "CLOSE",
             string payloadStop = "STOP")
         {
-            string stateTopic = GenerateStateTopic(name);
-            string commandTopic = GenerateCommandTopic(name);
-            string setPositionTopic = GenerateCommandTopic(name, "position");
-            string positionTopic = GenerateStateTopic(name, "position");
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
+            string setPositionTopic = GenerateCommandTopic(objectId, "position");
+            string positionTopic = GenerateStateTopic(objectId, "position");
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
@@ -641,7 +641,7 @@ namespace nanoFramework.HomeAssistant
         /// Adds a climate entity with mode and temperature command/state topics.
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
-        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="name">Display name for the entity.</param>
         /// <param name="modes">Supported climate modes (defaults to off/heat/cool).</param>
         /// <param name="minTemp">Minimum setpoint temperature.</param>
         /// <param name="maxTemp">Maximum setpoint temperature.</param>
@@ -659,11 +659,11 @@ namespace nanoFramework.HomeAssistant
         {
             modes = modes ?? new[] { "off", "heat", "cool" };
 
-            string modeCommandTopic = GenerateCommandTopic(name, "mode");
-            string modeStateTopic = GenerateStateTopic(name, "mode");
-            string temperatureCommandTopic = GenerateCommandTopic(name, "temperature");
-            string temperatureStateTopic = GenerateStateTopic(name, "temperature");
-            string currentTemperatureTopic = GenerateStateTopic(name, "current_temperature");
+            string modeCommandTopic = GenerateCommandTopic(objectId, "mode");
+            string modeStateTopic = GenerateStateTopic(objectId, "mode");
+            string temperatureCommandTopic = GenerateCommandTopic(objectId, "temperature");
+            string temperatureStateTopic = GenerateStateTopic(objectId, "temperature");
+            string currentTemperatureTopic = GenerateStateTopic(objectId, "current_temperature");
 
             var discovery = new HomeAssistantDiscoveryEntity
             {
