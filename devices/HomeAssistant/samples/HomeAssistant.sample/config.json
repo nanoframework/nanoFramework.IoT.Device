@@ -1,0 +1,12 @@
+{
+  "WifiSsid": "your wifi",
+  "WifiPassword": "you password",
+  "MqttBroker": "192.168.1.2",
+  "MqttPort": 1883,
+  "HomeAssistantDeviceName": "nanoSprinkler",
+  "HomeAssistantDeviceId": "nano_sprinkler",
+  "TimerOnSeconds": 15,
+  "TimerOffSeconds": 60,
+  "RelayPin": 15,
+  "RelayActiveHigh": false
+}

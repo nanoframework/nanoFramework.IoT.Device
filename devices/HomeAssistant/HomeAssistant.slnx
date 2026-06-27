@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="HomeAssistant.nuspec" />
+  </Folder>
+  <Project Path="HomeAssistant.nfproj" Type="11a8dd76-328b-46df-9f39-f559912d0360">
+    <Deploy />
+  </Project>
+  <Project Path="samples/HomeAssistant.sample/HomeAssistant.sample.nfproj" Type="11a8dd76-328b-46df-9f39-f559912d0360" Id="43fcf688-b1ba-44f1-a430-ca17718370dd">
+    <Deploy />
+  </Project>
+</Solution>
