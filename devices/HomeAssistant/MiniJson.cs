@@ -86,6 +86,55 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Appends a JSON array of strings property to the object being built.
+        /// </summary>
+        /// <param name="json">The JSON builder buffer.</param>
+        /// <param name="first">Tracks whether this is the first property.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="values">String values for the JSON array.</param>
+        public static void AppendStringArrayProperty(StringBuilder json, ref bool first, string name, string[] values)
+        {
+            if (values == null || values.Length == 0)
+            {
+                return;
+            }
+
+            if (!first)
+            {
+                json.Append(',');
+            }
+
+            json.Append('"');
+            json.Append(name);
+            json.Append('"');
+            json.Append(':');
+            json.Append('[');
+
+            bool firstItem = true;
+            for (int i = 0; i < values.Length; i++)
+            {
+                string value = values[i];
+                if (string.IsNullOrEmpty(value))
+                {
+                    continue;
+                }
+
+                if (!firstItem)
+                {
+                    json.Append(',');
+                }
+
+                json.Append('"');
+                json.Append(Escape(value));
+                json.Append('"');
+                firstItem = false;
+            }
+
+            json.Append(']');
+            first = false;
+        }
+
+        /// <summary>
         /// Escapes a string for inclusion in a JSON string literal.
         /// </summary>
         /// <param name="value">Input string value.</param>

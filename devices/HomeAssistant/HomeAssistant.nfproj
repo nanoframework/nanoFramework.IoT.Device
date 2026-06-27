@@ -32,10 +32,14 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Entities\HomeAssistantButton.cs" />
+    <Compile Include="Entities\HomeAssistantClimate.cs" />
+    <Compile Include="Entities\HomeAssistantCover.cs" />
     <Compile Include="Constants\HomeAssistantDeviceClass.cs" />
     <Compile Include="Constants\HomeAssistantEntityCategory.cs" />
     <Compile Include="Constants\HomeAssistantStateClass.cs" />
     <Compile Include="Entities\HomeAssistantDiscoveryEntity.cs" />
+    <Compile Include="Entities\HomeAssistantLight.cs" />
     <Compile Include="Entities\HomeAssistantNumber.cs" />
     <Compile Include="Entities\HomeAssistantRuntimeEntity.cs" />
     <Compile Include="Entities\HomeAssistantSelect.cs" />

@@ -223,6 +223,30 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Generates command topic for an entity with a command channel suffix.
+        /// Example: deviceName='nanoSprinkler', entityName='Thermostat', commandSuffix='mode'.
+        /// → 'nanoframework/nano-sprinkler/thermostat/mode/set'.
+        /// </summary>
+        /// <returns>The generated command topic with suffix channel.</returns>
+        public string GenerateCommandTopic(string entityName, string commandSuffix)
+        {
+            if (string.IsNullOrEmpty(commandSuffix))
+            {
+                return GenerateCommandTopic(entityName);
+            }
+
+            if (string.IsNullOrEmpty(entityName))
+            {
+                string suffixNormalized = NormalizeTopicName(commandSuffix);
+                return _deviceTopicRoot + "/" + suffixNormalized + "/set";
+            }
+
+            string entityNormalized = NormalizeTopicName(entityName);
+            string commandNormalized = NormalizeTopicName(commandSuffix);
+            return _deviceTopicRoot + "/" + entityNormalized + "/" + commandNormalized + "/set";
+        }
+
+        /// <summary>
         /// Generates state topic for an entity based on its name and device name.
         /// Example: deviceName='nanoSprinkler', entityName='Timer'.
         /// → 'nanoframework/nano-sprinkler/timer/state'.
@@ -237,6 +261,30 @@ namespace nanoFramework.HomeAssistant
 
             string entityNormalized = NormalizeTopicName(entityName);
             return _deviceTopicRoot + "/" + entityNormalized + "/state";
+        }
+
+        /// <summary>
+        /// Generates state topic for an entity with a state channel suffix.
+        /// Example: deviceName='nanoSprinkler', entityName='Thermostat', stateSuffix='temperature'.
+        /// → 'nanoframework/nano-sprinkler/thermostat/temperature/state'.
+        /// </summary>
+        /// <returns>The generated state topic with suffix channel.</returns>
+        public string GenerateStateTopic(string entityName, string stateSuffix)
+        {
+            if (string.IsNullOrEmpty(stateSuffix))
+            {
+                return GenerateStateTopic(entityName);
+            }
+
+            if (string.IsNullOrEmpty(entityName))
+            {
+                string suffixNormalized = NormalizeTopicName(stateSuffix);
+                return _deviceTopicRoot + "/" + suffixNormalized + "/state";
+            }
+
+            string entityNormalized = NormalizeTopicName(entityName);
+            string stateNormalized = NormalizeTopicName(stateSuffix);
+            return _deviceTopicRoot + "/" + entityNormalized + "/" + stateNormalized + "/state";
         }
 
         /// <summary>
@@ -479,6 +527,177 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Adds a button entity with auto-generated command topic based on entity name.
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="payloadPress">Payload sent by Home Assistant when button is pressed.</param>
+        /// <returns>The created button runtime entity.</returns>
+        public HomeAssistantButton AddButton(
+            string objectId,
+            string name,
+            string payloadPress = "PRESS")
+        {
+            string commandTopic = GenerateCommandTopic(name);
+
+            var discovery = new HomeAssistantDiscoveryEntity
+            {
+                ComponentType = HomeAssistantComponentType.Button,
+                ObjectId = objectId,
+                Name = name,
+                UniqueId = objectId,
+                CommandTopic = commandTopic,
+                PayloadPress = payloadPress,
+                PreferFullDevice = _discoveryEntities.Count == 0
+            };
+            _discoveryEntities.Add(discovery);
+
+            var runtime = new HomeAssistantButton(discovery, PublishMessage);
+            _runtimeEntities.Add(runtime);
+            return runtime;
+        }
+
+        /// <summary>
+        /// Adds a light entity using basic on/off MQTT light discovery fields.
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="payloadOn">Payload for ON commands and state.</param>
+        /// <param name="payloadOff">Payload for OFF commands and state.</param>
+        /// <returns>The created light runtime entity.</returns>
+        public HomeAssistantLight AddLight(
+            string objectId,
+            string name,
+            string payloadOn = "ON",
+            string payloadOff = "OFF")
+        {
+            string stateTopic = GenerateStateTopic(name);
+            string commandTopic = GenerateCommandTopic(name);
+
+            var discovery = new HomeAssistantDiscoveryEntity
+            {
+                ComponentType = HomeAssistantComponentType.Light,
+                ObjectId = objectId,
+                Name = name,
+                UniqueId = objectId,
+                StateTopic = stateTopic,
+                CommandTopic = commandTopic,
+                PayloadOn = payloadOn,
+                PayloadOff = payloadOff,
+                PreferFullDevice = _discoveryEntities.Count == 0
+            };
+            _discoveryEntities.Add(discovery);
+
+            var runtime = new HomeAssistantLight(discovery, payloadOff, PublishMessage);
+            _runtimeEntities.Add(runtime);
+            return runtime;
+        }
+
+        /// <summary>
+        /// Adds a cover entity with open/close/stop command support and state topic.
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="payloadOpen">Payload used to open the cover.</param>
+        /// <param name="payloadClose">Payload used to close the cover.</param>
+        /// <param name="payloadStop">Payload used to stop the cover.</param>
+        /// <returns>The created cover runtime entity.</returns>
+        public HomeAssistantCover AddCover(
+            string objectId,
+            string name,
+            string payloadOpen = "OPEN",
+            string payloadClose = "CLOSE",
+            string payloadStop = "STOP")
+        {
+            string stateTopic = GenerateStateTopic(name);
+            string commandTopic = GenerateCommandTopic(name);
+            string setPositionTopic = GenerateCommandTopic(name, "position");
+            string positionTopic = GenerateStateTopic(name, "position");
+
+            var discovery = new HomeAssistantDiscoveryEntity
+            {
+                ComponentType = HomeAssistantComponentType.Cover,
+                ObjectId = objectId,
+                Name = name,
+                UniqueId = objectId,
+                StateTopic = stateTopic,
+                CommandTopic = commandTopic,
+                SetPositionTopic = setPositionTopic,
+                PositionTopic = positionTopic,
+                PayloadOpen = payloadOpen,
+                PayloadClose = payloadClose,
+                PayloadStop = payloadStop,
+                StateOpen = "open",
+                StateOpening = "opening",
+                StateClosed = "closed",
+                StateClosing = "closing",
+                StateStopped = "stopped",
+                PreferFullDevice = _discoveryEntities.Count == 0
+            };
+            _discoveryEntities.Add(discovery);
+
+            var runtime = new HomeAssistantCover(discovery, "closed", PublishMessage);
+            _runtimeEntities.Add(runtime);
+            return runtime;
+        }
+
+        /// <summary>
+        /// Adds a climate entity with mode and temperature command/state topics.
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity (used to generate topics).</param>
+        /// <param name="modes">Supported climate modes (defaults to off/heat/cool).</param>
+        /// <param name="minTemp">Minimum setpoint temperature.</param>
+        /// <param name="maxTemp">Maximum setpoint temperature.</param>
+        /// <param name="tempStep">Setpoint temperature step.</param>
+        /// <param name="temperatureUnit">Temperature unit (C or F).</param>
+        /// <returns>The created climate runtime entity.</returns>
+        public HomeAssistantClimate AddClimate(
+            string objectId,
+            string name,
+            string[] modes = null,
+            string minTemp = null,
+            string maxTemp = null,
+            string tempStep = null,
+            string temperatureUnit = "C")
+        {
+            modes = modes ?? new[] { "off", "heat", "cool" };
+
+            string modeCommandTopic = GenerateCommandTopic(name, "mode");
+            string modeStateTopic = GenerateStateTopic(name, "mode");
+            string temperatureCommandTopic = GenerateCommandTopic(name, "temperature");
+            string temperatureStateTopic = GenerateStateTopic(name, "temperature");
+            string currentTemperatureTopic = GenerateStateTopic(name, "current_temperature");
+
+            var discovery = new HomeAssistantDiscoveryEntity
+            {
+                ComponentType = HomeAssistantComponentType.Climate,
+                ObjectId = objectId,
+                Name = name,
+                UniqueId = objectId,
+                CommandTopic = modeCommandTopic,
+                StateTopic = modeStateTopic,
+                ModeCommandTopic = modeCommandTopic,
+                ModeStateTopic = modeStateTopic,
+                TemperatureCommandTopic = temperatureCommandTopic,
+                TemperatureStateTopic = temperatureStateTopic,
+                CurrentTemperatureTopic = currentTemperatureTopic,
+                Modes = modes,
+                MinTemp = minTemp,
+                MaxTemp = maxTemp,
+                TempStep = tempStep,
+                TemperatureUnit = temperatureUnit,
+                PreferFullDevice = _discoveryEntities.Count == 0
+            };
+            _discoveryEntities.Add(discovery);
+
+            string initialMode = modes.Length > 0 ? modes[0] : "off";
+            var runtime = new HomeAssistantClimate(discovery, initialMode, PublishMessage);
+            _runtimeEntities.Add(runtime);
+            return runtime;
+        }
+
+        /// <summary>
         /// Connects to the MQTT broker and publishes discovery configuration.
         /// </summary>
         /// <param name="willTopic">Topic for last-will-testament message (usually availability topic).</param>
@@ -643,10 +862,30 @@ namespace nanoFramework.HomeAssistant
             for (int i = 0; i < _runtimeEntities.Count; i++)
             {
                 HomeAssistantRuntimeEntity entity = (HomeAssistantRuntimeEntity)_runtimeEntities[i];
-                if (!string.IsNullOrEmpty(entity.CommandTopic))
+                string[] commandTopics = entity.Discovery.GetCommandTopics();
+                for (int j = 0; j < commandTopics.Length; j++)
                 {
-                    topics.Add(entity.CommandTopic);
-                    qosLevels.Add(MqttQoSLevel.AtLeastOnce);
+                    string commandTopic = commandTopics[j];
+                    if (string.IsNullOrEmpty(commandTopic))
+                    {
+                        continue;
+                    }
+
+                    bool exists = false;
+                    for (int k = 0; k < topics.Count; k++)
+                    {
+                        if ((string)topics[k] == commandTopic)
+                        {
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if (!exists)
+                    {
+                        topics.Add(commandTopic);
+                        qosLevels.Add(MqttQoSLevel.AtLeastOnce);
+                    }
                 }
             }
 
@@ -775,9 +1014,13 @@ namespace nanoFramework.HomeAssistant
             for (int i = 0; i < _runtimeEntities.Count; i++)
             {
                 HomeAssistantRuntimeEntity entity = (HomeAssistantRuntimeEntity)_runtimeEntities[i];
-                if (entity.CommandTopic == commandTopic)
+                string[] commandTopics = entity.Discovery.GetCommandTopics();
+                for (int j = 0; j < commandTopics.Length; j++)
                 {
-                    return entity;
+                    if (commandTopics[j] == commandTopic)
+                    {
+                        return entity;
+                    }
                 }
             }
 
@@ -841,7 +1084,18 @@ namespace nanoFramework.HomeAssistant
                 for (int i = 0; i < _runtimeEntities.Count; i++)
                 {
                     HomeAssistantRuntimeEntity entity = (HomeAssistantRuntimeEntity)_runtimeEntities[i];
-                    if (entity.CommandTopic == e.Topic)
+                    string[] commandTopics = entity.Discovery.GetCommandTopics();
+                    bool matched = false;
+                    for (int j = 0; j < commandTopics.Length; j++)
+                    {
+                        if (commandTopics[j] == e.Topic)
+                        {
+                            matched = true;
+                            break;
+                        }
+                    }
+
+                    if (matched)
                     {
                         // Route message to this entity via its SetState method
                         // SetState will trigger OnStateChange event and auto-publish to state topic
