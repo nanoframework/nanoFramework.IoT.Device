@@ -101,10 +101,22 @@ namespace nanoFramework.HomeAssistant
                 _publisher(_discovery.StateTopic, changed ? _state : newState, true);
             }
 
-            if (notifyListeners && changed)
+            if (notifyListeners && ShouldNotifyOnSetState(oldState, changed ? _state : newState, changed))
             {
-                OnStateChange?.Invoke(this, oldState, _state);
+                OnStateChange?.Invoke(this, oldState, changed ? _state : newState);
             }
+        }
+
+        /// <summary>
+        /// Determines whether a SetState operation should trigger <see cref="OnStateChange"/>.
+        /// </summary>
+        /// <param name="oldState">Previous state value.</param>
+        /// <param name="newState">Incoming state value.</param>
+        /// <param name="changed">True when <paramref name="newState"/> differs from <paramref name="oldState"/>.</param>
+        /// <returns><c>true</c> to raise <see cref="OnStateChange"/>; otherwise <c>false</c>.</returns>
+        protected virtual bool ShouldNotifyOnSetState(string oldState, string newState, bool changed)
+        {
+            return changed;
         }
 
         /// <summary>

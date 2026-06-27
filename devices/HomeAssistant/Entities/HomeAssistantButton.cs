@@ -19,5 +19,17 @@ namespace nanoFramework.HomeAssistant
         {
             Initialize(discovery, string.Empty, publisher);
         }
+
+        /// <summary>
+        /// Buttons are stateless commands; every command payload should trigger.
+        /// </summary>
+        /// <param name="oldState">Previous state value.</param>
+        /// <param name="newState">Incoming state value.</param>
+        /// <param name="changed">True when incoming state differs from previous.</param>
+        /// <returns>Always <c>true</c> for button command handling.</returns>
+        protected override bool ShouldNotifyOnSetState(string oldState, string newState, bool changed)
+        {
+            return true;
+        }
     }
 }
