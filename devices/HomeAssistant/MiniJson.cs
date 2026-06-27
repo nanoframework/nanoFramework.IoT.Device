@@ -158,6 +158,30 @@ namespace nanoFramework.HomeAssistant
                 {
                     output.Append("\\\"");
                 }
+                else if (c == '\b')
+                {
+                    output.Append("\\b");
+                }
+                else if (c == '\f')
+                {
+                    output.Append("\\f");
+                }
+                else if (c == '\n')
+                {
+                    output.Append("\\n");
+                }
+                else if (c == '\r')
+                {
+                    output.Append("\\r");
+                }
+                else if (c == '\t')
+                {
+                    output.Append("\\t");
+                }
+                else if (c < 0x20)
+                {
+                    AppendUnicodeEscape(output, c);
+                }
                 else
                 {
                     output.Append(c);
@@ -165,6 +189,25 @@ namespace nanoFramework.HomeAssistant
             }
 
             return output.ToString();
+        }
+
+        private static void AppendUnicodeEscape(StringBuilder output, char c)
+        {
+            output.Append("\\u");
+            output.Append('0');
+            output.Append('0');
+            output.Append(ToHexDigit((c >> 4) & 0x0F));
+            output.Append(ToHexDigit(c & 0x0F));
+        }
+
+        private static char ToHexDigit(int value)
+        {
+            if (value < 10)
+            {
+                return (char)('0' + value);
+            }
+
+            return (char)('A' + (value - 10));
         }
     }
 }

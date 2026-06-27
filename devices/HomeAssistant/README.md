@@ -209,7 +209,7 @@ Use `HomeAssistantEntityCategory` to control where entities appear in the HA UI:
 
 ## Sample
 
-See the [`samples/`](samples/) folder for a complete ESP32 sprinkler controller example that demonstrates:
+See the [repository sample](https://github.com/nanoframework/nanoFramework.IoT.Device/tree/main/devices/HomeAssistant/samples/HomeAssistant.sample) for a complete ESP32 sprinkler controller example that demonstrates:
 
 - Loading Wi-Fi and MQTT credentials from `config.json` stored on the device filesystem
 - Connecting to Wi-Fi and an MQTT broker with auto-reconnect
@@ -233,4 +233,4 @@ The relay GPIO pin and active-high/active-low polarity are configurable from Hom
 - [Home Assistant MQTT Integration](https://www.home-assistant.io/integrations/mqtt/)
 - [MQTT Discovery Protocol](https://www.home-assistant.io/integrations/mqtt/#mqtt-discovery)
 - [nanoFramework M2Mqtt](https://github.com/nanoframework/nanoFramework.m2mqtt)
-- Credites to [WilliamBZA](https://github.com/WilliamBZA/nanoframework.homeassistant.mqttdiscovery) for the great start to create this binding!
+- Credits to [WilliamBZA](https://github.com/WilliamBZA/nanoframework.homeassistant.mqttdiscovery) for the great start to create this binding!
