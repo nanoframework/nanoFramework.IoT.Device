@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using nanoFramework.Json;
 
 namespace nanoSprinkler
 {
@@ -60,7 +61,12 @@ namespace nanoSprinkler
         {
             try
             {
-                string json = ToJson(config);
+                if (config == null)
+                {
+                    config = new DeviceConfig();
+                }
+
+                string json = JsonConvert.SerializeObject(config);
                 WriteAllText(ConfigPath, json);
                 Debug.WriteLine("Config saved to " + ConfigPath);
             }
@@ -114,65 +120,6 @@ namespace nanoSprinkler
             }
         }
 
-        private static string ToJson(DeviceConfig config)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{");
-            builder.Append("\"WifiSsid\":\"");
-            AppendEscaped(builder, config.WifiSsid);
-            builder.Append("\",");
-            builder.Append("\"WifiPassword\":\"");
-            AppendEscaped(builder, config.WifiPassword);
-            builder.Append("\",");
-            builder.Append("\"MqttBroker\":\"");
-            AppendEscaped(builder, config.MqttBroker);
-            builder.Append("\",");
-            builder.Append("\"MqttPort\":");
-            builder.Append(config.MqttPort);
-            builder.Append(",");
-            builder.Append("\"HomeAssistantDeviceName\":\"");
-            AppendEscaped(builder, config.HomeAssistantDeviceName);
-            builder.Append("\",");
-            builder.Append("\"HomeAssistantDeviceId\":\"");
-            AppendEscaped(builder, config.HomeAssistantDeviceId);
-            builder.Append("\",");
-            builder.Append("\"TimerOnSeconds\":");
-            builder.Append(config.TimerOnSeconds);
-            builder.Append(",");
-            builder.Append("\"TimerOffSeconds\":");
-            builder.Append(config.TimerOffSeconds);
-            builder.Append(",");
-            builder.Append("\"TimerModeEnabled\":");
-            builder.Append(config.TimerModeEnabled ? "true" : "false");
-            builder.Append(",");
-            builder.Append("\"RelayPin\":");
-            builder.Append(config.RelayPin);
-            builder.Append(",");
-            builder.Append("\"RelayActiveHigh\":");
-            builder.Append(config.RelayActiveHigh ? "true" : "false");
-            builder.Append("}");
-            return builder.ToString();
-        }
-
-        private static void AppendEscaped(StringBuilder builder, string value)
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < value.Length; i++)
-            {
-                char c = value[i];
-                if (c == '\\' || c == '"')
-                {
-                    builder.Append('\\');
-                }
-
-                builder.Append(c);
-            }
-        }
-
         private static DeviceConfig ParseJson(string json)
         {
             if (string.IsNullOrEmpty(json))
@@ -180,187 +127,20 @@ namespace nanoSprinkler
                 return null;
             }
 
-            DeviceConfig cfg = new DeviceConfig();
-            cfg.WifiSsid = ParseString(json, "WifiSsid", cfg.WifiSsid);
-            cfg.WifiPassword = ParseString(json, "WifiPassword", cfg.WifiPassword);
-            cfg.MqttBroker = ParseString(json, "MqttBroker", cfg.MqttBroker);
-            cfg.MqttPort = ParseInt(json, "MqttPort", cfg.MqttPort);
-            cfg.HomeAssistantDeviceName = ParseString(json, "HomeAssistantDeviceName", cfg.HomeAssistantDeviceName);
-            cfg.HomeAssistantDeviceId = ParseString(json, "HomeAssistantDeviceId", cfg.HomeAssistantDeviceId);
-            cfg.TimerOnSeconds = ParseInt(json, "TimerOnSeconds", cfg.TimerOnSeconds);
-            cfg.TimerOffSeconds = ParseInt(json, "TimerOffSeconds", cfg.TimerOffSeconds);
-            cfg.TimerModeEnabled = ParseBool(json, "TimerModeEnabled", cfg.TimerModeEnabled);
-            cfg.RelayPin = ParseInt(json, "RelayPin", cfg.RelayPin);
-            cfg.RelayActiveHigh = ParseBool(json, "RelayActiveHigh", cfg.RelayActiveHigh);
+            DeviceConfig cfg = (DeviceConfig)JsonConvert.DeserializeObject(json, typeof(DeviceConfig));
+            if (cfg == null)
+            {
+                return null;
+            }
+
+            // Keep string members safe for consumers even if JSON contained null values.
+            cfg.WifiSsid = cfg.WifiSsid ?? string.Empty;
+            cfg.WifiPassword = cfg.WifiPassword ?? string.Empty;
+            cfg.MqttBroker = cfg.MqttBroker ?? string.Empty;
+            cfg.HomeAssistantDeviceName = cfg.HomeAssistantDeviceName ?? string.Empty;
+            cfg.HomeAssistantDeviceId = cfg.HomeAssistantDeviceId ?? string.Empty;
+
             return cfg;
-        }
-
-        private static string ParseString(string json, string key, string defaultValue)
-        {
-            string token = "\"" + key + "\"";
-            int keyPos = json.IndexOf(token);
-            if (keyPos < 0)
-            {
-                return defaultValue;
-            }
-
-            int colon = json.IndexOf(':', keyPos + token.Length);
-            if (colon < 0)
-            {
-                return defaultValue;
-            }
-
-            int startQuote = json.IndexOf('"', colon + 1);
-            if (startQuote < 0)
-            {
-                return defaultValue;
-            }
-
-            int endQuote = startQuote + 1;
-            while (endQuote < json.Length)
-            {
-                if (json[endQuote] == '"' && json[endQuote - 1] != '\\')
-                {
-                    break;
-                }
-
-                endQuote++;
-            }
-
-            if (endQuote >= json.Length)
-            {
-                return defaultValue;
-            }
-
-            string value = json.Substring(startQuote + 1, endQuote - startQuote - 1);
-            return UnescapeJson(value);
-        }
-
-        private static string UnescapeJson(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return string.Empty;
-            }
-
-            StringBuilder builder = new StringBuilder(value.Length);
-            bool escaping = false;
-
-            for (int i = 0; i < value.Length; i++)
-            {
-                char c = value[i];
-                if (escaping)
-                {
-                    builder.Append(c);
-                    escaping = false;
-                }
-                else if (c == '\\')
-                {
-                    escaping = true;
-                }
-                else
-                {
-                    builder.Append(c);
-                }
-            }
-
-            if (escaping)
-            {
-                builder.Append('\\');
-            }
-
-            return builder.ToString();
-        }
-
-        private static int ParseInt(string json, string key, int defaultValue)
-        {
-            string token = "\"" + key + "\"";
-            int keyPos = json.IndexOf(token);
-            if (keyPos < 0)
-            {
-                return defaultValue;
-            }
-
-            int colon = json.IndexOf(':', keyPos + token.Length);
-            if (colon < 0)
-            {
-                return defaultValue;
-            }
-
-            int start = colon + 1;
-            while (start < json.Length && (json[start] == ' ' || json[start] == '\t' || json[start] == '\r' || json[start] == '\n'))
-            {
-                start++;
-            }
-
-            int end = start;
-            while (end < json.Length && (json[end] == '-' || (json[end] >= '0' && json[end] <= '9')))
-            {
-                end++;
-            }
-
-            if (end <= start)
-            {
-                return defaultValue;
-            }
-
-            int value;
-            if (int.TryParse(json.Substring(start, end - start), out value))
-            {
-                return value;
-            }
-
-            return defaultValue;
-        }
-
-        private static bool ParseBool(string json, string key, bool defaultValue)
-        {
-            string token = "\"" + key + "\"";
-            int keyPos = json.IndexOf(token);
-            if (keyPos < 0)
-            {
-                return defaultValue;
-            }
-
-            int colon = json.IndexOf(':', keyPos + token.Length);
-            if (colon < 0)
-            {
-                return defaultValue;
-            }
-
-            int start = colon + 1;
-            while (start < json.Length && (json[start] == ' ' || json[start] == '\t' || json[start] == '\r' || json[start] == '\n'))
-            {
-                start++;
-            }
-
-            if (start >= json.Length)
-            {
-                return defaultValue;
-            }
-
-            string remainder = json.Substring(start).ToLower();
-            if (remainder.IndexOf("true") == 0)
-            {
-                return true;
-            }
-
-            if (remainder.IndexOf("false") == 0)
-            {
-                return false;
-            }
-
-            if (remainder.IndexOf("1") == 0)
-            {
-                return true;
-            }
-
-            if (remainder.IndexOf("0") == 0)
-            {
-                return false;
-            }
-
-            return defaultValue;
         }
     }
 }
