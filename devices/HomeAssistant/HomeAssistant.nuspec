@@ -22,7 +22,8 @@
     <tags>nanoFramework C# csharp netmf netnf iot HomeAssistant</tags>
     <dependencies>
         <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-		<dependency id="nanoFramework.M2Mqtt" version="5.1.217" />
+    		<dependency id="nanoFramework.M2Mqtt" version="5.1.217" />
+        <dependency id="nanoFramework.M2Mqtt.Core" version="5.1.217" />
     </dependencies>
   </metadata>
   <files>
