@@ -19,13 +19,19 @@ namespace nanoSprinkler
     internal static class Wireless80211
     {
         /// <summary>
-        /// Returns <c>true</c> when the platform firmware has a non-empty SSID stored,
-        /// i.e. credentials have been provisioned at least once.
+        /// Returns <c>true</c> when STA is enabled and has a non-empty SSID stored.
         /// </summary>
         public static bool IsEnabled()
         {
             Wireless80211Configuration wconf = GetConfiguration();
-            return wconf != null && !string.IsNullOrEmpty(wconf.Ssid);
+            if (wconf == null)
+            {
+                return false;
+            }
+
+            bool enabled = (wconf.Options & Wireless80211Configuration.ConfigurationOptions.Enable)
+                == Wireless80211Configuration.ConfigurationOptions.Enable;
+            return enabled && !string.IsNullOrEmpty(wconf.Ssid);
         }
 
         /// <summary>

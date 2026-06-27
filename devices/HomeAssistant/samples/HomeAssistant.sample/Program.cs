@@ -28,6 +28,10 @@ namespace nanoSprinkler
         private const int RecoveryDeepSleepSeconds = 1;
         private const int ForegroundIdleSleepMs = 1_000;
         private const int RegularGcIntervalMs = 30_000;
+        private const int MinTimerSeconds = 1;
+        private const int MaxTimerSeconds = 3600;
+        private const int DefaultTimerOnSeconds = 30;
+        private const int DefaultTimerOffSeconds = 60;
         private const string BootMarkerPath = "I:\\boot-marker.txt";
 
         private static readonly object StateLock = new object();
@@ -51,8 +55,8 @@ namespace nanoSprinkler
 
         private static bool _sprinklerOn;
         private static bool _timerModeEnabled;
-        private static int _timerOnSeconds = 30;
-        private static int _timerOffSeconds = 60;
+        private static int _timerOnSeconds = DefaultTimerOnSeconds;
+        private static int _timerOffSeconds = DefaultTimerOffSeconds;
         private static int _relayPin;
         private static bool _relayActiveHigh;
 
@@ -248,6 +252,8 @@ namespace nanoSprinkler
             {
                 if (oldRelay != null)
                 {
+                    // Ensure the previous relay pin is de-energized before releasing it.
+                    WriteRelayToPin(oldRelay, false);
                     oldRelay.Dispose();
                 }
             }
@@ -354,12 +360,20 @@ namespace nanoSprinkler
 
             if (_config.TimerOnSeconds <= 0)
             {
-                _config.TimerOnSeconds = 30;
+                _config.TimerOnSeconds = DefaultTimerOnSeconds;
+            }
+            else
+            {
+                _config.TimerOnSeconds = ClampTimerSeconds(_config.TimerOnSeconds);
             }
 
             if (_config.TimerOffSeconds <= 0)
             {
-                _config.TimerOffSeconds = 60;
+                _config.TimerOffSeconds = DefaultTimerOffSeconds;
+            }
+            else
+            {
+                _config.TimerOffSeconds = ClampTimerSeconds(_config.TimerOffSeconds);
             }
 
             if (!IsValidRelayPin(_config.RelayPin))
@@ -452,6 +466,8 @@ namespace nanoSprinkler
 
         private static void SetTimerOnSeconds(int seconds)
         {
+            seconds = ClampTimerSeconds(seconds);
+
             bool changed = false;
             lock (StateLock)
             {
@@ -475,6 +491,8 @@ namespace nanoSprinkler
 
         private static void SetTimerOffSeconds(int seconds)
         {
+            seconds = ClampTimerSeconds(seconds);
+
             bool changed = false;
             lock (StateLock)
             {
@@ -526,6 +544,21 @@ namespace nanoSprinkler
                 SetSprinkler(false);
                 SleepWhileTimerEnabled(offSeconds * 1000);
             }
+        }
+
+        private static int ClampTimerSeconds(int seconds)
+        {
+            if (seconds < MinTimerSeconds)
+            {
+                return MinTimerSeconds;
+            }
+
+            if (seconds > MaxTimerSeconds)
+            {
+                return MaxTimerSeconds;
+            }
+
+            return seconds;
         }
 
         private static bool SleepWhileTimerEnabled(int milliseconds)
@@ -897,7 +930,7 @@ namespace nanoSprinkler
                 // Keep running and retry on next maintenance cycle.
                 _mqttReconnectRequested = true;
                 Debug.WriteLine("MQTT still unreachable. Will retry in maintenance loop.");
-                return true;
+                return false;
             }
         }
 
@@ -1021,7 +1054,11 @@ namespace nanoSprinkler
             {
                 Debug.WriteLine("Recovery reboot requested: " + reason);
                 WriteRebootMarker(reason);
-                _homeAssistant.Disconnect();
+                if (_homeAssistant != null)
+                {
+                    _homeAssistant.Disconnect();
+                }
+
                 Thread.Sleep(1000);
                 Sleep.EnableWakeupByTimer(TimeSpan.FromSeconds(RecoveryDeepSleepSeconds));
                 Sleep.StartDeepSleep();
