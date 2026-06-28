@@ -323,6 +323,29 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Validates and normalizes an entity object ID used for topic and unique ID generation.
+        /// </summary>
+        /// <param name="objectId">The object ID to validate.</param>
+        /// <returns>The trimmed object ID.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="objectId"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="objectId"/> is empty or whitespace.</exception>
+        private string RequireObjectId(string objectId)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            string normalized = objectId.Trim();
+            if (normalized.Length == 0)
+            {
+                throw new ArgumentException(nameof(objectId));
+            }
+
+            return normalized;
+        }
+
+        /// <summary>
         /// Adds a switch entity with auto-generated topics based on object ID.
         /// Topics are generated from the object ID normalized to lowercase with underscores.
         /// </summary>
@@ -337,6 +360,8 @@ namespace nanoFramework.HomeAssistant
             string payloadOn = "ON",
             string payloadOff = "OFF")
         {
+            objectId = RequireObjectId(objectId);
+
             string stateTopic = GenerateStateTopic(objectId);
             string commandTopic = GenerateCommandTopic(objectId);
 
@@ -371,6 +396,7 @@ namespace nanoFramework.HomeAssistant
             string step = "1",
             string unitOfMeasurement = null)
         {
+            objectId = RequireObjectId(objectId);
             unitOfMeasurement = unitOfMeasurement ?? string.Empty;
 
             string stateTopic = GenerateStateTopic(objectId);
@@ -407,6 +433,7 @@ namespace nanoFramework.HomeAssistant
             string unitOfMeasurement = null,
             string deviceClass = null)
         {
+            objectId = RequireObjectId(objectId);
             unitOfMeasurement = unitOfMeasurement ?? string.Empty;
             deviceClass = deviceClass ?? string.Empty;
 
@@ -439,6 +466,8 @@ namespace nanoFramework.HomeAssistant
             string name,
             string[] options)
         {
+            objectId = RequireObjectId(objectId);
+
             if (options == null || options.Length == 0)
             {
                 throw new ArgumentException("Select options cannot be null or empty.", nameof(options));
@@ -474,6 +503,7 @@ namespace nanoFramework.HomeAssistant
             string name,
             string initialValue = null)
         {
+            objectId = RequireObjectId(objectId);
             initialValue = initialValue ?? string.Empty;
 
             string stateTopic = GenerateStateTopic(objectId);
@@ -505,6 +535,7 @@ namespace nanoFramework.HomeAssistant
             string name,
             string initialValue = null)
         {
+            objectId = RequireObjectId(objectId);
             initialValue = initialValue ?? string.Empty;
 
             string stateTopic = GenerateStateTopic(objectId);
@@ -537,6 +568,7 @@ namespace nanoFramework.HomeAssistant
             string name,
             string payloadPress = "PRESS")
         {
+            objectId = RequireObjectId(objectId);
             string commandTopic = GenerateCommandTopic(objectId);
 
             var discovery = new HomeAssistantDiscoveryEntity
@@ -569,6 +601,7 @@ namespace nanoFramework.HomeAssistant
             string payloadOn = "ON",
             string payloadOff = "OFF")
         {
+            objectId = RequireObjectId(objectId);
             string stateTopic = GenerateStateTopic(objectId);
             string commandTopic = GenerateCommandTopic(objectId);
 
@@ -606,6 +639,7 @@ namespace nanoFramework.HomeAssistant
             string payloadClose = "CLOSE",
             string payloadStop = "STOP")
         {
+            objectId = RequireObjectId(objectId);
             string stateTopic = GenerateStateTopic(objectId);
             string commandTopic = GenerateCommandTopic(objectId);
             string setPositionTopic = GenerateCommandTopic(objectId, "position");
@@ -657,6 +691,7 @@ namespace nanoFramework.HomeAssistant
             string tempStep = null,
             string temperatureUnit = "C")
         {
+            objectId = RequireObjectId(objectId);
             modes = modes ?? new[] { "off", "heat", "cool" };
 
             string modeCommandTopic = GenerateCommandTopic(objectId, "mode");

@@ -229,6 +229,14 @@ foreach ($folder in $deviceFolders)
         {
             nuget restore $cardSolution
         }
+
+        if (-not $?)
+        {
+            "" | Write-Host -ForegroundColor Red
+            "*****************************************" | Write-Host -ForegroundColor Red
+            "##[error] >>>ERROR: Couldn't restore helper solution: '$cardSolution'!" | Write-Host -ForegroundColor Red
+            throw "Error restoring helper solution '$cardSolution'"
+        }
     }
 
     # Mpu9250 solutions requires Ak8963
@@ -250,6 +258,14 @@ foreach ($folder in $deviceFolders)
         else
         {
             nuget restore $ak8963Solution
+        }
+
+        if (-not $?)
+        {
+            "" | Write-Host -ForegroundColor Red
+            "*****************************************" | Write-Host -ForegroundColor Red
+            "##[error] >>>ERROR: Couldn't restore helper solution: '$ak8963Solution'!" | Write-Host -ForegroundColor Red
+            throw "Error restoring helper solution '$ak8963Solution'"
         }
     }
 

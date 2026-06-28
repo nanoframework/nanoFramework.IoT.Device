@@ -16,6 +16,8 @@ namespace nanoSprinkler
     public static class ConfigManager
     {
         private const string ConfigPath = "I:\\config.json";
+        private const string ConfigBackupPath = "I:\\config.json.bak";
+        private const string ConfigTempPath = "I:\\config.json.tmp";
 
         /// <summary>
         /// Loads the persisted device configuration from flash storage.
@@ -27,6 +29,12 @@ namespace nanoSprinkler
             try
             {
                 string json = ReadAllText(ConfigPath);
+                if (string.IsNullOrEmpty(json))
+                {
+                    // Recover from interrupted save where backup exists but primary is missing/corrupt.
+                    json = ReadAllText(ConfigBackupPath);
+                }
+
                 if (!string.IsNullOrEmpty(json))
                 {
                     DeviceConfig cfg = ParseJson(json);
@@ -113,10 +121,59 @@ namespace nanoSprinkler
         private static void WriteAllText(string path, string content)
         {
             byte[] data = Encoding.UTF8.GetBytes(content);
-            using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+
+            // Two-phase write: persist temp first, then rotate primary to backup, then promote temp.
+            using (FileStream stream = new FileStream(ConfigTempPath, FileMode.Create, FileAccess.Write))
             {
                 stream.Write(data, 0, data.Length);
                 stream.Flush();
+            }
+
+            try
+            {
+                if (File.Exists(ConfigBackupPath))
+                {
+                    File.Delete(ConfigBackupPath);
+                }
+
+                if (File.Exists(path))
+                {
+                    File.Move(path, ConfigBackupPath);
+                }
+
+                File.Move(ConfigTempPath, path);
+
+                if (File.Exists(ConfigBackupPath))
+                {
+                    File.Delete(ConfigBackupPath);
+                }
+            }
+            catch
+            {
+                // Best effort rollback: if promotion failed and only backup exists, restore primary.
+                try
+                {
+                    if (File.Exists(ConfigTempPath))
+                    {
+                        File.Delete(ConfigTempPath);
+                    }
+                }
+                catch
+                {
+                }
+
+                try
+                {
+                    if (!File.Exists(path) && File.Exists(ConfigBackupPath))
+                    {
+                        File.Move(ConfigBackupPath, path);
+                    }
+                }
+                catch
+                {
+                }
+
+                throw;
             }
         }
 
