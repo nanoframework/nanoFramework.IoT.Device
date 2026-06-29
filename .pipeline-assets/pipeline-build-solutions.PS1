@@ -121,8 +121,8 @@ elseif($env:DEVICE_TO_BUILD -eq "ALL")
 {
     Write-Host "Building 'all' packages"
 
-    $files = (Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\" -Include "*.sln"  -Recurse)
-    $deviceFolders = $files | Foreach-Object {$_.Directory.Name}
+    $files = (Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\" -Include "*.sln", "*.slnx" -Recurse)
+    $deviceFolders = $files | Foreach-Object {$_.Directory.Name} | Sort-Object -Unique
 }
 else
 {
@@ -146,7 +146,10 @@ foreach ($folder in $deviceFolders)
     "" | Write-Host -ForegroundColor Yellow
     
     # try to find the solution
-    $solutionFile = Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\" -Include "$folder.sln" -Recurse
+    $solutionCandidates = Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\" -Include "$folder.sln", "$folder.slnx" -Recurse
+    $solutionFile = $solutionCandidates |
+        Sort-Object @{ Expression = { if ($_.Extension -eq ".sln") { 0 } else { 1 } } }, FullName |
+        Select-Object -First 1
 
     if($null -eq $solutionFile)
     {
@@ -178,8 +181,17 @@ foreach ($folder in $deviceFolders)
     }
 
     # need to restore NuGets first
-    write-host "##[command] Performing nuget restore for '$solutionFile'."
-    nuget restore $solutionFile
+    if ($solutionFile.Extension -eq ".slnx")
+    {
+        write-host "##[command] Performing msbuild restore for '$solutionFile'."
+        & "$msbuild" "$solutionFile" /t:Restore /p:RestorePackagesConfig=true
+    }
+    else
+    {
+        write-host "##[command] Performing nuget restore for '$solutionFile'."
+        nuget restore $solutionFile
+    }
+
     if (-not $?)
     { 
         "" | Write-Host -ForegroundColor Red
@@ -196,17 +208,65 @@ foreach ($folder in $deviceFolders)
     #################################################################
 
     # NFC solutions require the projects on Card solution to be restored too
-    if ($solutionFile.Name -eq "Mfrc522.sln" -or
-        $solutionFile.Name -eq "Pn5180.sln" -or 
-        $solutionFile.Name -eq "Pn532.sln")
+    if ($solutionFile.BaseName -eq "Mfrc522" -or
+        $solutionFile.BaseName -eq "Pn5180" -or 
+        $solutionFile.BaseName -eq "Pn532")
     {
-        nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Card\Card.sln
+        $cardSolution = Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Card\" -Include "Card.sln", "Card.slnx" -Recurse |
+            Sort-Object @{ Expression = { if ($_.Extension -eq ".sln") { 0 } else { 1 } } }, FullName |
+            Select-Object -First 1
+
+        if ($null -eq $cardSolution)
+        {
+            throw "Couldn't find Card solution (.sln or .slnx)."
+        }
+
+        if ($cardSolution.Extension -eq ".slnx")
+        {
+            & "$msbuild" "$cardSolution" /t:Restore /p:RestorePackagesConfig=true
+        }
+        else
+        {
+            nuget restore $cardSolution
+        }
+
+        if (-not $?)
+        {
+            "" | Write-Host -ForegroundColor Red
+            "*****************************************" | Write-Host -ForegroundColor Red
+            "##[error] >>>ERROR: Couldn't restore helper solution: '$cardSolution'!" | Write-Host -ForegroundColor Red
+            throw "Error restoring helper solution '$cardSolution'"
+        }
     }
 
     # Mpu9250 solutions requires Ak8963
-    if ($solutionFile.Name -eq "Mpu9250.sln")
+    if ($solutionFile.BaseName -eq "Mpu9250")
     {
-        nuget restore $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Ak8963\Ak8963.sln
+        $ak8963Solution = Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\Ak8963\" -Include "Ak8963.sln", "Ak8963.slnx" -Recurse |
+            Sort-Object @{ Expression = { if ($_.Extension -eq ".sln") { 0 } else { 1 } } }, FullName |
+            Select-Object -First 1
+
+        if ($null -eq $ak8963Solution)
+        {
+            throw "Couldn't find Ak8963 solution (.sln or .slnx)."
+        }
+
+        if ($ak8963Solution.Extension -eq ".slnx")
+        {
+            & "$msbuild" "$ak8963Solution" /t:Restore /p:RestorePackagesConfig=true
+        }
+        else
+        {
+            nuget restore $ak8963Solution
+        }
+
+        if (-not $?)
+        {
+            "" | Write-Host -ForegroundColor Red
+            "*****************************************" | Write-Host -ForegroundColor Red
+            "##[error] >>>ERROR: Couldn't restore helper solution: '$ak8963Solution'!" | Write-Host -ForegroundColor Red
+            throw "Error restoring helper solution '$ak8963Solution'"
+        }
     }
 
     ### done handling references to other bindings or helper libs ###
