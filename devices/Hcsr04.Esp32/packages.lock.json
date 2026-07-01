@@ -10,15 +10,15 @@
       },
       "nanoFramework.Hardware.Esp32.Rmt": {
         "type": "Direct",
-        "requested": "[2.0.35, 2.0.35]",
-        "resolved": "2.0.35",
-        "contentHash": "+vO6Vnm8evySbudXz4SJe0Olkm2zkdvCgGo6Eh35wggfcZLCG02DTu7JwqZ1KqSOpeO858n2rcq3x8m9YXOywA=="
+        "requested": "[2.0.51, 2.0.51]",
+        "resolved": "2.0.51",
+        "contentHash": "lli5uM8uRxIBhjsKqwKSxXCCues0VBNDkPo+WIgMx8a6A6XUreQn8ZzcOQJKca2v+ZGUjxDXDXc+NxSnn1vR2A=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.32, 1.11.32]",
-        "resolved": "1.11.32",
-        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
+        "requested": "[1.11.37, 1.11.37]",
+        "resolved": "1.11.37",
+        "contentHash": "whTgEJCGpE8eGK7Z2fI6gTqsVeVrnCzP1KDSqIB2PY0/Jyw7NcnwCFe3s/43ch75DuAZt8/jTX0VJoJtN0Colw=="
       },
       "nanoFramework.System.Device.Model": {
         "type": "Direct",

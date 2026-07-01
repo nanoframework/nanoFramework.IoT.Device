@@ -19,7 +19,7 @@
     <tags>nanoFramework C# csharp netmf netnf m5stack weight loadcell adc</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.System.Device.Spi" version="1.3.82" />
+      <dependency id="nanoFramework.System.Device.Spi" version="1.3.89" />
     </dependencies>
   </metadata>
   <files>
