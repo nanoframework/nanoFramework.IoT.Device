@@ -10,21 +10,21 @@
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[1.0.386, 1.0.386]",
-        "resolved": "1.0.386",
-        "contentHash": "F7lGgemOh0F+qKejVoenofNBYg258nc6s4iWhkONC+DROLOjctJW++4AV2XJuOlPWyvMW1f5bzEXknF1YkvqTQ=="
+        "requested": "[1.0.394, 1.0.394]",
+        "resolved": "1.0.394",
+        "contentHash": "R0RfjOpYVPGjJsyF9yL/PKqE9eDQFKuUsbl9TxvSP6H7XUE0emuTEiLMryLdPIcOm8vP//3OL9cB5OJAE6fkFQ=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
-        "requested": "[5.1.217, 5.1.217]",
-        "resolved": "5.1.217",
-        "contentHash": "LC7glpDQxJxz3jOUF/P8yiehAWPNe6k3UTD1+FVbLCB57/+yFOjyaAaRRAQslZkdiYE0cQ7kfRMkyVxvL9v67g=="
+        "requested": "[5.1.218, 5.1.218]",
+        "resolved": "5.1.218",
+        "contentHash": "ND7FCXr3Bfrg3ce+BGGr2AHD2kptDX+NIQz9ZXBiiXZ13TtAsSE+UAdrRrYAkQ+jbc+1vVt4JLswbB3mJdFxgA=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.32, 1.11.32]",
-        "resolved": "1.11.32",
-        "contentHash": "NyLUIwJDlpl5VKSd+ljmdDtO2WHHBvPvruo1ccaL+hd79z+6XMYze1AccOVXKGiZenLBCwDmFHwpgIQyHkM7GA=="
+        "requested": "[1.11.37, 1.11.37]",
+        "resolved": "1.11.37",
+        "contentHash": "whTgEJCGpE8eGK7Z2fI6gTqsVeVrnCzP1KDSqIB2PY0/Jyw7NcnwCFe3s/43ch75DuAZt8/jTX0VJoJtN0Colw=="
       },
       "nanoFramework.Runtime.Native": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.IO.Ports": {
         "type": "Direct",
-        "requested": "[1.1.132, 1.1.132]",
-        "resolved": "1.1.132",
-        "contentHash": "EHWkSGOWPShgbAelNOGSIKHo5bmAlvVile7NGfhEzI7oH3D063+IAp/ufaY/TthTjb/saf5bAjbwqynijCNSUw=="
+        "requested": "[1.1.139, 1.1.139]",
+        "resolved": "1.1.139",
+        "contentHash": "AkF0zFdn77WiBTEpqxUaUyDhjTrei5x+jskLQxms/sw+KJtPgzkf8AzWpxtpCNTRmySBKtm3EGMietPlGtgd/Q=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
