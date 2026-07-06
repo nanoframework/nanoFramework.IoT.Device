@@ -30,7 +30,7 @@
       <HintPath>..\packages\nanoFramework.CoreLibrary.2.0.0-preview.52\lib\netnano1.0\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Graphics.Core.2.0.0-preview.27\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Graphics.Core.2.0.0-preview.29\lib\netnano1.0\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Hardware.Esp32.2.0.0-preview.12\lib\netnano1.0\nanoFramework.Hardware.Esp32.dll</HintPath>
