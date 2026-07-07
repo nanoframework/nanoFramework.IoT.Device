@@ -1,0 +1,2 @@
+audio
+i2c
