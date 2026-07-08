@@ -1,0 +1,35 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Es7210", "Es7210.nfproj", "{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Es7210.samples", "samples\Es7210.samples.nfproj", "{54AC2C9A-4E51-434B-B018-59EE7B322E2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDB5CEE7-1CEB-425D-A356-CD1A6ED72368}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{54AC2C9A-4E51-434B-B018-59EE7B322E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54AC2C9A-4E51-434B-B018-59EE7B322E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54AC2C9A-4E51-434B-B018-59EE7B322E2A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{54AC2C9A-4E51-434B-B018-59EE7B322E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54AC2C9A-4E51-434B-B018-59EE7B322E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54AC2C9A-4E51-434B-B018-59EE7B322E2A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58109EF5-4C9C-4120-8297-5739A95C5B16}
+	EndGlobalSection
+EndGlobal

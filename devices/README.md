@@ -291,6 +291,8 @@
 
 ## Audio codecs and sound devices
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw88298.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw88298/) [AW88298 - I2S Class-D smart audio amplifier (speaker output)](Aw88298)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7210.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7210/) [ES7210 - 4-channel audio ADC (microphone capture codec)](Es7210)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7243e.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7243e/) [ES7243E - Audio ADC (microphone capture codec)](Es7243e)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es8156.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es8156/) [ES8156 - Low-power stereo audio DAC (playback codec)](Es8156)
 
@@ -339,8 +341,8 @@
 
 ## I2C libraries/modules
 
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7243e.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7243e/) [ES7243E - Audio ADC (microphone capture codec)](Es7243e)
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es8156.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es8156/) [ES8156 - Low-power stereo audio DAC (playback codec)](Es8156)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw88298.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw88298/) [AW88298 - I2S Class-D smart audio amplifier (speaker output)](Aw88298)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7210.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7210/) [ES7210 - 4-channel audio ADC (microphone capture codec)](Es7210)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
 
 ## Bus and GPIO multiplexers
