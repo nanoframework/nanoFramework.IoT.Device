@@ -127,6 +127,14 @@ string GetCategorizedDeviceListing(string devicesPath, IEnumerable<DeviceInfo> d
     {
         if (categoriesDescriptions.TryGetValue(categoryToDisplay, out string? categoryDescription))
         {
+            // A null description marks a category that is a recognised tag but should not be
+            // rendered as its own section (for example bus tags like `i2c`). Skip it so it does
+            // not produce an empty `## ` header in the generated listing.
+            if (categoryDescription == null)
+            {
+                continue;
+            }
+
             string listingInCurrentCategory = GetDeviceListing(devicesPath, devices.Where((d) => d.Categories.Contains(categoryToDisplay)));
             if (!string.IsNullOrEmpty(listingInCurrentCategory))
             {

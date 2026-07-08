@@ -289,6 +289,11 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Buzzer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Buzzer/) [Buzzer - Piezo Buzzer Controller](Buzzer)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Yx5300.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Yx5300/) [YX5200/YX5300 - MP3 Player](Yx5300)
 
+## Audio codecs and sound devices
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7243e.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7243e/) [ES7243E - Audio ADC (microphone capture codec)](Es7243e)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es8156.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es8156/) [ES8156 - Low-power stereo audio DAC (playback codec)](Es8156)
+
 ## GPIO or bit operating devices
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Axp192.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Axp192/) [AXP192 - Enhanced single Cell Li-Battery and Power System Management IC](Axp192)
@@ -324,19 +329,21 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Modbus.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Modbus/) [Modbus - Machine to machine communication protocol](Modbus)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.MulticastDns.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.MulticastDns/) [Multicast DNS](MulticastDns)
 
-## 
+## Character LCD displays
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.CharacterLcd.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.CharacterLcd/) [Character LCD (Liquid Crystal Display)](CharacterLcd)
 
-## 
+## Buzzers
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Buzzer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Buzzer/) [Buzzer - Piezo Buzzer Controller](Buzzer)
 
-## 
+## I2C libraries/modules
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7243e.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7243e/) [ES7243E - Audio ADC (microphone capture codec)](Es7243e)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es8156.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es8156/) [ES8156 - Low-power stereo audio DAC (playback codec)](Es8156)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
 
-## 
+## Bus and GPIO multiplexers
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Charlieplex.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Charlieplex/) [Charlieplex Segment binding](Charlieplex)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.ShiftRegister.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.ShiftRegister/) [Generic shift register](ShiftRegister)
@@ -375,7 +382,7 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.AtomQrCode.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.AtomQrCode/) [M5Stack ATOM QR Code reader](AtomQrCode)
 
-##  modules
+## Satellite communication modules
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.SwarmTile.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.SwarmTile/) [Swarm Tile](SwarmTile)
 
