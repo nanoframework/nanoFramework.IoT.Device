@@ -5,7 +5,7 @@ The [Everest Semiconductor ES7210](https://www.everest-semi.com/) is a 4-channel
 This binding covers the **I2C control plane only**. It configures the codec (clocking, microphone selection, gain, mute and power state) for a two-microphone (MIC1 + MIC2) capture setup in slave mode. The captured PCM audio samples are streamed out over **I2S** using `System.Device.I2s` and are not handled by this binding.
 
 > [!IMPORTANT]
-> The register sequences are ported from the Espressif [`esp_codec_dev`](https://components.espressif.com/components/espressif/esp_codec_dev) component and should be validated on other hardware than CoreS3. The default I2C address is 0x40.
+> The register sequences are ported from the Espressif [`esp_codec_dev`](https://components.espressif.com/components/espressif/esp_codec_dev) component and should be validated should be validated on hardware other than the CoreS3. The default I2C address is 0x40.
 
 ## Documentation
 

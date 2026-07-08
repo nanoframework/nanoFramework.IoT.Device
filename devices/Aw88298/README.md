@@ -5,7 +5,7 @@ The [Awinic AW88298](https://www.awinic.com/) is a 16-bit I2S Class-D smart audi
 This binding covers the **I2C control plane only**. It configures the amplifier (reset, power/enable, output volume, mute and boost). The PCM audio samples are streamed over **I2S** using `System.Device.I2s` and are not handled by this binding.
 
 > [!IMPORTANT]
-> The register sequences are ported from the Espressif [`esp_codec_dev`](https://components.espressif.com/components/espressif/esp_codec_dev) component and should be validated on other hardware and the CoreS3. The AW88298 uses 16-bit registers. The default I2C address is 0x36.
+> The register sequences are ported from the Espressif [`esp_codec_dev`](https://components.espressif.com/components/espressif/esp_codec_dev) component and should be validated should be validated on hardware other than the CoreS3. The AW88298 uses 16-bit registers. The default I2C address is 0x36.
 
 ## Documentation
 
