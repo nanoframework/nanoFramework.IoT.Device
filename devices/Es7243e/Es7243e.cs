@@ -70,7 +70,7 @@ namespace Iot.Device.Es7243e
         /// <remarks>
         /// This runs the ES7243E initialization register sequence (slave mode, I2S data format). After
         /// calling this method the codec is configured; call <see cref="Start" /> to begin capturing.
-        /// This implementation is proven to work on ESP32-S3 and youmay have to implement your own for
+        /// This implementation is proven to work on ESP32-S3 and you may have to implement your own for
         /// other platforms. The ES7243E datasheet is not publicly available, so the register bit layout
         /// and function is not fully known.
         /// </remarks>
@@ -80,18 +80,18 @@ namespace Iot.Device.Es7243e
             // guaranteed to be correct or optimal for all hardware revisions.
             // The ES7243E datasheet is not publicly available, so the register bit layout and
             // function is not fully known.
-            WriteRegister(0x01, 0x3A);
-            WriteRegister(0x00, 0x80);
-            WriteRegister(0xF9, 0x00);
-            WriteRegister(0x04, 0x02);
-            WriteRegister(0x04, 0x01);
-            WriteRegister(0xF9, 0x01);
-            WriteRegister(0x00, 0x1E);
-            WriteRegister(0x01, 0x00);
+            WriteRegister(RegClockManager1, 0x3A);
+            WriteRegister(RegReset, 0x80);
+            WriteRegister(RegBiasPower, 0x00);
+            WriteRegister(RegClockManager4, 0x02);
+            WriteRegister(RegClockManager4, 0x01);
+            WriteRegister(RegBiasPower, 0x01);
+            WriteRegister(RegReset, 0x1E);
+            WriteRegister(RegClockManager1, 0x00);
 
             WriteRegister(0x02, 0x00);
             WriteRegister(0x03, 0x20);
-            WriteRegister(0x04, 0x03);
+            WriteRegister(RegClockManager4, 0x03);
             WriteRegister(0x0D, 0x00);
             WriteRegister(0x05, 0x00);
             WriteRegister(0x06, 0x03);
@@ -100,12 +100,12 @@ namespace Iot.Device.Es7243e
 
             WriteRegister(0x09, 0xCA);
             WriteRegister(0x0A, 0x85);
-            WriteRegister(0x0B, 0x00);
+            WriteRegister(RegAdcMute, 0x00);
             WriteRegister(0x0E, 0xBF);
             WriteRegister(0x0F, 0x80);
             WriteRegister(0x14, 0x0C);
             WriteRegister(0x15, 0x0C);
-            WriteRegister(0x17, 0x02);
+            WriteRegister(RegSystem17, 0x02);
             WriteRegister(0x18, 0x26);
 
             WriteRegister(0x19, 0x77);
