@@ -63,3 +63,19 @@ Debug.WriteLine($"5V out  : {power.GetOutputVoltage().Millivolts} mV");
 Debug.WriteLine($"Source  : {power.GetPowerSource()}");
 Debug.WriteLine($"Charging: {power.IsCharging}");
 ```
+
+### GPIO
+
+The M5PM1 exposes five general-purpose I/O pins (`Pin.Gpio0` to `Pin.Gpio4`). Each pin has a mux function (`GpioFunction`), a direction (the standard `PinMode` input or output only), an output driver type (`GpioDrive`), an output latch and an input reading. Boards wire these pins to different loads (for example the M5StickS3 uses `Gpio2` for the L3B / LCD power gate).
+
+```csharp
+// Drive GPIO2 high as a push-pull output (e.g. the M5StickS3 L3B / LCD power gate).
+power.SetGpioFunction(Pin.Gpio2, GpioFunction.Gpio);
+power.SetGpioDrive(Pin.Gpio2, GpioDrive.PushPull);
+power.SetGpioMode(Pin.Gpio2, PinMode.Output);
+power.WriteGpio(Pin.Gpio2, PinValue.High);
+
+// Read GPIO0 as an input (e.g. the M5StickS3 charge-status line).
+power.SetGpioMode(Pin.Gpio0, PinMode.Input);
+PinValue level = power.ReadGpio(Pin.Gpio0);
+```

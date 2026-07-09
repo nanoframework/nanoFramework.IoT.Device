@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Gpio;
 using System.Device.I2c;
 using System.IO;
 using System.Threading;
@@ -40,7 +41,12 @@ namespace Iot.Device.M5Pm1
         private const byte RegPowerControl = 0x06;
         private const byte RegI2cConfig = 0x09;
         private const byte RegWatchdog = 0x0A;
+        private const byte RegGpioMode = 0x10;
+        private const byte RegGpioOutput = 0x11;
         private const byte RegGpioInput = 0x12;
+        private const byte RegGpioDrive = 0x13;
+        private const byte RegGpioFunction0 = 0x16;
+        private const byte RegGpioFunction1 = 0x17;
         private const byte RegBatteryVoltage = 0x22;
         private const byte RegVbusVoltage = 0x24;
         private const byte RegOutputVoltage = 0x26;
@@ -135,11 +141,76 @@ namespace Iot.Device.M5Pm1
         /// <summary>
         /// Gets the active power source (5V input, 5V input/output, or battery).
         /// </summary>
-        /// <returns>The current <see cref="Iot.Device.M5Pm1.PowerSource" />.</returns>
+        /// <returns>The current <see cref="Iot.Device.M5Pm1.PowerSource" />, or <see cref="PowerSource.Unknown" /> if the register reports a value outside the documented range.</returns>
         public PowerSource GetPowerSource()
         {
-            return (PowerSource)(ReadRegister(RegPowerSource) & PowerSourceMask);
+            int source = ReadRegister(RegPowerSource) & PowerSourceMask;
+            return source <= (int)PowerSource.Battery ? (PowerSource)source : PowerSource.Unknown;
         }
+
+        /// <summary>
+        /// Sets the direction (input or output) of a GPIO pin.
+        /// </summary>
+        /// <param name="pin">The GPIO pin to configure.</param>
+        /// <param name="mode">The direction to apply. Only <see cref="PinMode.Input" /> and <see cref="PinMode.Output" /> are supported; the M5PM1 has no internal pull resistors.</param>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="mode"/> is not <see cref="PinMode.Input" /> or <see cref="PinMode.Output" />.</exception>
+        public void SetGpioMode(Pin pin, PinMode mode)
+        {
+            if (mode != PinMode.Input && mode != PinMode.Output)
+            {
+                throw new ArgumentException();
+            }
+
+            UpdateRegister(RegGpioMode, (byte)(1 << (int)pin), mode == PinMode.Output);
+        }
+
+        /// <summary>
+        /// Sets the output driver type (push-pull or open-drain) of a GPIO pin.
+        /// </summary>
+        /// <param name="pin">The GPIO pin to configure.</param>
+        /// <param name="drive">The driver type to apply.</param>
+        public void SetGpioDrive(Pin pin, GpioDrive drive)
+            => UpdateRegister(RegGpioDrive, (byte)(1 << (int)pin), drive == GpioDrive.OpenDrain);
+
+        /// <summary>
+        /// Sets the multiplexed function of a GPIO pin.
+        /// </summary>
+        /// <param name="pin">The GPIO pin to configure.</param>
+        /// <param name="function">The function to apply.</param>
+        public void SetGpioFunction(Pin pin, GpioFunction function)
+        {
+            // GPIO0-3 use FUNC0 (0x16); GPIO4 uses FUNC1 (0x17). Each pin occupies a 2-bit field.
+            byte register = (int)pin < 4 ? RegGpioFunction0 : RegGpioFunction1;
+            int shift = ((int)pin < 4 ? (int)pin : (int)pin - 4) * 2;
+            byte mask = (byte)(0x03 << shift);
+            byte current = ReadRegister(register);
+            byte updated = (byte)((current & (0xFF - mask)) | ((byte)((byte)function << shift) & mask));
+            WriteRegister(register, updated);
+        }
+
+        /// <summary>
+        /// Sets the output level of a GPIO pin (when it is configured as an output).
+        /// </summary>
+        /// <param name="pin">The GPIO pin to drive.</param>
+        /// <param name="value">The level to drive the pin to.</param>
+        public void WriteGpio(Pin pin, PinValue value)
+            => UpdateRegister(RegGpioOutput, (byte)(1 << (int)pin), value == PinValue.High);
+
+        /// <summary>
+        /// Reads the input level of a GPIO pin.
+        /// </summary>
+        /// <param name="pin">The GPIO pin to read.</param>
+        /// <returns>The input level of the pin.</returns>
+        public PinValue ReadGpio(Pin pin)
+            => (ReadRegister(RegGpioInput) & (1 << (int)pin)) != 0 ? PinValue.High : PinValue.Low;
+
+        /// <summary>
+        /// Reads the output latch level of a GPIO pin (the last value written, not the physical input level).
+        /// </summary>
+        /// <param name="pin">The GPIO pin to read.</param>
+        /// <returns>The output latch level of the pin.</returns>
+        public PinValue ReadGpioOutputLatch(Pin pin)
+            => (ReadRegister(RegGpioOutput) & (1 << (int)pin)) != 0 ? PinValue.High : PinValue.Low;
 
         // The M5PM1 sleeps when the I2C bus is idle and NAKs the first transaction, so a cold read comes
         // back as zeros. Poll the device-ID register until the PMIC acknowledges, then apply the M5Stack

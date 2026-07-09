@@ -22,5 +22,10 @@ namespace Iot.Device.M5Pm1
         /// Powered from the battery.
         /// </summary>
         Battery = 2,
+
+        /// <summary>
+        /// The power source is unknown (the register reported a value outside the documented range).
+        /// </summary>
+        Unknown = 3,
     }
 }

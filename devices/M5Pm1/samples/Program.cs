@@ -3,6 +3,7 @@
 
 using Iot.Device.M5Pm1;
 using nanoFramework.Hardware.Esp32;
+using System.Device.Gpio;
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
@@ -31,6 +32,15 @@ Debug.WriteLine($"M5PM1 device ID: 0x{deviceId:X4} (expected 0x{M5Pm1.DeviceId:X
 power.BatteryChargeEnabled = true;
 power.ExternalOutputEnabled = true;
 
+// GPIO example: drive GPIO2 high as a push-pull output (on the M5StickS3 this is the L3B / LCD power
+// gate), and read GPIO0 as an input (the M5StickS3 charge-status line).
+power.SetGpioFunction(Pin.Gpio2, GpioFunction.Gpio);
+power.SetGpioDrive(Pin.Gpio2, GpioDrive.PushPull);
+power.SetGpioMode(Pin.Gpio2, PinMode.Output);
+power.WriteGpio(Pin.Gpio2, PinValue.High);
+
+power.SetGpioMode(Pin.Gpio0, PinMode.Input);
+
 Debug.WriteLine("M5PM1 initialized. Reporting power telemetry...");
 
 while (true)
@@ -40,6 +50,7 @@ while (true)
     Debug.WriteLine($"5V out  : {power.GetOutputVoltage().Millivolts} mV");
     Debug.WriteLine($"Source  : {power.GetPowerSource()}");
     Debug.WriteLine($"Charging: {power.IsCharging}");
+    Debug.WriteLine($"GPIO0   : {power.ReadGpio(Pin.Gpio0) == PinValue.High}");
     Debug.WriteLine(string.Empty);
 
     Thread.Sleep(2000);
