@@ -320,6 +320,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Dac63004.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Dac63004/) [DAC63004/DAC63004W - Ultra-low-power quad-channel 12-bit smart DAC with I²C, SPI and PWM](Dac63004)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ina219.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ina219/) [INA219 - Bidirectional Current/Power Monitor](Ina219)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ip5306.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ip5306/) [IP5306 - Power management](Ip5306)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.M5Pm1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.M5Pm1/) [M5PM1 - M5Stack power-management IC](M5Pm1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Max1704x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Max1704x/) [MAX1704x/MAX17043/MAX17044/MAX17048/MAX17049 - Battery gauge](Max1704x)
 
 ## Protocols providers/libraries
@@ -341,8 +342,6 @@
 
 ## I2C libraries/modules
 
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw88298.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw88298/) [AW88298 - I2S Class-D smart audio amplifier (speaker output)](Aw88298)
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7210.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7210/) [ES7210 - 4-channel audio ADC (microphone capture codec)](Es7210)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
 
 ## Bus and GPIO multiplexers
