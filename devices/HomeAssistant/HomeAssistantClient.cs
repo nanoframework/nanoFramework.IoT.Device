@@ -31,7 +31,6 @@ namespace nanoFramework.HomeAssistant
         /// <param name="e">MQTT publish acknowledgment arguments.</param>
         public delegate void MqttMessagePublishedHandler(object sender, MqttMsgPublishedEventArgs e);
 
-        private readonly string _deviceName;
         private readonly HomeAssistantDeviceInfo _device;
         private readonly string _brokerAddress;
         private readonly int _brokerPort;
@@ -68,8 +67,7 @@ namespace nanoFramework.HomeAssistant
         /// Initializes a new instance of the <see cref="HomeAssistantClient" /> class.
         /// Configures MQTT broker details and device metadata with auto-generated topics.
         /// </summary>
-        /// <param name="deviceName">Device name used to auto-generate MQTT topics (e.g., 'nanoSprinkler').</param>
-        /// <param name="device">Device metadata shared by all entities.</param>
+        /// <param name="device">Device metadata shared by all entities. Its <see cref="HomeAssistantDeviceInfo.Name"/> is also used to auto-generate MQTT topics (e.g., 'nanoSprinkler').</param>
         /// <param name="brokerAddress">MQTT broker IP address or hostname.</param>
         /// <param name="brokerPort">MQTT broker port (usually 1883).</param>
         /// <param name="mqttClientIdPrefix">Prefix for generating unique MQTT client ID.</param>
@@ -77,8 +75,9 @@ namespace nanoFramework.HomeAssistant
         /// <param name="mqttPassword">Optional MQTT broker password.</param>
         /// <param name="onMqttMessageReceived">Optional event handler for received MQTT messages.</param>
         /// <param name="onMqttConnectionClosed">Optional event handler for MQTT connection closed.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="device"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="device"/>'s <see cref="HomeAssistantDeviceInfo.Name"/> contains no alphanumeric characters (e.g. it is entirely emoji or punctuation) and cannot be used to generate MQTT topics.</exception>
         public HomeAssistantClient(
-            string deviceName,
             HomeAssistantDeviceInfo device,
             string brokerAddress,
             int brokerPort,
@@ -88,14 +87,23 @@ namespace nanoFramework.HomeAssistant
             MqttMessageReceivedHandler onMqttMessageReceived = null,
             EventHandler onMqttConnectionClosed = null)
         {
-            _deviceName = deviceName;
+            if (device == null)
+            {
+                throw new ArgumentNullException(nameof(device));
+            }
+
+            if (SanitizeTopicSegment(device.Name, '-').Length == 0)
+            {
+                throw new ArgumentException("Device name must contain at least one alphanumeric character (a-z, 0-9) to generate MQTT topics.", nameof(device));
+            }
+
             _device = device;
             _brokerAddress = brokerAddress;
             _brokerPort = brokerPort;
             _mqttClientIdPrefix = mqttClientIdPrefix;
             _mqttUsername = mqttUsername;
             _mqttPassword = mqttPassword;
-            _deviceTopicRoot = GenerateDeviceTopicRoot(_deviceName);
+            _deviceTopicRoot = GenerateDeviceTopicRoot(_device.Name);
             _discoveryEntities = new ArrayList();
             _runtimeEntities = new ArrayList();
 
@@ -116,7 +124,7 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public string DeviceName
         {
-            get { return _deviceName; }
+            get { return _device.Name; }
         }
 
         /// <summary>
@@ -182,7 +190,7 @@ namespace nanoFramework.HomeAssistant
         /// <returns>The normalized device topic root.</returns>
         private string GenerateDeviceTopicRoot(string deviceName)
         {
-            string normalized = (deviceName ?? string.Empty).Replace(" ", "-").ToLower();
+            string normalized = SanitizeTopicSegment(deviceName, '-');
             return $"nanoframework/{normalized}";
         }
 
@@ -293,33 +301,64 @@ namespace nanoFramework.HomeAssistant
         /// <returns>The normalized topic segment.</returns>
         private string NormalizeTopicName(string name)
         {
-            if (string.IsNullOrEmpty(name))
+            return SanitizeTopicSegment(name, '_');
+        }
+
+        /// <summary>
+        /// Sanitizes a name into an MQTT-topic-safe segment: lowercase ASCII letters and digits only,
+        /// with whitespace/dashes/underscores collapsed to a single <paramref name="separator"/>.
+        /// Any other character (emoji, punctuation, non-ASCII, MQTT wildcards such as '+' and '#') is dropped,
+        /// since such characters can break topic matching or are not reliably supported end-to-end.
+        /// </summary>
+        /// <param name="value">The raw name to sanitize.</param>
+        /// <param name="separator">The character used to join word segments (e.g. '-' or '_').</param>
+        /// <returns>The sanitized, topic-safe segment.</returns>
+        private static string SanitizeTopicSegment(string value, char separator)
+        {
+            if (string.IsNullOrEmpty(value))
             {
                 return string.Empty;
             }
 
-            StringBuilder normalized = new StringBuilder(name.Length);
-            bool lastWasSpace = false;
+            StringBuilder sanitized = new StringBuilder(value.Length);
+            bool lastWasSeparator = false;
 
-            for (int i = 0; i < name.Length; i++)
+            for (int i = 0; i < value.Length; i++)
             {
-                char c = name[i];
-                if (c == ' ')
+                char c = value[i];
+                if (c >= 'a' && c <= 'z')
                 {
-                    if (!lastWasSpace && normalized.Length > 0)
+                    sanitized.Append(c);
+                    lastWasSeparator = false;
+                }
+                else if (c >= 'A' && c <= 'Z')
+                {
+                    sanitized.Append((char)(c + 32));
+                    lastWasSeparator = false;
+                }
+                else if (c >= '0' && c <= '9')
+                {
+                    sanitized.Append(c);
+                    lastWasSeparator = false;
+                }
+                else if (c == ' ' || c == '-' || c == '_')
+                {
+                    if (!lastWasSeparator && sanitized.Length > 0)
                     {
-                        normalized.Append('_');
-                        lastWasSpace = true;
+                        sanitized.Append(separator);
+                        lastWasSeparator = true;
                     }
                 }
-                else
-                {
-                    normalized.Append(c.ToLower());
-                    lastWasSpace = false;
-                }
+
+                // Any other character (emoji, punctuation, non-ASCII, MQTT wildcards) is dropped.
             }
 
-            return normalized.ToString();
+            if (sanitized.Length > 0 && sanitized[sanitized.Length - 1] == separator)
+            {
+                sanitized.Length--;
+            }
+
+            return sanitized.ToString();
         }
 
         /// <summary>

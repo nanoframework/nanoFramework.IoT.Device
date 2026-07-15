@@ -638,7 +638,6 @@ namespace nanoSprinkler
             string mqttClientIdPrefix = deviceId + "-";
 
             _homeAssistant = new HomeAssistantClient(
-                deviceName,
                 device,
                 _config.MqttBroker,
                 _config.MqttPort,
