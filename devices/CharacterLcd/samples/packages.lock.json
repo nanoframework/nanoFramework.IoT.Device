@@ -28,9 +28,9 @@
       },
       "nanoFramework.Iot.Device.Pcx857x": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.94, 2.0.0-preview.94]",
-        "resolved": "2.0.0-preview.94",
-        "contentHash": "0gPnrbwWZvs/tI/3IfnAo8u+E6tlFv+P7uwRlfjlo2ZG8tvHlUX81m6cICqYZG1XKYbpdysKJQ5+4cIite+C7g=="
+        "requested": "[2.0.0-preview.109, 2.0.0-preview.109]",
+        "resolved": "2.0.0-preview.109",
+        "contentHash": "xrqAM0PofNx+cfQJOXTut8Bk8icULwlJr2qgyes7jcvQ1r6j0vs2bQGw9NYAnYb6kMluWxW1oe5Ghmr3hYaeRQ=="
       },
       "nanoFramework.Iot.Device.ShiftRegister": {
         "type": "Direct",
