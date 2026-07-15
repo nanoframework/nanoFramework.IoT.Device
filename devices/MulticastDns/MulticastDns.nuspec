@@ -22,9 +22,9 @@
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.13" />
-        <dependency id="nanoFramework.System.Buffers.Helpers" version="2.0.0-preview.94" />
+        <dependency id="nanoFramework.System.Buffers.Helpers" version="2.0.0-preview.109" />
         <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.22" />
-        <dependency id="nanoFramework.System.Net" version="2.0.0-preview.25" />
+        <dependency id="nanoFramework.System.Net" version="2.0.0-preview.32" />
         <dependency id="nanoFramework.System.Net.Sockets.UdpClient" version="1.1.106" />
         <dependency id="nanoFramework.System.Text" version="2.0.0-preview.23" />
         <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.14" />
