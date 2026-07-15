@@ -24,7 +24,7 @@
       <HintPath>..\packages\nanoFramework.Iot.Device.Multiplexing.2.0.0-preview.77\lib\netnano1.0\Iot.Device.Multiplexing.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.Pcx857x, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.2.0.0-preview.94\lib\netnano1.0\Iot.Device.Pcx857x.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Iot.Device.Pcx857x.2.0.0-preview.109\lib\netnano1.0\Iot.Device.Pcx857x.dll</HintPath>
     </Reference>
     <Reference Include="Iot.Device.ShiftRegister, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.ShiftRegister.2.0.0-preview.92\lib\netnano1.0\Iot.Device.ShiftRegister.dll</HintPath>
