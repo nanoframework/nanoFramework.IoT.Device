@@ -101,8 +101,7 @@ brightness.OnStateChange += (sender, oldState, newState) =>
 ### 5. Connect and publish
 
 ```csharp
-string availabilityTopic = client.AvailabilityTopic;
-bool connected = client.Connect(willTopic: availabilityTopic, willMessage: "offline");
+bool connected = client.Connect();
 
 if (connected)
 {
@@ -112,6 +111,8 @@ if (connected)
     temperature.PublishState("21.5");
 }
 ```
+
+`Connect()` automatically sets a Last-Will-Testament on `client.AvailabilityTopic` (payload `"offline"`), so Home Assistant marks the device unavailable if it disconnects ungracefully. Pass a different topic to `willTopic` to override it, or `string.Empty` to connect without an LWT at all.
 
 ### 6. Publish state updates
 

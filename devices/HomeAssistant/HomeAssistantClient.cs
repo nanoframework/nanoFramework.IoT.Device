@@ -174,6 +174,63 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Sanitizes a name into an MQTT-topic-safe segment: lowercase ASCII letters and digits only,
+        /// with whitespace/dashes/underscores collapsed to a single <paramref name="separator"/>.
+        /// Any other character (emoji, punctuation, non-ASCII, MQTT wildcards such as '+' and '#') is dropped,
+        /// since such characters can break topic matching or are not reliably supported end-to-end.
+        /// </summary>
+        /// <param name="value">The raw name to sanitize.</param>
+        /// <param name="separator">The character used to join word segments (e.g. '-' or '_').</param>
+        /// <returns>The sanitized, topic-safe segment.</returns>
+        private static string SanitizeTopicSegment(string value, char separator)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return string.Empty;
+            }
+
+            StringBuilder sanitized = new StringBuilder(value.Length);
+            bool lastWasSeparator = false;
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                char c = value[i];
+                if (c >= 'a' && c <= 'z')
+                {
+                    sanitized.Append(c);
+                    lastWasSeparator = false;
+                }
+                else if (c >= 'A' && c <= 'Z')
+                {
+                    sanitized.Append((char)(c + 32));
+                    lastWasSeparator = false;
+                }
+                else if (c >= '0' && c <= '9')
+                {
+                    sanitized.Append(c);
+                    lastWasSeparator = false;
+                }
+                else if (c == ' ' || c == '-' || c == '_')
+                {
+                    if (!lastWasSeparator && sanitized.Length > 0)
+                    {
+                        sanitized.Append(separator);
+                        lastWasSeparator = true;
+                    }
+                }
+
+                // Any other character (emoji, punctuation, non-ASCII, MQTT wildcards) is dropped.
+            }
+
+            if (sanitized.Length > 0 && sanitized[sanitized.Length - 1] == separator)
+            {
+                sanitized.Length--;
+            }
+
+            return sanitized.ToString();
+        }
+
+        /// <summary>
         /// Generates the availability topic from device name.
         /// Example: 'nanoSprinkler' → 'nanoframework/nano-sprinkler/availability'.
         /// </summary>
@@ -302,63 +359,6 @@ namespace nanoFramework.HomeAssistant
         private string NormalizeTopicName(string name)
         {
             return SanitizeTopicSegment(name, '_');
-        }
-
-        /// <summary>
-        /// Sanitizes a name into an MQTT-topic-safe segment: lowercase ASCII letters and digits only,
-        /// with whitespace/dashes/underscores collapsed to a single <paramref name="separator"/>.
-        /// Any other character (emoji, punctuation, non-ASCII, MQTT wildcards such as '+' and '#') is dropped,
-        /// since such characters can break topic matching or are not reliably supported end-to-end.
-        /// </summary>
-        /// <param name="value">The raw name to sanitize.</param>
-        /// <param name="separator">The character used to join word segments (e.g. '-' or '_').</param>
-        /// <returns>The sanitized, topic-safe segment.</returns>
-        private static string SanitizeTopicSegment(string value, char separator)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return string.Empty;
-            }
-
-            StringBuilder sanitized = new StringBuilder(value.Length);
-            bool lastWasSeparator = false;
-
-            for (int i = 0; i < value.Length; i++)
-            {
-                char c = value[i];
-                if (c >= 'a' && c <= 'z')
-                {
-                    sanitized.Append(c);
-                    lastWasSeparator = false;
-                }
-                else if (c >= 'A' && c <= 'Z')
-                {
-                    sanitized.Append((char)(c + 32));
-                    lastWasSeparator = false;
-                }
-                else if (c >= '0' && c <= '9')
-                {
-                    sanitized.Append(c);
-                    lastWasSeparator = false;
-                }
-                else if (c == ' ' || c == '-' || c == '_')
-                {
-                    if (!lastWasSeparator && sanitized.Length > 0)
-                    {
-                        sanitized.Append(separator);
-                        lastWasSeparator = true;
-                    }
-                }
-
-                // Any other character (emoji, punctuation, non-ASCII, MQTT wildcards) is dropped.
-            }
-
-            if (sanitized.Length > 0 && sanitized[sanitized.Length - 1] == separator)
-            {
-                sanitized.Length--;
-            }
-
-            return sanitized.ToString();
         }
 
         /// <summary>
@@ -769,7 +769,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Connects to the MQTT broker and publishes discovery configuration.
         /// </summary>
-        /// <param name="willTopic">Topic for last-will-testament message (usually availability topic).</param>
+        /// <param name="willTopic">Topic for the last-will-testament message. When <c>null</c> (the default), auto-generated from the device name via <see cref="AvailabilityTopic"/>. Pass <see cref="string.Empty"/> to connect without an LWT.</param>
         /// <param name="willMessage">Payload for LWT (usually "offline").</param>
         /// <returns>True if connection successful, false otherwise.</returns>
         public bool Connect(string willTopic = null, string willMessage = "offline")
@@ -789,8 +789,12 @@ namespace nanoFramework.HomeAssistant
 
                     clientId = _mqttClientIdPrefix + Guid.NewGuid().ToString();
 
-                    // Connect with LWT if provided
-                    if (!string.IsNullOrEmpty(willTopic))
+                    // Auto-generate the will topic from the device name unless the caller overrode it
+                    // (or explicitly opted out of an LWT by passing string.Empty).
+                    string effectiveWillTopic = willTopic ?? GenerateAvailabilityTopic();
+
+                    // Connect with LWT if a will topic is in effect
+                    if (!string.IsNullOrEmpty(effectiveWillTopic))
                     {
                         client.Connect(
                             clientId,
@@ -799,7 +803,7 @@ namespace nanoFramework.HomeAssistant
                             willRetain: true,
                             willQosLevel: MqttQoSLevel.AtLeastOnce,
                             willFlag: true,
-                            willTopic: willTopic,
+                            willTopic: effectiveWillTopic,
                             willMessage: willMessage,
                             cleanSession: true,
                             keepAlivePeriod: 60);
