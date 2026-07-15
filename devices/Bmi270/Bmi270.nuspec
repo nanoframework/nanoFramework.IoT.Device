@@ -25,7 +25,7 @@
       <dependency id="nanoFramework.System.Numerics" version="1.2.862" />
       <dependency id="nanoFramework.UnitsNet.Temperature" version="5.76.15" />
       <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
-      <dependency id="nanoFramework.Iot.Device.Bmm150" version="1.2.991" />
+      <dependency id="nanoFramework.Iot.Device.Bmm150" version="1.2.1016" />
     </dependencies>
   </metadata>
   <files>
