@@ -23,7 +23,7 @@
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
         <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.13" />
         <dependency id="nanoFramework.System.IO.Streams" version="2.0.0-preview.22" />
-        <dependency id="nanoFramework.System.Net" version="2.0.0-preview.25" />
+        <dependency id="nanoFramework.System.Net" version="2.0.0-preview.32" />
         <dependency id="nanoFramework.System.Text" version="2.0.0-preview.23" />
         <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.14" />
         <dependency id="nanoFramework.System.Collections" version="2.0.0-preview.15" />

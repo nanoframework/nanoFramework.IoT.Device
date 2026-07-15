@@ -71,13 +71,13 @@
       <HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.2.0.0-preview.77\lib\netnano1.0\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Buffers.Helpers.2.0.0-preview.94\lib\netnano1.0\System.Buffers.Helpers.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Buffers.Helpers.2.0.0-preview.109\lib\netnano1.0\System.Buffers.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.IO.Streams.2.0.0-preview.22\lib\netnano1.0\System.IO.Streams.dll</HintPath>
     </Reference>
     <Reference Include="System.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>packages\nanoFramework.System.Net.2.0.0-preview.25\lib\netnano1.0\System.Net.dll</HintPath>
+      <HintPath>packages\nanoFramework.System.Net.2.0.0-preview.32\lib\netnano1.0\System.Net.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Sockets.UdpClient, Version=1.1.106.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Net.Sockets.UdpClient.1.1.106\lib\System.Net.Sockets.UdpClient.dll</HintPath>

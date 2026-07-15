@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.30, 2.0.0-preview.30]",
-        "resolved": "2.0.0-preview.30",
-        "contentHash": "hvW6/JzPPpoR/Xqlr5304KmU2Mc+98SSy7bE/hp18yJb5Dx41/6zFlAXj7zH8wu//ccHFG77EAai5arFiVtm7A=="
+        "requested": "[2.0.0-preview.32, 2.0.0-preview.32]",
+        "resolved": "2.0.0-preview.32",
+        "contentHash": "Sl2xRVDaigdue5GxM4XRLiU8h8BWuiix8scAcNZtYw6AQMg8qaGmW+fCpKaoBfFrNfwfg6xOOkm3Qv6A6WP66g=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -34,15 +34,15 @@
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.25, 2.0.0-preview.25]",
-        "resolved": "2.0.0-preview.25",
-        "contentHash": "XS+R6px9F8y/eUNwGdch6kygcwH9fVtKtzjyCVSdvdnjXbecRYhKBUWEy9tejhjLUdQvIfIl5lMJPgW5lS2PRA=="
+        "requested": "[2.0.0-preview.32, 2.0.0-preview.32]",
+        "resolved": "2.0.0-preview.32",
+        "contentHash": "o8ZYiL25rCV7hivODK+w+L/heAGUXJv5HH0cWOF6qRo+6i5jc9dHV4M3kBKfnyRDKhiT9P8UC+Y4MNaBtkbsyw=="
       },
       "nanoFramework.System.Net.Http.Server": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.16, 2.0.0-preview.16]",
-        "resolved": "2.0.0-preview.16",
-        "contentHash": "Bl5O/YFXzLG+8IF+2HFojfonWVCBM9KHiDlZa89qtdNFAzO/RZwCzjyHoIcTArLTeW4Et1yPTXyWTxdVmxWhUQ=="
+        "requested": "[2.0.0-preview.18, 2.0.0-preview.18]",
+        "resolved": "2.0.0-preview.18",
+        "contentHash": "bC8g0EiznBIyHkPKCWFz27bRYxmW3rm/bE1qqJiaQ08ImskstMwAxEde3qmpUIAR72AViBtuBA9EC/CR0cNvmg=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.150, 1.2.150]",
-        "resolved": "1.2.150",
-        "contentHash": "XYp5t4vZP5+yGIGamPU89QxWvhpu9hsMEkr2bPm6WssIBd9ycnSCXNmfCKdXtpfXqId0I/8hTJqqTrMCGY7JAw=="
+        "requested": "[1.2.151, 1.2.151]",
+        "resolved": "1.2.151",
+        "contentHash": "lwO/8A24YID+1Ih9yZqEGuhoDJaL0wze2c1QkeXyE1HGPrrQIMdgRX0HOujSdOJN8J3CGagVSUJ7UTta7o2qyg=="
       }
     }
   }
