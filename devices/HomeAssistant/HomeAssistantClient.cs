@@ -494,6 +494,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Builds a read-only discovery entity (state topic only, no command topic) for the given component type.
         /// </summary>
+        /// <returns>The created discovery entity.</returns>
         private HomeAssistantDiscoveryEntity CreateReadOnlyDiscoveryEntity(
             HomeAssistantComponentType componentType,
             string objectId,

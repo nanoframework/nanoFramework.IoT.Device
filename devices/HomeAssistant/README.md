@@ -60,6 +60,12 @@ HomeAssistantNumber temperature = client.AddSensor(
     unitOfMeasurement: "°C",
     deviceClass:       HomeAssistantDeviceClass.Temperature);
 
+// Binary sensor (read-only ON/OFF, no command topic — for example a door or motion sensor)
+HomeAssistantSwitch doorSensor = client.AddBinarySensor(
+    objectId:    "my_device_door",
+    name:        "Front Door",
+    deviceClass: "door");
+
 // Select (enumerated options)
 HomeAssistantSelect mode = client.AddSelect(
     objectId: "my_device_mode",
