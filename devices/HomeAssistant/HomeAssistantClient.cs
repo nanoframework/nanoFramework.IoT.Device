@@ -358,7 +358,13 @@ namespace nanoFramework.HomeAssistant
         /// <returns>The normalized topic segment.</returns>
         private string NormalizeTopicName(string name)
         {
-            return SanitizeTopicSegment(name, '_');
+            string normalized = SanitizeTopicSegment(name, '_');
+            if (normalized.Length == 0)
+            {
+                throw new ArgumentException("Topic name segment must contain at least one alphanumeric character.", nameof(name));
+            }
+
+            return normalized;
         }
 
         /// <summary>
