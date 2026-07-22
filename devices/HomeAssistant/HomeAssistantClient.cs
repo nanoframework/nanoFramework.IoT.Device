@@ -212,7 +212,7 @@ namespace nanoFramework.HomeAssistant
                     sanitized.Append(c);
                     lastWasSeparator = false;
                 }
-                else if (c == ' ' || c == '-' || c == '_')
+                else if (IsAsciiWhitespace(c) || c == '-' || c == '_')
                 {
                     if (!lastWasSeparator && sanitized.Length > 0)
                     {
@@ -230,6 +230,18 @@ namespace nanoFramework.HomeAssistant
             }
 
             return sanitized.ToString();
+        }
+
+        /// <summary>
+        /// Determines whether <paramref name="c"/> is an ASCII whitespace character (space, tab, newline,
+        /// carriage return, form feed, or vertical tab). nanoFramework's mscorlib does not provide
+        /// <c>Char.IsWhiteSpace</c>, so this enumerates the characters explicitly.
+        /// </summary>
+        /// <param name="c">The character to test.</param>
+        /// <returns><see langword="true"/> if <paramref name="c"/> is ASCII whitespace; otherwise <see langword="false"/>.</returns>
+        private static bool IsAsciiWhitespace(char c)
+        {
+            return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v';
         }
 
         /// <summary>
