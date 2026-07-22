@@ -112,7 +112,7 @@ if (connected)
 }
 ```
 
-`Connect()` automatically sets a Last-Will-Testament on `client.AvailabilityTopic` (payload `"offline"`), so Home Assistant marks the device unavailable if it disconnects ungracefully. Pass a different topic to `willTopic` to override it, or `string.Empty` to connect without an LWT at all.
+`Connect()` automatically sets a Last-Will-Testament on `client.AvailabilityTopic` (payload `"offline"`), so Home Assistant marks the device unavailable if it disconnects ungracefully. Pass a different topic to `willTopic` to override it — `client.AvailabilityTopic` then reflects that custom topic for the rest of the session, so `PublishOnline()`, `Disconnect()`, and discovery payloads all stay consistent with the broker's LWT topic. Pass `string.Empty` to connect without an LWT at all (availability publishing still uses the default topic in that case).
 
 ### 6. Publish state updates
 

@@ -40,6 +40,7 @@ namespace nanoFramework.HomeAssistant
         private readonly string _deviceTopicRoot;
         private readonly ArrayList _discoveryEntities;
         private readonly ArrayList _runtimeEntities;
+        private string _availabilityTopic;
         private MqttClient _mqttClient;
         private object _mqttLock = new object();
 
@@ -104,6 +105,7 @@ namespace nanoFramework.HomeAssistant
             _mqttUsername = mqttUsername;
             _mqttPassword = mqttPassword;
             _deviceTopicRoot = GenerateDeviceTopicRoot(_device.Name);
+            _availabilityTopic = GenerateAvailabilityTopic();
             _discoveryEntities = new ArrayList();
             _runtimeEntities = new ArrayList();
 
@@ -136,11 +138,11 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Gets the MQTT availability topic, auto-generated from device name.
+        /// Gets the MQTT availability topic used for online/offline publishing and discovery payloads.
         /// </summary>
         public string AvailabilityTopic
         {
-            get { return GenerateAvailabilityTopic(); }
+            get { return _availabilityTopic; }
         }
 
         /// <summary>
@@ -775,7 +777,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Connects to the MQTT broker and publishes discovery configuration.
         /// </summary>
-        /// <param name="willTopic">Topic for the last-will-testament message. When <c>null</c> (the default), auto-generated from the device name via <see cref="AvailabilityTopic"/>. Pass <see cref="string.Empty"/> to connect without an LWT.</param>
+        /// <param name="willTopic">Topic for the last-will-testament message. When <c>null</c> (the default), auto-generated from the device name. Pass <see cref="string.Empty"/> to connect without an LWT (availability publishing still uses the default topic). A non-empty custom value also becomes <see cref="AvailabilityTopic"/> for this session, so <see cref="PublishOnline"/>, <see cref="Disconnect"/>, and discovery payloads stay consistent with the broker's LWT topic.</param>
         /// <param name="willMessage">Payload for LWT (usually "offline").</param>
         /// <returns>True if connection successful, false otherwise.</returns>
         public bool Connect(string willTopic = null, string willMessage = "offline")
@@ -798,6 +800,8 @@ namespace nanoFramework.HomeAssistant
                     // Auto-generate the will topic from the device name unless the caller overrode it
                     // (or explicitly opted out of an LWT by passing string.Empty).
                     string effectiveWillTopic = willTopic ?? GenerateAvailabilityTopic();
+
+                    _availabilityTopic = string.IsNullOrEmpty(effectiveWillTopic) ? GenerateAvailabilityTopic() : effectiveWillTopic;
 
                     // Connect with LWT if a will topic is in effect
                     if (!string.IsNullOrEmpty(effectiveWillTopic))
@@ -901,7 +905,7 @@ namespace nanoFramework.HomeAssistant
                         try
                         {
                             // Publish offline explicitly before disconnect
-                            PublishRetained(GenerateAvailabilityTopic(), "offline");
+                            PublishRetained(_availabilityTopic, "offline");
                             _mqttClient.Disconnect();
                         }
                         catch (Exception ex)
@@ -1027,7 +1031,7 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void PublishOnline()
         {
-            PublishRetained(GenerateAvailabilityTopic(), "online");
+            PublishRetained(_availabilityTopic, "online");
         }
 
         /// <summary>
@@ -1035,7 +1039,7 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void PublishOffline()
         {
-            PublishRetained(GenerateAvailabilityTopic(), "offline");
+            PublishRetained(_availabilityTopic, "offline");
         }
 
         /// <summary>
@@ -1075,7 +1079,7 @@ namespace nanoFramework.HomeAssistant
                 }
 
                 string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
-                string payload = entity.BuildConfigPayload(GenerateAvailabilityTopic(), deviceJson);
+                string payload = entity.BuildConfigPayload(_availabilityTopic, deviceJson);
                 PublishRetained(topic, payload);
             }
         }
@@ -1292,7 +1296,7 @@ namespace nanoFramework.HomeAssistant
             }
 
             string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
-            string payload = entity.BuildConfigPayload(GenerateAvailabilityTopic(), deviceJson);
+            string payload = entity.BuildConfigPayload(_availabilityTopic, deviceJson);
             PublishRetained(topic, payload);
         }
 
