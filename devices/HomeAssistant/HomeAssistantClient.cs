@@ -68,7 +68,7 @@ namespace nanoFramework.HomeAssistant
         /// Initializes a new instance of the <see cref="HomeAssistantClient" /> class.
         /// Configures MQTT broker details and device metadata with auto-generated topics.
         /// </summary>
-        /// <param name="device">Device metadata shared by all entities. Its <see cref="HomeAssistantDeviceInfo.Name"/> is also used to auto-generate MQTT topics (e.g., 'nanoSprinkler').</param>
+        /// <param name="device">Device metadata shared by all entities. Its <see cref="HomeAssistantDeviceInfo.Id"/> is also used to auto-generate MQTT topics (e.g., 'nanoSprinkler-01').</param>
         /// <param name="brokerAddress">MQTT broker IP address or hostname.</param>
         /// <param name="brokerPort">MQTT broker port (usually 1883).</param>
         /// <param name="mqttClientIdPrefix">Prefix for generating unique MQTT client ID.</param>
@@ -77,7 +77,7 @@ namespace nanoFramework.HomeAssistant
         /// <param name="onMqttMessageReceived">Optional event handler for received MQTT messages.</param>
         /// <param name="onMqttConnectionClosed">Optional event handler for MQTT connection closed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="device"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="device"/>'s <see cref="HomeAssistantDeviceInfo.Name"/> contains no alphanumeric characters (e.g. it is entirely emoji or punctuation) and cannot be used to generate MQTT topics.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="device"/>'s <see cref="HomeAssistantDeviceInfo.Id"/> contains no alphanumeric characters (e.g. it is entirely emoji or punctuation) and cannot be used to generate MQTT topics.</exception>
         public HomeAssistantClient(
             HomeAssistantDeviceInfo device,
             string brokerAddress,
@@ -93,9 +93,9 @@ namespace nanoFramework.HomeAssistant
                 throw new ArgumentNullException(nameof(device));
             }
 
-            if (SanitizeTopicSegment(device.Name, '-').Length == 0)
+            if (SanitizeTopicSegment(device.Id, '-').Length == 0)
             {
-                throw new ArgumentException("Device name must contain at least one alphanumeric character (a-z, 0-9) to generate MQTT topics.", nameof(device));
+                throw new ArgumentException("Device ID must contain at least one alphanumeric character (a-z, 0-9) to generate MQTT topics.", nameof(device));
             }
 
             _device = device;
@@ -104,7 +104,7 @@ namespace nanoFramework.HomeAssistant
             _mqttClientIdPrefix = mqttClientIdPrefix;
             _mqttUsername = mqttUsername;
             _mqttPassword = mqttPassword;
-            _deviceTopicRoot = GenerateDeviceTopicRoot(_device.Name);
+            _deviceTopicRoot = GenerateDeviceTopicRoot(_device.Id);
             _availabilityTopic = GenerateAvailabilityTopic();
             _discoveryEntities = new ArrayList();
             _runtimeEntities = new ArrayList();
@@ -255,13 +255,13 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Generates the root topic prefix from a device name.
-        /// Example: 'nanoSprinkler' → 'nanoframework/nano-sprinkler'.
+        /// Generates the root topic prefix from a device ID.
+        /// Example: 'nanoSprinkler-01' → 'nanoframework/nano-sprinkler-01'.
         /// </summary>
         /// <returns>The normalized device topic root.</returns>
-        private string GenerateDeviceTopicRoot(string deviceName)
+        private string GenerateDeviceTopicRoot(string deviceId)
         {
-            string normalized = SanitizeTopicSegment(deviceName, '-');
+            string normalized = SanitizeTopicSegment(deviceId, '-');
             return $"nanoframework/{normalized}";
         }
 
