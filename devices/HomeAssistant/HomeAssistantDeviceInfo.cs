@@ -11,9 +11,6 @@ namespace nanoFramework.HomeAssistant
     /// </summary>
     public sealed class HomeAssistantDeviceInfo
     {
-        private string _id;
-        private string _name;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeAssistantDeviceInfo" /> class.
         /// </summary>
@@ -24,6 +21,16 @@ namespace nanoFramework.HomeAssistant
         /// <exception cref="ArgumentException">Thrown when <paramref name="id"/> or <paramref name="name"/> is null or empty.</exception>
         public HomeAssistantDeviceInfo(string id, string name, string model = null, string manufacturer = null)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("Device id cannot be null or empty.");
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Device name cannot be null or empty.");
+            }
+
             Id = id;
             Name = name;
             Model = model ?? string.Empty;
@@ -31,58 +38,24 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Gets or sets the device identifier shared by all entities.
+        /// Gets the device identifier shared by all entities.
         /// </summary>
-        /// <exception cref="ArgumentException">Thrown when value is null or empty.</exception>
-        public string Id
-        {
-            get
-            {
-                return _id;
-            }
-
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Device id cannot be null or empty.");
-                }
-
-                _id = value;
-            }
-        }
+        public string Id { get; }
 
         /// <summary>
-        /// Gets or sets the device display name.
+        /// Gets the device display name.
         /// </summary>
-        /// <exception cref="ArgumentException">Thrown when value is null or empty.</exception>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Device name cannot be null or empty.");
-                }
-
-                _name = value;
-            }
-        }
+        public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the device model name.
+        /// Gets the device model name.
         /// </summary>
-        public string Model { get; set; }
+        public string Model { get; }
 
         /// <summary>
-        /// Gets or sets the device manufacturer.
+        /// Gets the device manufacturer.
         /// </summary>
-        public string Manufacturer { get; set; }
+        public string Manufacturer { get; }
 
         /// <summary>
         /// Builds a full Home Assistant device JSON object.
