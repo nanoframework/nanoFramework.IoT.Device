@@ -77,7 +77,7 @@ namespace nanoFramework.HomeAssistant
         /// <param name="onMqttMessageReceived">Optional event handler for received MQTT messages.</param>
         /// <param name="onMqttConnectionClosed">Optional event handler for MQTT connection closed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="device"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="device"/>'s <see cref="HomeAssistantDeviceInfo.Id"/> contains no alphanumeric characters (e.g. it is entirely emoji or punctuation) and cannot be used to generate MQTT topics.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="device"/>'s <see cref="HomeAssistantDeviceInfo.Id"/> contains no alphanumeric characters (e.g. it is entirely emoji or punctuation), or contains a character that cannot be represented in an MQTT topic segment (e.g. emoji, punctuation, non-ASCII, or MQTT wildcards such as '+' and '#'), and cannot be used to generate MQTT topics.</exception>
         public HomeAssistantClient(
             HomeAssistantDeviceInfo device,
             string brokerAddress,
@@ -122,7 +122,8 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Gets the device name used for auto-generating MQTT topics.
+        /// Gets the display name of the device. MQTT topics are generated from
+        /// <see cref="HomeAssistantDeviceInfo.Id"/>, not from this name.
         /// </summary>
         public string DeviceName
         {
@@ -178,12 +179,16 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Sanitizes a name into an MQTT-topic-safe segment: lowercase ASCII letters and digits only,
         /// with whitespace/dashes/underscores collapsed to a single <paramref name="separator"/>.
-        /// Any other character (emoji, punctuation, non-ASCII, MQTT wildcards such as '+' and '#') is dropped,
-        /// since such characters can break topic matching or are not reliably supported end-to-end.
+        /// Any other character (emoji, punctuation, non-ASCII, MQTT wildcards such as '+' and '#') is rejected
+        /// rather than dropped, so that distinct inputs (e.g. "dev/1" and "dev1") cannot silently collapse
+        /// onto the same topic segment.
         /// </summary>
         /// <param name="value">The raw name to sanitize.</param>
         /// <param name="separator">The character used to join word segments (e.g. '-' or '_').</param>
         /// <returns>The sanitized, topic-safe segment.</returns>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="value"/> contains a character that
+        /// cannot be represented in a topic segment (e.g. emoji, punctuation, non-ASCII, or MQTT wildcards such
+        /// as '+' and '#').</exception>
         private static string SanitizeTopicSegment(string value, char separator)
         {
             if (string.IsNullOrEmpty(value))
@@ -220,8 +225,10 @@ namespace nanoFramework.HomeAssistant
                         lastWasSeparator = true;
                     }
                 }
-
-                // Any other character (emoji, punctuation, non-ASCII, MQTT wildcards) is dropped.
+                else
+                {
+                    throw new ArgumentException();
+                }
             }
 
             if (sanitized.Length > 0 && sanitized[sanitized.Length - 1] == separator)
@@ -245,8 +252,8 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Generates the availability topic from device name.
-        /// Example: 'nanoSprinkler' → 'nanoframework/nano-sprinkler/availability'.
+        /// Generates the availability topic from the device ID.
+        /// Example: device.Id='nanoSprinkler' → 'nanoframework/nanosprinkler/availability'.
         /// </summary>
         /// <returns>The availability topic for the configured device.</returns>
         private string GenerateAvailabilityTopic()
@@ -256,7 +263,7 @@ namespace nanoFramework.HomeAssistant
 
         /// <summary>
         /// Generates the root topic prefix from a device ID.
-        /// Example: 'nanoSprinkler-01' → 'nanoframework/nano-sprinkler-01'.
+        /// Example: 'nanoSprinkler-01' → 'nanoframework/nanosprinkler-01'.
         /// </summary>
         /// <returns>The normalized device topic root.</returns>
         private string GenerateDeviceTopicRoot(string deviceId)
@@ -284,10 +291,11 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Generates command topic for an entity based on its name and device name.
-        /// Normalizes both device name and entity name to lowercase with dashes.
-        /// Example: deviceName='nanoSprinkler', entityName='Timer ON Seconds'.
-        /// → 'nanoframework/nano-sprinkler/timer-on-seconds/set'.
+        /// Generates command topic for an entity based on its name and the device ID.
+        /// The device topic root is normalized with '-' as the word separator; entity name
+        /// segments are normalized with '_'.
+        /// Example: device.Id='nanoSprinkler', entityName='Timer ON Seconds'.
+        /// → 'nanoframework/nanosprinkler/timer_on_seconds/set'.
         /// </summary>
         /// <returns>The generated command topic for the entity, or the root command topic when name is empty.</returns>
         public string GenerateCommandTopic(string entityName)
@@ -303,8 +311,8 @@ namespace nanoFramework.HomeAssistant
 
         /// <summary>
         /// Generates command topic for an entity with a command channel suffix.
-        /// Example: deviceName='nanoSprinkler', entityName='Thermostat', commandSuffix='mode'.
-        /// → 'nanoframework/nano-sprinkler/thermostat/mode/set'.
+        /// Example: device.Id='nanoSprinkler', entityName='Thermostat', commandSuffix='mode'.
+        /// → 'nanoframework/nanosprinkler/thermostat/mode/set'.
         /// </summary>
         /// <returns>The generated command topic with suffix channel.</returns>
         public string GenerateCommandTopic(string entityName, string commandSuffix)
@@ -326,9 +334,9 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Generates state topic for an entity based on its name and device name.
-        /// Example: deviceName='nanoSprinkler', entityName='Timer'.
-        /// → 'nanoframework/nano-sprinkler/timer/state'.
+        /// Generates state topic for an entity based on its name and the device ID.
+        /// Example: device.Id='nanoSprinkler', entityName='Timer'.
+        /// → 'nanoframework/nanosprinkler/timer/state'.
         /// </summary>
         /// <returns>The generated state topic for the entity, or the root state topic when name is empty.</returns>
         public string GenerateStateTopic(string entityName)
@@ -344,8 +352,8 @@ namespace nanoFramework.HomeAssistant
 
         /// <summary>
         /// Generates state topic for an entity with a state channel suffix.
-        /// Example: deviceName='nanoSprinkler', entityName='Thermostat', stateSuffix='temperature'.
-        /// → 'nanoframework/nano-sprinkler/thermostat/temperature/state'.
+        /// Example: device.Id='nanoSprinkler', entityName='Thermostat', stateSuffix='temperature'.
+        /// → 'nanoframework/nanosprinkler/thermostat/temperature/state'.
         /// </summary>
         /// <returns>The generated state topic with suffix channel.</returns>
         public string GenerateStateTopic(string entityName, string stateSuffix)
@@ -367,7 +375,8 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
-        /// Normalizes entity name to topic format (lowercase, spaces to underscores).
+        /// Normalizes an entity name into a topic-safe segment: lowercase ASCII, with
+        /// whitespace/dashes/underscores collapsed to a single underscore.
         /// </summary>
         /// <returns>The normalized topic segment.</returns>
         private string NormalizeTopicName(string name)
@@ -789,7 +798,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Connects to the MQTT broker and publishes discovery configuration.
         /// </summary>
-        /// <param name="willTopic">Topic for the last-will-testament message. When <c>null</c> (the default), auto-generated from the device name. Pass <see cref="string.Empty"/> to connect without an LWT (availability publishing still uses the default topic). A non-empty custom value also becomes <see cref="AvailabilityTopic"/> for this session, so <see cref="PublishOnline"/>, <see cref="Disconnect"/>, and discovery payloads stay consistent with the broker's LWT topic.</param>
+        /// <param name="willTopic">Topic for the last-will-testament message. When <c>null</c> (the default), auto-generated from the device ID. Pass <see cref="string.Empty"/> to connect without an LWT (availability publishing still uses the default topic). A non-empty custom value also becomes <see cref="AvailabilityTopic"/> for this session, so <see cref="PublishOnline"/>, <see cref="Disconnect"/>, and discovery payloads stay consistent with the broker's LWT topic.</param>
         /// <param name="willMessage">Payload for LWT (usually "offline").</param>
         /// <returns>True if connection successful, false otherwise.</returns>
         public bool Connect(string willTopic = null, string willMessage = "offline")
@@ -809,7 +818,7 @@ namespace nanoFramework.HomeAssistant
 
                     clientId = _mqttClientIdPrefix + Guid.NewGuid().ToString();
 
-                    // Auto-generate the will topic from the device name unless the caller overrode it
+                    // Auto-generate the will topic from the device ID unless the caller overrode it
                     // (or explicitly opted out of an LWT by passing string.Empty).
                     string effectiveWillTopic = willTopic ?? GenerateAvailabilityTopic();
 
@@ -1043,7 +1052,10 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void PublishOnline()
         {
-            PublishRetained(_availabilityTopic, "online");
+            lock (_mqttLock)
+            {
+                PublishRetained(_availabilityTopic, "online");
+            }
         }
 
         /// <summary>
@@ -1051,7 +1063,10 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         public void PublishOffline()
         {
-            PublishRetained(_availabilityTopic, "offline");
+            lock (_mqttLock)
+            {
+                PublishRetained(_availabilityTopic, "offline");
+            }
         }
 
         /// <summary>
@@ -1064,35 +1079,38 @@ namespace nanoFramework.HomeAssistant
                 return;
             }
 
-            string deviceFull = _device == null ? null : _device.ToFullJson();
-            string deviceRef = _device == null ? null : _device.ToReferenceJson();
-            bool fullDevicePublished = false;
-
-            for (int i = 0; i < _discoveryEntities.Count; i++)
+            lock (_mqttLock)
             {
-                HomeAssistantDiscoveryEntity entity = (HomeAssistantDiscoveryEntity)_discoveryEntities[i];
-                if (entity == null)
-                {
-                    continue;
-                }
+                string deviceFull = _device == null ? null : _device.ToFullJson();
+                string deviceRef = _device == null ? null : _device.ToReferenceJson();
+                bool fullDevicePublished = false;
 
-                string deviceJson = null;
-                if (entity.IncludeDevice && _device != null)
+                for (int i = 0; i < _discoveryEntities.Count; i++)
                 {
-                    if (!fullDevicePublished && entity.PreferFullDevice)
+                    HomeAssistantDiscoveryEntity entity = (HomeAssistantDiscoveryEntity)_discoveryEntities[i];
+                    if (entity == null)
                     {
-                        deviceJson = deviceFull;
-                        fullDevicePublished = true;
+                        continue;
                     }
-                    else
-                    {
-                        deviceJson = deviceRef;
-                    }
-                }
 
-                string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
-                string payload = entity.BuildConfigPayload(_availabilityTopic, deviceJson);
-                PublishRetained(topic, payload);
+                    string deviceJson = null;
+                    if (entity.IncludeDevice && _device != null)
+                    {
+                        if (!fullDevicePublished && entity.PreferFullDevice)
+                        {
+                            deviceJson = deviceFull;
+                            fullDevicePublished = true;
+                        }
+                        else
+                        {
+                            deviceJson = deviceRef;
+                        }
+                    }
+
+                    string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
+                    string payload = entity.BuildConfigPayload(_availabilityTopic, deviceJson);
+                    PublishRetained(topic, payload);
+                }
             }
         }
 
@@ -1301,15 +1319,18 @@ namespace nanoFramework.HomeAssistant
                 return;
             }
 
-            string deviceJson = null;
-            if (entity.IncludeDevice && _device != null)
+            lock (_mqttLock)
             {
-                deviceJson = entity.PreferFullDevice ? _device.ToFullJson() : _device.ToReferenceJson();
-            }
+                string deviceJson = null;
+                if (entity.IncludeDevice && _device != null)
+                {
+                    deviceJson = entity.PreferFullDevice ? _device.ToFullJson() : _device.ToReferenceJson();
+                }
 
-            string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
-            string payload = entity.BuildConfigPayload(_availabilityTopic, deviceJson);
-            PublishRetained(topic, payload);
+                string topic = entity.BuildDiscoveryTopic(HomeAssistantTopics.DiscoveryPrefix);
+                string payload = entity.BuildConfigPayload(_availabilityTopic, deviceJson);
+                PublishRetained(topic, payload);
+            }
         }
 
         private void SubscribeEntityCommandTopics(HomeAssistantRuntimeEntity entity)
