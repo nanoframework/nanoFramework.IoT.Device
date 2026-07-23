@@ -14,8 +14,8 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeAssistantDeviceInfo" /> class.
         /// </summary>
-        /// <param name="id">Device identifier shared by all entities.</param>
-        /// <param name="name">Device display name.</param>
+        /// <param name="id">Device identifier shared by all entities. Device id cannot be null or empty.</param>
+        /// <param name="name">Device display name. Device name cannot be null or empty.</param>
         /// <param name="model">Device model name.</param>
         /// <param name="manufacturer">Device manufacturer.</param>
         /// <exception cref="ArgumentException">Thrown when <paramref name="id"/> or <paramref name="name"/> is null or empty.</exception>
@@ -23,12 +23,12 @@ namespace nanoFramework.HomeAssistant
         {
             if (string.IsNullOrEmpty(id))
             {
-                throw new ArgumentException("Device id cannot be null or empty.");
+                throw new ArgumentException();
             }
 
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Device name cannot be null or empty.");
+                throw new ArgumentException();
             }
 
             Id = id;

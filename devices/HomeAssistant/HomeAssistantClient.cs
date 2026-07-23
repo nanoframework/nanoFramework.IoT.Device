@@ -68,7 +68,7 @@ namespace nanoFramework.HomeAssistant
         /// Initializes a new instance of the <see cref="HomeAssistantClient" /> class.
         /// Configures MQTT broker details and device metadata with auto-generated topics.
         /// </summary>
-        /// <param name="device">Device metadata shared by all entities. Its <see cref="HomeAssistantDeviceInfo.Id"/> is also used to auto-generate MQTT topics (e.g., 'nanoSprinkler-01').</param>
+        /// <param name="device">Device metadata shared by all entities. Its <see cref="HomeAssistantDeviceInfo.Id"/> is also used to auto-generate MQTT topics (e.g., 'nanoSprinkler-01'). <see cref="HomeAssistantDeviceInfo.Id"/> must contain at least one alphanumeric character (a-z, 0-9) to generate MQTT topics.</param>
         /// <param name="brokerAddress">MQTT broker IP address or hostname.</param>
         /// <param name="brokerPort">MQTT broker port (usually 1883).</param>
         /// <param name="mqttClientIdPrefix">Prefix for generating unique MQTT client ID.</param>
@@ -95,7 +95,7 @@ namespace nanoFramework.HomeAssistant
 
             if (SanitizeTopicSegment(device.Id, '-').Length == 0)
             {
-                throw new ArgumentException("Device ID must contain at least one alphanumeric character (a-z, 0-9) to generate MQTT topics.", nameof(device));
+                throw new ArgumentException();
             }
 
             _device = device;
