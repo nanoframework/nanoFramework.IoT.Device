@@ -638,7 +638,6 @@ namespace nanoSprinkler
             string mqttClientIdPrefix = deviceId + "-";
 
             _homeAssistant = new HomeAssistantClient(
-                deviceName,
                 device,
                 _config.MqttBroker,
                 _config.MqttPort,
@@ -831,8 +830,8 @@ namespace nanoSprinkler
 
             try
             {
-                // Connect to MQTT broker with LWT (Last Will Testament) for availability topic.
-                bool connected = _homeAssistant.Connect(_homeAssistant.AvailabilityTopic, "offline");
+                // Connect to MQTT broker. LWT (Last Will Testament) is auto-generated from the device name.
+                bool connected = _homeAssistant.Connect();
 
                 if (connected)
                 {

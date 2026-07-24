@@ -27,7 +27,6 @@ var device = new HomeAssistantDeviceInfo(
 
 ```csharp
 var client = new HomeAssistantClient(
-    deviceName:           "MyDevice",
     device:               device,
     brokerAddress:        "192.168.1.2",
     brokerPort:           1883,
@@ -36,8 +35,8 @@ var client = new HomeAssistantClient(
     mqttPassword:         null);   // optional
 ```
 
-The device name is normalized to lowercase with dashes and becomes the root MQTT topic prefix:
-`MyDevice` → `nanoframework/mydevice/…`
+The device's `Name` (from `HomeAssistantDeviceInfo`) is normalized to lowercase with dashes and becomes the root MQTT topic prefix:
+`My Device` → `nanoframework/my-device/…`
 
 ### 3. Add entities
 
@@ -102,8 +101,7 @@ brightness.OnStateChange += (sender, oldState, newState) =>
 ### 5. Connect and publish
 
 ```csharp
-string availabilityTopic = client.AvailabilityTopic;
-bool connected = client.Connect(willTopic: availabilityTopic, willMessage: "offline");
+bool connected = client.Connect();
 
 if (connected)
 {
@@ -113,6 +111,8 @@ if (connected)
     temperature.PublishState("21.5");
 }
 ```
+
+`Connect()` automatically sets a Last-Will-Testament on `client.AvailabilityTopic` (payload `"offline"`), so Home Assistant marks the device unavailable if it disconnects ungracefully. Pass a different topic to `willTopic` to override it — `client.AvailabilityTopic` then reflects that custom topic for the rest of the session, so `PublishOnline()`, `Disconnect()`, and discovery payloads all stay consistent with the broker's LWT topic. Pass `string.Empty` to connect without an LWT at all (availability publishing still uses the default topic in that case).
 
 ### 6. Publish state updates
 
