@@ -176,6 +176,9 @@ namespace nanoFramework.HomeAssistant
 
         /// <summary>Device class identifier for sulphur dioxide sensors.</summary>
         public const string SulphurDioxide = "sulphur_dioxide";
+        
+        [Obsolete("Use SulphurDioxide instead.")]
+        public const string SulfurDioxide = SulphurDioxide;
 
         /// <summary>Device class identifier for tamper binary sensors.</summary>
         public const string Tamper = "tamper";
