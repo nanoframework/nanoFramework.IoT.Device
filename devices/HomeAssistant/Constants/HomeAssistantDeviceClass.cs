@@ -192,7 +192,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>Device class identifier for timestamp sensors.</summary>
         public const string Timestamp = "timestamp";
 
-        /// <summary>Device class identifier for update binary sensors.</summary>
+        /// <summary>Device class identifier for update binary sensors. For existing binary sensors only; do not use for new binary sensors. New callers should use the dedicated update entity instead.</summary>
         public const string Update = "update";
 
         /// <summary>Device class identifier for vibration binary sensors.</summary>
