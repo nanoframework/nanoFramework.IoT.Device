@@ -21,7 +21,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>Device class identifier for battery sensors (sensor: charge level) and low-battery binary sensors.</summary>
         public const string Battery = "battery";
 
-        /// <summary>Device class identifier for low-battery-charging binary sensors.</summary>
+        /// <summary>Device class identifier for binary sensors indicating whether a device is currently charging or not charging.</summary>
         public const string BatteryCharging = "battery_charging";
 
         /// <summary>Device class identifier for blood glucose concentration sensors.</summary>
@@ -113,6 +113,9 @@ namespace nanoFramework.HomeAssistant
 
         /// <summary>Device class identifier for nitrous oxide sensors.</summary>
         public const string NitrousOxide = "nitrous_oxide";
+
+        [Obsolete("Use NitrogenDioxide, NitrogenMonoxide, or NitrousOxide instead.")]
+        public const string NitrogenOxides = "nitrogen_oxides";
 
         /// <summary>Device class identifier for occupancy binary sensors.</summary>
         public const string Occupancy = "occupancy";
