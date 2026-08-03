@@ -21,8 +21,8 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
       <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.37" />
-      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.62" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.39" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.64" />
     </dependencies>
   </metadata>
   <files>

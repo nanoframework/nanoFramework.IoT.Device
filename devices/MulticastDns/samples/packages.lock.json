@@ -10,9 +10,9 @@
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
-        "requested": "[1.11.37, 1.11.37]",
-        "resolved": "1.11.37",
-        "contentHash": "whTgEJCGpE8eGK7Z2fI6gTqsVeVrnCzP1KDSqIB2PY0/Jyw7NcnwCFe3s/43ch75DuAZt8/jTX0VJoJtN0Colw=="
+        "requested": "[1.11.39, 1.11.39]",
+        "resolved": "1.11.39",
+        "contentHash": "qNcgsk1QU5lTj2MgMYyF4iTx85YjFcAfJP9sYYydUlEXL1JaO2MnKGI3oBG4p20dJ1Fqi1ClIgKXJfAp9z80tA=="
       },
       "nanoFramework.System.Collections": {
         "type": "Direct",
@@ -22,9 +22,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[1.5.149, 1.5.149]",
-        "resolved": "1.5.149",
-        "contentHash": "bOceF44zpOACFYIbFTBO+Pxm8H0pg7C3AM5zzUs4wA0DiG/RB5HqKeBTUD0mpu0PTyCERsByDQMK6Pz6h1SBuw=="
+        "requested": "[1.5.150, 1.5.150]",
+        "resolved": "1.5.150",
+        "contentHash": "eY2trIT0uhqQqwxSDiLXFuXcmo9orqNLtFx9CupnrA6lf5Q3nB1WbOwAQx2l4oSIrXLSsGsqg5Ya258QVbuGQA=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.Net.Http.Server": {
         "type": "Direct",
-        "requested": "[1.5.210, 1.5.210]",
-        "resolved": "1.5.210",
-        "contentHash": "SAdrFjdrLpFeAd+0fVv2G0Qe0FPx97bO77tCGQ5sS6XnJIkcYsNPYCqy6HuGDkVNq8dLdP7n3TfhnxKPpbh0yg=="
+        "requested": "[1.5.212, 1.5.212]",
+        "resolved": "1.5.212",
+        "contentHash": "SXE41PfNT+L+B2nJ4Q85PI3DVsjHgaP4J8uFrFJYRMDFytKMVJhgm8ExYxSM7kWkKQXMdBrHVmtTFI8KVVFa2A=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "nanoFramework.WebServer": {
         "type": "Direct",
-        "requested": "[1.2.151, 1.2.151]",
-        "resolved": "1.2.151",
-        "contentHash": "lwO/8A24YID+1Ih9yZqEGuhoDJaL0wze2c1QkeXyE1HGPrrQIMdgRX0HOujSdOJN8J3CGagVSUJ7UTta7o2qyg=="
+        "requested": "[1.2.154, 1.2.154]",
+        "resolved": "1.2.154",
+        "contentHash": "V0aj4+6FPlX4/4Im/hF71OCLJDe9V2/EcpvlqQDfh10BdIxETxKKix3xR+RNtjTfbQm067daYsaEoeokJwql/A=="
       }
     }
   }

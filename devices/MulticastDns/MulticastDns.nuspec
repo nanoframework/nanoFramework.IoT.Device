@@ -20,7 +20,7 @@
     <tags>nanoFramework C# csharp netmf netnf Iot Multicast DNS</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.Runtime.Events" version="1.11.37" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.39" />
       <dependency id="nanoFramework.System.Buffers.Helpers" version="1.0.310" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.96" />
       <dependency id="nanoFramework.System.Net" version="1.11.60" />
