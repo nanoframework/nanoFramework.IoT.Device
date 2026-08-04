@@ -116,7 +116,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>Device class identifier for nitrous oxide sensors.</summary>
         public const string NitrousOxide = "nitrous_oxide";
 
-        /// <summary>Device class identifier for nitrous oxide sensors.</summary>
+        /// <summary>Device class identifier for nitrogen oxides (NOx) sensors. Deprecated in favour of the individual gases: use <see cref="NitrogenDioxide"/>, <see cref="NitrogenMonoxide"/>, or <see cref="NitrousOxide"/> instead.</summary>
         [Obsolete("Use NitrogenDioxide, NitrogenMonoxide, or NitrousOxide instead.")]
         public const string NitrogenOxides = "nitrogen_oxides";
 
@@ -182,8 +182,8 @@ namespace nanoFramework.HomeAssistant
 
         /// <summary>Device class identifier for sulphur dioxide sensors.</summary>
         public const string SulphurDioxide = "sulphur_dioxide";
-        
-        /// <summary>Device class identifier for sulphur dioxide sensors.</summary>
+
+        /// <summary>Device class identifier for sulphur dioxide sensors. Deprecated in favour of <see cref="SulphurDioxide"/>, kept for source compatibility. Resolves to the same "sulphur_dioxide" identifier; use <see cref="SulphurDioxide"/> instead.</summary>
         [Obsolete("Use SulphurDioxide instead.")]
         public const string SulfurDioxide = SulphurDioxide;
 
