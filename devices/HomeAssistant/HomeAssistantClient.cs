@@ -492,6 +492,28 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Builds a read-only discovery entity (state topic only, no command topic) for the given component type.
+        /// </summary>
+        /// <returns>The created discovery entity.</returns>
+        private HomeAssistantDiscoveryEntity CreateReadOnlyDiscoveryEntity(
+            HomeAssistantComponentType componentType,
+            string objectId,
+            string name,
+            string deviceClass)
+        {
+            return new HomeAssistantDiscoveryEntity
+            {
+                ComponentType = componentType,
+                ObjectId = objectId,
+                Name = name,
+                UniqueId = objectId,
+                StateTopic = GenerateStateTopic(objectId),
+                DeviceClass = deviceClass ?? string.Empty,
+                IncludeAvailability = true
+            };
+        }
+
+        /// <summary>
         /// Adds a sensor entity with an auto-generated topic based on object ID.
         /// </summary>
         /// <returns>The created sensor runtime entity.</returns>
@@ -502,25 +524,41 @@ namespace nanoFramework.HomeAssistant
             string deviceClass = null)
         {
             objectId = RequireObjectId(objectId);
-            unitOfMeasurement = unitOfMeasurement ?? string.Empty;
-            deviceClass = deviceClass ?? string.Empty;
 
-            string stateTopic = GenerateStateTopic(objectId);
-
-            var discovery = new HomeAssistantDiscoveryEntity
-            {
-                ComponentType = HomeAssistantComponentType.Sensor,
-                ObjectId = objectId,
-                Name = name,
-                UniqueId = objectId,
-                StateTopic = stateTopic,
-                UnitOfMeasurement = unitOfMeasurement,
-                DeviceClass = deviceClass,
-                IncludeAvailability = true
-            };
+            var discovery = CreateReadOnlyDiscoveryEntity(HomeAssistantComponentType.Sensor, objectId, name, deviceClass);
+            discovery.UnitOfMeasurement = unitOfMeasurement ?? string.Empty;
             RegisterDiscoveryEntity(discovery);
 
             var runtime = new HomeAssistantNumber(discovery, "0", PublishMessage);
+            RegisterRuntimeEntity(runtime);
+            return runtime;
+        }
+
+        /// <summary>
+        /// Adds a read-only binary sensor entity with an auto-generated topic based on object ID.
+        /// No command topic is generated, so Home Assistant cannot write to it (for example, a door or motion sensor).
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity.</param>
+        /// <param name="deviceClass">Home Assistant binary sensor device class (for example, "door", "motion").</param>
+        /// <param name="payloadOn">Payload representing the ON/true state (default "ON").</param>
+        /// <param name="payloadOff">Payload representing the OFF/false state (default "OFF").</param>
+        /// <returns>The created binary sensor runtime entity.</returns>
+        public HomeAssistantSwitch AddBinarySensor(
+            string objectId,
+            string name,
+            string deviceClass = null,
+            string payloadOn = "ON",
+            string payloadOff = "OFF")
+        {
+            objectId = RequireObjectId(objectId);
+
+            var discovery = CreateReadOnlyDiscoveryEntity(HomeAssistantComponentType.BinarySensor, objectId, name, deviceClass);
+            discovery.PayloadOn = payloadOn;
+            discovery.PayloadOff = payloadOff;
+            RegisterDiscoveryEntity(discovery);
+
+            var runtime = new HomeAssistantSwitch(discovery, payloadOff, PublishMessage);
             RegisterRuntimeEntity(runtime);
             return runtime;
         }
