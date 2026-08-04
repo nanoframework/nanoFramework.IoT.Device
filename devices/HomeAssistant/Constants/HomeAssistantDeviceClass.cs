@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+
 namespace nanoFramework.HomeAssistant
 {
     /// <summary>
@@ -114,6 +116,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>Device class identifier for nitrous oxide sensors.</summary>
         public const string NitrousOxide = "nitrous_oxide";
 
+        /// <summary>Device class identifier for nitrous oxide sensors.</summary>
         [Obsolete("Use NitrogenDioxide, NitrogenMonoxide, or NitrousOxide instead.")]
         public const string NitrogenOxides = "nitrogen_oxides";
 
@@ -180,6 +183,7 @@ namespace nanoFramework.HomeAssistant
         /// <summary>Device class identifier for sulphur dioxide sensors.</summary>
         public const string SulphurDioxide = "sulphur_dioxide";
         
+        /// <summary>Device class identifier for sulphur dioxide sensors.</summary>
         [Obsolete("Use SulphurDioxide instead.")]
         public const string SulfurDioxide = SulphurDioxide;
 
