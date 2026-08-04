@@ -71,7 +71,7 @@ namespace nanoFramework.HomeAssistant
         /// <param name="device">Device metadata shared by all entities. Its <see cref="HomeAssistantDeviceInfo.Id"/> is also used to auto-generate MQTT topics (e.g., 'nanoSprinkler-01'). <see cref="HomeAssistantDeviceInfo.Id"/> must contain at least one alphanumeric character (a-z, 0-9) to generate MQTT topics.</param>
         /// <param name="brokerAddress">MQTT broker IP address or hostname.</param>
         /// <param name="brokerPort">MQTT broker port (usually 1883).</param>
-        /// <param name="mqttClientIdPrefix">Prefix for generating unique MQTT client ID.</param>
+        /// <param name="mqttClientIdPrefix">Prefix for the MQTT client ID. The full ID is this prefix followed by the sanitized <see cref="HomeAssistantDeviceInfo.Id"/>, so it identifies the device and stays the same across reconnections and reboots. This matters whenever a last-will-testament is in use: a client ID that changed per connection would leave the broker holding a stale session whose will fires after the new session has already published its "online" availability, marking the device offline while it is connected. It also means two devices must not share a <see cref="HomeAssistantDeviceInfo.Id"/>, or they will repeatedly disconnect each other - though they would already be publishing to the same topics.</param>
         /// <param name="mqttUsername">Optional MQTT broker username.</param>
         /// <param name="mqttPassword">Optional MQTT broker password.</param>
         /// <param name="onMqttMessageReceived">Optional event handler for received MQTT messages.</param>
@@ -854,7 +854,13 @@ namespace nanoFramework.HomeAssistant
                     client.MqttMsgPublishReceived += OnInternalMqttMessageReceived;
                     client.MqttMsgPublished += OnInternalMqttMessagePublished;
 
-                    clientId = _mqttClientIdPrefix + Guid.NewGuid().ToString();
+                    // Derived from the device ID so that it stays the same across reconnections.
+                    // A client ID that changed per connection would make the broker treat every
+                    // reconnection as a new session, leaving the previous one to linger until its
+                    // keep-alive expired and then publish its will - after the new session had
+                    // already published "online", marking the device offline while it was connected.
+                    // A stable ID makes the broker take the existing session over instead.
+                    clientId = _mqttClientIdPrefix + SanitizeTopicSegment(_device.Id, '-');
 
                     // Auto-generate the will topic from the device ID unless the caller overrode it
                     // (or explicitly opted out of an LWT by passing string.Empty).
