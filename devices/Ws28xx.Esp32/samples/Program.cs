@@ -8,9 +8,9 @@ using System.Diagnostics;
 using System.Drawing;
 
 // Configure the count of pixels
-const int Count = 10;
+const int Count = 256;
 // Adjust the pin number
-const int Pin = 15;
+const int Pin = 18;
 
 // Uncomment for WS2008
 // Ws28xx neo = new Ws2808(Pin, Count);
