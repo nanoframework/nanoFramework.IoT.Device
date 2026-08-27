@@ -68,7 +68,7 @@ The various `BitmapImage***` classes already take into account the color schemes
 The timing values of the `T0L`, `T0H`, `T1L`, `T1H` and `Reset` should be taken from the data sheet of the led strip.
 
 The `T0L` and `T0H` are the pulse coding for the zero bit. 
-The `T1L` and `T2H` are the pulse coding for the one bit. 
+The `T1L` and `T1H` are the pulse coding for the one bit. 
 
 And a `Reset` is the pulse used at the end of the pulse sequence to indicate the end.
 
