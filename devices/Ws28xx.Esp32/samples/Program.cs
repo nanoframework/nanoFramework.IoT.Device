@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Drawing;
 
 // Configure the count of pixels
-const int Count = 256;
+const int Count = 10;
 // Adjust the pin number
 const int Pin = 18;
 

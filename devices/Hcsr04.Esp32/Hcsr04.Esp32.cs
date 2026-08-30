@@ -126,7 +126,9 @@ namespace Iot.Device.Hcsr04.Esp32
             {
                 response = _rxChannel.TryGetReceivedSymbols();
                 if (response != null)
+                {
                     break;
+                }
 
                 // Retry every 20 ms
                 Thread.Sleep(20);

@@ -8,7 +8,6 @@ namespace Iot.Device.Ws28xx.Esp32
     /// <summary>
     /// Represents the SK6812 Driver.
     /// </summary>
-    /// <seealso cref="Iot.Device.Ws28xx.Esp32.Ws28xx" />
     public class Sk6812 : Ws28xx
     {
         /// <summary>
