@@ -16,9 +16,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.10.91, 3.10.91]",
-        "resolved": "3.10.91",
-        "contentHash": "9MtEXm/um2lQAEoek1EkF4CXNH4JuXxv2jV3Ew2XlzP0LXxFaFiECS7ji8zf1ZaMnPGYbbom+Nm6y4ADc5HNHQ=="
+        "requested": "[3.10.94, 3.10.94]",
+        "resolved": "3.10.94",
+        "contentHash": "sn6gFIx6bwFj3Me0XGmek3gLZi/MZC8C4tRLwslXGeBcXcVxvFpZyDrQA93G8TiYgxTS7J7triKB7hj5wXzSxA=="
       }
     }
   }
