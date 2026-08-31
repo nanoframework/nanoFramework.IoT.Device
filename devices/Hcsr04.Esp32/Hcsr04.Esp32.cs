@@ -20,8 +20,10 @@ namespace Iot.Device.Hcsr04.Esp32
         ReceiverChannel _rxChannel;
         TransmitterChannel _txChannel;
         long _lastMeasurment;
+        RmtSymbols _triggerPulse = new RmtSymbols();
 
         const double _speedOfSound = 340.29;
+        const int _resolutionHz = 1_000_000;
 
         /// <summary>
         /// Gets the current distance, usual range from 2 cm to 400 cm.
@@ -34,37 +36,35 @@ namespace Iot.Device.Hcsr04.Esp32
         /// </summary>
         /// <param name="trigger">GPIO pin number for trigger pin</param>
         /// <param name="echo">GPIO pin number of echo pin</param>
-        /// <param name="rmtTriggerChannel">The RMT channel number to use for trigger. Use -1 (default) to automatically select a free channel, or 0 to 7 (inclusive) to specify a channel explicitly.</param>
-        /// <param name="rmtEchoChannel">The RMT channel number to use for echo. Use -1 (default) to automatically select a free channel, or 0 to 7 (inclusive) to specify a channel explicitly.</param>
-        public Hcsr04(int trigger, int echo, int rmtTriggerChannel = -1, int rmtEchoChannel = -1)
+        public Hcsr04(int trigger, int echo)
         {
             // Set-up TX & RX channels
             // We need to send a 10us pulse to initiate measurement
-            var txChannelSettings = new TransmitChannelSettings(channel: rmtTriggerChannel, pinNumber: trigger)
+            var txChannelSettings = new TransmitChannelSettings(pinNumber: trigger)
             {
-                // 1us clock ( 80Mhz / 80 ) = 1Mhz
-                ClockDivider = 80,
-                EnableCarrierWave = true,
+                // 1us clock = 1Mhz
+                ResolutionHz = _resolutionHz,
+                EnableCarrierWave = false,
                 IdleLevel = false,
             };
 
             _txChannel = new TransmitterChannel(txChannelSettings);
+
             // we only need 1 pulse of 10 us high
-            _txChannel.AddCommand(new RmtCommand(10, true, 0, false));
+            _triggerPulse.Add(new RmtSymbol(10, true, 0, false));
 
             // The received echo pulse width represents the distance to obstacle
             // 150us to 38ms
-            var rxChannelSettings = new ReceiverChannelSettings(channel: rmtEchoChannel, pinNumber: echo)
+            var rxChannelSettings = new ReceiverChannelSettings(pinNumber: echo)
             {
-                // 1us clock ( 80Mhz / 80 ) = 1Mhz
-                ClockDivider = 80,
+                // 1us clock  = 1Mhz
+                ResolutionHz = _resolutionHz,
 
-                // filter out 200Us / noise
-                EnableFilter = true,
-                FilterThreshold = 200,
+                // filter out 50ns / noise
+                FilterThreshold = 50,
 
-                // 40ms based on 1us clock
-                IdleThreshold = 40_000,
+                // 30ms 
+                IdleThreshold = 30_000_000,
 
                 // 100 millisecond timeout is enough
                 ReceiveTimeout = TimeSpan.FromMilliseconds(100)
@@ -101,7 +101,7 @@ namespace Iot.Device.Hcsr04.Esp32
         /// <returns>True if success</returns>
         public bool TryGetDistance(out Length result)
         {
-            RmtCommand[] response = null;
+            RmtSymbols response = null;
             // Make sure we don't measure before the 60 ms
             while (DateTime.UtcNow.Ticks - _lastMeasurment < 60 * TimeSpan.TicksPerMillisecond)
             {
@@ -116,12 +116,23 @@ namespace Iot.Device.Hcsr04.Esp32
 
             _lastMeasurment = DateTime.UtcNow.Ticks;
 
-            _rxChannel.Start(true);
+            _rxChannel.Start();
 
             // Send 10us pulse
-            _txChannel.Send(false);
+            _txChannel.Send(_triggerPulse, true);
 
-            response = _rxChannel.GetAllItems();
+            // Try 5 times to get valid response
+            for (int count = 0; count < 5; count++)
+            {
+                response = _rxChannel.TryGetReceivedSymbols();
+                if (response != null)
+                {
+                    break;
+                }
+
+                // Retry every 20 ms
+                Thread.Sleep(20);
+            }
 
             _rxChannel.Stop();
 

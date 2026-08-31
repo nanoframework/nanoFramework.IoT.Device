@@ -60,25 +60,21 @@ Also nothing is display before the `Update` function is called.
 
 ## Advance usage
 
-The Ws28xx class provide a generic driver. In case your strip is not supported or colors are inverted or coded in a different number of colors, you can use specific definitions and create your own class. Here is the example for the SK6812 used in the M5Stack Fire for example:
-
-```csharp
-public Sk6812(int gpioPin, int width, int height = 1)
-    : base(gpioPin, new BitmapImageWs2808Grb(width, height))
-{
-    ClockDivider = 4;
-    OnePulse = new(14, true, 12, false);
-    ZeroPulse = new(7, true, 16, false);
-    ResetCommand = new(500, false, 520, false);
-}
-```
+The Ws28xx class provide a generic driver. 
+In case your strip is not supported or colors are inverted or coded in a different number of colors, you can use specific definitions and create your own class. 
 
 The various `BitmapImage***` classes already take into account the color schemes, the bit per color coding. Use one of them to accommodate your needs.
 
-The pulses are calculated based on the datasheet of each driver. A `OnePulse` is a pulse coding for a bit high = 1. A `ZeroPulse` is coding for a bit low = 0. And a `ResetCommand` is the command used in some drivers at the end of the pulse chain.
+The timing values of the `T0L`, `T0H`, `T1L`, `T1H` and `Reset` should be taken from the data sheet of the led strip.
 
-Each pulse is 80MHz based and then divided by the `ClockDivider`. You have to take this into account to make the proper math for the pulses.
+The `T0L` and `T0H` are the pulse coding for the zero bit. 
+The `T1L` and `T1H` are the pulse coding for the one bit. 
+
+And a `Reset` is the pulse used at the end of the pulse sequence to indicate the end.
+
+Each timing value is 10MHz based so is 100ns in length. 
+Use that to calculate timing values. i.e for 600ns length use pulse count of 6.
 
 ## Limitations
 
-If you are using a very very long chain, depending on your board and the memory available on it, you can be out of memory while preparing the pulse chain to send.
+If you are using a very long chain, depending on your board and the memory available on it, you can be out of memory while preparing the pulse chain to send.

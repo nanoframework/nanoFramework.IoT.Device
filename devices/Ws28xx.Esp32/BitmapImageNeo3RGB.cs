@@ -9,7 +9,7 @@ namespace Iot.Device.Ws28xx.Esp32
     /// Special 24bit RGB format for Neo pixel LEDs where each bit is converted to 3 bits.
     /// A one is converted to 110, a zero is converted to 100.
     /// </summary>
-    /// <seealso cref="Iot.Device.Ws28xx.BitmapImageNeo3" />
+    /// <seealso cref="Iot.Device.Ws28xx.Esp32.BitmapImageNeo3" />
     public class BitmapImageNeo3Rgb : BitmapImageNeo3
     {
         /// <summary>
