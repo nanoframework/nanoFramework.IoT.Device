@@ -99,7 +99,7 @@ namespace Iot.Device.DHTxx.Esp32
         /// <param name="pinNumberingScheme">The GPIO pin numbering scheme</param>
         /// <param name="gpioController"><see cref="GpioController"/> related with operations on pins</param>
         /// <param name="shouldDispose"><see langword="true"/> to dispose the <see cref="GpioController"/></param>
-        /// <param name="rmtChannel">The RMT channel number to use. Use -1 to auto-select a free channel; otherwise valid explicit values are 0 to 7 (inclusive).</param>
+        /// <param name="rmtChannel">Ignored. The RMT channel is automatically selected by the driver in v3+.</param>
         public DhtBase(int pinEcho, int pinTrigger, PinNumberingScheme pinNumberingScheme = PinNumberingScheme.Logical, GpioController? gpioController = null, bool shouldDispose = true, int rmtChannel = -1)
         {
             _protocol = CommunicationProtocol.OneWire;
@@ -107,14 +107,13 @@ namespace Iot.Device.DHTxx.Esp32
             _controller = gpioController ?? new GpioController(pinNumberingScheme);
             _pin = pinTrigger;
 
-            var rxChannelSettings = new ReceiverChannelSettings(channel: rmtChannel, pinNumber: pinEcho)
+            var rxChannelSettings = new ReceiverChannelSettings(pinNumber: pinEcho)
             {
-                // 1us clock ( 80Mhz / 80 ) = 1Mhz
-                ClockDivider = 80,
+                // 1us resolution (1 MHz = 1_000_000 Hz)
+                ResolutionHz = 1_000_000,
 
-                // no filter
-                EnableFilter = false,
-                FilterThreshold = 5,
+                // no filter (FilterThreshold = 0 disables filtering in v3)
+                FilterThreshold = 0,
 
                 // max time 1us clock
                 IdleThreshold = ushort.MaxValue,
@@ -171,12 +170,11 @@ namespace Iot.Device.DHTxx.Esp32
                 throw new Exception("GPIO controller or RMT receiver is not configured.");
             }
 
-            RmtCommand[] response;
+            RmtSymbols response;
             byte readVal = 0;
 
             // keep data line HIGH
             _controller.SetPinMode(_pin, PinMode.Output);
-            _rxChannel.Start(true);
             _controller.Write(_pin, PinValue.High);
             DelayHelper.DelayMilliseconds(20, true);
 
@@ -190,16 +188,15 @@ namespace Iot.Device.DHTxx.Esp32
             // wait 20 - 40 microseconds
             _controller.SetPinMode(_pin, PinMode.InputPullUp);
 
-            // Receive everything
-            response = _rxChannel.GetAllItems();
-            _rxChannel.Stop();
+            // Receive everything (blocking; returns null on timeout)
+            response = _rxChannel.Receive();
             // Set back to pull up
             _controller.SetPinMode(_pin, PinMode.Output);
 
             // We will read 43 elements. The first 1 is the large pulse
             // The second one the small puls and the fisrt 80 micro second one
             // The thrid one the second micro second element
-            if ((response != null) && (response.Length >= 43))
+            if ((response != null) && (response.Count >= 43))
             {
                 // the read data contains 40 bits
                 for (int i = 0; i < 40; i++)
