@@ -108,11 +108,10 @@ namespace Iot.Device.DHTxx.Esp32
 
             var rxChannelSettings = new ReceiverChannelSettings(pinNumber: pinEcho)
             {
-                // 1us clock ( 80Mhz / 80 ) = 1Mhz
-                ClockDivider = 80,
+                // 1us resolution (1 MHz)
+                ResolutionHz = 1_000_000,
 
                 // no filter
-                EnableFilter = false,
                 FilterThreshold = 5,
 
                 // max time 1us clock
@@ -170,12 +169,12 @@ namespace Iot.Device.DHTxx.Esp32
                 throw new Exception("GPIO controller or RMT receiver is not configured.");
             }
 
-            RmtCommand[] response;
+            RmtSymbols response;
             byte readVal = 0;
 
             // keep data line HIGH
             _controller.SetPinMode(_pin, PinMode.Output);
-            _rxChannel.Start(true);
+            _rxChannel.Start();
             _controller.Write(_pin, PinValue.High);
             DelayHelper.DelayMilliseconds(20, true);
 
@@ -190,7 +189,7 @@ namespace Iot.Device.DHTxx.Esp32
             _controller.SetPinMode(_pin, PinMode.InputPullUp);
 
             // Receive everything
-            response = _rxChannel.GetAllItems();
+            response = _rxChannel.TryGetReceivedSymbols();
             _rxChannel.Stop();
             // Set back to pull up
             _controller.SetPinMode(_pin, PinMode.Output);
@@ -198,7 +197,7 @@ namespace Iot.Device.DHTxx.Esp32
             // We will read 43 elements. The first 1 is the large pulse
             // The second one the small puls and the fisrt 80 micro second one
             // The thrid one the second micro second element
-            if ((response != null) && (response.Length >= 43))
+            if ((response != null) && (response.Count >= 43))
             {
                 // the read data contains 40 bits
                 for (int i = 0; i < 40; i++)

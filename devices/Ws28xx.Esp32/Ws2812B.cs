@@ -20,9 +20,9 @@ namespace Iot.Device.Ws28xx.Esp32
             : base(gpioPin, new BitmapImageNeo3(width, height))
         {
             ClockDivider = 2;
-            OnePulse = new RmtCommand(32, true, 18, false);
-            ZeroPulse = new RmtCommand(16, true, 34, false);
-            ResetCommand = new RmtCommand(2000, false, 2000, false);
+            OnePulse = new RmtSymbol(32, true, 18, false);
+            ZeroPulse = new RmtSymbol(16, true, 34, false);
+            ResetCommand = new RmtSymbol(2000, false, 2000, false);
         }
     }
 }

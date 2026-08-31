@@ -19,6 +19,7 @@ namespace Iot.Device.Hcsr04.Esp32
     {
         ReceiverChannel _rxChannel;
         TransmitterChannel _txChannel;
+        RmtSymbols _triggerPulse;
         long _lastMeasurment;
 
         const double _speedOfSound = 340.29;
@@ -40,25 +41,25 @@ namespace Iot.Device.Hcsr04.Esp32
             // We need to send a 10us pulse to initiate measurement
             var txChannelSettings = new TransmitChannelSettings(pinNumber: trigger)
             {
-                // 1us clock ( 80Mhz / 80 ) = 1Mhz
-                ClockDivider = 80,
+                // 1us resolution (1 MHz)
+                ResolutionHz = 1_000_000,
                 EnableCarrierWave = true,
                 IdleLevel = false,
             };
 
             _txChannel = new TransmitterChannel(txChannelSettings);
             // we only need 1 pulse of 10 us high
-            _txChannel.AddCommand(new RmtCommand(10, true, 0, false));
+            _triggerPulse = new RmtSymbols();
+            _triggerPulse.Add(new RmtSymbol(10, true, 0, false));
 
             // The received echo pulse width represents the distance to obstacle
             // 150us to 38ms
             var rxChannelSettings = new ReceiverChannelSettings(pinNumber: echo)
             {
-                // 1us clock ( 80Mhz / 80 ) = 1Mhz
-                ClockDivider = 80,
+                // 1us resolution (1 MHz)
+                ResolutionHz = 1_000_000,
 
-                // filter out 200Us / noise
-                EnableFilter = true,
+                // filter out 200us / noise
                 FilterThreshold = 200,
 
                 // 40ms based on 1us clock
@@ -99,7 +100,7 @@ namespace Iot.Device.Hcsr04.Esp32
         /// <returns>True if success</returns>
         public bool TryGetDistance(out Length result)
         {
-            RmtCommand[] response = null;
+            RmtSymbols response = null;
             // Make sure we don't measure before the 60 ms
             while (DateTime.UtcNow.Ticks - _lastMeasurment < 60 * TimeSpan.TicksPerMillisecond)
             {
@@ -114,14 +115,12 @@ namespace Iot.Device.Hcsr04.Esp32
 
             _lastMeasurment = DateTime.UtcNow.Ticks;
 
-            _rxChannel.Start(true);
+            _rxChannel.Start();
 
             // Send 10us pulse
-            _txChannel.Send(false);
+            _txChannel.Send(_triggerPulse, false);
 
-            response = _rxChannel.GetAllItems();
-
-            _rxChannel.Stop();
+            response = _rxChannel.Receive();
 
             if (response == null)
             {

@@ -17,19 +17,19 @@ namespace Iot.Device.Ws28xx.Esp32
         protected readonly int GpioPin;
 
         /// <summary>
-        /// Gets or sets the One pulse command.
+        /// Gets or sets the One pulse symbol.
         /// </summary>
-        public RmtCommand OnePulse { get; set; }
+        public RmtSymbol OnePulse { get; set; }
 
         /// <summary>
-        /// Gets or sets the zero pulse command.
+        /// Gets or sets the zero pulse symbol.
         /// </summary>
-        public RmtCommand ZeroPulse { get; set; }
+        public RmtSymbol ZeroPulse { get; set; }
 
         /// <summary>
-        /// Gets or sets the reset command.
+        /// Gets or sets the reset symbol.
         /// </summary>
-        public RmtCommand ResetCommand { get; set; }
+        public RmtSymbol ResetCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the clock divider.
@@ -67,26 +67,27 @@ namespace Iot.Device.Ws28xx.Esp32
                 EnableCarrierWave = false,
                 IdleLevel = false,
 
-                // this value for the clock divider considers a clock source of 80MHz which is what we have fixed in native
-                ClockDivider = this.ClockDivider,
+                // this value for the resolution considers a clock source of 80MHz which is what we have fixed in native
+                ResolutionHz = 80_000_000 / this.ClockDivider,
             };
             var transmitter = new TransmitterChannel(transmitterSettings);
 
+            var symbols = new RmtSymbols();
             for (int i = 0; i < Image.Data.Length; i++)
             {
-                SerializeColor(Image.Data[i], transmitter);
+                SerializeColor(Image.Data[i], symbols);
             }
 
-            transmitter.AddCommand(ResetCommand);
-            transmitter.Send(true);
+            symbols.Add(ResetCommand);
+            transmitter.Send(symbols, true);
             transmitter.Dispose();
         }
 
-        private void SerializeColor(byte b, TransmitterChannel transmitter)
+        private void SerializeColor(byte b, RmtSymbols symbols)
         {
             for (var i = 0; i < 8; ++i)
             {
-                transmitter.AddCommand(((b & (1u << 7)) != 0) ? OnePulse : ZeroPulse);
+                symbols.Add(((b & (1u << 7)) != 0) ? OnePulse : ZeroPulse);
                 b <<= 1;
             }
         }

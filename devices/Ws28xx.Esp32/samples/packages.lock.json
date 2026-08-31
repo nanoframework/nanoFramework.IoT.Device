@@ -22,9 +22,9 @@
       },
       "nanoFramework.Hardware.Esp32.Rmt": {
         "type": "Direct",
-        "requested": "[3.0.0-preview.20, 3.0.0-preview.20]",
-        "resolved": "3.0.0-preview.20",
-        "contentHash": "eR73G3o9O/3ieItHZztJVud3ugJG8gO1I9hfhefQFSX0YXAC2U2moC24G7Ua07H5i6aFSXq65IkXF6Zx/RiHAQ=="
+        "requested": "[4.0.0-preview.1, 4.0.0-preview.1]",
+        "resolved": "4.0.0-preview.1",
+        "contentHash": "pptzCc/Uy+pL/0xOdsz4N/DUANdLLbsZ+8P5ttuVfIv7c3AP9KuFmyNNCnOeyi3gD74TA08smZ8a6M44K8BBUg=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
@@ -46,9 +46,9 @@
       },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
-        "requested": "[3.10.91, 3.10.91]",
-        "resolved": "3.10.91",
-        "contentHash": "9MtEXm/um2lQAEoek1EkF4CXNH4JuXxv2jV3Ew2XlzP0LXxFaFiECS7ji8zf1ZaMnPGYbbom+Nm6y4ADc5HNHQ=="
+        "requested": "[3.10.94, 3.10.94]",
+        "resolved": "3.10.94",
+        "contentHash": "sn6gFIx6bwFj3Me0XGmek3gLZi/MZC8C4tRLwslXGeBcXcVxvFpZyDrQA93G8TiYgxTS7J7triKB7hj5wXzSxA=="
       }
     }
   }
