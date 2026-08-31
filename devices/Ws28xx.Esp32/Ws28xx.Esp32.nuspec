@@ -20,7 +20,7 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.20" />
+        <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="4.0.0-preview.1" />
         <dependency id="nanoFramework.Runtime.Events" version="2.0.0-preview.13" />
         <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.29" />
       </group>
