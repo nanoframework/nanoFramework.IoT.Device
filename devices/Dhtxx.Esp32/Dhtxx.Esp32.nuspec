@@ -20,7 +20,7 @@
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
         <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.0-preview.20" />
+        <dependency id="nanoFramework.Hardware.Esp32.Rmt" version="3.0.1" />
         <dependency id="nanoFramework.System.Device.Gpio" version="2.0.0-preview.18" />
         <dependency id="nanoFramework.System.Device.I2c" version="2.0.0-preview.12" />
         <dependency id="nanoFramework.System.Math" version="2.0.0-preview.19" />
