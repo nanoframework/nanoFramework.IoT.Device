@@ -10,9 +10,9 @@
       },
       "nanoFramework.Iot.Device.Bmm150": {
         "type": "Direct",
-        "requested": "[1.2.1016, 1.2.1016]",
-        "resolved": "1.2.1016",
-        "contentHash": "s4sm96wfm9FFsGaMxI+8bsGQj7mrn+3pDiNDbLzSVZfTfTWy3LfAIqjU1i4/QcuTeTw7iRFSJnBMV/OdvWYUoQ=="
+        "requested": "[1.2.1040, 1.2.1040]",
+        "resolved": "1.2.1040",
+        "contentHash": "AEESP55+plW7TP6Wwp8T3xHaesUdRH+EOXDGNgVQ3X1RjufdWDUnjWnyT4oJShRUuNwcY7C88yqvfuKHy6BLlA=="
       },
       "nanoFramework.System.Buffers.Binary.BinaryPrimitives": {
         "type": "Direct",
