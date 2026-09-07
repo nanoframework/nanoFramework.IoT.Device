@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.Device.Wifi": {
         "type": "Direct",
-        "requested": "[1.5.150, 1.5.150]",
-        "resolved": "1.5.150",
-        "contentHash": "eY2trIT0uhqQqwxSDiLXFuXcmo9orqNLtFx9CupnrA6lf5Q3nB1WbOwAQx2l4oSIrXLSsGsqg5Ya258QVbuGQA=="
+        "requested": "[1.5.152, 1.5.152]",
+        "resolved": "1.5.152",
+        "contentHash": "8BHJDlRPyoeRB3vxZ2jlcaPJbdeN9t2yrcyRL/2qZq6jJKSfGen8tA7IA7ElE3Ynl3fzxIh1+JbvYspiH9OJBg=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
@@ -52,15 +52,15 @@
       },
       "nanoFramework.System.Net": {
         "type": "Direct",
-        "requested": "[1.11.60, 1.11.60]",
-        "resolved": "1.11.60",
-        "contentHash": "FbcvVZSnOKI0nQqMz6Jw/m6C1CZzcNPsfQqmf6pp4dr5XUvtgWHv8D3/Vfhxv+5Zg2x+3tTsOVGAyFDIOuQdxg=="
+        "requested": "[1.11.64, 1.11.64]",
+        "resolved": "1.11.64",
+        "contentHash": "jyC28lSWbBs1aajgp12HlHn6U0o00OMGzFP95SAeJ1CJ6BdmK+bq+peTvsfzpqyT0Babuaqq/x9G94XLaGapGw=="
       },
       "nanoFramework.System.Net.Http": {
         "type": "Direct",
-        "requested": "[1.5.212, 1.5.212]",
-        "resolved": "1.5.212",
-        "contentHash": "g65WT1u8JnvW0gN+Zwm4t82DzRHTM2lKqiaAf9+K9VlSVGZR1G4bdfEnEdiEud3foIGoKCYFzkVpRV4FOt4BoQ=="
+        "requested": "[1.5.214, 1.5.214]",
+        "resolved": "1.5.214",
+        "contentHash": "EQXHaX1K8hnuWBdSLFPqY7BHLQo+veXLw+D2kDaSxLTvV+ev0BmLUcXJ+ccmmCUvIi2hTMvDO9ABuP/ytoD0Zw=="
       },
       "nanoFramework.System.Text": {
         "type": "Direct",
