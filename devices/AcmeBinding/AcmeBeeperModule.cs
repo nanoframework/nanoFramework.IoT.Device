@@ -31,6 +31,7 @@ namespace Iot.Device.AcmeBinding
             _isBeeping = true;
 
             Thread.Sleep(durationMilliseconds);
+            _isBeeping = false;
         }
 
         /// <summary>
