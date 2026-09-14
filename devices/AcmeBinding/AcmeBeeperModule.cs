@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Device.Model;
+using System.Threading;
 
 namespace Iot.Device.AcmeBinding
 {
@@ -28,6 +29,8 @@ namespace Iot.Device.AcmeBinding
         public void Beep(int durationMilliseconds)
         {
             _isBeeping = true;
+
+            Thread.Sleep(durationMilliseconds);
         }
 
         /// <summary>

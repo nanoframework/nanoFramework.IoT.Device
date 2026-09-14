@@ -48,7 +48,7 @@ namespace Iot.Device.AcmeBinding
         /// <remarks>Telemetry case: no-arg method returning a value.</remarks>
         /// <returns>Simulated uptime in seconds.</returns>
         [Telemetry("Uptime")]
-        public int GetUptimeSeconds() => _uptimeSeconds++;
+        public int GetUptimeSeconds() => (int)(Environment.TickCount64 / 1000);
 
         /// <summary>
         /// Reads the simulated device orientation.
@@ -56,7 +56,7 @@ namespace Iot.Device.AcmeBinding
         /// <remarks>Telemetry case: method returning bool with one out argument.</remarks>
         /// <param name="orientation">The simulated orientation vector.</param>
         /// <returns><see langword="true" /> if the orientation was read successfully.</returns>
-        [Telemetry("Orientation")]
+        [Telemetry("Orientation", "The simulated orientation vector.")]
         public bool TryReadOrientation(out Vector3 orientation)
         {
             orientation = new Vector3(0.0, 0.0, 1.0);
