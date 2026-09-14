@@ -15,9 +15,8 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>Synthetic, hardware-free device binding exercising every System.Device.Model attribute case (Telemetry, Property, Command, Component), for testing AI-Native IoT / MCP generation tooling.</description>
+    <description>Synthetic, hardware-free device binding for development and testing.</description>
     <summary>Iot.Device.AcmeBinding assembly for .NET nanoFramework C# projects</summary>
-    <tags>nanoFramework C# csharp netmf netnf Iot.Device.AcmeBinding</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
       <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
