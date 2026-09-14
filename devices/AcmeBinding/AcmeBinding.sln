@@ -1,13 +1,20 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32616.157
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12128.139 oobstable
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "AcmeBinding", "AcmeBinding.nfproj", "{8B0A88CA-02D9-41C3-BD60-8C7D28E6AC88}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "AcmeBinding.samples", "samples\AcmeBinding.samples.nfproj", "{3EAFCE36-8503-4238-AFAD-42C22B49650A}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "NFUnitTest", "tests\NFUnitTest.nfproj", "{BA29B481-103B-4FB4-8EAD-56CC69603745}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{64D6EA90-C333-4F42-B1AD-1BB5E5A94DCB}"
+	ProjectSection(SolutionItems) = preProject
+		AcmeBinding.nuspec = AcmeBinding.nuspec
+		category.txt = category.txt
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
