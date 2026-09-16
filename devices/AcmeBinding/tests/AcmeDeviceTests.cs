@@ -5,12 +5,21 @@ using Iot.Device.AcmeBinding;
 using nanoFramework.TestFramework;
 using System.Drawing;
 using System.Numerics;
+using Iot.Device.DeviceModel.Reflection;
 
 namespace Iot.Device.NFUnitTest
 {
     [TestClass]
     public class AcmeDeviceTests
     {
+        [TestMethod]
+        public void GetInterfaceDisplayName_Reads_Interface_Attribute()
+        {
+            string displayName = CapabilityReflector.GetInterfaceDisplayName(typeof(AcmeDevice));
+            
+            Assert.AreEqual("Acme synthetic sensor/actuator", displayName);
+        }
+
         [TestMethod]
         public void FirmwareVersion_Is_Reported()
         {

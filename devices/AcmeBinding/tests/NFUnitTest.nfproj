@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <!-- INSERT FILE REFERENCES HERE -->
+    <Compile Include="..\..\..\src\DeviceModel.Reflection\CapabilityReflector.cs">
+      <Link>CapabilityReflector.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />
