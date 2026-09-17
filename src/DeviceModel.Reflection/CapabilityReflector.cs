@@ -13,7 +13,7 @@ namespace Iot.Device.DeviceModel.Reflection
     public static class CapabilityReflector
     {
         /// <summary>
-        /// Reads the display name declared by the <see cref="cref="InterfaceAttribute"/> on the given device type 
+        /// Reads the display name declared by the <see cref="InterfaceAttribute"/> on the given device type
         /// </summary>
         /// <param name="deviceType">The device type to inspect, e.g. <c>typeof(AcmeDevice)</c>.</param>
         /// <returns> The interface display name, or <see langword="null"/> if the type has no <see cref="InterfaceAttribute"/>.</returns>
