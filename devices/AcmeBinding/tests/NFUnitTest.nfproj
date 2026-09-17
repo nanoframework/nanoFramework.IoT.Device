@@ -60,6 +60,21 @@
     <Compile Include="..\..\..\src\DeviceModel.Reflection\CapabilityReflector.cs">
       <Link>CapabilityReflector.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\src\DeviceModel.Reflection\CapabilityDiscovery.cs">
+      <Link>CapabilityDiscovery.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\DeviceModel.Reflection\CapabilityKind.cs">
+      <Link>CapabilityKind.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\DeviceModel.Reflection\CapabilityParameter.cs">
+      <Link>CapabilityParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\DeviceModel.Reflection\Capability.cs">
+      <Link>Capability.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\DeviceModel.Reflection\DeviceInterface.cs">
+      <Link>DeviceInterface.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="*.cs" />

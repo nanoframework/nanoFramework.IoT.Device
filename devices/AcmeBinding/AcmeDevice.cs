@@ -67,17 +67,21 @@ namespace Iot.Device.AcmeBinding
         /// Gets the read-only synthetic firmware version.
         /// </summary>
         /// <remarks>Property case: read-only property.</remarks>
-        [Property]
-        public string FirmwareVersion => "1.0.0-synthetic";
+        public string FirmwareVersion
+        {
+            [Property]
+            get => "1.0.0-synthetic";
+        }
 
         /// <summary>
         /// Gets or sets the sampling rate, in hertz.
         /// </summary>
         /// <remarks>Property case: writable property via a single get/set accessor pair.</remarks>
-        [Property]
         public int SamplingRateHz
         {
+            [Property]
             get => _samplingRateHz;
+            [Property]
             set => _samplingRateHz = value;
         }
 
