@@ -4,7 +4,7 @@
     <MaxCpuCount>1</MaxCpuCount>
     <ResultsDirectory>TestResults</ResultsDirectory>
     <TestSessionTimeout>120000</TestSessionTimeout>
-    <TargetFrameworkVersion>net48</TargetFrameworkVersion>
+    <TargetFrameworkVersion>Framework40</TargetFrameworkVersion>
     <TargetPlatform>x64</TargetPlatform>
   </RunConfiguration>
   <nanoFrameworkAdapter>

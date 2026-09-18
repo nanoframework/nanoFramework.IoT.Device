@@ -11,28 +11,57 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
     /// <summary>Discovers capabilities from System.Device.Model metadata.</summary>
     public static class CapabilityDiscovery
     {
+        /// <summary>Discovers an interface from a device instance.</summary>
+        /// <param name="device">The device instance to inspect.</param>
+        /// <returns>The discovered device interface.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="device" /> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentException">Thrown when the device metadata is invalid.</exception>
         public static DeviceInterface Discover(object device)
         {
-            if (device == null) throw new ArgumentNullException(nameof(device));
+            if (device == null)
+            {
+                throw new ArgumentNullException(nameof(device));
+            }
+
             return Discover(device.GetType());
         }
 
+        /// <summary>Discovers an interface from a device type.</summary>
+        /// <param name="deviceType">The device type to inspect.</param>
+        /// <returns>The discovered device interface.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="deviceType" /> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentException">Thrown when the device metadata is invalid.</exception>
         public static DeviceInterface Discover(Type deviceType)
         {
-            if (deviceType == null) throw new ArgumentNullException(nameof(deviceType));
+            if (deviceType == null)
+            {
+                throw new ArgumentNullException(nameof(deviceType));
+            }
+
             return DiscoverInterface(deviceType, string.Empty, new ArrayList());
         }
 
         private static DeviceInterface DiscoverInterface(Type type, string path, ArrayList stack)
         {
             InterfaceAttribute interfaceAttribute = GetTypeAttribute<InterfaceAttribute>(type);
-            if (interfaceAttribute == null) throw Invalid(type, "the type must have an InterfaceAttribute");
-            if (string.IsNullOrEmpty(interfaceAttribute.DisplayName)) throw Invalid(type, "the interface display name cannot be empty");
-            if (stack.Contains(type)) throw Invalid(type, "component cycle detected");
+            if (interfaceAttribute == null)
+            {
+                throw Invalid(type, "the type must have an InterfaceAttribute");
+            }
+
+            string interfaceName = interfaceAttribute.DisplayName;
+            if (string.IsNullOrEmpty(interfaceName))
+            {
+                interfaceName = type.Name;
+            }
+
+            if (stack.Contains(type))
+            {
+                throw Invalid(type, "component cycle detected");
+            }
 
             stack.Add(type);
             ArrayList capabilities = new ArrayList();
-            ArrayList components = new ArrayList();
             MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
             for (int index = 0; index < methods.Length; index++)
             {
@@ -41,10 +70,8 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
 
             stack.Remove(type);
             Capability[] discoveredCapabilities = ToCapabilityArray(capabilities);
-            DeviceInterface[] discoveredComponents = ToInterfaceArray(components);
             SortCapabilities(discoveredCapabilities);
-            SortComponents(discoveredComponents);
-            return new DeviceInterface(interfaceAttribute.DisplayName, type, path, discoveredCapabilities, discoveredComponents);
+            return new DeviceInterface(interfaceName, type, path, discoveredCapabilities, new DeviceInterface[0]);
         }
 
         private static void DiscoverMethod(MethodInfo method, string path, ArrayList capabilities)
@@ -61,7 +88,11 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
             string memberName = PropertyAccessorName(method.Name);
             if (component != null)
             {
-                if (parameters.Length != 0 || method.ReturnType == typeof(void)) throw Invalid(method, "a component getter must have no parameters and return a value");
+                if (parameters.Length != 0 || method.ReturnType == typeof(void))
+                {
+                    throw Invalid(method, "a component getter must have no parameters and return a value");
+                }
+
                 // The component is represented as a method by the nanoFramework reflection API.
                 return;
             }
@@ -73,8 +104,16 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
             }
             else if (property != null)
             {
-                if (method.ReturnType == typeof(void) && parameters.Length != 1) throw Invalid(method, "a property setter must take exactly one parameter");
-                if (method.ReturnType != typeof(void) && parameters.Length != 0) throw Invalid(method, "a property getter method cannot take parameters");
+                if (method.ReturnType == typeof(void) && parameters.Length != 1)
+                {
+                    throw Invalid(method, "a property setter must take exactly one parameter");
+                }
+
+                if (method.ReturnType != typeof(void) && parameters.Length != 0)
+                {
+                    throw Invalid(method, "a property getter method cannot take parameters");
+                }
+
                 Type valueType = method.ReturnType == typeof(void) ? parameters[0].ParameterType : method.ReturnType;
                 string name = NameOrDefault(property.Name, memberName);
                 AddCapability(capabilities, new Capability(CapabilityKind.Property, name, DisplayName(property.DisplayName, memberName), valueType, JoinPath(path, name), method.ReturnType != typeof(void), method.ReturnType == typeof(void), new CapabilityParameter[0]), method);
@@ -88,15 +127,27 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
 
         private static Type TelemetryValueType(MethodInfo method, ParameterInfo[] parameters)
         {
-            if (parameters.Length == 0 && method.ReturnType != typeof(void)) return method.ReturnType;
-            if (method.ReturnType == typeof(bool) && parameters.Length == 1 && parameters[0].ParameterType.GetElementType() != null) return parameters[0].ParameterType.GetElementType();
+            if (parameters.Length == 0 && method.ReturnType != typeof(void))
+            {
+                return method.ReturnType;
+            }
+
+            if (method.ReturnType == typeof(bool) && parameters.Length == 1 && parameters[0].ParameterType.GetElementType() != null)
+            {
+                return parameters[0].ParameterType.GetElementType();
+            }
+
             throw Invalid(method, "telemetry must be a value-returning method or a bool method with one out parameter");
         }
 
         private static CapabilityParameter[] Parameters(ParameterInfo[] parameters)
         {
             CapabilityParameter[] result = new CapabilityParameter[parameters.Length];
-            for (int index = 0; index < parameters.Length; index++) result[index] = new CapabilityParameter("arg" + index, parameters[index].ParameterType, parameters[index].ParameterType.GetElementType() != null);
+            for (int index = 0; index < parameters.Length; index++)
+            {
+                result[index] = new CapabilityParameter("arg" + index, parameters[index].ParameterType, parameters[index].ParameterType.GetElementType() != null);
+            }
+
             return result;
         }
 
@@ -105,7 +156,11 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
             for (int index = 0; index < capabilities.Count; index++)
             {
                 Capability existing = (Capability)capabilities[index];
-                if (existing.Name != capability.Name) continue;
+                if (existing.Name != capability.Name)
+                {
+                    continue;
+                }
+
                 if (existing.Kind == CapabilityKind.Property && capability.Kind == CapabilityKind.Property && existing.Path == capability.Path && (existing.CanRead != capability.CanRead || existing.CanWrite != capability.CanWrite))
                 {
                     capabilities[index] = MergeProperty(existing, capability);
@@ -120,26 +175,51 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
 
         private static Capability MergeProperty(Capability first, Capability second)
         {
-            return new Capability(CapabilityKind.Property, first.Name, first.DisplayName, first.ValueType ?? second.ValueType, first.Path, first.CanRead || second.CanRead, first.CanWrite || second.CanWrite, new CapabilityParameter[0]);
+            Type valueType = first.ValueType ?? second.ValueType;
+            bool canRead = first.CanRead || second.CanRead;
+            bool canWrite = first.CanWrite || second.CanWrite;
+            return new Capability(CapabilityKind.Property, first.Name, first.DisplayName, valueType, first.Path, canRead, canWrite, new CapabilityParameter[0]);
         }
 
-        private static string NameOrDefault(string name, string fallback) { return string.IsNullOrEmpty(name) ? fallback : name; }
+        private static string NameOrDefault(string name, string fallback)
+        {
+            return string.IsNullOrEmpty(name) ? fallback : name;
+        }
+
         private static string PropertyAccessorName(string name)
         {
-            if (name.StartsWith("get_")) return name.Substring(4);
-            if (name.StartsWith("set_")) return name.Substring(4);
+            if (name.StartsWith("get_"))
+            {
+                return name.Substring(4);
+            }
+
+            if (name.StartsWith("set_"))
+            {
+                return name.Substring(4);
+            }
+
             return name;
         }
 
-        private static string DisplayName(string displayName, string fallback) { return string.IsNullOrEmpty(displayName) ? fallback : displayName; }
-        private static string JoinPath(string parent, string name) { return string.IsNullOrEmpty(parent) ? name : parent + "." + name; }
+        private static string DisplayName(string displayName, string fallback)
+        {
+            return string.IsNullOrEmpty(displayName) ? fallback : displayName;
+        }
+
+        private static string JoinPath(string parent, string name)
+        {
+            return string.IsNullOrEmpty(parent) ? name : parent + "." + name;
+        }
         private static T GetAttribute<T>(MethodInfo method) where T : Attribute
         {
             object[] attributes = method.GetCustomAttributes(true);
             for (int index = 0; index < attributes.Length; index++)
             {
                 T attribute = attributes[index] as T;
-                if (attribute != null) return attribute;
+                if (attribute != null)
+                {
+                    return attribute;
+                }
             }
 
             return null;
@@ -151,17 +231,31 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
             for (int index = 0; index < attributes.Length; index++)
             {
                 T attribute = attributes[index] as T;
-                if (attribute != null) return attribute;
+                if (attribute != null)
+                {
+                    return attribute;
+                }
             }
 
             return null;
         }
 
-        private static CapabilityModelException Invalid(MethodInfo member, string message) { return new CapabilityModelException(member.DeclaringType.FullName + "." + member.Name + ": " + message); }
-        private static CapabilityModelException Invalid(Type type, string message) { return new CapabilityModelException(type.FullName + ": " + message); }
+        private static ArgumentException Invalid(MethodInfo member, string message)
+        {
+            return new ArgumentException(member.DeclaringType.FullName + "." + member.Name + ": " + message);
+        }
 
-        private static Capability[] ToCapabilityArray(ArrayList values) { Capability[] result = new Capability[values.Count]; values.CopyTo(result); return result; }
-        private static DeviceInterface[] ToInterfaceArray(ArrayList values) { DeviceInterface[] result = new DeviceInterface[values.Count]; values.CopyTo(result); return result; }
+        private static ArgumentException Invalid(Type type, string message)
+        {
+            return new ArgumentException(type.FullName + ": " + message);
+        }
+
+        private static Capability[] ToCapabilityArray(ArrayList values)
+        {
+            Capability[] result = new Capability[values.Count];
+            values.CopyTo(result);
+            return result;
+        }
 
         private static void SortCapabilities(Capability[] values)
         {
@@ -169,20 +263,15 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine
             {
                 Capability value = values[index];
                 int position = index - 1;
-                while (position >= 0 && string.Compare(values[position].Path, value.Path) > 0) values[position + 1] = values[position--];
+                while (position >= 0 && string.Compare(values[position].Path, value.Path) > 0)
+                {
+                    values[position + 1] = values[position];
+                    position--;
+                }
+
                 values[position + 1] = value;
             }
         }
 
-        private static void SortComponents(DeviceInterface[] values)
-        {
-            for (int index = 1; index < values.Length; index++)
-            {
-                DeviceInterface value = values[index];
-                int position = index - 1;
-                while (position >= 0 && string.Compare(values[position].Path, value.Path) > 0) values[position + 1] = values[position--];
-                values[position + 1] = value;
-            }
-        }
     }
 }

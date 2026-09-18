@@ -4,14 +4,17 @@
 using Iot.Device.AcmeBinding;
 using nanoFramework.IoT.Device.CoreDiscoveryEngine;
 using nanoFramework.TestFramework;
+using System.Device.Model;
 using System;
 
 namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
 {
     [TestClass]
+    /// <summary>Tests capability discovery from device model metadata.</summary>
     public class CapabilityDiscoveryTests
     {
         [TestMethod]
+        /// <summary>Verifies that interface metadata is preserved.</summary>
         public void Discover_UsesInterfaceMetadata()
         {
             DeviceInterface result = CapabilityDiscovery.Discover(typeof(AcmeDevice));
@@ -22,6 +25,7 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         [TestMethod]
+        /// <summary>Verifies that named telemetry is discovered.</summary>
         public void Discover_FindsNamedTelemetry()
         {
             DeviceInterface result = CapabilityDiscovery.Discover(typeof(AcmeDevice));
@@ -36,6 +40,7 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         [TestMethod]
+        /// <summary>Verifies that property accessors are merged.</summary>
         public void Discover_MergesPropertyGetterAndSetter()
         {
             DeviceInterface result = CapabilityDiscovery.Discover(typeof(AcmeDevice));
@@ -49,6 +54,7 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         [TestMethod]
+        /// <summary>Verifies that command parameters are preserved.</summary>
         public void Discover_PreservesAllCommandParameters()
         {
             DeviceInterface result = CapabilityDiscovery.Discover(typeof(AcmeDevice));
@@ -66,6 +72,7 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         [TestMethod]
+        /// <summary>Verifies that an instance can be discovered.</summary>
         public void Discover_AcceptsDeviceInstance()
         {
             AcmeDevice device = new AcmeDevice();
@@ -76,6 +83,7 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         [TestMethod]
+        /// <summary>Verifies that a null device is rejected.</summary>
         public void Discover_RejectsNullDevice()
         {
             bool rejected = false;
@@ -92,6 +100,7 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         [TestMethod]
+        /// <summary>Verifies that an unannotated type is rejected.</summary>
         public void Discover_RejectsUnannotatedType()
         {
             bool rejected = false;
@@ -99,12 +108,21 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
             {
                 CapabilityDiscovery.Discover(typeof(UnannotatedDevice));
             }
-            catch (CapabilityModelException)
+            catch (ArgumentException)
             {
                 rejected = true;
             }
 
             Assert.IsTrue(rejected);
+        }
+
+        [TestMethod]
+        /// <summary>Verifies that an empty display name falls back to the type name.</summary>
+        public void Discover_UsesTypeNameWhenDisplayNameIsEmpty()
+        {
+            DeviceInterface result = CapabilityDiscovery.Discover(typeof(EmptyDisplayNameDevice));
+
+            Assert.AreEqual("EmptyDisplayNameDevice", result.Name);
         }
 
         private static Capability Find(DeviceInterface deviceInterface, string name)
@@ -122,6 +140,11 @@ namespace nanoFramework.IoT.Device.CoreDiscoveryEngine.Tests
         }
 
         private sealed class UnannotatedDevice
+        {
+        }
+
+        [Interface("")]
+        private sealed class EmptyDisplayNameDevice
         {
         }
     }

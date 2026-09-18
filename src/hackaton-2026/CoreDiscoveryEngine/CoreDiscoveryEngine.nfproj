@@ -31,8 +31,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CapabilityDiscovery.cs" />
-    <Compile Include="CapabilityModel.cs" />
-    <Compile Include="CapabilityModelException.cs" />
+    <Compile Include="CapabilityKind.cs" />
+    <Compile Include="CapabilityParameter.cs" />
+    <Compile Include="Capability.cs" />
+    <Compile Include="DeviceInterface.cs" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
 </Project>
