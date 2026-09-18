@@ -142,6 +142,11 @@ namespace Iot.Device.DeviceModel.Reflection
 
                 if (existing.Kind == CapabilityKind.Property && capability.Kind == CapabilityKind.Property)
                 {
+                    if (existing.ValueType != null && capability.ValueType != null && existing.ValueType != capability.ValueType)
+                    {
+                        throw new InvalidOperationException("Property '" + capability.Name + "' has mismatched getter/setter types '" + existing.ValueType.FullName + "' and '" + capability.ValueType.FullName + "'");
+                    }
+                    
                     capabilities[index] = MergeProperty(existing, capability);
                     return;
                 }
