@@ -291,10 +291,12 @@
 
 ## Audio codecs and sound devices
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw8737.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw8737/) [AW8737A - Mono Class-K audio power amplifier (speaker output)](Aw8737)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Aw88298.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Aw88298/) [AW88298 - I2S Class-D smart audio amplifier (speaker output)](Aw88298)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7210.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7210/) [ES7210 - 4-channel audio ADC (microphone capture codec)](Es7210)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es7243e.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es7243e/) [ES7243E - Audio ADC (microphone capture codec)](Es7243e)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es8156.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es8156/) [ES8156 - Low-power stereo audio DAC (playback codec)](Es8156)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Es8311.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Es8311/) [ES8311 - Low-power mono audio CODEC (DAC + ADC)](Es8311)
 
 ## GPIO or bit operating devices
 
