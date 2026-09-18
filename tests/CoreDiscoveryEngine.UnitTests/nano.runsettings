@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <MaxCpuCount>1</MaxCpuCount>
+    <ResultsDirectory>TestResults</ResultsDirectory>
+    <TestSessionTimeout>120000</TestSessionTimeout>
+    <TargetFrameworkVersion>Framework40</TargetFrameworkVersion>
+    <TargetPlatform>x64</TargetPlatform>
+  </RunConfiguration>
+  <nanoFrameworkAdapter>
+    <Logging>None</Logging>
+    <IsRealHardware>False</IsRealHardware>
+  </nanoFrameworkAdapter>
+</RunSettings>
