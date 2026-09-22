@@ -287,7 +287,7 @@
 ## Media libraries
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Buzzer.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Buzzer/) [Buzzer - Piezo Buzzer Controller](Buzzer)
-* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Yx5300.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Yx5300/) [YX5200/YX5300 - MP3 Player](Yx5300)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Yx5300.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Yx5300/) [YX5200/YX5300/YX6300 Serial MP3 Players](Yx5300)
 
 ## Audio codecs and sound devices
 
