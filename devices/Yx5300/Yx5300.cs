@@ -373,7 +373,7 @@ namespace Iot.Device.Yx5300
         /// <returns>True if success.</returns>
         public bool PlayTrackWithVolume(int trackNum, int volume)
         {
-            return SendRequest(CommandSet.CMD_PLAY_W_VOL, (byte)trackNum, (byte)(volume > MaxVolume ? MaxVolume : volume));
+            return SendRequest(CommandSet.CMD_PLAY_W_VOL, (byte)(volume > MaxVolume ? MaxVolume : volume), (byte)trackNum);
         }
 
         /// <summary>
@@ -539,7 +539,7 @@ namespace Iot.Device.Yx5300
         /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
         public ushort GetFolderCount()
         {
-            return SendQuery(CommandSet.CMD_QUERY_TOT_FLDR, PktDataNull, PktDataNull, StatusCode.TotalNumberOfFiles);
+            return SendQuery(CommandSet.CMD_QUERY_TOT_FLDR, PktDataNull, PktDataNull, StatusCode.TotalNumberOfFolders);
         }
 
         // Low level code
@@ -588,7 +588,7 @@ namespace Iot.Device.Yx5300
         private ushort SendQuery(CommandSet cmd, byte dataHi, byte dataLo, StatusCode expectedStatusCode)
         {
             SendRequest(cmd, dataHi, dataLo);
-            if (_status.Code != StatusCode.AcknoledgeOk)
+            if (_status.Code != StatusCode.AcknowledgeOk)
             {
                 ThrowQueryException();
             }

@@ -41,7 +41,7 @@ namespace Iot.Device.Yx5300
             FileNotFound = 0x40,
 
             /// <summary>Message acknowledged ok.</summary>
-            AcknoledgeOk = 0x41,
+            AcknowledgeOk = 0x41,
 
             /// <summary>Current status.</summary>
             Status = 0x42,
@@ -62,7 +62,7 @@ namespace Iot.Device.Yx5300
             NumberOfFilesInFolder = 0x4e,
 
             /// <summary>Total number of folders.</summary>
-            TotalNumberOfFiles = 0x4f
+            TotalNumberOfFolders = 0x4f
         }
     }
 }
