@@ -13,6 +13,7 @@ See [this article](https://wiki.keyestudio.com/KS0387_keyestudio_YX5200-24SS_MP3
 ```csharp
 using Iot.Device.Yx5300;
 using nanoFramework.Hardware.Esp32;
+using System.Diagnostics;
 using System.Threading;
 
 const int FolderNumber = 1;
@@ -26,17 +27,19 @@ Configuration.SetPinFunction(Gpio.IO16, DeviceFunction.COM2_RX);
 // Open COM2 and instantiate player
 mp3Player = new Yx5300("COM2");
 
-// Start player and play some files
+// Start player and inspect the TF card
 Thread.Sleep(1000);
-mp3Player.Volume(Yx5300.MaxVolume / 2);
+Debug.WriteLine($"Volume: {mp3Player.GetVolume()}");
+Debug.WriteLine($"Folders: {mp3Player.GetFolderCount()}");
+Debug.WriteLine($"Files on card: {mp3Player.GetTotalFileCount()}");
+Debug.WriteLine($"Files in folder {FolderNumber}: {mp3Player.GetFolderFileCount(FolderNumber)}");
 
-// Repeat a folder
-mp3Player.PlayFolderRepeat(FolderNumber);
-mp3Player.Play();
+// Play a file at half volume
+mp3Player.PlayTrackWithVolume(FileNumber, Yx5300.MaxVolume / 2);
+Debug.WriteLine($"Playing file: {mp3Player.GetPlayingFile()}");
 
-// Repeat a file
-mp3Player.PlayTrackRepeat(FileNumber);
-mp3Player.Play();
+// Repeat the current file
+mp3Player.Repeat(true);
 
 Thread.Sleep(Timeout.Infinite);
 ```

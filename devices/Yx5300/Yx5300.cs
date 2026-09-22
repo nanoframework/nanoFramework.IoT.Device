@@ -16,162 +16,105 @@ namespace Iot.Device.Yx5300
     /// <summary>
     /// Yx5300 - MP3 Player.
     /// </summary>
-    public class Yx5300
+    public partial class Yx5300
     {
         // Serial port
         private const int SerialBaud = 9600;
         private const int TimeoutMiliseconds = 1000;
 
         // Protocol Message Characters
-        private const byte PktSom = 0x7e;       // Start of message delimiter character
-        private const byte PktVer = 0xff;       // Version information
-        private const byte PktLen = 0x06;       // Data packet length in bytes (excluding SOM, EOM)
-        private const byte PktCmdDummy = 0x00;    // Command placeholder
-        private const byte PktFbOff = 0x00;    // Command feedback OFF
-        private const byte PktFbOn = 0x01;     // Command feedback ON
-        private const byte PktDataNull = 0x00;  // Packet data place marker 
-        private const byte PKtEom = 0xef;       // End of message delimiter character
+        // Start of message delimiter character
+        private const byte PktSom = 0x7e;
+
+        // Version information
+        private const byte PktVer = 0xff;
+
+        // Data packet length in bytes (excluding SOM, EOM)
+        private const byte PktLen = 0x06;
+
+        // Command placeholder
+        private const byte PktCmdDummy = 0x00;
+
+        // Command feedback OFF
+        private const byte PktFbOff = 0x00;
+
+        // Command feedback ON
+        private const byte PktFbOn = 0x01;
+
+        // Packet data place marker
+        private const byte PktDataNull = 0x00;
+
+        // End of message delimiter character
+        private const byte PKtEom = 0xef;
 
         // Command options
-        private const byte CmdOptOn = 0x00;    // On indicator
-        private const byte CmdOptOff = 0x01;   // Off indicator
-        private const byte CmdOptDevUdisk = 0X01; // Device option UDisk (not used)
-        private const byte CmdOptDevTf = 0X02;    // Device option TF
-        private const byte CmdOptDevFlash = 0X04; // Device option Flash (not used)
+        // On indicator
+        private const byte CmdOptOn = 0x00;
 
-        private readonly byte[] msg = new byte[] 
+        // Off indicator
+        private const byte CmdOptOff = 0x01;
+
+        // Device option UDisk (not used)
+        private const byte CmdOptDevUdisk = 0X01;
+
+        // Device option TF
+        private const byte CmdOptDevTf = 0X02;
+
+        // Device option Flash (not used)
+        private const byte CmdOptDevFlash = 0X04;
+
+        private readonly byte[] msg = new byte[]
         {
-                PktSom,      // 0: Start
-                PktVer,      // 1: Version
-                PktLen,      // 2: Length
-                PktCmdDummy,         // 3: Command placeholder
-                PktFbOn,    // 4: Feedback
-                PktDataNull, // 5: Data Hi
-                PktDataNull, // 6: Data Lo
-                PktDataNull, // [7]: Checksum Hi (optional)
-                PktDataNull, // [8]: Checksum Lo (optional)
-                PKtEom       // 7, [9]: End
+            // 0: Start
+            PktSom,
+
+            // 1: Version
+            PktVer,
+
+            // 2: Length
+            PktLen,
+
+            // 3: Command placeholder
+            PktCmdDummy,
+
+            // 4: Feedback
+            PktFbOn,
+
+            // 5: Data Hi
+            PktDataNull,
+
+            // 6: Data Lo
+            PktDataNull,
+
+            // [7]: Checksum Hi (optional)
+            PktDataNull,
+
+            // [8]: Checksum Lo (optional)
+            PktDataNull,
+
+            // 7, [9]: End
+            PKtEom
         };
 
         /// <summary>
-        /// Maximum Volume.
+        /// Maximum volume.
         /// </summary>
         public const int MaxVolume = 30;
-
-        private enum CommandSet
-        {
-            CMD_NUL = 0x00,              // No command
-            CMD_NEXT_SONG = 0x01,        // Play next song
-            CMD_PREV_SONG = 0x02,        // Play previous song
-            CMD_PLAY_WITH_INDEX = 0x03,  // Play song with index number
-            CMD_VOLUME_UP = 0x04,        // Volume increase by one
-            CMD_VOLUME_DOWN = 0x05,      // Volume decrease by one
-            CMD_SET_VOLUME = 0x06,       // Set the volume to level specified
-            CMD_SET_EQUALIZER = 0x07,    // Set the equalizer to specified level
-            CMD_SNG_CYCL_PLAY = 0x08,    // Loop play (repeat) specified track
-            CMD_SEL_DEV = 0x09,          // Select storage device to TF card
-            CMD_SLEEP_MODE = 0x0a,       // Chip enters sleep mode
-            CMD_WAKE_UP = 0x0b,          // Chip wakes up from sleep mode
-            CMD_RESET = 0x0c,            // Chip reset
-            CMD_PLAY = 0x0d,             // Playback restart
-            CMD_PAUSE = 0x0e,            // Playback is paused
-            CMD_PLAY_FOLDER_FILE = 0x0f, // Play the song with the specified folder and index number
-            CMD_STOP_PLAY = 0x16,        // Playback is stopped
-            CMD_FOLDER_CYCLE = 0x17,     // Loop playback from specified folder
-            CMD_SHUFFLE_PLAY = 0x18,     // Playback shuffle mode
-            CMD_SET_SNGL_CYCL = 0x19,    // Set loop play (repeat) on/off for current file
-            CMD_SET_DAC = 0x1a,          // DAC on/off control
-            CMD_PLAY_W_VOL = 0x22,       // Play track at the specified volume
-            CMD_SHUFFLE_FOLDER = 0x28,   // Playback shuffle mode for folder specified
-            CMD_QUERY_STATUS = 0x42,     // Query Device Status
-            CMD_QUERY_VOLUME = 0x43,     // Query Volume level
-            CMD_QUERY_EQUALIZER = 0x44,  // Query current equalizer (disabled in hardware)
-            CMD_QUERY_TOT_FILES = 0x48,  // Query total files in all folders
-            CMD_QUERY_PLAYING = 0x4c,    // Query which track playing
-            CMD_QUERY_FLDR_FILES = 0x4e, // Query total files in folder
-            CMD_QUERY_TOT_FLDR = 0x4f,   // Query number of folders
-        }
-
-        /// <summary>
-        /// Status Code.
-        /// </summary>
-        public enum StatusCode
-        {
-            /// <summary>No error (library generated status).</summary>
-            NoError = 0x00,
-
-            /// <summary>Timeout on response message (library generated status).</summary>
-            Timeout = 0x01,
-
-            /// <summary>Wrong version number in return message (library generated status).</summary>
-            Version = 0x02,
-
-            /// <summary>Device checksum invalid (library generated status).</summary>
-            Checksum = 0x03,
-
-            /// <summary>TF Card was inserted (unsolicited).</summary>
-            CardInserted = 0x3a,
-
-            /// <summary>TF card was removed (unsolicited).</summary>
-            CardRemoved = 0x3b,
-
-            /// <summary>Track/file has ended (unsolicited).</summary>
-            EndOfFile = 0x3d,
-
-            /// <summary>Initialization complete (unsolicited).</summary>
-            InitializationComplete = 0x3f,
-
-            /// <summary>Error file not found.</summary>
-            FileNotFound = 0x40,
-
-            /// <summary>Message acknowledged ok.</summary>
-            AcknoledgeOk = 0x41,
-
-            /// <summary>Current status.</summary>
-            Status = 0x42,
-
-            /// <summary>Current volume level.</summary>
-            Volume = 0x43,
-
-            /// <summary>Equalizer status.</summary>
-            Equalizer = 0x44,
-
-            /// <summary>TF Total file count.</summary>
-            TotalFileCount = 0x48,
-
-            /// <summary>Current file playing.</summary>
-            Playing = 0x4c,
-
-            /// <summary>Total number of files in the folder.</summary>
-            NumberOfFilesInFolder = 0x4e,
-
-            /// <summary>Total number of folders.</summary>
-            TotalNumberOfFiles = 0x4f
-        }
-
-        /// <summary>
-        /// Class containing status data.
-        /// </summary>
-        public class Status
-        {
-            /// <summary>
-            /// Gets or sets status Code.
-            /// </summary>
-            public StatusCode Code { get; set; }
-
-            /// <summary>
-            /// Gets or sets associated data.
-            /// </summary>
-            public ushort Data { get; set; }
-        }
 
         private Status _status = new Status();
         private SerialPort _serialPort;
 
-        private byte[] _bufRx = new byte[30]; // receive buffer for serial comms
-        private byte _bufIdx;    // index for next char into _bufIdx
-        private DateTime _timeSent; // time last serial message was sent
-        private bool _waitResponse; // true when we are waiting response to a query
+        // Receive buffer for serial comms
+        private byte[] _bufRx = new byte[30];
+
+        // Index for next char into _bufIdx
+        private byte _bufIdx;
+
+        // Time last serial message was sent
+        private DateTime _timeSent;
+
+        // True when we are waiting response to a query
+        private bool _waitResponse;
         private int _timeoutDurationInMs = TimeoutMiliseconds;
 
         /// <summary>
@@ -198,7 +141,8 @@ namespace Iot.Device.Yx5300
             // The synchronous call will return when the command is accepted
             // then it will be followed by an initialization message saying TF card is inserted.
             // Doc says this should be 200ms, so we set a timeout for 1000ms.
-            Device(CmdOptDevTf); // set the TF card file system
+            // Set the TF card file system
+            Device(CmdOptDevTf);
             _timeSent = DateTime.UtcNow;
             while (!Check())
             {
@@ -238,7 +182,8 @@ namespace Iot.Device.Yx5300
                 c = (byte)_serialPort.ReadByte();
                 if (c == PktSom)
                 {
-                    _bufIdx = 0;      // start of message - reset the index
+                    // Start of message - reset the index
+                    _bufIdx = 0;
                 }
 
                 _bufRx[_bufIdx++] = c;
@@ -260,7 +205,8 @@ namespace Iot.Device.Yx5300
                 ProcessResponse();
             }
 
-            return c == PKtEom;   // we have just processed a response
+            // We have just processed a response
+            return c == PKtEom;
         }
 
         /// <summary>
@@ -305,7 +251,7 @@ namespace Iot.Device.Yx5300
         }
 
         /// <summary>
-        /// Set the equalizer.
+        /// Sets the equalizer.
         /// </summary>
         /// <param name="eqId">Id of the equalizer.</param>
         /// <returns>True if success.</returns>
@@ -335,17 +281,31 @@ namespace Iot.Device.Yx5300
         }
 
         /// <summary>
-        /// Reset player settings.
+        /// Enables or disables repeat playback for the current track.
+        /// </summary>
+        /// <param name="isRepeated">True to repeat the current track; otherwise, false.</param>
+        /// <returns>True if success.</returns>
+        public bool Repeat(bool isRepeated)
+        {
+            return SendRequest(CommandSet.CMD_SET_SNGL_CYCL, PktDataNull, isRepeated ? CmdOptOn : CmdOptOff);
+        }
+
+        /// <summary>
+        /// Resets the player settings.
         /// </summary>
         /// <returns>True if success.</returns>
         public bool Reset()
         {
             int cachedTimeout = _timeoutDurationInMs;
-            _timeoutDurationInMs = 2000;  // initialization timeout needs to be a long one
 
-            var response = SendRequest(CommandSet.CMD_RESET, PktDataNull, PktDataNull);  // long timeout on this message
+            // Initialization timeout needs to be a long one
+            _timeoutDurationInMs = 2000;
 
-            _timeoutDurationInMs = cachedTimeout;  // put back saved value
+            // Long timeout on this message
+            var response = SendRequest(CommandSet.CMD_RESET, PktDataNull, PktDataNull);
+
+            // Put back saved value
+            _timeoutDurationInMs = cachedTimeout;
 
             return response;
         }
@@ -387,7 +347,7 @@ namespace Iot.Device.Yx5300
         }
 
         /// <summary>
-        /// Plays playing.
+        /// Starts or resumes playback.
         /// </summary>
         /// <returns>True if success.</returns>
         public bool Play()
@@ -406,7 +366,18 @@ namespace Iot.Device.Yx5300
         }
 
         /// <summary>
-        /// Plays a file.
+        /// Plays a track at the specified volume.
+        /// </summary>
+        /// <param name="trackNum">The track number to play.</param>
+        /// <param name="volume">The volume from 0 to 30.</param>
+        /// <returns>True if success.</returns>
+        public bool PlayTrackWithVolume(int trackNum, int volume)
+        {
+            return SendRequest(CommandSet.CMD_PLAY_W_VOL, (byte)(volume > MaxVolume ? MaxVolume : volume), (byte)trackNum);
+        }
+
+        /// <summary>
+        /// Plays a track repeatedly.
         /// </summary>
         /// <param name="fileNum">The file number to play.</param>
         /// <returns>True if success.</returns>
@@ -439,7 +410,7 @@ namespace Iot.Device.Yx5300
         /// <summary>
         /// Plays and shuffles the play in a specific folder.
         /// </summary>
-        /// <param name="folderNum">Numer of folder to shuffle.</param>
+        /// <param name="folderNum">Number of the folder to shuffle.</param>
         /// <returns>True if success.</returns>
         public bool PlayFolderShuffle(int folderNum)
         {
@@ -457,7 +428,7 @@ namespace Iot.Device.Yx5300
         }
 
         /// <summary>
-        /// Gets the maximum Volume.
+        /// Gets the maximum volume.
         /// </summary>
         /// <returns>The maximum volume.</returns>
         public int GetMaxVolume() 
@@ -465,7 +436,7 @@ namespace Iot.Device.Yx5300
             return MaxVolume; 
         }
 
-        /// <summary>Increases the volume.
+        /// <summary>
         /// Increases the volume.
         /// </summary>
         /// <returns>True if success.</returns>
@@ -491,6 +462,84 @@ namespace Iot.Device.Yx5300
         public bool VolumeMute(bool isMute)
         {
             return SendRequest(CommandSet.CMD_SET_DAC, PktDataNull, isMute ? CmdOptOff : CmdOptOn);
+        }
+
+        /// <summary>
+        /// Queries the current playback status.
+        /// </summary>
+        /// <returns>The playback status data.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetPlaybackStatus()
+        {
+            return SendQuery(CommandSet.CMD_QUERY_STATUS, PktDataNull, PktDataNull, StatusCode.Status);
+        }
+
+        /// <summary>
+        /// Queries the current volume.
+        /// </summary>
+        /// <returns>The current volume.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetVolume()
+        {
+            return SendQuery(CommandSet.CMD_QUERY_VOLUME, PktDataNull, PktDataNull, StatusCode.Volume);
+        }
+
+        /// <summary>
+        /// Queries the current equalizer setting.
+        /// </summary>
+        /// <returns>The current equalizer setting.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetEqualizer()
+        {
+            return SendQuery(CommandSet.CMD_QUERY_EQUALIZER, PktDataNull, PktDataNull, StatusCode.Equalizer);
+        }
+
+        /// <summary>
+        /// Gets the total number of files across all folders on the TF card.
+        /// </summary>
+        /// <returns>The total number of files across the entire TF card.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetTotalFileCount()
+        {
+            return SendQuery(CommandSet.CMD_QUERY_TOT_FILES, PktDataNull, PktDataNull, StatusCode.TotalFileCount);
+        }
+
+        /// <summary>
+        /// Queries the currently playing file.
+        /// </summary>
+        /// <returns>The index of the currently playing file.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetPlayingFile()
+        {
+            return SendQuery(CommandSet.CMD_QUERY_PLAYING, PktDataNull, PktDataNull, StatusCode.Playing);
+        }
+
+        /// <summary>
+        /// Gets the number of files in the specified folder.
+        /// </summary>
+        /// <param name="folderNum">The folder number whose files are counted.</param>
+        /// <returns>The number of files in the specified folder.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetFolderFileCount(int folderNum)
+        {
+            return SendQuery(CommandSet.CMD_QUERY_FLDR_FILES, PktDataNull, (byte)folderNum, StatusCode.NumberOfFilesInFolder);
+        }
+
+        /// <summary>
+        /// Queries the total number of folders on the TF card.
+        /// </summary>
+        /// <returns>The total number of folders.</returns>
+        /// <exception cref="TimeoutException">The device did not return the requested data in time.</exception>
+        /// <exception cref="InvalidOperationException">The device returned an unexpected response.</exception>
+        public ushort GetFolderCount()
+        {
+            return SendQuery(CommandSet.CMD_QUERY_TOT_FLDR, PktDataNull, PktDataNull, StatusCode.TotalNumberOfFiles);
         }
 
         // Low level code
@@ -536,9 +585,45 @@ namespace Iot.Device.Yx5300
             return true;
         }
 
+        private ushort SendQuery(CommandSet cmd, byte dataHi, byte dataLo, StatusCode expectedStatusCode)
+        {
+            SendRequest(cmd, dataHi, dataLo);
+            if (_status.Code != StatusCode.AcknoledgeOk)
+            {
+                ThrowQueryException();
+            }
+
+            _timeSent = DateTime.UtcNow;
+            _waitResponse = true;
+
+            do
+            {
+                Thread.Sleep(10);
+            }
+            while (!Check());
+
+            if (_status.Code != expectedStatusCode)
+            {
+                ThrowQueryException();
+            }
+
+            return _status.Data;
+        }
+
+        private void ThrowQueryException()
+        {
+            if (_status.Code == StatusCode.Timeout)
+            {
+                throw new TimeoutException("The device did not return the requested data in time.");
+            }
+
+            throw new InvalidOperationException($"Unexpected device response: {_status.Code}.");
+        }
+
         private void ProcessResponse(bool isTimeout = false)
         {
-            _waitResponse = false;    // definitely no longer waiting
+            // Definitely no longer waiting
+            _waitResponse = false;
 
             SpanByte data = new SpanByte(_bufRx, 1, _bufRx.Length - 1);
             ushort chk = CalcCheckSum(data, _bufRx[2]);
