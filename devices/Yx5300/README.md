@@ -1,12 +1,20 @@
-# YX5200/YX5300 - MP3 Player
+# YX5200/YX5300/YX6300 Serial MP3 Players
 
-Use this driver to control the Keyestudio YX5200-24SS MP3/Jaycar XC3748 Music Player Module
+Use this binding to control UART MP3 player modules based on the YX5200, YX5300, and YX6300 command protocol. These modules play MP3, WAV, and, where supported by the module, WMA files from a microSD/TF card.
 
-This MP3 module is a MP3/WAV/WMA music player. It uses YX5200/YX5300 at its core and it plays files from an integrated SD card reader. It is connected with Serial port.
+Known compatible modules and product names include:
+
+- Catalex Serial MP3 Player modules based on the YX5300 or YX6300.
+- Keyestudio KS0387 YX5200-24SS MP3 Module.
+- Jaycar XC3748 Arduino Compatible Serial MP3 Player Module.
+- Altronics Z6334 Arduino Compatible Serial MP3 Player Module.
+- Serial MP3 Music Player Module V1.3.2, the YX5300-based board also sold under generic UART MP3 player names.
+
+Generic modules with similar names or layouts are compatible only when they implement the same 10-byte YX5200/YX5300/YX6300 UART protocol.
 
 ## Documentation
 
-See [this article](https://wiki.keyestudio.com/KS0387_keyestudio_YX5200-24SS_MP3_Module) for a good oversight.
+See the [Keyestudio YX5200-24SS documentation](https://wiki.keyestudio.com/KS0387_keyestudio_YX5200-24SS_MP3_Module) and the [YX5300/YX6300 protocol documentation](https://majicdesigns.github.io/MD_YX5300/) for module details.
 
 ## Usage
 

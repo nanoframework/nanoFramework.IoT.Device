@@ -373,7 +373,7 @@ namespace Iot.Device.Yx5300
         /// <returns>True if success.</returns>
         public bool PlayTrackWithVolume(int trackNum, int volume)
         {
-            return SendRequest(CommandSet.CMD_PLAY_W_VOL, (byte)(volume > MaxVolume ? MaxVolume : volume), (byte)trackNum);
+            return SendRequest(CommandSet.CMD_PLAY_W_VOL, (byte)trackNum, (byte)(volume > MaxVolume ? MaxVolume : volume));
         }
 
         /// <summary>
