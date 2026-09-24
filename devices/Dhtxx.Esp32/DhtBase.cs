@@ -115,8 +115,8 @@ namespace Iot.Device.DHTxx.Esp32
                 // no filter (FilterThreshold = 0 disables filtering in v3)
                 FilterThreshold = 0,
 
-                // max time 1us clock
-                IdleThreshold = ushort.MaxValue,
+                // in nanoseconds: it must be longer than the 20 ms start signal, which is now part of the received frame
+                IdleThreshold = 25_000_000,
 
                 // timeout after 1 second
                 ReceiveTimeout = TimeSpan.FromSeconds(1)
@@ -170,8 +170,12 @@ namespace Iot.Device.DHTxx.Esp32
                 throw new Exception("GPIO controller or RMT receiver is not configured.");
             }
 
-            RmtSymbols response;
+            RmtSymbols? response;
             byte readVal = 0;
+
+            // start receiving before the start signal: arming the receiver after releasing the line is too late
+            // and the sensor response is lost
+            _rxChannel.Start();
 
             // keep data line HIGH
             _controller.SetPinMode(_pin, PinMode.Output);
@@ -188,22 +192,40 @@ namespace Iot.Device.DHTxx.Esp32
             // wait 20 - 40 microseconds
             _controller.SetPinMode(_pin, PinMode.InputPullUp);
 
-            // Receive everything (blocking; returns null on timeout)
-            response = _rxChannel.Receive();
+            // the frame is complete once the line stays idle for IdleThreshold after the last bit
+            response = _rxChannel.TryGetReceivedSymbols();
+            DateTime receiveDeadline = DateTime.UtcNow.AddSeconds(1);
+            while ((response == null) && (DateTime.UtcNow < receiveDeadline))
+            {
+                Thread.Sleep(5);
+                response = _rxChannel.TryGetReceivedSymbols();
+            }
+
+            _rxChannel.Stop();
+
             // Set back to pull up
             _controller.SetPinMode(_pin, PinMode.Output);
 
-            // We will read 43 elements. The first 1 is the large pulse
-            // The second one the small puls and the fisrt 80 micro second one
-            // The thrid one the second micro second element
-            if ((response != null) && (response.Count >= 43))
+            // Locate the start signal (the only long low level), the bits don't always start at the same index.
+            // After it: release + 80us low, 80us high + first bit low, then one symbol per bit.
+            int startSignal = -1;
+            for (int i = 0; (response != null) && (i < response.Count); i++)
+            {
+                if (!response[i].Level1 && (response[i].Duration1 > 1000))
+                {
+                    startSignal = i;
+                    break;
+                }
+            }
+
+            if ((response != null) && (startSignal >= 0) && (response.Count >= startSignal + 43))
             {
                 // the read data contains 40 bits
                 for (int i = 0; i < 40; i++)
                 {
                     readVal <<= 1;
                     // It's a 1 if the timing if 70 micro seconds, 0 if between 26 and 28
-                    if (response[i + 3].Duration0 > 50)
+                    if (response[startSignal + 3 + i].Duration0 > 50)
                     {
                         readVal |= 1;
                     }
