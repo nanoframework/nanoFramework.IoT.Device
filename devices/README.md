@@ -137,6 +137,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bmm150.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bmm150/) [Bmm150 - Magnetometer](Bmm150)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bno055.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bno055/) [BNO055 - inertial measurement unit](Bno055)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Hmc5883l.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Hmc5883l/) [HMC5883L - 3 Axis Digital Compass](Hmc5883l)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lis3Mdl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lis3Mdl/) [LIS3MDL - three-axis digital magnetometer](Lis3Mdl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lps22Hb.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lps22Hb/) [LPS22HB - MEMS nano pressure sensor: 260-1260 hPa absolute digital output barometer](Lps22Hb)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
@@ -342,6 +343,7 @@
 
 ## I2C libraries/modules
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lis3Mdl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lis3Mdl/) [LIS3MDL - three-axis digital magnetometer](Lis3Mdl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
 
 ## Bus and GPIO multiplexers
