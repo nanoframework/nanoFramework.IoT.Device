@@ -243,7 +243,7 @@ namespace Iot.Device.Lis3Mdl
 
         private void Read(Register register, SpanByte data)
         {
-            _i2c.WriteByte((byte)register);
+            _i2c.WriteByte((byte)((byte)register | 0x80));
             _i2c.Read(data);
         }
     }
