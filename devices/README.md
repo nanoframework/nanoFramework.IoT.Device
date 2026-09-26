@@ -282,6 +282,7 @@
 
 ## RFID/NFC modules
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.M24Sr.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.M24Sr/) [M24SR - dynamic NFC tag](M24Sr)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mfrc522.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mfrc522/) [MFRC522 - RFID reader](Mfrc522)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pn5180.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pn5180/) [PN5180 - RFID and NFC reader](Pn5180)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pn532.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pn532/) [PN532 - RFID and NFC reader](Pn532)
@@ -347,6 +348,7 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lis3Mdl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lis3Mdl/) [LIS3MDL - three-axis digital magnetometer](Lis3Mdl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.M24Sr.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.M24Sr/) [M24SR - dynamic NFC tag](M24Sr)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
 
 ## Bus and GPIO multiplexers
