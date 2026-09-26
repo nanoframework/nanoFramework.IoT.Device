@@ -22,7 +22,7 @@ Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
 
 The on-board M24SR64-Y uses the 7-bit I2C address `0x56`. The sample uses I2C bus 2; adjust the bus number if the board firmware maps that peripheral differently.
 
-An I2C session must be opened before accessing the tag and closed afterward. `OpenSession` waits for normal session ownership and does not intentionally interrupt NFC activity. Use `KillSession` only when taking ownership is more important than preserving an active RF session.
+An I2C session must be opened before accessing the tag and closed afterward. `OpenSession` retries normal session acquisition up to the configured polling limit and does not intentionally interrupt NFC activity. It throws `InvalidOperationException` if the session remains unavailable. Use `KillSession` only when taking ownership is more important than preserving an active RF session.
 
 ```csharp
 using Iot.Device.M24Sr;
@@ -39,7 +39,7 @@ try
     M24SrCapabilityContainer capabilityContainer = tag.ReadCapabilityContainer();
     NdefMessage message = tag.ReadNdefMessage();
 
-    Debug.WriteLine($"NDEF capacity: {capabilityContainer.MaximumNdefMessageSize} bytes");
+    Debug.WriteLine($"NDEF capacity: {capabilityContainer.MaximumNdefFileSize - 2} bytes");
     Debug.WriteLine($"NDEF length: {message.Length} bytes, records: {message.Records.Count}");
 }
 finally

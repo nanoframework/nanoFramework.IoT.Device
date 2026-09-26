@@ -20,7 +20,7 @@ try
     M24SrCapabilityContainer capabilityContainer = tag.ReadCapabilityContainer();
     NdefMessage message = tag.ReadNdefMessage();
 
-    Debug.WriteLine($"NDEF capacity: {capabilityContainer.MaximumNdefMessageSize} bytes");
+    Debug.WriteLine($"NDEF capacity: {capabilityContainer.MaximumNdefFileSize - 2} bytes");
     Debug.WriteLine($"NDEF length: {message.Length} bytes, records: {message.Records.Count}");
     for (int index = 0; index < message.Records.Count; index++)
     {

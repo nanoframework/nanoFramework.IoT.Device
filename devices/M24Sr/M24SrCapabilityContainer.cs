@@ -38,11 +38,11 @@ namespace Iot.Device.M24Sr
             MaximumReadLength = (data[3] << 8) | data[4];
             MaximumWriteLength = (data[5] << 8) | data[6];
             NdefFileId = (ushort)((data[9] << 8) | data[10]);
-            MaximumNdefMessageSize = (data[11] << 8) | data[12];
+            MaximumNdefFileSize = (data[11] << 8) | data[12];
             ReadAccess = data[13];
             WriteAccess = data[14];
 
-            if ((MaximumReadLength <= 0) || (MaximumWriteLength <= 0))
+            if ((MaximumReadLength <= 0) || (MaximumWriteLength <= 0) || (MaximumNdefFileSize < 2))
             {
                 throw new InvalidOperationException();
             }
@@ -69,9 +69,9 @@ namespace Iot.Device.M24Sr
         public ushort NdefFileId { get; }
 
         /// <summary>
-        /// Gets the maximum NDEF message size in bytes.
+        /// Gets the maximum NDEF file size in bytes, including the two-byte NLEN field.
         /// </summary>
-        public int MaximumNdefMessageSize { get; }
+        public int MaximumNdefFileSize { get; }
 
         /// <summary>
         /// Gets the NDEF read-access value.

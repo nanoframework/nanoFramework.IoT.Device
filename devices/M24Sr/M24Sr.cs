@@ -25,7 +25,9 @@ namespace Iot.Device.M24Sr
         private const byte UpdateBinaryInstruction = 0xD6;
         private const ushort CapabilityContainerFileId = 0xE103;
         private const ushort SuccessStatus = 0x9000;
+        private const int NdefLengthFieldSize = 2;
         private const int StatusResponseLength = 5;
+        private const int FrameWaitingTimeExtensionLength = 4;
         private const int MaximumWritePayloadLength = 246;
         private const int PollDelayMilliseconds = 1;
 
@@ -39,7 +41,7 @@ namespace Iot.Device.M24Sr
         /// Initializes a new instance of the <see cref="M24Sr"/> class.
         /// </summary>
         /// <param name="i2cDevice">I2C device used to communicate with the tag.</param>
-        /// <param name="answerPollingAttempts">Maximum number of one-millisecond answer polling attempts.</param>
+        /// <param name="answerPollingAttempts">Maximum number of one-millisecond answer and session-acquisition polling attempts.</param>
         /// <exception cref="ArgumentNullException"><paramref name="i2cDevice"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="answerPollingAttempts"/> is less than or equal to zero.</exception>
         public M24Sr(I2cDevice i2cDevice, int answerPollingAttempts = 80)
@@ -54,19 +56,30 @@ namespace Iot.Device.M24Sr
         }
 
         /// <summary>
-        /// Gets the maximum number of answer polling attempts.
+        /// Gets the maximum number of answer and session-acquisition polling attempts.
         /// </summary>
         public int AnswerPollingAttempts { get; }
 
         /// <summary>
-        /// Opens an I2C session with the tag.
+        /// Opens an I2C session with the tag, waiting for an active RF session to be released.
         /// </summary>
-        /// <exception cref="InvalidOperationException">The I2C write did not complete.</exception>
+        /// <exception cref="InvalidOperationException">The session could not be acquired before the polling limit was reached.</exception>
         public void OpenSession()
         {
-            Write(new byte[] { OpenSessionCommand });
-            _blockNumber = 0;
-            _sessionOpen = true;
+            for (int attempt = 0; attempt < AnswerPollingAttempts; attempt++)
+            {
+                I2cTransferResult result = _i2cDevice.WriteByte(OpenSessionCommand);
+                if (result.Status == I2cTransferStatus.FullTransfer)
+                {
+                    _blockNumber = 0;
+                    _sessionOpen = true;
+                    return;
+                }
+
+                Thread.Sleep(PollDelayMilliseconds);
+            }
+
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -130,9 +143,9 @@ namespace Iot.Device.M24Sr
             M24SrCapabilityContainer capabilityContainer = ReadCapabilityContainer();
             SelectFile(capabilityContainer.NdefFileId);
 
-            byte[] lengthBuffer = ReadBinary(0, 2);
+            byte[] lengthBuffer = ReadBinary(0, NdefLengthFieldSize);
             int messageLength = (lengthBuffer[0] << 8) | lengthBuffer[1];
-            if (messageLength > capabilityContainer.MaximumNdefMessageSize)
+            if (messageLength + NdefLengthFieldSize > capabilityContainer.MaximumNdefFileSize)
             {
                 throw new InvalidOperationException();
             }
@@ -153,7 +166,7 @@ namespace Iot.Device.M24Sr
                     count = 250;
                 }
 
-                byte[] block = ReadBinary((ushort)(offset + 2), count);
+                byte[] block = ReadBinary((ushort)(offset + NdefLengthFieldSize), count);
                 new SpanByte(block).CopyTo(new SpanByte(message).Slice(offset, count));
                 offset += count;
             }
@@ -181,7 +194,7 @@ namespace Iot.Device.M24Sr
                 throw new InvalidOperationException();
             }
 
-            if (message.Length > capabilityContainer.MaximumNdefMessageSize)
+            if (message.Length + NdefLengthFieldSize > capabilityContainer.MaximumNdefFileSize)
             {
                 throw new ArgumentException();
             }
@@ -207,7 +220,7 @@ namespace Iot.Device.M24Sr
                     count = maximumWriteLength;
                 }
 
-                UpdateBinary((ushort)(offset + 2), new SpanByte(serializedMessage).Slice(offset, count));
+                UpdateBinary((ushort)(offset + NdefLengthFieldSize), new SpanByte(serializedMessage).Slice(offset, count));
                 offset += count;
             }
 
@@ -238,6 +251,16 @@ namespace Iot.Device.M24Sr
         private static bool HasValidCrc(byte[] data)
         {
             return ComputeCrc(data, data.Length) == 0;
+        }
+
+        private static bool HasValidCrc(byte[] data, int length)
+        {
+            return ComputeCrc(data, length) == 0;
+        }
+
+        private static bool IsFrameWaitingTimeExtension(byte[] response)
+        {
+            return (response[0] & 0xC0) == 0xC0;
         }
 
         private static void AppendCrc(byte[] data, int length)
@@ -341,10 +364,17 @@ namespace Iot.Device.M24Sr
             AppendCrc(frame, index);
             Write(frame);
 
-            byte[] response = ReadResponse(responseDataLength + StatusResponseLength);
-            if ((response[0] & 0xC0) == 0xC0)
+            int responseLength = responseDataLength + StatusResponseLength;
+            byte[] response = ReadResponse(responseLength);
+            int extensionCount = 0;
+            while (IsFrameWaitingTimeExtension(response))
             {
-                response = HandleFrameWaitingTimeExtension(response);
+                if (!HasValidCrc(response, FrameWaitingTimeExtensionLength) || (++extensionCount > AnswerPollingAttempts))
+                {
+                    throw new InvalidOperationException();
+                }
+
+                response = HandleFrameWaitingTimeExtension(response, responseLength);
             }
 
             ValidateResponse(response);
@@ -358,13 +388,13 @@ namespace Iot.Device.M24Sr
             return responseData;
         }
 
-        private byte[] HandleFrameWaitingTimeExtension(byte[] response)
+        private byte[] HandleFrameWaitingTimeExtension(byte[] response, int responseLength)
         {
-            byte[] extensionResponse = new byte[4];
+            byte[] extensionResponse = new byte[FrameWaitingTimeExtensionLength];
             new SpanByte(response).Slice(0, 2).CopyTo(extensionResponse);
             AppendCrc(extensionResponse, 2);
             Write(extensionResponse);
-            return ReadResponse(StatusResponseLength);
+            return ReadResponse(responseLength);
         }
 
         private byte[] ReadResponse(int length)
@@ -374,6 +404,13 @@ namespace Iot.Device.M24Sr
             {
                 I2cTransferResult result = _i2cDevice.Read(response);
                 if (result.Status == I2cTransferStatus.FullTransfer)
+                {
+                    return response;
+                }
+
+                if ((result.BytesTransferred >= FrameWaitingTimeExtensionLength) &&
+                    IsFrameWaitingTimeExtension(response) &&
+                    HasValidCrc(response, FrameWaitingTimeExtensionLength))
                 {
                     return response;
                 }
