@@ -208,7 +208,8 @@ foreach ($folder in $deviceFolders)
     #################################################################
 
     # NFC solutions require the projects on Card solution to be restored too
-    if ($solutionFile.BaseName -eq "Mfrc522" -or
+    if ($solutionFile.BaseName -eq "M24Sr" -or
+        $solutionFile.BaseName -eq "Mfrc522" -or
         $solutionFile.BaseName -eq "Pn5180" -or 
         $solutionFile.BaseName -eq "Pn532")
     {
