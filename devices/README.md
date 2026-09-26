@@ -23,6 +23,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Adxl357.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Adxl357/) [ADXL357 - Accelerometer](Adxl357)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bmi270.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bmi270/) [BMI270 - accelerometer and gyroscope](Bmi270)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bno055.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bno055/) [BNO055 - inertial measurement unit](Bno055)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu6886.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu6886/) [Mpu6886 - accelerometer and gyroscope](Mpu6886)
@@ -106,6 +107,7 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bmi270.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bmi270/) [BMI270 - accelerometer and gyroscope](Bmi270)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bno055.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bno055/) [BNO055 - inertial measurement unit](Bno055)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu6886.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu6886/) [Mpu6886 - accelerometer and gyroscope](Mpu6886)
@@ -344,6 +346,7 @@
 ## I2C libraries/modules
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lis3Mdl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lis3Mdl/) [LIS3MDL - three-axis digital magnetometer](Lis3Mdl)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
 
 ## Bus and GPIO multiplexers
