@@ -1,0 +1,43 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ndef", "..\Card\Ndef\Ndef.nfproj", "{150CED27-7CF0-4671-9370-B330D2D49066}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "M24Sr", "M24Sr.nfproj", "{C946D545-332D-46F2-B31A-732DA85B7C03}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "M24Sr.Samples", "samples\M24Sr.Samples.nfproj", "{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B6C72051-A4A6-4D17-BC3B-0892563874E7}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{150CED27-7CF0-4671-9370-B330D2D49066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{150CED27-7CF0-4671-9370-B330D2D49066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{150CED27-7CF0-4671-9370-B330D2D49066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C946D545-332D-46F2-B31A-732DA85B7C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C946D545-332D-46F2-B31A-732DA85B7C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C946D545-332D-46F2-B31A-732DA85B7C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C946D545-332D-46F2-B31A-732DA85B7C03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{152F43C2-E53F-4BB7-B6AB-8757DDD780D4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {303733A3-815D-4431-9C18-179071E74871}
+	EndGlobalSection
+EndGlobal

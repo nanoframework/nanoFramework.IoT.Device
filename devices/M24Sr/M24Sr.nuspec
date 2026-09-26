@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.M24Sr</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.M24Sr</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes></releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>Binding for the ST M24SR dynamic NFC Forum Type 4 tag over I2C.</description>
+    <summary>M24SR dynamic NFC tag binding for .NET nanoFramework.</summary>
+    <tags>nanoFramework C# csharp netmf netnf IoT NFC NDEF Type4 M24SR</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Text" version="1.3.42" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.M24Sr.dll" target="lib\Iot.Device.M24Sr.dll" />
+    <file src="bin\Release\Iot.Device.M24Sr.pdb" target="lib\Iot.Device.M24Sr.pdb" />
+    <file src="bin\Release\Iot.Device.M24Sr.pdbx" target="lib\Iot.Device.M24Sr.pdbx" />
+    <file src="bin\Release\Iot.Device.M24Sr.pe" target="lib\Iot.Device.M24Sr.pe" />
+    <file src="bin\Release\Iot.Device.M24Sr.xml" target="lib\Iot.Device.M24Sr.xml" />
+    <file src="..\Card\Ndef\bin\Release\Iot.Device.Ndef.dll" target="lib\Iot.Device.Ndef.dll" />
+    <file src="..\Card\Ndef\bin\Release\Iot.Device.Ndef.pdb" target="lib\Iot.Device.Ndef.pdb" />
+    <file src="..\Card\Ndef\bin\Release\Iot.Device.Ndef.pdbx" target="lib\Iot.Device.Ndef.pdbx" />
+    <file src="..\Card\Ndef\bin\Release\Iot.Device.Ndef.pe" target="lib\Iot.Device.Ndef.pe" />
+    <file src="..\Card\Ndef\bin\Release\Iot.Device.Ndef.xml" target="lib\Iot.Device.Ndef.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
