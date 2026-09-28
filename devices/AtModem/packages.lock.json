@@ -10,15 +10,15 @@
       },
       "nanoFramework.Iot.Device.Common.GnssDevice": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.121, 2.0.0-preview.121]",
-        "resolved": "2.0.0-preview.121",
-        "contentHash": "ivIXlgURZhQfKvgqJi3mvZXj/LkHYUs9unjhwibBHMsm5JsqZ0r50o4ga20TFzTBEQNwpm/I5AbTud5KTyIe2g=="
+        "requested": "[2.0.0-preview.133, 2.0.0-preview.133]",
+        "resolved": "2.0.0-preview.133",
+        "contentHash": "W7APWmDmuf2LKmbMHUXjIBVPQKh/3rx/XJZgaK8QDSfop2djT8MPRc1qI9QDvYRT3rr1fexbnSxHsgi02wvHlg=="
       },
       "nanoFramework.M2Mqtt.Core": {
         "type": "Direct",
-        "requested": "[6.0.0-preview.17, 6.0.0-preview.17]",
-        "resolved": "6.0.0-preview.17",
-        "contentHash": "+LleGqq6jj/ww8duc2sPmK3+WcJI6HbZMVow+x0FzPOpuLDa4eAN/RN9QhzikvaxhCKNRE57FHahO0Wsn6fraA=="
+        "requested": "[6.0.0-preview.20, 6.0.0-preview.20]",
+        "resolved": "6.0.0-preview.20",
+        "contentHash": "+QEu9qpkmnV7SUBQ0f096xmFNNWMp2qFqIJJxd6OfTHS8NI6slmb7tkU9S1nrARCkk1GxYj/MVusLfPVtemxrg=="
       },
       "nanoFramework.Runtime.Events": {
         "type": "Direct",
