@@ -101,7 +101,7 @@ namespace Iot.Device.Vcnl4040
         #region Measurement
 
         /// <summary>
-        /// Gets the current proximity sensor reading.
+        /// Gets the current proximity sensor reading in raw ADC counts.
         /// Note: if active force mode is enabled reading this property implicitly triggers
         /// the measurement for once cycle.
         /// </summary>

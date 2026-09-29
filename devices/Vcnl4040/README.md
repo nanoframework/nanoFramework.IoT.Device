@@ -36,7 +36,7 @@ sensor.ProximitySensor.PowerOn = true;
 while (true)
 {
     Debug.WriteLine($"Illuminance: {sensor.AmbientLightSensor.Illuminance.Lux:F2} lux");
-    Debug.WriteLine($"Proximity: {sensor.ProximitySensor.Distance}");
+    Debug.WriteLine($"Proximity reading: {sensor.ProximitySensor.Distance} counts");
     Thread.Sleep(1000);
 }
 ```

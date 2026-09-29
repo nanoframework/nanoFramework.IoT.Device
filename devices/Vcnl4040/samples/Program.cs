@@ -32,7 +32,7 @@ proximity.PowerOn = true;
 while (true)
 {
     Debug.WriteLine($"Illuminance: {ambientLight.Illuminance.Lux:F2} lux");
-    Debug.WriteLine($"Proximity: {proximity.Distance}");
+    Debug.WriteLine($"Proximity reading: {proximity.Distance} counts");
     Debug.WriteLine($"White channel: {proximity.WhiteChannelReading}");
     Thread.Sleep(1000);
 }
