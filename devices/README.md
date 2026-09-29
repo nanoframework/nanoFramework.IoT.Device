@@ -286,6 +286,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mfrc522.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mfrc522/) [MFRC522 - RFID reader](Mfrc522)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pn5180.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pn5180/) [PN5180 - RFID and NFC reader](Pn5180)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pn532.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pn532/) [PN532 - RFID and NFC reader](Pn532)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Rdm6300.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Rdm6300/) [RDM6300 RFID reader](Rdm6300)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Card.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Card/) [RFID shared elements](Card)
 
 ## Media libraries
