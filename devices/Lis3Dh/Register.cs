@@ -3,11 +3,10 @@
 
 namespace Iot.Device.Lis3DhAccelerometer
 {
-    // Register for Accelerometer and Gyroscope
     internal enum Register : byte
     {
-        // register modifiers
         I2cAutoIncrement = 0x80,
+        WHO_AM_I = 0x0F,
 
         CTRL_REG0 = 0x1E, // SDO_PULL_UP_DISCONNECT, 0, 0, 1, 0, 0, 0, 0
         TEMP_CFG_REG = 0x1F, // ADC_ENABLE, TEMP_ENABLE, 0, 0, ...

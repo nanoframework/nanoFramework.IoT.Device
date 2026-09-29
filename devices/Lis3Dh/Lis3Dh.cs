@@ -26,6 +26,8 @@ namespace Iot.Device.Lis3DhAccelerometer
         /// </summary>
         public const byte SecondaryI2cAddress = 0x19;
 
+        private const byte DeviceId = 0x33;
+        private const byte BlockDataUpdateEnabled = 0x80;
         private const int Max = 1 << 15;
 
         private DataRate _dataRate;
@@ -135,14 +137,19 @@ namespace Iot.Device.Lis3DhAccelerometer
 
         private void ChangeSettings(DataRate dataRate, OperatingMode operatingMode, AccelerationScale accelerationScale)
         {
+            if (dataRate == DataRate.LowPowerMode1600Hz && operatingMode != OperatingMode.LowPowerMode)
+            {
+                throw new ArgumentException("The 1.6 kHz data rate is available only in low-power mode.");
+            }
+
             byte dataRateBits = (byte)((byte)dataRate << 4);
             byte lowPowerModeBitAndAxesEnable = (byte)(operatingMode == OperatingMode.LowPowerMode ? 0b1111 : 0b0111);
             this[Register.CTRL_REG1] = (byte)(dataRateBits | lowPowerModeBitAndAxesEnable);
 
-            // remainder of the bits (block data update/endianness/self-test/SPI 3 or 4-wire setting) set to default
+            // Enable block data update; leave endianness, self-test, and SPI settings at their defaults
             byte fullScaleBits = (byte)((byte)accelerationScale << 4);
             byte highResolutionModeBit = (byte)(operatingMode == OperatingMode.HighResolutionMode ? 0b1000 : 0b0000);
-            this[Register.CTRL_REG4] = (byte)(fullScaleBits | highResolutionModeBit);
+            this[Register.CTRL_REG4] = (byte)(BlockDataUpdateEnabled | fullScaleBits | highResolutionModeBit);
 
             _dataRate = dataRate;
             _operatingMode = operatingMode;
@@ -151,6 +158,13 @@ namespace Iot.Device.Lis3DhAccelerometer
 
         private Lis3Dh Initialize(DataRate dataRate, OperatingMode operatingMode, AccelerationScale accelerationScale)
         {
+            SpanByte deviceId = new byte[1];
+            ReadRegister(Register.WHO_AM_I, deviceId, false);
+            if (deviceId[0] != DeviceId)
+            {
+                throw new Exception("Device is not a LIS3DH.");
+            }
+
             ResetUnusedSettings();
             ChangeSettings(dataRate, operatingMode, accelerationScale);
 

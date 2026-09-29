@@ -9,7 +9,7 @@ namespace Iot.Device.Lis3DhAccelerometer
     public enum OperatingMode : byte
     {
         /// <summary>
-        /// Power-down mode.
+        /// High-resolution mode.
         /// </summary>
         HighResolutionMode,
 
