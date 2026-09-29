@@ -351,8 +351,8 @@ namespace Iot.Device.Vcnl4040
             _alsConfRegister.Write();
 
             // set threshold levels by calculating the register value in counts based on the current resolution.
-            _alsLowInterruptThresholdRegister.Level = (ushort)(configuration.LowerThreshold.Lux / resolution.Lux);
-            _alsHighInterruptThresholdRegister.Level = (ushort)(configuration.UpperThreshold.Lux / resolution.Lux);
+            _alsLowInterruptThresholdRegister.Level = ConvertToCounts(configuration.LowerThreshold, resolution);
+            _alsHighInterruptThresholdRegister.Level = ConvertToCounts(configuration.UpperThreshold, resolution);
             _alsLowInterruptThresholdRegister.Write();
             _alsHighInterruptThresholdRegister.Write();
 
@@ -388,7 +388,24 @@ namespace Iot.Device.Vcnl4040
         #region Helper
 
         /// <summary>
-        /// Helper method to get detection range and resolution for the given integration time.
+        /// Converts an illuminance threshold to the closest register count without overflowing.
+        /// </summary>
+        /// <param name="illuminance">The illuminance threshold.</param>
+        /// <param name="resolution">The configured sensor resolution.</param>
+        /// <returns>The register count.</returns>
+        private static ushort ConvertToCounts(Illuminance illuminance, Illuminance resolution)
+        {
+            double counts = illuminance.Lux / resolution.Lux;
+            if (counts >= ushort.MaxValue)
+            {
+                return ushort.MaxValue;
+            }
+
+            return (ushort)(counts + 0.5);
+        }
+
+        /// <summary>
+        /// Gets the detection range and resolution for the given integration time.
         /// </summary>
         /// <param name="integrationTime">The integration time.</param>
         /// <param name="range">The resulting detection range.</param>

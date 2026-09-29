@@ -270,6 +270,7 @@ namespace Iot.Device.Vcnl4040
             // enable interrupts / proximity detection logic output
             if (configuration.Mode == ProximityInterruptMode.LogicOutput)
             {
+                _alsConfRegister.Read();
                 if (_alsConfRegister.AlsIntEn == AlsInterrupt.Enabled)
                 {
                     throw new InvalidOperationException();

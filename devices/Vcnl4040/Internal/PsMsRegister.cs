@@ -79,6 +79,8 @@ namespace Iot.Device.Vcnl4040.Internal
             WhiteEn = (PsWhiteChannelState)(dataHigh & WhiteEnMask);
             PsMs = (PsProximityDetectionOutput)(dataHigh & PsMsMask);
             LedI = (PsLedCurrent)(dataHigh & LedIMask);
+
+            ResetChangeFlags();
         }
 
         /// <inheritdoc />
