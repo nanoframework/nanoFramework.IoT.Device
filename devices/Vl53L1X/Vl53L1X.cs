@@ -239,8 +239,9 @@ namespace Iot.Device.Vl53L1X
         {
             get
             {
-                byte temp = ReadByte((byte)Registers.GPIO__TIO_HV_STATUS);
-                return temp != 0;
+                byte expected = InterruptPolarity == PinValue.High ? (byte)1 : (byte)0;
+                byte status = ReadByte((ushort)Registers.GPIO__TIO_HV_STATUS);
+                return (status & 0x01) == expected;
             }
         }
 
@@ -252,15 +253,15 @@ namespace Iot.Device.Vl53L1X
             get
             {
                 byte polarity = ReadByte((ushort)Registers.GPIO_HV_MUX__CTRL);
-                polarity = (byte)(polarity & 0x10);
-                return polarity >> 4 == 1 ? PinValue.High : PinValue.Low;
+                return (polarity & 0x10) == 0 ? PinValue.High : PinValue.Low;
             }
 
             set
             {
-                byte temp = ReadByte((ushort)Registers.GPIO_HV_MUX__CTRL);
-                temp = (byte)(temp & 0xEF);
-                WriteRegister((ushort)Registers.GPIO_HV_MUX__CTRL, (byte)(temp | (byte)(((byte)value & 1) << 4)));
+                byte polarity = ReadByte((ushort)Registers.GPIO_HV_MUX__CTRL);
+                polarity = (byte)(polarity & 0xEF);
+                byte polarityBit = value == PinValue.High ? (byte)0 : (byte)0x10;
+                WriteRegister((ushort)Registers.GPIO_HV_MUX__CTRL, (byte)(polarity | polarityBit));
             }
         }
 
@@ -442,17 +443,26 @@ namespace Iot.Device.Vl53L1X
             get
             {
                 uint temp = ReadUInt32((ushort)Registers.VL53L1X_SYSTEM__INTERMEASUREMENT_PERIOD);
-                uint clockPll = ReadUInt32((ushort)Registers.VL53L1X_RESULT__OSC_CALIBRATE_VAL);
+                ushort clockPll = ReadUInt16((ushort)Registers.VL53L1X_RESULT__OSC_CALIBRATE_VAL);
 
                 clockPll &= 0x3FF;
+                if (clockPll == 0)
+                {
+                    throw new IOException("The oscillator calibration value is zero.");
+                }
 
                 return (ushort)(temp / (clockPll * 1.065));
             }
 
             set
             {
-                uint clockPll = ReadUInt32((ushort)Registers.VL53L1X_RESULT__OSC_CALIBRATE_VAL);
+                ushort clockPll = ReadUInt16((ushort)Registers.VL53L1X_RESULT__OSC_CALIBRATE_VAL);
                 clockPll &= 0x3FF;
+                if (clockPll == 0)
+                {
+                    throw new IOException("The oscillator calibration value is zero.");
+                }
+
                 WriteUInt32(
                     (ushort)Registers.VL53L1X_SYSTEM__INTERMEASUREMENT_PERIOD,
                     (uint)(clockPll * value * 1.075));
@@ -578,12 +588,28 @@ namespace Iot.Device.Vl53L1X
                         return RangeStatus.SigmaFailure;
                     case 4:
                         return RangeStatus.SignalFailure;
+                    case 8:
+                        return RangeStatus.RangeValidMinRangeClipped;
                     case 5:
                         return RangeStatus.OutOfBounds;
+                    case 3:
+                        return RangeStatus.HardwareFailure;
+                    case 19:
+                        return RangeStatus.RangeValidNoWrapCheck;
                     case 7:
                         return RangeStatus.WrapAround;
+                    case 12:
+                        return RangeStatus.XtalkSignalFailure;
+                    case 18:
+                        return RangeStatus.SynchronizationInterrupt;
+                    case 22:
+                        return RangeStatus.RangeValidMergedPulse;
+                    case 23:
+                        return RangeStatus.TargetPresentLackOfSignal;
+                    case 13:
+                        return RangeStatus.MinRangeFailure;
                     default:
-                        throw new Exception($"The returned range status code {rgSt} of the device is unknown.");
+                        return RangeStatus.Unknown;
                 }
             }
         }
@@ -653,7 +679,7 @@ namespace Iot.Device.Vl53L1X
         public void SetDistanceThreshold(Length threshLow, Length threshHigh, WindowDetectionMode detectionMode)
         {
             byte temp = ReadByte((ushort)Registers.SYSTEM__INTERRUPT_CONFIG_GPIO);
-            temp &= 0x47;
+            temp &= 0xF8;
             WriteRegister(
                 (ushort)Registers.SYSTEM__INTERRUPT_CONFIG_GPIO,
                 (byte)(temp | ((byte)detectionMode & 0x07) | 0x40));
@@ -789,13 +815,13 @@ namespace Iot.Device.Vl53L1X
 
             set
             {
-                var length = (ushort)value.Millimeters;
-                if (length > 0xFFFF >> 2)
+                double length = value.Millimeters;
+                if (length < 0 || length > (0xFFFF >> 2))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The sigma threshold is too high");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The sigma threshold must be between 0 and 16383 mm.");
                 }
 
-                WriteUInt16((ushort)Registers.RANGE_CONFIG__SIGMA_THRESH, (ushort)(length << 2));
+                WriteUInt16((ushort)Registers.RANGE_CONFIG__SIGMA_THRESH, (ushort)((ushort)length << 2));
             }
         }
 

@@ -4,45 +4,88 @@
 namespace Iot.Device.Vl53L1X
 {
     /// <summary>
-    /// The range status of the device.
-    /// There are five range statuses: 0, 1, 2, 4, and 7. When the range status is 0, there is no error.
-    /// Range status 1 and 2 are error warnings while range status 4 and 7 are errors.
+    /// The range status reported by the device.
     /// </summary>
     public enum RangeStatus : byte
     {
         /// <summary>
-        /// No error has occured.
+        /// The range is valid.
         /// </summary>
         NoError = 0,
 
         /// <summary>
-        /// SigmaFailure.
-        /// This means that the repeatability or standard deviation of the measurement is bad due to a decreasing signal noise ratio.
-        /// Increasing the timing budget can improve the standard deviation and avoid a range status 1.
+        /// The measurement repeatability is outside the configured sigma threshold.
         /// </summary>
         SigmaFailure = 1,
 
         /// <summary>
-        /// SignalFailure.
-        /// This means that the return signal is too week to return a good answer.
-        /// The reason is because the target is too far, or the target is not reflective enough, or the target is too small.
-        /// Increasing the timing budget might help, but there may simply be no target available.
+        /// The return signal is below the configured signal threshold.
         /// </summary>
         SignalFailure = 2,
 
         /// <summary>
-        /// OutOfBounds.
-        /// This means that the sensor is ranging in a "non-appropriated" zone and the measured result may be inconsistent.
-        /// This status is considered as a warning but, in general, it happens when a target is at the maximum distance possible from the sensor, i.e. around 5 m.
-        /// However, this is only for very bright targets.
+        /// The range is valid, but the target is below the minimum detection threshold.
+        /// </summary>
+        RangeValidMinRangeClipped = 3,
+
+        /// <summary>
+        /// The measured phase is outside the valid limits.
         /// </summary>
         OutOfBounds = 4,
 
         /// <summary>
-        /// WrapAround.
-        /// This situation may occur when the target is very reflective and the distance to the target/sensor is longer than the physical limited distance measurable by the sensor.
-        /// Such distances include approximately 5 m when the senor is in Long distance mode and approximately 1.3 m when the sensor is in Short distance mode.
+        /// A hardware failure occurred.
+        /// </summary>
+        HardwareFailure = 5,
+
+        /// <summary>
+        /// The range is valid, but the wraparound check was not performed.
+        /// </summary>
+        RangeValidNoWrapCheck = 6,
+
+        /// <summary>
+        /// A wrapped target was detected.
         /// </summary>
         WrapAround = 7,
+
+        /// <summary>
+        /// An internal processing underflow or overflow occurred.
+        /// </summary>
+        ProcessingFailure = 8,
+
+        /// <summary>
+        /// The crosstalk signal is too high.
+        /// </summary>
+        XtalkSignalFailure = 9,
+
+        /// <summary>
+        /// The first synchronization interrupt occurred after ranging started.
+        /// </summary>
+        SynchronizationInterrupt = 10,
+
+        /// <summary>
+        /// The range is valid, but the result contains merged pulses.
+        /// </summary>
+        RangeValidMergedPulse = 11,
+
+        /// <summary>
+        /// A target is present, but the signal is insufficient.
+        /// </summary>
+        TargetPresentLackOfSignal = 12,
+
+        /// <summary>
+        /// The configured region of interest is outside the SPAD array.
+        /// </summary>
+        MinRangeFailure = 13,
+
+        /// <summary>
+        /// The low-level driver returned an invalid negative range.
+        /// </summary>
+        RangeInvalid = 14,
+
+        /// <summary>
+        /// The device returned an unrecognized status.
+        /// </summary>
+        Unknown = 255
     }
 }
