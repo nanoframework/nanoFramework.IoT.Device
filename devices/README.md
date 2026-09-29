@@ -24,6 +24,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Adxl357.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Adxl357/) [ADXL357 - Accelerometer](Adxl357)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bmi270.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bmi270/) [BMI270 - accelerometer and gyroscope](Bmi270)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bno055.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bno055/) [BNO055 - inertial measurement unit](Bno055)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lis3Dh.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lis3Dh/) [LIS3DH - ultra-low-power high-performance 3-axis accelerometer](Lis3Dh)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
@@ -192,6 +193,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.LidarLiteV3.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.LidarLiteV3/) [LidarLiteV3 - LIDAR Time of Flight Sensor](LidarLiteV3)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.QtrSensors.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.QtrSensors/) [QTR Sensors - Pololu QTR Reflectance Sensors](QtrSensors)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl53L0X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl53L0X/) [VL53L0X - distance sensor](Vl53L0X)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl53L1X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl53L1X/) [VL53L1X distance sensor](Vl53L1X)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl6180X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl6180X/) [Vl6180X - distance sensor](Vl6180X)
 
 ## Passive InfraRed (motion) sensors
@@ -353,6 +355,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.M24Sr.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.M24Sr/) [M24SR - dynamic NFC tag](M24Sr)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl53L1X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl53L1X/) [VL53L1X distance sensor](Vl53L1X)
 
 ## Bus and GPIO multiplexers
 
@@ -388,6 +391,7 @@
 ## Lidar
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.LidarLiteV3.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.LidarLiteV3/) [LidarLiteV3 - LIDAR Time of Flight Sensor](LidarLiteV3)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl53L1X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl53L1X/) [VL53L1X distance sensor](Vl53L1X)
 
 ## Readers
 
