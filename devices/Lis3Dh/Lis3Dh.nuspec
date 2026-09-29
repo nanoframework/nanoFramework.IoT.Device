@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Lis3Dh</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Lis3Dh</title>
+    <authors>nanoframework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes></releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>Binding for the ST LIS3DH ultra-low-power, high-performance three-axis accelerometer.</description>
+    <summary>LIS3DH accelerometer binding for .NET nanoFramework.</summary>
+    <tags>nanoFramework C# csharp netmf netnf IoT accelerometer LIS3DH</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.Gpio" version="1.1.64" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.862" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Lis3Dh.dll" target="lib\Iot.Device.Lis3Dh.dll" />
+    <file src="bin\Release\Iot.Device.Lis3Dh.pdb" target="lib\Iot.Device.Lis3Dh.pdb" />
+    <file src="bin\Release\Iot.Device.Lis3Dh.pdbx" target="lib\Iot.Device.Lis3Dh.pdbx" />
+    <file src="bin\Release\Iot.Device.Lis3Dh.pe" target="lib\Iot.Device.Lis3Dh.pe" />
+    <file src="bin\Release\Iot.Device.Lis3Dh.xml" target="lib\Iot.Device.Lis3Dh.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
