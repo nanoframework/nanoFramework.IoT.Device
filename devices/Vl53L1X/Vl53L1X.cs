@@ -117,18 +117,18 @@ namespace Iot.Device.Vl53L1X
                 throw new ArgumentException("Value can't exceed 0x7F", nameof(newAddress));
             }
 
-            try
+            SpanByte writeArray = new byte[3];
+            ushort register = (ushort)Registers.VL53L1X_I2C_SLAVE__DEVICE_ADDRESS;
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray, register);
+            writeArray[2] = newAddress;
+            I2cTransferResult result = i2CDevice.Write(writeArray);
+            if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                SpanByte writeArray = new byte[3];
-                BinaryPrimitives.WriteUInt16BigEndian(writeArray, (byte)Registers.VL53L1X_I2C_SLAVE__DEVICE_ADDRESS);
-                writeArray[2] = newAddress;
-                i2CDevice.Write(writeArray);
-                Thread.Sleep(10);
+                throw new IOException(
+                    $"I2C write to register 0x{register:X4} failed: {result.Status}, {result.BytesTransferred} bytes transferred.");
             }
-            catch (IOException ex)
-            {
-                throw new IOException($"Can't change I2C Address to {newAddress}", ex);
-            }
+
+            Thread.Sleep(10);
         }
 
         /// <summary>
@@ -919,79 +919,89 @@ namespace Iot.Device.Vl53L1X
             SpanByte writeArray = new byte[3];
             BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
             writeArray[2] = param;
-            _i2CDevice.Write(writeArray);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
         }
 
         private byte ReadByte(ushort reg)
         {
-            SpanByte writeBytes = new byte[2];
-            BinaryPrimitives.WriteUInt16BigEndian(writeBytes, reg);
-            _i2CDevice.Write(writeBytes);
-            return _i2CDevice.ReadByte();
+            SpanByte writeArray = new byte[2];
+            SpanByte readArray = new byte[1];
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
+            ValidateTransfer(_i2CDevice.Read(readArray), reg, false);
+            return readArray[0];
         }
 
         private short ReadInt16(ushort reg)
         {
-            SpanByte outArray = new byte[2];
+            SpanByte readArray = new byte[2];
             SpanByte writeArray = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
-            _i2CDevice.Write(writeArray);
-
-            _i2CDevice.Read(outArray);
-            return BinaryPrimitives.ReadInt16BigEndian(outArray);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
+            ValidateTransfer(_i2CDevice.Read(readArray), reg, false);
+            return BinaryPrimitives.ReadInt16BigEndian(readArray);
         }
 
         private ushort ReadUInt16(ushort reg)
         {
-            SpanByte outArray = new byte[2];
+            SpanByte readArray = new byte[2];
             SpanByte writeArray = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
-            _i2CDevice.Write(writeArray);
-            _i2CDevice.Read(outArray);
-            return BinaryPrimitives.ReadUInt16BigEndian(outArray);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
+            ValidateTransfer(_i2CDevice.Read(readArray), reg, false);
+            return BinaryPrimitives.ReadUInt16BigEndian(readArray);
         }
 
         private uint ReadUInt32(ushort reg)
         {
-            SpanByte outArray = new byte[4];
+            SpanByte readArray = new byte[4];
             SpanByte writeArray = new byte[2];
             BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
-            _i2CDevice.Write(writeArray);
-
-            _i2CDevice.Read(outArray);
-            return BinaryPrimitives.ReadUInt32BigEndian(outArray);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
+            ValidateTransfer(_i2CDevice.Read(readArray), reg, false);
+            return BinaryPrimitives.ReadUInt32BigEndian(readArray);
         }
 
         private void WriteInt16(ushort reg, short data)
         {
-            SpanByte outArray = new byte[4];
-            BinaryPrimitives.WriteUInt16BigEndian(outArray, reg);
-            BinaryPrimitives.WriteInt16BigEndian(outArray.Slice(2), data);
-            _i2CDevice.Write(outArray);
+            SpanByte writeArray = new byte[4];
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
+            BinaryPrimitives.WriteInt16BigEndian(writeArray.Slice(2), data);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
         }
 
         private void WriteUInt16(ushort reg, ushort data)
         {
-            SpanByte outArray = new byte[4];
-            BinaryPrimitives.WriteUInt16BigEndian(outArray, reg);
-            BinaryPrimitives.WriteUInt16BigEndian(outArray.Slice(2), data);
-            _i2CDevice.Write(outArray);
+            SpanByte writeArray = new byte[4];
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray.Slice(2), data);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
         }
 
         private void WriteInt32(ushort reg, int data)
         {
-            SpanByte outArray = new byte[6];
-            BinaryPrimitives.WriteUInt16BigEndian(outArray, reg);
-            BinaryPrimitives.WriteInt32BigEndian(outArray.Slice(2), data);
-            _i2CDevice.Write(outArray);
+            SpanByte writeArray = new byte[6];
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
+            BinaryPrimitives.WriteInt32BigEndian(writeArray.Slice(2), data);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
         }
 
         private void WriteUInt32(ushort reg, uint data)
         {
-            SpanByte outArray = new byte[6];
-            BinaryPrimitives.WriteUInt16BigEndian(outArray, reg);
-            BinaryPrimitives.WriteUInt32BigEndian(outArray.Slice(2), data);
-            _i2CDevice.Write(outArray);
+            SpanByte writeArray = new byte[6];
+            BinaryPrimitives.WriteUInt16BigEndian(writeArray, reg);
+            BinaryPrimitives.WriteUInt32BigEndian(writeArray.Slice(2), data);
+            ValidateTransfer(_i2CDevice.Write(writeArray), reg, true);
+        }
+
+        private void ValidateTransfer(I2cTransferResult result, ushort reg, bool isWrite)
+        {
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                string operation = isWrite ? "write to" : "read from";
+                throw new IOException(
+                    $"I2C {operation} register 0x{reg:X4} failed: {result.Status}, {result.BytesTransferred} bytes transferred.");
+            }
         }
     }
 }
