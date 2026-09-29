@@ -264,7 +264,7 @@ namespace Iot.Device.Vcnl4040
             // Therefore, the configuration of the output range and the interrupts are considered independently.
             if (configuration.LowerThreshold > configuration.UpperThreshold)
             {
-                throw new ArgumentException($"Upper threshold (is: {configuration.UpperThreshold}) must be higher than the lower threshold (is: {configuration.LowerThreshold}).");
+                throw new ArgumentException();
             }
 
             // enable interrupts / proximity detection logic output
@@ -272,7 +272,7 @@ namespace Iot.Device.Vcnl4040
             {
                 if (_alsConfRegister.AlsIntEn == AlsInterrupt.Enabled)
                 {
-                    throw new InvalidOperationException("Logic output mode interferes with ALS interrupt function. ALS interrupts must be disabled.");
+                    throw new InvalidOperationException();
                 }
 
                 _psMsRegister.PsMs = PsProximityDetectionOutput.LogicOutput;
@@ -314,7 +314,7 @@ namespace Iot.Device.Vcnl4040
                     _psConf2Register.PsInt = PsInterruptMode.CloseOrAway;
                     break;
                 default:
-                    throw new ArgumentException("Invalid mode", nameof(configuration));
+                    throw new ArgumentException();
             }
 
             _psMsRegister.Write();
@@ -325,6 +325,7 @@ namespace Iot.Device.Vcnl4040
         /// Gets the interrupt configuration from the device.
         /// </summary>
         /// <returns>The proximity interrupt configuration.</returns>
+        /// <exception cref="ArgumentException">Thrown when the device contains an invalid interrupt mode.</exception>
         public ProximityInterruptConfiguration GetInterruptConfiguration()
         {
             _psLowInterruptThresholdRegister.Read();
@@ -356,7 +357,7 @@ namespace Iot.Device.Vcnl4040
                         mode = ProximityInterruptMode.CloseOrAwayInterrupt;
                         break;
                     default:
-                        throw new ArgumentException("Invalid interrupt");
+                        throw new ArgumentException();
                 }
             }
 

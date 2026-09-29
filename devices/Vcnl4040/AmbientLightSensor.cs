@@ -327,23 +327,23 @@ namespace Iot.Device.Vcnl4040
 
             if (configuration.LowerThreshold.Lux < 0 || configuration.UpperThreshold.Lux < 0)
             {
-                throw new ArgumentException($"Lower threshold (is: {configuration.LowerThreshold}) and upper threshold (is: {configuration.UpperThreshold}) must be positive.");
+                throw new ArgumentException();
             }
 
             if (configuration.LowerThreshold.Lux > maxDetectionRange.Lux || configuration.UpperThreshold.Lux > maxDetectionRange.Lux)
             {
-                throw new ArgumentException($"Lower threshold (is: {configuration.LowerThreshold}) or upper threshold (is: {configuration.UpperThreshold}) must not exceed maximum range of {maxDetectionRange} lux.");
+                throw new ArgumentException();
             }
 
             if (configuration.LowerThreshold.Lux > configuration.UpperThreshold.Lux)
             {
-                throw new ArgumentException($"Lower threshold (is: {configuration.LowerThreshold}) must not be higher than upper threshold  (is: {configuration.UpperThreshold}).");
+                throw new ArgumentException();
             }
 
             _psMsRegister.Read();
             if (_psMsRegister.PsMs == PsProximityDetectionOutput.LogicOutput)
             {
-                throw new InvalidOperationException("Logic output mode interferes with ALS interrupt function. Logic output must be disabled.");
+                throw new InvalidOperationException();
             }
 
             // disable interrupts before altering configuration to avoid transient side effects

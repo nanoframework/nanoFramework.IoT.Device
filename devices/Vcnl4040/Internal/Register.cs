@@ -58,7 +58,7 @@ namespace Iot.Device.Vcnl4040.Internal
             I2cTransferResult result = _i2cDevice.WriteRead(writeBuffer, readBuffer);
             if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                throw new InvalidOperationException($"I2C read failed for register 0x{(byte)_commandCode:X2}. Status: {result.Status}.");
+                throw new InvalidOperationException();
             }
 
             dataLow = readBuffer[0];
@@ -79,7 +79,7 @@ namespace Iot.Device.Vcnl4040.Internal
             I2cTransferResult result = _i2cDevice.Write(writeBuffer);
             if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                throw new InvalidOperationException($"I2C write failed for register 0x{(byte)_commandCode:X2}. Status: {result.Status}.");
+                throw new InvalidOperationException();
             }
         }
     }

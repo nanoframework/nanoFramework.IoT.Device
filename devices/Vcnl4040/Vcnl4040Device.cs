@@ -42,7 +42,7 @@ namespace Iot.Device.Vcnl4040
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="i2cDevice"/> is <see langword="null"/>.</exception>
         public Vcnl4040Device(I2cDevice i2cDevice)
         {
-            _i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
+            _i2cDevice = i2cDevice ?? throw new ArgumentNullException();
 
             AmbientLightSensor = new AmbientLightSensor(_i2cDevice);
             ProximitySensor = new ProximitySensor(_i2cDevice);
@@ -83,7 +83,7 @@ namespace Iot.Device.Vcnl4040
             _idRegister.Read();
             if (_idRegister.Id != CompatibleDeviceId)
             {
-                throw new NotSupportedException($"Incompatible device found (expected ID: {CompatibleDeviceId}, actual ID: {_idRegister.Id})");
+                throw new NotSupportedException();
             }
         }
 
@@ -131,7 +131,7 @@ namespace Iot.Device.Vcnl4040
             I2cTransferResult result = _i2cDevice.Write(data);
             if (result.Status != I2cTransferStatus.FullTransfer)
             {
-                throw new InvalidOperationException($"I2C write failed for register 0x{(byte)commandCode:X2}. Status: {result.Status}.");
+                throw new InvalidOperationException();
             }
         }
     }
