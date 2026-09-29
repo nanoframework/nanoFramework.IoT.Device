@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Nerdbank.GitVersioning.3.10.94\build\Nerdbank.GitVersioning.props" Condition="Exists('packages\Nerdbank.GitVersioning.3.10.94\build\Nerdbank.GitVersioning.props')" />
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{FBD5855E-635E-44E8-93CB-A42407C82753}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Iot.Device.Ina236</RootNamespace>
+    <AssemblyName>Iot.Device.Ina236</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\Iot.Device.Ina236.xml</DocumentationFile>
+    <LangVersion>9.0</LangVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(TF_BUILD)' == 'True' or '$(ContinuousIntegrationBuild)' == 'True'">true</RestoreLockedMode>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Reference Include="mscorlib"><HintPath>packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.UnitsNet.ElectricCurrent"><HintPath>packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.UnitsNet.ElectricPotential"><HintPath>packages\nanoFramework.UnitsNet.ElectricPotential.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.UnitsNet.ElectricResistance"><HintPath>packages\nanoFramework.UnitsNet.ElectricResistance.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricResistance.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.UnitsNet.Power"><HintPath>packages\nanoFramework.UnitsNet.Power.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Power.dll</HintPath></Reference>
+    <Reference Include="System.Buffers.Binary.BinaryPrimitives"><HintPath>packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath></Reference>
+    <Reference Include="System.Device.I2c"><HintPath>packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath></Reference>
+    <Reference Include="System.Device.Model"><HintPath>packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Compile Include="*.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup><ErrorText>Missing NuGet package build import: {0}.</ErrorText></PropertyGroup>
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.10.94\build\Nerdbank.GitVersioning.props')" Text="$([System.String]::Format('$(ErrorText)', 'Nerdbank.GitVersioning.props'))" />
+    <Error Condition="!Exists('packages\Nerdbank.GitVersioning.3.10.94\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', 'Nerdbank.GitVersioning.targets'))" />
+  </Target>
+  <Import Project="packages\Nerdbank.GitVersioning.3.10.94\build\Nerdbank.GitVersioning.targets" Condition="Exists('packages\Nerdbank.GitVersioning.3.10.94\build\Nerdbank.GitVersioning.targets')" />
+</Project>
