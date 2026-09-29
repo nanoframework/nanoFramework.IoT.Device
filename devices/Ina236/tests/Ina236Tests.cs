@@ -47,6 +47,18 @@ namespace Iot.Device.Adc.Tests
         }
 
         [TestMethod]
+        public void CalibrationDoesNotUseReservedBit()
+        {
+            SimulatedIna236 i2cDevice = new SimulatedIna236();
+            Ina236 ina236 = new Ina236(i2cDevice, ElectricResistance.FromOhms(0.01), ElectricCurrent.FromAmperes(0.2));
+            i2cDevice.SetRegister(4, 1000);
+
+            Assert.AreEqual((ushort)0x7FFF, i2cDevice.GetRegister(5));
+            double currentAmperes = ina236.ReadCurrent().Amperes;
+            Assert.IsTrue(currentAmperes > 0.015625 && currentAmperes < 0.015626);
+        }
+
+        [TestMethod]
         public void RoundsConfigurationValuesUp()
         {
             _ina236.AverageOverNoSamples = 5;

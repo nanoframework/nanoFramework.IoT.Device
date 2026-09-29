@@ -36,4 +36,4 @@ using (Ina236 device = new Ina236(
 
 Known breakout boards commonly use an 8 milliohm shunt and are designed for currents up to 10 A. Verify the shunt value and current rating for your board. At 10 A, an 8 milliohm shunt dissipates 0.8 W.
 
-The INA236A supports addresses `0x40` through `0x43`; the INA236B supports `0x60` through `0x63`. The address depends on the device variant and ADDR pin connection.
+The INA236A supports addresses `0x40` through `0x43`; the INA236B supports `0x48` through `0x4B`. The address depends on the device variant and ADDR pin connection.

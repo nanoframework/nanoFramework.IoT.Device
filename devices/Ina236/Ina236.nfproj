@@ -25,7 +25,6 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Reference Include="mscorlib"><HintPath>packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath></Reference>
-    <Reference Include="nanoFramework.Runtime.Native"><HintPath>packages\nanoFramework.Runtime.Native.1.7.11\lib\nanoFramework.Runtime.Native.dll</HintPath></Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricCurrent"><HintPath>packages\nanoFramework.UnitsNet.ElectricCurrent.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricCurrent.dll</HintPath></Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricPotential"><HintPath>packages\nanoFramework.UnitsNet.ElectricPotential.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricPotential.dll</HintPath></Reference>
     <Reference Include="nanoFramework.UnitsNet.ElectricResistance"><HintPath>packages\nanoFramework.UnitsNet.ElectricResistance.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricResistance.dll</HintPath></Reference>

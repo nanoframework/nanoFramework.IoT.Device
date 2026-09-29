@@ -67,11 +67,12 @@ namespace Iot.Device.Adc
 
             ElectricCurrent currentLsbMinimum = ElectricCurrent.FromAmperes(_maxCurrent.Amperes / 32768 * 2);
             int calibrationValue = (int)(0.00512 / (currentLsbMinimum.Amperes * _shuntResistance.Ohms));
-            if (calibrationValue <= 0 || calibrationValue > ushort.MaxValue)
+            if (calibrationValue <= 0)
             {
                 throw new InvalidOperationException("The calibration value is outside the supported range.");
             }
 
+            calibrationValue = calibrationValue > 0x7FFF ? 0x7FFF : calibrationValue;
             _currentLsb = ElectricCurrent.FromAmperes(0.00512 / _shuntResistance.Ohms / calibrationValue);
             _voltageLsb = ElectricPotential.FromMicrovolts(2.5);
             WriteRegister(Ina236Register.Calibration, (ushort)calibrationValue);
