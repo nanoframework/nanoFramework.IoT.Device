@@ -58,6 +58,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Max44009.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Max44009/) [MAX44009 - Ambient Light Sensor](Max44009)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Tcs3472x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Tcs3472x/) [TCS3472x/TCS34721/TCS34723/TCS34725/TCS34727 Sensors](Tcs3472x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Tsl256x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Tsl256x/) [TSL256x/TSL2560/TSL2561 - Illuminance sensor](Tsl256x)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vcnl4040.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vcnl4040/) [VCNL4040 - Proximity and Ambient Light Sensor](Vcnl4040)
 
 ## Barometers
 
@@ -242,6 +243,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ltr553AlsWa.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ltr553AlsWa/) [LTR-553ALS-WA - Proximity and Ambient Light Sensor](Ltr553AlsWa)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpr121.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpr121/) [MPR121 - Proximity Capacitive Touch Sensor Controller](Mpr121)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vcnl4040.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vcnl4040/) [VCNL4040 - Proximity and Ambient Light Sensor](Vcnl4040)
 
 ## Touch sensors
 
