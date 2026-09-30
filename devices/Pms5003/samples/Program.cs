@@ -18,10 +18,10 @@ resetPin.Write(PinValue.High);
 setPin.Write(PinValue.High);
 
 // PMS5003 TX -> ESP32-C3 Super Mini GPIO20 (RX), PMS5003 RX -> GPIO21 (TX).
-Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM2_RX);
-Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.COM2_TX);
+Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM1_RX);
+Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.COM1_TX);
 
-SerialPort serialPort = new SerialPort("COM2", Pms5003.DefaultBaudRate, Parity.None, 8, StopBits.One);
+SerialPort serialPort = new SerialPort("COM1", Pms5003.DefaultBaudRate, Parity.None, 8, StopBits.One);
 serialPort.ReadTimeout = 5000;
 serialPort.Open();
 Pms5003 sensor = new Pms5003(serialPort);
