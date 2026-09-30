@@ -3,6 +3,7 @@
 
 using Iot.Device.Pms5003;
 using nanoFramework.Hardware.Esp32;
+using System;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -28,9 +29,17 @@ Pms5003 sensor = new Pms5003(serialPort);
 
 while (true)
 {
-    PmsReading reading = sensor.Read();
-    Debug.WriteLine($"PM1.0: {reading.Pm1Atmospheric} ug/m3");
-    Debug.WriteLine($"PM2.5: {reading.Pm2Point5Atmospheric} ug/m3");
-    Debug.WriteLine($"PM10: {reading.Pm10Atmospheric} ug/m3");
+    try
+    {
+        PmsReading reading = sensor.Read();
+        Debug.WriteLine($"PM1.0: {reading.Pm1Atmospheric} ug/m3");
+        Debug.WriteLine($"PM2.5: {reading.Pm2Point5Atmospheric} ug/m3");
+        Debug.WriteLine($"PM10: {reading.Pm10Atmospheric} ug/m3");
+    }
+    catch (TimeoutException)
+    {
+        Debug.WriteLine($"No PMS5003 data received on COM1 RX GPIO20. Buffered bytes: {serialPort.BytesToRead}");
+    }
+
     Thread.Sleep(1000);
 }
