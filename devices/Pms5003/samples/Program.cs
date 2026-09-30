@@ -3,9 +3,19 @@
 
 using Iot.Device.Pms5003;
 using nanoFramework.Hardware.Esp32;
+using System.Device.Gpio;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
+
+const int Reset = 2;
+const int Set = 3;
+
+GpioController gpioController = new GpioController();
+GpioPin resetPin = gpioController.OpenPin(Reset, PinMode.Output);
+GpioPin setPin = gpioController.OpenPin(Set, PinMode.Output);
+resetPin.Write(PinValue.High);
+setPin.Write(PinValue.High);
 
 // PMS5003 TX -> ESP32-C3 Super Mini GPIO20 (RX), PMS5003 RX -> GPIO21 (TX).
 Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM2_RX);
