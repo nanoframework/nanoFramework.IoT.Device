@@ -474,6 +474,14 @@ namespace Iot.Device.CoreDiscoveryEngine
                 {
                     builder.Append("\\n");
                 }
+                else if (character == '\t')
+                {
+                    builder.Append("\\t");
+                }
+                else if (character < ' ')
+                {
+                    builder.Append("\\u").Append(((int)character).ToString("x4"));
+                }
                 else
                 {
                     builder.Append(character);
