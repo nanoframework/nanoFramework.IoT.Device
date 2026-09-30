@@ -7,8 +7,8 @@ using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
 
-Configuration.SetPinFunction(8, DeviceFunction.I2C1_DATA);
-Configuration.SetPinFunction(9, DeviceFunction.I2C1_CLOCK);
+Configuration.SetPinFunction(6, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(7, DeviceFunction.I2C1_CLOCK);
 
 I2cConnectionSettings settings = new I2cConnectionSettings(1, Pmsa003i.DefaultI2cAddress);
 I2cDevice i2cDevice = new I2cDevice(settings);

@@ -12,16 +12,16 @@ The PMSA003I measures PM1.0, PM2.5, and PM10 mass concentration and particle cou
 |---|---|---|
 | VIN | Board supply | Follow the breakout board's supply specification |
 | GND | GND | Common ground |
-| SDA | GPIO8 | I2C1 data |
-| SCL | GPIO9 | I2C1 clock |
+| SDA | GPIO6 | I2C1 data |
+| SCL | GPIO7 | I2C1 clock |
 
 The fixed 7-bit I2C address is `0x12`. Configure the ESP32 I2C pin functions before creating `I2cDevice`.
 
 ## Usage
 
 ```csharp
-Configuration.SetPinFunction(8, DeviceFunction.I2C1_DATA);
-Configuration.SetPinFunction(9, DeviceFunction.I2C1_CLOCK);
+Configuration.SetPinFunction(6, DeviceFunction.I2C1_DATA);
+Configuration.SetPinFunction(7, DeviceFunction.I2C1_CLOCK);
 
 I2cConnectionSettings settings = new I2cConnectionSettings(1, Pmsa003i.DefaultI2cAddress);
 I2cDevice i2cDevice = new I2cDevice(settings);
