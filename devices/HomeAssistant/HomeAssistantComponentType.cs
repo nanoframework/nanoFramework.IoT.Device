@@ -56,6 +56,11 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Text entity.
         /// </summary>
-        Text
+        Text,
+
+        /// <summary>
+        /// Time entity.
+        /// </summary>
+        Time
     }
 }

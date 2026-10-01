@@ -585,7 +585,8 @@ namespace nanoFramework.HomeAssistant
             bool isWritable = ComponentType == HomeAssistantComponentType.Switch
                 || ComponentType == HomeAssistantComponentType.Number
                 || ComponentType == HomeAssistantComponentType.Select
-                || ComponentType == HomeAssistantComponentType.Text;
+                || ComponentType == HomeAssistantComponentType.Text
+                || ComponentType == HomeAssistantComponentType.Time;
 
             if (isWritable)
             {
@@ -675,6 +676,11 @@ namespace nanoFramework.HomeAssistant
             if (componentType == HomeAssistantComponentType.Text)
             {
                 return "text";
+            }
+
+            if (componentType == HomeAssistantComponentType.Time)
+            {
+                return "time";
             }
 
             return "sensor";

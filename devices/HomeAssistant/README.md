@@ -6,7 +6,7 @@ This binding provides a Home Assistant MQTT integration for .NET nanoFramework. 
 
 - **MQTT Discovery** — entities are automatically registered in Home Assistant on connect
 - **Auto-generated topics** — state and command topics derived from the device and entity names
-- **Built-in entity types** — Switch, Number, Sensor, Binary Sensor, Select, Text, and more
+- **Built-in entity types** — Switch, Number, Sensor, Binary Sensor, Select, Text, Time, and more
 - **Availability tracking** — Last-Will-Testament and online/offline publishing
 - **HA restart detection** — re-publishes discovery and state when Home Assistant comes back online
 - **Sensor presets** — ready-made configurations for temperature, humidity, pressure, energy, and more
@@ -77,6 +77,12 @@ HomeAssistantTextItem status = client.AddDiagnosticStringSensor(
     objectId:     "my_device_status",
     name:         "Status",
     initialValue: "OK");
+
+// Time (time of day, for example a schedule or alarm time)
+HomeAssistantTime startTime = client.AddTime(
+    objectId:     "my_device_start_time",
+    name:         "Start Time",
+    initialValue: new TimeSpan(6, 30, 0));
 ```
 
 ### 4. Subscribe to state changes
@@ -102,7 +108,16 @@ brightness.OnStateChange += (sender, oldState, newState) =>
         // apply brightness
     }
 };
+
+startTime.OnStateChange += (sender, oldState, newState) =>
+{
+    // newState is an ISO time string (HH:MM:SS); Value parses it for you
+    TimeSpan timeOfDay = startTime.Value;
+    // apply schedule
+};
 ```
+
+Use `startTime.SetValue(new TimeSpan(7, 0, 0))` to publish a new time from the device. Only the hours, minutes and seconds components are used.
 
 ### 5. Connect and publish
 
@@ -204,7 +219,9 @@ Available presets:
 
 `HomeAssistantComponentType` covers:
 
-`Switch`, `Number`, `Sensor`, `BinarySensor`, `Button`, `Select`, `Light`, `Cover`, `Climate`, `Text`
+`Switch`, `Number`, `Sensor`, `BinarySensor`, `Button`, `Select`, `Light`, `Cover`, `Climate`, `Text`, `Time`
+
+> The `Time` entity requires Home Assistant 2026.5 or newer.
 
 ## Entity Categories
 
