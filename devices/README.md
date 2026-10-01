@@ -405,6 +405,8 @@
 
 ## Particulate Matter Sensor
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pms5003.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pms5003/) [Plantower PMS5003 particulate-matter sensor](Pms5003)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Pmsa003i.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Pmsa003i/) [Plantower PMSA003I particulate-matter sensor](Pmsa003i)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Sen5x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Sen5x/) [Sensirion SEN5x series module](Sen5x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Sps30.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Sps30/) [Sensirion SPS30 Particulate Matter Sensor](Sps30)
 
