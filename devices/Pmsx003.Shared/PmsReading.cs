@@ -3,7 +3,13 @@
 
 using Iot.Device.Pmsx003.Shared;
 
+#if PMS5003
 namespace Iot.Device.Pms5003
+#elif PMSA003I
+namespace Iot.Device.Pmsa003i
+#else
+#error A PMSx003 device symbol must be defined.
+#endif
 {
     /// <summary>
     /// Represents one particulate-matter measurement frame.
