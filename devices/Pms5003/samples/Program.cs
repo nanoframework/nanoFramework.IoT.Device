@@ -15,14 +15,19 @@ const int Set = 3;
 GpioController gpioController = new GpioController();
 GpioPin resetPin = gpioController.OpenPin(Reset, PinMode.Output);
 GpioPin setPin = gpioController.OpenPin(Set, PinMode.Output);
-resetPin.Write(PinValue.High);
 setPin.Write(PinValue.High);
+resetPin.Write(PinValue.Low);
+Thread.Sleep(100);
+resetPin.Write(PinValue.High);
+
+Debug.WriteLine("Warming up PMS5003 for 30 seconds...");
+Thread.Sleep(30000);
 
 // PMS5003 TX -> ESP32-C3 Super Mini GPIO20 (RX), PMS5003 RX -> GPIO21 (TX).
-Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM1_RX);
-Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.COM1_TX);
+Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM2_RX);
+Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.COM2_TX);
 
-SerialPort serialPort = new SerialPort("COM1", Pms5003.DefaultBaudRate, Parity.None, 8, StopBits.One);
+SerialPort serialPort = new SerialPort("COM2", Pms5003.DefaultBaudRate, Parity.None, 8, StopBits.One);
 serialPort.ReadTimeout = 5000;
 serialPort.Open();
 Pms5003 sensor = new Pms5003(serialPort);
@@ -38,7 +43,7 @@ while (true)
     }
     catch (TimeoutException)
     {
-        Debug.WriteLine($"No PMS5003 data received on COM1 RX GPIO20. Buffered bytes: {serialPort.BytesToRead}");
+        Debug.WriteLine($"No PMS5003 data received on COM2 RX GPIO20. Buffered bytes: {serialPort.BytesToRead}");
     }
 
     Thread.Sleep(1000);
