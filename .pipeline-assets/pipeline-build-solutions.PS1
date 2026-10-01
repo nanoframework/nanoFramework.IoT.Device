@@ -132,6 +132,44 @@ else
     $deviceFolders.Add("$env:DEVICE_TO_BUILD")
 }
 
+# Resolve folders containing shared project items to the bindings that import them.
+# Shared projects are compiled into their consumers and aren't packages themselves.
+$devicesPath = "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices"
+$resolvedDeviceFolders = @()
+
+foreach ($folder in $deviceFolders)
+{
+    $folderPath = Join-Path $devicesPath $folder
+    $solution = Get-ChildItem -Path $folderPath -Include "$folder.sln", "$folder.slnx" -Recurse
+
+    if ($null -ne $solution)
+    {
+        $resolvedDeviceFolders += $folder
+        continue
+    }
+
+    $sharedProjectItems = Get-ChildItem -Path $folderPath -Filter "*.projitems" -Recurse
+    $importingFolders = foreach ($projectItems in $sharedProjectItems)
+    {
+        Get-ChildItem -Path $devicesPath -Filter "*.nfproj" -Recurse |
+            Select-String -SimpleMatch $projectItems.Name |
+            ForEach-Object {
+                $_.Path.Substring($devicesPath.Length).TrimStart('\').Split('\')[0]
+            }
+    }
+
+    if ($null -eq $importingFolders)
+    {
+        $resolvedDeviceFolders += $folder
+    }
+    else
+    {
+        $resolvedDeviceFolders += $importingFolders
+    }
+}
+
+$deviceFolders = $resolvedDeviceFolders | Sort-Object -Unique
+
 # flag for any build 'failure'
 $buildFailed = $false
 
