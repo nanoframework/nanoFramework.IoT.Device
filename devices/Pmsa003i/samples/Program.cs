@@ -31,10 +31,6 @@ while (true)
     {
         Debug.WriteLine($"Invalid PMSA003I frame: {ex.Message}");
     }
-    catch (InvalidOperationException ex)
-    {
-        Debug.WriteLine($"Invalid PMS5003 frame: {ex.Message}");
-    }
 
     Thread.Sleep(1000);
 }
