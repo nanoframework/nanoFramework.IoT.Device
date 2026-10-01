@@ -11,6 +11,7 @@ namespace Iot.Device.Pms5003
     /// <summary>
     /// Plantower PMS5003 particulate-matter sensor using its UART interface.
     /// </summary>
+    [Interface("Plantower PMS5003 particulate-matter sensor using its UART interface.")]
     public sealed class Pms5003 : IDisposable
     {
         /// <summary>The UART baud rate required by the sensor.</summary>
