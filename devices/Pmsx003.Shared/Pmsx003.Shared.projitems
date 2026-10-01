@@ -10,6 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Pmsx003Reading.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PmsReading.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pmsx003Parser.cs" />
   </ItemGroup>
 </Project>
