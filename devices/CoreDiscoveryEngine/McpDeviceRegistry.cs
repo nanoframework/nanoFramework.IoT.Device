@@ -314,7 +314,13 @@ namespace Iot.Device.CoreDiscoveryEngine
                 return "string";
             }
 
-            return IsSimpleType(type) ? "number" : "object";
+            return IsIntegralType(type) ? "integer" : IsSimpleType(type) ? "number" : "object";
+        }
+
+        private bool IsIntegralType(Type type)
+        {
+            return type == typeof(byte) || type == typeof(sbyte) || type == typeof(short) || type == typeof(ushort)
+                || type == typeof(int) || type == typeof(uint) || type == typeof(long) || type == typeof(ulong);
         }
 
         private bool IsSimpleType(Type type)
