@@ -40,6 +40,10 @@ while (true)
         Debug.WriteLine($"PM1.0: {reading.Pm1Atmospheric} ug/m3");
         Debug.WriteLine($"PM2.5: {reading.Pm2Point5Atmospheric} ug/m3");
         Debug.WriteLine($"PM10: {reading.Pm10Atmospheric} ug/m3");
+        Debug.WriteLine($"Particles >0.3um: {reading.ParticlesLargerThan0Point3Micrometers}");
+        Debug.WriteLine($"Particles >0.5um: {reading.ParticlesLargerThan0Point5Micrometers}");
+        Debug.WriteLine($"Version: {reading.Version}, error: {reading.ErrorCode}");
+        Debug.WriteLine($"---");
     }
     catch (TimeoutException)
     {
