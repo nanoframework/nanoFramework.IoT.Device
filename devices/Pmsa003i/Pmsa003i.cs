@@ -11,6 +11,7 @@ namespace Iot.Device.Pmsa003i
     /// <summary>
     /// Plantower PMSA003I particulate-matter sensor using its I2C interface.
     /// </summary>
+    [Interface("Plantower PMSA003I particulate-matter sensor using its I2C interface.")]
     public sealed class Pmsa003i : IDisposable
     {
         /// <summary>The default I2C address.</summary>
