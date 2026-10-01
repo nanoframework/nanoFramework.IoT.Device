@@ -19,6 +19,12 @@
         "requested": "[3.0.80, 3.0.80]",
         "resolved": "3.0.80",
         "contentHash": "o2ymxAz6TC6VguKqN6rrGB/L4sVAIJVEut87Hq8MvwEe6P/7JwzX+VB4vKJxEmihCSJs7Z3Yo9Rb8HgIEo8DMg=="
+      },
+      "nanoFramework.System.Device.Model": {
+        "type": "Direct",
+        "requested": "[1.2.862, 1.2.862]",
+        "resolved": "1.2.862",
+        "contentHash": "dARhyb8BHkje2P+7VphJpRLynVhMkC0U4pFNecLs6jw8DHRMMJyszcbgo/N0ALeYjilNk9hea+wzBLFrgZpsUQ=="
       }
     }
   }

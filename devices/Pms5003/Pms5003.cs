@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Device.Model;
 using System.IO.Ports;
 using Iot.Device.Pmsx003.Shared;
 
@@ -33,6 +34,7 @@ namespace Iot.Device.Pms5003
         /// Reads and validates the next complete sensor measurement.
         /// </summary>
         /// <returns>The particulate-matter measurement.</returns>
+        [Telemetry]
         public PmsReading Read()
         {
             if (_serialPort == null)

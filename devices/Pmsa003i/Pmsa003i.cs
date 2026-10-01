@@ -3,6 +3,7 @@
 
 using System;
 using System.Device.I2c;
+using System.Device.Model;
 using Iot.Device.Pmsx003.Shared;
 
 namespace Iot.Device.Pmsa003i
@@ -33,6 +34,7 @@ namespace Iot.Device.Pmsa003i
         /// Reads and validates one sensor measurement.
         /// </summary>
         /// <returns>The particulate-matter measurement.</returns>
+        [Telemetry]
         public PmsReading Read()
         {
             if (_i2cDevice == null)
