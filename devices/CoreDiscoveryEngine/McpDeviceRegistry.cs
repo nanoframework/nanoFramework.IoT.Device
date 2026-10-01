@@ -343,6 +343,11 @@ namespace Iot.Device.CoreDiscoveryEngine
 
         private object ConvertArgument(object value, Type type)
         {
+            if (value == null)
+            {
+                throw new ArgumentException("Null tool argument");
+            }
+
             string text = value.ToString();
             if (type == typeof(string))
             {
