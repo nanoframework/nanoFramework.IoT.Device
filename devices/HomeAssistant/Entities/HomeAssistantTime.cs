@@ -45,19 +45,28 @@ namespace nanoFramework.HomeAssistant
         /// <summary>
         /// Sets the time of day. Only the hours, minutes and seconds components are used.
         /// </summary>
-        /// <param name="value">Time of day to publish.</param>
+        /// <param name="value">Time of day to publish. Must not be negative.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is negative.</exception>
         public void SetValue(TimeSpan value)
         {
-            PublishState(Format(value));
+            PublishState(Format(value, nameof(value)));
         }
 
         /// <summary>
         /// Formats a time of day as an ISO time string (HH:MM:SS).
+        /// Any whole-day and fractional-second components are ignored.
         /// </summary>
-        /// <param name="value">Time of day to format.</param>
+        /// <param name="value">Time of day to format. Must not be negative.</param>
+        /// <param name="paramName">Name of the caller's parameter, used when reporting a negative value.</param>
         /// <returns>The time formatted as HH:MM:SS.</returns>
-        internal static string Format(TimeSpan value)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is negative.</exception>
+        internal static string Format(TimeSpan value, string paramName)
         {
+            if (value < TimeSpan.Zero)
+            {
+                throw new ArgumentOutOfRangeException(paramName);
+            }
+
             return Pad(value.Hours) + ":" + Pad(value.Minutes) + ":" + Pad(value.Seconds);
         }
 

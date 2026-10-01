@@ -117,7 +117,7 @@ startTime.OnStateChange += (sender, oldState, newState) =>
 };
 ```
 
-Use `startTime.SetValue(new TimeSpan(7, 0, 0))` to publish a new time from the device. Only the hours, minutes and seconds components are used.
+Use `startTime.SetValue(new TimeSpan(7, 0, 0))` to publish a new time from the device. Only the hours, minutes and seconds components are used, and negative values throw `ArgumentOutOfRangeException` (as does a negative `initialValue` passed to `AddTime`).
 
 ### 5. Connect and publish
 

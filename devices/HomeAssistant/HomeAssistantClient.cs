@@ -684,14 +684,18 @@ namespace nanoFramework.HomeAssistant
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
         /// <param name="name">Display name for the entity.</param>
-        /// <param name="initialValue">Initial time of day. Only the hours, minutes and seconds components are used.</param>
+        /// <param name="initialValue">Initial time of day. Must not be negative. Only the hours, minutes and seconds components are used.</param>
         /// <returns>The created time runtime entity.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="initialValue"/> is negative.</exception>
         public HomeAssistantTime AddTime(
             string objectId,
             string name,
             TimeSpan initialValue)
         {
             objectId = RequireObjectId(objectId);
+
+            // Validate and format before registering anything so a bad value leaves no discovery entity behind.
+            string initialState = HomeAssistantTime.Format(initialValue, nameof(initialValue));
 
             string stateTopic = GenerateStateTopic(objectId);
             string commandTopic = GenerateCommandTopic(objectId);
@@ -707,7 +711,7 @@ namespace nanoFramework.HomeAssistant
             };
             RegisterDiscoveryEntity(discovery);
 
-            var runtime = new HomeAssistantTime(discovery, HomeAssistantTime.Format(initialValue), PublishMessage);
+            var runtime = new HomeAssistantTime(discovery, initialState, PublishMessage);
             RegisterRuntimeEntity(runtime);
             return runtime;
         }
