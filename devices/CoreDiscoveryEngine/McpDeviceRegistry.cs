@@ -23,11 +23,13 @@ namespace Iot.Device.CoreDiscoveryEngine
         /// </summary>
         /// <param name="device">The device instance to register.</param>
         /// <param name="prefix">An optional prefix used to distinguish device instances.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="device"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException">Discovery fails, a reflected member cannot be resolved, or the generated MCP name or URI is already registered.</exception>
         public void Register(object device, string prefix = null)
         {
             if (device == null)
             {
-                throw new ArgumentNullException(nameof(device));
+                throw new ArgumentNullException();
             }
 
             DeviceInterface deviceInterface = CapabilityDiscovery.Discover(device);
@@ -40,16 +42,18 @@ namespace Iot.Device.CoreDiscoveryEngine
         /// <param name="deviceInterface">The discovered device interface.</param>
         /// <param name="device">The live device instance to register.</param>
         /// <param name="prefix">An optional prefix used to distinguish device instances.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="deviceInterface"/> or <paramref name="device"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException">A reflected member cannot be resolved, or the generated MCP name or URI is already registered.</exception>
         public void Register(DeviceInterface deviceInterface, object device, string prefix = null)
         {
             if (deviceInterface == null)
             {
-                throw new ArgumentNullException(nameof(deviceInterface));
+                throw new ArgumentNullException();
             }
 
             if (device == null)
             {
-                throw new ArgumentNullException(nameof(device));
+                throw new ArgumentNullException();
             }
 
             RegisterInterface(deviceInterface, device, NormalizePrefix(prefix));
@@ -78,6 +82,7 @@ namespace Iot.Device.CoreDiscoveryEngine
         /// </summary>
         /// <param name="uri">The absolute MCP resource URI.</param>
         /// <returns>The MCP resource-read result.</returns>
+        /// <exception cref="McpResourceRegistry.ResourceNotFoundException">No registered resource matches <paramref name="uri"/>.</exception>
         public string ReadResource(string uri)
         {
             McpInvocation invocation = (McpInvocation)_resources[NormalizeResourceUri(uri)];
@@ -102,6 +107,8 @@ namespace Iot.Device.CoreDiscoveryEngine
         /// <param name="name">The generated tool name.</param>
         /// <param name="arguments">The MCP tool arguments.</param>
         /// <returns>The JSON value returned by the tool.</returns>
+        /// <exception cref="ArgumentException">The tool is not registered, a required argument is missing, or an argument type is unsupported.</exception>
+        /// <exception cref="InvalidCastException">An argument cannot be converted to the required type.</exception>
         public string InvokeTool(string name, Hashtable arguments)
         {
             McpInvocation invocation = (McpInvocation)_tools[name.ToLower()];
@@ -229,7 +236,7 @@ namespace Iot.Device.CoreDiscoveryEngine
                 }
             }
 
-            throw new ArgumentException("Component accessor not found: " + path);
+            throw new ArgumentException();
         }
 
         private MethodInfo FindMethod(Type type, string methodName)
@@ -243,7 +250,7 @@ namespace Iot.Device.CoreDiscoveryEngine
                 }
             }
 
-            throw new ArgumentException("Method not found: " + methodName);
+            throw new ArgumentException();
         }
 
         private string GetInputSchema(Capability capability)
@@ -349,7 +356,7 @@ namespace Iot.Device.CoreDiscoveryEngine
                     return false;
                 }
 
-                throw new InvalidCastException();
+                throw new InvalidCastException("Invalid Boolean argument");
             }
 
             if (type == typeof(int))
@@ -449,7 +456,7 @@ namespace Iot.Device.CoreDiscoveryEngine
         {
             if (values.Contains(key))
             {
-                throw new ArgumentException("Duplicate MCP element: " + key);
+                throw new ArgumentException();
             }
 
             values.Add(key, invocation);

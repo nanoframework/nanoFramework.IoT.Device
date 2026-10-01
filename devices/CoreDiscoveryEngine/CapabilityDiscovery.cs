@@ -20,11 +20,13 @@ namespace Iot.Device.CoreDiscoveryEngine
         /// </summary>
         /// <param name="device">The device instance to inspect.</param>
         /// <returns>The discovered device interface.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="device"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException">The device metadata contains a component cycle, invalid capability signature, conflicting attributes, duplicate capability, or mismatched property accessors.</exception>
         public static DeviceInterface Discover(object device)
         {
             if (device == null)
             {
-                throw new ArgumentNullException(nameof(device));
+                throw new ArgumentNullException();
             }
 
             return Discover(device.GetType());
@@ -35,11 +37,13 @@ namespace Iot.Device.CoreDiscoveryEngine
         /// </summary>
         /// <param name="deviceType">The device type to inspect.</param>
         /// <returns>The discovered device interface.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="deviceType"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException">The device metadata contains a component cycle, invalid capability signature, conflicting attributes, duplicate capability, or mismatched property accessors.</exception>
         public static DeviceInterface Discover(Type deviceType)
         {
             if (deviceType == null)
             {
-                throw new ArgumentNullException(nameof(deviceType));
+                throw new ArgumentNullException();
             }
 
             return DiscoverInterface(deviceType, string.Empty, new ArrayList());
@@ -49,7 +53,7 @@ namespace Iot.Device.CoreDiscoveryEngine
         {
             if (stack.Contains(deviceType))
             {
-                throw new ArgumentException(deviceType.Name + ": component cycle");
+                throw new ArgumentException("cycle");
             }
 
             InterfaceAttribute interfaceAttribute = (InterfaceAttribute)GetAttribute(deviceType, typeof(InterfaceAttribute));
@@ -86,7 +90,7 @@ namespace Iot.Device.CoreDiscoveryEngine
 
             if (attributeCount > 1)
             {
-                throw new ArgumentException(method.Name + ": multiple attributes");
+                throw new ArgumentException("attributes");
             }
 
             string memberName = GetMemberName(method.Name);
@@ -118,7 +122,7 @@ namespace Iot.Device.CoreDiscoveryEngine
             }
             else
             {
-                throw new ArgumentException(method.Name + ": invalid telemetry");
+                throw new ArgumentException("telemetry");
             }
 
             string name = NameOrDefault(attribute.Name, memberName);
@@ -146,7 +150,7 @@ namespace Iot.Device.CoreDiscoveryEngine
 
             if (!isGetter && !isSetter && !isGetterMethod && !isSetterMethod)
             {
-                throw new ArgumentException(method.Name + ": invalid property");
+                throw new ArgumentException("property");
             }
 
             bool canRead = isGetter || isGetterMethod;
@@ -195,7 +199,7 @@ namespace Iot.Device.CoreDiscoveryEngine
         {
             if (!method.Name.StartsWith("get_") || method.ReturnType == typeof(void) || method.GetParameters().Length != 0)
             {
-                throw new ArgumentException(method.Name + ": invalid component");
+                throw new ArgumentException("component");
             }
 
             string name = NameOrDefault(attribute.Name, memberName);
@@ -216,19 +220,19 @@ namespace Iot.Device.CoreDiscoveryEngine
                 {
                     if (existing.ValueType != capability.ValueType)
                     {
-                        throw new ArgumentException(method.Name + ": type mismatch");
+                        throw new ArgumentException("type");
                     }
 
                     if ((existing.CanRead && capability.CanRead) || (existing.CanWrite && capability.CanWrite))
                     {
-                        throw new ArgumentException(method.Name + ": duplicate accessor");
+                        throw new ArgumentException("accessor");
                     }
 
                     capabilities[index] = MergeProperty(existing, capability);
                     return;
                 }
 
-                throw new ArgumentException(method.Name + ": duplicate capability");
+                throw new ArgumentException("capability");
             }
 
             capabilities.Add(capability);
