@@ -13,11 +13,11 @@ The PMS5003 measures PM1.0, PM2.5, and PM10 mass concentration and particle coun
 | Pin 1 VCC | 5V | Sensor power |
 | Pin 2 GND | GND | Common ground |
 | Pin 4 RXD | GPIO21 (TX) | Optional for active-reporting mode |
-| Pin 5 TXD | GPIO20 (RX) | Sensor data to ESP32 COM1 RX |
+| Pin 5 TXD | GPIO20 (RX) | Sensor data to ESP32 COM2 RX |
 | Pin 3 SET | GPIO3 | Driven high for normal operation |
 | Pin 6 RESET | GPIO2 | Driven high to keep the sensor out of reset |
 
-The PMS5003 UART uses 9600 baud, 8 data bits, no parity, and one stop bit. Configure the ESP32 UART pin functions before opening `SerialPort`.
+The PMS5003 UART uses 9600 baud, 8 data bits, no parity, and one stop bit. Configure the ESP32 UART pin functions before opening `SerialPort`. After reset, allow 30 seconds for the fan and measurement chamber to stabilize before reading the first frame.
 
 ## Usage
 
@@ -28,12 +28,15 @@ const int Set = 3;
 GpioController gpioController = new GpioController();
 GpioPin resetPin = gpioController.OpenPin(Reset, PinMode.Output);
 GpioPin setPin = gpioController.OpenPin(Set, PinMode.Output);
-resetPin.Write(PinValue.High);
 setPin.Write(PinValue.High);
-Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM1_RX);
-Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.COM1_TX);
+resetPin.Write(PinValue.Low);
+Thread.Sleep(100);
+resetPin.Write(PinValue.High);
+Thread.Sleep(30000); // Allow the fan and measurement chamber to stabilize.
+Configuration.SetPinFunction(Gpio.IO20, DeviceFunction.COM2_RX);
+Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.COM2_TX);
 
-SerialPort serialPort = new SerialPort("COM1", Pms5003.DefaultBaudRate, Parity.None, 8, StopBits.One);
+SerialPort serialPort = new SerialPort("COM2", Pms5003.DefaultBaudRate, Parity.None, 8, StopBits.One);
 serialPort.ReadTimeout = 5000;
 serialPort.Open();
 Pms5003 sensor = new Pms5003(serialPort);
