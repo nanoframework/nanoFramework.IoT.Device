@@ -49,6 +49,10 @@ while (true)
     {
         Debug.WriteLine($"No PMS5003 data received on COM2 RX GPIO20. Buffered bytes: {serialPort.BytesToRead}");
     }
+    catch (InvalidOperationException ex)
+    {
+        Debug.WriteLine($"Invalid PMS5003 frame: {ex.Message}");
+    }
 
     Thread.Sleep(1000);
 }
