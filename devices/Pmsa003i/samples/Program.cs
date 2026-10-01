@@ -27,9 +27,9 @@ while (true)
         Debug.WriteLine($"Version: {reading.Version}, error: {reading.ErrorCode}");
         Debug.WriteLine($"---");
     }
-    catch (InvalidOperationException ex)
+    catch (TimeoutException)
     {
-        Debug.WriteLine($"Invalid PMSA003I frame: {ex.Message}");
+        Debug.WriteLine($"No PMS5003 data received on COM2 RX GPIO20. Buffered bytes: {serialPort.BytesToRead}");
     }
 
     Thread.Sleep(1000);
