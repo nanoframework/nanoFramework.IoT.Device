@@ -45,6 +45,7 @@
     <Compile Include="Entities\HomeAssistantSelect.cs" />
     <Compile Include="Entities\HomeAssistantSwitch.cs" />
     <Compile Include="Entities\HomeAssistantTextItem.cs" />
+    <Compile Include="Entities\HomeAssistantTime.cs" />
     <Compile Include="HomeAssistantClient.cs" />
     <Compile Include="HomeAssistantComponentType.cs" />
     <Compile Include="HomeAssistantDeviceInfo.cs" />

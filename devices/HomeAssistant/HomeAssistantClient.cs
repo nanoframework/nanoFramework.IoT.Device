@@ -667,6 +667,56 @@ namespace nanoFramework.HomeAssistant
         }
 
         /// <summary>
+        /// Adds a time entity (time of day, initially 00:00:00) with auto-generated topics based on object ID.
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity.</param>
+        /// <returns>The created time runtime entity.</returns>
+        public HomeAssistantTime AddTime(
+            string objectId,
+            string name)
+        {
+            return AddTime(objectId, name, TimeSpan.Zero);
+        }
+
+        /// <summary>
+        /// Adds a time entity (time of day) with auto-generated topics based on object ID.
+        /// </summary>
+        /// <param name="objectId">Unique object ID for the entity.</param>
+        /// <param name="name">Display name for the entity.</param>
+        /// <param name="initialValue">Initial time of day. Must not be negative. Only the hours, minutes and seconds components are used.</param>
+        /// <returns>The created time runtime entity.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="initialValue"/> is negative.</exception>
+        public HomeAssistantTime AddTime(
+            string objectId,
+            string name,
+            TimeSpan initialValue)
+        {
+            objectId = RequireObjectId(objectId);
+
+            // Validate and format before registering anything so a bad value leaves no discovery entity behind.
+            string initialState = HomeAssistantTime.Format(initialValue, nameof(initialValue));
+
+            string stateTopic = GenerateStateTopic(objectId);
+            string commandTopic = GenerateCommandTopic(objectId);
+
+            var discovery = new HomeAssistantDiscoveryEntity
+            {
+                ComponentType = HomeAssistantComponentType.Time,
+                ObjectId = objectId,
+                Name = name,
+                UniqueId = objectId,
+                StateTopic = stateTopic,
+                CommandTopic = commandTopic
+            };
+            RegisterDiscoveryEntity(discovery);
+
+            var runtime = new HomeAssistantTime(discovery, initialState, PublishMessage);
+            RegisterRuntimeEntity(runtime);
+            return runtime;
+        }
+
+        /// <summary>
         /// Adds a button entity with an auto-generated command topic based on object ID.
         /// </summary>
         /// <param name="objectId">Unique object ID for the entity.</param>
