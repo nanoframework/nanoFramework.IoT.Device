@@ -376,6 +376,7 @@
 
 ## Iot.Device helpers and common
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.CoreDiscoveryEngine.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.CoreDiscoveryEngine/) [Core Discovery Engine for MCP using System.Device.Model](CoreDiscoveryEngine)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Common.GnssDevice.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Common.GnssDevice/) [Global Navigation Satellite System Device NMEA 0183 - Including Generic Serial Module with GPS, GNSS, BeiDou - NEO6-M, NEO-M8P-2, NEO-M9N from u-blox, ATGM336H, Minewsemi, ZED-F9P, ZOE-M8Q, SAM-M8Q, SARA-R5 and many many more](GnssDevice)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Multiplexing.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Multiplexing/) [Iot.Device.Multiplexing](Multiplexing)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Common.NumberHelper.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Common.NumberHelper/) [Iot.Device.NumberHelper](NumberHelper)
