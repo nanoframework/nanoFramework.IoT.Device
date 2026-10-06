@@ -327,16 +327,24 @@ foreach ($folder in $deviceFolders)
         ########################
         # perform versions check
 
-        if($null -ne $env:System_PullRequest_PullRequestId)
+        foreach ($packageNuspec in $nuspecFiles)
         {
-            # this is a PR build, perform analysis on nuspec dependencies
-            write-host "##[command] Running nanovc for PR (analyse nuspec)."
-            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile --analyse-nuspec
-        }
-        else
-        {
-            write-host "##[command] Running nanovc."
-            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+            if($null -ne $env:System_PullRequest_PullRequestId)
+            {
+                # this is a PR build, perform analysis on nuspec dependencies
+                write-host "##[command] Running nanovc for PR (analyse nuspec) on '$($packageNuspec.FullName)'."
+                nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile.FullName --nuspec-file $packageNuspec.FullName --analyse-nuspec
+            }
+            else
+            {
+                write-host "##[command] Running nanovc on '$($packageNuspec.FullName)'."
+                nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile.FullName --nuspec-file $packageNuspec.FullName
+            }
+
+            if($LASTEXITCODE -ne 0)
+            {
+                break
+            }
         }
 
         if($LASTEXITCODE -eq 0)
