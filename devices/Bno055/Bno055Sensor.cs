@@ -383,7 +383,7 @@ namespace Iot.Device.Bno055
         /// <summary>
         /// Gets the orientation (Euler Angles) X = Heading, Y = Roll, Z = Pitch.
         /// </summary>
-        [Telemetry(null, "Orientation (Euler Angles)")]
+        [Telemetry("Orientation", "Orientation (Euler Angles)")]
         public Vector3 Orientation
         {
             get
