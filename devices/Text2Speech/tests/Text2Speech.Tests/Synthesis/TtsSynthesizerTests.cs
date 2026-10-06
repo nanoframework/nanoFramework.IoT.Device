@@ -168,6 +168,25 @@ namespace Iot.Device.Text2Speech.Tests
         }
 
         /// <summary>
+        /// Verifies English expansion overflow is retried instead of silently truncating text.
+        /// </summary>
+        [TestMethod]
+        public void SegmenterRetriesEnglishExpansionOverflow()
+        {
+            string digits = new string('8', 40);
+            string input = new string('$', 56) + digits;
+            TtsSegmenter segmenter = new TtsSegmenter(EnglishTtsLanguage.Instance);
+            TtsSynthesizer synthesizer = CreateEnglishSynthesizer();
+            string[] segments = segmenter.Split(input);
+
+            Assert.AreEqual(1, segments.Length, "Audible segment count");
+            AssertPcmEqual(
+                synthesizer.Speak(digits),
+                synthesizer.Speak(segments[0]),
+                "Complete expanded digits");
+        }
+
+        /// <summary>
         /// Verifies number expansion matches equivalent written words.
         /// </summary>
         [TestMethod]
@@ -324,6 +343,42 @@ namespace Iot.Device.Text2Speech.Tests
         }
 
         /// <summary>
+        /// Verifies each optional formant glide is applied independently.
+        /// </summary>
+        [TestMethod]
+        public void IndependentFormantGlidesUseBaseFormantFallbacks()
+        {
+            TtsSynthesizer synthesizer =
+                new TtsSynthesizer(new TestLanguage(), new VoiceOptions());
+            byte[] noGlide = synthesizer.Speak("x");
+            byte[] firstOnly = synthesizer.Speak("f");
+            byte[] explicitFallbacks = synthesizer.Speak("e");
+            byte[] secondOnly = synthesizer.Speak("s");
+
+            AssertPcmEqual(firstOnly, explicitFallbacks, "Zero glides use base formants");
+            Assert.IsTrue(
+                ComputeHash(noGlide) != ComputeHash(secondOnly),
+                "Second-formant-only glide affects output");
+        }
+
+        /// <summary>
+        /// Verifies voice scaling cannot exceed the renderer's Nyquist formant limit.
+        /// </summary>
+        [TestMethod]
+        public void FormantScalingClampsAtNyquist()
+        {
+            TestLanguage language = new TestLanguage();
+            byte[] normal = new TtsSynthesizer(
+                language,
+                new VoiceOptions(formantScalePercent: 100)).Speak("n");
+            byte[] scaled = new TtsSynthesizer(
+                language,
+                new VoiceOptions(formantScalePercent: 120)).Speak("n");
+
+            AssertPcmEqual(normal, scaled, "Nyquist formant clamp");
+        }
+
+        /// <summary>
         /// Verifies the public phoneme workspace remains bounded and reusable.
         /// </summary>
         [TestMethod]
@@ -336,6 +391,14 @@ namespace Iot.Device.Text2Speech.Tests
             }
 
             Assert.IsFalse(buffer.TryAdd(TestLanguage.Tone, 0), "Full phoneme buffer");
+            Assert.ThrowsException(
+                typeof(ArgumentOutOfRangeException),
+                delegate { new TtsPhonemeBuffer().TryAdd(TestLanguage.Tone, 0, 49); },
+                "Local duration lower bound");
+            Assert.ThrowsException(
+                typeof(ArgumentOutOfRangeException),
+                delegate { new TtsPhonemeBuffer().TryAdd(TestLanguage.Tone, 0, 201); },
+                "Local duration upper bound");
             Assert.AreEqual(TtsPhonemeBuffer.MaximumPhonemes, buffer.Count, "Full phoneme count");
             buffer.Clear();
             Assert.AreEqual(0, buffer.Count, "Cleared phoneme count");

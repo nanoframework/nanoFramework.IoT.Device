@@ -18,7 +18,29 @@ namespace Iot.Device.Text2Speech.Tests
         {
             for (int i = 0; i < text.Length; i++)
             {
-                if (text[i] == 'x' && !phonemes.TryAdd(TestLanguage.Tone, 0))
+                TtsPhoneme phoneme = null;
+                if (text[i] == 'x')
+                {
+                    phoneme = TestLanguage.Tone;
+                }
+                else if (text[i] == 'f')
+                {
+                    phoneme = TestLanguage.FirstFormantGlide;
+                }
+                else if (text[i] == 'e')
+                {
+                    phoneme = TestLanguage.FirstFormantGlideWithExplicitFallbacks;
+                }
+                else if (text[i] == 's')
+                {
+                    phoneme = TestLanguage.SecondFormantGlide;
+                }
+                else if (text[i] == 'n')
+                {
+                    phoneme = TestLanguage.NyquistFormants;
+                }
+
+                if (phoneme != null && !phonemes.TryAdd(phoneme, 0))
                 {
                     return false;
                 }

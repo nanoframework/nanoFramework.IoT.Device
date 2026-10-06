@@ -62,9 +62,34 @@ namespace Iot.Device.Text2Speech
         /// <exception cref="ArgumentNullException"><paramref name="phoneme" /> is <see langword="null" />.</exception>
         public bool TryAdd(TtsPhoneme phoneme, int pitchOffset)
         {
+            return TryAdd(phoneme, pitchOffset, 100);
+        }
+
+        /// <summary>
+        /// Appends a phoneme with relative pitch and local duration adjustments.
+        /// </summary>
+        /// <param name="phoneme">The immutable acoustic phoneme definition.</param>
+        /// <param name="pitchOffset">The relative pitch adjustment in semitones.</param>
+        /// <param name="durationPercent">
+        /// The local duration percentage, from 50 through 200.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> when appended; otherwise, <see langword="false" /> when full.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="phoneme" /> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="durationPercent" /> is outside the supported range.
+        /// </exception>
+        public bool TryAdd(TtsPhoneme phoneme, int pitchOffset, int durationPercent)
+        {
             if (phoneme == null)
             {
                 throw new ArgumentNullException();
+            }
+
+            if (durationPercent < 50 || durationPercent > 200)
+            {
+                throw new ArgumentOutOfRangeException();
             }
 
             if (_count >= _sequence.Length)
@@ -74,6 +99,7 @@ namespace Iot.Device.Text2Speech
 
             _sequence[_count].Phoneme = phoneme;
             _sequence[_count].PitchOffset = pitchOffset;
+            _sequence[_count].DurationPercent = durationPercent;
             _count++;
             return true;
         }
@@ -84,15 +110,16 @@ namespace Iot.Device.Text2Speech
             for (int i = 0; i < _count; i++)
             {
                 TtsPhoneme phoneme = _sequence[i].Phoneme;
+                int durationPercent = _sequence[i].DurationPercent;
                 if (phoneme.Type != TtsPhonemeType.Stop)
                 {
-                    count += options.DurationToSamples(phoneme.Duration);
+                    count += options.DurationToSamples(phoneme.Duration, durationPercent);
                 }
                 else if (phoneme.Voiced)
                 {
-                    count += options.DurationToSamples(18)
-                        + options.DurationToSamples(20)
-                        + options.DurationToSamples(18);
+                    count += options.DurationToSamples(18, durationPercent)
+                        + options.DurationToSamples(20, durationPercent)
+                        + options.DurationToSamples(18, durationPercent);
                 }
                 else
                 {
@@ -106,7 +133,8 @@ namespace Iot.Device.Text2Speech
                         burst = 45;
                     }
 
-                    count += options.DurationToSamples(20) + options.DurationToSamples(burst);
+                    count += options.DurationToSamples(20, durationPercent)
+                        + options.DurationToSamples(burst, durationPercent);
                 }
             }
 

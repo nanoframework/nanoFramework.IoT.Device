@@ -87,20 +87,27 @@ namespace Iot.Device.Text2Speech
 
         internal int DurationToSamples(int milliseconds)
         {
+            return DurationToSamples(milliseconds, 100);
+        }
+
+        internal int DurationToSamples(int milliseconds, int durationPercent)
+        {
             if (milliseconds <= 0)
             {
                 return 0;
             }
 
             int divisor = 1000 * SpeedPercent;
-            int samples = ((milliseconds * TtsSynthesizer.SampleRate * 100) + (divisor / 2))
+            int samples = ((milliseconds * TtsSynthesizer.SampleRate * durationPercent)
+                + (divisor / 2))
                 / divisor;
             return samples > 0 ? samples : 1;
         }
 
         internal int ScaleFormant(int hertz)
         {
-            return (hertz * _formantScale) >> ScaleShift;
+            int scaled = (hertz * _formantScale) >> ScaleShift;
+            return scaled > 4000 ? 4000 : scaled;
         }
 
         internal int ScaleIntonation(int semitones)

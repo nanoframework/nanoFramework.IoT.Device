@@ -49,9 +49,11 @@ namespace Iot.Device.Text2Speech
         public static readonly TtsPhoneme W = P(TtsPhonemeType.Voiced, 300, 700, 2200, 6, 5, 2, 43, 62);
         public static readonly TtsPhoneme H = P(TtsPhonemeType.Voiced, 300, 1700, 2400, 5, 5, 2, 46, 62);
 
-        public static readonly TtsPhoneme Space = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 80);
-        public static readonly TtsPhoneme Comma = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 120);
-        public static readonly TtsPhoneme Stop = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 160);
+        public static readonly TtsPhoneme Space = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 25);
+        public static readonly TtsPhoneme Comma = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 220);
+        public static readonly TtsPhoneme Clause = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 320);
+        public static readonly TtsPhoneme Stop = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 400);
+        public static readonly TtsPhoneme Question = P(TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 500);
 
         private static TtsPhoneme P(
             TtsPhonemeType type,

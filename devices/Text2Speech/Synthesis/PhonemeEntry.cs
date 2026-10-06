@@ -19,5 +19,11 @@ namespace Iot.Device.Text2Speech
         /// </summary>
         /// <value>The sentence-contour pitch adjustment.</value>
         public int PitchOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phoneme-specific duration percentage.
+        /// </summary>
+        /// <value>The local duration scale where 100 preserves the nominal duration.</value>
+        public int DurationPercent { get; set; }
     }
 }

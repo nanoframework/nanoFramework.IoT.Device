@@ -376,8 +376,8 @@ foreach ($folder in $deviceFolders)
             # package NuGet
             foreach ($packageNuspec in $nuspecFiles)
             {
-                write-host "##[command] Running nuget pack for '$packageNuspec'."
-                nuget pack $packageNuspec -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
+                write-host "##[command] Running nuget pack for '$($packageNuspec.FullName)'."
+                nuget pack $packageNuspec.FullName -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
                 if (-not $?) { throw "Error packaging '$packageNuspec'" }
             }
         }

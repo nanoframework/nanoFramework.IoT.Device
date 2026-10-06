@@ -23,6 +23,66 @@ namespace Iot.Device.Text2Speech.Tests
             0,
             0);
 
+        internal static readonly TtsPhoneme FirstFormantGlide = new TtsPhoneme(
+            TtsPhonemeType.Voiced,
+            730,
+            1090,
+            2440,
+            6,
+            5,
+            2,
+            45,
+            50,
+            false,
+            900,
+            0,
+            0);
+
+        internal static readonly TtsPhoneme FirstFormantGlideWithExplicitFallbacks = new TtsPhoneme(
+            TtsPhonemeType.Voiced,
+            730,
+            1090,
+            2440,
+            6,
+            5,
+            2,
+            45,
+            50,
+            false,
+            900,
+            1090,
+            2440);
+
+        internal static readonly TtsPhoneme SecondFormantGlide = new TtsPhoneme(
+            TtsPhonemeType.Voiced,
+            730,
+            1090,
+            2440,
+            6,
+            5,
+            2,
+            45,
+            50,
+            false,
+            0,
+            1500,
+            0);
+
+        internal static readonly TtsPhoneme NyquistFormants = new TtsPhoneme(
+            TtsPhonemeType.Voiced,
+            4000,
+            4000,
+            4000,
+            6,
+            5,
+            2,
+            45,
+            50,
+            false,
+            0,
+            0,
+            0);
+
         /// <summary>
         /// Gets the test language name.
         /// </summary>

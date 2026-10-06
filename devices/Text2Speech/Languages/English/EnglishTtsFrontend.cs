@@ -61,7 +61,12 @@ namespace Iot.Device.Text2Speech
             phonemes.Clear();
             _phonemes = phonemes;
             _overflowed = false;
-            int expandedLength = ExpandText(text, _expandedText);
+            int expandedLength;
+            if (!TryExpandText(text, _expandedText, out expandedLength))
+            {
+                return false;
+            }
+
             bool isQuestion = false;
             int letterTotal = 0;
             for (int i = 0; i < expandedLength; i++)
@@ -207,10 +212,10 @@ namespace Iot.Device.Text2Speech
             return !_overflowed;
         }
 
-        private static int ExpandText(string input, char[] output)
+        private static bool TryExpandText(string input, char[] output, out int length)
         {
             int outputIndex = 0;
-            for (int i = 0; i < input.Length && outputIndex < output.Length - 1;)
+            for (int i = 0; i < input.Length;)
             {
                 char current = input[i];
                 if (current == '\'')
@@ -232,19 +237,36 @@ namespace Iot.Device.Text2Speech
                         int value = ((current - '0') * 10) + (input[i + 1] - '0');
                         if (value < 10)
                         {
-                            outputIndex = Append(output, outputIndex, DigitWords[value]);
+                            if (!TryAppend(output, ref outputIndex, DigitWords[value]))
+                            {
+                                length = 0;
+                                return false;
+                            }
                         }
                         else if (value < 20)
                         {
-                            outputIndex = Append(output, outputIndex, TeenWords[value - 10]);
+                            if (!TryAppend(output, ref outputIndex, TeenWords[value - 10]))
+                            {
+                                length = 0;
+                                return false;
+                            }
                         }
                         else
                         {
-                            outputIndex = Append(output, outputIndex, TensWords[value / 10]);
+                            if (!TryAppend(output, ref outputIndex, TensWords[value / 10]))
+                            {
+                                length = 0;
+                                return false;
+                            }
+
                             if ((value % 10) != 0)
                             {
-                                outputIndex = Append(output, outputIndex, " ");
-                                outputIndex = Append(output, outputIndex, DigitWords[value % 10]);
+                                if (!TryAppend(output, ref outputIndex, " ")
+                                    || !TryAppend(output, ref outputIndex, DigitWords[value % 10]))
+                                {
+                                    length = 0;
+                                    return false;
+                                }
                             }
                         }
                     }
@@ -254,10 +276,21 @@ namespace Iot.Device.Text2Speech
                         {
                             if (digit != 0)
                             {
-                                outputIndex = Append(output, outputIndex, " ");
+                                if (!TryAppend(output, ref outputIndex, " "))
+                                {
+                                    length = 0;
+                                    return false;
+                                }
                             }
 
-                            outputIndex = Append(output, outputIndex, DigitWords[input[i + digit] - '0']);
+                            if (!TryAppend(
+                                output,
+                                ref outputIndex,
+                                DigitWords[input[i + digit] - '0']))
+                            {
+                                length = 0;
+                                return false;
+                            }
                         }
                     }
 
@@ -265,21 +298,33 @@ namespace Iot.Device.Text2Speech
                     continue;
                 }
 
+                if (outputIndex >= output.Length)
+                {
+                    length = 0;
+                    return false;
+                }
+
                 output[outputIndex++] = current;
                 i++;
             }
 
-            return outputIndex;
+            length = outputIndex;
+            return true;
         }
 
-        private static int Append(char[] output, int index, string value)
+        private static bool TryAppend(char[] output, ref int index, string value)
         {
-            for (int i = 0; i < value.Length && index < output.Length - 1; i++)
+            if (value.Length > output.Length - index)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < value.Length; i++)
             {
                 output[index++] = value[i];
             }
 
-            return index;
+            return true;
         }
 
         private static Pattern FindPattern(char[] text, int textLength, int offset)

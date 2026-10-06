@@ -10,7 +10,7 @@ A managed, integer-only formant speech synthesizer for constrained .NET nanoFram
 - 2 kHz control-rate updates for pitch, formants, envelopes, and transitions while oscillators and noise remain at 8 kHz.
 - Reused parser and renderer workspaces to reduce repeated allocations and garbage collection.
 - Built-in English and French spelling-to-phoneme rules, number expansion, punctuation pauses, and statement/question intonation.
-- French support for precomposed accents, oral and rounded vowels, four approximate nasal vowels, French consonants and glides, and cardinal integers through 999,999,999.
+- French support for precomposed accents, oral and rounded vowels, four approximate nasal vowels, French consonants and glides, cardinal integers through 999,999,999, and accentual-group prosody.
 - Public language, frontend, phoneme, and bounded-buffer APIs for allocation-conscious language packs.
 - Streaming or buffered unsigned 8-bit mono PCM at 8,000 Hz.
 - Canonical 44-byte PCM WAV header creation and validation.
@@ -102,6 +102,11 @@ A language pack implements two small interfaces:
 - `ITtsLanguageFrontend` normalizes one text round, applies spelling, number, stress, and intonation rules, and appends acoustic phonemes to `TtsPhonemeBuffer`. It returns `false` instead of truncating when the fixed 128-phoneme capacity is exceeded.
 
 `TtsPhoneme` is the renderer-neutral acoustic model. A language pack supplies formant frequencies, amplitudes, MIDI pitch, duration, voicing, and optional formant glides. `TtsPhonemeType` selects one of the shared renderer paths: voiced, fricative, stop, silence, or voiced fricative. Definitions are validated when constructed so invalid frequencies, amplitudes, pitches, durations, and glides fail before synthesis starts.
+
+`TtsPhonemeBuffer.TryAdd` also has an overload with a local duration percentage.
+This lets a frontend lengthen accented vowels or shorten unstressed material
+without creating duplicate acoustic phoneme definitions. Existing frontends
+using the pitch-only overload retain a 100% duration and byte-identical timing.
 
 A minimal frontend has this shape:
 
@@ -301,12 +306,12 @@ msbuild Text2Speech.sln /p:platform="Any CPU" /p:Configuration=Release /verbosit
 ```
 
 If `msbuild` is not on `PATH`, locate the Visual Studio MSBuild executable with `vswhere` and invoke it directly. StyleCop findings fail the build.
-To validate the IoT.Device-style packages after a Release build, provide one version to all three specifications so the language dependencies resolve to the matching core package:
+To validate the IoT.Device-style packages after a Release build, provide one version to all three specifications:
 
 ```powershell
 nuget pack Text2Speech.nuspec -Version 1.0.0 -Properties commit=LOCAL
-nuget pack Text2Speech.English.nuspec -Version 1.0.0 -Properties commit=LOCAL
-nuget pack Text2Speech.French.nuspec -Version 1.0.0 -Properties commit=LOCAL
+nuget pack Languages\English\Text2Speech.English.nuspec -Version 1.0.0 -Properties commit=LOCAL
+nuget pack Languages\French\Text2Speech.French.nuspec -Version 1.0.0 -Properties commit=LOCAL
 ```
 
 ## Tests
@@ -318,12 +323,12 @@ Tests cover format constants, deterministic synthesis, buffered/streamed equival
 ## Constraints
 
 - The separately packaged English and French frontends are intentionally compact; other languages require their own `ITtsLanguage` and `ITtsLanguageFrontend` implementation, phoneme inventory, normalization, spelling, stress, and intonation rules.
-- Phase 1 French is rule based. It does not provide a full lexicon, optional liaison, grammatical disambiguation, or exact acoustic nasal coupling, so irregular and context-sensitive words remain approximate.
-- Pronunciation uses spelling rules rather than a dictionary, so proper names and irregular words may sound approximate.
+- French pronunciation is rule based. Its embedded prosody was distilled from HI! PARIS SSML output and French accentual-group behavior: approximately 2% slower segment timing, short word joins, final-vowel lengthening, continuation rises, declarative falls, question rises, and differentiated comma, clause, and terminal pauses. It does not provide a full lexicon, optional liaison, grammatical disambiguation, or exact acoustic nasal coupling, so irregular and context-sensitive words remain approximate.
+- To generate the French Prosology, we've been using HI! PARIS two-stage Qwen2.5-7B cascade on a host computer and converts its SSML into bounded pitch, speed, volume, and pause controls. The generated controls are development artifacts; the firmware frontend continues to use its built-in deterministic contour until a continuous span-level runtime bridge is added.
 - Input and phonemes are bounded by the selected language and the fixed 128-entry `TtsPhonemeBuffer` to keep memory deterministic.
 - The 8 kHz output favors size and embedded cost over high-fidelity speech.
 - Calls reset renderer state for deterministic output and are safe to use through separate synthesizer calls; a sink must consume each block synchronously.
 
 ## License and attribution
 
-This repository is MIT licensed. The managed engine is derived from PebbleTalk at commit `8ddfbb60b9cd940a8ef4a24c3787ad211b19b003`, copyright (c) 2026 neonfire, also under the MIT License. French spelling rules are independently adapted from Epitran French data (MIT, copyright 2016 David Mortensen), and French cardinal behavior is adapted from Unicode CLDR data (Unicode License v3). See `LICENSE` and `NOTICE`.
+This repository is MIT licensed. The managed engine is derived from PebbleTalk at commit `8ddfbb60b9cd940a8ef4a24c3787ad211b19b003`, copyright (c) 2026 neonfire, also under the MIT License. French spelling rules are independently adapted from Epitran French data (MIT, copyright 2016 David Mortensen), and French cardinal behavior is adapted from Unicode CLDR data (Unicode License v3). Host-side prosody tool interoperates with the MIT-licensed HI! PARIS Prosody-Control-French-TTS project and separately downloaded Apache-2.0 models. See `LICENSE` and `NOTICE`.

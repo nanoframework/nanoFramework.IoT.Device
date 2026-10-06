@@ -171,8 +171,8 @@ namespace Iot.Device.Text2Speech
                 if (previous.Type == TtsPhonemeType.Voiced)
                 {
                     previousF1 = previous.Glide1 > 0 ? previous.Glide1 : previous.F1;
-                    previousF2 = previous.Glide1 > 0 ? previous.Glide2 : previous.F2;
-                    previousF3 = previous.Glide1 > 0 ? previous.Glide3 : previous.F3;
+                    previousF2 = previous.Glide2 > 0 ? previous.Glide2 : previous.F2;
+                    previousF3 = previous.Glide3 > 0 ? previous.Glide3 : previous.F3;
                     break;
                 }
             }
@@ -198,6 +198,7 @@ namespace Iot.Device.Text2Speech
                     phoneme,
                     entry.PitchOffset,
                     nextPitchOffset,
+                    entry.DurationPercent,
                     previousF1,
                     previousF2,
                     previousF3,
@@ -207,11 +208,11 @@ namespace Iot.Device.Text2Speech
             }
             else if (phoneme.Type == TtsPhonemeType.VoicedFricative)
             {
-                EmitVoicedFricative(phoneme, entry.PitchOffset);
+                EmitVoicedFricative(phoneme, entry.PitchOffset, entry.DurationPercent);
             }
             else
             {
-                EmitPhoneme(phoneme, entry.PitchOffset);
+                EmitPhoneme(phoneme, entry.PitchOffset, entry.DurationPercent);
             }
         }
 
@@ -219,6 +220,7 @@ namespace Iot.Device.Text2Speech
             TtsPhoneme phoneme,
             int pitchOffset,
             int nextPitchOffset,
+            int durationPercent,
             int previousF1,
             int previousF2,
             int previousF3,
@@ -226,7 +228,7 @@ namespace Iot.Device.Text2Speech
             int nextF2,
             int nextF3)
         {
-            int duration = _options.DurationToSamples(phoneme.Duration);
+            int duration = _options.DurationToSamples(phoneme.Duration, durationPercent);
             int attack = duration / 8;
             if (attack < ControlPeriod)
             {
@@ -261,10 +263,10 @@ namespace Iot.Device.Text2Speech
             int glideIncrement1 = phoneme.Glide1 > 0
                 ? FormantIncrement(phoneme.Glide1)
                 : baseIncrement1;
-            int glideIncrement2 = phoneme.Glide1 > 0
+            int glideIncrement2 = phoneme.Glide2 > 0
                 ? FormantIncrement(phoneme.Glide2)
                 : baseIncrement2;
-            int glideIncrement3 = phoneme.Glide1 > 0
+            int glideIncrement3 = phoneme.Glide3 > 0
                 ? FormantIncrement(phoneme.Glide3)
                 : baseIncrement3;
             int basePosition1 = baseIncrement1 << IncrementInterpolationShift;
@@ -297,10 +299,10 @@ namespace Iot.Device.Text2Speech
             int endStep1 = blend > 0 && nextF1 > 0 && phoneme.Glide1 == 0
                 ? ((FormantIncrement(nextF1) << IncrementInterpolationShift) - endPosition1) / blend
                 : 0;
-            int endStep2 = blend > 0 && nextF2 > 0 && phoneme.Glide1 == 0
+            int endStep2 = blend > 0 && nextF2 > 0 && phoneme.Glide2 == 0
                 ? ((FormantIncrement(nextF2) << IncrementInterpolationShift) - endPosition2) / blend
                 : 0;
-            int endStep3 = blend > 0 && nextF3 > 0 && phoneme.Glide1 == 0
+            int endStep3 = blend > 0 && nextF3 > 0 && phoneme.Glide3 == 0
                 ? ((FormantIncrement(nextF3) << IncrementInterpolationShift) - endPosition3) / blend
                 : 0;
 
@@ -321,29 +323,40 @@ namespace Iot.Device.Text2Speech
                 int increment1;
                 int increment2;
                 int increment3;
+                increment1 = basePosition1 >> IncrementInterpolationShift;
                 if (i < blend && previousF1 > 0)
                 {
                     increment1 = startPosition1 >> IncrementInterpolationShift;
-                    increment2 = startPosition2 >> IncrementInterpolationShift;
-                    increment3 = startPosition3 >> IncrementInterpolationShift;
                     startPosition1 += startStep1 * blockLength;
-                    startPosition2 += startStep2 * blockLength;
-                    startPosition3 += startStep3 * blockLength;
                 }
                 else if (i >= endStart && nextF1 > 0 && phoneme.Glide1 == 0)
                 {
                     increment1 = endPosition1 >> IncrementInterpolationShift;
-                    increment2 = endPosition2 >> IncrementInterpolationShift;
-                    increment3 = endPosition3 >> IncrementInterpolationShift;
                     endPosition1 += endStep1 * blockLength;
-                    endPosition2 += endStep2 * blockLength;
-                    endPosition3 += endStep3 * blockLength;
                 }
-                else
+
+                increment2 = basePosition2 >> IncrementInterpolationShift;
+                if (i < blend && previousF2 > 0)
                 {
-                    increment1 = basePosition1 >> IncrementInterpolationShift;
-                    increment2 = basePosition2 >> IncrementInterpolationShift;
-                    increment3 = basePosition3 >> IncrementInterpolationShift;
+                    increment2 = startPosition2 >> IncrementInterpolationShift;
+                    startPosition2 += startStep2 * blockLength;
+                }
+                else if (i >= endStart && nextF2 > 0 && phoneme.Glide2 == 0)
+                {
+                    increment2 = endPosition2 >> IncrementInterpolationShift;
+                    endPosition2 += endStep2 * blockLength;
+                }
+
+                increment3 = basePosition3 >> IncrementInterpolationShift;
+                if (i < blend && previousF3 > 0)
+                {
+                    increment3 = startPosition3 >> IncrementInterpolationShift;
+                    startPosition3 += startStep3 * blockLength;
+                }
+                else if (i >= endStart && nextF3 > 0 && phoneme.Glide3 == 0)
+                {
+                    increment3 = endPosition3 >> IncrementInterpolationShift;
+                    endPosition3 += endStep3 * blockLength;
                 }
 
                 int increment0 = pitchPosition >> IncrementInterpolationShift;
@@ -402,9 +415,12 @@ namespace Iot.Device.Text2Speech
             }
         }
 
-        private void EmitVoicedFricative(TtsPhoneme phoneme, int pitchOffset)
+        private void EmitVoicedFricative(
+            TtsPhoneme phoneme,
+            int pitchOffset,
+            int durationPercent)
         {
-            int duration = _options.DurationToSamples(phoneme.Duration);
+            int duration = _options.DurationToSamples(phoneme.Duration, durationPercent);
             int attack = duration / 6;
             if (attack < ControlPeriod)
             {
@@ -487,9 +503,12 @@ namespace Iot.Device.Text2Speech
             }
         }
 
-        private void EmitPhoneme(TtsPhoneme phoneme, int pitchOffset)
+        private void EmitPhoneme(
+            TtsPhoneme phoneme,
+            int pitchOffset,
+            int durationPercent)
         {
-            int duration = _options.DurationToSamples(phoneme.Duration);
+            int duration = _options.DurationToSamples(phoneme.Duration, durationPercent);
             int attack = duration / 8;
             if (attack < 4)
             {
@@ -554,7 +573,7 @@ namespace Iot.Device.Text2Speech
                         + _options.ScaleIntonation(pitchOffset)));
                 if (phoneme.Voiced)
                 {
-                    int murmur = _options.DurationToSamples(18);
+                    int murmur = _options.DurationToSamples(18, durationPercent);
                     EmitWos(
                         phoneme.F1 > 0 ? phoneme.F1 : 300,
                         700,
@@ -568,7 +587,7 @@ namespace Iot.Device.Text2Speech
                         murmur);
                 }
 
-                int closure = _options.DurationToSamples(20);
+                int closure = _options.DurationToSamples(20, durationPercent);
                 EmitSilence(closure);
 
                 int burstMilliseconds;
@@ -589,7 +608,7 @@ namespace Iot.Device.Text2Speech
                     }
                 }
 
-                int burst = _options.DurationToSamples(burstMilliseconds);
+                int burst = _options.DurationToSamples(burstMilliseconds, durationPercent);
                 int peak = 12 * phoneme.A2;
                 int burstStep = RampStep(peak, burst);
                 for (int i = 0; i < burst; i += ControlPeriod)

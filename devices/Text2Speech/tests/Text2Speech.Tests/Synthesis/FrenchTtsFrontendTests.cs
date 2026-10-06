@@ -45,6 +45,40 @@ namespace Iot.Device.Text2Speech.Tests
         }
 
         /// <summary>
+        /// Verifies grouped silent finals and lateral ill words do not add extra phonemes.
+        /// </summary>
+        [TestMethod]
+        public void FrenchSilentFinalGroupsAndLateralIllArePronouncedCorrectly()
+        {
+            TtsSynthesizer synthesizer = CreateSynthesizer();
+
+            Assert.AreEqual(
+                synthesizer.Speak("vin").Length,
+                synthesizer.Speak("vingt").Length,
+                "Silent gt in vingt");
+            Assert.AreEqual(
+                synthesizer.Speak("vin").Length,
+                synthesizer.Speak("vingts").Length,
+                "Silent gts in vingts");
+            Assert.AreEqual(
+                synthesizer.Speak("sans").Length,
+                synthesizer.Speak("cents").Length,
+                "Silent ts in cents");
+            Assert.AreEqual(
+                synthesizer.Speak("mil").Length,
+                synthesizer.Speak("mille").Length,
+                "Lateral ill in mille");
+            Assert.AreEqual(
+                synthesizer.Speak("vil").Length,
+                synthesizer.Speak("ville").Length,
+                "Lateral ill in ville");
+            Assert.AreEqual(
+                synthesizer.Speak("tranquile").Length,
+                synthesizer.Speak("tranquille").Length,
+                "Lateral ill in tranquille");
+        }
+
+        /// <summary>
         /// Verifies accented letters and important French grapheme groups produce speech.
         /// </summary>
         [TestMethod]
@@ -103,6 +137,22 @@ namespace Iot.Device.Text2Speech.Tests
             Assert.AreEqual(expected.Length, count, "Streaming byte count");
             Assert.AreEqual(expected.Length, sink.Position, "Sink byte count");
             Assert.IsTrue(sink.Matches, "French streamed PCM");
+        }
+
+        /// <summary>
+        /// Verifies French accentual groups use distinct continuation and terminal timing.
+        /// </summary>
+        [TestMethod]
+        public void FrenchProsodyUsesAccentualGroups()
+        {
+            TtsSynthesizer synthesizer = CreateSynthesizer();
+            byte[] plain = synthesizer.Speak("Demain nous partirons.");
+            byte[] grouped = synthesizer.Speak("Demain, nous partirons.");
+            byte[] question = synthesizer.Speak("Demain nous partirons?");
+
+            Assert.IsTrue(grouped.Length > plain.Length, "Comma group pause");
+            Assert.IsTrue(question.Length > plain.Length, "Question boundary");
+            Assert.IsTrue(ComputeHash(question) != ComputeHash(plain), "Question contour");
         }
 
         /// <summary>

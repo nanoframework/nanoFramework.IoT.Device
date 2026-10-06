@@ -15,6 +15,7 @@ namespace Iot.Device.Text2Speech
 
         private TtsPhonemeBuffer _phonemes;
         private bool _overflowed;
+        private int _durationPercent;
 
         /// <summary>
         /// Expands and parses French text into the reusable phoneme sequence.
@@ -45,39 +46,58 @@ namespace Iot.Device.Text2Speech
             }
 
             bool isQuestion = false;
-            int letterTotal = 0;
             for (int i = 0; i < expandedLength; i++)
             {
                 if (_expandedText[i] == '?')
                 {
                     isQuestion = true;
                 }
-
-                if (IsLetter(_expandedText[i]))
-                {
-                    letterTotal++;
-                }
             }
 
-            int letterPosition = 0;
+            int groupStart = 0;
+            int groupEnd = FrenchProsody.FindGroupEnd(_expandedText, groupStart, expandedLength);
+            int groupLetterTotal =
+                FrenchProsody.CountLetters(_expandedText, groupStart, groupEnd);
+            int accentOffset =
+                FrenchProsody.FindAccentOffset(_expandedText, groupStart, groupEnd);
+            int groupLetterPosition = 0;
             for (int i = 0; i < expandedLength; i++)
             {
                 char current = _expandedText[i];
                 if (current == ' ' || current == '\t' || current == '\r' || current == '\n')
                 {
+                    _durationPercent = 100;
                     Add(FrenchPhonemeData.Space, 0);
                     continue;
                 }
 
-                if (current == ',' || current == ';' || current == ':')
+                if (current == ',' || current == ';' || current == ':'
+                    || current == '.' || current == '!' || current == '?')
                 {
-                    Add(FrenchPhonemeData.Comma, 0);
-                    continue;
-                }
+                    _durationPercent = 100;
+                    if (current == ',')
+                    {
+                        Add(FrenchPhonemeData.Comma, 0);
+                    }
+                    else if (current == ';' || current == ':')
+                    {
+                        Add(FrenchPhonemeData.Clause, 0);
+                    }
+                    else
+                    {
+                        Add(
+                            current == '?' ? FrenchPhonemeData.Question : FrenchPhonemeData.Stop,
+                            0);
+                    }
 
-                if (current == '.' || current == '!' || current == '?')
-                {
-                    Add(FrenchPhonemeData.Stop, 0);
+                    groupStart = i + 1;
+                    groupEnd =
+                        FrenchProsody.FindGroupEnd(_expandedText, groupStart, expandedLength);
+                    groupLetterTotal =
+                        FrenchProsody.CountLetters(_expandedText, groupStart, groupEnd);
+                    accentOffset =
+                        FrenchProsody.FindAccentOffset(_expandedText, groupStart, groupEnd);
+                    groupLetterPosition = 0;
                     continue;
                 }
 
@@ -91,7 +111,17 @@ namespace Iot.Device.Text2Speech
                     continue;
                 }
 
-                int pitchOffset = PitchForPosition(letterPosition, letterTotal, isQuestion);
+                bool finalGroup = groupEnd >= expandedLength
+                    || _expandedText[groupEnd] == '.'
+                    || _expandedText[groupEnd] == '!'
+                    || _expandedText[groupEnd] == '?';
+                int pitchOffset = FrenchProsody.PitchForPosition(
+                    groupLetterPosition,
+                    groupLetterTotal,
+                    isQuestion,
+                    finalGroup);
+                _durationPercent =
+                    FrenchProsody.DurationPercent(_expandedText, i, accentOffset);
                 int consumed = ParsePattern(i, expandedLength, pitchOffset);
                 if (consumed == 0)
                 {
@@ -100,7 +130,7 @@ namespace Iot.Device.Text2Speech
                 }
 
                 i += consumed - 1;
-                letterPosition += consumed;
+                groupLetterPosition += consumed;
             }
 
             return !_overflowed;
@@ -169,6 +199,16 @@ namespace Iot.Device.Text2Speech
 
             if (Match(offset, length, "ill"))
             {
+                if (IsLateralIllException(offset, length))
+                {
+                    Add(FrenchPhonemeData.I, pitchOffset);
+                    Add(
+                        FrenchPhonemeData.L,
+                        pitchOffset,
+                        FrenchProsody.NormalDurationPercent);
+                    return 3;
+                }
+
                 if (!IsVowel(CharAt(offset - 1, length)))
                 {
                     Add(FrenchPhonemeData.I, pitchOffset);
@@ -327,7 +367,9 @@ namespace Iot.Device.Text2Speech
             char next = CharAt(offset + 1, length);
             bool wordEnd = IsWordEnd(offset + 1, length);
 
-            if ((wordEnd && IsSilentFinal(current) && !IsPronouncedFinalException(offset, length))
+            if ((IsSilentFinal(current)
+                    && IsWordEndAfterSilentFinal(offset, length)
+                    && !IsPronouncedFinalException(offset, length))
                 || (current == 'p' && next == 't' && IsWholeWord(offset, length, "sept")))
             {
                 return;
@@ -488,9 +530,19 @@ namespace Iot.Device.Text2Speech
 
         private bool IsWordEndAfterSilentFinal(int offset, int length)
         {
-            char value = CharAt(offset, length);
-            return IsWordEnd(offset, length)
-                || (IsSilentFinal(value) && IsWordEnd(offset + 1, length));
+            while (IsSilentFinal(CharAt(offset, length)))
+            {
+                offset++;
+            }
+
+            return IsWordEnd(offset, length);
+        }
+
+        private bool IsLateralIllException(int offset, int length)
+        {
+            return IsWholeWord(offset, length, "mille")
+                || IsWholeWord(offset, length, "ville")
+                || IsWholeWord(offset, length, "tranquille");
         }
 
         private bool IsPronouncedFinalException(int offset, int length)
@@ -535,35 +587,6 @@ namespace Iot.Device.Text2Speech
             return offset >= 0 && offset < length ? _expandedText[offset] : '\0';
         }
 
-        private int PitchForPosition(int position, int total, bool question)
-        {
-            if (total <= 4)
-            {
-                return question ? 2 : 0;
-            }
-
-            if (question)
-            {
-                if ((position * 2) < total)
-                {
-                    return -1;
-                }
-
-                int halfPosition = position - (total / 2);
-                int halfTotal = total - (total / 2);
-                return -1 + ((halfPosition * 5) / halfTotal);
-            }
-
-            if ((position * 2) < total)
-            {
-                return (position * 6) / total;
-            }
-
-            int fallingPosition = position - (total / 2);
-            int fallingTotal = total - (total / 2);
-            return 3 - ((fallingPosition * 5) / fallingTotal);
-        }
-
         private bool IsSilentFinal(char value)
         {
             return value == 'd' || value == 'g' || value == 'p' || value == 's'
@@ -598,7 +621,12 @@ namespace Iot.Device.Text2Speech
 
         private void Add(TtsPhoneme phoneme, int pitchOffset)
         {
-            if (!_phonemes.TryAdd(phoneme, pitchOffset))
+            Add(phoneme, pitchOffset, _durationPercent);
+        }
+
+        private void Add(TtsPhoneme phoneme, int pitchOffset, int durationPercent)
+        {
+            if (!_phonemes.TryAdd(phoneme, pitchOffset, durationPercent))
             {
                 _overflowed = true;
             }
