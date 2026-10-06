@@ -22,8 +22,8 @@ At 8,000 Hz, audio occupies approximately 8,000 bytes per second plus the 44-byt
 ## Projects
 
 - `Text2Speech.nfproj`: language-neutral renderer, synthesis API, segmentation contracts, PCM sinks, and WAV support.
-- `Text2Speech.English.nfproj`: English normalization, spelling rules, and acoustic definitions.
-- `Text2Speech.French.nfproj`: French normalization, spelling rules, and acoustic definitions.
+- `Languages\English\Text2Speech.English.nfproj`: English normalization, spelling rules, and acoustic definitions.
+- `Languages\French\Text2Speech.French.nfproj`: French normalization, spelling rules, and acoustic definitions.
 - `samples\Text2Speech.Samples\Text2Speech.Samples.nfproj`: internal-storage and ESP32 I2S sample.
 - `samples\Text2Speech.WebServerSample\Text2Speech.WebServerSample.nfproj`: Wi-Fi browser interface for synthesis, playback, and WAV management.
 - `tests\Text2Speech.Tests\Text2Speech.Tests.nfproj`: simulator-compatible unit tests.
@@ -42,7 +42,7 @@ The package specifications follow the nanoFramework IoT.Device layout and includ
 
 Following the nanoFramework WebServer MCP and Skills package pattern, each language package is standalone: it contains the core assembly artifacts plus its language assembly and flattens the core package dependencies. Applications only need to install the selected language package, while the core-only package remains available for custom language frontends. Applications only pay the flash and initialization cost of the language assemblies they reference. The namespace remains `Iot.Device.Text2Speech` across all three assemblies. The core deliberately provides no parameterless or voice-only `TtsSynthesizer` constructor and no parameterless `TtsSegmenter` constructor, because those APIs would create a dependency on a particular language package.
 
-All three library `.nfproj` files and all three `.nuspec` files are kept at the repository root; samples and tests remain in their established folders.
+The core `.nfproj` and `.nuspec` files are kept at the binding root. Each language-specific project and package specification is kept with its sources under `Languages\English` or `Languages\French`; samples and tests remain in their established folders.
 
 ### Source layout
 
@@ -64,7 +64,7 @@ The web sample links the shared hardware and storage source files from their org
 
 This is how the sample web interface looks like:
 
-![Web screen shot](./sreenshot.png)
+![Web screen shot](./screenshot.png)
 
 It allows selecting English or French, one of the three voice profiles, and buffered or live-streaming playback. You can also download, delete or play again any of the files. This is also a great demonstration of the amazing [.NET nanoFramework WebServer](https://github.com/nanoframework/nanoFramework.WebServer).
 

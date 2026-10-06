@@ -205,6 +205,13 @@ foreach ($folder in $deviceFolders)
 
     # try to find the nuspec
     $nuspecFile = Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\" -Include "$folder.nuspec" -Recurse
+    $nuspecFiles = @($nuspecFile)
+
+    # Text2Speech produces separate core and language packages from one solution.
+    if ($folder -eq "Text2Speech")
+    {
+        $nuspecFiles = @(Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\" -Filter "$folder*.nuspec" -File -Recurse)
+    }
 
     if($null -eq $nuspecFile)
     {
@@ -367,9 +374,12 @@ foreach ($folder in $deviceFolders)
 
             ###############
             # package NuGet
-            write-host "##[command] Running nuget pack."
-            nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
-            if (-not $?) { throw "Error packaging '$nuspecFile'" }
+            foreach ($packageNuspec in $nuspecFiles)
+            {
+                write-host "##[command] Running nuget pack for '$packageNuspec'."
+                nuget pack $packageNuspec -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
+                if (-not $?) { throw "Error packaging '$packageNuspec'" }
+            }
         }
         else
         {

@@ -13,9 +13,9 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup><Compile Include="Audio\WavPcm8Mono8000Tests.cs" /><Compile Include="Synthesis\TtsSynthesizerTests.cs" /><Compile Include="Synthesis\FrenchTtsFrontendTests.cs" /><Compile Include="Synthesis\Support\*.cs" /><Compile Include="Properties\AssemblyInfo.cs" /></ItemGroup>
   <ItemGroup><None Include="nano.runsettings" /><None Include="packages.config" /><None Include="Settings.StyleCop" /></ItemGroup>
-  <ItemGroup><ProjectReference Include="..\..\Text2Speech.nfproj"><Project>{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}</Project><Name>Text2Speech.Core</Name></ProjectReference><ProjectReference Include="..\..\Text2Speech.English.nfproj"><Project>{4A64C059-CA50-42E1-A0CB-EE525B594C30}</Project><Name>Text2Speech.English</Name></ProjectReference><ProjectReference Include="..\..\Text2Speech.French.nfproj"><Project>{4FB3562E-B740-4E1F-B09B-1317A7455B64}</Project><Name>Text2Speech.French</Name></ProjectReference></ItemGroup>
+  <ItemGroup><ProjectReference Include="..\..\Text2Speech.nfproj"><Project>{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}</Project><Name>Text2Speech.Core</Name></ProjectReference><ProjectReference Include="..\..\Languages\English\Text2Speech.English.nfproj"><Project>{4A64C059-CA50-42E1-A0CB-EE525B594C30}</Project><Name>Text2Speech.English</Name></ProjectReference><ProjectReference Include="..\..\Languages\French\Text2Speech.French.nfproj"><Project>{4FB3562E-B740-4E1F-B09B-1317A7455B64}</Project><Name>Text2Speech.French</Name></ProjectReference></ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib"><HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.12\lib\mscorlib.dll</HintPath></Reference>
+    <Reference Include="mscorlib"><HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath></Reference>
     <Reference Include="nanoFramework.TestFramework"><HintPath>..\..\packages\nanoFramework.TestFramework.3.0.80\lib\nanoFramework.TestFramework.dll</HintPath></Reference>
     <Reference Include="nanoFramework.UnitTestLauncher"><HintPath>..\..\packages\nanoFramework.TestFramework.3.0.80\lib\nanoFramework.UnitTestLauncher.exe</HintPath></Reference>
   </ItemGroup>
@@ -23,6 +23,5 @@
   <ProjectExtensions><ProjectCapabilities><ProjectConfigurationsDeclaredAsItems /></ProjectCapabilities></ProjectExtensions>
   <Import Project="..\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
 </Project>
-
 
 

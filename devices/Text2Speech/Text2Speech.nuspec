@@ -6,9 +6,9 @@
     <title>nanoFramework.Iot.Device.Text2Speech</title>
     <authors>nanoFramework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="file">LICENSE</license>
+    <license type="file">LICENSE.md</license>
     <releaseNotes></releaseNotes>
-    <readme>docs\README.md</readme>
+    <readme>docs/README.md</readme>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
     <icon>images\nf-logo.png</icon>
@@ -18,7 +18,7 @@
     <summary>Iot.Device.Text2Speech core assembly for .NET nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf Iot.Device.Text2Speech speech synthesis TTS PCM WAV</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.17.12" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
     </dependencies>
   </metadata>
   <files>
@@ -27,9 +27,9 @@
     <file src="bin\Release\Iot.Device.Text2Speech.pdbx" target="lib\Iot.Device.Text2Speech.pdbx" />
     <file src="bin\Release\Iot.Device.Text2Speech.pe" target="lib\Iot.Device.Text2Speech.pe" />
     <file src="bin\Release\Iot.Device.Text2Speech.xml" target="lib\Iot.Device.Text2Speech.xml" />
-    <file src="README.md" target="docs\README.md" />
+    <file src="README.md" target="docs/README.md" />
     <file src="assets\nf-logo.png" target="images\nf-logo.png" />
-    <file src="LICENSE" target="LICENSE" />
+    <file src="..\..\LICENSE.md" target="LICENSE.md" />
     <file src="NOTICE" target="NOTICE" />
   </files>
 </package>

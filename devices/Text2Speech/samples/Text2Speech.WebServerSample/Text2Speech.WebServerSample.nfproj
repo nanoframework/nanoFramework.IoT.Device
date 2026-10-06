@@ -13,9 +13,9 @@
     <Compile Include="..\Text2Speech.Samples\Storage\WavFileWriter.cs"><Link>WavFileWriter.cs</Link></Compile>
     <None Include="packages.config" /><None Include="Settings.StyleCop" />
   </ItemGroup>
-  <ItemGroup><ProjectReference Include="..\..\Text2Speech.nfproj"><Project>{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}</Project><Name>Text2Speech.Core</Name></ProjectReference><ProjectReference Include="..\..\Text2Speech.English.nfproj"><Project>{4A64C059-CA50-42E1-A0CB-EE525B594C30}</Project><Name>Text2Speech.English</Name></ProjectReference><ProjectReference Include="..\..\Text2Speech.French.nfproj"><Project>{4FB3562E-B740-4E1F-B09B-1317A7455B64}</Project><Name>Text2Speech.French</Name></ProjectReference></ItemGroup>
+  <ItemGroup><ProjectReference Include="..\..\Text2Speech.nfproj"><Project>{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}</Project><Name>Text2Speech.Core</Name></ProjectReference><ProjectReference Include="..\..\Languages\English\Text2Speech.English.nfproj"><Project>{4A64C059-CA50-42E1-A0CB-EE525B594C30}</Project><Name>Text2Speech.English</Name></ProjectReference><ProjectReference Include="..\..\Languages\French\Text2Speech.French.nfproj"><Project>{4FB3562E-B740-4E1F-B09B-1317A7455B64}</Project><Name>Text2Speech.French</Name></ProjectReference></ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib"><HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.12\lib\mscorlib.dll</HintPath></Reference>
+    <Reference Include="mscorlib"><HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath></Reference>
     <Reference Include="nanoFramework.Hardware.Esp32"><HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.42\lib\nanoFramework.Hardware.Esp32.dll</HintPath></Reference>
     <Reference Include="Iot.Device.Es8156"><HintPath>..\..\packages\nanoFramework.Iot.Device.Es8156.1.0.32\lib\Iot.Device.Es8156.dll</HintPath></Reference>
     <Reference Include="nanoFramework.ResourceManager"><HintPath>..\..\packages\nanoFramework.ResourceManager.1.2.32\lib\nanoFramework.ResourceManager.dll</HintPath></Reference>
