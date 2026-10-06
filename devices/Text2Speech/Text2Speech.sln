@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12128.139 oobstable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Text2Speech.Core", "Text2Speech.nfproj", "{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Text2Speech.English", "Text2Speech.English.nfproj", "{4A64C059-CA50-42E1-A0CB-EE525B594C30}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Text2Speech.French", "Text2Speech.French.nfproj", "{4FB3562E-B740-4E1F-B09B-1317A7455B64}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Text2Speech.Samples", "samples\Text2Speech.Samples\Text2Speech.Samples.nfproj", "{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Text2Speech.Tests", "tests\Text2Speech.Tests\Text2Speech.Tests.nfproj", "{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Text2Speech.WebServerSample", "samples\Text2Speech.WebServerSample\Text2Speech.WebServerSample.nfproj", "{ADDD4D30-8873-49C2-A26C-C528AE51E58C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4A64C059-CA50-42E1-A0CB-EE525B594C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A64C059-CA50-42E1-A0CB-EE525B594C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A64C059-CA50-42E1-A0CB-EE525B594C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A64C059-CA50-42E1-A0CB-EE525B594C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB3562E-B740-4E1F-B09B-1317A7455B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB3562E-B740-4E1F-B09B-1317A7455B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB3562E-B740-4E1F-B09B-1317A7455B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB3562E-B740-4E1F-B09B-1317A7455B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1D063BA-9138-4D47-84BA-847DE6B5D5AB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E63BB8E8-D86C-4BCB-B44C-B0E16757A090}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{ADDD4D30-8873-49C2-A26C-C528AE51E58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADDD4D30-8873-49C2-A26C-C528AE51E58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADDD4D30-8873-49C2-A26C-C528AE51E58C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{ADDD4D30-8873-49C2-A26C-C528AE51E58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADDD4D30-8873-49C2-A26C-C528AE51E58C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADDD4D30-8873-49C2-A26C-C528AE51E58C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9AD220A0-635F-46AE-AAB9-A66AC195BE16}
+	EndGlobalSection
+EndGlobal

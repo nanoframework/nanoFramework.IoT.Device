@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals"><NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath></PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><ProjectGuid>{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}</ProjectGuid><OutputType>Library</OutputType><RootNamespace>Iot.Device.Text2Speech</RootNamespace><AssemblyName>Iot.Device.Text2Speech</AssemblyName><TargetFrameworkVersion>v1.0</TargetFrameworkVersion><StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings><LangVersion>9.0</LangVersion><DocumentationFile>bin\$(Configuration)\Iot.Device.Text2Speech.xml</DocumentationFile></PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup><Compile Include="Audio\*.cs" /><Compile Include="Languages\*.cs" /><Compile Include="Synthesis\*.cs" /><Compile Include="Properties\AssemblyInfo.cs" /><None Include="packages.config" /><None Include="Settings.StyleCop" /></ItemGroup>
+  <ItemGroup><Reference Include="mscorlib"><HintPath>packages\nanoFramework.CoreLibrary.1.17.12\lib\mscorlib.dll</HintPath></Reference></ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project="packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
+</Project>
+

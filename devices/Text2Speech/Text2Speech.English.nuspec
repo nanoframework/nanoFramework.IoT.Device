@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Text2Speech.English</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Text2Speech.English</title>
+    <authors>nanoFramework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <releaseNotes></releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>Text2Speech core plus compact English normalization, number expansion, spelling-to-phoneme rules, and acoustic definitions for Text2Speech on .NET nanoFramework.</description>
+    <summary>English frontend for Iot.Device.Text2Speech</summary>
+    <tags>nanoFramework C# csharp netmf netnf Iot.Device.Text2Speech English speech synthesis TTS</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.12" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Text2Speech.dll" target="lib\Iot.Device.Text2Speech.dll" />
+    <file src="bin\Release\Iot.Device.Text2Speech.pdb" target="lib\Iot.Device.Text2Speech.pdb" />
+    <file src="bin\Release\Iot.Device.Text2Speech.pdbx" target="lib\Iot.Device.Text2Speech.pdbx" />
+    <file src="bin\Release\Iot.Device.Text2Speech.pe" target="lib\Iot.Device.Text2Speech.pe" />
+    <file src="bin\Release\Iot.Device.Text2Speech.xml" target="lib\Iot.Device.Text2Speech.xml" />
+    <file src="bin\Release\Iot.Device.Text2Speech.English.dll" target="lib\Iot.Device.Text2Speech.English.dll" />
+    <file src="bin\Release\Iot.Device.Text2Speech.English.pdb" target="lib\Iot.Device.Text2Speech.English.pdb" />
+    <file src="bin\Release\Iot.Device.Text2Speech.English.pdbx" target="lib\Iot.Device.Text2Speech.English.pdbx" />
+    <file src="bin\Release\Iot.Device.Text2Speech.English.pe" target="lib\Iot.Device.Text2Speech.English.pe" />
+    <file src="bin\Release\Iot.Device.Text2Speech.English.xml" target="lib\Iot.Device.Text2Speech.English.xml" />
+    <file src="README.md" target="docs\README.md" />
+    <file src="assets\nf-logo.png" target="images\nf-logo.png" />
+    <file src="LICENSE" target="LICENSE" />
+    <file src="NOTICE" target="NOTICE" />
+  </files>
+</package>
