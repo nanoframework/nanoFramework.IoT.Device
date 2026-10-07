@@ -83,6 +83,66 @@ namespace Iot.Device.Text2Speech.Tests
             0,
             0);
 
+        internal static readonly TtsPhoneme Fricative = new TtsPhoneme(
+            TtsPhonemeType.Fricative,
+            0,
+            0,
+            0,
+            2,
+            8,
+            0,
+            0,
+            50,
+            false,
+            0,
+            0,
+            0);
+
+        internal static readonly TtsPhoneme VoicedFricative = new TtsPhoneme(
+            TtsPhonemeType.VoicedFricative,
+            400,
+            1100,
+            2100,
+            4,
+            4,
+            1,
+            43,
+            50,
+            false,
+            0,
+            0,
+            0);
+
+        internal static readonly TtsPhoneme UnvoicedStop = new TtsPhoneme(
+            TtsPhonemeType.Stop,
+            300,
+            700,
+            2400,
+            0,
+            5,
+            0,
+            45,
+            50,
+            false,
+            0,
+            0,
+            0);
+
+        internal static readonly TtsPhoneme VoicedStop = new TtsPhoneme(
+            TtsPhonemeType.Stop,
+            350,
+            700,
+            2400,
+            0,
+            4,
+            0,
+            45,
+            50,
+            true,
+            0,
+            0,
+            0);
+
         /// <summary>
         /// Gets the test language name.
         /// </summary>

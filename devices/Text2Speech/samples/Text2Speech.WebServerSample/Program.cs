@@ -16,8 +16,10 @@ namespace Iot.Device.Text2Speech.WebServerSample
     /// </summary>
     public static class Program
     {
-        private const string WifiSsid = "YourSSID";
-        private const string WifiPassword = "YourPassword";
+        // Update the Wi-Fi SSID and password to connect to your network.
+        // When none provided, it will try to reconnect to the last known network saved alredy in the device.
+        private const string WifiSsid = "";
+        private const string WifiPassword = "";
         private const int WifiTimeoutMilliseconds = 60000;
 
         /// <summary>
@@ -33,11 +35,22 @@ namespace Iot.Device.Text2Speech.WebServerSample
             {
                 CancellationTokenSource timeout =
                     new CancellationTokenSource(WifiTimeoutMilliseconds);
-                bool connected = WifiNetworkHelper.ConnectDhcp(
-                    WifiSsid,
-                    WifiPassword,
-                    requiresDateTime: false,
-                    token: timeout.Token);
+                bool connected;
+                if (string.IsNullOrEmpty(WifiSsid) || string.IsNullOrEmpty(WifiPassword))
+                {
+                    connected = WifiNetworkHelper.Reconnect(
+                        requiresDateTime: false,
+                        token: timeout.Token);
+                }
+                else
+                {
+                    connected = WifiNetworkHelper.ConnectDhcp(
+                        WifiSsid,
+                        WifiPassword,
+                        requiresDateTime: false,
+                        token: timeout.Token);
+                }
+
                 if (!connected)
                 {
                     string message = "Unable to connect Wi-Fi. Status: "

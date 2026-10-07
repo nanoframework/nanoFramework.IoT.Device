@@ -126,7 +126,10 @@ namespace Iot.Device.Text2Speech
                 if (consumed == 0)
                 {
                     ParseCharacter(i, expandedLength, pitchOffset);
-                    consumed = 1;
+                    consumed = IsCollapsibleDoubleConsonant(current)
+                        && CharAt(i + 1, expandedLength) == current
+                            ? 2
+                            : 1;
                 }
 
                 i += consumed - 1;
@@ -520,7 +523,19 @@ namespace Iot.Device.Text2Speech
         private bool IsNasalContext(int offset, int length)
         {
             char next = CharAt(offset, length);
+            if ((next == 'm' || next == 'n') && next == CharAt(offset - 1, length))
+            {
+                return false;
+            }
+
             return !IsLetter(next) || IsConsonant(next);
+        }
+
+        private bool IsCollapsibleDoubleConsonant(char value)
+        {
+            return value == 'b' || value == 'd' || value == 'f' || value == 'l'
+                || value == 'm' || value == 'n' || value == 'p' || value == 'r'
+                || value == 's' || value == 't' || value == 'v' || value == 'z';
         }
 
         private bool IsWordEnd(int offset, int length)

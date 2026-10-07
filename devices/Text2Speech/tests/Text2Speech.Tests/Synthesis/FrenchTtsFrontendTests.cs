@@ -79,6 +79,32 @@ namespace Iot.Device.Text2Speech.Tests
         }
 
         /// <summary>
+        /// Verifies safe doubled consonants emit once and doubled m/n block nasalization.
+        /// </summary>
+        [TestMethod]
+        public void FrenchDoubleConsonantsEmitOnce()
+        {
+            TtsSynthesizer synthesizer = CreateSynthesizer();
+
+            Assert.AreEqual(
+                synthesizer.Speak("vère").Length,
+                synthesizer.Speak("verre").Length,
+                "Double r in verre");
+            Assert.AreEqual(
+                synthesizer.Speak("tace").Length,
+                synthesizer.Speak("tasse").Length,
+                "Double s in tasse");
+            Assert.AreEqual(
+                synthesizer.Speak("alez").Length,
+                synthesizer.Speak("allez").Length,
+                "Double l in allez");
+            Assert.AreEqual(
+                synthesizer.Speak("coment").Length,
+                synthesizer.Speak("comment").Length,
+                "Double m in comment");
+        }
+
+        /// <summary>
         /// Verifies accented letters and important French grapheme groups produce speech.
         /// </summary>
         [TestMethod]

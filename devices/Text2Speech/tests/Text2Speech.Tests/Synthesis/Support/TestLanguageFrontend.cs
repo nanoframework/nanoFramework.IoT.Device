@@ -39,6 +39,22 @@ namespace Iot.Device.Text2Speech.Tests
                 {
                     phoneme = TestLanguage.NyquistFormants;
                 }
+                else if (text[i] == 'h')
+                {
+                    phoneme = TestLanguage.Fricative;
+                }
+                else if (text[i] == 'v')
+                {
+                    phoneme = TestLanguage.VoicedFricative;
+                }
+                else if (text[i] == 'p')
+                {
+                    phoneme = TestLanguage.UnvoicedStop;
+                }
+                else if (text[i] == 'b')
+                {
+                    phoneme = TestLanguage.VoicedStop;
+                }
 
                 if (phoneme != null && !phonemes.TryAdd(phoneme, 0))
                 {

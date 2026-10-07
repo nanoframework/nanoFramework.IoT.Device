@@ -8,16 +8,16 @@ namespace Iot.Device.Text2Speech
     /// </summary>
     internal static class FrenchPhonemeData
     {
-        public static readonly TtsPhoneme A = P(TtsPhonemeType.Voiced, 730, 1090, 2440, 6, 5, 2, 45, 125);
-        public static readonly TtsPhoneme EClose = P(TtsPhonemeType.Voiced, 390, 1990, 2550, 5, 6, 2, 47, 112);
-        public static readonly TtsPhoneme EOpen = P(TtsPhonemeType.Voiced, 530, 1760, 2820, 6, 5, 2, 46, 118);
-        public static readonly TtsPhoneme I = P(TtsPhonemeType.Voiced, 270, 2290, 3010, 5, 7, 2, 48, 118);
-        public static readonly TtsPhoneme OClose = P(TtsPhonemeType.Voiced, 450, 800, 2400, 7, 4, 2, 44, 125);
-        public static readonly TtsPhoneme OOpen = P(TtsPhonemeType.Voiced, 570, 840, 2410, 7, 4, 2, 44, 122);
-        public static readonly TtsPhoneme U = P(TtsPhonemeType.Voiced, 300, 610, 2200, 6, 5, 2, 43, 122);
-        public static readonly TtsPhoneme YRounded = P(TtsPhonemeType.Voiced, 300, 1700, 2400, 6, 5, 2, 46, 118);
-        public static readonly TtsPhoneme Eu = P(TtsPhonemeType.Voiced, 400, 1500, 2300, 6, 5, 2, 45, 120);
-        public static readonly TtsPhoneme Oe = P(TtsPhonemeType.Voiced, 550, 1450, 2250, 6, 5, 2, 44, 120);
+        public static readonly TtsPhoneme A = P(TtsPhonemeType.Voiced, 657, 1310, 2440, 6, 5, 2, 45, 125);
+        public static readonly TtsPhoneme EClose = P(TtsPhonemeType.Voiced, 367, 2039, 2550, 5, 6, 2, 47, 112);
+        public static readonly TtsPhoneme EOpen = P(TtsPhonemeType.Voiced, 503, 1805, 2820, 6, 5, 2, 46, 118);
+        public static readonly TtsPhoneme I = P(TtsPhonemeType.Voiced, 274, 2253, 3010, 5, 7, 2, 48, 118);
+        public static readonly TtsPhoneme OClose = P(TtsPhonemeType.Voiced, 403, 875, 2400, 7, 4, 2, 44, 125);
+        public static readonly TtsPhoneme OOpen = P(TtsPhonemeType.Voiced, 518, 1015, 2410, 7, 4, 2, 44, 122);
+        public static readonly TtsPhoneme U = P(TtsPhonemeType.Voiced, 314, 788, 2200, 6, 5, 2, 43, 122);
+        public static readonly TtsPhoneme YRounded = P(TtsPhonemeType.Voiced, 290, 1881, 2400, 6, 5, 2, 46, 118);
+        public static readonly TtsPhoneme Eu = P(TtsPhonemeType.Voiced, 372, 1499, 2300, 6, 5, 2, 45, 120);
+        public static readonly TtsPhoneme Oe = P(TtsPhonemeType.Voiced, 566, 1498, 2250, 6, 5, 2, 44, 120);
         public static readonly TtsPhoneme Schwa = P(TtsPhonemeType.Voiced, 500, 1500, 2400, 5, 4, 2, 44, 82);
 
         // The current renderer has no anti-formants. Reduced upper-formant amplitudes provide

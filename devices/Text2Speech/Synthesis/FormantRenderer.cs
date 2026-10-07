@@ -143,6 +143,23 @@ namespace Iot.Device.Text2Speech
             return sample < -127 ? -127 : sample;
         }
 
+        private static int FadeToSilence(int sample, int index, int duration)
+        {
+            int fadeSamples = duration < ControlPeriod ? duration : ControlPeriod;
+            int fadeStart = duration - fadeSamples;
+            if (index < fadeStart)
+            {
+                return sample;
+            }
+
+            if (fadeSamples <= 1)
+            {
+                return 0;
+            }
+
+            return (sample * (duration - 1 - index)) / (fadeSamples - 1);
+        }
+
         private static int ControlBlockLength(int index, int duration)
         {
             int remaining = duration - index;
@@ -400,6 +417,7 @@ namespace Iot.Device.Text2Speech
                         outputSample = -127;
                     }
 
+                    outputSample = FadeToSilence(outputSample, i + sampleIndex, duration);
                     _outputBuffer[_outputPosition++] = (byte)(outputSample + 128);
                     _outputTotal++;
                     if (_outputPosition == _outputBuffer.Length)
@@ -493,6 +511,7 @@ namespace Iot.Device.Text2Speech
                         outputSample = -127;
                     }
 
+                    outputSample = FadeToSilence(outputSample, i + sampleIndex, duration);
                     _outputBuffer[_outputPosition++] = (byte)(outputSample + 128);
                     _outputTotal++;
                     if (_outputPosition == _outputBuffer.Length)
@@ -553,6 +572,7 @@ namespace Iot.Device.Text2Speech
                             outputSample = -127;
                         }
 
+                        outputSample = FadeToSilence(outputSample, i + sampleIndex, duration);
                         _outputBuffer[_outputPosition++] = (byte)(outputSample + 128);
                         _outputTotal++;
                         if (_outputPosition == _outputBuffer.Length)
@@ -631,6 +651,7 @@ namespace Iot.Device.Text2Speech
                             outputSample = -127;
                         }
 
+                        outputSample = FadeToSilence(outputSample, i + sampleIndex, burst);
                         _outputBuffer[_outputPosition++] = (byte)(outputSample + 128);
                         _outputTotal++;
                         if (_outputPosition == _outputBuffer.Length)
@@ -739,6 +760,7 @@ namespace Iot.Device.Text2Speech
                         outputSample = -127;
                     }
 
+                    outputSample = FadeToSilence(outputSample, i + sampleIndex, duration);
                     _outputBuffer[_outputPosition++] = (byte)(outputSample + 128);
                     _outputTotal++;
                     if (_outputPosition == _outputBuffer.Length)

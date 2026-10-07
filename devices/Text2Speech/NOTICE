@@ -72,3 +72,20 @@ in these Data Files or Software without prior written authorization of the
 copyright holder.
 
 SPDX-License-Identifier: Unicode-3.0
+
+French acoustic calibration attribution
+
+French oral-vowel F1/F2 targets use measurements derived from:
+Cnam-LMSSC Multilingual LibriSpeech French Phoneme
+https://huggingface.co/datasets/Cnam-LMSSC/multilingual_librispeech_french_phoneme
+
+The dataset is provided by the Laboratoire de Mécanique des Structures et des
+Systèmes Couplés (Cnam-LMSSC) under the Creative Commons Attribution 4.0
+International license:
+https://creativecommons.org/licenses/by/4.0/
+
+The measurements were extracted from a single native-French speaker using
+Montreal Forced Aligner boundaries and locally implemented LPC formant
+analysis. The embedded targets conservatively interpolate between the prior
+Text2Speech values and those measurements; the original recordings and
+alignment files are not redistributed with this repository.

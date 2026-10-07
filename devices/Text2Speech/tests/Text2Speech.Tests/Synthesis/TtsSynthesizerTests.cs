@@ -379,6 +379,29 @@ namespace Iot.Device.Text2Speech.Tests
         }
 
         /// <summary>
+        /// Verifies every excitation path reaches the unsigned midpoint at a phoneme boundary.
+        /// </summary>
+        [TestMethod]
+        public void PhonemeTailsFadeToUnsignedMidpoint()
+        {
+            TtsSynthesizer synthesizer =
+                new TtsSynthesizer(new TestLanguage(), new VoiceOptions());
+            char[] inputs = new char[] { 'x', 'h', 'v', 'p', 'b' };
+
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                byte[] pcm = synthesizer.Speak(inputs[i].ToString());
+                int end = pcm.Length - 1;
+
+                Assert.IsTrue(pcm.Length >= 4, "Fade sample count");
+                Assert.IsTrue(CenteredMagnitude(pcm[end - 3]) <= 127, "Fade start");
+                Assert.IsTrue(CenteredMagnitude(pcm[end - 2]) <= 84, "Fade middle");
+                Assert.IsTrue(CenteredMagnitude(pcm[end - 1]) <= 42, "Fade end");
+                Assert.AreEqual((byte)128, pcm[end], "Unsigned midpoint");
+            }
+        }
+
+        /// <summary>
         /// Verifies the public phoneme workspace remains bounded and reusable.
         /// </summary>
         [TestMethod]
@@ -446,6 +469,12 @@ namespace Iot.Device.Text2Speech.Tests
             }
 
             return hash;
+        }
+
+        private static int CenteredMagnitude(byte sample)
+        {
+            int centered = sample - 128;
+            return centered < 0 ? -centered : centered;
         }
     }
 }
