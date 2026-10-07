@@ -70,9 +70,9 @@
       },
       "nanoFramework.M5Core2": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.20, 2.0.0-preview.20]",
-        "resolved": "2.0.0-preview.20",
-        "contentHash": "dvBykAZ9HBb6R6m64dOXmTaaLpdYIOeiu3IhCaK83wwkEO4I64VmrRFvftEUS/OQQQVkP2trjR09GvtTQ5cCyQ=="
+        "requested": "[2.0.0-preview.22, 2.0.0-preview.22]",
+        "resolved": "2.0.0-preview.22",
+        "contentHash": "IIFymyHPvZ+PDP1a3DUMVH1+gmiNUQZrK7vLw48bC+nBJAlMbtbkeVL2U+IKaEFUhaQT2zCTwnXPY53zlrnvRg=="
       },
       "nanoFramework.ResourceManager": {
         "type": "Direct",
