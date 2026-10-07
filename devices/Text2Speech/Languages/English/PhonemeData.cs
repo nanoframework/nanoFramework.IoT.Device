@@ -28,27 +28,27 @@ namespace Iot.Device.Text2Speech
         /// </summary>
         public static readonly TtsPhoneme[] Letters =
         {
-            P(TtsPhonemeType.Voiced, 730, 1090, 2440, 6, 5, 2, 45, 130),
+            P(TtsPhonemeType.Voiced, 660, 1512, 2440, 6, 5, 2, 45, 130),
             P(TtsPhonemeType.Stop, 350, 700, 2400, 0, 4, 0, 45, 80, true),
             P(TtsPhonemeType.Stop, 300, 800, 2500, 1, 6, 0, 45, 72),
             P(TtsPhonemeType.Stop, 300, 800, 2800, 2, 5, 0, 45, 72, true),
-            P(TtsPhonemeType.Voiced, 530, 1760, 2820, 6, 5, 2, 46, 118),
+            P(TtsPhonemeType.Voiced, 552, 1783, 2820, 6, 5, 2, 46, 118),
             P(TtsPhonemeType.Fricative, 0, 0, 0, 0, 4, 0, 0, 82),
             P(TtsPhonemeType.Stop, 260, 700, 2800, 1, 4, 0, 45, 75, true),
             P(TtsPhonemeType.Fricative, 0, 0, 0, 0, 2, 0, 0, 50),
-            P(TtsPhonemeType.Voiced, 390, 1990, 2550, 5, 6, 2, 47, 108),
+            P(TtsPhonemeType.Voiced, 412, 2002, 2550, 5, 6, 2, 47, 108),
             P(TtsPhonemeType.Stop, 300, 800, 2800, 1, 5, 0, 45, 90, true),
             P(TtsPhonemeType.Stop, 300, 800, 2500, 1, 6, 0, 45, 68),
             P(TtsPhonemeType.Voiced, 360, 1030, 2880, 6, 4, 2, 44, 92),
             P(TtsPhonemeType.Voiced, 280, 900, 2200, 7, 3, 1, 43, 105),
             P(TtsPhonemeType.Voiced, 280, 1700, 2600, 7, 3, 1, 44, 95),
-            P(TtsPhonemeType.Voiced, 570, 840, 2410, 7, 4, 2, 44, 128),
+            P(TtsPhonemeType.Voiced, 659, 1078, 2410, 7, 4, 2, 44, 128),
             P(TtsPhonemeType.Stop, 300, 700, 2400, 0, 5, 0, 45, 68),
             P(TtsPhonemeType.Stop, 300, 800, 2500, 1, 6, 0, 45, 68),
             P(TtsPhonemeType.Voiced, 490, 800, 1690, 6, 5, 2, 44, 100),
             P(TtsPhonemeType.Fricative, 0, 0, 0, 2, 8, 0, 0, 88),
             P(TtsPhonemeType.Stop, 300, 700, 2800, 2, 6, 0, 45, 62),
-            P(TtsPhonemeType.Voiced, 440, 960, 2300, 7, 4, 1, 44, 112),
+            P(TtsPhonemeType.Voiced, 531, 1064, 2300, 7, 4, 1, 44, 112),
             P(TtsPhonemeType.VoicedFricative, 300, 700, 0, 4, 5, 0, 44, 78),
             P(TtsPhonemeType.Voiced, 300, 610, 2200, 6, 5, 2, 43, 80),
             P(TtsPhonemeType.Fricative, 0, 0, 0, 2, 8, 0, 0, 78),
@@ -72,6 +72,11 @@ namespace Iot.Device.Text2Speech
         public static readonly TtsPhoneme Th = P(TtsPhonemeType.Fricative, 0, 0, 0, 0, 3, 0, 0, 88);
 
         /// <summary>
+        /// The voiced th fricative phoneme.
+        /// </summary>
+        public static readonly TtsPhoneme VoicedTh = P(TtsPhonemeType.VoicedFricative, 300, 1400, 0, 3, 4, 1, 44, 82);
+
+        /// <summary>
         /// The voiced ng nasal phoneme.
         /// </summary>
         public static readonly TtsPhoneme Ng = P(TtsPhonemeType.Voiced, 280, 800, 2200, 7, 3, 1, 43, 95);
@@ -79,22 +84,22 @@ namespace Iot.Device.Text2Speech
         /// <summary>
         /// The long ee vowel phoneme.
         /// </summary>
-        public static readonly TtsPhoneme Ee = P(TtsPhonemeType.Voiced, 270, 2290, 3010, 5, 7, 2, 48, 135);
+        public static readonly TtsPhoneme Ee = P(TtsPhonemeType.Voiced, 304, 2305, 3010, 5, 7, 2, 48, 135);
 
         /// <summary>
         /// The short terminal y vowel phoneme.
         /// </summary>
-        public static readonly TtsPhoneme Iy = P(TtsPhonemeType.Voiced, 270, 2290, 3010, 5, 7, 2, 47, 90);
+        public static readonly TtsPhoneme Iy = P(TtsPhonemeType.Voiced, 304, 2305, 3010, 5, 7, 2, 47, 90);
 
         /// <summary>
         /// The long oo vowel phoneme.
         /// </summary>
-        public static readonly TtsPhoneme Uu = P(TtsPhonemeType.Voiced, 300, 870, 2240, 7, 4, 1, 44, 132);
+        public static readonly TtsPhoneme Uu = P(TtsPhonemeType.Voiced, 339, 925, 2240, 7, 4, 1, 44, 132);
 
         /// <summary>
         /// The rhotic er vowel phoneme.
         /// </summary>
-        public static readonly TtsPhoneme Er = P(TtsPhonemeType.Voiced, 490, 1350, 1690, 6, 5, 2, 44, 115);
+        public static readonly TtsPhoneme Er = P(TtsPhonemeType.Voiced, 484, 1368, 1690, 6, 5, 2, 44, 115);
 
         /// <summary>
         /// The rhotic or vowel phoneme.
@@ -119,7 +124,7 @@ namespace Iot.Device.Text2Speech
         /// <summary>
         /// The long a diphthong phoneme.
         /// </summary>
-        public static readonly TtsPhoneme Ay = P(TtsPhonemeType.Voiced, 530, 1760, 2820, 6, 5, 2, 46, 140, false, 390, 1990, 2550);
+        public static readonly TtsPhoneme Ay = P(TtsPhonemeType.Voiced, 508, 1915, 2820, 6, 5, 2, 46, 140, false, 397, 2108, 2550);
 
         /// <summary>
         /// The long i diphthong phoneme.
@@ -129,7 +134,7 @@ namespace Iot.Device.Text2Speech
         /// <summary>
         /// The long o vowel phoneme.
         /// </summary>
-        public static readonly TtsPhoneme Oh = P(TtsPhonemeType.Voiced, 570, 840, 2410, 7, 4, 2, 44, 140, false, 440, 960, 2300);
+        public static readonly TtsPhoneme Oh = P(TtsPhonemeType.Voiced, 538, 885, 2410, 7, 4, 2, 44, 140, false, 437, 924, 2300);
 
         /// <summary>
         /// The oy diphthong phoneme.

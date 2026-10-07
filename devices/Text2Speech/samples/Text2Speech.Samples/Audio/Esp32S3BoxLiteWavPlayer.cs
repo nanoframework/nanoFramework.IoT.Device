@@ -31,6 +31,7 @@ namespace Iot.Device.Text2Speech.Samples
         private const int FastPlaybackSampleRate = 8000;
         private const int InterpolatedPlaybackSampleRate = 16000;
         private const int I2sBufferSize = 40000;
+        private const int DefaultStartupBlockCount = 4;
 
         private readonly I2sDevice _i2sDevice;
         private readonly InterpolatedI2sPcmSink _pcmSink;
@@ -44,7 +45,7 @@ namespace Iot.Device.Text2Speech.Samples
         /// Initializes a new instance of the <see cref="Esp32S3BoxLiteWavPlayer" /> class.
         /// </summary>
         public Esp32S3BoxLiteWavPlayer()
-            : this(I2sPlaybackMode.Interpolated16Khz)
+            : this(I2sPlaybackMode.Interpolated16Khz, DefaultStartupBlockCount)
         {
         }
 
@@ -52,10 +53,16 @@ namespace Iot.Device.Text2Speech.Samples
         /// Initializes a new instance of the <see cref="Esp32S3BoxLiteWavPlayer" /> class.
         /// </summary>
         /// <param name="playbackMode">The playback rate and conversion mode.</param>
+        /// <param name="startupBlockCount">
+        /// The number of 2,048-sample source blocks buffered before playback starts.
+        /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="playbackMode" /> is not a supported playback mode.
+        /// <paramref name="playbackMode" /> is not a supported playback mode, or
+        /// <paramref name="startupBlockCount" /> is outside the playback queue capacity.
         /// </exception>
-        public Esp32S3BoxLiteWavPlayer(I2sPlaybackMode playbackMode)
+        public Esp32S3BoxLiteWavPlayer(
+            I2sPlaybackMode playbackMode,
+            int startupBlockCount = DefaultStartupBlockCount)
         {
             if (playbackMode != I2sPlaybackMode.Fast8Khz
                 && playbackMode != I2sPlaybackMode.Interpolated16Khz)
@@ -97,7 +104,8 @@ namespace Iot.Device.Text2Speech.Samples
                 });
             _pcmSink = new InterpolatedI2sPcmSink(
                 _i2sDevice,
-                playbackMode == I2sPlaybackMode.Interpolated16Khz);
+                playbackMode == I2sPlaybackMode.Interpolated16Khz,
+                startupBlockCount);
 
             // Start the master clocks before configuring the slave codec.
             _i2sDevice.Write(new byte[512]);
@@ -110,7 +118,8 @@ namespace Iot.Device.Text2Speech.Samples
             Debug.WriteLine(
                 "ES8156 initialized at " + _dac.Volume.ToString()
                 + "% volume; ESP32-S3-BOX-Lite amplifier enabled; playback="
-                + _playbackMode.ToString() + ".");
+                + _playbackMode.ToString() + "; startup-blocks="
+                + startupBlockCount.ToString() + ".");
         }
 
         /// <summary>

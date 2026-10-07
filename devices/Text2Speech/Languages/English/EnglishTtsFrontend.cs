@@ -133,6 +133,23 @@ namespace Iot.Device.Text2Speech
                 }
 
                 int pitchOffset = PitchForPosition(letterPosition, letterTotal, isQuestion);
+                int irregularLength;
+                if (wordLength == 0
+                    && TryAddIrregularWord(
+                        _expandedText,
+                        expandedLength,
+                        i,
+                        letterPosition,
+                        letterTotal,
+                        isQuestion,
+                        out irregularLength))
+                {
+                    i += irregularLength - 1;
+                    letterPosition += irregularLength;
+                    wordLength = irregularLength;
+                    continue;
+                }
+
                 bool previousLetter = i > 0 && IsLowerLetter(ToLowerAscii(_expandedText[i - 1]));
                 if (!previousLetter && !nextLetter && (current == 'i' || current == 'a'))
                 {
@@ -210,6 +227,23 @@ namespace Iot.Device.Text2Speech
             }
 
             return !_overflowed;
+        }
+
+        private static bool MatchesWord(
+            char[] text,
+            int textLength,
+            int offset,
+            string expected)
+        {
+            for (int i = 0; i < expected.Length; i++)
+            {
+                if (ToLowerAscii(CharAt(text, textLength, offset + i)) != expected[i])
+                {
+                    return false;
+                }
+            }
+
+            return !IsLowerLetter(ToLowerAscii(CharAt(text, textLength, offset + expected.Length)));
         }
 
         private static bool TryExpandText(string input, char[] output, out int length)
@@ -439,6 +473,37 @@ namespace Iot.Device.Text2Speech
         private static bool IsVowel(char value)
         {
             return value == 'a' || value == 'e' || value == 'i' || value == 'o' || value == 'u';
+        }
+
+        private bool TryAddIrregularWord(
+            char[] text,
+            int textLength,
+            int offset,
+            int letterPosition,
+            int letterTotal,
+            bool isQuestion,
+            out int wordLength)
+        {
+            if (MatchesWord(text, textLength, offset, "any"))
+            {
+                Add(Letter('e'), PitchForPosition(letterPosition, letterTotal, isQuestion));
+                Add(Letter('n'), PitchForPosition(letterPosition + 1, letterTotal, isQuestion));
+                Add(PhonemeData.Iy, PitchForPosition(letterPosition + 2, letterTotal, isQuestion));
+                wordLength = 3;
+                return true;
+            }
+
+            if (MatchesWord(text, textLength, offset, "other"))
+            {
+                Add(Letter('u'), PitchForPosition(letterPosition, letterTotal, isQuestion));
+                Add(PhonemeData.VoicedTh, PitchForPosition(letterPosition + 1, letterTotal, isQuestion));
+                Add(PhonemeData.Er, PitchForPosition(letterPosition + 3, letterTotal, isQuestion));
+                wordLength = 5;
+                return true;
+            }
+
+            wordLength = 0;
+            return false;
         }
 
         private void Add(TtsPhoneme phoneme, int pitchOffset)

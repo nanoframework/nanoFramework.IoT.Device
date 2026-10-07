@@ -15,11 +15,11 @@ namespace Iot.Device.Text2Speech.Samples
     {
         private const int QueueBlockSize = 2048;
         private const int QueueBlockCount = 8;
-        private const int StartupBlockCount = 7;
         private const int HeartbeatIntervalMilliseconds = 50;
 
         private readonly I2sDevice _i2sDevice;
         private readonly bool _interpolate;
+        private readonly int _startupBlockCount;
         private readonly byte[][] _queue = new byte[QueueBlockCount][];
         private readonly int[] _queueCounts = new int[QueueBlockCount];
         private readonly byte[] _output;
@@ -62,10 +62,23 @@ namespace Iot.Device.Text2Speech.Samples
         /// </summary>
         /// <param name="i2sDevice">The initialized I2S output device.</param>
         /// <param name="interpolate">Whether to insert midpoints for 16 kHz playback.</param>
-        public InterpolatedI2sPcmSink(I2sDevice i2sDevice, bool interpolate)
+        /// <param name="startupBlockCount">The number of queued source blocks required before playback starts.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="startupBlockCount" /> is outside the queue capacity.
+        /// </exception>
+        public InterpolatedI2sPcmSink(
+            I2sDevice i2sDevice,
+            bool interpolate,
+            int startupBlockCount)
         {
+            if (startupBlockCount < 1 || startupBlockCount > QueueBlockCount)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             _i2sDevice = i2sDevice;
             _interpolate = interpolate;
+            _startupBlockCount = startupBlockCount;
             _output = new byte[interpolate ? 16384 : 8192];
             for (int i = 0; i < _queue.Length; i++)
             {
@@ -312,7 +325,7 @@ namespace Iot.Device.Text2Speech.Samples
             return _queuedBlocks > 0
                 && (_playbackStarted
                     || _producerCompleted
-                    || _queuedBlocks >= StartupBlockCount);
+                    || _queuedBlocks >= _startupBlockCount);
         }
 
         private void ConvertAndWrite(byte[] buffer, int count)
@@ -499,6 +512,7 @@ namespace Iot.Device.Text2Speech.Samples
             Debug.WriteLine(
                 "[i2s-diagnostic] mode="
                 + (_interpolate ? "interpolated-16khz" : "fast-8khz")
+                + ", startup-blocks=" + _startupBlockCount.ToString()
                 + ", source-writes=" + _sourceWriteCount.ToString()
                 + ", samples=" + _sourceSamplesQueued.ToString()
                 + ", max-queue=" + _maximumQueueDepth.ToString() + "/" + QueueBlockCount.ToString()

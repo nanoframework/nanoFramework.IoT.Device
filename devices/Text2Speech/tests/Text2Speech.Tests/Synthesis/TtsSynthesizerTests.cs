@@ -216,6 +216,21 @@ namespace Iot.Device.Text2Speech.Tests
         }
 
         /// <summary>
+        /// Verifies common irregular words use their General American pronunciations.
+        /// </summary>
+        [TestMethod]
+        public void EnglishIrregularWordsUseExpectedPronunciations()
+        {
+            TtsSynthesizer synthesizer = CreateEnglishSynthesizer();
+
+            Assert.AreEqual(2424, synthesizer.Speak("any").Length, "Any pronunciation");
+            Assert.AreEqual(2472, synthesizer.Speak("other").Length, "Other pronunciation");
+            Assert.IsTrue(
+                synthesizer.Speak("any other name").Length > 5000,
+                "Reported phrase must produce complete speech");
+        }
+
+        /// <summary>
         /// Verifies voice controls alter pitch, timbre, and speaking duration.
         /// </summary>
         [TestMethod]
