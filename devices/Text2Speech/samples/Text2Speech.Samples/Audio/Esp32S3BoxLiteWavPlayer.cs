@@ -18,6 +18,8 @@ namespace Iot.Device.Text2Speech.Samples
     /// </summary>
     internal sealed class Esp32S3BoxLiteWavPlayer : IDisposable
     {
+        internal const byte DefaultVolumePercent = 70;
+
         private const int I2sBus = 1;
         private const int I2cBus = 1;
         private const int I2cDataPin = 8;
@@ -27,7 +29,6 @@ namespace Iot.Device.Text2Speech.Samples
         private const int I2sWordSelectPin = 47;
         private const int I2sDataOutPin = 15;
         private const int PowerAmplifierPin = 46;
-        private const byte VolumePercent = 70;
         private const int FastPlaybackSampleRate = 8000;
         private const int InterpolatedPlaybackSampleRate = 16000;
         private const int I2sBufferSize = 40000;
@@ -66,6 +67,12 @@ namespace Iot.Device.Text2Speech.Samples
         {
             if (playbackMode != I2sPlaybackMode.Fast8Khz
                 && playbackMode != I2sPlaybackMode.Interpolated16Khz)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (startupBlockCount < InterpolatedI2sPcmSink.MinimumStartupBlockCount
+                || startupBlockCount > InterpolatedI2sPcmSink.MaximumStartupBlockCount)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -111,7 +118,7 @@ namespace Iot.Device.Text2Speech.Samples
             _i2sDevice.Write(new byte[512]);
             _dac.Initialize();
             _dac.SetFormat(SerialAudioFormat.I2s, WordLength.Bits16);
-            _dac.Volume = VolumePercent;
+            _dac.Volume = DefaultVolumePercent;
             _dac.Muted = false;
             _powerAmplifier.Write(PinValue.High);
 
@@ -120,6 +127,37 @@ namespace Iot.Device.Text2Speech.Samples
                 + "% volume; ESP32-S3-BOX-Lite amplifier enabled; playback="
                 + _playbackMode.ToString() + "; startup-blocks="
                 + startupBlockCount.ToString() + ".");
+        }
+
+        /// <summary>
+        /// Gets or sets the codec output volume percentage.
+        /// </summary>
+        /// <value>The output volume from 0 through 100.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The assigned value is greater than 100.
+        /// </exception>
+        public byte Volume
+        {
+            get => _dac.Volume;
+            set
+            {
+                if (value > 100)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                _dac.Volume = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether codec output is muted.
+        /// </summary>
+        /// <value><see langword="true" /> when muted; otherwise, <see langword="false" />.</value>
+        public bool Muted
+        {
+            get => _dac.Muted;
+            set => _dac.Muted = value;
         }
 
         /// <summary>

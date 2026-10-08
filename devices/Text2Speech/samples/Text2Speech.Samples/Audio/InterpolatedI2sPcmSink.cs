@@ -13,6 +13,9 @@ namespace Iot.Device.Text2Speech.Samples
     /// </summary>
     internal sealed class InterpolatedI2sPcmSink : IPcmSink
     {
+        internal const int MinimumStartupBlockCount = 1;
+        internal const int MaximumStartupBlockCount = QueueBlockCount;
+
         private const int QueueBlockSize = 2048;
         private const int QueueBlockCount = 8;
         private const int HeartbeatIntervalMilliseconds = 50;
@@ -71,7 +74,8 @@ namespace Iot.Device.Text2Speech.Samples
             bool interpolate,
             int startupBlockCount)
         {
-            if (startupBlockCount < 1 || startupBlockCount > QueueBlockCount)
+            if (startupBlockCount < MinimumStartupBlockCount
+                || startupBlockCount > MaximumStartupBlockCount)
             {
                 throw new ArgumentOutOfRangeException();
             }

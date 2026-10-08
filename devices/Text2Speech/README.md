@@ -283,6 +283,7 @@ The page at `/` provides:
 - Text input up to 1,024 characters. The server prefers sentence boundaries and then word boundaries when splitting it into synthesis rounds of at most 96 characters. Buffered mode can pause briefly between rounds; streaming mode keeps one continuous playback session.
 - English or French language selection, with language-aware segmentation and synthesis.
 - Smooth, fast-bright, and deep predefined voice profiles for either language.
+- Hardware output volume from 0% through 100% and a mute control, applied to speech and saved-WAV playback.
 - Buffered playback or live streaming selection.
 - WAV saving enabled by default, with one counter-named WAV file created for every synthesis round.
 - A live list of saved WAV files with device playback, download, and delete actions.
@@ -293,6 +294,7 @@ HTTP routes:
 
 - `GET /`: static browser application.
 - `POST /speak`: URL-encoded language, text, voice, playback mode, and save option.
+- `POST /sound`: validated codec volume percentage and mute state.
 - `GET /files`: current WAV file table fragment.
 - `POST /play`: validated playback of a stored canonical unsigned 8-bit mono 8 kHz WAV through the device.
 - `GET /download?name=...`: WAV download.
@@ -329,7 +331,7 @@ Tests cover format constants, deterministic synthesis, buffered/streamed equival
 - The separately packaged English and French frontends are intentionally compact; other languages require their own `ITtsLanguage` and `ITtsLanguageFrontend` implementation, phoneme inventory, normalization, spelling, stress, and intonation rules.
 - French pronunciation is rule based. Its embedded prosody was distilled from HI! PARIS SSML output and French accentual-group behavior: approximately 2% slower segment timing, short word joins, final-vowel lengthening, continuation rises, declarative falls, question rises, and differentiated comma, clause, and terminal pauses. It does not provide a full lexicon, optional liaison, grammatical disambiguation, or exact acoustic nasal coupling, so irregular and context-sensitive words remain approximate.
 - French oral-vowel F1/F2 targets are conservatively calibrated halfway toward single-speaker native-French measurements extracted from the Cnam-LMSSC Multilingual LibriSpeech French Phoneme dataset. F3, amplitudes, pitch, duration, schwa, and nasal-vowel targets remain independently tuned so acoustic changes can be evaluated separately.
-- English F1/F2 targets with direct General American matches are conservatively calibrated halfway toward the adult-male medians from Hillenbrand et al. (1995). Diphthong targets use the measured 20% and 80% contours. F3, amplitudes, pitch, duration, unsupported vowels, and rhotic variants without direct matches remain independently tuned.
+- English F1/F2 targets with direct General American matches are conservatively calibrated using numerical outputs independently calculated by the local acoustic-analysis pipeline. Diphthong targets use independently calculated early and late vowel contours. F3, amplitudes, pitch, duration, unsupported vowels, and rhotic variants without direct matches remain independently tuned.
 - To generate the French Prosology, we've been using HI! PARIS two-stage Qwen2.5-7B cascade on a host computer and converts its SSML into bounded pitch, speed, volume, and pause controls. The generated controls are development artifacts; the firmware frontend continues to use its built-in deterministic contour until a continuous span-level runtime bridge is added.
 - Input and phonemes are bounded by the selected language and the fixed 128-entry `TtsPhonemeBuffer` to keep memory deterministic.
 - The 8 kHz output favors size and embedded cost over high-fidelity speech.
@@ -337,4 +339,4 @@ Tests cover format constants, deterministic synthesis, buffered/streamed equival
 
 ## License and attribution
 
-This repository is MIT licensed. The managed engine is derived from PebbleTalk at commit `8ddfbb60b9cd940a8ef4a24c3787ad211b19b003`, copyright (c) 2026 neonfire, also under the MIT License. English vowel calibration uses measurements from Hillenbrand et al. (1995), hosted with permission in Santiago Barreda's dataset repository; the repository wrapper is MIT licensed, while the original archive has no separate license. French spelling rules are independently adapted from Epitran French data (MIT, copyright 2016 David Mortensen), French cardinal behavior is adapted from Unicode CLDR data (Unicode License v3), and French oral-vowel calibration uses measurements derived from the Cnam-LMSSC Multilingual LibriSpeech French Phoneme dataset (CC BY 4.0). Host-side prosody tooling interoperates with the MIT-licensed HI! PARIS Prosody-Control-French-TTS project and separately downloaded Apache-2.0 models. See `LICENSE` and `NOTICE`.
+This repository is MIT licensed. The managed engine is derived from PebbleTalk at commit `8ddfbb60b9cd940a8ef4a24c3787ad211b19b003`, copyright (c) 2026 neonfire, also under the MIT License. English acoustic constants are independently calculated outputs of the local calibration pipeline; source measurements and recordings are not included. French spelling rules are independently adapted from Epitran French data (MIT, copyright 2016 David Mortensen), French cardinal behavior is adapted from Unicode CLDR data (Unicode License v3), and French oral-vowel calibration uses measurements derived from the Cnam-LMSSC Multilingual LibriSpeech French Phoneme dataset (CC BY 4.0). Host-side prosody tooling interoperates with the MIT-licensed HI! PARIS Prosody-Control-French-TTS project and separately downloaded Apache-2.0 models. See `LICENSE` and `NOTICE`.

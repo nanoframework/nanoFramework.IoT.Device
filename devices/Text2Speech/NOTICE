@@ -30,9 +30,11 @@ under the MIT License. The original archive has no separate license, and the
 original data file states:
 Copyright (c) 1995 James Hillenbrand.
 
-The embedded targets conservatively interpolate F1/F2 between the prior
-Text2Speech values and adult-male measurement medians. The original
-measurements and recordings are not redistributed with this repository.
+The embedded targets are numerical outputs independently calculated by the
+local acoustic-analysis pipeline and conservatively interpolated with the
+prior Text2Speech values. They are not copied rows or measurements from the
+source data. The original measurements and recordings are not redistributed
+with this repository.
 
 French frontend attribution
 

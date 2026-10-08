@@ -33,22 +33,24 @@ namespace Iot.Device.Text2Speech.WebServerSample
             Esp32S3BoxLiteWavPlayer player = null;
             try
             {
-                CancellationTokenSource timeout =
-                    new CancellationTokenSource(WifiTimeoutMilliseconds);
                 bool connected;
-                if (string.IsNullOrEmpty(WifiSsid) || string.IsNullOrEmpty(WifiPassword))
+                using (CancellationTokenSource timeout =
+                    new CancellationTokenSource(WifiTimeoutMilliseconds))
                 {
-                    connected = WifiNetworkHelper.Reconnect(
-                        requiresDateTime: false,
-                        token: timeout.Token);
-                }
-                else
-                {
-                    connected = WifiNetworkHelper.ConnectDhcp(
-                        WifiSsid,
-                        WifiPassword,
-                        requiresDateTime: false,
-                        token: timeout.Token);
+                    if (string.IsNullOrEmpty(WifiSsid) || string.IsNullOrEmpty(WifiPassword))
+                    {
+                        connected = WifiNetworkHelper.Reconnect(
+                            requiresDateTime: false,
+                            token: timeout.Token);
+                    }
+                    else
+                    {
+                        connected = WifiNetworkHelper.ConnectDhcp(
+                            WifiSsid,
+                            WifiPassword,
+                            requiresDateTime: false,
+                            token: timeout.Token);
+                    }
                 }
 
                 if (!connected)

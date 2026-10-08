@@ -122,6 +122,13 @@ namespace Iot.Device.Text2Speech.WebServerSample
             + "<option value='streaming'>Live stream</option></select></label>"
             + "<label><input type='checkbox' name='save' value='true' checked> Save WAV file</label>"
             + "<button type='submit'>Speak</button></form>"
+            + "<h2>Sound</h2><form id='sound'><label>Volume <output id='volumeValue'>"
+            + Esp32S3BoxLiteWavPlayer.DefaultVolumePercent.ToString()
+            + "%</output><input id='volume' type='range' name='volume' min='0' max='100' value='"
+            + Esp32S3BoxLiteWavPlayer.DefaultVolumePercent.ToString()
+            + "' oninput=\"document.getElementById('volumeValue').textContent=this.value+'%'\"></label>"
+            + "<label><input type='checkbox' name='muted' value='true'> Mute output</label>"
+            + "<button type='submit'>Apply sound settings</button></form>"
             + "<p id='status' class='status'>Ready.</p><h2>Saved WAV files</h2>"
             + "<div id='files'>Loading...</div><script>"
             + "async function loadFiles(){let r=await fetch('/files');document.getElementById('files').innerHTML=await r.text();}"
@@ -130,6 +137,11 @@ namespace Iot.Device.Text2Speech.WebServerSample
             + "try{let r=await fetch('/speak',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},"
             + "body:new URLSearchParams(new FormData(this))});s.textContent=await r.text();await loadFiles();}"
             + "catch(x){s.textContent='Request failed: '+x;}};"
+            + "document.getElementById('sound').onsubmit=async function(e){e.preventDefault();"
+            + "let s=document.getElementById('status');s.textContent='Applying sound settings...';"
+            + "try{let r=await fetch('/sound',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},"
+            + "body:new URLSearchParams(new FormData(this))});s.textContent=await r.text();}"
+            + "catch(x){s.textContent='Sound request failed: '+x;}};"
             + "async function playFile(f){let s=document.getElementById('status');s.textContent='Playing WAV...';"
             + "try{let r=await fetch('/play',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},"
             + "body:new URLSearchParams(new FormData(f))});s.textContent=await r.text();}"
@@ -290,6 +302,50 @@ namespace Iot.Device.Text2Speech.WebServerSample
             catch (Exception ex)
             {
                 WriteFailure(e.Context.Response, "Speech request failed", ex);
+            }
+        }
+
+        /// <summary>
+        /// Updates the shared codec volume and mute state.
+        /// </summary>
+        /// <param name="e">The web server request.</param>
+        [Route("sound")]
+        [Method("POST")]
+        public void Sound(WebServerEventArgs e)
+        {
+            try
+            {
+                UrlParameter[] form = ReadForm(e.Context.Request);
+                byte volume;
+                if (!TryParseVolume(GetFormValue(form, "volume"), out volume))
+                {
+                    WriteResponse(
+                        e.Context.Response,
+                        HttpStatusCode.BadRequest,
+                        "text/plain",
+                        "Volume must be an integer from 0 through 100.");
+                    return;
+                }
+
+                bool muted = GetFormValue(form, "muted") == "true";
+                lock (OperationLock)
+                {
+                    _player.Volume = volume;
+                    _player.Muted = muted;
+                }
+
+                string message = muted
+                    ? "Sound muted at " + volume.ToString() + "% volume."
+                    : "Volume set to " + volume.ToString() + "%.";
+                WriteResponse(
+                    e.Context.Response,
+                    HttpStatusCode.OK,
+                    "text/plain",
+                    message);
+            }
+            catch (Exception ex)
+            {
+                WriteFailure(e.Context.Response, "Sound settings failed", ex);
             }
         }
 
@@ -616,6 +672,35 @@ namespace Iot.Device.Text2Speech.WebServerSample
         {
             int separator = path.LastIndexOf('\\');
             return separator >= 0 ? path.Substring(separator + 1) : path;
+        }
+
+        private static bool TryParseVolume(string value, out byte volume)
+        {
+            volume = 0;
+            if (string.IsNullOrEmpty(value) || value.Length > 3)
+            {
+                return false;
+            }
+
+            int parsed = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                char digit = value[i];
+                if (digit < '0' || digit > '9')
+                {
+                    return false;
+                }
+
+                parsed = (parsed * 10) + digit - '0';
+            }
+
+            if (parsed > 100)
+            {
+                return false;
+            }
+
+            volume = (byte)parsed;
+            return true;
         }
 
         private static bool IsWavFileName(string name)

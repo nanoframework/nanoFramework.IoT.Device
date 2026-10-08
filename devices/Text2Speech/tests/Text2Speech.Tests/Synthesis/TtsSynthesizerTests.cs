@@ -223,8 +223,13 @@ namespace Iot.Device.Text2Speech.Tests
         {
             TtsSynthesizer synthesizer = CreateEnglishSynthesizer();
 
-            Assert.AreEqual(2424, synthesizer.Speak("any").Length, "Any pronunciation");
-            Assert.AreEqual(2472, synthesizer.Speak("other").Length, "Other pronunciation");
+            byte[] any = synthesizer.Speak("any");
+            byte[] other = synthesizer.Speak("other");
+
+            Assert.AreEqual(2424, any.Length, "Any pronunciation length");
+            Assert.AreEqual((uint)2842794339, ComputeHash(any), "Any pronunciation PCM");
+            Assert.AreEqual(2472, other.Length, "Other pronunciation length");
+            Assert.AreEqual((uint)3741042, ComputeHash(other), "Other pronunciation PCM");
             Assert.IsTrue(
                 synthesizer.Speak("any other name").Length > 5000,
                 "Reported phrase must produce complete speech");
