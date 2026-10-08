@@ -450,12 +450,11 @@ namespace Iot.Device.Bq2579x
             // read existing content
             byte[] buffer = ReadFromRegister(Register.REG00_Minimal_System_Voltage, 1);
 
-            // divide by step value, as the register takes the value as 240mV steps
-            var newValue = value.Millivolts / StepMinimalSystemVoltage;
+            // remove fixed offset and divide by step value, as the register takes the value as 250mV steps
+            var newValue = (value.Millivolts - FixedOffsetMinimalSystemVoltage) / StepMinimalSystemVoltage;
 
             // process value to replace VSYSMIN_5:0
-            // no need to mask as the value has to be already 6 bits wide
-            buffer[0] |= (byte)newValue;
+            buffer[0] = (byte)((buffer[0] & ~0b0011_1111) | ((byte)newValue & 0b0011_1111));
 
             WriteToRegister(Register.REG00_Minimal_System_Voltage, buffer);
         }
@@ -495,8 +494,8 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = new byte[2];
 
             // process value 
-            buffer[0] |= (byte)newValue;
-            buffer[1] |= (byte)((int)newValue >> 8);
+            buffer[0] = (byte)((int)newValue >> 8);
+            buffer[1] = (byte)newValue;
 
             WriteToRegister(Register.REG01_Charge_Voltage_Limit, buffer);
         }
@@ -536,8 +535,8 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = new byte[2];
 
             // process value 
-            buffer[0] |= (byte)newValue;
-            buffer[1] |= (byte)((int)newValue >> 8);
+            buffer[0] = (byte)((int)newValue >> 8);
+            buffer[1] = (byte)newValue;
 
             WriteToRegister(Register.REG03_Charge_Current_Limit, buffer);
         }
@@ -610,8 +609,8 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = new byte[2];
 
             // process value 
-            buffer[0] |= (byte)newValue;
-            buffer[1] |= (byte)((int)newValue >> 8);
+            buffer[0] = (byte)((int)newValue >> 8);
+            buffer[1] = (byte)newValue;
 
             WriteToRegister(Register.REG06_Input_Current_Limit, buffer);
         }
@@ -639,6 +638,8 @@ namespace Iot.Device.Bq2579x
 
             // process value to replace VBAT_LOWV_1:0
             buffer[0] = (byte)(((byte)value << 6) | (byte)(buffer[0] & 0b0011_1111));
+
+            WriteToRegister(Register.REG08_Precharge_Control, buffer[0]);
         }
 
         public ElectricCurrent GetPrechargeCurrentLimit()
@@ -646,7 +647,7 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = ReadFromRegister(Register.REG08_Precharge_Control, 1);
 
             return new ElectricCurrent(
-                buffer[0] & PrechargeCurrentLimitMask * StepPrechargeCurrentLimit,
+                (buffer[0] & PrechargeCurrentLimitMask) * StepPrechargeCurrentLimit,
                 UnitsNet.Units.ElectricCurrentUnit.Milliampere);
         }
 
@@ -666,8 +667,9 @@ namespace Iot.Device.Bq2579x
             var newValue = value.Milliamperes / StepPrechargeCurrentLimit;
 
             // process value to replace IPRECHG_5:0
-            // no need to mask as the value has to be already 6 bits wide
-            buffer[0] |= (byte)newValue;
+            buffer[0] = (byte)((buffer[0] & ~PrechargeCurrentLimitMask) | ((byte)newValue & PrechargeCurrentLimitMask));
+
+            WriteToRegister(Register.REG08_Precharge_Control, buffer[0]);
         }
 
         #endregion
@@ -684,7 +686,7 @@ namespace Iot.Device.Bq2579x
             byte[] buffer = ReadFromRegister(Register.REG09_Charge_Termination_Current, 1);
 
             return new ElectricCurrent(
-                buffer[0] & TerminationCurrentMask * TerminationCurrentMinValue,
+                (buffer[0] & TerminationCurrentMask) * TerminationCurrentMinValue,
                 UnitsNet.Units.ElectricCurrentUnit.Milliampere);
         }
 
@@ -704,8 +706,9 @@ namespace Iot.Device.Bq2579x
             var newValue = value.Milliamperes / TerminationCurrentMinValue;
 
             // process value to replace ITERM_4:0
-            // no need to mask as the value has to be already 5 bits wide
-            buffer[0] |= (byte)newValue;
+            buffer[0] = (byte)((buffer[0] & ~TerminationCurrentMask) | ((byte)newValue & TerminationCurrentMask));
+
+            WriteToRegister(Register.REG09_Charge_Termination_Current, buffer[0]);
         }
 
         #endregion
