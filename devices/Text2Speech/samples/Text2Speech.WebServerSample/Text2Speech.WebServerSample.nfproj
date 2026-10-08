@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals"><NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath></PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><ProjectGuid>{ADDD4D30-8873-49C2-A26C-C528AE51E58C}</ProjectGuid><OutputType>Exe</OutputType><RootNamespace>Iot.Device.Text2Speech.WebServerSample</RootNamespace><AssemblyName>Iot.Device.Text2Speech.WebServerSample</AssemblyName><TargetFrameworkVersion>v1.0</TargetFrameworkVersion><StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings><LangVersion>9.0</LangVersion></PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="Program.cs" /><Compile Include="Controllers\TtsController.cs" /><Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Text2Speech.Samples\Audio\Esp32S3BoxLiteWavPlayer.cs"><Link>Esp32S3BoxLiteWavPlayer.cs</Link></Compile>
+    <Compile Include="..\Text2Speech.Samples\Audio\I2sPlaybackMode.cs"><Link>I2sPlaybackMode.cs</Link></Compile>
+    <Compile Include="..\Text2Speech.Samples\Audio\InterpolatedI2sPcmSink.cs"><Link>InterpolatedI2sPcmSink.cs</Link></Compile>
+    <Compile Include="..\Text2Speech.Samples\Storage\WavFile.cs"><Link>WavFile.cs</Link></Compile>
+    <Compile Include="..\Text2Speech.Samples\Storage\WavFileWriter.cs"><Link>WavFileWriter.cs</Link></Compile>
+    <None Include="packages.config" /><None Include="Settings.StyleCop" />
+  </ItemGroup>
+  <ItemGroup><ProjectReference Include="..\..\Text2Speech.nfproj"><Project>{15E6BA0F-8D4D-4D80-A045-4339CE5F0470}</Project><Name>Text2Speech.Core</Name></ProjectReference><ProjectReference Include="..\..\Languages\English\Text2Speech.English.nfproj"><Project>{4A64C059-CA50-42E1-A0CB-EE525B594C30}</Project><Name>Text2Speech.English</Name></ProjectReference><ProjectReference Include="..\..\Languages\French\Text2Speech.French.nfproj"><Project>{4FB3562E-B740-4E1F-B09B-1317A7455B64}</Project><Name>Text2Speech.French</Name></ProjectReference></ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib"><HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.Hardware.Esp32"><HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.42\lib\nanoFramework.Hardware.Esp32.dll</HintPath></Reference>
+    <Reference Include="Iot.Device.Es8156"><HintPath>..\..\packages\nanoFramework.Iot.Device.Es8156.1.0.32\lib\Iot.Device.Es8156.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.ResourceManager"><HintPath>..\..\packages\nanoFramework.ResourceManager.1.2.32\lib\nanoFramework.ResourceManager.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.Runtime.Events"><HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.39\lib\nanoFramework.Runtime.Events.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.System.Collections"><HintPath>..\..\packages\nanoFramework.System.Collections.1.5.75\lib\nanoFramework.System.Collections.dll</HintPath></Reference>
+    <Reference Include="System.Device.Gpio"><HintPath>..\..\packages\nanoFramework.System.Device.Gpio.1.1.64\lib\System.Device.Gpio.dll</HintPath></Reference>
+    <Reference Include="System.Device.I2c"><HintPath>..\..\packages\nanoFramework.System.Device.I2c.1.1.29\lib\System.Device.I2c.dll</HintPath></Reference>
+    <Reference Include="System.Device.I2s"><HintPath>..\..\packages\nanoFramework.System.Device.I2s.1.0.28\lib\System.Device.I2s.dll</HintPath></Reference>
+    <Reference Include="System.Device.Wifi"><HintPath>..\..\packages\nanoFramework.System.Device.Wifi.1.5.152\lib\System.Device.Wifi.dll</HintPath></Reference>
+    <Reference Include="System.IO.FileSystem"><HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.1.1.96\lib\System.IO.FileSystem.dll</HintPath></Reference>
+    <Reference Include="System.IO.Streams"><HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.96\lib\System.IO.Streams.dll</HintPath></Reference>
+    <Reference Include="System.Net"><HintPath>..\..\packages\nanoFramework.System.Net.1.11.64\lib\System.Net.dll</HintPath></Reference>
+    <Reference Include="System.Net.Http"><HintPath>..\..\packages\nanoFramework.System.Net.Http.Server.1.5.214\lib\System.Net.Http.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.System.Text"><HintPath>..\..\packages\nanoFramework.System.Text.1.3.42\lib\nanoFramework.System.Text.dll</HintPath></Reference>
+    <Reference Include="System.Threading"><HintPath>..\..\packages\nanoFramework.System.Threading.1.1.52\lib\System.Threading.dll</HintPath></Reference>
+    <Reference Include="nanoFramework.WebServer"><HintPath>..\..\packages\nanoFramework.WebServer.FileSystem.1.2.162\lib\nanoFramework.WebServer.dll</HintPath></Reference>
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <Import Project="..\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
+</Project>
