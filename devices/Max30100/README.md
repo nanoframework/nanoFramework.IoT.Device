@@ -1,6 +1,8 @@
 ﻿# MAX30100 pulse oximeter and heart-rate sensor
 
-The MAX30100 integrates red and infrared LEDs, a photodetector, optical elements, and low-noise electronics for pulse-oximetry and heart-rate signal acquisition. This binding configures the sensor and reads its raw red and infrared FIFO samples.
+The MAX30100 integrates red and infrared LEDs, a photodetector, optical elements, and low-noise electronics for pulse-oximetry and heart-rate signal acquisition. This binding configures the sensor and reads its raw red and infrared FIFO samples. The ESP32 sample processes those samples and displays the estimated heart rate and blood oxygen saturation (SpO₂).
+
+The sensor must be [calibrated](#oxygen-saturation-calibration) against a suitable trusted reference before its SpO₂ results can be relied upon. Without calibration, the displayed oxygen-saturation values are experimental estimates and cannot be fully trusted. The supplied LED currents and processing defaults produced stable results on only a small number of tested sensors and fingers; different modules, optical covers, mounting arrangements, and users may require different settings and calibration. This binding and sample as is are not suitable for medical use.
 
 ## Documentation
 
