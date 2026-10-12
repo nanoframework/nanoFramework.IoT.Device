@@ -32,10 +32,16 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props"
     Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Enums.cs" />
     <Compile Include="Max30100.cs" />
     <Compile Include="Max30100DataConverter.cs" />
+    <Compile Include="Max30100LedCurrent.cs" />
+    <Compile Include="Max30100Mode.cs" />
+    <Compile Include="Max30100PulseOximeter.cs" />
+    <Compile Include="Max30100PulseOximeterOptions.cs" />
+    <Compile Include="Max30100PulseOximeterWorker.cs" />
+    <Compile Include="Max30100PulseWidth.cs" />
     <Compile Include="Max30100Reading.cs" />
+    <Compile Include="Max30100SampleRate.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -54,6 +60,12 @@
     <Reference
       Include="System.Device.Model, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math, Version=1.5.116.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.System.Math.1.5.116\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature, Version=5.76.15.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets"

@@ -4,9 +4,9 @@
 namespace Iot.Device.Max30100
 {
     /// <summary>One raw optical sample from the MAX30100 FIFO.</summary>
-    public sealed class Max30100Reading
+    public struct Max30100Reading
     {
-        /// <summary>Initializes a new instance of the <see cref="Max30100Reading"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Max30100Reading"/> struct.</summary>
         /// <param name="infrared">The infrared ADC value.</param>
         /// <param name="red">The red ADC value.</param>
         public Max30100Reading(ushort infrared, ushort red)

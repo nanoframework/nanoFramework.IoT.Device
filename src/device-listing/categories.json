@@ -53,5 +53,6 @@
   "satellite": "Satellite communication modules",
   "particulatematter": "Particulate Matter Sensor",
   "epaper": "E-Paper",
-  "positioning": "Positioning like GNSS, GPS"
+  "positioning": "Positioning like GNSS, GPS",
+  "medical": "Medical sensors"
 }

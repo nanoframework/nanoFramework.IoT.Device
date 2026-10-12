@@ -34,5 +34,13 @@ namespace Iot.Device.Max30100.Tests
         {
             Assert.AreEqual(-4.75, Max30100DataConverter.ConvertTemperature(0xFB, 0x04));
         }
+
+        [TestMethod]
+        public void CalculateUnreadSampleCountRecognizesFullFifo()
+        {
+            Assert.AreEqual((byte)16, Max30100DataConverter.CalculateUnreadSampleCount(5, 5, 1));
+            Assert.AreEqual((byte)0, Max30100DataConverter.CalculateUnreadSampleCount(5, 5, 0));
+            Assert.AreEqual((byte)4, Max30100DataConverter.CalculateUnreadSampleCount(9, 5, 0));
+        }
     }
 }
