@@ -53,12 +53,13 @@ namespace Iot.Device.Max30100
         private double _signalQuality;
         private double _infraredAcRms;
         private double _beatDetectionThreshold;
+        private double _beatDetectionProminenceThreshold;
         private double _autocorrelationHeartRate;
         private double _autocorrelationQuality;
         private bool _heartRateEstimatorsDisagree;
         private bool _usedAutocorrelationFallback;
         private bool _usedWeakSignalOxygenSaturation;
-        private int _detectedBeatCrossings;
+        private int _detectedBeatPeaks;
         private int _detectedBeatIntervals;
         private int _rawBeatIntervals;
         private int _queueCount;
@@ -114,6 +115,8 @@ namespace Iot.Device.Max30100
                 options.FilterSettlingSeconds,
                 options.BeatDetectionThresholdFraction,
                 options.MinimumBeatDetectionThreshold,
+                options.PeakDetectionProminenceFraction,
+                options.BeatRefractoryPeriodFraction,
                 options.MinimumAcRms,
                 options.MissedBeatIntervalFactor,
                 options.BeatIntervalToleranceFraction,
@@ -191,10 +194,14 @@ namespace Iot.Device.Max30100
         /// <param name="baselineTrackingRate">The baseline-tracking rate used by the high-pass filter.</param>
         /// <param name="signalSmoothingRate">The smoothing rate used by the low-pass filter.</param>
         /// <param name="filterSettlingSeconds">The duration discarded while the filters settle.</param>
-        /// <param name="beatDetectionThresholdFraction">
-        /// The infrared AC RMS fraction used for positive and negative beat-detection hysteresis.
+        /// <param name="beatDetectionThresholdFraction">The infrared AC RMS fraction used as the minimum peak height.</param>
+        /// <param name="minimumBeatDetectionThreshold">The minimum beat-peak height in ADC counts.</param>
+        /// <param name="peakDetectionProminenceFraction">
+        /// The infrared AC RMS fraction required for peak prominence.
         /// </param>
-        /// <param name="minimumBeatDetectionThreshold">The minimum beat-detection hysteresis in ADC counts.</param>
+        /// <param name="beatRefractoryPeriodFraction">
+        /// The refractory period as a fraction of the shortest supported beat interval.
+        /// </param>
         /// <param name="minimumAcRms">The minimum red or infrared AC RMS amplitude required for measurements.</param>
         /// <param name="missedBeatIntervalFactor">
         /// The interval-to-median factor above which one missed beat is inferred.
@@ -294,6 +301,8 @@ namespace Iot.Device.Max30100
             double filterSettlingSeconds = Max30100PulseOximeter.DefaultFilterSettlingSeconds,
             double beatDetectionThresholdFraction = Max30100PulseOximeter.DefaultBeatDetectionThresholdFraction,
             double minimumBeatDetectionThreshold = Max30100PulseOximeter.DefaultMinimumBeatDetectionThreshold,
+            double peakDetectionProminenceFraction = Max30100PulseOximeter.DefaultPeakDetectionProminenceFraction,
+            double beatRefractoryPeriodFraction = Max30100PulseOximeter.DefaultBeatRefractoryPeriodFraction,
             double minimumAcRms = Max30100PulseOximeter.DefaultMinimumAcRms,
             double missedBeatIntervalFactor = Max30100PulseOximeter.DefaultMissedBeatIntervalFactor,
             double beatIntervalToleranceFraction = Max30100PulseOximeter.DefaultBeatIntervalToleranceFraction,
@@ -358,6 +367,8 @@ namespace Iot.Device.Max30100
                 filterSettlingSeconds,
                 beatDetectionThresholdFraction,
                 minimumBeatDetectionThreshold,
+                peakDetectionProminenceFraction,
+                beatRefractoryPeriodFraction,
                 minimumAcRms,
                 missedBeatIntervalFactor,
                 beatIntervalToleranceFraction,
@@ -529,15 +540,15 @@ namespace Iot.Device.Max30100
             }
         }
 
-        /// <summary>Gets the number of positive beat-threshold crossings found during the latest analysis.</summary>
-        /// <value>The number of detected threshold crossings.</value>
-        public int DetectedBeatCrossings
+        /// <summary>Gets the number of prominence-qualified beat peaks found during the latest analysis.</summary>
+        /// <value>The number of peaks remaining after refractory-period suppression.</value>
+        public int DetectedBeatPeaks
         {
             get
             {
                 lock (_stateLock)
                 {
-                    return _detectedBeatCrossings;
+                    return _detectedBeatPeaks;
                 }
             }
         }
@@ -568,8 +579,8 @@ namespace Iot.Device.Max30100
             }
         }
 
-        /// <summary>Gets the positive and negative threshold used for beat detection.</summary>
-        /// <value>The beat-detection threshold in filtered ADC counts.</value>
+        /// <summary>Gets the minimum positive peak height used for beat detection.</summary>
+        /// <value>The peak-height threshold in filtered ADC counts.</value>
         public double BeatDetectionThreshold
         {
             get
@@ -577,6 +588,19 @@ namespace Iot.Device.Max30100
                 lock (_stateLock)
                 {
                     return _beatDetectionThreshold;
+                }
+            }
+        }
+
+        /// <summary>Gets the minimum prominence used for beat detection.</summary>
+        /// <value>The required rise from a preceding local valley in filtered ADC counts.</value>
+        public double BeatDetectionProminenceThreshold
+        {
+            get
+            {
+                lock (_stateLock)
+                {
+                    return _beatDetectionProminenceThreshold;
                 }
             }
         }
@@ -989,11 +1013,12 @@ namespace Iot.Device.Max30100
                 _isHeartRateHeld = _processor.IsHeartRateHeld;
                 _hasValidOxygenSaturation = _processor.HasValidOxygenSaturation;
                 _candidateHeartRate = _processor.CandidateHeartRate;
-                _detectedBeatCrossings = _processor.DetectedBeatCrossings;
+                _detectedBeatPeaks = _processor.DetectedBeatPeaks;
                 _detectedBeatIntervals = _processor.DetectedBeatIntervals;
                 _rawBeatIntervals = _processor.RawBeatIntervals;
                 _infraredAcRms = _processor.InfraredAcRms;
                 _beatDetectionThreshold = _processor.BeatDetectionThreshold;
+                _beatDetectionProminenceThreshold = _processor.BeatDetectionProminenceThreshold;
                 _autocorrelationHeartRate = _processor.AutocorrelationHeartRate;
                 _autocorrelationQuality = _processor.AutocorrelationQuality;
                 _heartRateEstimatorsDisagree = _processor.HeartRateEstimatorsDisagree;

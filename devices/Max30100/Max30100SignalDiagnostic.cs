@@ -18,8 +18,8 @@ namespace Iot.Device.Max30100
         /// <summary>The infrared perfusion index is below the configured minimum.</summary>
         InsufficientPerfusion,
 
-        /// <summary>Too few complete pulse crossings were detected.</summary>
-        TooFewBeatCrossings,
+        /// <summary>Too few prominence-qualified pulse peaks were detected.</summary>
+        TooFewBeatPeaks,
 
         /// <summary>Too few intervals fall within the configured heart-rate range.</summary>
         TooFewBeatIntervals,

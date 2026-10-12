@@ -44,6 +44,8 @@ namespace Iot.Device.Max30100.Tests
                 FilterSettlingSeconds = 0.75,
                 BeatDetectionThresholdFraction = 0.15,
                 MinimumBeatDetectionThreshold = 2,
+                PeakDetectionProminenceFraction = 0.6,
+                BeatRefractoryPeriodFraction = 0.8,
                 MinimumAcRms = 8,
                 MissedBeatIntervalFactor = 1.8,
                 BeatIntervalToleranceFraction = 0.20,
@@ -79,6 +81,8 @@ namespace Iot.Device.Max30100.Tests
             Assert.AreEqual(0.75, pulseOximeter.FilterSettlingSeconds);
             Assert.AreEqual(0.15, pulseOximeter.BeatDetectionThresholdFraction);
             Assert.AreEqual(2.0, pulseOximeter.MinimumBeatDetectionThreshold);
+            Assert.AreEqual(0.6, pulseOximeter.PeakDetectionProminenceFraction);
+            Assert.AreEqual(0.8, pulseOximeter.BeatRefractoryPeriodFraction);
             Assert.AreEqual(8.0, pulseOximeter.MinimumAcRms);
             Assert.AreEqual(1.8, pulseOximeter.MissedBeatIntervalFactor);
             Assert.AreEqual(0.20, pulseOximeter.BeatIntervalToleranceFraction);
@@ -106,6 +110,28 @@ namespace Iot.Device.Max30100.Tests
             Assert.AreEqual(0.08, pulseOximeter.WeakSignalOxygenSaturationRatioTolerance);
             Assert.AreEqual(4, pulseOximeter.WeakSignalOxygenSaturationConfirmationCount);
             Assert.AreEqual(7, pulseOximeter.StableOpticalSignalHeartRateMissLimit);
+        }
+
+        [TestMethod]
+        public void AddSampleSuppressesEarlySecondaryPulsePeaks()
+        {
+            Max30100PulseOximeter pulseOximeter = new Max30100PulseOximeter();
+
+            for (int index = 0; index < 850; index++)
+            {
+                int phase = index % 100;
+                int primaryDistance = phase > 50 ? phase - 50 : 50 - phase;
+                int secondaryDistance = phase > 30 ? phase - 30 : 30 - phase;
+                int primary = primaryDistance < 12 ? (12 - primaryDistance) * 80 : 0;
+                int secondary = secondaryDistance < 6 ? (6 - secondaryDistance) * 35 : 0;
+                ushort infrared = (ushort)(20000 + primary + secondary);
+                ushort red = (ushort)(25000 + ((primary + secondary) / 2));
+                pulseOximeter.AddSample(new Max30100Reading(infrared, red));
+            }
+
+            Assert.IsTrue(pulseOximeter.HasValidHeartRate);
+            Assert.IsTrue(pulseOximeter.HeartRate > 59 && pulseOximeter.HeartRate < 61);
+            Assert.IsTrue(pulseOximeter.DetectedBeatPeaks >= 4);
         }
 
         [TestMethod]

@@ -50,7 +50,7 @@ sensor.Configure(
     Max30100SampleRate.SamplesPerSecond50,
     Max30100PulseWidth.Microseconds1600,
     Max30100LedCurrent.Milliamps27Point1,
-    Max30100LedCurrent.Milliamps37);
+    Max30100LedCurrent.Milliamps40Point2);
 
 uint processedDroppedSamples = 0;
 
@@ -89,7 +89,7 @@ sensor.Configure(
     Max30100SampleRate.SamplesPerSecond50,
     Max30100PulseWidth.Microseconds1600,
     Max30100LedCurrent.Milliamps27Point1,
-    Max30100LedCurrent.Milliamps37);
+    Max30100LedCurrent.Milliamps40Point2);
 ```
 
 ### Measurement mode
@@ -129,7 +129,7 @@ With a 1600-microsecond pulse, IR around 32,000 and red around 28,000 are near t
 
 ### LED currents
 
-The sample drives the red LED at 27.1 mA and the infrared LED at 37.0 mA. Increasing current generally raises both the DC reflection and pulsatile AC signal, but it also increases power consumption, LED heating, and the risk of ADC clipping. It does not necessarily improve perfusion index because both AC and DC can rise together. The red current provides more signal than 24 mA while retaining more headroom than 37 mA, which can clip at 65,535 on some fingers and modules.
+The sample drives the red LED at 27.1 mA and the infrared LED at 40.2 mA. The infrared current is one step above 37.0 mA to test whether additional infrared signal improves pulse-wave detection while the red current remains unchanged. Increasing current generally raises both the DC reflection and pulsatile AC signal, but it also increases power consumption, LED heating, and the risk of ADC clipping. It does not necessarily improve perfusion index because both AC and DC can rise together. The red current provides more signal than 24 mA while retaining more headroom than 37 mA, which can clip at 65,535 on some fingers and modules.
 
 The chosen unequal currents compensate for different red and infrared optical response. Tune each channel independently:
 
@@ -142,7 +142,7 @@ Changing pulse width changes the effective optical energy, so LED currents may n
 
 The sample processor first discards two seconds while finger pressure and optical levels stabilize, then uses an eight-second window of uninterrupted finger data. It restarts collection after an abrupt red or infrared level change because that indicates finger motion. It normally requires two consistent pulse candidates before `HasValidHeartRate` can become true. A candidate with at least four consistent beat intervals and 80% quality can be accepted immediately. A candidate survives up to two weak analysis windows, and finger removal is debounced across five samples. Reset the processor after any FIFO overflow because missing samples invalidate the waveform timing:
 
-- `HeartRate` fuses hysteresis beat intervals with normalized autocorrelation of the filtered infrared waveform. Median interval filtering rejects outliers and compensates for isolated missed beats, while autocorrelation remains stable when waveform shape causes missing or extra threshold crossings.
+- `HeartRate` fuses adaptive peak intervals with normalized autocorrelation of the filtered infrared waveform. Local peaks must pass RMS-relative height and prominence thresholds. A refractory period derived from the maximum configured BPM retains only the strongest competing peak. Median interval filtering rejects outliers and compensates for isolated missed beats.
 - `OxygenSaturation` uses an uncalibrated ratio-of-ratios approximation.
 - `PerfusionIndex` is the infrared AC signal as a percentage of its DC level.
 - `SignalQuality` combines beat-interval consistency, the amount of interval evidence, and the proportion of raw intervals accepted. Two matching intervals can no longer report 100% quality, and windows containing several rejected intervals are penalized. At least four accepted intervals are needed to reach the full consistency score. Heart-rate readings below 45% are rejected.
@@ -158,13 +158,14 @@ The sample processor first discards two seconds while finger pressure and optica
 - `ChannelCorrelation` reports whether the detrended red and infrared pulse shapes agree. Experimental SpO₂ requires correlation of at least 0.80 and at least 0.10% perfusion in both channels.
 - `RatioOfRatios` reports `(red AC / red DC) / (infrared AC / infrared DC)`. The demonstration converts it with `110 - 25R`, but accurate conversion coefficients depend on the sensor module, optics, finger placement, and calibration against reference measurements.
 - `OxygenSaturationCalibrationIntercept` and `OxygenSaturationCalibrationSlope` expose the active coefficients in `SpO₂ = intercept + slope × ratio`.
-- `BeatDetectionThreshold` reports the positive and negative hysteresis level used to detect beats.
+- `BeatDetectionThreshold` reports the minimum positive peak height used to detect beats.
+- `BeatDetectionProminenceThreshold` reports the required rise from the preceding local valley.
 - `AutocorrelationHeartRate` independently reports the strongest prominent periodic waveform in the supported heart-rate range.
 - `AutocorrelationQuality` reports periodic peak strength, prominence over its shoulders, and whether the window contains enough cycles.
 - `HeartRateEstimatorsDisagree` identifies windows rejected because valid interval and periodic estimates differ by more than 12 BPM.
 - `UsedAutocorrelationFallback` identifies candidates obtained from strong periodicity when threshold-crossing intervals were unusable.
-- `DetectedBeatCrossings` reports how many complete negative-to-positive threshold crossings were found.
-- `RawBeatIntervals` reports how many crossings produced an interval in the supported 40–180 BPM range.
+- `DetectedBeatPeaks` reports how many prominence-qualified peaks remained after refractory-period suppression.
+- `RawBeatIntervals` reports how many peaks produced an interval in the configured BPM range.
 - `DetectedBeatIntervals` reports how many raw intervals passed consistency filtering. At least four are required for a candidate and full interval evidence.
 - `FingerDetected` indicates whether both optical channels exceed the contact threshold.
 - `IsSettling` indicates that initial finger-placement samples are still being discarded.
@@ -223,8 +224,10 @@ Filter and beat-detection heuristics are also configurable:
 - `BaselineTrackingRate` controls how quickly the baseline follows slow optical-level changes. Increasing it rejects faster drift but can remove part of a slow pulse waveform.
 - `SignalSmoothingRate` controls how quickly the smoothed AC signal follows the baseline-removed input. Increasing it preserves faster detail and noise; decreasing it produces stronger smoothing.
 - `FilterSettlingSeconds` controls how much of the start of each filtered window is excluded while filter state converges.
-- `BeatDetectionThresholdFraction` sets the symmetric hysteresis threshold as a fraction of infrared AC RMS. Increasing it rejects small fluctuations but may miss weak beats.
-- `MinimumBeatDetectionThreshold` prevents near-zero RMS windows from producing crossings from numerical or ADC noise.
+- `BeatDetectionThresholdFraction` sets the minimum positive peak height as a fraction of infrared AC RMS. Increasing it rejects small fluctuations but may miss weak beats.
+- `MinimumBeatDetectionThreshold` prevents near-zero RMS windows from producing peaks from numerical or ADC noise.
+- `PeakDetectionProminenceFraction` sets the required rise from the preceding local valley as a fraction of infrared AC RMS. Increasing it rejects secondary waveform details but can reject shallow pulses.
+- `BeatRefractoryPeriodFraction` sets the refractory period relative to the shortest interval allowed by `MaximumHeartRate`. Competing peaks inside this period are reduced to the strongest peak.
 - `MinimumAcRms` is the minimum infrared amplitude for heart rate and minimum red amplitude for SpO₂.
 - `MissedBeatIntervalFactor` identifies unusually long intervals that are divided by two to compensate for one missed crossing.
 - `BeatIntervalToleranceFraction` controls how far an interval may differ from the median before it is rejected.
@@ -259,7 +262,7 @@ Autocorrelation behavior is configurable:
 
 The worker's `publishRate` constructor argument controls how many state snapshots are requested per second. Lower values reduce locking and copying; higher values make raw values and progress more responsive. The actual interval is an integer number of sensor samples and can therefore be slightly slower than the requested rate.
 
-The processor removes residual linear drift from each filtered analysis window before calculating perfusion and detecting beats. This prevents a gradual pressure or temperature trend from inflating perfusion and producing a small number of misleading low-rate crossings.
+The processor removes residual linear drift from each filtered analysis window before calculating perfusion and detecting beats. This prevents a gradual pressure or temperature trend from inflating perfusion and producing misleading low-rate peaks.
 
 The processor defaults to a six-second analysis window, and the ESP32 sample uses an eight-second window. The additional interval evidence makes it less likely that a short noise burst or harmonic will replace an established BPM candidate. Candidates based on only three intervals are rejected. A candidate more than 12 BPM from the existing candidate must also repeat before it replaces that candidate.
 
@@ -280,33 +283,19 @@ Debug.WriteLine($"Sensor die temperature: {dieTemperature.DegreesCelsius:F2} °C
 
 This is typically what you can get from the sample. Collecting can take a bit of time but if you are stuck in this, move your finger or use another one. Hold without moving the finger on the sensor.
 
-```csharp
+```text
 MAX30100 part ID: 0x11, revision: 0x05
 Place a finger on the sensor.
 Place a finger on the sensor.
-Stabilizing finger contact. IR: 44153, red: 47963.
-Collecting a stable signal. IR: 44148, red: 47780, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (11%).
-Collecting a stable signal. IR: 43977, red: 47526, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (24%).
-Collecting a stable signal. IR: 44475, red: 47686, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (36%).
-Collecting a stable signal. IR: 44391, red: 47465, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (49%).
-Collecting a stable signal. IR: 43763, red: 46719, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (61%).
-Collecting a stable signal. IR: 43755, red: 46705, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (74%).
-Collecting a stable signal. IR: 43217, red: 46278, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (86%).
-Collecting a stable signal. IR: 43655, red: 46470, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, crossings: 0, intervals: 0/0, diagnostic: filling window (99%).
-Collecting a stable signal. IR: 43408, red: 46197, perfusion: 0.48%, red perfusion: 0.33%, correlation: 0.96, ratio: 0.69, quality: 59%, candidate: 94.3 BPM, periodic: 93.9 BPM/8%, AC RMS: 210.0, threshold: 21.0, crossings: 8, intervals: 6/5, diagnostic: waiting for candidate confirmation.
-Collecting a stable signal. IR: 43593, red: 46250, perfusion: 0.48%, red perfusion: 0.33%, correlation: 0.96, ratio: 0.69, quality: 59%, candidate: 94.3 BPM, periodic: 93.9 BPM/8%, AC RMS: 210.0, threshold: 21.0, crossings: 8, intervals: 6/5, diagnostic: waiting for candidate confirmation.
-Collecting a stable signal. IR: 43172, red: 45897, perfusion: 0.47%, red perfusion: 0.33%, correlation: 0.96, ratio: 0.71, quality: 24%, candidate: 94.3 BPM, periodic: 94.4 BPM/7%, AC RMS: 207.3, threshold: 20.7, crossings: 9, intervals: 6/3, diagnostic: beat intervals are inconsistent.
-Collecting a stable signal. IR: 43470, red: 46011, perfusion: 0.47%, red perfusion: 0.33%, correlation: 0.96, ratio: 0.71, quality: 24%, candidate: 94.3 BPM, periodic: 94.4 BPM/7%, AC RMS: 207.3, threshold: 20.7, crossings: 9, intervals: 6/3, diagnostic: beat intervals are inconsistent.
-Pulse: 92.1 BPM, SpO2: 92.8%, perfusion: 0.41%, red perfusion: 0.29%, correlation: 0.96, ratio: 0.69, periodic: 93.7 BPM/24%, quality: 53%.
-Pulse: 92.1 BPM, SpO2: 92.8%, perfusion: 0.41%, red perfusion: 0.29%, correlation: 0.96, ratio: 0.69, periodic: 93.7 BPM/24%, quality: 53%.
-Pulse: 92.3 BPM, SpO2: 93.4%, perfusion: 0.34%, red perfusion: 0.19%, correlation: 0.99, ratio: 0.56, periodic: 93.5 BPM/81%, quality: 80%.
-Pulse: 92.3 BPM, SpO2: 93.4%, perfusion: 0.34%, red perfusion: 0.19%, correlation: 0.99, ratio: 0.56, periodic: 93.5 BPM/81%, quality: 80%.
-Pulse: 92.5 BPM, SpO2: 93.9%, perfusion: 0.25%, red perfusion: 0.14%, correlation: 0.99, ratio: 0.57, periodic: 93.5 BPM/98%, quality: 94%.
-Pulse: 92.5 BPM, SpO2: 93.9%, perfusion: 0.25%, red perfusion: 0.14%, correlation: 0.99, ratio: 0.57, periodic: 93.5 BPM/98%, quality: 94%.
-Pulse: 92.7 BPM, SpO2: 94.3%, perfusion: 0.25%, red perfusion: 0.14%, correlation: 0.99, ratio: 0.57, periodic: 93.3 BPM/98%, quality: 95%.
-Pulse: 92.7 BPM, SpO2: 94.3%, perfusion: 0.25%, red perfusion: 0.14%, correlation: 0.99, ratio: 0.57, periodic: 93.3 BPM/98%, quality: 95%.
-Pulse: 92.9 BPM, SpO2: 94.5%, perfusion: 0.25%, red perfusion: 0.15%, correlation: 0.99, ratio: 0.58, periodic: 93.3 BPM/99%, quality: 96%.
-Pulse: 92.9 BPM, SpO2: 94.5%, perfusion: 0.25%, red perfusion: 0.15%, correlation: 0.99, ratio: 0.58, periodic: 93.3 BPM/99%, quality: 96%.
+Collecting a stable signal. IR: 43482, red: 45127, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, prominence: 0.0, peaks: 0, intervals: 0/0, diagnostic: filling window (29%).
+Collecting a stable signal. IR: 42277, red: 43792, perfusion: 0.00%, red perfusion: 0.00%, correlation: 0.00, ratio: 0.00, quality: 0%, candidate: 0.0 BPM, periodic: 0.0 BPM/0%, AC RMS: 0.0, threshold: 0.0, prominence: 0.0, peaks: 0, intervals: 0/0, diagnostic: filling window (80%).
+Pulse: 84.2 BPM, SpO2: 97.3%, perfusion: 1.42%, red perfusion: 0.72%, correlation: 0.99, ratio: 0.51, periodic: 0.0 BPM/0%, quality: 70%.
+Pulse: 84.2 BPM (held), SpO2: 97.3%, perfusion: 1.34%, red perfusion: 0.71%, correlation: 0.99, ratio: 0.53, periodic: 0.0 BPM/0%, quality: 0%.
+Pulse: 84.0 BPM, SpO2: 97.2%, perfusion: 0.54%, red perfusion: 0.28%, correlation: 0.99, ratio: 0.52, periodic: 84.9 BPM/56%, quality: 63%.
+Pulse: 85.0 BPM, SpO2: 97.3%, perfusion: 0.51%, red perfusion: 0.26%, correlation: 1.00, ratio: 0.51, periodic: 87.6 BPM/68%, quality: 71%.
+Pulse: 87.8 BPM, SpO2: 97.1%, perfusion: 0.62%, red perfusion: 0.33%, correlation: 1.00, ratio: 0.54, periodic: 83.5 BPM/52%, quality: 60%.
+Pulse: 89.0 BPM, SpO2: 97.0%, perfusion: 0.66%, red perfusion: 0.34%, correlation: 1.00, ratio: 0.52, periodic: 78.8 BPM/53%, quality: 52%.
+Pulse: 85.9 BPM, SpO2: 97.1%, perfusion: 0.53%, red perfusion: 0.27%, correlation: 1.00, ratio: 0.51, periodic: 82.9 BPM/42%, quality: 97%.
 ```
 
 ## Oxygen-saturation calibration

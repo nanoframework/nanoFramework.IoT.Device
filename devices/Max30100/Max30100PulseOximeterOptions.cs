@@ -103,15 +103,25 @@ namespace Iot.Device.Max30100
         /// <value>The default is 0.5 seconds.</value>
         public double FilterSettlingSeconds { get; set; } = Max30100PulseOximeter.DefaultFilterSettlingSeconds;
 
-        /// <summary>Gets or sets the AC RMS fraction used for beat-detection hysteresis.</summary>
+        /// <summary>Gets or sets the AC RMS fraction used as the minimum peak height.</summary>
         /// <value>The default is 0.10.</value>
         public double BeatDetectionThresholdFraction { get; set; } =
             Max30100PulseOximeter.DefaultBeatDetectionThresholdFraction;
 
-        /// <summary>Gets or sets the minimum beat-detection hysteresis.</summary>
+        /// <summary>Gets or sets the minimum beat-detection peak height.</summary>
         /// <value>The default is 1.0 ADC count.</value>
         public double MinimumBeatDetectionThreshold { get; set; } =
             Max30100PulseOximeter.DefaultMinimumBeatDetectionThreshold;
+
+        /// <summary>Gets or sets the AC RMS fraction required for peak prominence.</summary>
+        /// <value>The default is 0.50.</value>
+        public double PeakDetectionProminenceFraction { get; set; } =
+            Max30100PulseOximeter.DefaultPeakDetectionProminenceFraction;
+
+        /// <summary>Gets or sets the refractory period as a fraction of the shortest supported beat interval.</summary>
+        /// <value>The default is 0.75.</value>
+        public double BeatRefractoryPeriodFraction { get; set; } =
+            Max30100PulseOximeter.DefaultBeatRefractoryPeriodFraction;
 
         /// <summary>Gets or sets the minimum AC RMS amplitude required for measurements.</summary>
         /// <value>The default is 5.0 ADC counts.</value>

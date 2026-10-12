@@ -78,8 +78,8 @@ Thread diagnosticThread = new Thread(() =>
                 case Max30100SignalDiagnostic.InsufficientPerfusion:
                     diagnostic = "infrared perfusion is too low";
                     break;
-                case Max30100SignalDiagnostic.TooFewBeatCrossings:
-                    diagnostic = "too few complete pulse crossings";
+                case Max30100SignalDiagnostic.TooFewBeatPeaks:
+                    diagnostic = "too few prominence-qualified pulse peaks";
                     break;
                 case Max30100SignalDiagnostic.TooFewBeatIntervals:
                     diagnostic = "too few intervals in the configured BPM range";
@@ -116,7 +116,8 @@ Thread diagnosticThread = new Thread(() =>
                 + $"{pulseOximeter.AutocorrelationQuality:F0}%, "
                 + $"AC RMS: {pulseOximeter.InfraredAcRms:F1}, "
                 + $"threshold: {pulseOximeter.BeatDetectionThreshold:F1}, "
-                + $"crossings: {pulseOximeter.DetectedBeatCrossings}, "
+                + $"prominence: {pulseOximeter.BeatDetectionProminenceThreshold:F1}, "
+                + $"peaks: {pulseOximeter.DetectedBeatPeaks}, "
                 + $"intervals: {pulseOximeter.RawBeatIntervals}/{pulseOximeter.DetectedBeatIntervals}, "
                 + $"diagnostic: {diagnostic}.{overflow}");
         }
@@ -152,7 +153,7 @@ sensor.Configure(
     Max30100SampleRate.SamplesPerSecond50,
     Max30100PulseWidth.Microseconds1600,
     Max30100LedCurrent.Milliamps27Point1,
-    Max30100LedCurrent.Milliamps37);
+    Max30100LedCurrent.Milliamps40Point2);
 
 while (true)
 {

@@ -86,11 +86,17 @@ namespace Iot.Device.Max30100
         /// <summary>The default duration discarded while the filters settle.</summary>
         public const double DefaultFilterSettlingSeconds = 0.5;
 
-        /// <summary>The default RMS fraction used for beat-detection hysteresis.</summary>
+        /// <summary>The default RMS fraction used as the minimum beat-peak height.</summary>
         public const double DefaultBeatDetectionThresholdFraction = 0.10;
 
-        /// <summary>The default minimum beat-detection hysteresis in ADC counts.</summary>
+        /// <summary>The default minimum beat-peak height in ADC counts.</summary>
         public const double DefaultMinimumBeatDetectionThreshold = 1.0;
+
+        /// <summary>The default RMS fraction required for beat-peak prominence.</summary>
+        public const double DefaultPeakDetectionProminenceFraction = 0.50;
+
+        /// <summary>The default refractory period as a fraction of the shortest supported beat interval.</summary>
+        public const double DefaultBeatRefractoryPeriodFraction = 0.75;
 
         /// <summary>The default minimum AC RMS amplitude required for pulse measurements.</summary>
         public const double DefaultMinimumAcRms = 5.0;
@@ -192,6 +198,7 @@ namespace Iot.Device.Max30100
         private const double MaximumCandidateTolerance = 180.0;
         private const double MaximumOxygenSaturationRatioLimit = 10.0;
         private const double MaximumMissedBeatIntervalFactor = 3.0;
+        private const double MaximumPeakDetectionProminenceFraction = 4.0;
         private const double MaximumIntervalDeviationQualityPenalty = 1000.0;
         private const double MaximumAutocorrelationShoulderFraction = 0.5;
         private const double MaximumNormalizedAutocorrelationProminence = 2.0;
@@ -220,7 +227,7 @@ namespace Iot.Device.Max30100
         private double _candidateHeartRate;
         private int _candidateMissCount;
         private int _consistentHeartRateCount;
-        private int _detectedBeatCrossingCount;
+        private int _detectedBeatPeakCount;
         private int _detectedIntervalCount;
         private int _rawBeatIntervalCount;
         private bool _hasPreviousSample;
@@ -276,6 +283,8 @@ namespace Iot.Device.Max30100
                 options.FilterSettlingSeconds,
                 options.BeatDetectionThresholdFraction,
                 options.MinimumBeatDetectionThreshold,
+                options.PeakDetectionProminenceFraction,
+                options.BeatRefractoryPeriodFraction,
                 options.MinimumAcRms,
                 options.MissedBeatIntervalFactor,
                 options.BeatIntervalToleranceFraction,
@@ -351,10 +360,14 @@ namespace Iot.Device.Max30100
         /// <param name="baselineTrackingRate">The baseline-tracking rate used by the high-pass filter.</param>
         /// <param name="signalSmoothingRate">The smoothing rate used by the low-pass filter.</param>
         /// <param name="filterSettlingSeconds">The duration discarded while the filters settle.</param>
-        /// <param name="beatDetectionThresholdFraction">
-        /// The infrared AC RMS fraction used for positive and negative beat-detection hysteresis.
+        /// <param name="beatDetectionThresholdFraction">The infrared AC RMS fraction used as the minimum peak height.</param>
+        /// <param name="minimumBeatDetectionThreshold">The minimum beat-peak height in ADC counts.</param>
+        /// <param name="peakDetectionProminenceFraction">
+        /// The infrared AC RMS fraction required for peak prominence.
         /// </param>
-        /// <param name="minimumBeatDetectionThreshold">The minimum beat-detection hysteresis in ADC counts.</param>
+        /// <param name="beatRefractoryPeriodFraction">
+        /// The refractory period as a fraction of the shortest supported beat interval.
+        /// </param>
         /// <param name="minimumAcRms">The minimum red or infrared AC RMS amplitude required for measurements.</param>
         /// <param name="missedBeatIntervalFactor">
         /// The interval-to-median factor above which one missed beat is inferred.
@@ -460,6 +473,8 @@ namespace Iot.Device.Max30100
             double filterSettlingSeconds = DefaultFilterSettlingSeconds,
             double beatDetectionThresholdFraction = DefaultBeatDetectionThresholdFraction,
             double minimumBeatDetectionThreshold = DefaultMinimumBeatDetectionThreshold,
+            double peakDetectionProminenceFraction = DefaultPeakDetectionProminenceFraction,
+            double beatRefractoryPeriodFraction = DefaultBeatRefractoryPeriodFraction,
             double minimumAcRms = DefaultMinimumAcRms,
             double missedBeatIntervalFactor = DefaultMissedBeatIntervalFactor,
             double beatIntervalToleranceFraction = DefaultBeatIntervalToleranceFraction,
@@ -609,6 +624,20 @@ namespace Iot.Device.Max30100
             if (double.IsNaN(minimumBeatDetectionThreshold)
                 || minimumBeatDetectionThreshold < 0
                 || minimumBeatDetectionThreshold > ushort.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (double.IsNaN(peakDetectionProminenceFraction)
+                || peakDetectionProminenceFraction <= 0
+                || peakDetectionProminenceFraction > MaximumPeakDetectionProminenceFraction)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (double.IsNaN(beatRefractoryPeriodFraction)
+                || beatRefractoryPeriodFraction <= 0
+                || beatRefractoryPeriodFraction > 1)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -818,6 +847,8 @@ namespace Iot.Device.Max30100
             FilterSettlingSeconds = filterSettlingSeconds;
             BeatDetectionThresholdFraction = beatDetectionThresholdFraction;
             MinimumBeatDetectionThreshold = minimumBeatDetectionThreshold;
+            PeakDetectionProminenceFraction = peakDetectionProminenceFraction;
+            BeatRefractoryPeriodFraction = beatRefractoryPeriodFraction;
             MinimumAcRms = minimumAcRms;
             MissedBeatIntervalFactor = missedBeatIntervalFactor;
             BeatIntervalToleranceFraction = beatIntervalToleranceFraction;
@@ -941,13 +972,21 @@ namespace Iot.Device.Max30100
         /// <value>The settling duration in seconds.</value>
         public double FilterSettlingSeconds { get; }
 
-        /// <summary>Gets the RMS fraction used for beat-detection hysteresis.</summary>
-        /// <value>The positive and negative hysteresis threshold as a fraction of infrared AC RMS.</value>
+        /// <summary>Gets the RMS fraction used as the minimum beat-peak height.</summary>
+        /// <value>The positive peak-height threshold as a fraction of infrared AC RMS.</value>
         public double BeatDetectionThresholdFraction { get; }
 
-        /// <summary>Gets the minimum beat-detection hysteresis.</summary>
-        /// <value>The minimum positive and negative threshold in ADC counts.</value>
+        /// <summary>Gets the minimum beat-peak height.</summary>
+        /// <value>The minimum positive peak threshold in ADC counts.</value>
         public double MinimumBeatDetectionThreshold { get; }
+
+        /// <summary>Gets the RMS fraction required for beat-peak prominence.</summary>
+        /// <value>The minimum rise from the preceding local valley as a fraction of infrared AC RMS.</value>
+        public double PeakDetectionProminenceFraction { get; }
+
+        /// <summary>Gets the refractory period as a fraction of the shortest supported beat interval.</summary>
+        /// <value>A value greater than zero through one.</value>
+        public double BeatRefractoryPeriodFraction { get; }
 
         /// <summary>Gets the minimum AC RMS amplitude required for pulse measurements.</summary>
         /// <value>The minimum amplitude in ADC counts.</value>
@@ -1093,9 +1132,9 @@ namespace Iot.Device.Max30100
         /// <value>The number of accepted beat intervals.</value>
         public int DetectedBeatIntervals => _detectedIntervalCount;
 
-        /// <summary>Gets the number of positive beat-threshold crossings found during the latest analysis.</summary>
-        /// <value>The number of detected threshold crossings.</value>
-        public int DetectedBeatCrossings => _detectedBeatCrossingCount;
+        /// <summary>Gets the number of prominence-qualified beat peaks found during the latest analysis.</summary>
+        /// <value>The number of peaks remaining after refractory-period suppression.</value>
+        public int DetectedBeatPeaks => _detectedBeatPeakCount;
 
         /// <summary>Gets the number of physiologically plausible beat intervals found before consistency filtering.</summary>
         /// <value>The number of raw beat intervals.</value>
@@ -1105,9 +1144,13 @@ namespace Iot.Device.Max30100
         /// <value>The filtered infrared amplitude in ADC counts.</value>
         public double InfraredAcRms { get; private set; }
 
-        /// <summary>Gets the positive and negative threshold used for beat detection.</summary>
-        /// <value>The beat-detection threshold in filtered ADC counts.</value>
+        /// <summary>Gets the minimum positive peak height used for beat detection.</summary>
+        /// <value>The peak-height threshold in filtered ADC counts.</value>
         public double BeatDetectionThreshold { get; private set; }
+
+        /// <summary>Gets the minimum prominence used for beat detection.</summary>
+        /// <value>The required rise from a preceding local valley in filtered ADC counts.</value>
+        public double BeatDetectionProminenceThreshold { get; private set; }
 
         /// <summary>Gets the heart rate independently estimated from waveform periodicity.</summary>
         /// <value>The normalized-autocorrelation estimate in beats per minute, or zero when no periodic peak is available.</value>
@@ -1360,6 +1403,7 @@ namespace Iot.Device.Max30100
             SignalQuality = 0;
             InfraredAcRms = 0;
             BeatDetectionThreshold = 0;
+            BeatDetectionProminenceThreshold = 0;
             AutocorrelationHeartRate = 0;
             AutocorrelationQuality = 0;
             HeartRateEstimatorsDisagree = false;
@@ -1377,7 +1421,7 @@ namespace Iot.Device.Max30100
             _consistentHeartRateCount = 0;
             _alternateHeartRate = 0;
             _alternateHeartRateCount = 0;
-            _detectedBeatCrossingCount = 0;
+            _detectedBeatPeakCount = 0;
             _detectedIntervalCount = 0;
             _rawBeatIntervalCount = 0;
         }
@@ -1577,9 +1621,9 @@ namespace Iot.Device.Max30100
             {
                 SignalDiagnostic = Max30100SignalDiagnostic.AutocorrelationFallbackPending;
             }
-            else if (_detectedBeatCrossingCount < MinimumBeatIntervalCount)
+            else if (_detectedBeatPeakCount < MinimumBeatIntervalCount)
             {
-                SignalDiagnostic = Max30100SignalDiagnostic.TooFewBeatCrossings;
+                SignalDiagnostic = Max30100SignalDiagnostic.TooFewBeatPeaks;
             }
             else if (_rawBeatIntervalCount < MinimumBeatIntervalCount)
             {
@@ -1793,7 +1837,7 @@ namespace Iot.Device.Max30100
 
         private double CalculateHeartRate(int filterStart, double infraredRms)
         {
-            _detectedBeatCrossingCount = 0;
+            _detectedBeatPeakCount = 0;
             _detectedIntervalCount = 0;
             _rawBeatIntervalCount = 0;
             double threshold = infraredRms * BeatDetectionThresholdFraction;
@@ -1803,47 +1847,83 @@ namespace Iot.Device.Max30100
             }
 
             BeatDetectionThreshold = threshold;
+            double prominenceThreshold = infraredRms * PeakDetectionProminenceFraction;
+            if (prominenceThreshold < MinimumBeatDetectionThreshold)
+            {
+                prominenceThreshold = MinimumBeatDetectionThreshold;
+            }
+
+            BeatDetectionProminenceThreshold = prominenceThreshold;
             int minimumInterval = (int)((_sampleRate * 60) / MaximumHeartRate);
             int maximumInterval = (int)((_sampleRate * 60) / MinimumHeartRate);
+            int refractorySamples = (int)(minimumInterval * BeatRefractoryPeriodFraction);
+            if (refractorySamples < 1)
+            {
+                refractorySamples = 1;
+            }
+
             int previousBeat = -1;
             int intervalCount = 0;
-            bool armed = false;
-
-            for (int index = filterStart; index < _sampleCount; index++)
+            int pendingPeak = -1;
+            double pendingPeakHeight = 0;
+            double valley = _filteredInfraredSamples[filterStart];
+            for (int index = filterStart + 1; index < _sampleCount - 1; index++)
             {
                 double signal = _filteredInfraredSamples[index];
-                if (signal <= -threshold)
+                if (signal < valley)
                 {
-                    armed = true;
+                    valley = signal;
+                }
+
+                if (signal < threshold
+                    || signal <= _filteredInfraredSamples[index - 1]
+                    || signal < _filteredInfraredSamples[index + 1])
+                {
                     continue;
                 }
 
-                if (!armed || signal < threshold)
+                double prominence = signal - valley;
+                if (prominence < prominenceThreshold)
                 {
                     continue;
                 }
 
-                armed = false;
-                _detectedBeatCrossingCount++;
-                if (previousBeat >= 0)
+                if (pendingPeak < 0)
                 {
-                    int interval = index - previousBeat;
-                    if (interval < minimumInterval)
+                    pendingPeak = index;
+                    pendingPeakHeight = signal;
+                }
+                else if (index - pendingPeak < refractorySamples)
+                {
+                    if (signal > pendingPeakHeight)
                     {
-                        continue;
-                    }
-
-                    if (interval <= maximumInterval)
-                    {
-                        if (intervalCount < _beatIntervals.Length)
-                        {
-                            _beatIntervals[intervalCount] = interval;
-                            intervalCount++;
-                        }
+                        pendingPeak = index;
+                        pendingPeakHeight = signal;
                     }
                 }
+                else
+                {
+                    AddDetectedBeatPeak(
+                        pendingPeak,
+                        minimumInterval,
+                        maximumInterval,
+                        ref previousBeat,
+                        ref intervalCount);
+                    pendingPeak = index;
+                    pendingPeakHeight = signal;
+                }
 
-                previousBeat = index;
+                valley = _filteredInfraredSamples[index + 1];
+            }
+
+            if (pendingPeak >= 0)
+            {
+                AddDetectedBeatPeak(
+                    pendingPeak,
+                    minimumInterval,
+                    maximumInterval,
+                    ref previousBeat,
+                    ref intervalCount);
             }
 
             _rawBeatIntervalCount = intervalCount;
@@ -1914,6 +1994,32 @@ namespace Iot.Device.Max30100
             SignalQuality *= (double)acceptedIntervalCount / intervalCount;
 
             return 60.0 * _sampleRate / meanInterval;
+        }
+
+        private void AddDetectedBeatPeak(
+            int peak,
+            int minimumInterval,
+            int maximumInterval,
+            ref int previousBeat,
+            ref int intervalCount)
+        {
+            if (previousBeat >= 0)
+            {
+                int interval = peak - previousBeat;
+                if (interval < minimumInterval)
+                {
+                    return;
+                }
+
+                if (interval <= maximumInterval && intervalCount < _beatIntervals.Length)
+                {
+                    _beatIntervals[intervalCount] = interval;
+                    intervalCount++;
+                }
+            }
+
+            _detectedBeatPeakCount++;
+            previousBeat = peak;
         }
 
         private double CalculateAutocorrelationHeartRate(int filterStart)
