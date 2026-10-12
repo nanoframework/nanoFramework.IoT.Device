@@ -420,4 +420,8 @@
 
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Common.GnssDevice.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Common.GnssDevice/) [Global Navigation Satellite System Device NMEA 0183 - Including Generic Serial Module with GPS, GNSS, BeiDou - NEO6-M, NEO-M8P-2, NEO-M9N from u-blox, ATGM336H, Minewsemi, ZED-F9P, ZOE-M8Q, SAM-M8Q, SARA-R5 and many many more](GnssDevice)
 
+## Medical sensors
+
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Max30100.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Max30100/) [MAX30100 pulse oximeter and heart-rate sensor](Max30100)
+
 </categorizedDevices>
