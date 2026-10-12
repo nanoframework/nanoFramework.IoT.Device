@@ -205,6 +205,13 @@ foreach ($folder in $deviceFolders)
 
     # try to find the nuspec
     $nuspecFile = Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\" -Include "$folder.nuspec" -Recurse
+    $nuspecFiles = @($nuspecFile)
+
+    # Text2Speech produces separate core and language packages from one solution.
+    if ($folder -eq "Text2Speech")
+    {
+        $nuspecFiles = @(Get-ChildItem -Path "$env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder\" -Filter "$folder*.nuspec" -File -Recurse)
+    }
 
     if($null -eq $nuspecFile)
     {
@@ -320,16 +327,24 @@ foreach ($folder in $deviceFolders)
         ########################
         # perform versions check
 
-        if($null -ne $env:System_PullRequest_PullRequestId)
+        foreach ($packageNuspec in $nuspecFiles)
         {
-            # this is a PR build, perform analysis on nuspec dependencies
-            write-host "##[command] Running nanovc for PR (analyse nuspec)."
-            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile --analyse-nuspec
-        }
-        else
-        {
-            write-host "##[command] Running nanovc."
-            nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile --nuspec-file $nuspecFile
+            if($null -ne $env:System_PullRequest_PullRequestId)
+            {
+                # this is a PR build, perform analysis on nuspec dependencies
+                write-host "##[command] Running nanovc for PR (analyse nuspec) on '$($packageNuspec.FullName)'."
+                nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile.FullName --nuspec-file $packageNuspec.FullName --analyse-nuspec
+            }
+            else
+            {
+                write-host "##[command] Running nanovc on '$($packageNuspec.FullName)'."
+                nanovc --working-directory $env:BUILD_SOURCESDIRECTORY\nanoFramework.IoT.Device\devices\$folder --solution-to-check $solutionFile.FullName --nuspec-file $packageNuspec.FullName
+            }
+
+            if($LASTEXITCODE -ne 0)
+            {
+                break
+            }
         }
 
         if($LASTEXITCODE -eq 0)
@@ -367,9 +382,12 @@ foreach ($folder in $deviceFolders)
 
             ###############
             # package NuGet
-            write-host "##[command] Running nuget pack."
-            nuget pack $nuspecFile -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
-            if (-not $?) { throw "Error packaging '$nuspecFile'" }
+            foreach ($packageNuspec in $nuspecFiles)
+            {
+                write-host "##[command] Running nuget pack for '$($packageNuspec.FullName)'."
+                nuget pack $packageNuspec.FullName -Version $MyNuGetVersion -Symbols -SymbolPackageFormat snupkg -properties commit="$Build_SourceVersion" -OutputDirectory $env:Agent_TempDirectory
+                if (-not $?) { throw "Error packaging '$packageNuspec'" }
+            }
         }
         else
         {

@@ -1,0 +1,113 @@
+﻿Text2Speech for .NET nanoFramework
+
+This project includes a managed C# port of the PebbleTalk speech synthesizer:
+https://github.com/neonfire42/pebbletalk
+
+The port was based on upstream commit:
+8ddfbb60b9cd940a8ef4a24c3787ad211b19b003
+
+PebbleTalk copyright (c) 2026 neonfire and is licensed under the MIT License.
+The managed port preserves the integer formant synthesis design, English
+spelling rules, phoneme data, and waveform lookup data while replacing the C
+callback and global state with allocation-bounded .NET nanoFramework classes
+and an unsigned 8-bit PCM streaming interface.
+
+The full license for this repository is in LICENSE.
+
+English acoustic calibration attribution
+
+English vowel F1/F2 targets use measurements from:
+Hillenbrand, J., Getty, L. A., Clark, M. J., & Wheeler, K. (1995).
+"Acoustic characteristics of American English vowels."
+The Journal of the Acoustical Society of America, 97(5).
+https://doi.org/10.1121/1.411872
+
+The data are hosted with permission from Jim Hillenbrand in:
+https://github.com/santiagobarreda/hillenbrand_et_al_1995
+
+The repository wrapper is copyright (c) 2024 Santiago Barreda and is provided
+under the MIT License. The original archive has no separate license, and the
+original data file states:
+Copyright (c) 1995 James Hillenbrand.
+
+The embedded targets are numerical outputs independently calculated by the
+local acoustic-analysis pipeline and conservatively interpolated with the
+prior Text2Speech values. They are not copied rows or measurements from the
+source data. The original measurements and recordings are not redistributed
+with this repository.
+
+French frontend attribution
+
+The French grapheme-to-phoneme rules are independently adapted from the French
+language data distributed with Epitran:
+https://github.com/dmort27/epitran
+
+Copyright (c) 2016 David Mortensen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+French cardinal-number behavior is adapted from Unicode CLDR data:
+https://github.com/unicode-org/cldr
+
+Copyright © 2001–2026 Unicode, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of data files and any associated documentation (the "Data Files") or software
+and any associated documentation (the "Software") to deal in the Data Files
+or Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, and/or sell copies of the Data
+Files or Software, and to permit persons to whom the Data Files or Software
+are furnished to do so, provided that either (a) this copyright and permission
+notice appear with all copies of the Data Files or Software, or (b) this
+copyright and permission notice appear in associated Documentation.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+THIRD PARTY RIGHTS.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE
+LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR
+ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall not
+be used in advertising or otherwise to promote the sale, use or other dealings
+in these Data Files or Software without prior written authorization of the
+copyright holder.
+
+SPDX-License-Identifier: Unicode-3.0
+
+French acoustic calibration attribution
+
+French oral-vowel F1/F2 targets use measurements derived from:
+Cnam-LMSSC Multilingual LibriSpeech French Phoneme
+https://huggingface.co/datasets/Cnam-LMSSC/multilingual_librispeech_french_phoneme
+
+The dataset is provided by the Laboratoire de Mécanique des Structures et des
+Systèmes Couplés (Cnam-LMSSC) under the Creative Commons Attribution 4.0
+International license:
+https://creativecommons.org/licenses/by/4.0/
+
+The measurements were extracted from a single native-French speaker using
+Montreal Forced Aligner boundaries and locally implemented LPC formant
+analysis. The embedded targets conservatively interpolate between the prior
+Text2Speech values and those measurements; the original recordings and
+alignment files are not redistributed with this repository.
