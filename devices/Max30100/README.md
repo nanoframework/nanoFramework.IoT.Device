@@ -151,6 +151,7 @@ The sample processor first discards two seconds while finger pressure and optica
 - `HasValidOxygenSaturation` reports whether the experimental ratio-of-ratios result is available.
 - `UsedWeakSignalOxygenSaturation` identifies SpO₂ values accepted through repeated weak-signal stability checks.
 - `CandidateHeartRate` exposes the current unconfirmed pulse candidate for diagnostics.
+- `SignalDiagnostic` reports the processor's reason for not publishing a heart rate, so applications do not need to duplicate processing thresholds.
 - `AnalysisWindowProgress` distinguishes expected zero diagnostics while the stable-sample window is still filling from an analyzed window that contains no usable pulse.
 - `InfraredAcRms` reports the detrended infrared pulse amplitude in ADC counts.
 - `RedPerfusionIndex` reports the red AC signal relative to its DC level.

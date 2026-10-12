@@ -42,6 +42,7 @@
     <Compile Include="Max30100PulseWidth.cs" />
     <Compile Include="Max30100Reading.cs" />
     <Compile Include="Max30100SampleRate.cs" />
+    <Compile Include="Max30100SignalDiagnostic.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />

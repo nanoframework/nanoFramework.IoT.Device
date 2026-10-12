@@ -1065,6 +1065,10 @@ namespace Iot.Device.Max30100
         /// <value>A value from zero through 100.</value>
         public double AnalysisWindowProgress => _sampleCount * 100.0 / _infraredSamples.Length;
 
+        /// <summary>Gets the reason the current signal has not produced a valid heart rate.</summary>
+        /// <value>The current signal diagnostic, or <see cref="Max30100SignalDiagnostic.None"/>.</value>
+        public Max30100SignalDiagnostic SignalDiagnostic { get; private set; }
+
         /// <summary>Gets a value indicating whether pulse and oxygen-saturation estimates are available.</summary>
         /// <value>True when the current estimates passed basic signal checks.</value>
         public bool HasValidReading { get; private set; }
@@ -1268,6 +1272,7 @@ namespace Iot.Device.Max30100
             if (_sampleCount < _infraredSamples.Length)
             {
                 _sampleCount++;
+                SignalDiagnostic = Max30100SignalDiagnostic.FillingAnalysisWindow;
             }
 
             _samplesSinceCalculation++;
@@ -1360,6 +1365,7 @@ namespace Iot.Device.Max30100
             HeartRateEstimatorsDisagree = false;
             UsedAutocorrelationFallback = false;
             UsedWeakSignalOxygenSaturation = false;
+            SignalDiagnostic = Max30100SignalDiagnostic.None;
             _weakSignalOxygenSaturationRatio = 0;
             _weakSignalOxygenSaturationCount = 0;
             _sampleCount = 0;
@@ -1499,6 +1505,7 @@ namespace Iot.Device.Max30100
                 && PerfusionIndex >= MinimumHeartRatePerfusionIndex
                 && ChannelCorrelation >= MinimumOxygenSaturationCorrelation;
             UpdateHeartRateValidity(heartRate, heartRateCandidateValid, strongCandidate, stableOpticalSignal);
+            UpdateSignalDiagnostic(infraredRms, heartRate, heartRateCandidateValid);
             bool ratioInRange = ratio >= MinimumOxygenSaturationRatio
                 && ratio <= MaximumOxygenSaturationRatio;
             bool strongOxygenSaturationSignal = redRms >= MinimumAcRms
@@ -1545,6 +1552,54 @@ namespace Iot.Device.Max30100
             else
             {
                 OxygenSaturation = oxygenSaturation;
+            }
+        }
+
+        private void UpdateSignalDiagnostic(double infraredRms, double heartRate, bool candidateValid)
+        {
+            if (HasValidHeartRate)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.None;
+            }
+            else if (infraredRms < MinimumAcRms)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.InsufficientAcAmplitude;
+            }
+            else if (PerfusionIndex < MinimumHeartRatePerfusionIndex)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.InsufficientPerfusion;
+            }
+            else if (HeartRateEstimatorsDisagree)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.EstimatorsDisagree;
+            }
+            else if (UsedAutocorrelationFallback && candidateValid)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.AutocorrelationFallbackPending;
+            }
+            else if (_detectedBeatCrossingCount < MinimumBeatIntervalCount)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.TooFewBeatCrossings;
+            }
+            else if (_rawBeatIntervalCount < MinimumBeatIntervalCount)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.TooFewBeatIntervals;
+            }
+            else if (_detectedIntervalCount < MinimumBeatIntervalCount)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.InconsistentBeatIntervals;
+            }
+            else if (SignalQuality < MinimumHeartRateQuality)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.LowSignalQuality;
+            }
+            else if (heartRate < MinimumHeartRate || heartRate > MaximumHeartRate)
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.NoHeartRateEstimate;
+            }
+            else
+            {
+                SignalDiagnostic = Max30100SignalDiagnostic.CandidateConfirmationPending;
             }
         }
 

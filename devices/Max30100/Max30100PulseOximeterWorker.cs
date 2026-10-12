@@ -39,6 +39,7 @@ namespace Iot.Device.Max30100
         private bool _stopping;
         private double _candidateHeartRate;
         private double _analysisWindowProgress;
+        private Max30100SignalDiagnostic _signalDiagnostic;
         private double _heartRate;
         private double _oxygenSaturation;
         private double _perfusionIndex;
@@ -433,6 +434,19 @@ namespace Iot.Device.Max30100
                 lock (_stateLock)
                 {
                     return _analysisWindowProgress;
+                }
+            }
+        }
+
+        /// <summary>Gets the reason the current signal has not produced a valid heart rate.</summary>
+        /// <value>The current signal diagnostic, or <see cref="Max30100SignalDiagnostic.None"/>.</value>
+        public Max30100SignalDiagnostic SignalDiagnostic
+        {
+            get
+            {
+                lock (_stateLock)
+                {
+                    return _signalDiagnostic;
                 }
             }
         }
@@ -969,6 +983,7 @@ namespace Iot.Device.Max30100
                 _fingerDetected = _processor.FingerDetected;
                 _isSettling = _processor.IsSettling;
                 _analysisWindowProgress = _processor.AnalysisWindowProgress;
+                _signalDiagnostic = _processor.SignalDiagnostic;
                 _hasValidReading = _processor.HasValidReading;
                 _hasValidHeartRate = _processor.HasValidHeartRate;
                 _isHeartRateHeld = _processor.IsHeartRateHeld;

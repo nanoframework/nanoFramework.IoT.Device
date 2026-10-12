@@ -31,6 +31,7 @@ namespace Iot.Device.Max30100.Tests
             Assert.IsTrue(pulseOximeter.AutocorrelationHeartRate > 59 && pulseOximeter.AutocorrelationHeartRate < 61);
             Assert.IsTrue(pulseOximeter.AutocorrelationQuality > 90);
             Assert.IsTrue(pulseOximeter.OxygenSaturation > 90 && pulseOximeter.OxygenSaturation <= 100);
+            Assert.AreEqual(Max30100SignalDiagnostic.None, pulseOximeter.SignalDiagnostic);
         }
 
         [TestMethod]
@@ -146,6 +147,7 @@ namespace Iot.Device.Max30100.Tests
             Assert.IsFalse(pulseOximeter.HasValidHeartRate);
             Assert.AreEqual(0.0, pulseOximeter.CandidateHeartRate);
             Assert.IsTrue(pulseOximeter.DetectedBeatIntervals < 3);
+            Assert.AreNotEqual(Max30100SignalDiagnostic.None, pulseOximeter.SignalDiagnostic);
         }
 
         [TestMethod]

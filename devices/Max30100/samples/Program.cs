@@ -67,41 +67,41 @@ Thread diagnosticThread = new Thread(() =>
         else if (!pulseOximeter.HasValidHeartRate)
         {
             string diagnostic;
-            if (pulseOximeter.AnalysisWindowProgress < 100)
+            switch (pulseOximeter.SignalDiagnostic)
             {
-                diagnostic = $"filling window ({pulseOximeter.AnalysisWindowProgress:F0}%)";
-            }
-            else if (pulseOximeter.InfraredAcRms < 5)
-            {
-                diagnostic = "infrared AC amplitude is too low";
-            }
-            else if (pulseOximeter.HeartRateEstimatorsDisagree)
-            {
-                diagnostic = "beat intervals and periodicity disagree";
-            }
-            else if (pulseOximeter.UsedAutocorrelationFallback)
-            {
-                diagnostic = "using periodic fallback; waiting for confirmation";
-            }
-            else if (pulseOximeter.DetectedBeatCrossings < 4)
-            {
-                diagnostic = "too few complete pulse crossings";
-            }
-            else if (pulseOximeter.RawBeatIntervals < 4)
-            {
-                diagnostic = "too few intervals in the 40-180 BPM range";
-            }
-            else if (pulseOximeter.DetectedBeatIntervals < 4)
-            {
-                diagnostic = "beat intervals are inconsistent";
-            }
-            else if (pulseOximeter.SignalQuality < 45)
-            {
-                diagnostic = "periodic confidence is too low";
-            }
-            else
-            {
-                diagnostic = "waiting for candidate confirmation";
+                case Max30100SignalDiagnostic.FillingAnalysisWindow:
+                    diagnostic = $"filling window ({pulseOximeter.AnalysisWindowProgress:F0}%)";
+                    break;
+                case Max30100SignalDiagnostic.InsufficientAcAmplitude:
+                    diagnostic = "infrared AC amplitude is too low";
+                    break;
+                case Max30100SignalDiagnostic.InsufficientPerfusion:
+                    diagnostic = "infrared perfusion is too low";
+                    break;
+                case Max30100SignalDiagnostic.TooFewBeatCrossings:
+                    diagnostic = "too few complete pulse crossings";
+                    break;
+                case Max30100SignalDiagnostic.TooFewBeatIntervals:
+                    diagnostic = "too few intervals in the configured BPM range";
+                    break;
+                case Max30100SignalDiagnostic.InconsistentBeatIntervals:
+                    diagnostic = "beat intervals are inconsistent";
+                    break;
+                case Max30100SignalDiagnostic.LowSignalQuality:
+                    diagnostic = "periodic confidence is too low";
+                    break;
+                case Max30100SignalDiagnostic.EstimatorsDisagree:
+                    diagnostic = "beat intervals and periodicity disagree";
+                    break;
+                case Max30100SignalDiagnostic.AutocorrelationFallbackPending:
+                    diagnostic = "using periodic fallback; waiting for confirmation";
+                    break;
+                case Max30100SignalDiagnostic.NoHeartRateEstimate:
+                    diagnostic = "no heart-rate estimate is in the configured range";
+                    break;
+                default:
+                    diagnostic = "waiting for candidate confirmation";
+                    break;
             }
 
             Debug.WriteLine(
