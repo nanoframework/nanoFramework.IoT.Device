@@ -4,6 +4,7 @@
 using System;
 using System.Device.I2c;
 using System.Device.Model;
+using System.IO;
 using System.Threading;
 using UnitsNet;
 
@@ -69,6 +70,7 @@ namespace Iot.Device.Max30100
 
         /// <summary>Gets the number of samples discarded because the FIFO overflowed.</summary>
         /// <value>The number of discarded samples observed since this instance was created.</value>
+        [Telemetry("DroppedSampleCount")]
         public uint DroppedSampleCount => _droppedSampleCount;
 
         /// <summary>
@@ -80,6 +82,7 @@ namespace Iot.Device.Max30100
         /// <param name="redLedCurrent">The red LED current.</param>
         /// <param name="infraredLedCurrent">The infrared LED current.</param>
         /// <exception cref="ArgumentOutOfRangeException">A configuration value is not defined by the MAX30100.</exception>
+        [Command]
         public void Configure(
             Max30100Mode mode = Max30100Mode.SpO2,
             Max30100SampleRate sampleRate = Max30100SampleRate.SamplesPerSecond100,
@@ -108,14 +111,17 @@ namespace Iot.Device.Max30100
 
         /// <summary>Enables or disables the FIFO-almost-full interrupt.</summary>
         /// <param name="enabled">True to enable the interrupt.</param>
+        [Property("FifoAlmostFullInterruptEnabled")]
         public void EnableFifoAlmostFullInterrupt(bool enabled) => SetInterrupt(FifoAlmostFullInterruptMask, enabled);
 
         /// <summary>Enables or disables the new-FIFO-data interrupt.</summary>
         /// <param name="enabled">True to enable the interrupt.</param>
+        [Property("NewFifoDataInterruptEnabled")]
         public void EnableNewFifoDataInterrupt(bool enabled) => SetInterrupt(NewFifoDataInterruptMask, enabled);
 
         /// <summary>Gets the number of unread samples currently stored in the FIFO.</summary>
         /// <returns>The number of unread samples.</returns>
+        [Telemetry("UnreadSampleCount")]
         public byte GetUnreadSampleCount()
         {
             RefreshUnreadSampleCount();
@@ -170,6 +176,7 @@ namespace Iot.Device.Max30100
         }
 
         /// <summary>Clears all FIFO pointers and unread samples.</summary>
+        [Command]
         public void ClearFifo()
         {
             WriteRegister(Register.FifoWritePointer, 0);
@@ -180,6 +187,7 @@ namespace Iot.Device.Max30100
 
         /// <summary>Places the sensor in or out of shutdown mode.</summary>
         /// <param name="shutdown">True to enter low-power shutdown mode.</param>
+        [Property("Shutdown")]
         public void SetShutdown(bool shutdown)
         {
             byte mode = ReadRegister(Register.ModeConfiguration);
@@ -189,6 +197,7 @@ namespace Iot.Device.Max30100
 
         /// <summary>Resets the sensor and waits for the reset to complete.</summary>
         /// <exception cref="InvalidOperationException">The MAX30100 reset did not complete.</exception>
+        [Command]
         public void Reset()
         {
             byte mode = ReadRegister(Register.ModeConfiguration);
@@ -284,7 +293,11 @@ namespace Iot.Device.Max30100
         {
             EnsureNotDisposed();
             _registerAddressBuffer[0] = (byte)register;
-            _i2cDevice.WriteRead(_registerAddressBuffer, readBuffer);
+            var result = _i2cDevice.WriteRead(_registerAddressBuffer, readBuffer);
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new IOException("The MAX30100 did not complete the I2C read transfer.");
+            }
         }
 
         private void WriteRegister(Register register, byte value)
@@ -292,7 +305,11 @@ namespace Iot.Device.Max30100
             EnsureNotDisposed();
             _registerWriteBuffer[0] = (byte)register;
             _registerWriteBuffer[1] = value;
-            _i2cDevice.Write(_registerWriteBuffer);
+            var result = _i2cDevice.Write(_registerWriteBuffer);
+            if (result.Status != I2cTransferStatus.FullTransfer)
+            {
+                throw new IOException("The MAX30100 did not complete the I2C write transfer.");
+            }
         }
 
         private void EnsureNotDisposed()

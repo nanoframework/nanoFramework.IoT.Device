@@ -26,6 +26,45 @@ The sensor must be [calibrated](#oxygen-saturation-calibration) against a suitab
 
 Use 3.3 V logic. Some breakout boards include voltage regulators and I2C pull-ups; check the specifications of your module before connecting it.
 
+## ESP32-S3-BOX-Lite screen sample
+
+The [ESP32-S3-BOX-Lite sample](samples/Max30100.Esp32S3BoxLite/) presents the complete measurement flow on the board's 320 by 240 display. It asks the user to place and steady a finger, shows analysis-window progress while acquiring data, and then presents heart rate and SpO₂ in separate high-contrast panels. The footer always identifies the result as experimental and reminds the user that calibration is required.
+
+### Screen previews
+
+These generated UI previews reproduce the sample layout and colors. They are documentation illustrations rather than photographs of the physical LCD.
+
+| Acquiring a signal | Live measurement | Sensor unplugged |
+| --- | --- | --- |
+| ![Box Lite acquiring a pulse-oximeter signal](images/esp32-s3-box-lite-acquiring.png) | ![Box Lite displaying heart rate and oxygen saturation](images/esp32-s3-box-lite-measurement.png) | ![Box Lite reporting an unplugged MAX30100](images/esp32-s3-box-lite-unplugged.png) |
+
+The sample preserves reliable acquisition by draining the MAX30100 FIFO on the highest-priority thread. Screen rendering runs on a normal-priority thread while FIFO acquisition remains at highest priority. It checks for display changes four times per second. With the ESP32-S3 OCTAL firmware, the complete 320 by 240 layout is composed directly in a persistent managed RGB565 array. Solid regions write directly into that array, while text is rendered through one reusable 300 by 32 bitmap and copied into the frame. This avoids allocating a full-screen graphics bitmap from the firmware-limited 128 KB graphics heap. Each screen layout is redrawn only when the acquisition state changes, and the display is refreshed only when a displayed value changes. The firmware currently grants a maximum 128 KB native display-driver buffer, which cannot contain the 153,600-byte RGB565 screen in one write. The already prepared 153,600-byte managed RGB565 frame is submitted with one `DisplayControl.Write`, so no managed pixel conversion occurs while the display is refreshing. The native managed-graphics driver streams that submitted frame internally using its fixed eight-row SPI blocks at 40 MHz. The application requests the firmware maximum 128 KB graphics heap, reports the size actually allocated, and verifies that it is large enough for one native eight-row transfer block. A compact NinaB resource supplies basic ASCII symbols omitted from the Segoe UI tiny font, including the percent sign in measurement text and the hyphen in the calibration warning; Segoe UI remains the normal label font.
+
+The board must run the **ESP32-S3 OCTAL** .NET nanoFramework firmware variant built with the **managed generic graphics driver**. The BOX-Lite has 16 MB of QSPI flash and 8 MB of Octal PSRAM; the OCTAL firmware name refers to its PSRAM interface. Do not use the ESP32-S3 QUAD PSRAM variant for this board. The built-in ST7789(V) display uses these fixed board connections:
+
+| Display signal | ESP32-S3-BOX-Lite pin |
+| --- | --- |
+| MOSI | GPIO6 |
+| Clock | GPIO7 |
+| Chip select | GPIO5 |
+| Data/command | GPIO4 |
+| Reset | GPIO48 |
+| Backlight | GPIO45 |
+
+Connect the external MAX30100 separately:
+
+| MAX30100 | ESP32-S3-BOX-Lite |
+| --- | --- |
+| VIN | 3.3 V |
+| GND | GND |
+| SDA | GPIO41 (PMOD1 IO8) |
+| SCL | GPIO40 (PMOD1 IO7) |
+| INT | Not required by this sample |
+
+GPIO40 and GPIO41 do not conflict with the built-in display. The sample configures them as I2C bus 1 immediately before creating the MAX30100 device. The BOX-Lite does not populate I2C pull-up resistors on these PMOD pins, so the MAX30100 breakout must provide pull-ups or external pull-ups must be added to SDA and SCL. Incomplete I2C transfers and sensor reset timeouts are treated as disconnection: the screen reports that the sensor is unplugged, processing is reset, and the sample retries the complete identity-check, reset, and configuration sequence once per second.
+
+Deploy `samples/Max30100.Esp32S3BoxLite/Max30100.Esp32S3BoxLite.nfproj` to run the screen sample. Its displayed SpO₂ value uses the same experimental defaults as the standard ESP32 sample and must be calibrated against a trusted reference before it can be relied upon.
+
 ## Usage
 
 Configure the ESP32 I2C pins before creating the I2C device:
