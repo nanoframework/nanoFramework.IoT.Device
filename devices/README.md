@@ -52,6 +52,7 @@
 
 ## Light sensor
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Apds9960.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Apds9960/) [APDS9960 proximity, ambient light, RGB, and gesture sensor](Apds9960)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bh1745.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bh1745/) [Bh1745 - RGB Sensor](Bh1745)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Bh1750fvi.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Bh1750fvi/) [BH1750FVI - Ambient Light Sensor](Bh1750fvi)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ltr553AlsWa.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ltr553AlsWa/) [LTR-553ALS-WA - Proximity and Ambient Light Sensor](Ltr553AlsWa)
@@ -238,6 +239,7 @@
 
 ## Proximity sensors
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Apds9960.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Apds9960/) [APDS9960 proximity, ambient light, RGB, and gesture sensor](Apds9960)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Chsc6540.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Chsc6540/) [CHSC6540 - Touch screen controller](Chsc6540)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ft6xx6x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ft6xx6x/) [Ft6xx6x/Ft6336GU - Touch screen controller](Ft6xx6x)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Ltr553AlsWa.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Ltr553AlsWa/) [LTR-553ALS-WA - Proximity and Ambient Light Sensor](Ltr553AlsWa)
@@ -273,6 +275,7 @@
 
 ## Color sensors
 
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Apds9960.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Apds9960/) [APDS9960 proximity, ambient light, RGB, and gesture sensor](Apds9960)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Tcs3472x.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Tcs3472x/) [TCS3472x/TCS34721/TCS34723/TCS34725/TCS34727 Sensors](Tcs3472x)
 
 ## LED drivers
