@@ -33,14 +33,6 @@ namespace Iot.Device.Max30100.Samples.Esp32S3BoxLite
             I2cConnectionSettings settings = new I2cConnectionSettings(1, Max30100.DefaultI2cAddress);
             I2cDevice i2cDevice = new I2cDevice(settings);
             Max30100 sensor = new Max30100(i2cDevice);
-            byte partId = WaitForSensor(sensor);
-            Debug.WriteLine($"MAX30100 part ID: 0x{partId:X2}.");
-
-            if (partId != Max30100.ExpectedPartId)
-            {
-                _display.ShowSensorError(partId);
-                throw new System.InvalidOperationException("Unexpected MAX30100 part identifier.");
-            }
 
             Max30100PulseOximeterOptions options = new Max30100PulseOximeterOptions
             {
@@ -56,9 +48,9 @@ namespace Iot.Device.Max30100.Samples.Esp32S3BoxLite
             };
 
             Thread.CurrentThread.Priority = ThreadPriority.Highest;
+            _sensorDisconnected = true;
             displayThread.Start();
 
-            ConfigureSensor(sensor);
             uint processedDroppedSamples = 0;
 
             while (true)
@@ -74,7 +66,7 @@ namespace Iot.Device.Max30100.Samples.Esp32S3BoxLite
                             processedDroppedSamples = sensor.DroppedSampleCount;
                             _pulseOximeter.Reset();
                             _sensorDisconnected = false;
-                            Debug.WriteLine("MAX30100 reconnected.");
+                            Debug.WriteLine("MAX30100 connected and configured.");
                         }
                         else
                         {
@@ -83,11 +75,18 @@ namespace Iot.Device.Max30100.Samples.Esp32S3BoxLite
                     }
                     catch (IOException exception)
                     {
-                        Debug.WriteLine($"MAX30100 still disconnected: {exception.Message}");
+                        ReportDisconnectedSensor(exception);
+                    }
+                    catch (System.InvalidOperationException exception)
+                    {
+                        ReportDisconnectedSensor(exception);
                     }
 
-                    Thread.Sleep(1000);
-                    continue;
+                    if (_sensorDisconnected)
+                    {
+                        Thread.Sleep(1000);
+                        continue;
+                    }
                 }
 
                 try
@@ -114,25 +113,6 @@ namespace Iot.Device.Max30100.Samples.Esp32S3BoxLite
             }
         }
 
-        private static byte WaitForSensor(Max30100 sensor)
-        {
-            while (true)
-            {
-                try
-                {
-                    _sensorDisconnected = false;
-                    return sensor.PartId;
-                }
-                catch (IOException exception)
-                {
-                    _sensorDisconnected = true;
-                    _display.ShowSensorDisconnected();
-                    Debug.WriteLine($"Waiting for MAX30100: {exception.Message}");
-                    Thread.Sleep(1000);
-                }
-            }
-        }
-
         private static void ConfigureSensor(Max30100 sensor)
         {
             sensor.Reset();
@@ -143,6 +123,14 @@ namespace Iot.Device.Max30100.Samples.Esp32S3BoxLite
                 Max30100LedCurrent.Milliamps27Point1,
                 Max30100LedCurrent.Milliamps40Point2);
         }
+
+        private static void ReportDisconnectedSensor(System.Exception exception)
+        {
+            _sensorDisconnected = true;
+            _pulseOximeter.Reset();
+            Debug.WriteLine($"MAX30100 disconnected or failed to reset: {exception.Message}");
+        }
+
         private static void UpdateDisplay()
         {
             while (true)

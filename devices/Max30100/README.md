@@ -61,7 +61,7 @@ Connect the external MAX30100 separately:
 | SCL | GPIO40 (PMOD1 IO7) |
 | INT | Not required by this sample |
 
-GPIO40 and GPIO41 do not conflict with the built-in display. The sample configures them as I2C bus 1 immediately before creating the MAX30100 device. The BOX-Lite does not populate I2C pull-up resistors on these PMOD pins, so the MAX30100 breakout must provide pull-ups or external pull-ups must be added to SDA and SCL. Incomplete I2C transfers are treated as disconnection: the screen reports that the sensor is unplugged, processing is reset, and the sample retries once per second until the expected device responds and can be configured again.
+GPIO40 and GPIO41 do not conflict with the built-in display. The sample configures them as I2C bus 1 immediately before creating the MAX30100 device. The BOX-Lite does not populate I2C pull-up resistors on these PMOD pins, so the MAX30100 breakout must provide pull-ups or external pull-ups must be added to SDA and SCL. Incomplete I2C transfers and sensor reset timeouts are treated as disconnection: the screen reports that the sensor is unplugged, processing is reset, and the sample retries the complete identity-check, reset, and configuration sequence once per second.
 
 Deploy `samples/Max30100.Esp32S3BoxLite/Max30100.Esp32S3BoxLite.nfproj` to run the screen sample. Its displayed SpO₂ value uses the same experimental defaults as the standard ESP32 sample and must be calibrated against a trusted reference before it can be relied upon.
 
