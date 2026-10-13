@@ -51,10 +51,10 @@ namespace Iot.Device.Apds9960.Tests
         [TestMethod]
         public void GestureDecoderRecognizesDirections()
         {
-            Assert.AreEqual(Gesture.Up, GestureDecoder.Decode(new byte[] { 40, 80, 60, 60, 50, 70, 60, 60, 60, 60, 60, 60, 70, 50, 60, 60, 80, 40, 60, 60 }, 5));
-            Assert.AreEqual(Gesture.Down, GestureDecoder.Decode(new byte[] { 80, 40, 60, 60, 70, 50, 60, 60, 60, 60, 60, 60, 50, 70, 60, 60, 40, 80, 60, 60 }, 5));
-            Assert.AreEqual(Gesture.Left, GestureDecoder.Decode(new byte[] { 60, 60, 40, 80, 60, 60, 50, 70, 60, 60, 60, 60, 60, 60, 70, 50, 60, 60, 80, 40 }, 5));
-            Assert.AreEqual(Gesture.Right, GestureDecoder.Decode(new byte[] { 60, 60, 80, 40, 60, 60, 70, 50, 60, 60, 60, 60, 60, 60, 50, 70, 60, 60, 40, 80 }, 5));
+            Assert.AreEqual(Gesture.Up, GestureDecoder.Decode(new byte[] { 80, 40, 60, 60, 70, 50, 60, 60, 60, 60, 60, 60, 50, 70, 60, 60, 40, 80, 60, 60 }, 5));
+            Assert.AreEqual(Gesture.Down, GestureDecoder.Decode(new byte[] { 40, 80, 60, 60, 50, 70, 60, 60, 60, 60, 60, 60, 70, 50, 60, 60, 80, 40, 60, 60 }, 5));
+            Assert.AreEqual(Gesture.Left, GestureDecoder.Decode(new byte[] { 60, 60, 80, 40, 60, 60, 70, 50, 60, 60, 60, 60, 60, 60, 50, 70, 60, 60, 40, 80 }, 5));
+            Assert.AreEqual(Gesture.Right, GestureDecoder.Decode(new byte[] { 60, 60, 40, 80, 60, 60, 50, 70, 60, 60, 60, 60, 60, 60, 70, 50, 60, 60, 80, 40 }, 5));
         }
 
         [TestMethod]
