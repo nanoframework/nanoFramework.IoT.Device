@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.props')" />
+  <Import Project="packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.props')" />
+  <Import Project="packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.props" Condition="Exists('packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.props')" />
   <PropertyGroup Label="Globals">
     <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
   </PropertyGroup>
@@ -17,6 +20,15 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <DocumentationFile>bin\$(Configuration)\Iot.Device.Ds18b20.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Deterministic>true</Deterministic>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">True</ContinuousIntegrationBuild>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -58,6 +70,15 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.props'))" />
     <Error Condition="!Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
   </Target>
+  <Import Project="packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('packages\Microsoft.Build.Tasks.Git.10.0.402\build\Microsoft.Build.Tasks.Git.targets')" />
+  <Import Project="packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.targets" Condition="Exists('packages\Microsoft.SourceLink.Common.10.0.402\build\Microsoft.SourceLink.Common.targets')" />
+  <Import Project="packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('packages\Microsoft.SourceLink.GitHub.10.0.402\build\Microsoft.SourceLink.GitHub.targets')" />
 </Project>
