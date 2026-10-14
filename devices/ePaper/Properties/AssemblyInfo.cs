@@ -10,9 +10,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright(c).NET Foundation and Contributors")]
 
 [assembly: ComVisible(false)]
-
-/////////////////////////////////////////////////////////////////
-// This attribute is mandatory when building Interop libraries //
-// update this whenever the native assembly signature changes  //
-[assembly: AssemblyNativeVersion("0.0.0.0")]
-/////////////////////////////////////////////////////////////////
