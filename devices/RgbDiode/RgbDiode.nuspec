@@ -20,11 +20,11 @@
     <tags>nanoFramework C# csharp netmf netnf RgbDiode</tags>
     <dependencies>
       <group targetFramework=".NETnanoFramework1.0">
-        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.52" />
-        <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.12" />
-        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.29" />
-        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.19" />
-        <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.14" />
+        <dependency id="nanoFramework.CoreLibrary" version="2.0.0-preview.63" />
+        <dependency id="nanoFramework.System.Device.Pwm" version="2.0.0-preview.16" />
+        <dependency id="nanoFramework.Graphics.Core" version="2.0.0-preview.38" />
+        <dependency id="nanoFramework.System.Math" version="2.0.0-preview.36" />
+        <dependency id="nanoFramework.System.Threading" version="2.0.0-preview.20" />
       </group>
     </dependencies>
   </metadata>
