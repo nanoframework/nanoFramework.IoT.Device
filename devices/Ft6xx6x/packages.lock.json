@@ -28,9 +28,9 @@
       },
       "nanoFramework.Graphics.Core": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.36, 2.0.0-preview.36]",
-        "resolved": "2.0.0-preview.36",
-        "contentHash": "7A7bJPs57sMLwxAZjeXKkz9kdYtkTub4oOSTzZT7veZWM1qKHAVA9lPO1F5U0s4VCXj6a1hd6OppfMJq8RPKfw=="
+        "requested": "[2.0.0-preview.38, 2.0.0-preview.38]",
+        "resolved": "2.0.0-preview.38",
+        "contentHash": "ILyQ0OB1XmZ1KnnjJarN7qFmgrsH9L1gE3+1BTJPOODFbRv0td/i6WhtsPBXYUUzShP0/FXv5wTaIfxMr6cujQ=="
       },
       "nanoFramework.System.Device.I2c": {
         "type": "Direct",
