@@ -29,6 +29,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu6886.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu6886/) [Mpu6886 - accelerometer and gyroscope](Mpu6886)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Qmi8658.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Qmi8658/) [QMI8658 - Six-axis accelerometer and gyroscope](Qmi8658)
 
 ## Volatile Organic Compound sensors
 
@@ -115,6 +116,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm9Ds1.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm9Ds1/) [LSM9DS1 - 3D accelerometer, gyroscope and magnetometer](Lsm9Ds1)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu9250.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu9250/) [MPU6050/MPU6500/MPU9250 - Gyroscope, Accelerometer, Temperature and Magnetometer (MPU9250 only)](Mpu9250)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Mpu6886.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Mpu6886/) [Mpu6886 - accelerometer and gyroscope](Mpu6886)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Qmi8658.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Qmi8658/) [QMI8658 - Six-axis accelerometer and gyroscope](Qmi8658)
 
 ## Compasses
 
@@ -362,6 +364,7 @@
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Lsm6Dsl.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Lsm6Dsl/) [LSM6DSL - three-axis accelerometer and gyroscope](Lsm6Dsl)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.M24Sr.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.M24Sr/) [M24SR - dynamic NFC tag](M24Sr)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Paj7620.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Paj7620/) [PAJ7620U2 gesture sensor](Paj7620)
+* [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Qmi8658.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Qmi8658/) [QMI8658 - Six-axis accelerometer and gyroscope](Qmi8658)
 * [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Iot.Device.Vl53L1X.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Iot.Device.Vl53L1X/) [VL53L1X distance sensor](Vl53L1X)
 
 ## Bus and GPIO multiplexers
