@@ -40,9 +40,9 @@
       },
       "nanoFramework.System.Buffers.Helpers": {
         "type": "Direct",
-        "requested": "[2.0.0-preview.121, 2.0.0-preview.121]",
-        "resolved": "2.0.0-preview.121",
-        "contentHash": "bo6F8AH1D/bZrygVC85mOLBZOj89LzU4RbiR+73ZN+Frjfgj9q0BwtpV5d+2PA4HWGNw6AbCRAkYMHqZ0uUUJQ=="
+        "requested": "[2.0.0-preview.150, 2.0.0-preview.150]",
+        "resolved": "2.0.0-preview.150",
+        "contentHash": "Tcb7ur04WTrswHtjSPaApdqYhK5+uEGAiTdsxhRl1SVhJns/Tl0G/CT7yXl2Tt1dfjg3IhB3Kq9a5lAD9cLNpw=="
       },
       "nanoFramework.System.IO.Streams": {
         "type": "Direct",
