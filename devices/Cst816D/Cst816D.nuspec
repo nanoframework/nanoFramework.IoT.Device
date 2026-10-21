@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Cst816D</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Cst816D</title>
+    <authors>nanoFramework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>CST816D single-point capacitive touch controller binding for .NET nanoFramework, including the Waveshare ESP32-S3-Touch-LCD-2.</description>
+    <tags>nanoFramework C# csharp netmf netnf CST816D</tags>
+    <dependencies>
+      <dependency id="nanoFramework.Graphics.Core" version="1.2.55" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Cst816D.dll" target="lib\Iot.Device.Cst816D.dll" />
+    <file src="bin\Release\Iot.Device.Cst816D.pdb" target="lib\Iot.Device.Cst816D.pdb" />
+    <file src="bin\Release\Iot.Device.Cst816D.pdbx" target="lib\Iot.Device.Cst816D.pdbx" />
+    <file src="bin\Release\Iot.Device.Cst816D.pe" target="lib\Iot.Device.Cst816D.pe" />
+    <file src="bin\Release\Iot.Device.Cst816D.xml" target="lib\Iot.Device.Cst816D.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
