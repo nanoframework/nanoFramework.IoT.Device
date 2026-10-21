@@ -4,7 +4,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Cst816D", "Cst816D.nfproj", "{2571BB0A-086A-4E42-A797-8661F7DB2041}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Cst816D.Samples", "samples\Cst816D.Samples.nfproj", "{6E2E3B38-BC68-440B-90CC-86A27B51BD83}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Cst816D.Samples", "samples\Cst816D.samples.nfproj", "{6E2E3B38-BC68-440B-90CC-86A27B51BD83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52F47140-F210-4E18-B08E-A17D01962543}"
 	ProjectSection(SolutionItems) = preProject
