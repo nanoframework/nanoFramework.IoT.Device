@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Iot.Device.Qmi8658</id>
+    <version>$version$</version>
+    <title>nanoFramework.Iot.Device.Qmi8658</title>
+    <authors>nanoFramework</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.IoT.Device</projectUrl>
+    <icon>images\nf-logo.png</icon>
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.IoT.Device" commit="$commit$" />
+    <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
+    <description>QMI8658 six-axis accelerometer and gyroscope binding for .NET nanoFramework, including the Waveshare ESP32-S3-Touch-LCD-2.</description>
+    <tags>nanoFramework C# csharp netmf netnf QMI8658 IMU accelerometer gyroscope</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.System.Buffers.Binary.BinaryPrimitives" version="1.2.862" />
+      <dependency id="nanoFramework.System.Device.I2c" version="1.1.29" />
+      <dependency id="nanoFramework.System.Device.Model" version="1.2.862" />
+      <dependency id="nanoFramework.System.Math" version="1.5.116" />
+      <dependency id="nanoFramework.System.Numerics" version="1.2.862" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.52" />
+      <dependency id="nanoFramework.UnitsNet.Temperature" version="5.76.15" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Iot.Device.Qmi8658.dll" target="lib\Iot.Device.Qmi8658.dll" />
+    <file src="bin\Release\Iot.Device.Qmi8658.pdb" target="lib\Iot.Device.Qmi8658.pdb" />
+    <file src="bin\Release\Iot.Device.Qmi8658.pdbx" target="lib\Iot.Device.Qmi8658.pdbx" />
+    <file src="bin\Release\Iot.Device.Qmi8658.pe" target="lib\Iot.Device.Qmi8658.pe" />
+    <file src="bin\Release\Iot.Device.Qmi8658.xml" target="lib\Iot.Device.Qmi8658.xml" />
+    <file src="README.md" target="docs\" />
+    <file src="..\..\assets\nf-logo.png" target="images" />
+    <file src="..\..\LICENSE.md" target="" />
+  </files>
+</package>
