@@ -221,7 +221,8 @@ namespace Iot.Device.Text2Speech.Tests
         [TestMethod]
         public void EnglishIrregularWordsUseExpectedPronunciations()
         {
-            TtsSynthesizer synthesizer = CreateEnglishSynthesizer();
+            TtsSynthesizer synthesizer =
+                new TtsSynthesizer(EnglishTtsLanguage.Instance, new VoiceOptions(continuousVoicing: false));
 
             byte[] any = synthesizer.Speak("any");
             byte[] other = synthesizer.Speak("other");

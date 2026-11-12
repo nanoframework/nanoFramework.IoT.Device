@@ -8,6 +8,7 @@ A managed, integer-only formant speech synthesizer for constrained .NET nanoFram
 - Integer-only formant synthesis suitable for microcontrollers without an FPU.
 - Division-free per-sample rendering with fixed-point interpolation and 24-bit oscillator phases.
 - 2 kHz control-rate updates for pitch, formants, envelopes, and transitions while oscillators and noise remain at 8 kHz.
+- Continuous oscillator phases and envelopes across adjoining voiced phonemes, with an explicit legacy mode for comparison.
 - Reused parser and renderer workspaces to reduce repeated allocations and garbage collection.
 - Built-in English and French spelling-to-phoneme rules, number expansion, punctuation pauses, and statement/question intonation.
 - French support for precomposed accents, oral and rounded vowels, four approximate nasal vowels, French consonants and glides, cardinal integers through 999,999,999, and accentual-group prosody.
@@ -84,6 +85,61 @@ TtsSynthesizer synthesizer = new TtsSynthesizer(language, voice);
 byte[] pcm = synthesizer.Speak("Hello from Text2Speech.");
 byte[] header = WavPcm8Mono8000.CreateHeader(pcm.Length);
 ```
+
+### Low-cost voiced continuity
+
+Voiced continuity is enabled by default, including calls to the existing
+six-parameter `VoiceOptions` constructor. Adjacent `Voiced` phonemes retain
+their pitch and formant oscillator phases instead of restarting each phoneme.
+Attack and release envelopes, including the final midpoint fade, remain at the
+outer boundaries of a voiced run rather than creating a silence dip inside
+every vowel or voiced consonant.
+
+With transition smoothing enabled, neighboring formant trajectories meet at
+their midpoint, including diphthong glide endpoints. Coarticulation now uses
+immediate voiced neighbors only: it does not reach across pauses, stops,
+fricatives, or voiced fricatives. Those excitation paths retain their existing
+PCM generation and break voiced continuity. Each `Speak` call, including one
+following a sink exception, starts from reset renderer state.
+
+For an A/B comparison using otherwise identical controls:
+
+```csharp
+TtsSynthesizer continuous = new TtsSynthesizer(
+    EnglishTtsLanguage.Instance, new VoiceOptions());
+TtsSynthesizer legacy = new TtsSynthesizer(
+    EnglishTtsLanguage.Instance, new VoiceOptions(continuousVoicing: false));
+```
+
+The explicit boolean overload also accepts all existing pitch, speed, formant,
+intonation, noise, and smoothing arguments. `continuousVoicing: false` restores
+the original phases, per-phoneme envelopes, and across-gap formant lookup.
+`transitionSmoothingPercent: 0` disables formant blending independently; it does
+not disable phase or envelope continuity.
+
+The implementation adds four integer state fields per renderer and one boolean
+per voice-options instance. Actual heap overhead depends on the runtime's field
+storage and object layout. It adds no arrays, lookup tables, buffered utterance,
+floating-point DSP, or per-block allocations. The same 2,048-byte output buffer
+is reused, output remains 8 kHz, and phase/envelope decisions are made outside
+the per-sample oscillator loop. Sample counts and speaking durations are
+unchanged. This is not the heavier oversampled desktop source/filter renderer.
+
+On the simulator, regression tests compare a repeated voiced sequence
+sample-for-sample with one sustained tone away from the outer fades. They also
+check legacy golden PCM, boundary resets, partial control blocks, Nyquist
+formants, streamed/buffered equivalence, buffer reuse, and recovery after a sink
+failure. These checks do not establish perceptual quality or ESP32 throughput.
+The acoustic/pronunciation tables are deliberately unchanged.
+
+Before deploying widely, compare the same English and French sentences on the
+target board with continuity enabled and disabled, keeping every other voice
+control, firmware, and playback mode identical. Use the existing buffered
+sample's synthesis-time and real-time-speed measurements to separate generation
+cost from I2S writes. The `BothLanguagesRetainSampleBudgetAndReportStreamingTimings`
+test also prints `[tts-continuity]` timing totals over eight interleaved runs per
+mode after warm-up; its tick values are 100 ns units. Timing is diagnostic, not
+a desktop-derived performance guarantee or a noisy wall-clock test assertion.
 
 ### Language frontends
 
@@ -325,6 +381,21 @@ nuget pack Languages\French\Text2Speech.French.nuspec -Version 1.0.0 -Properties
 The test project uses `nanoFramework.TestFramework`, `nanoFramework.UnitTestLauncher`, and the nanoFramework VSTest adapter. Build the Release solution first, then run `tests\Text2Speech.Tests\bin\Release\NFUnitTest.dll` using `tests\Text2Speech.Tests\nano.runsettings`. The checked-in settings use the nanoCLR simulator (`IsRealHardware=False`).
 
 Tests cover format constants, deterministic synthesis, buffered/streamed equivalence, number expansion, frontend rules, invalid input, WAV headers, and malformed/truncated WAV rejection.
+Voicing-continuity tests additionally cover the legacy switch, unchanged sample
+budgets, sustained oscillator phase, local formant joins, consonant/pause
+boundaries, diphthong fallbacks, short phonemes, and reused streaming buffers.
+
+If the VSTest adapter is unavailable, an already installed nanoCLR CLI can run
+the built PE assemblies directly:
+
+```powershell
+$assemblies = Get-ChildItem .\tests\Text2Speech.Tests\bin\Release\*.pe |
+    Select-Object -ExpandProperty FullName
+nanoclr run -a $assemblies --resolve
+```
+
+Confirm every `Test passed`/`Test failed` result and the final `Done.` line:
+the CLI exit code alone is not proof that all test assertions passed.
 
 ## Constraints
 
