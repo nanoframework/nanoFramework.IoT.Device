@@ -617,7 +617,7 @@ namespace Iot.Device.Yx5300
                 throw new TimeoutException("The device did not return the requested data in time.");
             }
 
-            throw new InvalidOperationException($"Unexpected device response: {_status.Code}.");
+            throw new InvalidOperationException($"Unexpected device response: {_status.Code}, data: {_status.Data}.");
         }
 
         private void ProcessResponse(bool isTimeout = false)
