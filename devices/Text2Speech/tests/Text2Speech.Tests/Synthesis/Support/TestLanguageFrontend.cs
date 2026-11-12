@@ -23,6 +23,22 @@ namespace Iot.Device.Text2Speech.Tests
                 {
                     phoneme = TestLanguage.Tone;
                 }
+                else if (text[i] == 'l')
+                {
+                    phoneme = TestLanguage.LongTone;
+                }
+                else if (text[i] == 'c')
+                {
+                    phoneme = TestLanguage.SustainedTone;
+                }
+                else if (text[i] == 't')
+                {
+                    phoneme = TestLanguage.TinyTone;
+                }
+                else if (text[i] == ' ')
+                {
+                    phoneme = TestLanguage.Silence;
+                }
                 else if (text[i] == 'f')
                 {
                     phoneme = TestLanguage.FirstFormantGlide;

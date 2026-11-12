@@ -23,6 +23,18 @@ namespace Iot.Device.Text2Speech.Tests
             0,
             0);
 
+        internal static readonly TtsPhoneme LongTone = new TtsPhoneme(
+            TtsPhonemeType.Voiced, 730, 1090, 2440, 6, 5, 2, 45, 200, false, 0, 0, 0);
+
+        internal static readonly TtsPhoneme SustainedTone = new TtsPhoneme(
+            TtsPhonemeType.Voiced, 730, 1090, 2440, 6, 5, 2, 45, 800, false, 0, 0, 0);
+
+        internal static readonly TtsPhoneme TinyTone = new TtsPhoneme(
+            TtsPhonemeType.Voiced, 730, 1090, 2440, 6, 5, 2, 45, 1, false, 0, 0, 0);
+
+        internal static readonly TtsPhoneme Silence = new TtsPhoneme(
+            TtsPhonemeType.Silence, 0, 0, 0, 0, 0, 0, 0, 50, false, 0, 0, 0);
+
         internal static readonly TtsPhoneme FirstFormantGlide = new TtsPhoneme(
             TtsPhonemeType.Voiced,
             730,
